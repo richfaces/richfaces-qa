@@ -65,7 +65,7 @@ public class TestInplaceSelect extends AbstractWebDriverTest {
      */
     private void checkSelect(RichFacesInplaceSelect select, String option, Event event) {
         if (event == Event.DBLCLICK) {
-            select.advanced().setEditByEvent(event);
+            select.advanced().setupEditByEvent(event);
             select.select(option).confirmByControlls();
         } else {
             select.select(option).confirm();

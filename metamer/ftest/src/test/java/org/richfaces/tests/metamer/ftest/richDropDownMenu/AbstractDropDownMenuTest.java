@@ -60,7 +60,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
 
     private void updateDropDownMenuInvoker() {
         page.getFileDropDownMenu(driver.getCurrentUrl()).advanced()
-            .setInvoker(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().HOVER_INVOKER);
+            .setupInvoker(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().HOVER_INVOKER);
     }
 
     @Page
@@ -87,7 +87,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
 
         assertNotVisible(page.getGroupList(), "Submenu should not be expanded.");
         guardNoRequest(
-            new Actions(driver).moveToElement(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItems().get(3))
+            new Actions(driver).moveToElement(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItemsElements().get(3))
                 .build()).perform();
         assertVisible(page.getGroupList(), "Submenu should be expanded.");
 
@@ -105,17 +105,17 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
     public void testShowEvent() {
         dropDownMenuAttributes.set(DropDownMenuAttributes.showEvent, "contextmenu");
         page.getFileDropDownMenu(driver.getCurrentUrl()).advanced()
-            .setInvoker(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().RIGHT_CLICK_INVOKER);
+            .setupInvoker(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().RIGHT_CLICK_INVOKER);
         page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().invoke(page.getTarget1());
 
         dropDownMenuAttributes.set(DropDownMenuAttributes.showEvent, "hover");
         page.getFileDropDownMenu(driver.getCurrentUrl()).advanced()
-            .setInvoker(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().HOVER_INVOKER);
+            .setupInvoker(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().HOVER_INVOKER);
         page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().invoke(page.getTarget1());
 
         dropDownMenuAttributes.set(DropDownMenuAttributes.showEvent, "click");
         page.getFileDropDownMenu(driver.getCurrentUrl()).advanced()
-            .setInvoker(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().LEFT_CLICK_INVOKER);
+            .setupInvoker(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().LEFT_CLICK_INVOKER);
         page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().invoke(page.getTarget1());
     }
 
@@ -125,7 +125,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         String styleVal = "background-color: " + color + ";";
         dropDownMenuAttributes.set(DropDownMenuAttributes.style, styleVal);
         page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().invoke(page.getTarget1());
-        String backgroundColor = page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getTopLvlElement()
+        String backgroundColor = page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getTopLevelElement()
             .getCssValue("background-color");
         // webdriver retrieves the color in rgba format
         assertEquals(ContextMenuSimplePage.trimTheRGBAColor(backgroundColor), "rgba(255,255,0,1)",
@@ -136,7 +136,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         updateDropDownMenuInvoker();
         String styleClassVal = "test-style-class";
         dropDownMenuAttributes.set(DropDownMenuAttributes.styleClass, styleClassVal);
-        String styleClass = page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getTopLvlElement()
+        String styleClass = page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getTopLevelElement()
             .getAttribute("class");
         assertTrue(styleClass.contains(styleClassVal));
     }
@@ -147,7 +147,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         dropDownMenuAttributes.set(DropDownMenuAttributes.dir, expected);
 
         page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().invoke(page.getTarget1());
-        String directionCSS = page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItems().get(0)
+        String directionCSS = page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItemsElements().get(0)
             .getCssValue("direction");
         assertEquals(directionCSS, expected, "The direction attribute was not applied correctly!");
     }
@@ -167,24 +167,24 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         // ajax
         dropDownMenuAttributes.set(DropDownMenuAttributes.mode, "ajax");
         page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().invoke(page.getTarget1());
-        guardAjax(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItems().get(0)).click();
+        guardAjax(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItemsElements().get(0)).click();
         assertEquals(page.getOutput().getText(), "New", "Menu action was not performed.");
 
         // server
         dropDownMenuAttributes.set(DropDownMenuAttributes.mode, "server");
         page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().invoke(page.getTarget1());
-        guardHttp(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItems().get(8)).click();
+        guardHttp(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItemsElements().get(8)).click();
         assertEquals(page.getOutput().getText(), "Close", "Menu action was not performed.");
 
         // client
         dropDownMenuAttributes.set(DropDownMenuAttributes.mode, "client");
         page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().invoke(page.getTarget1());
-        guardNoRequest(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItems().get(0)).click();
+        guardNoRequest(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItemsElements().get(0)).click();
 
         // null
         dropDownMenuAttributes.set(DropDownMenuAttributes.mode, "server");
         page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().invoke(page.getTarget1());
-        guardHttp(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItems().get(8)).click();
+        guardHttp(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItemsElements().get(8)).click();
         assertEquals(page.getOutput().getText(), "Close", "Menu action was not performed.");
     }
 
@@ -267,7 +267,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         updateDropDownMenuInvoker();
         String titleVal = "test title";
         dropDownMenuAttributes.set(DropDownMenuAttributes.title, titleVal);
-        assertEquals(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getTopLvlElement().getAttribute("title"),
+        assertEquals(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getTopLevelElement().getAttribute("title"),
             titleVal);
     }
 
@@ -277,7 +277,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().invoke(page.getTarget1());
-                page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItems().get(1).click();
+                page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItemsElements().get(1).click();
             }
         });
     }
@@ -288,7 +288,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().invoke(page.getTarget1());
-                new Actions(driver).doubleClick(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItems().get(2))
+                new Actions(driver).doubleClick(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItemsElements().get(2))
                     .build().perform();
             }
         });
@@ -301,10 +301,10 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
             public void perform() {
                 page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().invoke(page.getTarget1());
                 new Actions(driver)
-                    .moveToElement(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItems().get(3)).build()
+                    .moveToElement(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItemsElements().get(3)).build()
                     .perform();
                 waitGui().until().element(page.getGroupList()).is().visible();
-                new Actions(driver).click(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItems().get(1))
+                new Actions(driver).click(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItemsElements().get(1))
                     .build().perform();
                 waitGui().until().element(page.getGroupList()).is().not().visible();
             }
@@ -318,7 +318,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
             public void perform() {
                 page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().invoke(page.getTarget1());
                 new Actions(driver)
-                    .moveToElement(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItems().get(3)).build()
+                    .moveToElement(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItemsElements().get(3)).build()
                     .perform();
                 waitGui().until().element(page.getGroupList()).is().visible();
             }
@@ -348,8 +348,8 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
             public void perform() {
                 page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().invoke(page.getTarget1());
                 new Actions(driver)
-                    .keyDown(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItems().get(2), Keys.CONTROL)
-                    .keyUp(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItems().get(2), Keys.CONTROL).build()
+                    .keyDown(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItemsElements().get(2), Keys.CONTROL)
+                    .keyUp(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItemsElements().get(2), Keys.CONTROL).build()
                     .perform();
             }
         });
@@ -378,7 +378,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
             public void perform() {
                 page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().invoke(page.getTarget1());
                 Mouse mouse = ((HasInputDevices) driver).getMouse();
-                mouse.mouseDown(((Locatable) page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItems().get(1))
+                mouse.mouseDown(((Locatable) page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItemsElements().get(1))
                     .getCoordinates());
             }
         });
@@ -396,7 +396,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
             public void perform() {
                 page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().invoke(page.getTarget1());
                 new Actions(driver)
-                    .moveToElement(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItems().get(3)).build()
+                    .moveToElement(page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItemsElements().get(3)).build()
                     .perform();
                 waitModel().until().element(page.getGroupList()).is().visible();
                 new Actions(driver).moveToElement(page.getRequestTimeElement()).build().perform();
@@ -417,7 +417,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
             public void perform() {
                 page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().invoke(page.getTarget1());
                 Mouse mouse = ((HasInputDevices) driver).getMouse();
-                mouse.mouseUp(((Locatable) page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItems().get(1))
+                mouse.mouseUp(((Locatable) page.getFileDropDownMenu(driver.getCurrentUrl()).advanced().getItemsElements().get(1))
                     .getCoordinates());
             }
         });

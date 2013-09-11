@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.richfaces.tests.page.fragments.impl.list.ListComponent;
 import org.richfaces.tests.page.fragments.impl.message.Message.MessageType;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
 
 /**
  *
@@ -40,8 +41,8 @@ public interface Messages<T extends MessageItem> extends ListComponent<T> {
 
         boolean isVisible();
 
-        void waitUntilIsNotVisible();
+        WaitingWrapper waitUntilMessagesAreNotVisible();
 
-        void waitUntilIsVisible();
+        WaitingWrapper waitUntilMessagesAreVisible();
     }
 }

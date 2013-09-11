@@ -30,8 +30,9 @@ import java.util.concurrent.TimeUnit;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
-import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
 import org.jboss.arquillian.graphene.fragment.Root;
+import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
+import org.jboss.arquillian.graphene.wait.FluentWait;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Point;
@@ -39,6 +40,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 
@@ -56,7 +59,7 @@ public abstract class AbstractPopupMenu {
     protected WebElement root;
 
     private WebElement target;
-    private AdvancedInteractions advancedInteractions = null;
+    private final AdvancedPopupMenuInteractions advancedInteractions = new AdvancedPopupMenuInteractions();
 
     /* ************************************************************************************************
      * Abstract methods
@@ -87,6 +90,10 @@ public abstract class AbstractPopupMenu {
     /* ************************************************************************************************
      * API
      */
+    public AdvancedPopupMenuInteractions advanced() {
+        return advancedInteractions;
+    }
+
     public void selectItem(ChoicePicker picker) {
         if (target == null) {
             target = root;
@@ -122,17 +129,10 @@ public abstract class AbstractPopupMenu {
         this.target = target;
     }
 
-    public AdvancedInteractions advanced() {
-        if (advancedInteractions == null) {
-            advancedInteractions = new AdvancedInteractions();
-        }
-        return advancedInteractions;
-    }
-
     /* ****************************************************************************************************
      * Nested classes
      */
-    public class AdvancedInteractions {
+    public class AdvancedPopupMenuInteractions {
 
         /**
          * The right click invoker of popup menu
@@ -149,9 +149,10 @@ public abstract class AbstractPopupMenu {
          */
         public final PopupMenuInvoker HOVER_INVOKER = new HoverPopupMenuInvoker();
 
-        private PopupMenuInvoker invoker = RIGHT_CLICK_INVOKER;
-        private long contextMenuVisibleWaitingTimeout = 4000L;
-        private int showDelay = 50;
+        private final PopupMenuInvoker DEFAULT_INVOKER = RIGHT_CLICK_INVOKER;
+        private PopupMenuInvoker invoker = DEFAULT_INVOKER;
+        private static final int DEFAULT_SHOWDELAY = 50;
+        private int showDelay = DEFAULT_SHOWDELAY;
 
         public WebElement getMenuPopup() {
             return getMenuPopupInternal();
@@ -175,19 +176,23 @@ public abstract class AbstractPopupMenu {
             return Collections.unmodifiableList(getMenuItemElementsInternal());
         }
 
+        public void setupShowDelay() {
+            showDelay = DEFAULT_SHOWDELAY;
+        }
+
         /**
          * Sets the delay which is between showevent observing and the menu opening
          *
          * @param showDelay
          */
-        public void setShowDelay(int newShowDelay) {
+        public void setupShowDelay(int newShowDelay) {
             if (showDelay < 0) {
                 throw new IllegalArgumentException("Can not be negative!");
             }
             showDelay = newShowDelay;
         }
 
-        public int getShowDelay() {
+        protected int getShowDelay() {
             return showDelay;
         }
 
@@ -195,34 +200,46 @@ public abstract class AbstractPopupMenu {
             return invoker;
         }
 
-        public void setInvoker(PopupMenuInvoker newInvoker) {
+        public void setupInvoker() {
+            invoker = DEFAULT_INVOKER;
+        }
+
+        public void setupInvoker(PopupMenuInvoker newInvoker) {
             if (invoker == null) {
                 throw new IllegalArgumentException("Parameter invoker can not be null!");
             }
             invoker = newInvoker;
         }
 
-        public WebElement getTarget() {
+        public WebElement getTargetElement() {
             return target;
         }
 
         /**
          * Waits until the popup menu is visible. It takes into account the <code>showDelay</code> which has default value 50ms.
          *
-         * @see #setShowDelay(int)
+         * @see #setupShowDelay(int)
          */
-        public void waitUntilIsVisible() {
-            Graphene.waitModel().withTimeout(showDelay + getContextMenuVisibleWaitingTimeout(), TimeUnit.MILLISECONDS)
-                .withMessage("The " + getNameOfFragment() + " did not show in the given timeout!").until()
-                .element(getMenuPopup()).is().visible();
+        public WaitingWrapper waitUntilIsNotVisible() {
+            return new WaitingWrapperImpl() {
+
+                @Override
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until().element(getMenuPopupInternal()).is().not().visible();
+                }
+            }.withMessage("Waiting for menu to hide.");
         }
 
-        public void setContextMenuVisibleWaitingTimeout(long timeoutInMillis) {
-            this.contextMenuVisibleWaitingTimeout = timeoutInMillis;
-        }
+        public WaitingWrapper waitUntilIsVisible() {
+            return new WaitingWrapperImpl() {
 
-        public long getContextMenuVisibleWaitingTimeout() {
-            return this.contextMenuVisibleWaitingTimeout;
+                @Override
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until().element(getMenuPopup()).is().visible();
+                }
+            }
+                .withMessage("The " + getNameOfFragment() + " did not show in the given timeout!")
+                .withTimeout(showDelay + 4000, TimeUnit.MILLISECONDS);
         }
 
         /**
@@ -231,7 +248,7 @@ public abstract class AbstractPopupMenu {
          *
          * @return the popup menu items
          */
-        public List<WebElement> getItems() {
+        public List<WebElement> getItemsElements() {
             return Collections.unmodifiableList(getMenuItemElements());
         }
 
@@ -246,7 +263,7 @@ public abstract class AbstractPopupMenu {
                     + getNameOfFragment() + " is displayed at the moment!");
             }
             browser.findElement(By.tagName("body")).click();
-            waitModel().until().element(getMenuPopupInternal()).is().not().visible();
+            waitUntilIsNotVisible().perform();
         }
 
         /**
@@ -255,14 +272,14 @@ public abstract class AbstractPopupMenu {
          * <code>showDelay == 50ms</code>. Use <code>#setShowDelay</code> if this value is different for this menu.
          *
          * @param givenTarget
-         * @see #setInvoker(PopupMenuInvoker)
-         * @see #setShowDelay(int)
+         * @see #setupInvoker(PopupMenuInvoker)
+         * @see #setupShowDelay(int)
          */
         public void invoke(WebElement givenTarget) {
             actions.moveToElement(givenTarget).build().perform();
             invoker.invoke(givenTarget);
 
-            advanced().waitUntilIsVisible();
+            advanced().waitUntilIsVisible().perform();
         }
 
         /**
@@ -271,7 +288,7 @@ public abstract class AbstractPopupMenu {
          *
          * @param givenTarget
          * @param location
-         * @see #setInvoker(PopupMenuInvoker)
+         * @see #setupInvoker(PopupMenuInvoker)
          */
         public void invoke(WebElement givenTarget, Point location) {
             throw new UnsupportedOperationException("File a feature request to have this, or even better implement it:)");
@@ -282,7 +299,7 @@ public abstract class AbstractPopupMenu {
          * right click. To change this behavior use <code>setInvoker()</code> method. You have to have a target set before
          * invocation of this method.
          *
-         * @see #setInvoker(PopupMenuInvoker)
+         * @see #setupInvoker(PopupMenuInvoker)
          * @see #setTarget(WebElement)
          */
         public void invoke() {

@@ -174,9 +174,9 @@ public abstract class AbstractMessageComponentTest extends AbstractMessageCompon
     @Override
     protected void waitingForValidationMessagesToHide() {
         submitWithHBtn();
-        getMessageComponentForFirstInput().advanced().waitUntilIsNotVisible();
-        getMessageComponentForSecondInput().advanced().waitUntilIsNotVisible();
-        getMessageComponentForSelectableInput().advanced().waitUntilIsNotVisible();
+        getMessageComponentForFirstInput().advanced().waitUntilMessageIsNotVisible().perform();
+        getMessageComponentForSecondInput().advanced().waitUntilMessageIsNotVisible().perform();
+        getMessageComponentForSelectableInput().advanced().waitUntilMessageIsNotVisible().perform();
     }
 
     protected class GenerateMessagesAction implements Action {

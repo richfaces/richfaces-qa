@@ -26,7 +26,9 @@ import org.richfaces.tests.page.fragments.impl.panel.Panel;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface PopupPanel<HEADER, BODY> extends Panel<HEADER, BODY> {
+public interface PopupPanel<HEADER, HEADERCONTROLS, BODY> extends Panel<HEADER, BODY> {
+
+    HEADERCONTROLS getHeaderControlsContent();
 
     enum ResizerLocation {
 

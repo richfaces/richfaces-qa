@@ -69,7 +69,7 @@ public class TestHashParam extends AbstractWebDriverTest {
 
     private void openPopup() {
         openButton.click();
-        panel.advanced().waitUntilIsVisible();
+        panel.advanced().waitUntilPopupIsVisible().perform();
     }
 
     @Test

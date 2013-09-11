@@ -41,16 +41,21 @@ public class RichFacesContextMenu extends AbstractPopupMenu {
     @FindByJQuery("script:last")
     private WebElement script;
 
-    private AdvancedInteractions advancedInteractions;
+    private final AdvancedContextMenuInteractions advancedInteractions = new AdvancedContextMenuInteractions();
 
     @Override
-    protected WebElement getMenuPopupInternal() {
-        return contextMenuPopup;
+    public AdvancedContextMenuInteractions advanced() {
+        return advancedInteractions;
     }
 
     @Override
     protected List<WebElement> getMenuItemElementsInternal() {
         return menuItemsElements;
+    }
+
+    @Override
+    protected WebElement getMenuPopupInternal() {
+        return contextMenuPopup;
     }
 
     @Override
@@ -63,14 +68,8 @@ public class RichFacesContextMenu extends AbstractPopupMenu {
         return script;
     }
 
-    public AdvancedInteractions advanced() {
-        if (advancedInteractions == null) {
-            advancedInteractions = new AdvancedInteractions();
-        }
-        return advancedInteractions;
-    }
+    public class AdvancedContextMenuInteractions extends AbstractPopupMenu.AdvancedPopupMenuInteractions {
 
-    public class AdvancedInteractions extends AbstractPopupMenu.AdvancedInteractions {
         public String getLangAttribute() {
             return root.getAttribute("lang");
         }

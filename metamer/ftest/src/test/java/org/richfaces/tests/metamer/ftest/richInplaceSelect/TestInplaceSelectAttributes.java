@@ -221,7 +221,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         } catch (TimeoutException e) {// ok
         }
         assertNotVisible(globalPopup, "Popup should not be displayed.");
-        select.advanced().setEditByEvent(Event.MOUSEUP);
+        select.advanced().setupEditByEvent(Event.MOUSEUP);
         select.advanced().switchToEditingState();
         assertVisible(globalPopup, "Popup should be displayed.");
     }

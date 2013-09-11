@@ -147,12 +147,12 @@ public class TestPopupPanel extends AbstractWebDriverTest {
 
     private void hidePopup() {
         panel.getBodyContent().hide();
-        panel.advanced().waitUntilIsNotVisible();
+        panel.advanced().waitUntilPopupIsNotVisible().perform();
     }
 
     private void openPopupPanel() {
         openButton.click();
-        panel.advanced().waitUntilIsVisible();
+        panel.advanced().waitUntilPopupIsVisible().perform();
     }
 
     @Test

@@ -51,7 +51,7 @@ public class DynamicTabsPage {
         for (int i = 1; i < tabPanel.getNumberOfTabs(); i++) {
             tabPanel.switchTo(i);
 
-            String headerText = tabPanel.advanced().getActiveHeader().getText();
+            String headerText = tabPanel.advanced().getActiveHeaderElement().getText();
 
             waitGui().until().element(submitButton).is().visible();
             waitGui().withTimeout(2, TimeUnit.SECONDS).withMessage("The tab was not switched correctly!").until()

@@ -24,9 +24,6 @@ package org.richfaces.tests.page.fragments.impl.fileUpload;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -44,6 +41,9 @@ import org.richfaces.tests.page.fragments.impl.list.ListComponent;
 import org.richfaces.tests.page.fragments.impl.list.RichFacesListItem;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
+
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
 
 public class RichFacesFileUpload implements FileUpload {
 
@@ -66,7 +66,7 @@ public class RichFacesFileUpload implements FileUpload {
     @FindBy(css = "input[type=file].rf-fu-inp")
     private List<WebElement> fileInputElements;
 
-    private AdvancedInteractions interactions = new AdvancedInteractions();
+    private final AdvancedFileUploadInteractions interactions = new AdvancedFileUploadInteractions();
 
     @Override
     public boolean addFile(File file) {
@@ -85,7 +85,7 @@ public class RichFacesFileUpload implements FileUpload {
         return TRUE;
     }
 
-    public AdvancedInteractions advanced() {
+    public AdvancedFileUploadInteractions advanced() {
         return interactions;
     }
 
@@ -158,32 +158,32 @@ public class RichFacesFileUpload implements FileUpload {
     public static class RichFacesFileUploadList extends AbstractListComponent<FileUploadItemImpl> {
     }
 
-    public class AdvancedInteractions {
+    public class AdvancedFileUploadInteractions {
 
         private static final String DEFAULT_DONE_LABEL = "Done";
         private String doneLabel;
 
-        public WebElement getRoot() {
+        public WebElement getRootElement() {
             return rootElement;
         }
 
-        public WebElement getAddButton() {
+        public WebElement getAddButtonElement() {
             return addButtonElement;
         }
 
-        public WebElement getDisabledAddButton() {
+        public WebElement getDisabledAddButtonElement() {
             return disabledAddButtonElement;
         }
 
-        public WebElement getClearAllButton() {
+        public WebElement getClearAllButtonElement() {
             return clearAllButtonElement;
         }
 
-        public WebElement getFileInput() {
+        public WebElement getFileInputElement() {
             return fileInputElement;
         }
 
-        public WebElement getUploadButton() {
+        public WebElement getUploadButtonElement() {
             return uploadButtonElement;
         }
 
@@ -207,16 +207,12 @@ public class RichFacesFileUpload implements FileUpload {
             getItems().getItem(picker).remove();
         }
 
-        public void setDoneLabel(String doneLabel) {
+        public void setupDoneLabel() {
+            this.doneLabel = DEFAULT_DONE_LABEL;
+        }
+
+        public void setupDoneLabel(String doneLabel) {
             this.doneLabel = doneLabel;
-        }
-
-        public void waitUntilIsVisible() {
-            Graphene.waitGui().until().element(rootElement).is().visible();
-        }
-
-        public void waitUntilIsNotVisible() {
-            Graphene.waitGui().until().element(rootElement).is().not().visible();
         }
     }
 }

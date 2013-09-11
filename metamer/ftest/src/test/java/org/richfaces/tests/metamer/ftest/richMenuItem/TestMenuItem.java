@@ -358,6 +358,6 @@ public class TestMenuItem extends AbstractWebDriverTest {
 
     @BeforeMethod
     private void updateDropDownMenuInvoker() {
-        fileDropDownMenu.advanced().setInvoker(fileDropDownMenu.advanced().HOVER_INVOKER);
+        fileDropDownMenu.advanced().setupInvoker(fileDropDownMenu.advanced().HOVER_INVOKER);
     }
 }

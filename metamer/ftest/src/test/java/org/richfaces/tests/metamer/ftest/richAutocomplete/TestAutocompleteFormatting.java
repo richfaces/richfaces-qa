@@ -81,12 +81,12 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
         @Use(field = "autofill", booleans = { true, false }),
         @Use(field = "selectFirst", booleans = { true, false }) })
     public void testFormatting() {
-        assertTrue(autocomplete.advanced().getSuggestions().isEmpty());
+        assertTrue(autocomplete.advanced().getSuggestionsElements().isEmpty());
         autocomplete.clear();
         SelectOrConfirm typed = Graphene.guardAjax(autocomplete).type("ala");
-        assertFalse(autocomplete.advanced().getSuggestions().isEmpty());
+        assertFalse(autocomplete.advanced().getSuggestionsElements().isEmpty());
         Graphene.guardAjax(typed).confirm();
-        autocomplete.advanced().waitForSuggestionsToHide();
+        autocomplete.advanced().waitForSuggestionsToBeNotVisible().perform();
         String expected = getExpectedStateForPrefix("ala", selectFirst).toLowerCase();
         String found = autocomplete.advanced().getInput().getStringValue().toLowerCase();
         assertTrue(found.startsWith(expected), "The input value should start with '" + expected + "', but '" + found

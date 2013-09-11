@@ -53,7 +53,7 @@ public class TestOrderingListJSApi extends AbstractOrderingListTest {
     private WebElement value;
 
     private Integer getActualSelectedItemIndex() {
-        return Utils.getIndexOfElement(orderingList.advanced().getSelectedItems().get(0));
+        return Utils.getIndexOfElement(orderingList.advanced().getSelectedItemsElements().get(0));
     }
 
     @Override

@@ -21,8 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.log;
 
-import com.google.common.base.Predicate;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.fragment.Root;
@@ -36,6 +34,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.richfaces.tests.page.fragments.impl.list.AbstractListComponent;
 import org.richfaces.tests.page.fragments.impl.list.ListComponent;
 import org.richfaces.tests.page.fragments.impl.list.RichFacesListItem;
+
+import com.google.common.base.Predicate;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -53,12 +53,9 @@ public class RichFacesLog implements Log {
     @FindBy(tagName = "select")
     private Select levelSelect;
 
-    private AdvancedInteractions interactions;
+    private final AdvancedLogInteractions interactions = new AdvancedLogInteractions();
 
-    public AdvancedInteractions advanced() {
-        if (interactions == null) {
-            interactions = new AdvancedInteractions();
-        }
+    public AdvancedLogInteractions advanced() {
         return interactions;
     }
 
@@ -145,9 +142,9 @@ public class RichFacesLog implements Log {
         }
     }
 
-    public class AdvancedInteractions {
+    public class AdvancedLogInteractions {
 
-        public GrapheneElement getRoot() {
+        public GrapheneElement getRootElement() {
             return new GrapheneElement(root);
         }
     }

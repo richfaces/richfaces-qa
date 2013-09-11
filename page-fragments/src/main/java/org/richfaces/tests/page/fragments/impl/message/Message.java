@@ -22,6 +22,7 @@
 package org.richfaces.tests.page.fragments.impl.message;
 
 import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
 
 /**
  *
@@ -56,8 +57,8 @@ public interface Message {
 
         WebElement getSummaryElement();
 
-        void waitUntilIsNotVisible();
+        WaitingWrapper waitUntilMessageIsNotVisible();
 
-        void waitUntilIsVisible();
+        WaitingWrapper waitUntilMessageIsVisible();
     }
 }

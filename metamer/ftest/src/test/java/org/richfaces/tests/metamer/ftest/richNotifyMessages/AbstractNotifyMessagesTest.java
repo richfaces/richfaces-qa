@@ -87,7 +87,7 @@ public abstract class AbstractNotifyMessagesTest extends AbstractMessagesCompone
         return new FutureTarget<WebElement>() {
             @Override
             public WebElement getTarget() {
-                return page.getMessagesComponentWithGlobal().getItem(0).getRoot();
+                return page.getMessagesComponentWithGlobal().getItem(0).getRootElement();
             }
         };
     }

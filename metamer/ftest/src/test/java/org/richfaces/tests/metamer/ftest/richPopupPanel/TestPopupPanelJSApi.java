@@ -68,7 +68,7 @@ public class TestPopupPanelJSApi extends AbstractWebDriverTest {
 
     private void openPopupPanel() {
         openButton.click();
-        panel.advanced().waitUntilIsVisible();
+        panel.advanced().waitUntilPopupIsVisible().perform();
     }
 
     private int getValue() {
@@ -79,7 +79,7 @@ public class TestPopupPanelJSApi extends AbstractWebDriverTest {
     public void testHide() {
         openPopupPanel();
         hide.click();
-        panel.advanced().waitUntilIsNotVisible();
+        panel.advanced().waitUntilPopupIsNotVisible().perform();
     }
 
     @Test
@@ -123,7 +123,7 @@ public class TestPopupPanelJSApi extends AbstractWebDriverTest {
     public void testShow() {
         assertNotVisible(panel.advanced().getRootElement(), "Panel should not be visible.");
         show.click();
-        panel.advanced().waitUntilIsVisible();
+        panel.advanced().waitUntilPopupIsVisible().perform();
     }
 
     @Test

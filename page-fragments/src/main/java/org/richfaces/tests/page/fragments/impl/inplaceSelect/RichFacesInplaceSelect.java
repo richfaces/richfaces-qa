@@ -1,5 +1,27 @@
+/*******************************************************************************
+ * JBoss, Home of Professional Open Source
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.inplaceSelect;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
@@ -53,15 +75,22 @@ public class RichFacesInplaceSelect implements InplaceSelect {
     @Root
     private WebElement root;
 
-    private Event editByEvent = Event.CLICK;
-
     @Drone
     private WebDriver browser;
 
     @ArquillianResource
     private JavascriptExecutor executor;
 
-    private AdvancedInteractions advancedInteractions;
+    private final AdvancedInplaceSelectInteractions advancedInteractions = new AdvancedInplaceSelectInteractions();
+
+    public AdvancedInplaceSelectInteractions advanced() {
+        return advancedInteractions;
+    }
+
+    @Override
+    public TextInputComponentImpl getTextInput() {
+        return textInput;
+    }
 
     @Override
     public ConfirmOrCancel select(ChoicePicker picker) {
@@ -85,18 +114,6 @@ public class RichFacesInplaceSelect implements InplaceSelect {
         return select(ChoicePickerHelper.byVisibleText().match(text));
     }
 
-    @Override
-    public TextInputComponentImpl getTextInput() {
-        return textInput;
-    }
-
-    public AdvancedInteractions advanced() {
-        if (advancedInteractions == null) {
-            advancedInteractions = new AdvancedInteractions();
-        }
-        return advancedInteractions;
-    }
-
     public class ConfirmOrCancelImpl extends AbstractConfirmOrCancel {
 
         @Override
@@ -111,7 +128,7 @@ public class RichFacesInplaceSelect implements InplaceSelect {
 
         @Override
         public WebElement getInput() {
-            return textInput.advanced().getInput();
+            return textInput.advanced().getInputElement();
         }
 
         @Override
@@ -125,12 +142,19 @@ public class RichFacesInplaceSelect implements InplaceSelect {
         }
     }
 
-    public class AdvancedInteractions {
+    public class AdvancedInplaceSelectInteractions {
+
+        private final Event DEFAULT_EDIT_EVENT = Event.CLICK;
+        private Event editByEvent = DEFAULT_EDIT_EVENT;
 
         private static final String RF_IS_CHNG_CLASS = "rf-is-chng";
         private static final String RF_IS_ACT_CLASS = "rf-is-act";
 
-        public void setEditByEvent(Event event) {
+        public void setupEditByEvent() {
+            editByEvent = DEFAULT_EDIT_EVENT;
+        }
+
+        public void setupEditByEvent(Event event) {
             editByEvent = event;
         }
 
@@ -143,7 +167,7 @@ public class RichFacesInplaceSelect implements InplaceSelect {
         }
 
         public List<WebElement> getOptions() {
-            return browser.findElements(By.className(OPTIONS_CLASS));
+            return Collections.unmodifiableList(browser.findElements(By.className(OPTIONS_CLASS)));
         }
 
         public boolean isInState(InplaceComponentState state) {

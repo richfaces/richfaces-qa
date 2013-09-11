@@ -201,7 +201,7 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
         setCorrectValues();
         submitWithA4jBtn();
         MetamerPage.waitRequest(getPage().generateAllMsgsButton, WaitRequestType.XHR).click();
-        getPage().getMessagesComponentWithGlobal().advanced().waitUntilIsVisible();
+        getPage().getMessagesComponentWithGlobal().advanced().waitUntilMessagesAreVisible().perform();
     }
 
     @Override
@@ -224,18 +224,18 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
     protected abstract MessagesComponentTestPage<? extends Message> getPage();
 
     protected String getSimpleInput1ID() {
-        return getIDOfElement(getPage().getSimpleInput1().advanced().getInput());
+        return getIDOfElement(getPage().getSimpleInput1().advanced().getInputElement());
     }
 
     protected String getSimpleInput2ID() {
-        return getIDOfElement(getPage().getSimpleInput2().advanced().getInput());
+        return getIDOfElement(getPage().getSimpleInput2().advanced().getInputElement());
     }
 
     @Override
     protected void waitingForValidationMessagesToHide() {
         submitWithHBtn();
-        getPage().getMessagesComponentWithFor().advanced().waitUntilIsNotVisible();
-        getPage().getMessagesComponentWithGlobal().advanced().waitUntilIsNotVisible();
+        getPage().getMessagesComponentWithFor().advanced().waitUntilMessagesAreNotVisible().perform();
+        getPage().getMessagesComponentWithGlobal().advanced().waitUntilMessagesAreNotVisible().perform();
     }
 
     private class GenerateMessagesAction implements Action {

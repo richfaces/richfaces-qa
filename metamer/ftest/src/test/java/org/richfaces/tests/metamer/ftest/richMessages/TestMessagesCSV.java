@@ -50,7 +50,7 @@ public class TestMessagesCSV extends AbstractMessagesTest {
     @Override
     protected void waitingForValidationMessagesToShow() {
         submitWithA4jBtn();// "https://issues.jboss.org/browse/RF-12922"
-        getPage().getMessagesComponentWithGlobal().advanced().waitUntilIsVisible();
-        getPage().getMessagesComponentWithFor().advanced().waitUntilIsVisible();
+        getPage().getMessagesComponentWithGlobal().advanced().waitUntilMessagesAreVisible().perform();
+        getPage().getMessagesComponentWithFor().advanced().waitUntilMessagesAreVisible().perform();
     }
 }

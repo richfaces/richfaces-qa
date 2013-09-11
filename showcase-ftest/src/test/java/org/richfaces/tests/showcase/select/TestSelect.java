@@ -73,7 +73,7 @@ public class TestSelect extends AbstractWebDriverTest {
 
         Assert.assertTrue(second.advanced().isPopupPresent());
 
-        for (WebElement option : second.advanced().getSuggestions()) {
+        for (WebElement option : second.advanced().getSuggestionsElements()) {
             Assert.assertTrue(option.getText().startsWith(capital.substring(0, 2)), "The option '" + option.getText() + "' doesn't start with '" + capital.substring(0, 2) + "'.");
         }
 

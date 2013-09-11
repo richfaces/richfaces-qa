@@ -151,7 +151,7 @@ public class TestPickList extends AbstractWebDriverTest {
         assertButtonDisabled(pickList.advanced().getRemoveAllButtonElement());
         assertButtonDisabled(pickList.advanced().getRemoveButtonElement());
         for (ListItem item : pickList.advanced().getSourceList().getItems()) {
-            assertTrue(item.getRoot().getAttribute("class").contains(disabledOptionClass),
+            assertTrue(item.getRootElement().getAttribute("class").contains(disabledOptionClass),
                 "Item should be disabled.");
         }
         try {
@@ -166,7 +166,7 @@ public class TestPickList extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testDisabledClass() {
         pickListAttributes.set(PickListAttributes.disabled, Boolean.TRUE);
-        testStyleClass(pickList.advanced().getRoot(), BasicAttributes.disabledClass);
+        testStyleClass(pickList.advanced().getRootElement(), BasicAttributes.disabledClass);
     }
 
     @Test
@@ -208,7 +208,7 @@ public class TestPickList extends AbstractWebDriverTest {
         String testedClass = "metamer-ftest-class";
         pickListAttributes.set(PickListAttributes.itemClass, "metamer-ftest-class");
         for (ListItem li : pickList.advanced().getSourceList().getItems()) {
-            assertTrue(li.getRoot().getAttribute("class").contains(testedClass), "Item @class should contain "
+            assertTrue(li.getRootElement().getAttribute("class").contains(testedClass), "Item @class should contain "
                 + testedClass);
         }
     }
@@ -222,14 +222,14 @@ public class TestPickList extends AbstractWebDriverTest {
         String textSource = pickList.advanced().getSourceList().getItem(0).getText();
         pickList.add(0);
         ListItem item = pickList.advanced().getTargetList().getItem(0);
-        assertTrue(item.getRoot().getAttribute("class").contains("rf-pick-sel"));
+        assertTrue(item.getRootElement().getAttribute("class").contains("rf-pick-sel"));
         assertEquals(item.getText(), textSource);
 
         pickList.remove(0);
         item = pickList.advanced().getSourceList().getItem(ChoicePickerHelper.byIndex().last());
-        assertTrue(item.getRoot().getAttribute("class").contains("rf-pick-sel"));
+        assertTrue(item.getRootElement().getAttribute("class").contains("rf-pick-sel"));
         assertEquals(item.getText(), textSource);
-        assertEquals(Utils.getIndexOfElement(((GrapheneElement) item.getRoot()).getWrappedElement()), pickList.advanced().getSourceList().size() - 1, "Index of removed item.");
+        assertEquals(Utils.getIndexOfElement(((GrapheneElement) item.getRootElement()).getWrappedElement()), pickList.advanced().getSourceList().size() - 1, "Index of removed item.");
     }
 
     @Test
@@ -286,77 +286,77 @@ public class TestPickList extends AbstractWebDriverTest {
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     public void testOnblur() {
         testFireEvent(pickListAttributes, PickListAttributes.onblur,
-            new Actions(driver).click(pickList.advanced().getRoot()).click(page.getRequestTimeElement()).build());
+            new Actions(driver).click(pickList.advanced().getRootElement()).click(page.getRequestTimeElement()).build());
     }
 
     @Test
     public void testOnchange() {
-        testFireEvent(Event.CHANGE, pickList.advanced().getRoot(), "change");
+        testFireEvent(Event.CHANGE, pickList.advanced().getRootElement(), "change");
     }
 
     @Test
     public void testOnclick() {
-        testFireEvent(Event.CLICK, pickList.advanced().getRoot());
+        testFireEvent(Event.CLICK, pickList.advanced().getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOndblclick() {
-        testFireEvent(Event.DBLCLICK, pickList.advanced().getRoot());
+        testFireEvent(Event.DBLCLICK, pickList.advanced().getRootElement());
     }
 
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     public void testOnfocus() {
-        testFireEvent(Event.FOCUS, pickList.advanced().getRoot());
+        testFireEvent(Event.FOCUS, pickList.advanced().getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeydown() {
-        testFireEvent(Event.KEYDOWN, pickList.advanced().getRoot());
+        testFireEvent(Event.KEYDOWN, pickList.advanced().getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeypress() {
-        testFireEvent(Event.KEYPRESS, pickList.advanced().getRoot());
+        testFireEvent(Event.KEYPRESS, pickList.advanced().getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeyup() {
-        testFireEvent(Event.KEYUP, pickList.advanced().getRoot());
+        testFireEvent(Event.KEYUP, pickList.advanced().getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmousedown() {
-        testFireEvent(Event.MOUSEDOWN, pickList.advanced().getRoot());
+        testFireEvent(Event.MOUSEDOWN, pickList.advanced().getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmousemove() {
-        testFireEvent(Event.MOUSEMOVE, pickList.advanced().getRoot());
+        testFireEvent(Event.MOUSEMOVE, pickList.advanced().getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseout() {
-        testFireEvent(Event.MOUSEOUT, pickList.advanced().getRoot());
+        testFireEvent(Event.MOUSEOUT, pickList.advanced().getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseover() {
-        testFireEvent(Event.MOUSEOVER, pickList.advanced().getRoot());
+        testFireEvent(Event.MOUSEOVER, pickList.advanced().getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseup() {
-        testFireEvent(Event.MOUSEUP, pickList.advanced().getRoot());
+        testFireEvent(Event.MOUSEUP, pickList.advanced().getRootElement());
     }
 
     @Test
@@ -547,7 +547,7 @@ public class TestPickList extends AbstractWebDriverTest {
         // all items should remain selected and in this case ordering controls should be disabled
         assertEquals(pickList.advanced().getTargetList().getItems().size(), 3);
         for (ListItem item : pickList.advanced().getTargetList().getItems()) {
-            assertTrue(item.getRoot().getAttribute("class").contains("rf-pick-sel"));
+            assertTrue(item.getRootElement().getAttribute("class").contains("rf-pick-sel"));
         }
         // so check ordering controls if they are disabled
         assertButtonDisabled(pickList.advanced().getBottomButtonElement());
@@ -601,9 +601,9 @@ public class TestPickList extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testRendered() {
         pickListAttributes.set(PickListAttributes.rendered, Boolean.TRUE);
-        assertPresent(pickList.advanced().getRoot(), "Picklist should be present");
+        assertPresent(pickList.advanced().getRootElement(), "Picklist should be present");
         pickListAttributes.set(PickListAttributes.rendered, Boolean.FALSE);
-        assertNotPresent(pickList.advanced().getRoot(), "Picklist should not be present");
+        assertNotPresent(pickList.advanced().getRootElement(), "Picklist should not be present");
     }
 
     @Test
@@ -646,7 +646,7 @@ public class TestPickList extends AbstractWebDriverTest {
         testHTMLAttribute(new FutureTarget<WebElement>() {
             @Override
             public WebElement getTarget() {
-                return pickList.advanced().getSourceList().getItem(0).getRoot();
+                return pickList.advanced().getSourceList().getItem(0).getRootElement();
             }
         }, pickListAttributes, PickListAttributes.selectItemClass, "metamer-ftest-class", new Action() {
             @Override
@@ -666,13 +666,13 @@ public class TestPickList extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testStyle() {
-        testStyle(pickList.advanced().getRoot());
+        testStyle(pickList.advanced().getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyleClass() {
-        testStyleClass(pickList.advanced().getRoot());
+        testStyleClass(pickList.advanced().getRootElement());
     }
 
     /**
@@ -683,7 +683,7 @@ public class TestPickList extends AbstractWebDriverTest {
         pickListAttributes.set(PickListAttributes.switchByClick, Boolean.TRUE);
         ListItem item = pickList.advanced().getSourceList().getItems().get(0);
         String text = item.getText();
-        item.getRoot().click();
+        item.getRootElement().click();
         Graphene.waitGui().until(new Predicate<WebDriver>() {
             @Override
             public boolean apply(WebDriver input) {
@@ -692,7 +692,7 @@ public class TestPickList extends AbstractWebDriverTest {
         });
         item = pickList.advanced().getTargetList().getItem(0);
         assertEquals(item.getText(), text);
-        assertTrue(item.getRoot().getAttribute("class").contains("rf-pick-sel"));
+        assertTrue(item.getRootElement().getAttribute("class").contains("rf-pick-sel"));
     }
 
     /**
@@ -703,7 +703,7 @@ public class TestPickList extends AbstractWebDriverTest {
         pickListAttributes.set(PickListAttributes.switchByDblClick, Boolean.TRUE);
         ListItem item = pickList.advanced().getSourceList().getItems().get(0);
         String text = item.getText();
-        new Actions(driver).doubleClick(item.getRoot()).perform();
+        new Actions(driver).doubleClick(item.getRootElement()).perform();
         Graphene.waitGui().until(new Predicate<WebDriver>() {
             @Override
             public boolean apply(WebDriver input) {

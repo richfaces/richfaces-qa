@@ -62,9 +62,9 @@ public class TestAutocompleteFragment extends AbstractAutocompleteTest {
         checkOutput("Alaska, Illinois");
 
         autocompleteAttributes.set(AutocompleteAttributes.tokens, ";");
-        autocomplete.advanced().setToken(";");
-        Graphene.guardHttp(autocomplete.advanced().clear(ClearType.DELETE)).advanced().getInput().submit();
-        Graphene.waitAjax().until().element(autocomplete.advanced().getInput().advanced().getInput()).text().equalTo("");
+        autocomplete.advanced().setupToken(";");
+        Graphene.guardHttp(autocomplete.advanced().clear(ClearType.DELETE)).advanced().getInputElement().submit();
+        Graphene.waitAjax().until().element(autocomplete.advanced().getInput().advanced().getInputElement()).text().equalTo("");
         autocomplete
             .type("m").select(ChoicePickerHelper.byVisibleText().contains("ss"))// selects the first one containing 'ss'
             .type("w").select(ChoicePickerHelper.byIndex().index(2))
@@ -89,10 +89,10 @@ public class TestAutocompleteFragment extends AbstractAutocompleteTest {
 
     @Test
     public void testTypingPrefixAndThenSelectFirst() {
-        assertTrue(autocomplete.advanced().getSuggestions().isEmpty());
+        assertTrue(autocomplete.advanced().getSuggestionsElements().isEmpty());
         SelectOrConfirm type = Graphene.guardAjax(autocomplete).type("ala");
-        autocomplete.advanced().waitForSuggestionsToShow();
-        assertEquals(autocomplete.advanced().getSuggestions().size(), 2, "There should be 2 options");
+        autocomplete.advanced().waitForSuggestionsToBeVisible().perform();
+        assertEquals(autocomplete.advanced().getSuggestionsElements().size(), 2, "There should be 2 options");
         Graphene.guardAjax(type).select();
         String expectedStateForPrefix = getExpectedStateForPrefix("ala", true);
         assertEquals(autocomplete.advanced().getInput().getStringValue().toLowerCase(), expectedStateForPrefix.toLowerCase());

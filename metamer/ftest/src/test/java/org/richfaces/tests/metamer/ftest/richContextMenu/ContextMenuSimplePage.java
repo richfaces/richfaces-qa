@@ -116,7 +116,7 @@ public class ContextMenuSimplePage extends MetamerPage {
             @Override
             public void perform() {
                 targetPanel1.click();
-                contextMenu.advanced().waitUntilIsVisible();
+                contextMenu.advanced().waitUntilIsVisible().perform();
             }
         }).inMillis().intValue();
     }

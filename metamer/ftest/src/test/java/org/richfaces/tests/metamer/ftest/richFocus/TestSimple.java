@@ -75,7 +75,7 @@ public class TestSimple extends AbstractWebDriverTest {
         page.getAgeInput().sendKeys("38");
 
         page.ajaxValidateInputs();
-        waitModel().until(new ElementIsFocused(page.getAddressInput().advanced().getInput()));
+        waitModel().until(new ElementIsFocused(page.getAddressInput().advanced().getInputElement()));
 
         page.typeStringAndDoNotCareAboutFocus();
 
@@ -95,7 +95,7 @@ public class TestSimple extends AbstractWebDriverTest {
         page.getAgeInput().sendKeys("38");
 
         page.ajaxValidateInputs();
-        waitModel().until(new ElementIsFocused(page.getNameInput().advanced().getInput()));
+        waitModel().until(new ElementIsFocused(page.getNameInput().advanced().getInputElement()));
 
         page.typeStringAndDoNotCareAboutFocus();
 

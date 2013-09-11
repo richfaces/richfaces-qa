@@ -145,7 +145,7 @@ public class TestLog extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testRendered() {
         attributes.set(LogAttributes.rendered, false);
-        assertNotVisible(log.advanced().getRoot(), "Log should be not rendered.");
+        assertNotVisible(log.advanced().getRootElement(), "Log should be not rendered.");
     }
 
     @Test

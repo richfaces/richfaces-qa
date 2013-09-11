@@ -78,9 +78,9 @@ public class RichFacesPickList implements PickList {
     @FindBy(css = "thead.rf-pick-lst-hdr > tr.rf-pick-hdr")
     private WebElement headerElement;
 
-    private final AdvancedInteractions interactions = new AdvancedInteractions();
+    private final AdvancedPickListInteractions interactions = new AdvancedPickListInteractions();
 
-    public AdvancedInteractions advanced() {
+    public AdvancedPickListInteractions advanced() {
         return interactions;
     }
 
@@ -260,7 +260,7 @@ public class RichFacesPickList implements PickList {
         }
 
         @Override
-        public List<WebElement> getItems() {
+        public List<WebElement> getItemsElements() {
             return Collections.unmodifiableList(items);
         }
 
@@ -310,7 +310,7 @@ public class RichFacesPickList implements PickList {
         }
     }
 
-    public class AdvancedInteractions {
+    public class AdvancedPickListInteractions {
 
         public WebElement getAddAllButtonElement() {
             return addAllButtonElement;
@@ -360,7 +360,7 @@ public class RichFacesPickList implements PickList {
             return removeButtonElement;
         }
 
-        public WebElement getRoot() {
+        public WebElement getRootElement() {
             return root;
         }
 
@@ -391,5 +391,4 @@ public class RichFacesPickList implements PickList {
 
     public static class SelectableListImpl extends AbstractListComponent<SelectableListItemImpl> {
     }
-
 }

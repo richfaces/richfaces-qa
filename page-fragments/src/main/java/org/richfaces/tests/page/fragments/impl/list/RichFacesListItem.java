@@ -34,7 +34,7 @@ public class RichFacesListItem implements ListItem {
     private WebElement root;
 
     @Override
-    public GrapheneElement getRoot() {
+    public GrapheneElement getRootElement() {
         return new GrapheneElement(root);
     }
 

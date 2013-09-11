@@ -21,9 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.hotkey;
 
-import com.google.common.base.Optional;
-import com.google.common.base.Preconditions;
-
 import java.util.EnumSet;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
@@ -37,6 +34,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Utils;
+
+import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
 
 /**
  * Automatically setups hotkey from widget, if no hotkey from user is set.
@@ -55,7 +55,7 @@ public class RichFacesHotkey implements Hotkey {
     @FindBy(tagName = "script")
     private WebElement script;
 
-    private final AdvancedInteractions interactions = new AdvancedInteractions();
+    private final AdvancedHotkeyInteractions interactions = new AdvancedHotkeyInteractions();
 
     private enum ModifierKeys {
 
@@ -71,7 +71,7 @@ public class RichFacesHotkey implements Hotkey {
         }
     }
 
-    public AdvancedInteractions advanced() {
+    public AdvancedHotkeyInteractions advanced() {
         return interactions;
     }
 
@@ -89,15 +89,14 @@ public class RichFacesHotkey implements Hotkey {
         actions.sendKeys(element, advanced().getHotkey().get()).perform();
     }
 
-    public class AdvancedInteractions {
+    public class AdvancedHotkeyInteractions {
 
-        private String hotkeyFromUser;
         private String hotkey;
         private String previousKeyText = "";
         private String selector;
 
-        public Optional<String> getHotkey() {
-            return Optional.fromNullable(hotkeyFromUser).or(Optional.fromNullable(hotkey)).or(Optional.<String>absent());
+        protected Optional<String> getHotkey() {
+            return Optional.fromNullable(hotkey).or(Optional.<String>absent());
         }
 
         private void initHotkeyFromScript() {
@@ -111,7 +110,6 @@ public class RichFacesHotkey implements Hotkey {
                 return;
             }
             previousKeyText = hotkeyText.get();
-            //
 
             hotkey = "";
             String hotkeyTextTmp = previousKeyText;
@@ -139,7 +137,7 @@ public class RichFacesHotkey implements Hotkey {
             return rootElement;
         }
 
-        public Optional<By> getSelector() {
+        protected Optional<By> getSelector() {
             return (selector == null || selector.isEmpty()
                 ? Optional.<By>absent()
                 : Optional.<By>of(ByJQuery.selector(selector)));
@@ -154,11 +152,10 @@ public class RichFacesHotkey implements Hotkey {
             if (hotkey == null || hotkey.isEmpty()) {
                 throw new NullPointerException("Hotkey cannot be empty or null. Set up hotkey from widget if you want to reset it.");
             }
-            this.hotkeyFromUser = hotkey;
+            this.hotkey = hotkey;
         }
 
         public void setupHotkeyFromWidget() {
-            this.hotkeyFromUser = null;
             initHotkeyFromScript();
         }
 

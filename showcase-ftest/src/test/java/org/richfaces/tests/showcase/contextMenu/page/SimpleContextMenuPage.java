@@ -17,7 +17,7 @@ public class SimpleContextMenuPage {
     }
 
     public RichFacesContextMenu getContextMenu() {
-        contextMenu.advanced().setInvoker(contextMenu.advanced().LEFT_CLICK_INVOKER);
+        contextMenu.advanced().setupInvoker(contextMenu.advanced().LEFT_CLICK_INVOKER);
         contextMenu.advanced().setupTargetFromWidget();
         return contextMenu;
     }

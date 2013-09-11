@@ -24,12 +24,10 @@ package org.richfaces.tests.page.fragments.impl.dataScroller;
 import java.util.Collections;
 import java.util.List;
 
-import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -57,12 +55,10 @@ public class RichFacesDataScroller implements DataScroller {
     @FindBy(className = "rf-ds-act")
     private GrapheneElement activePage;
 
-    @Drone
-    private WebDriver driver;
     private static final String CSS_PAGE_SELECTOR = "[id$='ds_%d'].rf-ds-nmb-btn";
     private static final String CLASS_DISABLED = "rf-ds-dis";
 
-    private AdvancedInteractions advancedInteractions;
+    private final AdvancedDataScrollerInteractions advancedInteractions = new AdvancedDataScrollerInteractions();
 
     @Override
     public int getActivePageNumber() {
@@ -105,24 +101,21 @@ public class RichFacesDataScroller implements DataScroller {
     @Override
     public void switchTo(DataScrollerSwitchButton btn) {
         String prevPageText = activePage.getText();
-        advanced().getButton(btn).click();
+        advanced().getButtonElement(btn).click();
         Graphene.waitModel().until().element(activePage).text().not().equalTo(prevPageText);
     }
 
-    public AdvancedInteractions advanced() {
-        if (advancedInteractions == null) {
-            advancedInteractions = new AdvancedInteractions();
-        }
+    public AdvancedDataScrollerInteractions advanced() {
         return advancedInteractions;
     }
 
-    public class AdvancedInteractions {
+    public class AdvancedDataScrollerInteractions {
 
-        public WebElement getRoot() {
+        public WebElement getRootElement() {
             return root;
         }
 
-        public WebElement getButton(DataScrollerSwitchButton btn) {
+        public WebElement getButtonElement(DataScrollerSwitchButton btn) {
             return getButtonGrapheneElement(btn);
         }
 
@@ -145,11 +138,11 @@ public class RichFacesDataScroller implements DataScroller {
             }
         }
 
-        public By getCssSelectorForPageNumber(int pageNumber) {
+        private By getCssSelectorForPageNumber(int pageNumber) {
             return By.cssSelector(String.format(CSS_PAGE_SELECTOR, pageNumber));
         }
 
-        public List<? extends WebElement> getAllPagesWebElements() {
+        public List<? extends WebElement> getAllPagesElements() {
             return Collections.unmodifiableList(numberedPages);
         }
 
@@ -178,7 +171,7 @@ public class RichFacesDataScroller implements DataScroller {
         }
 
         public boolean isButtonDisabled(DataScrollerSwitchButton btn) {
-            return getButton(btn).getAttribute("class").contains(CLASS_DISABLED);
+            return getButtonElement(btn).getAttribute("class").contains(CLASS_DISABLED);
         }
 
         public boolean isButtonPresent(DataScrollerSwitchButton btn) {

@@ -44,7 +44,7 @@ public class TestFocus extends AbstractWebDriverTest {
 
     @Test
     public void testFirstInputFocusedAfterPageLoad() {
-        waitModel().withTimeout(TIMEOUT_FOCUS, TimeUnit.SECONDS).until(new ElementIsFocused(page.nameInput.advanced().getInput()));
+        waitModel().withTimeout(TIMEOUT_FOCUS, TimeUnit.SECONDS).until(new ElementIsFocused(page.nameInput.advanced().getInputElement()));
     }
 
     @Test
@@ -53,7 +53,7 @@ public class TestFocus extends AbstractWebDriverTest {
         page.jobInput.sendKeys("1");
 
         page.submitButton.click();
-        waitModel().withTimeout(TIMEOUT_FOCUS, TimeUnit.SECONDS).until(new ElementIsFocused(page.jobInput.advanced().getInput()));
+        waitModel().withTimeout(TIMEOUT_FOCUS, TimeUnit.SECONDS).until(new ElementIsFocused(page.jobInput.advanced().getInputElement()));
     }
 
 }

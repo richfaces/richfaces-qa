@@ -76,7 +76,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     public void testColumnClasses() {
         String testedClass = "metamer-ftest-class";
         attributes.set(OrderingListAttributes.columnClasses, testedClass);
-        for (WebElement li : orderingList.advanced().getItems()) {
+        for (WebElement li : orderingList.advanced().getItemsElements()) {
             for (WebElement e : li.findElements(By.tagName("td"))) {
                 assertTrue(e.getAttribute("class").contains(testedClass), "Item @class should contain " + testedClass);
             }
@@ -86,7 +86,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     @Test
     public void testDisabled() {
         attributes.set(OrderingListAttributes.disabled, Boolean.TRUE);
-        for (WebElement li : orderingList.advanced().getItems()) {
+        for (WebElement li : orderingList.advanced().getItemsElements()) {
             assertTrue(li.getAttribute("class").contains("rf-ord-opt-dis"), "Item @class should contain " + "rf-ord-opt-dis");
         }
         try {
@@ -145,7 +145,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     public void testItemClass() {
         String testedClass = "metamer-ftest-class";
         attributes.set(OrderingListAttributes.itemClass, "metamer-ftest-class");
-        for (WebElement element : orderingList.advanced().getItems()) {
+        for (WebElement element : orderingList.advanced().getItemsElements()) {
             assertTrue(element.getAttribute("class").contains(testedClass), "Item @class should contain " + testedClass);
         }
     }
@@ -193,7 +193,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
                 orderingList.advanced().getListAreaElement().click();
                 orderingList.advanced().getRootElement().click();
                 waiting(500);
-                Utils.triggerJQ(executor, "blur", orderingList.advanced().getItems().get(0));
+                Utils.triggerJQ(executor, "blur", orderingList.advanced().getItemsElements().get(0));
             }
         });
     }
@@ -217,7 +217,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     @Test
     public void testOnfocus() {
         testFireEvent(attributes, OrderingListAttributes.onfocus,
-            new Actions(driver).click(orderingList.advanced().getItems().get(0)).build());
+            new Actions(driver).click(orderingList.advanced().getItemsElements().get(0)).build());
     }
 
     @Test
@@ -237,52 +237,52 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
 
     @Test
     public void testOnlistclick() {
-        testFireEvent(attributes, OrderingListAttributes.onlistclick, new Actions(driver).click(orderingList.advanced().getItems().get(0)).build());
+        testFireEvent(attributes, OrderingListAttributes.onlistclick, new Actions(driver).click(orderingList.advanced().getItemsElements().get(0)).build());
     }
 
     @Test
     public void testOnlistdblclick() {
-        testFireEvent(Event.DBLCLICK, orderingList.advanced().getItems().get(0), "listdblclick");
+        testFireEvent(Event.DBLCLICK, orderingList.advanced().getItemsElements().get(0), "listdblclick");
     }
 
     @Test
     public void testOnlistkeydown() {
-        testFireEvent(Event.KEYDOWN, orderingList.advanced().getItems().get(0), "listkeydown");
+        testFireEvent(Event.KEYDOWN, orderingList.advanced().getItemsElements().get(0), "listkeydown");
     }
 
     @Test
     public void testOnlistkeypress() {
-        testFireEvent(Event.KEYPRESS, orderingList.advanced().getItems().get(0), "listkeypress");
+        testFireEvent(Event.KEYPRESS, orderingList.advanced().getItemsElements().get(0), "listkeypress");
     }
 
     @Test
     public void testOnlistkeyup() {
-        testFireEvent(Event.KEYUP, orderingList.advanced().getItems().get(0), "listkeyup");
+        testFireEvent(Event.KEYUP, orderingList.advanced().getItemsElements().get(0), "listkeyup");
     }
 
     @Test
     public void testOnlistmousedown() {
-        testFireEvent(Event.MOUSEDOWN, orderingList.advanced().getItems().get(0), "listmousedown");
+        testFireEvent(Event.MOUSEDOWN, orderingList.advanced().getItemsElements().get(0), "listmousedown");
     }
 
     @Test
     public void testOnlistmousemove() {
-        testFireEvent(Event.MOUSEMOVE, orderingList.advanced().getItems().get(0), "listmousemove");
+        testFireEvent(Event.MOUSEMOVE, orderingList.advanced().getItemsElements().get(0), "listmousemove");
     }
 
     @Test
     public void testOnlistmouseout() {
-        testFireEvent(Event.MOUSEOUT, orderingList.advanced().getItems().get(0), "listmouseout");
+        testFireEvent(Event.MOUSEOUT, orderingList.advanced().getItemsElements().get(0), "listmouseout");
     }
 
     @Test
     public void testOnlistmouseover() {
-        testFireEvent(Event.MOUSEOVER, orderingList.advanced().getItems().get(0), "listmouseover");
+        testFireEvent(Event.MOUSEOVER, orderingList.advanced().getItemsElements().get(0), "listmouseover");
     }
 
     @Test
     public void testOnlistmouseup() {
-        testFireEvent(Event.MOUSEUP, orderingList.advanced().getItems().get(0), "listmouseup");
+        testFireEvent(Event.MOUSEUP, orderingList.advanced().getItemsElements().get(0), "listmouseup");
     }
 
     @Test
@@ -322,7 +322,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     public void testSelectItemClass() {
         attributes.set(OrderingListAttributes.selectItemClass, "metamer-ftest-class");
         orderingList.select(0);
-        assertTrue(orderingList.advanced().getSelectedItems().get(0).getAttribute("class").contains("metamer-ftest-class"), "The attribute <selectItemClass> is set to <metamer-ftest-class>, but it has no effect.");
+        assertTrue(orderingList.advanced().getSelectedItemsElements().get(0).getAttribute("class").contains("metamer-ftest-class"), "The attribute <selectItemClass> is set to <metamer-ftest-class>, but it has no effect.");
     }
 
     @Test

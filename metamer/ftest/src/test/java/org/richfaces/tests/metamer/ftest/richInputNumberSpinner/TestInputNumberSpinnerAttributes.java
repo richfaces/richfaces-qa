@@ -67,7 +67,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     @RegressionTest("https://issues.jboss.org/browse/RF-11315")
     @Templates(value = "plain")
     public void testAccesskey() {
-        testHTMLAttribute(spinner.advanced().getInput().advanced().getInput(), inputNumberSpinnerAttributes,
+        testHTMLAttribute(spinner.advanced().getInput().advanced().getInputElement(), inputNumberSpinnerAttributes,
             InputNumberSpinnerAttributes.accesskey, "x");
     }
 
@@ -99,10 +99,10 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     @Test
     public void testDisabled() {
         inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.disabled, Boolean.TRUE);
-        String attribute = spinner.advanced().getInput().advanced().getInput().getAttribute("disabled");
+        String attribute = spinner.advanced().getInput().advanced().getInputElement().getAttribute("disabled");
         assertTrue(attribute.equals("disabled") || attribute.equals("true"), "Input should be disabled");
-        assertNotPresent(spinner.advanced().getArrowDecrease(), "Decrease button should not be present on page");
-        assertNotPresent(spinner.advanced().getArrowIncrease(), "Increase button should not be present on page");
+        assertNotPresent(spinner.advanced().getArrowDecreaseElement(), "Decrease button should not be present on page");
+        assertNotPresent(spinner.advanced().getArrowIncreaseElement(), "Increase button should not be present on page");
         assertPresent(disabledDecreaseBtn, "Disabled decrease button should be present on page");
         assertPresent(disabledIncreaseBtn, "Disabled increase button should be present on page");
     }
@@ -110,10 +110,10 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     @Test
     public void testEnableManualInput() {
         inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.enableManualInput, Boolean.FALSE);
-        String attribute = spinner.advanced().getInput().advanced().getInput().getAttribute("readonly");
+        String attribute = spinner.advanced().getInput().advanced().getInputElement().getAttribute("readonly");
         assertTrue(attribute.equals("readonly") || attribute.equals("true"), "Input should be readonly");
-        assertPresent(spinner.advanced().getArrowDecrease(), "Decrease button should be present on page");
-        assertPresent(spinner.advanced().getArrowIncrease(), "Increase button should be present on page");
+        assertPresent(spinner.advanced().getArrowDecreaseElement(), "Decrease button should be present on page");
+        assertPresent(spinner.advanced().getArrowIncreaseElement(), "Increase button should be present on page");
     }
 
     @Test
@@ -134,15 +134,15 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     @Test
     public void testInit() {
         assertVisible(spinner.advanced().getRootElement(), "Spinner is not present on the page.");
-        assertVisible(spinner.advanced().getInput().advanced().getInput(), "Spinner's input is not visible.");
-        assertVisible(spinner.advanced().getArrowDecrease(), "Spinner's decrease button is not visible.");
-        assertVisible(spinner.advanced().getArrowIncrease(), "Spinner's increase button is not visible.");
+        assertVisible(spinner.advanced().getInput().advanced().getInputElement(), "Spinner's input is not visible.");
+        assertVisible(spinner.advanced().getArrowDecreaseElement(), "Spinner's decrease button is not visible.");
+        assertVisible(spinner.advanced().getArrowIncreaseElement(), "Spinner's increase button is not visible.");
     }
 
     @Test
     @Templates(value = "plain")
     public void testInputClass() {
-        testStyleClass(spinner.advanced().getInput().advanced().getInput(), BasicAttributes.inputClass);
+        testStyleClass(spinner.advanced().getInput().advanced().getInputElement(), BasicAttributes.inputClass);
     }
 
     @Test
@@ -150,11 +150,11 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     public void testInputSize() {
         String testedValue = "3";
         inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.inputSize, testedValue);
-        assertEquals(spinner.advanced().getInput().advanced().getInput().getAttribute("size"), testedValue,
+        assertEquals(spinner.advanced().getInput().advanced().getInputElement().getAttribute("size"), testedValue,
             "Input's size attribute.");
         testedValue = "40";
         inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.inputSize, testedValue);
-        assertEquals(spinner.advanced().getInput().advanced().getInput().getAttribute("size"), testedValue,
+        assertEquals(spinner.advanced().getInput().advanced().getInputElement().getAttribute("size"), testedValue,
             "Input's size attribute.");
     }
 
@@ -224,7 +224,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     @Templates(value = "plain")
     public void testOnblur() {
         testFireEvent(inputNumberSpinnerAttributes, InputNumberSpinnerAttributes.onblur,
-            new Actions(driver).click(spinner.advanced().getInput().advanced().getInput()).click(page.getRequestTimeElement())
+            new Actions(driver).click(spinner.advanced().getInput().advanced().getInputElement()).click(page.getRequestTimeElement())
                 .build());
     }
 
@@ -283,14 +283,14 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     @Templates(value = "plain")
     public void testOnfocus() {
         testFireEvent(inputNumberSpinnerAttributes, InputNumberSpinnerAttributes.onfocus,
-            new Actions(driver).click(spinner.advanced().getInput().advanced().getInput()).build());
+            new Actions(driver).click(spinner.advanced().getInput().advanced().getInputElement()).build());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOninputclick() {
         testFireEvent(inputNumberSpinnerAttributes, InputNumberSpinnerAttributes.oninputclick,
-            new Actions(driver).click(spinner.advanced().getInput().advanced().getInput()).build());
+            new Actions(driver).click(spinner.advanced().getInput().advanced().getInputElement()).build());
     }
 
     @Test
@@ -298,62 +298,62 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     @Templates(value = "plain")
     public void testOninputdblclick() {
         testFireEvent(inputNumberSpinnerAttributes, InputNumberSpinnerAttributes.oninputdblclick, new Actions(driver)
-            .doubleClick(spinner.advanced().getInput().advanced().getInput()).build());
+            .doubleClick(spinner.advanced().getInput().advanced().getInputElement()).build());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOninputkeydown() {
-        testFireEventWithJS(spinner.advanced().getInput().advanced().getInput(), Event.KEYDOWN, inputNumberSpinnerAttributes,
+        testFireEventWithJS(spinner.advanced().getInput().advanced().getInputElement(), Event.KEYDOWN, inputNumberSpinnerAttributes,
             InputNumberSpinnerAttributes.oninputkeydown);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOninputkeypress() {
-        testFireEventWithJS(spinner.advanced().getInput().advanced().getInput(), Event.KEYPRESS, inputNumberSpinnerAttributes,
+        testFireEventWithJS(spinner.advanced().getInput().advanced().getInputElement(), Event.KEYPRESS, inputNumberSpinnerAttributes,
             InputNumberSpinnerAttributes.oninputkeypress);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOninputkeyup() {
-        testFireEventWithJS(spinner.advanced().getInput().advanced().getInput(), Event.KEYUP, inputNumberSpinnerAttributes,
+        testFireEventWithJS(spinner.advanced().getInput().advanced().getInputElement(), Event.KEYUP, inputNumberSpinnerAttributes,
             InputNumberSpinnerAttributes.oninputkeyup);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOninputmousedown() {
-        testFireEventWithJS(spinner.advanced().getInput().advanced().getInput(), Event.MOUSEDOWN, inputNumberSpinnerAttributes,
+        testFireEventWithJS(spinner.advanced().getInput().advanced().getInputElement(), Event.MOUSEDOWN, inputNumberSpinnerAttributes,
             InputNumberSpinnerAttributes.oninputmousedown);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOninputmousemove() {
-        testFireEventWithJS(spinner.advanced().getInput().advanced().getInput(), Event.MOUSEMOVE, inputNumberSpinnerAttributes,
+        testFireEventWithJS(spinner.advanced().getInput().advanced().getInputElement(), Event.MOUSEMOVE, inputNumberSpinnerAttributes,
             InputNumberSpinnerAttributes.oninputmousemove);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOninputmouseout() {
-        testFireEventWithJS(spinner.advanced().getInput().advanced().getInput(), Event.MOUSEOUT, inputNumberSpinnerAttributes,
+        testFireEventWithJS(spinner.advanced().getInput().advanced().getInputElement(), Event.MOUSEOUT, inputNumberSpinnerAttributes,
             InputNumberSpinnerAttributes.oninputmouseout);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOninputmouseover() {
-        testFireEventWithJS(spinner.advanced().getInput().advanced().getInput(), Event.MOUSEOVER, inputNumberSpinnerAttributes,
+        testFireEventWithJS(spinner.advanced().getInput().advanced().getInputElement(), Event.MOUSEOVER, inputNumberSpinnerAttributes,
             InputNumberSpinnerAttributes.oninputmouseover);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOninputmouseup() {
-        testFireEventWithJS(spinner.advanced().getInput().advanced().getInput(), Event.MOUSEUP, inputNumberSpinnerAttributes,
+        testFireEventWithJS(spinner.advanced().getInput().advanced().getInputElement(), Event.MOUSEUP, inputNumberSpinnerAttributes,
             InputNumberSpinnerAttributes.oninputmouseup);
     }
 
@@ -416,7 +416,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     @Test
     @Templates(value = "plain")
     public void testOnselect() {
-        testFireEventWithJS(spinner.advanced().getInput().advanced().getInput(), inputNumberSpinnerAttributes,
+        testFireEventWithJS(spinner.advanced().getInput().advanced().getInputElement(), inputNumberSpinnerAttributes,
             InputNumberSpinnerAttributes.onselect);
     }
 
@@ -470,7 +470,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     @RegressionTest("https://issues.jboss.org/browse/RF-10980")
     @Templates(value = "plain")
     public void testTabindex() {
-        testHTMLAttribute(spinner.advanced().getInput().advanced().getInput(), inputNumberSpinnerAttributes,
+        testHTMLAttribute(spinner.advanced().getInput().advanced().getInputElement(), inputNumberSpinnerAttributes,
             InputNumberSpinnerAttributes.tabindex, "57");
     }
 

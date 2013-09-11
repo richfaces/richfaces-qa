@@ -70,7 +70,7 @@ public class TestTreeLoadingFacet extends AbstractTreeTest {
             assertTrue(Utils.isVisible(treeNode.advanced().getHandleLoadingElement()));
             assertTrue(treeNode.advanced().getHandleLoadingElement().findElement(By.tagName("img")).getAttribute("src").endsWith(IMAGE_URL));
 
-            treeNode.advanced().waitUntilNodeIsExpanded();
+            treeNode.advanced().waitUntilNodeIsExpanded().perform();
         }
     }
 
