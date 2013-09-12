@@ -15,7 +15,7 @@ FSF site: http://www.fsf.org. -->
     <parent>
         <groupId>org.richfaces.tests</groupId>
         <artifactId>metamer-root</artifactId>
-        <version>5.0.0-SNAPSHOT</version>
+        <version>4.3.4-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -51,8 +51,8 @@ FSF site: http://www.fsf.org. -->
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.richfaces</groupId>
-            <artifactId>richfaces</artifactId>
+            <groupId>org.richfaces.ui.common</groupId>
+            <artifactId>richfaces-ui-common-api</artifactId>
         </dependency>
         <!-- Arquillian dependencies -->
         <dependency>
@@ -77,10 +77,6 @@ FSF site: http://www.fsf.org. -->
             <artifactId>richfaces-page-fragments</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-screen-recorder</artifactId>
         </dependency>
 
         <!-- Resolution of JAR libraries into WAR archive -->

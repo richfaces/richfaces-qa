@@ -50,6 +50,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
 
     @ArquillianResource
     protected URL contextPath;
+    protected static Boolean runInPortalEnv = Boolean.getBoolean("runInPortalEnv");
     /**
      * The path to the metamer application.
      */
@@ -75,7 +76,12 @@ public abstract class AbstractMetamerTest extends Arquillian {
 
     @Deployment(testable = false)
     public static WebArchive createTestArchive() {
-        WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/metamer.war"));
+        WebArchive war;
+        if(runInPortalEnv) {
+            war = ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/metamer-portlet.war"));
+        } else {
+            war = ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/metamer.war"));
+        }
         /*
          * If value on system property "org.richfaces.resourceMapping.enabled" is set to true, modify context-params in web.xml.
          * For more info see https://issues.jboss.org/browse/RFPL-1682

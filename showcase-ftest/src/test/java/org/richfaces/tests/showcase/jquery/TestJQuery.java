@@ -24,7 +24,6 @@ package org.richfaces.tests.showcase.jquery;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
 import static org.testng.Assert.assertEquals;
 
-import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.WebElement;
@@ -54,7 +53,7 @@ public class TestJQuery extends AbstractWebDriverTest {
             actions.moveToElement(image).build().perform();
             waitModel().until("The width of image after hovering is wrong!")
                     .element(image)
-                    .attribute(Attribute.WIDTH.getAttributeName())
+                    .attribute("width")
                     .equalTo(WIDTH_OF_IMG_AFTER_HOVER);
         }
     }
@@ -67,7 +66,7 @@ public class TestJQuery extends AbstractWebDriverTest {
      * @return the width of image with width of image's borders
      */
     private String getWidthOfImage(WebElement element) {
-        return element.getAttribute(Attribute.WIDTH.getAttributeName());
+        return element.getAttribute("width");
     }
 
 }
