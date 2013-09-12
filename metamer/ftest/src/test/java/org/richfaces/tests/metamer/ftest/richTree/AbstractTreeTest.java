@@ -75,9 +75,7 @@ public abstract class AbstractTreeTest extends AbstractWebDriverTest {
         }
     };
     @Inject
-    @Use(strings = { "simpleSwingTreeNode", //
-//        "simpleRichFacesTreeNode", "simpleRichFacesTreeDataModel"
-})
+    @Use(strings = { "simpleSwingTreeNode", "simpleRichFacesTreeNode", "simpleRichFacesTreeDataModel" })
     protected String sample;
 
     protected final String simpleSwingTreeNode = "simpleSwingTreeNode";
