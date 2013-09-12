@@ -21,9 +21,6 @@
  */
 package org.richfaces.tests.page.fragments.impl;
 
-import com.google.common.base.Optional;
-import com.google.common.base.Preconditions;
-
 import java.util.Iterator;
 
 import org.apache.commons.lang.StringEscapeUtils;
@@ -38,8 +35,11 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
+
+import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
 
 /**
  *
@@ -142,6 +142,17 @@ public final class Utils {
         return getTextFromHiddenElement(getExecutorFromElement(element), element);
     }
 
+    /**
+     * Invokes RF JS API function on given root of RF component. The root must be set correctly.
+     *
+     * @param componentRoot root of the RF component
+     * @param functionWithParams JS API function with params (e.g. <code>setValue(new Date('October 10, 2012 12:00:00'))</code>  )
+     */
+    public static String invokeRichFacesJSAPIFunction(WebElement componentRoot, String functionWithParams) {
+        JavascriptExecutor executor = getExecutorFromElement(componentRoot);
+        return (String) executor.executeScript("return RichFaces.component(arguments[0])." + functionWithParams, componentRoot);
+    }
+
     public static boolean isVisible(WebElement e) {
         try {
             boolean result = false;
@@ -152,10 +163,10 @@ public final class Utils {
         }
     }
 
-    public static boolean isVisible(WebDriver driver, By by) {
+    public static boolean isVisible(SearchContext searchContext, By by) {
         try {
             boolean result = false;
-            result = driver.findElement(by).isDisplayed();
+            result = searchContext.findElement(by).isDisplayed();
             return result;
         } catch (NoSuchElementException ex) {
             return false;
