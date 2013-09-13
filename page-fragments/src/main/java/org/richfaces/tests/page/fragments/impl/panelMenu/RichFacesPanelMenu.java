@@ -14,7 +14,7 @@ public class RichFacesPanelMenu extends AbstractPanelMenu {
     @FindByJQuery(".rf-pm-top-itm,.rf-pm-itm")
     private List<WebElement> menuItems;
 
-    private AdvancedInteractions advancedInteractions;
+    private AdvancedPanelMenuInteractions advancedInteractions;
 
     @Root
     private WebElement root;
@@ -29,14 +29,22 @@ public class RichFacesPanelMenu extends AbstractPanelMenu {
         return menuGroups;
     }
 
-    public AdvancedInteractions advanced() {
+    public AdvancedPanelMenuInteractions advanced() {
         if (advancedInteractions == null) {
-            advancedInteractions = new AdvancedInteractions();
+            advancedInteractions = new AdvancedPanelMenuInteractions();
         }
         return advancedInteractions;
     }
 
-    public class AdvancedInteractions extends AbstractPanelMenu.AdvancedInteractions {
+    public class AdvancedPanelMenuInteractions extends AbstractPanelMenu.AdvancedAbstractPanelMenuInteractions {
+
+        public List<WebElement> getMenuGroupElements() {
+            return menuGroups;
+        }
+
+        public List<WebElement> getMenuItemElements() {
+            return menuItems;
+        }
 
         public List<WebElement> getAllSelectedItems() {
             return root.findElements(By.cssSelector("div[class*=rf-pm][class*=-itm-sel]"));

@@ -6,12 +6,15 @@ import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
+import org.jboss.arquillian.graphene.wait.FluentWait;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 
@@ -31,7 +34,7 @@ public abstract class AbstractPanelMenu implements PanelMenu, PanelMenuGroup {
     private JavascriptExecutor executor;
     @Drone
     private WebDriver browser;
-    private AdvancedInteractions advancedInteractions;
+    private AdvancedAbstractPanelMenuInteractions advancedInteractions;
 
     private Event expandEvent = Event.CLICK;
     private Event collapseEvent = Event.CLICK;
@@ -67,7 +70,7 @@ public abstract class AbstractPanelMenu implements PanelMenu, PanelMenuGroup {
         }
         executeEventOn(expandEvent, groupHeader);
         // can not work with already picked element as it can be stale
-        waitUntilExpanded(getHeaderElementDynamically(picker.pick(getMenuGroups())));
+        advanced().waitUntilMenuGroupExpanded(getHeaderElementDynamically(picker.pick(getMenuGroups()))).perform();
         return Graphene.createPageFragment(RichFacesPanelMenuGroup.class, groupRoot);
     }
 
@@ -92,7 +95,7 @@ public abstract class AbstractPanelMenu implements PanelMenu, PanelMenuGroup {
         }
         executeEventOn(collapseEvent, groupHeader);
         // can not work with already picked element as it can be stale
-        waitUntilCollapsed(getHeaderElementDynamically(picker.pick(getMenuGroups())));
+        advanced().waitUntilMenuGroupCollapsed(getHeaderElementDynamically(picker.pick(getMenuGroups()))).perform();
     }
 
     @Override
@@ -107,39 +110,69 @@ public abstract class AbstractPanelMenu implements PanelMenu, PanelMenuGroup {
 
     @Override
     public PanelMenu expandAll() {
-        // TODO
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public PanelMenu collapseAll() {
-        // TODO
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     public abstract List<WebElement> getMenuItems();
 
     public abstract List<WebElement> getMenuGroups();
 
-    public AdvancedInteractions advanced() {
+    public AdvancedAbstractPanelMenuInteractions advanced() {
         if (advancedInteractions == null) {
-            advancedInteractions = new AdvancedInteractions();
+            advancedInteractions = new AdvancedAbstractPanelMenuInteractions();
         }
         return advancedInteractions;
     }
 
-    public class AdvancedInteractions {
+    public class AdvancedAbstractPanelMenuInteractions {
 
-        public void setExpandEvent(Event event) {
+        public void setupExpandEvent(Event event) {
             expandEvent = event;
         }
 
-        public void setCollapseEvent(Event event) {
+        public void setupCollapseEvent(Event event) {
             collapseEvent = event;
         }
 
         public boolean isGroupExpanded(WebElement groupRoot) {
             return AbstractPanelMenu.this.isGroupExpanded(getHeaderElementDynamically(groupRoot));
+        }
+
+        public WaitingWrapper waitUntilMenuGroupExpanded(final WebElement group) {
+            return new WaitingWrapperImpl() {
+
+                @Override
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.ignoring(org.openqa.selenium.remote.ErrorHandler.UnknownServerException.class).until(
+                        new Predicate<WebDriver>() {
+                            @Override
+                            public boolean apply(WebDriver input) {
+                                return AbstractPanelMenu.this.isGroupExpanded(group);
+                            }
+                        });
+                }
+            }.withMessage("Waiting for Panel Menu group to be expanded!");
+        }
+
+        public WaitingWrapper waitUntilMenuGroupCollapsed(final WebElement group) {
+            return new WaitingWrapperImpl() {
+
+                @Override
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.ignoring(org.openqa.selenium.remote.ErrorHandler.UnknownServerException.class).until(
+                        new Predicate<WebDriver>() {
+                            @Override
+                            public boolean apply(WebDriver input) {
+                                return !AbstractPanelMenu.this.isGroupExpanded(group);
+                            }
+                        });
+                }
+            }.withMessage("Waiting for Panel Menu group to be expanded!");
         }
     }
 
@@ -162,24 +195,6 @@ public abstract class AbstractPanelMenu implements PanelMenu, PanelMenuGroup {
         if (!new WebElementConditionFactory(element).isVisible().apply(browser)) {
             throw new IllegalArgumentException("Element: " + element + " must be visible before interacting with it!");
         }
-    }
-
-    private void waitUntilExpanded(final WebElement group) {
-        Graphene.waitModel().ignoring(org.openqa.selenium.remote.ErrorHandler.UnknownServerException.class).until(new Predicate<WebDriver>() {
-            @Override
-            public boolean apply(WebDriver input) {
-                return isGroupExpanded(group);
-            }
-        });
-    }
-
-    private void waitUntilCollapsed(final WebElement group) {
-        Graphene.waitModel().ignoring(org.openqa.selenium.remote.ErrorHandler.UnknownServerException.class).until(new Predicate<WebDriver>() {
-            @Override
-            public boolean apply(WebDriver input) {
-                return !isGroupExpanded(group);
-            }
-        });
     }
 
     private void executeEventOn(Event event, WebElement element) {
