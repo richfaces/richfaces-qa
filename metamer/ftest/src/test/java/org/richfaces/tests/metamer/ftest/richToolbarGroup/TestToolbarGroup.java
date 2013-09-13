@@ -51,7 +51,7 @@ import org.testng.annotations.Test;
  * Test case for page /faces/components/richToolbarGroup/simple.xhtml
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22733 $
+ * @since 4.3.4.Final
  */
 public class TestToolbarGroup extends AbstractWebDriverTest {
 
@@ -288,10 +288,12 @@ public class TestToolbarGroup extends AbstractWebDriverTest {
         assertTrue(new WebElementConditionFactory(page.getItemButton()).isPresent().apply(driver), "Button should be present on the page.");
         assertTrue(new WebElementConditionFactory(page.getItemButton()).isVisible().apply(driver), "Button should be visible.");
 
-        for (int i = 0; i < 6; i++) {
-            // assertFalse(selenium.isElementPresent(items[i]), "Item " + (i + 1) + " should not be rendered.");
-            assertFalse(new WebElementConditionFactory(driver.findElement(itemsBy[i])).isPresent().apply(driver), "Item " + (i + 1) + " should not be rendered.");
-        }
+        assertFalse(page.getItemCreateDoc().isPresent(), "Item 'create document' should not be rendered.");
+        assertFalse(page.getItemCreateFolder().isPresent(), "Item 'create folder' should not be rendered.");
+        assertFalse(page.getItemCopy().isPresent(), "Item 'copy' should not be rendered.");
+        assertFalse(page.getItemSave().isPresent(), "Item 'save' should not be rendered.");
+        assertFalse(page.getItemSaveAs().isPresent(), "Item 'save as' should not be rendered.");
+        assertFalse(page.getItemSaveAll().isPresent(), "Item 'save all' should not be rendered.");
     }
 
 }
