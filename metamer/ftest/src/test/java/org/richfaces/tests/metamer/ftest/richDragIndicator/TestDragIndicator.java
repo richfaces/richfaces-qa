@@ -109,7 +109,7 @@ public class TestDragIndicator extends AbstractWebDriverTest {
                 .until()
                 .element(page.indicator)
                 .is().not().present();
-
+        actionQueue.release().perform();
     }
 
     @Test
