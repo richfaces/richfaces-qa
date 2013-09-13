@@ -134,7 +134,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </r:column>
 
             <f:facet name="footer">
-                <r:dataScroller id="scroller2" render="#{richDataScrollerBean.attributes['render'].value} scroller1">
+                <r:dataScroller id="scroller2" render="scroller1" page="#{richDataScrollerBean.attributes['page'].value}">
 
                     <f:facet name="first">#{richDataScrollerBean.facets['first']}</f:facet>
                     <f:facet name="fastRewind">#{richDataScrollerBean.facets['fastRewind']}</f:facet>
