@@ -23,6 +23,7 @@ package org.richfaces.tests.metamer.ftest.richToolbar;
 
 import java.util.List;
 
+import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -43,57 +44,57 @@ public class ToolbarPage {
     private List<WebElement> separatorsImages;
     /** toolbar items with no matter if tool or empty cell */
     @FindByJQuery("tr.rf-tb-cntr > td")
-    private List<WebElement> items;
+    private List<GrapheneElement> items;
     @FindByJQuery("td[id$=createDocument_itm]")
-    private WebElement itemCreateDoc;
+    private GrapheneElement itemCreateDoc;
     @FindByJQuery("td[id$=createFolder_itm]")
-    private WebElement itemCreateFolder;
+    private GrapheneElement itemCreateFolder;
     @FindByJQuery("td[id$=copy_itm]")
-    private WebElement itemCopy;
+    private GrapheneElement itemCopy;
     @FindByJQuery("td[id$=save_itm]")
-    private WebElement itemSave;
+    private GrapheneElement itemSave;
     @FindByJQuery("td[id$=saveAs_itm]")
-    private WebElement itemSaveAs;
+    private GrapheneElement itemSaveAs;
     @FindByJQuery("td[id$=saveAll_itm]")
-    private WebElement itemSaveAll;
+    private GrapheneElement itemSaveAll;
     @FindByJQuery("td[id$=input_itm]")
-    private WebElement itemInput;
+    private GrapheneElement itemInput;
     @FindByJQuery("td[id$=button_itm]")
-    private WebElement itemButton;
+    private GrapheneElement itemButton;
 
-    public WebElement getItemButton() {
+    public GrapheneElement getItemButton() {
         return itemButton;
     }
 
-    public WebElement getItemCopy() {
+    public GrapheneElement getItemCopy() {
         return itemCopy;
     }
 
-    public WebElement getItemCreateDoc() {
+    public GrapheneElement getItemCreateDoc() {
         return itemCreateDoc;
     }
 
-    public WebElement getItemCreateFolder() {
+    public GrapheneElement getItemCreateFolder() {
         return itemCreateFolder;
     }
 
-    public WebElement getItemInput() {
+    public GrapheneElement getItemInput() {
         return itemInput;
     }
 
-    public WebElement getItemSave() {
+    public GrapheneElement getItemSave() {
         return itemSave;
     }
 
-    public WebElement getItemSaveAll() {
+    public GrapheneElement getItemSaveAll() {
         return itemSaveAll;
     }
 
-    public WebElement getItemSaveAs() {
+    public GrapheneElement getItemSaveAs() {
         return itemSaveAs;
     }
 
-    public List<WebElement> getItems() {
+    public List<GrapheneElement> getItems() {
         return items;
     }
 
