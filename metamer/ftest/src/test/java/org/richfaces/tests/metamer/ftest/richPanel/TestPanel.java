@@ -25,6 +25,7 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.bodyClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.headerClass;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelAttributes;
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
@@ -38,7 +39,6 @@ import org.richfaces.tests.page.fragments.impl.panel.TextualRichFacesPanel;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.Test;
 
-
 /**
  * Test case for page /faces/components/richPanel/simple.xhtml
  *
@@ -48,10 +48,10 @@ import org.testng.annotations.Test;
  */
 public class TestPanel extends AbstractWebDriverTest {
 
-    @FindBy( css = "div[id$=panelWithHeader]" )
+    @FindBy(css = "div[id$=panelWithHeader]")
     private TextualRichFacesPanel panelWithHeader;
 
-    @FindBy( css = "div[id$=panelWithoutHeader]" )
+    @FindBy(css = "div[id$=panelWithoutHeader]")
     private TextualRichFacesPanel panelWithoutHeader;
 
     @Override
@@ -62,18 +62,23 @@ public class TestPanel extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testInit() {
-        assertPresent(panelWithHeader.advanced().getRootElement(), "Panel with header should be present and visible on the page.");
-        assertPresent(panelWithoutHeader.advanced().getRootElement(), "Panel without header should be present and visible on the page.");
+        assertPresent(panelWithHeader.advanced().getRootElement(),
+            "Panel with header should be present and visible on the page.");
+        assertPresent(panelWithoutHeader.advanced().getRootElement(),
+            "Panel without header should be present and visible on the page.");
 
         assertPresent(panelWithHeader.advanced().getHeaderElement(), "The first panel should have a header.");
-        assertNotPresent(panelWithoutHeader.advanced().getHeaderElement(), "The second panel should not have any header.");
+        assertNotPresent(panelWithoutHeader.advanced().getHeaderElement(),
+            "The second panel should not have any header.");
 
         assertPresent(panelWithHeader.advanced().getBodyElement(), "The first panel should have a body.");
         assertPresent(panelWithoutHeader.advanced().getBodyElement(), "The second panel should have a body.");
 
         assertTrue(panelWithHeader.getHeaderContent().getText().endsWith("header of panel"));
-        assertTrue(panelWithHeader.getBodyContent().getText().startsWith("Lorem ipsum"), "First panel's body should start with \"Lorem ipsum\".");
-        assertTrue(panelWithoutHeader.getBodyContent().getText().startsWith("Nulla ornare"), "Second panel's body should start with \"Nulla ornare\".");
+        assertTrue(panelWithHeader.getBodyContent().getText().startsWith("Lorem ipsum"),
+            "First panel's body should start with \"Lorem ipsum\".");
+        assertTrue(panelWithoutHeader.getBodyContent().getText().startsWith("Nulla ornare"),
+            "Second panel's body should start with \"Nulla ornare\".");
     }
 
     @Test
@@ -88,8 +93,10 @@ public class TestPanel extends AbstractWebDriverTest {
     public void testHeader() {
         panelAttributes.set(PanelAttributes.header, "new header");
 
-        assertTrue(panelWithHeader.getHeaderContent().getText().equals("header of panel"), "Header of the first panel should not change (facet defined).");
-        assertTrue(panelWithoutHeader.getHeaderContent().getText().equals("new header"), "Header of the second panel.");
+        assertEquals(panelWithHeader.getHeaderContent().getText(), "header of panel",
+            "Header of the first panel should not change (facet defined).");
+        assertEquals(panelWithoutHeader.getHeaderContent().getText(), "new header",
+            "Header of the second panel.");
     }
 
     @Test
@@ -121,52 +128,50 @@ public class TestPanel extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testOnkeydown() {
-        testFireEventWithJS(panelWithHeader.advanced().getRootElement(), Event.KEYDOWN, panelAttributes, PanelAttributes.onkeydown);
-        testFireEventWithJS(panelWithoutHeader.advanced().getRootElement(), Event.KEYDOWN, panelAttributes, PanelAttributes.onkeydown);
+        testFireEventWithJS(panelWithHeader.advanced().getRootElement(), Event.KEYDOWN, panelAttributes,
+            PanelAttributes.onkeydown);
+        testFireEventWithJS(panelWithoutHeader.advanced().getRootElement(), Event.KEYDOWN, panelAttributes,
+            PanelAttributes.onkeydown);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeypress() {
-        testFireEventWithJS(panelWithHeader.advanced().getRootElement(), Event.KEYPRESS, panelAttributes, PanelAttributes.onkeypress);
-        testFireEventWithJS(panelWithoutHeader.advanced().getRootElement(), Event.KEYPRESS, panelAttributes, PanelAttributes.onkeypress);
+        testFireEventWithJS(panelWithHeader.advanced().getRootElement(), Event.KEYPRESS, panelAttributes,
+            PanelAttributes.onkeypress);
+        testFireEventWithJS(panelWithoutHeader.advanced().getRootElement(), Event.KEYPRESS, panelAttributes,
+            PanelAttributes.onkeypress);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeyup() {
-        testFireEventWithJS(panelWithHeader.advanced().getRootElement(), Event.KEYUP, panelAttributes, PanelAttributes.onkeyup);
-        testFireEventWithJS(panelWithoutHeader.advanced().getRootElement(), Event.KEYUP, panelAttributes, PanelAttributes.onkeyup);
+        testFireEventWithJS(panelWithHeader.advanced().getRootElement(), Event.KEYUP, panelAttributes,
+            PanelAttributes.onkeyup);
+        testFireEventWithJS(panelWithoutHeader.advanced().getRootElement(), Event.KEYUP, panelAttributes,
+            PanelAttributes.onkeyup);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmousedown() {
-        Action mouseDownAction = new Actions(driver)
-            .moveToElement(panelWithHeader.advanced().getRootElement())
-            .clickAndHold(panelWithHeader.advanced().getRootElement())
-            .release()
-            .build();
+        Action mouseDownAction = new Actions(driver).moveToElement(panelWithHeader.advanced().getRootElement())
+            .clickAndHold(panelWithHeader.advanced().getRootElement()).release().build();
         testFireEvent(panelAttributes, PanelAttributes.onmousedown, mouseDownAction);
 
-        mouseDownAction = new Actions(driver)
-            .moveToElement(panelWithoutHeader.advanced().getRootElement())
-            .clickAndHold(panelWithoutHeader.advanced().getRootElement())
-            .release()
-            .build();
+        mouseDownAction = new Actions(driver).moveToElement(panelWithoutHeader.advanced().getRootElement())
+            .clickAndHold(panelWithoutHeader.advanced().getRootElement()).release().build();
         testFireEvent(panelAttributes, PanelAttributes.onmousedown, mouseDownAction);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmousemove() {
-        Action mouseMoveAction = new Actions(driver)
-            .moveToElement(panelWithHeader.advanced().getRootElement(), 3, 3)
+        Action mouseMoveAction = new Actions(driver).moveToElement(panelWithHeader.advanced().getRootElement(), 3, 3)
             .build();
         testFireEvent(panelAttributes, PanelAttributes.onmousemove, mouseMoveAction);
 
-        mouseMoveAction = new Actions(driver)
-            .moveToElement(panelWithoutHeader.advanced().getRootElement(), 3, 3)
+        mouseMoveAction = new Actions(driver).moveToElement(panelWithoutHeader.advanced().getRootElement(), 3, 3)
             .build();
         testFireEvent(panelAttributes, PanelAttributes.onmousemove, mouseMoveAction);
     }
@@ -175,33 +180,31 @@ public class TestPanel extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testOnmouseout() {
         // TODO 2013-02-01 JJa: try implement using WebDriver API (doesn't work for now)
-        testFireEventWithJS(panelWithHeader.advanced().getRootElement(), Event.MOUSEOUT, panelAttributes, PanelAttributes.onmouseout);
-        testFireEventWithJS(panelWithoutHeader.advanced().getRootElement(), Event.MOUSEOUT, panelAttributes, PanelAttributes.onmouseout);
+        testFireEventWithJS(panelWithHeader.advanced().getRootElement(), Event.MOUSEOUT, panelAttributes,
+            PanelAttributes.onmouseout);
+        testFireEventWithJS(panelWithoutHeader.advanced().getRootElement(), Event.MOUSEOUT, panelAttributes,
+            PanelAttributes.onmouseout);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseover() {
         // TODO 2013-02-01 JJa: try implement using WebDriver API (doesn't work for now)
-        testFireEventWithJS(panelWithHeader.advanced().getRootElement(), Event.MOUSEOVER, panelAttributes, PanelAttributes.onmouseover);
-        testFireEventWithJS(panelWithoutHeader.advanced().getRootElement(), Event.MOUSEOVER, panelAttributes, PanelAttributes.onmouseover);
+        testFireEventWithJS(panelWithHeader.advanced().getRootElement(), Event.MOUSEOVER, panelAttributes,
+            PanelAttributes.onmouseover);
+        testFireEventWithJS(panelWithoutHeader.advanced().getRootElement(), Event.MOUSEOVER, panelAttributes,
+            PanelAttributes.onmouseover);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseup() {
-        Action mouseUpAction = new Actions(driver)
-            .moveToElement(panelWithHeader.advanced().getRootElement())
-            .clickAndHold()
-            .release()
-            .build();
+        Action mouseUpAction = new Actions(driver).moveToElement(panelWithHeader.advanced().getRootElement())
+            .clickAndHold().release().build();
         testFireEvent(panelAttributes, PanelAttributes.onmouseup, mouseUpAction);
 
-        mouseUpAction = new Actions(driver)
-            .moveToElement(panelWithoutHeader.advanced().getRootElement())
-            .clickAndHold()
-            .release()
-            .build();
+        mouseUpAction = new Actions(driver).moveToElement(panelWithoutHeader.advanced().getRootElement())
+            .clickAndHold().release().build();
         testFireEvent(panelAttributes, PanelAttributes.onmouseup, mouseUpAction);
     }
 
@@ -210,8 +213,10 @@ public class TestPanel extends AbstractWebDriverTest {
     public void testRendered() {
         panelAttributes.set(PanelAttributes.rendered, Boolean.FALSE);
 
-        assertNotPresent(panelWithHeader.advanced().getRootElement(), "First panel should not be rendered when rendered=false.");
-        assertNotPresent(panelWithoutHeader.advanced().getRootElement(), "Second panel should not be rendered when rendered=false.");
+        assertNotPresent(panelWithHeader.advanced().getRootElement(),
+            "First panel should not be rendered when rendered=false.");
+        assertNotPresent(panelWithoutHeader.advanced().getRootElement(),
+            "Second panel should not be rendered when rendered=false.");
     }
 
     @Test
