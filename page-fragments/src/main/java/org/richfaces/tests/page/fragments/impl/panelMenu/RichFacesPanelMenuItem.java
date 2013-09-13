@@ -20,35 +20,35 @@ public class RichFacesPanelMenuItem implements PanelMenuItem {
     @Root
     private WebElement root;
 
-    private AdvancedInteractions advancedInteractions;
+    private AdvancedPanelMenuItemInteractions advancedInteractions;
 
     @Override
     public void select() {
         root.click();
     }
 
-    public AdvancedInteractions advanced() {
+    public AdvancedPanelMenuItemInteractions advanced() {
         if (advancedInteractions == null) {
-            advancedInteractions = new AdvancedInteractions();
+            advancedInteractions = new AdvancedPanelMenuItemInteractions();
         }
         return advancedInteractions;
     }
 
-    public class AdvancedInteractions {
+    public class AdvancedPanelMenuItemInteractions {
 
-        public WebElement getLeftIcon() {
+        public WebElement getLeftIconElement() {
             return leftIcon;
         }
 
-        public WebElement getRightIcon() {
+        public WebElement getRightIconElement() {
             return rightIcon;
         }
 
-        public WebElement getRightIconImg() {
+        public WebElement getRightIconImgElement() {
             return rightIconImg;
         }
 
-        public WebElement getLeftIconImg() {
+        public WebElement getLeftIconImgElement() {
             return leftIconImg;
         }
 

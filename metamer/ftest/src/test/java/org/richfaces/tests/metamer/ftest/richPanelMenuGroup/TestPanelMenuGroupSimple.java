@@ -97,7 +97,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     public void testLeftDisabledIcon() {
         panelMenuGroupAttributes.set(disabled, true);
 
-        verifyStandardIcons(leftDisabledIcon, page.getTopGroup().advanced().getLeftIcon(), page.getTopGroup().advanced().getLeftIcon(), "");
+        verifyStandardIcons(leftDisabledIcon, page.getTopGroup().advanced().getLeftIconElement(), page.getTopGroup().advanced().getLeftIconElement(), "");
     }
 
     @Test
@@ -105,21 +105,21 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     public void testLeftCollapsedIcon() {
         page.getMenu().collapseGroup(1);
 
-        verifyStandardIcons(leftCollapsedIcon, page.getTopGroup().advanced().getLeftIcon(), page.getTopGroup().advanced().getLeftIcon(), "");
+        verifyStandardIcons(leftCollapsedIcon, page.getTopGroup().advanced().getLeftIconElement(), page.getTopGroup().advanced().getLeftIconElement(), "");
 
         panelMenuGroupAttributes.set(disabled, true);
         // both icon should be "transparent" - invisible
-        assertTrue(page.getTopGroup().advanced().isTransparent(page.getTopGroup().advanced().getLeftIcon()));
+        assertTrue(page.getTopGroup().advanced().isTransparent(page.getTopGroup().advanced().getLeftIconElement()));
     }
 
     @Test
     @Templates(value = "plain")
     public void testLeftExpandedIcon() {
 
-        verifyStandardIcons(leftExpandedIcon, page.getTopGroup().advanced().getLeftIcon(), page.getTopGroup().advanced().getLeftIcon(), "");
+        verifyStandardIcons(leftExpandedIcon, page.getTopGroup().advanced().getLeftIconElement(), page.getTopGroup().advanced().getLeftIconElement(), "");
 
         panelMenuGroupAttributes.set(disabled, true);
-        assertTrue(page.getTopGroup().advanced().isTransparent(page.getTopGroup().advanced().getRightIcon()));
+        assertTrue(page.getTopGroup().advanced().isTransparent(page.getTopGroup().advanced().getRightIconElement()));
     }
 
     @Test
@@ -151,16 +151,16 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     public void testRightDisabledIcon() {
         panelMenuGroupAttributes.set(disabled, true);
 
-        verifyStandardIcons(rightDisabledIcon, page.getTopGroup().advanced().getRightIcon(), page.getTopGroup().advanced().getRightIcon(), "");
+        verifyStandardIcons(rightDisabledIcon, page.getTopGroup().advanced().getRightIconElement(), page.getTopGroup().advanced().getRightIconElement(), "");
     }
 
     @Test
     @Templates(value = "plain")
     public void testRightExpandedIcon() {
-        verifyStandardIcons(rightExpandedIcon, page.getTopGroup().advanced().getRightIcon(), page.getTopGroup().advanced().getRightIcon(), "");
+        verifyStandardIcons(rightExpandedIcon, page.getTopGroup().advanced().getRightIconElement(), page.getTopGroup().advanced().getRightIconElement(), "");
 
         panelMenuGroupAttributes.set(disabled, true);
-        assertTrue(page.getTopGroup().advanced().isTransparent(page.getTopGroup().advanced().getRightIcon()));
+        assertTrue(page.getTopGroup().advanced().isTransparent(page.getTopGroup().advanced().getRightIconElement()));
     }
 
     @Test
@@ -168,10 +168,10 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     public void testRightCollapsedIcon() {
         page.getMenu().collapseGroup(1);
 
-        verifyStandardIcons(rightCollapsedIcon, page.getTopGroup().advanced().getRightIcon(), page.getTopGroup().advanced().getRightIcon(), "");
+        verifyStandardIcons(rightCollapsedIcon, page.getTopGroup().advanced().getRightIconElement(), page.getTopGroup().advanced().getRightIconElement(), "");
 
         panelMenuGroupAttributes.set(disabled, true);
-        assertTrue(page.getTopGroup().advanced().isTransparent(page.getTopGroup().advanced().getRightIcon()));
+        assertTrue(page.getTopGroup().advanced().isTransparent(page.getTopGroup().advanced().getRightIconElement()));
     }
 
     @Test

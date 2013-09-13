@@ -56,7 +56,7 @@ public class TestPanelMenuFragmentShowcase extends AbstractWebDriverTest {
         assertEquals(selectedItem.getText(), "item242");
 
         panelMenuAttributes.set(PanelMenuAttributes.expandEvent, "mouseover");
-        menu.advanced().setExpandEvent(Event.MOUSEOVER);
+        menu.advanced().setupExpandEvent(Event.MOUSEOVER);
         guardAjax(menu.expandGroup("Group 3")).selectItem("Item 3.1");
         assertEquals(selectedItem.getText(), "item31");
 

@@ -24,7 +24,7 @@ public class RichFacesPanelMenuGroup extends AbstractPanelMenu {
 
     @Root
     private WebElement root;
-    private AdvancedInteractions advancedInteractions;
+    private AdvancedPanelMenuGroupInteractions advancedInteractions;
 
     @Override
     public List<WebElement> getMenuItems() {
@@ -36,20 +36,28 @@ public class RichFacesPanelMenuGroup extends AbstractPanelMenu {
         return menuGroups;
     }
 
-    public AdvancedInteractions advanced() {
+    public AdvancedPanelMenuGroupInteractions advanced() {
         if (advancedInteractions == null) {
-            advancedInteractions = new AdvancedInteractions();
+            advancedInteractions = new AdvancedPanelMenuGroupInteractions();
         }
         return advancedInteractions;
     }
 
-    public class AdvancedInteractions extends AbstractPanelMenu.AdvancedInteractions {
+    public class AdvancedPanelMenuGroupInteractions extends AbstractPanelMenu.AdvancedAbstractPanelMenuInteractions {
+
+        public List<WebElement> getMenuGroupElements() {
+            return menuGroups;
+        }
+
+        public List<WebElement> getMenuItemElements() {
+            return menuItems;
+        }
 
         public boolean isExpanded() {
             return super.isGroupExpanded(root);
         }
 
-        public WebElement getLabel() {
+        public WebElement getLabelElement() {
             return label;
         }
 
@@ -61,11 +69,11 @@ public class RichFacesPanelMenuGroup extends AbstractPanelMenu {
             return icon.getAttribute("class").contains("-transparent");
         }
 
-        public WebElement getLeftIcon() {
+        public WebElement getLeftIconElement() {
             return leftIcon;
         }
 
-        public WebElement getRightIcon() {
+        public WebElement getRightIconElement() {
             return rightIcon;
         }
 

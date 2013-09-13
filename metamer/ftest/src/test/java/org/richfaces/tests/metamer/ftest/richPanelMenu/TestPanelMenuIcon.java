@@ -67,136 +67,136 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
     @Test
     public void testGroupCollapsedLeftIcon() {
         guardAjax(page.getPanelMenu()).expandGroup("Group 2");
-        verifyStandardIcons(groupCollapsedLeftIcon, page.getGroup24().advanced().getLeftIcon(), page.getGroup24().advanced()
-            .getLeftIcon(), "");
+        verifyStandardIcons(groupCollapsedLeftIcon, page.getGroup24().advanced().getLeftIconElement(), page.getGroup24().advanced()
+            .getLeftIconElement(), "");
     }
 
     @Test
     public void testGroupCollapsedRightIcon() {
         guardAjax(page.getPanelMenu()).expandGroup("Group 2");
-        verifyStandardIcons(groupCollapsedRightIcon, page.getGroup24().advanced().getRightIcon(), page.getGroup24().advanced()
-            .getRightIcon(), "");
+        verifyStandardIcons(groupCollapsedRightIcon, page.getGroup24().advanced().getRightIconElement(), page.getGroup24().advanced()
+            .getRightIconElement(), "");
     }
 
     @Test
     public void testGroupDisabledLeftIcon() {
         guardAjax(page.getPanelMenu()).expandGroup("Group 2");
         // for disabled icon both icons (expanded and collapsed) should be the same (state depends on implicit group settings)
-        verifyStandardIcons(groupDisabledLeftIcon, page.getGroup26().advanced().getLeftIcon(), page.getGroup26().advanced()
-            .getLeftIcon(), "");
+        verifyStandardIcons(groupDisabledLeftIcon, page.getGroup26().advanced().getLeftIconElement(), page.getGroup26().advanced()
+            .getLeftIconElement(), "");
     }
 
     @Test
     public void testGroupDisabledRightIcon() {
         guardAjax(page.getPanelMenu()).expandGroup("Group 2");
-        verifyStandardIcons(groupDisabledRightIcon, page.getGroup26().advanced().getRightIcon(), page.getGroup26().advanced()
-            .getRightIcon(), "");
+        verifyStandardIcons(groupDisabledRightIcon, page.getGroup26().advanced().getRightIconElement(), page.getGroup26().advanced()
+            .getRightIconElement(), "");
     }
 
     @Test
     public void testGroupExpandedLeftIcon() {
         guardAjax(page.getPanelMenu()).expandGroup("Group 2");
         guardAjax(page.getPanelMenu()).expandGroup("Group 2.4");
-        verifyStandardIcons(groupExpandedLeftIcon, page.getGroup24().advanced().getLeftIcon(), page.getGroup24().advanced()
-            .getLeftIcon(), "");
+        verifyStandardIcons(groupExpandedLeftIcon, page.getGroup24().advanced().getLeftIconElement(), page.getGroup24().advanced()
+            .getLeftIconElement(), "");
     }
 
     @Test
     public void testGroupExpandedRightIcon() {
         guardAjax(page.getPanelMenu()).expandGroup("Group 2");
         guardAjax(page.getPanelMenu()).expandGroup("Group 2.4");
-        verifyStandardIcons(groupExpandedRightIcon, page.getGroup24().advanced().getRightIcon(), page.getGroup24().advanced()
-            .getRightIcon(), "");
+        verifyStandardIcons(groupExpandedRightIcon, page.getGroup24().advanced().getRightIconElement(), page.getGroup24().advanced()
+            .getRightIconElement(), "");
     }
 
     @Test
     public void testItemDisabledLeftIcon() {
         guardAjax(page.getPanelMenu()).expandGroup("Group 2");
-        verifyStandardIcons(itemDisabledLeftIcon, page.getItem25().advanced().getLeftIcon(), page.getItem25().advanced()
-            .getLeftIconImg(), "");
+        verifyStandardIcons(itemDisabledLeftIcon, page.getItem25().advanced().getLeftIconElement(), page.getItem25().advanced()
+            .getLeftIconImgElement(), "");
     }
 
     @Test
     public void testItemDisabledRightIcon() {
         guardAjax(page.getPanelMenu()).expandGroup("Group 2");
-        verifyStandardIcons(itemDisabledRightIcon, page.getItem25().advanced().getRightIcon(), page.getItem25().advanced()
-            .getRightIconImg(), "");
+        verifyStandardIcons(itemDisabledRightIcon, page.getItem25().advanced().getRightIconElement(), page.getItem25().advanced()
+            .getRightIconImgElement(), "");
     }
 
     @Test
     public void testItemLeftIcon() {
         guardAjax(page.getPanelMenu()).expandGroup("Group 2");
-        verifyStandardIcons(itemLeftIcon, page.getItem22().advanced().getLeftIcon(), page.getItem22().advanced()
-            .getLeftIconImg(), "");
+        verifyStandardIcons(itemLeftIcon, page.getItem22().advanced().getLeftIconElement(), page.getItem22().advanced()
+            .getLeftIconImgElement(), "");
     }
 
     @Test
     public void testItemRightIcon() {
         guardAjax(page.getPanelMenu()).expandGroup("Group 2");
-        verifyStandardIcons(itemRightIcon, page.getItem22().advanced().getRightIcon(), page.getItem22().advanced()
-            .getRightIconImg(), "");
+        verifyStandardIcons(itemRightIcon, page.getItem22().advanced().getRightIconElement(), page.getItem22().advanced()
+            .getRightIconImgElement(), "");
     }
 
     @Test
     public void testTopGroupCollapsedLeftIcon() {
-        verifyStandardIcons(topGroupCollapsedLeftIcon, page.getGroup1().advanced().getLeftIcon(), page.getGroup1().advanced()
-            .getLeftIcon(), "");
+        verifyStandardIcons(topGroupCollapsedLeftIcon, page.getGroup1().advanced().getLeftIconElement(), page.getGroup1().advanced()
+            .getLeftIconElement(), "");
     }
 
     @Test
     public void testTopGroupCollapsedRightIcon() {
-        verifyStandardIcons(topGroupCollapsedRightIcon, page.getGroup1().advanced().getRightIcon(), page.getGroup1().advanced()
-            .getRightIcon(), "");
+        verifyStandardIcons(topGroupCollapsedRightIcon, page.getGroup1().advanced().getRightIconElement(), page.getGroup1().advanced()
+            .getRightIconElement(), "");
     }
 
     @Test
     public void testTopGroupDisabledLeftIcon() {
-        verifyStandardIcons(topGroupDisabledLeftIcon, page.getGroup4().advanced().getLeftIcon(), page.getGroup4().advanced()
-            .getLeftIcon(), "");
+        verifyStandardIcons(topGroupDisabledLeftIcon, page.getGroup4().advanced().getLeftIconElement(), page.getGroup4().advanced()
+            .getLeftIconElement(), "");
     }
 
     @Test
     public void testTopGroupDisabledRightIcon() {
-        verifyStandardIcons(topGroupDisabledRightIcon, page.getGroup4().advanced().getRightIcon(), page.getGroup4().advanced()
-            .getRightIcon(), "");
+        verifyStandardIcons(topGroupDisabledRightIcon, page.getGroup4().advanced().getRightIconElement(), page.getGroup4().advanced()
+            .getRightIconElement(), "");
     }
 
     @Test
     public void testTopGroupExpandedLeftIcon() {
         guardAjax(page.getPanelMenu()).expandGroup("Group 1");
-        verifyStandardIcons(topGroupExpandedLeftIcon, page.getGroup1().advanced().getLeftIcon(), page.getGroup1().advanced()
-            .getLeftIcon(), "");
+        verifyStandardIcons(topGroupExpandedLeftIcon, page.getGroup1().advanced().getLeftIconElement(), page.getGroup1().advanced()
+            .getLeftIconElement(), "");
     }
 
     @Test
     public void testTopGroupExpandedRightIcon() {
         guardAjax(page.getPanelMenu()).expandGroup("Group 1");
-        verifyStandardIcons(topGroupExpandedRightIcon, page.getGroup1().advanced().getRightIcon(), page.getGroup1().advanced()
-            .getRightIcon(), "");
+        verifyStandardIcons(topGroupExpandedRightIcon, page.getGroup1().advanced().getRightIconElement(), page.getGroup1().advanced()
+            .getRightIconElement(), "");
     }
 
     @Test
     public void testTopItemDisabledLeftIcon() {
-        verifyStandardIcons(topItemDisabledLeftIcon, page.getItem4().advanced().getLeftIcon(), page.getItem4().advanced()
-            .getLeftIconImg(), "");
+        verifyStandardIcons(topItemDisabledLeftIcon, page.getItem4().advanced().getLeftIconElement(), page.getItem4().advanced()
+            .getLeftIconImgElement(), "");
     }
 
     @Test
     public void testTopItemDisabledRightIcon() {
-        verifyStandardIcons(topItemDisabledRightIcon, page.getItem4().advanced().getRightIcon(), page.getItem4().advanced()
-            .getRightIconImg(), "");
+        verifyStandardIcons(topItemDisabledRightIcon, page.getItem4().advanced().getRightIconElement(), page.getItem4().advanced()
+            .getRightIconImgElement(), "");
     }
 
     @Test
     public void testTopItemLeftIcon() {
-        verifyStandardIcons(topItemLeftIcon, page.getItem3().advanced().getLeftIcon(), page.getItem3().advanced()
-            .getLeftIconImg(), "");
+        verifyStandardIcons(topItemLeftIcon, page.getItem3().advanced().getLeftIconElement(), page.getItem3().advanced()
+            .getLeftIconImgElement(), "");
     }
 
     @Test
     public void testTopItemRightIcon() {
-        verifyStandardIcons(topItemRightIcon, page.getItem3().advanced().getRightIcon(), page.getItem3().advanced()
-            .getRightIconImg(), "");
+        verifyStandardIcons(topItemRightIcon, page.getItem3().advanced().getRightIconElement(), page.getItem3().advanced()
+            .getRightIconImgElement(), "");
     }
 
     private void verifyStandardIcons(PanelMenuAttributes attribute, WebElement icon, WebElement imgIcon, String classSuffix) {
