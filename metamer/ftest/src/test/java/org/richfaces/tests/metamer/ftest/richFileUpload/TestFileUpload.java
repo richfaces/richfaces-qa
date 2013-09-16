@@ -39,6 +39,7 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
@@ -97,16 +98,19 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @Templates("plain")
     public void testAddLabel() {
         testLabelChanges(fileUpload.advanced().getAddButtonElement(), fileUploadAttributes, FileUploadAttributes.addLabel, null);
     }
 
     @Test
+    @Templates("plain")
     public void testClearAllLabel() {
         testLabelChanges(fileUpload.advanced().getClearAllButtonElement(), fileUploadAttributes, FileUploadAttributes.clearAllLabel, succesfulFileUploadAction);
     }
 
     @Test
+    @Templates("plain")
     public void testClearLabel() {
         testLabelChanges(new FutureTarget<WebElement>() {
             @Override
@@ -123,6 +127,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @Templates("plain")
     public void testDeleteLabel() {
         testLabelChanges(new FutureTarget<WebElement>() {
             @Override
@@ -138,11 +143,13 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @Templates("plain")
     public void testDir() {
         testDir(fileUpload.advanced().getRootElement());
     }
 
     @Test
+    @Templates("plain")
     public void testDisabled() {
         fileUploadAttributes.set(FileUploadAttributes.disabled, Boolean.TRUE);
         assertVisible(fileUpload.advanced().getRootElement(), "File upload is not on the page.");
@@ -153,6 +160,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @Templates("plain")
     @RegressionTest("https://issues.jboss.org/browse/RF-12122")
     public void testDoneLabel() {
         testLabelChanges(new FutureTarget<WebElement>() {
@@ -183,6 +191,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @Templates("plain")
     public void testLang() {
         testAttributeLang(fileUpload.advanced().getRootElement());
     }
@@ -258,6 +267,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @Templates("plain")
     public void testOnClear() {
         testFireEvent("clear", new Action() {
             @Override
@@ -269,6 +279,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @Templates("plain")
     public void testOnclick() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onclick,
             new Actions(driver).click(fileUpload.advanced().getFileInputElement()).build());
@@ -281,6 +292,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @Templates("plain")
     public void testOndblclick() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.ondblclick, new Actions(driver)
             .doubleClick(fileUpload.advanced().getFileInputElement()).build());
@@ -302,16 +314,19 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @Templates("plain")
     public void testOnkeydown() {
         testFireEventWithJS(fileUpload.advanced().getRootElement(), fileUploadAttributes, FileUploadAttributes.onkeydown);
     }
 
     @Test
+    @Templates("plain")
     public void testOnkeypress() {
         testFireEventWithJS(fileUpload.advanced().getRootElement(), fileUploadAttributes, FileUploadAttributes.onkeypress);
     }
 
     @Test
+    @Templates("plain")
     public void testOnkeyup() {
         testFireEventWithJS(fileUpload.advanced().getRootElement(), fileUploadAttributes, FileUploadAttributes.onkeyup);
     }
@@ -319,24 +334,30 @@ public class TestFileUpload extends AbstractFileUploadTest {
     @Test
     public void testOnmousedown() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onmousedown, new Actions(driver).clickAndHold(fileUpload.advanced().getFileInputElement()).build());
+        // mouse button needs to be released
+        new Actions(driver).release().perform();
     }
 
     @Test
+    @Templates("plain")
     public void testOnmousemove() {
         testFireEventWithJS(fileUpload.advanced().getRootElement(), fileUploadAttributes, FileUploadAttributes.onmousemove);
     }
 
     @Test
+    @Templates("plain")
     public void testOnmouseout() {
         testFireEventWithJS(fileUpload.advanced().getRootElement(), fileUploadAttributes, FileUploadAttributes.onmouseout);
     }
 
     @Test
+    @Templates("plain")
     public void testOnmouseover() {
         testFireEventWithJS(fileUpload.advanced().getRootElement(), fileUploadAttributes, FileUploadAttributes.onmouseover);
     }
 
     @Test
+    @Templates("plain")
     public void testOnmouseup() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onmousedown, new Actions(driver).click(fileUpload.advanced().getFileInputElement()).build());
     }
@@ -359,6 +380,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @Templates("plain")
     public void testRendered() {
         fileUploadAttributes.set(FileUploadAttributes.rendered, Boolean.FALSE);
         assertFalse(new WebElementConditionFactory(fileUpload.advanced().getRootElement()).isPresent().apply(driver), "Component should not be rendered when rendered=false.");
@@ -391,21 +413,25 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @Templates("plain")
     public void testStyle() {
         testStyle(fileUpload.advanced().getRootElement());
     }
 
     @Test
+    @Templates("plain")
     public void testStyleClass() {
         testStyleClass(fileUpload.advanced().getRootElement());
     }
 
     @Test
+    @Templates("plain")
     public void testTitle() {
         testTitle(fileUpload.advanced().getRootElement());
     }
 
     @Test
+    @Templates("plain")
     public void testUploadLabel() {
         testLabelChanges(fileUpload.advanced().getUploadButtonElement(), fileUploadAttributes, FileUploadAttributes.uploadLabel, new Action() {
             @Override
