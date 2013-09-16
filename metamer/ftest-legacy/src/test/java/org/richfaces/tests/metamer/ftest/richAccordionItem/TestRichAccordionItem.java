@@ -48,6 +48,7 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.checker.IconsChecker;
 import org.testng.annotations.Test;
 
@@ -103,6 +104,7 @@ public class TestRichAccordionItem extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates("plain")
     public void testDir() {
         testDir(item1);
     }
@@ -417,6 +419,7 @@ public class TestRichAccordionItem extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates("plain")
     public void testTitle() {
         testTitle(item1);
     }
