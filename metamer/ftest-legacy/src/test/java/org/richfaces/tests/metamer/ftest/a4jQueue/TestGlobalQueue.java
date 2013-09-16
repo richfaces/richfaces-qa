@@ -65,7 +65,7 @@ public class TestGlobalQueue extends AbstractGrapheneTest {
      * request (begin).
      */
     @Test
-    @Use(field = "requestDelay", ints = { 4000, 900, 80 })
+    @Use(field = "requestDelay", ints = { 4000, 900, 150 })
     public void testRequestDelay() {
         attributes.set(QueueAttributes.requestDelay, requestDelay);
 
