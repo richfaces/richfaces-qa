@@ -102,8 +102,7 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
     protected TextRetriever retrieveStatusChecker = retrieveText.locator(jq("#statusCheckerOutput"));
     protected TextRetriever retrieveJsFunctionChecker = retrieveText.locator(jsFunctionChecker);
     protected LocatorReference<JQueryLocator> attributesRoot = new LocatorReference<JQueryLocator>(
-            pjq("span[id$=:attributes:panel]"));
-
+            pjq("div[id$=:attributes:panel]"));
     protected ScreenshotInterceptor screenshotInterceptor = new ScreenshotInterceptor();
     protected PhaseInfo phaseInfo = new PhaseInfo();
 
