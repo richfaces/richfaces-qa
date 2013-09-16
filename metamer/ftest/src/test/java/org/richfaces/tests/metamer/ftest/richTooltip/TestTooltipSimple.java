@@ -76,7 +76,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
     @Inject
     @Use(empty = true)
     Positioning direction;
-    Integer[] offsets = new Integer[]{ 0, PRESET_OFFSET, -PRESET_OFFSET };
+    Integer[] offsets = new Integer[] { 0, PRESET_OFFSET, -PRESET_OFFSET };
     @Inject
     @Use(ints = 0)
     Integer verticalOffset;
@@ -153,9 +153,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
     }
 
     @Test
-    @Uses({
-        @Use(field = "direction", enumeration = true),
-        @Use(field = "verticalOffset", value = "offsets"),
+    @Uses({ @Use(field = "direction", enumeration = true), @Use(field = "verticalOffset", value = "offsets"),
         @Use(field = "horizontalOffset", value = "offsets") })
     @Templates(value = { "plain", "richCollapsibleSubTable", "richExtendedDataTable", "richPopupPanel" })
     public void testPositioning() {
@@ -222,7 +220,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "presetDelay", ints = { 0, 1, 5 })
+    @Use(field = "presetDelay", ints = { 0, 1000, 5000 })
     public void testHideDelay() {
 
         tooltipAttributes.set(TooltipAttributes.mode, TooltipMode.ajax);
@@ -231,8 +229,9 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         page.getTooltip().setMode(TooltipMode.ajax);
 
         page.getTooltip().recall(page.getPanel());
-        page.getTooltip().hide(page.getPanel());
-        Graphene.waitModel().withTimeout(presetDelay + 2, TimeUnit.SECONDS).until("Tooltip didn't disappears!").element(page.getTooltip().getRoot()).is().not().visible();
+        new Actions(driver).moveToElement(page.getPanel()).moveToElement(page.getRequestTimeElement()).perform();
+        Graphene.waitModel().withTimeout(presetDelay / 1000 + 2, TimeUnit.SECONDS).until("Tooltip didn't disappears!")
+            .element(page.getTooltip().getRoot()).is().not().visible();
     }
 
     @Test
@@ -294,13 +293,13 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
             MetamerPage.requestTimeNotChangesWaiting(page.getPanel()).click();
         }
 
-        MetamerPage.requestTimeNotChangesWaiting(page.getTooltip()).hide(page.getPanel());
+        new Actions(driver).moveToElement(page.getPanel()).moveToElement(page.getRequestTimeElement()).perform();
 
         Graphene.waitGui().until().element(page.getTooltip().getRoot()).is().not().visible();
     }
 
     @Test
-    public void testOnBeforeDOMUpdate() {
+    public void testOnbeforedomupdate() {
         tooltipAttributes.set(TooltipAttributes.showEvent, "click");
         // in client mode no DOM update triggered
         tooltipAttributes.set(TooltipAttributes.mode, TooltipMode.ajax);
@@ -313,7 +312,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
     @Test
     @Use(field = "mode", enumeration = true)
-    public void testOnBeforeHide() {
+    public void testOnbeforehide() {
         tooltipAttributes.set(TooltipAttributes.showEvent, "click");
         tooltipAttributes.set(TooltipAttributes.mode, mode);
         page.getTooltip().setMode(mode);
@@ -323,14 +322,15 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         // Setting handler cause tooltip disappear,
         // so invoke them between event handler setting
         page.getPanel().click();
-        page.getTooltip().hide(page.getPanel());
+        new Actions(driver).moveToElement(page.getPanel()).moveToElement(page.getRequestTimeElement()).perform();
+        Graphene.waitGui().until().element(page.getTooltip().getRoot()).is().not().visible();
 
         testRequestEventsAfter("beforehide");
     }
 
     @Test
     @Use(field = "mode", enumeration = true)
-    public void testOnBeforeShow() {
+    public void testOnbeforeshow() {
         tooltipAttributes.set(TooltipAttributes.showEvent, "click");
         tooltipAttributes.set(TooltipAttributes.mode, mode);
         page.getTooltip().setMode(mode);
@@ -343,7 +343,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
     }
 
     @Test
-    public void testOnBegin() {
+    public void testOnbegin() {
         tooltipAttributes.set(TooltipAttributes.showEvent, "click");
         tooltipAttributes.set(TooltipAttributes.mode, TooltipMode.ajax);
         page.getTooltip().setMode(TooltipMode.ajax);
@@ -358,7 +358,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
     @Test
     @Use(field = "mode", enumeration = true)
     @Templates(value = "plain")
-    public void testOnClick() {
+    public void testOnclick() {
         tooltipAttributes.set(TooltipAttributes.mode, mode);
         page.getTooltip().setMode(mode);
         Action click = new Actions(driver).click(page.getTooltip().getRoot()).build();
@@ -366,7 +366,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
     }
 
     @Test
-    public void testOnComplete() {
+    public void testOncomplete() {
         tooltipAttributes.set(TooltipAttributes.showEvent, "click");
         tooltipAttributes.set(TooltipAttributes.mode, TooltipMode.ajax);
         page.getTooltip().setMode(TooltipMode.ajax);
@@ -381,7 +381,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
     @Test
     @Use(field = "mode", enumeration = true)
     @Templates(value = "plain")
-    public void testOnDblClick() {
+    public void testOndblclick() {
         tooltipAttributes.set(TooltipAttributes.mode, mode);
         page.getTooltip().setMode(mode);
         Action dblClick = new Actions(driver).doubleClick(page.getTooltip().getRoot()).build();
@@ -390,20 +390,23 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
     @Test
     @Use(field = "mode", enumeration = true)
-    public void testOnHide() {
+    public void testOnhide() {
         tooltipAttributes.set(TooltipAttributes.mode, mode);
         tooltipAttributes.set(TooltipAttributes.showEvent, "click");
         page.getTooltip().setMode(mode);
 
         testRequestEventsBefore("hide");
-        page.getPanel().click();
-        page.getTooltip().hide(page.getPanel());
+        MetamerPage.waitRequest(page.getPanel(), mode == TooltipMode.ajax ? WaitRequestType.XHR : WaitRequestType.NONE)
+            .click();
+        new Actions(driver).moveToElement(page.getPanel()).moveToElement(page.getRequestTimeElement()).perform();
+        Graphene.waitGui().until().element(page.getTooltip().getRoot()).is().not().visible();
+
         testRequestEventsAfter("hide");
     }
 
     @Test
     @Use(field = "mode", enumeration = true)
-    public void testOnShow() {
+    public void testOnshow() {
         tooltipAttributes.set(TooltipAttributes.mode, mode);
         tooltipAttributes.set(TooltipAttributes.showEvent, "click");
         page.getTooltip().setMode(mode);
@@ -419,7 +422,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
     @Test
     @Use(field = "mode", enumeration = true)
     @Templates(value = "plain")
-    public void testOnMouseDown() {
+    public void testOnmousedown() {
         tooltipAttributes.set(TooltipAttributes.mode, mode);
         page.getTooltip().setMode(mode);
         Action action = new Actions(driver).clickAndHold(page.getTooltip().getRoot()).build();
@@ -430,7 +433,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
     @Test
     @Use(field = "mode", enumeration = true)
     @Templates(value = "plain")
-    public void testOnMouseMove() {
+    public void testOnmousemove() {
         tooltipAttributes.set(TooltipAttributes.mode, mode);
         page.getTooltip().setMode(mode);
         Action action = new Actions(driver).moveToElement(page.getTooltip().getRoot(), 1, 1).build();
@@ -440,7 +443,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
     @Test
     @Use(field = "mode", enumeration = true)
     @Templates(value = "plain")
-    public void testOnMouseOut() {
+    public void testOnmouseout() {
         tooltipAttributes.set(TooltipAttributes.mode, mode);
         page.getTooltip().setMode(mode);
 
@@ -460,7 +463,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
     @Test
     @Use(field = "mode", enumeration = true)
     @Templates(value = "plain")
-    public void testOnMouseOver() {
+    public void testOnmouseover() {
         tooltipAttributes.set(TooltipAttributes.mode, mode);
         page.getTooltip().setMode(mode);
         Action action = new Actions(driver).moveToElement(page.getTooltip().getRoot()).build();
@@ -470,7 +473,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
     @Test
     @Use(field = "mode", enumeration = true)
     @Templates(value = "plain")
-    public void testOnMouseUp() {
+    public void testOnmouseup() {
         tooltipAttributes.set(TooltipAttributes.mode, mode);
         page.getTooltip().setMode(mode);
         Action action = new Actions(driver).clickAndHold(page.getTooltip().getRoot())
@@ -480,7 +483,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
     @Test
     @Templates(value = "plain")
-    public void testRendered() {
+    public void testrendered() {
         tooltipAttributes.set(TooltipAttributes.rendered, false);
         page.getTooltip().recall(page.getPanel());
         Graphene.waitGui().until().element(page.getTooltip().getRoot()).is().not().present();
@@ -505,7 +508,8 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
                 .withMessage("Tooltip shouldn't be displayed before deplay timeout (" + presetDelay + ") is over.")
                 .until().element(page.getTooltip().getRoot()).is().not().visible();
         }
-        Graphene.waitModel().withTimeout(presetDelay / 1000 + 2, TimeUnit.SECONDS).until("Tooltip didn't disappears!").element(page.getTooltip().getRoot()).is().visible();
+        Graphene.waitModel().withTimeout(presetDelay / 1000 + 2, TimeUnit.SECONDS).until("Tooltip didn't disappears!")
+            .element(page.getTooltip().getRoot()).is().visible();
         page.getTooltip().hide(page.getPanel());
     }
 
@@ -600,7 +604,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
             actualEvents,
             events,
             format("The events ({0}) don't came in right order ({1})", Arrays.deepToString(actualEvents),
-            Arrays.deepToString(events)));
+                Arrays.deepToString(events)));
     }
 
     private void recallTooltipInRightBottomCornerOfPanel(int offsetX, int offsetY) {
