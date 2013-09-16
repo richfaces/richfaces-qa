@@ -11,8 +11,6 @@
         <packages>
             <package name="org.richfaces.tests.showcase.inplaceSelect.*" />
             <package name="org.richfaces.tests.showcase.select.*" />
-            <package name="org.richfaces.tests.showcase.orderingList.*" />
-            <package name="org.richfaces.tests.showcase.pickList.*" />
         </packages>
     </test>
 </suite>
