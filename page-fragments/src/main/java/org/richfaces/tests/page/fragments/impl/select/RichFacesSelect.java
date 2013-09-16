@@ -75,7 +75,7 @@ public class RichFacesSelect implements Select {
         return selectSuggestions;
     }
 
-    private List<WebElement> getSuggestionsElements() {
+    private List<WebElement> getSuggestionsOptions() {
         return driver.findElement(GLOBAL_POPUP).findElements(By.className("rf-sel-opt"));
     }
 
@@ -102,7 +102,7 @@ public class RichFacesSelect implements Select {
 
         @Override
         public void select(ChoicePicker picker) {
-            WebElement foundValue = picker.pick(getSuggestionsElements());
+            WebElement foundValue = picker.pick(getSuggestionsOptions());
             if (foundValue == null) {
                 throw new RuntimeException("The value was not found by " + picker.toString());
             }
@@ -128,7 +128,7 @@ public class RichFacesSelect implements Select {
 
         private void selectWithKeys(WebElement foundValue) {
             // if selectFirst attribute is set, we don't have to press arrow down key for first item
-            boolean skip = getSuggestionsElements().get(0).getAttribute("class").contains("rf-sel-sel");
+            boolean skip = getSuggestionsOptions().get(0).getAttribute("class").contains("rf-sel-sel");
             int index = Utils.getIndexOfElement(foundValue);
             int steps = index + (skip ? 0 : 1);
             Actions actions = new Actions(driver);
@@ -168,7 +168,7 @@ public class RichFacesSelect implements Select {
         }
 
         public List<WebElement> getSuggestionsElements() {
-            return Collections.unmodifiableList(getSuggestionsElements());
+            return Collections.unmodifiableList(getSuggestionsOptions());
         }
 
         public boolean isPopupPresent() {
