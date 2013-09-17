@@ -63,7 +63,7 @@ public class TestAutocompleteFragment extends AbstractAutocompleteTest {
 
         autocompleteAttributes.set(AutocompleteAttributes.tokens, ";");
         autocomplete.advanced().setupToken(";");
-        Graphene.guardHttp(autocomplete.advanced().clear(ClearType.DELETE)).advanced().getInputElement().submit();
+        autocomplete.advanced().clear(ClearType.DELETE).advanced().getInputElement().submit();
         Graphene.waitAjax().until().element(autocomplete.advanced().getInput().advanced().getInputElement()).text().equalTo("");
         autocomplete
             .type("m").select(ChoicePickerHelper.byVisibleText().contains("ss"))// selects the first one containing 'ss'
