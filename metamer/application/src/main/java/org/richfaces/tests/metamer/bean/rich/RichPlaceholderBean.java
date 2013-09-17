@@ -48,7 +48,7 @@ public class RichPlaceholderBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        LOG.info("initializing bean " + getClass().getName());
+        LOG.debug("initializing bean " + getClass().getName());
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIPlaceholder.class, getClass());
 
         attributes.setAttribute("value", "Watermark text");

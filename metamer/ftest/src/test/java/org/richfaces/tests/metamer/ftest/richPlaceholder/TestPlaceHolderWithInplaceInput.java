@@ -94,7 +94,7 @@ public class TestPlaceHolderWithInplaceInput extends AbstractPlaceholderJSFTest 
 
     @Override
     protected void clickOnInput1() {
-        ii1.type(" ");
+        ii1.advanced().getEditInputElement().click();
     }
 
     @Override
