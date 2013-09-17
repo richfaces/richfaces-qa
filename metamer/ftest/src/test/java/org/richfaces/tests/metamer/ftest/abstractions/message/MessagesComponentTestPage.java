@@ -21,14 +21,14 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.abstractions.message;
 
-import org.richfaces.tests.page.fragments.impl.messages.MessageItem;
+import org.richfaces.tests.page.fragments.impl.message.Message;
 import org.richfaces.tests.page.fragments.impl.messages.Messages;
 
 /**
  * Page for testing messages components (rich:messages, rich:notifyMessages)
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class MessagesComponentTestPage<T extends MessageItem> extends MessagesComponentCommonPage {
+public abstract class MessagesComponentTestPage<T extends Message> extends MessagesComponentCommonPage {
 
     public abstract Messages<? extends T> getMessagesComponentWithFor();
 

@@ -33,7 +33,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.list.AbstractListComponent;
+import org.richfaces.tests.page.fragments.impl.list.ListItem;
 import org.richfaces.tests.page.fragments.impl.message.AbstractMessage;
+import org.richfaces.tests.page.fragments.impl.message.Message;
 import org.richfaces.tests.page.fragments.impl.message.Message.MessageType;
 import org.richfaces.tests.page.fragments.impl.messages.RichFacesMessages.MessageImpl;
 import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
@@ -64,7 +66,7 @@ public class RichFacesMessages extends AbstractListComponent<MessageImpl> implem
     }
 
     @Override
-    public List<MessageImpl> getItems(MessageType type) {
+    public List<? extends Message> getItems(MessageType type) {
         switch (type) {
             case OK:
                 return Collections.unmodifiableList(okMessages);
@@ -81,7 +83,7 @@ public class RichFacesMessages extends AbstractListComponent<MessageImpl> implem
         }
     }
 
-    public static class MessageImpl extends AbstractMessage implements MessageItem {
+    public static class MessageImpl extends AbstractMessage implements Message, ListItem {
 
         @FindBy(className = "rf-msgs-det")
         private WebElement messageDetailElement;

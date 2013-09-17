@@ -30,10 +30,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.list.AbstractListComponent;
+import org.richfaces.tests.page.fragments.impl.list.ListItem;
 import org.richfaces.tests.page.fragments.impl.message.Message.MessageType;
 import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotify.NotifyMessageItemImpl;
 import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
 import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
+import org.richfaces.tests.page.fragments.impl.utils.picker.MultipleChoicePicker;
 
 import com.google.common.base.Predicate;
 
@@ -89,7 +91,7 @@ public class RichFacesNotify extends AbstractListComponent<NotifyMessageItemImpl
     }
 
     @Override
-    public List<NotifyMessageItemImpl> getItems(MessageType type) {
+    public List<? extends NotifyMessage> getItems(MessageType type) {
         switch (type) {
             case OK:
                 throw new UnsupportedOperationException("Notify messages does not support messages of type 'OK'.");
@@ -162,7 +164,7 @@ public class RichFacesNotify extends AbstractListComponent<NotifyMessageItemImpl
         }
     }
 
-    public static class NotifyMessageItemImpl extends RichFacesNotifyMessage implements NotifyMessageItem {
+    public static class NotifyMessageItemImpl extends RichFacesNotifyMessage implements NotifyMessage, ListItem {
 
         @Override
         public GrapheneElement getRootElement() {

@@ -24,6 +24,8 @@ package org.richfaces.tests.page.fragments.impl.messages;
 import java.util.List;
 
 import org.richfaces.tests.page.fragments.impl.list.ListComponent;
+import org.richfaces.tests.page.fragments.impl.list.ListItem;
+import org.richfaces.tests.page.fragments.impl.message.Message;
 import org.richfaces.tests.page.fragments.impl.message.Message.MessageType;
 import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
 
@@ -31,11 +33,11 @@ import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface Messages<T extends MessageItem> extends ListComponent<T> {
+public interface Messages<T extends Message & ListItem> extends ListComponent<T> {
 
     AdvancedMessagesInteractions advanced();
 
-    List<T> getItems(MessageType type);
+    List<? extends Message> getItems(MessageType type);
 
     public interface AdvancedMessagesInteractions {
 

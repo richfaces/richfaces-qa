@@ -23,14 +23,14 @@ package org.richfaces.tests.metamer.ftest.richMessages;
 
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.abstractions.message.MessagesComponentTestPage;
-import org.richfaces.tests.page.fragments.impl.messages.MessageItem;
+import org.richfaces.tests.page.fragments.impl.message.Message;
 import org.richfaces.tests.page.fragments.impl.messages.Messages;
 import org.richfaces.tests.page.fragments.impl.messages.RichFacesMessages;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class MessagesPage extends MessagesComponentTestPage<MessageItem> {
+public class MessagesPage extends MessagesComponentTestPage<Message> {
 
     @FindBy(xpath = "//fieldset/span[contains(@id, 'messagesWithFor')]")
     private RichFacesMessages messagesComponentWithFor;
@@ -38,12 +38,12 @@ public class MessagesPage extends MessagesComponentTestPage<MessageItem> {
     private RichFacesMessages messagesComponentWithGlobal;
 
     @Override
-    public Messages<? extends MessageItem> getMessagesComponentWithFor() {
+    public Messages<? extends Message> getMessagesComponentWithFor() {
         return messagesComponentWithFor;
     }
 
     @Override
-    public Messages<? extends MessageItem> getMessagesComponentWithGlobal() {
+    public Messages<? extends Message> getMessagesComponentWithGlobal() {
         return messagesComponentWithGlobal;
     }
 }
