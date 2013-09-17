@@ -319,6 +319,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     @Test
     public void testOnmousedown() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onmousedown, new Actions(driver).clickAndHold(fileUpload.advanced().getFileInputElement()).build());
+        new Actions(driver).release().build().perform();
     }
 
     @Test
