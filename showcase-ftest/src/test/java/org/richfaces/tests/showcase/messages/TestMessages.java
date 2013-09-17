@@ -26,7 +26,6 @@ import java.util.List;
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.page.fragments.impl.message.Message;
 import org.richfaces.tests.page.fragments.impl.message.Message.MessageType;
-import org.richfaces.tests.page.fragments.impl.messages.MessageItem;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.messages.page.MessagesPage;
 import org.testng.Assert;
@@ -90,7 +89,7 @@ public class TestMessages extends AbstractWebDriverTest {
     }
 
     public void assertErrorIsPresent(String fieldName, String expected) {
-        List<? extends MessageItem> messages = page.getMessages().getItems(MessageType.ERROR);
+        List<? extends Message> messages = page.getMessages().getItems(MessageType.ERROR);
         for (Message message : messages) {
             if (message.getSummary().contains(expected)) {
                 return;

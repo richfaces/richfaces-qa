@@ -22,7 +22,7 @@
 package org.richfaces.tests.showcase.messages.page;
 
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.messages.MessageItem;
+import org.richfaces.tests.page.fragments.impl.message.Message;
 import org.richfaces.tests.page.fragments.impl.messages.Messages;
 import org.richfaces.tests.page.fragments.impl.messages.RichFacesMessages;
 import org.richfaces.tests.showcase.message.page.AbstractMessagePage;
@@ -35,7 +35,7 @@ public class MessagesPage extends AbstractMessagePage {
     @FindBy(className = "rf-msgs")
     private RichFacesMessages messages;
 
-    public Messages<? extends MessageItem> getMessages() {
+    public Messages<? extends Message> getMessages() {
         return messages;
     }
 }

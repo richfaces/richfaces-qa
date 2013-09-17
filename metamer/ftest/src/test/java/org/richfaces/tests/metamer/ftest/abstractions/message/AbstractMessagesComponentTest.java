@@ -36,7 +36,6 @@ import org.richfaces.tests.metamer.validation.MultipleValidationRulesBean;
 import org.richfaces.tests.page.fragments.impl.common.ClearType;
 import org.richfaces.tests.page.fragments.impl.message.Message;
 import org.richfaces.tests.page.fragments.impl.message.Message.MessageType;
-import org.richfaces.tests.page.fragments.impl.messages.MessageItem;
 import org.richfaces.tests.page.fragments.impl.messages.Messages;
 import org.testng.Assert;
 
@@ -154,8 +153,8 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
         Assert.assertTrue(getPage().getMessagesComponentWithGlobal().advanced().isVisible());
         Assert.assertEquals(getPage().getMessagesComponentWithFor().size(), expectedNumberOfMessages, "Number of messages for message component with @for attribute.");
         Assert.assertEquals(getPage().getMessagesComponentWithGlobal().size(), expectedNumberOfMessages * 2, "Number of messages for message component with @globalOnly attribute.");
-        Messages<? extends MessageItem> messagesComponentWithFor = getPage().getMessagesComponentWithFor();
-        for (MessageItem message : messagesComponentWithFor.getItems()) {
+        Messages<? extends Message> messagesComponentWithFor = getPage().getMessagesComponentWithFor();
+        for (Message message : messagesComponentWithFor.getItems()) {
             boolean wasFound = Boolean.FALSE;
             for (String s : validationMessages) {
                 if (message.getSummary().contains(s)) {

@@ -23,7 +23,7 @@ package org.richfaces.tests.showcase.notify.page;
 
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.notify.Notify;
-import org.richfaces.tests.page.fragments.impl.notify.NotifyMessageItem;
+import org.richfaces.tests.page.fragments.impl.notify.NotifyMessage;
 import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotify;
 import org.richfaces.tests.showcase.message.page.AbstractMessagePage;
 
@@ -35,7 +35,7 @@ public class MessagesPage extends AbstractMessagePage {
     @FindBy(tagName = "body")
     private RichFacesNotify notify;
 
-    public Notify<? extends NotifyMessageItem> getNotify() {
+    public Notify<? extends NotifyMessage> getNotify() {
         return notify;
     }
 

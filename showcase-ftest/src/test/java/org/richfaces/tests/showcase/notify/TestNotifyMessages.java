@@ -91,7 +91,7 @@ public class TestNotifyMessages extends AbstractWebDriverTest {
     }
 
     protected void assertErrorIsPresent(String fieldName, String expected) {
-        List<? extends NotifyMessage> messages = page.getNotify().getItems(Message.MessageType.ERROR);
+        List<? extends Message> messages = page.getNotify().getItems(Message.MessageType.ERROR);
         for (Message message : messages) {
             if (message.getSummary().contains(expected)) {
                 return;

@@ -26,7 +26,7 @@ import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.abstractions.message.AbstractMessagesComponentTest;
 import org.richfaces.tests.metamer.ftest.abstractions.message.MessagesComponentTestPage;
 import org.richfaces.tests.metamer.ftest.webdriver.AttributeList;
-import org.richfaces.tests.page.fragments.impl.messages.MessageItem;
+import org.richfaces.tests.page.fragments.impl.message.Message;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.Assert;
 
@@ -42,7 +42,7 @@ public abstract class AbstractMessagesTest extends AbstractMessagesComponentTest
     protected MessagesPage page;
 
     @Override
-    protected MessagesComponentTestPage<? extends MessageItem> getPage() {
+    protected MessagesComponentTestPage<? extends Message> getPage() {
         return page;
     }
 

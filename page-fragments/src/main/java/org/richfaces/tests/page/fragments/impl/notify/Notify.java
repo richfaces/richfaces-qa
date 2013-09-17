@@ -21,11 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.notify;
 
+import org.richfaces.tests.page.fragments.impl.list.ListItem;
 import org.richfaces.tests.page.fragments.impl.messages.Messages;
 
 /**
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface Notify<T extends NotifyMessageItem> extends Messages<T> {
+public interface Notify<T extends NotifyMessage & ListItem> extends Messages<T> {
 }

@@ -24,14 +24,13 @@ package org.richfaces.tests.metamer.ftest.richNotifyMessages;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.abstractions.message.MessagesComponentTestPage;
 import org.richfaces.tests.page.fragments.impl.notify.Notify;
-import org.richfaces.tests.page.fragments.impl.notify.NotifyMessageItem;
+import org.richfaces.tests.page.fragments.impl.notify.NotifyMessage;
 import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotify;
-import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotify.NotifyMessageItemImpl;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class NotifyMessagesPage extends MessagesComponentTestPage<NotifyMessageItem> {
+public class NotifyMessagesPage extends MessagesComponentTestPage<NotifyMessage> {
 
     @FindBy(tagName = "body")
     private RichFacesNotify messagesComponentWithFor;
@@ -39,13 +38,13 @@ public class NotifyMessagesPage extends MessagesComponentTestPage<NotifyMessageI
     private RichFacesNotify messagesComponentWithGlobal;
 
     @Override
-    public Notify<? extends NotifyMessageItem> getMessagesComponentWithFor() {
+    public Notify<? extends NotifyMessage> getMessagesComponentWithFor() {
         messagesComponentWithFor.advanced().setStyleClassToContain("forSelectableInput");
         return messagesComponentWithFor;
     }
 
     @Override
-    public Notify<? extends NotifyMessageItem> getMessagesComponentWithGlobal() {
+    public Notify<? extends NotifyMessage> getMessagesComponentWithGlobal() {
         messagesComponentWithGlobal.advanced().setStyleClassToContain("forGlobalOnly");
         return messagesComponentWithGlobal;
     }
