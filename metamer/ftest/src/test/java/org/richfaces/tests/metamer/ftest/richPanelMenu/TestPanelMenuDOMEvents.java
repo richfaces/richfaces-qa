@@ -34,14 +34,8 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttribute
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuAttributes;
 import static org.richfaces.tests.page.fragments.impl.utils.Event.CLICK;
 import static org.richfaces.tests.page.fragments.impl.utils.Event.DBLCLICK;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEDOWN;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEMOVE;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOUT;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOVER;
 import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEUP;
 import static org.testng.Assert.assertTrue;
-
-import com.google.common.base.Predicate;
 
 import java.net.URL;
 
@@ -52,12 +46,15 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.annotations.Uses;
 import org.richfaces.tests.page.fragments.impl.panelMenuGroup.RichFacesPanelMenuGroup;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.google.common.base.Predicate;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -69,9 +66,9 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     Mode mode;
 
     @Inject
-    @Use("events")
+    @Use(useNull = true)
     Event event = DBLCLICK;
-    Event[] events = new Event[] { CLICK, DBLCLICK, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER, MOUSEUP };
+    Event[] events = new Event[] { CLICK, MOUSEUP };
 
     @Override
     public URL getTestUrl() {
@@ -87,7 +84,7 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     }
 
     @Test
-    @Use(field = "mode", enumeration = true)
+    @Uses({ @Use(field = "mode", enumeration = true), @Use(field = "event", value = "events") })
     public void testExpandEvent() {
         panelMenuAttributes.set(expandEvent, event.getEventName());
         assertTrue(page.group2.isCollapsed());
@@ -97,7 +94,7 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     }
 
     @Test
-    @Use(field = "mode", enumeration = true)
+    @Uses({ @Use(field = "mode", enumeration = true), @Use(field = "event", value = "events") })
     public void testCollapseEvent() {
         panelMenuAttributes.set(collapseEvent, event.getEventName());
 
@@ -109,54 +106,67 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     }
 
     @Test
+    @Templates("plain")
     @Use(field = "mode", enumeration = false)
-    public void testOnClick() {
+    public void testOnclick() {
         Action click = new Actions(driver).click(page.panelMenu.getRoot()).build();
         testFireEvent(panelMenuAttributes, onclick, click);
     }
 
     @Test
+    @Templates("plain")
     @Use(field = "mode", enumeration = false)
-    public void testOnDblclick() {
+    public void testOndblclick() {
         Action dblClick = new Actions(driver).doubleClick(page.panelMenu.getRoot()).build();
         testFireEvent(panelMenuAttributes, ondblclick, dblClick);
     }
 
     @Test
     @Use(field = "mode", enumeration = false)
-    public void testOnMousedown() {
+    public void testOnmousedown() {
         Action mousedown = new Actions(driver).clickAndHold(page.panelMenu.getRoot()).build();
         testFireEvent(panelMenuAttributes, onmousedown, mousedown);
+        new Actions(driver).release().perform();
     }
 
     @Test
+    @Templates("plain")
     @Use(field = "mode", enumeration = false)
-    public void testOnMousemove() {
+    public void testOnmousemove() {
         Action mousemove = new Actions(driver).moveToElement(page.panelMenu.getRoot(), 3, 3).build();
         testFireEvent(panelMenuAttributes, onmousemove, mousemove);
     }
 
     @Test
+    @Templates("plain")
     @Use(field = "mode", enumeration = false)
-    public void testOnMouseout() {
+    public void testOnmouseout() {
         // TODO 2013-02-07 JJa: implement using WebDriver API (doesn't work for now)
         // Action mouseout = new Actions(driver).moveToElement(page.panelMenu.getRoot()).moveByOffset(-5, -5).build();
         // testFireEvent(panelMenuAttributes, onmouseout, mouseout);
-        testFireEventWithJS(page.panelMenu.getRoot(), Event.MOUSEOUT, panelMenuAttributes, PanelMenuAttributes.onmouseout);
+        testFireEventWithJS(page.panelMenu.getRoot(), Event.MOUSEOUT, panelMenuAttributes,
+            PanelMenuAttributes.onmouseout);
     }
 
     @Test
+    @Templates("plain")
     @Use(field = "mode", enumeration = false)
-    public void testOnMouseover() {
+    public void testOnmouseover() {
         Action mouseover = new Actions(driver).moveToElement(page.panelMenu.getRoot(), 3, 3).build();
         testFireEvent(panelMenuAttributes, onmouseover, mouseover);
     }
 
     @Test
     @Use(field = "mode", enumeration = false)
-    public void testOnMouseup() {
-        Action mouseup = new Actions(driver).clickAndHold(page.panelMenu.getRoot()).release().build();
-        testFireEvent(panelMenuAttributes, onmouseup, mouseup);
+    public void testOnmouseup() {
+        testFireEvent(panelMenuAttributes, onmouseup, new Action() {
+            @Override
+            public void perform() {
+                new Actions(driver).clickAndHold(page.panelMenu.getRoot()).perform();
+                expectedReturnJS("return metamerEvents", "");
+                new Actions(driver).release(page.panelMenu.getRoot()).perform();
+            }
+        });
     }
 
     private class GroupIsExpanded implements Predicate<WebDriver> {
