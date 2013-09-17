@@ -46,10 +46,12 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.HasInputDevices;
 import org.openqa.selenium.interactions.Mouse;
+import org.openqa.selenium.interactions.internal.Coordinates;
 import org.openqa.selenium.internal.Locatable;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch.PerformableAction;
@@ -160,6 +162,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testDir() {
         updateShowAction();
         String expected = "rtl";
@@ -218,6 +221,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testLang() {
         updateShowAction();
         String langVal = "cs";
@@ -281,6 +285,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testStyle() {
         updateShowAction();
         String color = "yellow";
@@ -294,6 +299,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testStyleClass() {
         updateShowAction();
         String styleClassVal = "test-style-class";
@@ -316,6 +322,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testTitle() {
         updateShowAction();
         String titleVal = "test title";
@@ -324,6 +331,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testRendered() {
         updateShowAction();
         contextMenuAttributes.set(ContextMenuAttributes.rendered, Boolean.FALSE);
@@ -352,6 +360,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testOnclick() {
         updateShowAction();
         testFireEvent(contextMenuAttributes, ContextMenuAttributes.onclick, new Action() {
@@ -364,6 +373,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testOndblclick() {
         updateShowAction();
         testFireEvent(contextMenuAttributes, ContextMenuAttributes.ondblclick, new Action() {
@@ -410,6 +420,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testOnkeypress() {
         updateShowAction();
         testFireEvent(contextMenuAttributes, ContextMenuAttributes.onkeypress, new Action() {
@@ -432,6 +443,8 @@ public class TestContextMenu extends AbstractWebDriverTest {
                 mouse.mouseDown(((Locatable) page.getContextMenu().advanced().getItemsElements().get(1)).getCoordinates());
             }
         });
+        // release mouse button - necessary since Selenium 2.35
+        new Actions(driver).release().perform();
     }
 
     @Test
@@ -442,12 +455,15 @@ public class TestContextMenu extends AbstractWebDriverTest {
             public void perform() {
                 page.getContextMenu().advanced().invoke(page.getTargetPanel1());
                 Mouse mouse = ((HasInputDevices) driver).getMouse();
-                mouse.mouseUp(((Locatable) page.getContextMenu().advanced().getItemsElements().get(1)).getCoordinates());
+                Coordinates coords = ((Locatable) page.getContextMenu().advanced().getItemsElements().get(1)).getCoordinates();
+                mouse.mouseDown(coords);
+                mouse.mouseUp(coords);
             }
         });
     }
 
     @Test
+    @Templates("plain")
     public void testOnmousemove() {
         updateShowAction();
         testFireEvent(contextMenuAttributes, ContextMenuAttributes.onmousemove, new Action() {
