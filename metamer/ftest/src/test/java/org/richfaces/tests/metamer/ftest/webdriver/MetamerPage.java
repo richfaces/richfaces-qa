@@ -281,7 +281,7 @@ public class MetamerPage {
 
         protected String time1;
 
-        private static final By REQUEST_TIME = By.cssSelector("span[id='requestTime']");
+        private static final By REQUEST_TIME = By.cssSelector("span[id$='requestTime']");
 
         protected void afterAction(GrapheneContext context) {
             Graphene.waitModel(context.getWebDriver()).until().element(REQUEST_TIME).text().not().equalTo(time1);
