@@ -28,6 +28,7 @@ import java.net.URL;
 
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
 /**
@@ -56,21 +57,25 @@ public class TestDropDownMenuSideMenu extends AbstractDropDownMenuTest {
     }
 
     @Test
+    @Templates("plain")
     public void testStyle() {
         super.testStyle();
     }
 
     @Test
+    @Templates("plain")
     public void testStyleClass() {
         super.testStyleClass();
     }
 
     @Test
+    @Templates("plain")
     public void testDir() {
         super.testDir();
     }
 
     @Test
+    @Templates("plain")
     public void testLang() {
         super.testLang();
     }
@@ -97,6 +102,7 @@ public class TestDropDownMenuSideMenu extends AbstractDropDownMenuTest {
     }
 
     @Test
+    @Templates("plain")
     public void testRendered() {
         super.testRendered();
     }
@@ -108,16 +114,19 @@ public class TestDropDownMenuSideMenu extends AbstractDropDownMenuTest {
     }
 
     @Test
+    @Templates("plain")
     public void testTitle() {
         super.testTitle();
     }
 
     @Test
+    @Templates("plain")
     public void testOnclick() {
         super.testOnclick();
     }
 
     @Test
+    @Templates("plain")
     public void testOndblclick() {
         super.testOndblclick();
     }
@@ -149,11 +158,13 @@ public class TestDropDownMenuSideMenu extends AbstractDropDownMenuTest {
     }
 
     @Test
+    @Templates("plain")
     public void testOnkeypress() {
         super.testOnkeypress();
     }
 
     @Test
+    @Templates("plain")
     public void testOnkeyup() {
         super.testOnkeyup();
     }
@@ -164,6 +175,7 @@ public class TestDropDownMenuSideMenu extends AbstractDropDownMenuTest {
     }
 
     @Test
+    @Templates("plain")
     public void testOnmousemove() {
         super.testOnmousemove();
     }
@@ -175,6 +187,7 @@ public class TestDropDownMenuSideMenu extends AbstractDropDownMenuTest {
     }
 
     @Test
+    @Templates("plain")
     public void testOnmouseover() {
         super.testOnmouseover();
     }
