@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.calendarAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotEquals;
@@ -61,21 +60,22 @@ import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.Locations;
-import org.richfaces.tests.page.fragments.impl.calendar.common.HeaderControls;
-import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay;
-import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay.DayType;
-import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDays;
-import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarWeek;
-import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.DayPicker;
-import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.TimeEditor;
-import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.TimeEditor.SetValueBy;
-import org.richfaces.tests.page.fragments.impl.calendar.popup.CalendarPopupComponent.OpenedBy;
-import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.PopupFooterControls;
-import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.PopupHeaderControls;
+import org.richfaces.tests.page.fragments.impl.calendar.DayPicker;
+import org.richfaces.tests.page.fragments.impl.calendar.DayPicker.CalendarDay;
+import org.richfaces.tests.page.fragments.impl.calendar.DayPicker.CalendarDay.DayType;
+import org.richfaces.tests.page.fragments.impl.calendar.DayPicker.CalendarWeek;
+import org.richfaces.tests.page.fragments.impl.calendar.HeaderControls;
+import org.richfaces.tests.page.fragments.impl.calendar.PopupCalendar.PopupFooterControls;
+import org.richfaces.tests.page.fragments.impl.calendar.PopupCalendar.PopupHeaderControls;
+import org.richfaces.tests.page.fragments.impl.calendar.RichFacesAdvancedPopupCalendar.OpenedBy;
+import org.richfaces.tests.page.fragments.impl.calendar.TimeEditor;
+import org.richfaces.tests.page.fragments.impl.calendar.TimeEditor.SetValueBy;
 import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import com.google.common.collect.Lists;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -177,39 +177,50 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @Use(field = "boundaryDatesMode", enumeration = true)
     public void testBoundaryDatesMode() {
         calendarAttributes.set(CalendarAttributes.boundaryDatesMode, boundaryDatesMode.value);
-        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
-        MetamerPage.waitRequest(calendar, WaitRequestType.XHR).setDateTime(firstOfNovember2012);
-        PopupFooterControls proxiedFooterControls = calendar.openPopup().getProxiedFooterControls();
-        HeaderControls proxiedHeaderControls = calendar.openPopup().getProxiedHeaderControls();
+        DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
+        MetamerPage.waitRequest(popupCalendar, WaitRequestType.XHR).setDateTime(firstOfNovember2012);
+        PopupFooterControls footerControls = popupCalendar.openPopup().getFooterControls();
+        HeaderControls headerControls = popupCalendar.openPopup().getHeaderControls();
         DateTime yearAndMonth;
         String firstOfNovember2012String = firstOfNovember2012.toString(dateTimeFormatter);
         switch (boundaryDatesMode) {
             case INACTIVE:
             case NULL:
-                MetamerPage.waitRequest(proxiedDayPicker.getBoundaryDays().get(0), WaitRequestType.NONE).select();
+                try {
+                MetamerPage.waitRequest(dayPicker.getBoundaryDays().get(0), WaitRequestType.NONE).select();
+                fail("Item should not be selected.");
+                } catch (TimeoutException ex) {// ok
+                }
                 // apply and check, that the date has not changed
-                MetamerPage.waitRequest(proxiedFooterControls, WaitRequestType.NONE).applyDate();
-                assertEquals(calendar.getInputValue(), firstOfNovember2012String);
+                footerControls = popupCalendar.openPopup().getFooterControls();
+                MetamerPage.waitRequest(footerControls, WaitRequestType.NONE).applyDate();
+                assertEquals(popupCalendar.getInput().getStringValue(), firstOfNovember2012String);
                 break;
             case SCROLL:
                 // scroll to 28th of October 2012
-                MetamerPage.waitRequest(proxiedDayPicker.getBoundaryDays().get(0), WaitRequestType.NONE).select();
-                yearAndMonth = proxiedHeaderControls.getYearAndMonth();
+                try {
+                MetamerPage.waitRequest(dayPicker.getBoundaryDays().get(0), WaitRequestType.NONE).select();
+                fail("Item should not be selected.");
+                } catch (TimeoutException ex) {// ok
+                }
+                yearAndMonth = headerControls.getYearAndMonth();
                 assertEquals(yearAndMonth.getYear(), 2012);
                 assertEquals(yearAndMonth.getMonthOfYear(), 10);
                 // apply and check, that the date has not changed
-                MetamerPage.waitRequest(proxiedFooterControls, WaitRequestType.NONE).applyDate();
-                assertEquals(calendar.getInputValue(), firstOfNovember2012String);
+                footerControls = popupCalendar.openPopup().getFooterControls();
+                MetamerPage.waitRequest(footerControls, WaitRequestType.NONE).applyDate();
+                assertEquals(popupCalendar.getInput().getStringValue(), firstOfNovember2012String);
                 break;
             case SELECT:
                 // select 28th of October 2012
-                MetamerPage.waitRequest(proxiedDayPicker.getBoundaryDays().get(0), WaitRequestType.NONE).select();
-                yearAndMonth = proxiedHeaderControls.getYearAndMonth();
+                CalendarDay day = dayPicker.getBoundaryDays().get(0);
+                MetamerPage.waitRequest(day.getDayElement(), WaitRequestType.NONE).click();
+                yearAndMonth = headerControls.getYearAndMonth();
                 assertEquals(yearAndMonth.getYear(), 2012);
                 assertEquals(yearAndMonth.getMonthOfYear(), 10);
 
-                MetamerPage.waitRequest(proxiedFooterControls, WaitRequestType.XHR).applyDate();
-                DateTime parsedDateTime = dateTimeFormatter.parseDateTime(calendar.getInputValue());
+                MetamerPage.waitRequest(footerControls, WaitRequestType.XHR).applyDate();
+                DateTime parsedDateTime = dateTimeFormatter.parseDateTime(popupCalendar.getInput().getStringValue());
                 assertEquals(parsedDateTime.getYear(), 2012);
                 assertEquals(parsedDateTime.getMonthOfYear(), 10);
                 assertEquals(parsedDateTime.getDayOfMonth(), 28);
@@ -220,29 +231,29 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @Test
     @Templates(value = "plain")
     public void testButtonClass() {
-        testStyleClass(calendar.getPopupButton(), BasicAttributes.buttonClass);
+        testStyleClass(popupCalendar.getPopupButtonElement(), BasicAttributes.buttonClass);
     }
 
     @Test
     public void testButtonClassLabel() {
         calendarAttributes.set(CalendarAttributes.buttonLabel, "label");
-        testStyleClass(calendar.getPopupButton(), BasicAttributes.buttonClass);
+        testStyleClass(popupCalendar.getPopupButtonElement(), BasicAttributes.buttonClass);
     }
 
     @Test
     public void testButtonClassIcon() {
         calendarAttributes.set(CalendarAttributes.buttonIcon, "heart");
-        testStyleClass(calendar.getPopupButton(), BasicAttributes.buttonClass);
+        testStyleClass(popupCalendar.getPopupButtonElement(), BasicAttributes.buttonClass);
     }
 
     @Test
     public void testButtonIcon() {
         calendarAttributes.set(CalendarAttributes.buttonIcon, "star");
-        String src = calendar.getPopupButton().getAttribute("src");
+        String src = popupCalendar.getPopupButtonElement().getAttribute("src");
         assertTrue(src.contains("star.png"), "Calendar's icon was not updated.");
 
         calendarAttributes.set(CalendarAttributes.buttonIcon, "null");
-        src = calendar.getPopupButton().getAttribute("src");
+        src = popupCalendar.getPopupButtonElement().getAttribute("src");
         assertTrue(src.contains("calendarIcon.png"), "Calendar's icon was not updated.");
     }
 
@@ -252,12 +263,12 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         calendarAttributes.set(CalendarAttributes.buttonDisabledIcon, "heart");
         calendarAttributes.set(CalendarAttributes.disabled, Boolean.TRUE);
 
-        String src = calendar.getPopupButton().getAttribute("src");
+        String src = popupCalendar.getPopupButtonElement().getAttribute("src");
         assertTrue(src.endsWith("heart.png"), "Calendar's icon was not updated.");
 
         calendarAttributes.set(CalendarAttributes.buttonDisabledIcon, "null");
 
-        src = calendar.getPopupButton().getAttribute("src");
+        src = popupCalendar.getPopupButtonElement().getAttribute("src");
         assertTrue(src.contains("disabledCalendarIcon.png"), "Calendar's icon was not updated.");
     }
 
@@ -265,12 +276,12 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     public void testButtonLabel() {
         calendarAttributes.set(CalendarAttributes.buttonLabel, "label");
 
-        assertTrue(new WebElementConditionFactory(calendar.getPopupButton()).isVisible().apply(driver), "Button should be displayed.");
-        assertEquals(calendar.getPopupButton().getText(), "label", "Label of the button.");
-        assertNotEquals(calendar.getPopupButton().getTagName(), "img", "Image should not be displayed.");
+        assertTrue(new WebElementConditionFactory(popupCalendar.getPopupButtonElement()).isVisible().apply(driver), "Button should be displayed.");
+        assertEquals(popupCalendar.getPopupButtonElement().getText(), "label", "Label of the button.");
+        assertNotEquals(popupCalendar.getPopupButtonElement().getTagName(), "img", "Image should not be displayed.");
 
         calendarAttributes.set(CalendarAttributes.buttonIcon, "star");
-        assertNotEquals(calendar.getPopupButton().getTagName(), "img", "Image should not be displayed.");
+        assertNotEquals(popupCalendar.getPopupButtonElement().getTagName(), "img", "Image should not be displayed.");
     }
 
     @Test
@@ -280,7 +291,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         calendarAttributes.set(CalendarAttributes.enableManualInput, Boolean.TRUE);
         calendarAttributes.set(CalendarAttributes.converterMessage, errorMsg);
 
-        calendar.getInput().sendKeys("RF 4");
+        popupCalendar.getInput().sendKeys("RF 4");
         submitWithA4jSubmitBtn();
         message.advanced().waitUntilMessageIsVisible().perform();
 
@@ -293,17 +304,16 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         calendarAttributes.set(CalendarAttributes.datePattern, pattern);
 
         setCurrentDateWithCalendarsTodayButtonAction.perform();
-        String calendarInputText = calendar.getInputValue();
+        String calendarInputText = popupCalendar.getInput().getStringValue();
         dateTimeFormatter = DateTimeFormat.forPattern(pattern);
-        DateTime dt = null;
         try {
-            dt = dateTimeFormatter.parseDateTime(calendarInputText);
+            DateTime dt = dateTimeFormatter.parseDateTime(calendarInputText);
+            assertEquals(dt.getDayOfMonth(), todayMidday.getDayOfMonth());
+            assertEquals(dt.getMonthOfYear(), todayMidday.getMonthOfYear());
+            assertEquals(dt.getYear(), todayMidday.getYear());
         } catch (IllegalArgumentException ex) {
             fail(ex.getMessage());
         }
-        assertEquals(dt.getDayOfMonth(), todayMidday.getDayOfMonth());
-        assertEquals(dt.getMonthOfYear(), todayMidday.getMonthOfYear());
-        assertEquals(dt.getYear(), todayMidday.getYear());
     }
 
     @Test
@@ -311,20 +321,16 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         int tuesdayDay = 3;
         calendarAttributes.set(CalendarAttributes.dayClassFunction, "yellowTuesdays");
         // switch to next month to refresh classes
-        calendar.openPopup().getHeaderControls().nextMonth();
-        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
-        CalendarDays tuesdays = proxiedDayPicker.getSpecificDays(tuesdayDay);
-        tuesdays.removeSpecificDays(DayType.boundaryDay);
-
+        popupCalendar.openPopup().getHeaderControls().nextMonth();
+        DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
+        List<CalendarDay> tuesdays = filterOutBoundaryDays(Lists.newArrayList(dayPicker.getSpecificDays(tuesdayDay)));
         for (CalendarDay tuesday : tuesdays) {
             assertTrue(tuesday.containsStyleClass("yellowDay"), "All tuesdays should be yellow.");
         }
 
         calendarAttributes.set(CalendarAttributes.dayClassFunction, "null");
-
-        tuesdays = proxiedDayPicker.getSpecificDays(tuesdayDay);
-        tuesdays.removeSpecificDays(DayType.boundaryDay);
-
+        dayPicker = popupCalendar.openPopup().getDayPicker();
+        tuesdays = filterOutBoundaryDays(Lists.newArrayList(dayPicker.getSpecificDays(tuesdayDay)));
         for (CalendarDay tuesday : tuesdays) {
             assertFalse(tuesday.containsStyleClass("yellowDay"), "All tuesdays should not be yellow.");
         }
@@ -335,21 +341,19 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         calendarAttributes.set(CalendarAttributes.dayDisableFunction, "disableTuesdays");
         int tuesdayDay = 3;
         // switch to next month to refresh classes
-        calendar.openPopup().getHeaderControls().nextMonth();
-        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
-        CalendarDays tuesdays = proxiedDayPicker.getSpecificDays(tuesdayDay);
-        tuesdays.removeSpecificDays(DayType.boundaryDay);
+        popupCalendar.openPopup().getHeaderControls().nextMonth();
+        DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
+
+        List<CalendarDay> tuesdays = filterOutBoundaryDays(Lists.newArrayList(dayPicker.getSpecificDays(tuesdayDay)));
         for (CalendarDay tuesday : tuesdays) {
-            assertFalse(tuesday.is(DayType.clickable), "All tuesdays should not be enabled.");
+            assertFalse(tuesday.is(DayType.selectableDay), "All tuesdays should not be enabled.");
         }
 
         calendarAttributes.set(CalendarAttributes.dayDisableFunction, "null");
-
-        tuesdays = proxiedDayPicker.getSpecificDays(tuesdayDay);
-        tuesdays.removeSpecificDays(DayType.boundaryDay);
-
+        dayPicker = popupCalendar.openPopup().getDayPicker();
+        tuesdays = filterOutBoundaryDays(Lists.newArrayList(dayPicker.getSpecificDays(tuesdayDay)));
         for (CalendarDay tuesday : tuesdays) {
-            assertTrue(tuesday.is(DayType.clickable), "All tuesdays should be enabled.");
+            assertTrue(tuesday.is(DayType.selectableDay), "All tuesdays should be enabled.");
         }
     }
 
@@ -361,9 +365,8 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         calendarAttributes.set(CalendarAttributes.jointPoint, Direction.BOTTOMLEFT.value);
         // scrolls page down
         Point locationInput, locationPopup = null;
-        locationInput = calendar.getLocations().getBottomLeft();
-        Locations popupLocations = calendar.openPopup().getLocations();
-
+        locationInput = popupCalendar.getLocations().getBottomLeft();
+        Locations popupLocations = popupCalendar.openPopup().getLocations();
         switch (direction) {
             case TOPLEFT:
                 locationPopup = popupLocations.getBottomRight();
@@ -388,7 +391,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     public void testDefaultLabel() {
         String defaultLabel = "RichFaces 4";
         calendarAttributes.set(CalendarAttributes.defaultLabel, defaultLabel);
-        assertEquals(calendar.getInputValue(), defaultLabel);
+        assertEquals(popupCalendar.getInput().getStringValue(), defaultLabel);
     }
 
     @Test
@@ -397,11 +400,11 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         final String t = "06:06";
         calendarAttributes.set(CalendarAttributes.defaultTime, t);
         setCurrentDateWithCalendarsTodayButtonAction.perform();
-        String text = calendar.openPopup().getFooterControls().getTimeEditorOpenerElement().getText();
+        String text = popupCalendar.openPopup().getFooterControls().getTimeEditorOpenerElement().getText();
         assertTrue(text.equals(t), "Default time");
 
         // another check in time editor
-        TimeEditor timeEditor = calendar.openPopup().getFooterControls().openTimeEditor();
+        TimeEditor timeEditor = popupCalendar.openPopup().getFooterControls().openTimeEditor();
         DateTime setTime = timeEditor.getTime();
         DateTime reference = todayMidday.withHourOfDay(6).withMinuteOfHour(6);
         assertEquals(setTime.getHourOfDay(), reference.getHourOfDay());
@@ -411,47 +414,49 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @Test
     public void testDisabled() {
         calendarAttributes.set(CalendarAttributes.disabled, Boolean.TRUE);
-        assertEquals(calendar.getInput().getAttribute("disabled"), "true");
+        assertEquals(popupCalendar.getInput().advanced().getInputElement().getAttribute("disabled"), "true");
 
         // Popup should not be displayed
         int catched = 0;
         try {
-            Graphene.guardNoRequest(calendar).openPopup(OpenedBy.INPUT_CLICKING);
+            Graphene.guardNoRequest(popupCalendar).openPopup(OpenedBy.INPUT_CLICKING);
         } catch (TimeoutException ex) {
             catched++;
         }
         try {
-            Graphene.guardNoRequest(calendar).openPopup(OpenedBy.OPEN_BUTTON_CLICKING);
+            Graphene.guardNoRequest(popupCalendar).openPopup(OpenedBy.OPEN_BUTTON_CLICKING);
         } catch (TimeoutException ex) {
             catched++;
         }
-        assertTrue(catched == 2);
+        assertEquals(catched, 2);
     }
 
     @Test
     public void testEnableManualInput() {
-        assertEquals(calendar.getInput().getAttribute("readonly"), "true");
+        assertEquals(popupCalendar.getInput().advanced().getInputElement().getAttribute("readonly"), "true");
 
         calendarAttributes.set(CalendarAttributes.enableManualInput, Boolean.TRUE);
-        assertTrue(new WebElementConditionFactory(calendar.getInput()).attribute("readonly").not().isPresent().apply(driver),
+        assertTrue(new WebElementConditionFactory(popupCalendar.getInput().advanced().getInputElement()).attribute("readonly").not().isPresent().apply(driver),
             "Readonly attribute of input should not be defined.");
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-9646")
     public void testFirstWeekDay() {
-        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
+        DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
         List<String> weekDays = Arrays.asList("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
 
-        assertEquals(proxiedDayPicker.getWeekDayShortNames(), weekDays);
+        assertEquals(dayPicker.getWeekDayShortNames(), weekDays);
 
         // wrong input, nothing changes, RF-9646
         calendarAttributes.set(CalendarAttributes.firstWeekDay, 7);
-        assertEquals(proxiedDayPicker.getWeekDayShortNames(), weekDays);
+        dayPicker = popupCalendar.openPopup().getDayPicker();
+        assertEquals(dayPicker.getWeekDayShortNames(), weekDays);
 
         calendarAttributes.set(CalendarAttributes.firstWeekDay, 1);
+        dayPicker = popupCalendar.openPopup().getDayPicker();
         Collections.rotate(weekDays, -1);
-        assertEquals(proxiedDayPicker.getWeekDayShortNames(), weekDays);
+        assertEquals(dayPicker.getWeekDayShortNames(), weekDays);
     }
 
     @Test
@@ -464,26 +469,26 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     public void testImmediate() {
         calendarAttributes.set(CalendarAttributes.immediate, Boolean.TRUE);
         setCurrentDateWithCalendarsTodayButtonAction.perform();
-        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: null -> " + calendar.getInputValue());
+        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: null -> " + popupCalendar.getInput().getStringValue());
         page.assertPhases(PhaseId.ANY_PHASE);
     }
 
     @Test
     @Templates(value = "plain")
     public void testInputClass() {
-        testStyleClass(calendar.getInput(), BasicAttributes.inputClass);
+        testStyleClass(popupCalendar.getInput().advanced().getInputElement(), BasicAttributes.inputClass);
     }
 
     @Test
     public void testInputSize() {
         calendarAttributes.set(CalendarAttributes.inputSize, "30");
-        assertEquals(calendar.getInput().getAttribute("size"), "30", "Size attribute of input should be defined.");
+        assertEquals(popupCalendar.getInput().advanced().getInputElement().getAttribute("size"), "30", "Size attribute of input should be defined.");
     }
 
     @Test
     @Templates(value = "plain")
     public void testInputStyle() {
-        testStyle(calendar.getInput(), BasicAttributes.inputStyle);
+        testStyle(popupCalendar.getInput().advanced().getInputElement(), BasicAttributes.inputStyle);
     }
 
     @Test
@@ -491,9 +496,9 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     public void testJointPoint() {
         int tolerance = 4;
         calendarAttributes.set(CalendarAttributes.jointPoint, direction.value);
-        Locations inputLocations = calendar.getLocations();
+        Locations inputLocations = popupCalendar.getLocations();
         Point locationInput = null;
-        Point locationPopup = calendar.openPopup().getLocations().getTopLeft();
+        Point locationPopup = popupCalendar.openPopup().getLocations().getTopLeft();
         switch (direction) {
             case NULL:
             case AUTO:
@@ -518,13 +523,13 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     public void testLocale() {
         String locale = "ru";
         calendarAttributes.set(CalendarAttributes.locale, locale);
-        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
-        List<String> weekDayShortNames = proxiedDayPicker.getWeekDayShortNames();
+        DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
+        List<String> weekDayShortNames = dayPicker.getWeekDayShortNames();
         List<String> expectedShortNames = Arrays.asList("Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб");
         assertEquals(weekDayShortNames, expectedShortNames);
 
         setCurrentDateWithCalendarsTodayButtonAction.perform();
-        DateTime parsedDateTime = dateTimeFormatter.withLocale(new Locale(locale)).parseDateTime(calendar.getInputValue());
+        DateTime parsedDateTime = dateTimeFormatter.withLocale(new Locale(locale)).parseDateTime(popupCalendar.getInput().getStringValue());
 
         assertEquals(parsedDateTime.getDayOfMonth(), todayMidday.getDayOfMonth(), "Input doesn't contain selected date.");
         assertEquals(parsedDateTime.getMonthOfYear(), todayMidday.getMonthOfYear(), "Input doesn't contain selected date.");
@@ -537,10 +542,10 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         calendarAttributes.set(CalendarAttributes.minDaysInFirstWeek, 1);
         // 1.1.2011 starts with saturday => only 1 day in first weak
         DateTime firstOf2011 = firstOfJanuary2012.withYear(2011);
-        calendar.setDateTime(firstOf2011);
-        CalendarWeek firstDisplayedWeek = calendar.openPopup().getDayPicker().getWeek(1);
-        int secondDisplayedWeekNumber = calendar.openPopup().getDayPicker().getWeek(2).getWeekNumber();
-        CalendarDays days = firstDisplayedWeek.getCalendarDays().removeSpecificDays(DayType.boundaryDay);
+        popupCalendar.setDateTime(firstOf2011);
+        CalendarWeek firstDisplayedWeek = popupCalendar.openPopup().getDayPicker().getWeek(1);
+        int secondDisplayedWeekNumber = popupCalendar.openPopup().getDayPicker().getWeek(2).getWeekNumber();
+        List<CalendarDay> days = filterOutBoundaryDays(Lists.newArrayList(firstDisplayedWeek.getCalendarDays()));
 
         assertEquals(days.size(), 1, "Month days in first displayed week.");
         assertEquals(firstDisplayedWeek.getWeekNumber().intValue(), 1, "First displayed week number.");
@@ -548,9 +553,9 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
         calendarAttributes.set(CalendarAttributes.minDaysInFirstWeek, 2);
 
-        firstDisplayedWeek = calendar.openPopup().getDayPicker().getWeek(1);
-        secondDisplayedWeekNumber = calendar.openPopup().getDayPicker().getWeek(2).getWeekNumber();
-        days = firstDisplayedWeek.getCalendarDays().removeSpecificDays(DayType.boundaryDay);
+        firstDisplayedWeek = popupCalendar.openPopup().getDayPicker().getWeek(1);
+        secondDisplayedWeekNumber = popupCalendar.openPopup().getDayPicker().getWeek(2).getWeekNumber();
+        days = filterOutBoundaryDays(Lists.newArrayList(firstDisplayedWeek.getCalendarDays()));
 
         assertEquals(days.size(), 1, "Month days in first displayed week.");
         assertEquals(firstDisplayedWeek.getWeekNumber().intValue(), 53, "First displayed week number.");
@@ -561,20 +566,20 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @Use(field = "mode", enumeration = true)
     public void testMode() {
         calendarAttributes.set(CalendarAttributes.mode, mode.value);
-        HeaderControls proxiedHeaderControls = calendar.openPopup().getProxiedHeaderControls();
+        HeaderControls hc = popupCalendar.openPopup().getHeaderControls();
         switch (mode) {
             case AJAX:
-                MetamerPage.waitRequest(proxiedHeaderControls, WaitRequestType.XHR).nextMonth();
-                MetamerPage.waitRequest(proxiedHeaderControls, WaitRequestType.XHR).nextYear();
-                MetamerPage.waitRequest(proxiedHeaderControls, WaitRequestType.XHR).previousMonth();
-                MetamerPage.waitRequest(proxiedHeaderControls, WaitRequestType.XHR).previousYear();
+                MetamerPage.waitRequest(hc, WaitRequestType.XHR).nextMonth();
+                MetamerPage.waitRequest(hc, WaitRequestType.XHR).nextYear();
+                MetamerPage.waitRequest(hc, WaitRequestType.XHR).previousMonth();
+                MetamerPage.waitRequest(hc, WaitRequestType.XHR).previousYear();
                 break;
             case CLIENT:
             case NULL:
-                MetamerPage.waitRequest(proxiedHeaderControls, WaitRequestType.NONE).nextMonth();
-                MetamerPage.waitRequest(proxiedHeaderControls, WaitRequestType.NONE).nextYear();
-                MetamerPage.waitRequest(proxiedHeaderControls, WaitRequestType.NONE).previousMonth();
-                MetamerPage.waitRequest(proxiedHeaderControls, WaitRequestType.NONE).previousYear();
+                MetamerPage.waitRequest(hc, WaitRequestType.NONE).nextMonth();
+                MetamerPage.waitRequest(hc, WaitRequestType.NONE).nextYear();
+                MetamerPage.waitRequest(hc, WaitRequestType.NONE).previousMonth();
+                MetamerPage.waitRequest(hc, WaitRequestType.NONE).previousYear();
                 break;
         }
     }
@@ -585,16 +590,16 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         calendarAttributes.set(CalendarAttributes.monthLabels, labelsString);
 
         // set date to 1st day of year
-        calendar.setDateTime(todayMidday.withMonthOfYear(1).withDayOfMonth(1));
+        popupCalendar.setDateTime(todayMidday.withMonthOfYear(1).withDayOfMonth(1));
 
         List<String> expectedLabels = Arrays.asList(labelsString.split(", "));
-        HeaderControls proxiedHeaderControls = calendar.openPopup().getProxiedHeaderControls();
+        HeaderControls hc = popupCalendar.openPopup().getHeaderControls();
         List<String> monthsLabels = new ArrayList<String>(12);
         for (int i = 0; i < 12; i++) {
-            String monthAndYear = proxiedHeaderControls.getYearAndMonthEditorOpenerElement().getText();
+            String monthAndYear = hc.getYearAndMonthEditorOpenerElement().getText();
             String month = monthAndYear.substring(0, monthAndYear.indexOf(","));
             monthsLabels.add(month);
-            proxiedHeaderControls.nextMonth();
+            hc.nextMonth();
         }
         assertEquals(monthsLabels, expectedLabels, "Month label in calendar");
     }
@@ -605,7 +610,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         calendarAttributes.set(CalendarAttributes.monthLabelsShort, labelsString);
 
         List<String> expectedLabels = Arrays.asList(labelsString.split(", "));
-        List<String> shortMonthsLabels = calendar.openPopup().getHeaderControls().openYearAndMonthEditor()
+        List<String> shortMonthsLabels = popupCalendar.openPopup().getHeaderControls().openYearAndMonthEditor()
             .getShortMonthsLabels();
 
         assertEquals(shortMonthsLabels, expectedLabels, "Month label in calendar");
@@ -615,7 +620,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         int offset = 15;
         int tolerance = 5;
 
-        Locations before = calendar.openPopup().getLocations();
+        Locations before = popupCalendar.openPopup().getLocations();
         Locations movedFromBefore = (horizontal ? before.moveAllBy(offset, 0) : before.moveAllBy(0, offset));
         if (horizontal) {
             calendarAttributes.set(CalendarAttributes.horizontalOffset, offset);
@@ -623,7 +628,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
             calendarAttributes.set(CalendarAttributes.verticalOffset, offset);
         }
 
-        Locations after = calendar.openPopup().getLocations();
+        Locations after = popupCalendar.openPopup().getLocations();
 
         Iterator<Point> itAfter = after.iterator();
         Iterator<Point> itMovedBefore = movedFromBefore.iterator();
@@ -652,10 +657,10 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         testFireEvent(calendarAttributes, CalendarAttributes.onclean, new Action() {
             @Override
             public void perform() {
-                PopupFooterControls proxiedFooterControls = calendar.openPopup().getProxiedFooterControls();
-                MetamerPage.waitRequest(proxiedFooterControls, WaitRequestType.NONE).todayDate();
-                Graphene.waitGui().until().element(proxiedFooterControls.getCleanButtonElement()).is().visible();
-                MetamerPage.waitRequest(proxiedFooterControls, WaitRequestType.NONE).cleanDate();
+                PopupFooterControls fc = popupCalendar.openPopup().getFooterControls();
+                MetamerPage.waitRequest(fc, WaitRequestType.NONE).todayDate();
+                Graphene.waitGui().until().element(fc.getCleanButtonElement()).is().visible();
+                MetamerPage.waitRequest(fc, WaitRequestType.NONE).cleanDate();
             }
         });
     }
@@ -666,7 +671,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         testFireEvent(calendarAttributes, CalendarAttributes.oncomplete, new Action() {
             @Override
             public void perform() {
-                MetamerPage.waitRequest(calendar.openPopup().getHeaderControls(), WaitRequestType.XHR).nextMonth();
+                MetamerPage.waitRequest(popupCalendar.openPopup().getHeaderControls(), WaitRequestType.XHR).nextMonth();
             }
         });
     }
@@ -682,7 +687,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         testFireEvent(calendarAttributes, CalendarAttributes.ondatemouseout, new Action() {
             @Override
             public void perform() {
-                fireEvent(calendar.openPopup().getDayPicker().getTodayDay().getElement(), Event.MOUSEOUT);
+                fireEvent(popupCalendar.openPopup().getDayPicker().getTodayDay().getDayElement(), Event.MOUSEOUT);
             }
         });
     }
@@ -692,7 +697,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         testFireEvent(calendarAttributes, CalendarAttributes.ondatemouseover, new Action() {
             @Override
             public void perform() {
-                fireEvent(calendar.openPopup().getDayPicker().getTodayDay().getElement(), Event.MOUSEOVER);
+                fireEvent(popupCalendar.openPopup().getDayPicker().getTodayDay().getDayElement(), Event.MOUSEOVER);
             }
         });
     }
@@ -705,7 +710,9 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @Test
     public void testOnhide() {
         testFireEvent(calendarAttributes, CalendarAttributes.onhide,
-            new Actions(driver).click(calendar.getInput()).click(calendar.getInput()).build());
+            new Actions(driver)
+            .click(popupCalendar.getInput().advanced().getInputElement())
+            .click(popupCalendar.getInput().advanced().getInputElement()).build());
     }
 
     @Test
@@ -713,7 +720,9 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         // this throws the condition 2x
         // testFireEventWithJS(calendar.getInput(), Event.BLUR, calendarAttributes, CalendarAttributes.oninputblur);
         testFireEvent(calendarAttributes, CalendarAttributes.oninputblur,
-            new Actions(driver).click(calendar.getInput()).click(page.getRequestTimeElement()).build());
+            new Actions(driver)
+            .click(popupCalendar.getInput().advanced().getInputElement())
+            .click(page.getRequestTimeElement()).build());
     }
 
     @Test
@@ -723,7 +732,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputchange, new Action() {
             @Override
             public void perform() {
-                calendar.getInput().sendKeys("0");
+                popupCalendar.getInput().sendKeys("0");
                 submitWithA4jSubmitBtn();
             }
         });
@@ -731,70 +740,70 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testOninputclick() {
-        testFireEvent(calendarAttributes, CalendarAttributes.oninputclick, new Actions(driver).click(calendar.getInput())
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputclick, new Actions(driver).click(popupCalendar.getInput().advanced().getInputElement())
             .build());
     }
 
     @Test
     public void testOninputdblclick() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputdblclick,
-            new Actions(driver).doubleClick(calendar.getInput()).build());
+            new Actions(driver).doubleClick(popupCalendar.getInput().advanced().getInputElement()).build());
     }
 
     @Test
     public void testOninputfocus() {
-        testFireEvent(calendarAttributes, CalendarAttributes.oninputfocus, new Actions(driver).click(calendar.getInput())
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputfocus, new Actions(driver).click(popupCalendar.getInput().advanced().getInputElement())
             .build());
     }
 
     @Test
     public void testOninputkeydown() {
-        testFireEventWithJS(calendar.getInput(), Event.KEYDOWN, calendarAttributes, CalendarAttributes.oninputkeydown);
+        testFireEventWithJS(popupCalendar.getInput().advanced().getInputElement(), Event.KEYDOWN, calendarAttributes, CalendarAttributes.oninputkeydown);
     }
 
     @Test
     public void testOninputkeypress() {
-        testFireEventWithJS(calendar.getInput(), Event.KEYPRESS, calendarAttributes, CalendarAttributes.oninputkeypress);
+        testFireEventWithJS(popupCalendar.getInput().advanced().getInputElement(), Event.KEYPRESS, calendarAttributes, CalendarAttributes.oninputkeypress);
     }
 
     @Test
     public void testOninputkeyup() {
-        testFireEventWithJS(calendar.getInput(), Event.KEYUP, calendarAttributes, CalendarAttributes.oninputkeyup);
+        testFireEventWithJS(popupCalendar.getInput().advanced().getInputElement(), Event.KEYUP, calendarAttributes, CalendarAttributes.oninputkeyup);
     }
 
     @Test
     public void testOninputmousedown() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputmousedown,
-            new Actions(driver).clickAndHold(calendar.getInput()).build());
+            new Actions(driver).clickAndHold(popupCalendar.getInput().advanced().getInputElement()).build());
     }
 
     @Test
     public void testOninputmousemove() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputmousemove,
-            new Actions(driver).moveToElement(calendar.getInput()).build());
+            new Actions(driver).moveToElement(popupCalendar.getInput().advanced().getInputElement()).build());
     }
 
     @Test
     public void testOninputmouseout() {
-        testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseout, new Actions(driver).click(calendar.getInput())
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseout, new Actions(driver).click(popupCalendar.getInput().advanced().getInputElement())
             .moveToElement(page.getRequestTimeElement()).build());
     }
 
     @Test
     public void testOninputmouseover() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseover,
-            new Actions(driver).moveToElement(calendar.getInput()).build());
+            new Actions(driver).moveToElement(popupCalendar.getInput().advanced().getInputElement()).build());
     }
 
     @Test
     public void testOninputmouseup() {
-        testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseup, new Actions(driver).click(calendar.getInput())
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseup, new Actions(driver).click(popupCalendar.getInput().advanced().getInputElement())
             .build());
     }
 
     @Test
     public void testOninputselect() {
-        testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseup, new Actions(driver).click(calendar.getInput())
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseup, new Actions(driver).click(popupCalendar.getInput().advanced().getInputElement())
             .build());
     }
 
@@ -803,7 +812,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         testFireEvent(calendarAttributes, CalendarAttributes.onshow, new Action() {
             @Override
             public void perform() {
-                calendar.openPopup();
+                popupCalendar.openPopup();
             }
         });
     }
@@ -822,20 +831,20 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     public void testPopup() {
         calendarAttributes.set(CalendarAttributes.popup, Boolean.FALSE);
         assertTrue(inlineCalendar.isVisible(), "Inline calendar should be visible.");
-        assertListOfWebElementsNotVisible(Arrays.asList(calendar.getInput(), calendar.getPopupButton()));
+        assertListOfWebElementsNotVisible(Arrays.asList(popupCalendar.getInput().advanced().getInputElement(), popupCalendar.getPopupButtonElement()));
     }
 
     @Test
     @Templates(value = "plain")
     public void testPopupClass() {
-        testHTMLAttribute(calendar.openPopup().getRoot(), calendarAttributes, CalendarAttributes.popupClass,
+        testHTMLAttribute(popupCalendar.openPopup().getRoot(), calendarAttributes, CalendarAttributes.popupClass,
             "metamer-ftest-class");
     }
 
     @Test
     @Templates(value = "plain")
     public void testPopupStyle() {
-        testHTMLAttribute(calendar.openPopup().getRoot(), calendarAttributes, CalendarAttributes.popupStyle,
+        testHTMLAttribute(popupCalendar.openPopup().getRoot(), calendarAttributes, CalendarAttributes.popupStyle,
             "background-color: yellow; font-size: 1.5em;");
     }
 
@@ -843,7 +852,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @Templates(value = "plain")
     public void testRendered() {
         calendarAttributes.set(CalendarAttributes.rendered, Boolean.FALSE);
-        assertFalse(calendar.isVisible());
+        assertFalse(popupCalendar.isVisible());
     }
 
     @Test
@@ -877,11 +886,11 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         int minutes = 33;
 
         // set yesterday with some minutes
-        MetamerPage.waitRequest(calendar, WaitRequestType.XHR).setDateTime(todayMidday.plusMinutes(minutes).minusDays(1));
+        MetamerPage.waitRequest(popupCalendar, WaitRequestType.XHR).setDateTime(todayMidday.plusMinutes(minutes).minusDays(1));
         // second time, but without minutes setting, to see if the minutes will reset
         setCurrentDateWithCalendarsTodayButtonAction.perform();
 
-        int minutesAfterReseting = dateTimeFormatter.parseDateTime(calendar.getInputValue()).getMinuteOfHour();
+        int minutesAfterReseting = dateTimeFormatter.parseDateTime(popupCalendar.getInput().getStringValue()).getMinuteOfHour();
 
         if (booleanValue) {
             assertEquals(minutesAfterReseting, 0);
@@ -894,13 +903,13 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @Use(field = "booleanValue", booleans = { false, true })
     public void testShowApplyButton() {
         calendarAttributes.set(CalendarAttributes.showApplyButton, booleanValue);
-        PopupFooterControls proxiedFooterControls = calendar.openPopup().getProxiedFooterControls();
+        PopupFooterControls fc = popupCalendar.openPopup().getFooterControls();
         if (booleanValue) {
-            assertVisible(proxiedFooterControls.getApplyButtonElement());
+            assertVisible(fc.getApplyButtonElement());
         } else {
-            assertNotVisible(proxiedFooterControls.getApplyButtonElement());
+            assertNotVisible(fc.getApplyButtonElement());
             setCurrentDateWithCalendarsTodayButtonAction.perform();
-            DateTime inputTime = dateTimeFormatter.parseDateTime(calendar.getInputValue());
+            DateTime inputTime = dateTimeFormatter.parseDateTime(popupCalendar.getInput().getStringValue());
             assertEquals(inputTime.getDayOfMonth(), todayMidday.getDayOfMonth());
             assertEquals(inputTime.getMonthOfYear(), todayMidday.getMonthOfYear());
             assertEquals(inputTime.getYear(), todayMidday.getYear());
@@ -912,15 +921,15 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     public void testShowFooter() {
         setCurrentDateWithCalendarsTodayButtonAction.perform();
         calendarAttributes.set(CalendarAttributes.showFooter, booleanValue);
-        PopupFooterControls proxiedFooterControls = calendar.openPopup().getProxiedFooterControls();
+        PopupFooterControls fc = popupCalendar.openPopup().getFooterControls();
         if (booleanValue) {
-            assertVisible(proxiedFooterControls, "Footer elements should be visible, when footer is rendered");
-            assertListOfWebElementsVisible(Arrays.asList(proxiedFooterControls.getApplyButtonElement(),
-                proxiedFooterControls.getCleanButtonElement(), proxiedFooterControls.getTimeEditorOpenerElement(),
-                proxiedFooterControls.getTodayButtonElement()));
+            assertTrue(fc.isVisible(), "Footer elements should be visible, when footer is rendered");
+            assertListOfWebElementsVisible(Arrays.asList(fc.getApplyButtonElement(),
+                fc.getCleanButtonElement(), fc.getTimeEditorOpenerElement(),
+                fc.getTodayButtonElement()));
 
         } else {
-            assertNotVisible(proxiedFooterControls, "Footer elements should not be visible, when footer is not rendered");
+            assertFalse(fc.isVisible(), "Footer elements should not be visible, when footer is not rendered");
         }
     }
 
@@ -928,17 +937,17 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @Use(field = "booleanValue", booleans = { false, true })
     public void testShowHeader() {
         calendarAttributes.set(CalendarAttributes.showHeader, booleanValue);
-        PopupHeaderControls proxiedHeaderControls = calendar.openPopup().getProxiedHeaderControls();
+        PopupHeaderControls hc = popupCalendar.openPopup().getHeaderControls();
         if (booleanValue) {
-            assertListOfWebElementsVisible(Arrays.asList(proxiedHeaderControls.getCloseButtonElement(),
-                proxiedHeaderControls.getNextMonthElement(), proxiedHeaderControls.getNextYearElement(),
-                proxiedHeaderControls.getPreviousMonthElement(), proxiedHeaderControls.getPreviousYearElement(),
-                proxiedHeaderControls.getYearAndMonthEditorOpenerElement()));
+            assertListOfWebElementsVisible(Arrays.asList(hc.getCloseButtonElement(),
+                hc.getNextMonthElement(), hc.getNextYearElement(),
+                hc.getPreviousMonthElement(), hc.getPreviousYearElement(),
+                hc.getYearAndMonthEditorOpenerElement()));
         } else {
-            assertListOfWebElementsNotVisible(Arrays.asList(proxiedHeaderControls.getCloseButtonElement(),
-                proxiedHeaderControls.getNextMonthElement(), proxiedHeaderControls.getNextYearElement(),
-                proxiedHeaderControls.getPreviousMonthElement(), proxiedHeaderControls.getPreviousYearElement(),
-                proxiedHeaderControls.getYearAndMonthEditorOpenerElement()));
+            assertListOfWebElementsNotVisible(Arrays.asList(hc.getCloseButtonElement(),
+                hc.getNextMonthElement(), hc.getNextYearElement(),
+                hc.getPreviousMonthElement(), hc.getPreviousYearElement(),
+                hc.getYearAndMonthEditorOpenerElement()));
         }
     }
 
@@ -947,9 +956,9 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     public void testShowInput() {
         calendarAttributes.set(CalendarAttributes.showInput, booleanValue);
         if (booleanValue) {
-            assertVisible(calendar.getInput());
+            assertVisible(popupCalendar.getInput().advanced().getInputElement());
         } else {
-            assertNotVisible(calendar.getInput());
+            assertNotVisible(popupCalendar.getInput().advanced().getInputElement());
         }
     }
 
@@ -957,11 +966,11 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @Use(field = "booleanValue", booleans = { false, true })
     public void testShowWeekDaysBar() {
         calendarAttributes.set(CalendarAttributes.showWeekDaysBar, booleanValue);
-        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
+        DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
         if (booleanValue) {
-            assertVisible(proxiedDayPicker.getWeekDaysBarElement());
+            assertVisible(dayPicker.getWeekDaysBarElement());
         } else {
-            assertNotVisible(proxiedDayPicker.getWeekDaysBarElement());
+            assertNotVisible(dayPicker.getWeekDaysBarElement());
         }
     }
 
@@ -969,11 +978,11 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @Use(field = "booleanValue", booleans = { false, true })
     public void testShowWeeksBar() {
         calendarAttributes.set(CalendarAttributes.showWeeksBar, booleanValue);
-        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
+        DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
         if (booleanValue) {
-            assertVisible(proxiedDayPicker.getWeek(1).getWeekNumberElement());
+            assertVisible(dayPicker.getWeek(1).getWeekNumberElement());
         } else {
-            assertNotVisible(proxiedDayPicker.getWeek(1).getWeekNumberElement());
+            assertNotVisible(dayPicker.getWeek(1).getWeekNumberElement());
         }
     }
 
@@ -981,31 +990,31 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-9655")
     @Templates(value = "plain")
     public void testStyle() {
-        testStyle(calendar.getRoot());
+        testStyle(popupCalendar.getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyleClass() {
-        testStyleClass(calendar.getRoot());
+        testStyleClass(popupCalendar.getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testTabindexInput() {
-        testHTMLAttribute(calendar.getInput(), calendarAttributes, CalendarAttributes.tabindex, "101");
+        testHTMLAttribute(popupCalendar.getInput().advanced().getInputElement(), calendarAttributes, CalendarAttributes.tabindex, "101");
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10980")
     @Templates(value = "richPopupPanel")
     public void testTabindexInputInPopupPanel() {
-        testHTMLAttribute(calendar.getInput(), calendarAttributes, CalendarAttributes.tabindex, "101");
+        testHTMLAttribute(popupCalendar.getInput().advanced().getInputElement(), calendarAttributes, CalendarAttributes.tabindex, "101");
     }
 
     @Test
     public void testTabindexButton() {
-        testHTMLAttribute(calendar.getPopupButton(), calendarAttributes, CalendarAttributes.tabindex, "101");
+        testHTMLAttribute(popupCalendar.getPopupButtonElement(), calendarAttributes, CalendarAttributes.tabindex, "101");
     }
 
     @Test
@@ -1014,28 +1023,28 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         calendarAttributes.set(CalendarAttributes.todayControlMode, todayControlMode.value);
         switch (todayControlMode) {
             case HIDDEN:
-                assertNotVisible(calendar.openPopup().getFooterControls().getTodayButtonElement());
+                assertNotVisible(popupCalendar.openPopup().getFooterControls().getTodayButtonElement());
                 break;
             case NULL:
             case SELECT:
                 // set date to tomorrow
-                calendar.setDateTime(todayMidday.plusDays(1));
+                popupCalendar.setDateTime(todayMidday.plusDays(1));
                 // set date with calendar's 'Today' button,
                 // this will scroll and select todays day
-                MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.NONE).todayDate();
-                CalendarDay selectedDay = calendar.openPopup().getDayPicker().getSelectedDay();
+                MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.NONE).todayDate();
+                CalendarDay selectedDay = popupCalendar.openPopup().getDayPicker().getSelectedDay();
                 assertNotNull(selectedDay);
                 assertTrue(selectedDay.is(DayType.todayDay));
                 break;
             case SCROLL:
-                calendar.setDateTime(todayMidday.plusMonths(1));
+                popupCalendar.setDateTime(todayMidday.plusMonths(1));
                 // set date with calendar's 'Today' button,
                 // this will only scroll to today but will not select it
-                MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.NONE).todayDate();
+                MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.NONE).todayDate();
                 // no selected day should be in calendar
-                assertNull(calendar.openPopup().getDayPicker().getSelectedDay());
+                assertNull(popupCalendar.openPopup().getDayPicker().getSelectedDay());
                 // but view of day picker should will change to current month
-                assertEquals(calendar.openPopup().getHeaderControls().getYearAndMonth().getMonthOfYear(),
+                assertEquals(popupCalendar.openPopup().getHeaderControls().getYearAndMonth().getMonthOfYear(),
                     todayMidday.getMonthOfYear());
                 break;
         }
@@ -1044,7 +1053,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @Test
     public void testValueChangeListener() {
         setCurrentDateWithCalendarsTodayButtonAction.perform();
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> " + calendar.getInputValue());
+        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> " + popupCalendar.getInput().getStringValue());
     }
 
     @Test
@@ -1055,13 +1064,13 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @Test
     public void testWeekDayLabelsShort() {
         List<String> originalValues = Arrays.asList("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
-        List<String> weekDayShortNames = calendar.openPopup().getDayPicker().getWeekDayShortNames();
+        List<String> weekDayShortNames = popupCalendar.openPopup().getDayPicker().getWeekDayShortNames();
         assertEquals(weekDayShortNames, originalValues);
 
         String expectedWeekDayShortNames = "ne, po, ut, st, ct, pa, so";
         calendarAttributes.set(CalendarAttributes.weekDayLabelsShort, expectedWeekDayShortNames);
         List<String> expectedList = Arrays.asList(expectedWeekDayShortNames.split(", "));
-        weekDayShortNames = calendar.openPopup().getDayPicker().getWeekDayShortNames();
+        weekDayShortNames = popupCalendar.openPopup().getDayPicker().getWeekDayShortNames();
         assertEquals(weekDayShortNames, expectedList);
     }
 
@@ -1070,7 +1079,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     public void testZindex() {
         final String zindex = "30";
         calendarAttributes.set(CalendarAttributes.zindex, zindex);
-        String contentZindex = calendar.openPopup().getRoot().getCssValue("z-index");
+        String contentZindex = popupCalendar.openPopup().getRoot().getCssValue("z-index");
         assertEquals(contentZindex, zindex, "Z-index of the popup");
     }
 
@@ -1110,8 +1119,8 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
         @Override
         public void perform() {
-            MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.NONE).todayDate();
-            calendar.openPopup().getFooterControls().openTimeEditor().setTime(todayMidday.plusMinutes(5), SetValueBy.BUTTONS)
+            MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.NONE).todayDate();
+            popupCalendar.openPopup().getFooterControls().openTimeEditor().setTime(todayMidday.plusMinutes(5), SetValueBy.BUTTONS)
                 .confirmTime();
         }
     }
@@ -1120,7 +1129,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
         @Override
         public void perform() {
-            MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
+            MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
         }
     }
 
@@ -1128,8 +1137,8 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
         @Override
         public void perform() {
-            MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.NONE).todayDate();
-            calendar.openPopup().getHeaderControls().nextMonth();
+            MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.NONE).todayDate();
+            popupCalendar.openPopup().getHeaderControls().nextMonth();
         }
     }
 }

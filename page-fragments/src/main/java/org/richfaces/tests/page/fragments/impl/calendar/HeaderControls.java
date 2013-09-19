@@ -19,113 +19,90 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.page.fragments.impl.calendar.common;
+package org.richfaces.tests.page.fragments.impl.calendar;
 
-import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
+import org.jboss.arquillian.graphene.GrapheneElement;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.fragment.Root;
+import org.jboss.arquillian.graphene.wait.FluentWait;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.richfaces.tests.page.fragments.impl.calendar.common.editor.RichFacesCalendarEditor;
-import org.richfaces.tests.page.fragments.impl.calendar.common.editor.yearAndMonth.YearAndMonthEditor;
+import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.calendar.RichFacesAdvancedInlineCalendar.CalendarEditor;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
 
 /**
  * Component for header controls of calendar.
- *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesHeaderControls implements HeaderControls {
+public class HeaderControls {
 
     @Root
     private WebElement root;
 
-    @Drone
-    protected WebDriver driver;
-    //
-    private RichFacesCalendarEditor calendarEditor;
-    //
-    @FindBy(css = "td.rf-cal-hdr-month > div.rf-cal-tl-btn")
-    private WebElement yearAndMonthEditorOpenerElement;
-    @FindBy(xpath = ".//td[1] /div")
-    private WebElement previousYearElement;
-    @FindBy(xpath = ".//td[2] /div")
-    private WebElement previousMonthElement;
-    @FindBy(xpath = ".//td[4] /div")
-    private WebElement nextMonthElement;
-    @FindBy(xpath = ".//td[5] /div")
-    private WebElement nextYearElement;
-    //
+    @FindByJQuery(".rf-cal-tl:eq(0) > div")
+    private GrapheneElement previousYearElement;
+    @FindByJQuery(".rf-cal-tl:eq(1) > div")
+    private GrapheneElement previousMonthElement;
+    @FindBy(css = ".rf-cal-hdr-month > div")
+    private GrapheneElement yearAndMonthEditorOpenerElement;
+    @FindByJQuery(".rf-cal-tl:eq(2) > div")
+    private GrapheneElement nextMonthElement;
+    @FindByJQuery(".rf-cal-tl:eq(3) > div")
+    private GrapheneElement nextYearElement;
+
+    private CalendarEditor calendarEditor;
     private final DateTimeFormatter formatter = DateTimeFormat.forPattern("MMMM, yyyy");
 
     private void _openYearAndMonthEditor() {
-        if (!isVisible()
-            || new WebElementConditionFactory(yearAndMonthEditorOpenerElement).not().isVisible().apply(driver)) {
+        if (!isVisible() || !yearAndMonthEditorOpenerElement.isDisplayed()) {
             throw new RuntimeException("Cannot open date editor. "
                 + "Ensure that calendar popup and header controls are displayed and some date is set.");
         }
         yearAndMonthEditorOpenerElement.click();
-        Graphene.waitGui().until(calendarEditor.getDateEditor().isVisibleCondition());
+        calendarEditor.getDateEditor().waitUntilIsVisible().perform();
     }
 
-    @Override
     public WebElement getNextMonthElement() {
         return nextMonthElement;
     }
 
-    @Override
     public WebElement getNextYearElement() {
         return nextYearElement;
     }
 
-    @Override
     public WebElement getPreviousMonthElement() {
         return previousMonthElement;
     }
 
-    @Override
     public WebElement getPreviousYearElement() {
         return previousYearElement;
     }
 
-    @Override
     public DateTime getYearAndMonth() {
         return formatter.parseDateTime(yearAndMonthEditorOpenerElement.getText());
     }
 
-    @Override
     public YearAndMonthEditor getYearAndMonthEditor() {
         return calendarEditor.getDateEditor();
     }
 
-    @Override
     public WebElement getYearAndMonthEditorOpenerElement() {
         return yearAndMonthEditorOpenerElement;
     }
 
-    @Override
-    public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return new WebElementConditionFactory(root).not().isVisible();
-    }
-
-    @Override
     public boolean isVisible() {
-        return isVisibleCondition().apply(driver);
+        return Utils.isVisible(root);
     }
 
-    @Override
-    public ExpectedCondition<Boolean> isVisibleCondition() {
-        return new WebElementConditionFactory(root).isVisible();
-    }
-
-    @Override
     public void nextMonth() {
-        if (!isVisible() || new WebElementConditionFactory(nextMonthElement).not().isVisible().apply(driver)) {
+        if (!isVisible() || !nextMonthElement.isDisplayed()) {
             throw new RuntimeException("Cannot interact with nextMonth button. "
                 + "Ensure that calendar popup and header controls are displayed.");
         }
@@ -134,9 +111,8 @@ public class RichFacesHeaderControls implements HeaderControls {
         Graphene.waitAjax().until().element(yearAndMonthEditorOpenerElement).text().not().equalTo(before);
     }
 
-    @Override
     public void nextYear() {
-        if (!isVisible() || new WebElementConditionFactory(nextYearElement).not().isVisible().apply(driver)) {
+        if (!isVisible() || !nextYearElement.isDisplayed()) {
             throw new RuntimeException("Cannot interact with nextYear button. "
                 + "Ensure that calendar popup and header controls are displayed.");
         }
@@ -145,9 +121,8 @@ public class RichFacesHeaderControls implements HeaderControls {
         Graphene.waitAjax().until().element(yearAndMonthEditorOpenerElement).text().not().equalTo(before);
     }
 
-    @Override
     public YearAndMonthEditor openYearAndMonthEditor() {
-        if (calendarEditor.getDateEditor().isVisible()) {
+        if (Utils.isVisible(calendarEditor.getDateEditor().getRoot())) {
             return calendarEditor.getDateEditor();
         } else {
             _openYearAndMonthEditor();
@@ -155,9 +130,8 @@ public class RichFacesHeaderControls implements HeaderControls {
         }
     }
 
-    @Override
     public void previousYear() {
-        if (!isVisible() || new WebElementConditionFactory(previousYearElement).not().isVisible().apply(driver)) {
+        if (!isVisible() || !previousYearElement.isDisplayed()) {
             throw new RuntimeException("Cannot interact with previousYear button. "
                 + "Ensure that calendar popup and header controls are displayed.");
         }
@@ -166,9 +140,8 @@ public class RichFacesHeaderControls implements HeaderControls {
         Graphene.waitAjax().until().element(yearAndMonthEditorOpenerElement).text().not().equalTo(before);
     }
 
-    @Override
     public void previousMonth() {
-        if (!isVisible() || new WebElementConditionFactory(previousMonthElement).not().isVisible().apply(driver)) {
+        if (!isVisible() || !previousMonthElement.isDisplayed()) {
             throw new RuntimeException("Cannot interact with previousMonth button. "
                 + "Ensure that calendar popup and header controls are displayed.");
         }
@@ -177,7 +150,25 @@ public class RichFacesHeaderControls implements HeaderControls {
         Graphene.waitAjax().until().element(yearAndMonthEditorOpenerElement).text().not().equalTo(before);
     }
 
-    public void setCalendarEditor(RichFacesCalendarEditor calendarEditor) {
+    public void setCalendarEditor(CalendarEditor calendarEditor) {
         this.calendarEditor = calendarEditor;
+    }
+
+    public WaitingWrapper waitUntilIsNotVisible() {
+        return new WaitingWrapperImpl() {
+            @Override
+            protected void performWait(FluentWait<WebDriver, Void> wait) {
+                wait.until().element(root).is().not().visible();
+            }
+        }.withMessage("Header controls to be not visible.");
+    }
+
+    public WaitingWrapper waitUntilIsVisible() {
+        return new WaitingWrapperImpl() {
+            @Override
+            protected void performWait(FluentWait<WebDriver, Void> wait) {
+                wait.until().element(root).is().visible();
+            }
+        }.withMessage("Header controls to be visible.");
     }
 }

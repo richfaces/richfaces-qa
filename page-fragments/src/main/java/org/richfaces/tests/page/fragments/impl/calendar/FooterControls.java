@@ -19,113 +19,91 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.page.fragments.impl.calendar.common;
+package org.richfaces.tests.page.fragments.impl.calendar;
 
-import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
+import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.fragment.Root;
+import org.jboss.arquillian.graphene.wait.FluentWait;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.RichFacesDayPicker;
-import org.richfaces.tests.page.fragments.impl.calendar.common.editor.RichFacesCalendarEditor;
-import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.TimeEditor;
+import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.calendar.RichFacesAdvancedInlineCalendar.CalendarEditor;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
 
 /**
  * Component for footer controls of calendar.
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesFooterControls implements FooterControls {
+public class FooterControls {
 
     @Root
-    protected WebElement root;
+    private WebElement root;
 
-    @Drone
-    protected WebDriver driver;
-    //
-    protected RichFacesCalendarEditor calendarEditor;
-    protected RichFacesDayPicker dayPicker;
-    //
+    private CalendarEditor calendarEditor;
+
     @FindByJQuery("div.rf-cal-tl-btn:contains('Clean')")
-    protected WebElement cleanButtonElement;
+    private GrapheneElement cleanButtonElement;
     @FindBy(css = "td.rf-cal-tl-ftr > div[onclick*='showTimeEditor']")
-    protected WebElement timeEditorOpenerElement;
+    private GrapheneElement timeEditorOpenerElement;
     @FindBy(css = "td.rf-cal-tl-ftr > div[onclick*='showSelectedDate']")
-    protected WebElement selectedDateElement;
+    private GrapheneElement selectedDateElement;
     @FindByJQuery("div.rf-cal-tl-btn:contains('Today')")
-    protected WebElement todayButtonElement;
+    private GrapheneElement todayButtonElement;
 
     private void _openTimeEditor() {
         if (!isVisible()) {
             throw new RuntimeException("Cannot open time editor. "
-                    + "Ensure that calendar popup and footer controls are displayed.");
+                + "Ensure that calendar popup and footer controls are displayed.");
         }
-        if (new WebElementConditionFactory(timeEditorOpenerElement).not().isVisible().apply(driver)) {
+        if (!timeEditorOpenerElement.isDisplayed()) {
             throw new RuntimeException("Cannot open time editor. "
-                    + "Ensure that the date is set before setting time.");
+                + "Ensure that the date is set before setting time.");
         }
         timeEditorOpenerElement.click();
-        Graphene.waitGui().until(calendarEditor.getTimeEditor().isVisibleCondition());
+        calendarEditor.getTimeEditor().waitUntilIsVisible();
     }
 
-    @Override
     public void cleanDate() {
         if (!isVisible()) {
             throw new RuntimeException("Footer controls are not displayed, cannot interact with  clean button");
         }
-        if (new WebElementConditionFactory(cleanButtonElement).not().isVisible().apply(driver)) {
+        if (!cleanButtonElement.isDisplayed()) {
             throw new RuntimeException("Clean button is not displayed.");
         }
         cleanButtonElement.click();
-        Graphene.waitGui().until(new WebElementConditionFactory(cleanButtonElement).not().isVisible());
+        Graphene.waitGui().until().element(cleanButtonElement).is().not().visible();
     }
 
-    @Override
     public WebElement getCleanButtonElement() {
         return cleanButtonElement;
     }
 
-    @Override
     public TimeEditor getTimeEditor() {
         return calendarEditor.getTimeEditor();
     }
 
-    @Override
     public WebElement getTimeEditorOpenerElement() {
         return timeEditorOpenerElement;
     }
 
-    @Override
     public WebElement getTodayButtonElement() {
         return todayButtonElement;
     }
 
-    @Override
     public WebElement getSelectedDateElement() {
         return selectedDateElement;
     }
 
-    @Override
-    public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return new WebElementConditionFactory(root).not().isVisible();
-    }
-
-    @Override
     public boolean isVisible() {
-        return isVisibleCondition().apply(driver);
+        return Utils.isVisible(root);
     }
 
-    @Override
-    public ExpectedCondition<Boolean> isVisibleCondition() {
-        return new WebElementConditionFactory(root).isVisible();
-    }
-
-    @Override
     public TimeEditor openTimeEditor() {
-        if (calendarEditor.getTimeEditor().isVisible()) {
+        if (Utils.isVisible(calendarEditor.getTimeEditor().getRoot())) {
             return calendarEditor.getTimeEditor();
         } else {
             _openTimeEditor();
@@ -133,27 +111,39 @@ public class RichFacesFooterControls implements FooterControls {
         }
     }
 
-    public void setCalendarEditor(RichFacesCalendarEditor calendarEditor) {
+    public void setCalendarEditor(CalendarEditor calendarEditor) {
         this.calendarEditor = calendarEditor;
     }
 
-    public void setDayPicker(RichFacesDayPicker dayPicker) {
-        this.dayPicker = dayPicker;
-    }
-
-    @Override
     public void setTodaysDate() {
         todayDate();
     }
 
-    @Override
     public void todayDate() {
         if (!isVisible()) {
             throw new RuntimeException("Footer controls are not displayed, cannot interact with today button");
         }
-        if (new WebElementConditionFactory(todayButtonElement).not().isVisible().apply(driver)) {
+        if (!todayButtonElement.isDisplayed()) {
             throw new RuntimeException("Today button is not displayed.");
         }
         todayButtonElement.click();
+    }
+
+    public WaitingWrapper waitUntilIsNotVisible() {
+        return new WaitingWrapperImpl() {
+            @Override
+            protected void performWait(FluentWait<WebDriver, Void> wait) {
+                wait.until().element(root).is().not().visible();
+            }
+        }.withMessage("Footer controls to be not visible.");
+    }
+
+    public WaitingWrapper waitUntilIsVisible() {
+        return new WaitingWrapperImpl() {
+            @Override
+            protected void performWait(FluentWait<WebDriver, Void> wait) {
+                wait.until().element(root).is().visible();
+            }
+        }.withMessage("Footer controls to be visible.");
     }
 }

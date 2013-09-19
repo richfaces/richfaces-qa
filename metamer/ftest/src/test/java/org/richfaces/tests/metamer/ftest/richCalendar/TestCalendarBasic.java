@@ -37,10 +37,10 @@ import org.joda.time.DateTime;
 import org.openqa.selenium.Dimension;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay;
-import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.DayPicker;
-import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.CalendarPopup;
-import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.PopupHeaderControls;
+import org.richfaces.tests.page.fragments.impl.calendar.DayPicker;
+import org.richfaces.tests.page.fragments.impl.calendar.DayPicker.CalendarDay;
+import org.richfaces.tests.page.fragments.impl.calendar.PopupCalendar;
+import org.richfaces.tests.page.fragments.impl.calendar.PopupCalendar.PopupHeaderControls;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -69,20 +69,20 @@ public class TestCalendarBasic extends AbstractCalendarTest {
 
     @Test
     public void testCleanButton() {
-        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
-        proxiedDayPicker.getWeek(3).getCalendarDays().get(3).select();
-        MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.NONE).cleanDate();
+        DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
+        dayPicker.getWeek(3).getCalendarDays().get(3).select();
+        MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.NONE).cleanDate();
 
-        CalendarDay selectedDay = proxiedDayPicker.getSelectedDay();
+        CalendarDay selectedDay = dayPicker.getSelectedDay();
         assertNull(selectedDay);
     }
 
     @Test
     public void testCloseButton() {
-        CalendarPopup popup = calendar.openPopup();
+        PopupCalendar popup = popupCalendar.openPopup();
         assertTrue(popup.isVisible());
 
-        MetamerPage.waitRequest(calendar.openPopup().getHeaderControls(), WaitRequestType.NONE).closePopup();
+        MetamerPage.waitRequest(popupCalendar.openPopup().getHeaderControls(), WaitRequestType.NONE).closePopup();
         assertFalse(popup.isVisible());
     }
 
@@ -98,27 +98,27 @@ public class TestCalendarBasic extends AbstractCalendarTest {
 
     @Test
     public void testHeaderMonth() {
-        DateTime yearAndMonth = calendar.openPopup().getHeaderControls().getYearAndMonth();
+        DateTime yearAndMonth = popupCalendar.openPopup().getHeaderControls().getYearAndMonth();
         assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.getMonthOfYear(), "Calendar shows wrong month in its header.");
         assertEquals(yearAndMonth.getYear(), todayMidday.getYear(), "Calendar shows wrong year in its header.");
     }
 
     @Test
     public void testInit() {
-        assertTrue(calendar.isVisible(), "Calendar is not present on the page.");
-        assertTrue(new WebElementConditionFactory(calendar.getInput()).isVisible().apply(driver), "Calendar's input should be visible.");
-        assertTrue(new WebElementConditionFactory(calendar.getPopupButton()).isVisible().apply(driver), "Calendar's image should be visible.");
-        assertTrue(calendar.getPopupButton().getTagName().equalsIgnoreCase("img"), "Calendar's image should be visible.");
-        assertFalse(calendar.getPopupButton().getTagName().equalsIgnoreCase("button"), "Calendar's popup button should not be visible.");
-        CalendarPopup popup = calendar.openPopup();
+        assertTrue(popupCalendar.isVisible(), "Calendar is not present on the page.");
+        assertTrue(new WebElementConditionFactory(popupCalendar.getInput().advanced().getInputElement()).isVisible().apply(driver), "Calendar's input should be visible.");
+        assertTrue(new WebElementConditionFactory(popupCalendar.getPopupButtonElement()).isVisible().apply(driver), "Calendar's image should be visible.");
+        assertTrue(popupCalendar.getPopupButtonElement().getTagName().equalsIgnoreCase("img"), "Calendar's image should be visible.");
+        assertFalse(popupCalendar.getPopupButtonElement().getTagName().equalsIgnoreCase("button"), "Calendar's popup button should not be visible.");
+        PopupCalendar popup = popupCalendar.openPopup();
         assertTrue(popup.isVisible());
-        calendar.closePopup();
+        popupCalendar.closePopup();
         assertFalse(popup.isVisible());
     }
 
     @Test
     public void testNextMonthButton() {
-        PopupHeaderControls headerControls = calendar.openPopup().getHeaderControls();
+        PopupHeaderControls headerControls = popupCalendar.openPopup().getHeaderControls();
         DateTime previousYearAndMonth = headerControls.getYearAndMonth();
         headerControls.nextMonth();
         DateTime yearAndMonth = headerControls.getYearAndMonth();
@@ -129,7 +129,7 @@ public class TestCalendarBasic extends AbstractCalendarTest {
 
     @Test
     public void testNextYearButton() {
-        PopupHeaderControls headerControls = calendar.openPopup().getHeaderControls();
+        PopupHeaderControls headerControls = popupCalendar.openPopup().getHeaderControls();
         DateTime previousYearAndMonth = headerControls.getYearAndMonth();
         headerControls.nextYear();
         DateTime yearAndMonth = headerControls.getYearAndMonth();
@@ -150,7 +150,7 @@ public class TestCalendarBasic extends AbstractCalendarTest {
 
     @Test
     public void testPrevMonthButton() {
-        PopupHeaderControls headerControls = calendar.openPopup().getHeaderControls();
+        PopupHeaderControls headerControls = popupCalendar.openPopup().getHeaderControls();
         DateTime previousYearAndMonth = headerControls.getYearAndMonth();
         headerControls.previousMonth();
         DateTime yearAndMonth = headerControls.getYearAndMonth();
@@ -161,7 +161,7 @@ public class TestCalendarBasic extends AbstractCalendarTest {
 
     @Test
     public void testPrevYearButton() {
-        PopupHeaderControls headerControls = calendar.openPopup().getHeaderControls();
+        PopupHeaderControls headerControls = popupCalendar.openPopup().getHeaderControls();
         DateTime previousYearAndMonth = headerControls.getYearAndMonth();
         headerControls.previousYear();
         DateTime yearAndMonth = headerControls.getYearAndMonth();
@@ -172,42 +172,42 @@ public class TestCalendarBasic extends AbstractCalendarTest {
 
     @Test
     public void testSelectDate() {
-        CalendarDay selectedDay = calendar.openPopup().getDayPicker().getSelectedDay();
+        CalendarDay selectedDay = popupCalendar.openPopup().getDayPicker().getSelectedDay();
         assertNull(selectedDay);
 
-        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
-        MetamerPage.waitRequest(proxiedDayPicker.getWeek(3).getCalendarDays().get(3), WaitRequestType.NONE).select();
+        DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
+        MetamerPage.waitRequest(dayPicker.getWeek(3).getCalendarDays().get(3), WaitRequestType.NONE).select();
 
-        selectedDay = proxiedDayPicker.getSelectedDay();
+        selectedDay = dayPicker.getSelectedDay();
         assertNotNull(selectedDay);
     }
 
     @Test
     public void testTodayButton() {
-        MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.NONE).todayDate();
+        MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.NONE).todayDate();
 
-        CalendarDay selectedDay = calendar.openPopup().getDayPicker().getSelectedDay();
-        CalendarDay todayDay = calendar.openPopup().getDayPicker().getTodayDay();
+        CalendarDay selectedDay = popupCalendar.openPopup().getDayPicker().getSelectedDay();
+        CalendarDay todayDay = popupCalendar.openPopup().getDayPicker().getTodayDay();
         assertEquals(selectedDay.getDayNumber(), todayDay.getDayNumber());
     }
 
     @Test
     public void testTodayIsSelected() {
-        CalendarDay todayDay = calendar.openPopup().getDayPicker().getTodayDay();
+        CalendarDay todayDay = popupCalendar.openPopup().getDayPicker().getTodayDay();
         assertEquals(todayDay.getDayNumber().intValue(), todayMidday.getDayOfMonth());
     }
 
     @Test
     public void testWeekDaysLabels() {
-        List<String> weekDayShortNames = calendar.openPopup().getDayPicker().getWeekDayShortNames();
+        List<String> weekDayShortNames = popupCalendar.openPopup().getDayPicker().getWeekDayShortNames();
         assertEquals(weekDayShortNames, Arrays.asList("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"));
     }
 
     @Test
     public void testWeekNumbers() {
-        MetamerPage.waitRequest(calendar, WaitRequestType.XHR).setDateTime(firstOfJanuary2012);
+        MetamerPage.waitRequest(popupCalendar, WaitRequestType.XHR).setDateTime(firstOfJanuary2012);
 
-        DayPicker dayPicker = calendar.openPopup().getDayPicker();
+        DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
         List<Integer> weeksNumbers = dayPicker.getWeeksNumbers();
         assertEquals(weeksNumbers, Arrays.asList(1, 2, 3, 4, 5, 6));
     }

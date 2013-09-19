@@ -19,86 +19,92 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.page.fragments.impl.calendar.common.editor.time;
+package org.richfaces.tests.page.fragments.impl.calendar;
 
-import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
+import org.jboss.arquillian.graphene.GrapheneElement;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.fragment.Root;
+import org.jboss.arquillian.graphene.wait.FluentWait;
 import org.joda.time.DateTime;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.spinner.RichFacesHoursSpinner12;
-import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.spinner.RichFacesHoursSpinner24;
-import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.spinner.RichFacesTimeSignSpinner;
-import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.spinner.RichFacesTimeSignSpinner.TimeSign;
-import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.spinner.RichFacesTimeSpinner;
+import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.calendar.TimeSpinner.TimeSign;
+import org.richfaces.tests.page.fragments.impl.calendar.TimeSpinner.TimeSignSpinner;
+import org.richfaces.tests.page.fragments.impl.calendar.TimeSpinner.TimeSpinner12;
+import org.richfaces.tests.page.fragments.impl.calendar.TimeSpinner.TimeSpinner24;
+import org.richfaces.tests.page.fragments.impl.calendar.TimeSpinner.TimeSpinner60;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
 
 /**
  * Component for editing calendar's time
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesTimeEditor implements TimeEditor {
+public class TimeEditor {
 
     @Root
     private WebElement root;
 
-    @Drone
-    private WebDriver driver;
-    @FindBy(xpath = ".//td[@class='rf-cal-timepicker-inp']/table/tbody/tr/td/table[tbody/tr/td/input[contains(@id, 'TimeHours')]]")
-    private RichFacesHoursSpinner12 hoursSpinner12;
-    @FindBy(xpath = ".//td[@class='rf-cal-timepicker-inp']/table/tbody/tr/td/table[tbody/tr/td/input[contains(@id, 'TimeHours')]]")
-    private RichFacesHoursSpinner24 hoursSpinner24;
-    @FindBy(xpath = ".//td[@class='rf-cal-timepicker-inp']/table/tbody/tr/td/table[tbody/tr/td/input[contains(@id, 'TimeMinutes')]]")
-    private RichFacesTimeSpinner minutesSpinner;
-    @FindBy(xpath = ".//td[@class='rf-cal-timepicker-inp']/table/tbody/tr/td/table[tbody/tr/td/input[contains(@id, 'TimeSeconds')]]")
-    private RichFacesTimeSpinner secondsSpinner;
-    @FindBy(xpath = ".//td[@class='rf-cal-timepicker-inp']/table/tbody/tr/td/table[tbody/tr/td/input[contains(@id, 'TimeSign')]]")
-    private RichFacesTimeSignSpinner timeSignSpinner;
-    //
+    @FindByJQuery(".rf-cal-timepicker-inp table table:has('input[id$=TimeHours]')")
+    private TimeSpinner12 hoursSpinner12;
+    @FindByJQuery(".rf-cal-timepicker-inp table table:has('input[id$=TimeHours]')")
+    private TimeSpinner24 hoursSpinner24;
+    @FindByJQuery(".rf-cal-timepicker-inp table table:has('input[id$=TimeMinutes]')")
+    private TimeSpinner60 minutesSpinner;
+    @FindByJQuery(".rf-cal-timepicker-inp table table:has('input[id$=TimeSeconds]')")
+    private TimeSpinner60 secondsSpinner;
+    @FindByJQuery(".rf-cal-timepicker-inp table table:has('input[id$=TimeSign]')")
+    private TimeSignSpinner timeSignSpinner;
+
     @FindBy(css = "div[id$=TimeEditorButtonOk]")
-    private WebElement okButtonElement;
+    private GrapheneElement okButtonElement;
     @FindBy(css = "div[id$=TimeEditorButtonCancel]")
-    private WebElement cancelButtonElement;
-    //
+    private GrapheneElement cancelButtonElement;
+
     private static final int defaultHours = 12;
     private static final int defaultMinutes = 0;
     private static final int defaultSeconds = 0;
 
-    @Override
+    public WebElement getRoot() {
+        return root;
+    }
+
+    public enum SetValueBy {
+
+        TYPING, BUTTONS;
+    }
+
     public void cancelTime() {
         if (!isVisible()) {
             throw new RuntimeException("Cannot interact with TimePicker. "
-                    + "Ensure that it it is opened.");
+                + "Ensure that it it is opened.");
         }
-        if (new WebElementConditionFactory(cancelButtonElement).not().isVisible().apply(driver)) {
+        if (!cancelButtonElement.isDisplayed()) {
             throw new RuntimeException("Cancel button is not visible.");
         }
         cancelButtonElement.click();
-        Graphene.waitGui().withMessage("Time editor did not close.").until(isNotVisibleCondition());
+        waitUntilIsNotVisible();
     }
 
-    @Override
     public void confirmTime() {
         if (!isVisible()) {
             throw new RuntimeException("Cannot interact with TimePicker. "
-                    + "Ensure that it it is opened.");
+                + "Ensure that it it is opened.");
         }
-        if (new WebElementConditionFactory(okButtonElement).not().isVisible().apply(driver)) {
+        if (!okButtonElement.isDisplayed()) {
             throw new RuntimeException("Ok button is not visible.");
         }
         okButtonElement.click();
-        Graphene.waitGui().withMessage("Time editor did not close.").until(isNotVisibleCondition());
+        waitUntilIsNotVisible();
     }
 
-    @Override
     public WebElement getCancelButtonElement() {
         return cancelButtonElement;
     }
 
-    private RichFacesTimeSpinner getHoursSpinner() {
+    private TimeSpinner<Integer> getHoursSpinner() {
         if (getTimeSignSpinner() == null) {
             if (hoursSpinner24.isVisible()) {
                 return hoursSpinner24;
@@ -111,46 +117,44 @@ public class RichFacesTimeEditor implements TimeEditor {
         return null;
     }
 
-    private RichFacesTimeSpinner getMinutesSpinner() {
+    private TimeSpinner<Integer> getMinutesSpinner() {
         if (minutesSpinner.isVisible()) {
             return minutesSpinner;
         }
         return null;
     }
 
-    @Override
     public WebElement getOkButtonElement() {
         return okButtonElement;
     }
 
-    private RichFacesTimeSpinner getSecondsSpinner() {
+    private TimeSpinner<Integer> getSecondsSpinner() {
         if (secondsSpinner.isVisible()) {
             return secondsSpinner;
         }
         return null;
     }
 
-    @Override
     public DateTime getTime() {
         int seconds = (getSecondsSpinner() != null ? getSecondsSpinner().getValue() : defaultSeconds);
         int minutes = (getMinutesSpinner() != null ? getMinutesSpinner().getValue() : defaultMinutes);
         int hours = (getHoursSpinner() != null ? getHoursSpinner().getValue() : defaultHours);
         DateTime result = new DateTime()
-                .withHourOfDay(hours)
-                .withMinuteOfHour(minutes)
-                .withSecondOfMinute(seconds);
-        RichFacesTimeSignSpinner tss = getTimeSignSpinner();
+            .withHourOfDay(hours)
+            .withMinuteOfHour(minutes)
+            .withSecondOfMinute(seconds);
+        TimeSignSpinner tss = getTimeSignSpinner();
         if (tss != null) {
             switch (tss.getValue()) {
                 case AM:
                     if (result.getHourOfDay() == 12) {//12:xx am -> 00:xx
-                        result = result.minusHours(12);
-                    }
+                    result = result.minusHours(12);
+                }
                     break;
                 case PM:
                     if (result.getHourOfDay() != 12) {
-                        result = result.plusHours(12);
-                    }
+                    result = result.plusHours(12);
+                }
                     break;
                 default:
                     throw new IllegalArgumentException("Unknown switch");
@@ -159,32 +163,21 @@ public class RichFacesTimeEditor implements TimeEditor {
         return result;
     }
 
-    private RichFacesTimeSignSpinner getTimeSignSpinner() {
+    private TimeSignSpinner getTimeSignSpinner() {
         if (timeSignSpinner.isVisible()) {
             return timeSignSpinner;
         }
         return null;
     }
 
-    @Override
-    public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return new WebElementConditionFactory(root).not().isVisible();
-    }
-
-    @Override
     public boolean isVisible() {
-        return isVisibleCondition().apply(driver);
-    }
-
-    @Override
-    public ExpectedCondition<Boolean> isVisibleCondition() {
-        return new WebElementConditionFactory(root).isVisible();
+        return Utils.isVisible(root);
     }
 
     private TimeEditor setTime(int hours, int minutes, int seconds, SetValueBy by) {
         TimeSign timeSign = null;
-        RichFacesTimeSpinner actSecondsSpinner = getSecondsSpinner();
-        RichFacesTimeSignSpinner acttimeSignSpinner = getTimeSignSpinner();
+        TimeSpinner<Integer> actSecondsSpinner = getSecondsSpinner();
+        TimeSignSpinner acttimeSignSpinner = getTimeSignSpinner();
         if (acttimeSignSpinner != null) {//there is a time sign spinner, --> fix the hours
             timeSign = TimeSign.AM;
             if (hours >= 12) {
@@ -208,8 +201,25 @@ public class RichFacesTimeEditor implements TimeEditor {
         return this;
     }
 
-    @Override
     public TimeEditor setTime(DateTime time, SetValueBy inputType) {
         return setTime(time.getHourOfDay(), time.getMinuteOfHour(), time.getSecondOfMinute(), inputType);
+    }
+
+    public WaitingWrapper waitUntilIsNotVisible() {
+        return new WaitingWrapperImpl() {
+            @Override
+            protected void performWait(FluentWait<WebDriver, Void> wait) {
+                wait.until().element(root).is().not().visible();
+            }
+        }.withMessage("Time editor to be not visible.");
+    }
+
+    public WaitingWrapper waitUntilIsVisible() {
+        return new WaitingWrapperImpl() {
+            @Override
+            protected void performWait(FluentWait<WebDriver, Void> wait) {
+                wait.until().element(root).is().visible();
+            }
+        }.withMessage("Time editor to be visible.");
     }
 }
