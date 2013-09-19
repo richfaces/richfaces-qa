@@ -22,17 +22,17 @@
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.calendarAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+
 import org.joda.time.DateTime;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.TimeEditor;
-import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.TimeEditor.SetValueBy;
+import org.richfaces.tests.page.fragments.impl.calendar.TimeEditor;
+import org.richfaces.tests.page.fragments.impl.calendar.TimeEditor.SetValueBy;
 import org.testng.annotations.Test;
 
 /**
@@ -51,15 +51,15 @@ public class TestCalendarTimeEditor extends AbstractCalendarTest {
     @Test
     public void testCancelButton() {
         int plusMinutes = 5;
-        MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
-        TimeEditor openedTimeEditor = calendar.openPopup().getFooterControls().openTimeEditor();
+        MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
+        TimeEditor openedTimeEditor = popupCalendar.openPopup().getFooterControls().openTimeEditor();
         MetamerPage.waitRequest(openedTimeEditor, WaitRequestType.NONE).setTime(todayMidday.plusMinutes(plusMinutes), SetValueBy.BUTTONS);
         DateTime time1 = openedTimeEditor.getTime();
         assertEquals(time1.getMinuteOfHour(), plusMinutes);
 
         MetamerPage.waitRequest(openedTimeEditor, WaitRequestType.NONE).cancelTime();
         assertFalse(openedTimeEditor.isVisible());
-        openedTimeEditor = calendar.openPopup().getFooterControls().openTimeEditor();
+        openedTimeEditor = popupCalendar.openPopup().getFooterControls().openTimeEditor();
         time1 = openedTimeEditor.getTime();
         assertEquals(time1.getHourOfDay(), 12);//default value
         assertEquals(time1.getMinuteOfHour(), 0);//default value
@@ -99,8 +99,8 @@ public class TestCalendarTimeEditor extends AbstractCalendarTest {
 
     @Test
     public void testShowTimeEditor() {
-        MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
-        TimeEditor openedTimeEditor = calendar.openPopup().getFooterControls().openTimeEditor();
+        MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
+        TimeEditor openedTimeEditor = popupCalendar.openPopup().getFooterControls().openTimeEditor();
         assertTrue(openedTimeEditor.isVisible());
         DateTime time1 = openedTimeEditor.getTime();
         assertEquals(time1.getHourOfDay(), 12);
@@ -109,11 +109,11 @@ public class TestCalendarTimeEditor extends AbstractCalendarTest {
 
     private void testTimeSet(int[] valuesToTest, Time time, SetValueBy interaction) {
         for (int value : valuesToTest) {
-            MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
-            TimeEditor openedTimeEditor = calendar.openPopup().getFooterControls().openTimeEditor();
+            MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
+            TimeEditor openedTimeEditor = popupCalendar.openPopup().getFooterControls().openTimeEditor();
             DateTime changedTime = time.change(todayMidday, value);
             openedTimeEditor.setTime(changedTime, interaction).confirmTime();
-            openedTimeEditor = calendar.openPopup().getFooterControls().openTimeEditor();
+            openedTimeEditor = popupCalendar.openPopup().getFooterControls().openTimeEditor();
             DateTime time1 = openedTimeEditor.getTime();
             time.checkTimeChanged(changedTime, time1);
         }

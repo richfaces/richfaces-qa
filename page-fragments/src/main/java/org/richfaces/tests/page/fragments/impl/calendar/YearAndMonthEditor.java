@@ -19,74 +19,87 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.page.fragments.impl.calendar.common.editor.yearAndMonth;
+package org.richfaces.tests.page.fragments.impl.calendar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
-import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.fragment.Root;
+import org.jboss.arquillian.graphene.wait.FluentWait;
 import org.joda.time.DateTime;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
+
+import com.google.common.collect.Lists;
 
 /**
  * Component for calendar's year and month editor.
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesYearAndMonthEditor implements YearAndMonthEditor {
+public class YearAndMonthEditor {
 
     @Root
     private WebElement root;
 
-    @Drone
-    private WebDriver driver;
-    //
-    @FindBy(css = "div[id*='DateEditorLayoutM']")
-    private List<WebElement> months;
+    @FindByJQuery("div[id*='DateEditorLayoutM']:even")
+    private List<WebElement> monthsEven;
+    @FindByJQuery("div[id*='DateEditorLayoutM']:odd")
+    private List<WebElement> monthsOdd;
+    @FindBy(css = "div[id*='DateEditorLayoutM'].rf-cal-edtr-btn-sel")
+    private WebElement selectedMonth;
+
     @FindBy(css = "div[id*='DateEditorLayoutY']")
     private List<WebElement> years;
-    @FindBy(xpath = ".//tr[contains(@id,'DateEditorLayoutTR')][1] //td[3] //div")
+    @FindByJQuery("div[id*='DateEditorLayoutY']:even")
+    private List<WebElement> yearsEven;
+    @FindByJQuery("div[id*='DateEditorLayoutY']:odd")
+    private List<WebElement> yearsOdd;
+    @FindBy(css = "div[id*='DateEditorLayoutY0']")
+    private WebElement firstYear;
+    @FindBy(css = "div[id*='DateEditorLayoutY'].rf-cal-edtr-btn-sel")
+    private WebElement selectedYear;
+
+    @FindByJQuery("[id$='DateEditorLayoutTR'] > td > div:eq(2)")
     private WebElement previousDecadeButtonElement;
-    @FindBy(xpath = ".//tr[contains(@id,'DateEditorLayoutTR')][1] //td[4] //div")
+    @FindByJQuery("[id$='DateEditorLayoutTR'] > td > div:eq(3)")
     private WebElement nextDecadeButtonElement;
     @FindBy(css = "div[id$=DateEditorButtonOk]")
     private WebElement okButtonElement;
     @FindBy(css = "div[id$=DateEditorButtonCancel]")
     private WebElement cancelButtonElement;
-    //
+
     private static final String SELECTED = "rf-cal-edtr-btn-sel";
 
-    @Override
     public void cancelDate() {
         cancelButtonElement.click();
-        Graphene.waitGui().withMessage("Year and month editor did not close.").until(isNotVisibleCondition());
+        waitUntilIsNotVisible().perform();
     }
 
-    @Override
     public void confirmDate() {
         okButtonElement.click();
-        Graphene.waitGui().withMessage("Year and month editor did not close.").until(isNotVisibleCondition());
+        waitUntilIsNotVisible().perform();
     }
 
-    @Override
     public WebElement getCancelButtonElement() {
         return cancelButtonElement;
     }
 
-    @Override
     public DateTime getDate() {
-        return new DateTime().withMonthOfYear(getSelectedMonth()).withYear(getSelectedYear());
+        return new DateTime().withMonthOfYear(getSelectedMonthNumber()).withYear(getSelectedYearNumber());
     }
 
-    @Override
     public List<Integer> getDisplayedYears() {
-        List<WebElement> inRightOrder = inRightOrder(years);
+        List<WebElement> inRightOrder = Lists.newArrayList(yearsEven);
+        inRightOrder.addAll(yearsOdd);
         List<Integer> result = new ArrayList<Integer>(10);
         for (WebElement webElement : inRightOrder) {
             result.add(Integer.parseInt(webElement.getText().trim()));
@@ -94,49 +107,42 @@ public class RichFacesYearAndMonthEditor implements YearAndMonthEditor {
         return result;
     }
 
-    @Override
     public WebElement getNextDecadeButtonElement() {
         return nextDecadeButtonElement;
     }
 
-    @Override
     public WebElement getOkButtonElement() {
         return okButtonElement;
     }
 
-    @Override
     public WebElement getPreviousDecadeButtonElement() {
         return previousDecadeButtonElement;
     }
 
-    @Override
-    public Integer getSelectedMonth() {
-        String classAttribute = "class";
-        List<WebElement> inRightOrder = inRightOrder(months);
-        int i = 0;
-        for (WebElement webElement : inRightOrder) {
-            if (webElement.getAttribute(classAttribute).contains(SELECTED)) {
-                return i + 1;
-            }
-            i++;
+    public WebElement getRoot() {
+        return root;
+    }
+
+    public Integer getSelectedMonthNumber() {
+        if (Utils.isVisible(selectedMonth)) {
+            String id = selectedMonth.getAttribute("id");
+            return Integer.parseInt(id.substring(id.lastIndexOf("M") + 1))
+                + 1;// indexed from 0
         }
         return null;
     }
 
-    @Override
-    public Integer getSelectedYear() {
-        String classAttribute = "class";
-        for (WebElement year : years) {
-            if (year.getAttribute(classAttribute).contains(SELECTED)) {
-                return Integer.parseInt(year.getText().trim());
-            }
+    public Integer getSelectedYearNumber() {
+        if (Utils.isVisible(selectedYear)) {
+            String year = selectedYear.getText();
+            return Integer.parseInt(year);
         }
         return null;
     }
 
-    @Override
     public List<String> getShortMonthsLabels() {
-        List<WebElement> inRightOrder = inRightOrder(months);
+        List<WebElement> inRightOrder = Lists.newArrayList(monthsEven);
+        inRightOrder.addAll(monthsOdd);
         List<String> result = new ArrayList<String>(12);
         for (WebElement webElement : inRightOrder) {
             result.add(webElement.getText().trim());
@@ -144,59 +150,27 @@ public class RichFacesYearAndMonthEditor implements YearAndMonthEditor {
         return result;
     }
 
-    private List<WebElement> inRightOrder(List<WebElement> list) {
-        List<WebElement> result = new ArrayList<WebElement>(12);
-        List<WebElement> result1 = new ArrayList<WebElement>(6);
-        List<WebElement> result2 = new ArrayList<WebElement>(6);
-        int x = 0;
-        for (WebElement webElement : list) {
-            if (x % 2 == 0) {
-                result1.add(webElement);
-            } else {
-                result2.add(webElement);
-            }
-            x++;
-        }
-        result.addAll(result1);
-        result.addAll(result2);
-        return result;
-    }
-
-    @Override
-    public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return new WebElementConditionFactory(root).not().isVisible();
-    }
-
-    @Override
     public boolean isVisible() {
-        return isVisibleCondition().apply(driver);
+        return Utils.isVisible(root);
     }
 
-    @Override
-    public ExpectedCondition<Boolean> isVisibleCondition() {
-        return new WebElementConditionFactory(root).isVisible();
-    }
-
-    @Override
     public void nextDecade() {
-        String firstBefore = years.get(0).getText();
+        String firstBefore = firstYear.getText();
         nextDecadeButtonElement.click();
-        Graphene.waitGui().withMessage("The decade was not changed.").until().element(years.get(0)).text().not().equalTo(firstBefore);
+        Graphene.waitGui().withMessage("The decade was not changed.").until().element(firstYear).text().not().equalTo(firstBefore);
     }
 
-    @Override
     public void previousDecade() {
-        String firstBefore = years.get(0).getText();
+        String firstBefore = firstYear.getText();
         previousDecadeButtonElement.click();
-        Graphene.waitGui().withMessage("The decade was not changed.").until().element(years.get(0)).text().not().equalTo(firstBefore);
+        Graphene.waitGui().withMessage("The decade was not changed.").until().element(firstYear).text().not().equalTo(firstBefore);
     }
 
-    @Override
-    public RichFacesYearAndMonthEditor selectDate(DateTime date) {
+    public YearAndMonthEditor selectDate(DateTime date) {
         return selectDate(date.getMonthOfYear(), date.getYear());
     }
 
-    private RichFacesYearAndMonthEditor selectDate(int month, int year) {
+    private YearAndMonthEditor selectDate(int month, int year) {
         Validate.isTrue(month > 0 && month < 13, "Month number has to be in interval <1,12>");//this should not be necessary
         selectMonth(month);
         selectYear(year);
@@ -204,34 +178,48 @@ public class RichFacesYearAndMonthEditor implements YearAndMonthEditor {
     }
 
     private void selectMonth(int month) {
-        WebElement monthElement = inRightOrder(months).get(month - 1);
+        WebElement monthElement = root.findElement(By.cssSelector("div[id*='DateEditorLayoutM" + (month - 1) + "']"));
         monthElement.click();
         Graphene.waitGui().withMessage("The month was not selected.").until().element(monthElement).attribute("class").contains(SELECTED);
     }
 
     private void selectYear(int year) {
         int yearsPickerSize = years.size();
-        int yearInTheFirstColumn = Integer.parseInt(years.get(0).getText());
+        int yearInTheFirstColumn = Integer.parseInt(firstYear.getText());
         int diff = year - yearInTheFirstColumn;
+        // scroll to year
         if (diff > 0 && diff >= yearsPickerSize) {
             while (diff > 0) {
-                nextDecadeButtonElement.click();
+                nextDecade();
                 diff -= yearsPickerSize;
             }
         } else {
             while (diff < 0) {
-                previousDecadeButtonElement.click();
+                previousDecade();
                 diff += yearsPickerSize;
             }
         }
-        String yearString = String.valueOf(year);
-        for (WebElement yearElement : years) {
-            if (yearElement.getText().trim().equals(yearString)) {
-                yearElement.click();
-                Graphene.waitGui().withMessage("The year was not selected.").until().element(yearElement).attribute("class").contains(SELECTED);
-                return;
+        // select year
+        WebElement yearElement = root.findElement(ByJQuery.selector("div[id*='DateEditorLayoutY']:contains('" + year + "')"));
+        yearElement.click();
+        Graphene.waitGui().withMessage("The year was not selected.").until().element(yearElement).attribute("class").contains(SELECTED);
+    }
+
+    public WaitingWrapper waitUntilIsNotVisible() {
+        return new WaitingWrapperImpl() {
+            @Override
+            protected void performWait(FluentWait<WebDriver, Void> wait) {
+                wait.until().element(root).is().not().visible();
             }
-        }
-        throw new IllegalStateException("The year was not found");
+        }.withMessage("Year and month editor to be not visible.");
+    }
+
+    public WaitingWrapper waitUntilIsVisible() {
+        return new WaitingWrapperImpl() {
+            @Override
+            protected void performWait(FluentWait<WebDriver, Void> wait) {
+                wait.until().element(root).is().visible();
+            }
+        }.withMessage("Year and month editor to be not visible.");
     }
 }

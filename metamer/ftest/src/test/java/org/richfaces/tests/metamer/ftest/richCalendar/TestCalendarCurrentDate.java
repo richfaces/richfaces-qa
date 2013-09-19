@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.calendarAttributes;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
@@ -59,7 +58,7 @@ public class TestCalendarCurrentDate extends AbstractCalendarTest {
         DateTime newReferenceTime = todayMidday.plusMonths(someMonthsInFuture);
         calendarAttributes.set(CalendarAttributes.currentDate, newReferenceTime.toString(dateTimeFormatter));
         //get actual date in popup and parse it (pattern is Month, year)
-        DateTime yearAndMonth = calendar.openPopup().getHeaderControls().getYearAndMonth();
+        DateTime yearAndMonth = popupCalendar.openPopup().getHeaderControls().getYearAndMonth();
 
         assertEquals(yearAndMonth.getMonthOfYear(), newReferenceTime.getMonthOfYear());
         assertEquals(yearAndMonth.getYear(), newReferenceTime.getYear());
@@ -68,7 +67,7 @@ public class TestCalendarCurrentDate extends AbstractCalendarTest {
     @Test
     public void testCurrentDateGet() {
         //set date to today
-        MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
+        MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
 
         //parse the value saved to attribute @currentDate
         DateTime currentDateValue = dateTimeFormatter.parseDateTime(calendarAttributes.get(CalendarAttributes.currentDate));

@@ -21,10 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.calendarAttributes;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
+
 import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -89,14 +89,13 @@ public class TestCalendarKVS extends AbstractCalendarTest {
         @Override
         public void doRequest(String inputValue) {
             calendarAttributes.set(CalendarAttributes.enableManualInput, Boolean.TRUE);
-            calendar.getInput().clear();
-            calendar.getInput().sendKeys(inputValue);
+            popupCalendar.getInput().clear().sendKeys(inputValue);
             submitWithA4jSubmitBtn();
         }
 
         @Override
         public void verifyResponse(String inputValue) {
-            assertEquals(calendar.getInputValue(), inputValue);
+            assertEquals(popupCalendar.getInput().getStringValue(), inputValue);
         }
 
         @Override
@@ -116,13 +115,13 @@ public class TestCalendarKVS extends AbstractCalendarTest {
 
         @Override
         public void doRequest(String inputValue) {
-            MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
-            selectedDate = calendar.getInputValue();
+            MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
+            selectedDate = popupCalendar.getInput().getStringValue();
         }
 
         @Override
         public void verifyResponse(String inputValue) {
-            assertEquals(calendar.getInputValue(), selectedDate, "Input doesn't contain selected date.");
+            assertEquals(popupCalendar.getInput().getStringValue(), selectedDate, "Input doesn't contain selected date.");
         }
 
         @Override
