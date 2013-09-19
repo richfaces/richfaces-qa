@@ -41,6 +41,4 @@ public interface PopupMenu {
     void selectItem(String header, WebElement target);
 
     void selectItem(int index, WebElement target);
-
-    void setTarget(WebElement target);
 }

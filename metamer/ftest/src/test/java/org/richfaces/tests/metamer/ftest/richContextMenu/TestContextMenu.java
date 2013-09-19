@@ -57,6 +57,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch.PerformableAction;
 import org.richfaces.tests.page.fragments.impl.Locations;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.richfaces.ui.common.Positioning;
 import org.testng.annotations.Test;
 
@@ -86,7 +87,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
 
     private void updateShowAction() {
         contextMenuAttributes.set(ContextMenuAttributes.showEvent, "click");
-        page.getContextMenu().advanced().setupInvoker(page.getContextMenu().advanced().LEFT_CLICK_INVOKER);
+        page.getContextMenu().advanced().setupInvokeEvent(Event.CLICK);
     }
 
     @Test
@@ -550,11 +551,11 @@ public class TestContextMenu extends AbstractWebDriverTest {
     public void testShowEvent() {
         updateShowAction();
         contextMenuAttributes.set(ContextMenuAttributes.showEvent, "hover");
-        page.getContextMenu().advanced().setupInvoker(page.getContextMenu().advanced().HOVER_INVOKER);
+        page.getContextMenu().advanced().setupInvokeEvent(Event.MOUSEOVER);
         page.getContextMenu().advanced().invoke(page.getTargetPanel1());
 
         contextMenuAttributes.set(ContextMenuAttributes.showEvent, "click");
-        page.getContextMenu().advanced().setupInvoker(page.getContextMenu().advanced().LEFT_CLICK_INVOKER);
+        page.getContextMenu().advanced().setupInvokeEvent(Event.CLICK);
         page.getContextMenu().advanced().invoke(page.getTargetPanel1());
     }
 

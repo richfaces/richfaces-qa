@@ -27,11 +27,12 @@ import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.contextMenu.AbstractPopupMenu;
+import org.richfaces.tests.page.fragments.impl.contextMenu.PopupMenu;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class RichFacesDropDownMenu extends AbstractPopupMenu implements DropDownMenu {
+public class RichFacesDropDownMenu extends AbstractPopupMenu implements PopupMenu {
 
     @FindBy(className = "rf-ddm-itm")
     private List<WebElement> menuItemsElements;
@@ -63,12 +64,7 @@ public class RichFacesDropDownMenu extends AbstractPopupMenu implements DropDown
     }
 
     @Override
-    public String getNameOfFragment() {
-        return RichFacesDropDownMenu.class.getName();
-    }
-
-    @Override
-    protected WebElement getScript() {
+    protected WebElement getScriptElement() {
         return script;
     }
 

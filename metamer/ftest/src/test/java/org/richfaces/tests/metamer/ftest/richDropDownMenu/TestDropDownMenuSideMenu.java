@@ -31,12 +31,14 @@ import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
+
 /**
  *
  * @author <a href="mailto:manovotn@redhat.com">Matej Novotny</a>
  *
  */
 public class TestDropDownMenuSideMenu extends AbstractDropDownMenuTest {
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richDropDownMenu/sideMenu.xhtml");

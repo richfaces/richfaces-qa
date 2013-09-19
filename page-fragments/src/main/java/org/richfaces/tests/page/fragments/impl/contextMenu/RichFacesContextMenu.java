@@ -59,19 +59,14 @@ public class RichFacesContextMenu extends AbstractPopupMenu implements PopupMenu
     }
 
     @Override
-    protected String getNameOfFragment() {
-        return RichFacesContextMenu.class.getName();
-    }
-
-    @Override
-    protected WebElement getScript() {
+    protected WebElement getScriptElement() {
         return script;
     }
 
     public class AdvancedContextMenuInteractions extends AbstractPopupMenu.AdvancedPopupMenuInteractions {
 
         public String getLangAttribute() {
-            return root.getAttribute("lang");
+            return getRootElement().getAttribute("lang");
         }
     }
 }

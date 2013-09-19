@@ -56,7 +56,7 @@ public class TestTree extends AbstractContextMenuTest {
             waitGui().withTimeout(3, TimeUnit.SECONDS).until(page.getExpextedConditionOnNodeSelected(leaf));
             waitGui();
 
-            page.getContextMenu().setTarget(leaf);
+            page.getContextMenu().advanced().setupTarget(leaf);
             page.getContextMenu().selectItem(0);
             waitGui().withTimeout(3, TimeUnit.SECONDS).until().element(page.getArtistFromPopup()).is().visible();
 
