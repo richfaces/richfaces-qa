@@ -136,7 +136,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
         menuItemAttributes.set(MenuItemAttributes.disabled, Boolean.TRUE);
 
         assertTrue(menuItem1.getAttribute("class").contains("rf-ddm-itm-dis"),
-                "Menu item should have class 'rf-ddm-itm-dis'.");
+            "Menu item should have class 'rf-ddm-itm-dis'.");
         assertNotPresent(icon, "Icon should not be present.");
         assertPresent(emptyIcon, "Empty icon should be present.");
     }
@@ -152,11 +152,11 @@ public class TestMenuItem extends AbstractWebDriverTest {
     public void testIcon() {
         menuItemAttributes.set(MenuItemAttributes.icon, "star");
         assertTrue(icon.getAttribute("src").contains("star.png"),
-                "Image's src attribute should contain 'star.png'.");
+            "Image's src attribute should contain 'star.png'.");
 
         menuItemAttributes.set(MenuItemAttributes.icon, "nonexisting");
         assertTrue(icon.getAttribute("src").contains("nonexisting"),
-                "Image's src attribute should contain 'nonexisting'.");
+            "Image's src attribute should contain 'nonexisting'.");
 
         menuItemAttributes.set(MenuItemAttributes.icon, "null");
         assertNotPresent(icon, "Icon should not be present.");
@@ -173,12 +173,12 @@ public class TestMenuItem extends AbstractWebDriverTest {
         menuItemAttributes.set(MenuItemAttributes.iconDisabled, "star");
         openMenu();
         assertTrue(icon.getAttribute("src").contains("star.png"),
-                "Image's src attribute should contain 'star.png'.");
+            "Image's src attribute should contain 'star.png'.");
 
         menuItemAttributes.set(MenuItemAttributes.iconDisabled, "nonexisting");
         openMenu();
         assertTrue(icon.getAttribute("src").contains("nonexisting"),
-                "Image's src attribute should contain 'nonexisting'.");
+            "Image's src attribute should contain 'nonexisting'.");
     }
 
     @Test
@@ -358,6 +358,6 @@ public class TestMenuItem extends AbstractWebDriverTest {
 
     @BeforeMethod
     private void updateDropDownMenuInvoker() {
-        fileDropDownMenu.advanced().setupInvoker(fileDropDownMenu.advanced().HOVER_INVOKER);
+        fileDropDownMenu.advanced().setupInvokeEvent(Event.MOUSEOVER);
     }
 }

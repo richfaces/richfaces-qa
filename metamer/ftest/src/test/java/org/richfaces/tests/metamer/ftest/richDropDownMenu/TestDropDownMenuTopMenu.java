@@ -107,11 +107,11 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
         super.testRendered();
     }
 
-     @Test
-     @Use(field = "delay", ints = { 1000, 1500, 2500 })
-     public void testShowDelay() {
-     super.testShowDelay(delay);
-     }
+    @Test
+    @Use(field = "delay", ints = { 1000, 1500, 2500 })
+    public void testShowDelay() {
+        super.testShowDelay(delay);
+    }
 
     @Test
     @Templates("plain")

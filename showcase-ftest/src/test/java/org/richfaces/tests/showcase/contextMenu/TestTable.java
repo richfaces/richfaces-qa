@@ -56,7 +56,7 @@ public class TestTable extends AbstractContextMenuTest {
 
             String priceFromTable = rowPrice.getText();
 
-            page.getContextMenu().setTarget(rowPrice);
+            page.getContextMenu().advanced().setupTarget(rowPrice);
             page.getContextMenu().selectItem(0);
 
             Graphene.waitGui().until().element(page.getPriceFromPopup()).is().visible();

@@ -180,11 +180,11 @@ public class TestMenuGroup extends AbstractWebDriverTest {
 
         menuGroupAttributes.set(MenuGroupAttributes.icon, "star");
         assertTrue(icon.getAttribute("src").contains("star.png"),
-                "Icon's src attribute should contain \"star.png\".");
+            "Icon's src attribute should contain \"star.png\".");
 
         menuGroupAttributes.set(MenuGroupAttributes.icon, "nonexisting");
         assertTrue(icon.getAttribute("src").contains("nonexisting"),
-                "Icon's src attribute should contain \"nonexisting\".");
+            "Icon's src attribute should contain \"nonexisting\".");
     }
 
     @Test
@@ -197,11 +197,11 @@ public class TestMenuGroup extends AbstractWebDriverTest {
 
         menuGroupAttributes.set(MenuGroupAttributes.iconDisabled, "star");
         assertTrue(icon.getAttribute("src").contains("star.png"),
-                "Icon's src attribute should contain \"star.png\".");
+            "Icon's src attribute should contain \"star.png\".");
 
         menuGroupAttributes.set(MenuGroupAttributes.iconDisabled, "nonexisting");
         assertTrue(icon.getAttribute("src").contains("nonexisting"),
-                "Icon's src attribute should contain \"nonexisting\".");
+            "Icon's src attribute should contain \"nonexisting\".");
     }
 
     @Test
@@ -387,6 +387,6 @@ public class TestMenuGroup extends AbstractWebDriverTest {
 
     @BeforeMethod
     private void updateDropDownMenuInvoker() {
-        fileDropDownMenu.advanced().setupInvoker(fileDropDownMenu.advanced().HOVER_INVOKER);
+        fileDropDownMenu.advanced().setupInvokeEvent(Event.MOUSEOVER);
     }
 }
