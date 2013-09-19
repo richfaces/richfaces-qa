@@ -29,7 +29,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.switchable.AbstractSwitchableComponent;
 
-public class RichFacesAccordion extends AbstractSwitchableComponent<RichFacesAccordionItem> {
+public class RichFacesAccordion extends AbstractSwitchableComponent<RichFacesAccordionItem> implements Accordion {
 
     @FindBy(className = "rf-ac-itm-hdr")
     private List<WebElement> switcherControllerElements;
@@ -47,6 +47,7 @@ public class RichFacesAccordion extends AbstractSwitchableComponent<RichFacesAcc
         return advancedInteractions;
     }
 
+    @Override
     public int getNumberOfAccordionItems() {
         return accordionItems.size();
     }

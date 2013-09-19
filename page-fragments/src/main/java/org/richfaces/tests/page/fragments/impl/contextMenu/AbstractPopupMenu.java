@@ -21,14 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.contextMenu;
 
-import static org.jboss.arquillian.graphene.Graphene.waitModel;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.fragment.Root;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
@@ -48,7 +45,7 @@ import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public abstract class AbstractPopupMenu {
+public abstract class AbstractPopupMenu implements PopupMenu {
 
     @Drone
     private WebDriver browser;
@@ -94,6 +91,7 @@ public abstract class AbstractPopupMenu {
         return advancedInteractions;
     }
 
+    @Override
     public void selectItem(ChoicePicker picker) {
         if (target == null) {
             target = root;
@@ -102,29 +100,35 @@ public abstract class AbstractPopupMenu {
         picker.pick(getMenuItemElementsInternal()).click();
     }
 
+    @Override
     public void selectItem(String header) {
         selectItem(ChoicePickerHelper.byVisibleText().match(header));
     }
 
+    @Override
     public void selectItem(int index) {
         selectItem(ChoicePickerHelper.byIndex().index(index));
     }
 
+    @Override
     public void selectItem(ChoicePicker picker, WebElement target) {
         setTarget(target);
         selectItem(picker);
     }
 
+    @Override
     public void selectItem(String header, WebElement target) {
         setTarget(target);
         selectItem(header);
     }
 
+    @Override
     public void selectItem(int index, WebElement target) {
         setTarget(target);
         selectItem(index);
     }
 
+    @Override
     public void setTarget(WebElement target) {
         this.target = target;
     }

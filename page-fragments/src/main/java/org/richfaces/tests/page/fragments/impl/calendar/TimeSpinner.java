@@ -55,7 +55,7 @@ public abstract class TimeSpinner<T> {
         return buttonUpElement;
     }
 
-    public TextInputComponent getInput() {
+    public TextInputComponentImpl getInput() {
         return input;
     }
 

@@ -19,9 +19,28 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.inputNumberSlider;
+package org.richfaces.tests.page.fragments.impl.contextMenu;
 
-public interface InputNumberSlider extends NumberInput {
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 
-    void slideToValue(double n);
+/**
+ *
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ */
+public interface PopupMenu {
+
+    void selectItem(ChoicePicker picker);
+
+    void selectItem(String header);
+
+    void selectItem(int index);
+
+    void selectItem(ChoicePicker picker, WebElement target);
+
+    void selectItem(String header, WebElement target);
+
+    void selectItem(int index, WebElement target);
+
+    void setTarget(WebElement target);
 }

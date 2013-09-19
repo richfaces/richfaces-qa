@@ -30,7 +30,7 @@ import org.openqa.selenium.support.FindBy;
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class RichFacesContextMenu extends AbstractPopupMenu {
+public class RichFacesContextMenu extends AbstractPopupMenu implements PopupMenu {
 
     @FindBy(className = "rf-ctx-itm")
     private List<WebElement> menuItemsElements;

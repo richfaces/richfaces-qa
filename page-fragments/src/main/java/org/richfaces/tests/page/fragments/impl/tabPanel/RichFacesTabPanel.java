@@ -29,7 +29,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.switchable.AbstractSwitchableComponent;
 
-public class RichFacesTabPanel extends AbstractSwitchableComponent<RichFacesTab> {
+public class RichFacesTabPanel extends AbstractSwitchableComponent<RichFacesTab> implements TabPanel<RichFacesTab> {
 
     @FindByJQuery(".rf-tab-hdr:visible")
     private List<WebElement> switcherControllerElements;
