@@ -184,13 +184,11 @@ public abstract class AbstractTreeSelectionTest extends AbstractTreeTest {
 
     protected void testTopLevelSelection() {
         assertEquals(allSelectedItems.size(), 0);
-        TreeNode guardedNode;
         for (TreeNode node : tree.advanced().getNodes()) {
-            guardedNode = getGuarded(node, selectionType);
             assertFalse(node.advanced().isSelected());
             assertTrue(node.advanced().isCollapsed());
-            guardedNode.advanced().select();
-            assertTrue(node.advanced().isSelected());
+            getGuarded(node.advanced().getLabelElement(), selectionType).click();
+            node.advanced().waitUntilNodeIsSelected();
             assertTrue(node.advanced().isCollapsed());
             assertEquals(allSelectedItems.size(), 1);
         }
