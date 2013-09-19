@@ -83,7 +83,7 @@ public abstract class AbstractTreeSelectionTest extends AbstractTreeTest {
                     ? tree.advanced().getNodes().get(index)
                     : treeNode.advanced().getNodes().get(index);
                 if (i < path.length - 1) {
-                    getGuarded(treeNode.advanced(), selectionType).expand();
+                    treeNode.advanced().expand();
                 }
             }
         }
@@ -100,7 +100,7 @@ public abstract class AbstractTreeSelectionTest extends AbstractTreeTest {
             String[] strings = StringUtils.split(matcher.group(1), ", ");
             Integer[] numbers = new Integer[strings.length];
             for (int i = 0; i < strings.length; i++) {
-                numbers[i] = Integer.valueOf(strings[i]) + 1;
+                numbers[i] = Integer.valueOf(strings[i]);
             }
             return numbers;
         }
