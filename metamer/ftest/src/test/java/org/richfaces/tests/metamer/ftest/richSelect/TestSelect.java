@@ -99,14 +99,14 @@ public class TestSelect extends AbstractWebDriverTest {
     @Test
     public void testClientFilterFunction() {
         selectAttributes.set(SelectAttributes.clientFilterFunction, "filterValuesByLength");
-        select.type("4");//get all states with 4 letters
+        select.type("4");// get all states with 4 letters
         List<WebElement> suggestions = select.advanced().getSuggestionsElements();
         assertEquals(suggestions.size(), 3);
         assertEquals(suggestions.get(0).getText(), "Iowa");
         assertEquals(suggestions.get(1).getText(), "Ohio");
         assertEquals(suggestions.get(2).getText(), "Utah");
 
-        select.type("5");//get all states with 5 letters
+        select.type("5");// get all states with 5 letters
         suggestions = select.advanced().getSuggestionsElements();
         assertEquals(suggestions.size(), 3);
         assertEquals(suggestions.get(0).getText(), "Idaho");
@@ -485,7 +485,8 @@ public class TestSelect extends AbstractWebDriverTest {
         for (int i = 0; i < selectOptions.length; i++) {
             assertEquals(suggestions.get(i).getText(), selectOptions[i]);
         }
-        assertTrue(suggestions.get(0).getAttribute("class").contains("rf-sel-sel"), "First item should contain class for selected item.");
+        assertTrue(suggestions.get(0).getAttribute("class").contains("rf-sel-sel"),
+            "First item should contain class for selected item.");
         new Actions(driver).sendKeys(Keys.RETURN).perform();
 
         String previousTime = page.getRequestTimeElement().getText();
@@ -502,16 +503,19 @@ public class TestSelect extends AbstractWebDriverTest {
         Graphene.guardAjax(select.openSelect()).select(0);
         select.openSelect();
         List<WebElement> suggestions = select.advanced().getSuggestionsElements();
-        assertTrue(suggestions.get(0).getAttribute("class").contains("metamer-ftest-class"), "Selected item should contain set class");
+        assertTrue(suggestions.get(0).getAttribute("class").contains("metamer-ftest-class"),
+            "Selected item should contain set class");
         for (int i = 1; i < suggestions.size(); i++) {
-            assertFalse(suggestions.get(i).getAttribute("class").contains("metamer-ftest-class"), "Not selected item should not contain set class");
+            assertFalse(suggestions.get(i).getAttribute("class").contains("metamer-ftest-class"),
+                "Not selected item should not contain set class");
         }
     }
 
     @Test
     public void testSelectWithKeyboard() {
         selectHawaiiWithKeyboardGuardedAction.perform();
-        assertTrue(item10.getAttribute("class").contains("rf-sel-sel"), "Selected item should contain class for selected option.");
+        assertTrue(item10.getAttribute("class").contains("rf-sel-sel"),
+            "Selected item should contain class for selected option.");
         assertEquals(output.getText(), "Hawaii");
         page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Hawaii");
     }
@@ -519,7 +523,8 @@ public class TestSelect extends AbstractWebDriverTest {
     @Test
     public void testSelectWithMouse() {
         Graphene.guardAjax(select.openSelect()).select(10);
-        assertTrue(item10.getAttribute("class").contains("rf-sel-sel"), "Selected item should contain class for selected option.");
+        assertTrue(item10.getAttribute("class").contains("rf-sel-sel"),
+            "Selected item should contain class for selected option.");
         assertEquals(output.getText(), "Hawaii");
         page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Hawaii");
     }

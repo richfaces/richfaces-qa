@@ -92,7 +92,7 @@ public class RichFacesSelect implements Select {
 
     @Override
     public SelectSuggestions openSelect() {
-        if (!Utils.isVisible(driver, GLOBAL_POPUP) && Utils.isVisible(localPopup)) {
+        if (!Utils.isVisible(driver, GLOBAL_POPUP) && !Utils.isVisible(localPopup)) {
             (advanced().getOpenByInputClick() ? input.advanced().getInputElement() : showButton).click();
         }
         return getSuggestions();
