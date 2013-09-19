@@ -76,8 +76,11 @@ public class TestSelectFragment extends AbstractWebDriverTest {
 
         Graphene.guardAjax(select.openSelect()).select(0);
         assertEquals(getOutputText(), "Alabama");
+        select.advanced().getInput().clear();
+
         Graphene.guardAjax(select.openSelect()).select("Michigan");
         assertEquals(getOutputText(), "Michigan");
+        select.advanced().getInput().clear();
 
         Graphene.guardAjax(select.openSelect()).select(ChoicePickerHelper.byIndex().last());
         assertEquals(getOutputText(), "Wyoming");

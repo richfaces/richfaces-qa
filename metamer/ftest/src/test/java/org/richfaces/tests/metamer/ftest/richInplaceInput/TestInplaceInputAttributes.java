@@ -126,7 +126,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-9872")
     public void testClickCancelButton() {
         inplaceInputAttributes.set(InplaceInputAttributes.showControls, Boolean.TRUE);
-        MetamerPage.waitRequest(inplaceInput.type("value that will be canceled"), WaitRequestType.NONE).cancelByControlls();
+        MetamerPage.waitRequest(inplaceInput.type("value that will be canceled"), WaitRequestType.HTTP).cancelByControlls();
         assertEquals(inplaceInput.advanced().getLabelValue(), "RichFaces 4", "Default value was expected.");
     }
 
