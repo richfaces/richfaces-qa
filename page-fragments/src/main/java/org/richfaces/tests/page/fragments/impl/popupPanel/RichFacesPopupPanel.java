@@ -74,14 +74,15 @@ public abstract class RichFacesPopupPanel<HEADER, HEADERCONTROLS, BODY> extends 
 
     private final AdvancedPopupPanelInteractions interactions = new AdvancedPopupPanelInteractions();
 
+    private final Class<HEADERCONTROLS> headerClass = (Class<HEADERCONTROLS>) TypeResolver.resolveRawArguments(RichFacesPopupPanel.class, getClass())[1];
+
     public AdvancedPopupPanelInteractions advanced() {
         return interactions;
     }
 
     @Override
     public HEADERCONTROLS getHeaderControlsContent() {
-        Class<HEADERCONTROLS> containerClass = (Class<HEADERCONTROLS>) TypeResolver.resolveRawArguments(RichFacesPopupPanel.class, getClass())[1];
-        return Graphene.createPageFragment(containerClass, getBodyElement());
+        return Graphene.createPageFragment(headerClass, getBodyElement());
     }
 
     @Override

@@ -22,4 +22,12 @@
 package org.richfaces.tests.page.fragments.impl.panel;
 
 public class TextualRichFacesPanel extends RichFacesPanel<TextualFragmentPart, TextualFragmentPart> {
+
+    public String getHeaderText() {
+        return getHeaderContent().getText();
+    }
+
+    public String getBodyText() {
+        return getBodyContent().getText();
+    }
 }
