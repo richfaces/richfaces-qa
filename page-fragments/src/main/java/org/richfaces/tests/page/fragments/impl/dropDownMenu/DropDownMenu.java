@@ -19,9 +19,14 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.inputNumberSlider;
+package org.richfaces.tests.page.fragments.impl.dropDownMenu;
 
-public interface InputNumberSlider extends NumberInput {
+import org.richfaces.tests.page.fragments.impl.contextMenu.PopupMenu;
 
-    void slideToValue(double n);
+/**
+ * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ */
+public interface DropDownMenu extends PopupMenu {
+
+    String getNameOfFragment();
 }

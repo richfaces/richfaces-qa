@@ -28,8 +28,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.inputNumberSlider.AbstractNumberInput;
+import org.richfaces.tests.page.fragments.impl.inputNumberSlider.NumberInput;
 
-public class RichFacesInputNumberSpinner extends AbstractNumberInput {
+public class RichFacesInputNumberSpinner extends AbstractNumberInput implements NumberInput {
 
     @FindBy(css = "input.rf-insp-inp")
     private TextInputComponentImpl input;

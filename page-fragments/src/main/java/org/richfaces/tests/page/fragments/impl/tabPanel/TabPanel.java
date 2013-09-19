@@ -19,9 +19,12 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.inputNumberSlider;
+package org.richfaces.tests.page.fragments.impl.tabPanel;
 
-public interface InputNumberSlider extends NumberInput {
+import org.richfaces.tests.page.fragments.impl.switchable.ComponentContainer;
+import org.richfaces.tests.page.fragments.impl.switchable.SwitchableComponent;
 
-    void slideToValue(double n);
+public interface TabPanel<T extends ComponentContainer> extends SwitchableComponent<T> {
+
+    int getNumberOfTabs();
 }

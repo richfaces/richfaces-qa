@@ -31,7 +31,7 @@ import org.richfaces.tests.page.fragments.impl.contextMenu.AbstractPopupMenu;
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class RichFacesDropDownMenu extends AbstractPopupMenu {
+public class RichFacesDropDownMenu extends AbstractPopupMenu implements DropDownMenu {
 
     @FindBy(className = "rf-ddm-itm")
     private List<WebElement> menuItemsElements;

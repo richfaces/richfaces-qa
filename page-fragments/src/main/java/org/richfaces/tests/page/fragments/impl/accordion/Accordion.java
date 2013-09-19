@@ -19,9 +19,11 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.inputNumberSlider;
+package org.richfaces.tests.page.fragments.impl.accordion;
 
-public interface InputNumberSlider extends NumberInput {
+import org.richfaces.tests.page.fragments.impl.switchable.SwitchableComponent;
 
-    void slideToValue(double n);
+public interface Accordion extends SwitchableComponent<RichFacesAccordionItem> {
+
+    int getNumberOfAccordionItems();
 }
