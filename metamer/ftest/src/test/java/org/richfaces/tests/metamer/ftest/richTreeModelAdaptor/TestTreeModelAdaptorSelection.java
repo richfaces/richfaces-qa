@@ -116,7 +116,7 @@ public class TestTreeModelAdaptorSelection extends AbstractTreeSelectionTest {
         Matcher matcher = pattern.matcher(string);
         List<Integer> list = new LinkedList<Integer>();
         while (matcher.find()) {
-            int integer = Integer.valueOf(matcher.group(1)) + 1;
+            int integer = Integer.valueOf(matcher.group(1));
             integer = fixShiftWhenModelPresent(list, integer);
             list.add(integer);
         }
@@ -128,7 +128,7 @@ public class TestTreeModelAdaptorSelection extends AbstractTreeSelectionTest {
 
     private Integer fixShiftWhenModelPresent(List<Integer> list, int integer) {
         if (!list.isEmpty()) {
-            if (list.get(0) % 2 == 0) {
+            if (list.get(0) % 2 == 1) {
                 if (list.size() == 2) {
                     if (paths.toString().equals(pathsForRecursiveModel.toString())) {
                         return integer + 7;
