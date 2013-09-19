@@ -39,12 +39,9 @@ public abstract class RichFacesPanel<HEADER, BODY> extends AbstractPanel<HEADER,
     @FindBy(css = "div.rf-p-b")
     private WebElement body;
 
-    private AdvancedInteractions advancedInteractions;
+    private AdvancedPanelInteractions advancedInteractions = new AdvancedPanelInteractions();
 
-    public AdvancedInteractions advanced() {
-        if (advancedInteractions == null) {
-            advancedInteractions = new AdvancedInteractions();
-        }
+    public AdvancedPanelInteractions advanced() {
         return advancedInteractions;
     }
 
@@ -58,7 +55,7 @@ public abstract class RichFacesPanel<HEADER, BODY> extends AbstractPanel<HEADER,
         return header;
     }
 
-    public class AdvancedInteractions {
+    public class AdvancedPanelInteractions {
 
         public WebElement getRootElement() {
             return RichFacesPanel.this.getRootElement();

@@ -74,10 +74,10 @@ public class TestPanel extends AbstractWebDriverTest {
         assertPresent(panelWithHeader.advanced().getBodyElement(), "The first panel should have a body.");
         assertPresent(panelWithoutHeader.advanced().getBodyElement(), "The second panel should have a body.");
 
-        assertTrue(panelWithHeader.getHeaderContent().getText().endsWith("header of panel"));
-        assertTrue(panelWithHeader.getBodyContent().getText().startsWith("Lorem ipsum"),
+        assertTrue(panelWithHeader.getHeaderText().endsWith("header of panel"));
+        assertTrue(panelWithHeader.getBodyText().startsWith("Lorem ipsum"),
             "First panel's body should start with \"Lorem ipsum\".");
-        assertTrue(panelWithoutHeader.getBodyContent().getText().startsWith("Nulla ornare"),
+        assertTrue(panelWithoutHeader.getBodyText().startsWith("Nulla ornare"),
             "Second panel's body should start with \"Nulla ornare\".");
     }
 
@@ -93,9 +93,9 @@ public class TestPanel extends AbstractWebDriverTest {
     public void testHeader() {
         panelAttributes.set(PanelAttributes.header, "new header");
 
-        assertEquals(panelWithHeader.getHeaderContent().getText(), "header of panel",
+        assertEquals(panelWithHeader.getHeaderText(), "header of panel",
             "Header of the first panel should not change (facet defined).");
-        assertEquals(panelWithoutHeader.getHeaderContent().getText(), "new header",
+        assertEquals(panelWithoutHeader.getHeaderText(), "new header",
             "Header of the second panel.");
     }
 

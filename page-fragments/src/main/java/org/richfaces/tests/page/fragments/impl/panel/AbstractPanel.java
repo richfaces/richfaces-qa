@@ -32,11 +32,13 @@ public abstract class AbstractPanel<HEADER, BODY> implements Panel<HEADER, BODY>
     @Root
     private WebElement root;
 
+    private final Class<BODY> bodyClass = (Class<BODY>) TypeResolver.resolveRawArguments(Panel.class, getClass())[1];
+    private final Class<HEADER> headerClass = (Class<HEADER>) TypeResolver.resolveRawArguments(Panel.class, getClass())[0];
+
     @Override
     @SuppressWarnings(value = "unchecked")
     public BODY getBodyContent() {
-        Class<BODY> containerClass = (Class<BODY>) TypeResolver.resolveRawArguments(Panel.class, getClass())[1];
-        return Graphene.createPageFragment(containerClass, getBodyElement());
+        return Graphene.createPageFragment(bodyClass, getBodyElement());
     }
 
     protected abstract WebElement getBodyElement();
@@ -47,8 +49,7 @@ public abstract class AbstractPanel<HEADER, BODY> implements Panel<HEADER, BODY>
         if (!new GrapheneElement(getHeaderElement()).isPresent()) {
             throw new IllegalStateException("You are trying to get header content of the panel which does not have header!");
         }
-        Class<HEADER> containerClass = (Class<HEADER>) TypeResolver.resolveRawArguments(Panel.class, getClass())[0];
-        return Graphene.createPageFragment(containerClass, getHeaderElement());
+        return Graphene.createPageFragment(headerClass, getHeaderElement());
     }
 
     protected abstract WebElement getHeaderElement();
