@@ -35,6 +35,7 @@ import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.annotations.Uses;
 import org.richfaces.tests.page.fragments.impl.tree.Tree.TreeNode;
 import org.richfaces.tests.page.fragments.impl.utils.Actions;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
@@ -59,6 +60,13 @@ public class TestTreeAttributes extends AbstractTreeTest {
         assertEquals(expectedReturnJS("return window.data;", testData), testData);
     }
 
+    @Test(groups = { "Future" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-11766")
+    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    public void testDataRFTreeNode() {
+        testData();
+    }
+
     @Test
     public void testDir() {
         testDir(tree.advanced().getRootElement());
@@ -71,12 +79,20 @@ public class TestTreeAttributes extends AbstractTreeTest {
         page.assertListener(PhaseId.UPDATE_MODEL_VALUES, "executeChecker");
     }
 
+    @Test(groups = { "Future" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-11766")
+    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    public void testExecuteRFTreeNode() {
+        testExecute();
+    }
+
     @Test
     @Templates(value = "plain")
     public void testHandleClass() {
         TreeNode node = getGuarded(tree, SwitchType.ajax).expandNode(0);
         testStyleClass(node.advanced().getHandleElement(), BasicAttributes.handleClass);
-        testStyleClass(getGuarded(node, SwitchType.ajax).expandNode(0).advanced().getHandleElement(), BasicAttributes.handleClass);
+        testStyleClass(getGuarded(node, SwitchType.ajax).expandNode(0).advanced().getHandleElement(),
+            BasicAttributes.handleClass);
     }
 
     @Test
@@ -93,9 +109,11 @@ public class TestTreeAttributes extends AbstractTreeTest {
         treeAttributes.set(TreeAttributes.iconCollapsed, IMAGE_URL);
         TreeNode node = tree.advanced().getFirstNode();
         assertTrue(node.advanced().getIconElement().getAttribute("src").endsWith(IMAGE_URL));
-        String attribute = Optional.fromNullable(getGuarded(node.advanced(), SwitchType.ajax).expand().advanced().getIconElement().getAttribute("src")).or("");
+        String attribute = Optional.fromNullable(
+            getGuarded(node.advanced(), SwitchType.ajax).expand().advanced().getIconElement().getAttribute("src")).or("");
         assertFalse(attribute.endsWith(IMAGE_URL));
-        assertTrue(getGuarded(node.advanced(), SwitchType.ajax).collapse().advanced().getIconElement().getAttribute("src").endsWith(IMAGE_URL));
+        assertTrue(getGuarded(node.advanced(), SwitchType.ajax).collapse().advanced().getIconElement().getAttribute("src")
+            .endsWith(IMAGE_URL));
     }
 
     @Test
@@ -104,9 +122,11 @@ public class TestTreeAttributes extends AbstractTreeTest {
         treeAttributes.set(TreeAttributes.iconExpanded, IMAGE_URL);
         TreeNode node = getGuarded(tree, SwitchType.ajax).expandNode(0);
         assertTrue(node.advanced().getIconElement().getAttribute("src").endsWith(IMAGE_URL));
-        String attribute = Optional.fromNullable(getGuarded(node.advanced(), SwitchType.ajax).collapse().advanced().getIconElement().getAttribute("src")).or("");
+        String attribute = Optional.fromNullable(
+            getGuarded(node.advanced(), SwitchType.ajax).collapse().advanced().getIconElement().getAttribute("src")).or("");
         assertFalse(attribute.endsWith(IMAGE_URL));
-        assertTrue(getGuarded(node.advanced(), SwitchType.ajax).expand().expandNode(0).advanced().getIconElement().getAttribute("src").endsWith(IMAGE_URL));
+        assertTrue(getGuarded(node.advanced(), SwitchType.ajax).expand().expandNode(0).advanced().getIconElement()
+            .getAttribute("src").endsWith(IMAGE_URL));
     }
 
     @Test
@@ -151,6 +171,13 @@ public class TestTreeAttributes extends AbstractTreeTest {
         Graphene.waitAjax().until().element(page.getRenderCheckerOutputElement()).text().not().equalTo(renderCheckerText);
     }
 
+    @Test(groups = { "Future" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-11766")
+    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    public void testLimitRenderRFTreeNode() {
+        testLimitRender();
+    }
+
     @Test
     @Templates(value = "plain")
     public void testNodeClass() {
@@ -162,9 +189,23 @@ public class TestTreeAttributes extends AbstractTreeTest {
         testFireEvent(treeAttributes, TreeAttributes.onbeforedomupdate, selectFirstNodeAjaxAction);
     }
 
+    @Test(groups = { "Future" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-11766")
+    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    public void testOnbeforedomupdateRFTreeNode() {
+        testOnbeforedomupdate();
+    }
+
     @Test
     public void testOnbeforenodetoggle() {
         testFireEvent(treeAttributes, TreeAttributes.onbeforenodetoggle, expandFirstNodeAjaxAction);
+    }
+
+    @Test(groups = { "Future" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-11766")
+    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    public void testOnbeforenodetoggleRFTreeNode() {
+        testOnbeforenodetoggle();
     }
 
     @Test
@@ -172,9 +213,23 @@ public class TestTreeAttributes extends AbstractTreeTest {
         testFireEvent(treeAttributes, TreeAttributes.onbeforeselectionchange, selectFirstNodeAjaxAction);
     }
 
+    @Test(groups = { "Future" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-11766")
+    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    public void testOnbeforeselectionchangeRFTreeNode() {
+        testOnbeforeselectionchange();
+    }
+
     @Test
     public void testOnbegin() {
         testFireEvent(treeAttributes, TreeAttributes.onbegin, selectFirstNodeAjaxAction);
+    }
+
+    @Test(groups = { "Future" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-11766")
+    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    public void testOnbeginRFTreeNode() {
+        testOnbegin();
     }
 
     @Test
@@ -185,6 +240,13 @@ public class TestTreeAttributes extends AbstractTreeTest {
     @Test
     public void testOncomplete() {
         testFireEvent(treeAttributes, TreeAttributes.oncomplete, selectFirstNodeAjaxAction);
+    }
+
+    @Test(groups = { "Future" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-11766")
+    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    public void testOncompleteRFTreeNode() {
+        testOncomplete();
     }
 
     @Test
@@ -248,12 +310,26 @@ public class TestTreeAttributes extends AbstractTreeTest {
         testFireEvent(treeAttributes, TreeAttributes.onselectionchange, selectFirstNodeAjaxAction);
     }
 
+    @Test(groups = { "Future" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-11766")
+    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    public void testOnselectionChangeRFTreeNode() {
+        testOnselectionchange();
+    }
+
     @Test
     public void testRender() {
         treeAttributes.set(TreeAttributes.render, "renderChecker");
         String renderCheckerText = page.getRenderCheckerOutputElement().getText();
         selectFirstNodeAjaxAction.perform();
         Graphene.waitAjax().until().element(page.getRenderCheckerOutputElement()).text().not().equalTo(renderCheckerText);
+    }
+
+    @Test(groups = { "Future" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-11766")
+    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    public void testRenderRFTreeNode() {
+        testRender();
     }
 
     @Test
@@ -268,7 +344,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     @Use(field = "sample", strings = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates(exclude = "a4jRegion")
     public void testSelectionClientSideEventsOrder() {
-        String[] events = new String[]{ "beforeselectionchange", "begin", "beforedomupdate", "complete", "selectionchange" };
+        String[] events = new String[] { "beforeselectionchange", "begin", "beforedomupdate", "complete", "selectionchange" };
         testRequestEventsBefore(events);
         selectFirstNodeAjaxAction.perform();
         testRequestEventsAfter(events);
@@ -298,9 +374,23 @@ public class TestTreeAttributes extends AbstractTreeTest {
         Graphene.guardNoRequest(tree).selectNode(1);
     }
 
+    @Test(groups = { "Future" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-11766")
+    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    public void testSelectionTypeRFTreeNode() {
+        testSelectionType();
+    }
+
     @Test
     public void testStatus() {
         testStatus(selectFirstNodeAjaxAction);
+    }
+
+    @Test(groups = { "Future" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-11766")
+    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    public void testStatusRFTreeNode() {
+        testStatus();
     }
 
     @Test
@@ -322,7 +412,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     @IssueTracking("https://issues.jboss.org/browse/RF-10265")
     public void testToggleClientSideEventsOrder() {
         treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax);
-        String[] events = new String[]{ "beforenodetoggle", "begin", "beforedomupdate", "complete", "nodetoggle" };
+        String[] events = new String[] { "beforenodetoggle", "begin", "beforedomupdate", "complete", "nodetoggle" };
         testRequestEventsBefore(events);
         expandFirstNodeAjaxAction.perform();
         testRequestEventsAfter(events);
@@ -332,15 +422,14 @@ public class TestTreeAttributes extends AbstractTreeTest {
     public void testToggleNodeEvent() {
         treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax);
         List<Event> testedEvents = Lists.newArrayList(Event.CLICK, Event.CONTEXTCLICK, Event.DBLCLICK);
-        for (boolean toggleByHandle : new boolean[]{ true, false }) {
+        for (boolean toggleByHandle : new boolean[] { true, false }) {
             tree.advanced().setupToggleByHandle(toggleByHandle);
             for (Event event : testedEvents) {
                 treeAttributes.set(TreeAttributes.toggleNodeEvent, event.toString());
                 if (!toggleByHandle) {
                     tree.advanced().setupToggleNodeEvent(event);
                 }
-                (tree.advanced().getFirstNode().advanced().isExpanded()
-                    ? collapseFirstNodeAjaxAction
+                (tree.advanced().getFirstNode().advanced().isExpanded() ? collapseFirstNodeAjaxAction
                     : expandFirstNodeAjaxAction).perform();
             }
         }
