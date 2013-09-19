@@ -1,5 +1,7 @@
 package org.richfaces.tests.page.fragments.test.choicePicker;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
 
@@ -24,20 +26,30 @@ public class TestChoicePickerByVisibleText extends Arquillian {
     private MyPageFragment myFragment;
 
     @Test
-    public void testPickNonExistingElement() {
-        browser.get(TestChoicePickerByVisibleText.class.getResource("choicePickerByVisibleText.html").toExternalForm());
-
-        ByVisibleTextChoicePicker picker = ChoicePickerHelper.byVisibleText().match("non existing");
-        WebElement element = picker.pick(myFragment.getDivs());
-        assertNull(element);
-    }
-
-    @Test
     public void testMultipleChoicePickerNonExistingElement() {
         browser.get(TestChoicePickerByVisibleText.class.getResource("choicePickerByVisibleText.html").toExternalForm());
 
         ByVisibleTextChoicePicker picker = ChoicePickerHelper.byVisibleText().match("non existing");
         List<WebElement> elements = picker.pickMultiple(myFragment.getDivs());
         assertTrue(elements.isEmpty());
+    }
+
+    @Test
+    public void testPickExistingElement() {
+        browser.get(TestChoicePickerByVisibleText.class.getResource("choicePickerByVisibleText.html").toExternalForm());
+
+        ByVisibleTextChoicePicker picker = ChoicePickerHelper.byVisibleText().match("1");
+        WebElement element = picker.pick(myFragment.getDivs());
+        assertNotNull(element);
+        assertEquals(element.getText(), "1");
+    }
+
+    @Test
+    public void testPickNotExistingElement() {
+        browser.get(TestChoicePickerByVisibleText.class.getResource("choicePickerByVisibleText.html").toExternalForm());
+
+        ByVisibleTextChoicePicker picker = ChoicePickerHelper.byVisibleText().match("non existing");
+        WebElement element = picker.pick(myFragment.getDivs());
+        assertNull(element);
     }
 }
