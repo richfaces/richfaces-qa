@@ -425,6 +425,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         page.getTooltip().setMode(mode);
         Action action = new Actions(driver).clickAndHold(page.getTooltip().getRoot()).build();
         verifyEventHandler(TooltipAttributes.onmousedown, action);
+        new Actions(driver).release().perform();
     }
 
     @Test
@@ -463,7 +464,8 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
     public void testOnmouseover() {
         tooltipAttributes.set(TooltipAttributes.mode, mode);
         page.getTooltip().setMode(mode);
-        Action action = new Actions(driver).moveToElement(page.getTooltip().getRoot()).build();
+        new Actions(driver).moveToElement(page.getRequestTimeElement()).perform();
+        Action action = new Actions(driver).moveToElement(page.getTooltip().getRoot(), 0, 0).build();
         verifyEventHandler(TooltipAttributes.onmouseover, action);
     }
 
