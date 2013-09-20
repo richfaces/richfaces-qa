@@ -76,7 +76,7 @@ public class TestStatusJSApi extends AbstractWebDriverTest {
         testFireEvent(statusAttributes, StatusAttributes.onstart, new Action() {
             @Override
             public void perform() {
-                executeJS("RichFaces.component('" + statusMessage.getAttribute("id") + "').start()");
+                executeJS("RichFaces.$('" + statusMessage.getAttribute("id") + "').start()");
             }
         });
 
@@ -89,7 +89,7 @@ public class TestStatusJSApi extends AbstractWebDriverTest {
         testFireEvent(statusAttributes, StatusAttributes.onstop, new Action() {
             @Override
             public void perform() {
-                executeJS("RichFaces.component('" + statusMessage.getAttribute("id") + "').stop()");
+                executeJS("RichFaces.$('" + statusMessage.getAttribute("id") + "').stop()");
             }
         });
     }
@@ -101,7 +101,7 @@ public class TestStatusJSApi extends AbstractWebDriverTest {
         testFireEvent(statusAttributes, StatusAttributes.onerror, new Action() {
             @Override
             public void perform() {
-                executeJS("RichFaces.component('" + statusMessage.getAttribute("id") + "').error()");
+                executeJS("RichFaces.$('" + statusMessage.getAttribute("id") + "').error()");
             }
         });
     }
