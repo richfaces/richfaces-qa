@@ -29,8 +29,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
-import com.google.common.base.Predicate;
-
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -59,6 +58,7 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
+import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.VisibleComponent;
@@ -67,6 +67,9 @@ import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
+
+import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
 
 public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
@@ -324,6 +327,34 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
         attLang = (lang1 == null || lang1.isEmpty() ? lang2 : lang1);
         assertEquals(attLang, TESTVALUE, "Attribute xml:lang should be present.");
+    }
+
+    /**
+     * Helper method for testing of delays (showDelay, hideDelay). Runs the @actionWithDelay 3 times and measure time spent in it.
+     * Then count an average time from these 3 values and asserts it to the @expectedDelay with 50% tolerance.
+     *
+     * @param actionBefore action before the measured action. Can be used for e.g. close/open menu. Can be null.
+     * @param actionWithDelay the measured action. Can be e.g. open/close menu.
+     * @param attributeName name of the measured attribute (e.g. hideDelay, showDelay).
+     * @param expectedDelay expected delay spent in @actionWithDelay and also a value that will be set in attribute with name @attributeName
+     */
+    protected void testDelay(final Action actionBefore, final Action actionWithDelay, String attributeName, long expectedDelay) {
+        getUnsafeAttributes("").set(attributeName, expectedDelay);
+        double tolerance = expectedDelay * 0.5;
+        int cycles = 3;
+        ArrayList<Long> delays = Lists.newArrayList();
+        for (int i = 0; i < cycles; i++) {
+            if (actionBefore != null) {
+                actionBefore.perform();
+            }
+            delays.add(StopWatch.watchTimeSpentInAction(actionWithDelay).inMillis().longValue());
+        }
+        double avg = 0;
+        for (Long delay : delays) {
+            avg += delay;
+        }
+        avg /= delays.size();
+        assertEquals(avg, expectedDelay, tolerance, "The delay is not in tolerance.");
     }
 
     /**
