@@ -22,64 +22,204 @@
 package org.richfaces.tests.page.fragments.impl.tooltip;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.fragment.Root;
+import org.jboss.arquillian.graphene.wait.FluentWait;
 import org.jboss.arquillian.test.api.ArquillianResource;
-import org.openqa.selenium.JavascriptExecutor;
+import org.jodah.typetools.TypeResolver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
-import org.richfaces.TooltipMode;
+import org.richfaces.tests.page.fragments.impl.utils.Actions;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
+
+import com.google.common.base.Predicate;
 
 /**
- * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
+ * The root of this tooltip will be used for invoking this tooltip. In other words:
+ * set root of this toolTip to the panel on which can be the toolTip invoked so you don't have to set the target before invoking.
  *
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @param <CONTENT>
  */
-public class RichFacesTooltip {
+public abstract class RichFacesTooltip<CONTENT> implements Tooltip<CONTENT> {
 
     @Root
     private WebElement root;
+
     @ArquillianResource
-    private JavascriptExecutor executor;
-    @ArquillianResource
-    private Actions actions;
+    private WebDriver driver;
 
-    private TooltipMode mode = TooltipMode.client;
+    private final Class<CONTENT> contentClass = (Class<CONTENT>) TypeResolver.resolveRawArguments(RichFacesTooltip.class, getClass())[0];
+    private final AdvancedTooltipInteractions interactions = new AdvancedTooltipInteractions();
 
-    public WebElement getRoot() {
-        return root;
+    public AdvancedTooltipInteractions advanced() {
+        return interactions;
     }
 
-    public TooltipMode getMode() {
-        return mode;
+    @Override
+    public CONTENT getContent() {
+        return Graphene.createPageFragment(contentClass, advanced().getTooltipElement());
     }
 
-    public void setMode(TooltipMode mode) {
-        this.mode = mode;
+    @Override
+    public RichFacesTooltip hide() {
+        advanced().initiateTooltipsBefore();
+        new Actions(driver)
+            .triggerEventByWD(advanced().getHideEvent(), advanced().getTarget())
+            .perform();
+        advanced().waitUntilTooltipIsNotVisible().perform();
+        return this;
     }
 
-    public void recall(WebElement target) {
-        recall(target, 5, 5);
+    @Override
+    public RichFacesTooltip hide(WebElement target) {
+        advanced().setupTarget(target);
+        return hide();
     }
 
-    public void recall(WebElement target, int x, int y) {
-        Action mouseMoveAt = actions.moveToElement(target, x, y).build();
-        getGuardTypeForMode(mouseMoveAt, mode).perform();
+    @Override
+    public RichFacesTooltip show() {
+        advanced().initiateTooltipsBefore();
+        new Actions(driver)
+            .moveToElement(advanced().getTarget())
+            .triggerEventByWD(advanced().getShowEvent(), advanced().getTarget())
+            .perform();
+        advanced().waitUntilTooltipIsVisible().perform();
+        advanced().acquireLastVisibleTooltipIDIfNotSet();
+        return this;
     }
 
-    public void hide(WebElement target) {
-        hide(target, -5, -5);
+    @Override
+    public RichFacesTooltip show(WebElement target) {
+        advanced().setupTarget(target);
+        return show();
     }
 
-    private void hide(WebElement target, int x, int y) {
-        actions.moveByOffset(x, y).perform();
-    }
+    public class AdvancedTooltipInteractions {
 
-    private static <T> T getGuardTypeForMode(T target, TooltipMode mode) {
-        switch (mode) {
-            case ajax:
-                return Graphene.guardAjax(target);
-            default:
-                return Graphene.guardNoRequest(target);
+        private final ByJQuery tooltipsSelector = ByJQuery.selector(".rf-tt:visible");
+        private final Event DEFAULT_SHOW_EVENT = Event.MOUSEOVER;
+        private Event showEvent = DEFAULT_SHOW_EVENT;
+        private final Event DEFAULT_HIDE_EVENT = Event.MOUSEOUT;
+        private Event hideEvent = DEFAULT_HIDE_EVENT;
+        private WebElement target;
+        private String idOfTooltip;
+        private int tooltipsBefore;
+
+        protected void acquireLastVisibleTooltipIDIfNotSet() {
+            if (idOfTooltip == null) {
+                this.idOfTooltip = driver.findElement(ByJQuery.selector(".rf-tt:last:visible")).getAttribute("id");
+            }
+        }
+
+        protected Event getHideEvent() {
+            return hideEvent;
+        }
+
+        protected String getIdOfTooltip() {
+            return idOfTooltip;
+        }
+
+        protected Event getShowEvent() {
+            return showEvent;
+        }
+
+        protected WebElement getTarget() {
+            if (target == null) {
+                return root;
+            }
+            return target;
+        }
+
+        protected int getTooltipsBefore() {
+            return tooltipsBefore;
+        }
+
+        /**
+         * Show the tooltip before this method. It will return actual tooltip element (element depends on the tooltip's visible state).
+         */
+        public WebElement getTooltipElement() {
+            if (getIdOfTooltip() == null) {
+                throw new IllegalStateException("Cannot obtain tooltip element. You have to show it first.");
+            }
+            return driver.findElement(By.id(getIdOfTooltip()));
+        }
+
+        protected void initiateTooltipsBefore() {
+            tooltipsBefore = driver.findElements(tooltipsSelector).size();
+        }
+
+        public void setupHideEvent() {
+            this.hideEvent = DEFAULT_HIDE_EVENT;
+        }
+
+        public void setupHideEvent(Event event) {
+            this.hideEvent = event;
+        }
+
+        public void setupShowEvent() {
+            this.showEvent = DEFAULT_SHOW_EVENT;
+        }
+
+        public void setupShowEvent(Event event) {
+            this.showEvent = event;
+        }
+
+        public void setupTarget() {
+            this.target = null;
+        }
+
+        public void setupTarget(WebElement target) {
+            this.target = target;
+        }
+
+        public WaitingWrapper waitUntilTooltipIsNotVisible() {
+            return getIdOfTooltip() == null
+                ? new WaitingWrapperImpl() {
+                    @Override
+                    protected void performWait(FluentWait<WebDriver, Void> wait) {
+                        wait.until(new Predicate<WebDriver>() {
+                            @Override
+                            public boolean apply(WebDriver input) {
+                                if (getTooltipsBefore() == 0) {
+                                    return driver.findElements(tooltipsSelector).isEmpty();
+                                } else {
+                                    return driver.findElements(tooltipsSelector).size() < getTooltipsBefore();
+                                }
+                            }
+                        });
+                    }
+                }.withMessage("Waiting until some tooltip disappears. There were " + getTooltipsBefore() + " tooltips before, now there are: " + driver.findElements(tooltipsSelector).size())
+                : new WaitingWrapperImpl() {
+                    @Override
+                    protected void performWait(FluentWait<WebDriver, Void> wait) {
+                        wait.until().element(driver, By.id(getIdOfTooltip())).is().not().visible();
+                    }
+                }.withMessage("Waiting until tooltip is not visible.");
+        }
+
+        public WaitingWrapper waitUntilTooltipIsVisible() {
+            return getIdOfTooltip() == null
+                ? new WaitingWrapperImpl() {
+                    @Override
+                    protected void performWait(FluentWait<WebDriver, Void> wait) {
+                        wait.until(new Predicate<WebDriver>() {
+                            @Override
+                            public boolean apply(WebDriver input) {
+                                return driver.findElements(tooltipsSelector).size() > getTooltipsBefore();
+                            }
+                        });
+                    }
+                }.withMessage("Waiting until a new tooltip appears. There were " + getTooltipsBefore() + " tooltips before, now there are: " + driver.findElements(tooltipsSelector).size())
+                : new WaitingWrapperImpl() {
+                    @Override
+                    protected void performWait(FluentWait<WebDriver, Void> wait) {
+                        wait.until().element(driver, By.id(getIdOfTooltip())).is().visible();
+                    }
+                }.withMessage("Waiting until tooltip is visible.");
         }
     }
 }

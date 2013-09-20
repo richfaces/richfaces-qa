@@ -1,6 +1,6 @@
 /**
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -19,55 +19,16 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.metamer.ftest.richTooltip;
+package org.richfaces.tests.page.fragments.impl.tooltip;
 
-import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import org.richfaces.tests.page.fragments.impl.panel.TextualFragmentPart;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public enum TooltipAttributes implements AttributeEnum {
+public class TextualRichFacesTooltip extends RichFacesTooltip<TextualFragmentPart> {
 
-    attached,
-    binding,
-    converter,
-    data,
-    dir,
-    direction,
-    followMouse,
-    hideDelay,
-    hideEvent,
-    horizontalOffset,
-    id,
-    jointPoint,
-    lang,
-    layout,
-    limitRender,
-    mode,
-    onbeforedomupdate,
-    onbeforehide,
-    onbeforeshow,
-    onbegin,
-    onclick,
-    oncomplete,
-    ondblclick,
-    onhide,
-    onmousedown,
-    onmousemove,
-    onmouseout,
-    onmouseover,
-    onmouseup,
-    onshow,
-    render,
-    rendered,
-    showDelay,
-    showEvent,
-    status,
-    style,
-    styleClass,
-    target,
-    title,
-    value,
-    verticalOffset,
-    zindex
+    public String getContentText() {
+        return getContent().getText();
+    }
 }
