@@ -290,6 +290,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
 
     @Test
     public void testOnmouseover() {
+        new Actions(driver).moveToElement(page.getRequestTimeElement()).perform();
         testFireEvent(treeAttributes, TreeAttributes.onmouseover,
             new Actions(driver).triggerEventByWD(Event.MOUSEOVER, tree.advanced().getRootElement()).build());
     }
