@@ -229,7 +229,8 @@ public class TestPickList extends AbstractWebDriverTest {
         item = pickList.advanced().getSourceList().getItem(ChoicePickerHelper.byIndex().last());
         assertTrue(item.getRootElement().getAttribute("class").contains("rf-pick-sel"));
         assertEquals(item.getText(), textSource);
-        assertEquals(Utils.getIndexOfElement(((GrapheneElement) item.getRootElement()).getWrappedElement()), pickList.advanced().getSourceList().size() - 1, "Index of removed item.");
+        assertEquals(Utils.getIndexOfElement(((GrapheneElement) item.getRootElement()).getWrappedElement()), pickList
+            .advanced().getSourceList().size() - 1, "Index of removed item.");
     }
 
     @Test
@@ -237,7 +238,8 @@ public class TestPickList extends AbstractWebDriverTest {
         int testedValue = 600;
         int tolerance = 10;
         pickListAttributes.set(PickListAttributes.listHeight, testedValue);
-        assertEquals(Integer.valueOf(pickList.advanced().getSourceListAreaElement().getCssValue("height").replace("px", "")),
+        assertEquals(
+            Integer.valueOf(pickList.advanced().getSourceListAreaElement().getCssValue("height").replace("px", "")),
             testedValue, tolerance);
     }
 
@@ -246,7 +248,8 @@ public class TestPickList extends AbstractWebDriverTest {
         int testedValue = 600;
         int tolerance = 10;
         pickListAttributes.set(PickListAttributes.listWidth, testedValue);
-        assertEquals(Integer.valueOf(pickList.advanced().getSourceListAreaElement().getCssValue("width").replace("px", "")),
+        assertEquals(
+            Integer.valueOf(pickList.advanced().getSourceListAreaElement().getCssValue("width").replace("px", "")),
             testedValue, tolerance);
     }
 
@@ -452,12 +455,11 @@ public class TestPickList extends AbstractWebDriverTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11322")
     public void testOntargetblur() {
-        testFireEvent(pickListAttributes, PickListAttributes.ontargetblur, new Action() {
-            @Override
-            public void perform() {
-                pickList.add(0).remove(0);
-            }
-        });
+        testFireEvent(
+            pickListAttributes,
+            PickListAttributes.ontargetfocus,
+            new Actions(driver).click(pickList.advanced().getTargetListAreaElement())
+                .click(pickList.advanced().getSourceListAreaElement()).build());
     }
 
     @Test
@@ -564,12 +566,14 @@ public class TestPickList extends AbstractWebDriverTest {
         // move first item to last
         OrderingList orderingTargetList = pickList.advanced().orderTargetList();
         List<? extends ListItem> items = pickList.advanced().getTargetList().getItems();
-        List<String> targetStrings = Lists.newArrayList(items.get(0).getText(), items.get(1).getText(), items.get(2).getText());
+        List<String> targetStrings = Lists.newArrayList(items.get(0).getText(), items.get(1).getText(), items.get(2)
+            .getText());
 
         orderingTargetList.select(0).putItAfter(2);
         // verify that previously first item is now the last item (select 3rd item, and verify text)
         items = pickList.advanced().getTargetList().getItems();
-        List<String> targetStringsAfter = Lists.newArrayList(items.get(0).getText(), items.get(1).getText(), items.get(2).getText());
+        List<String> targetStringsAfter = Lists.newArrayList(items.get(0).getText(), items.get(1).getText(),
+            items.get(2).getText());
         targetStrings.add(targetStrings.remove(0));
         assertEquals(targetStringsAfter, targetStrings);
         // then move this item one step "up"
