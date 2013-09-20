@@ -31,8 +31,6 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
-import java.util.List;
-
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.Point;
@@ -46,11 +44,8 @@ import org.openqa.selenium.internal.Locatable;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuSimplePage;
-import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
 import org.richfaces.tests.page.fragments.impl.dropDownMenu.RichFacesDropDownMenu;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
-
-import com.beust.jcommander.internal.Lists;
 
 /**
  * Abstract test used for testing both drop down menus - top and side
@@ -206,24 +201,19 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
 
     @Use(field = "delay", ints = { 1000, 1500, 2500 })
     public void testHideDelay(int delay) {
-        dropDownMenuAttributes.set(DropDownMenuAttributes.hideDelay, delay);
         dropDownMenuAttributes.set(DropDownMenuAttributes.showDelay, 0);
-        double tolerance = delay * 0.5;
         updateDropDownMenuInvoker();
-
-        List<Integer> times = Lists.newArrayList(3);
-        for (int i = 0; i < 3; i++) {
-            getCurrentMenu().advanced().invoke(page.getTarget1());
-            times.add(StopWatch.watchTimeSpentInAction(new StopWatch.PerformableAction() {
-                @Override
-                public void perform() {
-                    getCurrentMenu().advanced().dismiss();
-                }
-            }).inMillis().intValue());
-        }
-        double average = (times.get(0) + times.get(1) + times.get(2)) / 3;
-        assertEquals(average, delay, tolerance, "The measured delay was far from set value.");
-
+        testDelay(new Action() {
+            @Override
+            public void perform() {
+                getCurrentMenu().advanced().invoke(page.getTarget1());
+            }
+        }, new Action() {
+            @Override
+            public void perform() {
+                getCurrentMenu().advanced().dismiss();
+            }
+        }, "hideDelay", delay);
     }
 
     public void testPopupWidth() {
@@ -246,23 +236,21 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
 
     public void testShowDelay(int delay) {
         dropDownMenuAttributes.set(DropDownMenuAttributes.hideDelay, 0);
-        dropDownMenuAttributes.set(DropDownMenuAttributes.showDelay, delay);
-        double tolerance = delay * 0.5;
         updateDropDownMenuInvoker();
-
-        List<Integer> times = Lists.newArrayList(3);
-        for (int i = 0; i < 3; i++) {
-            times.add(StopWatch.watchTimeSpentInAction(new StopWatch.PerformableAction() {
-                @Override
-                public void perform() {
-                    getCurrentMenu().advanced().invoke(page.getTarget1());
+        testDelay(new Action() {
+            @Override
+            public void perform() {
+                try {
+                    getCurrentMenu().advanced().dismiss();
+                } catch (IllegalStateException ignored) {
                 }
-            }).inMillis().intValue());
-            getCurrentMenu().advanced().dismiss();
-        }
-
-        double average = (times.get(0) + times.get(1) + times.get(2)) / 3;
-        assertEquals(average, delay, tolerance, "The measured delay was far from set value.");
+            }
+        }, new Action() {
+            @Override
+            public void perform() {
+                getCurrentMenu().advanced().invoke(page.getTarget1());
+            }
+        }, "showDelay", delay);
     }
 
     public void testTitle() {

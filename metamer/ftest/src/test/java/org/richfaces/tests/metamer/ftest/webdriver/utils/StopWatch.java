@@ -21,6 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.webdriver.utils;
 
+import org.openqa.selenium.interactions.Action;
+
 /**
  * Simple utility for measuring time spent in some action.
  *
@@ -46,7 +48,7 @@ public final class StopWatch {
         return new TimeSpent(Math.round(timeSpentInNanos / 1000000000.0));
     }
 
-    public static StopWatch watchTimeSpentInAction(PerformableAction a) {
+    public static StopWatch watchTimeSpentInAction(Action a) {
         long time = System.nanoTime();
         a.perform();
         return new StopWatch(System.nanoTime() - time);
@@ -102,10 +104,5 @@ public final class StopWatch {
         public int hashCode() {
             return Long.valueOf(value).hashCode();
         }
-    }
-
-    public interface PerformableAction {
-
-        void perform();
     }
 }

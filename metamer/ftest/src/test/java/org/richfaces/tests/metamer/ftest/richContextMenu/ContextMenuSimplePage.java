@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richContextMenu;
 
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.contextMenuAttributes;
-import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
@@ -32,7 +31,6 @@ import org.richfaces.component.Positioning;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.DriverType;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
 import org.richfaces.tests.page.fragments.impl.Locations;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.contextMenu.RichFacesContextMenu;
@@ -92,7 +90,7 @@ public class ContextMenuSimplePage extends MetamerPage {
 
     public void waitUntilContextMenuHides() {
         Graphene.waitModel().withMessage("Context menu should not be visible.")
-                .until().element(contextMenuContent).is().not().visible();
+            .until().element(contextMenuContent).is().not().visible();
     }
 
     public Locations getContextMenuLocations() {
@@ -108,21 +106,6 @@ public class ContextMenuSimplePage extends MetamerPage {
         Locations contextMenuLocations = Utils.getLocations(contextMenuContent);
         contextMenu.advanced().dismiss();
         return contextMenuLocations;
-    }
-
-    public int getActualShowDelay(final int showDelay) {
-    contextMenuAttributes.set(ContextMenuAttributes.showDelay, showDelay);
-        return StopWatch.watchTimeSpentInAction(new StopWatch.PerformableAction() {
-            @Override
-            public void perform() {
-                targetPanel1.click();
-                contextMenu.advanced().waitUntilIsVisible().perform();
-            }
-        }).inMillis().intValue();
-    }
-
-    public void checkShowDelay(int expected) {
-        assertEquals(getActualShowDelay(expected), expected, SHOW_DELAY_TOLERANCE);
     }
 
     public static String trimTheRGBAColor(String original) {
