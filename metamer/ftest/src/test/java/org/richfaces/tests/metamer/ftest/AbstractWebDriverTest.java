@@ -65,6 +65,7 @@ import org.richfaces.tests.page.fragments.impl.VisibleComponent;
 import org.richfaces.tests.page.fragments.impl.common.ClearType;
 import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
+import org.richfaces.ui.common.SwitchType;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 
@@ -75,10 +76,13 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     @Drone
     protected WebDriver driver;
+
     @ArquillianResource
     protected JavascriptExecutor executor;
+
     @FindBy(css = "input[id$=statusInput]")
     protected TextInputComponentImpl statusInput;
+
     @Page
     private MetamerPage metamerPage;
     protected static final int WAIT_TIME = 5;// s
@@ -136,12 +140,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * @param value value, which String representation will be set to attribute input.
      */
     protected void setAttribute(String attributeName, Object value) {
-        TextInputComponentImpl attributeInput = Graphene.createPageFragment(TextInputComponentImpl.class,
-            driver.findElement(By.cssSelector(format(ATTRIBUTE_INPUT_TEMPLATE, attributeName))));
-        // set attribute
-        MetamerPage.waitRequest(attributeInput.advanced().clear(ClearType.JS).sendKeys(value.toString()).advanced().getInputElement(),
-            WaitRequestType.HTTP).submit();
-
+        getUnsafeAttributes("").set(attributeName, value);
     }
 
     /**
@@ -212,6 +211,46 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             }
         }
         return result;
+    }
+
+    /**
+     * Helper method for testing data.
+     * @param triggeringAction
+     */
+    protected void testData(Action triggeringAction) {
+        String testedValue = "RF5";
+        UnsafeAttributes attributes = getUnsafeAttributes("");
+        attributes.set("data", testedValue);
+        attributes.set("oncomplete", "data = event.data");
+        Graphene.guardAjax(new ActionWrapper(triggeringAction)).perform();
+        assertEquals(expectedReturnJS("return window.data;", testedValue), testedValue);
+    }
+
+    protected void testLimitRender(Action triggeringAction) {
+        UnsafeAttributes attributes = getUnsafeAttributes("");
+        attributes.set("limitRender", true);
+        attributes.set("render", "@this renderChecker");
+        attributes.set("mode", SwitchType.ajax);
+        String renderCheckerText = metamerPage.getRenderCheckerOutputElement().getText();
+        String requestTime = metamerPage.getRequestTimeElement().getText();
+        Graphene.guardAjax(new ActionWrapper(triggeringAction)).perform();
+        Graphene.waitGui().until().element(metamerPage.getRenderCheckerOutputElement()).text().not()
+            .equalTo(renderCheckerText);
+        Graphene.waitGui().until().element(metamerPage.getRequestTimeElement()).text()
+            .equalTo(requestTime);
+    }
+
+    protected void testRender(Action triggeringAction) {
+        UnsafeAttributes attributes = getUnsafeAttributes("");
+        attributes.set("render", "@this renderChecker");
+        attributes.set("mode", SwitchType.ajax);
+        String renderCheckerText = metamerPage.getRenderCheckerOutputElement().getText();
+        String requestTime = metamerPage.getRequestTimeElement().getText();
+        Graphene.guardAjax(new ActionWrapper(triggeringAction)).perform();
+        Graphene.waitGui().until().element(metamerPage.getRenderCheckerOutputElement()).text().not()
+            .equalTo(renderCheckerText);
+        Graphene.waitGui().until().element(metamerPage.getRequestTimeElement()).text().not()
+            .equalTo(requestTime);
     }
 
     /**
@@ -336,11 +375,11 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * @param actionBefore action before the measured action. Can be used for e.g. close/open menu. Can be null.
      * @param actionWithDelay the measured action. Can be e.g. open/close menu.
      * @param attributeName name of the measured attribute (e.g. hideDelay, showDelay).
-     * @param expectedDelay expected delay spent in @actionWithDelay and also a value that will be set in attribute with name @attributeName
+     * @param expectedDelayInMillis expected delay spent in @actionWithDelay and also a value that will be set in attribute with name @attributeName
      */
-    protected void testDelay(final Action actionBefore, final Action actionWithDelay, String attributeName, long expectedDelay) {
-        getUnsafeAttributes("").set(attributeName, expectedDelay);
-        double tolerance = expectedDelay * 0.5;
+    protected void testDelay(final Action actionBefore, final Action actionWithDelay, String attributeName, long expectedDelayInMillis) {
+        getUnsafeAttributes("").set(attributeName, expectedDelayInMillis);
+        double tolerance = expectedDelayInMillis == 0 ? 500 : expectedDelayInMillis * 0.5;
         int cycles = 3;
         ArrayList<Long> delays = Lists.newArrayList();
         for (int i = 0; i < cycles; i++) {
@@ -354,7 +393,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             avg += delay;
         }
         avg /= delays.size();
-        assertEquals(avg, expectedDelay, tolerance, "The delay is not in tolerance.");
+        assertEquals(avg, expectedDelayInMillis, tolerance, "The delay is not in tolerance.");
     }
 
     /**
@@ -549,7 +588,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         getUnsafeAttributes("").set("status", checker);
 
         String statusCheckerTimeBefore = metamerPage.getStatusCheckerOutputElement().getText();
-        statusChangingAction.perform();
+        Graphene.guardAjax(new ActionWrapper(statusChangingAction)).perform();
         Graphene.waitModel().until().element(metamerPage.getStatusCheckerOutputElement()).text().not()
             .equalTo(statusCheckerTimeBefore);
     }
@@ -810,6 +849,23 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     public interface FutureTarget<T> {
 
         T getTarget();
+    }
+
+    /**
+     * Wrapper for anonymous actions, so it can be guarded by graphene.
+     */
+    public static class ActionWrapper implements Action {
+
+        private final Action a;
+
+        public ActionWrapper(Action a) {
+            this.a = a;
+        }
+
+        @Override
+        public void perform() {
+            a.perform();
+        }
     }
 
     protected static final class FutureWebElement {
