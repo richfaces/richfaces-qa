@@ -21,11 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.richTooltip;
 
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.tooltip.RichFacesTooltip;
+import org.richfaces.tests.page.fragments.impl.tooltip.TextualRichFacesTooltip;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
@@ -34,57 +33,71 @@ import org.richfaces.tests.page.fragments.impl.tooltip.RichFacesTooltip;
 public class TooltipPage extends MetamerPage {
 
     @FindBy(css = "div[id$=panel]")
+    private TextualRichFacesTooltip tooltipOnPanel;
+
+    @FindBy(css = "div[id$=panel]")
     private WebElement panel;
-
     @FindBy(css = "div[id$=regular-div]")
-    private WebElement panel1;
-
+    private WebElement panelRegularDiv;
     @FindBy(css = "div[id$=jsf-div]")
-    private WebElement panel2;
-
-    @FindBy(css = "div[id$=panel_body]")
-    private WebElement panel3;
-
-    @FindBy(className = "rf-tt")
-    private RichFacesTooltip tooltip;
+    private WebElement panelJSFDiv;
 
     @FindBy(css = "table[id$='attributes:attributes']")
     private WebElement attributesTable;
+    @FindBy(css = "input[id$=showClick]")
+    private WebElement jsAPIshowClick;
+    @FindBy(css = "input[id$=hideClick]")
+    private WebElement jsAPIhideClick;
+    @FindBy(css = "input[id$=showMouseOver]")
+    private WebElement jsAPIshowMouseOver;
+    @FindBy(css = "input[id$=hideMouseOver]")
+    private WebElement jsAPIhideMouseOver;
 
     public WebElement getAttributesTable() {
         return attributesTable;
+    }
+
+    public WebElement getJsAPIhideClick() {
+        return jsAPIhideClick;
+    }
+
+    public WebElement getJsAPIhideMouseOver() {
+        return jsAPIhideMouseOver;
+    }
+
+    public WebElement getJsAPIshowClick() {
+        return jsAPIshowClick;
+    }
+
+    public WebElement getJsAPIshowMouseOver() {
+        return jsAPIshowMouseOver;
     }
 
     public WebElement getPanel() {
         return panel;
     }
 
-    public WebElement getPanel1() {
-        return panel1;
+    public WebElement getPanelRegularDiv() {
+        return panelRegularDiv;
     }
 
-    public WebElement getPanel2() {
-        return panel2;
+    public WebElement getPanelJSFDiv() {
+        return panelJSFDiv;
     }
 
-    public WebElement getPanel3() {
-        return panel3;
+    public TextualRichFacesTooltip getTooltip() {
+        return tooltipOnPanel;
     }
-
-    public RichFacesTooltip getTooltip() {
-        return tooltip;
-    }
-
-    @FindBy(css = "input[id$=showClick]")
-    public WebElement jsAPIshowClick;
-
-    @FindBy(css = "input[id$=hideClick]")
-    public WebElement jsAPIhideClick;
-
-    @FindBy(css = "input[id$=showMouseOver]")
-    public WebElement jsAPIshowMouseOver;
-
-    @FindBy(css = "input[id$=hideMouseOver]")
-    public WebElement jsAPIhideMouseOver;
-
+//
+//    public TextualRichFacesTooltip getTooltipOnPanel1() {
+//        return tooltipOnPanel1;
+//    }
+//
+//    public TextualRichFacesTooltip getTooltipOnPanel2() {
+//        return tooltipOnPanel2;
+//    }
+//
+//    public TextualRichFacesTooltip getTooltipOnPanel3() {
+//        return tooltipOnPanel3;
+//    }
 }
