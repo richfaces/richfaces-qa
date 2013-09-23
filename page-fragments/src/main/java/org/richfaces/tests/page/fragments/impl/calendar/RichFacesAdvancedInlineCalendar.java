@@ -21,6 +21,7 @@
  */
 package org.richfaces.tests.page.fragments.impl.calendar;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.fragment.Root;
 import org.jboss.arquillian.graphene.wait.FluentWait;
 import org.joda.time.DateTime;
@@ -44,6 +45,9 @@ public class RichFacesAdvancedInlineCalendar {
     @Root
     private WebElement root;
 
+    @Drone
+    private WebDriver browser;
+
     @FindBy(css = "span[id$=Popup] > input[id$='InputDate']")
     private TextInputComponentImpl input;
     @FindBy(css = "td[id$=Header]")
@@ -54,6 +58,9 @@ public class RichFacesAdvancedInlineCalendar {
     private DayPicker dayPicker;
     @FindBy(css = "table[id$=Editor]")
     private CalendarEditor calendarEditor;
+
+    private long _closePopupWaitUntilIsNotVisibleTimeout = -1;
+    private long _openPopupWaitUntilIsVisibleTimeout = -1;
 
     protected CalendarEditor getCalendarEditor() {
         return calendarEditor;
@@ -95,6 +102,22 @@ public class RichFacesAdvancedInlineCalendar {
         if (Utils.isVisible(getFooterControls().getTimeEditorOpenerElement())) {
             getFooterControls().openTimeEditor().setTime(dt, TimeEditor.SetValueBy.TYPING).confirmTime();
         }
+    }
+
+    public void setupClosePopupWaitUntilIsNotVisibleTimeout(long timeout) {
+        this._closePopupWaitUntilIsNotVisibleTimeout = timeout;
+    }
+
+    public long getClosePopupWaitUntilIsNotVisibleTimeout() {
+        return _closePopupWaitUntilIsNotVisibleTimeout == -1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _closePopupWaitUntilIsNotVisibleTimeout;
+    }
+
+    public void setupOpenPopupWaitUntilIsVisibleTimeout(long timeout) {
+        this._openPopupWaitUntilIsVisibleTimeout = timeout;
+    }
+
+    public long getOpenPopupWaitUntilIsVisibleTimeout() {
+        return _openPopupWaitUntilIsVisibleTimeout == - 1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _openPopupWaitUntilIsVisibleTimeout;
     }
 
     public WaitingWrapper waitUntilIsNotVisible() {

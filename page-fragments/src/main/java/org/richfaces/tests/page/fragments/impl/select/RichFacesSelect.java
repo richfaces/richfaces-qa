@@ -23,6 +23,7 @@ package org.richfaces.tests.page.fragments.impl.select;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.GrapheneElement;
@@ -66,12 +67,17 @@ public class RichFacesSelect implements Select {
     private final AdvancedSelectInteractions interactions = new AdvancedSelectInteractions();
     private final SelectSuggestionsImpl selectSuggestions = new SelectSuggestionsImpl();
 
+    private long _selectWaitUntilSuggestionsAreNotVisibleTimeout = -1;
+    private long _getSuggestionsWaitUntilSuggestionsAreVisibleTimeout = -1;
+
     public AdvancedSelectInteractions advanced() {
         return interactions;
     }
 
     private SelectSuggestionsImpl getSuggestions() {
-        advanced().waitUntilSuggestionsAreVisible().perform();
+        advanced().waitUntilSuggestionsAreVisible()
+                  .withTimeout(advanced().getGetSuggestionsWaitUntilSuggestionsAreVisibleTimeout(), TimeUnit.SECONDS)
+                  .perform();
         return selectSuggestions;
     }
 
@@ -112,7 +118,9 @@ public class RichFacesSelect implements Select {
             } else {
                 foundValue.click();
             }
-            advanced().waitUntilSuggestionsAreNotVisible().perform();
+            advanced().waitUntilSuggestionsAreNotVisible()
+                      .withTimeout(advanced().getSelectWaitUntilSuggestionsAreNotVisibleTimeout(), TimeUnit.SECONDS)
+                      .perform();
             input.advanced().trigger("blur");
         }
 
@@ -223,6 +231,22 @@ public class RichFacesSelect implements Select {
                     });
                 }
             }.withMessage("Waiting for popup to be visible");
+        }
+
+        public void setupSelectWaitUntilSuggestionsAreNotVisibleTimeout(long timeout) {
+            _selectWaitUntilSuggestionsAreNotVisibleTimeout = timeout;
+        }
+
+        public long getSelectWaitUntilSuggestionsAreNotVisibleTimeout() {
+            return _selectWaitUntilSuggestionsAreNotVisibleTimeout == -1 ? Utils.getWaitAjaxDefaultTimeout(driver) : _selectWaitUntilSuggestionsAreNotVisibleTimeout;
+        }
+
+        public void setupGetSuggestionsWaitUntilSuggestionsAreVisibleTimeout(long timeout) {
+            _getSuggestionsWaitUntilSuggestionsAreVisibleTimeout = timeout;
+        }
+
+        public long getGetSuggestionsWaitUntilSuggestionsAreVisibleTimeout() {
+            return _getSuggestionsWaitUntilSuggestionsAreVisibleTimeout == -1 ? Utils.getWaitAjaxDefaultTimeout(driver) : _getSuggestionsWaitUntilSuggestionsAreVisibleTimeout;
         }
     }
 }

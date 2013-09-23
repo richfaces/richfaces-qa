@@ -21,6 +21,9 @@
  */
 package org.richfaces.tests.page.fragments.impl.calendar;
 
+import java.util.concurrent.TimeUnit;
+
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
@@ -46,6 +49,9 @@ public class HeaderControls {
     @Root
     private WebElement root;
 
+    @Drone
+    private WebDriver browser;
+
     @FindByJQuery(".rf-cal-tl:eq(0) > div")
     private GrapheneElement previousYearElement;
     @FindByJQuery(".rf-cal-tl:eq(1) > div")
@@ -60,13 +66,17 @@ public class HeaderControls {
     private CalendarEditor calendarEditor;
     private final DateTimeFormatter formatter = DateTimeFormat.forPattern("MMMM, yyyy");
 
+    private long _closePopupWaitUntilIsNotVisibleTimeout = -1;
+
     private void _openYearAndMonthEditor() {
         if (!isVisible() || !yearAndMonthEditorOpenerElement.isDisplayed()) {
             throw new RuntimeException("Cannot open date editor. "
                 + "Ensure that calendar popup and header controls are displayed and some date is set.");
         }
         yearAndMonthEditorOpenerElement.click();
-        calendarEditor.getDateEditor().waitUntilIsVisible().perform();
+        calendarEditor.getDateEditor().waitUntilIsVisible()
+                                      .withTimeout(calendarEditor.getDateEditor().getOpenYearAndMonthEditorWaitUntilIsVisible(), TimeUnit.SECONDS)
+                                      .perform();
     }
 
     public WebElement getNextMonthElement() {
@@ -152,6 +162,14 @@ public class HeaderControls {
 
     public void setCalendarEditor(CalendarEditor calendarEditor) {
         this.calendarEditor = calendarEditor;
+    }
+
+    public void setupClosePopupWaitUntilIsNotVisibleTimeout(long timeout) {
+        this._closePopupWaitUntilIsNotVisibleTimeout = timeout;
+    }
+
+    public long getClosePopupWaitUntilIsNotVisibleTimeout() {
+        return _closePopupWaitUntilIsNotVisibleTimeout == - 1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _closePopupWaitUntilIsNotVisibleTimeout;
     }
 
     public WaitingWrapper waitUntilIsNotVisible() {

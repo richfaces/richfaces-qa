@@ -27,6 +27,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxy;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
+import org.jboss.arquillian.graphene.spi.configuration.GrapheneConfiguration;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -36,6 +37,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.SearchContext;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.google.common.base.Optional;
@@ -293,5 +295,13 @@ public final class Utils {
             result = ((GrapheneProxyInstance) result).unwrap();
         }
         return result;
+    }
+
+    public static long getWaitGUIDefaultTimeout(WebDriver browser) {
+        return ((GrapheneProxyInstance) browser).getContext().getConfiguration().getWaitGuiInterval();
+    }
+
+    public static long getWaitAjaxDefaultTimeout(WebDriver browser) {
+        return ((GrapheneProxyInstance) browser).getContext().getConfiguration().getWaitAjaxInterval();
     }
 }
