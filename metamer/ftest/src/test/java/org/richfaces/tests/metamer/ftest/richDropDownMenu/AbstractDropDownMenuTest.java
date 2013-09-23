@@ -59,7 +59,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
     }
 
     private void updateDropDownMenuInvoker() {
-        getCurrentMenu().advanced().setupInvokeEvent(Event.MOUSEOVER);
+        getCurrentMenu().advanced().setupShowEvent(Event.MOUSEOVER);
     }
 
     @Page
@@ -75,7 +75,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         assertNotVisible(page.getGroup(), "Menu group \"Save As...\" should not be visible on the page.");
 
         assertNotVisible(page.getFileMenuList(), "Menu should not be expanded.");
-        guardNoRequest(getCurrentMenu()).advanced().invoke(page.getTarget1());
+        guardNoRequest(getCurrentMenu()).advanced().show(page.getTarget1());
         assertVisible(page.getFileMenuList(), "Menu should be expanded.");
 
         assertPresent(page.getGroup(), "Menu group \"Save As...\" should be present on the page.");
@@ -104,16 +104,16 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
 
     public void testShowEvent() {
         dropDownMenuAttributes.set(DropDownMenuAttributes.showEvent, "contextmenu");
-        getCurrentMenu().advanced().setupInvokeEvent(Event.CONTEXTCLICK);
-        getCurrentMenu().advanced().invoke(page.getTarget1());
+        getCurrentMenu().advanced().setupShowEvent(Event.CONTEXTCLICK);
+        getCurrentMenu().advanced().show(page.getTarget1());
 
         dropDownMenuAttributes.set(DropDownMenuAttributes.showEvent, "hover");
-        getCurrentMenu().advanced().setupInvokeEvent(Event.MOUSEOVER);
-        getCurrentMenu().advanced().invoke(page.getTarget1());
+        getCurrentMenu().advanced().setupShowEvent(Event.MOUSEOVER);
+        getCurrentMenu().advanced().show(page.getTarget1());
 
         dropDownMenuAttributes.set(DropDownMenuAttributes.showEvent, "click");
-        getCurrentMenu().advanced().setupInvokeEvent(Event.CLICK);
-        getCurrentMenu().advanced().invoke(page.getTarget1());
+        getCurrentMenu().advanced().setupShowEvent(Event.CLICK);
+        getCurrentMenu().advanced().show(page.getTarget1());
     }
 
     public void testStyle() {
@@ -121,7 +121,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         String color = "yellow";
         String styleVal = "background-color: " + color + ";";
         dropDownMenuAttributes.set(DropDownMenuAttributes.style, styleVal);
-        getCurrentMenu().advanced().invoke(page.getTarget1());
+        getCurrentMenu().advanced().show(page.getTarget1());
         String backgroundColor = getCurrentMenu().advanced().getTopLevelElement()
             .getCssValue("background-color");
         // webdriver retrieves the color in rgba format
@@ -143,7 +143,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         String expected = "rtl";
         dropDownMenuAttributes.set(DropDownMenuAttributes.dir, expected);
 
-        getCurrentMenu().advanced().invoke(page.getTarget1());
+        getCurrentMenu().advanced().show(page.getTarget1());
         String directionCSS = getCurrentMenu().advanced().getItemsElements().get(0)
             .getCssValue("direction");
         assertEquals(directionCSS, expected, "The direction attribute was not applied correctly!");
@@ -153,7 +153,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         updateDropDownMenuInvoker();
         String langVal = "cs";
         dropDownMenuAttributes.set(DropDownMenuAttributes.lang, langVal);
-        getCurrentMenu().advanced().invoke(page.getTarget1());
+        getCurrentMenu().advanced().show(page.getTarget1());
 
         assertEquals(getCurrentMenu().advanced().getLangAttribute(), langVal,
             "The lang attribute was not set correctly!");
@@ -163,36 +163,36 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         updateDropDownMenuInvoker();
         // ajax
         dropDownMenuAttributes.set(DropDownMenuAttributes.mode, "ajax");
-        getCurrentMenu().advanced().invoke(page.getTarget1());
+        getCurrentMenu().advanced().show(page.getTarget1());
         guardAjax(getCurrentMenu().advanced().getItemsElements().get(0)).click();
         assertEquals(page.getOutput().getText(), "New", "Menu action was not performed.");
 
         // server
         dropDownMenuAttributes.set(DropDownMenuAttributes.mode, "server");
-        getCurrentMenu().advanced().invoke(page.getTarget1());
+        getCurrentMenu().advanced().show(page.getTarget1());
         guardHttp(getCurrentMenu().advanced().getItemsElements().get(8)).click();
         assertEquals(page.getOutput().getText(), "Close", "Menu action was not performed.");
 
         // client
         dropDownMenuAttributes.set(DropDownMenuAttributes.mode, "client");
-        getCurrentMenu().advanced().invoke(page.getTarget1());
+        getCurrentMenu().advanced().show(page.getTarget1());
         guardNoRequest(getCurrentMenu().advanced().getItemsElements().get(0)).click();
 
         // null
         dropDownMenuAttributes.set(DropDownMenuAttributes.mode, "server");
-        getCurrentMenu().advanced().invoke(page.getTarget1());
+        getCurrentMenu().advanced().show(page.getTarget1());
         guardHttp(getCurrentMenu().advanced().getItemsElements().get(8)).click();
         assertEquals(page.getOutput().getText(), "Close", "Menu action was not performed.");
     }
 
     public void testDisabled() {
         updateDropDownMenuInvoker();
-        getCurrentMenu().advanced().invoke(page.getTarget1());
+        getCurrentMenu().advanced().show(page.getTarget1());
 
         dropDownMenuAttributes.set(DropDownMenuAttributes.disabled, true);
 
         try {
-            getCurrentMenu().advanced().invoke(page.getTarget1());
+            getCurrentMenu().advanced().show(page.getTarget1());
             fail("The context menu should not be invoked when disabled!");
         } catch (TimeoutException ex) {
             // OK
@@ -206,12 +206,12 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         testDelay(new Action() {
             @Override
             public void perform() {
-                getCurrentMenu().advanced().invoke(page.getTarget1());
+                getCurrentMenu().advanced().show(page.getTarget1());
             }
         }, new Action() {
             @Override
             public void perform() {
-                getCurrentMenu().advanced().dismiss();
+                getCurrentMenu().advanced().hide();
             }
         }, "hideDelay", delay);
     }
@@ -241,14 +241,14 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 try {
-                    getCurrentMenu().advanced().dismiss();
+                    getCurrentMenu().advanced().hide();
                 } catch (IllegalStateException ignored) {
                 }
             }
         }, new Action() {
             @Override
             public void perform() {
-                getCurrentMenu().advanced().invoke(page.getTarget1());
+                getCurrentMenu().advanced().show(page.getTarget1());
             }
         }, "showDelay", delay);
     }
@@ -267,7 +267,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onclick, new Action() {
             @Override
             public void perform() {
-                getCurrentMenu().advanced().invoke(page.getTarget1());
+                getCurrentMenu().advanced().show(page.getTarget1());
                 getCurrentMenu().advanced().getItemsElements().get(1).click();
             }
         });
@@ -278,7 +278,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.ondblclick, new Action() {
             @Override
             public void perform() {
-                getCurrentMenu().advanced().invoke(page.getTarget1());
+                getCurrentMenu().advanced().show(page.getTarget1());
                 new Actions(driver)
                     .doubleClick(getCurrentMenu().advanced().getItemsElements().get(2))
                     .build().perform();
@@ -291,7 +291,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.ongrouphide, new Action() {
             @Override
             public void perform() {
-                getCurrentMenu().advanced().invoke(page.getTarget1());
+                getCurrentMenu().advanced().show(page.getTarget1());
                 new Actions(driver)
                     .moveToElement(
                     getCurrentMenu().advanced().getItemsElements().get(3)).build()
@@ -310,7 +310,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.ongroupshow, new Action() {
             @Override
             public void perform() {
-                getCurrentMenu().advanced().invoke(page.getTarget1());
+                getCurrentMenu().advanced().show(page.getTarget1());
                 new Actions(driver)
                     .moveToElement(
                     getCurrentMenu().advanced().getItemsElements().get(3)).build()
@@ -325,8 +325,8 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onhide, new Action() {
             @Override
             public void perform() {
-                getCurrentMenu().advanced().invoke(page.getTarget1());
-                getCurrentMenu().advanced().dismiss();
+                getCurrentMenu().advanced().show(page.getTarget1());
+                getCurrentMenu().advanced().hide();
             }
         });
     }
@@ -341,7 +341,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onkeydown, new Action() {
             @Override
             public void perform() {
-                getCurrentMenu().advanced().invoke(page.getTarget1());
+                getCurrentMenu().advanced().show(page.getTarget1());
                 new Actions(driver)
                     .keyDown(getCurrentMenu().advanced().getItemsElements().get(2),
                     Keys.CONTROL)
@@ -356,7 +356,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onkeypress, new Action() {
             @Override
             public void perform() {
-                getCurrentMenu().advanced().invoke(page.getTarget1());
+                getCurrentMenu().advanced().show(page.getTarget1());
                 new Actions(driver).sendKeys("a").build().perform();
             }
         });
@@ -372,7 +372,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onmousedown, new Action() {
             @Override
             public void perform() {
-                getCurrentMenu().advanced().invoke(page.getTarget1());
+                getCurrentMenu().advanced().show(page.getTarget1());
                 Mouse mouse = ((HasInputDevices) driver).getMouse();
                 mouse.mouseDown(((Locatable) getCurrentMenu().advanced()
                     .getItemsElements().get(1)).getCoordinates());
@@ -391,7 +391,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onmouseout, new Action() {
             @Override
             public void perform() {
-                getCurrentMenu().advanced().invoke(page.getTarget1());
+                getCurrentMenu().advanced().show(page.getTarget1());
                 new Actions(driver)
                     .moveToElement(
                     getCurrentMenu().advanced().getItemsElements().get(3)).build()
@@ -413,7 +413,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onmouseup, new Action() {
             @Override
             public void perform() {
-                getCurrentMenu().advanced().invoke(page.getTarget1());
+                getCurrentMenu().advanced().show(page.getTarget1());
                 Mouse mouse = ((HasInputDevices) driver).getMouse();
                 Coordinates coords = ((Locatable) getCurrentMenu().advanced()
                     .getItemsElements().get(1)).getCoordinates();
@@ -439,11 +439,11 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         updateDropDownMenuInvoker();
         int offset = 11;
 
-        getCurrentMenu().advanced().invoke(page.getTarget1());
+        getCurrentMenu().advanced().show(page.getTarget1());
         Point positionBefore = page.getDropDownMenuContent().getLocation();
 
         dropDownMenuAttributes.set(DropDownMenuAttributes.horizontalOffset, offset);
-        getCurrentMenu().advanced().invoke(page.getTarget1());
+        getCurrentMenu().advanced().show(page.getTarget1());
 
         Point positionAfter = page.getDropDownMenuContent().getLocation();
 
@@ -454,11 +454,11 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         updateDropDownMenuInvoker();
         int offset = 11;
 
-        getCurrentMenu().advanced().invoke(page.getTarget1());
+        getCurrentMenu().advanced().show(page.getTarget1());
         Point positionBefore = page.getDropDownMenuContent().getLocation();
 
         dropDownMenuAttributes.set(DropDownMenuAttributes.verticalOffset, offset);
-        getCurrentMenu().advanced().invoke(page.getTarget1());
+        getCurrentMenu().advanced().show(page.getTarget1());
 
         Point positionAfter = page.getDropDownMenuContent().getLocation();
 

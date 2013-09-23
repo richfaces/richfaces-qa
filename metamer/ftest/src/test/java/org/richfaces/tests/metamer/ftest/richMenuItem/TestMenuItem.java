@@ -81,7 +81,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     private void openMenu() {
-        fileDropDownMenu.advanced().invoke(target1);
+        fileDropDownMenu.advanced().show(target1);
         Graphene.waitGui().until().element(fileMenuLabel).is().visible();
     }
 
@@ -198,7 +198,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
         assertEquals(fileMenuLabel.getText(), "File", "Label of the menu");
 
         assertNotVisible(fileMenuList, "Menu should not be expanded");
-        Graphene.guardNoRequest(fileDropDownMenu).advanced().invoke(target1);
+        Graphene.guardNoRequest(fileDropDownMenu).advanced().show(target1);
         assertVisible(fileMenuList, "Menu should be expanded");
 
         assertVisible(icon, "Icon of menu item should be visible on the page");
@@ -358,6 +358,6 @@ public class TestMenuItem extends AbstractWebDriverTest {
 
     @BeforeMethod
     private void updateDropDownMenuInvoker() {
-        fileDropDownMenu.advanced().setupInvokeEvent(Event.MOUSEOVER);
+        fileDropDownMenu.advanced().setupShowEvent(Event.MOUSEOVER);
     }
 }
