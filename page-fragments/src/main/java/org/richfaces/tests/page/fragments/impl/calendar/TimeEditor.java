@@ -21,6 +21,9 @@
  */
 package org.richfaces.tests.page.fragments.impl.calendar;
 
+import java.util.concurrent.TimeUnit;
+
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.fragment.Root;
@@ -47,6 +50,9 @@ public class TimeEditor {
     @Root
     private WebElement root;
 
+    @Drone
+    private WebDriver browser;
+
     @FindByJQuery(".rf-cal-timepicker-inp table table:has('input[id$=TimeHours]')")
     private TimeSpinner12 hoursSpinner12;
     @FindByJQuery(".rf-cal-timepicker-inp table table:has('input[id$=TimeHours]')")
@@ -67,6 +73,10 @@ public class TimeEditor {
     private static final int defaultMinutes = 0;
     private static final int defaultSeconds = 0;
 
+    private long _cancelTimeWaitUntilIsNotVisibleTimeout = -1;
+    private long _confirmTimeWaitUntilIsNotVisibleTimeout = -1;
+    private long _openTimeEditorWaitUntilIsVisibleTimeout = -1;
+
     public WebElement getRoot() {
         return root;
     }
@@ -85,7 +95,7 @@ public class TimeEditor {
             throw new RuntimeException("Cancel button is not visible.");
         }
         cancelButtonElement.click();
-        waitUntilIsNotVisible();
+        waitUntilIsNotVisible().withTimeout(getCancelTimeWaitUntilIsNotVisibleTimeout(), TimeUnit.SECONDS);
     }
 
     public void confirmTime() {
@@ -97,7 +107,7 @@ public class TimeEditor {
             throw new RuntimeException("Ok button is not visible.");
         }
         okButtonElement.click();
-        waitUntilIsNotVisible();
+        waitUntilIsNotVisible().withTimeout(getConfirmTimeWaitUntilIsNotVisibleTimeout(), TimeUnit.SECONDS);
     }
 
     public WebElement getCancelButtonElement() {
@@ -203,6 +213,30 @@ public class TimeEditor {
 
     public TimeEditor setTime(DateTime time, SetValueBy inputType) {
         return setTime(time.getHourOfDay(), time.getMinuteOfHour(), time.getSecondOfMinute(), inputType);
+    }
+
+    public void setupCancelTimeWaitUntilIsNotVisibleTimeout(long timeout) {
+        this._cancelTimeWaitUntilIsNotVisibleTimeout = timeout;
+    }
+
+    public long getCancelTimeWaitUntilIsNotVisibleTimeout() {
+        return _cancelTimeWaitUntilIsNotVisibleTimeout == -1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _cancelTimeWaitUntilIsNotVisibleTimeout;
+    }
+
+    public void setupConfirmTimeWaitUntilIsNotVisibleTimeout(long timeout) {
+        this._confirmTimeWaitUntilIsNotVisibleTimeout = timeout;
+    }
+
+    public long getConfirmTimeWaitUntilIsNotVisibleTimeout() {
+        return _confirmTimeWaitUntilIsNotVisibleTimeout == -1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _confirmTimeWaitUntilIsNotVisibleTimeout;
+    }
+
+    public void setupOpenTimeEditorWaitUntilIsVisible(long timeout) {
+        _openTimeEditorWaitUntilIsVisibleTimeout = timeout;
+    }
+
+    public long getOpenEditorWaitUntilIsVisibleTimeout() {
+        return _openTimeEditorWaitUntilIsVisibleTimeout == -1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _openTimeEditorWaitUntilIsVisibleTimeout;
     }
 
     public WaitingWrapper waitUntilIsNotVisible() {

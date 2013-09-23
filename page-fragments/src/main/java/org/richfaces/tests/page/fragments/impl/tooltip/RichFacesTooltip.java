@@ -21,6 +21,8 @@
  */
 package org.richfaces.tests.page.fragments.impl.tooltip;
 
+import java.util.concurrent.TimeUnit;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.fragment.Root;
@@ -30,6 +32,7 @@ import org.jodah.typetools.TypeResolver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.utils.Actions;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
@@ -55,6 +58,9 @@ public abstract class RichFacesTooltip<CONTENT> implements Tooltip<CONTENT> {
     private final Class<CONTENT> contentClass = (Class<CONTENT>) TypeResolver.resolveRawArguments(RichFacesTooltip.class, getClass())[0];
     private final AdvancedTooltipInteractions interactions = new AdvancedTooltipInteractions();
 
+    private long _hideWaitUntilTooltipIsNotVisibleTimeout = -1;
+    private long _showWaitUntilTooltipIsVisibleTimeout = -1;
+
     public AdvancedTooltipInteractions advanced() {
         return interactions;
     }
@@ -70,7 +76,9 @@ public abstract class RichFacesTooltip<CONTENT> implements Tooltip<CONTENT> {
         new Actions(driver)
             .triggerEventByWD(advanced().getHideEvent(), advanced().getTarget())
             .perform();
-        advanced().waitUntilTooltipIsNotVisible().perform();
+        advanced().waitUntilTooltipIsNotVisible()
+                  .withTimeout(advanced().getHideWaitUntilTooltipIsNotVisibleTimeout(), TimeUnit.SECONDS)
+                  .perform();
         return this;
     }
 
@@ -87,7 +95,9 @@ public abstract class RichFacesTooltip<CONTENT> implements Tooltip<CONTENT> {
             .moveToElement(advanced().getTarget())
             .triggerEventByWD(advanced().getShowEvent(), advanced().getTarget())
             .perform();
-        advanced().waitUntilTooltipIsVisible().perform();
+        advanced().waitUntilTooltipIsVisible()
+                  .withTimeout(advanced().getShowWaitUntilTooltipIsVisibleTimeout(), TimeUnit.SECONDS)
+                  .perform();
         advanced().acquireLastVisibleTooltipIDIfNotSet();
         return this;
     }
@@ -220,6 +230,22 @@ public abstract class RichFacesTooltip<CONTENT> implements Tooltip<CONTENT> {
                         wait.until().element(driver, By.id(getIdOfTooltip())).is().visible();
                     }
                 }.withMessage("Waiting until tooltip is visible.");
+        }
+
+        public void setupHideWaitUntilTooltipIsNotVisibleTimeout(long timeout) {
+            _hideWaitUntilTooltipIsNotVisibleTimeout = timeout;
+        }
+
+        public long getHideWaitUntilTooltipIsNotVisibleTimeout() {
+            return _hideWaitUntilTooltipIsNotVisibleTimeout == -1 ? Utils.getWaitAjaxDefaultTimeout(driver) : _hideWaitUntilTooltipIsNotVisibleTimeout;
+        }
+
+        public void setupShowWaitUntilTooltipIsVisibleTimeout(long timeout) {
+            _showWaitUntilTooltipIsVisibleTimeout = timeout;
+        }
+
+        public long getShowWaitUntilTooltipIsVisibleTimeout() {
+            return _showWaitUntilTooltipIsVisibleTimeout == -1 ? Utils.getWaitAjaxDefaultTimeout(driver) : _showWaitUntilTooltipIsVisibleTimeout;
         }
     }
 }

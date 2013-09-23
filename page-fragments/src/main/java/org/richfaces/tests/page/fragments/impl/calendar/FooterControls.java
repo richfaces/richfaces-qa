@@ -21,6 +21,9 @@
  */
 package org.richfaces.tests.page.fragments.impl.calendar;
 
+import java.util.concurrent.TimeUnit;
+
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
@@ -54,6 +57,9 @@ public class FooterControls {
     @FindByJQuery("div.rf-cal-tl-btn:contains('Today')")
     private GrapheneElement todayButtonElement;
 
+    @Drone
+    private WebDriver browser;
+
     private void _openTimeEditor() {
         if (!isVisible()) {
             throw new RuntimeException("Cannot open time editor. "
@@ -64,7 +70,8 @@ public class FooterControls {
                 + "Ensure that the date is set before setting time.");
         }
         timeEditorOpenerElement.click();
-        calendarEditor.getTimeEditor().waitUntilIsVisible();
+        calendarEditor.getTimeEditor().waitUntilIsVisible()
+                      .withTimeout(calendarEditor.getTimeEditor().getOpenEditorWaitUntilIsVisibleTimeout(), TimeUnit.SECONDS);
     }
 
     public void cleanDate() {

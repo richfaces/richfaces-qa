@@ -23,8 +23,10 @@ package org.richfaces.tests.page.fragments.impl.calendar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.Validate;
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
@@ -49,6 +51,9 @@ public class YearAndMonthEditor {
 
     @Root
     private WebElement root;
+
+    @Drone
+    private WebDriver browser;
 
     @FindByJQuery("div[id*='DateEditorLayoutM']:even")
     private List<WebElement> monthsEven;
@@ -79,14 +84,18 @@ public class YearAndMonthEditor {
 
     private static final String SELECTED = "rf-cal-edtr-btn-sel";
 
+    private long _cancelDateWaitUntilIsNotVisible = -1;
+    private long _confirmDateWaitUntilIsNotVisible = -1;
+    private long _openYearAndMonthEditorWaitUntilIsVisible = -1;
+
     public void cancelDate() {
         cancelButtonElement.click();
-        waitUntilIsNotVisible().perform();
+        waitUntilIsNotVisible().withTimeout(getCancelDateWaitUntilIsNotVisible(), TimeUnit.SECONDS).perform();
     }
 
     public void confirmDate() {
         okButtonElement.click();
-        waitUntilIsNotVisible().perform();
+        waitUntilIsNotVisible().withTimeout(getConfirmDateWaitUntilIsNotVisible(), TimeUnit.SECONDS).perform();
     }
 
     public WebElement getCancelButtonElement() {
@@ -203,6 +212,30 @@ public class YearAndMonthEditor {
         WebElement yearElement = root.findElement(ByJQuery.selector("div[id*='DateEditorLayoutY']:contains('" + year + "')"));
         yearElement.click();
         Graphene.waitGui().withMessage("The year was not selected.").until().element(yearElement).attribute("class").contains(SELECTED);
+    }
+
+    public void setupCancelDateWaitUntilIsNotVisible(long timeout) {
+        _cancelDateWaitUntilIsNotVisible = timeout;
+    }
+
+    public long getCancelDateWaitUntilIsNotVisible() {
+        return _cancelDateWaitUntilIsNotVisible == -1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _cancelDateWaitUntilIsNotVisible;
+    }
+
+    public void setupConfirmDateWaitUntilIsNotVisible(long timeout) {
+        _confirmDateWaitUntilIsNotVisible = timeout;
+    }
+
+    public long getConfirmDateWaitUntilIsNotVisible() {
+        return _confirmDateWaitUntilIsNotVisible == -1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _confirmDateWaitUntilIsNotVisible;
+    }
+
+    public void setupOpenYearAndMonthEditorWaitUntilIsVisible(long timeout) {
+        _openYearAndMonthEditorWaitUntilIsVisible = timeout;
+    }
+
+    public long getOpenYearAndMonthEditorWaitUntilIsVisible() {
+        return _openYearAndMonthEditorWaitUntilIsVisible == -1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _openYearAndMonthEditorWaitUntilIsVisible;
     }
 
     public WaitingWrapper waitUntilIsNotVisible() {

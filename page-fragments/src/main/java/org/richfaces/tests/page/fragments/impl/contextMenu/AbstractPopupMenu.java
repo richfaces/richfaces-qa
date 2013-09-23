@@ -56,6 +56,9 @@ public abstract class AbstractPopupMenu implements PopupMenu {
 
     private final AdvancedPopupMenuInteractions advancedInteractions = new AdvancedPopupMenuInteractions();
 
+    private long _hideWaitUntilIsNotVisibleTimeout = -1;
+    private long _showWaitUntilIsVisibleTimeout = -1;
+
     /* ************************************************************************************************
      * Abstract methods
      */
@@ -97,7 +100,7 @@ public abstract class AbstractPopupMenu implements PopupMenu {
 
     @Override
     public void selectItem(ChoicePicker picker) {
-        advanced().invoke();
+        advanced().show();
         picker.pick(getMenuItemElementsInternal()).click();
     }
 
@@ -147,13 +150,13 @@ public abstract class AbstractPopupMenu implements PopupMenu {
          *
          * @throws IllegalStateException when no popup menu is displayed in the time of invoking
          */
-        public void dismiss() {
+        public void hide() {
             if (!getMenuPopupInternal().isDisplayed()) {
                 throw new IllegalStateException("You are attemting to dismiss the " + getNameOfFragment() + ", however, no "
                     + getNameOfFragment() + " is displayed at the moment!");
             }
             browser.findElement(Utils.BY_HTML).click();
-            waitUntilIsNotVisible().perform();
+            waitUntilIsNotVisible().withTimeout(getHideWaitUntilIsNotVisibleTimeout(), TimeUnit.SECONDS).perform();
         }
 
         /**
@@ -198,8 +201,8 @@ public abstract class AbstractPopupMenu implements PopupMenu {
          * @see #setupInvoker(PopupMenuInvoker)
          * @see #setTarget(WebElement)
          */
-        public void invoke() {
-            invoke(getTargetElement());
+        public void show() {
+            show(getTargetElement());
         }
 
         /**
@@ -211,12 +214,12 @@ public abstract class AbstractPopupMenu implements PopupMenu {
          * @see #setupInvoker(PopupMenuInvoker)
          * @see #setupShowDelay(int)
          */
-        public void invoke(WebElement givenTarget) {
+        public void show(WebElement givenTarget) {
             new Actions(browser)
                 .moveToElement(givenTarget)
                 .triggerEventByWD(invokeEvent, givenTarget).perform();
 
-            advanced().waitUntilIsVisible().perform();
+            advanced().waitUntilIsVisible().withTimeout(getShowWaitUntilIsVisibleTimeout(), TimeUnit.SECONDS).perform();
         }
 
         /**
@@ -227,7 +230,7 @@ public abstract class AbstractPopupMenu implements PopupMenu {
          * @param location
          * @see #setupInvoker(PopupMenuInvoker)
          */
-        public void invoke(WebElement givenTarget, Point location) {
+        public void show(WebElement givenTarget, Point location) {
             throw new UnsupportedOperationException("File a feature request to have this, or even better implement it:)");
 //            actions
 //                .moveToElement(givenTarget)
@@ -237,18 +240,18 @@ public abstract class AbstractPopupMenu implements PopupMenu {
 //            advanced().waitUntilIsVisible().perform();
         }
 
-        public void setupInvokeEvent() {
+        public void setupShowEvent() {
             invokeEvent = DEFAULT_INVOKE_EVENT;
         }
 
-        public void setupInvokeEvent(Event newInvokeEvent) {
-            if (newInvokeEvent == null) {
+        public void setupShowEvent(Event newShowEvent) {
+            if (newShowEvent == null) {
                 throw new IllegalArgumentException("Parameter newInvokeEvent can not be null!");
             }
-            invokeEvent = newInvokeEvent;
+            invokeEvent = newShowEvent;
         }
 
-        public void setupInvokeEventFromWidget() {
+        public void setupShowEventFromWidget() {
             Optional<String> event = Utils.getJSONValue2(getScriptElement(), "showEvent");
             invokeEvent = new Event(event.or(DEFAULT_INVOKE_EVENT.getEventName()));
         }
@@ -284,6 +287,22 @@ public abstract class AbstractPopupMenu implements PopupMenu {
             } else {
                 target = root;
             }
+        }
+
+        public void setupHideWaitUntilIsNotVisibleTimeout(long timeout) {
+            _hideWaitUntilIsNotVisibleTimeout = timeout;
+        }
+
+        public long getHideWaitUntilIsNotVisibleTimeout() {
+            return _hideWaitUntilIsNotVisibleTimeout == -1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _hideWaitUntilIsNotVisibleTimeout;
+        }
+
+        public void setupShowWaitUntilIsVisibleTimeout(long timeout) {
+            _showWaitUntilIsVisibleTimeout = timeout;
+        }
+
+        public long getShowWaitUntilIsVisibleTimeout() {
+            return _showWaitUntilIsVisibleTimeout == -1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _showWaitUntilIsVisibleTimeout;
         }
 
         /**

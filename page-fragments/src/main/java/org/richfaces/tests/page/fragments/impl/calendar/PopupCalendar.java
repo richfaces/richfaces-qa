@@ -22,6 +22,9 @@
 package org.richfaces.tests.page.fragments.impl.calendar;
 
 import static org.openqa.selenium.By.cssSelector;
+
+import java.util.concurrent.TimeUnit;
+
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.joda.time.DateTime;
 import org.openqa.selenium.By;
@@ -120,7 +123,9 @@ public class PopupCalendar extends RichFacesAdvancedInlineCalendar {
                     + "Ensure that calendar popup and header controls are displayed.");
             }
             closeButtonElement.click();
-            waitUntilIsNotVisible().perform();
+            waitUntilIsNotVisible()
+                              .withTimeout(getClosePopupWaitUntilIsNotVisibleTimeout(), TimeUnit.SECONDS)
+                              .perform();
         }
 
         public WebElement getCloseButtonElement() {

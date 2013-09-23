@@ -23,6 +23,7 @@ package org.richfaces.tests.page.fragments.impl.autocomplete;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.fragment.Root;
@@ -63,6 +64,10 @@ public class RichFacesAutocomplete implements Autocomplete {
     private TextInputComponentImpl input;
 
     private final AdvancedAutocompleteInteractions advancedInteractions = new AdvancedAutocompleteInteractions();
+
+    private long _confirmWaitForSuggestionsToBeNotVisibleTimeout = -1;
+    private long _selectWaitForSuggestionsToBeNotVisibleTimeout = -1;
+    private long _selectWaitForSuggestionsToBeVisibleTimeout = -1;
 
     public AdvancedAutocompleteInteractions advanced() {
         return advancedInteractions;
@@ -116,7 +121,11 @@ public class RichFacesAutocomplete implements Autocomplete {
             String id = root.getAttribute("id");
             String selectorOfRoot = String.format(SUGGESTIONS_CSS_SELECTOR_TEMPLATE, id);
             List<WebElement> foundElements = driver.findElements(By.cssSelector(selectorOfRoot));
-            if (!foundElements.isEmpty() && foundElements.get(0).isDisplayed()) { // prevent returning of not visible
+            if (!foundElements.isEmpty() && foundElements.get(0).isDisplayed()) { // prevent
+                                                                                  // returning
+                                                                                  // of
+                                                                                  // not
+                                                                                  // visible
                 // elements
                 return Collections.unmodifiableList(foundElements);
             } else {
@@ -174,6 +183,29 @@ public class RichFacesAutocomplete implements Autocomplete {
             }.withMessage("Waiting for suggestions to be visible");
         }
 
+        public void setupConfirmWaitForSuggestionsToBeNotVisibleTimeout(long timeout) {
+            _confirmWaitForSuggestionsToBeNotVisibleTimeout = timeout;
+        }
+
+        public void setupSelectWaitForSuggestionsToBeNotVisibleTimeout(long timeout) {
+            _selectWaitForSuggestionsToBeNotVisibleTimeout = timeout;
+        }
+
+        public void setupSelectWaitForSuggestionsToBeVisibleTimeout(long timeout) {
+            _selectWaitForSuggestionsToBeVisibleTimeout = timeout;
+        }
+    }
+
+    private long getConfirmWaitForSuggestionsToBeNotVisibleTimeout() {
+        return (_confirmWaitForSuggestionsToBeNotVisibleTimeout == -1L) ? Utils.getWaitAjaxDefaultTimeout(driver) : _confirmWaitForSuggestionsToBeNotVisibleTimeout;
+    }
+
+    private long getSelectWaitForSuggestionsToBeNotVisibleTimeout() {
+        return (_selectWaitForSuggestionsToBeNotVisibleTimeout == -1L) ? Utils.getWaitAjaxDefaultTimeout(driver) : _selectWaitForSuggestionsToBeNotVisibleTimeout;
+    }
+
+    private long getSelectWaitForSuggestionsToBeVisibleTimeout() {
+        return (_selectWaitForSuggestionsToBeVisibleTimeout == -1L) ? Utils.getWaitAjaxDefaultTimeout(driver) : _selectWaitForSuggestionsToBeVisibleTimeout;
     }
 
     public class SelectOrConfirmImpl implements SelectOrConfirm {
@@ -181,7 +213,8 @@ public class RichFacesAutocomplete implements Autocomplete {
         @Override
         public Autocomplete confirm() {
             new Actions(driver).sendKeys(Keys.RETURN).click(driver.findElement(Utils.BY_BODY)).perform();
-            advanced().waitForSuggestionsToBeNotVisible().perform();
+            advanced().waitForSuggestionsToBeNotVisible()
+                .withTimeout(getConfirmWaitForSuggestionsToBeNotVisibleTimeout(), TimeUnit.SECONDS).perform();
             return RichFacesAutocomplete.this;
         }
 
@@ -192,7 +225,8 @@ public class RichFacesAutocomplete implements Autocomplete {
 
         @Override
         public Autocomplete select(ChoicePicker picker) {
-            advanced().waitForSuggestionsToBeVisible().perform();
+            advanced().waitForSuggestionsToBeVisible()
+                .withTimeout(getSelectWaitForSuggestionsToBeVisibleTimeout(), TimeUnit.SECONDS).perform();
             WebElement foundValue = picker.pick(advanced().getSuggestionsElements());
             if (foundValue == null) {
                 throw new RuntimeException("The value was not found by " + picker.toString());
@@ -204,7 +238,8 @@ public class RichFacesAutocomplete implements Autocomplete {
                 foundValue.click();
             }
 
-            advanced().waitForSuggestionsToBeNotVisible().perform();
+            advanced().waitForSuggestionsToBeNotVisible()
+                .withTimeout(getSelectWaitForSuggestionsToBeNotVisibleTimeout(), TimeUnit.SECONDS).perform();
             return RichFacesAutocomplete.this;
         }
 
@@ -220,7 +255,8 @@ public class RichFacesAutocomplete implements Autocomplete {
 
         private void selectWithKeys(WebElement foundValue) {
             List<WebElement> suggestions = advanced().getSuggestionsElements();
-            // if selectFirst attribute of autocomplete is set, we don't have to press arrow down key for first item
+            // if selectFirst attribute of autocomplete is set, we don't have to
+            // press arrow down key for first item
             boolean skip = suggestions.get(0).getAttribute("class").contains("rf-au-itm-sel");
             int index = Utils.getIndexOfElement(foundValue);
             int steps = index + (skip ? 0 : 1);

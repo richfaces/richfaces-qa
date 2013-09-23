@@ -1,6 +1,7 @@
 package org.richfaces.tests.page.fragments.impl.panelMenu;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
@@ -39,6 +40,9 @@ public abstract class AbstractPanelMenu implements PanelMenu, PanelMenuGroup {
     private Event expandEvent = Event.CLICK;
     private Event collapseEvent = Event.CLICK;
 
+    private long _expandGroupWaitUntilMenuGroupExpandedTimeout = -1;
+    private long _collapseGroupWaitUntilMenuGroupCollapsed = -1;
+
     @Override
     public PanelMenuItem selectItem(ChoicePicker picker) {
         WebElement itemRoot = picker.pick(getMenuItems());
@@ -70,7 +74,9 @@ public abstract class AbstractPanelMenu implements PanelMenu, PanelMenuGroup {
         }
         executeEventOn(expandEvent, groupHeader);
         // can not work with already picked element as it can be stale
-        advanced().waitUntilMenuGroupExpanded(getHeaderElementDynamically(picker.pick(getMenuGroups()))).perform();
+        advanced().waitUntilMenuGroupExpanded(getHeaderElementDynamically(picker.pick(getMenuGroups())))
+                  .withTimeout(advanced().getExpandGroupWaitUntilMenuGroupExpandedTimeout(), TimeUnit.SECONDS)
+                  .perform();
         return Graphene.createPageFragment(RichFacesPanelMenuGroup.class, groupRoot);
     }
 
@@ -173,6 +179,22 @@ public abstract class AbstractPanelMenu implements PanelMenu, PanelMenuGroup {
                         });
                 }
             }.withMessage("Waiting for Panel Menu group to be expanded!");
+        }
+
+        public void setupExpandGroupWaitUntilMenuGroupExpandedTimeout(long timeout) {
+            _expandGroupWaitUntilMenuGroupExpandedTimeout = timeout;
+        }
+
+        public long getExpandGroupWaitUntilMenuGroupExpandedTimeout() {
+            return _expandGroupWaitUntilMenuGroupExpandedTimeout == -1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _expandGroupWaitUntilMenuGroupExpandedTimeout;
+        }
+
+        public void setupCollapseGroupWaitUntilMenuGroupCollapsed(long timeout) {
+            _collapseGroupWaitUntilMenuGroupCollapsed = timeout;
+        }
+
+        public long getCollapseGroupWaitUntilMenuGroupCollapsed() {
+            return _collapseGroupWaitUntilMenuGroupCollapsed == -1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _collapseGroupWaitUntilMenuGroupCollapsed;
         }
     }
 
