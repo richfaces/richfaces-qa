@@ -102,7 +102,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     }
 
     private void openMenu() {
-        fileDropDownMenu.advanced().invoke(target1);
+        fileDropDownMenu.advanced().show(target1);
     }
 
     private void openMenuAndSubMenu() {
@@ -213,7 +213,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
         assertNotVisible(group, "Menu group \"Save As...\" should not be visible on the page");
 
         assertNotVisible(fileMenuList, "Menu should not be expanded.");
-        Graphene.guardNoRequest(fileDropDownMenu).advanced().invoke(target1);
+        Graphene.guardNoRequest(fileDropDownMenu).advanced().show(target1);
         assertVisible(fileMenuList, "Menu should be expanded.");
 
         assertPresent(group, "M enu group \"Save As...\" should be present on the page");
@@ -387,6 +387,6 @@ public class TestMenuGroup extends AbstractWebDriverTest {
 
     @BeforeMethod
     private void updateDropDownMenuInvoker() {
-        fileDropDownMenu.advanced().setupInvokeEvent(Event.MOUSEOVER);
+        fileDropDownMenu.advanced().setupShowEvent(Event.MOUSEOVER);
     }
 }

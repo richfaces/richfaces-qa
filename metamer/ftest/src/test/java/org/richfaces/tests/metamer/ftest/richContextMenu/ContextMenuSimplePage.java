@@ -94,17 +94,17 @@ public class ContextMenuSimplePage extends MetamerPage {
     }
 
     public Locations getContextMenuLocations() {
-        contextMenu.advanced().invoke(targetPanel2);
+        contextMenu.advanced().show(targetPanel2);
         Locations contextMenuLocations = Utils.getLocations(contextMenuContent);
-        contextMenu.advanced().dismiss();
+        contextMenu.advanced().hide();
         return contextMenuLocations;
     }
 
     public Locations getContextMenuLocationsWhenPosition(Positioning positioning) {
         contextMenuAttributes.set(ContextMenuAttributes.direction, positioning);
-        contextMenu.advanced().invoke(targetPanel2);
+        contextMenu.advanced().show(targetPanel2);
         Locations contextMenuLocations = Utils.getLocations(contextMenuContent);
-        contextMenu.advanced().dismiss();
+        contextMenu.advanced().hide();
         return contextMenuLocations;
     }
 

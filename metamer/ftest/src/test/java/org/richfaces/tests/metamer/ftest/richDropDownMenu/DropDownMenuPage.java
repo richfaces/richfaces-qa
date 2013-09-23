@@ -150,7 +150,7 @@ public class DropDownMenuPage extends MetamerPage {
 
     public String returnPopupWidth(String minWidth, RichFacesDropDownMenu dropDownMenu) {
         dropDownMenuAttributes.set(DropDownMenuAttributes.popupWidth, minWidth);
-        dropDownMenu.advanced().invoke(target1);
+        dropDownMenu.advanced().show(target1);
         return dropDownMenuContent.getCssValue("min-width");
     }
 }
