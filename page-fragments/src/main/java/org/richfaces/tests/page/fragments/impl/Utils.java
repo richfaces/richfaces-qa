@@ -149,7 +149,7 @@ public final class Utils {
      * @param functionWithParams JS API function with params (e.g. <code>setValue(new Date('October 10, 2012 12:00:00'))</code>  )
      */
     public static String invokeRichFacesJSAPIFunction(WebElement componentRoot, String functionWithParams) {
-        return (String) getExecutorFromElement(componentRoot).executeScript("return RichFaces.component(arguments[0])." + functionWithParams, componentRoot);
+        return (String) getExecutorFromElement(componentRoot).executeScript("return RichFaces.$(arguments[0])." + functionWithParams, componentRoot);
     }
 
     public static boolean isVisible(WebElement e) {
