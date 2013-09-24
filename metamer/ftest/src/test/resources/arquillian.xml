@@ -153,7 +153,6 @@ http://www.fsf.org. -->
 
     <extension qualifier="webdriver">
         <property name="browserCapabilities">firefox</property>
-        <property name="firefoxUserPreferences">target/test-classes/prefs.js</property>
     </extension>
 
 </arquillian>
