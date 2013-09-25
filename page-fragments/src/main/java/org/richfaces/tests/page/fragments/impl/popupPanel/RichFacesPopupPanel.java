@@ -81,12 +81,16 @@ public abstract class RichFacesPopupPanel<HEADER, HEADERCONTROLS, BODY> extends 
 
     @Override
     public HEADERCONTROLS getHeaderControlsContent() {
-        return Graphene.createPageFragment(headerClass, getBodyElement());
+        return Graphene.createPageFragment(headerClass, getHeaderControlsElement());
     }
 
     @Override
     protected WebElement getBodyElement() {
         return contentElement;
+    }
+
+    protected WebElement getHeaderControlsElement() {
+        return headerControlsElement;
     }
 
     @Override
