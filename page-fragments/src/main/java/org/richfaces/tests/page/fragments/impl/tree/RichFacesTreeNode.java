@@ -21,9 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.tree;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.wait.FluentWait;
 import org.openqa.selenium.WebDriver;
@@ -83,7 +85,7 @@ public class RichFacesTreeNode extends RichFacesTree implements Tree.TreeNode {
                 if (isToggleByHandle()) {
                     getHandleElement().click();
                 } else {
-                    new Actions(driver).triggerEventByWD(getToggleNodeEvent(), getLabelElement()).perform();
+                    new Actions(driver).triggerEventByWD(getToggleNodeEvent(), getCorrectElementWithOnclickAction()).perform();
                 }
             }
             waitUntilNodeIsCollapsed()
@@ -98,18 +100,27 @@ public class RichFacesTreeNode extends RichFacesTree implements Tree.TreeNode {
                 if (isToggleByHandle()) {
                     getHandleElement().click();
                 } else {
-                    new Actions(driver).triggerEventByWD(getToggleNodeEvent(), getLabelElement()).perform();
+                    new Actions(driver).triggerEventByWD(getToggleNodeEvent(), getCorrectElementWithOnclickAction()).perform();
                 }
             }
             waitUntilNodeIsExpanded()
-                    .withTimeout(getExpandWaitUntilNodeIsExpandedTimeout(), TimeUnit.SECONDS)
-                    .perform();
+                .withTimeout(getExpandWaitUntilNodeIsExpandedTimeout(), TimeUnit.SECONDS)
+                .perform();
             return RichFacesTreeNode.this;
         }
 
         @Override
         public WebElement getContainerElement() {
             return containerElement;
+        }
+
+        /**
+         * We have to get correct element with onclick event, which is by default the label element,
+         * but when there is an panel inside node, the onclick action is moved to that panel.
+         */
+        private WebElement getCorrectElementWithOnclickAction() {
+            List<WebElement> possibleElements = getLabelElement().findElements(ByJQuery.selector(">*[onclick]"));
+            return (possibleElements.isEmpty() ? getLabelElement() : possibleElements.get(0));
         }
 
         @Override
@@ -166,7 +177,7 @@ public class RichFacesTreeNode extends RichFacesTree implements Tree.TreeNode {
         @Override
         public TreeNode select() {
             if (!isSelected()) {
-                getLabelElement().click();
+                getCorrectElementWithOnclickAction().click();
             }
             waitUntilNodeIsSelected()
                 .withTimeout(getSelectWaitUntilNodeIsSelectedTimeout(), TimeUnit.SECONDS)

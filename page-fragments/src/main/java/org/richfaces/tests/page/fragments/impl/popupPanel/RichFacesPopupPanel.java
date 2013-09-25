@@ -32,7 +32,6 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Locations;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.panel.AbstractPanel;
-import org.richfaces.tests.page.fragments.impl.popupPanel.PopupPanel.ResizerLocation;
 import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
 import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
 
@@ -82,12 +81,16 @@ public abstract class RichFacesPopupPanel<HEADER, HEADERCONTROLS, BODY> extends 
 
     @Override
     public HEADERCONTROLS getHeaderControlsContent() {
-        return Graphene.createPageFragment(headerClass, getBodyElement());
+        return Graphene.createPageFragment(headerClass, getHeaderControlsElement());
     }
 
     @Override
     protected WebElement getBodyElement() {
         return contentElement;
+    }
+
+    protected WebElement getHeaderControlsElement() {
+        return headerControlsElement;
     }
 
     @Override
