@@ -34,6 +34,7 @@ import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.Dimension;
@@ -87,7 +88,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "delay", ints = { 1000, 1500, 2500 })
+    @Use(field = "delay", ints = { 1500, 2000, 2500 })
     public void testHideDelay() {
         updateShowAction();
         testDelay(new Action() {
@@ -99,8 +100,8 @@ public class TestContextMenu extends AbstractWebDriverTest {
         }, new Action() {
             @Override
             public void perform() {
+                page.getContextMenu().advanced().setupHideWaitUntilIsNotVisibleTimeout(3);
                 page.getContextMenu().advanced().hide();
-                page.waitUntilContextMenuHides();
             }
         }, "hideDelay", delay);
     }
@@ -339,7 +340,8 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @Test
     public void testOnshow() {
         updateShowAction();
-        testFireEvent(contextMenuAttributes, ContextMenuAttributes.onshow, new Actions(driver).click(page.getTargetPanel1()).build());
+        testFireEvent(contextMenuAttributes, ContextMenuAttributes.onshow, new Actions(driver).click(page.getTargetPanel1())
+            .build());
     }
 
     @Test
@@ -378,28 +380,17 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @IssueTracking("https://issues.jboss.org/browse/RF-12792")
     public void testOnkeydown() {
         updateShowAction();
-        testFireEvent(contextMenuAttributes, ContextMenuAttributes.onkeydown, new Action() {
-            @Override
-            public void perform() {
-                page.getContextMenu().advanced().show(page.getTargetPanel1());
-                new Actions(driver).keyDown(page.getContextMenu().advanced().getItemsElements().get(1), Keys.CONTROL)
-                    .keyUp(page.getContextMenu().advanced().getItemsElements().get(1), Keys.CONTROL).build().perform();
-            }
-        });
+        page.getContextMenu().advanced().show(page.getTargetPanel1());
+        testFireEventWithJS(page.getContextMenu().advanced().getItemsElements().get(1), Event.KEYDOWN, contextMenuAttributes,
+            ContextMenuAttributes.onkeydown);
     }
 
-    @Test(groups = "Future")
-    // false negative
+    @Test
     public void testOnkeyup() {
         updateShowAction();
-        testFireEvent(contextMenuAttributes, ContextMenuAttributes.onkeyup, new Action() {
-            @Override
-            public void perform() {
-                page.getContextMenu().advanced().show(page.getTargetPanel1());
-                new Actions(driver).keyDown(page.getContextMenu().advanced().getItemsElements().get(0), Keys.ALT)
-                    .keyUp(page.getContextMenu().advanced().getItemsElements().get(0), Keys.ALT).build().perform();
-            }
-        });
+        page.getContextMenu().advanced().show(page.getTargetPanel1());
+        testFireEventWithJS(page.getContextMenu().advanced().getItemsElements().get(1), Event.KEYUP, contextMenuAttributes,
+            ContextMenuAttributes.onkeyup);
     }
 
     @Test
@@ -509,7 +500,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "delay", ints = { 1000, 1500, 2500 })
+    @Use(field = "delay", ints = { 1500, 2000, 2500 })
     public void testShowDelay() {
         updateShowAction();
         testDelay(new Action() {
@@ -524,9 +515,8 @@ public class TestContextMenu extends AbstractWebDriverTest {
         }, new Action() {
             @Override
             public void perform() {
+                page.getContextMenu().advanced().setupShowWaitUntilIsVisibleTimeout(3);
                 page.getContextMenu().advanced().show(page.getTargetPanel1());
-                page.waitUntilContextMenuAppears();
-
             }
         }, "showDelay", delay);
     }
