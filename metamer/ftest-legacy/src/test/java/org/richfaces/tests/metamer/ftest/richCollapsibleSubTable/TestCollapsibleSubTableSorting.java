@@ -40,7 +40,7 @@ import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.model.DataTable;
 import org.richfaces.tests.metamer.model.Employee;
-import org.richfaces.ui.iteration.SortOrder;
+import org.richfaces.model.SortOrder;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

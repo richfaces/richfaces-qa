@@ -31,8 +31,8 @@ import javax.faces.bean.ViewScoped;
 import org.richfaces.model.Filter;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.model.Capital;
-import org.richfaces.ui.iteration.SortOrder;
 import org.richfaces.ui.iteration.column.UIColumn;
+import org.richfaces.model.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

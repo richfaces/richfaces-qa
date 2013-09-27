@@ -31,7 +31,7 @@ import org.richfaces.tests.metamer.bean.rich.RichColumnBean;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.model.Capital;
-import org.richfaces.ui.iteration.SortOrder;
+import org.richfaces.model.SortOrder;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
