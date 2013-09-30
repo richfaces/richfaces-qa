@@ -24,10 +24,10 @@ package org.richfaces.tests.showcase.autocomplete;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.graphene.component.object.api.autocomplete.Suggestion;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
-import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
+import org.richfaces.tests.page.fragments.impl.autocomplete.SelectOrConfirm;
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.autocomplete.page.CustomLayoutsPage;
 import org.testng.annotations.Test;
@@ -59,20 +59,20 @@ public class TestCustomLayouts extends AbstractWebDriverTest {
     @Test
     public void testAutocompletionOfInputWithTableLayout() {
 
-        typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(page.autocomplete1, "v", EXP_SUGG_AFTER_V_FST_INPUT,
+        typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(page.getAutocomplete1(), "v", EXP_SUGG_AFTER_V_FST_INPUT,
             EXP_SUGG_AFTER_V_FST_INPUT.split(" ")[0]);
 
-        typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(page.autocomplete1, "ala", EXP_SUGG_AFTER_ALA_FST_INPUT,
+        typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(page.getAutocomplete1(), "ala", EXP_SUGG_AFTER_ALA_FST_INPUT,
             EXP_SUGG_AFTER_ALA_FST_INPUT.split(" ")[0]);
     }
 
     @Test
     public void testAutocompletionOfInputWithDivlayput() {
 
-        typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(page.autocomplete2, "v", EXP_SUGG_AFTER_V_SC_INPUT,
+        typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(page.getAutocomplete2(), "v", EXP_SUGG_AFTER_V_SC_INPUT,
             EXP_SUGG_AFTER_V_SC_INPUT.split(" ")[0]);
 
-        typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(page.autocomplete2, "ala", EXP_SUGG_AFTER_ALA_SC_INPUT,
+        typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(page.getAutocomplete2(), "ala", EXP_SUGG_AFTER_ALA_SC_INPUT,
             EXP_SUGG_AFTER_ALA_SC_INPUT.split(" ")[0]);
 
     }
@@ -82,22 +82,21 @@ public class TestCustomLayouts extends AbstractWebDriverTest {
      * ************
      */
 
-    private void typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(RichFacesAutocomplete<String> autocomplete,
+    private void typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(RichFacesAutocomplete autocomplete,
         String whatTotype, String expectedValueInPopup, String expectedValueInInputAfterEnter) {
 
-        autocomplete.setSuggestionParser(new TextSuggestionParser());
-        autocomplete.type(whatTotype);
+        SelectOrConfirm suggestions = autocomplete.type(whatTotype);
 
-        Suggestion<String> firstSuggestion = autocomplete.getFirstSuggestion();
-        assertTrue(expectedValueInPopup.equals(firstSuggestion.getValue()), "The first row of popup should suggest "
+        String firstSuggestion = autocomplete.advanced().getSuggestionsElements().get(0).getText();
+        assertTrue(expectedValueInPopup.equals(firstSuggestion), "The first row of popup should suggest "
             + expectedValueInPopup + " " + "when " + whatTotype + " is typed in input");
 
-        autocomplete.autocompleteWithSuggestion(firstSuggestion);
+        suggestions.select(ChoicePickerHelper.byVisibleText().contains(firstSuggestion));
 
-        String valueInInput = autocomplete.getInputValue();
+        String valueInInput = autocomplete.advanced().getInput().getStringValue();
         assertEquals(valueInInput, expectedValueInInputAfterEnter, "The value in input should be different!");
 
-        autocomplete.clear();
+        autocomplete.advanced().getInput().clear();
     }
 
 }

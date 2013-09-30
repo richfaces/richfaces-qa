@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.repeat.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -29,17 +29,17 @@ import org.openqa.selenium.WebElement;
  */
 public class RepeatPage {
 
-    @FindBy(jquery="div.rf-p:first div[id$=header]")
+    @FindByJQuery("div.rf-p:first div[id$=header]")
     public WebElement firstStateHeader;
-    @FindBy(jquery="div.rf-p:first div[id$=body]")
+    @FindByJQuery("div.rf-p:first div[id$=body]")
     public WebElement firstStateBody;
-    @FindBy(jquery="div.rf-p:last div[id$=header]")
+    @FindByJQuery("div.rf-p:last div[id$=header]")
     public WebElement lastStateHeader;
-    @FindBy(jquery="div.rf-p:last div[id$=body]")
+    @FindByJQuery("div.rf-p:last div[id$=body]")
     public WebElement lastStateBody;
-    @FindBy(jquery="a.rf-ds-nmb-btn:first")
+    @FindByJQuery("a.rf-ds-nmb-btn:first")
     public WebElement anchorForSecondPage;
-    @FindBy(jquery="a.rf-ds-nmb-btn:last")
+    @FindByJQuery("a.rf-ds-nmb-btn:last")
     public WebElement anchorForThirdPage;
 
 }

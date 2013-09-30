@@ -21,12 +21,16 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.message;
 
-import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.graphene.GrapheneElement;
+import org.jboss.arquillian.graphene.fragment.Root;
+import org.jboss.arquillian.graphene.wait.FluentWait;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
+
+import com.google.common.base.Predicate;
 
 /**
  * Abstract base for message component.
@@ -35,81 +39,100 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 public abstract class AbstractMessage implements Message {
 
     @Root
-    protected WebElement root;
+    private WebElement root;
 
-    @Drone
-    protected WebDriver driver;
+    private final AdvancedMessageInteractions interactions = new AdvancedMessageInteractionsImpl();
+
+    @Override
+    public AdvancedMessageInteractions advanced() {
+        return interactions;
+    }
 
     protected abstract String getCssClass(MessageType type);
 
     @Override
     public String getDetail() {
-        if (isDetailNotVisibleCondition().apply(driver)) {
-            throw new RuntimeException("The message detail is not visible");
-        }
         return getMessageDetailElement().getText();
     }
 
-    @Override
-    public WebElement getRoot() {
-        return root;
+    protected abstract WebElement getMessageDetailElement();
+
+    protected abstract WebElement getMessageSummaryElement();
+
+    protected GrapheneElement getRootElement() {
+        return new GrapheneElement(root);
     }
 
     @Override
     public String getSummary() {
-        if (isSummaryNotVisibleCondition().apply(driver)) {
-            throw new RuntimeException("The message summary is not visible");
-        }
         return getMessageSummaryElement().getText();
     }
 
     @Override
-    public ExpectedCondition<Boolean> isDetailNotVisibleCondition() {
-        return Graphene.element(getMessageDetailElement()).not().isVisible();
+    public MessageType getType() {
+        String attribute = getRootElement().getAttribute("class");
+        for (MessageType type : MessageType.values()) {
+            if (attribute.contains(getCssClass(type))) {
+                return type;
+            }
+        }
+        return null;
     }
 
-    @Override
-    public boolean isDetailVisible() {
-        return isDetailVisibleCondition().apply(driver);
-    }
+    public class AdvancedMessageInteractionsImpl implements AdvancedMessageInteractions {
 
-    @Override
-    public ExpectedCondition<Boolean> isDetailVisibleCondition() {
-        return Graphene.element(getMessageDetailElement()).isVisible();
-    }
+        @Override
+        public WebElement getDetailElement() {
+            return getMessageDetailElement();
+        }
 
-    @Override
-    public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return Graphene.element(root).not().isVisible();
-    }
+        @Override
+        public WebElement getRootElement() {
+            return root;
+        }
 
-    @Override
-    public ExpectedCondition<Boolean> isSummaryNotVisibleCondition() {
-        return Graphene.element(getMessageSummaryElement()).not().isVisible();
-    }
+        @Override
+        public WebElement getSummaryElement() {
+            return getMessageSummaryElement();
+        }
 
-    @Override
-    public boolean isSummaryVisible() {
-        return isSummaryVisibleCondition().apply(driver);
-    }
+        @Override
+        public boolean isVisible() {
+            return Utils.isVisible(getSummaryElement()) || Utils.isVisible(getDetailElement());
+        }
 
-    @Override
-    public ExpectedCondition<Boolean> isSummaryVisibleCondition() {
-        return Graphene.element(getMessageSummaryElement()).isVisible();
-    }
+        @Override
+        public WaitingWrapper waitUntilMessageIsNotVisible() {
+            return new WaitingWrapperImpl() {
 
-    @Override
-    public boolean isType(MessageType type) {
-        return getRoot().getAttribute("class").contains(getCssClass(type));
-    }
+                @Override
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until(new Predicate<WebDriver>() {
 
-    @Override
-    public boolean isVisible() {
-        return isVisibleCondition().apply(driver);
-    }
+                        @Override
+                        public boolean apply(WebDriver input) {
+                            return !isVisible();
+                        }
+                    });
+                }
+            }.withMessage("Waiting for message to be not visible.");
+        }
 
-    @Override
-    public ExpectedCondition<Boolean> isVisibleCondition() {
-        return Graphene.element(root).isVisible();
+        @Override
+        public WaitingWrapper waitUntilMessageIsVisible() {
+            return new WaitingWrapperImpl() {
+
+                @Override
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until(new Predicate<WebDriver>() {
+
+                        @Override
+                        public boolean apply(WebDriver input) {
+                            return isVisible();
+                        }
+                    });
+                }
+            }.withMessage("Waiting for message to be visible.");
+        }
     }
 }

@@ -20,7 +20,7 @@
  */
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.richTabPanel;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 

@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.contextMenu;
 
-import static org.jboss.arquillian.graphene.Graphene.element;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.testng.Assert.assertTrue;
 
@@ -76,7 +75,7 @@ public class AbstractContextMenuTest extends AbstractWebDriverTest {
         }
         actions.build().perform();
 
-        Graphene.waitGui().withTimeout(2, TimeUnit.SECONDS).until(element(contextMenuPopup).isVisible());
+        Graphene.waitGui().withTimeout(2, TimeUnit.SECONDS).until().element(contextMenuPopup).is().visible();
 
         Point locationOfTarget = target.getLocation();
         Point locationOfCtxMenu = contextMenuPopup.getLocation();

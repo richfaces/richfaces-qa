@@ -23,10 +23,9 @@ package org.richfaces.tests.showcase.inplaceSelect;
 
 import static org.testng.Assert.assertEquals;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.richfaces.tests.page.fragments.impl.input.inplace.EditingState.FinishEditingBy;
-import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.OpenBy;
-import org.richfaces.tests.page.fragments.impl.input.inplace.select.RichFacesInplaceSelect;
+import org.jboss.arquillian.graphene.page.Page;
+import org.richfaces.tests.page.fragments.impl.inplaceSelect.RichFacesInplaceSelect;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.inplaceSelect.page.SimplePage;
 import org.testng.annotations.Test;
@@ -46,31 +45,31 @@ public class TestInplaceSelect extends AbstractWebDriverTest {
     @Test
     public void testSimpleSelect() {
         for (int i = 1; i <= 5; i++) {
-            checkSelect(page.simpleSelect, "Option " + i, OpenBy.CLICK);
+            checkSelect(page.simpleSelect, "Option " + i, Event.CLICK);
         }
     }
 
     @Test
     public void testCustomizationSelect() {
-        checkSelect(page.customSelect, "Alabama", OpenBy.DBLCLICK);
-        checkSelect(page.customSelect, "Florida", OpenBy.DBLCLICK);
-        checkSelect(page.customSelect, "California", OpenBy.DBLCLICK);
+        checkSelect(page.customSelect, "Alabama", Event.DBLCLICK);
+        checkSelect(page.customSelect, "Florida", Event.DBLCLICK);
+        checkSelect(page.customSelect, "California", Event.DBLCLICK);
     }
 
     /* *********************************************************************************************************
-     * Help methods **************************************************************
-     * *******************************************
+     * Help methods ************************************************************** *******************************************
      */
     /**
-     * Checks the select, when it is select which is activated by double click, then also there is need for click on
-     * accept button.
+     * Checks the select, when it is select which is activated by double click, then also there is need for click on accept
+     * button.
      */
-    private void checkSelect(RichFacesInplaceSelect select, String option, OpenBy by) {
-        if (by.equals(OpenBy.DBLCLICK)) {
-            select.editBy(by).changeToValue(option).confirm(FinishEditingBy.CONTROLS);
+    private void checkSelect(RichFacesInplaceSelect select, String option, Event event) {
+        if (event == Event.DBLCLICK) {
+            select.advanced().setupEditByEvent(event);
+            select.select(option).confirmByControlls();
         } else {
-            select.editBy(by).changeToValue(option).confirm();
+            select.select(option).confirm();
         }
-        assertEquals(select.getLabelValue(), option, "The selected option is different as the select shows!");
+        assertEquals(select.advanced().getLabelValue(), option, "The selected option is different as the select shows!");
     }
 }

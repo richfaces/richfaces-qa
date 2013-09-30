@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.calendarAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
@@ -33,15 +32,14 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.calendar.common.HeaderControls;
-import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay;
-import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.TimeEditor;
-import org.richfaces.tests.page.fragments.impl.calendar.common.editor.yearAndMonth.YearAndMonthEditor;
-import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.CalendarPopup;
+import org.richfaces.tests.page.fragments.impl.calendar.DayPicker.CalendarDay;
+import org.richfaces.tests.page.fragments.impl.calendar.HeaderControls;
+import org.richfaces.tests.page.fragments.impl.calendar.PopupCalendar;
+import org.richfaces.tests.page.fragments.impl.calendar.TimeEditor;
+import org.richfaces.tests.page.fragments.impl.calendar.YearAndMonthEditor;
 import org.testng.annotations.Test;
 
 /**
@@ -121,17 +119,17 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
     public void testGetValueAsString() {
         setTodaysDate();
         MetamerPage.waitRequest(getValueAsString, MetamerPage.WaitRequestType.NONE).click();
-        assertEquals(getGettersValue(), calendar.getInputValue());
+        assertEquals(getGettersValue(), popupCalendar.getInput().getStringValue());
     }
 
     @Test
     public void testResetValue() {
         setTodaysDate();
-        CalendarDay selectedDay = calendar.openPopup().getDayPicker().getSelectedDay();
+        CalendarDay selectedDay = popupCalendar.openPopup().getDayPicker().getSelectedDay();
         assertNotNull(selectedDay);
-        calendar.openPopup();
+        popupCalendar.openPopup();
         executeJSFromElement(resetValue);
-        selectedDay = calendar.openPopup().getDayPicker().getSelectedDay();
+        selectedDay = popupCalendar.openPopup().getDayPicker().getSelectedDay();
         assertNull(selectedDay);
     }
 
@@ -140,71 +138,66 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
         calendarAttributes.set(CalendarAttributes.showApplyButton, Boolean.FALSE);
         // setValue sets the date to 10 Oct of 2012
         MetamerPage.waitRequest(setValue, MetamerPage.WaitRequestType.XHR).click();
-        CalendarDay selectedDay = calendar.openPopup().getDayPicker().getSelectedDay();
+        CalendarDay selectedDay = popupCalendar.openPopup().getDayPicker().getSelectedDay();
         assertNotNull(selectedDay);
         assertEquals(selectedDay.getDayNumber().intValue(), 10);
     }
 
     @Test
     public void testShowAndHideDateEditor() {
-        YearAndMonthEditor yearAndMonthEditor = calendar.getPopup().getHeaderControls().getYearAndMonthEditor();
+        YearAndMonthEditor yearAndMonthEditor = popupCalendar.getPopup().getHeaderControls().getYearAndMonthEditor();
         executeJSFromElement(showDateEditor);
-        Graphene.waitGui().withMessage("year and month editor should be visible")
-                .until(yearAndMonthEditor.isVisibleCondition());
+        yearAndMonthEditor.waitUntilIsVisible().perform();
         executeJSFromElement(hideDateEditor);
-        Graphene.waitGui().withMessage("year and month editor should not be visible")
-                .until(yearAndMonthEditor.isNotVisibleCondition());
+        yearAndMonthEditor.waitUntilIsNotVisible().perform();
     }
 
     @Test
     public void testShowAndHidePopup() {
-        CalendarPopup popup = calendar.getPopup();
+        PopupCalendar popup = popupCalendar.getPopup();
         executeJSFromElement(showPopup);
-        Graphene.waitGui().withMessage("popup should be visible").until(popup.isVisibleCondition());
+        popup.waitUntilIsVisible().perform();
         executeJSFromElement(hidePopup);
-        Graphene.waitGui().withMessage("popup should not be visible").until(popup.isNotVisibleCondition());
+        popup.waitUntilIsNotVisible().perform();
     }
 
     @Test
     public void testShowAndHideTimeEditor() {
-        Dimension size = driver.manage().window().getSize();
-        driver.manage().window().setSize(new Dimension(1024, 768));
-        calendar.setDateTime(todayMidday.plusMonths(1));
-        TimeEditor timeEditor = calendar.getPopup().getFooterControls().getTimeEditor();
+        setTodaysDate();
+        TimeEditor timeEditor = popupCalendar.getPopup().getFooterControls().getTimeEditor();
         executeJSFromElement(showTimeEditor);
-        Graphene.waitGui().withMessage("time editor should be visible").until(timeEditor.isVisibleCondition());
+        timeEditor.waitUntilIsVisible().perform();
         executeJSFromElement(hideTimeEditor);
-        Graphene.waitGui().withMessage("time editor should not be visible").until(timeEditor.isNotVisibleCondition());
-        driver.manage().window().setSize(size);
+        timeEditor.waitUntilIsNotVisible().perform();
     }
 
     @Test
     public void testShowSelectedDate() {
         setTodaysDate();
-        HeaderControls proxiedHeaderControls = calendar.openPopup().getProxiedHeaderControls();
-        proxiedHeaderControls.nextMonth();
-        proxiedHeaderControls.nextMonth();
+        HeaderControls headerControls = popupCalendar.openPopup().getHeaderControls();
+        headerControls.nextMonth();
+        headerControls.nextMonth();
         executeJSFromElement(showSelectedDate);
-        DateTime yearAndMonth = proxiedHeaderControls.getYearAndMonth();
+        DateTime yearAndMonth = headerControls.getYearAndMonth();
         assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.getMonthOfYear());
     }
 
     @Test
     public void testSwitchPopup() {
-        CalendarPopup popup = calendar.getPopup();
+        PopupCalendar popup = popupCalendar.getPopup();
         executeJSFromElement(switchPopup);
-        Graphene.waitGui().withMessage("popup should be visible").until(popup.isVisibleCondition());
+        popup.waitUntilIsVisible().perform();
         executeJSFromElement(switchPopup);
-        Graphene.waitGui().withMessage("popup should not be visible").until(popup.isNotVisibleCondition());
+        popup.waitUntilIsNotVisible().perform();
         executeJSFromElement(switchPopup);
-        Graphene.waitGui().withMessage("popup should be visible").until(popup.isVisibleCondition());
+        popup.waitUntilIsVisible().perform();
     }
 
     @Test
     public void testToday() {
-        calendar.openPopup();
+        popupCalendar.openPopup();
         executeJSFromElement(today);
-        CalendarDay selectedDay = calendar.openPopup().getDayPicker().getSelectedDay();
+        CalendarDay selectedDay = popupCalendar.openPopup().getDayPicker().getSelectedDay();
         assertEquals(selectedDay.getDayNumber().intValue(), todayMidday.getDayOfMonth());
     }
 
@@ -217,7 +210,7 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
      */
     private Object executeJSFromElement(WebElement element) {
         return executeJS(element.getAttribute("onclick") != null ? element.getAttribute("onclick") : element
-                .getAttribute("onmouseover"));
+            .getAttribute("onmouseover"));
     }
 
     private String getGettersValue() {
@@ -226,7 +219,7 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
     }
 
     private void setTodaysDate() {
-        MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), MetamerPage.WaitRequestType.XHR)
-                .setTodaysDate();
+        MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), MetamerPage.WaitRequestType.XHR)
+            .setTodaysDate();
     }
 }

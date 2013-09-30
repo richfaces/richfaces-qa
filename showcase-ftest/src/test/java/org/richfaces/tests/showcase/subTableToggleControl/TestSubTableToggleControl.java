@@ -25,8 +25,9 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.util.List;
-import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+
+import org.jboss.arquillian.graphene.findby.ByJQuery;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.dataTable.AbstractDataIterationWithCars;
@@ -104,7 +105,7 @@ public class TestSubTableToggleControl extends AbstractDataIterationWithCars {
             }
         }
 
-        String expectedNumberOfTrs = bodyOfTable.findElement(ByJQuery.jquerySelector("tr:visible:last")).getText().trim();
+        String expectedNumberOfTrs = bodyOfTable.findElement(ByJQuery.selector("tr:visible:last")).getText().trim();
 
         String[] partsOfLine = expectedNumberOfTrs.split(":");
         int expectedNumberOfTrsInt = Integer.valueOf(partsOfLine[1].trim()).intValue();

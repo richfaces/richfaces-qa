@@ -112,4 +112,13 @@ public class RichPopupPanelBean implements Serializable {
         LOGGER.warn("3:  " + value3);
         return null;
     }
+
+    public void waitingAction() {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 }

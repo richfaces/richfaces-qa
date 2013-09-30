@@ -25,9 +25,7 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
-import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-
 import org.testng.annotations.Test;
 
 /**
@@ -49,7 +47,7 @@ public class TestNotifyMessagesCSV extends AbstractNotifyMessagesTest {
     @Override
     protected void waitingForValidationMessagesToShow() {
         submitWithHBtn();// "https://issues.jboss.org/browse/RF-12922"
-        Graphene.waitGui().until(getPage().getMessagesComponentWithGlobal().isVisibleCondition());
-        Graphene.waitGui().until(getPage().getMessagesComponentWithFor().isVisibleCondition());
+        getPage().getMessagesComponentWithGlobal().advanced().waitUntilMessagesAreVisible().perform();
+        getPage().getMessagesComponentWithFor().advanced().waitUntilMessagesAreVisible().perform();
     }
 }

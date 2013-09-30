@@ -25,9 +25,8 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -153,9 +152,9 @@ public class TestForm extends AbstractKitchensinkTest {
             registerNewMember("definitelydifferent@ba.sk");
 
             WebElement fstRow = membersTable.getTableRow();
-            String mailFromFstRow = fstRow.findElement(ByJQuery.jquerySelector("td:eq(3)")).getText();
+            String mailFromFstRow = fstRow.findElement(ByJQuery.selector("td:eq(3)")).getText();
 
-            fstRow.findElement(ByJQuery.jquerySelector("td:eq(5) a")).click();
+            fstRow.findElement(ByJQuery.selector("td:eq(5) a")).click();
             for (String window: webDriver.getWindowHandles()) {
                 if (!window.equals(originalWindow)) {
                     webDriver.switchTo().window(window);

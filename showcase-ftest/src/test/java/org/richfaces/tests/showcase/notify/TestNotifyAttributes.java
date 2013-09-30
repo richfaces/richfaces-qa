@@ -21,16 +21,19 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.notify;
 
-import com.google.common.base.Predicate;
-import java.util.concurrent.TimeUnit;
-import org.jboss.arquillian.graphene.Graphene;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import com.google.common.base.Predicate;
+
+import java.util.concurrent.TimeUnit;
+
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.notify.NotifyMessage;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.notify.page.NotifyAttributesPage;
@@ -42,7 +45,6 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestNotifyAttributes extends AbstractWebDriverTest {
-
 
     @Page
     private NotifyAttributesPage page;
@@ -74,7 +76,7 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
 
         assertTrue(ok, "The message should not dissapear");
 
-        page.getNotify().getMessageAtIndex(0).close();
+        page.getNotify().getItem(0).close();
         page.waitUntilThereIsNoNotify();
     }
 
@@ -91,14 +93,14 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
         page.setShowShadow(true);
         page.showNotification();
 
-        assertTrue(isElementPresent(page.getNotify().getMessageAtIndex(0).getShadowElement()), "The shadow should be presented!");
+        assertTrue(isElementPresent(page.getNotify().getItem(0).advanced().getShadowElement()), "The shadow should be presented!");
 
         page.waitUntilThereIsNoNotify();
 
         page.setShowShadow(false);
         page.showNotification();
 
-        assertFalse(isElementPresent(page.getNotify().getMessageAtIndex(0).getShadowElement()), "The shadow should not be presented!");
+        assertFalse(isElementPresent(page.getNotify().getItem(0).advanced().getShadowElement()), "The shadow should not be presented!");
     }
 
     @Test
@@ -107,26 +109,25 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
         page.setShowCloseButtion(true);
         page.showNotification();
 
-        NotifyMessage message = page.getNotify().getMessageAtIndex(0);
+        NotifyMessage message = page.getNotify().getItem(0);
 
-        actions.moveToElement(message.getMessageSummaryElement()).build().perform();
-        assertTrue(message.getCloseIconElement().isDisplayed(), "The close button should be visible!");
+        actions.moveToElement(message.advanced().getSummaryElement()).build().perform();
+        assertTrue(message.advanced().getCloseIconElement().isDisplayed(), "The close button should be visible!");
         page.waitUntilThereIsNoNotify();
 
         page.setShowCloseButtion(false);
 
         page.showNotification();
 
-        message = page.getNotify().getMessageAtIndex(0);
+        message = page.getNotify().getItem(0);
 
-        actions.moveToElement(message.getMessageSummaryElement());
-        assertFalse(message.getCloseIconElement().isDisplayed(), "The close button should not be visible!");
+        actions.moveToElement(message.advanced().getSummaryElement());
+        assertFalse(message.advanced().getCloseIconElement().isDisplayed(), "The close button should not be visible!");
     }
 
     /* *****************************************************************************
      * Help methods ************************************************************** ***************
      */
-
     private void checkNonBlockingOpacity(final String opacity) {
         loadPage();
         page.setNonBlocking(true);
@@ -134,23 +135,23 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
         page.waitUntilThereIsNoNotify();
         page.showNotification();
 
-        final NotifyMessage message = page.getNotify().getMessageAtIndex(0);
-        actions.moveToElement(message.getMessageSummaryElement()).build().perform();
+        final NotifyMessage message = page.getNotify().getItem(0);
+        actions.moveToElement(message.advanced().getSummaryElement()).perform();
 
         Graphene.waitAjax()
-                .withMessage("The notify should has opacity " + opacity + ".")
-                .pollingEvery(50, TimeUnit.MILLISECONDS)
-                .until(new Predicate<WebDriver>() {
-                    @Override
-                    public boolean apply(WebDriver input) {
-                        double actualOpacity = Double.valueOf(message.getRoot().getCssValue("opacity"));
-                        boolean succcess = Math.abs(Double.valueOf(opacity) - actualOpacity) <= 0.2;
-                        if (!succcess) {
-                            actions.moveToElement(message.getMessageSummaryElement()).build().perform();
-                        }
-                        return succcess;
+            .withMessage("The notify should has opacity " + opacity + ".")
+            .pollingEvery(50, TimeUnit.MILLISECONDS)
+            .until(new Predicate<WebDriver>() {
+                @Override
+                public boolean apply(WebDriver input) {
+                    double actualOpacity = Double.valueOf(message.advanced().getRootElement().getCssValue("opacity"));
+                    boolean succcess = Math.abs(Double.valueOf(opacity) - actualOpacity) <= 0.2;
+                    if (!succcess) {
+                        Utils.triggerJQ("mouseover", message.advanced().getSummaryElement());
                     }
-                });
+                    return succcess;
+                }
+            });
     }
 
     private void checkStayTime(long stayTime) {
@@ -162,12 +163,10 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
         long timeWhenNotifyDisappeared = System.currentTimeMillis();
         long delta = timeWhenNotifyDisappeared - timeWhenNotifyIsRendered;
 
-
         // the time should be measured when the notify started to disappear,
         // however
         // it is measured from the time it fully disappears, therefore there is
         // added delay
-
         long moreThan = stayTime;
         long lessThan = stayTime + NotifyAttributesPage.NOTIFY_DISAPPEAR_DELAY;
 
@@ -185,5 +184,4 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
             currentTime = System.currentTimeMillis();
         }
     }
-
 }

@@ -22,13 +22,14 @@
 package org.richfaces.tests.showcase.collapsiblePanel;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import org.richfaces.tests.showcase.panel.AbstractPanelTest;
 import org.testng.annotations.Test;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.collapsiblePanel.page.SimplePage;
 
 /**
@@ -58,7 +59,7 @@ public class TestSimple extends AbstractPanelTest {
         page.secondPanel.click();
         page.firstPanel.click();
         /* This is workaround because page.secondPanelContent is not reachable at this time, there is only element with class rf-cp-b*/
-        int size = webDriver.findElements(ByJQuery.jquerySelector("div[class='rf-cp-b']")).size();
+        int size = webDriver.findElements(ByJQuery.selector("div[class='rf-cp-b']")).size();
         assertTrue(size == 1, "The content of the second panel should not be visible, since the panel is collapsed!");
     }
 }

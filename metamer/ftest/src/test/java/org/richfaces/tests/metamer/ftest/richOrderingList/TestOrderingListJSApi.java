@@ -28,6 +28,7 @@ import java.net.URL;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.page.fragments.impl.Utils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -52,7 +53,7 @@ public class TestOrderingListJSApi extends AbstractOrderingListTest {
     private WebElement value;
 
     private Integer getActualSelectedItemIndex() {
-        return orderingList.getSelectedItems().get(0).getIndex();
+        return Utils.getIndexOfElement(orderingList.advanced().getSelectedItemsElements().get(0));
     }
 
     @Override
@@ -66,22 +67,22 @@ public class TestOrderingListJSApi extends AbstractOrderingListTest {
 
     @Test
     public void testInit() {
-        assertTrue(orderingList.isVisible(), "The ordering list should be visible.");
-        assertButtonDisabled(orderingList.getBottomButtonElement(), "The button [last] should be disabled.");
-        assertButtonDisabled(orderingList.getDownButtonElement(), "The button [down] should be disabled.");
-        assertButtonDisabled(orderingList.getTopButtonElement(), "The button [first] should be disabled.");
-        assertButtonDisabled(orderingList.getUpButtonElement(), "The button [up] should be disabled.");
+        assertVisible(orderingList.advanced().getRootElement(), "The ordering list should be visible.");
+        assertButtonDisabled(orderingList.advanced().getBottomButtonElement(), "The button [last] should be disabled.");
+        assertButtonDisabled(orderingList.advanced().getDownButtonElement(), "The button [down] should be disabled.");
+        assertButtonDisabled(orderingList.advanced().getTopButtonElement(), "The button [first] should be disabled.");
+        assertButtonDisabled(orderingList.advanced().getUpButtonElement(), "The button [up] should be disabled.");
     }
 
     @Test
     public void testListLength() {
         getListLength.click();
-        Assert.assertEquals(Integer.valueOf(getValueFromOutputJSField()), Integer.valueOf(orderingList.getItems().size()));
+        Assert.assertEquals(Integer.valueOf(getValueFromOutputJSField()), Integer.valueOf(orderingList.advanced().getList().size()));
     }
 
     @Test
     public void testMoving() {
-        orderingList.selectItemsByIndex(0);
+        orderingList.advanced().select(0);
         checkButtonsStateTop();
 
         downButton.click();
@@ -102,7 +103,7 @@ public class TestOrderingListJSApi extends AbstractOrderingListTest {
 
         downBottomButton.click();
         checkButtonsStateBottom();
-        Assert.assertEquals(getActualSelectedItemIndex(), Integer.valueOf(orderingList.getItems().size() - 1));
+        Assert.assertEquals(getActualSelectedItemIndex(), Integer.valueOf(orderingList.advanced().getList().size() - 1));
 
         upTopButton.click();
         checkButtonsStateTop();

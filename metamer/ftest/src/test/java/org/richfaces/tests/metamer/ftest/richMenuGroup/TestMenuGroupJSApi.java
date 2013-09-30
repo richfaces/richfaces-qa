@@ -25,10 +25,9 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.Test;
 
@@ -57,22 +56,22 @@ public class TestMenuGroupJSApi extends AbstractWebDriverTest {
 
     @Test
     public void testHide() {
-        fireEvent(hideButton, Event.MOUSEOVER);
-        Graphene.waitGui().until().element(menuList).is().visible();
+        hideButton.click();
+        Graphene.waitGui().until().element(menuItem41).is().not().visible();
         assertNotVisible(menuItem41, "Save button should not be visible.");
         assertNotVisible(groupList, "Group list should not be visible.");
         testShow();//show the group
-        fireEvent(hideButton, Event.MOUSEOVER);
-        Graphene.waitGui().until().element(menuList).is().visible();
+        hideButton.click();
+        Graphene.waitGui().until().element(menuItem41).is().not().visible();
         assertNotVisible(menuItem41, "Save button should not be visible.");
         assertNotVisible(groupList, "Group list should not be visible.");
     }
 
     @Test
     public void testShow() {
-        fireEvent(showButton, Event.MOUSEOVER);
-        Graphene.waitGui().until().element(menuList).is().visible();
-        assertVisible(groupList, "Group list is not visible.");
+        showButton.click();
+        Graphene.waitGui().until().element(menuItem41).is().visible();
         assertVisible(menuItem41, "Save button is not visible.");
+        assertVisible(groupList, "Group list is not visible.");
     }
 }

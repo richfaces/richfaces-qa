@@ -39,8 +39,8 @@ import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponent.ClearType;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
+import org.richfaces.tests.page.fragments.impl.common.ClearType;
+import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 import org.testng.annotations.Test;
 
 /**
@@ -106,7 +106,7 @@ public class TestFunctions extends AbstractWebDriverTest {
     }
 
     private void fillInRoleAndApply(String role) {
-        roleNameInput.clear(ClearType.JS).fillIn(role);
+        roleNameInput.advanced().clear(ClearType.JS).sendKeys(role);
         MetamerPage.waitRequest(applyLink, WaitRequestType.HTTP).click();
     }
 
@@ -129,20 +129,20 @@ public class TestFunctions extends AbstractWebDriverTest {
 
     @Test
     public void testFadeOutFadeIn() {
-        assertVisible(input.getInput(), "Input should be visible");
+        assertVisible(input.advanced().getInputElement(), "Input should be visible");
         new Actions(driver).moveToElement(fadeOut).perform();
-        Graphene.waitGui().until(input.isNotVisibleCondition());
-        assertNotVisible(input.getInput(), "Input should not be visible.");
+        Graphene.waitGui().until().element(input.advanced().getInputElement()).is().not().visible();
+        assertNotVisible(input.advanced().getInputElement(), "Input should not be visible.");
         new Actions(driver).moveToElement(fadeIn).perform();
-        Graphene.waitGui().until(input.isVisibleCondition());
-        assertVisible(input.getInput(), "Input should be visible");
+        Graphene.waitGui().until().element(input.advanced().getInputElement()).is().visible();
+        assertVisible(input.advanced().getInputElement(), "Input should be visible");
     }
 
     @Test
     @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
         "richExtendedDataTable", "richList", "hDataTable", "uiRepeat" })
     public void testFunctions() {
-        String id = input.getInput().getAttribute("id");
+        String id = input.advanced().getInputElement().getAttribute("id");
         String clientId = clientIdOutput.getText();
         assertNotNull(clientId, "Function clientId() doesn't work.");
         assertNotSame(clientId, "", "Function clientId() doesn't work.");
@@ -156,7 +156,7 @@ public class TestFunctions extends AbstractWebDriverTest {
 
         output = findComponentOutput.getText();
         assertEquals(output, "abc", "Function findComponent() doesn't work.");
-        input.clear(ClearType.JS).fillIn("RichFaces");
+        input.advanced().clear(ClearType.JS).sendKeys("RichFaces");
         MetamerPage.waitRequest(applyLink, WaitRequestType.HTTP).click();
         output = findComponentOutput.getText();
         assertEquals(output, "RichFaces", "Function findComponent() doesn't work.");

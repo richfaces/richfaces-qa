@@ -23,13 +23,14 @@ package org.richfaces.tests.page.fragments.impl.contextMenu;
 
 import java.util.List;
 
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class RichFacesContextMenu extends AbstractPopupMenu {
+public class RichFacesContextMenu extends AbstractPopupMenu implements PopupMenu {
 
     @FindBy(className = "rf-ctx-itm")
     private List<WebElement> menuItemsElements;
@@ -37,19 +38,35 @@ public class RichFacesContextMenu extends AbstractPopupMenu {
     @FindBy(css = "div.rf-ctx-lst")
     private WebElement contextMenuPopup;
 
+    @FindByJQuery("script:last")
+    private WebElement script;
+
+    private final AdvancedContextMenuInteractions advancedInteractions = new AdvancedContextMenuInteractions();
+
     @Override
-    public WebElement getMenuPopup() {
-        return contextMenuPopup;
+    public AdvancedContextMenuInteractions advanced() {
+        return advancedInteractions;
     }
 
     @Override
-    public List<WebElement> getMenuItemElements() {
+    protected List<WebElement> getMenuItemElementsInternal() {
         return menuItemsElements;
     }
 
     @Override
-    public String getNameOfFragment() {
-        return RichFacesContextMenu.class.getName();
+    protected WebElement getMenuPopupInternal() {
+        return contextMenuPopup;
     }
 
+    @Override
+    protected WebElement getScriptElement() {
+        return script;
+    }
+
+    public class AdvancedContextMenuInteractions extends AbstractPopupMenu.AdvancedPopupMenuInteractions {
+
+        public String getLangAttribute() {
+            return getRootElement().getAttribute("lang");
+        }
+    }
 }

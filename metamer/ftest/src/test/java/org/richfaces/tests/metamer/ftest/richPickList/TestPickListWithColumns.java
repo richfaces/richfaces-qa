@@ -26,16 +26,14 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.pickList
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
-import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
-import org.richfaces.tests.page.fragments.impl.list.ordering.RichFacesSimpleOrderingListItem;
-import org.richfaces.tests.page.fragments.impl.list.pick.RichFacesPickList;
-import org.richfaces.tests.page.fragments.impl.list.pick.RichFacesSourceList;
-import org.richfaces.tests.page.fragments.impl.list.pick.RichFacesTargetList;
+import org.richfaces.tests.page.fragments.impl.orderingList.SelectableListItem;
+import org.richfaces.tests.page.fragments.impl.pickList.RichFacesPickList;
 import org.testng.annotations.Test;
 
 /**
@@ -45,7 +43,7 @@ import org.testng.annotations.Test;
 public class TestPickListWithColumns extends AbstractWebDriverTest {
 
     @FindBy(css = "[id$=pickList]")
-    private ThreeColumnPickList picklist;
+    private RichFacesPickList picklist;
 
     @Override
     public URL getTestUrl() {
@@ -56,8 +54,8 @@ public class TestPickListWithColumns extends AbstractWebDriverTest {
     public void testColumnClasses() {
         String testedClass = "metamer-ftest-class";
         pickListAttributes.set(PickListAttributes.columnClasses, testedClass);
-        for (ThreeColumnListItem li : picklist.source().getItems()) {
-            for (WebElement e : li.getItemElement().findElements(By.tagName("td"))) {
+        for (SelectableListItem li : picklist.advanced().getSourceList().getItems()) {
+            for (WebElement e : li.getRootElement().findElements(By.tagName("td"))) {
                 assertTrue(e.getAttribute("class").contains(testedClass), "Item @class should contain " + testedClass);
             }
         }
@@ -65,54 +63,7 @@ public class TestPickListWithColumns extends AbstractWebDriverTest {
 
     @Test
     public void testHeaderClass() {
-        testStyleClass(picklist.source().getHeaderElement(), BasicAttributes.headerClass);
-        testStyleClass(picklist.target().getHeaderElement(), BasicAttributes.headerClass);
-    }
-
-    public static class ThreeColumnPickList extends RichFacesPickList<ThreeColumnListItem, ThreeColumnSourceList, ThreeColumnTargetList> {
-
-        @Override
-        protected Class<ThreeColumnSourceList> getSourceListType() {
-            return ThreeColumnSourceList.class;
-        }
-
-        @Override
-        protected Class<ThreeColumnTargetList> getTargetListType() {
-            return ThreeColumnTargetList.class;
-        }
-    }
-
-    public static class ThreeColumnSourceList extends RichFacesSourceList<ThreeColumnListItem> {
-
-        @Override
-        protected Class<ThreeColumnListItem> getListItemType() {
-            return ThreeColumnListItem.class;
-        }
-    }
-
-    public static class ThreeColumnTargetList extends RichFacesTargetList<ThreeColumnListItem> {
-
-        @Override
-        protected Class<ThreeColumnListItem> getListItemType() {
-            return ThreeColumnListItem.class;
-        }
-    }
-
-    public static class ThreeColumnListItem extends RichFacesSimpleOrderingListItem {
-
-        @FindBy(tagName = "td")
-        private List<WebElement> columns;
-
-        public String city() {
-            return columns.get(1).getText().trim();
-        }
-
-        public String flag() {
-            return columns.get(0).findElement(By.tagName("image")).getAttribute("src").trim();
-        }
-
-        public String state() {
-            return columns.get(2).getText().trim();
-        }
+        testStyleClass(picklist.advanced().getSourceHeaderElement(), BasicAttributes.headerClass);
+        testStyleClass(picklist.advanced().getTargetHeaderElement(), BasicAttributes.headerClass);
     }
 }

@@ -21,10 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.contextMenu;
 
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
 import static org.testng.Assert.assertTrue;
 
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.contextMenu.page.SimpleContextMenuPage;
 import org.testng.annotations.Test;
 
@@ -41,7 +41,7 @@ public class TestSimple extends AbstractContextMenuTest {
         Graphene.waitGui().until().element(page.getPicture()).is().visible();
         double widthBeforeZoomIn = getTargetWidth(page.getPicture());
 
-        page.getContextMenu().selectItem(SimpleContextMenuPage.ZOOM_IN);
+        page.getContextMenu().selectItem(0);
 
         double widthAfterZoom = getTargetWidth(page.getPicture());
 
@@ -53,7 +53,7 @@ public class TestSimple extends AbstractContextMenuTest {
         Graphene.waitGui().until().element(page.getPicture()).is().visible();
         double widthBeforeZoomOut = getTargetWidth(page.getPicture());
 
-        page.getContextMenu().selectItem(SimpleContextMenuPage.ZOOM_OUT);
+        page.getContextMenu().selectItem(1);
 
         double widthAfterZoomOut = getTargetWidth(page.getPicture());
 
@@ -63,7 +63,7 @@ public class TestSimple extends AbstractContextMenuTest {
 
     @Test
     public void testContextMenuRenderedAtCorrectPosition() {
-        checkContextMenuRenderedAtCorrectPosition(page.getPicture(), page.getContextMenu().getMenuPopup(),
+        checkContextMenuRenderedAtCorrectPosition(page.getPicture(), page.getContextMenu().advanced().getMenuPopup(),
             InvocationType.LEFT_CLICK, null);
     }
 }

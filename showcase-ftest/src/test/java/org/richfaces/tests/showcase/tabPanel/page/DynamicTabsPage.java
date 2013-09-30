@@ -21,16 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.tabPanel.page;
 
-import static org.jboss.arquillian.graphene.Graphene.attribute;
-import static org.jboss.arquillian.graphene.Graphene.element;
-import static org.jboss.arquillian.graphene.Graphene.guardXhr;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.tabPanel.RichFacesTabPanel;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -38,25 +35,27 @@ import org.openqa.selenium.WebElement;
  */
 public class DynamicTabsPage {
 
-    @FindBy(jquery = ".example-cnt td[id*='header:active']:visible")
-    public WebElement activeTabHeader;
+    @FindByJQuery(".rf-tbp:eq(1)")
+    private RichFacesTabPanel tabPanel;
 
-    @FindBy(jquery = ".example-cnt td[id*='header:inactive']:visible")
-    public List<WebElement> inactiveTabsHeaders;
+    public RichFacesTabPanel getTabPanel() {
+        return tabPanel;
+    }
 
-    @FindBy(jquery = "input[type='submit']:visible")
+    @FindByJQuery("input[type='submit']:visible")
     public WebElement submitButton;
 
     public static final int NUM_OF_TABS = 8;
 
     public void iterateOverTabsAndAssert() {
-        for (WebElement i : inactiveTabsHeaders) {
-            String headerText = i.getText();
+        for (int i = 1; i < tabPanel.getNumberOfTabs(); i++) {
+            tabPanel.switchTo(i);
 
-            guardXhr(i).click();
-            waitGui().until(element(submitButton).isVisible());
-            waitGui().withTimeout(2, TimeUnit.SECONDS).withMessage("The tab was not switched correctly!")
-                .until(attribute(submitButton, "value").contains(headerText));
+            String headerText = tabPanel.advanced().getActiveHeaderElement().getText();
+
+            waitGui().until().element(submitButton).is().visible();
+            waitGui().withTimeout(2, TimeUnit.SECONDS).withMessage("The tab was not switched correctly!").until()
+                .element(submitButton).attribute("value").contains(headerText);
         }
     }
 }

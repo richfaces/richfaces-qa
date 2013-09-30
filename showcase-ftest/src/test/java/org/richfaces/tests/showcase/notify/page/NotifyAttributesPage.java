@@ -22,13 +22,15 @@
 package org.richfaces.tests.showcase.notify.page;
 
 import com.google.common.base.Predicate;
+
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -40,20 +42,20 @@ public class NotifyAttributesPage extends NotifyPage {
 
     public static final int TIMEOUT = 5000;
 
-    @FindBy(jquery=".rf-insl-inp:eq(0)")
+    @FindByJQuery(".rf-insl-inp:eq(0)")
     private WebElement inputForStayTime;
-    @FindBy(jquery="input[type=checkbox]:eq(0)")
+    @FindByJQuery("input[type=checkbox]:eq(0)")
     private WebElement stickyCheckBox;
-    @FindBy(jquery="input[type=checkbox]:eq(1)")
+    @FindByJQuery("input[type=checkbox]:eq(1)")
     private WebElement nonBlockingCheckBox;
-    @FindBy(jquery="input[type=checkbox]:eq(2)")
+    @FindByJQuery("input[type=checkbox]:eq(2)")
     private WebElement showShadowCheckBox;
-    @FindBy(jquery="input[type=checkbox]:eq(3)")
+    @FindByJQuery("input[type=checkbox]:eq(3)")
     private WebElement showCloseButtonCheckBox;
-    @FindBy(jquery=".rf-insl-inp:eq(1)")
+    @FindByJQuery(".rf-insl-inp:eq(1)")
     private WebElement nonBlockingOpacityInput;
 
-    @FindBy(css="input[type=submit]")
+    @FindBy(css = "input[type=submit]")
     private WebElement showNotification;
 
     @ArquillianResource
@@ -76,12 +78,12 @@ public class NotifyAttributesPage extends NotifyPage {
         if (nonBlockingCheckBox.isSelected() != nonBlocking) {
             actions.moveToElement(nonBlockingCheckBox).click().build().perform();
             Graphene.waitGui()
-                    .until(new Predicate<WebDriver>() {
-                        @Override
-                        public boolean apply(WebDriver input) {
-                            return nonBlockingOpacityInput.isEnabled() == nonBlocking;
-                        }
-                    });
+                .until(new Predicate<WebDriver>() {
+                    @Override
+                    public boolean apply(WebDriver input) {
+                        return nonBlockingOpacityInput.isEnabled() == nonBlocking;
+                    }
+                });
         }
     }
 

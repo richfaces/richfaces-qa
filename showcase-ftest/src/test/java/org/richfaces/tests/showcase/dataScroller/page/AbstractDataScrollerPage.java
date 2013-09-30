@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.dataScroller.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -41,37 +41,37 @@ public abstract class AbstractDataScrollerPage {
     public final String CLASS_OF_ACTIVE_BUTTON_WITH_NUMBER = CLASS_OF_INACTIVE_BUTTON_WITH_NUMBER + " rf-ds-act";
 
 
-    @FindBy(jquery="a[class='" + CLASS_OF_BUTTON_NEXT + "']")
+    @FindByJQuery("a[class='" + CLASS_OF_BUTTON_NEXT + "']")
     public WebElement nextButton;
-    @FindBy(jquery="span[class='" + CLASS_OF_BUTTON_NEXT + " " + CLASS_OF_BUTTON_DIS + "']")
+    @FindByJQuery("span[class='" + CLASS_OF_BUTTON_NEXT + " " + CLASS_OF_BUTTON_DIS + "']")
     public WebElement nextButtonDis;
 
-    @FindBy(jquery="a[class='" + CLASS_OF_BUTTON_PREV + "']")
+    @FindByJQuery("a[class='" + CLASS_OF_BUTTON_PREV + "']")
     public WebElement previousButton;
-    @FindBy(jquery="span[class='" + CLASS_OF_BUTTON_PREV + " " + CLASS_OF_BUTTON_DIS + "']")
+    @FindByJQuery("span[class='" + CLASS_OF_BUTTON_PREV + " " + CLASS_OF_BUTTON_DIS + "']")
     public WebElement previousButtonDis;
 
-    @FindBy(jquery="a[class='" + CLASS_OF_BUTTON_FIRST + "']")
+    @FindByJQuery("a[class='" + CLASS_OF_BUTTON_FIRST + "']")
     public WebElement firstPageButton;
-    @FindBy(jquery="span[class='" + CLASS_OF_BUTTON_FIRST + " " + CLASS_OF_BUTTON_DIS + "']")
+    @FindByJQuery("span[class='" + CLASS_OF_BUTTON_FIRST + " " + CLASS_OF_BUTTON_DIS + "']")
     public WebElement firstPageButtonDis;
 
-    @FindBy(jquery="a[class='" + CLASS_OF_BUTTON_LAST + "']")
+    @FindByJQuery("a[class='" + CLASS_OF_BUTTON_LAST + "']")
     public WebElement lastPageButton;
-    @FindBy(jquery="span[class='" + CLASS_OF_BUTTON_LAST + " " + CLASS_OF_BUTTON_DIS + "']")
+    @FindByJQuery("span[class='" + CLASS_OF_BUTTON_LAST + " " + CLASS_OF_BUTTON_DIS + "']")
     public WebElement lastPageButtonDis;
 
-    @FindBy(jquery="a[class='" + CLASS_OF_BUTTON_FAST_RWD + "']")
+    @FindByJQuery("a[class='" + CLASS_OF_BUTTON_FAST_RWD + "']")
     public WebElement fastPrevButton;
-    @FindBy(jquery="span[class='" + CLASS_OF_BUTTON_FAST_RWD + " " + CLASS_OF_BUTTON_DIS + "']")
+    @FindByJQuery("span[class='" + CLASS_OF_BUTTON_FAST_RWD + " " + CLASS_OF_BUTTON_DIS + "']")
     public WebElement fastPrevButtonDis;
 
-    @FindBy(jquery="a[class='" + CLASS_OF_BUTTON_FAST_FWD + "']")
+    @FindByJQuery("a[class='" + CLASS_OF_BUTTON_FAST_FWD + "']")
     public WebElement fastNextButton;
-    @FindBy(jquery="span[class='" + CLASS_OF_BUTTON_FAST_FWD + " " + CLASS_OF_BUTTON_DIS + "']")
+    @FindByJQuery("span[class='" + CLASS_OF_BUTTON_FAST_FWD + " " + CLASS_OF_BUTTON_DIS + "']")
     public WebElement fastNextButtonDis;
 
-    @FindBy(jquery="span[class*='" + CLASS_OF_ACTIVE_BUTTON_WITH_NUMBER + "']")
+    @FindByJQuery("span[class*='" + CLASS_OF_ACTIVE_BUTTON_WITH_NUMBER + "']")
     public WebElement buttonWithNumberOfPageActive;
 
     public int getNumberOfCurrentPage() {

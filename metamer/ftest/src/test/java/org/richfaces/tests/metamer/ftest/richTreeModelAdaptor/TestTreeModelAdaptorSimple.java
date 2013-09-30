@@ -28,31 +28,22 @@ import static org.testng.Assert.fail;
 
 import java.net.URL;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.component.SwitchType;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
-import org.richfaces.tests.metamer.ftest.richTree.TreeSimplePage;
+import org.richfaces.tests.metamer.ftest.richTree.AbstractTreeTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNode;
+import org.richfaces.tests.page.fragments.impl.tree.Tree.TreeNode;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22754 $
  */
-public class TestTreeModelAdaptorSimple extends AbstractWebDriverTest {
+public class TestTreeModelAdaptorSimple extends AbstractTreeTest {
 
-    @Page
-    TreeSimplePage page;
+    private TreeNode treeNode;
 
-    protected RichFacesTreeNode treeNode;
-
-    private Attributes<ModelAdaptorAttributes> modelAdaptorAttributes = new Attributes<ModelAdaptorAttributes>(
-        "listAttributes");
-    private Attributes<RecursiveModelAdaptorAttributes> recursiveModelAdaptorAttributes =
-        new Attributes<RecursiveModelAdaptorAttributes>("recursiveAttributes");
-
+    private final Attributes<ModelAdaptorAttributes> modelAdaptorAttributes = getAttributes("listAttributes");
+    private final Attributes<RecursiveModelAdaptorAttributes> recursiveModelAdaptorAttributes = getAttributes("recursiveAttributes");
 
     @Override
     public URL getTestUrl() {
@@ -61,25 +52,25 @@ public class TestTreeModelAdaptorSimple extends AbstractWebDriverTest {
 
     @Test
     public void testModelAdaptorRendered() {
-        page.tree.getNodes().get(1).expand();
-        page.tree.getNodes().get(1).getNode(1).expand();
-        treeNode = page.tree.getNodes().get(1).getNode(1).getNode(0);
+        treeNode = getGuarded(tree, SwitchType.ajax).expandNode(1);
+        treeNode = getGuarded(treeNode, SwitchType.ajax).expandNode(1);
+        treeNode = treeNode.advanced().getFirstNode();
 
-        assertTrue(treeNode.isLeaf());
+        assertTrue(treeNode.advanced().isLeaf());
 
         modelAdaptorAttributes.set(ModelAdaptorAttributes.rendered, false);
 
-        assertFalse(treeNode.isLeaf());
+        assertFalse(treeNode.advanced().isLeaf());
     }
 
     @Test
     public void testRecursiveModelAdaptorRendered() {
-        page.tree.getNodes().get(1).expand();
-        page.tree.getNodes().get(1).getNode(1).expand();
+        treeNode = getGuarded(tree, SwitchType.ajax).expandNode(1);
+        treeNode = getGuarded(treeNode, SwitchType.ajax).expandNode(1);
 
         boolean subnodePresent = false;
-        for (RichFacesTreeNode treeNode : page.tree.getNodes().get(1).getNode(1).getNodes()) {
-            if (!treeNode.isLeaf()) {
+        for (TreeNode actTreeNode : treeNode.advanced().getNodes()) {
+            if (!actTreeNode.advanced().isLeaf()) {
                 subnodePresent = true;
             }
         }
@@ -87,18 +78,20 @@ public class TestTreeModelAdaptorSimple extends AbstractWebDriverTest {
 
         recursiveModelAdaptorAttributes.set(RecursiveModelAdaptorAttributes.rendered, false);
 
-        for (RichFacesTreeNode treeNode : page.tree.getNodes().get(1).getNode(1).getNodes()) {
-            if (!treeNode.isLeaf()) {
-                fail("there should be no subnode (not leaf) in expanded branch");
+        for (TreeNode actTreeNode : treeNode.advanced().getNodes()) {
+            if (!actTreeNode.advanced().isLeaf()) {
+                fail("there should be no subnode (only leaves) in expanded branch");
             }
         }
     }
 
     private enum ModelAdaptorAttributes implements AttributeEnum {
+
         rendered,
     }
 
     private enum RecursiveModelAdaptorAttributes implements AttributeEnum {
+
         rendered,
     }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:r="http://richfaces.org/rich"
       xmlns:h="http://java.sun.com/jsf/html">
 
     <!--
@@ -53,8 +53,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <rich:toolbar id="toolbar" height="26px" width="500px;">
-                <rich:dropDownMenu id="menu1" mode="ajax">
+            <r:toolbar id="toolbar" height="26px" width="500px;">
+                <r:dropDownMenu id="menu1" mode="ajax">
                     <f:facet name="label">
                         <h:panelGroup>
                             <h:graphicImage library="images/icons" name="copy.gif" styleClass="pic" />
@@ -62,71 +62,71 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         </h:panelGroup>
                     </f:facet>
 
-                    <rich:menuItem id="menuItem1" label="New" icon="/resources/images/icons/create_doc.gif"/>
+                    <r:menuItem id="menuItem1" label="New" icon="/resources/images/icons/create_doc.gif"/>
 
-                    <rich:menuItem id="menuItem2" label="Open" icon="/resources/images/icons/open.gif" />
+                    <r:menuItem id="menuItem2" label="Open" icon="/resources/images/icons/open.gif" />
 
-                    <rich:menuGroup id="menuGroup3" label="Open Recent..." disabled="true">
-                        <rich:menuItem id="menuItem31" label="Save" icon="/resources/images/icons/save.gif" />
-                        <rich:menuItem id="menuItem32" label="Save All">
+                    <r:menuGroup id="menuGroup3" label="Open Recent..." disabled="true">
+                        <r:menuItem id="menuItem31" label="Save" icon="/resources/images/icons/save.gif" />
+                        <r:menuItem id="menuItem32" label="Save All">
                             <f:facet name="icon">
                                 <h:graphicImage library="images/icons" name="save_all.gif" />
                             </f:facet>
-                        </rich:menuItem>
-                    </rich:menuGroup>
+                        </r:menuItem>
+                    </r:menuGroup>
 
-                    <rich:menuSeparator id="menuSeparator11" />
+                    <r:menuSeparator id="menuSeparator11" />
 
-                    <rich:menuGroup id="menuGroup4"
-                                    dir="#{richMenuGroupBean.attributes['dir'].value}"
-                                    direction="#{richMenuGroupBean.attributes['direction'].value}"
-                                    disabled="#{richMenuGroupBean.attributes['disabled'].value}"
-                                    horizontalOffset="#{richMenuGroupBean.attributes['horizontalOffset'].value}"
-                                    icon="#{richMenuGroupBean.attributes['icon'].value}"
-                                    iconDisabled="#{richMenuGroupBean.attributes['iconDisabled'].value}"
-                                    jointPoint="#{richMenuGroupBean.attributes['jointPoint'].value}"
-                                    label="#{richMenuGroupBean.attributes['label'].value}"
-                                    lang="#{richMenuGroupBean.attributes['lang'].value}"
-                                    onclick="#{richMenuGroupBean.attributes['onclick'].value}"
-                                    ondblclick="#{richMenuGroupBean.attributes['ondblclick'].value}"
-                                    onhide="#{richMenuGroupBean.attributes['onhide'].value}"
-                                    onkeydown="#{richMenuGroupBean.attributes['onkeydown'].value}"
-                                    onkeypress="#{richMenuGroupBean.attributes['onkeypress'].value}"
-                                    onkeyup="#{richMenuGroupBean.attributes['onkeyup'].value}"
-                                    onmousedown="#{richMenuGroupBean.attributes['onmousedown'].value}"
-                                    onmousemove="#{richMenuGroupBean.attributes['onmousemove'].value}"
-                                    onmouseout="#{richMenuGroupBean.attributes['onmouseout'].value}"
-                                    onmouseover="#{richMenuGroupBean.attributes['onmouseover'].value}"
-                                    onmouseup="#{richMenuGroupBean.attributes['onmouseup'].value}"
-                                    onshow="#{richMenuGroupBean.attributes['onshow'].value}"
-                                    rendered="#{richMenuGroupBean.attributes['rendered'].value}"
-                                    style="#{richMenuGroupBean.attributes['style'].value}"
-                                    styleClass="#{richMenuGroupBean.attributes['styleClass'].value}"
-                                    title="#{richMenuGroupBean.attributes['title'].value}"
-                                    verticalOffset="#{richMenuGroupBean.attributes['verticalOffset'].value}"
-                                    >
-                        <rich:menuItem id="menuItem41" label="Save" icon="/resources/images/icons/save.gif" />
-                        <rich:menuItem id="menuItem42" label="Save All" >
+                    <r:menuGroup id="menuGroup4"
+                                 dir="#{richMenuGroupBean.attributes['dir'].value}"
+                                 direction="#{richMenuGroupBean.attributes['direction'].value}"
+                                 disabled="#{richMenuGroupBean.attributes['disabled'].value}"
+                                 horizontalOffset="#{richMenuGroupBean.attributes['horizontalOffset'].value}"
+                                 icon="#{richMenuGroupBean.attributes['icon'].value}"
+                                 iconDisabled="#{richMenuGroupBean.attributes['iconDisabled'].value}"
+                                 jointPoint="#{richMenuGroupBean.attributes['jointPoint'].value}"
+                                 label="#{richMenuGroupBean.attributes['label'].value}"
+                                 lang="#{richMenuGroupBean.attributes['lang'].value}"
+                                 onclick="#{richMenuGroupBean.attributes['onclick'].value}"
+                                 ondblclick="#{richMenuGroupBean.attributes['ondblclick'].value}"
+                                 onhide="#{richMenuGroupBean.attributes['onhide'].value}"
+                                 onkeydown="#{richMenuGroupBean.attributes['onkeydown'].value}"
+                                 onkeypress="#{richMenuGroupBean.attributes['onkeypress'].value}"
+                                 onkeyup="#{richMenuGroupBean.attributes['onkeyup'].value}"
+                                 onmousedown="#{richMenuGroupBean.attributes['onmousedown'].value}"
+                                 onmousemove="#{richMenuGroupBean.attributes['onmousemove'].value}"
+                                 onmouseout="#{richMenuGroupBean.attributes['onmouseout'].value}"
+                                 onmouseover="#{richMenuGroupBean.attributes['onmouseover'].value}"
+                                 onmouseup="#{richMenuGroupBean.attributes['onmouseup'].value}"
+                                 onshow="#{richMenuGroupBean.attributes['onshow'].value}"
+                                 rendered="#{richMenuGroupBean.attributes['rendered'].value}"
+                                 style="#{richMenuGroupBean.attributes['style'].value}"
+                                 styleClass="#{richMenuGroupBean.attributes['styleClass'].value}"
+                                 title="#{richMenuGroupBean.attributes['title'].value}"
+                                 verticalOffset="#{richMenuGroupBean.attributes['verticalOffset'].value}"
+                                 >
+                        <r:menuItem id="menuItem41" label="Save" icon="/resources/images/icons/save.gif" />
+                        <r:menuItem id="menuItem42" label="Save All" >
                             <f:facet name="icon">
                                 <h:graphicImage library="images/icons" name="save_all.gif" />
                             </f:facet>
-                        </rich:menuItem>
-                        <rich:menuItem id="menuItem43" label="Send Online" icon="/resources/images/icons/save.gif" disabled="true" />
-                    </rich:menuGroup>
+                        </r:menuItem>
+                        <r:menuItem id="menuItem43" label="Send Online" icon="/resources/images/icons/save.gif" disabled="true" />
+                    </r:menuGroup>
 
-                    <rich:menuItem id="menuItem5" label="Print" disabled="true"/>
+                    <r:menuItem id="menuItem5" label="Print" disabled="true"/>
 
-                    <rich:menuItem id="menuItem6" label="Close" />
+                    <r:menuItem id="menuItem6" label="Close" />
 
-                    <rich:menuSeparator id="menuSeparator12" />
+                    <r:menuSeparator id="menuSeparator12" />
 
-                    <rich:menuItem id="menuItem7" label="Exit" />
+                    <r:menuItem id="menuItem7" label="Exit" />
 
-                </rich:dropDownMenu>
-                <input id="show" type="button" name="show" value="JS API: open menu and show group" onmouseover="#{rich:component('menu1')}.show();#{rich:component('menuGroup4')}.show();" />
-                <input id="hide" type="button" name="hide" value="JS API: open menu and hide group" onmouseover="#{rich:component('menu1')}.show();#{rich:component('menuGroup4')}.hide();" />
+                </r:dropDownMenu>
+                <input id="show" type="button" name="show" value="JS API: open menu and show group" onclick="#{r:component('menu1')}.show();#{r:component('menuGroup4')}.show();" />
+                <input id="hide" type="button" name="hide" value="JS API: open menu and hide group" onclick="#{r:component('menu1')}.show();#{r:component('menuGroup4')}.hide();" />
 
-            </rich:toolbar>
+            </r:toolbar>
 
             <br /><br />
         </ui:define>

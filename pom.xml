@@ -36,9 +36,7 @@ FSF site: http://www.fsf.org. -->
         <version.jbossas6>6.0.0.Final</version.jbossas6>
         <version.jbossas7>7.0.2.Final</version.jbossas7>
         <version.jbossas7-1>7.1.1.Final</version.jbossas7-1>
-        <version.jbossEAP6>6.0</version.jbossEAP6>
-        <version.jbosseap6-1>7.2.0.Alpha1-redhat-4</version.jbosseap6-1>
-        <version.wildfly8-0>8.0.0.Alpha2</version.wildfly8-0>
+        <version.wildfly8-0>8.0.0.Alpha4</version.wildfly8-0>
         <eap61Zip>path/to/your/eap/distribution/zip</eap61Zip>
 
         <!-- version of Glassfish containers to use and download       -->
@@ -46,7 +44,7 @@ FSF site: http://www.fsf.org. -->
 
         <!-- version of Tomcat containers to use-->
         <version.tomcat6>6.0.36</version.tomcat6>
-        <version.tomcat7>7.0.39</version.tomcat7>
+        <version.tomcat7>7.0.42</version.tomcat7>
         <tomcat6Zip>path/to/your/tomcat/distribution/zip</tomcat6Zip>
         <tomcat7Zip>path/to/your/tomcat/distribution/zip</tomcat7Zip>
 
@@ -55,11 +53,10 @@ FSF site: http://www.fsf.org. -->
         <version.tomee1-5>1.5.1</version.tomee1-5>
 
         <!-- arquillian versions -->
-        <arquillian.bom.version>1.0.3.Final</arquillian.bom.version>
-        <arquillian.tomcat.version>1.0.0.CR4</arquillian.tomcat.version>
+        <arquillian.bom.version>1.1.1.Final</arquillian.bom.version>
+        <arquillian.tomcat.version>1.0.0.CR5</arquillian.tomcat.version>
         <arquillian.drone.version> 1.2.0.Alpha2</arquillian.drone.version>
-        <arquillian.graphene-testng.version>2.0.0.Beta1-SNAPSHOT</arquillian.graphene-testng.version>
-        <arquillian.graphene-webdriver.version>2.0.0.Beta1-SNAPSHOT</arquillian.graphene-webdriver.version>
+        <arquillian.graphene.version>2.0.0.Beta1</arquillian.graphene.version>
         <arquillian.jboss-as6.version>1.0.0.CR3</arquillian.jboss-as6.version>
         <arquillian.glassfish3-1.version>1.0.0.CR4</arquillian.glassfish3-1.version>
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
@@ -67,7 +64,7 @@ FSF site: http://www.fsf.org. -->
         <shrinkwrap.descriptors.version>2.0.0-alpha-4</shrinkwrap.descriptors.version>
         <arquillian.eap.managed.version>7.1.3.Final</arquillian.eap.managed.version>
 
-        <version.selenium>2.33.0</version.selenium>
+        <version.selenium>2.35.0</version.selenium>
         <version.slf4j.jbossas6>1.6.1</version.slf4j.jbossas6>
 
         <!-- these are set as Environmental variables to let Arquillian know where distribution of managed containers are -->
@@ -81,7 +78,7 @@ FSF site: http://www.fsf.org. -->
         <jboss6Home>${project.build.directory}/jboss-${version.jbossas6}</jboss6Home>
         <jbossEAP60Home>${project.build.directory}/jboss-eap-${version.jbossEAP6}</jbossEAP60Home>
         <jbossEAP61Home>${project.build.directory}/jboss-eap-6.1</jbossEAP61Home>
-        <wildfly8-0Home>${project.build.directory}/jboss-as-${version.jbossas7-1}</wildfly8-0Home>
+        <wildfly8-0Home>${project.build.directory}/jboss-as-${version.wildfly8-0}</wildfly8-0Home>
 
         <showcase.classifier>jbas71</showcase.classifier>
         <metamer.classifier>jbas71</metamer.classifier>
@@ -92,8 +89,10 @@ FSF site: http://www.fsf.org. -->
         <openshift.ssh.user>54abf287bcf646319d0b1c8d35f15546</openshift.ssh.user>
         <openshift.identity.file />
 
-        <jodatime.version>2.2</jodatime.version>
+        <jodatime.version>2.3</jodatime.version>
         <commons-lang.version>2.6</commons-lang.version>
+        <apache-commons-io.version>2.4</apache-commons-io.version>
+        <google.json.version>1.1</google.json.version>
     </properties>
 
     <modules>
@@ -363,7 +362,20 @@ FSF site: http://www.fsf.org. -->
                 <artifactId>testng</artifactId>
                 <version>6.1.1</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.jboss.arquillian.graphene</groupId>
+                <artifactId>arquillian-graphene</artifactId>
+                <version>${arquillian.graphene.version}</version>
+                <type>pom</type>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.jboss.arquillian.selenium</groupId>
+                <artifactId>selenium-bom</artifactId>
+                <version>${version.selenium}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
@@ -499,7 +511,7 @@ FSF site: http://www.fsf.org. -->
             <dependency>
                 <groupId>org.jboss.arquillian.graphene</groupId>
                 <artifactId>graphene-webdriver</artifactId>
-                <version>${arquillian.graphene-webdriver.version}</version>
+                <version>${arquillian.graphene.version}</version>
                 <type>pom</type>
             </dependency>
 
@@ -508,21 +520,6 @@ FSF site: http://www.fsf.org. -->
                 <groupId>joda-time</groupId>
                 <artifactId>joda-time</artifactId>
                 <version>${jodatime.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.arquillian.graphene</groupId>
-                <artifactId>graphene-webdriver-spi</artifactId>
-                <version>${arquillian.graphene-webdriver.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.arquillian.graphene</groupId>
-                <artifactId>graphene-component-api</artifactId>
-                <version>${arquillian.graphene-webdriver.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.arquillian.graphene</groupId>
-                <artifactId>graphene-webdriver-impl</artifactId>
-                <version>${arquillian.graphene-webdriver.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-lang</groupId>
@@ -537,7 +534,18 @@ FSF site: http://www.fsf.org. -->
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
-
+            <dependency>
+                <groupId>org.jboss.spec</groupId>
+                <artifactId>jboss-javaee-all-6.0</artifactId>
+                <version>3.0.2.Final</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${apache-commons-io.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -1358,7 +1366,7 @@ FSF site: http://www.fsf.org. -->
             </build>
         </profile>
         <profile>
-            <id>wildfly-remote-8-1</id>
+            <id>wildfly-remote-8-0</id>
             <properties>
                 <metamer.classifier>jbas71</metamer.classifier>
                 <showcase.classifier>jbas71</showcase.classifier>
@@ -1383,7 +1391,7 @@ FSF site: http://www.fsf.org. -->
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <systemProperties>
-                                <arquillian.launch>jbossas-remote-7-1</arquillian.launch>
+                                <arquillian.launch>wildfly-remote-8-0</arquillian.launch>
                             </systemProperties>
                         </configuration>
                     </plugin>

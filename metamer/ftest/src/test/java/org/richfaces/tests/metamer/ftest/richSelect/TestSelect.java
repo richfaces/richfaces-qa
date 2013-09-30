@@ -22,40 +22,33 @@
 package org.richfaces.tests.metamer.ftest.richSelect;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.selectAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-
-import com.google.common.base.Predicate;
 
 import java.net.URL;
 import java.util.List;
 
 import javax.faces.event.PhaseId;
 
-import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.jboss.arquillian.test.api.ArquillianResource;
-import org.openqa.selenium.JavascriptExecutor;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponent;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponent.ClearType;
-import org.richfaces.tests.page.fragments.impl.input.select.Option;
-import org.richfaces.tests.page.fragments.impl.input.select.Selection;
+import org.richfaces.tests.page.fragments.impl.common.ScrollingType;
+import org.richfaces.tests.page.fragments.impl.select.RichFacesSelect;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -69,38 +62,34 @@ public class TestSelect extends AbstractWebDriverTest {
 
     private static final String TESTSIZE = "300px";
     @FindBy(css = "div[id$=select]")
-    private RichFacesSelectEnhanced select;
-    @FindBy(css = "div[id$=select]")
-    private WebElement selectElement;
+    private RichFacesSelect select;
     @FindBy(css = "div.rf-sel-lst-scrl")
     private WebElement listElement;
     @FindBy(css = "div.rf-sel-lst-cord")
     private WebElement listRoot;
-    @FindBy(css = "div[id*=selectItem].rf-sel-opt")
-    private List<WebElement> selectItems;
     @FindBy(css = "span[id$=output]")
     private WebElement output;
-    @FindBy(className = "rf-sel-btn-arrow")
-    private WebElement showButton;
+
     @FindBy(css = "div[id$=selectItem10]")
     private WebElement item10;
+
+    private final Attributes<SelectAttributes> selectAttributes = getAttributes();
+
     @Page
     private MetamerPage page;
     private final Action selectHawaiiGuardedAction = new Action() {
         @Override
         public void perform() {
-            Graphene.guardAjax(select.callPopup()).selectByIndex(10);
+            Graphene.guardAjax(select.openSelect()).select(10);
         }
     };
     private final Action selectHawaiiWithKeyboardGuardedAction = new Action() {
         @Override
         public void perform() {
-            Graphene.guardAjax(select.callPopup()).selectByIndex(10, Selection.BY_KEYS);
+            select.advanced().setupScrollingType(ScrollingType.BY_KEYS);
+            Graphene.guardAjax(select.openSelect()).select(10);
         }
     };
-
-    @ArquillianResource
-    private JavascriptExecutor executor;
 
     @Override
     public URL getTestUrl() {
@@ -110,40 +99,39 @@ public class TestSelect extends AbstractWebDriverTest {
     @Test
     public void testClientFilterFunction() {
         selectAttributes.set(SelectAttributes.clientFilterFunction, "filterValuesByLength");
-        select.getInput().fillIn("4");//get all states with 4 letters
-        assertTrue(select.isPopupPresent());
-        List<Option> options = select.getPopup().getOptions();
-        assertEquals(options.size(), 3);
-        assertEquals(options.get(0).getVisibleText(), "Iowa");
-        assertEquals(options.get(1).getVisibleText(), "Ohio");
-        assertEquals(options.get(2).getVisibleText(), "Utah");
+        select.type("4");// get all states with 4 letters
+        List<WebElement> suggestions = select.advanced().getSuggestionsElements();
+        assertEquals(suggestions.size(), 3);
+        assertEquals(suggestions.get(0).getText(), "Iowa");
+        assertEquals(suggestions.get(1).getText(), "Ohio");
+        assertEquals(suggestions.get(2).getText(), "Utah");
 
-        select.getInput().clear(ClearType.JS).fillIn("5");//get all states with 5 letters
-        assertTrue(select.isPopupPresent());
-        options = select.getPopup().getOptions();
-        assertEquals(options.size(), 3);
-        assertEquals(options.get(0).getVisibleText(), "Idaho");
-        assertEquals(options.get(1).getVisibleText(), "Maine");
-        assertEquals(options.get(2).getVisibleText(), "Texas");
+        select.type("5");// get all states with 5 letters
+        suggestions = select.advanced().getSuggestionsElements();
+        assertEquals(suggestions.size(), 3);
+        assertEquals(suggestions.get(0).getText(), "Idaho");
+        assertEquals(suggestions.get(1).getText(), "Maine");
+        assertEquals(suggestions.get(2).getText(), "Texas");
     }
 
     @Test
     public void testDefaultLabel() {
         selectAttributes.set(SelectAttributes.defaultLabel, "new label");
-        assertEquals(select.getInput().getStringValue(), "new label", "Default label should change");
+        assertEquals(select.advanced().getInput().getStringValue(), "new label", "Default label should change");
+
         selectAttributes.set(SelectAttributes.defaultLabel, "");
-        assertPresent(select.getInput().getInput(), "Input should be present on the page.");
-        assertFalse(select.isPopupPresent(), "Popup should not be displayed on the page.");
-        assertEquals(select.getInput().getStringValue(), "", "Default label should change");
+        assertPresent(select.advanced().getInput().advanced().getInputElement(), "Input should be present on the page.");
+        select.advanced().waitUntilSuggestionsAreNotVisible().perform();
+        assertEquals(select.advanced().getInput().getStringValue(), "", "Default label should change");
     }
 
     @Test
     public void testDisabled() {
         selectAttributes.set(SelectAttributes.disabled, Boolean.TRUE);
-        assertPresent(select.getInput().getInput(), "Input should be present on the page.");
-        assertFalse(select.isPopupPresent(), "Popup should not be displayed on the page.");
+        assertPresent(select.advanced().getInput().advanced().getInputElement(), "Input should be present on the page.");
+        select.advanced().waitUntilSuggestionsAreNotVisible().perform();
         try {
-            select.callPopup();
+            select.openSelect();
         } catch (TimeoutException ex) {
             return;
         }
@@ -151,38 +139,31 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-9855")
+    @RegressionTest(value = { "https://issues.jboss.org/browse/RF-9663", "https://issues.jboss.org/browse/RF-9855" })
     public void testEnableManualInput() {
         selectAttributes.set(SelectAttributes.enableManualInput, Boolean.FALSE);
-        String readonly = select.getInput().getInput().getAttribute("readonly");
+        String readonly = select.advanced().getInput().advanced().getInputElement().getAttribute("readonly");
         assertTrue("readonly".equals(readonly) || "true".equals(readonly), "Input should be read-only");
 
-        select.callPopup();
-        assertTrue(select.isPopupPresent(), "Popup should be displayed.");
-        Graphene.guardAjax(select.callPopup()).selectByVisibleText("Hawaii");
+        select.advanced().setupOpenByInputClick(true);
+        select.openSelect();
+        select.advanced().waitUntilSuggestionsAreVisible().perform();
+        selectHawaiiGuardedAction.perform();
         assertTrue(item10.getAttribute("class").contains("rf-sel-sel"));
-        assertEquals(select.getSelectedOption().getVisibleText(), "Hawaii");
         assertEquals(output.getText(), "Hawaii");
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11320")
     public void testFiltering() {
-        select.getInput().fillIn("a");
-        Graphene.waitGui().until(new Predicate<WebDriver>() {
-            @Override
-            public boolean apply(WebDriver input) {
-                return select.isPopupPresent();
-            }
-        });
-
-        List<Option> options = select.callPopup().getOptions();
-        assertEquals(options.size(), 4, "Count of filtered options ('a')");
-        String[] selectOptions = {"Alabama", "Alaska", "Arizona", "Arkansas"};
+        select.type("a");
+        List<WebElement> suggestions = select.advanced().getSuggestionsElements();
+        assertEquals(suggestions.size(), 4, "Count of filtered options ('a')");
+        String[] selectOptions = { "Alabama", "Alaska", "Arizona", "Arkansas" };
         for (int i = 0; i < selectOptions.length; i++) {
-            assertEquals(options.get(i).getVisibleText(), selectOptions[i]);
+            assertEquals(suggestions.get(i).getText(), selectOptions[i]);
         }
-        Graphene.guardAjax(select.callPopup()).select(options.get(3));
+        Graphene.guardAjax(select.openSelect()).select(3);
         assertEquals(output.getText(), "Arkansas");
         page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Arkansas");
     }
@@ -192,17 +173,17 @@ public class TestSelect extends AbstractWebDriverTest {
         selectAttributes.set(SelectAttributes.immediate, Boolean.TRUE);
         selectHawaiiGuardedAction.perform();
         page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
-                PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
+            PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
         page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: -> Hawaii");
     }
 
     @Test
     @Templates(value = "plain")
     public void testInit() {
-        assertEquals(select.getInput().getStringValue(), "Click here to edit", "Default label");
-        assertPresent(select.getInput().getInput(), "Input should be present on the page.");
-        assertPresent(showButton, "Show button should be present on the page.");
-        assertFalse(select.isPopupPresent(), "Popup should not be displayed on the page.");
+        assertEquals(select.advanced().getInput().getStringValue(), "Click here to edit", "Default label");
+        assertPresent(select.advanced().getInput().advanced().getInputElement(), "Input should be present on the page.");
+        assertPresent(select.advanced().getShowButtonElement(), "Show button should be present on the page.");
+        select.advanced().waitUntilSuggestionsAreNotVisible().perform();
     }
 
     @Test
@@ -210,8 +191,10 @@ public class TestSelect extends AbstractWebDriverTest {
     public void testItemClass() {
         final String value = "metamer-ftest-class";
         selectAttributes.set(SelectAttributes.itemClass, value);
-        assertEquals(selectItems.size(), 50);
-        for (WebElement webElement : selectItems) {
+        select.openSelect();
+        List<WebElement> suggestions = select.advanced().getSuggestionsElements();
+        assertEquals(suggestions.size(), 50);
+        for (WebElement webElement : suggestions) {
             assertTrue(webElement.getAttribute("class").contains(value));
         }
     }
@@ -226,13 +209,11 @@ public class TestSelect extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-9737")
     public void testListHeight() {
         selectAttributes.set(SelectAttributes.listHeight, TESTSIZE);
-        select.callPopup();
-        assertTrue(select.isPopupPresent(), "Popup should be displayed.");
+        select.openSelect();
         assertEquals(listElement.getCssValue("height"), TESTSIZE, "Height of list did not change");
 
         selectAttributes.set(SelectAttributes.listHeight, "");
-        select.callPopup();
-        assertTrue(select.isPopupPresent(), "Popup should be displayed.");
+        select.openSelect();
         assertEquals(listElement.getCssValue("height"), "100px", "Height of list did not change");
     }
 
@@ -240,39 +221,33 @@ public class TestSelect extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-9737")
     public void testListWidth() {
         selectAttributes.set(SelectAttributes.listWidth, TESTSIZE);
-        select.callPopup();
-        assertTrue(select.isPopupPresent(), "Popup should be displayed.");
+        select.openSelect();
         assertEquals(listElement.getCssValue("width"), TESTSIZE, "Width of list did not change");
 
         selectAttributes.set(SelectAttributes.listWidth, "");
-        select.callPopup();
-        assertTrue(select.isPopupPresent(), "Popup should be displayed.");
+        select.openSelect();
         assertEquals(listElement.getCssValue("width"), "200px", "Width of list did not change");
     }
 
     @Test
     public void testMaxListHeight() {
         selectAttributes.set(SelectAttributes.maxListHeight, TESTSIZE);
-        select.callPopup();
-        assertTrue(select.isPopupPresent(), "Popup should be displayed.");
+        select.openSelect();
         assertEquals(listElement.getCssValue("max-height"), TESTSIZE, "Height of list did not change");
 
         selectAttributes.set(SelectAttributes.maxListHeight, "");
-        select.callPopup();
-        assertTrue(select.isPopupPresent(), "Popup should be displayed.");
+        select.openSelect();
         assertEquals(listElement.getCssValue("max-height"), "100px", "Height of list did not change");
     }
 
     @Test
     public void testMinListHeight() {
         selectAttributes.set(SelectAttributes.minListHeight, TESTSIZE);
-        select.callPopup();
-        assertTrue(select.isPopupPresent(), "Popup should be displayed.");
+        select.openSelect();
         assertEquals(listElement.getCssValue("min-height"), TESTSIZE, "Height of list did not change");
 
         selectAttributes.set(SelectAttributes.minListHeight, "");
-        select.callPopup();
-        assertTrue(select.isPopupPresent(), "Popup should be displayed.");
+        select.openSelect();
         assertEquals(listElement.getCssValue("min-height"), "20px", "Height of list did not change");
     }
 
@@ -281,9 +256,9 @@ public class TestSelect extends AbstractWebDriverTest {
         testFireEvent("blur", new Action() {
             @Override
             public void perform() {
-                select.getInput().getInput().click();// will not be triggered if this step omitted
+                select.advanced().getInput().advanced().getInputElement().click();// will not be triggered if this step omitted
                 page.getRequestTimeElement().click();// will not be triggered if this step omitted
-                select.getInput().clear(TextInputComponent.ClearType.JS).fillIn("ABCD").trigger("blur");
+                select.advanced().getInput().sendKeys("ABCD").advanced().trigger("blur");
             }
         });
     }
@@ -296,37 +271,37 @@ public class TestSelect extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testOnclick() {
-        testFireEvent(Event.CLICK, select.getInput().getInput());
+        testFireEvent(Event.CLICK, select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOndblclick() {
-        testFireEvent(Event.DBLCLICK, select.getInput().getInput());
+        testFireEvent(Event.DBLCLICK, select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnfocus() {
-        testFireEvent(Event.FOCUS, select.getInput().getInput());
+        testFireEvent(Event.FOCUS, select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeydown() {
-        testFireEvent(Event.KEYDOWN, select.getInput().getInput());
+        testFireEvent(Event.KEYDOWN, select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeypress() {
-        testFireEvent(Event.KEYPRESS, select.getInput().getInput());
+        testFireEvent(Event.KEYPRESS, select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeyup() {
-        testFireEvent(Event.KEYUP, select.getInput().getInput());
+        testFireEvent(Event.KEYUP, select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test
@@ -341,7 +316,7 @@ public class TestSelect extends AbstractWebDriverTest {
         testFireEvent("listdblclick", new Action() {
             @Override
             public void perform() {
-                select.callPopup();
+                select.openSelect();
                 Utils.triggerJQ(executor, "dblclick", listElement);
             }
         });
@@ -352,14 +327,9 @@ public class TestSelect extends AbstractWebDriverTest {
         testFireEvent("listhide", new Action() {
             @Override
             public void perform() {
-                select.callPopup();
+                select.openSelect();
                 page.getRequestTimeElement().click();
-                Graphene.waitGui().until(new Predicate<WebDriver>() {
-                    @Override
-                    public boolean apply(WebDriver input) {
-                        return !select.isPopupPresent();
-                    }
-                });
+                select.advanced().waitUntilSuggestionsAreNotVisible().perform();
             }
         });
     }
@@ -370,7 +340,7 @@ public class TestSelect extends AbstractWebDriverTest {
         testFireEvent("listkeydown", new Action() {
             @Override
             public void perform() {
-                select.callPopup();
+                select.openSelect();
                 Utils.triggerJQ(executor, "keydown", listElement);
             }
         });
@@ -382,7 +352,7 @@ public class TestSelect extends AbstractWebDriverTest {
         testFireEvent("listkeypress", new Action() {
             @Override
             public void perform() {
-                select.callPopup();
+                select.openSelect();
                 Utils.triggerJQ(executor, "keypress", listElement);
             }
         });
@@ -394,7 +364,7 @@ public class TestSelect extends AbstractWebDriverTest {
         testFireEvent("listkeyup", new Action() {
             @Override
             public void perform() {
-                select.callPopup();
+                select.openSelect();
                 Utils.triggerJQ(executor, "keyup", listElement);
             }
         });
@@ -439,7 +409,7 @@ public class TestSelect extends AbstractWebDriverTest {
         testFireEvent("listmouseover", new Action() {
             @Override
             public void perform() {
-                select.callPopup();
+                select.openSelect();
                 new Actions(driver).moveToElement(listElement).moveToElement(page.getRequestTimeElement()).perform();
             }
         });
@@ -456,7 +426,7 @@ public class TestSelect extends AbstractWebDriverTest {
         testFireEvent("listshow", new Action() {
             @Override
             public void perform() {
-                select.callPopup();
+                select.openSelect();
             }
         });
     }
@@ -464,31 +434,31 @@ public class TestSelect extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testOnmousedown() {
-        testFireEvent(Event.MOUSEDOWN, select.getInput().getInput());
+        testFireEvent(Event.MOUSEDOWN, select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmousemove() {
-        testFireEvent(Event.MOUSEMOVE, select.getInput().getInput());
+        testFireEvent(Event.MOUSEMOVE, select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseout() {
-        testFireEvent(Event.MOUSEOUT, select.getInput().getInput());
+        testFireEvent(Event.MOUSEOUT, select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseover() {
-        testFireEvent(Event.MOUSEOVER, select.getInput().getInput());
+        testFireEvent(Event.MOUSEOVER, select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseup() {
-        testFireEvent(Event.MOUSEUP, select.getInput().getInput());
+        testFireEvent(Event.MOUSEUP, select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test
@@ -500,7 +470,7 @@ public class TestSelect extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testRendered() {
         selectAttributes.set(SelectAttributes.rendered, Boolean.FALSE);
-        assertNotPresent(selectElement, "Component should not be rendered when rendered=false.");
+        assertNotPresent(select.advanced().getRootElement(), "Component should not be rendered when rendered=false.");
     }
 
     @Test
@@ -508,25 +478,19 @@ public class TestSelect extends AbstractWebDriverTest {
     public void testSelectFirst() {
         selectAttributes.set(SelectAttributes.selectFirst, Boolean.TRUE);
 
-        select.getInput().fillIn("a");
-        Graphene.waitGui().until(new Predicate<WebDriver>() {
-            @Override
-            public boolean apply(WebDriver input) {
-                return select.isPopupPresent();
-            }
-        });
-
-        List<Option> options = select.callPopup().getOptions();
-        assertEquals(options.size(), 4, "Count of filtered options ('a')");
-        String[] selectOptions = {"Alabama", "Alaska", "Arizona", "Arkansas"};
+        select.type("a");
+        List<WebElement> suggestions = select.advanced().getSuggestionsElements();
+        assertEquals(suggestions.size(), 4, "Count of filtered options ('a')");
+        String[] selectOptions = { "Alabama", "Alaska", "Arizona", "Arkansas" };
         for (int i = 0; i < selectOptions.length; i++) {
-            assertEquals(options.get(i).getVisibleText(), selectOptions[i]);
+            assertEquals(suggestions.get(i).getText(), selectOptions[i]);
         }
-        assertTrue(selectItems.get(0).getAttribute("class").contains("rf-sel-sel"), "First item should contain class for selected item.");
+        assertTrue(suggestions.get(0).getAttribute("class").contains("rf-sel-sel"),
+            "First item should contain class for selected item.");
         new Actions(driver).sendKeys(Keys.RETURN).perform();
 
         String previousTime = page.getRequestTimeElement().getText();
-        Utils.triggerJQ(executor, "blur", select.getInput().getInput());
+        Utils.triggerJQ(executor, "blur", select.advanced().getInput().advanced().getInputElement());
         Graphene.waitModel().until().element(page.getRequestTimeElement()).text().not().equalTo(previousTime);
         assertEquals(output.getText(), "Alabama", "Output should be Alabama");
     }
@@ -536,27 +500,31 @@ public class TestSelect extends AbstractWebDriverTest {
     public void testSelectItemClass() {
         selectAttributes.set(SelectAttributes.selectItemClass, "metamer-ftest-class");
 
-        Graphene.guardAjax(select.callPopup()).selectByIndex(0);
-        assertTrue(selectItems.get(0).getAttribute("class").contains("metamer-ftest-class"), "Selected item should contain set class");
-        for (int i = 1; i < selectItems.size(); i++) {
-            assertFalse(selectItems.get(i).getAttribute("class").contains("metamer-ftest-class"), "Not selected item should not contain set class");
+        Graphene.guardAjax(select.openSelect()).select(0);
+        select.openSelect();
+        List<WebElement> suggestions = select.advanced().getSuggestionsElements();
+        assertTrue(suggestions.get(0).getAttribute("class").contains("metamer-ftest-class"),
+            "Selected item should contain set class");
+        for (int i = 1; i < suggestions.size(); i++) {
+            assertFalse(suggestions.get(i).getAttribute("class").contains("metamer-ftest-class"),
+                "Not selected item should not contain set class");
         }
     }
 
     @Test
     public void testSelectWithKeyboard() {
-        Graphene.guardAjax(select.callPopup()).selectByIndex(10, Selection.BY_KEYS);
-        assertTrue(item10.getAttribute("class").contains("rf-sel-sel"), "Selected item should contain class for selected option.");
-        assertEquals(select.getSelectedOption().getVisibleText(), "Hawaii");
+        selectHawaiiWithKeyboardGuardedAction.perform();
+        assertTrue(item10.getAttribute("class").contains("rf-sel-sel"),
+            "Selected item should contain class for selected option.");
         assertEquals(output.getText(), "Hawaii");
         page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Hawaii");
     }
 
     @Test
     public void testSelectWithMouse() {
-        Graphene.guardAjax(select.callPopup()).selectByIndex(10, Selection.BY_MOUSE);
-        assertTrue(item10.getAttribute("class").contains("rf-sel-sel"), "Selected item should contain class for selected option.");
-        assertEquals(select.getSelectedOption().getVisibleText(), "Hawaii");
+        Graphene.guardAjax(select.openSelect()).select(10);
+        assertTrue(item10.getAttribute("class").contains("rf-sel-sel"),
+            "Selected item should contain class for selected option.");
         assertEquals(output.getText(), "Hawaii");
         page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Hawaii");
     }
@@ -564,39 +532,24 @@ public class TestSelect extends AbstractWebDriverTest {
     @Test
     public void testShowButton() {
         selectAttributes.set(SelectAttributes.showButton, Boolean.FALSE);
-        assertNotVisible(showButton, "Show button should not be visible.");
-        select.getInput().getInput().sendKeys(Keys.ARROW_DOWN);
-        Graphene.waitGui().until(new Predicate<WebDriver>() {
-            @Override
-            public boolean apply(WebDriver input) {
-                return select.isPopupPresent();
-            }
-        });
-        assertTrue(select.isPopupPresent(), "Popup should be displayed.");
-        assertEquals(select.callPopup().getOptions().size(), 50, "There should be 50 options.");
+        assertNotVisible(select.advanced().getShowButtonElement(), "Show button should not be visible.");
 
-        String[] selectOptions = {"Alabama", "Hawaii", "Massachusetts", "New Mexico", "South Dakota"};
-        List<Option> options = select.callPopup().getOptions();
-        for (int i = 0; i < options.size(); i += 10) {
-            assertEquals(options.get(i).getVisibleText(), selectOptions[i / 10], "Select option nr. " + i);
-        }
-        selectHawaiiGuardedAction.perform();
-        assertEquals(output.getText(), "Hawaii");
+        selectAttributes.set(SelectAttributes.showButton, Boolean.TRUE);
+        assertVisible(select.advanced().getShowButtonElement(), "Show button should be visible.");
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-9663")
     public void testShowButtonClick() {
-        selectAttributes.set(SelectAttributes.showButton, Boolean.FALSE);
-        assertNotVisible(showButton, "Show button should not be visible.");
-        select.callPopup();
-        assertTrue(select.isPopupPresent(), "Popup should be displayed.");
-        assertEquals(select.callPopup().getOptions().size(), 50, "There should be 50 options.");
+        selectAttributes.set(SelectAttributes.showButton, Boolean.TRUE);
+        assertVisible(select.advanced().getShowButtonElement(), "Show button should be visible.");
+        select.advanced().setupOpenByInputClick(false);
+        select.openSelect();
+        List<WebElement> suggestions = select.advanced().getSuggestionsElements();
+        assertEquals(suggestions.size(), 50, "There should be 50 options.");
 
-        String[] selectOptions = {"Alabama", "Hawaii", "Massachusetts", "New Mexico", "South Dakota"};
-        List<Option> options = select.callPopup().getOptions();
-        for (int i = 0; i < options.size(); i += 10) {
-            assertEquals(options.get(i).getVisibleText(), selectOptions[i / 10], "Select option nr. " + i);
+        String[] selectOptions = { "Alabama", "Hawaii", "Massachusetts", "New Mexico", "South Dakota" };
+        for (int i = 0; i < suggestions.size(); i += 10) {
+            assertEquals(suggestions.get(i).getText(), selectOptions[i / 10], "Select option nr. " + i);
         }
         selectHawaiiGuardedAction.perform();
         assertEquals(output.getText(), "Hawaii");
@@ -605,24 +558,24 @@ public class TestSelect extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testStyle() {
-        testStyle(selectElement);
+        testStyle(select.advanced().getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyleClass() {
-        testStyleClass(selectElement);
+        testStyleClass(select.advanced().getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testTitle() {
-        testTitle(select.getInput().getInput());
+        testTitle(select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test
     public void testValue() {
         selectAttributes.set(SelectAttributes.value, "North Carolina");
-        assertEquals(select.getInput().getStringValue(), "North Carolina", "Input should contain selected value.");
+        assertEquals(select.advanced().getInput().getStringValue(), "North Carolina", "Input should contain selected value.");
     }
 }

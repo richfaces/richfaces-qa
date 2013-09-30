@@ -21,30 +21,39 @@
  */
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.calendarAttributes;
+import static org.richfaces.tests.page.fragments.impl.calendar.RichFacesAdvancedPopupCalendar.OpenedBy.INPUT_CLICKING;
+import static org.richfaces.tests.page.fragments.impl.calendar.RichFacesAdvancedPopupCalendar.OpenedBy.OPEN_BUTTON_CLICKING;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import java.util.List;
+
 import javax.faces.event.PhaseId;
+
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
+import org.jboss.arquillian.graphene.page.Page;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.calendar.common.editor.yearAndMonth.YearAndMonthEditor;
-import org.richfaces.tests.page.fragments.impl.calendar.inline.RichFacesCalendarInlineComponent;
-import org.richfaces.tests.page.fragments.impl.calendar.popup.CalendarPopupComponent.OpenedBy;
-import org.richfaces.tests.page.fragments.impl.calendar.popup.RichFacesCalendarPopupComponent;
-import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.CalendarPopup;
-import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.PopupFooterControls;
-import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.PopupHeaderControls;
+import org.richfaces.tests.page.fragments.impl.calendar.DayPicker.CalendarDay;
+import org.richfaces.tests.page.fragments.impl.calendar.PopupCalendar;
+import org.richfaces.tests.page.fragments.impl.calendar.PopupCalendar.PopupFooterControls;
+import org.richfaces.tests.page.fragments.impl.calendar.PopupCalendar.PopupHeaderControls;
+import org.richfaces.tests.page.fragments.impl.calendar.RichFacesCalendar;
+import org.richfaces.tests.page.fragments.impl.calendar.RichFacesAdvancedInlineCalendar;
+import org.richfaces.tests.page.fragments.impl.calendar.RichFacesAdvancedPopupCalendar;
+import org.richfaces.tests.page.fragments.impl.calendar.YearAndMonthEditor;
 import org.testng.annotations.BeforeMethod;
+
+import com.google.common.collect.Lists;
 
 /**
  * Abstract test case for calendar.
@@ -60,29 +69,43 @@ public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
     protected DateTime todayMidday = new DateTime().withHourOfDay(12).withMinuteOfHour(0).withSecondOfMinute(0);
 
     @FindBy(css = "div[id$=calendar]")
-    protected RichFacesCalendarPopupComponent calendar;
+    protected RichFacesCalendar calendar;
     @FindBy(css = "div[id$=calendar]")
-    protected RichFacesCalendarInlineComponent inlineCalendar;
+    protected RichFacesAdvancedPopupCalendar popupCalendar;
+    @FindBy(css = "div[id$=calendar]")
+    protected RichFacesAdvancedInlineCalendar inlineCalendar;
+
+    protected final Attributes<CalendarAttributes> calendarAttributes = getAttributes();
 
     @BeforeMethod
     public void init() {
         todayMidday = new DateTime().withHourOfDay(12).withMinuteOfHour(0).withSecondOfMinute(0);
     }
 
+    protected List<CalendarDay> filterOutBoundaryDays(List<CalendarDay> days) {
+        List<CalendarDay> result = Lists.newArrayList();
+        for (CalendarDay calendarDay : days) {
+            if (!calendarDay.is(CalendarDay.DayType.boundaryDay)) {
+                result.add(calendarDay);
+            }
+        }
+        return result;
+    }
+
     public void testOpenPopupClickOnInput() {
-        CalendarPopup openedPopup = Graphene.guardNoRequest(calendar).openPopup(OpenedBy.INPUT_CLICKING);
+        PopupCalendar openedPopup = Graphene.guardNoRequest(popupCalendar).openPopup(INPUT_CLICKING);
         assertTrue(openedPopup.isVisible(), "Popup should be visible.");
     }
 
     public void testOpenPopupClickOnImage() {
-        CalendarPopup openedPopup = Graphene.guardNoRequest(calendar).openPopup(OpenedBy.OPEN_BUTTON_CLICKING);
+        PopupCalendar openedPopup = Graphene.guardNoRequest(popupCalendar).openPopup(OPEN_BUTTON_CLICKING);
         assertTrue(openedPopup.isVisible(), "Popup should be visible.");
     }
 
     public void testHeaderButtons() {
-        CalendarPopup openedPopup = calendar.openPopup();
+        PopupCalendar openedPopup = popupCalendar.openPopup();
         assertTrue(openedPopup.getHeaderControls().isVisible());
-        PopupHeaderControls headerControls = openedPopup.getProxiedHeaderControls();
+        PopupHeaderControls headerControls = openedPopup.getHeaderControls();
 
         assertTrue(isVisible(headerControls.getPreviousYearElement()), "Previous year button should be visible.");
         assertEquals(headerControls.getPreviousYearElement().getText(), "<<", "Button's text");
@@ -106,13 +129,13 @@ public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
     }
 
     private boolean isVisible(WebElement element) {
-        return Graphene.element(element).isVisible().apply(driver);
+        return new WebElementConditionFactory(element).isVisible().apply(driver);
     }
 
     public void testFooterButtons() {
-        CalendarPopup openedPopup = calendar.openPopup();
+        PopupCalendar openedPopup = popupCalendar.openPopup();
         assertTrue(openedPopup.getFooterControls().isVisible());
-        PopupFooterControls footerControls = openedPopup.getProxiedFooterControls();
+        PopupFooterControls footerControls = openedPopup.getFooterControls();
 
         assertTrue(isVisible(footerControls.getTodayButtonElement()), "Today button should be visible.");
         assertEquals(footerControls.getTodayButtonElement().getText(), "Today", "Button's text");
@@ -124,7 +147,9 @@ public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
 
         assertFalse(isVisible(footerControls.getTimeEditorOpenerElement()), "Time button should not be visible.");
 
-        footerControls.setTodaysDate();
+        MetamerPage.waitRequest(footerControls, WaitRequestType.XHR).setTodaysDate();
+        assertFalse(openedPopup.isVisible(), "Popup should not be displayed.");
+        footerControls = popupCalendar.openPopup().getFooterControls();
 
         assertTrue(isVisible(footerControls.getCleanButtonElement()), "Clean button should be visible.");
         assertEquals(footerControls.getCleanButtonElement().getText(), "Clean", "Button's text");
@@ -138,14 +163,14 @@ public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
         DateTimeFormatter formatter = DateTimeFormat.forPattern(datePattern);
         DateTime today = new DateTime();
 
-        CalendarPopup openedPopup = calendar.openPopup();
-        PopupFooterControls footerControls = openedPopup.getProxiedFooterControls();
+        PopupCalendar openedPopup = popupCalendar.openPopup();
+        PopupFooterControls footerControls = openedPopup.getFooterControls();
 
         MetamerPage.waitRequest(footerControls, WaitRequestType.XHR).setTodaysDate();
 
         assertFalse(openedPopup.isVisible(), "Popup should not be displayed.");
 
-        String dateSetInCalendar = calendar.getInputValue();
+        String dateSetInCalendar = popupCalendar.getInput().getStringValue();
         DateTime setTime = formatter.parseDateTime(dateSetInCalendar);
 
         assertEquals(setTime.getDayOfMonth(), today.getDayOfMonth());

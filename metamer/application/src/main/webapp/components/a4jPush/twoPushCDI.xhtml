@@ -40,14 +40,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <script type="text/javascript">
-                function updateOutput(outputID, event) {
-                    var timeString = 'day: ' + event.date + ', month: ' + (event.month + 1) + ', time: ' + event.hours + ':' + event.minutes + ':' + event.seconds;
-                    $('[id$=' + outputID + ']').text(timeString);
-                }
-
-            </script>
-
+        
             <p>
                 <a href="https://issues.jboss.org/browse/RF-12095">RF-12095</a><br/>
                 <a href="https://issues.jboss.org/browse/RF-12096">RF-12096</a><br/>
@@ -60,8 +53,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <a:outputPanel id="pushPanel">
                 <a:push id="push"
                         rendered="#{a4jPushBean.attributes['rendered'].value}"
-                        address="sampleAddress1"
-                        ondataavailable="updateOutput('outputDate', event.rf.data);"
+                        address="cdiSampleAddress1"
+                        ondataavailable="$('[id$=outputDate]').text(event.rf.data)"
                         onsubscribed="#{a4jPushBean.attributes['onsubscribed'].value}" />
             </a:outputPanel>
 
@@ -83,8 +76,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <!--  PUSH 2 -->
             <a:commandButton id="performPushEvent2" value="Push 2!" action="#{a4jPushBean.pushCDI2}" />
             <a:push id="push2"
-                    address="sampleAddress2"
-                    ondataavailable="updateOutput('outputDate2', event.rf.data);"
+                    address="cdiSampleAddress2"
+                    ondataavailable="$('[id$=outputDate2]').text(event.rf.data)"
                     onsubscribed="#{a4jPushBean.attributes['onsubscribed'].value}" />
 
             <br />

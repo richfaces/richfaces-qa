@@ -28,15 +28,15 @@ import org.openqa.selenium.WebElement;
  */
 public interface Hotkey {
 
-    WebElement getRootElement();
-
     /**
-     * Invokes the hotkey on body element.
+     * Invokes the hotkey on an element which is specified by selector attribute of hotkey,
+     * when the selector is empty, then the hotkey will be invoked on <code>html</code> element.
      */
     void invoke();
 
     /**
      * Invokes the hotkey on specified element.
+     * @param element element on which the hotkey will be invoked. Element cannot be null.
      */
-    void invokeOn(WebElement element);
+    void invoke(WebElement element);
 }

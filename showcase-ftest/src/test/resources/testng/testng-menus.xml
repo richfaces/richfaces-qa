@@ -9,10 +9,8 @@
         </groups>
 
         <packages>
-            <package name="org.richfaces.tests.showcase.panelMenu.*" />
             <package name="org.richfaces.tests.showcase.toolBar.*" />
             <package name="org.richfaces.tests.showcase.contextMenu.*" />
-            <package name="org.richfaces.tests.showcase.dropDrownMenu.*" />
         </packages>
     </test>
 </suite>

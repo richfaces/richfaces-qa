@@ -32,7 +32,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.input.inputNumberSpinner.RichFacesInputNumberSpinner;
+import org.richfaces.tests.page.fragments.impl.inputNumberSpinner.RichFacesInputNumberSpinner;
 import org.testng.annotations.Test;
 
 /**
@@ -72,10 +72,10 @@ public class TestInputNumberSpinnerJSApi extends AbstractWebDriverTest {
         inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.minValue, -1);
         MetamerPage.waitRequest(decreaseButton, WaitRequestType.XHR).click();
         MetamerPage.waitRequest(decreaseButton, WaitRequestType.XHR).click();
-        assertEquals(spinner.getInput().getStringValue(), "0");//2 - 1 - 1
+        assertEquals(spinner.advanced().getInput().getStringValue(), "0");//2 - 1 - 1
         MetamerPage.waitRequest(decreaseButton, WaitRequestType.XHR).click();
         MetamerPage.waitRequest(decreaseButton, WaitRequestType.NONE).click();
-        assertEquals(spinner.getInput().getStringValue(), "-1");//-2, but min is -1
+        assertEquals(spinner.advanced().getInput().getStringValue(), "-1");//-2, but min is -1
     }
 
     @Test
@@ -83,7 +83,7 @@ public class TestInputNumberSpinnerJSApi extends AbstractWebDriverTest {
         assertEquals(getValueFromOutputJSField(), "");
         MetamerPage.waitRequest(getValueButton, WaitRequestType.NONE).click();
         assertEquals(getValueFromOutputJSField(), DEFAULT_VALUE);
-        assertEquals(spinner.getInput().getStringValue(), DEFAULT_VALUE);
+        assertEquals(spinner.advanced().getInput().getStringValue(), DEFAULT_VALUE);
     }
 
     @Test
@@ -92,10 +92,10 @@ public class TestInputNumberSpinnerJSApi extends AbstractWebDriverTest {
 
         MetamerPage.waitRequest(increaseButton, WaitRequestType.XHR).click();
         MetamerPage.waitRequest(increaseButton, WaitRequestType.XHR).click();
-        assertEquals(spinner.getInput().getStringValue(), "4");//2 + 1 + 1
+        assertEquals(spinner.advanced().getInput().getStringValue(), "4");//2 + 1 + 1
         MetamerPage.waitRequest(increaseButton, WaitRequestType.XHR).click();
         MetamerPage.waitRequest(increaseButton, WaitRequestType.NONE).click();
-        assertEquals(spinner.getInput().getStringValue(), "5");//6, but max is 5
+        assertEquals(spinner.advanced().getInput().getStringValue(), "5");//6, but max is 5
 
     }
 
@@ -107,12 +107,12 @@ public class TestInputNumberSpinnerJSApi extends AbstractWebDriverTest {
         MetamerPage.waitRequest(decreaseButton, WaitRequestType.XHR).click();//6
         MetamerPage.waitRequest(getValueButton, WaitRequestType.NONE).click();
         assertEquals(getValueFromOutputJSField(), "6");//5 + 1 + 1 - 1
-        assertEquals(spinner.getInput().getStringValue(), "6");
+        assertEquals(spinner.advanced().getInput().getStringValue(), "6");
     }
 
     @Test
     public void testSetValue() {
         MetamerPage.waitRequest(setValueButton, WaitRequestType.XHR).click();
-        assertEquals(spinner.getInput().getStringValue(), SET_VALUE);
+        assertEquals(spinner.advanced().getInput().getStringValue(), SET_VALUE);
     }
 }

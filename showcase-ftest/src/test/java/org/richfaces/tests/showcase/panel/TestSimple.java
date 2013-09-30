@@ -23,7 +23,7 @@ package org.richfaces.tests.showcase.panel;
 
 import static org.jboss.arquillian.graphene.Graphene.waitAjax;
 
-import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.testng.annotations.Test;
 
 /**
@@ -58,7 +58,7 @@ public class TestSimple extends AbstractPanelTest {
     @Test
     public void testPanelWithoutHeader() {
         waitAjax(webDriver).until("Panel header should not be visible!")
-                .element(ByJQuery.jquerySelector(PANEL_WITHOUT_HEADER + " > " + HEADER))
+                .element(ByJQuery.selector(PANEL_WITHOUT_HEADER + " > " + HEADER))
                 .is()
                 .not()
                 .present();

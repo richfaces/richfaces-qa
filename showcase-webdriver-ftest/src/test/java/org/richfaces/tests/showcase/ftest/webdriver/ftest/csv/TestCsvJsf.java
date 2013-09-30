@@ -21,10 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.csv;
 
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
 import static org.testng.Assert.assertTrue;
 
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.csv.JsfValidatorsPage;
 import org.testng.annotations.Test;
@@ -48,13 +49,13 @@ public class TestCsvJsf extends AbstractWebDriverTest {
         getPage().loseFocus();
         Graphene.waitAjax()
             .withMessage("After typing invalid value into the age input field, an error message should be present.")
-            .until(Graphene.element(getPage().getAgeErrorArea()).isPresent());
+            .until(new WebElementConditionFactory(getPage().getAgeErrorArea()).isPresent());
         Graphene.waitAjax()
             .withMessage("After typing invalid value into the e-mail input field, an error message should be present.")
-            .until(Graphene.element(getPage().getEmailErrorArea()).isPresent());
+            .until(new WebElementConditionFactory(getPage().getEmailErrorArea()).isPresent());
         Graphene.waitAjax()
             .withMessage("After typing invalid value into the name input field, an error message should be present.")
-            .until(Graphene.element(getPage().getNameErrorArea()).isPresent());
+            .until(new WebElementConditionFactory(getPage().getNameErrorArea()).isPresent());
         getPage().getAgeInput().click();
         getPage().getAgeInput().clear();
         getPage().getAgeInput().sendKeys("18");
@@ -67,13 +68,13 @@ public class TestCsvJsf extends AbstractWebDriverTest {
         getPage().loseFocus();
         Graphene.waitAjax()
             .withMessage("After typing a valid value into the age input field, no error message should be present.")
-            .until(Graphene.element(getPage().getAgeErrorArea()).not().isPresent());
+            .until(new WebElementConditionFactory(getPage().getAgeErrorArea()).not().isPresent());
         Graphene.waitAjax()
             .withMessage("After typing a valid value into the e-mail input field, no error message should be present.")
-            .until(Graphene.element(getPage().getEmailErrorArea()).not().isPresent());
+            .until(new WebElementConditionFactory(getPage().getEmailErrorArea()).not().isPresent());
         Graphene.waitAjax()
             .withMessage("After typing a valid value into the name input field, no error message should be present.")
-            .until(Graphene.element(getPage().getNameErrorArea()).not().isPresent());
+            .until(new WebElementConditionFactory(getPage().getNameErrorArea()).not().isPresent());
     }
 
     @Test
@@ -83,7 +84,7 @@ public class TestCsvJsf extends AbstractWebDriverTest {
         getPage().loseFocus();
         Graphene.waitAjax()
             .withMessage("After typing invalid value into the age input field, an error message should be present.")
-            .until(Graphene.element(getPage().getAgeErrorArea()).isPresent());
+            .until(new WebElementConditionFactory(getPage().getAgeErrorArea()).isPresent());
         assertTrue(getPage().getAgeErrorArea().getText().contains("must be a number"));
         getPage().getAgeInput().click();
         getPage().getAgeInput().clear();
@@ -91,7 +92,7 @@ public class TestCsvJsf extends AbstractWebDriverTest {
         getPage().loseFocus();
         Graphene.waitAjax()
             .withMessage("After typing a valid value into the age input field, no error message should be present.")
-            .until(Graphene.element(getPage().getAgeErrorArea()).not().isPresent());
+            .until(new WebElementConditionFactory(getPage().getAgeErrorArea()).not().isPresent());
     }
 
     @Test
@@ -101,7 +102,7 @@ public class TestCsvJsf extends AbstractWebDriverTest {
         getPage().loseFocus();
         Graphene.waitAjax()
             .withMessage("After typing invalid value into the e-mail input field, an error message should be present.")
-            .until(Graphene.element(getPage().getEmailErrorArea()).isPresent());
+            .until(new WebElementConditionFactory(getPage().getEmailErrorArea()).isPresent());
         assertTrue(getPage().getEmailErrorArea().getText().contains("Invalid email address"));
         getPage().getEmailInput().click();
         getPage().getEmailInput().clear();
@@ -109,7 +110,7 @@ public class TestCsvJsf extends AbstractWebDriverTest {
         getPage().loseFocus();
         Graphene.waitAjax()
             .withMessage("After typing a valid e-mail into the e-mail input field, no error message should be present.")
-            .until(Graphene.element(getPage().getEmailErrorArea()).not().isPresent());
+            .until(new WebElementConditionFactory(getPage().getEmailErrorArea()).not().isPresent());
     }
 
     @Test
@@ -119,7 +120,7 @@ public class TestCsvJsf extends AbstractWebDriverTest {
         getPage().loseFocus();
         Graphene.waitAjax()
             .withMessage("After typing a long string into the name input field, an error message should be present.")
-            .until(Graphene.element(getPage().getNameErrorArea()).isPresent());
+            .until(new WebElementConditionFactory(getPage().getNameErrorArea()).isPresent());
         assertTrue(getPage().getNameErrorArea().getText().contains("Specified attribute is not between the expected values of 3 and 8"));
         getPage().getNameInput().click();
         getPage().getNameInput().clear();
@@ -127,7 +128,7 @@ public class TestCsvJsf extends AbstractWebDriverTest {
         getPage().loseFocus();
         Graphene.waitAjax()
             .withMessage("After typing a correct string into the name input field, no error message should be present.")
-            .until(Graphene.element(getPage().getNameErrorArea()).not().isPresent());
+            .until(new WebElementConditionFactory(getPage().getNameErrorArea()).not().isPresent());
     }
 
     @Test
@@ -137,7 +138,7 @@ public class TestCsvJsf extends AbstractWebDriverTest {
         getPage().loseFocus();
         Graphene.waitAjax()
             .withMessage("After typing invalid value into the age input field, an error message should be present.")
-            .until(Graphene.element(getPage().getAgeErrorArea()).isPresent());
+            .until(new WebElementConditionFactory(getPage().getAgeErrorArea()).isPresent());
         assertTrue(getPage().getAgeErrorArea().getText().contains("between the expected values"));
     }
 
@@ -148,7 +149,7 @@ public class TestCsvJsf extends AbstractWebDriverTest {
         getPage().loseFocus();
         Graphene.waitAjax()
             .withMessage("After typing invalid value into the age input field, an error message should be present.")
-            .until(Graphene.element(getPage().getAgeErrorArea()).isPresent());
+            .until(new WebElementConditionFactory(getPage().getAgeErrorArea()).isPresent());
         assertTrue(getPage().getAgeErrorArea().getText().contains("between the expected values"));
     }
 
@@ -159,7 +160,7 @@ public class TestCsvJsf extends AbstractWebDriverTest {
         getPage().loseFocus();
         Graphene.waitAjax()
             .withMessage("After typing a short string into the name input field, an error message should be present.")
-            .until(Graphene.element(getPage().getNameErrorArea()).isPresent());
+            .until(new WebElementConditionFactory(getPage().getNameErrorArea()).isPresent());
         assertTrue(getPage().getNameErrorArea().getText().contains("Specified attribute is not between the expected values of 3 and 8"));
     }
 

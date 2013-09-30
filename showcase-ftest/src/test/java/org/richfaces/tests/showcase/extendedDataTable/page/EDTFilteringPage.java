@@ -23,12 +23,13 @@ package org.richfaces.tests.showcase.extendedDataTable.page;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+
+import org.jboss.arquillian.graphene.findby.ByJQuery;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.showcase.dataTable.AbstractDataIterationWithCars.Car;
 import org.richfaces.tests.showcase.dataTable.page.TableFilteringPage;
 
@@ -40,14 +41,14 @@ public class EDTFilteringPage extends TableFilteringPage {
     @FindBy(css="*.rf-edt-b")
     public WebElement tBody;
 
-    @FindBy(jquery="*.rf-edt-b td div *.rf-edt-tbl")
+    @FindByJQuery("*.rf-edt-b td div *.rf-edt-tbl")
     private List<WebElement> tableParts;
 
 
     @Override
     public boolean isNothingFound() {
         try {
-            browser.findElement(ByJQuery.jquerySelector("div.rf-edt-ndt:contains('Nothing found')"));
+            browser.findElement(ByJQuery.selector("div.rf-edt-ndt:contains('Nothing found')"));
             return true;
         } catch(NoSuchElementException ignored) {
             return false;

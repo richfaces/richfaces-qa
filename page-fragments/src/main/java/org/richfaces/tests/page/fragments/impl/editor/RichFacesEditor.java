@@ -22,65 +22,96 @@
 package org.richfaces.tests.page.fragments.impl.editor;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.graphene.fragment.Root;
+import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.page.fragments.impl.common.ClearType;
+import org.richfaces.tests.page.fragments.impl.editor.toolbar.RichFacesEditorToolbar;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class RichFacesEditor {
+public class RichFacesEditor implements Editor {
 
     @Root
     private WebElement root;
 
     @Drone
-    private WebDriver driver;
+    private WebDriver browser;
 
     @FindBy(css = ".cke_toolbox")
-    private EditorToolbar toolbar;
+    private RichFacesEditorToolbar toolbar;
 
-    private static final String BUTTON_ON = "cke_on";
-    private static final String BUTTON_OFF = "cke_off";
+    @ArquillianResource
+    private JavascriptExecutor executor;
 
-    public boolean turnOnMode(EditorToolbar.EditorMode mode) {
-        return true;
+    private final AdvancedEditorInteractions advancedInteractions = new AdvancedEditorInteractions();
+
+    public AdvancedEditorInteractions advanced() {
+        return advancedInteractions;
     }
 
-    public boolean turnOffMode(EditorToolbar.EditorMode mode) {
-        return false;
+    @Override
+    public void clear() {
+        advanced().clear(ClearType.JS);
     }
 
-    public void clickOnButton() {
-
-    }
-
-    /**
-     * Types into the editor given text.
-     *
-     * @author Jan Papousek
-     * @param text
-     */
-    public void typeTextToEditor(String text) {
+    @Override
+    public String getText() {
         try {
-            // driver.switchTo().frame(page.editorFrame);
-            driver.switchTo().frame(0);// must be this way
-            WebElement activeArea = driver.findElement(By.tagName("body"));
-            activeArea.click();
-            activeArea.sendKeys(text);
+            return switchToEditorActiveArea().getText();
         } finally {
-            driver.switchTo().defaultContent();
+            browser.switchTo().defaultContent();
         }
     }
 
-    public EditorToolbar getToolbar() {
-        return toolbar;
+    private WebElement switchToEditorActiveArea() {
+        browser.switchTo().frame(0);
+        WebElement activeArea = browser.findElement(By.tagName("body"));
+        activeArea.click();
+        return activeArea;
     }
 
-    public void setToolbar(EditorToolbar toolbar) {
-        this.toolbar = toolbar;
+    @Override
+    public void type(String text) {
+        try {
+            switchToEditorActiveArea().sendKeys(text);
+        } finally {
+            browser.switchTo().defaultContent();
+        }
     }
 
+    public class AdvancedEditorInteractions {
+
+        public void clear(ClearType clearType) {
+            try {
+                WebElement activeArea = switchToEditorActiveArea();
+                switch (clearType) {
+                    case BACKSPACE:
+                        throw new UnsupportedOperationException("Unsupported Op.");
+                    case DELETE:
+                        throw new UnsupportedOperationException("Unsupported Op.");
+                    case ESCAPE_SQ:
+                        throw new UnsupportedOperationException("Unsupported Op.");
+                    case JS:
+                        executor.executeScript("arguments[0].innerHTML = '';", activeArea);
+                        break;
+                    case WD:
+                        throw new UnsupportedOperationException("Unsupported Op.");
+                    default:
+                        throw new UnsupportedOperationException("Unknown type of clear method " + clearType);
+                }
+            } finally {
+                browser.switchTo().defaultContent();
+            }
+        }
+
+        public RichFacesEditorToolbar getToolbar() {
+            return toolbar;
+        }
+    }
 }

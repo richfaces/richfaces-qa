@@ -24,20 +24,27 @@ package org.richfaces.tests.metamer.ftest.richTreeModelAdaptor;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
+import java.util.List;
 
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.richTree.TestTreeToggling;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22823 $
  */
 public class TestTreeModelAdaptorToggling extends TestTreeToggling {
+
+    @FindByJQuery(":radio[id*=recursiveModelRepresentation]")
+    private List<WebElement> recursiveModelRepresentations;
+    @FindByJQuery(":checkbox[id$=recursiveLeafChildrenNullable]")
+    private WebElement recursiveLeafChildrenNullableElement;
 
     @Inject
     @Use(enumeration = true)
@@ -47,37 +54,31 @@ public class TestTreeModelAdaptorToggling extends TestTreeToggling {
     @Use(booleans = { true, false })
     private boolean recursiveLeafChildrenNullable;
 
-    @BeforeClass
-    public void setupTreeModelTesting() {
-        paths = new int[][] { { 3, 2, 1, 2 }, { 2, 4, 6 } };
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richTree/treeAdaptors.xhtml");
     }
 
     @BeforeMethod
     public void initPathsAndModelRepresentation() {
         if (representation == RecursiveModelRepresentation.MAP) {
-            page.requestTimeChangesWaiting(page.recursiveModelRepresentations.get(1)).click();
+            MetamerPage.requestTimeChangesWaiting(recursiveModelRepresentations.get(1)).click();
         }
         if (recursiveLeafChildrenNullable) {
-            page.requestTimeChangesWaiting(page.recursiveLeafChildrenNullable).click();
+            MetamerPage.requestTimeChangesWaiting(recursiveLeafChildrenNullableElement).click();
         }
     }
 
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richTree/treeAdaptors.xhtml");
+    @BeforeClass
+    public void setupTreeModelTesting() {
+        paths = new int[][]{ { 2, 1, 0, 1 }, { 1, 3, 5 } };
     }
 
     @Test
     @Use(field = "sample", empty = true)
     @Override
-    public void testTopLevelNodesExpansion() {
-        super.testTopLevelNodesExpansion();
-    }
-
-    @Test
-    @Use(field = "sample", empty = true)
-    @Override
-    public void testTopLevelNodesCollapsion() {
-        super.testTopLevelNodesCollapsion();
+    public void testDeepCollapsion() {
+        super.testDeepCollapsion();
     }
 
     @Test
@@ -90,7 +91,14 @@ public class TestTreeModelAdaptorToggling extends TestTreeToggling {
     @Test
     @Use(field = "sample", empty = true)
     @Override
-    public void testDeepCollapsion() {
-        super.testDeepCollapsion();
+    public void testTopLevelNodesCollapsion() {
+        super.testTopLevelNodesCollapsion();
+    }
+
+    @Test
+    @Use(field = "sample", empty = true)
+    @Override
+    public void testTopLevelNodesExpansion() {
+        super.testTopLevelNodesExpansion();
     }
 }

@@ -28,7 +28,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -43,11 +43,11 @@ import org.testng.annotations.Test;
 public class TestPlaceholderCSV extends AbstractWebDriverTest {
 
     @Page
-    MetamerPage page;
+    private MetamerPage page;
     @FindBy(css = "[id$=input]")
-    WebElement input;
+    private WebElement input;
     @FindBy(css = "[id$=msg]")
-    RichFacesMessage msg;
+    private RichFacesMessage msg;
 
     @Override
     public URL getTestUrl() {
@@ -70,24 +70,23 @@ public class TestPlaceholderCSV extends AbstractWebDriverTest {
         String goodText = "1234";
         String longText = "1234567";
         assertEquals(input.getAttribute("value"), AbstractPlaceholderJSFTest.DEFAULT_PLACEHOLDER_TEXT);
-        assertFalse(msg.isVisible(), "Validation message should not be visible");
+        assertFalse(msg.advanced().isVisible(), "Validation message should not be visible");
 
         typeTextAndBlur(goodText);
         assertEquals(input.getAttribute("value"), goodText);
-        assertFalse(msg.isVisible(), "Validation message should not be visible");
+        assertFalse(msg.advanced().isVisible(), "Validation message should not be visible");
 
         typeTextAndBlur("");
-        Graphene.waitGui().until(msg.isVisibleCondition());
+        msg.advanced().waitUntilMessageIsVisible().perform();
         assertEquals(input.getAttribute("value"), AbstractPlaceholderJSFTest.DEFAULT_PLACEHOLDER_TEXT);
-        assertTrue(msg.isVisible(), "Validation message should  be visible");
+        assertTrue(msg.advanced().isVisible(), "Validation message should  be visible");
 
         typeTextAndBlur(goodText);
-        Graphene.waitGui().until(msg.isNotVisibleCondition());
-
+        msg.advanced().waitUntilMessageIsNotVisible().perform();
 
         typeTextAndBlur(longText);
-        Graphene.waitGui().until(msg.isVisibleCondition());
+        msg.advanced().waitUntilMessageIsVisible().perform();
         assertEquals(input.getAttribute("value"), longText);
-        assertTrue(msg.isVisible(), "Validation message should  be visible");
+        assertTrue(msg.advanced().isVisible(), "Validation message should  be visible");
     }
 }

@@ -21,12 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richMessages;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.abstractions.message.AbstractMessagesComponentTest;
 import org.richfaces.tests.metamer.ftest.abstractions.message.MessagesComponentTestPage;
 import org.richfaces.tests.metamer.ftest.webdriver.AttributeList;
 import org.richfaces.tests.page.fragments.impl.message.Message;
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.Assert;
 
 /**
@@ -41,37 +42,37 @@ public abstract class AbstractMessagesTest extends AbstractMessagesComponentTest
     protected MessagesPage page;
 
     @Override
-    protected MessagesComponentTestPage<Message> getPage() {
+    protected MessagesComponentTestPage<? extends Message> getPage() {
         return page;
     }
 
     @Override
     public void checkFor(int expectedMessages) {
-        AttributeList.messagesAttributes.setLower(MessagesAttributes.FOR, "");
+        AttributeList.messagesAttributes.set(MessagesAttributes.FOR, "");
         generateValidationMessagesWithoutWait();
         submitWithHBtn();
 
-        Assert.assertFalse(page.messagesComponentWithFor.isVisible());
+        Assert.assertFalse(page.getMessagesComponentWithFor().advanced().isVisible());
 
         // now set @for attribute to "simpleInput1"
-        AttributeList.messagesAttributes.setLower(MessagesAttributes.FOR, "simpleInput1");
+        AttributeList.messagesAttributes.set(MessagesAttributes.FOR, "simpleInput1");
         generateValidationMessagesWithoutWait();
         submitWithHBtn();
 
-        Assert.assertTrue(page.messagesComponentWithFor.isVisible());
-        Assert.assertEquals(page.messagesComponentWithFor.size(), expectedMessages);
-        Assert.assertEquals(page.messagesComponentWithFor.getMessagesForInput(getSimpleInput1ID()).size(), expectedMessages, expectedMessages + " messages for input 1 were expected.");
-        Assert.assertEquals(page.messagesComponentWithFor.getMessagesForInput(getSimpleInput2ID()).size(), 0, "No messages for input 2 were expected.");
+        Assert.assertTrue(page.getMessagesComponentWithFor().advanced().isVisible());
+        Assert.assertEquals(page.getMessagesComponentWithFor().size(), expectedMessages);
+        Assert.assertEquals(page.getMessagesComponentWithFor().getItems(ChoicePickerHelper.byWebElement().attribute("id").contains(getSimpleInput1ID())).size(), expectedMessages, expectedMessages + " messages for input 1 were expected.");
+        Assert.assertEquals(page.getMessagesComponentWithFor().getItems(ChoicePickerHelper.byWebElement().attribute("id").contains(getSimpleInput2ID())).size(), 0, "No messages for input 2 were expected.");
 
         // now set @for attribute to "simpleInput2"
-        AttributeList.messagesAttributes.setLower(MessagesAttributes.FOR, "simpleInput2");
+        AttributeList.messagesAttributes.set(MessagesAttributes.FOR, "simpleInput2");
         generateValidationMessagesWithoutWait();
         submitWithHBtn();
 
-        Assert.assertTrue(page.messagesComponentWithFor.isVisible());
-        Assert.assertEquals(page.messagesComponentWithFor.size(), expectedMessages);
-        Assert.assertEquals(page.messagesComponentWithFor.getMessagesForInput(getSimpleInput1ID()).size(), 0, "No messages for input 1 were expected.");
-        Assert.assertEquals(page.messagesComponentWithFor.getMessagesForInput(getSimpleInput2ID()).size(), expectedMessages, expectedMessages + " messages for input 2 were expected.");
+        Assert.assertTrue(page.getMessagesComponentWithFor().advanced().isVisible());
+        Assert.assertEquals(page.getMessagesComponentWithFor().size(), expectedMessages);
+        Assert.assertEquals(page.getMessagesComponentWithFor().getItems(ChoicePickerHelper.byWebElement().attribute("id").contains(getSimpleInput1ID())).size(), 0, "No messages for input 1 were expected.");
+        Assert.assertEquals(page.getMessagesComponentWithFor().getItems(ChoicePickerHelper.byWebElement().attribute("id").contains(getSimpleInput2ID())).size(), expectedMessages, expectedMessages + " messages for input 2 were expected.");
     }
 
     @Override
@@ -79,16 +80,16 @@ public abstract class AbstractMessagesTest extends AbstractMessagesComponentTest
         AttributeList.messagesAttributes.set(MessagesAttributes.globalOnly, Boolean.FALSE);
         generateValidationMessagesWithWait();
         //messages for both inputs should appear
-        Assert.assertTrue(page.messagesComponentWithGlobal.isVisible());
-        Assert.assertEquals(page.messagesComponentWithGlobal.size(), expectedMessagesPerInput * 2);//for both inputs
-        Assert.assertEquals(page.messagesComponentWithGlobal.getMessagesForInput(getSimpleInput1ID()).size(), expectedMessagesPerInput, expectedMessagesPerInput + " messages for input 1 were expected.");
-        Assert.assertEquals(page.messagesComponentWithGlobal.getMessagesForInput(getSimpleInput2ID()).size(), expectedMessagesPerInput, expectedMessagesPerInput + " messages for input 2 were expected.");
+        Assert.assertTrue(page.getMessagesComponentWithGlobal().advanced().isVisible());
+        Assert.assertEquals(page.getMessagesComponentWithGlobal().size(), expectedMessagesPerInput * 2);//for both inputs
+        Assert.assertEquals(page.getMessagesComponentWithGlobal().getItems(ChoicePickerHelper.byWebElement().attribute("id").contains(getSimpleInput1ID())).size(), expectedMessagesPerInput, expectedMessagesPerInput + " messages for input 1 were expected.");
+        Assert.assertEquals(page.getMessagesComponentWithGlobal().getItems(ChoicePickerHelper.byWebElement().attribute("id").contains(getSimpleInput2ID())).size(), expectedMessagesPerInput, expectedMessagesPerInput + " messages for input 2 were expected.");
 
         AttributeList.messagesAttributes.set(MessagesAttributes.globalOnly, Boolean.TRUE);
         generateValidationMessagesWithoutWait();
         submitWithA4jBtn();
         //no messages should appear, because validation messages are bound to inputs not to 'null'
-        Assert.assertFalse(page.messagesComponentWithGlobal.isVisible());
+        Assert.assertFalse(page.getMessagesComponentWithGlobal().advanced().isVisible());
     }
 
     @Override
@@ -96,7 +97,7 @@ public abstract class AbstractMessagesTest extends AbstractMessagesComponentTest
         return new FutureTarget<WebElement>() {
             @Override
             public WebElement getTarget() {
-                return page.messagesComponentWithGlobal.getRoot();
+                return page.getMessagesComponentWithGlobal().getRoot();
             }
         };
     }

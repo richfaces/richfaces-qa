@@ -28,6 +28,7 @@ import static javax.faces.event.PhaseId.PROCESS_VALIDATIONS;
 import static javax.faces.event.PhaseId.RENDER_RESPONSE;
 import static javax.faces.event.PhaseId.RESTORE_VIEW;
 import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
+
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState.ACCEPTING;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState.REJECTING;
@@ -47,7 +48,8 @@ import static org.testng.Assert.assertTrue;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -103,15 +105,16 @@ public class TestDropTarget extends AbstractWebDriverTest {
 
         String drop1Content = page.drop1.getText();
         String drop2Content = page.drop2.getText();
+        new Actions(driver).release(page.drop1).perform();
 
-        new Actions(driver).dragAndDrop(page.drg1, page.drop1).build().perform();
+//        new Actions(driver).dragAndDrop(page.drg1, page.drop1).build().perform();
 
         // TODO JJa: find replacement
         // waitAjax.waitForChange(retrieveDrop1);
         // assertTrue(retrieveDrop2.isValueChanged());
         Graphene.waitModel().until().element(page.drop1).text().not().equalTo(drop1Content);
-        // Graphene.waitModel().until(Graphene.element(page.drop2).not().text().equalTo(drop2Content));
-        assertFalse(Graphene.element(page.drop2).equals(drop2Content));
+        // Graphene.waitModel().until(new WebElementConditionFactory(page.drop2).not().text().equalTo(drop2Content));
+        assertFalse(new WebElementConditionFactory(page.drop2).equals(drop2Content));
     }
 
     @Test

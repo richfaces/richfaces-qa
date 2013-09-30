@@ -24,14 +24,15 @@ package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.extendedDataTableAttributes;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNotEquals;
 
 import java.net.URL;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -63,7 +64,7 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
 
     @Test
     public void testInit() {
-        Boolean present = Graphene.element(page.frozenColumnsTd).isPresent().apply(driver);
+        Boolean present = new WebElementConditionFactory(page.frozenColumnsTd).isPresent().apply(driver);
         assertFalse(present, "No frozen columns should be in page.");
     }
 
@@ -103,8 +104,11 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
     public void _testFrozenColumnsShow() {
         // wait for list of elements with frozen columns with expected size
         List<WebElement> frozenColumns = guardListSize(page.frozenColumns, numberOfColumns);
-        assertEquals(Integer.valueOf(frozenColumns.size()), numberOfColumns,
-                "The number of frozen columns set is not equal to the number of frozen columns found");
+        // frozenColumns feature is implemented in such a way that thare are no frozen column when frozenColumns equals
+        // number of columns
+        int expectedNumberOfColumns = numberOfColumns == 4 ? 0 : numberOfColumns;
+        assertEquals(frozenColumns.size(), expectedNumberOfColumns,
+            "The number of frozen columns set is not equal to the number of frozen columns found");
     }
 
     /**
@@ -152,10 +156,10 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
     private void _testScrollerForNotFrozenColumns() {
         // check if there is default scroller
         Graphene.waitModel().until("Default scroller should not be in the page.").element(page.defaultScroller).is()
-                .not().present();
+            .not().present();
         // check if there is scroller for not frozen columns
         Graphene.waitModel().until("Scroller for the not frozen columns should be in the page.")
-                .element(page.movedScroller).is().present();
+            .element(page.movedScroller).is().present();
         // check if the location of scroller moved
         assertNotEquals(location, page.movedScroller.getLocation(), "The position of scroller has not been changed.");
     }

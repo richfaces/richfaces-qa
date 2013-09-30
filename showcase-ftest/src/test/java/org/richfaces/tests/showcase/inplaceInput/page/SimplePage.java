@@ -21,17 +21,17 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.inplaceInput.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.richfaces.tests.page.fragments.impl.input.inplace.input.RichFacesInplaceInput;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.richfaces.tests.page.fragments.impl.inplaceInput.RichFacesInplaceInput;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class SimplePage {
 
-    @FindBy(jquery = ".rf-ii:eq(0)")
+    @FindByJQuery(".rf-ii:eq(0)")
     public RichFacesInplaceInput name;
-    @FindBy(jquery = ".rf-ii:eq(1)")
+    @FindByJQuery(".rf-ii:eq(1)")
     public RichFacesInplaceInput email;
 
 }

@@ -28,7 +28,6 @@ import java.net.URL;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
-
 /**
  * Test case for page /faces/components/richToggleControl/accordion.xhtml
  *
@@ -37,8 +36,8 @@ import org.testng.annotations.Test;
  */
 public class TestTCAccordion extends AbstractTestToggleControl {
 
-    WebElement[] items1;
-    WebElement[] items2;
+    private WebElement[] items1;
+    private WebElement[] items2;
 
     @Override
     public URL getTestUrl() {
@@ -66,15 +65,15 @@ public class TestTCAccordion extends AbstractTestToggleControl {
     }
 
     private WebElement[] getItems1() {
-        if (items1 == null ) {
-            items1 = new WebElement[] { page.panel1Item1Content, page.panel1Item2Content, page.panel1Item3Content };
+        if (items1 == null) {
+            items1 = new WebElement[]{ page.getPanel1Item1Content(), page.getPanel1Item2Content(), page.getPanel1Item3Content() };
         }
         return items1;
     }
 
     private WebElement[] getItems2() {
-        if (items2 == null ) {
-            items2 = new WebElement[] { page.panel2Item1Content, page.panel2Item2Content, page.panel2Item3Content };
+        if (items2 == null) {
+            items2 = new WebElement[]{ page.getPanel2Item1Content(), page.getPanel2Item2Content(), page.getPanel2Item3Content() };
         }
         return items2;
     }

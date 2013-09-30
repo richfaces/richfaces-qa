@@ -22,53 +22,41 @@
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.autocompleteAttributes;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
-import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
-import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
+import org.richfaces.tests.metamer.ftest.annotations.Uses;
+import org.richfaces.tests.page.fragments.impl.autocomplete.SelectOrConfirm;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestAutocompleteFormatting extends AbstractAutocompleteTest{
-
-    @FindBy(css="span.rf-au[id$=autocomplete]")
-    private RichFacesAutocomplete<String> autocomplete;
+public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
 
     @Inject
-    @Use(booleans = { true, false })
+    @Use(empty = true)
     Boolean autofill;
 
     @Inject
-    @Use(booleans = { true, false })
+    @Use(empty = true)
     Boolean selectFirst;
 
     @Inject
-    @Use(strings= {"div", "list", "table"})
+    @Use(strings = { "div", "list", "table" })
     String layout;
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richAutocomplete/fetchValueAttr.xhtml");
-    }
-
-    @BeforeMethod
-    public void setParser() {
-        autocomplete.setSuggestionParser(new TextSuggestionParser());
     }
 
     @BeforeMethod
@@ -82,47 +70,50 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest{
         if (selectFirst == null) {
             selectFirst = false;
         }
-        autocomplete.clear(ClearType.BACK_SPACE);
+        autocomplete.clear();
     }
 
     /**
      * This should test combination of @var and @fetchValue attributes of autocomplete
      */
     @Test
+    @Uses({
+        @Use(field = "autofill", booleans = { true, false }),
+        @Use(field = "selectFirst", booleans = { true, false }) })
     public void testFormatting() {
-        assertFalse(autocomplete.areSuggestionsAvailable());
-        autocomplete.clear(ClearType.BACK_SPACE);
-        autocomplete.type("ala");
-        assertTrue(autocomplete.areSuggestionsAvailable());
-        autocomplete.autocomplete();
-        Graphene.waitGui().until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver driver) {
-                return !autocomplete.areSuggestionsAvailable();
-            }
-        });
+        assertTrue(autocomplete.advanced().getSuggestionsElements().isEmpty());
+        autocomplete.clear();
+        SelectOrConfirm typed = Graphene.guardAjax(autocomplete).type("ala");
+        assertFalse(autocomplete.advanced().getSuggestionsElements().isEmpty());
+        Graphene.guardAjax(typed).confirm();
+        autocomplete.advanced().waitForSuggestionsToBeNotVisible().perform();
         String expected = getExpectedStateForPrefix("ala", selectFirst).toLowerCase();
-        String found = autocomplete.getInputValue().toLowerCase();
-        assertTrue(found.startsWith(expected), "The input value should start with '"+expected+"', but '" + found + "' found.");
+        String found = autocomplete.advanced().getInput().getStringValue().toLowerCase();
+        assertTrue(found.startsWith(expected), "The input value should start with '" + expected + "', but '" + found
+            + "' found.");
     }
 
     @Test
     public void testLayout() {
-        autocomplete.type("Co");
-        assertTrue(Graphene.element(getSuggestion("Colorado")).isPresent().apply(driver));
-        assertTrue(Graphene.element(getSuggestion("[Denver]")).isPresent().apply(driver));
-        assertTrue(Graphene.element(getSuggestion("Connecticut")).isPresent().apply(driver));
-        assertTrue(Graphene.element(getSuggestion("[Hartford]")).isPresent().apply(driver));
+        Graphene.guardAjax(autocomplete).type("Co");
+
+        Graphene.waitGui().until().element(getSuggestion("Colorado")).is().present();
+        Graphene.waitGui().until().element(getSuggestion("[Denver]")).is().present();
+        Graphene.waitGui().until().element(getSuggestion("Connecticut")).is().present();
+        Graphene.waitGui().until().element(getSuggestion("[Hartford]")).is().present();
+
+        Graphene.waitGui().until().element(getSuggestion("Hawaii")).is().not().present();
     }
 
     private By getSuggestion(String value) {
-        switch(getLayout()) {
+        switch (getLayout()) {
             case DIV:
-                return ByJQuery.jquerySelector("div[id$=autocompleteItems] > div:contains('" + value + "')");
+                return ByJQuery.selector("div[id$=autocompleteItems] > div:contains('" + value + "')");
             case LIST:
-                return ByJQuery.jquerySelector("ul[id$=autocompleteItems] > li:contains('" + value + "')");
+                return ByJQuery.selector("ul[id$=autocompleteItems] > li:contains('" + value + "')");
             case TABLE:
-                return ByJQuery.jquerySelector("table[id$=autocompleteItems] > tbody > tr > td:contains('" + value + "')");
+                return ByJQuery.selector("table[id$=autocompleteItems] > tbody > tr > td:contains('" + value
+                    + "')");
             default:
                 throw new UnsupportedOperationException();
         }
@@ -133,6 +124,7 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest{
     }
 
     private static enum Layout {
+
         DIV, LIST, TABLE;
     }
 

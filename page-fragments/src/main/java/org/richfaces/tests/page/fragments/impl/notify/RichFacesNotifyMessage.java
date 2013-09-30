@@ -22,8 +22,8 @@
 package org.richfaces.tests.page.fragments.impl.notify;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -31,12 +31,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.message.AbstractMessage;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class RichFacesNotifyMessage extends AbstractMessage implements NotifyMessage {
+
+    @Drone
+    private WebDriver driver;
 
     @FindBy(className = "rf-ntf-det")
     private WebElement messageDetailElement;
@@ -49,14 +53,21 @@ public class RichFacesNotifyMessage extends AbstractMessage implements NotifyMes
     @FindBy(className = "rf-ntf-shdw")
     private WebElement shadowElement;
 
+    private final AdvancedNotifyMessageInteractionsImpl interactions = new AdvancedNotifyMessageInteractionsImpl();
+
+    @Override
+    public AdvancedNotifyMessageInteractionsImpl advanced() {
+        return interactions;
+    }
+
     @Override
     public void close() {
-        new Actions(driver).moveToElement(root).perform();
-        Graphene.waitGui().withTimeout(3, TimeUnit.SECONDS).until().element(closeIconElement).is().visible();
-        final List<WebElement> messages = driver.findElements(By.xpath("//div[contains(@class, 'rf-ntf-cnt')]"));
+        new Actions(driver).moveToElement(getRootElement()).perform();
+        Graphene.waitModel().until().element(closeIconElement).is().visible();
+        final List<WebElement> messages = driver.findElements(By.cssSelector("div.rf-ntf-cnt"));
         final int sizeBefore = messages.size();
         new Actions(driver).click(closeIconElement).perform();
-        Graphene.waitGui().withTimeout(3, TimeUnit.SECONDS).withMessage("The message did not disappear.").until(new ExpectedCondition<Boolean>() {
+        Graphene.waitModel().withMessage("The message did not disappear.").until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver input) {
                 return messages.size() == (sizeBefore - 1);
@@ -65,17 +76,21 @@ public class RichFacesNotifyMessage extends AbstractMessage implements NotifyMes
     }
 
     @Override
-    public WebElement getCloseElement() {
-        return closeElement;
-    }
-
-    @Override
-    public WebElement getCloseIconElement() {
-        return closeIconElement;
-    }
-
-    @Override
     protected String getCssClass(MessageType type) {
+        return getStyleClassForMessageType(type);
+    }
+
+    @Override
+    protected WebElement getMessageDetailElement() {
+        return messageDetailElement;
+    }
+
+    @Override
+    protected WebElement getMessageSummaryElement() {
+        return messageSummaryElement;
+    }
+
+    public static String getStyleClassForMessageType(MessageType type) {
         switch (type) {
             case ERROR:
                 return "rf-ntf-err";
@@ -92,23 +107,57 @@ public class RichFacesNotifyMessage extends AbstractMessage implements NotifyMes
         }
     }
 
-    @Override
-    public WebElement getMessageDetailElement() {
-        return messageDetailElement;
+    public class AdvancedNotifyMessageInteractionsImpl extends AdvancedMessageInteractionsImpl implements AdvancedNotifyMessageIteractions {
+
+        @Override
+        public WebElement getCloseElement() {
+            return closeElement;
+        }
+
+        @Override
+        public WebElement getCloseIconElement() {
+            return closeIconElement;
+        }
+
+        @Override
+        public NotifyMessagePosition getPosition() {
+            return RichFacesNotifyMessagePosition.getPositionFromElement(getRootElement());
+        }
+
+        @Override
+        public WebElement getShadowElement() {
+            return shadowElement;
+        }
+
+        @Override
+        public boolean isVisible() {
+            return Utils.isVisible(getRootElement());
+        }
     }
 
-    @Override
-    public WebElement getMessageSummaryElement() {
-        return messageSummaryElement;
-    }
+    private enum RichFacesNotifyMessagePosition {
 
-    @Override
-    public NotifyMessagePosition getPosition() {
-        return RichFacesNotifyMessagePosition.getPositionFromElement(root);
-    }
+        BOTTOM_LEFT(NotifyMessagePosition.BOTTOM_LEFT, "rf-ntf-pos-bl"),
+        BOTTOM_RIGHT(NotifyMessagePosition.BOTTOM_RIGHT, "rf-ntf-pos-br"),
+        TOP_LEFT(NotifyMessagePosition.TOP_LEFT, "rf-ntf-pos-tl"),
+        TOP_RIGHT(NotifyMessagePosition.TOP_RIGHT, "rf-ntf-pos-tr");
 
-    @Override
-    public WebElement getShadowElement() {
-        return shadowElement;
+        private final String containsClass;
+        private final NotifyMessagePosition position;
+
+        private RichFacesNotifyMessagePosition(NotifyMessagePosition position, String containsClass) {
+            this.position = position;
+            this.containsClass = containsClass;
+        }
+
+        static NotifyMessagePosition getPositionFromElement(WebElement element) {
+            String styleClasses = element.getAttribute("class");
+            for (RichFacesNotifyMessagePosition messagePosition : values()) {
+                if (styleClasses.contains(messagePosition.containsClass)) {
+                    return messagePosition.position;
+                }
+            }
+            throw new RuntimeException("Cannot obtain position from element: " + element);
+        }
     }
 }

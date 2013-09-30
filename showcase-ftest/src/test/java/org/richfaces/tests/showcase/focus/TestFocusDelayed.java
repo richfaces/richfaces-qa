@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.focus;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.focus.page.FocusDelayedPage;
 import org.testng.annotations.Test;
@@ -39,7 +39,7 @@ public class TestFocusDelayed extends AbstractWebDriverTest {
     public void testDelayedFocusOnNameInput() {
         for (int i = 0; i < 3; i++) {
             page.showPopup();
-            page.waitForFocusIsGiven(page.nameInput.getInput());
+            page.waitForFocusIsGiven(page.nameInput.advanced().getInputElement());
 
             page.cancelPopup();
         }
@@ -49,15 +49,15 @@ public class TestFocusDelayed extends AbstractWebDriverTest {
     public void testDelayedFocusOnJobWhenItDoesNotPassValidation() {
         page.showPopup();
 
-        page.nameInput.fillIn("RichFaces");
-        page.jobInput.fillIn("aa");
+        page.nameInput.sendKeys("RichFaces");
+        page.jobInput.sendKeys("aa");
 
         page.saveButton.click();
-        page.waitForFocusIsGiven(page.jobInput.getInput());
+        page.waitForFocusIsGiven(page.jobInput.advanced().getInputElement());
 
         page.cancelPopup();
 
         page.showPopup();
-        page.waitForFocusIsGiven(page.jobInput.getInput());
+        page.waitForFocusIsGiven(page.jobInput.advanced().getInputElement());
     }
 }

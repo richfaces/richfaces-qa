@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.message.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.page.fragments.impl.message.Message;
 import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
 
@@ -30,13 +30,13 @@ import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
  */
 public class MessagePage extends AbstractMessagePage {
 
-    @FindBy(jquery="span[id$=name]")
+    @FindByJQuery("span[id$=name]")
     private RichFacesMessage nameMessage;
-    @FindBy(jquery="span[id$=job]")
+    @FindByJQuery("span[id$=job]")
     private RichFacesMessage jobMessage;
-    @FindBy(jquery="span[id$=address]")
+    @FindByJQuery("span[id$=address]")
     private RichFacesMessage addressMessage;
-    @FindBy(jquery="span[id$=zip]")
+    @FindByJQuery("span[id$=zip]")
     private RichFacesMessage zipMessage;
 
     public Message getMessageForName() {
@@ -56,12 +56,12 @@ public class MessagePage extends AbstractMessagePage {
     }
 
     public boolean areAllMessagesPresent() {
-        return nameMessage.isVisible() && jobMessage.isVisible() &&
-               addressMessage.isVisible() && zipMessage.isVisible();
+        return nameMessage.advanced().isVisible() && jobMessage.advanced().isVisible()
+            && addressMessage.advanced().isVisible() && zipMessage.advanced().isVisible();
     }
 
     public boolean isAnyMessagePresent() {
-        return nameMessage.isVisible() || jobMessage.isVisible() ||
-               addressMessage.isVisible() || zipMessage.isVisible();
+        return nameMessage.advanced().isVisible() || jobMessage.advanced().isVisible()
+            || addressMessage.advanced().isVisible() || zipMessage.advanced().isVisible();
     }
 }

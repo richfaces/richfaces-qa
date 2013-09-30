@@ -21,152 +21,169 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.dataScroller;
 
+import java.util.Collections;
 import java.util.List;
-import org.jboss.arquillian.drone.api.annotation.Drone;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.graphene.GrapheneElement;
+import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 
+/**
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
+ */
 public class RichFacesDataScroller implements DataScroller {
 
     @Root
-    protected WebElement root;
+    private WebElement root;
     @FindBy(className = "rf-ds-btn-first")
-    protected WebElement firstBtn;
+    private GrapheneElement firstBtn;
     @FindBy(className = "rf-ds-btn-fastrwd")
-    protected WebElement fastRewindBtn;
+    private GrapheneElement fastRewindBtn;
     @FindBy(className = "rf-ds-btn-prev")
-    protected WebElement previousBtn;
+    private GrapheneElement previousBtn;
     @FindBy(className = "rf-ds-btn-next")
-    protected WebElement nextBtn;
+    private GrapheneElement nextBtn;
     @FindBy(className = "rf-ds-btn-fastfwd")
-    protected WebElement fastForwardBtn;
+    private GrapheneElement fastForwardBtn;
     @FindBy(className = "rf-ds-btn-last")
-    protected WebElement lastBtn;
+    private GrapheneElement lastBtn;
     @FindBy(className = "rf-ds-nmb-btn")
-    protected List<WebElement> numberedPages;
+    private List<GrapheneElement> numberedPages;
     @FindBy(className = "rf-ds-act")
-    protected WebElement actPage;
+    private GrapheneElement activePage;
 
-    @Drone
-    private WebDriver driver;
     private static final String CSS_PAGE_SELECTOR = "[id$='ds_%d'].rf-ds-nmb-btn";
     private static final String CLASS_DISABLED = "rf-ds-dis";
 
-    @Override
-    public int getActPageNumber() {
-        return Integer.valueOf(actPage.getText());
-    }
-
-    private WebElement getButton(DataScrollerSwitchButton btn) {
-        switch (btn) {
-            case FAST_FORWARD:
-                return fastForwardBtn;
-            case FAST_REWIND:
-                return fastRewindBtn;
-            case FIRST:
-                return firstBtn;
-            case LAST:
-                return lastBtn;
-            case NEXT:
-                return nextBtn;
-            case PREVIOUS:
-                return previousBtn;
-            default:
-                throw new UnsupportedOperationException("Unknown button " + btn);
-        }
-    }
-
-    private By getCssSelectorForPageNumber(int pageNumber) {
-        return By.cssSelector(String.format(CSS_PAGE_SELECTOR, pageNumber));
-    }
-
-    private WebElement getFirstVisiblePageElement() {
-        return numberedPages.get(0);
-    }
-
-    private int getFirstVisiblePageNumber() {
-        return Integer.valueOf(getFirstVisiblePageElement().getText());
-    }
-
-    private WebElement getLastVisiblePageElement() {
-        return numberedPages.get(numberedPages.size() - 1);
-    }
-
-    private int getLastVisiblePageNumber() {
-        return Integer.valueOf(getLastVisiblePageElement().getText());
-    }
+    private final AdvancedDataScrollerInteractions advancedInteractions = new AdvancedDataScrollerInteractions();
 
     @Override
-    public boolean isButtonDisabled(DataScrollerSwitchButton btn) {
-        return getButton(btn).getAttribute("class").contains(CLASS_DISABLED);
-    }
-
-    @Override
-    public boolean isFirstPage() {
-        return Integer.valueOf(actPage.getText()).equals(1);
-    }
-
-    @Override
-    public boolean isLastPage() {
-        return actPage.getText().equals(getLastVisiblePageElement().getText());
-    }
-
-    @Override
-    public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return Graphene.element(root).not().isVisible();
-    }
-
-    @Override
-    public boolean isVisible() {
-        return isVisibleCondition().apply(driver);
-    }
-
-    @Override
-    public ExpectedCondition<Boolean> isVisibleCondition() {
-        return Graphene.element(root).isVisible();
+    public int getActivePageNumber() {
+        return Integer.valueOf(activePage.getText());
     }
 
     private void switchTo(By by) {
-        root.findElement(by).click();
+        WebElement element = root.findElement(by);
+        element.click();
+        Graphene.waitModel().until().element(element).attribute("class").contains("rf-ds-act");
     }
 
     @Override
     public void switchTo(int pageNumber) {
         int counter = 50; // to prevent infinite loops
-        String prevPageText = actPage.getText();
-        while (pageNumber > getLastVisiblePageNumber() && counter > 0) {
+
+        while (pageNumber > advanced().getLastVisiblePageNumber() && counter > 0) {
             switchTo(DataScrollerSwitchButton.FAST_FORWARD);
-            Graphene.waitModel().until().element(actPage).text().not().equalTo(prevPageText);
-            prevPageText = actPage.getText();
             counter--;
         }
         if (counter == 0) {
             throw new RuntimeException("Scroller doesn't change pages.");
         }
+
         counter = 50; // to prevent inifinite loops
-        while (pageNumber < getFirstVisiblePageNumber() && counter > 0) {
+        while (pageNumber < advanced().getFirstVisiblePageNumber() && counter > 0) {
             switchTo(DataScrollerSwitchButton.FAST_REWIND);
-            Graphene.waitModel().until().element(actPage).text().not().equalTo(prevPageText);
-            prevPageText = actPage.getText();
             counter--;
         }
         if (counter == 0) {
             throw new RuntimeException("Scroller doesn't change pages.");
         }
-        if (pageNumber == getActPageNumber()) {
+
+        if (pageNumber == getActivePageNumber()) {
             return;
         }
-        switchTo(getCssSelectorForPageNumber(pageNumber));
+        switchTo(advanced().getCssSelectorForPageNumber(pageNumber));
     }
 
     @Override
     public void switchTo(DataScrollerSwitchButton btn) {
-        getButton(btn).click();
+        String prevPageText = activePage.getText();
+        advanced().getButtonElement(btn).click();
+        Graphene.waitModel().until().element(activePage).text().not().equalTo(prevPageText);
+    }
+
+    public AdvancedDataScrollerInteractions advanced() {
+        return advancedInteractions;
+    }
+
+    public class AdvancedDataScrollerInteractions {
+
+        public WebElement getRootElement() {
+            return root;
+        }
+
+        public WebElement getButtonElement(DataScrollerSwitchButton btn) {
+            return getButtonGrapheneElement(btn);
+        }
+
+        private GrapheneElement getButtonGrapheneElement(DataScrollerSwitchButton btn) {
+            switch (btn) {
+                case FAST_FORWARD:
+                    return fastForwardBtn;
+                case FAST_REWIND:
+                    return fastRewindBtn;
+                case FIRST:
+                    return firstBtn;
+                case LAST:
+                    return lastBtn;
+                case NEXT:
+                    return nextBtn;
+                case PREVIOUS:
+                    return previousBtn;
+                default:
+                    throw new UnsupportedOperationException("Unknown button " + btn);
+            }
+        }
+
+        private By getCssSelectorForPageNumber(int pageNumber) {
+            return By.cssSelector(String.format(CSS_PAGE_SELECTOR, pageNumber));
+        }
+
+        public List<? extends WebElement> getAllPagesElements() {
+            return Collections.unmodifiableList(numberedPages);
+        }
+
+        public WebElement getFirstVisiblePageElement() {
+            return numberedPages.get(0);
+        }
+
+        public int getFirstVisiblePageNumber() {
+            return Integer.valueOf(getFirstVisiblePageElement().getText());
+        }
+
+        public WebElement getLastVisiblePageElement() {
+            return numberedPages.get(numberedPages.size() - 1);
+        }
+
+        public int getLastVisiblePageNumber() {
+            return Integer.valueOf(getLastVisiblePageElement().getText());
+        }
+
+        public WebElement getActivePageElement() {
+            return activePage;
+        }
+
+        public int getCountOfVisiblePages() {
+            return numberedPages.size();
+        }
+
+        public boolean isButtonDisabled(DataScrollerSwitchButton btn) {
+            return getButtonElement(btn).getAttribute("class").contains(CLASS_DISABLED);
+        }
+
+        public boolean isButtonPresent(DataScrollerSwitchButton btn) {
+            return getButtonGrapheneElement(btn).isPresent();
+        }
+
+        public boolean isFirstPage() {
+            return Integer.valueOf(activePage.getText()).equals(1);
+        }
+
+        public boolean isLastPage() {
+            return activePage.getText().equals(advanced().getLastVisiblePageElement().getText());
+        }
     }
 }

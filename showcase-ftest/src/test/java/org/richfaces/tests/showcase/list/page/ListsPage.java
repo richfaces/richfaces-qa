@@ -22,10 +22,13 @@
 package org.richfaces.tests.showcase.list.page;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.list.simple.RichFacesSimpleList;
-import org.richfaces.tests.page.fragments.impl.list.simple.SimpleList.ListType;
+import org.richfaces.component.ListType;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.page.fragments.impl.list.ListComponent;
+import org.richfaces.tests.page.fragments.impl.list.ListItem;
+import org.richfaces.tests.page.fragments.impl.list.RichFacesList;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -33,25 +36,29 @@ import org.richfaces.tests.page.fragments.impl.list.simple.SimpleList.ListType;
 public class ListsPage {
 
     @FindBy(css = "[id$='list']")
-    public RichFacesSimpleList list;
-    @FindBy(jquery = "a:contains('ordered')")
+    private RichFacesList list;
+    @FindByJQuery("a:contains('ordered')")
     private WebElement orderedList;
-    @FindBy(jquery = "a:contains('unordered')")
+    @FindByJQuery("a:contains('unordered')")
     private WebElement unordered;
-    @FindBy(jquery = "a:contains('definitions')")
+    @FindByJQuery("a:contains('definitions')")
     private WebElement definitions;
 
     public void setType(ListType type) {
         switch (type) {
-            case DEFINITIONS:
-                Graphene.guardXhr(definitions).click();
+            case definitions:
+                Graphene.guardAjax(definitions).click();
                 break;
-            case UNORDERED:
-                Graphene.guardXhr(unordered).click();
+            case unordered:
+                Graphene.guardAjax(unordered).click();
                 break;
-            case ORDERED:
-                Graphene.guardXhr(orderedList).click();
+            case ordered:
+                Graphene.guardAjax(orderedList).click();
                 break;
         }
+    }
+
+    public ListComponent<? extends ListItem> getList() {
+        return list;
     }
 }

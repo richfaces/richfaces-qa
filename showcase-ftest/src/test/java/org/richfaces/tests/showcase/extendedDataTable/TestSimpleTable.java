@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.extendedDataTable;
 
-import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
@@ -32,7 +32,7 @@ import org.testng.annotations.Test;
  */
 public class TestSimpleTable extends AbstractExtendedTableTest {
 
-    @FindBy(jquery="tbody[id$=tbf]")
+    @FindByJQuery("tbody[id$=tbf]")
     private WebElement tableNonScrollablePart;
 
     /*
@@ -46,7 +46,7 @@ public class TestSimpleTable extends AbstractExtendedTableTest {
     @Test
     public void testFirstRow() {
 
-        WebElement row = tableNonScrollablePart.findElement(ByJQuery.jquerySelector("tr:eq(0)"));
+        WebElement row = tableNonScrollablePart.findElement(ByJQuery.selector("tr:eq(0)"));
 
         checkTheRow("Chevrolet", "Corvette", row);
 
@@ -55,7 +55,7 @@ public class TestSimpleTable extends AbstractExtendedTableTest {
     @Test
     public void testLastRow() {
 
-        WebElement row = tableNonScrollablePart.findElement(ByJQuery.jquerySelector("tr:last"));
+        WebElement row = tableNonScrollablePart.findElement(ByJQuery.selector("tr:last"));
 
         checkTheRow("Infiniti", "EX35", row);
     }

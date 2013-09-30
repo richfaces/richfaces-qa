@@ -29,57 +29,43 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.tooltipA
 
 import java.net.URL;
 
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
+import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.google.common.collect.Lists;
 
 /**
  * Test for @target attribute on page faces/components/richTooltip/targetting.xhtml
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- *
- * @version $Revision$
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestTooltipTarget extends AbstractWebDriverTest {
 
     @Page
-    TooltipPage page;
+    private TooltipPage page;
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richTooltip/targetting.xhtml");
     }
 
-    @BeforeMethod
-    public void setupAttributes() {
-        tooltipAttributes.set(showEvent, "mouseover");
-        tooltipAttributes.set(hideEvent, "mouseout");
-    }
-
-    @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-11370")
-    public void testTarget() {
-        // 2. target
-        tooltipAttributes.set(target, "jsf-div");
-        page.getTooltip().recall(page.getPanel2());
-        Graphene.waitGui().until().element(page.getTooltip().getRoot()).is().visible();
-
-        // 3. default target
-        tooltipAttributes.set(target, "panel");
-        page.getTooltip().recall(page.getPanel3());
-        Graphene.waitGui().until().element(page.getTooltip().getRoot()).is().visible();
-    }
-
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11370")
-    public void testTargetWithRegularDiv() {
-        tooltipAttributes.set(target, "regular-div");
-        page.getTooltip().recall(page.getPanel1());
-        Graphene.waitGui().until().element(page.getTooltip().getRoot()).is().visible();
+    public void testTarget() {
+        tooltipAttributes.set(showEvent, "mouseover");
+        tooltipAttributes.set(hideEvent, "mouseout");
+        page.getTooltip().advanced().setupShowEvent(Event.MOUSEOVER);
+        page.getTooltip().advanced().setupHideEvent(Event.MOUSEOUT);
+        for (WebElement panel : Lists.newArrayList(page.getPanel(), page.getPanelJSFDiv(), page.getPanelRegularDiv())) {
+            tooltipAttributes.set(target, panel.getAttribute("id"));
+            page.getTooltip().show(panel);
+            page.getTooltip().hide();
+        }
     }
 }

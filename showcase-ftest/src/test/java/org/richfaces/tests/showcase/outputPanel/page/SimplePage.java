@@ -21,15 +21,16 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.outputPanel.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class SimplePage {
 
-    @FindBy(jquery = "span:contains('text1')")
+    @FindByJQuery("span:contains('text1')")
     public WebElement firstError;
 
     @FindBy(css = "input[id$='text1']")
@@ -38,7 +39,7 @@ public class SimplePage {
     @FindBy(css = "span[id$='out1']")
     public WebElement firstOutput;
 
-    @FindBy(jquery = "span:contains('text2')")
+    @FindByJQuery("span:contains('text2')")
     public WebElement secondError;
 
     @FindBy(css = "input[id$='text2']")

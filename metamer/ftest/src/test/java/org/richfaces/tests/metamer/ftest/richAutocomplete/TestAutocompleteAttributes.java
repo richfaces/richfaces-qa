@@ -23,22 +23,14 @@ package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
 import static java.text.MessageFormat.format;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.autocompleteAttributes;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
-import org.jboss.arquillian.graphene.component.object.api.autocomplete.Suggestion;
-import org.jboss.arquillian.graphene.component.object.api.scrolling.ScrollingType;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.openqa.selenium.support.FindBy;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
-import org.richfaces.tests.page.fragments.impl.autocomplete.SuggestionImpl;
-import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
-import org.testng.annotations.BeforeMethod;
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.annotations.Test;
 
 /**
@@ -51,53 +43,42 @@ public class TestAutocompleteAttributes<P> extends AbstractAutocompleteTest {
 
     private static final String PHASE_LISTENER_LOG_FORMAT = "*1 value changed: {0} -> {1}";
 
-    @FindBy(css="span[id$=autocomplete]")
-    private RichFacesAutocomplete<String> autocomplete;
-
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richAutocomplete/autocomplete.xhtml");
     }
 
-    @BeforeMethod
-    public void setParser() {
-        autocomplete.setSuggestionParser(new TextSuggestionParser());
-    }
-
-    @Test
-    public void testClientFilterFunction() {
-        autocompleteAttributes.set(AutocompleteAttributes.clientFilterFunction, Boolean.TRUE);
-    }
-
     @Test
     public void testValueChangeListener() {
-        autocomplete.clear(ClearType.BACK_SPACE);
-        autocomplete.type("something");
-        page.blur();
+        autocomplete.clear();
+        Graphene.guardAjax(autocomplete).type("something");
+        Graphene.guardAjax(page).blur();
 
-        Graphene.waitModel().until().element(page.getOutput()).text().equalTo("something");
+        checkOutput("something");
 
-        autocomplete.clear(ClearType.BACK_SPACE);
-        autocomplete.type("something else");
-        page.blur();
+        autocomplete.clear();
+        Graphene.guardAjax(autocomplete).type("something else");
+        Graphene.guardAjax(page).blur();
         // valueChangeListener output as 4th record
-        Graphene.waitModel().until().element(page.getOutput()).text().equalTo("something else");
+        checkOutput("something else");
         assertEquals(page.getPhases().get(3), format(PHASE_LISTENER_LOG_FORMAT, "something", "something else"));
     }
 
-    @Test(groups="Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-12820")
     public void testLayout() {
-        String[] layouts = new String[] {"div", "list", "table"};
-        for (String layout: layouts) {
+        String[] layouts = new String[] { "div", "list", "table" };
+        for (String layout : layouts) {
             autocompleteAttributes.set(AutocompleteAttributes.layout, layout);
-            Suggestion<String> expected = new SuggestionImpl<String>("Alaska");
-            autocomplete.clear(ClearType.BACK_SPACE);
-            autocomplete.type("ala");
-            autocomplete.autocompleteWithSuggestion(expected, ScrollingType.BY_MOUSE);
+            autocomplete.clear();
+
+            Graphene.guardAjax(autocomplete).type("ala").select(ChoicePickerHelper.byVisibleText().contains("Alaska"));
+            // code before refactoring
+            // Graphene.guardAjax(autocomplete).autocompleteWithSuggestion(expected, ScrollingType.BY_MOUSE);
+
             waiting(500);
-            assertEquals(autocomplete.getInputValue(), expected.getValue(), "The input value doesn't match when layout is set to '" + layout + "'.");
+            assertEquals(autocomplete.advanced().getInput().getStringValue(), "Alaska",
+                "The input value doesn't match when layout is set to '" + layout + "'.");
         }
     }
-
 }

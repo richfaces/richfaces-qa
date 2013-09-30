@@ -29,9 +29,10 @@ import static org.testng.Assert.assertTrue;
 
 import java.awt.Color;
 import java.net.URL;
+
 import org.jboss.arquillian.ajocado.utils.ColorUtils;
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -42,16 +43,15 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-//FIXME should not be generic
 public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
 
     public static final String INPUT1_ID = "[id$=input1]";
     public static final String INPUT2_ID = "[id$=input2]";
     public static final String DEFAULT_PLACEHOLDER_TEXT = "Watermark text";
     public static final String DEFAULT_PLACEHOLDER_CLASS = "rf-plhdr";
-    //
+
     private final String componentName;
-    //
+
     @FindBy(css = "[id$=placeholder]")
     WebElement placeholder;
     @FindBy(css = "[id$=a4jButton]")
@@ -179,7 +179,7 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
     public void testRendered() {
         placeholderAttributes.set(PlaceholderAttributes.rendered, Boolean.FALSE);
 
-        assertFalse(Graphene.element(placeholder).isPresent().apply(driver), "Placeholder should not be present");
+        assertFalse(new WebElementConditionFactory(placeholder).isPresent().apply(driver), "Placeholder should not be present");
         assertFalse(getInput1StyleClass().contains(DEFAULT_PLACEHOLDER_CLASS), "Input 1 styleClass");
         assertEquals(getInput1Value(), "", "Input 1 value");
     }

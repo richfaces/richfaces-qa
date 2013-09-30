@@ -25,7 +25,7 @@ import static org.jboss.arquillian.graphene.Graphene.waitModel;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.fileUpload.page.FileUploadPage;
 import org.testng.annotations.Test;

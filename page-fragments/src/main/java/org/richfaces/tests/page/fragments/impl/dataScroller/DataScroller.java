@@ -21,12 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.dataScroller;
 
-import org.richfaces.tests.page.fragments.impl.VisibleComponent;
-
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface DataScroller extends VisibleComponent {
+public interface DataScroller {
 
     enum DataScrollerSwitchButton {
 
@@ -38,18 +36,12 @@ public interface DataScroller extends VisibleComponent {
         LAST;
     }
 
-    int getActPageNumber();
-
-    boolean isButtonDisabled(DataScrollerSwitchButton btn);
-
-    boolean isFirstPage();
-
-    boolean isLastPage();
+    int getActivePageNumber();
 
     /**
      * Direct switch to page. Indexed from 1. Page must exist. Without any waiting.
      */
-    void switchTo(int page);
+    void switchTo(int pageNumber);
 
     /**
      * Switch by buttons. Clicks on the chosen button. Without any waiting.

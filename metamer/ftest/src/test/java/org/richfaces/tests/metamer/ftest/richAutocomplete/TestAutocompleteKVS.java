@@ -26,22 +26,15 @@ import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
-import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.openqa.selenium.support.FindBy;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
-import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
  * Test for keeping visual state (KVS) for autocomplete on page:
- *  faces/components/richAutocomplete/autocomplete.xhtml
- *
- *  There were some problems with
+ * faces/components/richAutocomplete/autocomplete.xhtml
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -50,19 +43,6 @@ public class TestAutocompleteKVS extends AbstractAutocompleteTest {
 
     @Page
     private MetamerPage page;
-
-    @FindBy(css = "span.rf-au[id$=autocomplete]")
-    private RichFacesAutocomplete<String> autocomplete;
-
-    @BeforeMethod
-    public void setParser() {
-        autocomplete.setSuggestionParser(new TextSuggestionParser());
-    }
-
-    @BeforeMethod
-    public void prepareAutocomplete() {
-        autocomplete.clear(ClearType.BACK_SPACE);
-    }
 
     @Override
     public URL getTestUrl() {
@@ -87,18 +67,17 @@ public class TestAutocompleteKVS extends AbstractAutocompleteTest {
 
         @Override
         public void doRequest(String inputValue) {
-            MetamerPage.waitRequest(autocomplete, WaitRequestType.XHR).type(inputValue);
-            autocomplete.finish();
+            Graphene.guardAjax(autocomplete).type(inputValue).confirm();
         }
 
         @Override
         public void verifyResponse(String inputValue) {
-            assertEquals(autocomplete.getInputValue(), inputValue);
+            assertEquals(autocomplete.advanced().getInput().getStringValue(), inputValue);
         }
 
         @Override
         public String[] getInputValues() {
-            return new String[]{ "not-in-list-value" };
+            return new String[]{ "Hawaii" };
         }
     }
 }

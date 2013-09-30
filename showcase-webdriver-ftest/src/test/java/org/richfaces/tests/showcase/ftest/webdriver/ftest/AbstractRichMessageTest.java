@@ -24,6 +24,7 @@ package org.richfaces.tests.showcase.ftest.webdriver.ftest;
 import org.jboss.arquillian.graphene.Graphene;
 import static org.testng.Assert.assertTrue;
 
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractRichMessagePage;
@@ -36,13 +37,13 @@ public abstract class AbstractRichMessageTest<Page extends AbstractRichMessagePa
     protected void checkErrorNotPresent(WebElement errorArea) {
         Graphene.waitAjax()
                 .withMessage("Error message should disappear.")
-                .until(Graphene.element(errorArea).not().isPresent());
+                .until(new WebElementConditionFactory(errorArea).not().isPresent());
     }
 
     protected void checkErrorPresent(WebElement errorArea) {
         Graphene.waitAjax()
                 .withMessage("Error message should appear.")
-                .until(Graphene.element(errorArea).isPresent());
+                .until(new WebElementConditionFactory(errorArea).isPresent());
         assertTrue(errorArea.getText().contains("Validation Error"));
     }
 

@@ -23,22 +23,24 @@ package org.richfaces.tests.metamer.ftest.richDataScroller;
 
 import javax.xml.bind.JAXBException;
 
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.jboss.arquillian.graphene.page.Page;
+import org.richfaces.tests.metamer.ftest.richDataScroller.SimplePage.ScrollerPosition;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22407 $
  */
-@Use(field = "dataScroller", value = "dataScroller2")
 public class TestScrollerInTableFooter extends AbstractScrollerTest {
+
+    @Page
+    private SimplePage page;
 
     public TestScrollerInTableFooter() throws JAXBException {
     }
 
     @Test
     public void testNumberedPages() {
-        super.testNumberedPages();
+        testNumberedPages(page.getScroller(ScrollerPosition.DATA_SCROLLER_IN_TABLE_FOOTER));
     }
 }

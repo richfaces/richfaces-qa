@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.list;
 
-import org.openqa.selenium.WebElement;
+import org.jboss.arquillian.graphene.GrapheneElement;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -29,12 +29,12 @@ import org.openqa.selenium.WebElement;
 public interface ListItem {
 
     /**
-     * Returns root element.
+     * @return text from this item
      */
-    WebElement getItemElement();
+    String getText();
 
-    /*
-     * Returns index of this element in list.
+    /**
+     * @return root of this item
      */
-    int getIndex();
+    GrapheneElement getRootElement();
 }

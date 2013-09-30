@@ -29,7 +29,7 @@ import org.richfaces.tests.metamer.ftest.abstractions.validations.NumberInputVal
 import org.richfaces.tests.metamer.ftest.abstractions.validations.ValidationMessageCase;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.input.inputNumberSpinner.RichFacesInputNumberSpinner;
+import org.richfaces.tests.page.fragments.impl.inputNumberSpinner.RichFacesInputNumberSpinner;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -58,7 +58,7 @@ public class CustomValidationTestsPage extends NumberInputValidationPage {
     }
 
     private double getActValue(RichFacesInputNumberSpinner spinner) {
-        return parseDouble(spinner.getInput().getStringValue());
+        return parseDouble(spinner.advanced().getInput().getStringValue());
     }
 
     public void verifyCustomBySpinning(WebDriverWait wait) {

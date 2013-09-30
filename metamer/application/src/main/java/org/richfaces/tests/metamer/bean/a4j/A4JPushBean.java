@@ -55,8 +55,8 @@ import static org.richfaces.demo.push.TopicsContextMessageProducer.PUSH_TOPICS_C
 public class A4JPushBean implements Serializable {
 
     private static final long serialVersionUID = 4810889475400649809L;
-    public static final String DATE_PATTERN = "'day:' d', month:' M', time:' HH:mm:ss";
-    public static final String METAMER_SUBTOPIC = "";
+    public static final String DATE_PATTERN = "'day:' d', month:' M', time:' HH:mm:ss.SSS";
+    public static final String METAMER_SUBTOPIC = "xxx";
     public static final String METAMER_TOPIC_CDI = "topic2";
     private static final Logger LOGGER = LoggerFactory.getLogger(A4JPushBean.class);
     private transient TopicsContext topicsContext;
@@ -65,11 +65,11 @@ public class A4JPushBean implements Serializable {
     private String message;
 
     @Inject
-    @Push(topic = "sampleAddress1")
-    private Event<Date> messageProducerForAddress1;
+    @Push(topic = "cdiSampleAddress1")
+    private Event<String> messageProducerForAddress1;
     @Inject
-    @Push(topic = "sampleAddress2")
-    private Event<Date> messageProducerForAddress2;
+    @Push(topic = "cdiSampleAddress2")
+    private Event<String> messageProducerForAddress2;
 
     /**
      * Initializes the managed bean.
@@ -97,12 +97,12 @@ public class A4JPushBean implements Serializable {
     }
 
     public void pushCDI1() {
-        messageProducerForAddress1.fire(new Date());
+        messageProducerForAddress1.fire(new DateTime().toString(DATE_PATTERN));
         LOGGER.debug("cdi push event 1");
     }
 
     public void pushCDI2() {
-        messageProducerForAddress2.fire(new Date());
+        messageProducerForAddress2.fire(new DateTime().toString(DATE_PATTERN));
         LOGGER.debug("cdi push event 2");
     }
 
@@ -111,7 +111,7 @@ public class A4JPushBean implements Serializable {
      * @throws MessageException
      */
     public void pushJMS1() throws MessageException {
-        TopicKey topicKey = new TopicKey("sampleAddress");
+        TopicKey topicKey = new TopicKey("jmsSampleAddress1");
         TopicsContext topicsContext = TopicsContext.lookup();
 
         topicsContext.publish(topicKey, new DateTime().toString(DATE_PATTERN));
@@ -123,7 +123,7 @@ public class A4JPushBean implements Serializable {
      * @throws MessageException
      */
     public void pushJMS2() throws MessageException {
-        TopicKey topicKey = new TopicKey("sampleAddress2");
+        TopicKey topicKey = new TopicKey("jmsSampleAddress2");
         TopicsContext topicsContext = TopicsContext.lookup();
 
         topicsContext.publish(topicKey, new DateTime().toString(DATE_PATTERN));

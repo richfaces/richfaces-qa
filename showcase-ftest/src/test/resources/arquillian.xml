@@ -98,14 +98,6 @@
         <!-- <property name="dontTouchLogging">true</property> -->
     </extension>
 
-    <extension qualifier="graphene">
-        <property name="browser">*firefox</property>
-        <property name="seleniumTimeoutAjax">7000</property>
-        <property name="seleniumMaximize">true</property>
-        <property name="seleniumPort">8444</property>
-        <property name="seleniumHost">localhost</property>
-    </extension>
-
     <extension qualifier="webdriver">
         <property name="browserCapabilities">${browser.capabilities}</property>
         <property name="remoteAddress">http://localhost:4444/wd/hub/</property>

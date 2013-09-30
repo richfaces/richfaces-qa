@@ -27,14 +27,19 @@ import static org.testng.Assert.assertTrue;
 
 import java.util.List;
 
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.GrapheneElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.list.ordering.RichFacesOrderingList;
-import org.richfaces.tests.page.fragments.impl.list.ordering.RichFacesSimpleOrderingList;
-import org.richfaces.tests.page.fragments.impl.list.ordering.RichFacesSimpleOrderingListItem;
+import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.list.ListItem;
+import org.richfaces.tests.page.fragments.impl.list.RichFacesListItem;
+import org.richfaces.tests.page.fragments.impl.orderingList.RichFacesOrderingList;
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 
 /**
  * Abstract test case for pages faces/components/richOrderingList/
@@ -45,12 +50,20 @@ import org.richfaces.tests.page.fragments.impl.list.ordering.RichFacesSimpleOrde
 public abstract class AbstractOrderingListTest extends AbstractWebDriverTest {
 
     @FindBy(css = "div[id$=orderingList]")
-    protected TwoColumnOrderingList twoColumnOrderingList;
-    @FindBy(css = "div[id$=orderingList]")
-    protected RichFacesSimpleOrderingList orderingList;
-    //
+    protected RichFacesOrderingList orderingList;
     @FindBy(css = "input[id$=submitButton]")
     protected WebElement submitButton;
+
+    protected final Attributes<OrderingListAttributes> attributes = getAttributes();
+
+    private TwoColumnListItem convertItem(ListItem item) {
+        return convertItem(item.getRootElement());
+    }
+
+    private TwoColumnListItem convertItem(WebElement itemRoot) {
+        WebElement trueRoot = (itemRoot instanceof GrapheneElement ? ((GrapheneElement) itemRoot).getWrappedElement() : itemRoot);
+        return Graphene.createPageFragment(TwoColumnListItem.class, trueRoot);
+    }
 
     protected void assertButtonDisabled(WebElement element, String buttonName) {
         assertTrue(element.getAttribute("class").contains("rf-ord-btn-dis"), "Button should contain disabled class 'rf-ord-btn-dis'");
@@ -63,63 +76,59 @@ public abstract class AbstractOrderingListTest extends AbstractWebDriverTest {
     }
 
     protected void checkButtonsStateBottom() {
-        assertButtonDisabled(twoColumnOrderingList.getBottomButtonElement(), "botom");
-        assertButtonDisabled(twoColumnOrderingList.getDownButtonElement(), "down");
-        assertButtonEnabled(twoColumnOrderingList.getTopButtonElement(), "top");
-        assertButtonEnabled(twoColumnOrderingList.getUpButtonElement(), "up");
+        assertButtonDisabled(orderingList.advanced().getBottomButtonElement(), "botom");
+        assertButtonDisabled(orderingList.advanced().getDownButtonElement(), "down");
+        assertButtonEnabled(orderingList.advanced().getTopButtonElement(), "top");
+        assertButtonEnabled(orderingList.advanced().getUpButtonElement(), "up");
     }
 
     protected void checkButtonsStateMiddle() {
-        assertButtonEnabled(twoColumnOrderingList.getBottomButtonElement(), "botom");
-        assertButtonEnabled(twoColumnOrderingList.getDownButtonElement(), "down");
-        assertButtonEnabled(twoColumnOrderingList.getTopButtonElement(), "top");
-        assertButtonEnabled(twoColumnOrderingList.getUpButtonElement(), "up");
+        assertButtonEnabled(orderingList.advanced().getBottomButtonElement(), "botom");
+        assertButtonEnabled(orderingList.advanced().getDownButtonElement(), "down");
+        assertButtonEnabled(orderingList.advanced().getTopButtonElement(), "top");
+        assertButtonEnabled(orderingList.advanced().getUpButtonElement(), "up");
     }
 
     protected void checkButtonsStateTop() {
-        assertButtonEnabled(twoColumnOrderingList.getBottomButtonElement(), "botom");
-        assertButtonEnabled(twoColumnOrderingList.getDownButtonElement(), "down");
-        assertButtonDisabled(twoColumnOrderingList.getTopButtonElement(), "top");
-        assertButtonDisabled(twoColumnOrderingList.getUpButtonElement(), "up");
+        assertButtonEnabled(orderingList.advanced().getBottomButtonElement(), "botom");
+        assertButtonEnabled(orderingList.advanced().getDownButtonElement(), "down");
+        assertButtonDisabled(orderingList.advanced().getTopButtonElement(), "top");
+        assertButtonDisabled(orderingList.advanced().getUpButtonElement(), "up");
     }
 
     private void checkColumnValuesMoved(int indexA, String stateA, String cityA, int indexB, String stateB, String cityB) {
-        assertEquals(twoColumnOrderingList.getItems()
-                .get(indexB + (int) Math.signum(indexA - indexB)).state(), stateB, "The rows weren't moved succesfully after moving.");
-        assertEquals(twoColumnOrderingList.getItems()
-                .get(indexB + (int) Math.signum(indexA - indexB)).city(), cityB, "The rows weren't moved succesfully after moving.");
-        assertEquals(twoColumnOrderingList.getItems()
-                .get(indexB).state(), stateA, "The rows weren't moved succesfully after moving.");
-        assertEquals(twoColumnOrderingList.getItems()
-                .get(indexB).city(), cityA, "The rows weren't moved succesfully after moving.");
+        assertEquals(convertItem(orderingList.advanced().getList().getItem(indexB + (int) Math.signum(indexA - indexB))).state(), stateB, "The rows weren't moved succesfully after moving.");
+        assertEquals(convertItem(orderingList.advanced().getList().getItem(indexB + (int) Math.signum(indexA - indexB))).city(), cityB, "The rows weren't moved succesfully after moving.");
+        assertEquals(convertItem(orderingList.advanced().getList().getItem(indexB)).state(), stateA, "The rows weren't moved succesfully after moving.");
+        assertEquals(convertItem(orderingList.advanced().getList().getItem(indexB)).city(), cityA, "The rows weren't moved succesfully after moving.");
     }
 
     private void checkColumnValuesSwapped(int indexA, String stateA, String cityA, int indexB, String stateB, String cityB) {
-        assertEquals(twoColumnOrderingList.getItems().get(indexA).state(), stateB, "The rows weren't swapped succesfully after moving.");
-        assertEquals(twoColumnOrderingList.getItems().get(indexA).city(), cityB, "The rows weren't swapped succesfully after moving.");
-        assertEquals(twoColumnOrderingList.getItems().get(indexB).state(), stateA, "The rows weren't swapped succesfully after moving.");
-        assertEquals(twoColumnOrderingList.getItems().get(indexB).city(), cityA, "The rows weren't swapped succesfully after moving.");
+        assertEquals(convertItem(orderingList.advanced().getList().getItem(indexA)).state(), stateB, "The rows weren't swapped succesfully after moving.");
+        assertEquals(convertItem(orderingList.advanced().getList().getItem(indexA)).city(), cityB, "The rows weren't swapped succesfully after moving.");
+        assertEquals(convertItem(orderingList.advanced().getList().getItem(indexB)).state(), stateA, "The rows weren't swapped succesfully after moving.");
+        assertEquals(convertItem(orderingList.advanced().getList().getItem(indexB)).city(), cityA, "The rows weren't swapped succesfully after moving.");
     }
 
     private int getFirstSelectedItemIndex() {
-        return twoColumnOrderingList.getSelectedItems().get(0).getIndex();
+        return Utils.getIndexOfElement(orderingList.advanced().getSelectedItemsElements().get(0));
     }
 
     protected void moveSelectedDown() {
         int beforeIndex = getFirstSelectedItemIndex();
-        TwoColumnListItem itemA = twoColumnOrderingList.getSelectedItems().get(0);
-        TwoColumnListItem itemB = twoColumnOrderingList.getItems().get(beforeIndex + 1);
+        TwoColumnListItem itemA = convertItem(orderingList.advanced().getSelectedItemsElements().get(0));
+        TwoColumnListItem itemB = convertItem(orderingList.advanced().getItemsElements().get(beforeIndex + 1));
 
         String stateA = itemA.state();
         String cityA = itemA.city();
         String stateB = itemB.state();
         String cityB = itemB.city();
 
-        twoColumnOrderingList.down();
+        orderingList.advanced().getDownButtonElement().click();
         int afterIndex = getFirstSelectedItemIndex();
         assertEquals(afterIndex, beforeIndex + 1, "The index of selected item doesn't match.");
         checkColumnValuesSwapped(beforeIndex, stateA, cityA, afterIndex, stateB, cityB);
-        if (afterIndex < twoColumnOrderingList.getItems().size() - 1) {
+        if (afterIndex < orderingList.advanced().getItemsElements().size() - 1) {
             checkButtonsStateMiddle();
         } else {
             checkButtonsStateBottom();
@@ -128,31 +137,32 @@ public abstract class AbstractOrderingListTest extends AbstractWebDriverTest {
 
     protected void moveSelectedToBottom() {
         int beforeIndex = getFirstSelectedItemIndex();
-        TwoColumnListItem itemA = twoColumnOrderingList.getSelectedItems().get(0);
-        TwoColumnListItem itemB = twoColumnOrderingList.getItems().get(twoColumnOrderingList.getItems().size() - 1);
+        TwoColumnListItem itemA = convertItem(orderingList.advanced().getSelectedItemsElements().get(0));
+        TwoColumnListItem itemB = convertItem(orderingList.advanced().getList().getItem(ChoicePickerHelper.byIndex().last()));
 
         String stateA = itemA.state();
         String cityA = itemA.city();
         String stateB = itemB.state();
         String cityB = itemB.city();
 
-        twoColumnOrderingList.bottom();
+        orderingList.advanced().getBottomButtonElement().click();
         int after = getFirstSelectedItemIndex();
-        assertEquals(after, twoColumnOrderingList.getItems().size() - 1, "The index of selected item doesn't match.");
-        checkColumnValuesMoved(beforeIndex, stateA, cityA, twoColumnOrderingList.getItems().size() - 1, stateB, cityB);
+        assertEquals(after, orderingList.advanced().getItemsElements().size() - 1, "The index of selected item doesn't match.");
+        checkColumnValuesMoved(beforeIndex, stateA, cityA, orderingList.advanced().getItemsElements().size() - 1, stateB, cityB);
         checkButtonsStateBottom();
     }
 
     protected void moveSelectedToTop() {
         int beforeIndex = getFirstSelectedItemIndex();
-        TwoColumnListItem itemA = twoColumnOrderingList.getSelectedItems().get(0);
-        TwoColumnListItem itemB = twoColumnOrderingList.getItems().get(0);
+        TwoColumnListItem itemA = convertItem(orderingList.advanced().getSelectedItemsElements().get(0));
+        TwoColumnListItem itemB = convertItem(orderingList.advanced().getItemsElements().get(0));
 
         String stateA = itemA.state();
         String cityA = itemA.city();
         String stateB = itemB.state();
         String cityB = itemB.city();
-        twoColumnOrderingList.top();
+
+        orderingList.advanced().getTopButtonElement().click();
         int afterIndex = getFirstSelectedItemIndex();
         assertEquals(afterIndex, 0, "The index of selected item doesn't match.");
         checkColumnValuesMoved(beforeIndex, stateA, cityA, afterIndex, stateB, cityB);
@@ -161,13 +171,14 @@ public abstract class AbstractOrderingListTest extends AbstractWebDriverTest {
 
     protected void moveSelectedUp() {
         int beforeIndex = getFirstSelectedItemIndex();
-        TwoColumnListItem itemA = twoColumnOrderingList.getSelectedItems().get(0);
-        TwoColumnListItem itemB = twoColumnOrderingList.getItems().get(beforeIndex - 1);
+        TwoColumnListItem itemA = convertItem(orderingList.advanced().getSelectedItemsElements().get(0));
+        TwoColumnListItem itemB = convertItem(orderingList.advanced().getItemsElements().get(beforeIndex - 1));
         String stateA = itemA.state();
         String cityA = itemA.city();
         String stateB = itemB.state();
         String cityB = itemB.city();
-        twoColumnOrderingList.up();
+
+        orderingList.advanced().getUpButtonElement().click();
         int afterIndex = getFirstSelectedItemIndex();
         assertEquals(afterIndex, beforeIndex - 1, "The index of selected item doesn't match.");
         checkColumnValuesSwapped(beforeIndex, stateA, cityA, afterIndex, stateB, cityB);
@@ -180,15 +191,7 @@ public abstract class AbstractOrderingListTest extends AbstractWebDriverTest {
         MetamerPage.waitRequest(submitButton, WaitRequestType.HTTP).click();
     }
 
-    public static class TwoColumnOrderingList extends RichFacesOrderingList<TwoColumnListItem> {
-
-        @Override
-        protected Class<TwoColumnListItem> getListItemType() {
-            return TwoColumnListItem.class;
-        }
-    }
-
-    public static class TwoColumnListItem extends RichFacesSimpleOrderingListItem {
+    public static class TwoColumnListItem extends RichFacesListItem {
 
         @FindBy(tagName = "td")
         private List<WebElement> columns;

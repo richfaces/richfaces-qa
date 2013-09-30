@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.richInplaceSelect;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import static org.testng.Assert.assertFalse;
 
 import org.jboss.test.selenium.android.ToolKitException;

@@ -21,15 +21,16 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ajax.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class AjaxPage {
 
-    @FindBy(jquery = "input[type='text']:eq(0)")
+    @FindByJQuery("input[type='text']:eq(0)")
     public WebElement input;
 
     @FindBy(css = "span[id$=out]")

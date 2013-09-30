@@ -33,8 +33,8 @@ public enum OrderingListAttributes implements AttributeEnum {
     caption,
     collectionType,
     columnClasses,
-    converter,//
-    converterMessage,//
+    converter,
+    converterMessage,
     disabled,
     disabledClass,
     downBottomText,
@@ -73,8 +73,8 @@ public enum OrderingListAttributes implements AttributeEnum {
     onmouseover,
     onmouseup,
     rendered,
-    required,//
-    requiredMessage,//
+    required,
+    requiredMessage,
     selectItemClass,
     style,
     styleClass,

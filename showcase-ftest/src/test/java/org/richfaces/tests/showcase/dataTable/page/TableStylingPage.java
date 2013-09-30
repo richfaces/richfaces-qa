@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.dataTable.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -29,13 +29,13 @@ import org.openqa.selenium.WebElement;
  */
 public class TableStylingPage {
 
-    @FindBy(jquery="tbody.rf-dt-b tr:last")
+    @FindByJQuery("tbody.rf-dt-b tr:last")
     public WebElement firstRow;
-    @FindBy(jquery="tbody.rf-dt-b tr:last")
+    @FindByJQuery("tbody.rf-dt-b tr:last")
     public WebElement tenthRow;
-    @FindBy(jquery="tbody.rf-dt-b tr:last")
+    @FindByJQuery("tbody.rf-dt-b tr:last")
     public WebElement lastRow;
-    @FindBy(jquery="tbody.rf-dt-b tr:last")
+    @FindByJQuery("tbody.rf-dt-b tr:last")
     public WebElement tbody;
 
 }

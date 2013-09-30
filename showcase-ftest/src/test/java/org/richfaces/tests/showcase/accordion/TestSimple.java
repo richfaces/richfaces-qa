@@ -23,7 +23,7 @@ package org.richfaces.tests.showcase.accordion;
 
 import static org.testng.Assert.assertFalse;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.accordion.page.SimplePage;
 import org.richfaces.tests.showcase.panel.AbstractPanelTest;
 import org.testng.annotations.Test;

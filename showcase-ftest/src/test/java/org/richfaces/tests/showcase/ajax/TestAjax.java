@@ -22,7 +22,7 @@
 package org.richfaces.tests.showcase.ajax;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ajax.page.AjaxPage;
 import org.testng.annotations.Test;
@@ -47,7 +47,7 @@ public class TestAjax extends AbstractWebDriverTest {
         page.input.clear();
         String toWrite = "text";
         for (char ch: toWrite.toCharArray()) {
-            Graphene.guardXhr(page.input).sendKeys(Character.toString(ch));
+            Graphene.guardAjax(page.input).sendKeys(Character.toString(ch));
         }
 
 
@@ -65,7 +65,7 @@ public class TestAjax extends AbstractWebDriverTest {
         String toWrite = "to erase";
 
         for (char ch: toWrite.toCharArray()) {
-            Graphene.guardXhr(page.input).sendKeys(Character.toString(ch));
+            Graphene.guardAjax(page.input).sendKeys(Character.toString(ch));
         }
 
         page.input.clear();

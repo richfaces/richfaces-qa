@@ -22,7 +22,8 @@
 package org.richfaces.tests.showcase.notify;
 
 import java.util.List;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.page.fragments.impl.message.Message;
 import org.richfaces.tests.page.fragments.impl.notify.NotifyMessage;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
@@ -57,7 +58,6 @@ public class TestNotifyMessages extends AbstractWebDriverTest {
      * Help methods **************************************************************
      * ******************************************************
      */
-
     protected void checkNotifyMessages(boolean submitActivation) {
         page.fillCorrectValues();
         page.validate();
@@ -91,8 +91,8 @@ public class TestNotifyMessages extends AbstractWebDriverTest {
     }
 
     protected void assertErrorIsPresent(String fieldName, String expected) {
-        List<NotifyMessage> messages = page.getNotify().getAllMessagesOfType(Message.MessageType.ERROR);
-        for (Message message: messages) {
+        List<? extends Message> messages = page.getNotify().getItems(Message.MessageType.ERROR);
+        for (Message message : messages) {
             if (message.getSummary().contains(expected)) {
                 return;
             }

@@ -38,7 +38,7 @@ import javax.faces.event.PhaseId;
 import org.apache.commons.lang.ArrayUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.GrapheneContext;
+import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxy;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
 import org.jboss.arquillian.graphene.proxy.Interceptor;
@@ -281,7 +281,7 @@ public class MetamerPage {
 
         protected String time1;
 
-        private static final By REQUEST_TIME = By.cssSelector("span[id='requestTime']");
+        private static final By REQUEST_TIME = By.cssSelector("span[id$='requestTime']");
 
         protected void afterAction(GrapheneContext context) {
             Graphene.waitModel(context.getWebDriver()).until().element(REQUEST_TIME).text().not().equalTo(time1);

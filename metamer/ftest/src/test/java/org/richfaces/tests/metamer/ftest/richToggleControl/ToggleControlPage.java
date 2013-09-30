@@ -21,9 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.richToggleControl;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.toggleControl.RichFacesToggleControl;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
@@ -31,59 +31,118 @@ import org.richfaces.tests.page.fragments.impl.toggleControl.RichFacesToggleCont
  */
 public class ToggleControlPage {
     @FindBy(css = "input[id$=tc11]")
-    public RichFacesToggleControl tcPanel1Item1;
-
+    private WebElement tcPanel1Item1;
     @FindBy(css = "input[id$=tc12]")
-    public RichFacesToggleControl tcPanel1Item2;
-
+    private WebElement tcPanel1Item2;
     @FindBy(css = "input[id$=tc13]")
-    public RichFacesToggleControl tcPanel1Item3;
-
+    private WebElement tcPanel1Item3;
     @FindBy(css = "input[id$=tc21]")
-    public RichFacesToggleControl tcPanel2Item1;
-
+    private WebElement tcPanel2Item1;
     @FindBy(css = "input[id$=tc22]")
-    public RichFacesToggleControl tcPanel2Item2;
-
+    private WebElement tcPanel2Item2;
     @FindBy(css = "input[id$=tc23]")
-    public RichFacesToggleControl tcPanel2Item3;
-
+    private WebElement tcPanel2Item3;
     @FindBy(css = "input[id$=tcCustom]")
-    public RichFacesToggleControl tcCustom;
+    private WebElement tcCustom;
 
     @FindBy(css = "div[id$='item11:content']")
-    public WebElement panel1Item1Content;
-
+    private WebElement panel1Item1Content;
     @FindBy(css = "div[id$='item12:content']")
-    public WebElement panel1Item2Content;
-
+    private WebElement panel1Item2Content;
     @FindBy(css = "div[id$='item13:content']")
-    public WebElement panel1Item3Content;
-
+    private WebElement panel1Item3Content;
     @FindBy(css = "div[id$='item21:content']")
-    public WebElement panel2Item1Content;
-
+    private WebElement panel2Item1Content;
     @FindBy(css = "div[id$='item22:content']")
-    public WebElement panel2Item2Content;
-
+    private WebElement panel2Item2Content;
     @FindBy(css = "div[id$='item23:content']")
-    public WebElement panel2Item3Content;
-
+    private WebElement panel2Item3Content;
     @FindBy(css = "div[id$=item11]")
-    public WebElement panel1Item1;
-
+    private WebElement panel1Item1;
     @FindBy(css = "div[id$=item12]")
-    public WebElement panel1Item2;
-
+    private WebElement panel1Item2;
     @FindBy(css = "div[id$=item13]")
-    public WebElement panel1Item3;
-
+    private WebElement panel1Item3;
     @FindBy(css = "div[id$=item21]")
-    public WebElement panel2Item1;
-
+    private WebElement panel2Item1;
     @FindBy(css = "div[id$=item22]")
-    public WebElement panel2Item2;
-
+    private WebElement panel2Item2;
     @FindBy(css = "div[id$=item23]")
-    public WebElement panel2Item3;
+    private WebElement panel2Item3;
+
+    public WebElement getPanel1Item1() {
+        return panel1Item1;
+    }
+
+    public WebElement getPanel1Item1Content() {
+        return panel1Item1Content;
+    }
+
+    public WebElement getPanel1Item2() {
+        return panel1Item2;
+    }
+
+    public WebElement getPanel1Item2Content() {
+        return panel1Item2Content;
+    }
+
+    public WebElement getPanel1Item3() {
+        return panel1Item3;
+    }
+
+    public WebElement getPanel1Item3Content() {
+        return panel1Item3Content;
+    }
+
+    public WebElement getPanel2Item1() {
+        return panel2Item1;
+    }
+
+    public WebElement getPanel2Item1Content() {
+        return panel2Item1Content;
+    }
+
+    public WebElement getPanel2Item2() {
+        return panel2Item2;
+    }
+
+    public WebElement getPanel2Item2Content() {
+        return panel2Item2Content;
+    }
+
+    public WebElement getPanel2Item3() {
+        return panel2Item3;
+    }
+
+    public WebElement getPanel2Item3Content() {
+        return panel2Item3Content;
+    }
+
+    public WebElement getTcCustom() {
+        return tcCustom;
+    }
+
+    public WebElement getTcPanel1Item1() {
+        return tcPanel1Item1;
+    }
+
+    public WebElement getTcPanel1Item2() {
+        return tcPanel1Item2;
+    }
+
+    public WebElement getTcPanel1Item3() {
+        return tcPanel1Item3;
+    }
+
+    public WebElement getTcPanel2Item1() {
+        return tcPanel2Item1;
+    }
+
+    public WebElement getTcPanel2Item2() {
+        return tcPanel2Item2;
+    }
+
+    public WebElement getTcPanel2Item3() {
+        return tcPanel2Item3;
+    }
 }

@@ -24,7 +24,7 @@ package org.richfaces.tests.showcase.componentControl;
 import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.componentControl.page.TableFilteringAPIPage;
 import org.richfaces.tests.showcase.dataTable.AbstractDataIterationWithCars;
@@ -52,7 +52,7 @@ public class TestTableFilteringAPI extends AbstractDataIterationWithCars {
 
         for (int i = 0; i < 6; i++) {
 
-            Graphene.guardXhr(page.getFilterValue(i)).click();
+            Graphene.guardAjax(page.getFilterValue(i)).click();
 
             for (WebElement row: page.tableRows) {
 

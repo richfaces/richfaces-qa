@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richNotifyMessage;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.abstractions.message.AbstractMessageComponentTest;
 
@@ -36,6 +36,7 @@ public abstract class AbstractNotifyMessageTest extends AbstractMessageComponent
     @Page
     protected NotifyMessagePage page;
 
+    @Override
     public void checkNoShowDetailNoShowSummary() {
         throw new UnsupportedOperationException();
     }
@@ -45,7 +46,7 @@ public abstract class AbstractNotifyMessageTest extends AbstractMessageComponent
         return new FutureTarget<WebElement>() {
             @Override
             public WebElement getTarget() {
-                return page.getMessageComponentForFirstInput().getRoot();
+                return page.getMessageComponentForFirstInput().advanced().getRootElement();
             }
         };
     }

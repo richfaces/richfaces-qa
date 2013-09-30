@@ -22,16 +22,11 @@
 package org.richfaces.tests.metamer.ftest.richPanelMenu;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.component.Mode.ajax;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuAttributes;
-import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.groupMode;
-import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.itemMode;
 
 import java.net.URL;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.testng.annotations.BeforeMethod;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -41,19 +36,10 @@ import org.testng.annotations.BeforeMethod;
 public class AbstractPanelMenuTest extends AbstractWebDriverTest {
 
     @Page
-    PanelMenuPage page;
+    protected PanelMenuPage page;
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richPanelMenu/simple.xhtml");
-    }
-
-    @BeforeMethod
-    public void setupModes() {
-        panelMenuAttributes.set(itemMode, ajax);
-        panelMenuAttributes.set(groupMode, ajax);
-
-        page.setGroupMode(ajax);
-        page.setItemMode(ajax);
     }
 }

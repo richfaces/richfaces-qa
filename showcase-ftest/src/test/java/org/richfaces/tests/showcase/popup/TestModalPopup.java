@@ -23,9 +23,9 @@ package org.richfaces.tests.showcase.popup;
 
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.showcase.panel.AbstractPanelTest;
 import org.richfaces.tests.showcase.popup.page.PopupPage;
 import org.testng.annotations.Test;

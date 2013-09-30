@@ -24,17 +24,19 @@ package org.richfaces.tests.metamer.ftest.a4jRegion;
 import org.apache.commons.lang.WordUtils;
 import org.jboss.arquillian.drone.api.annotation.Default;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.GrapheneContext;
 import org.jboss.arquillian.graphene.enricher.WebElementUtils;
-import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+import org.jboss.arquillian.graphene.proxy.GrapheneContextualHandler;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxy;
-import org.jboss.arquillian.graphene.proxy.GrapheneProxyHandler;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
+
 import static org.testng.Assert.assertTrue;
+
+import org.jboss.arquillian.graphene.context.GrapheneContext;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -88,15 +90,15 @@ public class NestedRegionModel {
             final String id = name.substring(0, 1).toLowerCase() + WordUtils.capitalize(name).replace(" ", "").substring(1);
             GrapheneContext context = GrapheneContext.getContextFor(Default.class);
             final WebDriver browser = context.getWebDriver();
-            this.select = GrapheneProxy.getProxyForHandler(GrapheneProxyHandler.forFuture(context, new GrapheneProxy.FutureTarget() {
+            this.select = GrapheneProxy.getProxyForHandler(GrapheneContextualHandler.forFuture(context, new GrapheneProxy.FutureTarget() {
                 @Override
                 public Object getTarget() {
                     return new Select(browser.findElement(By.cssSelector("select[id$="+id+"Select]")));
                 }
             }), Select.class);
             this.output = WebElementUtils.findElementLazily(By.cssSelector("span[id$="+id+"ValueOutput]"), browser);
-            this.input = WebElementUtils.findElementLazily(ByJQuery.jquerySelector("input:text[id$="+id+"ValueInput]"), browser);
-            this.link = WebElementUtils.findElementLazily(ByJQuery.jquerySelector("input:submit[id$="+id+"ValueButton]"), browser);
+            this.input = WebElementUtils.findElementLazily(ByJQuery.selector("input:text[id$="+id+"ValueInput]"), browser);
+            this.link = WebElementUtils.findElementLazily(ByJQuery.selector("input:submit[id$="+id+"ValueButton]"), browser);
             this.executeOption = name;
         }
 

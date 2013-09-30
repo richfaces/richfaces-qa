@@ -22,20 +22,22 @@
 package org.richfaces.tests.page.fragments.impl.log;
 
 import org.joda.time.DateTime;
+import org.richfaces.tests.page.fragments.impl.list.ListItem;
 import org.richfaces.tests.page.fragments.impl.log.Log.LogEntryLevel;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface LogEntry {
+public interface LogEntry extends ListItem {
 
     /**
-     * Return the content of this log entry
+     * Return the content of this log entry.
      */
     String getContent();
 
     /**
      * Return the level of this log entry.
+     * @see LogEntryLevel
      */
     LogEntryLevel getLevel();
 

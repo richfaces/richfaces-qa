@@ -21,8 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.richDragSource;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.GrapheneElement;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 
 /**
@@ -32,13 +33,13 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 public class DragSourceSimplePage extends MetamerPage {
 
     @FindBy(css = "div.rf-ind[id$=indicator]")
-    public WebElement indicator;
+    public GrapheneElement indicator;
 
     @FindBy(css = "div.rf-ind[id$=indicator2Clone]")
-    public WebElement indicator2;
+    public GrapheneElement indicator2;
 
     @FindBy(css = "body > div.ui-draggable")
-    public WebElement defaultIndicator;
+    public GrapheneElement defaultIndicator;
 
     @FindBy(css = "[id$=draggable1]")
     public WebElement drag1;

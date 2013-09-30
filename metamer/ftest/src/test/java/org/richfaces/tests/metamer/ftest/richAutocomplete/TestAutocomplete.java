@@ -22,26 +22,20 @@
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.autocompleteAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
-import java.util.List;
 
-import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
-import org.jboss.arquillian.graphene.component.object.api.autocomplete.Suggestion;
-import org.jboss.arquillian.graphene.component.object.api.scrolling.ScrollingType;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.metamer.bean.Model;
+import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.metamer.model.Capital;
-import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
-import org.richfaces.tests.page.fragments.impl.autocomplete.SuggestionImpl;
-import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
+import org.richfaces.tests.page.fragments.impl.autocomplete.SelectOrConfirm;
+import org.richfaces.tests.page.fragments.impl.common.ClearType;
+import org.richfaces.tests.page.fragments.impl.common.ScrollingType;
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -49,13 +43,6 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestAutocomplete extends AbstractAutocompleteTest {
-
-    @FindBy(css="span.rf-au")
-    protected RichFacesAutocomplete<String> autocomplete;
-
-    @Inject
-    @Use(strings= { "mouse", "keys" })
-    private String scrollingType;
 
     @Inject
     @Use(booleans = { true, false })
@@ -65,16 +52,9 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
     @Use(booleans = { true, false })
     Boolean selectFirst;
 
-    List<Capital> capitals = Model.unmarshallCapitals();
-
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richAutocomplete/autocomplete.xhtml");
-    }
-
-    @BeforeMethod
-    public void setParser() {
-        autocomplete.setSuggestionParser(new TextSuggestionParser());
     }
 
     @BeforeMethod
@@ -87,44 +67,44 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
         if (selectFirst == null) {
             selectFirst = false;
         }
-        autocomplete.clear(ClearType.BACK_SPACE);
-    }
-
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-11323")
-    public void testTypingPrefixAndThenConfirm() throws InterruptedException {
-        assertFalse(autocomplete.areSuggestionsAvailable());
-        autocomplete.type("ala");
-        waiting(1000);
-        assertTrue(autocomplete.areSuggestionsAvailable());
-        autocomplete.autocomplete();
-        assertFalse(autocomplete.areSuggestionsAvailable());
-        assertEquals(autocomplete.getInputValue().toLowerCase(), getExpectedStateForPrefix("ala", selectFirst).toLowerCase());
-    }
-
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-11323")
-    public void testTypingPrefixAndThenDeleteAll() {
-        assertFalse(autocomplete.areSuggestionsAvailable());
-        autocomplete.type("ala");
-        assertTrue(autocomplete.areSuggestionsAvailable());
-        autocomplete.clear(ClearType.BACK_SPACE);
-        assertFalse(autocomplete.areSuggestionsAvailable());
-        autocomplete.type("ala");
-        assertTrue(autocomplete.areSuggestionsAvailable());
+        autocomplete.clear();
     }
 
     @Test
-    public void testSimpleSelection() throws InterruptedException {
-        // this item is 2nd if type filter "ala", so it ensure that it was not picked first item
-       Suggestion<String> expected = new SuggestionImpl<String>("Alaska");
-       autocomplete.type("ala");
-       autocomplete.autocompleteWithSuggestion(expected, getScrollingType());
-       waiting(500);
-       assertEquals(autocomplete.getInputValue(), expected.getValue());
+    @RegressionTest("https://issues.jboss.org/browse/RF-11323")
+    public void testTypingPrefixAndThenConfirm() {
+        assertTrue(autocomplete.advanced().getSuggestionsElements().isEmpty());
+        SelectOrConfirm typed = Graphene.guardAjax(autocomplete).type("ala");
+        assertFalse(autocomplete.advanced().getSuggestionsElements().isEmpty());
+        Graphene.guardAjax(typed).confirm();
+        assertTrue(autocomplete.advanced().getSuggestionsElements().isEmpty());
+        String expectedStateForPrefix = getExpectedStateForPrefix("ala", selectFirst);
+        assertEquals(autocomplete.advanced().getInput().getStringValue(), expectedStateForPrefix);
+        checkOutput(expectedStateForPrefix);
     }
 
-    protected ScrollingType getScrollingType() {
-        return ScrollingType.valueOf("BY_" + scrollingType.toUpperCase());
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11323")
+    public void testTypingPrefixAndThenDeleteAll() {
+        Graphene.guardAjax(autocomplete).type("ala");
+        autocomplete.advanced().clear(ClearType.DELETE);
+        autocomplete.advanced().waitForSuggestionsToBeNotVisible().perform();
+        assertTrue(autocomplete.advanced().getSuggestionsElements().isEmpty());
+        Graphene.guardAjax(autocomplete).type("ala");
+        autocomplete.advanced().waitForSuggestionsToBeVisible().perform();
+        assertFalse(autocomplete.advanced().getSuggestionsElements().isEmpty());
+    }
+
+    @Test
+    public void testSimpleSelectionWithMouse() {
+        autocomplete.type("a").select(ChoicePickerHelper.byVisibleText().endsWith("na"));
+        checkOutput("Arizona");
+    }
+
+    @Test
+    public void testSimpleSelectionWithKeyboard() {
+        autocomplete.advanced().setupScrollingType(ScrollingType.BY_KEYS);
+        autocomplete.type("a").select(ChoicePickerHelper.byVisibleText().endsWith("na"));
+        checkOutput("Arizona");
     }
 }

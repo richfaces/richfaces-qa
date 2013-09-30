@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -60,11 +60,9 @@ import org.testng.annotations.Test;
 public class TestProgressBarAjax extends AbstractWebDriverTest {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormat.forPattern("HH:mm:ss.SSS");
-    //
     @Inject
     @Use(empty = false)
     private Integer testInterval;
-    //
     @Page
     private ProgressBarPage page;
 
@@ -314,6 +312,8 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     public void testOnmousedown() {
         testFireEvent(progressBarAttributes, ProgressBarAttributes.onmousedown,
                 new Actions(driver).clickAndHold(page.progressBar).build());
+        // release mouse button (necessary since Selenium 2.35)
+        new Actions(driver).release().perform();
     }
 
     @Test
@@ -329,6 +329,8 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
 
     @Test
     public void testOnmouseover() {
+        new Actions(driver).moveToElement(page.getRequestTimeElement()).perform();
+
         testFireEvent(progressBarAttributes, ProgressBarAttributes.onmouseover,
                 new Actions(driver).moveToElement(page.progressBar).build());
     }

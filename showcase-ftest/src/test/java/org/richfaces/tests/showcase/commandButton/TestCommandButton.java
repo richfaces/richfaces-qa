@@ -21,8 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.commandButton;
 
-
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
@@ -36,14 +35,12 @@ public class TestCommandButton extends AbstractTestA4jCommand {
     /* *****************************************************************************
      * Locators*****************************************************************************
      */
-
-    @FindBy(jquery = "input[type=submit]:eq(0)")
+    @FindByJQuery("input[type=submit]:eq(0)")
     protected WebElement commandButton;
 
     /* ******************************************************************************
      * Tests******************************************************************************
      */
-
     @Test
     public void testClickOnTheButtonWhileInputIsEmpty() {
         checkClickOnTheButtonWhileInputIsEmpty("");

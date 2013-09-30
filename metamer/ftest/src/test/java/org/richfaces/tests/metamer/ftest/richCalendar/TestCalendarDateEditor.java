@@ -31,12 +31,13 @@ import static org.testng.Assert.assertTrue;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.calendar.common.HeaderControls;
-import org.richfaces.tests.page.fragments.impl.calendar.common.editor.yearAndMonth.YearAndMonthEditor;
+import org.richfaces.tests.page.fragments.impl.calendar.HeaderControls;
+import org.richfaces.tests.page.fragments.impl.calendar.YearAndMonthEditor;
 import org.testng.annotations.Test;
 
 /**
@@ -54,15 +55,16 @@ public class TestCalendarDateEditor extends AbstractCalendarTest {
 
     @Test
     public void testCancelButton() {
-        MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
+        MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
 
-        HeaderControls hc = calendar.openPopup().getProxiedHeaderControls();
+        HeaderControls hc = popupCalendar.openPopup().getHeaderControls();
 
         DateTime canceledDate = todayMidday.plusMonths(2).plusYears(2);
-        YearAndMonthEditor openYearAndMonthEditor = hc.openYearAndMonthEditor();
-        MetamerPage.waitRequest(openYearAndMonthEditor, WaitRequestType.NONE).selectDate(canceledDate).cancelDate();
-        assertFalse(openYearAndMonthEditor.isVisible());
+        YearAndMonthEditor editor = hc.openYearAndMonthEditor();
+        MetamerPage.waitRequest(editor, WaitRequestType.NONE).selectDate(canceledDate).cancelDate();
+        assertFalse(editor.isVisible());
 
+        hc = popupCalendar.openPopup().getHeaderControls();
         DateTime yearAndMonthAfter = hc.getYearAndMonth();
         assertEquals(yearAndMonthAfter.getYear(), todayMidday.getYear());
         assertEquals(yearAndMonthAfter.getMonthOfYear(), todayMidday.getMonthOfYear());
@@ -70,12 +72,12 @@ public class TestCalendarDateEditor extends AbstractCalendarTest {
 
     @Test
     public void testNextDecadeButton() {
-        HeaderControls hc = calendar.openPopup().getProxiedHeaderControls();
+        HeaderControls hc = popupCalendar.openPopup().getHeaderControls();
         List<Integer> displayedYears = hc.openYearAndMonthEditor().getDisplayedYears();
         MetamerPage.waitRequest(hc.openYearAndMonthEditor(), WaitRequestType.NONE).nextDecade();
 
         assertNotEquals(hc.openYearAndMonthEditor().getDisplayedYears(), displayedYears);
-        Integer selectedYear = hc.openYearAndMonthEditor().getSelectedYear();
+        Integer selectedYear = hc.openYearAndMonthEditor().getSelectedYearNumber();
         assertNull(selectedYear);//no selected Year found
 
         MetamerPage.waitRequest(hc.openYearAndMonthEditor(), WaitRequestType.NONE).confirmDate();
@@ -86,12 +88,12 @@ public class TestCalendarDateEditor extends AbstractCalendarTest {
 
     @Test
     public void testPreviousDecadeButton() {
-        HeaderControls hc = calendar.openPopup().getProxiedHeaderControls();
+        HeaderControls hc = popupCalendar.openPopup().getHeaderControls();
         List<Integer> displayedYears = hc.openYearAndMonthEditor().getDisplayedYears();
         MetamerPage.waitRequest(hc.openYearAndMonthEditor(), WaitRequestType.NONE).previousDecade();
 
         assertNotEquals(hc.openYearAndMonthEditor().getDisplayedYears(), displayedYears);
-        Integer selectedYear = hc.openYearAndMonthEditor().getSelectedYear();
+        Integer selectedYear = hc.openYearAndMonthEditor().getSelectedYearNumber();
         assertNull(selectedYear);//no selected Year found
         //confirm previously selected date
         MetamerPage.waitRequest(hc.openYearAndMonthEditor(), WaitRequestType.NONE).confirmDate();
@@ -104,11 +106,11 @@ public class TestCalendarDateEditor extends AbstractCalendarTest {
     @Test
     public void testSelectMonthAndYear() {
         DateTime someFutureDate = todayMidday.plusMonths(1).plusYears(1);
-        HeaderControls hc = calendar.openPopup().getProxiedHeaderControls();
-        YearAndMonthEditor yearAndMonthEditor = hc.openYearAndMonthEditor();
-        MetamerPage.waitRequest(yearAndMonthEditor, WaitRequestType.NONE).selectDate(someFutureDate).confirmDate();
+        HeaderControls hc = popupCalendar.openPopup().getHeaderControls();
+        YearAndMonthEditor editor = hc.openYearAndMonthEditor();
+        MetamerPage.waitRequest(editor, WaitRequestType.NONE).selectDate(someFutureDate).confirmDate();
 
-        assertFalse(yearAndMonthEditor.isVisible());
+        assertFalse(editor.isVisible());
         DateTime yearAndMonthAfter = hc.getYearAndMonth();
         assertEquals(yearAndMonthAfter.getYear(), someFutureDate.getYear());
         assertEquals(yearAndMonthAfter.getMonthOfYear(), someFutureDate.getMonthOfYear());
@@ -116,11 +118,11 @@ public class TestCalendarDateEditor extends AbstractCalendarTest {
 
     @Test
     public void testShowDateEditor() {
-        YearAndMonthEditor yearAndMonthEditor = Graphene.guardNoRequest(calendar.openPopup().getHeaderControls()).openYearAndMonthEditor();
-        assertTrue(yearAndMonthEditor.isVisible());
-        List<String> shortMonthLabels = yearAndMonthEditor.getShortMonthsLabels();
+        YearAndMonthEditor editor = Graphene.guardNoRequest(popupCalendar.openPopup().getHeaderControls()).openYearAndMonthEditor();
+        assertTrue(editor.isVisible());
+        List<String> shortMonthLabels = editor.getShortMonthsLabels();
         assertEquals(shortMonthLabels, Arrays.asList("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"));
-        List<Integer> displayedYears = yearAndMonthEditor.getDisplayedYears();
+        List<Integer> displayedYears = editor.getDisplayedYears();
         assertTrue(displayedYears.contains(todayMidday.getYear()));
     }
 }

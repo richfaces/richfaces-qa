@@ -24,23 +24,59 @@ package org.richfaces.tests.metamer.ftest.richEditor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.page.fragments.impl.editor.RichFacesEditor;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class EditorSimplePage extends MetamerPage {
 
-    @FindBy(css="input[type=submit][id$=a4jButton]")
-    public WebElement a4jButton;
-    @FindBy(tagName="iframe")
-    public WebElement editorFrame;
-    @FindBy(css="input[type=submit][id$=hButton]")
-    public WebElement hButton;
-    @FindBy(css="span[id$=output]")
-    public WebElement output;
-    @FindBy(xpath="//div[@id='phasesPanel']//li[4]")
-    public WebElement valueChangeListener;
-    @FindBy(xpath="//div[@id='phasesPanel']//li[3]")
-    public WebElement valueChangeListenerAfterImmediate;
+    @FindBy(className = "rf-ed")
+    private RichFacesEditor editor;
+    @FindBy(css = "input[type=submit][id$=a4jButton]")
+    private WebElement a4jButton;
+    @FindBy(tagName = "iframe")
+    private WebElement editorFrame;
+    @FindBy(css = "input[type=submit][id$=hButton]")
+    private WebElement hButton;
+    @FindBy(css = "span[id$=output]")
+    private WebElement output;
+    @FindBy(xpath = "//div[@id='phasesPanel']//li[4]")
+    private WebElement valueChangeListener;
+    @FindBy(xpath = "//div[@id='phasesPanel']//li[3]")
+    private WebElement valueChangeListenerAfterImmediate;
+    @FindBy(className = "rf-msgs-sum")
+    private WebElement errorMsg;
 
+    public RichFacesEditor getEditor() {
+        return editor;
+    }
+
+    public WebElement getA4jButton() {
+        return a4jButton;
+    }
+
+    public WebElement getEditorFrame() {
+        return editorFrame;
+    }
+
+    public WebElement getHButton() {
+        return hButton;
+    }
+
+    public WebElement getOutput() {
+        return output;
+    }
+
+    public WebElement getValueChangeListener() {
+        return valueChangeListener;
+    }
+
+    public WebElement getValueChangeListenerAfterImmediate() {
+        return valueChangeListenerAfterImmediate;
+    }
+
+    public WebElement getErrorMsg() {
+        return errorMsg;
+    }
 }

@@ -21,14 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richPickList;
 
-import com.google.common.base.Predicate;
-
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.bean.ConverterBean;
 import org.richfaces.tests.metamer.ftest.abstractions.converter.AbstractConverterTest;
-import org.richfaces.tests.page.fragments.impl.list.ListItemsFilterBuilderImpl;
-import org.richfaces.tests.page.fragments.impl.list.pick.RichFacesSimplePickList;
-import org.richfaces.tests.page.fragments.impl.list.pick.RichFacesSimplePickListItem;
+import org.richfaces.tests.page.fragments.impl.pickList.RichFacesPickList;
 import org.testng.annotations.Test;
 
 /**
@@ -37,7 +33,7 @@ import org.testng.annotations.Test;
 public class TestPickListConverter extends AbstractConverterTest {
 
     @FindBy(css = "[id$=convertableInput]")
-    private RichFacesSimplePickList input;
+    private RichFacesPickList input;
     private static final String VALUE = "VALUE";
 
     @Override
@@ -57,14 +53,7 @@ public class TestPickListConverter extends AbstractConverterTest {
 
     @Override
     protected void setBadValue() {
-        input.source().getItems().filter(new ListItemsFilterBuilderImpl<RichFacesSimplePickListItem>().addFilter(new Predicate<RichFacesSimplePickListItem>() {
-
-            @Override
-            public boolean apply(RichFacesSimplePickListItem input) {
-                return input.getText().equals(VALUE);
-            }
-        })).selectAll();
-        input.add();
+        input.add(VALUE);
     }
 
     @Test

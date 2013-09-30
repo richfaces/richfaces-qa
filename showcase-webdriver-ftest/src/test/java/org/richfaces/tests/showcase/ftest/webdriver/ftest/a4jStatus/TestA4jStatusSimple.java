@@ -21,10 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jStatus;
 
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
 import static org.testng.Assert.assertEquals;
 
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.a4jStatus.ViewUsagePage;
 import org.testng.annotations.Test;
@@ -46,10 +47,10 @@ public class TestA4jStatusSimple extends AbstractWebDriverTest {
         getPage().getUserSubmit().click();
         Graphene.waitAjax()
             .withMessage("After submitting the username and the address, the request image should be present.")
-            .until(Graphene.element(getPage().getRequestImage()).isPresent());
+            .until(new WebElementConditionFactory(getPage().getRequestImage()).isPresent());
         Graphene.waitAjax()
             .withMessage("After submitting the username and the address, the output text should be present.")
-            .until(Graphene.element(getPage().getUserOutput()).isPresent());
+            .until(new WebElementConditionFactory(getPage().getUserOutput()).isPresent());
         assertEquals(getPage().getUserOutput().getText(), "User stored successfully");
     }
 
@@ -59,7 +60,7 @@ public class TestA4jStatusSimple extends AbstractWebDriverTest {
         getPage().getAddressInput().sendKeys("something");
         Graphene.waitAjax()
             .withMessage("After typing the address, the request image should be present.")
-            .until(Graphene.element(getPage().getRequestImage()).isPresent());
+            .until(new WebElementConditionFactory(getPage().getRequestImage()).isPresent());
     }
 
 
@@ -69,7 +70,7 @@ public class TestA4jStatusSimple extends AbstractWebDriverTest {
         getPage().getUsernameInput().sendKeys("something");
         Graphene.waitAjax()
             .withMessage("After typing the username, the request image should be present.")
-            .until(Graphene.element(getPage().getRequestImage()).isPresent());
+            .until(new WebElementConditionFactory(getPage().getRequestImage()).isPresent());
     }
 
     @Override

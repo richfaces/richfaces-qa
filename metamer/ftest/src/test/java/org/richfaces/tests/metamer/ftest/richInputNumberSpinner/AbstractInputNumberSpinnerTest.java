@@ -24,7 +24,7 @@ package org.richfaces.tests.metamer.ftest.richInputNumberSpinner;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.inputNumberSpinnerAttributes;
 import static org.testng.Assert.assertEquals;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -32,8 +32,8 @@ import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponent.ClearType;
-import org.richfaces.tests.page.fragments.impl.input.inputNumberSpinner.RichFacesInputNumberSpinner;
+import org.richfaces.tests.page.fragments.impl.common.ClearType;
+import org.richfaces.tests.page.fragments.impl.inputNumberSpinner.RichFacesInputNumberSpinner;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -69,7 +69,7 @@ public abstract class AbstractInputNumberSpinnerTest extends AbstractWebDriverTe
         Double actValue;
         WaitRequestType type;
         for (int i = 0; i < count; i++) {
-            actValue = Double.parseDouble(spinner.getInput().getStringValue());
+            actValue = Double.parseDouble(spinner.advanced().getInput().getStringValue());
             type = (actValue > minValue || cycled ? WaitRequestType.XHR : WaitRequestType.NONE);
             MetamerPage.waitRequest(spinner, type).decrease();
         }
@@ -80,7 +80,7 @@ public abstract class AbstractInputNumberSpinnerTest extends AbstractWebDriverTe
      * @return spinner input value
      */
     protected String getInputText() {
-        return spinner.getInput().getStringValue();
+        return spinner.advanced().getInput().getStringValue();
     }
 
     protected String getOutputText() {
@@ -95,7 +95,7 @@ public abstract class AbstractInputNumberSpinnerTest extends AbstractWebDriverTe
         Double actValue;
         WaitRequestType type;
         for (int i = 0; i < count; i++) {
-            actValue = Double.parseDouble(spinner.getInput().getStringValue());
+            actValue = Double.parseDouble(spinner.advanced().getInput().getStringValue());
             type = (actValue < maxValue || cycled ? WaitRequestType.XHR : WaitRequestType.NONE);
             MetamerPage.waitRequest(spinner, type).increase();
         }
@@ -170,6 +170,6 @@ public abstract class AbstractInputNumberSpinnerTest extends AbstractWebDriverTe
     }
 
     private void typeToInput(WaitRequestType type) {
-        MetamerPage.waitRequest(spinner.getInput().clear(ClearType.JS).fillIn(number), type).trigger("blur");
+        MetamerPage.waitRequest(spinner.advanced().getInput().advanced().clear(ClearType.JS).sendKeys(number).advanced(), type).trigger("blur");
     }
 }

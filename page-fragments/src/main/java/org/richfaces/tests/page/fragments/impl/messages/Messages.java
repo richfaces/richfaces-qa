@@ -23,16 +23,28 @@ package org.richfaces.tests.page.fragments.impl.messages;
 
 import java.util.List;
 
+import org.richfaces.tests.page.fragments.impl.list.ListComponent;
+import org.richfaces.tests.page.fragments.impl.list.ListItem;
 import org.richfaces.tests.page.fragments.impl.message.Message;
+import org.richfaces.tests.page.fragments.impl.message.Message.MessageType;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
 
 /**
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface Messages extends MessagesBase<Message> {
+public interface Messages<T extends Message & ListItem> extends ListComponent<T> {
 
-    /**
-     * Returns a list of Messages for an input that's id contains an @inputID.
-     */
-    List<Message> getMessagesForInput(String inputID);
+    AdvancedMessagesInteractions advanced();
+
+    List<? extends Message> getItems(MessageType type);
+
+    public interface AdvancedMessagesInteractions {
+
+        boolean isVisible();
+
+        WaitingWrapper waitUntilMessagesAreNotVisible();
+
+        WaitingWrapper waitUntilMessagesAreVisible();
+    }
 }

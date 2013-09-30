@@ -23,16 +23,13 @@ package org.richfaces.tests.metamer.ftest.abstractions.message;
 
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-
-import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.richMessage.MessageAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.AttributeList;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponent.ClearType;
+import org.richfaces.tests.page.fragments.impl.common.ClearType;
 import org.richfaces.tests.page.fragments.impl.message.Message;
-import org.testng.Assert;
 
 /**
  * Base for testing of message components (rich:message, rich:notifyMessage)
@@ -44,19 +41,20 @@ public abstract class AbstractMessageComponentTest extends AbstractMessageCompon
 
     public void checkAjaxRendered() {
         generateValidationMessagesWithWait();
-        assertTrue(getMessageComponentForFirstInput().isVisible());
-        assertTrue(getMessageComponentForSecondInput().isVisible());
-        assertTrue(getMessageComponentForSelectableInput().isVisible());
+        assertTrue(getMessageComponentForFirstInput().advanced().isVisible(), "Message should be visible.");
+        assertTrue(getMessageComponentForSecondInput().advanced().isVisible(), "Message should be visible.");
+        assertTrue(getMessageComponentForSelectableInput().advanced().isVisible(), "Message should be visible.");
+
         AttributeList.messageAttributes.set(MessageAttributes.ajaxRendered, Boolean.FALSE);
         generateValidationMessagesWithWait();
-        assertFalse(getMessageComponentForFirstInput().isVisible());
-        assertFalse(getMessageComponentForSecondInput().isVisible());
-        assertFalse(getMessageComponentForSelectableInput().isVisible());
+        assertFalse(getMessageComponentForFirstInput().advanced().isVisible(), "Message should not be visible.");
+        assertFalse(getMessageComponentForSecondInput().advanced().isVisible(), "Message should not be visible.");
+        assertFalse(getMessageComponentForSelectableInput().advanced().isVisible(), "Message should not be visible.");
         //submit with h:commandbutton
-        MetamerPage.waitRequest(getPage().hCommandButton, WaitRequestType.HTTP).click();
-        assertTrue(getMessageComponentForFirstInput().isVisible());
-        assertTrue(getMessageComponentForSecondInput().isVisible());
-        assertTrue(getMessageComponentForSelectableInput().isVisible());
+        MetamerPage.waitRequest(getPage().gethCommandButton(), WaitRequestType.HTTP).click();
+        assertTrue(getMessageComponentForFirstInput().advanced().isVisible(), "Message should be visible.");
+        assertTrue(getMessageComponentForSecondInput().advanced().isVisible(), "Message should be visible.");
+        assertTrue(getMessageComponentForSelectableInput().advanced().isVisible(), "Message should be visible.");
     }
 
     public void checkNoShowDetailNoShowSummary() {
@@ -66,90 +64,91 @@ public abstract class AbstractMessageComponentTest extends AbstractMessageCompon
         generateValidationMessages();
         submitWithA4jBtn();
 
-        assertFalse(getPage().getMessageComponentForFirstInput().isVisible());
-        assertFalse(getPage().getMessageComponentForSecondInput().isVisible());
-        assertFalse(getPage().getMessageComponentForSelectableInput().isVisible());
+        assertFalse(getMessageComponentForFirstInput().advanced().isVisible(), "Message should not be visible.");
+        assertFalse(getMessageComponentForSecondInput().advanced().isVisible(), "Message should not be visible.");
+        assertFalse(getMessageComponentForSelectableInput().advanced().isVisible(), "Message should not be visible.");
     }
 
     public void checkFor() {
         // firstly, remove value from attribute @for and generate message
-        AttributeList.messageAttributes.setLower(MessageAttributes.FOR, "");
+        AttributeList.messageAttributes.set(MessageAttributes.FOR, "");
         generateValidationMessages();
         submitWithA4jBtn();
-        assertFalse(getMessageComponentForSelectableInput().isVisible());
+        assertFalse(getMessageComponentForSelectableInput().advanced().isVisible(), "Message should not be visible.");
+
         // now set for attribute back to "simpleInput2"
-        AttributeList.messageAttributes.setLower(MessageAttributes.FOR, "simpleInput2");
+        AttributeList.messageAttributes.set(MessageAttributes.FOR, "simpleInput2");
         generateValidationMessagesWithWait();
-        assertTrue(getMessageComponentForSelectableInput().isVisible());
+        assertTrue(getMessageComponentForSelectableInput().advanced().isVisible(), "Message should be visible.");
     }
 
     public void checkRendered() {
         AttributeList.messageAttributes.set(MessageAttributes.rendered, Boolean.TRUE);
         generateValidationMessagesWithWait();
-        assertTrue(getMessageComponentForFirstInput().isVisible());
-        assertTrue(getMessageComponentForSecondInput().isVisible());
-        assertTrue(getMessageComponentForSelectableInput().isVisible());
+        assertTrue(getMessageComponentForFirstInput().advanced().isVisible(), "Message should be visible.");
+        assertTrue(getMessageComponentForSecondInput().advanced().isVisible(), "Message should be visible.");
+        assertTrue(getMessageComponentForSelectableInput().advanced().isVisible(), "Message should be visible.");
         AttributeList.messageAttributes.set(MessageAttributes.rendered, Boolean.FALSE);
         generateValidationMessages();
         submitWithA4jBtn();
-        assertFalse(getMessageComponentForFirstInput().isVisible());
-        assertFalse(getMessageComponentForSecondInput().isVisible());
-        assertFalse(getMessageComponentForSelectableInput().isVisible());
+        assertFalse(getMessageComponentForFirstInput().advanced().isVisible(), "Message should not be visible.");
+        assertFalse(getMessageComponentForSecondInput().advanced().isVisible(), "Message should not be visible.");
+        assertFalse(getMessageComponentForSelectableInput().advanced().isVisible(), "Message should not be visible.");
     }
 
     public void checkShowDetail() {
         AttributeList.messageAttributes.set(MessageAttributes.showSummary, Boolean.TRUE);
         AttributeList.messageAttributes.set(MessageAttributes.showDetail, Boolean.TRUE);
         generateValidationMessagesWithWait();
-        assertTrue(getMessageComponentForFirstInput().isDetailVisible());
-        assertTrue(getMessageComponentForSecondInput().isDetailVisible());
-        assertTrue(getMessageComponentForSelectableInput().isDetailVisible());
+        assertVisible(getMessageComponentForFirstInput().advanced().getDetailElement(), "Message should be visible.");
+        assertVisible(getMessageComponentForSecondInput().advanced().getDetailElement(), "Message should be visible.");
+        assertVisible(getMessageComponentForSelectableInput().advanced().getDetailElement(), "Message should be visible.");
         AttributeList.messageAttributes.set(MessageAttributes.showDetail, Boolean.FALSE);
         generateValidationMessagesWithWait();
-        assertFalse(getMessageComponentForFirstInput().isDetailVisible());
-        assertFalse(getMessageComponentForSecondInput().isDetailVisible());
-        assertFalse(getMessageComponentForSelectableInput().isDetailVisible());
+        assertNotVisible(getMessageComponentForFirstInput().advanced().getDetailElement(), "Message should not be visible.");
+        assertNotVisible(getMessageComponentForSecondInput().advanced().getDetailElement(), "Message should not be visible.");
+        assertNotVisible(getMessageComponentForSelectableInput().advanced().getDetailElement(), "Message should not be visible.");
     }
 
     public void checkShowSummary() {
         AttributeList.messageAttributes.set(MessageAttributes.showDetail, Boolean.TRUE);
         AttributeList.messageAttributes.set(MessageAttributes.showSummary, Boolean.TRUE);
         generateValidationMessagesWithWait();
-        assertTrue(getMessageComponentForFirstInput().isSummaryVisible());
-        assertTrue(getMessageComponentForSecondInput().isSummaryVisible());
-        assertTrue(getMessageComponentForSelectableInput().isSummaryVisible());
+        assertVisible(getMessageComponentForFirstInput().advanced().getSummaryElement(), "Message should be visible.");
+        assertVisible(getMessageComponentForSecondInput().advanced().getSummaryElement(), "Message should be visible.");
+        assertVisible(getMessageComponentForSelectableInput().advanced().getSummaryElement(), "Message should be visible.");
         AttributeList.messageAttributes.set(MessageAttributes.showSummary, Boolean.FALSE);
         generateValidationMessagesWithWait();
-        assertFalse(getMessageComponentForFirstInput().isSummaryVisible());
-        assertFalse(getMessageComponentForSecondInput().isSummaryVisible());
-        assertFalse(getMessageComponentForSelectableInput().isSummaryVisible());
+        assertNotVisible(getMessageComponentForFirstInput().advanced().getSummaryElement(), "Message should not be visible.");
+        assertNotVisible(getMessageComponentForSecondInput().advanced().getSummaryElement(), "Message should not be visible.");
+        assertNotVisible(getMessageComponentForSelectableInput().advanced().getSummaryElement(), "Message should not be visible.");
     }
 
     public void checkSimple() {
         //generate messages
         generateValidationMessagesWithWait();
-        Assert.assertTrue(getPage().getMessageComponentForFirstInput().isVisible());
-        Assert.assertTrue(getPage().getMessageComponentForSecondInput().isVisible());
-        Assert.assertTrue(getPage().getMessageComponentForSelectableInput().isVisible());
+        assertTrue(getMessageComponentForFirstInput().advanced().isVisible(), "Message should be visible.");
+        assertTrue(getMessageComponentForSecondInput().advanced().isVisible(), "Message should be visible.");
+        assertTrue(getMessageComponentForSelectableInput().advanced().isVisible(), "Message should be visible.");
         //hide all messages
         setCorrectValuesWithWaiting();
-        Assert.assertFalse(getPage().getMessageComponentForFirstInput().isVisible());
-        Assert.assertFalse(getPage().getMessageComponentForSecondInput().isVisible());
-        Assert.assertFalse(getPage().getMessageComponentForSelectableInput().isVisible());
+        assertFalse(getMessageComponentForFirstInput().advanced().isVisible(), "Message should not be visible.");
+        assertFalse(getMessageComponentForSecondInput().advanced().isVisible(), "Message should not be visible.");
+        assertFalse(getMessageComponentForSelectableInput().advanced().isVisible(), "Message should not be visible.");
         //type bad value to first input
-        getPage().simpleInput1.clear(ClearType.JS).fillIn("bad value");
+        getPage().getSimpleInput1().clear().sendKeys("bad value");
         submitWithA4jBtn();
-        Assert.assertTrue(getPage().getMessageComponentForFirstInput().isVisible());
-        Assert.assertFalse(getPage().getMessageComponentForSecondInput().isVisible());
-        Assert.assertTrue(getPage().getMessageComponentForSelectableInput().isVisible());
+        assertTrue(getMessageComponentForFirstInput().advanced().isVisible(), "Message should be visible.");
+        assertFalse(getMessageComponentForSecondInput().advanced().isVisible(), "Message should not be visible.");
+        assertTrue(getMessageComponentForSelectableInput().advanced().isVisible(), "Message should be visible.");
         //hide all messages
         setCorrectValuesWithWaiting();
         //type bad value to second input
-        getPage().simpleInput2.clear(ClearType.JS).fillIn("bad value");
+        getPage().getSimpleInput2().advanced().clear(ClearType.JS).sendKeys("bad value");
         submitWithA4jBtn();
-        Assert.assertFalse(getPage().getMessageComponentForFirstInput().isVisible());
-        Assert.assertTrue(getPage().getMessageComponentForSecondInput().isVisible());
-        Assert.assertFalse(getPage().getMessageComponentForSelectableInput().isVisible());
+        assertFalse(getMessageComponentForFirstInput().advanced().isVisible(), "Message should not be visible.");
+        assertTrue(getMessageComponentForSecondInput().advanced().isVisible(), "Message should be visible.");
+        assertFalse(getMessageComponentForSelectableInput().advanced().isVisible(), "Message should not be visible.");
     }
 
     @Override
@@ -175,9 +174,9 @@ public abstract class AbstractMessageComponentTest extends AbstractMessageCompon
     @Override
     protected void waitingForValidationMessagesToHide() {
         submitWithHBtn();
-        Graphene.waitGui().until(getPage().getMessageComponentForFirstInput().isNotVisibleCondition());
-        Graphene.waitGui().until(getPage().getMessageComponentForSecondInput().isNotVisibleCondition());
-        Graphene.waitGui().until(getPage().getMessageComponentForSelectableInput().isNotVisibleCondition());
+        getMessageComponentForFirstInput().advanced().waitUntilMessageIsNotVisible().perform();
+        getMessageComponentForSecondInput().advanced().waitUntilMessageIsNotVisible().perform();
+        getMessageComponentForSelectableInput().advanced().waitUntilMessageIsNotVisible().perform();
     }
 
     protected class GenerateMessagesAction implements Action {

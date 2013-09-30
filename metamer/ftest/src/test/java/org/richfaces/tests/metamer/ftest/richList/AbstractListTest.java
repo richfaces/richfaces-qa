@@ -23,6 +23,7 @@ package org.richfaces.tests.metamer.ftest.richList;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
+
 import static org.testng.Assert.assertEquals;
 
 import java.util.List;
@@ -33,9 +34,8 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.model.Employee;
-import org.richfaces.tests.page.fragments.impl.list.ListItems;
-import org.richfaces.tests.page.fragments.impl.list.simple.RichFacesSimpleList;
-import org.richfaces.tests.page.fragments.impl.list.simple.RichFacesSimpleListItem;
+import org.richfaces.tests.page.fragments.impl.list.RichFacesList;
+import org.richfaces.tests.page.fragments.impl.list.RichFacesListItem;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -45,12 +45,12 @@ public abstract class AbstractListTest extends AbstractWebDriverTest {
 
     static final List<Employee> employees = Model.unmarshallEmployees();
     static final int ELEMENTS_TOTAL = employees.size();
-    static final Integer[] INTS = {-1, 0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL,
-        ELEMENTS_TOTAL + 1};
-    //
+    static final Integer[] INTS = { -1, 0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL,
+        ELEMENTS_TOTAL + 1 };
+
     @FindBy(css = "[id$=richList]")
-    protected RichFacesSimpleList list;
-    //
+    protected RichFacesList list;
+
     @Inject
     @Use(empty = true)
     protected Integer first;
@@ -94,6 +94,7 @@ public abstract class AbstractListTest extends AbstractWebDriverTest {
     }
 
     private void verifyCounts() {
+        List<RichFacesListItem> items = list.getItems();
         assertEquals(list.getItems().size(), displayedRows);
     }
 
@@ -104,9 +105,9 @@ public abstract class AbstractListTest extends AbstractWebDriverTest {
     }
 
     private void verifyRows() {
-        ListItems<RichFacesSimpleListItem> items = list.getItems();
+        List<RichFacesListItem> items = list.getItems();
         int rowCount = items.size();
-        for (int position = 0; position < rowCount; position++) {
+        for (int position = 0; position < rowCount; position += 2) {
             Employee employee = expectedEmployees.get(position);
             assertEquals(items.get(position).getText(), employee.getName());
         }

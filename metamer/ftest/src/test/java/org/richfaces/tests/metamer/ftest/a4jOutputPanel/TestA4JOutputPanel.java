@@ -21,16 +21,16 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jOutputPanel;
 
-import static org.jboss.arquillian.ajocado.dom.Event.CLICK;
-import static org.jboss.arquillian.ajocado.dom.Event.DBLCLICK;
-import static org.jboss.arquillian.ajocado.dom.Event.KEYDOWN;
-import static org.jboss.arquillian.ajocado.dom.Event.KEYPRESS;
-import static org.jboss.arquillian.ajocado.dom.Event.KEYUP;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEDOWN;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEMOVE;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOUT;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOVER;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEUP;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.CLICK;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.DBLCLICK;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.KEYDOWN;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.KEYUP;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEDOWN;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEMOVE;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOUT;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOVER;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEUP;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.KEYPRESS;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.outputPanelAttributes;
 import static org.testng.Assert.assertEquals;
@@ -39,12 +39,11 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneElement;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
@@ -53,6 +52,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.Test;
 
 /**
@@ -72,11 +72,11 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
     @Inject
     @Use(empty = true)
     String layout;
-    @FindBy(css="input[id$=button]")
+    @FindBy(css = "input[id$=button]")
     private WebElement increaseCounterButton;
-    @FindBy(css="div[id$=outputPanel]")
+    @FindBy(css = "div[id$=outputPanel]")
     private GrapheneElement outputDiv;
-    @FindBy(css="span[id$=outputPanel]")
+    @FindBy(css = "span[id$=outputPanel]")
     private GrapheneElement outputSpan;
 
     @Page
@@ -106,16 +106,10 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-11312")
     public void testClick() {
         increaseCounterButton.click();
-        Graphene.waitGui()
-                .until()
-                .element(outputDiv)
-                .text().equalTo("1");
+        Graphene.waitGui().until().element(outputDiv).text().equalTo("1");
 
         increaseCounterButton.click();
-        Graphene.waitGui()
-                .until()
-                .element(outputDiv)
-                .text().equalTo("2");
+        Graphene.waitGui().until().element(outputDiv).text().equalTo("2");
     }
 
     @Test
@@ -130,10 +124,7 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
         assertEquals(output, "0", "Output after two clicks when ajaxRendered is set to false.");
 
         metamerPage.rerenderAll();
-        Graphene.waitGui()
-                .until()
-                .element(outputDiv)
-                .text().equalTo("2");
+        Graphene.waitGui().until().element(outputDiv).text().equalTo("2");
     }
 
     @Test
@@ -177,18 +168,12 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
 
         String timeValue = metamerPage.getRequestTimeElement().getText();
         Graphene.guardAjax(increaseCounterButton).click();
-        Graphene.waitGui()
-                .withMessage("Page was not updated")
-                .until()
-                .element(metamerPage.getRequestTimeElement())
-                .text().not().equalTo(timeValue);
+        Graphene.waitGui().withMessage("Page was not updated").until().element(metamerPage.getRequestTimeElement()).text()
+            .not().equalTo(timeValue);
         timeValue = metamerPage.getRequestTimeElement().getText();
         Graphene.guardAjax(increaseCounterButton).click();
-        Graphene.waitGui()
-                .withMessage("Page was not updated")
-                .until()
-                .element(metamerPage.getRequestTimeElement())
-                .text().not().equalTo(timeValue);
+        Graphene.waitGui().withMessage("Page was not updated").until().element(metamerPage.getRequestTimeElement()).text()
+            .not().equalTo(timeValue);
 
         outputPanelAttributes.set(OutputPanelAttributes.rendered, true);
         assertTrue(outputDiv.isPresent(), "Panel should be rendered.");

@@ -23,34 +23,59 @@ package org.richfaces.tests.page.fragments.impl.dropDownMenu;
 
 import java.util.List;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.contextMenu.AbstractPopupMenu;
+import org.richfaces.tests.page.fragments.impl.contextMenu.PopupMenu;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class RichFacesDropDownMenu extends AbstractPopupMenu {
+public class RichFacesDropDownMenu extends AbstractPopupMenu implements PopupMenu {
 
     @FindBy(className = "rf-ddm-itm")
     private List<WebElement> menuItemsElements;
 
-    @FindBy(jquery = ".rf-ddm-lst:eq(0)")
+    @FindByJQuery(".rf-ddm-lst:eq(0)")
     private WebElement dropDownMenuPopup;
 
+    @FindByJQuery(".rf-ddm-lbl script:last")
+    private WebElement script;
+
+    @FindByJQuery(".rf-ddm-lbl:eq(0)")
+    private WebElement topLvlElement;
+
+    private final AdvancedDropDownMenuInteractions advancedInteractions = new AdvancedDropDownMenuInteractions();
+
     @Override
-    public WebElement getMenuPopup() {
+    public AdvancedDropDownMenuInteractions advanced() {
+        return advancedInteractions;
+    }
+
+    @Override
+    protected WebElement getMenuPopupInternal() {
         return dropDownMenuPopup;
     }
 
     @Override
-    public List<WebElement> getMenuItemElements() {
+    protected List<WebElement> getMenuItemElementsInternal() {
         return menuItemsElements;
     }
 
     @Override
-    public String getNameOfFragment() {
-        return RichFacesDropDownMenu.class.getName();
+    protected WebElement getScriptElement() {
+        return script;
     }
 
+    public class AdvancedDropDownMenuInteractions extends AbstractPopupMenu.AdvancedPopupMenuInteractions {
+
+        public String getLangAttribute() {
+            return topLvlElement.getAttribute("lang");
+        }
+
+        public WebElement getTopLevelElement() {
+            return topLvlElement;
+        }
+    }
 }

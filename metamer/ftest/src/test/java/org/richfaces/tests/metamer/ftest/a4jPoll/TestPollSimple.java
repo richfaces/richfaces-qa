@@ -31,7 +31,6 @@ import static javax.faces.event.PhaseId.RESTORE_VIEW;
 import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes.bypassUpdates;
 import static org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes.data;
 import static org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes.enabled;
@@ -43,7 +42,6 @@ import static org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes.oncomplet
 import static org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes.render;
 import static org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes.rendered;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.pollAttributes;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -51,10 +49,10 @@ import static org.testng.Assert.assertTrue;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.javascript.JavaScript;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;

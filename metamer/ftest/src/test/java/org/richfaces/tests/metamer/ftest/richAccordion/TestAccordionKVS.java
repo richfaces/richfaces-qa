@@ -27,7 +27,7 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.BooleanConditionWrapper;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -68,7 +68,7 @@ public class TestAccordionKVS extends AbstractWebDriverTest {
 
         @Override
         public void doRequest(Integer accordionIndex) {
-            page.getAccordion().getItem(accordionIndex).activate();
+            page.getAccordion().switchTo(accordionIndex.intValue());
         }
 
         @Override
@@ -78,7 +78,7 @@ public class TestAccordionKVS extends AbstractWebDriverTest {
                     .until(new BooleanConditionWrapper(new ExpectedCondition<Boolean>() {
                         @Override
                         public Boolean apply(WebDriver input) {
-                            return page.getAccordion().getItem(accordionIndex).isActive();
+                            return page.getAccordion().advanced().getAccordionItems().get(accordionIndex).advanced().isActive();
                         }
                     }, NoSuchElementException.class, StaleElementReferenceException.class));
         }

@@ -32,9 +32,9 @@ import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
@@ -42,7 +42,6 @@ import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 
 /**
  * Tests the a4j:poll component.
@@ -57,7 +56,7 @@ public class TestPollInterval extends AbstractWebDriverTest {
     @Inject
     private int interval;
 
-    @FindBy(css="span[id$='event1:outputTime']")
+    @FindBy(css = "span[id$='event1:outputTime']")
     private WebElement outputTime;
 
     @Page
@@ -137,10 +136,10 @@ public class TestPollInterval extends AbstractWebDriverTest {
     private void waitForPoll() {
         String time = metamerPage.getRequestTimeElement().getText();
         Graphene.waitModel()
-                .withTimeout(2*interval, TimeUnit.MILLISECONDS)
-                .until()
-                .element(metamerPage.getRequestTimeElement())
-                .text().not().equalTo(time);
+            .withTimeout(2 * interval, TimeUnit.MILLISECONDS)
+            .until()
+            .element(metamerPage.getRequestTimeElement())
+            .text().not().equalTo(time);
     }
 
     private void validateInterval() {
@@ -161,7 +160,7 @@ public class TestPollInterval extends AbstractWebDriverTest {
         assertTrue(
             averageDeviation <= maximumAvgDeviation,
             format("Average deviation for all the intervals ({0}) should not be greater than defined maximum {1}",
-                averageDeviation, maximumAvgDeviation));
+            averageDeviation, maximumAvgDeviation));
     }
 
     /**

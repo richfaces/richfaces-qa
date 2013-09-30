@@ -28,11 +28,12 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+import java.util.List;
 
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -41,13 +42,13 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.page.fragments.impl.accordion.AccordionItem;
 import org.richfaces.tests.page.fragments.impl.accordion.RichFacesAccordionItem;
+import org.richfaces.tests.page.fragments.impl.switchable.SwitchType;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
- * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
+ * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
 public class TestAccordion extends AbstractWebDriverTest {
 
@@ -62,10 +63,12 @@ public class TestAccordion extends AbstractWebDriverTest {
     @Test
     public void testInit() {
         assertTrue(page.isAccordionVisible(), "Accordion is not present on the page.");
-        assertEquals(page.getAccordion().size(), 5, "number of visible headers");
-        assertTrue(page.getAccordion().getItem(0).isActive(), "The first accordion item should be active.");
-        for (int i = 1; i < page.getAccordion().size(); i++) {
-            assertTrue(page.getAccordion().getItem(i).isInactive(), "Item " + (i + 1) + " shouldn't be active.");
+        assertEquals(page.getAccordion().advanced().getAccordionItems().size(), 5, "number of visible headers");
+        assertTrue(page.getAccordion().advanced().getAccordionItems().get(0).advanced().isActive(),
+            "The first accordion item should be active.");
+        List<RichFacesAccordionItem> items = page.getAccordion().advanced().getAccordionItems();
+        for (int i = 1; i < items.size(); i++) {
+            assertTrue(!items.get(i).advanced().isActive(), "Item " + (i + 1) + " shouldn't be active.");
         }
     }
 
@@ -74,23 +77,26 @@ public class TestAccordion extends AbstractWebDriverTest {
         accordionAttributes.set(AccordionAttributes.activeItem, "item5");
 
         assertTrue(page.isAccordionVisible(), "Accordion is not present on the page.");
-        for (AccordionItem item: page.getAccordion()) {
-            assertTrue(item.isActive() || item.isInactive() || !item.isEnabled(), "Item " + item.getHeader() + "'s header should be visible.");
+        List<RichFacesAccordionItem> items = page.getAccordion().advanced().getAccordionItems();
+        for (RichFacesAccordionItem item : items) {
+            assertTrue(item.advanced().isActive() || !item.advanced().isActive() || !item.advanced().isEnabled(), "Item "
+                + item.advanced().getHeader() + "'s header should be visible.");
         }
 
-        assertTrue(page.getAccordion().getItem(4).isActive(), "Content of item5 should be visible.");
+        assertTrue(items.get(4).advanced().isActive(), "Content of item5 should be visible.");
         for (int i = 0; i < 4; i++) {
-            assertTrue(page.getAccordion().getItem(i).isInactive(), "Item " + (i + 1) + " shouldn't be active.");
+            assertTrue(!items.get(i).advanced().isActive(), "Item " + (i + 1) + " shouldn't be active.");
         }
 
         accordionAttributes.set(AccordionAttributes.activeItem, "item4");
-        for (AccordionItem item: page.getAccordion()) {
-            assertTrue(item.isActive() || item.isInactive() || !item.isEnabled(), "Item " + item.getHeader() + "'s header should be visible.");
+        for (RichFacesAccordionItem item : items) {
+            assertTrue(item.advanced().isActive() || !item.advanced().isActive() || !item.advanced().isEnabled(), "Item "
+                + item.advanced().getHeader() + "'s header should be visible.");
         }
 
-        assertTrue(page.getAccordion().getItem(0).isActive(), "Item 1 should be active.");
+        assertTrue(items.get(0).advanced().isActive(), "Item 1 should be active.");
         for (int i = 1; i < 4; i++) {
-            assertTrue(page.getAccordion().getItem(i).isInactive(), "Item " + (i + 1) + " shouldn't be active.");
+            assertTrue(!items.get(i).advanced().isActive(), "Item " + (i + 1) + " shouldn't be active.");
         }
     }
 
@@ -100,25 +106,21 @@ public class TestAccordion extends AbstractWebDriverTest {
         Object result = null;
 
         // RichFaces.$('form:accordion').nextItem('item4') will be null
-        result = ((JavascriptExecutor) driver).executeScript("return RichFaces.$('" + accordionId
-            + "').nextItem('item4')");
+        result = ((JavascriptExecutor) driver).executeScript("return RichFaces.$('" + accordionId + "').nextItem('item4')");
         assertEquals(result, null, "Result of function nextItem('item4')");
 
         // RichFaces.$('form:accordion').prevItem('item1') will be null
-        result = ((JavascriptExecutor) driver).executeScript("return RichFaces.$('" + accordionId
-            + "').prevItem('item1')");
+        result = ((JavascriptExecutor) driver).executeScript("return RichFaces.$('" + accordionId + "').prevItem('item1')");
         assertEquals(result, null, "Result of function prevItem('item1')");
 
         accordionAttributes.set(AccordionAttributes.cycledSwitching, true);
 
         // RichFaces.$('form:accordion').nextItem('item5') will be item1
-        result = ((JavascriptExecutor) driver).executeScript("return RichFaces.$('" + accordionId
-            + "').nextItem('item5')");
+        result = ((JavascriptExecutor) driver).executeScript("return RichFaces.$('" + accordionId + "').nextItem('item5')");
         assertEquals(result.toString(), "item1", "Result of function nextItem('item5')");
 
         // RichFaces.$('form:accordion').prevItem('item1') will be item5
-        result = ((JavascriptExecutor) driver).executeScript("return RichFaces.$('" + accordionId
-            + "').prevItem('item1')");
+        result = ((JavascriptExecutor) driver).executeScript("return RichFaces.$('" + accordionId + "').prevItem('item1')");
         assertEquals(result.toString(), "item5", "Result of function prevItem('item1')");
     }
 
@@ -143,7 +145,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     public void testImmediate() {
         accordionAttributes.set(AccordionAttributes.immediate, true);
 
-        page.getAccordion().getItem(2).activate();
+        page.getAccordion().switchTo(2);
 
         page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.RENDER_RESPONSE);
         page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "item changed: item1 -> item3");
@@ -152,29 +154,30 @@ public class TestAccordion extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testItemActiveHeaderClass() {
-        testStyleClass(((RichFacesAccordionItem) page.getAccordion().getActiveItem()).getHeaderElement(), BasicAttributes.itemActiveHeaderClass);
+        testStyleClass(page.getAccordion().advanced().getActiveItem().advanced().getHeaderElement(),
+            BasicAttributes.itemActiveHeaderClass);
     }
 
     @Test
     public void testItemChangeListener() {
-        page.getAccordion().getItem(2).activate();
+        page.getAccordion().switchTo(2);
         page.assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: item1 -> item3");
     }
 
     @Test
     @Templates(value = "plain")
     public void testItemContentClass() {
-        for (AccordionItem item: page.getAccordion()) {
-            testStyleClass(((RichFacesAccordionItem) item).getContentElement(), BasicAttributes.itemContentClass);
+        for (RichFacesAccordionItem item : page.getAccordion().advanced().getAccordionItems()) {
+            testStyleClass(item.advanced().getContentElement(), BasicAttributes.itemContentClass);
         }
     }
 
     @Test
     @Templates(value = "plain")
     public void testItemDisabledHeaderClass() {
-        for (AccordionItem item: page.getAccordion()) {
-            if (!item.isEnabled()) {
-                testStyleClass(((RichFacesAccordionItem) item).getHeaderElement(), BasicAttributes.itemDisabledHeaderClass);
+        for (RichFacesAccordionItem item : page.getAccordion().advanced().getAccordionItems()) {
+            if (!item.advanced().isEnabled()) {
+                testStyleClass(item.advanced().getHeaderElement(), BasicAttributes.itemDisabledHeaderClass);
             }
         }
     }
@@ -182,8 +185,8 @@ public class TestAccordion extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testItemHeaderClass() {
-        for (AccordionItem item: page.getAccordion()) {
-            testStyleClass(((RichFacesAccordionItem) item).getToActivateElement(), BasicAttributes.itemHeaderClass);
+        for (RichFacesAccordionItem item : page.getAccordion().advanced().getAccordionItems()) {
+            testStyleClass(item.advanced().getToActivateElement(), BasicAttributes.itemHeaderClass);
         }
     }
 
@@ -193,7 +196,7 @@ public class TestAccordion extends AbstractWebDriverTest {
         accordionAttributes.set(AccordionAttributes.onitemchange, "metamerEvents += \"itemchange \"");
 
         executeJS("metamerEvents = \"\";");
-        Graphene.guardAjax(page.getAccordion().getItem(2)).activate();
+        Graphene.guardAjax(page.getAccordion()).switchTo(2);
         String[] events = ((String) executeJS("return metamerEvents;")).split(" ");
 
         assertEquals(events[0], "beforeitemchange", "Attribute onbeforeitemchange doesn't work");
@@ -203,9 +206,9 @@ public class TestAccordion extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testItemInactiveHeaderClass() {
-        for (AccordionItem item: page.getAccordion()) {
-            if (item.isInactive() && item.isEnabled()) {
-                testStyleClass(((RichFacesAccordionItem) item).getHeaderElement(), BasicAttributes.itemInactiveHeaderClass);
+        for (RichFacesAccordionItem item : page.getAccordion().advanced().getAccordionItems()) {
+            if (!item.advanced().isActive() && item.advanced().isEnabled()) {
+                testStyleClass(item.advanced().getHeaderElement(), BasicAttributes.itemInactiveHeaderClass);
             }
         }
     }
@@ -221,7 +224,7 @@ public class TestAccordion extends AbstractWebDriverTest {
         Action action = new Action() {
             @Override
             public void perform() {
-                page.getAccordion().getItem(1).activate();
+                page.getAccordion().switchTo(1);
             }
         };
         testFireEvent(accordionAttributes, AccordionAttributes.onbeforeitemchange, action);
@@ -246,7 +249,7 @@ public class TestAccordion extends AbstractWebDriverTest {
         Action action = new Action() {
             @Override
             public void perform() {
-                page.getAccordion().getItem(1).activate();
+                page.getAccordion().switchTo(1);
             }
         };
         testFireEvent(accordionAttributes, AccordionAttributes.onitemchange, action);
@@ -275,6 +278,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testOnmouseover() {
+        new Actions(driver).moveToElement(page.getRequestTimeElement()).perform();
         Action action = new Actions(driver).moveToElement(page.getAccordionRootElement()).build();
         testFireEvent(accordionAttributes, AccordionAttributes.onmouseover, action);
     }
@@ -295,10 +299,12 @@ public class TestAccordion extends AbstractWebDriverTest {
 
     @Test
     public void testSimple() {
-        for (AccordionItem item: page.getAccordion()) {
-            if (item.isEnabled()) {
-                item.activate();
-                Assert.assertTrue(item.isActive());
+        List<RichFacesAccordionItem> items = page.getAccordion().advanced().getAccordionItems();
+        for (int i = 0; i < items.size(); i++) {
+            RichFacesAccordionItem item = items.get(i);
+            if (item.advanced().isEnabled()) {
+                page.getAccordion().switchTo(i);
+                Assert.assertTrue(item.advanced().isActive());
             }
         }
     }
@@ -319,7 +325,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-12532")
     public void testSwitchTypeNull() {
         for (int i = 2; i >= 0; i--) {
-            Graphene.guardAjax(page.getAccordion().getItem(i)).activate();
+            Graphene.guardAjax(page.getAccordion()).switchTo(i);
         }
     }
 
@@ -335,8 +341,9 @@ public class TestAccordion extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-12532")
     public void testSwitchTypeClient() {
         accordionAttributes.set(AccordionAttributes.switchType, "client");
+        page.getAccordion().advanced().setupSwitchType(SwitchType.CLIENT);
         for (int i = 2; i >= 0; i--) {
-            Graphene.guardNoRequest(page.getAccordion().getItem(i)).activate();
+            Graphene.guardNoRequest(page.getAccordion()).switchTo(i);
         }
     }
 
@@ -344,8 +351,9 @@ public class TestAccordion extends AbstractWebDriverTest {
     @RegressionTest({ "https://issues.jboss.org/browse/RF-10040", "https://issues.jboss.org/browse/RF-12532" })
     public void testSwitchTypeServer() {
         accordionAttributes.set(AccordionAttributes.switchType, "server");
+        page.getAccordion().advanced().setupSwitchType(SwitchType.SERVER);
         for (int i = 2; i >= 0; i--) {
-            Graphene.guardHttp(page.getAccordion().getItem(i)).activate();
+            Graphene.guardHttp(page.getAccordion()).switchTo(i);
         }
     }
 

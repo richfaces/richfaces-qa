@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.dataTable.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -29,32 +29,32 @@ import org.openqa.selenium.WebElement;
  */
 public class DataTableEditPage {
 
-    @FindBy(jquery="input[value=Delete]:visible")
+    @FindByJQuery("input[value=Delete]:visible")
     public WebElement deleteButtonInpopup;
-    @FindBy(jquery="input[value=Cancel]:visible")
+    @FindByJQuery("input[value=Cancel]:visible")
     public WebElement cancelButtonInpopup;
-    @FindBy(jquery="input[value=Store]:visible")
+    @FindByJQuery("input[value=Store]:visible")
     public WebElement storeButtonInpopup;
 
-    @FindBy(jquery="table[id$=editGrid] tbody tr:eq(0) td:eq(1)")
+    @FindByJQuery("table[id$=editGrid] tbody tr:eq(0) td:eq(1)")
     public WebElement vendorpopup;
-    @FindBy(jquery="table[id$=editGrid] tbody tr:eq(1) td:eq(1)")
+    @FindByJQuery("table[id$=editGrid] tbody tr:eq(1) td:eq(1)")
     public WebElement modelpopup;
-    @FindBy(jquery="input[id$=price]")
+    @FindByJQuery("input[id$=price]")
     public WebElement priceInputpopup;
-    @FindBy(jquery="input[id$=mage]")
+    @FindByJQuery("input[id$=mage]")
     public WebElement mileageInputpopup;
-    @FindBy(jquery="input[id$=vin]")
+    @FindByJQuery("input[id$=vin]")
     public WebElement vinInputpopup;
 
-    @FindBy(jquery="span[id$=price] span")
+    @FindByJQuery("span[id$=price] span")
     public WebElement errorMsgPrice;
-    @FindBy(jquery="span[id$=mage] span")
+    @FindByJQuery("span[id$=mage] span")
     public WebElement errorMsgMileage;
-    @FindBy(jquery="span[id$=vin] span")
+    @FindByJQuery("span[id$=vin] span")
     public WebElement errorMsgVin;
 
-    @FindBy(jquery="tbody[class=rf-dt-b]")
+    @FindByJQuery("tbody[class=rf-dt-b]")
     public WebElement table;
 
 }

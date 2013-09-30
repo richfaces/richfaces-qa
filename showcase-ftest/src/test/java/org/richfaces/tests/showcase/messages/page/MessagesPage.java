@@ -21,7 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.messages.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.page.fragments.impl.message.Message;
 import org.richfaces.tests.page.fragments.impl.messages.Messages;
 import org.richfaces.tests.page.fragments.impl.messages.RichFacesMessages;
 import org.richfaces.tests.showcase.message.page.AbstractMessagePage;
@@ -29,12 +30,12 @@ import org.richfaces.tests.showcase.message.page.AbstractMessagePage;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class MessagesPage extends AbstractMessagePage{
+public class MessagesPage extends AbstractMessagePage {
 
-    @FindBy(className="rf-msgs")
+    @FindBy(className = "rf-msgs")
     private RichFacesMessages messages;
 
-    public Messages getMessages() {
+    public Messages<? extends Message> getMessages() {
         return messages;
     }
 }

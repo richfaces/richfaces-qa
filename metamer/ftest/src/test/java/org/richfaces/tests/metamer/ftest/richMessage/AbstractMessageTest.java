@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richMessage;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.abstractions.message.AbstractMessageComponentTest;
 import org.richfaces.tests.metamer.ftest.abstractions.message.MessageComponentTestPage;
@@ -47,7 +47,7 @@ public abstract class AbstractMessageTest extends AbstractMessageComponentTest {
         return new FutureTarget<WebElement>() {
             @Override
             public WebElement getTarget() {
-                return page.messageComponentForFirstInput.getRoot();
+                return page.getMessageComponentForFirstInput().advanced().getRootElement();
             }
         };
     }

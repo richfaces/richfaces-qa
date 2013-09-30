@@ -22,13 +22,13 @@
 package org.richfaces.tests.page.fragments.impl.message;
 
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.richfaces.tests.page.fragments.impl.VisibleComponent;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
 
 /**
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface Message extends VisibleComponent {
+public interface Message {
 
     public enum MessageType {
 
@@ -39,27 +39,26 @@ public interface Message extends VisibleComponent {
         OK;
     }
 
-    String getDetail();
-
-    WebElement getMessageDetailElement();
-
-    WebElement getMessageSummaryElement();
-
-    WebElement getRoot();
+    AdvancedMessageInteractions advanced();
 
     String getSummary();
 
-    ExpectedCondition<Boolean> isDetailNotVisibleCondition();
+    String getDetail();
 
-    boolean isDetailVisible();
+    MessageType getType();
 
-    ExpectedCondition<Boolean> isDetailVisibleCondition();
+    public interface AdvancedMessageInteractions {
 
-    ExpectedCondition<Boolean> isSummaryNotVisibleCondition();
+        boolean isVisible();
 
-    boolean isSummaryVisible();
+        WebElement getRootElement();
 
-    ExpectedCondition<Boolean> isSummaryVisibleCondition();
+        WebElement getDetailElement();
 
-    boolean isType(MessageType type);
+        WebElement getSummaryElement();
+
+        WaitingWrapper waitUntilMessageIsNotVisible();
+
+        WaitingWrapper waitUntilMessageIsVisible();
+    }
 }

@@ -21,131 +21,161 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.messages;
 
-import com.google.common.collect.Lists;
+import com.google.common.base.Predicate;
 
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
 
-import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.graphene.GrapheneElement;
+import org.jboss.arquillian.graphene.wait.FluentWait;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.list.AbstractListComponent;
+import org.richfaces.tests.page.fragments.impl.list.ListItem;
+import org.richfaces.tests.page.fragments.impl.message.AbstractMessage;
 import org.richfaces.tests.page.fragments.impl.message.Message;
 import org.richfaces.tests.page.fragments.impl.message.Message.MessageType;
+import org.richfaces.tests.page.fragments.impl.messages.RichFacesMessages.MessageImpl;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
 
 /**
  * Component for rich:messages.
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesMessages implements Messages {
+public class RichFacesMessages extends AbstractListComponent<MessageImpl> implements Messages<MessageImpl> {
 
-    @Root
-    private WebElement root;
-    //
-    @FindBy(xpath = "./span")
-    private List<RichFacesMessagesMessage> messages;
     @FindBy(css = "span.rf-msgs-err")
-    private List<RichFacesMessagesMessage> errorMessages;
+    private List<MessageImpl> errorMessages;
     @FindBy(css = "span.rf-msgs-ftl")
-    private List<RichFacesMessagesMessage> fatalMessages;
+    private List<MessageImpl> fatalMessages;
     @FindBy(css = "span.rf-msgs-inf")
-    private List<RichFacesMessagesMessage> infoMessages;
+    private List<MessageImpl> infoMessages;
     @FindBy(css = "span.rf-msgs-ok")
-    private List<RichFacesMessagesMessage> okMessages;
+    private List<MessageImpl> okMessages;
     @FindBy(css = "span.rf-msgs-wrn")
-    private List<RichFacesMessagesMessage> warnMessages;
-    //
-    @Drone
-    private WebDriver driver;
+    private List<MessageImpl> warnMessages;
+
+    private final AdvancedMessagesInteractionsImpl interactions = new AdvancedMessagesInteractionsImpl();
 
     @Override
-    public List<Message> getAllMessagesOfType(MessageType type) {
+    public AdvancedMessagesInteractionsImpl advanced() {
+        return interactions;
+    }
+
+    @Override
+    public List<? extends Message> getItems(MessageType type) {
         switch (type) {
             case OK:
-                return Lists.<Message>newArrayList(okMessages);
+                return Collections.unmodifiableList(okMessages);
             case INFORMATION:
-                return Lists.<Message>newArrayList(infoMessages);
+                return Collections.unmodifiableList(infoMessages);
             case WARNING:
-                return Lists.<Message>newArrayList(warnMessages);
+                return Collections.unmodifiableList(warnMessages);
             case ERROR:
-                return Lists.<Message>newArrayList(errorMessages);
+                return Collections.unmodifiableList(errorMessages);
             case FATAL:
-                return Lists.<Message>newArrayList(fatalMessages);
+                return Collections.unmodifiableList(fatalMessages);
             default:
                 throw new UnsupportedOperationException("Unknown type " + type);
         }
     }
 
-    @Override
-    public Message getMessageAtIndex(int index) {
-        return messages.get(index);
-    }
+    public static class MessageImpl extends AbstractMessage implements Message, ListItem {
 
-    @Override
-    public List<Message> getMessagesForInput(String inputID) {
-        List<Message> result = Lists.newArrayList();
-        for (Message component : this) {
-            if (component.getRoot().getAttribute("id").contains(inputID)) {
-                result.add(component);
+        @FindBy(className = "rf-msgs-det")
+        private WebElement messageDetailElement;
+        @FindBy(className = "rf-msgs-sum")
+        private WebElement messageSummaryElement;
+
+        @Override
+        protected String getCssClass(MessageType type) {
+            return getCssClassForMessageType(type);
+        }
+
+        public static String getCssClassForMessageType(MessageType type) {
+            switch (type) {
+                case ERROR:
+                    return "rf-msgs-err";
+                case FATAL:
+                    return "rf-msgs-ftl";
+                case INFORMATION:
+                    return "rf-msgs-inf";
+                case OK:
+                    return "rf-msgs-ok";
+                case WARNING:
+                    return "rf-msgs-wrn";
+                default:
+                    throw new UnsupportedOperationException("Unknown message type " + type);
             }
         }
-        return result;
-    }
 
-    @Override
-    public WebElement getRoot() {
-        return root;
-    }
-
-    @Override
-    public boolean isVisible() {
-        return isVisibleCondition().apply(driver);
-    }
-
-    @Override
-    public ExpectedCondition<Boolean> isVisibleCondition() {
-        return Graphene.element(root).isVisible();
-    }
-
-    @Override
-    public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return Graphene.element(root).not().isVisible();
-    }
-
-    @Override
-    public Iterator<Message> iterator() {
-        return new MessagesIterator(messages.iterator());
-    }
-
-    @Override
-    public int size() {
-        return messages.size();
-    }
-
-    private static class MessagesIterator implements Iterator<Message> {
-
-        private final Iterator<RichFacesMessagesMessage> iterator;
-
-        public MessagesIterator(Iterator<RichFacesMessagesMessage> iterator) {
-            this.iterator = iterator;
+        @Override
+        protected WebElement getMessageDetailElement() {
+            return messageDetailElement;
         }
 
         @Override
-        public boolean hasNext() {
-            return iterator.hasNext();
+        protected WebElement getMessageSummaryElement() {
+            return messageSummaryElement;
         }
 
         @Override
-        public Message next() {
-            return iterator.next();
+        public GrapheneElement getRootElement() {
+            return super.getRootElement();
         }
 
         @Override
-        public void remove() {
-            throw new UnsupportedOperationException("Remove operation is not supported");
+        public String getText() {
+            return getRootElement().getText();
+        }
+    }
+
+    public class AdvancedMessagesInteractionsImpl implements AdvancedMessagesInteractions {
+
+        public WebElement getRootElement() {
+            return RichFacesMessages.this.getRoot();
+        }
+
+        @Override
+        public boolean isVisible() {
+            return Utils.isVisible(getRootElement()) && !getItems().isEmpty();
+        }
+
+        @Override
+        public WaitingWrapper waitUntilMessagesAreNotVisible() {
+            return new WaitingWrapperImpl() {
+
+                @Override
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until(new Predicate<WebDriver>() {
+
+                        @Override
+                        public boolean apply(WebDriver input) {
+                            return !isVisible();
+                        }
+                    });
+                }
+            }.withMessage("Waiting for message to be not visible.");
+        }
+
+        @Override
+        public WaitingWrapper waitUntilMessagesAreVisible() {
+            return new WaitingWrapperImpl() {
+
+                @Override
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until(new Predicate<WebDriver>() {
+
+                        @Override
+                        public boolean apply(WebDriver input) {
+                            return isVisible();
+                        }
+                    });
+                }
+            }.withMessage("Waiting for message to be visible.");
         }
     }
 }

@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.message;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.page.fragments.impl.message.Message;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.message.page.MessagePage;
@@ -75,30 +75,30 @@ public class TestMessage extends AbstractWebDriverTest {
         page.fillLongerJob();
         page.validate();
 
-        Assert.assertTrue(page.getMessageForJob().isVisible(), "The message for the Job input should be present.");
+        Assert.assertTrue(page.getMessageForJob().advanced().isVisible(), "The message for the Job input should be present.");
         assertMessageDetail("Job", page.getMessageForJob(), MessagePage.JOB_ERROR_GREATER_THAN_MAXIMUM);
 
-        for (Message message: new Message[] {page.getMessageForAddress(), page.getMessageForName(), page.getMessageForZip()}) {
-            Assert.assertFalse(message.isVisible(), "Unexpected message is present.");
+        for (Message message : new Message[]{ page.getMessageForAddress(), page.getMessageForName(), page.getMessageForZip() }) {
+            Assert.assertFalse(message.advanced().isVisible(), "Unexpected message is present.");
         }
 
         page.fillLongerZip();
         page.validate();
 
-        Assert.assertTrue(page.getMessageForJob().isVisible(), "A message for the Job input should be present.");
+        Assert.assertTrue(page.getMessageForJob().advanced().isVisible(), "A message for the Job input should be present.");
         assertMessageDetail("Job", page.getMessageForJob(), MessagePage.JOB_ERROR_GREATER_THAN_MAXIMUM);
 
-        Assert.assertTrue(page.getMessageForZip().isVisible(), "A message for the Zip input should be present.");
+        Assert.assertTrue(page.getMessageForZip().advanced().isVisible(), "A message for the Zip input should be present.");
         assertMessageDetail("Zip", page.getMessageForZip(), MessagePage.ZIP_ERROR_GREATER_THAN_MAXIMUM);
 
-        for (Message message: new Message[] {page.getMessageForAddress(), page.getMessageForName()}) {
-            Assert.assertFalse(message.isVisible(), "Unexpected message is present.");
+        for (Message message : new Message[]{ page.getMessageForAddress(), page.getMessageForName() }) {
+            Assert.assertFalse(message.advanced().isVisible(), "Unexpected message is present.");
         }
     }
 
     protected void assertMessageDetail(String fieldName, Message message, String expected) {
         Assert.assertTrue(message.getDetail().contains(expected),
-                "The message detail for '" + fieldName + "' should contain '" + expected + "', but it is '" + message.getDetail() + "'");
+            "The message detail for '" + fieldName + "' should contain '" + expected + "', but it is '" + message.getDetail() + "'");
     }
 
 }

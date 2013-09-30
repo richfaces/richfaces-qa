@@ -1,8 +1,8 @@
-/*
- * JBoss, Home of Professional Open Source.
- * Copyright 2010-2013, Red Hat, Inc., and individual contributors
- * as indicated by the @author tags. See the copyright.txt file in the
- * distribution for a full listing of individual contributors.
+/*******************************************************************************
+ * JBoss, Home of Professional Open Source
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -18,36 +18,41 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
+ *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jPush;
 
-import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
-import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
+import com.google.common.collect.Lists;
 
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
-import org.testng.Assert;
+import org.jboss.arquillian.graphene.Graphene;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.Test;
 
 /**
  * Test for simple push example faces/components/a4jPush/simple.xhtml
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestSimplePush extends AbstractGrapheneTest {
+public class TestSimplePush extends AbstractWebDriverTest {
 
-    protected JQueryLocator messagePanel = pjq("div[id$=messagePanel]");
-    protected JQueryLocator timestamp = messagePanel.getDescendant(jq(" div > span.timestamp"));
+    private static final int NUMBER_OF_VALUES = 5;
+    private static final int TOLERANCE = 2;// s
+    private static final int UPDATE_INTERVAL = 5;// s
+    private static final DateTimeFormatter TIME_PARSER = DateTimeFormat.forPattern("'['MMM d, yyyy HH:mm:ss a']'");
+
+    @FindBy(css = "div[id$=messagePanel] span.timestamp")
+    private WebElement timestamp;
 
     @Override
     public URL getTestUrl() {
@@ -56,34 +61,27 @@ public class TestSimplePush extends AbstractGrapheneTest {
 
     @Test
     public void testPushComponentExists() {
-        TextRetriever messageRetriever = retrieveText.locator(messagePanel);
-        TextRetriever timestampRetreiver = retrieveText.locator(timestamp);
-        messageRetriever.initializeValue();
-
-        // before receive first push update the message is "waiting for data from server"
-        waitAjax.waitForChangeAndReturn(messageRetriever);
-        timestampRetreiver.initializeValue();
-
-        List<String> times = new ArrayList<String>();
-        for (int i = 0; i < 6; ++i) {
-            waitAjax.waitForChangeAndReturn(timestampRetreiver);
-            String timestampString = timestampRetreiver.getValue();
-            if (timestampString != null && timestampString.startsWith("[")) {
-                timestampString = timestampString.substring(1, timestampString.length() - 1);
-            }
-            times.add(timestampString);
+        List<String> timeStampsString = Lists.newArrayList();
+        String previousTimeStampText;
+        Graphene.waitModel().until().element(timestamp).is().present();
+        for (int i = 0; i < NUMBER_OF_VALUES; ++i) {
+            previousTimeStampText = timestamp.getText();
+            timeStampsString.add(previousTimeStampText);
+            Graphene.waitModel().until().element(timestamp).text().not().equalTo(previousTimeStampText);
         }
-        Collections.sort(times);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy hh:mm:ss a");
-        try {
-            Date first = sdf.parse(times.get(0));
-            Date last = sdf.parse(times.get(times.size() - 1));
-            // Assert that last message is dated 5 * 5s (received 5 updates, with 5s interval)
-            Assert.assertEquals(first.getTime(), last.getTime() - 5 * 5 * 1000);
-        } catch (ParseException e) {
-            Assert.fail("Get wrong date format");
+        List<DateTime> times = Lists.newArrayList();
+        for (String string : timeStampsString) {
+            times.add(TIME_PARSER.parseDateTime(string));
+        }
+        DateTime prevTime = null;
+        for (DateTime dateTime : times) {
+            if (prevTime != null) {
+                assertTrue(prevTime.isBefore(dateTime));
+                long millis = dateTime.getMillis() - prevTime.getMillis();
+                assertEquals(millis / 1000.0, UPDATE_INTERVAL, TOLERANCE, "The update interval is not in tolerance.");
+            }
+            prevTime = dateTime;
         }
     }
-
 }

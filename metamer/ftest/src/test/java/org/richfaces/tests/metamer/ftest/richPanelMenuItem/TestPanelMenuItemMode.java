@@ -28,6 +28,8 @@ import static javax.faces.event.PhaseId.RENDER_RESPONSE;
 import static javax.faces.event.PhaseId.RESTORE_VIEW;
 import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
+import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuItemAttributes;
 
 import java.net.URL;
@@ -35,7 +37,7 @@ import java.util.LinkedList;
 
 import javax.faces.event.PhaseId;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
@@ -81,11 +83,14 @@ public class TestPanelMenuItemMode extends AbstractWebDriverTest {
         panelMenuItemAttributes.set(PanelMenuItemAttributes.immediate, immediate);
         panelMenuItemAttributes.set(PanelMenuItemAttributes.bypassUpdates, bypassUpdates);
         panelMenuItemAttributes.set(PanelMenuItemAttributes.mode, mode);
-        page.item.setMode(mode);
 
         panelMenuItemAttributes.set(PanelMenuItemAttributes.execute, "@this executeChecker");
 
-        page.item.select();
+        switch(mode) {
+            case ajax : guardAjax(page.getItem()).select(); break;
+            case server : guardHttp(page.getItem()).select(); break;
+            case client : page.getItem().select(); break;
+        }
 
         if (mode != Mode.client) {
             if ("phases".equals(listener)) {

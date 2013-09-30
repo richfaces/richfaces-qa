@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.richPopupPanel;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.popupPanelAttributes;
-import static org.richfaces.tests.page.fragments.impl.popupPanel.PopupPanel.ResizerLocation.S;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertTrue;
@@ -32,8 +31,8 @@ import java.net.URL;
 import java.util.EnumSet;
 import java.util.Locale;
 
-import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
@@ -50,10 +49,10 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.Locations;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.panel.TextualFragmentPart;
 import org.richfaces.tests.page.fragments.impl.popupPanel.PopupPanel.ResizerLocation;
 import org.richfaces.tests.page.fragments.impl.popupPanel.RichFacesPopupPanel;
-import org.richfaces.tests.page.fragments.impl.popupPanel.RichFacesSimplePopupPanelContent;
-import org.richfaces.tests.page.fragments.impl.popupPanel.RichFacesSimplePopupPanelControls;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -80,35 +79,35 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     private void checkCssValueOf(String cssValue, double value, WebElement element) {
         int tolerance = 5;
         assertEquals(Double.valueOf(element.getCssValue(cssValue).replace("px", "")),
-                value,
-                tolerance,
-                cssValue + " of the panel");
+            value,
+            tolerance,
+            cssValue + " of the panel");
     }
 
     private void checkCssValueOf(String cssValue, double value, double tolerance, WebElement element) {
         assertEquals(Double.valueOf(element.getCssValue(cssValue).replace("px", "")),
-                value,
-                tolerance,
-                cssValue + " of the panel");
+            value,
+            tolerance,
+            cssValue + " of the panel");
     }
 
     private void checkCssValueOfPanel(String cssValue, double value) {
-        checkCssValueOf(cssValue, value, panel.getRootElement());
+        checkCssValueOf(cssValue, value, panel.advanced().getRootElement());
     }
 
     private void checkCssValueOfPanelShadow(String cssValue, double value) {
-        checkCssValueOf(cssValue, value, panel.getShadowElement());
+        checkCssValueOf(cssValue, value, panel.advanced().getShadowElement());
     }
 
     private void checkMove(int byX, int byY) {
         int tolerance = 5;
-        Locations shadowLocationsBefore = Utils.getLocations(panel.getShadowElement());
-        Locations panelLocationsBefore = panel.getLocations();
-        assertEquals(panel.getHeaderElement().getCssValue("cursor"), "move", "Cursor used when mouse is over panel's header.");
+        Locations shadowLocationsBefore = Utils.getLocations(panel.advanced().getShadowElement());
+        Locations panelLocationsBefore = panel.advanced().getLocations();
+        assertEquals(panel.advanced().getHeaderElement().getCssValue("cursor"), "move", "Cursor used when mouse is over panel's header.");
 
-        panel.moveByOffset(byX, byY);
-        Locations shadowLocationsAfter = Utils.getLocations(panel.getShadowElement());
-        Locations panelLocationsAfter = panel.getLocations();
+        panel.advanced().moveByOffset(byX, byY);
+        Locations shadowLocationsAfter = Utils.getLocations(panel.advanced().getShadowElement());
+        Locations panelLocationsAfter = panel.advanced().getLocations();
         Utils.tolerantAssertLocationsEquals(panelLocationsBefore.moveAllBy(byX, byY), panelLocationsAfter, tolerance, tolerance, "Locations after move");
         Utils.tolerantAssertLocationsEquals(shadowLocationsBefore.moveAllBy(byX, byY), shadowLocationsAfter, tolerance, tolerance, "Locations after move");
     }
@@ -116,15 +115,15 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     private void checkResize(ResizerLocation fromLocation, int byX, int byY) {
         openPopupPanel();
         int tolerance = 5;
-        Locations panelLocationsBefore = panel.getLocations();
-        Locations shadowLocationsBefore = Utils.getLocations(panel.getShadowElement());
+        Locations panelLocationsBefore = panel.advanced().getLocations();
+        Locations shadowLocationsBefore = Utils.getLocations(panel.advanced().getShadowElement());
         int panelWidthBefore = panelLocationsBefore.getWidth();
         int panelHeightBefore = panelLocationsBefore.getHeight();
         int shadowWidthBefore = shadowLocationsBefore.getWidth();
         int shadowHeightBefore = shadowLocationsBefore.getHeight();
-        panel.resizeFromLocation(fromLocation, byX, byY);
-        Locations shadowLocationsAfter = Utils.getLocations(panel.getShadowElement());
-        Locations panelLocationsAfter = panel.getLocations();
+        panel.advanced().resizeFromLocation(fromLocation, byX, byY);
+        Locations shadowLocationsAfter = Utils.getLocations(panel.advanced().getShadowElement());
+        Locations panelLocationsAfter = panel.advanced().getLocations();
         assertNotEquals(shadowLocationsAfter, shadowLocationsBefore);
         int heightModifier = byY;
         int widthModifier = byX;
@@ -147,13 +146,13 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     private void hidePopup() {
-        panel.content().hide();
-        Graphene.waitGui().until(panel.isNotVisibleCondition());
+        panel.getBodyContent().hide();
+        panel.advanced().waitUntilPopupIsNotVisible().perform();
     }
 
     private void openPopupPanel() {
         openButton.click();
-        Graphene.waitGui().until(panel.isVisibleCondition());
+        panel.advanced().waitUntilPopupIsVisible().perform();
     }
 
     @Test
@@ -167,30 +166,30 @@ public class TestPopupPanel extends AbstractWebDriverTest {
         int tolerance = 10;
         setAttribute("textWidth", contentWidth);
         openPopupPanel();
-        assertEquals(panel.content().getParagraphElement().getCssValue("width"), contentWidth + "px",
-                "Paragraph's width.");
-        assertEquals(panel.getLocations().getWidth(),
-                Integer.valueOf(popupPanelAttributes.get(PopupPanelAttributes.minWidth)).intValue(),
-                tolerance,
-                "Panel's width should be the same as its minWidth, when its content is smaller.");
+        assertEquals(panel.getBodyContent().getParagraphElement().getCssValue("width"), contentWidth + "px",
+            "Paragraph's width.");
+        assertEquals(panel.advanced().getLocations().getWidth(),
+            Integer.valueOf(popupPanelAttributes.get(PopupPanelAttributes.minWidth)).intValue(),
+            tolerance,
+            "Panel's width should be the same as its minWidth, when its content is smaller.");
 
         popupPanelAttributes.set(PopupPanelAttributes.autosized, Boolean.TRUE);
         // when @autosized=true, then @min/max-width/height attributes are ignored
         openPopupPanel();
-        assertEquals(panel.getLocations().getWidth(),
-                contentWidth + panelPadding,
-                tolerance,
-                "Panel's width should be autosized to content.");
-        assertTrue(panel.getLocations().getWidth() < Integer.valueOf(popupPanelAttributes.get(PopupPanelAttributes.minWidth)).intValue(),
-                "In this case panel's width should be lesser than its @minWidth when @autosized=true");
-        assertTrue(panel.getLocations().getHeight() > Integer.valueOf(popupPanelAttributes.get(PopupPanelAttributes.maxHeight)).intValue(),
-                "In this case panel's height should be greater than its @maxHeight when @autosized=true");
+        assertEquals(panel.advanced().getLocations().getWidth(),
+            contentWidth + panelPadding,
+            tolerance,
+            "Panel's width should be autosized to content.");
+        assertTrue(panel.advanced().getLocations().getWidth() < Integer.valueOf(popupPanelAttributes.get(PopupPanelAttributes.minWidth)).intValue(),
+            "In this case panel's width should be lesser than its @minWidth when @autosized=true");
+        assertTrue(panel.advanced().getLocations().getHeight() > Integer.valueOf(popupPanelAttributes.get(PopupPanelAttributes.maxHeight)).intValue(),
+            "In this case panel's height should be greater than its @maxHeight when @autosized=true");
     }
 
     @Test
     @Templates(value = "plain")
     public void testControlsClass() {
-        testStyleClass(panel.getHeaderControlsElement(), BasicAttributes.controlsClass);
+        testStyleClass(panel.advanced().getHeaderControlsElement(), BasicAttributes.controlsClass);
     }
 
     @Test
@@ -217,10 +216,10 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     public void testFollowByScroll() {
         popupPanelAttributes.set(PopupPanelAttributes.followByScroll, Boolean.FALSE);
         openPopupPanel();
-        assertEquals(panel.getRootElement().getCssValue("position"), "absolute");
+        assertEquals(panel.advanced().getRootElement().getCssValue("position"), "absolute");
         popupPanelAttributes.set(PopupPanelAttributes.followByScroll, Boolean.TRUE);
         openPopupPanel();
-        assertEquals(panel.getRootElement().getCssValue("position"), "fixed");
+        assertEquals(panel.advanced().getRootElement().getCssValue("position"), "fixed");
     }
 
     @Test
@@ -229,13 +228,13 @@ public class TestPopupPanel extends AbstractWebDriverTest {
         String value = "new header";
         popupPanelAttributes.set(PopupPanelAttributes.header, value);
         openPopupPanel();
-        assertEquals(panel.getHeaderContentElement().getText(), value, "Header of the popup panel.");
+        assertEquals(panel.advanced().getHeaderContentElement().getText(), value, "Header of the popup panel.");
     }
 
     @Test
     @Templates(value = "plain")
     public void testHeaderClass() {
-        testStyleClass(panel.getHeaderElement(), BasicAttributes.headerClass);
+        testStyleClass(panel.advanced().getHeaderElement(), BasicAttributes.headerClass);
     }
 
     @Test
@@ -264,39 +263,39 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     @Test
     public void testHidePanel() {
         openPopupPanel();
-        assertVisible(panel, "Popup panel is not visible.");
+        assertVisible(panel.advanced().getRootElement(), "Popup panel is not visible.");
 
-        panel.controls().hide();
-        assertNotVisible(panel, "Popup panel is visible.");
+        panel.getHeaderControlsContent().close();
+        assertNotVisible(panel.advanced().getRootElement(), "Popup panel is visible.");
 
         openPopupPanel();
-        assertVisible(panel, "Popup panel is not visible.");
-        panel.content().hide();
-        assertNotVisible(panel, "Popup panel is visible.");
+        assertVisible(panel.advanced().getRootElement(), "Popup panel is not visible.");
+        panel.getBodyContent().hide();
+        assertNotVisible(panel.advanced().getRootElement(), "Popup panel is visible.");
     }
 
     @Test
     public void testInit() {
         assertPresent(openButton, "Button for opening popup should be on the page.");
-        assertNotVisible(panel, "Popup panel is visible.");
+        assertNotVisible(panel.advanced().getRootElement(), "Popup panel is visible.");
 
         openPopupPanel();
-        assertVisible(panel, "Popup panel should be visible.");
-        assertVisible(panel.getHeaderContentElement(), "Popup panel's header content should be visible.");
-        assertVisible(panel.getHeaderControlsElement(), "Popup panel's header contols should be visible.");
-        assertVisible(panel.getHeaderElement(), "Popup panel's header should be visible.");
-        assertVisible(panel.getContentScrollerElement(), "Popup panel's scroller should be visible.");
-        assertVisible(panel.getShadowElement(), "Popup panel's shadow should be visible.");
+        assertVisible(panel.advanced().getRootElement(), "Popup panel should be visible.");
+        assertVisible(panel.advanced().getHeaderContentElement(), "Popup panel's header content should be visible.");
+        assertVisible(panel.advanced().getHeaderControlsElement(), "Popup panel's header contols should be visible.");
+        assertVisible(panel.advanced().getHeaderElement(), "Popup panel's header should be visible.");
+        assertVisible(panel.advanced().getContentScrollerElement(), "Popup panel's scroller should be visible.");
+        assertVisible(panel.advanced().getShadowElement(), "Popup panel's shadow should be visible.");
         WebElement resizerElement;
         for (ResizerLocation l : ResizerLocation.values()) {
-            resizerElement = panel.getResizerElement(l);
+            resizerElement = panel.advanced().getResizerElement(l);
             assertVisible(resizerElement, "Resizer" + l + " should be visible.");
             assertEquals(resizerElement.getCssValue("cursor"), l.toString().toLowerCase(Locale.ENGLISH) + "-resize");
         }
         assertNotPresent(shade, "Mask should not be visible.");
-        assertEquals(panel.getHeaderContentElement().getText(), "popup panel header", "Header's text");
-        assertTrue(panel.content().getContentString().startsWith("Lorem ipsum"), "Panel's content should start with 'Lorem ipsum'.");
-        assertTrue(panel.content().getContentString().endsWith("hide this panel"), "Panel's content should end with 'hide this panel'.");
+        assertEquals(panel.advanced().getHeaderContentElement().getText(), "popup panel header", "Header's text");
+        assertTrue(panel.getBodyContent().getContentString().startsWith("Lorem ipsum"), "Panel's content should start with 'Lorem ipsum'.");
+        assertTrue(panel.getBodyContent().getContentString().endsWith("hide this panel"), "Panel's content should end with 'hide this panel'.");
     }
 
     @Test(groups = "Future")
@@ -309,19 +308,19 @@ public class TestPopupPanel extends AbstractWebDriverTest {
 
         popupPanelAttributes.set(PopupPanelAttributes.keepVisualState, Boolean.FALSE);
         openPopupPanel();
-        Locations locationsBefore = panel.getLocations();
-        panel.moveByOffset(moveBy, moveBy);
-        panel.content().submit();
+        Locations locationsBefore = panel.advanced().getLocations();
+        panel.advanced().moveByOffset(moveBy, moveBy);
+        panel.getBodyContent().submit();
         openPopupPanel();
-        Utils.tolerantAssertLocationsEquals(panel.getLocations(), locationsBefore, tolerance, tolerance, "Panel's position should be the same as before");
+        Utils.tolerantAssertLocationsEquals(panel.advanced().getLocations(), locationsBefore, tolerance, tolerance, "Panel's position should be the same as before");
 
         popupPanelAttributes.set(PopupPanelAttributes.keepVisualState, Boolean.TRUE);
         openPopupPanel();
-        locationsBefore = panel.getLocations();
-        panel.moveByOffset(moveBy, moveBy);
-        panel.content().submit();
+        locationsBefore = panel.advanced().getLocations();
+        panel.advanced().moveByOffset(moveBy, moveBy);
+        panel.getBodyContent().submit();
         openPopupPanel();
-        Utils.tolerantAssertLocationsEquals(panel.getLocations(), locationsBefore.moveAllBy(moveBy, moveBy), tolerance, tolerance, "Panel's position should the moved as before submit.");
+        Utils.tolerantAssertLocationsEquals(panel.advanced().getLocations(), locationsBefore.moveAllBy(moveBy, moveBy), tolerance, tolerance, "Panel's position should the moved as before submit.");
     }
 
     @Test
@@ -369,7 +368,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
         popupPanelAttributes.set(PopupPanelAttributes.height, 300);
         popupPanelAttributes.set(PopupPanelAttributes.maxHeight, 400);
         openPopupPanel();
-        panel.resizeFromLocation(ResizerLocation.S, 1, -120);// resize panel to minimum
+        panel.advanced().resizeFromLocation(ResizerLocation.S, 1, -120);// resize panel to minimum
         checkCssValueOfPanel("height", 200);
     }
 
@@ -379,7 +378,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
         popupPanelAttributes.set(PopupPanelAttributes.width, 300);
         popupPanelAttributes.set(PopupPanelAttributes.maxWidth, 400);
         openPopupPanel();
-        panel.resizeFromLocation(ResizerLocation.E, -120, 1);// resize panel to minimum
+        panel.advanced().resizeFromLocation(ResizerLocation.E, -120, 1);// resize panel to minimum
         checkCssValueOfPanel("width", 200);
     }
 
@@ -399,7 +398,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     public void testMovable() {
         popupPanelAttributes.set(PopupPanelAttributes.moveable, Boolean.FALSE);
         openPopupPanel();
-        assertEquals(panel.getHeaderElement().getCssValue("cursor"), "default", "Cursor used when mouse is over panel's header.");
+        assertEquals(panel.advanced().getHeaderElement().getCssValue("cursor"), "default", "Cursor used when mouse is over panel's header.");
         try {
             checkMove(50, 50);
         } catch (AssertionError e) {
@@ -427,7 +426,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 openPopupPanel();
-                panel.controls().hide();
+                panel.getHeaderControlsContent().close();
             }
         });
     }
@@ -455,7 +454,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 openPopupPanel();
-                panel.controls().hide();
+                panel.getHeaderControlsContent().close();
             }
         });
     }
@@ -522,7 +521,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 openPopupPanel();
-                panel.moveByOffset(50, 50);
+                panel.advanced().moveByOffset(50, 50);
             }
         });
     }
@@ -533,7 +532,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 openPopupPanel();
-                panel.resizeFromLocation(ResizerLocation.N, 0, 50);
+                panel.advanced().resizeFromLocation(ResizerLocation.N, 0, 50);
             }
         });
     }
@@ -552,9 +551,9 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testRendered() {
         popupPanelAttributes.set(PopupPanelAttributes.rendered, Boolean.TRUE);
-        assertPresent(panel.getRootElement(), "Panel should berendered.");
+        assertPresent(panel.advanced().getRootElement(), "Panel should berendered.");
         popupPanelAttributes.set(PopupPanelAttributes.rendered, Boolean.FALSE);
-        assertNotPresent(panel.getRootElement(), "Popup panel should not be rendered.");
+        assertNotPresent(panel.advanced().getRootElement(), "Popup panel should not be rendered.");
     }
 
     @Test
@@ -569,15 +568,15 @@ public class TestPopupPanel extends AbstractWebDriverTest {
         popupPanelAttributes.set(PopupPanelAttributes.maxWidth, 800);
         int resizeBy = 100;
         checkResize(resizer,
-                EnumSet.of(ResizerLocation.N, ResizerLocation.S).contains(resizer) ? 0 : resizeBy,
-                EnumSet.of(ResizerLocation.E, ResizerLocation.W).contains(resizer) ? 0 : resizeBy);
+            EnumSet.of(ResizerLocation.N, ResizerLocation.S).contains(resizer) ? 0 : resizeBy,
+            EnumSet.of(ResizerLocation.E, ResizerLocation.W).contains(resizer) ? 0 : resizeBy);
     }
 
     @Test
     public void testResizeable() {
         popupPanelAttributes.set(PopupPanelAttributes.resizeable, Boolean.FALSE);
         for (ResizerLocation r : ResizerLocation.values()) {
-            assertNotPresent(panel.getResizerElement(r), "Resizer " + r + " should not be present");
+            assertNotPresent(panel.advanced().getResizerElement(r), "Resizer " + r + " should not be present");
         }
     }
 
@@ -589,15 +588,15 @@ public class TestPopupPanel extends AbstractWebDriverTest {
         int value = 15;
         popupPanelAttributes.set(PopupPanelAttributes.shadowDepth, value);
         openPopupPanel();
-        Locations shadowLocations = Utils.getLocations(panel.getShadowElement());
-        Locations panelLocations = panel.getLocations();
+        Locations shadowLocations = Utils.getLocations(panel.advanced().getShadowElement());
+        Locations panelLocations = panel.advanced().getLocations();
         Utils.tolerantAssertLocationsEquals(panelLocations.moveAllBy(value, value), shadowLocations, tolerance, tolerance, "Locations of shadow.");
 
         value = 0;
         popupPanelAttributes.set(PopupPanelAttributes.shadowDepth, value);
         openPopupPanel();
-        shadowLocations = Utils.getLocations(panel.getShadowElement());
-        panelLocations = panel.getLocations();
+        shadowLocations = Utils.getLocations(panel.advanced().getShadowElement());
+        panelLocations = panel.advanced().getLocations();
         Utils.tolerantAssertLocationsEquals(panelLocations.moveAllBy(value, value), shadowLocations, tolerance, tolerance, "Locations of shadow.");
     }
 
@@ -615,23 +614,23 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     @Test
     public void testShow() {
         popupPanelAttributes.set(PopupPanelAttributes.show, Boolean.FALSE);
-        assertNotVisible(panel, "Panel should not be visible");
+        assertNotVisible(panel.advanced().getRootElement(), "Panel should not be visible");
         popupPanelAttributes.set(PopupPanelAttributes.show, Boolean.TRUE);
-        assertVisible(panel, "Panel should be visible");
+        assertVisible(panel.advanced().getRootElement(), "Panel should be visible");
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10245")
     @Templates(value = "plain")
     public void testStyle() {
-        testStyle(panel.getRootElement());
+        testStyle(panel.advanced().getRootElement());
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10245")
     @Templates(value = "plain")
     public void testStyleClass() {
-        testStyleClass(panel.getRootElement());
+        testStyleClass(panel.advanced().getRootElement());
     }
 
     @Test
@@ -640,7 +639,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
         int height = Integer.valueOf(String.valueOf(executeJS("return window.innerHeight")));
         openPopupPanel();
         //more tolerant check, tolerance 20
-        checkCssValueOf("top", Math.round((height - defaultPanelHeight) / 2), 20, panel.getRootElement());
+        checkCssValueOf("top", Math.round((height - defaultPanelHeight) / 2), 20, panel.advanced().getRootElement());
 
         popupPanelAttributes.set(PopupPanelAttributes.top, 200);
         openPopupPanel();
@@ -674,42 +673,38 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testZindex() {
         openPopupPanel();
-        checkCssValueOf("z-index", 4, panel.getRootElement());
+        checkCssValueOf("z-index", 4, panel.advanced().getRootElement());
 
         popupPanelAttributes.set(PopupPanelAttributes.zindex, 30);
         openPopupPanel();
-        checkCssValueOf("z-index", 30, panel.getRootElement());
+        checkCssValueOf("z-index", 30, panel.advanced().getRootElement());
     }
 
-    public static class TestedPopupPanel extends RichFacesPopupPanel<TestedPopupPanelControls, TestedPopupPanelContent> {
-
-        @Override
-        protected Class<TestedPopupPanelContent> getContentType() {
-            return TestedPopupPanelContent.class;
-        }
-
-        @Override
-        protected Class<TestedPopupPanelControls> getControlsType() {
-            return TestedPopupPanelControls.class;
-        }
+    public static class TestedPopupPanel extends RichFacesPopupPanel<TextualFragmentPart, TestedPopupPanelHeaderControls, TestedPopupPanelContent> {
     }
 
-    public static class TestedPopupPanelControls extends RichFacesSimplePopupPanelControls {
+    public static class TestedPopupPanelHeaderControls {
 
-        @FindBy(css = "a[id$='controlsHideLink']")
+        @Root
+        private WebElement root;
+
+        @FindBy(tagName = "a")
         private WebElement hideLinkElement;
 
         public WebElement getHideLinkElement() {
             return hideLinkElement;
         }
 
-        public void hide() {
+        public void close() {
             hideLinkElement.click();
-            Graphene.waitGui().until(isNotVisibleCondition());
+            Graphene.waitGui().until().element(root).is().not().visible();
         }
     }
 
-    public static class TestedPopupPanelContent extends RichFacesSimplePopupPanelContent {
+    public static class TestedPopupPanelContent {
+
+        @Root
+        private WebElement root;
 
         @FindBy(tagName = "p")
         private WebElement paragraphElement;
@@ -718,8 +713,8 @@ public class TestPopupPanel extends AbstractWebDriverTest {
         @FindBy(css = "a[id$='contentHideLink']")
         private WebElement hideLinkElement;
 
-        public WebElement getSubmitButton() {
-            return submitButton;
+        public String getContentString() {
+            return root.getText();
         }
 
         public WebElement getHideLinkElement() {
@@ -730,13 +725,13 @@ public class TestPopupPanel extends AbstractWebDriverTest {
             return paragraphElement;
         }
 
-        public String getContentString() {
-            return getRootElement().getText();
+        public WebElement getSubmitButton() {
+            return submitButton;
         }
 
         public void hide() {
             hideLinkElement.click();
-            Graphene.waitGui().until(isNotVisibleCondition());
+            Graphene.waitGui().until().element(root).is().not().visible();
         }
 
         public void submit() {

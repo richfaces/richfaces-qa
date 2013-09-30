@@ -23,8 +23,8 @@ package org.richfaces.tests.metamer.ftest.richInputNumberSpinner;
 
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.abstractions.converter.AbstractConverterTest;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponent;
-import org.richfaces.tests.page.fragments.impl.input.inputNumberSpinner.RichFacesInputNumberSpinner;
+import org.richfaces.tests.page.fragments.impl.common.ClearType;
+import org.richfaces.tests.page.fragments.impl.inputNumberSpinner.RichFacesInputNumberSpinner;
 import org.testng.annotations.Test;
 
 /**
@@ -54,7 +54,7 @@ public class TestInputNumberSpinnerConverter extends AbstractConverterTest {
 
     @Override
     protected void setBadValue() {
-        input.getInput().clear(TextInputComponent.ClearType.JS).fillIn(VALUE);
+        input.advanced().getInput().advanced().clear(ClearType.JS).sendKeys(VALUE);
     }
 
     @Test

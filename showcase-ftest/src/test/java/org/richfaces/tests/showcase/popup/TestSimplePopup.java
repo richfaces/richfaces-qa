@@ -25,8 +25,8 @@ import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.panel.AbstractPanelTest;
 import org.richfaces.tests.showcase.popup.page.PopupPage;
@@ -45,7 +45,7 @@ public class TestSimplePopup extends AbstractPanelTest {
     @Page
     private PopupPage page;
 
-    @FindBy(jquery = "div[class*='rf-pp-cnt']:visible a")
+    @FindByJQuery("div[class*='rf-pp-cnt']:visible a")
     private WebElement popupPanelHideAnchor;
 
     @Test

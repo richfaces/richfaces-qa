@@ -1,0 +1,20 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="seleniumTest">
+
+    <test name="All Selenium 2 Tests" preserve-order="false">
+        <groups>
+            <run>
+                <exclude name="Future" />
+                <exclude name="extended" />
+            </run>
+        </groups>
+
+        <packages>
+            <package name="org.richfaces.tests.metamer.ftest.*"></package>
+        </packages>
+
+
+    </test>
+
+</suite>
+

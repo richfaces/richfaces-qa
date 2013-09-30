@@ -23,55 +23,94 @@ package org.richfaces.tests.metamer.ftest.richToolbar;
 
 import java.util.List;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.GrapheneElement;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.toolbar.RichFacesToolbarGroupSeparator;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
  * @since 4.3.1
- *
  */
 public class ToolbarPage {
 
     @FindBy(css = "table[id$=toolbar]")
-    public WebElement toolbar;
-
-    @FindBy(jquery = "td.rf-tb-sep")
-    public RichFacesToolbarGroupSeparator separator;
-
-    @FindBy(jquery = "td.rf-tb-sep")
-    public List<WebElement> separators;
-
-    @FindBy(jquery = "td.rf-tb-sep > img")
-    public List<WebElement> separatorsImages;
-
+    private WebElement toolbar;
+    @FindByJQuery("td.rf-tb-sep")
+    private RichFacesToolbarGroupSeparator separator;
+    @FindByJQuery("td.rf-tb-sep")
+    private List<RichFacesToolbarGroupSeparator> separators;
+    @FindByJQuery("td.rf-tb-sep > img")
+    private List<WebElement> separatorsImages;
     /** toolbar items with no matter if tool or empty cell */
-    @FindBy(jquery = "tr.rf-tb-cntr > td")
-    public List<WebElement> items;
+    @FindByJQuery("tr.rf-tb-cntr > td")
+    private List<GrapheneElement> items;
+    @FindByJQuery("td[id$=createDocument_itm]")
+    private GrapheneElement itemCreateDoc;
+    @FindByJQuery("td[id$=createFolder_itm]")
+    private GrapheneElement itemCreateFolder;
+    @FindByJQuery("td[id$=copy_itm]")
+    private GrapheneElement itemCopy;
+    @FindByJQuery("td[id$=save_itm]")
+    private GrapheneElement itemSave;
+    @FindByJQuery("td[id$=saveAs_itm]")
+    private GrapheneElement itemSaveAs;
+    @FindByJQuery("td[id$=saveAll_itm]")
+    private GrapheneElement itemSaveAll;
+    @FindByJQuery("td[id$=input_itm]")
+    private GrapheneElement itemInput;
+    @FindByJQuery("td[id$=button_itm]")
+    private GrapheneElement itemButton;
 
-    @FindBy(jquery = "td[id$=createDocument_itm]")
-    public WebElement itemCreateDoc;
+    public GrapheneElement getItemButton() {
+        return itemButton;
+    }
 
-    @FindBy(jquery = "td[id$=createFolder_itm]")
-    public WebElement itemCreateFolder;
+    public GrapheneElement getItemCopy() {
+        return itemCopy;
+    }
 
-    @FindBy(jquery = "td[id$=copy_itm]")
-    public WebElement itemCopy;
+    public GrapheneElement getItemCreateDoc() {
+        return itemCreateDoc;
+    }
 
-    @FindBy(jquery = "td[id$=save_itm]")
-    public WebElement itemSave;
+    public GrapheneElement getItemCreateFolder() {
+        return itemCreateFolder;
+    }
 
-    @FindBy(jquery = "td[id$=saveAs_itm]")
-    public WebElement itemSaveAs;
+    public GrapheneElement getItemInput() {
+        return itemInput;
+    }
 
-    @FindBy(jquery = "td[id$=saveAll_itm]")
-    public WebElement itemSaveAll;
+    public GrapheneElement getItemSave() {
+        return itemSave;
+    }
 
-    @FindBy(jquery = "td[id$=input_itm]")
-    public WebElement itemInput;
+    public GrapheneElement getItemSaveAll() {
+        return itemSaveAll;
+    }
 
-    @FindBy(jquery = "td[id$=button_itm]")
-    public WebElement itemButton;
+    public GrapheneElement getItemSaveAs() {
+        return itemSaveAs;
+    }
 
+    public List<GrapheneElement> getItems() {
+        return items;
+    }
+
+    public RichFacesToolbarGroupSeparator getSeparator() {
+        return separator;
+    }
+
+    public List<RichFacesToolbarGroupSeparator> getSeparators() {
+        return separators;
+    }
+
+    public List<WebElement> getSeparatorsImages() {
+        return separatorsImages;
+    }
+
+    public WebElement getToolbar() {
+        return toolbar;
+    }
 }

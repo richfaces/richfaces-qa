@@ -28,15 +28,14 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.dom.Event;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.OpenBy;
-import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.State;
-import org.richfaces.tests.page.fragments.impl.input.inplace.input.RichFacesInplaceInput;
+import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceComponentState;
+import org.richfaces.tests.page.fragments.impl.inplaceInput.RichFacesInplaceInput;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.Test;
 
 /**
@@ -75,11 +74,11 @@ public class TestInplaceInputJSApi extends AbstractWebDriverTest {
 
     @Test
     public void cancel() {
-        String defaultText = inplaceInput.getLabelValue();
-        inplaceInput.editBy(OpenBy.CLICK).changeToValue(SOME_TEXT);
+        String defaultText = inplaceInput.advanced().getLabelValue();
+        inplaceInput.type(SOME_TEXT);
         fireEvent(cancelButton, Event.MOUSEOVER);
-        assertEquals(inplaceInput.getLabelValue(), defaultText);
-        assertFalse(inplaceInput.is(State.CHANGED));
+        assertEquals(inplaceInput.advanced().getLabelValue(), defaultText);
+        assertFalse(inplaceInput.advanced().isInState(InplaceComponentState.CHANGED));
     }
 
     @Test
@@ -88,13 +87,13 @@ public class TestInplaceInputJSApi extends AbstractWebDriverTest {
         //so the state of inplace input is set to active
         getInputButton.click();
         waiting(100);
-        inplaceInput.is(State.ACTIVE);
+        inplaceInput.advanced().isInState(InplaceComponentState.ACTIVE);
     }
 
     @Test
     public void getValue() {
         getValueButton.click();
-        assertEquals(getValueFromOutput(), inplaceInput.getLabelValue(), "Default value.");
+        assertEquals(getValueFromOutput(), inplaceInput.advanced().getLabelValue(), "Default value.");
     }
 
     private String getValueFromOutput() {
@@ -105,7 +104,7 @@ public class TestInplaceInputJSApi extends AbstractWebDriverTest {
     public void isEditState() {
         fireEvent(isEditStateButton, Event.MOUSEOVER);
         assertEquals(getValueFromOutput(), "false");
-        inplaceInput.editBy(OpenBy.CLICK);
+        inplaceInput.type(" ");
         fireEvent(isEditStateButton, Event.MOUSEOVER);
         assertEquals(getValueFromOutput(), "true");
     }
@@ -114,8 +113,7 @@ public class TestInplaceInputJSApi extends AbstractWebDriverTest {
     public void isValueChangedButton() {
         isValueChangedButton.click();
         assertEquals(getValueFromOutput(), "false");
-        MetamerPage.waitRequest(inplaceInput.editBy(OpenBy.CLICK)
-                .changeToValue(SOME_TEXT),
+        MetamerPage.waitRequest(inplaceInput.type(SOME_TEXT),
                 WaitRequestType.XHR).confirm();
         isValueChangedButton.click();
         assertEquals(getValueFromOutput(), "true");
@@ -123,16 +121,16 @@ public class TestInplaceInputJSApi extends AbstractWebDriverTest {
 
     @Test
     public void save() {
-        inplaceInput.editBy(OpenBy.CLICK).changeToValue(SOME_TEXT);
+        inplaceInput.type(SOME_TEXT);
         fireEvent(saveButton, Event.MOUSEOVER);
-        assertEquals(inplaceInput.getLabelValue(), SOME_TEXT);
-        assertTrue(inplaceInput.is(State.CHANGED));
+        assertEquals(inplaceInput.advanced().getLabelValue(), SOME_TEXT);
+        assertTrue(inplaceInput.advanced().isInState(InplaceComponentState.CHANGED));
     }
 
     @Test
     public void setValue() {
         String expected = "Completely different value";
         setValueButton.click();
-        assertEquals(inplaceInput.getLabelValue(), expected);
+        assertEquals(inplaceInput.advanced().getLabelValue(), expected);
     }
 }

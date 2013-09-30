@@ -22,6 +22,8 @@
 package org.richfaces.tests.metamer.bean.rich;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -48,6 +50,8 @@ public class RichDataScrollerBean implements Serializable {
     private Attributes tableAttributes;
     private boolean state = true;
 
+    private Map<String, String> facets;
+
     /**
      * Initializes the managed bean.
      */
@@ -73,6 +77,20 @@ public class RichDataScrollerBean implements Serializable {
         tableAttributes = Attributes.getEmptyAttributes(getClass());
         tableAttributes.setAttribute("rows", 9);
 
+        facets = new HashMap<String, String>();
+        facets.put("first", "<<<");
+        facets.put("fastRewind", "<<");
+        facets.put("previous", "<");
+        facets.put("next", ">");
+        facets.put("fastForward", ">>");
+        facets.put("last", ">>>");
+
+        facets.put("first_disabled", "<<<d");
+        facets.put("fastRewind_disabled", "<<d");
+        facets.put("previous_disabled", "<d");
+        facets.put("next_disabled", ">d");
+        facets.put("fastForward_disabled", ">>d");
+        facets.put("last_disabled", ">>>d");
     }
 
     public Attributes getAttributes() {
@@ -93,6 +111,7 @@ public class RichDataScrollerBean implements Serializable {
 
     /**
      * Getter for state.
+     *
      * @return true if non-empty data model should be used in table
      */
     public boolean isState() {
@@ -101,9 +120,14 @@ public class RichDataScrollerBean implements Serializable {
 
     /**
      * Setter for state.
+     *
      * @param state true if non-empty data model should be used in table
      */
     public void setState(boolean state) {
         this.state = state;
+    }
+
+    public Map<String, String> getFacets() {
+        return facets;
     }
 }

@@ -27,14 +27,14 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.util.List;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.input.fileUpload.RichFacesFileUpload;
+import org.richfaces.tests.page.fragments.impl.fileUpload.RichFacesFileUpload;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -52,7 +52,7 @@ public abstract class AbstractFileUploadTest extends AbstractWebDriverTest {
     protected static final String notAcceptableFile = "file1.x";
     protected static final String acceptableFile = "file1.txt";
     protected static final String bigFile = "bigFile.txt";
-    protected static final String[] filenames = {acceptableFile, "file2.txt"};
+    protected static final String[] filenames = { acceptableFile, "file2.txt" };
     protected static final String ap = "\"";
     protected int filesToUploadCount;
     protected int filesUploadedCount;

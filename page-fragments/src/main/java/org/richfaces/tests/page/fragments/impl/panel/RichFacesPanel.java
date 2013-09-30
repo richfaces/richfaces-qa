@@ -1,6 +1,6 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,40 +18,55 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
+ *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.panel;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
- * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
+ * Add to the final doc that there is example implementation in TextualRichFacesPanel, as the most used panel.
+ * @author jhuska
  *
+ * @param <HEADER>
+ * @param <BODY>
  */
-public class RichFacesPanel {
+public abstract class RichFacesPanel<HEADER, BODY> extends AbstractPanel<HEADER, BODY> {
 
-    public static final String CSS_HEADER = "div.rf-p-hdr";
-    public static final String CSS_BODY = "div.rf-p-b";
+    @FindBy(css = "div.rf-p-hdr")
+    private WebElement header;
 
-    @Root
-    WebElement root;
+    @FindBy(css = "div.rf-p-b")
+    private WebElement body;
 
-    @FindBy(css = CSS_HEADER)
-    WebElement header;
+    private AdvancedPanelInteractions advancedInteractions = new AdvancedPanelInteractions();
 
-    @FindBy(css = CSS_BODY)
-    WebElement body;
-
-    public WebElement getRoot() {
-        return root;
+    public AdvancedPanelInteractions advanced() {
+        return advancedInteractions;
     }
 
-    public WebElement getHeader() {
+    @Override
+    protected WebElement getBodyElement() {
+        return body;
+    }
+
+    @Override
+    protected WebElement getHeaderElement() {
         return header;
     }
 
-    public WebElement getBody() {
-        return body;
+    public class AdvancedPanelInteractions {
+
+        public WebElement getRootElement() {
+            return RichFacesPanel.this.getRootElement();
+        }
+
+        public WebElement getHeaderElement() {
+            return RichFacesPanel.this.getHeaderElement();
+        }
+
+        public WebElement getBodyElement() {
+            return RichFacesPanel.this.getBodyElement();
+        }
     }
 }

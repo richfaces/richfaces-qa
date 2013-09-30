@@ -21,12 +21,14 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.select;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponent;
-import org.richfaces.tests.page.fragments.impl.input.select.Option;
-import org.richfaces.tests.page.fragments.impl.input.select.OptionList;
-import org.richfaces.tests.page.fragments.impl.input.select.RichFacesSelect;
-import org.richfaces.tests.page.fragments.impl.input.select.Select;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
+
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.select.RichFacesSelect;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -34,57 +36,48 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
- * @version $Revision$
  */
 public class TestSelect extends AbstractWebDriverTest {
 
-    @FindBy(jquery = "div.rf-sel:eq(0)")
+    @FindByJQuery("div.rf-sel:eq(0)")
     private RichFacesSelect first;
-    @FindBy(jquery = "div.rf-sel:eq(1)")
+    @FindByJQuery("div.rf-sel:eq(1)")
     private RichFacesSelect second;
+
+    @Test
+    public void testSelectManualInputByMouse() {
+        selectSomethingFromCapitalsSelectAndCheck("Arizona");
+        selectSomethingFromCapitalsSelectAndCheck("Florida");
+        selectSomethingFromCapitalsSelectAndCheck("California");
+    }
 
     @Test
     public void testSimpleSelectMouseSelect() {
         for (int i = 0; i < 5; i++) {
-            OptionList popup = first.callPopup();
-            Assert.assertTrue(first.isPopupPresent());
-            Assert.assertFalse(second.isPopupPresent());
-            popup.selectByIndex(i);
-            int selected = first.getSelectedOption().getIndex();
-            Assert.assertEquals(selected, i, "The option with index <" + i + "> should be selected.");
+            first.openSelect();
+            assertTrue(first.advanced().isPopupPresent());
+            assertFalse(second.advanced().isPopupPresent());
+            Graphene.guardNoRequest(first.openSelect()).select(i);
+            assertEquals(first.advanced().getInput().getStringValue(), "Option " + (i + 1));
         }
     }
-
-    @Test
-    public void testSelectManualInputByMouse() {
-        selectSomethingFromCapitalsSelectAndCheck(second, "Arizona");
-        selectSomethingFromCapitalsSelectAndCheck(second, "Florida");
-        selectSomethingFromCapitalsSelectAndCheck(second, "California");
-    }
-
     /* *******************************************************************************
      * Help methods ************************************************************** *****************
      */
 
     /**
-     * Types the beginning of capital and then selects from poppup and check whether right option was selected
+     * Types the beginning of capital and then selects from popup and check whether right option was selected
      */
-    private void selectSomethingFromCapitalsSelectAndCheck(Select select, String capital) {
-        select.getInput().clear(TextInputComponent.ClearType.BACKSPACE);
-        select.getInput().fillIn(capital.substring(0, 2));
+    private void selectSomethingFromCapitalsSelectAndCheck(String capital) {
+        second.type(capital.substring(0, 2));
 
-        Assert.assertTrue(select.isPopupPresent());
+        Assert.assertTrue(second.advanced().isPopupPresent());
 
-        OptionList popup = select.callPopup();
-        Assert.assertTrue(select.isPopupPresent());
-
-        for (Option option: popup.getOptions()) {
-            Assert.assertTrue(option.getVisibleText().startsWith(capital.substring(0, 2)), "The option '" + option.getVisibleText() + "' doesn't start with '" + capital.substring(0, 2) + "'.");
+        for (WebElement option : second.advanced().getSuggestionsElements()) {
+            Assert.assertTrue(option.getText().startsWith(capital.substring(0, 2)), "The option '" + option.getText() + "' doesn't start with '" + capital.substring(0, 2) + "'.");
         }
 
-        Option expected = popup.selectByIndex(0);
-        Assert.assertEquals(select.getSelectedOption().getVisibleText(), expected.getVisibleText());
-
+        Graphene.guardNoRequest(second.openSelect()).select(0);
+        assertEquals(second.advanced().getInput().getStringValue(), capital);
     }
-
 }

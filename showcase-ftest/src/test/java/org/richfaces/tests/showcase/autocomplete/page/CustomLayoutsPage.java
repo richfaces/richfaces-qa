@@ -21,10 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.autocomplete.page;
 
-import org.jboss.arquillian.graphene.component.object.api.autocomplete.Suggestion;
-import org.jboss.arquillian.graphene.component.object.api.autocomplete.SuggestionParser;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.openqa.selenium.WebElement;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
 
 /**
@@ -33,20 +30,26 @@ import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplet
  */
 public class CustomLayoutsPage {
 
-    @FindBy(jquery = ".rf-au:eq(0)")
-    public RichFacesAutocomplete<String> autocomplete1;
+    @FindByJQuery(".rf-au:eq(0)")
+    private RichFacesAutocomplete autocomplete1;
 
-    @FindBy(jquery = ".rf-au:eq(1)")
-    public RichFacesAutocomplete<String> autocomplete2;
+    @FindByJQuery(".rf-au:eq(1)")
+    private RichFacesAutocomplete autocomplete2;
 
-    public class FirstSuggestionParser implements SuggestionParser<String> {
+    public RichFacesAutocomplete getAutocomplete1() {
+        return autocomplete1;
+    }
 
-        @Override
-        public Suggestion<String> parse(WebElement arg0) {
-            // TODO Auto-generated method stub
-            return null;
-        }
+    public void setAutocomplete1(RichFacesAutocomplete autocomplete1) {
+        this.autocomplete1 = autocomplete1;
+    }
 
+    public RichFacesAutocomplete getAutocomplete2() {
+        return autocomplete2;
+    }
+
+    public void setAutocomplete2(RichFacesAutocomplete autocomplete2) {
+        this.autocomplete2 = autocomplete2;
     }
 
 }

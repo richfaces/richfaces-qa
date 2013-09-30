@@ -1,344 +1,270 @@
+/*******************************************************************************
+ * JBoss, Home of Professional Open Source
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.autocomplete;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.jboss.arquillian.graphene.Graphene;
+import java.util.concurrent.TimeUnit;
 
-import org.jboss.arquillian.graphene.component.object.api.autocomplete.AutocompleteComponent;
-import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
-import org.jboss.arquillian.graphene.component.object.api.autocomplete.Suggestion;
-import org.jboss.arquillian.graphene.component.object.api.autocomplete.SuggestionParser;
-import org.jboss.arquillian.graphene.component.object.api.scrolling.ScrollingType;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
-import org.jboss.arquillian.graphene.wait.WebDriverWait;
-import org.jboss.arquillian.test.api.ArquillianResource;
+import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.jboss.arquillian.graphene.fragment.Root;
+import org.jboss.arquillian.graphene.wait.FluentWait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.common.ClearType;
+import org.richfaces.tests.page.fragments.impl.common.ScrollingType;
+import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
+import org.richfaces.tests.page.fragments.impl.utils.Actions;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 
-public class RichFacesAutocomplete<T> implements AutocompleteComponent<T> {
+import com.google.common.base.Predicate;
 
-    public static final String CLASS_NAME_SUGG_LIST = "rf-au-lst-cord";
-    public static final String CLASS_NAME_SUGG = "rf-au-itm";
-    public static final String CLASS_NAME_SUGG_SELECTED = "rf-au-itm-sel";
-    public static final String CSS_INPUT = "input[type='text']";
+/**
+ * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ */
+public class RichFacesAutocomplete implements Autocomplete {
 
-    private static final Logger LOGGER = Logger.getLogger(AutocompleteComponent.class.getName());
+    private static final String SUGGESTIONS_CSS_SELECTOR_TEMPLATE = ".rf-au-lst-cord[id='%sList'] .rf-au-itm";
+    private static final String CSS_INPUT = "input[type='text']";
 
-    @ArquillianResource
-    private Actions actions;
+    @Drone
+    private WebDriver driver;
 
     @Root
     private WebElement root;
 
     @FindBy(css = CSS_INPUT)
-    private WebElement inputToWrite;
+    private TextInputComponentImpl input;
 
-    private String separator = " ";
-    private SuggestionParser<T> parser;
-    private List<Suggestion<T>> selectedSuggestions = new ArrayList<Suggestion<T>>();
+    private final AdvancedAutocompleteInteractions advancedInteractions = new AdvancedAutocompleteInteractions();
 
-    @Override
-    public boolean areSuggestionsAvailable() {
-        WebElement suggList = getRightSuggestionList();
-        return suggList == null ? false : suggList.isDisplayed();
+    private long _confirmWaitForSuggestionsToBeNotVisibleTimeout = -1;
+    private long _selectWaitForSuggestionsToBeNotVisibleTimeout = -1;
+    private long _selectWaitForSuggestionsToBeVisibleTimeout = -1;
+
+    public AdvancedAutocompleteInteractions advanced() {
+        return advancedInteractions;
     }
 
+    @Override
+    public void clear() {
+        advanced().clear(ClearType.DEFAULT_CLEAR_TYPE);
+    }
 
     @Override
-    public void clear(ClearType... clearType) {
-        if (clearType.length == 0) {
-            inputToWrite.clear();
-            return;
+    public SelectOrConfirm type(String str) {
+        if (!input.getStringValue().isEmpty()) {
+            input.sendKeys(advanced().getToken() + " ");
         }
-        if (clearType.length > 1) {
-            throw new IllegalArgumentException("The number of clear type method arguments should be one!");
+        input.sendKeys(str);
+        return new SelectOrConfirmImpl();
+    }
+
+    public class AdvancedAutocompleteInteractions {
+
+        private static final String DEFAULT_TOKEN = ",";
+        private final ScrollingType DEFAULT_SCROLLING_TYPE = ScrollingType.BY_MOUSE;
+        private ScrollingType scrollingType = DEFAULT_SCROLLING_TYPE;
+        private String token = DEFAULT_TOKEN;
+
+        /**
+         * Clears the value of autocomplete's input field.
+         *
+         * @param clearType defines how the input should be cleared, e.g. by using backspace key, by delete key, by JavaScript,
+         *        etc.
+         * @return input component
+         */
+        public TextInputComponentImpl clear(ClearType clearType) {
+            return advanced().getInput().advanced().clear(clearType);
         }
 
-        int valueLength = inputToWrite.getAttribute("value").length();
+        public TextInputComponentImpl getInput() {
+            return input;
+        }
 
-        switch(clearType[0]) {
-            case BACK_SPACE: {
-                for (int i = 0; i < valueLength; i++) {
-                    actions.sendKeys(inputToWrite, Keys.BACK_SPACE);
+        public WebElement getRootElement() {
+            return root;
+        }
+
+        protected ScrollingType getScrollingType() {
+            return scrollingType;
+        }
+
+        public List<WebElement> getSuggestionsElements() {
+            String id = root.getAttribute("id");
+            String selectorOfRoot = String.format(SUGGESTIONS_CSS_SELECTOR_TEMPLATE, id);
+            List<WebElement> foundElements = driver.findElements(By.cssSelector(selectorOfRoot));
+            if (!foundElements.isEmpty() && foundElements.get(0).isDisplayed()) { // prevent
+                                                                                  // returning
+                                                                                  // of
+                                                                                  // not
+                                                                                  // visible
+                // elements
+                return Collections.unmodifiableList(foundElements);
+            } else {
+                return Collections.emptyList();
+            }
+        }
+
+        public String getToken() {
+            return token;
+        }
+
+        public void setupToken() {
+            token = DEFAULT_TOKEN;
+        }
+
+        public void setupToken(String value) {
+            token = value;
+        }
+
+        public void setupScrollingType() {
+            scrollingType = DEFAULT_SCROLLING_TYPE;
+        }
+
+        public void setupScrollingType(ScrollingType type) {
+            scrollingType = type;
+        }
+
+        public WaitingWrapper waitForSuggestionsToBeNotVisible() {
+            return new WaitingWrapperImpl() {
+
+                @Override
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until(new Predicate<WebDriver>() {
+                        @Override
+                        public boolean apply(WebDriver input) {
+                            return getSuggestionsElements().isEmpty();
+                        }
+                    });
                 }
-                actions.build().perform();
-                break;
-            }
-            case ESCAPE_SQ: {
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < valueLength; i++) {
-                    sb.append("\b");
+            }.withMessage("Waiting for suggestions to be not visible");
+        }
+
+        public WaitingWrapper waitForSuggestionsToBeVisible() {
+            return new WaitingWrapperImpl() {
+
+                @Override
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until(new Predicate<WebDriver>() {
+                        @Override
+                        public boolean apply(WebDriver input) {
+                            return !getSuggestionsElements().isEmpty();
+                        }
+                    });
                 }
-                inputToWrite.sendKeys(sb.toString());
-                root.click();
-                break;
+            }.withMessage("Waiting for suggestions to be visible");
+        }
+
+        public void setupConfirmWaitForSuggestionsToBeNotVisibleTimeout(long timeout) {
+            _confirmWaitForSuggestionsToBeNotVisibleTimeout = timeout;
+        }
+
+        public void setupSelectWaitForSuggestionsToBeNotVisibleTimeout(long timeout) {
+            _selectWaitForSuggestionsToBeNotVisibleTimeout = timeout;
+        }
+
+        public void setupSelectWaitForSuggestionsToBeVisibleTimeout(long timeout) {
+            _selectWaitForSuggestionsToBeVisibleTimeout = timeout;
+        }
+    }
+
+    private long getConfirmWaitForSuggestionsToBeNotVisibleTimeout() {
+        return (_confirmWaitForSuggestionsToBeNotVisibleTimeout == -1L) ? Utils.getWaitAjaxDefaultTimeout(driver) : _confirmWaitForSuggestionsToBeNotVisibleTimeout;
+    }
+
+    private long getSelectWaitForSuggestionsToBeNotVisibleTimeout() {
+        return (_selectWaitForSuggestionsToBeNotVisibleTimeout == -1L) ? Utils.getWaitAjaxDefaultTimeout(driver) : _selectWaitForSuggestionsToBeNotVisibleTimeout;
+    }
+
+    private long getSelectWaitForSuggestionsToBeVisibleTimeout() {
+        return (_selectWaitForSuggestionsToBeVisibleTimeout == -1L) ? Utils.getWaitAjaxDefaultTimeout(driver) : _selectWaitForSuggestionsToBeVisibleTimeout;
+    }
+
+    public class SelectOrConfirmImpl implements SelectOrConfirm {
+
+        @Override
+        public Autocomplete confirm() {
+            new Actions(driver).sendKeys(Keys.RETURN).click(driver.findElement(Utils.BY_BODY)).perform();
+            advanced().waitForSuggestionsToBeNotVisible()
+                .withTimeout(getConfirmWaitForSuggestionsToBeNotVisibleTimeout(), TimeUnit.SECONDS).perform();
+            return RichFacesAutocomplete.this;
+        }
+
+        @Override
+        public Autocomplete select() {
+            return select(ChoicePickerHelper.byIndex().first());
+        }
+
+        @Override
+        public Autocomplete select(ChoicePicker picker) {
+            advanced().waitForSuggestionsToBeVisible()
+                .withTimeout(getSelectWaitForSuggestionsToBeVisibleTimeout(), TimeUnit.SECONDS).perform();
+            WebElement foundValue = picker.pick(advanced().getSuggestionsElements());
+            if (foundValue == null) {
+                throw new RuntimeException("The value was not found by " + picker.toString());
             }
-            case DELETE: {
-                String ctrlADel = Keys.chord(Keys.CONTROL, "a", Keys.DELETE);
-                actions.sendKeys(inputToWrite, ctrlADel).build().perform();
+
+            if (advanced().getScrollingType() == ScrollingType.BY_KEYS) {
+                selectWithKeys(foundValue);
+            } else {
+                foundValue.click();
             }
-        }
-    }
 
-    @Override
-    public void finish() {
-        actions.sendKeys(Keys.chord(Keys.SPACE, Keys.BACK_SPACE)).build().perform();
-        root.findElement(By.xpath("//body")).click();
-        waitForSuggestionsNotAvailable(Graphene.waitGui());
-    }
-
-     @Override
-    public List<Suggestion<T>> getAllSuggestions() {
-        checkParser();
-        if (!areSuggestionsAvailable()) {
-            return null;
-        }
-        List<Suggestion<T>> allSugg = new ArrayList<Suggestion<T>>();
-        WebElement rightSuggList = getRightSuggestionList();
-        List<WebElement> suggestions = rightSuggList.findElements(By.className(CLASS_NAME_SUGG));
-        for (WebElement suggestion : suggestions) {
-            allSugg.add(parser.parse(suggestion));
-        }
-        return allSugg;
-    }
-
-    @Override
-    public List<Suggestion<T>> getSelectedSuggestions() {
-        return selectedSuggestions;
-    }
-
-    @Override
-    public List<String> getInputValues() {
-        String currentInputValue = inputToWrite.getAttribute("value");
-        return currentInputValue != null ? Arrays.asList(currentInputValue.split(separator)) : Collections.EMPTY_LIST;
-    }
-
-    @Override
-    public void setSeparator(String regex) {
-        this.separator = regex;
-    }
-
-    @Override
-    public List<Suggestion<T>> getFirstNSuggestions(int n) {
-        checkParser();
-        List<Suggestion<T>> firstNSuggs = new ArrayList<Suggestion<T>>();
-
-        if (!areSuggestionsAvailable()) {
-            return null;
+            advanced().waitForSuggestionsToBeNotVisible()
+                .withTimeout(getSelectWaitForSuggestionsToBeNotVisibleTimeout(), TimeUnit.SECONDS).perform();
+            return RichFacesAutocomplete.this;
         }
 
-        for (int i = 1; i <= n; i++) {
-            firstNSuggs.add(getNthSuggestion(i));
+        @Override
+        public Autocomplete select(int index) {
+            return select(ChoicePickerHelper.byIndex().index(index));
         }
 
-        return firstNSuggs;
-    }
-
-    @Override
-    public Suggestion<T> getFirstSuggestion() {
-        List<Suggestion<T>> suggestion = getFirstNSuggestions(1);
-
-        if (suggestion != null) {
-            return suggestion.get(0);
+        @Override
+        public Autocomplete select(String match) {
+            return select(ChoicePickerHelper.byVisibleText().match(match));
         }
 
-        return null;
-    }
-
-    @Override
-    public Suggestion<T> getNthSuggestion(int order) {
-        checkParser();
-
-        if (!areSuggestionsAvailable()) {
-            return null;
-        }
-
-        WebElement rightSuggList = getRightSuggestionList();
-        WebElement nthSuggestion = rightSuggList.findElement(By.cssSelector("." + CLASS_NAME_SUGG + ":nth-of-type(" + order
-            + ")"));
-
-        return parser.parse(nthSuggestion);
-    }
-
-    @Override
-    public void type(String value) {
-        inputToWrite.sendKeys(value);
-        try {
-            waitForSuggestionsAvailable(Graphene.waitGui());
-        } catch (TimeoutException e) {
-            LOGGER.log(Level.WARNING, "Suggestions aren't visible after typing into the input field.", e);
-        }
-    }
-
-    @Override
-    public List<Suggestion<T>> typeAndReturn(String value) {
-        inputToWrite.sendKeys(value);
-        try {
-            waitForSuggestionsAvailable(Graphene.waitGui());
-        } catch (TimeoutException ex) {
-            // no suggestions available
-            return null;
-        }
-
-        return getAllSuggestions();
-    }
-
-    public void autocomplete() {
-        inputToWrite.sendKeys("\n"); // Keys.ENTER doesn't work
-    }
-
-    @Override
-    public boolean autocompleteWithSuggestion(Suggestion<T> sugg) {
-        return autocomplete(sugg);
-    }
-
-    @Override
-    public boolean autocompleteWithSuggestion(Suggestion<T> sugg, ScrollingType scrollingType) {
-        return autocomplete(sugg, scrollingType);
-    }
-
-    @Override
-    public void setSuggestionParser(SuggestionParser<T> parser) {
-        this.parser = parser;
-    }
-
-    @Override
-    public String getFirstInputValue() {
-        List<String> inputValues = getInputValues();
-        return !inputValues.isEmpty() ? inputValues.get(0) : null;
-    }
-
-    @Override
-    public String getInputValue() {
-        return inputToWrite.getAttribute("value");
-    }
-
-    protected boolean autocomplete(Suggestion<T> suggToCompleteWith, ScrollingType... scrollingType) {
-        if (!checkArgumentsAndThatSuggestionsAreAvailable(suggToCompleteWith, scrollingType)) {
-            return false;
-        }
-
-        WebElement suggList = getRightSuggestionList();
-        if (suggList == null) {
-            throw new RuntimeException("The suggestions are available, but can not retrieve the right suggestion list!");
-        }
-
-        // get all suggestions and find the desired one
-        List<WebElement> allSuggestions = suggList.findElements(By.className(CLASS_NAME_SUGG));
-        // index for remembering how many times it will need to press key down to select suggestion
-        int i = suggList.findElements(By.className(CLASS_NAME_SUGG_SELECTED)).isEmpty() ? 1 : 0;
-        for (WebElement suggestion : allSuggestions) {
-            if (suggestion.getText().equals(suggToCompleteWith.getValue())) {
-
-                // choose the suggestion according to the scrolling type
-                // at first it does not matter
-                if (scrollingType.length == 0) {
-                    suggestion.click();
-
-                    // select the suggestion by pressing exact times down key and then enter
-                } else if (scrollingType[0] == ScrollingType.BY_KEYS) {
-                    LOGGER.log(Level.FINE, "Scrolling by keys.");
-                    for (int j = 0; j < i; j++) {
-                        actions.sendKeys(Keys.DOWN);
-                    }
-
-                    actions.build().perform();
-                    WebElement selectedSugg = suggList.findElement(By.className(CLASS_NAME_SUGG_SELECTED));
-
-                    if (selectedSugg.getText().equals(suggToCompleteWith.getValue())) {
-                        actions.sendKeys(selectedSugg, Keys.ENTER);
-                        actions.build().perform();
-                    } else {
-                        actions.sendKeys(Keys.DOWN).sendKeys(selectedSugg, Keys.ENTER);
-                        actions.build().perform();
-                    }
-
-                    // workaround for NoSuchElementException
-                    Graphene.waitGui().until(Graphene.element(root).isPresent());
-
-                    // or move the mouse over the right suggestion and click
-                } else if (scrollingType[0] == ScrollingType.BY_MOUSE) {
-                    LOGGER.log(Level.FINE, "Scrolling by mouse.");
-                    actions.moveToElement(suggestion).build().perform();
-
-                    suggestion.click();
-                }
-
-                // add suggestion to the list of selected suggestions
-                selectedSuggestions.add(suggToCompleteWith);
-                return true;
+        private void selectWithKeys(WebElement foundValue) {
+            List<WebElement> suggestions = advanced().getSuggestionsElements();
+            // if selectFirst attribute of autocomplete is set, we don't have to
+            // press arrow down key for first item
+            boolean skip = suggestions.get(0).getAttribute("class").contains("rf-au-itm-sel");
+            int index = Utils.getIndexOfElement(foundValue);
+            int steps = index + (skip ? 0 : 1);
+            Actions actions = new Actions(driver);
+            for (int i = 0; i < steps; i++) {
+                actions.sendKeys(Keys.ARROW_DOWN);
             }
-            i++;
-        }
-
-        return false;
-    }
-
-    protected void checkParser() {
-        if (parser == null) {
-            throw new IllegalStateException("The parser need to be set before executing this method!");
-        }
-    }
-
-    protected boolean checkArgumentsAndThatSuggestionsAreAvailable(Object... arguments) {
-        for (Object argument : arguments) {
-            if (argument == null) {
-                throw new IllegalArgumentException("Argument can not be null!");
-            }
-        }
-
-        if (!areSuggestionsAvailable()) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Returns suggestion list of this autocomplete, null if there is not any.
-     *
-     * @return
-     */
-    protected WebElement getRightSuggestionList() {
-        // the problem here is that suggestion list object in DOM is moved out of the autocomplete component's form when it is
-        // displayed, therefore at first it is neccessary to find correct suggestion list and then check if it is displayed
-        List<WebElement> suggestionLists = root.findElements(By.xpath("//*[contains(@class,'" + CLASS_NAME_SUGG_LIST + "')]"));
-
-        for (WebElement suggList : suggestionLists) {
-            String idOfSuggLst = suggList.getAttribute("id");
-            String idOfInput = inputToWrite.getAttribute("id");
-
-            int index = idOfSuggLst.indexOf("List");
-            boolean result = idOfInput.contains(idOfSuggLst.substring(0, index));
-
-            if (result) {
-                return suggList;
-            }
-        }
-
-        return null;
-    }
-
-    protected void waitForSuggestionsAvailable(WebDriverWait wait) {
-        wait.until(Graphene.element(getRightSuggestionList()).isVisible());
-    }
-
-    protected void waitForSuggestionsNotAvailable(WebDriverWait wait) {
-        wait.until(Graphene.element(getRightSuggestionList()).not().isVisible());
-    }
-
-    protected void waitFor(long timeInMillis) {
-        try {
-            Thread.sleep(timeInMillis);
-        } catch (InterruptedException ignored) {
+            actions.sendKeys(foundValue, Keys.RETURN).perform();
         }
     }
 }

@@ -29,9 +29,11 @@ import static org.testng.Assert.assertTrue;
 
 import java.awt.Color;
 import java.net.URL;
+
 import org.jboss.arquillian.ajocado.utils.ColorUtils;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -162,7 +164,7 @@ public abstract class AbstractPlaceholderNonJSFTest extends AbstractWebDriverTes
         placeholderAttributes.set(PlaceholderAttributes.selector, INPUT1_ID);
         placeholderAttributes.set(PlaceholderAttributes.rendered, Boolean.FALSE);
 
-        assertFalse(Graphene.element(placeholder).isVisible().apply(driver), "Placeholder should not be visible");
+        assertFalse(new WebElementConditionFactory(placeholder).isVisible().apply(driver), "Placeholder should not be visible");
 
         assertEquals(getInputValue(input1), "", "Input 1 value");
         assertEquals(getInputValue(input2), "", "Input 2 value");

@@ -21,16 +21,14 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.contextMenu;
 
-import static org.jboss.arquillian.graphene.Graphene.element;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.testng.Assert.assertTrue;
 
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.showcase.contextMenu.page.TableContextMenuPage;
 import org.richfaces.tests.showcase.contextMenu.page.TreeContextMenuPage;
 import org.testng.annotations.Test;
 
@@ -58,8 +56,9 @@ public class TestTree extends AbstractContextMenuTest {
             waitGui().withTimeout(3, TimeUnit.SECONDS).until(page.getExpextedConditionOnNodeSelected(leaf));
             waitGui();
 
-            page.getContextMenu().selectItem(TableContextMenuPage.VIEW, leaf);
-            waitGui().withTimeout(3, TimeUnit.SECONDS).until(element(page.getArtistFromPopup()).isVisible());
+            page.getContextMenu().advanced().setupTarget(leaf);
+            page.getContextMenu().selectItem(0);
+            waitGui().withTimeout(3, TimeUnit.SECONDS).until().element(page.getArtistFromPopup()).is().visible();
 
             String artistFromPopup = page.getArtistFromPopup().getText();
 
@@ -67,7 +66,7 @@ public class TestTree extends AbstractContextMenuTest {
                 "The context menu was not invoked correctly! The popup contains different artist name than the node in the tree!");
 
             page.getCloseButton().click();
-            waitGui().withTimeout(3, TimeUnit.SECONDS).until(element(page.getArtistFromPopup()).not().isVisible());
+            waitGui().withTimeout(3, TimeUnit.SECONDS).until().element(page.getArtistFromPopup()).is().not().visible();
             counter++;
         }
     }
@@ -76,9 +75,9 @@ public class TestTree extends AbstractContextMenuTest {
     public void testContextMenuRenderedAtCorrectPosition() {
         page.expandNodes(4);
         WebElement elementToTryOn = page.getLeaves().get(0);
-        Graphene.waitGui().withTimeout(2, TimeUnit.SECONDS).until(element(elementToTryOn).isVisible());
+        Graphene.waitGui().withTimeout(2, TimeUnit.SECONDS).until().element(elementToTryOn).is().visible();
 
-        checkContextMenuRenderedAtCorrectPosition(elementToTryOn, page.getContextMenu().getMenuPopup(),
+        checkContextMenuRenderedAtCorrectPosition(elementToTryOn, page.getContextMenu().advanced().getMenuPopup(),
             InvocationType.RIGHT_CLICK, page.getExpextedConditionOnNodeSelected(elementToTryOn));
     }
 }

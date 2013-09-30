@@ -21,11 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.progressBar;
 
-
 import static org.jboss.arquillian.graphene.Graphene.waitAjax;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.testng.annotations.Test;
 
 /**
@@ -36,7 +36,7 @@ public class TestAjaxProgressBar extends AbstractProgressBarTest {
 
     private final int MAX_DEVIATION = 3;
 
-    @FindBy(jquery = "input[type='submit']:eq(0)")
+    @FindByJQuery("input[type='submit']:eq(0)")
     private WebElement startButton;
 
     @FindBy(css = "div[class='rf-pb-rmng']")

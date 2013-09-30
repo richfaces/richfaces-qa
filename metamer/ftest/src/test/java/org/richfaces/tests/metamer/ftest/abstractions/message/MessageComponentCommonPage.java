@@ -23,7 +23,7 @@ package org.richfaces.tests.metamer.ftest.abstractions.message;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
+import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 
 /**
  * Common page of all message(s) components (rich:message(s), rich:notifyMessage(s)).
@@ -32,25 +32,69 @@ import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
 public class MessageComponentCommonPage {
 
     @FindBy(css = "input[id$=a4jButton]")
-    public WebElement a4jCommandButton;
+    private WebElement a4jCommandButton;
     @FindBy(css = "input[id$=setCorrectValuesButton]")
-    public WebElement correctValuesButton;
+    private WebElement correctValuesButton;
     @FindBy(css = "input[id$=hButton]")
-    public WebElement hCommandButton;
+    private WebElement hCommandButton;
     @FindBy(css = "span[id$=newSpan]")
-    public WebElement newSpan;
+    private WebElement newSpan;
     @FindBy(css = "input[id$=simpleInput1]")
-    public TextInputComponentImpl simpleInput1;
+    private TextInputComponentImpl simpleInput1;
     @FindBy(css = "input[id$=simpleInput2]")
-    public TextInputComponentImpl simpleInput2;
+    private TextInputComponentImpl simpleInput2;
     @FindBy(css = "input[id$=setWrongValuesButton]")
-    public WebElement wrongValuesButton;
+    private WebElement wrongValuesButton;
     @FindBy(css = "input[id$=generateFatalMsgBtn]")
-    public WebElement generateFatalMessageButton;
+    private WebElement generateFatalMessageButton;
     @FindBy(css = "input[id$=generateErrorMsgBtn]")
-    public WebElement generateErrorMessageButton;
+    private WebElement generateErrorMessageButton;
     @FindBy(css = "input[id$=generateWarnMsgBtn]")
-    public WebElement generateWarnMessageButton;
+    private WebElement generateWarnMessageButton;
     @FindBy(css = "input[id$=generateInfoMsgBtn]")
-    public WebElement generateInfoMessageButton;
+    private WebElement generateInfoMessageButton;
+
+    public WebElement getA4jCommandButton() {
+        return a4jCommandButton;
+    }
+
+    public WebElement getCorrectValuesButton() {
+        return correctValuesButton;
+    }
+
+    public WebElement gethCommandButton() {
+        return hCommandButton;
+    }
+
+    public WebElement getNewSpan() {
+        return newSpan;
+    }
+
+    public TextInputComponentImpl getSimpleInput1() {
+        return simpleInput1;
+    }
+
+    public TextInputComponentImpl getSimpleInput2() {
+        return simpleInput2;
+    }
+
+    public WebElement getWrongValuesButton() {
+        return wrongValuesButton;
+    }
+
+    public WebElement getGenerateFatalMessageButton() {
+        return generateFatalMessageButton;
+    }
+
+    public WebElement getGenerateErrorMessageButton() {
+        return generateErrorMessageButton;
+    }
+
+    public WebElement getGenerateWarnMessageButton() {
+        return generateWarnMessageButton;
+    }
+
+    public WebElement getGenerateInfoMessageButton() {
+        return generateInfoMessageButton;
+    }
 }

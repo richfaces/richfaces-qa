@@ -25,12 +25,13 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.selectAttributes;
 
 import java.net.URL;
-import org.jboss.arquillian.graphene.Graphene;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.validator.CaliforniaFirstValidator;
 import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
+import org.richfaces.tests.page.fragments.impl.select.RichFacesSelect;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -42,7 +43,7 @@ import org.testng.annotations.Test;
 public class TestSelectValidator extends AbstractWebDriverTest {
 
     @FindBy(css = "div[id$=select]")
-    private RichFacesSelectEnhanced select;
+    private RichFacesSelect select;
     @FindBy(css = "[id$=message]")
     private RichFacesMessage message;
 
@@ -54,16 +55,16 @@ public class TestSelectValidator extends AbstractWebDriverTest {
     @Test
     public void testValidatorMessage() {
         String customMessage = "Custom message!";
-        Graphene.guardAjax(select.callPopup()).selectByIndex(10);
-        Assert.assertTrue(message.isVisible(), "Validator message should be visible");
+        Graphene.guardAjax(select.openSelect()).select(10);
+        Assert.assertTrue(message.advanced().isVisible(), "Validator message should be visible");
         Assert.assertEquals(message.getDetail(), CaliforniaFirstValidator.VALIDATOR_ERROR_MSG);
 
         selectAttributes.set(SelectAttributes.validatorMessage, customMessage);
-        Graphene.guardAjax(select.callPopup()).selectByIndex(10);
-        Assert.assertTrue(message.isVisible(), "Validator message should be visible");
+        Graphene.guardAjax(select.openSelect()).select(10);
+        Assert.assertTrue(message.advanced().isVisible(), "Validator message should be visible");
         Assert.assertEquals(message.getDetail(), customMessage);
 
-        Graphene.guardAjax(select.callPopup()).selectByVisibleText("California");
-        Assert.assertFalse(message.isVisible(), "Validator message should not be visible");
+        Graphene.guardAjax(select.openSelect()).select("California");
+        Assert.assertFalse(message.advanced().isVisible(), "Validator message should not be visible");
     }
 }

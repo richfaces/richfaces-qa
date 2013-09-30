@@ -21,127 +21,160 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.notify;
 
-import com.google.common.collect.Lists;
-
-import java.util.Iterator;
 import java.util.List;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.graphene.GrapheneElement;
+import org.jboss.arquillian.graphene.wait.FluentWait;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.richfaces.tests.page.fragments.impl.list.AbstractListComponent;
+import org.richfaces.tests.page.fragments.impl.list.ListItem;
 import org.richfaces.tests.page.fragments.impl.message.Message.MessageType;
+import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotify.NotifyMessageItemImpl;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
+import org.richfaces.tests.page.fragments.impl.utils.picker.MultipleChoicePicker;
+
+import com.google.common.base.Predicate;
 
 /**
- * Always use with @FindBy(tagName="body"). Global component.
+ * This fragment ignores its findBy. Global component.
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesNotify implements Notify {
+public class RichFacesNotify extends AbstractListComponent<NotifyMessageItemImpl> implements Notify<NotifyMessageItemImpl> {
 
-    @Root
-    private WebElement rootElement;
     @Drone
     private WebDriver driver;
-    //
-    @FindBy(css = "div.rf-ntf")
-    private List<RichFacesNotifyMessage> messages;
-    @FindBy(css = "div.rf-ntf.rf-ntf-err")
-    private List<RichFacesNotifyMessage> errorMessages;
-    @FindBy(css = "div.rf-ntf.rf-ntf-ftl")
-    private List<RichFacesNotifyMessage> fatalMessages;
-    @FindBy(css = "div.rf-ntf.rf-ntf-inf")
-    private List<RichFacesNotifyMessage> infoMessages;
-    @FindBy(css = "div.rf-ntf.rf-ntf-wrn")
-    private List<RichFacesNotifyMessage> warnMessages;
+
+    private String styleClass = "";
+
+    private static final String NOTIFY_MSG_STYLECLASS = "rf-ntf";
+    private static final String NOTIFY_FATAL_MSG_STYLECLASS = "rf-ntf-ftl";
+    private static final String NOTIFY_ERROR_MSG_STYLECLASS = "rf-ntf-err";
+    private static final String NOTIFY_WARN_MSG_STYLECLASS = "rf-ntf-wrn";
+    private static final String NOTIFY_INFO_MSG_STYLECLASS = "rf-ntf-inf";
+
+    private final AdvancedNotifyInteractionsImpl interactions = new AdvancedNotifyInteractionsImpl();
 
     @Override
-    public List<NotifyMessage> getAllMessagesOfType(MessageType type) {
+    public AdvancedNotifyInteractionsImpl advanced() {
+        return interactions;
+    }
+
+    private By getByForNotifyWithStyleClass(String additionalStyleClass) {
+        return By.cssSelector("div"
+            + getSelectorForStyleClassOrEmpty(NOTIFY_MSG_STYLECLASS)
+            + getSelectorForStyleClassOrEmpty(this.styleClass)
+            + getSelectorForStyleClassOrEmpty(additionalStyleClass));
+    }
+
+    private String getSelectorForStyleClassOrEmpty(String styleClass) {
+        return (styleClass == null || styleClass.isEmpty() ? "" : "." + styleClass);
+    }
+
+    private List<NotifyMessageItemImpl> getErrorMessages() {
+        return instantiateFragments(NotifyMessageItemImpl.class,
+            driver.findElements(getByForNotifyWithStyleClass(NOTIFY_ERROR_MSG_STYLECLASS)));
+    }
+
+    private List<NotifyMessageItemImpl> getFatalMessages() {
+        return instantiateFragments(NotifyMessageItemImpl.class,
+            driver.findElements(getByForNotifyWithStyleClass(NOTIFY_FATAL_MSG_STYLECLASS)));
+    }
+
+    private List<NotifyMessageItemImpl> getInfoMessages() {
+        return instantiateFragments(NotifyMessageItemImpl.class,
+            driver.findElements(getByForNotifyWithStyleClass(NOTIFY_INFO_MSG_STYLECLASS)));
+    }
+
+    @Override
+    public List<? extends NotifyMessage> getItems(MessageType type) {
         switch (type) {
             case OK:
                 throw new UnsupportedOperationException("Notify messages does not support messages of type 'OK'.");
             case INFORMATION:
-                return Lists.<NotifyMessage>newArrayList(infoMessages);
+                return getInfoMessages();
             case WARNING:
-                return Lists.<NotifyMessage>newArrayList(warnMessages);
+                return getWarnMessages();
             case ERROR:
-                return Lists.<NotifyMessage>newArrayList(errorMessages);
+                return getErrorMessages();
             case FATAL:
-                return Lists.<NotifyMessage>newArrayList(fatalMessages);
+                return getFatalMessages();
             default:
                 throw new UnsupportedOperationException("Unknown type " + type);
         }
     }
 
     @Override
-    public NotifyMessage getMessageAtIndex(int index) {
-        return messages.get(index);
+    protected List<WebElement> getItemsElements() {
+        return driver.findElements(getByForNotifyWithStyleClass(null));
     }
 
-    @Override
-    public WebElement getRoot() {
-        return rootElement;
+    private List<NotifyMessageItemImpl> getWarnMessages() {
+        return instantiateFragments(NotifyMessageItemImpl.class,
+            driver.findElements(getByForNotifyWithStyleClass(NOTIFY_WARN_MSG_STYLECLASS)));
     }
 
-    @Override
-    public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver input) {
-                return messages.isEmpty();
-            }
-        };
-    }
+    public class AdvancedNotifyInteractionsImpl implements AdvancedMessagesInteractions {
 
-    @Override
-    public boolean isVisible() {
-        return isVisibleCondition().apply(driver);
-    }
-
-    @Override
-    public ExpectedCondition<Boolean> isVisibleCondition() {
-        return new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver input) {
-                return !messages.isEmpty();
-            }
-        };
-    }
-
-    @Override
-    public Iterator<NotifyMessage> iterator() {
-        return new NotifyMessagesIterator(messages.iterator());
-    }
-
-    @Override
-    public int size() {
-        return messages.size();
-    }
-
-    private static class NotifyMessagesIterator implements Iterator<NotifyMessage> {
-
-        private final Iterator<RichFacesNotifyMessage> iterator;
-
-        public NotifyMessagesIterator(Iterator<RichFacesNotifyMessage> iterator) {
-            this.iterator = iterator;
+        public void setStyleClassToContain(String styleClass) {
+            RichFacesNotify.this.styleClass = styleClass;
         }
 
         @Override
-        public boolean hasNext() {
-            return iterator.hasNext();
+        public boolean isVisible() {
+            return !getItemsElements().isEmpty();
         }
 
         @Override
-        public NotifyMessage next() {
-            return iterator.next();
+        public WaitingWrapper waitUntilMessagesAreNotVisible() {
+            return new WaitingWrapperImpl() {
+
+                @Override
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until(new Predicate<WebDriver>() {
+
+                        @Override
+                        public boolean apply(WebDriver input) {
+                            return !isVisible();
+                        }
+                    });
+                }
+            }.withMessage("Waiting for notify to be not visible.");
         }
 
         @Override
-        public void remove() {
-            throw new UnsupportedOperationException("Remove operation is not supported");
+        public WaitingWrapper waitUntilMessagesAreVisible() {
+            return new WaitingWrapperImpl() {
+
+                @Override
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until(new Predicate<WebDriver>() {
+
+                        @Override
+                        public boolean apply(WebDriver input) {
+                            return isVisible();
+                        }
+                    });
+                }
+            }.withMessage("Waiting for notify to be visible.");
         }
     }
+
+    public static class NotifyMessageItemImpl extends RichFacesNotifyMessage implements NotifyMessage, ListItem {
+
+        @Override
+        public GrapheneElement getRootElement() {
+            return super.getRootElement();
+        }
+
+        @Override
+        public String getText() {
+            return getRootElement().getText();
+        }
+    }
+
 }

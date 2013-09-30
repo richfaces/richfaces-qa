@@ -30,17 +30,17 @@ import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
-import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.contextMenu.AbstractPopupMenu;
-import org.richfaces.tests.page.fragments.impl.dropDownMenu.internal.RichFacesDropDownMenuInternal;
+import org.richfaces.tests.page.fragments.impl.dropDownMenu.RichFacesDropDownMenu;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -52,9 +52,9 @@ import org.testng.annotations.Test;
  */
 public class TestMenuItem extends AbstractWebDriverTest {
 
-    @FindBy(jquery = ".rf-tb-itm:eq(0)")
-    private RichFacesDropDownMenuInternal fileDropDownMenu;
-    @FindBy(jquery = ".rf-ddm-lbl-dec:eq(0)")
+    @FindByJQuery(".rf-tb-itm:eq(0)")
+    private RichFacesDropDownMenu fileDropDownMenu;
+    @FindByJQuery(".rf-ddm-lbl-dec:eq(0)")
     private WebElement target1;
     @FindBy(css = "div[id$=menu1] div.rf-ddm-lbl-dec")
     private WebElement fileMenuLabel;
@@ -81,7 +81,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     private void openMenu() {
-        fileDropDownMenu.invoke(target1);
+        fileDropDownMenu.advanced().show(target1);
         Graphene.waitGui().until().element(fileMenuLabel).is().visible();
     }
 
@@ -136,7 +136,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
         menuItemAttributes.set(MenuItemAttributes.disabled, Boolean.TRUE);
 
         assertTrue(menuItem1.getAttribute("class").contains("rf-ddm-itm-dis"),
-                "Menu item should have class 'rf-ddm-itm-dis'.");
+            "Menu item should have class 'rf-ddm-itm-dis'.");
         assertNotPresent(icon, "Icon should not be present.");
         assertPresent(emptyIcon, "Empty icon should be present.");
     }
@@ -152,11 +152,11 @@ public class TestMenuItem extends AbstractWebDriverTest {
     public void testIcon() {
         menuItemAttributes.set(MenuItemAttributes.icon, "star");
         assertTrue(icon.getAttribute("src").contains("star.png"),
-                "Image's src attribute should contain 'star.png'.");
+            "Image's src attribute should contain 'star.png'.");
 
         menuItemAttributes.set(MenuItemAttributes.icon, "nonexisting");
         assertTrue(icon.getAttribute("src").contains("nonexisting"),
-                "Image's src attribute should contain 'nonexisting'.");
+            "Image's src attribute should contain 'nonexisting'.");
 
         menuItemAttributes.set(MenuItemAttributes.icon, "null");
         assertNotPresent(icon, "Icon should not be present.");
@@ -173,12 +173,12 @@ public class TestMenuItem extends AbstractWebDriverTest {
         menuItemAttributes.set(MenuItemAttributes.iconDisabled, "star");
         openMenu();
         assertTrue(icon.getAttribute("src").contains("star.png"),
-                "Image's src attribute should contain 'star.png'.");
+            "Image's src attribute should contain 'star.png'.");
 
         menuItemAttributes.set(MenuItemAttributes.iconDisabled, "nonexisting");
         openMenu();
         assertTrue(icon.getAttribute("src").contains("nonexisting"),
-                "Image's src attribute should contain 'nonexisting'.");
+            "Image's src attribute should contain 'nonexisting'.");
     }
 
     @Test
@@ -198,7 +198,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
         assertEquals(fileMenuLabel.getText(), "File", "Label of the menu");
 
         assertNotVisible(fileMenuList, "Menu should not be expanded");
-        Graphene.guardNoRequest(fileDropDownMenu).invoke(target1);
+        Graphene.guardNoRequest(fileDropDownMenu).advanced().show(target1);
         assertVisible(fileMenuList, "Menu should be expanded");
 
         assertVisible(icon, "Icon of menu item should be visible on the page");
@@ -358,6 +358,6 @@ public class TestMenuItem extends AbstractWebDriverTest {
 
     @BeforeMethod
     private void updateDropDownMenuInvoker() {
-        fileDropDownMenu.setInvoker(AbstractPopupMenu.HOVER);
+        fileDropDownMenu.advanced().setupShowEvent(Event.MOUSEOVER);
     }
 }

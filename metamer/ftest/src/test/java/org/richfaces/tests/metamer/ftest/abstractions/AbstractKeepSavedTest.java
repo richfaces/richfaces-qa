@@ -24,15 +24,17 @@ package org.richfaces.tests.metamer.ftest.abstractions;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponent.ClearType;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
+import org.richfaces.tests.page.fragments.impl.common.ClearType;
+import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.messages.RichFacesMessages;
 import org.testng.Assert;
 
@@ -47,7 +49,7 @@ public class AbstractKeepSavedTest extends AbstractWebDriverTest {
     //
     private final String componentName;
     //
-    @FindBy(jquery = "[id$=panel] input[type=text]:first")
+    @FindByJQuery("[id$=panel] input[type=text]:first")
     private TextInputComponentImpl firstInput;
     @FindBy(css = "input[id$=submitButton]")
     private WebElement submitButton;
@@ -62,7 +64,7 @@ public class AbstractKeepSavedTest extends AbstractWebDriverTest {
     }
 
     protected void changeInputValueToAndSubmit(String s) {
-        firstInput.clear(ClearType.JS).fillIn(s);
+        firstInput.advanced().clear(ClearType.JS).sendKeys(s);
         submit();
     }
 
@@ -89,23 +91,23 @@ public class AbstractKeepSavedTest extends AbstractWebDriverTest {
         changeInputValueToAndSubmit(TEXT_CORRECT);
         // check that value is saved
         Assert.assertEquals(getInputValue(), TEXT_CORRECT);
-        Assert.assertFalse(messages.isVisible(), "No error message should be visible.");
+        Assert.assertFalse(messages.advanced().isVisible(), "No error message should be visible.");
 
         // put in a wrong value and submit
         changeInputValueToAndSubmit(TEXT_WRONG);
         // check if the value is saved depending on the @keepSaved
         Assert.assertEquals(getInputValue(), (keepSaved ? TEXT_WRONG : TEXT_CORRECT));
-        Assert.assertTrue(messages.isVisible(), "An error message should be visible.");
+        Assert.assertTrue(messages.advanced().isVisible(), "An error message should be visible.");
         Assert.assertEquals(messages.size(), 1, "Only 1 error message should be visible.");
         // check if the value is saved depending on the @keepSaved after another submit
         submit();
         if (keepSaved) {
             Assert.assertEquals(getInputValue(), TEXT_WRONG);
-            Assert.assertTrue(messages.isVisible(), "An error message should be visible.");
+            Assert.assertTrue(messages.advanced().isVisible(), "An error message should be visible.");
             Assert.assertEquals(messages.size(), 1, "Only 1 error message should be visible.");
         } else {
             Assert.assertEquals(getInputValue(), TEXT_CORRECT);
-            Assert.assertFalse(messages.isVisible(), "No error message should be visible.");
+            Assert.assertFalse(messages.advanced().isVisible(), "No error message should be visible.");
         }
     }
 

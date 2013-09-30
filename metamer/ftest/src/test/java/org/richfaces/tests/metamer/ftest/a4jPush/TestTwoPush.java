@@ -26,12 +26,10 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.pushAttr
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-import com.google.common.base.Predicate;
-
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -44,13 +42,18 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
+import com.google.common.base.Predicate;
+
 public class TestTwoPush extends AbstractWebDriverTest {
 
     @Page
     private TwoPushPage page;
 
     private void clickPushEnableCheckbox(boolean waitForReinitialization) {
-        MetamerPage.waitRequest(page.pushEnabledChckBox, WaitRequestType.XHR).click();
+        // Graphene.guardAjax doesn't work here
+        String requestTime = page.getRequestTimeElement().getText();
+        page.pushEnabledChckBox.click();
+        Graphene.waitAjax().until().element(page.getRequestTimeElement()).text().not().equalTo(requestTime);
         if (waitForReinitialization) {
             waitUntilPushReinits();
         }

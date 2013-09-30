@@ -23,13 +23,15 @@ package org.richfaces.tests.showcase.extendedDataTable.page;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.showcase.dataTable.AbstractDataIterationWithCars;
 import org.richfaces.tests.showcase.dataTable.AbstractDataIterationWithCars.Car;
 
@@ -38,13 +40,13 @@ import org.richfaces.tests.showcase.dataTable.AbstractDataIterationWithCars.Car;
  */
 public class EDTSelectionPage {
 
-    @FindBy(jquery="*.rf-edt-b td div *.rf-edt-tbl")
+    @FindByJQuery("*.rf-edt-b td div *.rf-edt-tbl")
     private List<WebElement> tableParts;
-    @FindBy(jquery="tbody[id$=tbf] tr")
+    @FindByJQuery("tbody[id$=tbf] tr")
     private List<WebElement> rows;
-    @FindBy(css="ul.rf-ulst li")
+    @FindBy(css = "ul.rf-ulst li")
     private List<WebElement> selected;
-    @FindBy(css="input[type='radio']")
+    @FindBy(css = "input[type='radio']")
     private List<WebElement> radios;
 
     @ArquillianResource
@@ -60,7 +62,7 @@ public class EDTSelectionPage {
 
     public void setSelectionMode(SelectionMode mode) {
         WebElement radio = null;
-        switch(mode) {
+        switch (mode) {
             case SINGLE:
                 radio = radios.get(0);
                 break;
@@ -71,13 +73,13 @@ public class EDTSelectionPage {
                 radio = radios.get(2);
         }
         if (!radio.isSelected()) {
-            Graphene.guardXhr(radio).click();
+            Graphene.guardAjax(radio).click();
         }
     }
 
     public List<Car> getSelectedCars() {
         List<Car> result = new ArrayList<Car>();
-        for (WebElement element: selected) {
+        for (WebElement element : selected) {
             String[] content = element.getText().trim().split(" - ");
             result.add(new AbstractDataIterationWithCars.Car(content[0], content[1], content[2], null, null, null));
         }
@@ -88,12 +90,12 @@ public class EDTSelectionPage {
         List<WebElement> cells1 = tableParts.get(0).findElements(By.tagName("tr")).get(rowIndex).findElements(By.cssSelector("td > div > div"));
         List<WebElement> cells2 = tableParts.get(1).findElements(By.tagName("tr")).get(rowIndex).findElements(By.cssSelector("td > div > div"));
         return new AbstractDataIterationWithCars.Car(
-                cells1.get(0).getText(),
-                cells1.get(1).getText(),
-                cells2.get(0).getText(),
-                cells2.get(1).getText(),
-                cells2.get(2).getText(),
-                null);
+            cells1.get(0).getText(),
+            cells1.get(1).getText(),
+            cells2.get(0).getText(),
+            cells2.get(1).getText(),
+            cells2.get(2).getText(),
+            null);
     }
 
     public List<AbstractDataIterationWithCars.Car> getCars() {
@@ -108,7 +110,7 @@ public class EDTSelectionPage {
         List<String> mileage = new ArrayList<String>();
         List<String> vin = new ArrayList<String>();
         int index = 0;
-        for (WebElement row: tableParts.get(0).findElements(By.tagName("tr"))) {
+        for (WebElement row : tableParts.get(0).findElements(By.tagName("tr"))) {
             index++;
             List<WebElement> cells = row.findElements(By.cssSelector("td > div > div"));
             vendor.add(cells.get(0).getText());
@@ -118,7 +120,7 @@ public class EDTSelectionPage {
             }
         }
         index = 0;
-        for (WebElement row: tableParts.get(1).findElements(By.tagName("tr"))) {
+        for (WebElement row : tableParts.get(1).findElements(By.tagName("tr"))) {
             index++;
             List<WebElement> cells = row.findElements(By.cssSelector("td > div > div"));
             price.add(cells.get(0).getText());
@@ -128,7 +130,7 @@ public class EDTSelectionPage {
                 break;
             }
         }
-        for (int i=0; i < vendor.size(); i++) {
+        for (int i = 0; i < vendor.size(); i++) {
             result.add(new AbstractDataIterationWithCars.Car(vendor.get(i), model.get(i), price.get(i), mileage.get(i), vin.get(i), null));
         }
         return result;
@@ -139,10 +141,12 @@ public class EDTSelectionPage {
     }
 
     public static enum SelectionMode {
+
         SINGLE, MULTIPLE, MULTIPLE_KEYBOARD_FREE;
     }
 
     public interface Selection {
+
         void select(int... rows);
     }
 
@@ -176,8 +180,8 @@ public class EDTSelectionPage {
 
         @Override
         public void select(int... rows) {
-            for (int index: rows) {
-                Graphene.guardXhr(rowElements.get(index)).click();
+            for (int index : rows) {
+                Graphene.guardAjax(rowElements.get(index)).click();
             }
         }
     }

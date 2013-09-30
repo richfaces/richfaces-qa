@@ -33,10 +33,10 @@ import org.richfaces.tests.metamer.ftest.webdriver.AttributeList;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.validation.MultipleValidationRulesBean;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponent.ClearType;
+import org.richfaces.tests.page.fragments.impl.common.ClearType;
 import org.richfaces.tests.page.fragments.impl.message.Message;
 import org.richfaces.tests.page.fragments.impl.message.Message.MessageType;
-import org.richfaces.tests.page.fragments.impl.messages.MessagesBase;
+import org.richfaces.tests.page.fragments.impl.messages.Messages;
 import org.testng.Assert;
 
 /**
@@ -49,19 +49,19 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
 
     public void checkAjaxRendered() {
         generateValidationMessagesWithWait();
-        assertTrue(getPage().getMessagesComponentWithFor().isVisible());
-        assertTrue(getPage().getMessagesComponentWithGlobal().isVisible());
+        assertTrue(getPage().getMessagesComponentWithFor().advanced().isVisible());
+        assertTrue(getPage().getMessagesComponentWithGlobal().advanced().isVisible());
 
         AttributeList.messagesAttributes.set(MessagesAttributes.ajaxRendered, Boolean.FALSE);
         generateValidationMessagesWithoutWait();
 
-        assertFalse(getPage().getMessagesComponentWithFor().isVisible());
-        assertFalse(getPage().getMessagesComponentWithGlobal().isVisible());
+        assertFalse(getPage().getMessagesComponentWithFor().advanced().isVisible());
+        assertFalse(getPage().getMessagesComponentWithGlobal().advanced().isVisible());
 
         //submit with h:commandbutton
-        MetamerPage.waitRequest(getPage().hCommandButton, WaitRequestType.HTTP).click();
-        assertTrue(getPage().getMessagesComponentWithFor().isVisible());
-        assertTrue(getPage().getMessagesComponentWithGlobal().isVisible());
+        MetamerPage.waitRequest(getPage().gethCommandButton(), WaitRequestType.HTTP).click();
+        assertTrue(getPage().getMessagesComponentWithFor().advanced().isVisible());
+        assertTrue(getPage().getMessagesComponentWithGlobal().advanced().isVisible());
     }
 
     public abstract void checkFor(int expectedMessages);
@@ -79,10 +79,10 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
     public void checkMessagesTypes() {
         generateAllKindsOfMessagesWithWait();
         assertEquals(getPage().getMessagesComponentWithFor().size(), 4);
-        getPage().getMessagesComponentWithFor().getMessageAtIndex(0).isType(MessageType.FATAL);
-        getPage().getMessagesComponentWithFor().getMessageAtIndex(1).isType(MessageType.ERROR);
-        getPage().getMessagesComponentWithFor().getMessageAtIndex(2).isType(MessageType.WARNING);
-        getPage().getMessagesComponentWithFor().getMessageAtIndex(3).isType(MessageType.INFORMATION);
+        assertEquals(getPage().getMessagesComponentWithFor().getItem(0).getType(), MessageType.FATAL);
+        assertEquals(getPage().getMessagesComponentWithFor().getItem(1).getType(), MessageType.ERROR);
+        assertEquals(getPage().getMessagesComponentWithFor().getItem(2).getType(), MessageType.WARNING);
+        assertEquals(getPage().getMessagesComponentWithFor().getItem(3).getType(), MessageType.INFORMATION);
     }
 
     public void checkNoShowDetailNoShowSummary() {
@@ -92,23 +92,23 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
         generateValidationMessagesWithoutWait();
         submitWithA4jBtn();
 
-        assertFalse(getPage().getMessagesComponentWithGlobal().isVisible());
-        assertFalse(getPage().getMessagesComponentWithFor().isVisible());
+        assertFalse(getPage().getMessagesComponentWithGlobal().advanced().isVisible());
+        assertFalse(getPage().getMessagesComponentWithFor().advanced().isVisible());
     }
 
     public void checkRendered() {
         AttributeList.messagesAttributes.set(MessagesAttributes.rendered, Boolean.TRUE);
         generateValidationMessagesWithWait();
 
-        assertTrue(getPage().getMessagesComponentWithGlobal().isVisible());
-        assertTrue(getPage().getMessagesComponentWithFor().isVisible());
+        assertTrue(getPage().getMessagesComponentWithGlobal().advanced().isVisible());
+        assertTrue(getPage().getMessagesComponentWithFor().advanced().isVisible());
 
         AttributeList.messagesAttributes.set(MessagesAttributes.rendered, Boolean.FALSE);
         generateValidationMessagesWithoutWait();
         submitWithA4jBtn();
 
-        assertFalse(getPage().getMessagesComponentWithGlobal().isVisible());
-        assertFalse(getPage().getMessagesComponentWithFor().isVisible());
+        assertFalse(getPage().getMessagesComponentWithGlobal().advanced().isVisible());
+        assertFalse(getPage().getMessagesComponentWithFor().advanced().isVisible());
     }
 
     public void checkShowDetail() {
@@ -116,14 +116,14 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
         AttributeList.messagesAttributes.set(MessagesAttributes.showDetail, Boolean.TRUE);
         generateValidationMessagesWithWait();
 
-        assertTrue(getPage().getMessagesComponentWithGlobal().getMessageAtIndex(0).isDetailVisible());
-        assertTrue(getPage().getMessagesComponentWithFor().getMessageAtIndex(0).isDetailVisible());
+        assertVisible(getPage().getMessagesComponentWithGlobal().getItem(0).advanced().getDetailElement(), "Detail should be visible");
+        assertVisible(getPage().getMessagesComponentWithFor().getItem(0).advanced().getDetailElement(), "Detail should be visible");
 
         AttributeList.messagesAttributes.set(MessagesAttributes.showDetail, Boolean.FALSE);
         generateValidationMessagesWithWait();
 
-        assertFalse(getPage().getMessagesComponentWithGlobal().getMessageAtIndex(0).isDetailVisible());
-        assertFalse(getPage().getMessagesComponentWithFor().getMessageAtIndex(0).isDetailVisible());
+        assertNotVisible(getPage().getMessagesComponentWithGlobal().getItem(0).advanced().getDetailElement(), "Detail should not be visible");
+        assertNotVisible(getPage().getMessagesComponentWithFor().getItem(0).advanced().getDetailElement(), "Detail should not be visible");
     }
 
     public void checkShowSummary() {
@@ -131,14 +131,14 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
         AttributeList.messagesAttributes.set(MessagesAttributes.showSummary, Boolean.TRUE);
         generateValidationMessagesWithWait();
 
-        assertTrue(getPage().getMessagesComponentWithGlobal().getMessageAtIndex(0).isSummaryVisible());
-        assertTrue(getPage().getMessagesComponentWithFor().getMessageAtIndex(0).isSummaryVisible());
+        assertVisible(getPage().getMessagesComponentWithGlobal().getItem(0).advanced().getSummaryElement(), "Summary should be visible");
+        assertVisible(getPage().getMessagesComponentWithFor().getItem(0).advanced().getSummaryElement(), "Summary should be visible");
 
         AttributeList.messagesAttributes.set(MessagesAttributes.showSummary, Boolean.FALSE);
         generateValidationMessagesWithWait();
 
-        assertFalse(getPage().getMessagesComponentWithGlobal().getMessageAtIndex(0).isSummaryVisible());
-        assertFalse(getPage().getMessagesComponentWithFor().getMessageAtIndex(0).isSummaryVisible());
+        assertNotVisible(getPage().getMessagesComponentWithGlobal().getItem(0).advanced().getSummaryElement(), "Summary should not be visible");
+        assertNotVisible(getPage().getMessagesComponentWithFor().getItem(0).advanced().getSummaryElement(), "Summary should not be visible");
     }
 
     public void checkSimple(int expectedNumberOfMessages) {
@@ -149,12 +149,12 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
         String[] validationMessages = { validationMessage1, validationMessage2, validationMessage3, validationMessage4 };
         //generate messages
         generateValidationMessagesWithWait();
-        Assert.assertTrue(getPage().getMessagesComponentWithFor().isVisible());
-        Assert.assertTrue(getPage().getMessagesComponentWithGlobal().isVisible());
+        Assert.assertTrue(getPage().getMessagesComponentWithFor().advanced().isVisible());
+        Assert.assertTrue(getPage().getMessagesComponentWithGlobal().advanced().isVisible());
         Assert.assertEquals(getPage().getMessagesComponentWithFor().size(), expectedNumberOfMessages, "Number of messages for message component with @for attribute.");
         Assert.assertEquals(getPage().getMessagesComponentWithGlobal().size(), expectedNumberOfMessages * 2, "Number of messages for message component with @globalOnly attribute.");
-        MessagesBase<? extends Message> messagesComponentWithFor = getPage().getMessagesComponentWithFor();
-        for (Message message : messagesComponentWithFor) {
+        Messages<? extends Message> messagesComponentWithFor = getPage().getMessagesComponentWithFor();
+        for (Message message : messagesComponentWithFor.getItems()) {
             boolean wasFound = Boolean.FALSE;
             for (String s : validationMessages) {
                 if (message.getSummary().contains(s)) {
@@ -167,28 +167,28 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
 
         //hide all messages
         setCorrectValuesWithWaiting();
-        Assert.assertFalse(getPage().getMessagesComponentWithFor().isVisible());
-        Assert.assertFalse(getPage().getMessagesComponentWithGlobal().isVisible());
+        Assert.assertFalse(getPage().getMessagesComponentWithFor().advanced().isVisible());
+        Assert.assertFalse(getPage().getMessagesComponentWithGlobal().advanced().isVisible());
         //type bad value to first input
-        getPage().simpleInput1.clear(ClearType.JS).fillIn("bad value");
+        getPage().getSimpleInput1().advanced().clear(ClearType.JS).sendKeys("bad value");
         submitWithHBtn();
 
-        Assert.assertTrue(getPage().getMessagesComponentWithFor().isVisible());
-        Assert.assertTrue(getPage().getMessagesComponentWithGlobal().isVisible());
+        Assert.assertTrue(getPage().getMessagesComponentWithFor().advanced().isVisible());
+        Assert.assertTrue(getPage().getMessagesComponentWithGlobal().advanced().isVisible());
         Assert.assertEquals(getPage().getMessagesComponentWithFor().size(), 1, "Number of messages for message component with @for attribute.");
         Assert.assertEquals(getPage().getMessagesComponentWithGlobal().size(), 1, "Number of messages for message component with @globalOnly attribute.");
-        Assert.assertTrue(getPage().getMessagesComponentWithFor().getMessageAtIndex(0).getSummary().contains("'bad value' must be a number consisting of one or more digits."));
-        Assert.assertTrue(getPage().getMessagesComponentWithGlobal().getMessageAtIndex(0).getSummary().contains("'bad value' must be a number consisting of one or more digits."));
+        Assert.assertTrue(getPage().getMessagesComponentWithFor().getItem(0).getSummary().contains("'bad value' must be a number consisting of one or more digits."));
+        Assert.assertTrue(getPage().getMessagesComponentWithGlobal().getItem(0).getSummary().contains("'bad value' must be a number consisting of one or more digits."));
         //hide all messages
         setCorrectValuesWithWaiting();
         //type bad value to second input
-        getPage().simpleInput2.clear(ClearType.JS).fillIn("bad value");
+        getPage().getSimpleInput2().advanced().clear(ClearType.JS).sendKeys("bad value");
         submitWithHBtn();
 
-        Assert.assertFalse(getPage().getMessagesComponentWithFor().isVisible());
-        Assert.assertTrue(getPage().getMessagesComponentWithGlobal().isVisible());
+        Assert.assertFalse(getPage().getMessagesComponentWithFor().advanced().isVisible());
+        Assert.assertTrue(getPage().getMessagesComponentWithGlobal().advanced().isVisible());
         Assert.assertEquals(getPage().getMessagesComponentWithGlobal().size(), 1, "Number of messages for message component with @globalOnly attribute.");
-        Assert.assertTrue(getPage().getMessagesComponentWithGlobal().getMessageAtIndex(0).getSummary().contains("'bad value' must be a number consisting of one or more digits."));
+        Assert.assertTrue(getPage().getMessagesComponentWithGlobal().getItem(0).getSummary().contains("'bad value' must be a number consisting of one or more digits."));
     }
 
     @Override
@@ -200,7 +200,7 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
         setCorrectValues();
         submitWithA4jBtn();
         MetamerPage.waitRequest(getPage().generateAllMsgsButton, WaitRequestType.XHR).click();
-        Graphene.waitAjax().until(getPage().getMessagesComponentWithGlobal().isVisibleCondition());
+        getPage().getMessagesComponentWithGlobal().advanced().waitUntilMessagesAreVisible().perform();
     }
 
     @Override
@@ -211,7 +211,7 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
 
     protected void generateValidationMessagesWithoutWait() {
         executeJS("window.valuesSettingState=''");
-        getPage().wrongValuesButton.click();
+        getPage().getWrongValuesButton().click();
         waitForValuesSetting();
     }
 
@@ -223,18 +223,18 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
     protected abstract MessagesComponentTestPage<? extends Message> getPage();
 
     protected String getSimpleInput1ID() {
-        return getIDOfElement(getPage().simpleInput1.getInput());
+        return getIDOfElement(getPage().getSimpleInput1().advanced().getInputElement());
     }
 
     protected String getSimpleInput2ID() {
-        return getIDOfElement(getPage().simpleInput2.getInput());
+        return getIDOfElement(getPage().getSimpleInput2().advanced().getInputElement());
     }
 
     @Override
     protected void waitingForValidationMessagesToHide() {
         submitWithHBtn();
-        Graphene.waitGui().until(getPage().getMessagesComponentWithFor().isNotVisibleCondition());
-        Graphene.waitGui().until(getPage().getMessagesComponentWithGlobal().isNotVisibleCondition());
+        getPage().getMessagesComponentWithFor().advanced().waitUntilMessagesAreNotVisible().perform();
+        getPage().getMessagesComponentWithGlobal().advanced().waitUntilMessagesAreNotVisible().perform();
     }
 
     private class GenerateMessagesAction implements Action {

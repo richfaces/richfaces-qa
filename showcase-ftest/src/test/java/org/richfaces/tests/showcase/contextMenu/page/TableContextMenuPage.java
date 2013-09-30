@@ -1,7 +1,5 @@
 package org.richfaces.tests.showcase.contextMenu.page;
 
-import static org.jboss.arquillian.graphene.Graphene.element;
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -11,7 +9,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.page.fragments.impl.contextMenu.RichFacesContextMenu;
-import org.richfaces.tests.page.fragments.impl.contextMenu.PopupMenuItem;
 
 public class TableContextMenuPage {
 
@@ -27,7 +24,6 @@ public class TableContextMenuPage {
     @FindBy(css = "input[type='button']")
     private WebElement closeButton;
 
-    public static final PopupMenuItem VIEW = new PopupMenuItem("View");
     private static final String CLASS_OF_SELECTED_ROW = "rf-edt-r-act";
 
     public ExpectedCondition<Boolean> getWaitConditionOnSelectingRow(final WebElement row) {
@@ -45,7 +41,7 @@ public class TableContextMenuPage {
         closeButton.click();
 
         Graphene.waitGui().withTimeout(2, TimeUnit.SECONDS).withMessage("The popup was not closed in a given timeout!")
-            .until(element(closeButton).not().isVisible());
+            .until().element(closeButton).is().not().visible();
     }
 
     public List<WebElement> getPrices() {

@@ -21,13 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.contextMenu;
 
-import static org.jboss.arquillian.graphene.Graphene.element;
 import static org.testng.Assert.assertEquals;
 
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.contextMenu.page.TableContextMenuPage;
 import org.testng.annotations.Test;
@@ -57,9 +56,10 @@ public class TestTable extends AbstractContextMenuTest {
 
             String priceFromTable = rowPrice.getText();
 
-            page.getContextMenu().selectItem(TableContextMenuPage.VIEW, rowPrice);
+            page.getContextMenu().advanced().setupTarget(rowPrice);
+            page.getContextMenu().selectItem(0);
 
-            Graphene.waitGui().until(element(page.getPriceFromPopup()).isVisible());
+            Graphene.waitGui().until().element(page.getPriceFromPopup()).is().visible();
 
             String priceFromPopup = page.getPriceFromPopup().getAttribute("value");
 
@@ -75,7 +75,7 @@ public class TestTable extends AbstractContextMenuTest {
     public void testContextMenuRenderedOnTheCorrectPosition() {
         WebElement elementToTryOn = page.getPrices().get(5);
 
-        checkContextMenuRenderedAtCorrectPosition(elementToTryOn, page.getContextMenu().getMenuPopup(),
+        checkContextMenuRenderedAtCorrectPosition(elementToTryOn, page.getContextMenu().advanced().getMenuPopup(),
             InvocationType.RIGHT_CLICK, page.getWaitConditionOnSelectingRow(elementToTryOn));
     }
 }

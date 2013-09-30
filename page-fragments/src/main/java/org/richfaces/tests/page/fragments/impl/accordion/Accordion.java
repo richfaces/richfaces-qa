@@ -1,6 +1,6 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,18 +18,12 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
+ *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.accordion;
 
-/**
- * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
- */
-public interface Accordion extends Iterable<AccordionItem> {
+import org.richfaces.tests.page.fragments.impl.switchable.SwitchableComponent;
 
-    int size();
+public interface Accordion extends SwitchableComponent<RichFacesAccordionItem> {
 
-    AccordionItem getActiveItem();
-
-    AccordionItem getItem(int index);
-
+    int getNumberOfAccordionItems();
 }

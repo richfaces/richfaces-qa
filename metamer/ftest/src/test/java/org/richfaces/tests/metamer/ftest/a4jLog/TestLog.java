@@ -21,20 +21,29 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jLog;
 
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.logAttributes;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.richfaces.tests.page.fragments.impl.common.ClearType.DELETE;
+import static org.richfaces.tests.page.fragments.impl.log.Log.LogEntryLevel.INFO;
+import static org.richfaces.tests.page.fragments.impl.log.Log.LogEntryLevel.values;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
 
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.annotations.Uses;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.richfaces.tests.page.fragments.impl.common.ClearType;
+import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
+import org.richfaces.tests.page.fragments.impl.log.Log.LogEntryLevel;
+import org.richfaces.tests.page.fragments.impl.log.RichFacesLog;
 import org.testng.annotations.Test;
 
 /**
@@ -45,14 +54,45 @@ import org.testng.annotations.Test;
  */
 public class TestLog extends AbstractWebDriverTest {
 
-    @Page
-    private LogPage page;
+    @FindBy(css = "input[id$=nameInput]")
+    private TextInputComponentImpl input;
+    @FindBy(css = "input[id$=submitButton]")
+    private WebElement submitButton;
+    @FindBy(css = "span[id$=out]")
+    private WebElement output;
+    @FindBy(css = "input[id$=debugButton]")
+    private WebElement debugButton;
+    @FindBy(css = "input[id$=infoButton]")
+    private WebElement infoButton;
+    @FindBy(css = "input[id$=warnButton]")
+    private WebElement warnButton;
+    @FindBy(css = "input[id$=errorButton]")
+    private WebElement errorButton;
+    @FindBy(css = "div.rf-log select")
+    private Select levelSelect;
+    @FindBy(css = "div.rf-log")
+    private RichFacesLog log;
 
-    /**
-     * Enumeration representing all possible levels for a4j:log.
-     */
-    public enum LogLevel {
-        DEBUG, NULL, INFO, WARN, ERROR;
+    private final Attributes<LogAttributes> attributes = getAttributes();
+
+    @Inject
+    @Use(empty = true)
+    private LogEntryLevel levelToSet;
+    @Inject
+    @Use(empty = false)
+    private Boolean setLevelByAttribute;
+
+    private void checkForEachLevel() {
+        for (LogEntryLevel levelToTrigger : values()) {
+            log.clear();
+            input.advanced().clear(DELETE).sendKeys(levelToTrigger.toString());
+            triggerMessage(levelToTrigger);
+            assertEquals(log.getLogEntries().size(), levelToTrigger.ordinal() >= levelToSet.ordinal() ? 1 : 0);
+            if (!log.getLogEntries().isEmpty()) {
+                assertEquals(log.getLogEntries().getItem(0).getLevel(), levelToTrigger, "Message type in log.");
+                assertEquals(log.getLogEntries().getItem(0).getContent(), levelToTrigger.toString(), "Message content.");
+            }
+        }
     }
 
     @Override
@@ -60,191 +100,92 @@ public class TestLog extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/a4jLog/simple.xhtml");
     }
 
-    @Test
-    public void testSubmit() {
-        page.input.clear();
-        page.input.sendKeys("RichFaces 4");
-        page.submitButton.click();
-
-        Graphene.waitGui().until().element(page.output).text().equalTo("Hello RichFaces 4!");
-
-        assertTrue(page.logMsg.size() > 0,
-            "There should be at least one message in log after submit button was clicked.");
+    private void submit() {
+        Graphene.guardAjax(submitButton).click();
     }
 
     @Test
-    public void testSubmitUnicode() {
-        page.input.clear();
-        page.input.sendKeys("ľščťžýáíéôúäň");
-        page.submitButton.click();
-
-        Graphene.waitGui().until().element(page.output).text().equalTo("Hello ľščťžýáíéôúäň!");
-
-        assertTrue(page.logMsg.size() > 0,
-            "There should be at least one message in log after submit button was clicked.");
-    }
-
-    @Test
+    @Templates(value = "plain")
     public void testClearButton() {
         testSubmit();
+        log.clear();
+        assertTrue(log.getLogEntries().isEmpty(), "There should be no messages in log after clear button was clicked.");
+    }
 
-        // test clear
-        page.clearButton.click();
-        assertEquals(page.logMsg.size(), 0, "There should be no messages in log after clear button was clicked.");
+    @Test
+    @Templates(value = "plain")
+    @Uses({
+        @Use(field = "levelToSet", enumeration = true),
+        @Use(field = "setLevelByAttribute", booleans = { false, true })
+    })
+    public void testLevel() {
+        if (setLevelByAttribute) {
+            attributes.set(LogAttributes.level, levelToSet.toString().toLowerCase());
+        } else {
+            log.changeLevel(levelToSet);
+        }
+
+        String selectedLevel = levelSelect.getFirstSelectedOption().getText();
+        assertEquals(selectedLevel, levelToSet.toString().toLowerCase(), "Log level in select wasn't changed.");
+        checkForEachLevel();
+    }
+
+    @Test
+    @Templates(value = "plain")
+    public void testLevelDefault() {
+        levelToSet = INFO;
+        attributes.set(LogAttributes.level, "");
+
+        String selectedLevel = levelSelect.getFirstSelectedOption().getText();
+        assertEquals(selectedLevel, levelToSet.toString().toLowerCase(), "Log level in select wasn't changed.");
+        checkForEachLevel();
     }
 
     @Test
     @Templates(value = "plain")
     public void testRendered() {
-        logAttributes.set(LogAttributes.rendered, false);
-        try {
-            page.log.isDisplayed();
-            fail("Log should not be rendered when rendered=false.");
-        } catch (NoSuchElementException ex) {
-            // expected
-        }
+        attributes.set(LogAttributes.rendered, false);
+        assertNotVisible(log.advanced().getRootElement(), "Log should be not rendered.");
     }
 
     @Test
-    public void testDebugFilterNull() {
-        testLogging(LogLevel.DEBUG, LogLevel.NULL);
+    public void testSubmit() {
+        input.advanced().clear(ClearType.DELETE).sendKeys("RichFaces 4");
+        submit();
+
+        Graphene.waitGui().until().element(output).text().equalTo("Hello RichFaces 4!");
+
+        assertTrue(log.getLogEntries().size() > 0,
+            "There should be at least one message in log after submit button was clicked.");
     }
 
     @Test
-    public void testDebugFilterDebug() {
-        testLogging(LogLevel.DEBUG, LogLevel.DEBUG);
+    public void testSubmitUnicode() {
+        input.advanced().clear(DELETE).sendKeys("ľščťžýáíéôúäň");
+        submit();
+
+        Graphene.waitGui().until().element(output).text().equalTo("Hello ľščťžýáíéôúäň!");
+
+        assertTrue(log.getLogEntries().size() > 0,
+            "There should be at least one message in log after submit button was clicked.");
     }
 
-    @Test
-    public void testDebugFilterInfo() {
-        testLogging(LogLevel.DEBUG, LogLevel.INFO);
-    }
-
-    @Test
-    public void testDebugFilterWarn() {
-        testLogging(LogLevel.DEBUG, LogLevel.WARN);
-    }
-
-    @Test
-    public void testDebugFilterError() {
-        testLogging(LogLevel.DEBUG, LogLevel.ERROR);
-    }
-
-    @Test
-    public void testInfoFilterNull() {
-        testLogging(LogLevel.INFO, LogLevel.NULL);
-    }
-
-    @Test
-    public void testInfoFilterDebug() {
-        testLogging(LogLevel.INFO, LogLevel.DEBUG);
-    }
-
-    @Test
-    public void testInfoFilterInfo() {
-        testLogging(LogLevel.INFO, LogLevel.INFO);
-    }
-
-    @Test
-    public void testInfoFilterWarn() {
-        testLogging(LogLevel.INFO, LogLevel.WARN);
-    }
-
-    @Test
-    public void testInfoFilterError() {
-        testLogging(LogLevel.INFO, LogLevel.ERROR);
-    }
-
-    @Test
-    public void testWarnFilterNull() {
-        testLogging(LogLevel.WARN, LogLevel.NULL);
-    }
-
-    @Test
-    public void testWarnFilterDebug() {
-        testLogging(LogLevel.WARN, LogLevel.DEBUG);
-    }
-
-    @Test
-    public void testWarnFilterInfo() {
-        testLogging(LogLevel.WARN, LogLevel.INFO);
-    }
-
-    @Test
-    public void testWarnFilterWarn() {
-        testLogging(LogLevel.WARN, LogLevel.WARN);
-    }
-
-    @Test
-    public void testWarnFilterError() {
-        testLogging(LogLevel.WARN, LogLevel.ERROR);
-    }
-
-    @Test
-    public void testErrorFilterNull() {
-        testLogging(LogLevel.ERROR, LogLevel.NULL);
-    }
-
-    @Test
-    public void testErrorFilterDebug() {
-        testLogging(LogLevel.ERROR, LogLevel.DEBUG);
-    }
-
-    @Test
-    public void testErrorFilterInfo() {
-        testLogging(LogLevel.ERROR, LogLevel.INFO);
-    }
-
-    @Test
-    public void testErrorFilterWarn() {
-        testLogging(LogLevel.ERROR, LogLevel.WARN);
-    }
-
-    @Test
-    public void testErrorFilterError() {
-        testLogging(LogLevel.ERROR, LogLevel.ERROR);
-    }
-
-    private void testLogging(LogLevel logLevel, LogLevel filterLevel) {
-        if (filterLevel != LogLevel.DEBUG) {
-            logAttributes.set(LogAttributes.level, filterLevel.toString().toLowerCase());
-        }
-
-        String selectedLevel = (new Select(page.levelSelect)).getFirstSelectedOption().getText();
-        if (filterLevel == LogLevel.NULL) {
-            assertEquals(selectedLevel, "info", "Log level in select wasn't changed.");
-        } else {
-            assertEquals(selectedLevel, filterLevel.toString().toLowerCase(), "Log level in select wasn't changed.");
-        }
-
-        page.input.clear();
-        page.input.sendKeys(logLevel.toString());
-        switch (logLevel) {
+    private void triggerMessage(LogEntryLevel levelToTrigger) {
+        switch (levelToTrigger) {
             case DEBUG:
-                page.debugButton.click();
+                debugButton.click();
                 break;
             case INFO:
-                page.infoButton.click();
+                infoButton.click();
                 break;
             case WARN:
-                page.warnButton.click();
+                warnButton.click();
                 break;
             case ERROR:
-                page.errorButton.click();
+                errorButton.click();
                 break;
             default:
                 break;
         }
-
-        assertEquals(page.logMsg.size(), filterLevel.ordinal() <= logLevel.ordinal() ? 1 : 0,
-            "There should be only one message in log.");
-
-        if (page.logMsg.size() == 0) {
-            return;
-        }
-
-        String loggedValue = page.msgType.get(0).getText().replaceAll(" *\\[.*\\]:$", "");
-        assertEquals(loggedValue, logLevel.toString().toLowerCase(), "Message type in log.");
-        assertEquals(page.msgContent.get(0).getText(), logLevel.toString(), "Message content.");
     }
 }

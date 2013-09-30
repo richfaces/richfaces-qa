@@ -27,7 +27,7 @@ import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
@@ -52,7 +52,7 @@ public class TestDelayed extends AbstractWebDriverTest {
     public void testDelayed() {
         page.getNextButton().click();
 
-        waitModel().until(new ElementIsFocused(page.getNameInput().getInput()));
+        waitModel().until(new ElementIsFocused(page.getNameInput().advanced().getInputElement()));
         page.typeStringAndDoNotCareAboutFocus();
 
         String actual = page.getNameInput().getStringValue();

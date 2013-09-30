@@ -27,7 +27,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.AttributeList;
@@ -63,11 +63,11 @@ public class TestPreserve extends AbstractWebDriverTest {
     }
 
     private void testPreserveTrue() {
-        page.getAgeInput().focus();
-        page.getAgeInput().getInput().click();
+        page.getAgeInput().advanced().focus();
+        page.getAgeInput().advanced().getInputElement().click();
 
         page.ajaxValidateInputs();
-        waitModel().until(new ElementIsFocused(page.getAgeInput().getInput()));
+        waitModel().until(new ElementIsFocused(page.getAgeInput().advanced().getInputElement()));
 
         page.typeStringAndDoNotCareAboutFocus();
 

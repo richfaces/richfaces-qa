@@ -22,28 +22,25 @@
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.calendarAttributes;
 import static org.testng.Assert.assertEquals;
 
-import com.google.common.base.Predicate;
 import java.net.URL;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import com.google.common.base.Predicate;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestCalendarTimeZone extends AbstractCalendarTest {
 
-    @FindBy(css = "input[id$=timeZoneInput]")
-    WebElement timeZoneInput;
     private DateTimeFormatter dtf;
 
     @Override
@@ -58,12 +55,12 @@ public class TestCalendarTimeZone extends AbstractCalendarTest {
 
     @Test
     public void testTimeZone() {
-        calendar.openPopup().getFooterControls().todayDate();
-        final DateTime dtStart = dtf.parseDateTime(calendar.getInputValue());
+        popupCalendar.openPopup().getFooterControls().todayDate();
+        final DateTime dtStart = dtf.parseDateTime(popupCalendar.getInput().getStringValue());
         setTimeZone("GMT+01:00", dtStart);
-        DateTime dtPlus1H = dtf.parseDateTime(calendar.getInputValue());
+        DateTime dtPlus1H = dtf.parseDateTime(popupCalendar.getInput().getStringValue());
         setTimeZone("GMT-02:00", dtStart);
-        DateTime dtMinus2H = dtf.parseDateTime(calendar.getInputValue());
+        DateTime dtMinus2H = dtf.parseDateTime(popupCalendar.getInput().getStringValue());
         assertEquals(dtPlus1H.getHourOfDay(), dtStart.plusHours(1).getHourOfDay());
         assertEquals(dtMinus2H.getHourOfDay(), dtStart.minusHours(2).getHourOfDay());
     }
@@ -75,13 +72,13 @@ public class TestCalendarTimeZone extends AbstractCalendarTest {
 
     private void waitForCalendarInputChange(final DateTime dtStart) {
         Graphene.waitModel()
-                .withMessage("Calendar time has not changed after setting a different time zone.")
-                .until(new Predicate<WebDriver>() {
-            @Override
-            public boolean apply(WebDriver input) {
-                return dtStart.getHourOfDay()
-                        != dtf.parseDateTime(calendar.getInputValue()).getHourOfDay();
-            }
-        });
+            .withMessage("Calendar time has not changed after setting a different time zone.")
+            .until(new Predicate<WebDriver>() {
+                @Override
+                public boolean apply(WebDriver input) {
+                    return dtStart.getHourOfDay()
+                    != dtf.parseDateTime(popupCalendar.getInput().getStringValue()).getHourOfDay();
+                }
+            });
     }
 }

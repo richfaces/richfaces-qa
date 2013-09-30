@@ -22,8 +22,10 @@
 package org.richfaces.tests.showcase.messages;
 
 import java.util.List;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.page.fragments.impl.message.Message;
+import org.richfaces.tests.page.fragments.impl.message.Message.MessageType;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.messages.page.MessagesPage;
 import org.testng.Assert;
@@ -41,7 +43,7 @@ public class TestMessages extends AbstractWebDriverTest {
     public void testCorrectValues() {
         page.fillCorrectValues();
         page.validate();
-        Assert.assertTrue(page.getMessages().getAllMessagesOfType(Message.MessageType.ERROR).isEmpty(), "No message should be present.");
+        Assert.assertTrue(page.getMessages().getItems(MessageType.ERROR).isEmpty(), "No message should be present.");
     }
 
     @Test
@@ -49,13 +51,12 @@ public class TestMessages extends AbstractWebDriverTest {
         page.fillShorterValues();
         page.validate();
 
-        Assert.assertEquals(page.getMessages().getAllMessagesOfType(Message.MessageType.ERROR).size(), 4, "4 messages should be present.");
+        Assert.assertEquals(page.getMessages().getItems(MessageType.ERROR).size(), 4, "4 messages should be present.");
 
         assertErrorIsPresent("Name", MessagesPage.NAME_ERROR_LESS_THAN_MINIMUM);
         assertErrorIsPresent("Job", MessagesPage.JOB_ERROR_LESS_THAN_MINIMUM);
         assertErrorIsPresent("Zip", MessagesPage.ZIP_ERROR_LESS_THAN_MINIMUM);
         assertErrorIsPresent("Address", MessagesPage.ADDRESS_ERROR_LESS_THAN_MINIMUM);
-
     }
 
     @Test
@@ -63,7 +64,7 @@ public class TestMessages extends AbstractWebDriverTest {
         page.eraseAll();
         page.validate();
 
-        Assert.assertEquals(page.getMessages().getAllMessagesOfType(Message.MessageType.ERROR).size(), 4, "4 messages should be present.");
+        Assert.assertEquals(page.getMessages().getItems(MessageType.ERROR).size(), 4, "4 messages should be present.");
 
         assertErrorIsPresent("Name", MessagesPage.NAME_ERROR_VALUE_REQUIRED);
         assertErrorIsPresent("Job", MessagesPage.JOB_ERROR__VALUE_REQUIRED);
@@ -76,7 +77,7 @@ public class TestMessages extends AbstractWebDriverTest {
         page.fillCorrectValues();
         page.validate();
 
-        Assert.assertTrue(page.getMessages().getAllMessagesOfType(Message.MessageType.ERROR).isEmpty(), "No message should be present.");
+        Assert.assertTrue(page.getMessages().getItems(MessageType.ERROR).isEmpty(), "No message should be present.");
 
         page.fillLongerJob();
         page.validate();
@@ -88,8 +89,8 @@ public class TestMessages extends AbstractWebDriverTest {
     }
 
     public void assertErrorIsPresent(String fieldName, String expected) {
-        List<Message> messages = page.getMessages().getAllMessagesOfType(Message.MessageType.ERROR);
-        for (Message message: messages) {
+        List<? extends Message> messages = page.getMessages().getItems(MessageType.ERROR);
+        for (Message message : messages) {
             if (message.getSummary().contains(expected)) {
                 return;
             }

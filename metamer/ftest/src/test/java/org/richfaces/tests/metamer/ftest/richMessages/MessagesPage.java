@@ -33,17 +33,17 @@ import org.richfaces.tests.page.fragments.impl.messages.RichFacesMessages;
 public class MessagesPage extends MessagesComponentTestPage<Message> {
 
     @FindBy(xpath = "//fieldset/span[contains(@id, 'messagesWithFor')]")
-    protected RichFacesMessages messagesComponentWithFor;
+    private RichFacesMessages messagesComponentWithFor;
     @FindBy(xpath = "//fieldset/span[contains(@id, 'messagesWithGlobal')]")
-    protected RichFacesMessages messagesComponentWithGlobal;
+    private RichFacesMessages messagesComponentWithGlobal;
 
     @Override
-    public Messages getMessagesComponentWithFor() {
+    public Messages<? extends Message> getMessagesComponentWithFor() {
         return messagesComponentWithFor;
     }
 
     @Override
-    public Messages getMessagesComponentWithGlobal() {
+    public Messages<? extends Message> getMessagesComponentWithGlobal() {
         return messagesComponentWithGlobal;
     }
 }

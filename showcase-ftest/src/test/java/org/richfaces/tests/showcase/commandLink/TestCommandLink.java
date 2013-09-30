@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.commandLink;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.showcase.commandButton.AbstractTestA4jCommand;
 import org.testng.annotations.Test;
 
@@ -36,14 +36,12 @@ public class TestCommandLink extends AbstractTestA4jCommand {
     /* *****************************************************************************
      * Locators*****************************************************************************
      */
-
-    @FindBy(css="form a")
+    @FindBy(css = "form a")
     protected WebElement commandLink;
 
     /* ******************************************************************************
      * Tests******************************************************************************
      */
-
     @Test
     public void testClickOnTheButtonWhileInputIsEmpty() {
         checkClickOnTheButtonWhileInputIsEmpty("Hello !");

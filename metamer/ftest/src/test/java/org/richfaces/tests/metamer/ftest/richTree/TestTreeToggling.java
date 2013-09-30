@@ -21,112 +21,79 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTree;
 
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.treeAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-import java.util.Deque;
-import java.util.LinkedList;
-
-import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.component.SwitchType;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNode;
+import org.richfaces.tests.page.fragments.impl.tree.Tree.TreeNode;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 23005 $
  */
-public class TestTreeToggling extends AbstractTestTree {
+public class TestTreeToggling extends AbstractTreeTest {
 
     private static final int TOP_LEVEL_NODES = 4;
 
-    protected int[][] paths = new int[][]{ { 1, 2, 1 }, { 4, 4, 1 } };
+    protected int[][] paths = new int[][]{ { 0, 1, 0 }, { 3, 3, 0 } };
 
     @Inject
     @Use(enumeration = true)
-    SwitchType toggleType = SwitchType.ajax;
+    private SwitchType toggleType = SwitchType.client;
 
-    @Page
-    protected TreeSimplePage page;
+    private TreeNode treeNode;
 
-    private RichFacesTreeNode treeNode;
-
-    @BeforeMethod
-    public void verifyInitialState() {
-        treeAttributes.set(TreeAttributes.toggleType, toggleType);
-        page.tree.setToggleType(toggleType);
-//        disabled because of https://issues.jboss.org/browse/ARQGRA-309
-//        chechInitialState();
+    private void assertNodeState(NodeState state) {
+        assertEquals(treeNode.advanced().isLeaf(), state.equals(NodeState.LEAF));
+        assertEquals(treeNode.advanced().isCollapsed(), state.equals(NodeState.COLLAPSED));
+        assertEquals(treeNode.advanced().isExpanded(), state.equals(NodeState.EXPANDED));
     }
 
-    private void chechInitialState() {
-        assertEquals(page.tree.getCollapsedNodes().size(), TOP_LEVEL_NODES);
-        assertEquals(page.tree.getExpandedNodes().size(), 0);
+    private void checkInitialState() {
+        assertEquals(tree.advanced().getNodesCollapsed().size(), TOP_LEVEL_NODES);
+        assertEquals(tree.advanced().getNodesExpanded().size(), 0);
     }
 
     @Test
-    @Use(field = "sample", value = "swingTreeNode")
-    public void testTopLevelNodesExpansion() {
-        chechInitialState();
-        for (int i = 1; i <= TOP_LEVEL_NODES; i++) {
-            treeNode = page.tree.getNodes().get(i - 1);
-            treeNode.setToggleType(toggleType);
-            treeNode.expand();
-            assertEquals(page.tree.getCollapsedNodes().size(), TOP_LEVEL_NODES - i);
-            assertEquals(page.tree.getExpandedNodes().size(), i);
-            assertTrue(treeNode.isExpanded());
+    @Use(field = "sample", value = "simpleSwingTreeNode")
+    public void testDeepCollapsion() {
+        checkInitialState();
+
+        testDeepExpansion();
+
+        for (TreeNode treeNode1 : tree.advanced().getNodesExpanded()) {
+            for (TreeNode treeNode2 : treeNode1.advanced().getNodesExpanded()) {
+                getGuarded(treeNode2.advanced(), toggleType).collapse();
+            }
+            treeNode1.advanced().collapse();
         }
+        checkInitialState();
     }
 
     @Test(groups = "extended")
     @Use(field = "sample", value = "richFacesTreeNodes")
-    public void testTopLevelNodesExpansion2() {
-        chechInitialState();
-        testTopLevelNodesExpansion();
+    public void testDeepCollapsion2() {
+        checkInitialState();
+        testDeepCollapsion();
     }
 
     @Test
-    @Use(field = "sample", value = "swingTreeNode")
-    public void testTopLevelNodesCollapsion() {
-        chechInitialState();
-        testTopLevelNodesExpansion();
-        for (int i = 1; i <= TOP_LEVEL_NODES; i++) {
-            treeNode = page.tree.getNodes().get(i - 1);
-            treeNode.setToggleType(toggleType);
-            treeNode.collapse();
-            assertEquals(page.tree.getCollapsedNodes().size(), i);
-            assertEquals(page.tree.getExpandedNodes().size(), TOP_LEVEL_NODES - i);
-            assertTrue(treeNode.isCollapsed());
-        }
-    }
-
-    @Test(groups = "extended")
-    @Use(field = "sample", value = "richFacesTreeNodes")
-    public void testTopLevelNodesCollapsion2() {
-        chechInitialState();
-        testTopLevelNodesCollapsion();
-    }
-
-    @Test
-    @Use(field = "sample", value = "swingTreeNode")
+    @Use(field = "sample", value = "simpleSwingTreeNode")
     public void testDeepExpansion() {
-        chechInitialState();
+        checkInitialState();
         for (int[] path : paths) {
-            int depth = path.length;
+            int depth = path.length-1;
+            for (int d = 0; d <= depth; d++) {
+                int number = path[d];
 
-            for (int d = 1; d <= path.length; d++) {
-                int number = path[d - 1];
-
-                treeNode = (d == 1) ? page.tree.getNodes().get(number - 1) : treeNode.getNode(number - 1);
-                treeNode.setToggleType(toggleType);
+                treeNode = (d == 0) ? tree.advanced().getNodes().get(number) : treeNode.advanced().getNodes().get(number);
 
                 if (d < depth) {
                     assertNodeState(NodeState.COLLAPSED);
-                    treeNode.expand();
+                    getGuarded(treeNode.advanced(), toggleType).expand();
                     assertNodeState(NodeState.EXPANDED);
                 } else {
                     assertNodeState(NodeState.LEAF);
@@ -138,48 +105,56 @@ public class TestTreeToggling extends AbstractTestTree {
     @Test(groups = "extended")
     @Use(field = "sample", value = "richFacesTreeNodes")
     public void testDeepExpansion2() {
-        chechInitialState();
         testDeepExpansion();
     }
 
     @Test
-    @Use(field = "sample", value = "swingTreeNode")
-    public void testDeepCollapsion() {
-        chechInitialState();
-        Deque<RichFacesTreeNode> stack = new LinkedList<RichFacesTreeNode>();
-
-        testDeepExpansion();
-
-        for (RichFacesTreeNode treeNode1 : page.tree.getExpandedNodes()) {
-            stack.push(treeNode1);
-            for (RichFacesTreeNode treeNode2 : treeNode1.getExpandedNodes()) {
-                stack.push(treeNode2);
-            }
-        }
-
-        while ((treeNode = stack.poll()) != null) {
-            treeNode.setToggleType(toggleType);
-            treeNode.expand();
+    @Use(field = "sample", value = "simpleSwingTreeNode")
+    public void testTopLevelNodesCollapsion() {
+        checkInitialState();
+        testTopLevelNodesExpansion();
+        for (int i = 1; i <= TOP_LEVEL_NODES; i++) {
+            treeNode = tree.advanced().getNodes().get(i - 1);
+            getGuarded(treeNode.advanced(), toggleType).collapse();
+            assertEquals(tree.advanced().getNodesCollapsed().size(), i);
+            assertEquals(tree.advanced().getNodesExpanded().size(), TOP_LEVEL_NODES - i);
+            assertTrue(treeNode.advanced().isCollapsed());
         }
     }
 
     @Test(groups = "extended")
     @Use(field = "sample", value = "richFacesTreeNodes")
-    public void testDeepCollapsion2() {
-        chechInitialState();
-        testDeepCollapsion();
+    public void testTopLevelNodesCollapsion2() {
+        testTopLevelNodesCollapsion();
     }
 
-    public void assertNodeState(NodeState state) {
-        assertEquals(treeNode.isLeaf() && treeNode.getIcon().isLeaf() && treeNode.getHandle().isLeaf(),
-                state == NodeState.LEAF);
-        assertEquals(treeNode.isCollapsed() && treeNode.getIcon().isCollapsed() && treeNode.getHandle().isCollapsed(),
-                state == NodeState.COLLAPSED);
-        assertEquals(treeNode.isExpanded() && treeNode.getIcon().isExpanded() && treeNode.getHandle().isExpanded(),
-                state == NodeState.EXPANDED);
+    @Test
+    @Use(field = "sample", value = "simpleSwingTreeNode")
+    public void testTopLevelNodesExpansion() {
+        checkInitialState();
+        for (int i = 1; i <= TOP_LEVEL_NODES; i++) {
+            treeNode = tree.advanced().getNodes().get(i - 1);
+            getGuarded(treeNode.advanced(), toggleType).expand();
+            assertEquals(tree.advanced().getNodesCollapsed().size(), TOP_LEVEL_NODES - i);
+            assertEquals(tree.advanced().getNodesExpanded().size(), i);
+            assertTrue(treeNode.advanced().isExpanded());
+        }
     }
 
-    public static enum NodeState {
+    @Test(groups = "extended")
+    @Use(field = "sample", value = "richFacesTreeNodes")
+    public void testTopLevelNodesExpansion2() {
+        testTopLevelNodesExpansion();
+    }
+
+    @BeforeMethod
+    public void verifyInitialState() {
+        treeAttributes.set(TreeAttributes.toggleType, toggleType);
+//        disabled because of https://issues.jboss.org/browse/ARQGRA-309
+//        chechInitialState();
+    }
+
+    private static enum NodeState {
 
         LEAF, COLLAPSED, EXPANDED;
     }

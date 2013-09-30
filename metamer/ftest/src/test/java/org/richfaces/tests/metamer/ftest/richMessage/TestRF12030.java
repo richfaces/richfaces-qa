@@ -24,8 +24,9 @@ package org.richfaces.tests.metamer.ftest.richMessage;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
+
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
@@ -54,9 +55,9 @@ public class TestRF12030 extends AbstractWebDriverTest {
         Graphene
             .waitModel()
             .until(
-                "The value from the first row of table"
-                    + " should be different as the table was navigated to the second page. "
-                    + "DataScroller does not work as expected!").element(page.firstTableRow).text().not()
+            "The value from the first row of table"
+            + " should be different as the table was navigated to the second page. "
+            + "DataScroller does not work as expected!").element(page.firstTableRow).text().not()
             .contains(valueFromFstRowBeforeCollapse);
     }
 }

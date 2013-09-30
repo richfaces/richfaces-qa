@@ -23,22 +23,23 @@ package org.richfaces.tests.page.fragments.impl.popupPanel;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.graphene.wait.FluentWait;
+import org.jodah.typetools.TypeResolver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.page.fragments.impl.Locations;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.panel.AbstractPanel;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class RichFacesPopupPanel<C extends PopupPanelControls, L extends PopupPanelContent> implements PopupPanel<C, L> {
+public abstract class RichFacesPopupPanel<HEADER, HEADERCONTROLS, BODY> extends AbstractPanel<HEADER, BODY> implements PopupPanel<HEADER, HEADERCONTROLS, BODY> {
 
-    @Root
-    private WebElement rootElement;
     @Drone
     private WebDriver driver;
     @FindBy(css = "div.rf-pp-hndlr-t")
@@ -70,117 +71,118 @@ public abstract class RichFacesPopupPanel<C extends PopupPanelControls, L extend
     @FindBy(css = "div.rf-pp-shdw")
     private WebElement shadowElement;
 
-    @Override
-    public L content() {
-        return Graphene.createPageFragment(getContentType(), contentElement);
+    private final AdvancedPopupPanelInteractions interactions = new AdvancedPopupPanelInteractions();
+
+    private final Class<HEADERCONTROLS> headerClass = (Class<HEADERCONTROLS>) TypeResolver.resolveRawArguments(RichFacesPopupPanel.class, getClass())[1];
+
+    public AdvancedPopupPanelInteractions advanced() {
+        return interactions;
     }
 
     @Override
-    public C controls() {
-        return Graphene.createPageFragment(getControlsType(), headerControlsElement);
+    public HEADERCONTROLS getHeaderControlsContent() {
+        return Graphene.createPageFragment(headerClass, getBodyElement());
     }
 
     @Override
-    public WebElement getContentElement() {
+    protected WebElement getBodyElement() {
         return contentElement;
     }
 
     @Override
-    public WebElement getContentScrollerElement() {
-        return contentScrollerElement;
-    }
-
-    protected abstract Class<L> getContentType();
-
-    protected abstract Class<C> getControlsType();
-
-    @Override
-    public WebElement getHeaderContentElement() {
-        return headerContentElement;
-    }
-
-    @Override
-    public WebElement getHeaderControlsElement() {
-        return headerControlsElement;
-    }
-
-    @Override
-    public WebElement getHeaderElement() {
+    protected WebElement getHeaderElement() {
         return headerElement;
     }
 
-    @Override
-    public Locations getLocations() {
-        if (isNotVisibleCondition().apply(driver)) {
-            throw new RuntimeException("Popup is not visible, cannot interact with it.");
+    public class AdvancedPopupPanelInteractions {
+
+        public WebElement getBodyElement() {
+            return contentElement;
         }
-        return Utils.getLocations(rootElement);
-    }
 
-    @Override
-    public WebElement getResizerElement(ResizerLocation resizerLocation) {
-        switch (resizerLocation) {
-            case N:
-                return resizerN;
-            case E:
-                return resizerE;
-            case S:
-                return resizerS;
-            case W:
-                return resizerW;
-            case NE:
-                return resizerNE;
-            case SE:
-                return resizerSE;
-            case SW:
-                return resizerSW;
-            case NW:
-                return resizerNW;
-            default:
-                throw new UnsupportedOperationException("Unknown switch " + resizerLocation);
+        public WebElement getContentElement() {
+            return contentElement;
         }
-    }
 
-    @Override
-    public WebElement getRootElement() {
-        return rootElement;
-    }
-
-    @Override
-    public WebElement getShadowElement() {
-        return shadowElement;
-    }
-
-    @Override
-    public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return Graphene.element(rootElement).not().isVisible();
-    }
-
-    @Override
-    public boolean isVisible() {
-        return isVisibleCondition().apply(driver);
-    }
-
-    @Override
-    public ExpectedCondition<Boolean> isVisibleCondition() {
-        return Graphene.element(rootElement).isVisible();
-    }
-
-    @Override
-    public PopupPanel moveByOffset(int xOffset, int yOffset) {
-        if (isNotVisibleCondition().apply(driver)) {
-            throw new RuntimeException("Popup is not visible, cannot interact with it.");
+        public WebElement getContentScrollerElement() {
+            return contentScrollerElement;
         }
-        new Actions(driver).dragAndDropBy(headerElement, xOffset, yOffset).perform();
-        return this;
-    }
 
-    @Override
-    public PopupPanel resizeFromLocation(ResizerLocation location, int byXPixels, int byYPixels) {
-        if (isNotVisibleCondition().apply(driver)) {
-            throw new RuntimeException("Popup is not visible, cannot interact with it.");
+        public WebElement getHeaderContentElement() {
+            return headerContentElement;
         }
-        new Actions(driver).dragAndDropBy(getResizerElement(location), byXPixels, byYPixels).perform();
-        return this;
+
+        public WebElement getHeaderControlsElement() {
+            return headerControlsElement;
+        }
+
+        public WebElement getHeaderElement() {
+            return headerElement;
+        }
+
+        public Locations getLocations() {
+            return Utils.getLocations(RichFacesPopupPanel.this.getRootElement());
+        }
+
+        public WebElement getResizerElement(ResizerLocation resizerLocation) {
+            switch (resizerLocation) {
+                case N:
+                    return resizerN;
+                case E:
+                    return resizerE;
+                case S:
+                    return resizerS;
+                case W:
+                    return resizerW;
+                case NE:
+                    return resizerNE;
+                case SE:
+                    return resizerSE;
+                case SW:
+                    return resizerSW;
+                case NW:
+                    return resizerNW;
+                default:
+                    throw new UnsupportedOperationException("Unknown switch " + resizerLocation);
+            }
+        }
+
+        public WebElement getRootElement() {
+            return RichFacesPopupPanel.this.getRootElement();
+        }
+
+        public WebElement getShadowElement() {
+            return shadowElement;
+        }
+
+        public AdvancedPopupPanelInteractions moveByOffset(int xOffset, int yOffset) {
+            new Actions(driver).dragAndDropBy(headerElement, xOffset, yOffset).perform();
+            return this;
+        }
+
+        public AdvancedPopupPanelInteractions resizeFromLocation(ResizerLocation location, int byXPixels, int byYPixels) {
+            new Actions(driver).dragAndDropBy(getResizerElement(location), byXPixels, byYPixels).perform();
+            return this;
+        }
+
+        public WaitingWrapper waitUntilPopupIsNotVisible() {
+            return new WaitingWrapperImpl() {
+
+                @Override
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until().element(getRootElement()).is().not().visible();
+                }
+            }.withMessage("Waiting for popup to be not visible.");
+        }
+
+        public WaitingWrapper waitUntilPopupIsVisible() {
+            return new WaitingWrapperImpl() {
+
+                @Override
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until().element(getRootElement()).is().visible();
+                }
+            }.withMessage("Waiting for popup to be visible.");
+        }
     }
 }

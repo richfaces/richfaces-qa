@@ -1,32 +1,32 @@
-/**
- * *****************************************************************************
- * JBoss, Home of Professional Open Source Copyright 2010-2013, Red Hat, Inc.
- * and individual contributors by the @authors tag. See the copyright.txt in the
- * distribution for a full listing of individual contributors.
+/*******************************************************************************
+ * JBoss, Home of Professional Open Source
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * This is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * This software is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this software; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
- * site: http://www.fsf.org.
- * *****************************************************************************
- */
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richValidator;
 
 import java.util.EnumMap;
 import java.util.Map;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.validation.AssertFalseBean;
 import org.richfaces.tests.metamer.validation.AssertTrueBean;
@@ -168,8 +168,8 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
     private void clickCorrectButton() {
         page.setCorrectBtn.click();
-        if (Graphene.element(page.inputFuture).isPresent().apply(driver)
-            && Graphene.element(page.inputPast).isPresent().apply(driver)) {
+        if (new WebElementConditionFactory(page.inputFuture).isPresent().apply(driver)
+            && new WebElementConditionFactory(page.inputPast).isPresent().apply(driver)) {
             page.inputPast.clear();
             page.inputPast.sendKeys(past);
             page.inputFuture.clear();
@@ -183,8 +183,8 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
     @BeforeMethod(alwaysRun = true)
     public void setDates() {
         if (firstRun) {
-            if (Graphene.element(page.inputFuture).isPresent().apply(driver)
-                && Graphene.element(page.inputPast).isPresent().apply(driver)) {
+            if (new WebElementConditionFactory(page.inputFuture).isPresent().apply(driver)
+                && new WebElementConditionFactory(page.inputPast).isPresent().apply(driver)) {
                 past = page.inputPast.getAttribute("value"); // sendKeys(past);
                 future = page.inputFuture.getAttribute("value"); // sendKeys(future);
 
@@ -197,8 +197,8 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
     private void clickWrongButton() {
         page.setWrongBtn.click();
-        if (Graphene.element(page.inputFuture).isPresent().apply(driver)
-            && Graphene.element(page.inputPast).isPresent().apply(driver)) {
+        if (new WebElementConditionFactory(page.inputFuture).isPresent().apply(driver)
+            && new WebElementConditionFactory(page.inputPast).isPresent().apply(driver)) {
             page.inputPast.clear();
             page.inputPast.sendKeys(future);
             page.inputFuture.clear();
@@ -223,7 +223,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         Graphene.waitGui().until().element(page.msgPattern).text().equalTo(messages.get(ID.pattern));
         Graphene.waitGui().until().element(page.msgCustom).text().equalTo(messages.get(ID.custom));
 
-        if (Graphene.element(page.inputRegexp).isPresent().apply(driver)) {
+        if (new WebElementConditionFactory(page.inputRegexp).isPresent().apply(driver)) {
             // regExp validator isn't present in JSR303 validation
             Graphene.waitGui().until().element(page.msgRegexp).text().equalTo(messages.get(ID.regexp));
         }
@@ -250,7 +250,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         Graphene.waitGui().until().element(page.msgPattern).text().equalTo(messages.get(ID.pattern));
         Graphene.waitGui().until().element(page.msgCustom).text().equalTo(messages.get(ID.custom));
 
-        if (Graphene.element(page.inputRegexp).isPresent().apply(driver)) {
+        if (new WebElementConditionFactory(page.inputRegexp).isPresent().apply(driver)) {
             // regExp validator isn't present in JSR303 validation
             Graphene.waitGui().until().element(page.msgRegexp).text().equalTo(messages.get(ID.regexp));
         }

@@ -1,52 +1,69 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+/*******************************************************************************
+ * JBoss, Home of Professional Open Source
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *******************************************************************************/
 package org.richfaces.tests.showcase.togglePanel.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
- *
  * @author <a href="mailto:pmensik@redhat.com">Petr Mensik</a>
  */
 public class WizardPage {
 
-    @FindBy(jquery = "input[type='text']:eq(0)")
+    @FindByJQuery("input[type='text']:eq(0)")
     public WebElement firstNameInput;
 
-    @FindBy(jquery = "input[type='text']:eq(1)")
+    @FindByJQuery("input[type='text']:eq(1)")
     public WebElement lastNameInput;
 
-    @FindBy(jquery = "input[type='text']:eq(2)")
+    @FindByJQuery("input[type='text']:eq(2)")
     public WebElement companyInput;
 
     @FindBy(tagName = "textarea")
     public WebElement notesInput;
 
-    @FindBy(jquery = "div[class*='rf-p wizard'] div[class*='rf-tgp'] table:visible tbody:visible")
+    @FindByJQuery("div[class*='rf-p wizard'] div[class*='rf-tgp'] table:visible tbody:visible")
     public WebElement summaryOfAllSteps;
 
-    @FindBy(jquery = "input[value*='Next']:visible")
+    @FindByJQuery("input[value*='Next']:visible")
     public WebElement nextButton;
 
-    @FindBy(jquery = "input[value*='Previous']:visible")
+    @FindByJQuery("input[value*='Previous']:visible")
     public WebElement previousButton;
 
-    @FindBy(jquery = "span[class='rf-msg-det']:contains('First Name: Validation Error'):visible")
+    @FindByJQuery("span[class='rf-msg-det']:contains('First Name: Validation Error'):visible")
     public WebElement errorMessageFirstName;
 
-    @FindBy(jquery = "span[class='rf-msg-det']:contains('Last Name: Validation Error'):visible")
+    @FindByJQuery("span[class='rf-msg-det']:contains('Last Name: Validation Error'):visible")
     public WebElement errorMessageLastName;
 
-    @FindBy(jquery = "span[class='rf-msg-det']:contains('Company: Validation Error'):visible")
+    @FindByJQuery("span[class='rf-msg-det']:contains('Company: Validation Error'):visible")
     public WebElement errorMessageCompany;
 
-    @FindBy(jquery = "span[class='rf-msg-det']:contains('Notes: Validation Error: Value is required.'):visible")
+    @FindByJQuery("span[class='rf-msg-det']:contains('Notes: Validation Error: Value is required.'):visible")
     public WebElement errorMessageNotes;
 
-    @FindBy(jquery = "span[class='rf-msg-det']:contains('Validation Error'):visible")
+    @FindByJQuery("span[class='rf-msg-det']:contains('Validation Error'):visible")
     public WebElement errorMessage;
 
 }

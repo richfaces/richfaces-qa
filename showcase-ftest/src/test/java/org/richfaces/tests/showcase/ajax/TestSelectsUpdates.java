@@ -22,13 +22,13 @@
 package org.richfaces.tests.showcase.ajax;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
@@ -46,9 +46,9 @@ public class TestSelectsUpdates extends AbstractWebDriverTest {
      * Locators*************************************************************************************
      */
 
-    @FindBy(jquery="fieldset form select:eq(0)")
+    @FindByJQuery("fieldset form select:eq(0)")
     protected WebElement firstSelect;
-    @FindBy(jquery="div[id$='second'] select")
+    @FindByJQuery("div[id$='second'] select")
     protected WebElement secondSelect;
 
     /* ***************************************************************************************
@@ -76,7 +76,7 @@ public class TestSelectsUpdates extends AbstractWebDriverTest {
 
 //        assertFalse(secondSelect.isDisplayed(), "Second select should be dispayed");
 
-        Graphene.guardXhr(new Select(firstSelect)).selectByVisibleText("Fruits");
+        Graphene.guardAjax(new Select(firstSelect)).selectByVisibleText("Fruits");
 
         List<String> fruitsActual = new ArrayList<String>();
         List<WebElement> fruitsOptions = new Select(secondSelect).getOptions();
@@ -89,7 +89,7 @@ public class TestSelectsUpdates extends AbstractWebDriverTest {
         assertEquals(fruitsActual, fruitsExpected, "When selected fruits in first select, in the second "
             + "should be some examples of Fruits");
 
-        Graphene.guardXhr(new Select(firstSelect)).selectByVisibleText("Vegetables");
+        Graphene.guardAjax(new Select(firstSelect)).selectByVisibleText("Vegetables");
 
         List<String> vegetablesActual = new ArrayList<String>();
         List<WebElement> vegetablesOptions = new Select(secondSelect).getOptions();

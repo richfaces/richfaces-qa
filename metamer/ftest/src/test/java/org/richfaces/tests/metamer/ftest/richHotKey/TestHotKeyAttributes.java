@@ -38,15 +38,13 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
 
     private enum KeysEnum {
 
-        CONTROL_Z(Keys.chord(Keys.CONTROL, "z"), "ctrl+z"),
-        T("t", "t"),
-        CTRL_X(HOTKEY_CTRL_X, "ctrl+x"),
-        ALT_CONTROL_X(Keys.chord(Keys.ALT, Keys.CONTROL, "x"), "alt+ctrl+x");
-        private final String keysToSend;
+        CONTROL_Z("ctrl+z"),
+        T("t"),
+        CTRL_X("ctrl+x"),
+        ALT_CONTROL_X("alt+ctrl+x");
         private final String keysString;
 
-        private KeysEnum(String keysToSend, String keysString) {
-            this.keysToSend = keysToSend;
+        private KeysEnum(String keysString) {
             this.keysString = keysString;
         }
     }
@@ -54,33 +52,26 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
     @Test
     public void enabledInInput() {
         // true
-        hotkey1.invokeOn(firstInput.getInput());
+        hotkey1.invoke(firstInput.advanced().getInputElement());
         checkEvents(1, 0);
         clearHotKeyEvents();
         // false
-        ATTRIBUTES_FIRST.set(HotKeyAttributes.enabledInInput, false);
-        hotkey1.invokeOn(firstInput.getInput());
+        firstHotkeyAttributes.set(HotKeyAttributes.enabledInInput, false);
+        hotkey1.invoke(firstInput.advanced().getInputElement());
         checkEvents(0, 0);
     }
 
     @Test
     @Use(field = "key", enumeration = true)
     public void testKey() {
-        //check if hotkey is not triggered if different hotkey is pressed
-        ATTRIBUTES_FIRST.set(HotKeyAttributes.key, key.keysString);
-        for (KeysEnum fireKeyEvent : KeysEnum.values()) {
-            pressHotkeyOnElement(fireKeyEvent.keysToSend, firstInput.getInput());
-            if (fireKeyEvent.equals(key)) {
-                checkEvents(1, 0);
-            } else {
-                checkEvents(0, 0);
-            }
-            clearHotKeyEvents();
-        }
+        firstHotkeyAttributes.set(HotKeyAttributes.key, key.keysString);
+        hotkey1.invoke();
+        checkEvents(1, 0);
+        clearHotKeyEvents();
     }
 
     private void testKeyForPreventDefault(String keyString, int expectedNum) {
-        ATTRIBUTES_FIRST.set(HotKeyAttributes.key, keyString);
+        firstHotkeyAttributes.set(HotKeyAttributes.key, keyString);
         hotkey1.invoke();
         hotkey1.invoke();
         checkEvent("onkeydown", expectedNum);
@@ -98,37 +89,36 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
 
     @Test
     public void testPreventDefaultFalse() {
-        ATTRIBUTES_FIRST.set(HotKeyAttributes.preventDefault, Boolean.FALSE);
+        firstHotkeyAttributes.set(HotKeyAttributes.preventDefault, Boolean.FALSE);
         try {
             testKeyForPreventDefault("ctrl+f", 1);
         } finally {
-            firstInput.getInput().sendKeys(Keys.ESCAPE);
+            firstInput.advanced().getInputElement().sendKeys(Keys.ESCAPE);
         }
     }
 
     @Test
     public void testPreventDefaultTrue() {
-        ATTRIBUTES_FIRST.set(HotKeyAttributes.preventDefault, Boolean.TRUE);
+        firstHotkeyAttributes.set(HotKeyAttributes.preventDefault, Boolean.TRUE);
         testKeyForPreventDefault("ctrl+f", 2);
-        testKeyForPreventDefault("ctrl+h", 2);
-        testKeyForPreventDefault("ctrl+u", 2);
     }
 
     @Test
     public void testRendered() {
-        ATTRIBUTES_FIRST.set(HotKeyAttributes.rendered, false);
-        assertNotPresent(hotkey1.getRootElement(), "Hotkey 1 should not be present on page.");
-        assertPresent(hotkey2.getRootElement(), "Hotkey 2 should be present on page.");
+        firstHotkeyAttributes.set(HotKeyAttributes.rendered, false);
+        assertNotPresent(hotkey1.advanced().getRootElement(), "Hotkey 1 should not be present on page.");
+        assertPresent(hotkey2.advanced().getRootElement(), "Hotkey 2 should be present on page.");
     }
 
     @Test
     public void testSelector() {
-        ATTRIBUTES_FIRST.set(HotKeyAttributes.selector, "input.first-input");
-        hotkey1.invokeOn(firstInput.getInput());
+        firstHotkeyAttributes.set(HotKeyAttributes.selector, "input.first-input");
+        hotkey1.advanced().setupSelectorFromWidget();
+        hotkey1.invoke();// invoke on element found by selector
         checkEvents(1, 0);
-        hotkey1.invokeOn(secondInput.getInput());
-        checkEvents(1, 0);//no change
-        hotkey1.invokeOn(firstInput.getInput());
+        hotkey1.invoke(secondInput.advanced().getInputElement());
+        checkEvents(1, 0);// no change
+        hotkey1.invoke();// invoke on element found by selector
         checkEvents(2, 0);
     }
 }

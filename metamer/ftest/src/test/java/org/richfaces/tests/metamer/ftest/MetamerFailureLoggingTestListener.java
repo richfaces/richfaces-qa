@@ -53,11 +53,7 @@ public class MetamerFailureLoggingTestListener extends FailureLoggingTestListene
 
     @Override
     public void onFailure(ITestResult result) {
-        if (AbstractGrapheneTest.class.isAssignableFrom(result.getTestClass().getRealClass())) {
-            onFailureForSelenium1(result);
-        } else {
-            onFailureForSelenium2(result);
-        }
+        onFailureForSelenium2(result);
 
         List<String> issueList = new LinkedList<String>();
         IssueTracking issueTracking = result.getMethod().getConstructorOrMethod().getMethod()

@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.region.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -29,34 +29,34 @@ import org.openqa.selenium.WebElement;
  */
 public class RegionPage {
 
-    @FindBy(jquery = "input[type='text']:nth(1)")
+    @FindByJQuery("input[type='text']:nth(1)")
     public WebElement brokenEmailInput;
 
-    @FindBy(jquery = "input[type='text']:nth(0)")
+    @FindByJQuery("input[type='text']:nth(0)")
     public WebElement brokenNameInput;
 
-    @FindBy(jquery = "table[id$='echopanel1'] td:nth(3)")
+    @FindByJQuery("table[id$='echopanel1'] td:nth(3)")
     public WebElement brokenEmailOutput;
 
-    @FindBy(jquery = "table[id$='echopanel1'] td:nth(1)")
+    @FindByJQuery("table[id$='echopanel1'] td:nth(1)")
     public WebElement brokenNameOutput;
 
-    @FindBy(jquery = "input[type='submit']:nth(0)")
+    @FindByJQuery("input[type='submit']:nth(0)")
     public WebElement brokenSubmit;
 
-    @FindBy(jquery = "input[type='text']:nth(3)")
+    @FindByJQuery("input[type='text']:nth(3)")
     public WebElement emailInput;
 
-    @FindBy(jquery = "input[type='text']:nth(2)")
+    @FindByJQuery("input[type='text']:nth(2)")
     public WebElement nameInput;
 
-    @FindBy(jquery = "table[id$='echopanel2'] td:nth(3)")
+    @FindByJQuery("table[id$='echopanel2'] td:nth(3)")
     public WebElement emailOutput;
 
-    @FindBy(jquery = "table[id$='echopanel2'] td:nth(1)")
+    @FindByJQuery("table[id$='echopanel2'] td:nth(1)")
     public WebElement nameOutput;
 
-    @FindBy(jquery = "input[type='submit']:nth(1)")
+    @FindByJQuery("input[type='submit']:nth(1)")
     public WebElement submit;
 
 }

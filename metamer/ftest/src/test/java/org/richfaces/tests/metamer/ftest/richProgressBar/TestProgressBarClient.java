@@ -34,7 +34,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
+import org.jboss.arquillian.graphene.page.Page;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -64,7 +65,7 @@ public class TestProgressBarClient extends AbstractWebDriverTest {
 
     @Test
     public void testInit() {
-        assertTrue(Graphene.element(page.progressBar).isPresent().apply(driver),
+        assertTrue(new WebElementConditionFactory(page.progressBar).isPresent().apply(driver),
                 "Progress bar is not present on the page.");
         assertTrue(page.progressBar.isDisplayed(), "Progress bar should be visible on the page.");
         assertTrue(page.initialOutput.isDisplayed(), "Initial output should be present on the page.");
@@ -72,13 +73,13 @@ public class TestProgressBarClient extends AbstractWebDriverTest {
         assertTrue(page.startButtonClient.isDisplayed(), "Start button is not present on the page.");
         assertTrue(page.pauseButton.isDisplayed(), "Pause button is not present on the page.");
 
-        if (Graphene.element(page.remain).isPresent().apply(driver)) {
+        if (new WebElementConditionFactory(page.remain).isPresent().apply(driver)) {
             assertFalse(page.remain.isDisplayed(), "Progress bar should not show progress.");
         }
-        if (Graphene.element(page.progress).isPresent().apply(driver)) {
+        if (new WebElementConditionFactory(page.progress).isPresent().apply(driver)) {
             assertFalse(page.progress.isDisplayed(), "Progress bar should not show progress.");
         }
-        if (Graphene.element(page.label).isPresent().apply(driver)) {
+        if (new WebElementConditionFactory(page.label).isPresent().apply(driver)) {
             assertFalse(page.label.isDisplayed(), "Progress bar should not show progress.");
         }
         assertEquals(page.isEnabled.getText(), "false");
@@ -97,7 +98,7 @@ public class TestProgressBarClient extends AbstractWebDriverTest {
 
         assertTrue(page.remain.isDisplayed(), "Progress bar should show progress.");
         assertTrue(page.progress.isDisplayed(), "Progress bar should show progress.");
-        assertFalse(Graphene.element(page.completeOutput).isVisible().apply(driver),
+        assertFalse(new WebElementConditionFactory(page.completeOutput).isVisible().apply(driver),
                 "Progress bar should not show progress.");
         assertEquals(page.isEnabled.getText(), "true");
     }

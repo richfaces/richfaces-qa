@@ -27,13 +27,14 @@ import static org.richfaces.tests.metamer.ftest.richDragIndicator.DragIndicatorA
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.DragIndicatorAttributes.rejectClass;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.DragIndicatorAttributes.rendered;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.dragIndicatorAttributes;
-import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -67,7 +68,7 @@ public class TestDragIndicator extends AbstractWebDriverTest {
         dragIndicatorAttributes.set(rendered, true);
 
         // before any mouse move, no indicator appears on page
-        assertFalse(Graphene.element(page.indicator).isPresent().apply(driver));
+        assertFalse(new WebElementConditionFactory(page.indicator).isPresent().apply(driver));
 
         Actions actionQueue = new Actions(driver);
 
@@ -99,7 +100,7 @@ public class TestDragIndicator extends AbstractWebDriverTest {
 
         // and now the same with indicator not rendered
         dragIndicatorAttributes.set(rendered, false);
-        assertFalse(Graphene.element(page.indicator).isPresent().apply(driver));
+        assertFalse(new WebElementConditionFactory(page.indicator).isPresent().apply(driver));
 
         // just small move to attempt display indicator
         dragging = actionQueue.clickAndHold(page.drag1).moveByOffset(1, 1).build();
@@ -108,7 +109,7 @@ public class TestDragIndicator extends AbstractWebDriverTest {
                 .until()
                 .element(page.indicator)
                 .is().not().present();
-
+        actionQueue.release().perform();
     }
 
     @Test
@@ -120,7 +121,7 @@ public class TestDragIndicator extends AbstractWebDriverTest {
         Actions actionQueue = new Actions(driver);
 
         // before any mouse move, no indicator appears on page
-        assertFalse(Graphene.element(page.indicator).isPresent().apply(driver));
+        assertFalse(new WebElementConditionFactory(page.indicator).isPresent().apply(driver));
 
         // firstly just drag and don't move. Indicator no displayed
         Action dragging = actionQueue.clickAndHold(page.drag1).build();

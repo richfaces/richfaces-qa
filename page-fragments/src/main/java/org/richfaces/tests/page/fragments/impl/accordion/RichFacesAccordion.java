@@ -1,6 +1,6 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,67 +18,63 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
+ *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.accordion;
 
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
+
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.page.fragments.impl.switchable.AbstractSwitchableComponent;
 
-/**
- * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
- */
-public class RichFacesAccordion implements Accordion {
+public class RichFacesAccordion extends AbstractSwitchableComponent<RichFacesAccordionItem> implements Accordion {
 
-    @Root
-    private WebElement root;
+    @FindBy(className = "rf-ac-itm-hdr")
+    private List<WebElement> switcherControllerElements;
 
-    @FindBy(className="rf-ac-itm")
-    private List<RichFacesAccordionItem> items;
+    @FindBy(className = "rf-ac-itm")
+    private List<RichFacesAccordionItem> accordionItems;
+
+    @FindByJQuery(".rf-ac-itm-cnt:visible")
+    private WebElement visibleContent;
+
+    private final AdvancedAccordionInteractions advancedInteractions = new AdvancedAccordionInteractions();
 
     @Override
-    public int size() {
-        return items.size();
+    public AdvancedAccordionInteractions advanced() {
+        return advancedInteractions;
     }
 
     @Override
-    public AccordionItem getActiveItem() {
-        for (AccordionItem item: items) {
-            if (item.isActive()) {
-                return item;
-            }
+    public int getNumberOfAccordionItems() {
+        return accordionItems.size();
+    }
+
+    public class AdvancedAccordionInteractions extends AbstractSwitchableComponent<RichFacesAccordionItem>.AdvancedSwitchableComponentInteractions {
+
+        public List<RichFacesAccordionItem> getAccordionItems() {
+            return Collections.unmodifiableList(accordionItems);
         }
-        return null;
+
+        public RichFacesAccordionItem getActiveItem() {
+            for (RichFacesAccordionItem item : accordionItems) {
+                if (item.advanced().isActive()) {
+                    return item;
+                }
+            }
+            return null;
+        }
     }
 
     @Override
-    public AccordionItem getItem(int index) {
-        return items.get(index);
-    }
-
-    public WebElement getRootElement() {
-        return root;
+    protected List<WebElement> getSwitcherControllerElements() {
+        return switcherControllerElements;
     }
 
     @Override
-    public Iterator<AccordionItem> iterator() {
-        final Iterator<RichFacesAccordionItem> iterator = items.iterator();
-        return new Iterator<AccordionItem>() {
-            @Override
-            public boolean hasNext() {
-                return iterator.hasNext();
-            }
-            @Override
-            public AccordionItem next() {
-                return iterator.next();
-            }
-            @Override
-            public void remove() {
-                iterator.remove();
-            }
-        };
+    protected WebElement getRootOfContainerElement() {
+        return visibleContent;
     }
-
 }

@@ -21,10 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.richGraphValidator;
 
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
 import static org.testng.Assert.assertTrue;
 
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.richGraphValidator.PasswordValidationPage;
 import org.testng.annotations.Test;
@@ -46,7 +47,7 @@ public class TestRichGraphValidator extends AbstractWebDriverTest {
         getPage().getSubmit().click();
         Graphene.waitAjax()
             .withMessage("After submitting a form wrong confirmation, validation message should be present.")
-            .until(Graphene.element(getPage().getGraphValidatorMessageArea()).isPresent());
+            .until(new WebElementConditionFactory(getPage().getGraphValidatorMessageArea()).isPresent());
         assertTrue(getPage().getGraphValidatorMessageArea().getText().contains("Different passwords entered!"));
         getPage().getConfirmation().click();
         getPage().getConfirmation().clear();
@@ -54,7 +55,7 @@ public class TestRichGraphValidator extends AbstractWebDriverTest {
         getPage().getSubmit().click();
         Graphene.waitAjax()
             .withMessage("After submitting a form with correctt value, sucess message should be present.")
-            .until(Graphene.element(getPage().getInfoMessageArea()).isPresent());
+            .until(new WebElementConditionFactory(getPage().getInfoMessageArea()).isPresent());
         assertTrue(getPage().getInfoMessageArea().getText().contains("Successfully changed!"));
     }
 
@@ -65,7 +66,7 @@ public class TestRichGraphValidator extends AbstractWebDriverTest {
         getPage().getSubmit().click();
         Graphene.waitAjax()
             .withMessage("After submitting a form with long password, validation message should be present.")
-            .until(Graphene.element(getPage().getValidatorMessageArea()).isPresent());
+            .until(new WebElementConditionFactory(getPage().getValidatorMessageArea()).isPresent());
         assertTrue(getPage().getValidatorMessageArea().getText().contains("between 5 and 15 characters"));
     }
 
@@ -76,7 +77,7 @@ public class TestRichGraphValidator extends AbstractWebDriverTest {
         getPage().getSubmit().click();
         Graphene.waitAjax()
             .withMessage("After submitting a form with short password, validation message should be present.")
-            .until(Graphene.element(getPage().getValidatorMessageArea()).isPresent());
+            .until(new WebElementConditionFactory(getPage().getValidatorMessageArea()).isPresent());
         assertTrue(getPage().getValidatorMessageArea().getText().contains("between 5 and 15 characters"));
     }
 

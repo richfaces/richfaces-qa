@@ -21,16 +21,16 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.inplaceSelect.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.richfaces.tests.page.fragments.impl.input.inplace.select.RichFacesInplaceSelect;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.richfaces.tests.page.fragments.impl.inplaceSelect.RichFacesInplaceSelect;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class SimplePage {
 
-    @FindBy(jquery = ".rf-is:eq(0)")
+    @FindByJQuery(".rf-is:eq(0)")
     public RichFacesInplaceSelect simpleSelect;
-    @FindBy(jquery = ".rf-is:eq(1)")
+    @FindByJQuery(".rf-is:eq(1)")
     public RichFacesInplaceSelect customSelect;
 }

@@ -44,7 +44,6 @@ public class AbstractPollTest extends AbstractWebDriverTest {
      *            TextRetriever from which the calendar with specific time will be inicialized
      */
     public GregorianCalendar initializeCalendarFromDateRetriever(String date) {
-
         String[] serverDateParsed = date.split(":");
         String hours = serverDateParsed[1].substring(serverDateParsed[1].length() - 2, serverDateParsed[1].length());
         String minutes = serverDateParsed[2];

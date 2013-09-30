@@ -21,11 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.status;
 
-import org.jboss.arquillian.graphene.Graphene;
-
-import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.openqa.selenium.WebElement;
-import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.status.page.TestReferencedUsagePage;
 import org.testng.annotations.Test;
 

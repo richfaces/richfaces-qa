@@ -22,7 +22,7 @@
 package org.richfaces.tests.showcase.repeat;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.repeat.page.RepeatPage;
 import static org.testng.Assert.assertEquals;
@@ -84,7 +84,7 @@ public class TestRepeat extends AbstractDataIterationWithStates {
     @Test
     public void testFirstStateSecondPage() {
 
-        Graphene.guardXhr(page.anchorForSecondPage).click();
+        Graphene.guardAjax(page.anchorForSecondPage).click();
 
         StateWithCapitalAndTimeZone actual = retrieveDataAboutState(page.firstStateHeader, page.firstStateBody);
         assertEquals(actual, FIRST_STATE_SECOND_PAGE, "The first state on second page is not correct");
@@ -93,7 +93,7 @@ public class TestRepeat extends AbstractDataIterationWithStates {
     @Test
     public void testLastStateSecondPage() {
 
-        Graphene.guardXhr(page.anchorForSecondPage).click();
+        Graphene.guardAjax(page.anchorForSecondPage).click();
 
         StateWithCapitalAndTimeZone actual = retrieveDataAboutState(page.lastStateHeader, page.lastStateBody);
         assertEquals(actual, LAST_STATE_SECOND_PAGE, "The last state on second page is not correct");
@@ -102,7 +102,7 @@ public class TestRepeat extends AbstractDataIterationWithStates {
     @Test
     public void testFirstStateThirdPage() {
 
-        Graphene.guardXhr(page.anchorForThirdPage).click();
+        Graphene.guardAjax(page.anchorForThirdPage).click();
 
         StateWithCapitalAndTimeZone actual = retrieveDataAboutState(page.firstStateHeader, page.firstStateBody);
         assertEquals(actual, FIRST_STATE_THIRD_PAGE, "The first state on third page is not correct");
@@ -111,7 +111,7 @@ public class TestRepeat extends AbstractDataIterationWithStates {
     @Test
     public void testLastStateThirdPage() {
 
-        Graphene.guardXhr(page.anchorForThirdPage).click();
+        Graphene.guardAjax(page.anchorForThirdPage).click();
 
         StateWithCapitalAndTimeZone actual = retrieveDataAboutState(page.lastStateHeader, page.lastStateBody);
         assertEquals(actual, LAST_STATE_THIRD_PAGE, "The last state on third page is not correct");

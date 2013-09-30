@@ -32,20 +32,18 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
-import com.google.common.base.Predicate;
-
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
-import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
+import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
@@ -59,31 +57,39 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.iphone.IPhoneDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.component.SwitchType;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
+import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.VisibleComponent;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponent.ClearType;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
+import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
+
+import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
 
 public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     @Drone
     protected WebDriver driver;
+
     @ArquillianResource
     protected JavascriptExecutor executor;
+
     @FindBy(css = "input[id$=statusInput]")
     protected TextInputComponentImpl statusInput;
+
     @Page
     private MetamerPage metamerPage;
     protected static final int WAIT_TIME = 5;// s
     protected static final int MINOR_WAIT_TIME = 50;// ms
-    protected static final int TRIES = 20;//for guardListSize and expectedReturnJS
+    protected static final int TRIES = 20;// for guardListSize and expectedReturnJS
     protected DriverType driverType;
     private static final String ATTRIBUTE_INPUT_TEMPLATE = "input[id$={0}Input]";
 
@@ -93,7 +99,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         InternetExplorer(InternetExplorerDriver.class),
         Chrome(ChromeDriver.class),
         HTMLUnit(HtmlUnitDriver.class),
-        //        Opera(OperaDriver.class),
+        // Opera(OperaDriver.class),
         IPhone(IPhoneDriver.class),
         Android(AndroidDriver.class),
         Remote(RemoteWebDriver.class);
@@ -114,8 +120,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Opens the tested page. If templates is not empty nor null, it appends url
-     * parameter with templates.
+     * Opens the tested page. If templates is not empty nor null, it appends url parameter with templates.
      *
      * @param templates templates that will be used for test, e.g. "red_div"
      */
@@ -133,18 +138,15 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Sets component attribute to chosen @value. Always uses the first attribute table, unless a more specific
-     * attribute locator provided (e.g. @attributename="table2:onChange").
-     * @param attributeName name of the attribute (attach prefix of the attribute table if needed another attribute table than the first one)
+     * Sets component attribute to chosen @value. Always uses the first attribute table, unless a more specific attribute
+     * locator provided (e.g. @attributename="table2:onChange").
+     *
+     * @param attributeName name of the attribute (attach prefix of the attribute table if needed another attribute table than
+     *        the first one)
      * @param value value, which String representation will be set to attribute input.
      */
     protected void setAttribute(String attributeName, Object value) {
-        TextInputComponentImpl attributeInput = Graphene.createPageFragment(TextInputComponentImpl.class,
-                driver.findElement(By.cssSelector(format(ATTRIBUTE_INPUT_TEMPLATE, attributeName))));
-        //set attribute
-        MetamerPage.waitRequest(attributeInput.clear(ClearType.JS)
-                .fillIn(value.toString()), WaitRequestType.HTTP)
-                .submit();
+        getUnsafeAttributes("").set(attributeName, value);
     }
 
     /**
@@ -160,11 +162,11 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     protected void assertNotPresent(WebElement element, String msg) {
-        assertTrue(Graphene.element(element).not().isPresent().apply(driver), msg);
+        assertTrue(new WebElementConditionFactory(element).not().isPresent().apply(driver), msg);
     }
 
     protected void assertNotVisible(WebElement element, String msg) {
-        assertTrue(Graphene.element(element).not().isVisible().apply(driver), msg);
+        assertTrue(new WebElementConditionFactory(element).not().isVisible().apply(driver), msg);
     }
 
     protected void assertNotVisible(VisibleComponent component, String msg) {
@@ -172,7 +174,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     protected void assertPresent(WebElement element, String msg) {
-        assertTrue(Graphene.element(element).isPresent().apply(driver), msg);
+        assertTrue(new WebElementConditionFactory(element).isPresent().apply(driver), msg);
     }
 
     protected void assertVisible(VisibleComponent component, String msg) {
@@ -180,7 +182,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     protected void assertVisible(WebElement element, String msg) {
-        assertTrue(Graphene.element(element).isVisible().apply(driver), msg);
+        assertTrue(new WebElementConditionFactory(element).isVisible().apply(driver), msg);
     }
 
     /**
@@ -188,8 +190,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      *
      * @param script whole command that will be executed
      * @param args
-     * @return may return a value or null (if expected (non-returning script) or
-     * if returning script fails)
+     * @return may return a value or null (if expected (non-returning script) or if returning script fails)
      */
     protected Object executeJS(String script, Object... args) {
         return executor.executeScript(script, args);
@@ -221,46 +222,85 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
+     * Helper method for testing data.
+     * @param triggeringAction
+     */
+    protected void testData(Action triggeringAction) {
+        String testedValue = "RF5";
+        UnsafeAttributes attributes = getUnsafeAttributes("");
+        attributes.set("data", testedValue);
+        attributes.set("oncomplete", "data = event.data");
+        Graphene.guardAjax(new ActionWrapper(triggeringAction)).perform();
+        assertEquals(expectedReturnJS("return window.data;", testedValue), testedValue);
+    }
+
+    protected void testLimitRender(Action triggeringAction) {
+        UnsafeAttributes attributes = getUnsafeAttributes("");
+        attributes.set("limitRender", true);
+        attributes.set("render", "@this renderChecker");
+        attributes.set("mode", SwitchType.ajax);
+        String renderCheckerText = metamerPage.getRenderCheckerOutputElement().getText();
+        String requestTime = metamerPage.getRequestTimeElement().getText();
+        Graphene.guardAjax(new ActionWrapper(triggeringAction)).perform();
+        Graphene.waitGui().until().element(metamerPage.getRenderCheckerOutputElement()).text().not()
+            .equalTo(renderCheckerText);
+        Graphene.waitGui().until().element(metamerPage.getRequestTimeElement()).text()
+            .equalTo(requestTime);
+    }
+
+    protected void testRender(Action triggeringAction) {
+        UnsafeAttributes attributes = getUnsafeAttributes("");
+        attributes.set("render", "@this renderChecker");
+        attributes.set("mode", SwitchType.ajax);
+        String renderCheckerText = metamerPage.getRenderCheckerOutputElement().getText();
+        String requestTime = metamerPage.getRequestTimeElement().getText();
+        Graphene.guardAjax(new ActionWrapper(triggeringAction)).perform();
+        Graphene.waitGui().until().element(metamerPage.getRenderCheckerOutputElement()).text().not()
+            .equalTo(renderCheckerText);
+        Graphene.waitGui().until().element(metamerPage.getRequestTimeElement()).text().not()
+            .equalTo(requestTime);
+    }
+
+    /**
      * Testing of HTMLAttribute (e.g. type).
      *
-     * E.g. testHTMLAttribute(page.link, mediaOutputAttributes,
-     * MediaOutputAttributes.type, "text/html");
+     * E.g. testHTMLAttribute(page.link, mediaOutputAttributes, MediaOutputAttributes.type, "text/html");
      *
-     * @param element WebElement which will be checked for containment of tested
-     * attribute
-     * @param attributes attributes instance which will be used for setting
-     * attribute
+     * @param element WebElement which will be checked for containment of tested attribute
+     * @param attributes attributes instance which will be used for setting attribute
      * @param testedAttribute attribute which will be tested
      * @param value tested value of attribute
      */
-    protected <T extends AttributeEnum> void testHTMLAttribute(WebElement element, Attributes<T> attributes, T testedAttribute, String value) {
+    protected <T extends AttributeEnum> void testHTMLAttribute(WebElement element, Attributes<T> attributes, T testedAttribute,
+        String value) {
         attributes.set(testedAttribute, value);
         String attString = Attribute2StringDecoder.decodeAttribute(testedAttribute);
         String valueOnPage = element.getAttribute(attString);
         if (new StringEqualsWrapper(value).equalsToSomeOfThis(null, "", "null")) {
             if (new StringEqualsWrapper(valueOnPage).notEqualsToSomeOfThis(null, "", "null")) {
-                fail("Attribute " + testedAttribute.toString() + " does not work properly, Value of attribute on page: '" + valueOnPage + "', expected value '" + value + "'.");
+                fail("Attribute " + testedAttribute.toString() + " does not work properly, Value of attribute on page: '"
+                    + valueOnPage + "', expected value '" + value + "'.");
             }
-        } else if (!valueOnPage.contains(value)) {//Attribute has not been set correctly
-            fail("Attribute " + testedAttribute.toString() + " does not work properly, Value of attribute on page: '" + valueOnPage + "', expected value '" + value + "'.");
+        } else if (!valueOnPage.contains(value)) {// Attribute has not been set correctly
+            fail("Attribute " + testedAttribute.toString() + " does not work properly, Value of attribute on page: '"
+                + valueOnPage + "', expected value '" + value + "'.");
         }
     }
 
     /**
      * Testing of HTMLAttribute (e.g. type).
      *
-     * E.g. testHTMLAttribute(page.link, mediaOutputAttributes,
-     * MediaOutputAttributes.type, "text/html");
+     * E.g. testHTMLAttribute(page.link, mediaOutputAttributes, MediaOutputAttributes.type, "text/html");
      *
-     * @param element FutureTarget of WebElement which will be checked for containment of tested
-     * attribute
-     * @param attributes attributes instance which will be used for setting
-     * attribute
+     * @param element FutureTarget of WebElement which will be checked for containment of tested attribute
+     * @param attributes attributes instance which will be used for setting attribute
      * @param testedAttribute attribute which will be tested
      * @param value tested value of attribute
-     * @param actionAfterSettingOfAttribute action which will be performed after setting the attribute(e.g. open popup), if it is null then it is skipped
+     * @param actionAfterSettingOfAttribute action which will be performed after setting the attribute(e.g. open popup), if it
+     *        is null then it is skipped
      */
-    protected <T extends AttributeEnum> void testHTMLAttribute(FutureTarget<WebElement> element, Attributes<T> attributes, T testedAttribute, String value, Action actionAfterSettingOfAttribute) {
+    protected <T extends AttributeEnum> void testHTMLAttribute(FutureTarget<WebElement> element, Attributes<T> attributes,
+        T testedAttribute, String value, Action actionAfterSettingOfAttribute) {
         attributes.set(testedAttribute, value);
         if (actionAfterSettingOfAttribute != null) {
             actionAfterSettingOfAttribute.perform();
@@ -269,49 +309,49 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         String valueOnPage = element.getTarget().getAttribute(attString);
         if (new StringEqualsWrapper(value).equalsToSomeOfThis(null, "", "null")) {
             if (new StringEqualsWrapper(valueOnPage).notEqualsToSomeOfThis(null, "", "null")) {
-                fail("Attribute " + testedAttribute.toString() + " does not work properly, Value of attribute on page: '" + valueOnPage + "', expected value '" + value + "'.");
+                fail("Attribute " + testedAttribute.toString() + " does not work properly, Value of attribute on page: '"
+                    + valueOnPage + "', expected value '" + value + "'.");
             }
-        } else if (!valueOnPage.contains(value)) {//Attribute has not been set correctly
-            fail("Attribute " + testedAttribute.toString() + " does not work properly, Value of attribute on page: '" + valueOnPage + "', expected value '" + value + "'.");
+        } else if (!valueOnPage.contains(value)) {// Attribute has not been set correctly
+            fail("Attribute " + testedAttribute.toString() + " does not work properly, Value of attribute on page: '"
+                + valueOnPage + "', expected value '" + value + "'.");
         }
     }
 
     /**
-     * Testing of HTMLAttribute (e.g. type). Expects that if an attribute is set
-     * to @value, then the value will be set to @anotherValue (e.g.
-     * null -> submit for a4j:commandButton)
+     * Testing of HTMLAttribute (e.g. type). Expects that if an attribute is set to @value, then the value will be set to @anotherValue
+     * (e.g. null -> submit for a4j:commandButton)
      *
-     * E.g. testHTMLAttribute(page.link, mediaOutputAttributes,
-     * MediaOutputAttributes.type, "text/html");
+     * E.g. testHTMLAttribute(page.link, mediaOutputAttributes, MediaOutputAttributes.type, "text/html");
      *
-     * @param element WebElement which will be checked for containment of tested
-     * attribute
-     * @param attributes attributes instance which will be used for setting
-     * attribute
+     * @param element WebElement which will be checked for containment of tested attribute
+     * @param attributes attributes instance which will be used for setting attribute
      * @param testedAttribute attribute which will be tested
      * @param value tested value of attribute
      * @param anotherValue value that will replace @value
      */
-    protected <T extends AttributeEnum> void testHTMLAttribute(WebElement element, Attributes<T> attributes, T testedAttribute, String value, String anotherValue) {
+    protected <T extends AttributeEnum> void testHTMLAttribute(WebElement element, Attributes<T> attributes, T testedAttribute,
+        String value, String anotherValue) {
         attributes.set(testedAttribute, value);
         String attString = Attribute2StringDecoder.decodeAttribute(testedAttribute);
         String valueOnPage = element.getAttribute(attString);
         if (new StringEqualsWrapper(value).equalsToSomeOfThis(null, "", "null")) {
             if (new StringEqualsWrapper(anotherValue).isNotSimilarToSomeOfThis(valueOnPage)) {
-                fail("Attribute " + testedAttribute.toString() + " does not work properly, Value of attribute on page: '" + valueOnPage + "', expected value '" + anotherValue + "'.");
+                fail("Attribute " + testedAttribute.toString() + " does not work properly, Value of attribute on page: '"
+                    + valueOnPage + "', expected value '" + anotherValue + "'.");
             }
-        } else if (new StringEqualsWrapper(anotherValue).isNotSimilarToSomeOfThis(value)) {//Attribute has not been set correctly
-            fail("Attribute " + testedAttribute.toString() + " does not work properly, Value of attribute on page: '" + valueOnPage + "', expected value '" + anotherValue + "'.");
+        } else if (new StringEqualsWrapper(anotherValue).isNotSimilarToSomeOfThis(value)) {// Attribute has not been set
+            // correctly
+            fail("Attribute " + testedAttribute.toString() + " does not work properly, Value of attribute on page: '"
+                + valueOnPage + "', expected value '" + anotherValue + "'.");
         }
     }
 
     /**
      * Testing of HTMLAttribute. The tested value is RichFaces 4.
      *
-     * @param element WebElement which will be checked for containment of tested
-     * attribute
-     * @param attributes attributes instance which will be used for setting
-     * attribute
+     * @param element WebElement which will be checked for containment of tested attribute
+     * @param attributes attributes instance which will be used for setting attribute
      * @param testedAttribute attribute which will be tested
      */
     protected <T extends AttributeEnum> void testHTMLAttribute(WebElement element, Attributes<T> attributes, T testedAttribute) {
@@ -319,8 +359,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Tests lang attribute of chosen component in Metamer. Page must contain an
-     * input for this component's attribute.
+     * Tests lang attribute of chosen component in Metamer. Page must contain an input for this component's attribute.
      *
      * @param element WebElement representing component.
      */
@@ -338,6 +377,34 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
+     * Helper method for testing of delays (showDelay, hideDelay). Runs the @actionWithDelay 3 times and measure time spent in it.
+     * Then count an average time from these 3 values and asserts it to the @expectedDelay with 50% tolerance.
+     *
+     * @param actionBefore action before the measured action. Can be used for e.g. close/open menu. Can be null.
+     * @param actionWithDelay the measured action. Can be e.g. open/close menu.
+     * @param attributeName name of the measured attribute (e.g. hideDelay, showDelay).
+     * @param expectedDelayInMillis expected delay spent in @actionWithDelay and also a value that will be set in attribute with name @attributeName
+     */
+    protected void testDelay(final Action actionBefore, final Action actionWithDelay, String attributeName, long expectedDelayInMillis) {
+        getUnsafeAttributes("").set(attributeName, expectedDelayInMillis);
+        double tolerance = expectedDelayInMillis == 0 ? 500 : expectedDelayInMillis * 0.5;
+        int cycles = 3;
+        ArrayList<Long> delays = Lists.newArrayList();
+        for (int i = 0; i < cycles; i++) {
+            if (actionBefore != null) {
+                actionBefore.perform();
+            }
+            delays.add(StopWatch.watchTimeSpentInAction(actionWithDelay).inMillis().longValue());
+        }
+        double avg = 0;
+        for (Long delay : delays) {
+            avg += delay;
+        }
+        avg /= delays.size();
+        assertEquals(avg, expectedDelayInMillis, tolerance, "The delay is not in tolerance.");
+    }
+
+    /**
      * A helper method for testing attribute "dir". It tries null, ltr and rtl.
      *
      * @param element WebElement reference of tested element
@@ -349,33 +416,26 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * A helper method for testing JavaScripts events. It sets "metamerEvents +=
-     * "testedAttribute" to the input field of the tested attribute and fires
-     * the event
-     *
-     * @event using jQuery on the given element
-     * @element. Then it checks if the event was fired. This method should only
-     * be used for attributes consistent with DOM events (e.g. (on)click,
-     * (on)change...).
+     * A helper method for testing JavaScripts events. It sets "metamerEvents += "testedAttribute" to the input field of the
+     * tested attribute and fires the event @event using jQuery on the given element @element. Then it checks if the event was
+     * fired. This method should only be used for attributes consistent with DOM events (e.g. (on)click, (on)change...).
      *
      * @param element WebElement on which will be the event triggered
-     * @param attributes attributes instance which will be used for setting
-     * attribute
+     * @param attributes attributes instance which will be used for setting attribute
      * @param testedAttribute attribute which will be tested
      */
     protected <T extends AttributeEnum> void testFireEventWithJS(WebElement element, Attributes<T> attributes, T testedAttribute) {
         attributes.set(testedAttribute, "metamerEvents += \"" + testedAttribute.toString() + " \"");
         executeJS("metamerEvents = \"\";");
-        Event e = new Event(testedAttribute.toString().substring(2));//remove prefix "on"
+        Event e = new Event(testedAttribute.toString().substring(2));// remove prefix "on"
         fireEvent(element, e);
         String returnedString = expectedReturnJS("return metamerEvents", testedAttribute.toString());
         assertEquals(returnedString, testedAttribute.toString(), "Event " + e + " does not work.");
     }
 
     /**
-     * A helper method for testing JavaScripts events. It sets "metamerEvents +=
-     * "testedAttribute" to the input field of the tested attribute and fires
-     * the event
+     * A helper method for testing JavaScripts events. It sets "metamerEvents += "testedAttribute" to the input field of the
+     * tested attribute and fires the event @event using jQuery on the element @element. Then it checks if the event was fired.
      *
      * @event using jQuery on the element
      * @element. Then it checks if the event was fired.
@@ -384,11 +444,11 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * testedAttribute)
      * @param element WebElement on which will be the event triggered
      * @param event event wich will be triggered
-     * @param attributes attributes instance which will be used for setting
-     * attribute
+     * @param attributes attributes instance which will be used for setting attribute
      * @param testedAttribute attribute which will be tested
      */
-    protected <T extends AttributeEnum> void testFireEventWithJS(WebElement element, Event event, Attributes<T> attributes, T testedAttribute) {
+    protected <T extends AttributeEnum> void testFireEventWithJS(WebElement element, Event event, Attributes<T> attributes,
+        T testedAttribute) {
         attributes.set(testedAttribute, "metamerEvents += \"" + testedAttribute.toString() + " \"");
         executeJS("metamerEvents = \"\";");
         fireEvent(element, event);
@@ -397,16 +457,12 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * A helper method for testing events. It sets "metamerEvents += "
+     * A helper method for testing events. It sets "metamerEvents += "@testedAttribute" to the input field and fires the event
+     * using Actions. Then it checks if the event was fired.
      *
-     * @testedAttribute" to the input field and fires the event using Actions.
-     * Then it checks if the event was fired.
-     *
-     * @param attributes attributes instance which will be used for setting
-     * attribute
+     * @param attributes attributes instance which will be used for setting attribute
      * @param testedAttribute attribute which will be tested
-     * @param eventFiringAction selenium action which leads to launch the tested
-     * event,
+     * @param eventFiringAction selenium action which leads to launch the tested event,
      */
     protected <T extends AttributeEnum> void testFireEvent(Attributes<T> attributes, T testedAttribute, Action eventFiringAction) {
         attributes.set(testedAttribute, "metamerEvents += \"" + testedAttribute.toString() + " \"");
@@ -433,7 +489,8 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * @param element FutureTarget of WebElement on which will be the event triggered
      * @param actionBeforeFiringTheEvent action which will be performed before firing the event
      */
-    protected void testFireEvent(final Event event, final FutureTarget<WebElement> element, final Action actionBeforeFiringTheEvent) {
+    protected void testFireEvent(final Event event, final FutureTarget<WebElement> element,
+        final Action actionBeforeFiringTheEvent) {
         testFireEvent(event.getEventName(), new Action() {
             @Override
             public void perform() {
@@ -464,18 +521,20 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     /**
      * A helper method for testing events.
      *
-     * @param attributeName name of the attribute that should be set (i.e. inputselect, onselect ; can be without the prefix 'on')
+     * @param attributeName name of the attribute that should be set (i.e. inputselect, onselect ; can be without the prefix
+     *        'on')
      * @param eventFiringAction action which will be performed to trigger the event
      */
     protected void testFireEvent(String attributeName, Action eventFiringAction) {
-        setAttribute((attributeName.startsWith("on") ? attributeName : "on" + attributeName),
-                "metamerEvents += \"" + attributeName + " \"");
-        //clear/init events
+        setAttribute((attributeName.startsWith("on") ? attributeName : "on" + attributeName), "metamerEvents += \""
+            + attributeName + " \"");
+        // clear/init events
         executeJS("metamerEvents = \"\";");
-        //trigger event
+        // trigger event
         eventFiringAction.perform();
-        //check
-        assertEquals(expectedReturnJS("return metamerEvents", attributeName), attributeName, "Attribute " + attributeName + " does not work.");
+        // check
+        assertEquals(expectedReturnJS("return metamerEvents", attributeName), attributeName, "Attribute " + attributeName
+            + " does not work.");
     }
 
     /**
@@ -489,76 +548,70 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Helper method for testing label's text changing. At first it sets
-     * "RichFaces 4" to the
-     * <code>testedAttribute</code> input, then fires
-     * <code>labelChangeAction</code>(if some), then waits for the visibility of
-     * <code>element</code> and finally checks if the label (
-     * <code>getText()</code> method) of
-     * <code>element</code> was changed as expected.
+     * Helper method for testing label's text changing. At first it sets "RichFaces 4" to the <code>testedAttribute</code>
+     * input, then fires <code>labelChangeAction</code>(if some), then waits for the visibility of <code>element</code> and
+     * finally checks if the label (<code>getText()</code> method) of <code>element</code> was changed as expected.
      *
-     * @param element element which <code>getText()</code> method will be used
-     * for checking of label text
-     * @param attributes attributes instance which will be used for setting
-     * attribute
+     * @param element element which <code>getText()</code> method will be used for checking of label text
+     * @param attributes attributes instance which will be used for setting attribute
      * @param testedAttribute attribute which will be tested
      * @param labelChangeAction action which will change the label (if no action
      * needed use <code>null</code> or empty Action)
      */
-    protected <T extends AttributeEnum> void testLabelChanges(WebElement element, Attributes<T> attributes, T testedAttribute, Action labelChangeAction) {
+    protected <T extends AttributeEnum> void testLabelChanges(WebElement element, Attributes<T> attributes, T testedAttribute,
+        Action labelChangeAction) {
         testLabelChanges(FutureWebElement.of(element), attributes, testedAttribute, labelChangeAction);
     }
 
-    protected <T extends AttributeEnum> void testLabelChanges(FutureTarget<WebElement> futureTarget, Attributes<T> attributes, T testedAttribute, Action labelChangeAction) {
+    protected <T extends AttributeEnum> void testLabelChanges(FutureTarget<WebElement> futureTarget, Attributes<T> attributes,
+        T testedAttribute, Action labelChangeAction) {
         String rf = "RichFaces 4";
         attributes.set(testedAttribute, rf);
         if (labelChangeAction != null) {
             labelChangeAction.perform();
         }
         Graphene.waitModel().until().element(futureTarget.getTarget()).is().visible();
-        Graphene.waitModel().until(testedAttribute + " does not work, label has not changed.").element(futureTarget.getTarget()).text().equalTo(rf);
+        Graphene.waitModel().until(testedAttribute + " does not work, label has not changed.")
+            .element(futureTarget.getTarget()).text().equalTo(rf);
     }
 
-    protected <T extends AttributeEnum> void testLabelChanges(String attributeName, FutureTarget<WebElement> futureTarget, Action labelChangeAction) {
+    protected <T extends AttributeEnum> void testLabelChanges(String attributeName, FutureTarget<WebElement> futureTarget,
+        Action labelChangeAction) {
         String rf = "RichFaces 4";
         setAttribute(attributeName, rf);
         if (labelChangeAction != null) {
             labelChangeAction.perform();
         }
         Graphene.waitModel().until().element(futureTarget.getTarget()).is().visible();
-        Graphene.waitModel().until(attributeName + " does not work, label has not changed.").element(futureTarget.getTarget()).text().equalTo(rf);
+        Graphene.waitModel().until(attributeName + " does not work, label has not changed.").element(futureTarget.getTarget())
+            .text().equalTo(rf);
     }
 
     /**
-     * Helper method for testing of attribute 'status'. At first it sets
-     *
-     * @status to "statusChecker", then saves Metamer's 'statusCheckerOutput'
-     * time, then fires <code>statusChangingAction</code>, and finally checks if
-     * Metamer's 'statusCheckerOutput' time was changed.
+     * Helper method for testing of attribute 'status'. At first it sets @status to "statusChecker", then saves Metamer's
+     * 'statusCheckerOutput' time, then fires <code>statusChangingAction</code>, and finally checks if Metamer's
+     * 'statusCheckerOutput' time was changed.
      *
      * @param statusChangingAction action that will change the status.
      */
     protected void testStatus(Action statusChangingAction) {
         Validate.notNull(statusChangingAction, "The @statusChangingAction cannot be null");
         String checker = "statusChecker";
-        //set attribute
-        MetamerPage.waitRequest(statusInput.clear(ClearType.JS)
-                .fillIn(checker), WaitRequestType.HTTP)
-                .trigger("blur");
+        // set attribute
+        getUnsafeAttributes("").set("status", checker);
 
         String statusCheckerTimeBefore = metamerPage.getStatusCheckerOutputElement().getText();
-        statusChangingAction.perform();
-        Graphene.waitModel().until().element(metamerPage.getStatusCheckerOutputElement()).text().not().equalTo(statusCheckerTimeBefore);
+        Graphene.guardAjax(new ActionWrapper(statusChangingAction)).perform();
+        Graphene.waitModel().until().element(metamerPage.getStatusCheckerOutputElement()).text().not()
+            .equalTo(statusCheckerTimeBefore);
     }
 
     /**
-     * A helper method for testing attribute "style" or similar. It sets
-     * "background-color: yellow; font-size: 1.5em;" to the input field and
-     * checks that it was changed on the page.
+     * A helper method for testing attribute "style" or similar. It sets "background-color: yellow; font-size: 1.5em;" to the
+     * input field and checks that it was changed on the page.
      *
      * @param element WebElement reference of tested element
-     * @param attribute name of the attribute that will be set (e.g. style,
-     * headerStyle, itemContentStyle)
+     * @param attribute name of the attribute that will be set (e.g. style, headerStyle, itemContentStyle)
      */
     protected void testStyle(final WebElement element, BasicAttributes attribute) {
         final String value = "background-color: yellow; font-size: 1.5em;";
@@ -566,9 +619,8 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * A helper method for testing attribute "style". It sets "background-color:
-     * yellow; font-size: 1.5em;" to the input field and checks that it was
-     * changed on the page.
+     * A helper method for testing attribute "style". It sets "background-color: yellow; font-size: 1.5em;" to the input field
+     * and checks that it was changed on the page.
      *
      * @param element WebElement reference of tested element
      */
@@ -577,13 +629,11 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * A helper method for testing attribute "class" or similar. It sets
-     * "metamer-ftest-class" to the input field and checks that it was changed
-     * on the page.
+     * A helper method for testing attribute "class" or similar. It sets "metamer-ftest-class" to the input field and checks
+     * that it was changed on the page.
      *
      * @param element WebElement reference of tested element
-     * @param attribute name of the attribute that will be set (e.g. styleClass,
-     * headerClass, itemContentClass)
+     * @param attribute name of the attribute that will be set (e.g. styleClass, headerClass, itemContentClass)
      */
     protected void testStyleClass(WebElement element, BasicAttributes attribute) {
         final String styleClass = "metamer-ftest-class";
@@ -591,9 +641,8 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * A helper method for testing attribute "class". It sets
-     * "metamer-ftest-class" to the input field and checks that it was changed
-     * on the page.
+     * A helper method for testing attribute "class". It sets "metamer-ftest-class" to the input field and checks that it was
+     * changed on the page.
      *
      * @param element locator of tested element
      */
@@ -612,9 +661,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Tries to check and wait for correct size (
-     *
-     * @size) of list. Depends on list of WebElements decorated with
+     * Tries to check and wait for correct size (@size) of list. Depends on list of WebElements decorated with
      * StaleReferenceAwareFieldDecorator.
      *
      * @param list input list
@@ -632,7 +679,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
                 lastCheckWithModifications = false;
             }
             if (checkedSize >= size && !lastCheckWithModifications) {
-                //last check
+                // last check
                 waiting(MINOR_WAIT_TIME);
                 list.size();
                 return list;
@@ -642,15 +689,37 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         return list;
     }
 
+    protected <T extends AttributeEnum> Attributes<T> getAttributes(String attributesTableId) {
+        return Attributes.<T>getAttributesFor(getFutureDriver(), attributesTableId);
+    }
+
+    protected UnsafeAttributes getUnsafeAttributes(String attributesTableId) {
+        return new UnsafeAttributes(getFutureDriver(), attributesTableId);
+    }
+
+    protected <T extends AttributeEnum> Attributes<T> getAttributes() {
+        return getAttributes("");
+    }
+
+    private FutureTarget<WebDriver> getFutureDriver() {
+        return new FutureTarget<WebDriver>() {
+
+            @Override
+            public WebDriver getTarget() {
+                return driver;
+            }
+        };
+    }
+
     /**
-     Method used to run selenium test in portal environment.
+     * Method used to run selenium test in portal environment.
      */
     private void goToTestInPortal() {
-        driver.get(format("{0}://{1}:{2}/{3}",
-                contextPath.getProtocol(), contextPath.getHost(), contextPath.getPort(), "portal/classic/metamer"));
+        driver.get(format("{0}://{1}:{2}/{3}", contextPath.getProtocol(), contextPath.getHost(), contextPath.getPort(),
+            "portal/classic/metamer"));
         try {
             driver.findElement(By.cssSelector("a[id$='controlsForm:goHomeLink']")).click();
-            //JSF form works only on home page
+            // JSF form works only on home page
         } catch (NoSuchElementException ex) {
         }
         JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -697,8 +766,11 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             }
         });
         String[] actualEvents = ((String) executeJS("return sessionStorage.getItem('metamerEvents')")).split(" ");
-        assertEquals(actualEvents, events, format("The events ({0}) don't came in right order ({1})",
-                Arrays.deepToString(actualEvents), Arrays.deepToString(events)));
+        assertEquals(
+            actualEvents,
+            events,
+            format("The events ({0}) don't came in right order ({1})", Arrays.deepToString(actualEvents),
+            Arrays.deepToString(events)));
     }
 
     public void cleanMetamerEventsVariable() {
@@ -708,10 +780,8 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Decoder for Attributes. Converts given Attribute to String. If Attribute
-     * ends with 'class' or 'style', then it returns the correct one, when the
-     * attribute does not end with none of those, then it returns toString()
-     * method of attribute
+     * Decoder for Attributes. Converts given Attribute to String. If Attribute ends with 'class' or 'style', then it returns
+     * the correct one, when the attribute does not end with none of those, then it returns toString() method of attribute
      */
     public static class Attribute2StringDecoder {
 
@@ -720,10 +790,10 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         public static <T extends AttributeEnum> String decodeAttribute(T testedAttribute) {
             String testedAtt = testedAttribute.toString();
             if (testedAtt.length() > 6) {
-                //get the ending
+                // get the ending
                 String tmp = testedAtt.toLowerCase();
                 for (String string : ATTRIBUTES) {
-                    if (tmp.lastIndexOf(string) > 0) {//contains an attribute to decode
+                    if (tmp.lastIndexOf(string) > 0) {// contains an attribute to decode
                         if (string.equalsIgnoreCase(ATTRIBUTES[0]) || string.equalsIgnoreCase(ATTRIBUTES[1])) {
                             return ATTRIBUTES[0];
                         } else if (string.equalsIgnoreCase(ATTRIBUTES[2])) {
@@ -742,8 +812,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * Abstract ReloadTester for testing component's state after reloading the
      * page
      *
-     * @param <T> the type of input values which will be set, sent and then
-     * verified
+     * @param <T> the type of input values which will be set, sent and then verified
      */
     public abstract class ReloadTester<T> {
 
@@ -779,9 +848,38 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         }
     }
 
-    protected interface FutureTarget<T> {
+    protected class UnsafeAttributes<T extends AttributeEnum> extends Attributes<T> {
+
+        public UnsafeAttributes(FutureTarget<WebDriver> driver, String attributesID) {
+            super(driver, attributesID);
+        }
+
+        @Override
+        public void set(String attribute, Object value) {
+            super.set(attribute, value);
+        }
+    }
+
+    public interface FutureTarget<T> {
 
         T getTarget();
+    }
+
+    /**
+     * Wrapper for anonymous actions, so it can be guarded by graphene.
+     */
+    public static class ActionWrapper implements Action {
+
+        private final Action a;
+
+        public ActionWrapper(Action a) {
+            this.a = a;
+        }
+
+        @Override
+        public void perform() {
+            a.perform();
+        }
     }
 
     protected static final class FutureWebElement {

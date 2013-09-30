@@ -21,12 +21,12 @@
  */
 package org.richfaces.tests.page.fragments.impl;
 
-import com.google.common.base.Objects;
-
 import java.util.Arrays;
 import java.util.Iterator;
 
 import org.openqa.selenium.Point;
+
+import com.google.common.base.Objects;
 
 /**
  * Helper class for storing locations of borders.

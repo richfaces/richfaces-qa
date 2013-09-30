@@ -21,17 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.inputNumberSpinner;
 
-import java.util.List;
 import static org.testng.Assert.assertEquals;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.openqa.selenium.Keys;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponent;
-import org.richfaces.tests.page.fragments.impl.input.inputNumberSpinner.InputNumberSpinner;
-import org.richfaces.tests.page.fragments.impl.input.inputNumberSpinner.RichFacesInputNumberSpinner;
+import java.util.List;
+
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.page.fragments.impl.inputNumberSpinner.RichFacesInputNumberSpinner;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 /**
@@ -53,7 +49,6 @@ public class TestSpinners extends AbstractWebDriverTest {
     /* *********************************************************************************
      * Tests ********************************************************************* ************
      */
-
     @Test
     public void testInputIncreasedByOne() {
         increaseByStep(spinners.get(0), FIRST_INPUT_STEP);
@@ -88,7 +83,6 @@ public class TestSpinners extends AbstractWebDriverTest {
      * Help methods **************************************************************
      * ************************************************************
      */
-
     /**
      * Decrease by step via decrease spinner
      *
@@ -99,23 +93,23 @@ public class TestSpinners extends AbstractWebDriverTest {
      * @param step
      *            the step by which will be the value decreased
      */
-    private void decreaseByStep(InputNumberSpinner spinner, int step) {
+    private void decreaseByStep(RichFacesInputNumberSpinner spinner, int step) {
 
-        int currentValueOfInput = spinner.getInput().getIntValue();
+        int currentValueOfInput = spinner.advanced().getInput().getIntValue();
 
         for (int i = currentValueOfInput; i > MIN_VALUE; i -= step) {
 
             spinner.decrease();
 
-            assertEquals(spinner.getInput().getIntValue(), currentValueOfInput - step,
+            assertEquals(spinner.advanced().getInput().getIntValue(), currentValueOfInput - step,
                 "The value should be decreased by " + step);
 
-            currentValueOfInput = spinner.getInput().getIntValue();
+            currentValueOfInput = spinner.advanced().getInput().getIntValue();
         }
 
         spinner.decrease();
 
-        currentValueOfInput = spinner.getInput().getIntValue();
+        currentValueOfInput = spinner.advanced().getInput().getIntValue();
 
         assertEquals(currentValueOfInput, MAX_VALUE, "The current value in the input should be maximal, so "
             + MAX_VALUE);
@@ -127,37 +121,35 @@ public class TestSpinners extends AbstractWebDriverTest {
      * @param spinner
      * @param step
      *            the step by which will be the value increased
-     *
      */
-    private void increaseByStep(InputNumberSpinner spinner, int step) {
+    private void increaseByStep(RichFacesInputNumberSpinner spinner, int step) {
 
-        int currentValueOfInput = spinner.getInput().getIntValue();
+        int currentValueOfInput = spinner.advanced().getInput().getIntValue();
 
         for (int i = currentValueOfInput; i < MAX_VALUE; i += step) {
 
             spinner.increase();
 
-            assertEquals(spinner.getInput().getIntValue(), currentValueOfInput + step,
+            assertEquals(spinner.advanced().getInput().getIntValue(), currentValueOfInput + step,
                 "The value should be increased by " + step);
 
-            currentValueOfInput = spinner.getInput().getIntValue();
+            currentValueOfInput = spinner.advanced().getInput().getIntValue();
         }
 
         spinner.increase();
 
-        currentValueOfInput = spinner.getInput().getIntValue();
+        currentValueOfInput = spinner.advanced().getInput().getIntValue();
 
         assertEquals(currentValueOfInput, MIN_VALUE, "The current value in the input should be minimal, so "
             + MIN_VALUE);
     }
 
-    private void setAndDecrease(InputNumberSpinner spinner, int step) {
-        spinner.getInput().clear(TextInputComponent.ClearType.BACKSPACE);
-        spinner.getInput().fillIn("30");
-        spinner.getRootElement().sendKeys(Keys.ENTER);
-        spinner.getInput().trigger("blur");
+    private void setAndDecrease(RichFacesInputNumberSpinner spinner, int step) {
+        spinner.advanced().getInput().clear();
+        spinner.advanced().getInput().sendKeys("30");
+        spinner.advanced().getInput().advanced().trigger("blur");
         spinner.decrease();
-        assertEquals(spinner.getInput().getIntValue(), 30 - step);
+        assertEquals(spinner.advanced().getInput().getIntValue(), 30 - step);
     }
 
 }

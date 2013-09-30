@@ -25,8 +25,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.OpenBy;
-import org.richfaces.tests.page.fragments.impl.input.inplace.input.RichFacesInplaceInput;
+import org.richfaces.tests.page.fragments.impl.inplaceInput.RichFacesInplaceInput;
 import org.testng.annotations.Test;
 
 /**
@@ -60,47 +59,47 @@ public class TestPlaceHolderWithInplaceInput extends AbstractPlaceholderJSFTest 
 
     @Override
     protected String getInput1EditValue() {
-        return ii1.getEditValue();
+        return ii1.getTextInput().getStringValue();
     }
 
     @Override
     protected String getInput1Value() {
-        return ii1.getLabelValue();
+        return ii1.advanced().getLabelValue();
     }
 
     @Override
     protected String getInput2Value() {
-        return ii2.getLabelValue().trim();
+        return ii2.advanced().getLabelValue().trim();
     }
 
     @Override
     protected String getInput1StyleClass() {
-        return ii1.getLabelInputElement().getAttribute("class");
+        return ii1.advanced().getLabelInputElement().getAttribute("class");
     }
 
     @Override
     protected String getInput2StyleClass() {
-        return ii2.getLabelInputElement().getAttribute("class");
+        return ii2.advanced().getLabelInputElement().getAttribute("class");
     }
 
     @Override
     protected void sendKeysToInput1(String keys) {
-        ii1.editBy(OpenBy.CLICK).changeToValue(keys).confirm();
+        ii1.type(keys).confirm();
     }
 
     @Override
     protected void clearInput1() {
-        ii1.editBy(OpenBy.CLICK).changeToValue("").confirm();
+        ii1.type("").confirm();
     }
 
     @Override
     protected void clickOnInput1() {
-        ii1.editBy(OpenBy.CLICK);
+        ii1.advanced().getEditInputElement().click();
     }
 
     @Override
     protected void clickOnInput2() {
-        ii2.editBy(OpenBy.CLICK);
+        ii2.type(" ");
     }
 
     @Test

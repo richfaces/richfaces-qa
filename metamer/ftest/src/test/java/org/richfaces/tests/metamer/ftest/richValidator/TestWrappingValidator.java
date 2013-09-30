@@ -23,14 +23,13 @@ package org.richfaces.tests.metamer.ftest.richValidator;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.validatorAttributes;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
 /**
@@ -128,25 +127,26 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
      */
     @Test
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-12154")
+    @Templates(exclude = { "richPopupPanel" })
     public void testDisabled() {
 
         String invalidValue = "11";
-        //set disabled to false
+        // set disabled to false
         validatorAttributes.set(ValidatorAttributes.disabled, Boolean.FALSE);
-        //put in an invalid value
+        // put in an invalid value
         page.inputMax.clear();
         Graphene.guardNoRequest(page.inputMax).sendKeys(invalidValue);
         page.a4jCommandBtn.click();
-        //check error message from validator
-        assertTrue(Graphene.element(page.msgMax).isPresent().apply(driver));
+        // check error message from validator
+        assertPresent(page.msgMax, "Element page.msgMax should be present!");
 
-        //set disabled to true
+        // set disabled to true
         validatorAttributes.set(ValidatorAttributes.disabled, Boolean.TRUE);
-        //put in an invalid value
+        // put in an invalid value
         Graphene.guardNoRequest(page.inputMax).sendKeys(invalidValue);
         page.a4jCommandBtn.click();
-        //check error message from validator
-        assertFalse(Graphene.element(page.msgMax).isPresent().apply(driver));
+        // check error message from validator
+        assertNotPresent(page.msgMax, "Element page.msgMax should be present!");
     }
 
     @Test(groups = { "Future" })

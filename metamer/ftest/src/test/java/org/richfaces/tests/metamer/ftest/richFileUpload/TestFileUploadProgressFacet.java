@@ -27,8 +27,8 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.fileUplo
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.testng.annotations.Test;
 
 /**
@@ -57,7 +57,7 @@ public class TestFileUploadProgressFacet extends AbstractFileUploadTest {
         sendFileWithWaiting(acceptableFile, true, false);
 
         Graphene.waitGui().withMessage("Custom progress bar should be displayed now.").until().element(customPB)
-                .is().visible();
+            .is().visible();
     }
 
     @Test
@@ -66,8 +66,8 @@ public class TestFileUploadProgressFacet extends AbstractFileUploadTest {
         sendFileWithWaiting(acceptableFile, true, true);
 
         Graphene.waitGui().withMessage("Done label should be displayed after upload.").until()
-                .element(fileUpload.getItems().get(0).getStateElement()).is().visible();
+            .element(fileUpload.advanced().getItems().getItem(0).getStateElement()).is().visible();
         Graphene.waitGui().withMessage("Progress bar should not be displayed after upload is completed.").until()
-                .element(customPB).is().not().visible();
+            .element(customPB).is().not().visible();
     }
 }

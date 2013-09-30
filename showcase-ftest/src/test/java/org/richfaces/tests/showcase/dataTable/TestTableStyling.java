@@ -26,7 +26,7 @@ import static org.testng.Assert.assertTrue;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;

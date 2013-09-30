@@ -29,9 +29,9 @@ import java.util.List;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.metamer.ftest.richDataScroller.PaginationTesterWebDriver.AssertingAndWaitingDataScroller;
-import org.richfaces.tests.page.fragments.impl.list.simple.RichFacesList;
-import org.richfaces.tests.page.fragments.impl.list.simple.RichFacesSimpleListItem;
+import org.richfaces.tests.page.fragments.impl.dataScroller.RichFacesDataScroller;
+import org.richfaces.tests.page.fragments.impl.list.AbstractListComponent;
+import org.richfaces.tests.page.fragments.impl.list.RichFacesListItem;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -41,9 +41,10 @@ import org.testng.annotations.Test;
 public class TestListWithScroller2 extends AbstractListTest {
 
     @FindBy(css = "span.rf-ds[id$=scroller2]")
-    private AssertingAndWaitingDataScroller scroller;
+    private RichFacesDataScroller scroller;
     @FindBy(css = "[id$=richList]")
     private TestedList list;
+
     private static final int ROWS = 20;
     private static final String ROWS_STRING = "20";
     private static final String RANGE_TEMPLATE = "[ firstRow: %s, rows: %s ]";
@@ -61,14 +62,14 @@ public class TestListWithScroller2 extends AbstractListTest {
         TestedListItem li;
         int maxIndex;
         for (Integer page : pages) {
-            if (!page.equals(scroller.getActPageNumber())) {
+            if (!page.equals(scroller.getActivePageNumber())) {
                 scroller.switchTo(page);
             }
             maxIndex = ROWS * (page - 1);
             for (Integer item : items) {
                 li = list.getItems().get(item);
                 Assert.assertEquals(li.getIterationStatusVarText(),
-                        String.format(ITERATION_STATUS_TEMPLATE, maxIndex, maxIndex + ROWS - 1, item + maxIndex, item + 1, (item == 0), (item == 19), (item % 2 == 1)));
+                    String.format(ITERATION_STATUS_TEMPLATE, maxIndex, maxIndex + ROWS - 1, item + maxIndex, item + 1, (item == 0), (item == 19), (item % 2 == 1)));
             }
         }
     }
@@ -79,7 +80,7 @@ public class TestListWithScroller2 extends AbstractListTest {
         String indexString;
         int index;
         for (Integer page : pages) {
-            if (!page.equals(scroller.getActPageNumber())) {
+            if (!page.equals(scroller.getActivePageNumber())) {
                 scroller.switchTo(page);
             }
             index = ROWS * (page - 1);
@@ -96,7 +97,7 @@ public class TestListWithScroller2 extends AbstractListTest {
         TestedListItem li;
         String startIndexString;
         for (Integer page : pages) {
-            if (!page.equals(scroller.getActPageNumber())) {
+            if (!page.equals(scroller.getActivePageNumber())) {
                 scroller.switchTo(page);
             }
             startIndexString = String.valueOf(ROWS * (page - 1));
@@ -109,15 +110,10 @@ public class TestListWithScroller2 extends AbstractListTest {
         }
     }
 
-    public static class TestedList extends RichFacesList<TestedListItem> {
-
-        @Override
-        protected Class<TestedListItem> getListItemType() {
-            return TestedListItem.class;
-        }
+    public static class TestedList extends AbstractListComponent<TestedListItem> {
     }
 
-    public static class TestedListItem extends RichFacesSimpleListItem {
+    public static class TestedListItem extends RichFacesListItem {
 
         @FindBy(css = "[id$=rowKeyVar]")
         private WebElement rowKeyVar;
