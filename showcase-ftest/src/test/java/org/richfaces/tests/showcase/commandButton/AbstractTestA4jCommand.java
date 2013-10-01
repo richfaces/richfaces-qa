@@ -24,6 +24,7 @@ package org.richfaces.tests.showcase.commandButton;
 import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -39,7 +40,7 @@ public abstract class AbstractTestA4jCommand extends AbstractWebDriverTest {
     /* *********************************************************************
      * Locators*********************************************************************
      */
-    @FindBy(css = "form input[type=text]")
+    @FindByJQuery("form input[type=text]:first")
     protected WebElement input;
     @FindBy(className = "outhello")
     protected WebElement output;
