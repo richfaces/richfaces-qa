@@ -9,7 +9,6 @@ import org.richfaces.tests.metamer.ftest.MetamerAttributes;
 import org.richfaces.tests.metamer.ftest.a4jQueue.QueueAttributes;
 import org.richfaces.tests.metamer.ftest.a4jStatus.StatusAttributes;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets;
-import org.richfaces.tests.metamer.ftest.richAccordionItem.AccordionItemAttributes;
 import org.richfaces.tests.metamer.ftest.richCollapsiblePanel.CollapsiblePanelAttributes;
 import org.richfaces.tests.metamer.ftest.richCollapsibleSubTableToggler.CollapsibleSubTableTogglerAttributes;
 import org.richfaces.tests.metamer.ftest.richColumn.ColumnAttributes;
@@ -24,7 +23,6 @@ import org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes;
 
 public class AttributeList {
 
-    public static Attributes<AccordionItemAttributes> accordionItemAttributes = new Attributes<AccordionItemAttributes>();
     public static Attributes<BasicAttributes> basicAttributes = new Attributes<BasicAttributes>();
     public static Attributes<CollapsiblePanelAttributes> collapsiblePanelAttributes = new Attributes<CollapsiblePanelAttributes>();
     public static Attributes<CollapsibleSubTableTogglerAttributes> collapsibleSubTableTogglerAttributes = new Attributes<CollapsibleSubTableTogglerAttributes>();
