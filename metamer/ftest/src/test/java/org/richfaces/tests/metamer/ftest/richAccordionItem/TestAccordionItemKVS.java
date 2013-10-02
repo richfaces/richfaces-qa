@@ -21,28 +21,31 @@
  */
 package org.richfaces.tests.metamer.ftest.richAccordionItem;
 
-import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
+import static org.jboss.arquillian.graphene.Graphene.waitGui;
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
+import org.jboss.arquillian.graphene.page.Page;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 /**
  * Test rich:accordion keeping visual state (KVS) on page faces/components/richAccordion/simple.xhtml
  *
- * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision$
+ * @author <a href="mailto:manovotn@redhat.com">Matej Novotny</a>
  */
-public class TestAccordionItemKVS extends AbstractGrapheneTest {
+public class TestAccordionItemKVS extends AbstractWebDriverTest {
 
-    AccordionReloadTester reloadTester = new AccordionReloadTester();
+    @Page
+    private AccordionItemPage page;
 
     @Override
     public URL getTestUrl() {
@@ -50,15 +53,15 @@ public class TestAccordionItemKVS extends AbstractGrapheneTest {
     }
 
     @Test(groups = { "keepVisualStateTesting" })
-    @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
-        "richExtendedDataTable", "richList" })
+    @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
+            "richList" })
     public void testRefreshFullPage() {
-        reloadTester.testFullPageRefresh();
+        new AccordionReloadTester(page).testFullPageRefresh();
     }
 
     @Test(groups = { "keepVisualStateTesting" })
-    @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
-        "richExtendedDataTable", "richList" })
+    @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
+            "richList" })
     @RegressionTest("https://issues.jboss.org/browse/RF-12131")
     public void testRefreshFullPageInIterationComponents() {
         testRefreshFullPage();
@@ -67,18 +70,47 @@ public class TestAccordionItemKVS extends AbstractGrapheneTest {
     @Test(groups = { "keepVisualStateTesting", "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-12035")
     public void testRenderAll() {
-        reloadTester.testRerenderAll();
+        new AccordionReloadTester(page).testRerenderAll();
     }
 
     private class AccordionReloadTester extends ReloadTester<String> {
+
+        public AccordionReloadTester(MetamerPage page) {
+            super(page);
+        }
+
+        /**
+         * Used to create a variable JQuery expression based in accordion item ID number and find the element. The pattern
+         * is:"div[id$='item" + headerItemNumber + ":header']"
+         *
+         * @param headerItemNumber number of item
+         * @return WebElement with given number
+         */
+        private WebElement getHeaderElem(String headerItemNumber) {
+            String expressionToUse = "div[id$='item" + headerItemNumber + ":header']";
+            return driver.findElement(ByJQuery.selector(expressionToUse));
+        }
+
+        /**
+         * Used to create a variable JQuery expression based in accordion item ID number and find the element. The pattern
+         * is:"div[id$='item" + contentItemNumber + ":content']"
+         *
+         * @param contentItemNumber number of item
+         * @return WebElement with given number
+         */
+        private WebElement getContentElem(String contentItemNumber) {
+            String expressionToUse = "div[id$='item" + contentItemNumber + ":content']";
+            return driver.findElement(ByJQuery.selector(expressionToUse));
+        }
+
         @Override
         public void doRequest(String accordionIndex) {
-            guardXhr(selenium).click(pjq("div[id$=item{0}:header]").format(accordionIndex));
+            guardAjax(getHeaderElem(accordionIndex)).click();
         }
 
         @Override
         public void verifyResponse(String accordionIndex) {
-            waitGui.until(elementVisible.locator(pjq("div[id$=item{0}:content]").format(accordionIndex)));
+            waitGui(driver).until().element(getContentElem(accordionIndex)).is().visible();
         }
 
         @Override
@@ -86,5 +118,4 @@ public class TestAccordionItemKVS extends AbstractGrapheneTest {
             return new String[] { "1", "2", "3" };
         }
     }
-
 }
