@@ -41,6 +41,10 @@ public class TestFunctions extends AbstractWebDriverTest {
     @Test
     public void testFunctionFindComponentCall() {
         String testString = "test string";
+        waitModel().until()
+                .element(page.input)
+                .is()
+                .visible();
         page.input.sendKeys(testString);
         page.input.sendKeys(Keys.ENTER);
         waitModel().until("The output should be test string")
