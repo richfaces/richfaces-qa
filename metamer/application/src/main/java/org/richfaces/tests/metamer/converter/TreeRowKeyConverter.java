@@ -4,17 +4,18 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import org.richfaces.convert.SequenceRowKeyConverter;
+
 import org.richfaces.tests.metamer.model.CompactDisc;
 import org.richfaces.tests.metamer.model.Company;
 import org.richfaces.tests.metamer.model.Labeled;
 import org.richfaces.tests.metamer.model.State;
 import org.richfaces.tests.metamer.model.tree.TreeNodeWithContent;
+import org.richfaces.ui.iteration.tree.convert.SequenceRowKeyConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @FacesConverter("treeRowKeyConverter")
-public class TreeRowKeyConverter extends SequenceRowKeyConverter {
+public class TreeRowKeyConverter extends SequenceRowKeyConverter<TreeNodeWithContent> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TreeRowKeyConverter.class);
 
