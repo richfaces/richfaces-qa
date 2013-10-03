@@ -18,7 +18,6 @@ import org.richfaces.tests.metamer.ftest.richDataGrid.DataGridAttributes;
 import org.richfaces.tests.metamer.ftest.richDataScroller.DataScrollerAttributes;
 import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.ExtendedDataTableAttributes;
-import org.richfaces.tests.metamer.ftest.richTab.TabAttributes;
 import org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes;
 
 public class AttributeList {
@@ -41,7 +40,6 @@ public class AttributeList {
     public static Attributes<QueueAttributes> queueAttributes = new Attributes<QueueAttributes>(
         pjq("table.attributes[id$=queueAttributes]"));
     public static Attributes<StatusAttributes> statusAttributes = new Attributes<StatusAttributes>();
-    public static Attributes<TabAttributes> tabAttributes = new Attributes<TabAttributes>();
     public static Attributes<TooltipAttributes> tooltipAttributes = new Attributes<TooltipAttributes>();
 
 }
