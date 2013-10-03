@@ -79,6 +79,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 varius diam ullamcorper egestas. Donec molestie tellus a felis facilisis ac vestibulum risus rhoncus.
 
             </r:collapsiblePanel>
+            <fieldset>
+                <legend>JavaScript API</legend>
+                <br/>
+                <input id="switch" type="button" name="switchPanel" value="switchPanel()" onclick="#{r:component('collapsiblePanel')}.switchPanel()" />
+                <br/>
+            </fieldset>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
