@@ -53,7 +53,7 @@ public class TestParam extends AbstractWebDriverTest {
             "There can not be anything selected at first after page first load!");
         for(ParamPage.Name name : ParamPage.Name.getAll()) {
             page.setName(name);
-            Graphene.waitAjax()
+            Graphene.waitGui()
                     .until("After selecting name, the output should contain the name.")
                     .element(page.output)
                     .text()
