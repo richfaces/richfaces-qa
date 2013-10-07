@@ -1,0 +1,80 @@
+#!/bin/bash
+
+function cloneRepository {
+        echo "=====> Clone Openshift repository <======"
+	cd $WORKSPACE
+	git clone ssh://$USER_HASH@$HOST/~/git/$APPNAME.git/
+}
+
+function cleanRepository {
+	rm -rf $WORKSPACE/$APPNAME/src
+	rm -rf $WORKSPACE/$APPNAME/pom.xml
+}
+
+function buildAndDeploy {
+	echo ======================================================
+	echo ========== Pushing application to openshift ==========
+	echo ======================================================
+	local PROJECT_PATH=$1
+	cleanRepository
+	cd $WORKSPACE/$APPNAME
+	git add -A
+	git commit -m 'Cleaning repository before new build.'
+	git push
+	cp -r $PROJECT_PATH/src $WORKSPACE/$APPNAME
+	cp -r $PROJECT_PATH/pom.xml $WORKSPACE/$APPNAME
+	cd $WORKSPACE/$APPNAME
+	git add -A
+	git commit -m 'Deploy application $APPNAME'
+	git push
+}
+
+function existsOnHost {
+	local URL=$USER_HASH@$HOST
+	local FILE_PATH=$1
+	if ssh $URL stat $FILE_PATH \> /dev/null 2\>\&1
+            then
+                    return 0
+            else
+                    return 1
+	fi
+}
+
+function checkDeployment {
+	local URL=$1
+	HEAD=$(curl -s --head $URL | head -n 1 | grep "OK")
+	
+	if [ "$HEAD" != "" ]
+	then
+		return 0
+	else
+		return 1
+	fi
+}
+
+function waitForDeployment {
+	local TIME=0	
+	local TIMEOUT=180
+
+	local URL=http://$HOST
+	
+	echo "Waiting for deployment at $URL"	
+	until checkDeployment $URL || [ $TIME -eq $TIMEOUT ]; do
+        if existsOnHost jbosseap/standalone/deployment/$CONTEXT_ROOT.failed 
+        then
+			echo 'Deployment failed. contextroot.failed file found in deployment directory.'
+            return 1
+        fi
+		echo Waiting ...		
+		sleep 1
+		TIME=$((TIME + 1))
+	done
+	if [ $TIME -eq $TIMEOUT ]
+	then
+		echo Deployment timeout. Application not accessible at $URL
+		return 2
+	else
+		echo Archive deployed successfully.
+		return 0
+	fi		
+}
