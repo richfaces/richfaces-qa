@@ -35,6 +35,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.TreeSet;
+
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.IntRange;
@@ -45,6 +46,7 @@ import org.jboss.arquillian.ajocado.utils.array.ArrayTransform;
 import org.jboss.arquillian.ajocado.waiting.retrievers.Retriever;
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractDataTableTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.model.ExtendedDataTable;
 import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
@@ -86,8 +88,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
-    @Templates(exclude = {"richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat"})
+    @Templates(exclude = { "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "a4jRepeat" })
     public void testMultiSelectionUsingControl() {
         Collection<Integer> forSelection = order(2, 5, 29, 16, 13, 21);
 
@@ -101,10 +102,10 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
 
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-10256")
-    @Templates(value = {"richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat"})
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-10256")
+    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richList", "a4jRepeat" })
     public void testMultiSelectionUsingControlIterationComponents() {
         testMultiSelectionUsingControl();
     }
@@ -121,8 +122,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
-    @Templates(exclude = {"richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat"})
+    @Templates(exclude = { "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "a4jRepeat" })
     public void testMultiSelectionUsingShiftBetweenPagesInReversedOrder() {
         IntRange range = new IntRange(12, 35);
 
@@ -133,10 +133,10 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
         assertEquals(selection.getCurrent(), selection(range));
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-10256")
-    @Templates(value = {"richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat"})
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-10256")
+    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richList", "a4jRepeat" })
     public void testMultiSelectionUsingShiftBetweenPagesInReversedOrderIterationComponents() {
         testMultiSelectionUsingShiftBetweenPagesInReversedOrder();
     }
@@ -162,8 +162,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
-    @Templates(exclude = {"richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRegion", "a4jRepeat"})
+    @Templates(exclude = { "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "a4jRegion", "a4jRepeat" })
     public void testMultiSelectionRemovingUsingCtrl() {
         IntRange range1 = new IntRange(2, 14);
 
@@ -181,10 +180,10 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
         verifySelected();
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-10256")
-    @Templates(value = {"richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRegion", "a4jRepeat"})
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-10256")
+    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richList", "a4jRegion", "a4jRepeat" })
     public void testMultiSelectionRemovingUsingCtrlIterationComponents() {
         testMultiSelectionRemovingUsingCtrl();
     }
@@ -261,8 +260,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
 
     enum Modifier {
 
-        CTRL,
-        SHIFT;
+        CTRL, SHIFT;
         GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
 
         public void up() {
