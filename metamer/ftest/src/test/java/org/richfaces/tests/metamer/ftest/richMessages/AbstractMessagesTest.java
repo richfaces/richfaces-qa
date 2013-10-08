@@ -42,7 +42,7 @@ public abstract class AbstractMessagesTest extends AbstractMessagesComponentTest
     protected MessagesPage page;
 
     @Override
-    protected MessagesComponentTestPage<? extends Message> getPage() {
+    protected MessagesComponentTestPage getPage() {
         return page;
     }
 

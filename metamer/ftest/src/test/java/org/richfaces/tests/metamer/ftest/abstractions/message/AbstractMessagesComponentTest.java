@@ -220,7 +220,7 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
     }
 
     @Override
-    protected abstract MessagesComponentTestPage<? extends Message> getPage();
+    protected abstract MessagesComponentTestPage getPage();
 
     protected String getSimpleInput1ID() {
         return getIDOfElement(getPage().getSimpleInput1().advanced().getInputElement());
