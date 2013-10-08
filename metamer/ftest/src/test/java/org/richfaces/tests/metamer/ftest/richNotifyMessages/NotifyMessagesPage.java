@@ -30,7 +30,7 @@ import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotify;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class NotifyMessagesPage extends MessagesComponentTestPage<NotifyMessage> {
+public class NotifyMessagesPage extends MessagesComponentTestPage {
 
     @FindBy(tagName = "body")
     private RichFacesNotify messagesComponentWithFor;
