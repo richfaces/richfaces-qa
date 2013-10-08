@@ -121,12 +121,12 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         String testedClass = "metamer-ftest-class";
         inplaceSelectAttributes.set(InplaceSelectAttributes.changedClass, testedClass);
 
-        assertFalse(new WebElementConditionFactory(select.advanced().getRootElement()).attribute("class").contains(testedClass).apply(driver),
-            "Inplace select should not have class metamer-ftest-class.");
+        assertFalse(new WebElementConditionFactory(select.advanced().getRootElement()).attribute("class").contains(testedClass)
+            .apply(driver), "Inplace select should not have class metamer-ftest-class.");
 
         guardAjax(select).select(10);
-        assertTrue(new WebElementConditionFactory(select.advanced().getRootElement()).attribute("class").contains(testedClass).apply(driver),
-            "Inplace select should have class metamer-ftest-class.");
+        assertTrue(new WebElementConditionFactory(select.advanced().getRootElement()).attribute("class").contains(testedClass)
+            .apply(driver), "Inplace select should have class metamer-ftest-class.");
     }
 
     @Test
@@ -156,6 +156,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(exclude = { "richAccordion", "richTabPanel" })
     public void testClickCancelButton() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.showControls, Boolean.TRUE);
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
@@ -169,6 +170,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(exclude = { "richAccordion", "richTabPanel" })
     public void testClickOkButton() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.showControls, Boolean.TRUE);
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
