@@ -69,7 +69,7 @@ http://www.fsf.org. -->
 
     <container qualifier="wildfly-managed-8-0">
         <configuration>
-            <property name="jbossHome">target/wildfly-8.0.0.Alpha4</property>
+            <property name="jbossHome">target/wildfly-8.0.0.Beta1</property>
             <property name="javaVmArguments">${arquillian.container.jbossas.7-1.jvm.args}</property>
             <property name="managementAddress">${arquillian.container.jbossas.7-1.node0}</property>
             <property name="serverConfig">standalone-full.xml</property>
