@@ -30,7 +30,7 @@ import org.richfaces.tests.page.fragments.impl.messages.RichFacesMessages;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class MessagesPage extends MessagesComponentTestPage<Message> {
+public class MessagesPage extends MessagesComponentTestPage {
 
     @FindBy(xpath = "//fieldset/span[contains(@id, 'messagesWithFor')]")
     private RichFacesMessages messagesComponentWithFor;

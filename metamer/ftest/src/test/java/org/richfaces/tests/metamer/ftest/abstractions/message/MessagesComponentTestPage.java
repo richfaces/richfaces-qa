@@ -28,9 +28,9 @@ import org.richfaces.tests.page.fragments.impl.messages.Messages;
  * Page for testing messages components (rich:messages, rich:notifyMessages)
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class MessagesComponentTestPage<T extends Message> extends MessagesComponentCommonPage {
+public abstract class MessagesComponentTestPage extends MessagesComponentCommonPage {
 
-    public abstract Messages<? extends T> getMessagesComponentWithFor();
+    public abstract Messages<? extends Message> getMessagesComponentWithFor();
 
-    public abstract Messages<? extends T> getMessagesComponentWithGlobal();
+    public abstract Messages<? extends Message> getMessagesComponentWithGlobal();
 }
