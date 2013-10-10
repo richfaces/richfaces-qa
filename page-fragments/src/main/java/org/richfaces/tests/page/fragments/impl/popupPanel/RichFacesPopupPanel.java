@@ -23,6 +23,7 @@ package org.richfaces.tests.page.fragments.impl.popupPanel;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.wait.FluentWait;
 import org.jodah.typetools.TypeResolver;
 import org.openqa.selenium.WebDriver;
@@ -43,33 +44,33 @@ public abstract class RichFacesPopupPanel<HEADER, HEADERCONTROLS, BODY> extends 
     @Drone
     private WebDriver driver;
     @FindBy(css = "div.rf-pp-hndlr-t")
-    private WebElement resizerN;
+    private GrapheneElement resizerN;
     @FindBy(css = "div.rf-pp-hndlr-r")
-    private WebElement resizerE;
+    private GrapheneElement resizerE;
     @FindBy(css = "div.rf-pp-hndlr-b")
-    private WebElement resizerS;
+    private GrapheneElement resizerS;
     @FindBy(css = "div.rf-pp-hndlr-l")
-    private WebElement resizerW;
+    private GrapheneElement resizerW;
     @FindBy(css = "div.rf-pp-hndlr-tr")
-    private WebElement resizerNE;
+    private GrapheneElement resizerNE;
     @FindBy(css = "div.rf-pp-hndlr-tl")
-    private WebElement resizerNW;
+    private GrapheneElement resizerNW;
     @FindBy(css = "div.rf-pp-hndlr-br")
-    private WebElement resizerSE;
+    private GrapheneElement resizerSE;
     @FindBy(css = "div.rf-pp-hndlr-bl")
-    private WebElement resizerSW;
+    private GrapheneElement resizerSW;
     @FindBy(css = "div.rf-pp-hdr")
-    private WebElement headerElement;
+    private GrapheneElement headerElement;
     @FindBy(css = "div.rf-pp-hdr-cnt")
-    private WebElement headerContentElement;
+    private GrapheneElement headerContentElement;
     @FindBy(css = "div.rf-pp-hdr-cntrls")
-    private WebElement headerControlsElement;
+    private GrapheneElement headerControlsElement;
     @FindBy(css = "div.rf-pp-cnt-scrlr")
-    private WebElement contentScrollerElement;
+    private GrapheneElement contentScrollerElement;
     @FindBy(css = "div.rf-pp-cnt")
-    private WebElement contentElement;
+    private GrapheneElement contentElement;
     @FindBy(css = "div.rf-pp-shdw")
-    private WebElement shadowElement;
+    private GrapheneElement shadowElement;
 
     private final AdvancedPopupPanelInteractions interactions = new AdvancedPopupPanelInteractions();
 
@@ -85,16 +86,16 @@ public abstract class RichFacesPopupPanel<HEADER, HEADERCONTROLS, BODY> extends 
     }
 
     @Override
-    protected WebElement getBodyElement() {
+    protected GrapheneElement getBodyElement() {
         return contentElement;
     }
 
-    protected WebElement getHeaderControlsElement() {
+    protected GrapheneElement getHeaderControlsElement() {
         return headerControlsElement;
     }
 
     @Override
-    protected WebElement getHeaderElement() {
+    protected GrapheneElement getHeaderElement() {
         return headerElement;
     }
 

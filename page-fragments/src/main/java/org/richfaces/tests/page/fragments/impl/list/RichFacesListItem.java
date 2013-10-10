@@ -23,7 +23,6 @@ package org.richfaces.tests.page.fragments.impl.list;
 
 import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.fragment.Root;
-import org.openqa.selenium.WebElement;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -31,11 +30,11 @@ import org.openqa.selenium.WebElement;
 public class RichFacesListItem implements ListItem {
 
     @Root
-    private WebElement root;
+    private GrapheneElement root;
 
     @Override
     public GrapheneElement getRootElement() {
-        return new GrapheneElement(root);
+        return root;
     }
 
     @Override

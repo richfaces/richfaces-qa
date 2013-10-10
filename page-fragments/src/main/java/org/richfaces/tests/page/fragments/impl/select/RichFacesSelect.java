@@ -76,8 +76,8 @@ public class RichFacesSelect implements Select {
 
     private SelectSuggestionsImpl getSuggestions() {
         advanced().waitUntilSuggestionsAreVisible()
-                  .withTimeout(advanced().getGetSuggestionsWaitUntilSuggestionsAreVisibleTimeout(), TimeUnit.SECONDS)
-                  .perform();
+            .withTimeout(advanced().getGetSuggestionsWaitUntilSuggestionsAreVisibleTimeout(), TimeUnit.SECONDS)
+            .perform();
         return selectSuggestions;
     }
 
@@ -86,8 +86,7 @@ public class RichFacesSelect implements Select {
     }
 
     private boolean isPopupPresent() {
-        return new GrapheneElement(driver.findElement(GLOBAL_POPUP)).isPresent()
-            && !localPopup.isPresent();
+        return !driver.findElements(GLOBAL_POPUP).isEmpty() && !localPopup.isPresent();
     }
 
     @Override
@@ -119,8 +118,8 @@ public class RichFacesSelect implements Select {
                 foundValue.click();
             }
             advanced().waitUntilSuggestionsAreNotVisible()
-                      .withTimeout(advanced().getSelectWaitUntilSuggestionsAreNotVisibleTimeout(), TimeUnit.SECONDS)
-                      .perform();
+                .withTimeout(advanced().getSelectWaitUntilSuggestionsAreNotVisibleTimeout(), TimeUnit.SECONDS)
+                .perform();
             input.advanced().trigger("blur");
         }
 
@@ -189,7 +188,10 @@ public class RichFacesSelect implements Select {
 
         /**
          * Setups opening of select. Default open method is by clicking on the input.
-         * @param openByClickOnInput if true, select will be opened by input clicking (default). If false, the select will be opened by 'show' button of the select.
+         *
+         * @param openByClickOnInput
+         *            if true, select will be opened by input clicking (default). If false, the select will be opened by
+         *            'show' button of the select.
          */
         public void setupOpenByInputClick(boolean openByClickOnInput) {
             openByInputClick = openByClickOnInput;
@@ -201,7 +203,9 @@ public class RichFacesSelect implements Select {
 
         /**
          * Setups scrolling type. Default value is By_MOUSE.
-         * @param type type of scrolling through the list of options and selecting on of them.
+         *
+         * @param type
+         *            type of scrolling through the list of options and selecting on of them.
          */
         public void setupScrollingType(ScrollingType type) {
             scrollingType = type;
@@ -238,7 +242,8 @@ public class RichFacesSelect implements Select {
         }
 
         public long getSelectWaitUntilSuggestionsAreNotVisibleTimeout() {
-            return _selectWaitUntilSuggestionsAreNotVisibleTimeout == -1 ? Utils.getWaitAjaxDefaultTimeout(driver) : _selectWaitUntilSuggestionsAreNotVisibleTimeout;
+            return _selectWaitUntilSuggestionsAreNotVisibleTimeout == -1 ? Utils.getWaitAjaxDefaultTimeout(driver)
+                : _selectWaitUntilSuggestionsAreNotVisibleTimeout;
         }
 
         public void setupGetSuggestionsWaitUntilSuggestionsAreVisibleTimeout(long timeout) {
@@ -246,7 +251,8 @@ public class RichFacesSelect implements Select {
         }
 
         public long getGetSuggestionsWaitUntilSuggestionsAreVisibleTimeout() {
-            return _getSuggestionsWaitUntilSuggestionsAreVisibleTimeout == -1 ? Utils.getWaitAjaxDefaultTimeout(driver) : _getSuggestionsWaitUntilSuggestionsAreVisibleTimeout;
+            return _getSuggestionsWaitUntilSuggestionsAreVisibleTimeout == -1 ? Utils.getWaitAjaxDefaultTimeout(driver)
+                : _getSuggestionsWaitUntilSuggestionsAreVisibleTimeout;
         }
     }
 }
