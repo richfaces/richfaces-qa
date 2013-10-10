@@ -44,7 +44,7 @@ import org.testng.annotations.Test;
 public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTest {
 
     @Test
-    public void testOnClick() {
+    public void testOnclick() {
         panelMenuGroupAttributes.set(mode, client);
 
         Action click = new Actions(driver).click(page.getTopGroup().advanced().getHeaderElement()).build();
@@ -52,14 +52,14 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     }
 
     @Test
-    public void testOnDblClick() {
+    public void testOndblclick() {
         panelMenuGroupAttributes.set(mode, client);
         Action dblClick = new Actions(driver).doubleClick(page.getTopGroup().advanced().getHeaderElement()).build();
         testFireEvent(panelMenuGroupAttributes, ondblclick, dblClick);
     }
 
     @Test
-    public void testOnMousedown() {
+    public void testOnmousedown() {
         panelMenuGroupAttributes.set(mode, client);
         Action mousedown = new Actions(driver).clickAndHold(page.getTopGroup().advanced().getHeaderElement()).build();
         testFireEvent(panelMenuGroupAttributes, onmousedown, mousedown);
@@ -67,28 +67,28 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     }
 
     @Test
-    public void testOnMousemove() {
+    public void testOnmousemove() {
         panelMenuGroupAttributes.set(mode, client);
         Action mousemove = new Actions(driver).moveToElement(page.getTopGroup().advanced().getHeaderElement(), 3, 3).build();
         testFireEvent(panelMenuGroupAttributes, onmousemove, mousemove);
     }
 
     @Test
-    public void testOnMouseout() {
+    public void testOnmouseout() {
         panelMenuGroupAttributes.set(mode, client);
         // TODO JJa 2013-02-13: Rewrite using webdriver api when fixed (not working now)
         testFireEventWithJS(page.getTopGroup().advanced().getHeaderElement(), Event.MOUSEOUT, panelMenuGroupAttributes, PanelMenuGroupAttributes.onmouseout);
     }
 
     @Test
-    public void testOnMouseover() {
+    public void testOnmouseover() {
         panelMenuGroupAttributes.set(mode, client);
         Action mouseover = new Actions(driver).moveToElement(page.getTopGroup().advanced().getHeaderElement(), 3, 3).build();
         testFireEvent(panelMenuGroupAttributes, onmouseover, mouseover);
     }
 
     @Test
-    public void testOnMouseup() {
+    public void testOnmouseup() {
         panelMenuGroupAttributes.set(mode, client);
         Action mouseup = new Actions(driver).clickAndHold(page.getTopGroup().advanced().getHeaderElement()).release().build();
         testFireEvent(panelMenuGroupAttributes, onmouseup, mouseup);
