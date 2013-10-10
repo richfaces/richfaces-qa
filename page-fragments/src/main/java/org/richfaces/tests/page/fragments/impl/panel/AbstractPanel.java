@@ -46,13 +46,13 @@ public abstract class AbstractPanel<HEADER, BODY> implements Panel<HEADER, BODY>
     @Override
     @SuppressWarnings(value = "unchecked")
     public HEADER getHeaderContent() {
-        if (!new GrapheneElement(getHeaderElement()).isPresent()) {
+        if (!getHeaderElement().isPresent()) {
             throw new IllegalStateException("You are trying to get header content of the panel which does not have header!");
         }
         return Graphene.createPageFragment(headerClass, getHeaderElement());
     }
 
-    protected abstract WebElement getHeaderElement();
+    protected abstract GrapheneElement getHeaderElement();
 
     protected WebElement getRootElement() {
         return root;

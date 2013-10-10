@@ -39,7 +39,7 @@ import com.google.common.base.Predicate;
 public abstract class AbstractMessage implements Message {
 
     @Root
-    private WebElement root;
+    private GrapheneElement root;
 
     private final AdvancedMessageInteractions interactions = new AdvancedMessageInteractionsImpl();
 
@@ -60,7 +60,7 @@ public abstract class AbstractMessage implements Message {
     protected abstract WebElement getMessageSummaryElement();
 
     protected GrapheneElement getRootElement() {
-        return new GrapheneElement(root);
+        return root;
     }
 
     @Override
