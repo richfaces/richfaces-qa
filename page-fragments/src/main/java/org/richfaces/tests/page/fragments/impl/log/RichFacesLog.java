@@ -43,7 +43,7 @@ import com.google.common.base.Predicate;
 public class RichFacesLog implements Log {
 
     @Root
-    private WebElement root;
+    private GrapheneElement root;
 
     @FindBy(css = "div.rf-log-contents")
     private RichFacesLogEntries logEntries;
@@ -145,7 +145,7 @@ public class RichFacesLog implements Log {
     public class AdvancedLogInteractions {
 
         public GrapheneElement getRootElement() {
-            return new GrapheneElement(root);
+            return root;
         }
     }
 }

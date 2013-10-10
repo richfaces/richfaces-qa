@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.panel;
 
+import org.jboss.arquillian.graphene.GrapheneElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -34,10 +35,10 @@ import org.openqa.selenium.support.FindBy;
 public abstract class RichFacesPanel<HEADER, BODY> extends AbstractPanel<HEADER, BODY> {
 
     @FindBy(css = "div.rf-p-hdr")
-    private WebElement header;
+    private GrapheneElement header;
 
     @FindBy(css = "div.rf-p-b")
-    private WebElement body;
+    private GrapheneElement body;
 
     private AdvancedPanelInteractions advancedInteractions = new AdvancedPanelInteractions();
 
@@ -51,7 +52,7 @@ public abstract class RichFacesPanel<HEADER, BODY> extends AbstractPanel<HEADER,
     }
 
     @Override
-    protected WebElement getHeaderElement() {
+    protected GrapheneElement getHeaderElement() {
         return header;
     }
 
