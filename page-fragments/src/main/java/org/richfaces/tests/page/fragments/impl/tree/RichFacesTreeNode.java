@@ -21,15 +21,14 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.tree;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.wait.FluentWait;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.utils.Actions;
 import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
@@ -40,22 +39,26 @@ import com.google.common.base.Predicate;
 
 public class RichFacesTreeNode extends RichFacesTree implements Tree.TreeNode {
 
-    @FindByJQuery("> .rf-trn")
+    @FindBy(className = "rf-trn")
     private WebElement infoElement;
 
-    @FindByJQuery("> .rf-trn > .rf-trn-hnd")
+    @FindBy(css = ".rf-trn > .rf-trn-hnd")
     private WebElement handleElement;
 
-    @FindByJQuery("> .rf-trn > .rf-trn-hnd-ldn-fct")
+    @FindBy(css = ".rf-trn > .rf-trn-hnd-ldn-fct")
     private WebElement handleLoadingElement;
 
-    @FindByJQuery("> .rf-trn > .rf-trn-cnt")
+    @FindBy(css = ".rf-trn > .rf-trn-cnt")
     private WebElement containerElement;
 
-    @FindByJQuery("> .rf-trn > .rf-trn-cnt > .rf-trn-ico:visible")
+    @FindByJQuery(".rf-trn > .rf-trn-cnt > .rf-trn-ico:visible")
     private WebElement iconElement;
-    @FindByJQuery("> .rf-trn > .rf-trn-cnt > .rf-trn-lbl")
+    @FindBy(css = ".rf-trn > .rf-trn-cnt > .rf-trn-lbl")
     private WebElement labelElement;
+    @FindByJQuery(".rf-trn > .rf-trn-cnt > .rf-trn-lbl[onclick]")
+    private WebElement elementForSelection;
+    @FindByJQuery(".rf-trn > .rf-trn-cnt > .rf-trn-lbl >*[onclick]")
+    private WebElement innerElementForSelection;
 
     private long _collapseWaitUntilNodeIsCollapsedTimeout = -1;
     private long _expandWaitUntilNodeIsExpandedTimeout = -1;
@@ -85,7 +88,7 @@ public class RichFacesTreeNode extends RichFacesTree implements Tree.TreeNode {
                 if (isToggleByHandle()) {
                     getHandleElement().click();
                 } else {
-                    new Actions(driver).triggerEventByWD(getToggleNodeEvent(), getCorrectElementWithOnclickAction()).perform();
+                    new Actions(driver).triggerEventByWD(getToggleNodeEvent(), getCorrectElementForInteraction()).perform();
                 }
             }
             waitUntilNodeIsCollapsed()
@@ -100,7 +103,7 @@ public class RichFacesTreeNode extends RichFacesTree implements Tree.TreeNode {
                 if (isToggleByHandle()) {
                     getHandleElement().click();
                 } else {
-                    new Actions(driver).triggerEventByWD(getToggleNodeEvent(), getCorrectElementWithOnclickAction()).perform();
+                    new Actions(driver).triggerEventByWD(getToggleNodeEvent(), getCorrectElementForInteraction()).perform();
                 }
             }
             waitUntilNodeIsExpanded()
@@ -115,12 +118,13 @@ public class RichFacesTreeNode extends RichFacesTree implements Tree.TreeNode {
         }
 
         /**
-         * We have to get correct element with onclick event, which is by default the label element,
-         * but when there is an panel inside node, the onclick action is moved to that panel.
+         * We have to get correct element, which is by default the label element,
+         * but when there is a panel inside the node, the interaction point is moved to that panel.
+         * When the label element has onclick action (unchangeable event for selection), then return the label element,
+         * otherwise return a child (with onclick action) of that label.
          */
-        private WebElement getCorrectElementWithOnclickAction() {
-            List<WebElement> possibleElements = getLabelElement().findElements(ByJQuery.selector(">*[onclick]"));
-            return (possibleElements.isEmpty() ? getLabelElement() : possibleElements.get(0));
+        private WebElement getCorrectElementForInteraction() {
+            return Utils.isVisible(elementForSelection) ? elementForSelection : innerElementForSelection;
         }
 
         @Override
@@ -177,7 +181,7 @@ public class RichFacesTreeNode extends RichFacesTree implements Tree.TreeNode {
         @Override
         public TreeNode select() {
             if (!isSelected()) {
-                getCorrectElementWithOnclickAction().click();
+                getCorrectElementForInteraction().click();
             }
             waitUntilNodeIsSelected()
                 .withTimeout(getSelectWaitUntilNodeIsSelectedTimeout(), TimeUnit.SECONDS)
