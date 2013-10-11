@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="seleniumTest">
+    <test name="All Components">
+        <packages>
+            <package name="org.richfaces.tests.photoalbum.ftest.webdriver.*" />
+        </packages>
+    </test>
+</suite>
