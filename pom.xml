@@ -83,11 +83,11 @@ FSF site: http://www.fsf.org. -->
         <showcase.classifier>jbas71</showcase.classifier>
         <metamer.classifier>jbas71</metamer.classifier>
 
-        <openshift.password />
+        <openshift.password/>
         <openshift.namespace>richfacesqa</openshift.namespace>
         <openshift.application>ftest</openshift.application>
         <openshift.ssh.user>54abf287bcf646319d0b1c8d35f15546</openshift.ssh.user>
-        <openshift.identity.file />
+        <openshift.identity.file/>
 
         <jodatime.version>2.3</jodatime.version>
         <commons-lang.version>2.6</commons-lang.version>
@@ -103,6 +103,7 @@ FSF site: http://www.fsf.org. -->
         <module>testng-listeners</module>
         <module>common</module>
         <module>page-fragments</module>
+        <module>photoalbum-ftest</module>
     </modules>
 
     <build>
@@ -368,7 +369,7 @@ FSF site: http://www.fsf.org. -->
                 <version>${arquillian.graphene.version}</version>
                 <type>pom</type>
             </dependency>
-            
+
             <dependency>
                 <groupId>org.jboss.arquillian.selenium</groupId>
                 <artifactId>selenium-bom</artifactId>
