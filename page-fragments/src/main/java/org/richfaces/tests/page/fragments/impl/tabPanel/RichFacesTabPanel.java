@@ -25,9 +25,12 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.switchable.AbstractSwitchableComponent;
+
+import com.google.common.base.Predicate;
 
 public class RichFacesTabPanel extends AbstractSwitchableComponent<RichFacesTab> implements TabPanel<RichFacesTab> {
 
@@ -52,8 +55,12 @@ public class RichFacesTabPanel extends AbstractSwitchableComponent<RichFacesTab>
     @FindByJQuery("> div:gt(1)")
     private List<WebElement> allTabContents;
 
+    @FindByJQuery(".rf-tab-hdr:visible")
+    private List<WebElement> allVisibleHeaders;
+
     private final AdvancedTabPanelInteractions advancedInteractions = new AdvancedTabPanelInteractions();
 
+    @Override
     public AdvancedTabPanelInteractions advanced() {
         return advancedInteractions;
     }
@@ -79,8 +86,23 @@ public class RichFacesTabPanel extends AbstractSwitchableComponent<RichFacesTab>
         public List<WebElement> getAllTabContentsElements() {
             return Collections.unmodifiableList(allTabContents);
         }
+
+        public List<WebElement> getAllVisibleHeadersElements() {
+            return Collections.unmodifiableList(allVisibleHeaders);
+        }
+
+        @Override
+        protected Predicate<WebDriver> getConditionForContentSwitched(final String textToContain) {
+            return new Predicate<WebDriver>() {
+                @Override
+                public boolean apply(WebDriver input) {
+                    return getActiveHeaderElement().getText().contains(textToContain);
+                }
+            };
+        }
     }
 
+    @Override
     public int getNumberOfTabs() {
         return switcherControllerElements.size();
     }
