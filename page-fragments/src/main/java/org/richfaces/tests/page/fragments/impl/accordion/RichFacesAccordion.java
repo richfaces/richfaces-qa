@@ -25,9 +25,12 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.switchable.AbstractSwitchableComponent;
+
+import com.google.common.base.Predicate;
 
 public class RichFacesAccordion extends AbstractSwitchableComponent<RichFacesAccordionItem> implements Accordion {
 
@@ -65,6 +68,16 @@ public class RichFacesAccordion extends AbstractSwitchableComponent<RichFacesAcc
                 }
             }
             return null;
+        }
+
+        @Override
+        protected Predicate<WebDriver> getConditionForContentSwitched(final String textToContain) {
+            return new Predicate<WebDriver>() {
+                @Override
+                public boolean apply(WebDriver input) {
+                    return getActiveItem().getActiveHeaderElement().getText().contains(textToContain);
+                }
+            };
         }
     }
 
