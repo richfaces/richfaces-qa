@@ -71,7 +71,7 @@ public abstract class RichFacesTooltip<CONTENT> implements Tooltip<CONTENT> {
     }
 
     @Override
-    public RichFacesTooltip hide() {
+    public RichFacesTooltip<CONTENT> hide() {
         advanced().initiateTooltipsBefore();
         new Actions(driver)
             .triggerEventByWD(advanced().getHideEvent(), advanced().getTarget())
@@ -83,13 +83,13 @@ public abstract class RichFacesTooltip<CONTENT> implements Tooltip<CONTENT> {
     }
 
     @Override
-    public RichFacesTooltip hide(WebElement target) {
+    public RichFacesTooltip<CONTENT> hide(WebElement target) {
         advanced().setupTarget(target);
         return hide();
     }
 
     @Override
-    public RichFacesTooltip show() {
+    public RichFacesTooltip<CONTENT> show() {
         advanced().initiateTooltipsBefore();
         new Actions(driver)
             .moveToElement(advanced().getTarget())
@@ -103,7 +103,7 @@ public abstract class RichFacesTooltip<CONTENT> implements Tooltip<CONTENT> {
     }
 
     @Override
-    public RichFacesTooltip show(WebElement target) {
+    public RichFacesTooltip<CONTENT> show(WebElement target) {
         advanced().setupTarget(target);
         return show();
     }
