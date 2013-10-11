@@ -39,9 +39,9 @@ public class RichFacesTree implements Tree {
     @Root
     private WebElement root;
 
-    @FindByJQuery("> div.rf-tr-nd")
+    @FindByJQuery("> .rf-tr-nd")
     private List<RichFacesTreeNode> childNodes;
-    @FindByJQuery("> div.rf-tr-nd")
+    @FindByJQuery("> .rf-tr-nd")
     private List<WebElement> childNodesElements;
 
     private final AdvancedTreeInteractions interactions = new AdvancedTreeInteractionsImpl();
