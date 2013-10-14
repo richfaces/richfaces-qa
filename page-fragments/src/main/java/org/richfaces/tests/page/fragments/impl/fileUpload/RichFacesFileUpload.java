@@ -36,6 +36,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 import org.richfaces.tests.page.fragments.impl.list.AbstractListComponent;
 import org.richfaces.tests.page.fragments.impl.list.ListComponent;
 import org.richfaces.tests.page.fragments.impl.list.RichFacesListItem;
@@ -45,7 +46,7 @@ import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 
-public class RichFacesFileUpload implements FileUpload {
+public class RichFacesFileUpload implements FileUpload, AdvancedInteractions<RichFacesFileUpload.AdvancedFileUploadInteractions> {
 
     @Root
     private WebElement rootElement;
@@ -85,6 +86,7 @@ public class RichFacesFileUpload implements FileUpload {
         return TRUE;
     }
 
+    @Override
     public AdvancedFileUploadInteractions advanced() {
         return interactions;
     }

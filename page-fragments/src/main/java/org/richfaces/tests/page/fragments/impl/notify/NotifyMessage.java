@@ -35,10 +35,10 @@ public interface NotifyMessage extends Message {
         BOTTOM_LEFT, BOTTOM_RIGHT, TOP_LEFT, TOP_RIGHT;
     }
 
+    void close();
+
     @Override
     AdvancedNotifyMessageIteractions advanced();
-
-    void close();
 
     public interface AdvancedNotifyMessageIteractions extends AdvancedMessageInteractions {
 

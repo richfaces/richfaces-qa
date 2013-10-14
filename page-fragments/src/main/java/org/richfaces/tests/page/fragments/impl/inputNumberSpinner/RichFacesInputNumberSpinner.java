@@ -26,11 +26,12 @@ import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.inputNumberSlider.AbstractNumberInput;
 import org.richfaces.tests.page.fragments.impl.inputNumberSlider.NumberInput;
 
-public class RichFacesInputNumberSpinner extends AbstractNumberInput implements NumberInput {
+public class RichFacesInputNumberSpinner extends AbstractNumberInput implements NumberInput, AdvancedInteractions<RichFacesInputNumberSpinner.AdvancedInputNumberSpinnerInteractions> {
 
     @FindBy(css = "input.rf-insp-inp")
     private TextInputComponentImpl input;
@@ -49,6 +50,7 @@ public class RichFacesInputNumberSpinner extends AbstractNumberInput implements 
 
     private final AdvancedInputNumberSpinnerInteractions advancedInteractions = new AdvancedInputNumberSpinnerInteractions();
 
+    @Override
     public AdvancedInputNumberSpinnerInteractions advanced() {
         return advancedInteractions;
     }

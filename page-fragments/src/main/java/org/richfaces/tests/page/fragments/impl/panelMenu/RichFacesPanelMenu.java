@@ -14,7 +14,7 @@ public class RichFacesPanelMenu extends AbstractPanelMenu {
     @FindByJQuery(".rf-pm-top-itm,.rf-pm-itm")
     private List<WebElement> menuItems;
 
-    private AdvancedPanelMenuInteractions advancedInteractions;
+    private AdvancedPanelMenuInteractions advancedInteractions = new AdvancedPanelMenuInteractions();
 
     @Root
     private WebElement root;
@@ -29,10 +29,8 @@ public class RichFacesPanelMenu extends AbstractPanelMenu {
         return menuGroups;
     }
 
+    @Override
     public AdvancedPanelMenuInteractions advanced() {
-        if (advancedInteractions == null) {
-            advancedInteractions = new AdvancedPanelMenuInteractions();
-        }
         return advancedInteractions;
     }
 

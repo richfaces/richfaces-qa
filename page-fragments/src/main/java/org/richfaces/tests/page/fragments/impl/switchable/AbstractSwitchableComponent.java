@@ -31,30 +31,29 @@ import org.jboss.arquillian.graphene.fragment.Root;
 import org.jodah.typetools.TypeResolver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 
 import com.google.common.base.Predicate;
 
-public abstract class AbstractSwitchableComponent<T extends ComponentContainer> implements SwitchableComponent<T> {
+public abstract class AbstractSwitchableComponent<T extends ComponentContainer> implements SwitchableComponent<T>, AdvancedInteractions<AbstractSwitchableComponent<T>.AdvancedSwitchableComponentInteractions> {
 
     @Root
     private WebElement root;
 
     private final Class<T> containerClass;
 
+    @SuppressWarnings("unchecked")
     public AbstractSwitchableComponent() {
         this.containerClass = (Class<T>) TypeResolver.resolveRawArgument(SwitchableComponent.class, getClass());
     }
-
-    public abstract AdvancedSwitchableComponentInteractions advanced();
 
     protected abstract WebElement getRootOfContainerElement();
 
     protected abstract List<WebElement> getSwitcherControllerElements();
 
     @Override
-    @SuppressWarnings("unchecked")
     public T switchTo(ChoicePicker picker) {
         WebElement switcher = picker.pick(getSwitcherControllerElements());
         if (switcher == null) {

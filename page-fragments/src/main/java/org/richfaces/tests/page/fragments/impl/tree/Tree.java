@@ -24,16 +24,16 @@ package org.richfaces.tests.page.fragments.impl.tree;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 
 public interface Tree {
 
-    AdvancedTreeInteractions advanced();
-
     /**
      * Collapses child node at index.
+     *
      * @param index index of node
      * @return collapsed node
      */
@@ -41,6 +41,7 @@ public interface Tree {
 
     /**
      * Collapses child node chosen by picker.
+     *
      * @param picker
      * @return collapsed node
      */
@@ -48,6 +49,7 @@ public interface Tree {
 
     /**
      * Expands child node at index.
+     *
      * @param index index of node
      * @return expanded node
      */
@@ -55,6 +57,7 @@ public interface Tree {
 
     /**
      * Expands child node chosen by picker.
+     *
      * @param picker
      * @return expanded node
      */
@@ -62,6 +65,7 @@ public interface Tree {
 
     /**
      * Selects child node at index.
+     *
      * @param index index of node
      * @return selected node
      */
@@ -69,6 +73,7 @@ public interface Tree {
 
     /**
      * Selects child node chosen by picker.
+     *
      * @param picker
      * @return selected node
      */
@@ -125,19 +130,20 @@ public interface Tree {
 
     public interface TreeNode extends Tree {
 
-        @Override
         AdvancedTreeNodeInteractions advanced();
 
         public interface AdvancedTreeNodeInteractions extends AdvancedTreeInteractions {
 
             /**
              * Expands this node.
+             *
              * @return same node
              */
             TreeNode expand();
 
             /**
              * Collapses this node.
+             *
              * @return same node
              */
             TreeNode collapse();
@@ -170,18 +176,21 @@ public interface Tree {
 
             /**
              * Selects this node.
+             *
              * @return same node
              */
             TreeNode select();
 
             /**
              * Checks styleClasses of root, handle, and icon elements.
+             *
              * @return WaitingWrapper
              */
             WaitingWrapper waitUntilNodeIsCollapsed();
 
             /**
              * Checks styleClasses of root, handle, and icon elements.
+             *
              * @return WaitingWrapper
              */
             WaitingWrapper waitUntilNodeIsExpanded();

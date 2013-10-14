@@ -31,6 +31,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
+import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 import org.richfaces.tests.page.fragments.impl.list.AbstractListComponent;
 import org.richfaces.tests.page.fragments.impl.list.ListComponent;
 import org.richfaces.tests.page.fragments.impl.list.RichFacesListItem;
@@ -40,7 +41,7 @@ import com.google.common.base.Predicate;
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class RichFacesLog implements Log {
+public class RichFacesLog implements Log, AdvancedInteractions<RichFacesLog.AdvancedLogInteractions> {
 
     @Root
     private GrapheneElement root;
@@ -55,6 +56,7 @@ public class RichFacesLog implements Log {
 
     private final AdvancedLogInteractions interactions = new AdvancedLogInteractions();
 
+    @Override
     public AdvancedLogInteractions advanced() {
         return interactions;
     }

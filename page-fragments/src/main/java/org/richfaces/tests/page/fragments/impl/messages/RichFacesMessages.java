@@ -32,6 +32,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 import org.richfaces.tests.page.fragments.impl.list.AbstractListComponent;
 import org.richfaces.tests.page.fragments.impl.list.ListItem;
 import org.richfaces.tests.page.fragments.impl.message.AbstractMessage;
@@ -45,7 +46,7 @@ import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
  * Component for rich:messages.
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesMessages extends AbstractListComponent<MessageImpl> implements Messages<MessageImpl> {
+public class RichFacesMessages extends AbstractListComponent<MessageImpl> implements Messages<MessageImpl>, AdvancedInteractions<Messages.AdvancedMessagesInteractions> {
 
     @FindBy(css = "span.rf-msgs-err")
     private List<MessageImpl> errorMessages;

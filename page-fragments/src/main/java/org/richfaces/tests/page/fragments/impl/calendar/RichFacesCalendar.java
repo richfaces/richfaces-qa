@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.calendar;
 
-import java.util.Collections;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.fragment.Root;
@@ -30,6 +29,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 import org.richfaces.tests.page.fragments.impl.common.TextInputComponent;
 
 import com.google.common.base.Optional;
@@ -38,7 +38,7 @@ import com.google.common.base.Optional;
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesCalendar implements Calendar {
+public class RichFacesCalendar implements Calendar, AdvancedInteractions<RichFacesCalendar.AdvancedCalendarInteractions> {
 
     @Root
     private WebElement root;
@@ -47,6 +47,7 @@ public class RichFacesCalendar implements Calendar {
 
     private Calendar strategy = new CalendarJavaScriptStrategy();
 
+    @Override
     public AdvancedCalendarInteractions advanced() {
         return interactions;
     }
