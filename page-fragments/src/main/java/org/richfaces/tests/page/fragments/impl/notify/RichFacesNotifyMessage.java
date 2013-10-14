@@ -107,7 +107,7 @@ public class RichFacesNotifyMessage extends AbstractMessage implements NotifyMes
         }
     }
 
-    public class AdvancedNotifyMessageInteractionsImpl extends AdvancedMessageInteractionsImpl implements AdvancedNotifyMessageIteractions {
+    public class AdvancedNotifyMessageInteractionsImpl extends AdvancedMessageInteractionsImpl implements NotifyMessage.AdvancedNotifyMessageIteractions {
 
         @Override
         public WebElement getCloseElement() {

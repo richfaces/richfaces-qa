@@ -24,6 +24,7 @@ package org.richfaces.tests.page.fragments.impl.panel;
 import org.jboss.arquillian.graphene.GrapheneElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 
 /**
  * Add to the final doc that there is example implementation in TextualRichFacesPanel, as the most used panel.
@@ -32,7 +33,7 @@ import org.openqa.selenium.support.FindBy;
  * @param <HEADER>
  * @param <BODY>
  */
-public abstract class RichFacesPanel<HEADER, BODY> extends AbstractPanel<HEADER, BODY> {
+public abstract class RichFacesPanel<HEADER, BODY> extends AbstractPanel<HEADER, BODY> implements AdvancedInteractions<RichFacesPanel<HEADER,BODY>.AdvancedPanelInteractions> {
 
     @FindBy(css = "div.rf-p-hdr")
     private GrapheneElement header;
@@ -42,6 +43,7 @@ public abstract class RichFacesPanel<HEADER, BODY> extends AbstractPanel<HEADER,
 
     private AdvancedPanelInteractions advancedInteractions = new AdvancedPanelInteractions();
 
+    @Override
     public AdvancedPanelInteractions advanced() {
         return advancedInteractions;
     }

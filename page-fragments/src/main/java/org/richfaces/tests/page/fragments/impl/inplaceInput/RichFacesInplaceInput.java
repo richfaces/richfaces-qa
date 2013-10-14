@@ -30,10 +30,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 
-public class RichFacesInplaceInput implements InplaceInput {
+public class RichFacesInplaceInput implements InplaceInput, AdvancedInteractions<RichFacesInplaceInput.AdvancedInplaceInputInteractions> {
 
     @FindBy(className = "rf-ii-fld")
     private TextInputComponentImpl textInput;
@@ -64,6 +65,7 @@ public class RichFacesInplaceInput implements InplaceInput {
 
     private final AdvancedInplaceInputInteractions advancedInteractions = new AdvancedInplaceInputInteractions();
 
+    @Override
     public AdvancedInplaceInputInteractions advanced() {
         return advancedInteractions;
     }

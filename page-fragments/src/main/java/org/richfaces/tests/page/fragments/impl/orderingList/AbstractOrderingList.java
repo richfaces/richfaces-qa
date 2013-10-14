@@ -31,6 +31,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 import org.richfaces.tests.page.fragments.impl.list.ListComponent;
 import org.richfaces.tests.page.fragments.impl.utils.Actions;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
@@ -41,7 +42,7 @@ import org.richfaces.tests.page.fragments.impl.utils.picker.MultipleChoicePicker
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractOrderingList implements OrderingList {
+public abstract class AbstractOrderingList implements OrderingList, AdvancedInteractions<AbstractOrderingList.AdvancedOrderingListInteractions> {
 
     @Root
     private WebElement root;
@@ -53,6 +54,7 @@ public abstract class AbstractOrderingList implements OrderingList {
     private final OrderingInteraction orderingInteraction = new OrderingInteractionImpl();
     private final PuttingSelectedItem puttingSelectedItem = new PuttingSelectedItemImpl();
 
+    @Override
     public AdvancedOrderingListInteractions advanced() {
         return interactions;
     }

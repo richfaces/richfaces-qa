@@ -24,9 +24,10 @@ package org.richfaces.tests.page.fragments.impl.accordion;
 import org.jboss.arquillian.graphene.GrapheneElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 import org.richfaces.tests.page.fragments.impl.switchable.AbstractComponentContainer;
 
-public class RichFacesAccordionItem extends AbstractComponentContainer {
+public class RichFacesAccordionItem extends AbstractComponentContainer implements AdvancedInteractions<RichFacesAccordionItem.AdvancedAccordionItemInteractions> {
 
     private static final String ACTIVE_HEADER_CLASS = "rf-ac-itm-lbl-act";
     private static final String DISABLED_HEADER_CLASS = "rf-ac-itm-lbl-dis";
@@ -51,6 +52,7 @@ public class RichFacesAccordionItem extends AbstractComponentContainer {
 
     private final AdvancedAccordionItemInteractions advancedInteractions = new AdvancedAccordionItemInteractions();
 
+    @Override
     public AdvancedAccordionItemInteractions advanced() {
         return advancedInteractions;
     }

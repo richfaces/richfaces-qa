@@ -35,6 +35,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.inplaceInput.AbstractConfirmOrCancel;
 import org.richfaces.tests.page.fragments.impl.inplaceInput.ConfirmOrCancel;
@@ -43,7 +44,7 @@ import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 
-public class RichFacesInplaceSelect implements InplaceSelect {
+public class RichFacesInplaceSelect implements InplaceSelect, AdvancedInteractions<RichFacesInplaceSelect.AdvancedInplaceSelectInteractions> {
 
     @FindBy(css = "input[id$=Okbtn]")
     private WebElement confirmButton;
@@ -83,6 +84,7 @@ public class RichFacesInplaceSelect implements InplaceSelect {
 
     private final AdvancedInplaceSelectInteractions advancedInteractions = new AdvancedInplaceSelectInteractions();
 
+    @Override
     public AdvancedInplaceSelectInteractions advanced() {
         return advancedInteractions;
     }

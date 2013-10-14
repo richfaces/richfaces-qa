@@ -32,6 +32,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 import org.richfaces.tests.page.fragments.impl.list.AbstractListComponent;
 import org.richfaces.tests.page.fragments.impl.list.ListComponent;
 import org.richfaces.tests.page.fragments.impl.orderingList.AbstractOrderingList;
@@ -44,7 +45,7 @@ import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.richfaces.tests.page.fragments.impl.utils.picker.MultipleChoicePicker;
 
-public class RichFacesPickList implements PickList {
+public class RichFacesPickList implements PickList, AdvancedInteractions<RichFacesPickList.AdvancedPickListInteractions> {
 
     @Root
     private WebElement root;
@@ -80,6 +81,7 @@ public class RichFacesPickList implements PickList {
 
     private final AdvancedPickListInteractions interactions = new AdvancedPickListInteractions();
 
+    @Override
     public AdvancedPickListInteractions advanced() {
         return interactions;
     }

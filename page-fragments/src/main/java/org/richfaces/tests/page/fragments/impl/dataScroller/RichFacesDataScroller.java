@@ -30,11 +30,12 @@ import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 
 /**
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  */
-public class RichFacesDataScroller implements DataScroller {
+public class RichFacesDataScroller implements DataScroller, AdvancedInteractions<RichFacesDataScroller.AdvancedDataScrollerInteractions> {
 
     @Root
     private WebElement root;
@@ -105,6 +106,7 @@ public class RichFacesDataScroller implements DataScroller {
         Graphene.waitModel().until().element(activePage).text().not().equalTo(prevPageText);
     }
 
+    @Override
     public AdvancedDataScrollerInteractions advanced() {
         return advancedInteractions;
     }

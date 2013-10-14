@@ -67,10 +67,10 @@ public class RichFacesTreeNode extends RichFacesTree implements Tree.TreeNode {
     @Drone
     private WebDriver driver;
 
-    private final AdvancedTreeNodeInteractions interactions = new AdvancedNodeInteractionsImpl();
+    private final AdvancedNodeInteractionsImpl interactions = new AdvancedNodeInteractionsImpl();
 
     @Override
-    public AdvancedTreeNodeInteractions advanced() {
+    public AdvancedNodeInteractionsImpl advanced() {
         return interactions;
     }
 

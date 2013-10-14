@@ -36,6 +36,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 import org.richfaces.tests.page.fragments.impl.common.ClearType;
 import org.richfaces.tests.page.fragments.impl.common.ScrollingType;
 import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
@@ -47,7 +48,7 @@ import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 
 import com.google.common.base.Predicate;
 
-public class RichFacesSelect implements Select {
+public class RichFacesSelect implements Select, AdvancedInteractions<RichFacesSelect.AdvancedSelectInteractions> {
 
     @Drone
     private WebDriver driver;
@@ -70,6 +71,7 @@ public class RichFacesSelect implements Select {
     private long _selectWaitUntilSuggestionsAreNotVisibleTimeout = -1;
     private long _getSuggestionsWaitUntilSuggestionsAreVisibleTimeout = -1;
 
+    @Override
     public AdvancedSelectInteractions advanced() {
         return interactions;
     }

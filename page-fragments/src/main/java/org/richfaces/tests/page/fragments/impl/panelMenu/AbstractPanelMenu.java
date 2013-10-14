@@ -13,6 +13,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
 import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
@@ -21,7 +22,7 @@ import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 
 import com.google.common.base.Predicate;
 
-public abstract class AbstractPanelMenu implements PanelMenu, PanelMenuGroup {
+public abstract class AbstractPanelMenu implements PanelMenu, PanelMenuGroup, AdvancedInteractions<AbstractPanelMenu.AdvancedAbstractPanelMenuInteractions> {
 
     public static final String CSS_EXPANDED_SUFFIX = "-exp";
     public static final String CSS_TRANSPARENT_SUFFIX = "-transparent";
@@ -35,7 +36,8 @@ public abstract class AbstractPanelMenu implements PanelMenu, PanelMenuGroup {
     private JavascriptExecutor executor;
     @Drone
     private WebDriver browser;
-    private AdvancedAbstractPanelMenuInteractions advancedInteractions;
+
+    private AdvancedAbstractPanelMenuInteractions advancedInteractions = new AdvancedAbstractPanelMenuInteractions();
 
     private Event expandEvent = Event.CLICK;
     private Event collapseEvent = Event.CLICK;
@@ -128,10 +130,8 @@ public abstract class AbstractPanelMenu implements PanelMenu, PanelMenuGroup {
 
     public abstract List<WebElement> getMenuGroups();
 
+    @Override
     public AdvancedAbstractPanelMenuInteractions advanced() {
-        if (advancedInteractions == null) {
-            advancedInteractions = new AdvancedAbstractPanelMenuInteractions();
-        }
         return advancedInteractions;
     }
 

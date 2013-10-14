@@ -32,6 +32,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Locations;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 import org.richfaces.tests.page.fragments.impl.panel.AbstractPanel;
 import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
 import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
@@ -39,7 +40,7 @@ import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class RichFacesPopupPanel<HEADER, HEADERCONTROLS, BODY> extends AbstractPanel<HEADER, BODY> implements PopupPanel<HEADER, HEADERCONTROLS, BODY> {
+public abstract class RichFacesPopupPanel<HEADER, HEADERCONTROLS, BODY> extends AbstractPanel<HEADER, BODY> implements PopupPanel<HEADER, HEADERCONTROLS, BODY>, AdvancedInteractions<RichFacesPopupPanel<HEADER, HEADERCONTROLS, BODY>.AdvancedPopupPanelInteractions> {
 
     @Drone
     private WebDriver driver;
@@ -76,6 +77,7 @@ public abstract class RichFacesPopupPanel<HEADER, HEADERCONTROLS, BODY> extends 
 
     private final Class<HEADERCONTROLS> headerClass = (Class<HEADERCONTROLS>) TypeResolver.resolveRawArguments(RichFacesPopupPanel.class, getClass())[1];
 
+    @Override
     public AdvancedPopupPanelInteractions advanced() {
         return interactions;
     }

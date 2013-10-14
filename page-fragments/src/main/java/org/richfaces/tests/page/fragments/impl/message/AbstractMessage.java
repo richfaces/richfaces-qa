@@ -27,6 +27,7 @@ import org.jboss.arquillian.graphene.wait.FluentWait;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
 import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
 
@@ -36,7 +37,7 @@ import com.google.common.base.Predicate;
  * Abstract base for message component.
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractMessage implements Message {
+public abstract class AbstractMessage implements Message, AdvancedInteractions<Message.AdvancedMessageInteractions> {
 
     @Root
     private GrapheneElement root;

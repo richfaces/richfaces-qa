@@ -32,10 +32,10 @@ import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.list.AbstractListComponent;
 import org.richfaces.tests.page.fragments.impl.list.ListItem;
 import org.richfaces.tests.page.fragments.impl.message.Message.MessageType;
+import org.richfaces.tests.page.fragments.impl.messages.Messages;
 import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotify.NotifyMessageItemImpl;
 import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
 import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
-import org.richfaces.tests.page.fragments.impl.utils.picker.MultipleChoicePicker;
 
 import com.google.common.base.Predicate;
 
@@ -118,7 +118,7 @@ public class RichFacesNotify extends AbstractListComponent<NotifyMessageItemImpl
             driver.findElements(getByForNotifyWithStyleClass(NOTIFY_WARN_MSG_STYLECLASS)));
     }
 
-    public class AdvancedNotifyInteractionsImpl implements AdvancedMessagesInteractions {
+    public class AdvancedNotifyInteractionsImpl implements Messages.AdvancedMessagesInteractions {
 
         public void setStyleClassToContain(String styleClass) {
             RichFacesNotify.this.styleClass = styleClass;
