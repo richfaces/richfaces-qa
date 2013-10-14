@@ -28,12 +28,12 @@ import java.util.concurrent.TimeUnit;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.fragment.Root;
 import org.jboss.arquillian.graphene.wait.FluentWait;
-import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 import org.richfaces.tests.page.fragments.impl.utils.Actions;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
@@ -46,7 +46,7 @@ import com.google.common.base.Optional;
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public abstract class AbstractPopupMenu implements PopupMenu {
+public abstract class AbstractPopupMenu implements PopupMenu, AdvancedInteractions<AbstractPopupMenu.AdvancedPopupMenuInteractions> {
 
     @Drone
     private WebDriver browser;
@@ -94,6 +94,7 @@ public abstract class AbstractPopupMenu implements PopupMenu {
     /* ************************************************************************************************
      * API
      */
+    @Override
     public AdvancedPopupMenuInteractions advanced() {
         return advancedInteractions;
     }

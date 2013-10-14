@@ -34,6 +34,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
@@ -41,7 +42,7 @@ import com.google.common.base.Preconditions;
 /**
  * Automatically setups hotkey from widget, if no hotkey from user is set.
  */
-public class RichFacesHotkey implements Hotkey {
+public class RichFacesHotkey implements Hotkey, AdvancedInteractions<RichFacesHotkey.AdvancedHotkeyInteractions> {
 
     @Drone
     private WebDriver driver;
@@ -71,6 +72,7 @@ public class RichFacesHotkey implements Hotkey {
         }
     }
 
+    @Override
     public AdvancedHotkeyInteractions advanced() {
         return interactions;
     }

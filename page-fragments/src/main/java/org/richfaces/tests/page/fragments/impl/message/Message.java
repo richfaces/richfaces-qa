@@ -22,13 +22,14 @@
 package org.richfaces.tests.page.fragments.impl.message;
 
 import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
 
 /**
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface Message {
+public interface Message extends AdvancedInteractions<Message.AdvancedMessageInteractions> {
 
     public enum MessageType {
 
@@ -38,8 +39,6 @@ public interface Message {
         WARNING,
         OK;
     }
-
-    AdvancedMessageInteractions advanced();
 
     String getSummary();
 

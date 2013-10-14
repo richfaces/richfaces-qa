@@ -20,7 +20,7 @@ public class RichFacesPanelMenuItem implements PanelMenuItem {
     @Root
     private WebElement root;
 
-    private AdvancedPanelMenuItemInteractions advancedInteractions;
+    private AdvancedPanelMenuItemInteractions advancedInteractions = new AdvancedPanelMenuItemInteractions();
 
     @Override
     public void select() {
@@ -28,9 +28,6 @@ public class RichFacesPanelMenuItem implements PanelMenuItem {
     }
 
     public AdvancedPanelMenuItemInteractions advanced() {
-        if (advancedInteractions == null) {
-            advancedInteractions = new AdvancedPanelMenuItemInteractions();
-        }
         return advancedInteractions;
     }
 

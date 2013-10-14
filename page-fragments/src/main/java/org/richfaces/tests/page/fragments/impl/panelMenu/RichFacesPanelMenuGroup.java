@@ -24,7 +24,7 @@ public class RichFacesPanelMenuGroup extends AbstractPanelMenu {
 
     @Root
     private WebElement root;
-    private AdvancedPanelMenuGroupInteractions advancedInteractions;
+    private AdvancedPanelMenuGroupInteractions advancedInteractions = new AdvancedPanelMenuGroupInteractions();
 
     @Override
     public List<WebElement> getMenuItems() {
@@ -37,9 +37,6 @@ public class RichFacesPanelMenuGroup extends AbstractPanelMenu {
     }
 
     public AdvancedPanelMenuGroupInteractions advanced() {
-        if (advancedInteractions == null) {
-            advancedInteractions = new AdvancedPanelMenuGroupInteractions();
-        }
         return advancedInteractions;
     }
 

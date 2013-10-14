@@ -33,6 +33,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 import org.richfaces.tests.page.fragments.impl.utils.Actions;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
@@ -47,7 +48,7 @@ import com.google.common.base.Predicate;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @param <CONTENT>
  */
-public abstract class RichFacesTooltip<CONTENT> implements Tooltip<CONTENT> {
+public abstract class RichFacesTooltip<CONTENT> implements Tooltip<CONTENT>, AdvancedInteractions<RichFacesTooltip<CONTENT>.AdvancedTooltipInteractions> {
 
     @Root
     private WebElement root;
@@ -61,6 +62,7 @@ public abstract class RichFacesTooltip<CONTENT> implements Tooltip<CONTENT> {
     private long _hideWaitUntilTooltipIsNotVisibleTimeout = -1;
     private long _showWaitUntilTooltipIsVisibleTimeout = -1;
 
+    @Override
     public AdvancedTooltipInteractions advanced() {
         return interactions;
     }

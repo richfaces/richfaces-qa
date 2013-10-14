@@ -28,13 +28,14 @@ import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 
 import com.google.common.collect.Lists;
 
-public class RichFacesTree implements Tree {
+public class RichFacesTree implements Tree, AdvancedInteractions<RichFacesTree.AdvancedTreeInteractionsImpl> {
 
     @Root
     private WebElement root;
@@ -44,10 +45,10 @@ public class RichFacesTree implements Tree {
     @FindByJQuery("> .rf-tr-nd")
     private List<WebElement> childNodesElements;
 
-    private final AdvancedTreeInteractions interactions = new AdvancedTreeInteractionsImpl();
+    private final AdvancedTreeInteractionsImpl interactions = new AdvancedTreeInteractionsImpl();
 
     @Override
-    public AdvancedTreeInteractions advanced() {
+    public AdvancedTreeInteractionsImpl advanced() {
         return interactions;
     }
 
@@ -96,7 +97,7 @@ public class RichFacesTree implements Tree {
         return childNodes.get(getIndexOfPickedElement(picker)).advanced().select();
     }
 
-    public class AdvancedTreeInteractionsImpl implements AdvancedTreeInteractions {
+    public class AdvancedTreeInteractionsImpl implements Tree.AdvancedTreeInteractions {
 
         private final Event DEFAULT_TOGGLE_NODE_EVENT = Event.CLICK;
         private final boolean DEFAULT_TOGGLE_BY_HANDLE = Boolean.TRUE;
