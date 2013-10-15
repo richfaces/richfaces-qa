@@ -60,10 +60,6 @@ public class RichFacesTreeNode extends RichFacesTree implements Tree.TreeNode {
     @FindByJQuery(".rf-trn > .rf-trn-cnt > .rf-trn-lbl >*[onclick]")
     private WebElement innerElementForSelection;
 
-    private long _collapseWaitUntilNodeIsCollapsedTimeout = -1;
-    private long _expandWaitUntilNodeIsExpandedTimeout = -1;
-    private long _selectWaitUntilNodeIsSelectedTimeout = -1;
-
     @Drone
     private WebDriver driver;
 
@@ -82,6 +78,10 @@ public class RichFacesTreeNode extends RichFacesTree implements Tree.TreeNode {
 
     public class AdvancedNodeInteractionsImpl extends AdvancedTreeInteractionsImpl implements AdvancedTreeNodeInteractions {
 
+        private long _timeoutForNodeToBeCollapsed = -1;
+        private long _timeoutForNodeToBeExpanded = -1;
+        private long _timeoutForNodeToBeSelected = -1;
+
         @Override
         public TreeNode collapse() {
             if (!isCollapsed()) {
@@ -91,9 +91,7 @@ public class RichFacesTreeNode extends RichFacesTree implements Tree.TreeNode {
                     new Actions(driver).triggerEventByWD(getToggleNodeEvent(), getCorrectElementForInteraction()).perform();
                 }
             }
-            waitUntilNodeIsCollapsed()
-                .withTimeout(getCollapseWaitUntilNodeIsCollapsedTimeout(), TimeUnit.SECONDS)
-                .perform();
+            waitUntilNodeIsCollapsed().perform();
             return RichFacesTreeNode.this;
         }
 
@@ -106,9 +104,7 @@ public class RichFacesTreeNode extends RichFacesTree implements Tree.TreeNode {
                     new Actions(driver).triggerEventByWD(getToggleNodeEvent(), getCorrectElementForInteraction()).perform();
                 }
             }
-            waitUntilNodeIsExpanded()
-                .withTimeout(getExpandWaitUntilNodeIsExpandedTimeout(), TimeUnit.SECONDS)
-                .perform();
+            waitUntilNodeIsExpanded().perform();
             return RichFacesTreeNode.this;
         }
 
@@ -183,10 +179,32 @@ public class RichFacesTreeNode extends RichFacesTree implements Tree.TreeNode {
             if (!isSelected()) {
                 getCorrectElementForInteraction().click();
             }
-            waitUntilNodeIsSelected()
-                .withTimeout(getSelectWaitUntilNodeIsSelectedTimeout(), TimeUnit.SECONDS)
-                .perform();
+            waitUntilNodeIsSelected().perform();
             return RichFacesTreeNode.this;
+        }
+
+        public void setuptimeoutForNodeToBeExpanded(long timeoutInMilliseconds) {
+            _timeoutForNodeToBeExpanded = timeoutInMilliseconds;
+        }
+
+        public long getTimeoutForNodeToBeExpanded() {
+            return _timeoutForNodeToBeExpanded == -1 ? Utils.getWaitAjaxDefaultTimeout(driver) : _timeoutForNodeToBeExpanded;
+        }
+
+        public void setupTimeoutForNodeToBeCollapsed(long timeoutInMilliseconds) {
+            _timeoutForNodeToBeCollapsed = timeoutInMilliseconds;
+        }
+
+        public long getTimeoutForNodeToBeCollapsed() {
+            return _timeoutForNodeToBeCollapsed == -1 ? Utils.getWaitAjaxDefaultTimeout(driver) : _timeoutForNodeToBeCollapsed;
+        }
+
+        public void setupTimeoutForNodeToBeSelected(long timeoutInMilliseconds) {
+            _timeoutForNodeToBeSelected = timeoutInMilliseconds;
+        }
+
+        public long getTimeoutForNodeToBeSelected() {
+            return _timeoutForNodeToBeSelected == -1 ? Utils.getWaitAjaxDefaultTimeout(driver) : _timeoutForNodeToBeSelected;
         }
 
         @Override
@@ -203,15 +221,8 @@ public class RichFacesTreeNode extends RichFacesTree implements Tree.TreeNode {
                         }
                     });
                 }
-            }.withMessage("Waiting for node to be collapsed");
-        }
-
-        public void setupCollapseWaitUntilNodeIsCollapsedTimeout(long timeout) {
-            _collapseWaitUntilNodeIsCollapsedTimeout = timeout;
-        }
-
-        public long getCollapseWaitUntilNodeIsCollapsedTimeout() {
-            return _collapseWaitUntilNodeIsCollapsedTimeout == -1 ? Utils.getWaitAjaxDefaultTimeout(driver) : _collapseWaitUntilNodeIsCollapsedTimeout;
+            }.withMessage("Waiting for node to be collapsed")
+             .withTimeout(getTimeoutForNodeToBeCollapsed(), TimeUnit.MILLISECONDS);
         }
 
         @Override
@@ -228,15 +239,8 @@ public class RichFacesTreeNode extends RichFacesTree implements Tree.TreeNode {
                         }
                     });
                 }
-            }.withMessage("Waiting for node to be expanded");
-        }
-
-        public void setupExpandWaitUntilNodeIsExpandedTimeout(long timeout) {
-            _expandWaitUntilNodeIsExpandedTimeout = timeout;
-        }
-
-        public long getExpandWaitUntilNodeIsExpandedTimeout() {
-            return _expandWaitUntilNodeIsExpandedTimeout == -1 ? Utils.getWaitAjaxDefaultTimeout(driver) : _expandWaitUntilNodeIsExpandedTimeout;
+            }.withMessage("Waiting for node to be expanded")
+             .withTimeout(getTimeoutForNodeToBeExpanded(), TimeUnit.MILLISECONDS);
         }
 
         @Override
@@ -270,15 +274,8 @@ public class RichFacesTreeNode extends RichFacesTree implements Tree.TreeNode {
                         }
                     });
                 }
-            }.withMessage("Waiting for node to be selected");
-        }
-
-        public void setupSelectWaitUntilNodeIsSelectedTimeout(long timeout) {
-            _selectWaitUntilNodeIsSelectedTimeout = timeout;
-        }
-
-        public long getSelectWaitUntilNodeIsSelectedTimeout() {
-            return _selectWaitUntilNodeIsSelectedTimeout == -1 ? Utils.getWaitAjaxDefaultTimeout(driver) : _selectWaitUntilNodeIsSelectedTimeout;
+            }.withMessage("Waiting for node to be selected")
+             .withTimeout(getTimeoutForNodeToBeSelected(), TimeUnit.MILLISECONDS);
         }
     }
 }

@@ -66,7 +66,7 @@ public class HeaderControls {
     private CalendarEditor calendarEditor;
     private final DateTimeFormatter formatter = DateTimeFormat.forPattern("MMMM, yyyy");
 
-    private long _closePopupWaitUntilIsNotVisibleTimeout = -1;
+    private long _timeoutForPopupToBeNotVisible = -1;
 
     private void _openYearAndMonthEditor() {
         if (!isVisible() || !yearAndMonthEditorOpenerElement.isDisplayed()) {
@@ -75,7 +75,6 @@ public class HeaderControls {
         }
         yearAndMonthEditorOpenerElement.click();
         calendarEditor.getDateEditor().waitUntilIsVisible()
-                                      .withTimeout(calendarEditor.getDateEditor().getOpenYearAndMonthEditorWaitUntilIsVisible(), TimeUnit.SECONDS)
                                       .perform();
     }
 
@@ -164,12 +163,12 @@ public class HeaderControls {
         this.calendarEditor = calendarEditor;
     }
 
-    public void setupClosePopupWaitUntilIsNotVisibleTimeout(long timeout) {
-        this._closePopupWaitUntilIsNotVisibleTimeout = timeout;
+    public void setupTimeoutForPopupToBeNotVisible(long timeoutInMilliseconds) {
+        this._timeoutForPopupToBeNotVisible = timeoutInMilliseconds;
     }
 
-    public long getClosePopupWaitUntilIsNotVisibleTimeout() {
-        return _closePopupWaitUntilIsNotVisibleTimeout == - 1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _closePopupWaitUntilIsNotVisibleTimeout;
+    public long getTimeoutForPopupToBeNotVisible() {
+        return _timeoutForPopupToBeNotVisible == - 1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _timeoutForPopupToBeNotVisible;
     }
 
     public WaitingWrapper waitUntilIsNotVisible() {
@@ -178,7 +177,8 @@ public class HeaderControls {
             protected void performWait(FluentWait<WebDriver, Void> wait) {
                 wait.until().element(root).is().not().visible();
             }
-        }.withMessage("Header controls to be not visible.");
+        }.withMessage("Header controls to be not visible.")
+         .withTimeout(getTimeoutForPopupToBeNotVisible(), TimeUnit.MILLISECONDS);
     }
 
     public WaitingWrapper waitUntilIsVisible() {

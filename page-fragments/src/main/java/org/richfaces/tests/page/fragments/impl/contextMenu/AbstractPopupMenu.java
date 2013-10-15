@@ -56,9 +56,6 @@ public abstract class AbstractPopupMenu implements PopupMenu, AdvancedInteractio
 
     private final AdvancedPopupMenuInteractions advancedInteractions = new AdvancedPopupMenuInteractions();
 
-    private long _hideWaitUntilIsNotVisibleTimeout = -1;
-    private long _showWaitUntilIsVisibleTimeout = -1;
-
     /* ************************************************************************************************
      * Abstract methods
      */
@@ -146,6 +143,9 @@ public abstract class AbstractPopupMenu implements PopupMenu, AdvancedInteractio
 
         private WebElement target;
 
+        private long _timeoutForPopupMenuToBeNotVisible = -1;
+        private long _timeoutForPopupMenuToBeVisible = -1;
+
         /**
          * Dismisses currently displayed popup menu. If no popup menu is currently displayed an exception is thrown.
          *
@@ -157,7 +157,7 @@ public abstract class AbstractPopupMenu implements PopupMenu, AdvancedInteractio
                     + getNameOfFragment() + " is displayed at the moment!");
             }
             browser.findElement(Utils.BY_HTML).click();
-            waitUntilIsNotVisible().withTimeout(getHideWaitUntilIsNotVisibleTimeout(), TimeUnit.SECONDS).perform();
+            waitUntilIsNotVisible().perform();
         }
 
         /**
@@ -220,7 +220,7 @@ public abstract class AbstractPopupMenu implements PopupMenu, AdvancedInteractio
                 .moveToElement(givenTarget)
                 .triggerEventByWD(invokeEvent, givenTarget).perform();
 
-            advanced().waitUntilIsVisible().withTimeout(getShowWaitUntilIsVisibleTimeout(), TimeUnit.SECONDS).perform();
+            advanced().waitUntilIsVisible().perform();
         }
 
         /**
@@ -290,20 +290,20 @@ public abstract class AbstractPopupMenu implements PopupMenu, AdvancedInteractio
             }
         }
 
-        public void setupHideWaitUntilIsNotVisibleTimeout(long timeout) {
-            _hideWaitUntilIsNotVisibleTimeout = timeout;
+        public void setupTimeoutForPopupMenuToBeNotVisible(long timeoutInMilliseconds) {
+            _timeoutForPopupMenuToBeNotVisible = timeoutInMilliseconds;
         }
 
-        public long getHideWaitUntilIsNotVisibleTimeout() {
-            return _hideWaitUntilIsNotVisibleTimeout == -1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _hideWaitUntilIsNotVisibleTimeout;
+        public long getTimeoutForPopupMenuToBeNotVisible() {
+            return _timeoutForPopupMenuToBeNotVisible == -1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _timeoutForPopupMenuToBeNotVisible;
         }
 
-        public void setupShowWaitUntilIsVisibleTimeout(long timeout) {
-            _showWaitUntilIsVisibleTimeout = timeout;
+        public void setupTimeoutForPopupMenuToBeVisible(long timeoutInMilliseconds) {
+            _timeoutForPopupMenuToBeVisible = timeoutInMilliseconds;
         }
 
-        public long getShowWaitUntilIsVisibleTimeout() {
-            return _showWaitUntilIsVisibleTimeout == -1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _showWaitUntilIsVisibleTimeout;
+        public long getTimeoutForPopupMenuToBeVisible() {
+            return _timeoutForPopupMenuToBeVisible == -1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _timeoutForPopupMenuToBeVisible;
         }
 
         /**
@@ -318,7 +318,8 @@ public abstract class AbstractPopupMenu implements PopupMenu, AdvancedInteractio
                 protected void performWait(FluentWait<WebDriver, Void> wait) {
                     wait.until().element(getMenuPopupInternal()).is().not().visible();
                 }
-            }.withMessage("Waiting for menu to hide.");
+            }.withMessage("Waiting for menu to hide.")
+             .withTimeout(getTimeoutForPopupMenuToBeNotVisible(), TimeUnit.MILLISECONDS);
         }
 
         public WaitingWrapper waitUntilIsVisible() {
@@ -329,7 +330,7 @@ public abstract class AbstractPopupMenu implements PopupMenu, AdvancedInteractio
                     wait.until().element(getMenuPopup()).is().visible();
                 }
             }.withMessage("The " + getNameOfFragment() + " did not show in the given timeout!")
-                .withTimeout(showDelay + 4000, TimeUnit.MILLISECONDS);
+             .withTimeout(showDelay + getTimeoutForPopupMenuToBeVisible(), TimeUnit.MILLISECONDS);
         }
     }
 }

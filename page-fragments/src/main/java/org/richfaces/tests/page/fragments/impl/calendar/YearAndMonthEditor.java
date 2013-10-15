@@ -84,18 +84,17 @@ public class YearAndMonthEditor {
 
     private static final String SELECTED = "rf-cal-edtr-btn-sel";
 
-    private long _cancelDateWaitUntilIsNotVisible = -1;
-    private long _confirmDateWaitUntilIsNotVisible = -1;
-    private long _openYearAndMonthEditorWaitUntilIsVisible = -1;
+    private long _timeoutForYearAndMonthEditorToBeNotVisible = -1;
+    private long _timeoutForYearAndMonthEditorToBeVisible = -1;
 
     public void cancelDate() {
         cancelButtonElement.click();
-        waitUntilIsNotVisible().withTimeout(getCancelDateWaitUntilIsNotVisible(), TimeUnit.SECONDS).perform();
+        waitUntilIsNotVisible().perform();
     }
 
     public void confirmDate() {
         okButtonElement.click();
-        waitUntilIsNotVisible().withTimeout(getConfirmDateWaitUntilIsNotVisible(), TimeUnit.SECONDS).perform();
+        waitUntilIsNotVisible().perform();
     }
 
     public WebElement getCancelButtonElement() {
@@ -214,28 +213,20 @@ public class YearAndMonthEditor {
         Graphene.waitGui().withMessage("The year was not selected.").until().element(yearElement).attribute("class").contains(SELECTED);
     }
 
-    public void setupCancelDateWaitUntilIsNotVisible(long timeout) {
-        _cancelDateWaitUntilIsNotVisible = timeout;
+    public void setuptimeoutForYearAndMonthEditorToBeNotVisible(long timeoutInMilliseconds) {
+        _timeoutForYearAndMonthEditorToBeNotVisible = timeoutInMilliseconds;
     }
 
-    public long getCancelDateWaitUntilIsNotVisible() {
-        return _cancelDateWaitUntilIsNotVisible == -1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _cancelDateWaitUntilIsNotVisible;
+    public long getTimeoutForYearAndMonthEditorToBeNotVisible() {
+        return _timeoutForYearAndMonthEditorToBeNotVisible == -1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _timeoutForYearAndMonthEditorToBeNotVisible;
     }
 
-    public void setupConfirmDateWaitUntilIsNotVisible(long timeout) {
-        _confirmDateWaitUntilIsNotVisible = timeout;
+    public void setupTimeoutForYearAndMonthEditorToBeVisible(long timeoutInMilliseconds) {
+        _timeoutForYearAndMonthEditorToBeVisible = timeoutInMilliseconds;
     }
 
-    public long getConfirmDateWaitUntilIsNotVisible() {
-        return _confirmDateWaitUntilIsNotVisible == -1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _confirmDateWaitUntilIsNotVisible;
-    }
-
-    public void setupOpenYearAndMonthEditorWaitUntilIsVisible(long timeout) {
-        _openYearAndMonthEditorWaitUntilIsVisible = timeout;
-    }
-
-    public long getOpenYearAndMonthEditorWaitUntilIsVisible() {
-        return _openYearAndMonthEditorWaitUntilIsVisible == -1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _openYearAndMonthEditorWaitUntilIsVisible;
+    public long getTimeoutForYearAndMonthEditorToBeVisible() {
+        return _timeoutForYearAndMonthEditorToBeVisible == -1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _timeoutForYearAndMonthEditorToBeVisible;
     }
 
     public WaitingWrapper waitUntilIsNotVisible() {
@@ -244,7 +235,8 @@ public class YearAndMonthEditor {
             protected void performWait(FluentWait<WebDriver, Void> wait) {
                 wait.until().element(root).is().not().visible();
             }
-        }.withMessage("Year and month editor to be not visible.");
+        }.withMessage("Year and month editor to be not visible.")
+         .withTimeout(getTimeoutForYearAndMonthEditorToBeNotVisible(), TimeUnit.MILLISECONDS);
     }
 
     public WaitingWrapper waitUntilIsVisible() {
@@ -253,6 +245,7 @@ public class YearAndMonthEditor {
             protected void performWait(FluentWait<WebDriver, Void> wait) {
                 wait.until().element(root).is().visible();
             }
-        }.withMessage("Year and month editor to be not visible.");
+        }.withMessage("Year and month editor to be not visible.")
+         .withTimeout(getTimeoutForYearAndMonthEditorToBeVisible(), TimeUnit.MILLISECONDS);
     }
 }

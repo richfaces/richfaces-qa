@@ -21,6 +21,8 @@
  */
 package org.richfaces.tests.page.fragments.impl.calendar;
 
+import java.util.concurrent.TimeUnit;
+
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.fragment.Root;
 import org.jboss.arquillian.graphene.wait.FluentWait;
@@ -59,8 +61,8 @@ public class RichFacesAdvancedInlineCalendar {
     @FindBy(css = "table[id$=Editor]")
     private CalendarEditor calendarEditor;
 
-    private long _closePopupWaitUntilIsNotVisibleTimeout = -1;
-    private long _openPopupWaitUntilIsVisibleTimeout = -1;
+    private long _timeoutForPopupToBeNotVisible = -1;
+    private long _timeoutPopupToBeVisible = -1;
 
     protected CalendarEditor getCalendarEditor() {
         return calendarEditor;
@@ -104,27 +106,27 @@ public class RichFacesAdvancedInlineCalendar {
         }
     }
 
-    public void setupClosePopupWaitUntilIsNotVisibleTimeout(long timeout) {
-        this._closePopupWaitUntilIsNotVisibleTimeout = timeout;
+    public void setupTimeoutForPopupToBeNotVisible(long timeoutInMilliseconds) {
+        this._timeoutForPopupToBeNotVisible = timeoutInMilliseconds;
     }
 
-    public long getClosePopupWaitUntilIsNotVisibleTimeout() {
-        return _closePopupWaitUntilIsNotVisibleTimeout == -1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _closePopupWaitUntilIsNotVisibleTimeout;
+    public long getTimeoutForPopupToBeNotVisible() {
+        return _timeoutForPopupToBeNotVisible == -1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _timeoutForPopupToBeNotVisible;
     }
 
-    public void setupOpenPopupWaitUntilIsVisibleTimeout(long timeout) {
-        this._openPopupWaitUntilIsVisibleTimeout = timeout;
+    public void setupTimeoutForPopupToBeVisible(long timeoutInMilliseconds) {
+        this._timeoutPopupToBeVisible = timeoutInMilliseconds;
     }
 
-    public long getOpenPopupWaitUntilIsVisibleTimeout() {
-        return _openPopupWaitUntilIsVisibleTimeout == - 1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _openPopupWaitUntilIsVisibleTimeout;
+    public long getTimeoutForPopupToBeVisible() {
+        return _timeoutPopupToBeVisible == - 1 ? Utils.getWaitAjaxDefaultTimeout(browser) : _timeoutPopupToBeVisible;
     }
 
     public WaitingWrapper waitUntilIsNotVisible() {
         return new WaitingWrapperImpl() {
             @Override
             protected void performWait(FluentWait<WebDriver, Void> wait) {
-                wait.until(new Predicate<WebDriver>() {
+                wait.withTimeout(getTimeoutForPopupToBeNotVisible(), TimeUnit.MILLISECONDS).until(new Predicate<WebDriver>() {
                     @Override
                     public boolean apply(WebDriver input) {
                         return !isVisible();
@@ -139,7 +141,7 @@ public class RichFacesAdvancedInlineCalendar {
 
             @Override
             protected void performWait(FluentWait<WebDriver, Void> wait) {
-                wait.until(new Predicate<WebDriver>() {
+                wait.withTimeout(getTimeoutForPopupToBeVisible(), TimeUnit.MILLISECONDS).until(new Predicate<WebDriver>() {
                     @Override
                     public boolean apply(WebDriver input) {
                         return isVisible();
