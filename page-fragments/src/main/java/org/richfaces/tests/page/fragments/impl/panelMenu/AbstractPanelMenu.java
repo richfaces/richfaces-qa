@@ -42,9 +42,6 @@ public abstract class AbstractPanelMenu implements PanelMenu, PanelMenuGroup, Ad
     private Event expandEvent = Event.CLICK;
     private Event collapseEvent = Event.CLICK;
 
-    private long _timoutForMenuGroupToBeExpanded = -1;
-    private long _timeoutForMenuGroupToBeCollapsed = -1;
-
     @Override
     public PanelMenuItem selectItem(ChoicePicker picker) {
         WebElement itemRoot = picker.pick(getMenuItems());
@@ -135,6 +132,9 @@ public abstract class AbstractPanelMenu implements PanelMenu, PanelMenuGroup, Ad
     }
 
     public class AdvancedAbstractPanelMenuInteractions {
+
+        private long _timoutForMenuGroupToBeExpanded = -1;
+        private long _timeoutForMenuGroupToBeCollapsed = -1;
 
         public void setupExpandEvent(Event event) {
             expandEvent = event;
