@@ -21,8 +21,6 @@
  */
 package org.richfaces.tests.page.fragments.impl.calendar;
 
-import java.util.concurrent.TimeUnit;
-
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneElement;
@@ -70,8 +68,7 @@ public class FooterControls {
                 + "Ensure that the date is set before setting time.");
         }
         timeEditorOpenerElement.click();
-        calendarEditor.getTimeEditor().waitUntilIsVisible()
-                      .withTimeout(calendarEditor.getTimeEditor().getOpenEditorWaitUntilIsVisibleTimeout(), TimeUnit.SECONDS);
+        calendarEditor.getTimeEditor().waitUntilIsVisible().perform();
     }
 
     public void cleanDate() {

@@ -21,8 +21,6 @@
  */
 package org.richfaces.tests.page.fragments.impl.calendar;
 
-import java.util.concurrent.TimeUnit;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.fragment.Root;
@@ -74,7 +72,6 @@ public class RichFacesAdvancedPopupCalendar {
             }
         }
         getPopup().waitUntilIsNotVisible()
-                  .withTimeout(getPopup().getClosePopupWaitUntilIsNotVisibleTimeout(), TimeUnit.SECONDS)
                   .perform();
     }
 
@@ -126,7 +123,6 @@ public class RichFacesAdvancedPopupCalendar {
                 throw new IllegalArgumentException();
         }
         getPopup().waitUntilIsVisible()
-                  .withTimeout(getPopup().getOpenPopupWaitUntilIsVisibleTimeout(), TimeUnit.SECONDS)
                   .perform();
         return getPopup();
     }
