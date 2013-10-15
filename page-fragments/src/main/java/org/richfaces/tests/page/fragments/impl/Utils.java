@@ -27,7 +27,6 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxy;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
-import org.jboss.arquillian.graphene.spi.configuration.GrapheneConfiguration;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -297,11 +296,23 @@ public final class Utils {
         return result;
     }
 
+    /**
+     * Returns the default timeout for GUI waiting in milliseconds.
+     *
+     * @param browser
+     * @return
+     */
     public static long getWaitGUIDefaultTimeout(WebDriver browser) {
-        return ((GrapheneProxyInstance) browser).getContext().getConfiguration().getWaitGuiInterval();
+        return 1000 * ((GrapheneProxyInstance) browser).getContext().getConfiguration().getWaitGuiInterval();
     }
 
+    /**
+     * Returns the default timeout for Ajax waiting in milliseconds.
+     *
+     * @param browser
+     * @return
+     */
     public static long getWaitAjaxDefaultTimeout(WebDriver browser) {
-        return ((GrapheneProxyInstance) browser).getContext().getConfiguration().getWaitAjaxInterval();
+        return 1000 * ((GrapheneProxyInstance) browser).getContext().getConfiguration().getWaitAjaxInterval();
     }
 }

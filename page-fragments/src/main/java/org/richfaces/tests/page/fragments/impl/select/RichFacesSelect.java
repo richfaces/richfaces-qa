@@ -68,18 +68,13 @@ public class RichFacesSelect implements Select, AdvancedInteractions<RichFacesSe
     private final AdvancedSelectInteractions interactions = new AdvancedSelectInteractions();
     private final SelectSuggestionsImpl selectSuggestions = new SelectSuggestionsImpl();
 
-    private long _selectWaitUntilSuggestionsAreNotVisibleTimeout = -1;
-    private long _getSuggestionsWaitUntilSuggestionsAreVisibleTimeout = -1;
-
     @Override
     public AdvancedSelectInteractions advanced() {
         return interactions;
     }
 
     private SelectSuggestionsImpl getSuggestions() {
-        advanced().waitUntilSuggestionsAreVisible()
-            .withTimeout(advanced().getGetSuggestionsWaitUntilSuggestionsAreVisibleTimeout(), TimeUnit.SECONDS)
-            .perform();
+        advanced().waitUntilSuggestionsAreVisible().perform();
         return selectSuggestions;
     }
 
@@ -119,9 +114,7 @@ public class RichFacesSelect implements Select, AdvancedInteractions<RichFacesSe
             } else {
                 foundValue.click();
             }
-            advanced().waitUntilSuggestionsAreNotVisible()
-                .withTimeout(advanced().getSelectWaitUntilSuggestionsAreNotVisibleTimeout(), TimeUnit.SECONDS)
-                .perform();
+            advanced().waitUntilSuggestionsAreNotVisible().perform();
             input.advanced().trigger("blur");
         }
 
@@ -155,6 +148,9 @@ public class RichFacesSelect implements Select, AdvancedInteractions<RichFacesSe
         private static final boolean DEFAULT_OPEN_BY_INPUT_CLICK = true;
         private ScrollingType scrollingType = DEFAULT_SCROLLING_TYPE;
         private Boolean openByInputClick = DEFAULT_OPEN_BY_INPUT_CLICK;
+
+        private long _timeoutForSuggestionsToBeNotVisible = -1;
+        private long _timeoutForSuggestionsToBeVisible = -1;
 
         public TextInputComponentImpl getInput() {
             return input;
@@ -220,7 +216,8 @@ public class RichFacesSelect implements Select, AdvancedInteractions<RichFacesSe
                 protected void performWait(FluentWait<WebDriver, Void> wait) {
                     wait.until().element(localPopup).is().present();
                 }
-            }.withMessage("Waiting for popup to be not visible");
+            }.withMessage("Waiting for popup to be not visible")
+             .withTimeout(getTimeoutForSuggestionsToBeNotVisible(), TimeUnit.MILLISECONDS);
         }
 
         public WaitingWrapper waitUntilSuggestionsAreVisible() {
@@ -236,25 +233,26 @@ public class RichFacesSelect implements Select, AdvancedInteractions<RichFacesSe
                         }
                     });
                 }
-            }.withMessage("Waiting for popup to be visible");
+            }.withMessage("Waiting for popup to be visible")
+             .withTimeout(getTimeoutForSuggestionsToBeVisible(), TimeUnit.MILLISECONDS);
         }
 
-        public void setupSelectWaitUntilSuggestionsAreNotVisibleTimeout(long timeout) {
-            _selectWaitUntilSuggestionsAreNotVisibleTimeout = timeout;
+        public void setupTimeoutForSuggestionsToBeNotVisible(long timeoutInMilliseconds) {
+            _timeoutForSuggestionsToBeNotVisible = timeoutInMilliseconds;
         }
 
-        public long getSelectWaitUntilSuggestionsAreNotVisibleTimeout() {
-            return _selectWaitUntilSuggestionsAreNotVisibleTimeout == -1 ? Utils.getWaitAjaxDefaultTimeout(driver)
-                : _selectWaitUntilSuggestionsAreNotVisibleTimeout;
+        public long getTimeoutForSuggestionsToBeNotVisible() {
+            return _timeoutForSuggestionsToBeNotVisible == -1 ? Utils.getWaitAjaxDefaultTimeout(driver)
+                : _timeoutForSuggestionsToBeNotVisible;
         }
 
-        public void setupGetSuggestionsWaitUntilSuggestionsAreVisibleTimeout(long timeout) {
-            _getSuggestionsWaitUntilSuggestionsAreVisibleTimeout = timeout;
+        public void setupTimeoutForSuggestionsToBeVisible(long timeoutInMilliseconds) {
+            _timeoutForSuggestionsToBeVisible = timeoutInMilliseconds;
         }
 
-        public long getGetSuggestionsWaitUntilSuggestionsAreVisibleTimeout() {
-            return _getSuggestionsWaitUntilSuggestionsAreVisibleTimeout == -1 ? Utils.getWaitAjaxDefaultTimeout(driver)
-                : _getSuggestionsWaitUntilSuggestionsAreVisibleTimeout;
+        public long getTimeoutForSuggestionsToBeVisible() {
+            return _timeoutForSuggestionsToBeVisible == -1 ? Utils.getWaitAjaxDefaultTimeout(driver)
+                : _timeoutForSuggestionsToBeVisible;
         }
     }
 }

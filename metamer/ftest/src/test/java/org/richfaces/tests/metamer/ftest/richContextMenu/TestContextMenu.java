@@ -100,7 +100,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         }, new Action() {
             @Override
             public void perform() {
-                page.getContextMenu().advanced().setupHideWaitUntilIsNotVisibleTimeout(3);
+                page.getContextMenu().advanced().setupTimeoutForPopupMenuToBeNotVisible(3);
                 page.getContextMenu().advanced().hide();
             }
         }, "hideDelay", delay);
@@ -515,7 +515,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         }, new Action() {
             @Override
             public void perform() {
-                page.getContextMenu().advanced().setupShowWaitUntilIsVisibleTimeout(3);
+                page.getContextMenu().advanced().setupTimeoutForPopupMenuToBeVisible(3);
                 page.getContextMenu().advanced().show(page.getTargetPanel1());
             }
         }, "showDelay", delay);

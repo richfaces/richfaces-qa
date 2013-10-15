@@ -27,7 +27,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.calendar.TimeEditor.SetValueBy;
-import org.richfaces.tests.page.fragments.impl.common.TextInputComponent;
 import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 
 /**

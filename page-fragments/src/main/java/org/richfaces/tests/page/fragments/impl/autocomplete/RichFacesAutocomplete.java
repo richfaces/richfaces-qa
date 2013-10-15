@@ -66,10 +66,6 @@ public class RichFacesAutocomplete implements Autocomplete, AdvancedInteractions
 
     private final AdvancedAutocompleteInteractions advancedInteractions = new AdvancedAutocompleteInteractions();
 
-    private long _confirmWaitForSuggestionsToBeNotVisibleTimeout = -1;
-    private long _selectWaitForSuggestionsToBeNotVisibleTimeout = -1;
-    private long _selectWaitForSuggestionsToBeVisibleTimeout = -1;
-
     public AdvancedAutocompleteInteractions advanced() {
         return advancedInteractions;
     }
@@ -94,6 +90,9 @@ public class RichFacesAutocomplete implements Autocomplete, AdvancedInteractions
         private final ScrollingType DEFAULT_SCROLLING_TYPE = ScrollingType.BY_MOUSE;
         private ScrollingType scrollingType = DEFAULT_SCROLLING_TYPE;
         private String token = DEFAULT_TOKEN;
+
+        private long _timeoutForSuggestionsToBeNotVisible = -1;
+        private long _timeoutForSuggestionsToBeVisible = -1;
 
         /**
          * Clears the value of autocomplete's input field.
@@ -166,7 +165,8 @@ public class RichFacesAutocomplete implements Autocomplete, AdvancedInteractions
                         }
                     });
                 }
-            }.withMessage("Waiting for suggestions to be not visible");
+            }.withMessage("Waiting for suggestions to be not visible")
+             .withTimeout(getTimeoutForSuggestionsToBeNotVisible(), TimeUnit.MILLISECONDS);
         }
 
         public WaitingWrapper waitForSuggestionsToBeVisible() {
@@ -181,32 +181,25 @@ public class RichFacesAutocomplete implements Autocomplete, AdvancedInteractions
                         }
                     });
                 }
-            }.withMessage("Waiting for suggestions to be visible");
+            }.withMessage("Waiting for suggestions to be visible")
+             .withTimeout(getTimeoutForSuggestionsToBeVisible(), TimeUnit.MILLISECONDS);
         }
 
-        public void setupConfirmWaitForSuggestionsToBeNotVisibleTimeout(long timeout) {
-            _confirmWaitForSuggestionsToBeNotVisibleTimeout = timeout;
+        public void setupTimeoutForSuggestionsToBeNotVisible(long timeoutInMilliseconds) {
+            _timeoutForSuggestionsToBeNotVisible = timeoutInMilliseconds;
         }
 
-        public void setupSelectWaitForSuggestionsToBeNotVisibleTimeout(long timeout) {
-            _selectWaitForSuggestionsToBeNotVisibleTimeout = timeout;
+        public void setupTimeoutForSuggestionsToBeVisible(long timeoutInMilliseconds) {
+            _timeoutForSuggestionsToBeVisible = timeoutInMilliseconds;
         }
 
-        public void setupSelectWaitForSuggestionsToBeVisibleTimeout(long timeout) {
-            _selectWaitForSuggestionsToBeVisibleTimeout = timeout;
+        public long getTimeoutForSuggestionsToBeNotVisible() {
+            return (_timeoutForSuggestionsToBeNotVisible == -1L) ? Utils.getWaitAjaxDefaultTimeout(driver) : _timeoutForSuggestionsToBeNotVisible;
         }
-    }
 
-    private long getConfirmWaitForSuggestionsToBeNotVisibleTimeout() {
-        return (_confirmWaitForSuggestionsToBeNotVisibleTimeout == -1L) ? Utils.getWaitAjaxDefaultTimeout(driver) : _confirmWaitForSuggestionsToBeNotVisibleTimeout;
-    }
-
-    private long getSelectWaitForSuggestionsToBeNotVisibleTimeout() {
-        return (_selectWaitForSuggestionsToBeNotVisibleTimeout == -1L) ? Utils.getWaitAjaxDefaultTimeout(driver) : _selectWaitForSuggestionsToBeNotVisibleTimeout;
-    }
-
-    private long getSelectWaitForSuggestionsToBeVisibleTimeout() {
-        return (_selectWaitForSuggestionsToBeVisibleTimeout == -1L) ? Utils.getWaitAjaxDefaultTimeout(driver) : _selectWaitForSuggestionsToBeVisibleTimeout;
+        public long getTimeoutForSuggestionsToBeVisible() {
+            return (_timeoutForSuggestionsToBeVisible == -1L) ? Utils.getWaitAjaxDefaultTimeout(driver) : _timeoutForSuggestionsToBeVisible;
+        }
     }
 
     public class SelectOrConfirmImpl implements SelectOrConfirm {
@@ -214,8 +207,7 @@ public class RichFacesAutocomplete implements Autocomplete, AdvancedInteractions
         @Override
         public Autocomplete confirm() {
             new Actions(driver).sendKeys(Keys.RETURN).click(driver.findElement(Utils.BY_BODY)).perform();
-            advanced().waitForSuggestionsToBeNotVisible()
-                .withTimeout(getConfirmWaitForSuggestionsToBeNotVisibleTimeout(), TimeUnit.SECONDS).perform();
+            advanced().waitForSuggestionsToBeNotVisible().perform();
             return RichFacesAutocomplete.this;
         }
 
@@ -226,8 +218,7 @@ public class RichFacesAutocomplete implements Autocomplete, AdvancedInteractions
 
         @Override
         public Autocomplete select(ChoicePicker picker) {
-            advanced().waitForSuggestionsToBeVisible()
-                .withTimeout(getSelectWaitForSuggestionsToBeVisibleTimeout(), TimeUnit.SECONDS).perform();
+            advanced().waitForSuggestionsToBeVisible().perform();
             WebElement foundValue = picker.pick(advanced().getSuggestionsElements());
             if (foundValue == null) {
                 throw new RuntimeException("The value was not found by " + picker.toString());
@@ -239,8 +230,7 @@ public class RichFacesAutocomplete implements Autocomplete, AdvancedInteractions
                 foundValue.click();
             }
 
-            advanced().waitForSuggestionsToBeNotVisible()
-                .withTimeout(getSelectWaitForSuggestionsToBeNotVisibleTimeout(), TimeUnit.SECONDS).perform();
+            advanced().waitForSuggestionsToBeNotVisible().perform();
             return RichFacesAutocomplete.this;
         }
 
