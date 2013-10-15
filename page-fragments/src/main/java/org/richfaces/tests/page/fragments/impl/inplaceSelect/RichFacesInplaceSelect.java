@@ -99,7 +99,7 @@ public class RichFacesInplaceSelect implements InplaceSelect, AdvancedInteractio
         advanced().switchToEditingState();
         WebElement optionToBeSelected = picker.pick(advanced().getOptions());
         optionToBeSelected.click();
-        if (isSaveOnSelect() && !isShowControlls()) {
+        if (advanced().isSaveOnSelect() && !isShowControlls()) {
             textInput.advanced().trigger("blur");
             waitForPopupHide();
         }
@@ -148,6 +148,7 @@ public class RichFacesInplaceSelect implements InplaceSelect, AdvancedInteractio
 
         private final Event DEFAULT_EDIT_EVENT = Event.CLICK;
         private Event editByEvent = DEFAULT_EDIT_EVENT;
+        private boolean saveOnSelect = false;
 
         private static final String RF_IS_CHNG_CLASS = "rf-is-chng";
         private static final String RF_IS_ACT_CLASS = "rf-is-act";
@@ -158,6 +159,10 @@ public class RichFacesInplaceSelect implements InplaceSelect, AdvancedInteractio
 
         public void setupEditByEvent(Event event) {
             editByEvent = event;
+        }
+
+        public void setupSaveOnSelect(boolean saveOnSelect) {
+            this.saveOnSelect = saveOnSelect;
         }
 
         public WebElement getRootElement() {
@@ -215,14 +220,10 @@ public class RichFacesInplaceSelect implements InplaceSelect, AdvancedInteractio
             }
             return null;
         }
-    }
 
-    private boolean isSaveOnSelect() {
-        String text = Utils.returningJQ(executor, "text()", script);// getting text from hidden element
-        if (text.contains("\"saveOnSelect\":false")) {
-            return Boolean.FALSE;
+        public boolean isSaveOnSelect() {
+            return saveOnSelect;
         }
-        return Boolean.TRUE;
     }
 
     private boolean isShowControlls() {
