@@ -28,6 +28,8 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.configuration.RichFacesPageFragmentsConfiguration;
+import org.richfaces.tests.page.fragments.configuration.RichFacesPageFragmentsConfigurationContext;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 import org.richfaces.tests.page.fragments.impl.common.TextInputComponent;
@@ -44,8 +46,10 @@ public class RichFacesCalendar implements Calendar, AdvancedInteractions<RichFac
     private WebElement root;
 
     private final AdvancedCalendarInteractions interactions = new AdvancedCalendarInteractions();
+    private final RichFacesPageFragmentsConfiguration configuration = RichFacesPageFragmentsConfigurationContext
+        .getProxy();
 
-    private Calendar strategy = new CalendarJavaScriptStrategy();
+    private Calendar strategy = configuration.isUseJSInteractionStrategy() ? new CalendarJavaScriptStrategy() : new CalendarInteractiveStrategy();
 
     @Override
     public AdvancedCalendarInteractions advanced() {
@@ -138,14 +142,16 @@ public class RichFacesCalendar implements Calendar, AdvancedInteractions<RichFac
         }
 
         /**
-         * Setups the interactive strategy for setting of date. The getting of date uses JS API of component. The strategy uses advanced API of this fragment.
+         * Setups the interactive strategy for setting of date. The getting of date uses JS API of component. The strategy uses
+         * advanced API of this fragment.
          */
         public void setupInteractiveStrategy() {
             strategy = new CalendarInteractiveStrategy();
         }
 
         /**
-         * Setups the much faster strategy for setting and getting of date. Default value. The strategy uses JS API of the component.
+         * Setups the much faster strategy for setting and getting of date. Default value. The strategy uses JS API of the
+         * component.
          */
         public void setupJavaScriptStrategy() {
             strategy = new CalendarJavaScriptStrategy();
