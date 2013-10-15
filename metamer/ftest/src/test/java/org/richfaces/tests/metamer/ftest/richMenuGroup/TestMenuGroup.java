@@ -39,6 +39,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.Locations;
@@ -87,8 +88,12 @@ public class TestMenuGroup extends AbstractWebDriverTest {
 
     private enum Direction {
 
-        AUTO("auto"), TOPLEFT("topLeft"), TOPRIGHT("topRight"), BOTTOMLEFT("bottomLeft"), BOTTOMRIGHT("bottomRight"), NULL(
-        "null");
+        AUTO("auto"),
+        TOPLEFT("topLeft"),
+        TOPRIGHT("topRight"),
+        BOTTOMLEFT("bottomLeft"),
+        BOTTOMRIGHT("bottomRight"),
+        NULL("null");
         private final String value;
 
         private Direction(String value) {
@@ -116,9 +121,13 @@ public class TestMenuGroup extends AbstractWebDriverTest {
         testDir(group);
     }
 
+    /**
+     * RichAccordion template is disabled because of a reported bug: https://issues.jboss.org/browse/RF-13264
+     */
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10218")
     @Use(field = "direction", enumeration = true)
+    @Templates(exclude = { "richAccordion" })
     public void testDirection() {
         menuGroupAttributes.set(MenuGroupAttributes.direction, direction.value);
         menuGroupAttributes.set(MenuGroupAttributes.jointPoint, Direction.TOPRIGHT.value);
@@ -168,7 +177,8 @@ public class TestMenuGroup extends AbstractWebDriverTest {
         menuGroupAttributes.set(MenuGroupAttributes.horizontalOffset, pixels);
         openMenuAndSubMenu();
         Locations locationsAfter = Utils.getLocations(groupList);
-        Utils.tolerantAssertLocationsEquals(locationsBefore.moveAllBy(pixels, 0), locationsAfter, 10, 10, "Horizontal Offset does not work");
+        Utils.tolerantAssertLocationsEquals(locationsBefore.moveAllBy(pixels, 0), locationsAfter, 10, 10,
+            "Horizontal Offset does not work");
     }
 
     @Test
@@ -179,12 +189,10 @@ public class TestMenuGroup extends AbstractWebDriverTest {
         assertPresent(emptyIcon, "Empty icon should be present.");
 
         menuGroupAttributes.set(MenuGroupAttributes.icon, "star");
-        assertTrue(icon.getAttribute("src").contains("star.png"),
-            "Icon's src attribute should contain \"star.png\".");
+        assertTrue(icon.getAttribute("src").contains("star.png"), "Icon's src attribute should contain \"star.png\".");
 
         menuGroupAttributes.set(MenuGroupAttributes.icon, "nonexisting");
-        assertTrue(icon.getAttribute("src").contains("nonexisting"),
-            "Icon's src attribute should contain \"nonexisting\".");
+        assertTrue(icon.getAttribute("src").contains("nonexisting"), "Icon's src attribute should contain \"nonexisting\".");
     }
 
     @Test
@@ -196,12 +204,10 @@ public class TestMenuGroup extends AbstractWebDriverTest {
         assertPresent(emptyIcon, "Empty icon should be present.");
 
         menuGroupAttributes.set(MenuGroupAttributes.iconDisabled, "star");
-        assertTrue(icon.getAttribute("src").contains("star.png"),
-            "Icon's src attribute should contain \"star.png\".");
+        assertTrue(icon.getAttribute("src").contains("star.png"), "Icon's src attribute should contain \"star.png\".");
 
         menuGroupAttributes.set(MenuGroupAttributes.iconDisabled, "nonexisting");
-        assertTrue(icon.getAttribute("src").contains("nonexisting"),
-            "Icon's src attribute should contain \"nonexisting\".");
+        assertTrue(icon.getAttribute("src").contains("nonexisting"), "Icon's src attribute should contain \"nonexisting\".");
     }
 
     @Test
@@ -257,7 +263,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
                 break;
             case NULL:
             case AUTO:
-            // auto (direction depends on browser/screen resolution)
+                // auto (direction depends on browser/screen resolution)
             case TOPRIGHT:
                 jointPointLocation = jointPointLocations.getTopRight();
                 break;
@@ -382,7 +388,8 @@ public class TestMenuGroup extends AbstractWebDriverTest {
         menuGroupAttributes.set(MenuGroupAttributes.verticalOffset, pixels);
         openMenuAndSubMenu();
         Locations locationsAfter = Utils.getLocations(groupList);
-        Utils.tolerantAssertLocationsEquals(locationsBefore.moveAllBy(0, pixels), locationsAfter, 10, 10, "Vertical Offset does not work");
+        Utils.tolerantAssertLocationsEquals(locationsBefore.moveAllBy(0, pixels), locationsAfter, 10, 10,
+            "Vertical Offset does not work");
     }
 
     @BeforeMethod
