@@ -58,7 +58,7 @@ public abstract class AbstractTreeSelectionTest extends AbstractTreeTest {
     private WebElement oldSelection;
     @FindBy(css = "span[id$=selectionEventClientId]")
     private WebElement clientId;
-    @FindBy(className = "rf-trn-sel")
+    @FindByJQuery(value = "div[id$=richTree] span.rf-trn-sel")
     private List<WebElement> allSelectedItems;
 
     @Inject
