@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"  xmlns:r="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets"  xmlns:r="http://richfaces.org/rich"
+      xmlns:validationMessages="http://java.sun.com/jsf/composite/validationMessages">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -32,62 +33,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </f:viewParam>
             </f:metadata>
         </ui:define>
-        
-        <ui:define name="js">
-            <script type="text/javascript">
-                function setCorrectValues() {
-                    $('[id$=jsr-303-inBeanselValue]').val('5');
-                    $('[id$=jsr-303-inBeanInput]').val('5').blur();
-                    
-                    $('[id$=jsr-303-inAttselValue]').val('5');
-                    $('[name$=jsr-303-inAttInput]').val('5').blur();
-                    
-                    $('[id$=jsr-303-inBundleselValue]').val('5');
-                    $('[id$=jsr-303-inBundleInput]').val('5').blur();
 
-                    $('[id$=csv-inBeanselValue]').val('5');
-                    $('[id$=csv-inBeanInput]').val('5').blur();
-
-                    $('[id$=csv-inAttselValue]').val('5');
-                    $('[id$=csv-inAttInput]').val('5').blur();
-
-                    $('[id$=csv-inBundleselValue]').val('5');
-                    $('[id$=csv-inBundleInput]').val('5').blur();
-
-                    $('[id$=jsf-inBundleselValue]').val('5');
-                    $('[id$=jsf-inBundleInput]').val('5').blur();
-           
-                    $('[id$=jsf-inAttselValue]').val('5');
-                    $('[id$=jsf-inAttInput]').val('5').blur();
-                }
-
-                function setWrongValues() {
-                    $('[id$=jsr-303-inBeanselValue]').val('10');
-                    $('[id$=jsr-303-inBeanInput]').val('10').blur();
-                    
-                    $('[id$=jsr-303-inAttselValue]').val('10');
-                    $('[name$=jsr-303-inAttInput]').val('10').blur();
-                    
-                    $('[id$=jsr-303-inBundleselValue]').val('10');
-                    $('[id$=jsr-303-inBundleInput]').val('10').blur();
-
-                    $('[id$=csv-inBeanselValue]').val('10');
-                    $('[id$=csv-inBeanInput]').val('10').blur();
-
-                    $('[id$=csv-inAttselValue]').val('10');
-                    $('[id$=csv-inAttInput]').val('10').blur();
-
-                    $('[id$=csv-inBundleselValue]').val('10');
-                    $('[id$=csv-inBundleInput]').val('10').blur();
-
-                    $('[id$=jsf-inBundleselValue]').val('10');
-                    $('[id$=jsf-inBundleInput]').val('10').blur();
-           
-                    $('[id$=jsf-inAttselValue]').val('10');
-                    $('[id$=jsf-inAttInput]').val('10').blur();
-                }
-            </script>
-        </ui:define>
+        <ui:define name="locatorFunction">
+            <validationMessages:locatorFunction className="rf-sel"/>
+        </ui:define> 
 
         <ui:define name="jsr-303-inBean">
             <r:select id="jsr-303-inBean" value="#{validationMessagesBean.valueWithMessagesJSR}" converter="#{validationMessagesBean.converter}">
@@ -97,8 +46,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="jsr-303-inAtt">
             <r:select id="jsr-303-inAtt" value="#{validationMessagesBean.valueWithoutMessagesJSR}" 
-                         validatorMessage="Custom validator error message from attribute of component."
-                         converter="#{validationMessagesBean.converter}">
+                      validatorMessage="Custom validator error message from attribute of component."
+                      converter="#{validationMessagesBean.converter}">
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
             </r:select>
         </ui:define> 
@@ -117,8 +66,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="csv-inAtt">
             <r:select id="csv-inAtt" value="#{validationMessagesBean.valueWithoutMessagesCSV}" 
-                         validatorMessage="Custom validator error message from attribute of component."
-                         converter="#{validationMessagesBean.converter}">
+                      validatorMessage="Custom validator error message from attribute of component."
+                      converter="#{validationMessagesBean.converter}">
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
             </r:select>
         </ui:define>  
@@ -131,8 +80,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="jsf-inAtt">
             <r:select id="jsf-inAtt" value="#{validationMessagesBean.valueJSF}" 
-                         validatorMessage="Custom validator error message from attribute of component."
-                         converter="#{validationMessagesBean.converter}">
+                      validatorMessage="Custom validator error message from attribute of component."
+                      converter="#{validationMessagesBean.converter}">
                 <f:validateDoubleRange minimum="2" maximum="9"/>
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
             </r:select>

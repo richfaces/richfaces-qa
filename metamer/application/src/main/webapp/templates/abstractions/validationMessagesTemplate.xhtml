@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:validationMessages="http://java.sun.com/jsf/composite/validationMessages">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -26,9 +27,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     -->
 
     <ui:composition template="/templates/template.xhtml">
-        
+
         <ui:define name="component">
-            
+
             <h:outputText id="currRB" value="Current message resource bundle: #{validationMessagesBean.printCurrentResourceBundle()}."/>
             <br/>
             Activate own message bundle (JSF validation only):
@@ -41,51 +42,39 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
             <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
             <br/><br/>
-            <ui:insert name="js">
-                <script type="text/javascript">
-                    function setCorrectValues() {
-                        $('[name$=jsr-303-inBean]').click().val('5').blur();
-                        $('[name$=jsr-303-inAtt]').click().val('5').blur();
-                        $('[name$=jsr-303-inBundle]').click().val('5').blur();
-                        $('[name$=csv-inBean]').click().val('5').blur();
-                        $('[name$=csv-inAtt]').click().val('5').blur();
-                        $('[name$=csv-inBundle]').click().val('5').blur();
-                        $('[name$=jsf-inBundle]').click().val('5').blur();
-                        $('[name$=jsf-inAtt]').click().val('5').blur();
-                    }
 
-                    function setWrongValues() {
-                        $('[name$=jsr-303-inBean]').click().val('10').blur();
-                        $('[name$=jsr-303-inAtt]').click().val('10').blur();
-                        $('[name$=jsr-303-inBundle]').click().val('10').blur();
-                        $('[name$=csv-inBean]').click().val('10').blur();
-                        $('[name$=csv-inAtt]').click().val('10').blur();
-                        $('[name$=csv-inBundle]').click().val('10').blur();
-                        $('[name$=jsf-inBundle]').click().val('10').blur();
-                        $('[name$=jsf-inAtt]').click().val('10').blur();
-                    }
-                </script>
+            <ui:insert name="locatorFunction">
+                <!-- e.g.:--> 
+                <validationMessages:locatorFunction className="rf-au"/>
             </ui:insert>
-            <script type="text/javascript">
-                function command(button){
-                    document.valuesSettingState="started";
-                    if(button=="wrong"){
-                        setWrongValues();
-                    }else{
-                        setCorrectValues(); 
-                    }
-                    document.valuesSettingState="finished";
-                }
-                if(window.onload == null){
-                    window.onload = function(){
-                        document.valuesSettingState="";
-                    } 
-                }else{
-                    window.onload += function(){
-                        document.valuesSettingState="";
-                    }
-                }
+            <ui:insert name="getValuesFunctions">
+                <validationMessages:valuesFunctions bad="10" good="5"/>
+            </ui:insert>
 
+            <script type="text/javascript">
+                function setValues(value) {
+                    $(getLocator()).each(function() {
+                        RichFaces.$($(this)).setValue(value);//invoke RichFaces JS API function
+                    });
+                }
+                function command(button) {
+                    document.valuesSettingState = "started";
+                    if (button == "wrong") {
+                        setValues(getBadValue());
+                    } else {
+                        setValues(getGoodValue());
+                    }
+                    document.valuesSettingState = "finished";
+                }
+                if (window.onload == null) {
+                    window.onload = function() {
+                        document.valuesSettingState = "";
+                    }
+                } else {
+                    window.onload += function() {
+                        document.valuesSettingState = "";
+                    }
+                }
             </script>
 
             Values setting:
@@ -94,10 +83,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <input id="setWrongValuesButton" name="setWrongValuesButton" type="button" value="set wrong values" onclick="command('wrong')"/>
             <br/><br/>
 
-            <h:outputText value="All inputs expects: #{validationMessagesBean.description}" />
+            <ui:insert name="valueDescription">
+                <h:outputText value="#{validationMessagesBean.numberInputDescription}" />
+            </ui:insert>
 
             <br/><br/>
-            JSR-303: 
+            JSR-303:
             <h:panelGrid columns="3">
 
                 <h:outputLabel for="jsr-303-inBean" value="Validation messages set in bean:" />

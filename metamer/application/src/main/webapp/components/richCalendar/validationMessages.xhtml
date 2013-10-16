@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich" 
+      xmlns:validationMessages="http://java.sun.com/jsf/composite/validationMessages">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -34,36 +35,22 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </f:metadata>
         </ui:define>
 
-        <ui:define name="js">
+        <ui:define name="getValuesFunctions">
             <h:inputHidden id="past" value="#{validationMessagesBean.pastDate}">
                 <f:convertDateTime pattern="MMM d, yyyy"/>
             </h:inputHidden>
             <h:inputHidden id="future" value="#{validationMessagesBean.futureDate}">
                 <f:convertDateTime pattern="MMM d, yyyy"/>
             </h:inputHidden>
-            <script type="text/javascript">
-                var future=$('[id$=future]').val();
-                var past=$('[id$=past]').val();
-                function setCorrectValues() {
-                    $('[id$=jsr-303-inBeanInputDate]').val(past).blur();
-                    $('[id$=jsr-303-inAttInputDate]').val(past).blur();
-                    $('[id$=jsr-303-inBundleInputDate]').val(past).blur();
-                    $('[id$=csv-inBeanInputDate]').val(past).blur();
-                    $('[id$=csv-inAttInputDate]').val(past).blur();
-                    $('[id$=csv-inBundleInputDate]').val(past).blur();
-                    $('[id$=jsf-inAttInputDate]').val(past).blur();
-                }
+            <validationMessages:valuesFunctions bad="$('[id$=future]').val();" good="$('[id$=past]').val();"/>
+        </ui:define>
 
-                function setWrongValues() {
-                    $('[id$=jsr-303-inBeanInputDate]').val(future).blur();
-                    $('[id$=jsr-303-inAttInputDate]').val(future).blur();
-                    $('[id$=jsr-303-inBundleInputDate]').val(future).blur();
-                    $('[id$=csv-inBeanInputDate]').val(future).blur();
-                    $('[id$=csv-inAttInputDate]').val(future).blur();
-                    $('[id$=csv-inBundleInputDate]').val(future).blur();
-                    $('[id$=jsf-inAttInputDate]').val(future).blur();
-                }
-            </script>
+        <ui:define name="locatorFunction">
+            <validationMessages:locatorFunction className="rf-cal"/>
+        </ui:define> 
+
+        <ui:define name="valueDescription">
+            <h:outputText value="#{validationMessagesBean.dateInputDescription}" />
         </ui:define>
 
         <ui:define name="jsr-303-inBean">
@@ -73,7 +60,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>      
 
         <ui:define name="jsr-303-inAtt">
-            <rich:calendar id="jsr-303-inAtt" value="#{validationMessagesBean.dateWithoutMessagesJSR}" 
+            <rich:calendar id="jsr-303-inAtt" value="#{validationMessagesBean.dateWithoutMessagesJSR}"
                            validatorMessage="Custom validator error message from attribute of component."
                            >
                 <f:convertDateTime pattern="MMM d, yyyy"/>
@@ -118,7 +105,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="jsf-inBundle">
             <h:outputText id="jsf-inBundle" value="No need for this, because we are using own validator with own message."/>
         </ui:define>   
-        
+
         <ui:define name="outOfTemplateAfter">         
             <ui:include src="resizedTemplatesStyles.xhtml"/>
         </ui:define>
