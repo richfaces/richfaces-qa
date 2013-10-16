@@ -33,6 +33,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.page.fragments.configuration.RichFacesPageFragmentsConfiguration;
+import org.richfaces.tests.page.fragments.configuration.RichFacesPageFragmentsConfigurationContext;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 
@@ -56,11 +58,17 @@ public class RichFacesHotkey implements Hotkey, AdvancedInteractions<RichFacesHo
     @FindBy(tagName = "script")
     private WebElement script;
 
+    private final RichFacesPageFragmentsConfiguration configuration = RichFacesPageFragmentsConfigurationContext.getProxy();
+
     private final AdvancedHotkeyInteractions interactions = new AdvancedHotkeyInteractions();
+    private String hotkey;
+    private String selector;
 
-    private enum ModifierKeys {
+    public enum ModifierKeys {
 
-        ALT(Keys.ALT), SHIFT(Keys.SHIFT), CTRL(Keys.CONTROL);
+        ALT(Keys.ALT),
+        SHIFT(Keys.SHIFT),
+        CTRL(Keys.CONTROL);
         private final Keys key;
 
         private ModifierKeys(Keys key) {
@@ -85,20 +93,60 @@ public class RichFacesHotkey implements Hotkey, AdvancedInteractions<RichFacesHo
     @Override
     public void invoke(WebElement element) {
         Preconditions.checkNotNull(element);
-        if (!advanced().getHotkey().isPresent()) {
-            advanced().setupHotkeyFromWidget();
+
+        String hotkey = advanced().getHotkey();
+        if(hotkey == null || hotkey.trim().isEmpty()) {
+            throw new IllegalArgumentException("The hotkey can not be null nor empty! Set it up correctly with #setUp(String) method.");
         }
-        actions.sendKeys(element, advanced().getHotkey().get()).perform();
+        actions.sendKeys(element, hotkey).perform();
+    }
+
+    @Override
+    public void setupHotkey(String hotkey) {
+        if (hotkey == null || hotkey.isEmpty()) {
+            throw new NullPointerException("Hotkey cannot be empty or null. Set up hotkey from widget if you want to reset it.");
+        }
+        this.hotkey = parseHotKey(hotkey);
+    }
+
+    @Override
+    public void setupSelector(String selector) {
+        this.selector = selector;
+    }
+
+    private String parseHotKey(String input) {
+        String result = "";
+        String hotkeyTextTmp = input;
+        EnumSet<ModifierKeys> keys = EnumSet.noneOf(ModifierKeys.class);
+        for (ModifierKeys modifierKey : ModifierKeys.values()) {
+            if (hotkeyTextTmp.contains(modifierKey.toString().toLowerCase())) {
+                keys.add(modifierKey);
+                hotkeyTextTmp = hotkeyTextTmp.replaceAll(modifierKey.toString().toLowerCase(), "");
+            }
+        }
+        hotkeyTextTmp = hotkeyTextTmp.replaceAll("\\+", "");
+        if (hotkeyTextTmp.length() != 1) {
+            throw new RuntimeException("Hotkey doesn't contain one character.");
+        }
+        for (ModifierKeys modifierKeys : keys) {
+            result += modifierKeys.getKey();
+        }
+        result = Keys.chord(result, hotkeyTextTmp);
+        if (result == null || result.isEmpty()) {
+            throw new RuntimeException("Hotkey cannot be empty or null.");
+        }
+        return result;
     }
 
     public class AdvancedHotkeyInteractions {
 
-        private String hotkey;
         private String previousKeyText = "";
-        private String selector;
 
-        protected Optional<String> getHotkey() {
-            return Optional.fromNullable(hotkey).or(Optional.<String>absent());
+        public String getHotkey() {
+            if (configuration.isUseJSInteractionStrategy()) {
+                setupFromWidget();
+            }
+            return hotkey;
         }
 
         private void initHotkeyFromScript() {
@@ -111,28 +159,7 @@ public class RichFacesHotkey implements Hotkey, AdvancedInteractions<RichFacesHo
             if (previousKeyText.equals(hotkeyText.get())) {
                 return;
             }
-            previousKeyText = hotkeyText.get();
-
-            hotkey = "";
-            String hotkeyTextTmp = previousKeyText;
-            EnumSet<ModifierKeys> keys = EnumSet.noneOf(ModifierKeys.class);
-            for (ModifierKeys modifierKey : ModifierKeys.values()) {
-                if (hotkeyTextTmp.contains(modifierKey.toString().toLowerCase())) {
-                    keys.add(modifierKey);
-                    hotkeyTextTmp = hotkeyTextTmp.replaceAll(modifierKey.toString().toLowerCase(), "");
-                }
-            }
-            hotkeyTextTmp = hotkeyTextTmp.replaceAll("\\+", "");
-            if (hotkeyTextTmp.length() != 1) {
-                throw new RuntimeException("Hotkey doesn't contain one character.");
-            }
-            for (ModifierKeys modifierKeys : keys) {
-                hotkey += modifierKeys.getKey();
-            }
-            hotkey = Keys.chord(hotkey, hotkeyTextTmp);
-            if (hotkey == null || hotkey.isEmpty()) {
-                throw new RuntimeException("Hotkey cannot be empty or null.");
-            }
+            hotkey = parseHotKey(hotkeyText.get());
         }
 
         public WebElement getRootElement() {
@@ -140,9 +167,8 @@ public class RichFacesHotkey implements Hotkey, AdvancedInteractions<RichFacesHo
         }
 
         protected Optional<By> getSelector() {
-            return (selector == null || selector.isEmpty()
-                ? Optional.<By>absent()
-                : Optional.<By>of(ByJQuery.selector(selector)));
+            return (selector == null || selector.isEmpty() ? Optional.<By>absent() : Optional.<By>of(ByJQuery
+                .selector(selector)));
         }
 
         public void setupFromWidget() {
@@ -150,19 +176,8 @@ public class RichFacesHotkey implements Hotkey, AdvancedInteractions<RichFacesHo
             setupSelectorFromWidget();
         }
 
-        public void setupHotkey(String hotkey) {
-            if (hotkey == null || hotkey.isEmpty()) {
-                throw new NullPointerException("Hotkey cannot be empty or null. Set up hotkey from widget if you want to reset it.");
-            }
-            this.hotkey = hotkey;
-        }
-
         public void setupHotkeyFromWidget() {
             initHotkeyFromScript();
-        }
-
-        public void setupSelector(String selector) {
-            this.selector = selector;
         }
 
         public void setupSelectorFromWidget() {
