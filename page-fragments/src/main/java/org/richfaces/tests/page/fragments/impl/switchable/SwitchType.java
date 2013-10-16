@@ -21,6 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.switchable;
 
+/**
+ * Represents the types of the interaction when switching among various panels in the switchable components.
+ *
+ * @author jhuska
+ *
+ */
 public enum SwitchType {
 
     CLIENT, SERVER, AJAX

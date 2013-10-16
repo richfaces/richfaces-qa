@@ -29,18 +29,27 @@ import org.richfaces.tests.page.fragments.impl.list.ListItem;
  */
 public interface SelectableListItem extends ListItem {
 
+    /**
+     * Finds out whether this item is selected.
+     *
+     * @return <code>true</code> if this item is selected, <code>false</code> otherwise
+     */
     boolean isSelected();
 
     /**
-     * Selects item without deselect others.
+     * Selects item without deselecting others.
      */
     void select();
 
     /**
      * Select item and deselect other items depending on @deselectOthers.
-     * @param deselectOthers if true other items will be unselected.
+     *
+     * @param deselectOthers if <code>true</code> other items will be unselected.
      */
     void select(boolean deselectOthers);
 
+    /**
+     * Deselects this item.
+     */
     void deselect();
 }

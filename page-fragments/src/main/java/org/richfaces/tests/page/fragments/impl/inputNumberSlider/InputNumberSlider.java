@@ -23,5 +23,10 @@ package org.richfaces.tests.page.fragments.impl.inputNumberSlider;
 
 public interface InputNumberSlider extends NumberInput {
 
+    /**
+     * Slides the handler of this inputNumberSlider, so that the value will equals to the given param <code>n<code>.
+     *
+     * @param n the value which should be set in this inputNumberSlider after sliding of the handler.
+     */
     void slideToValue(double n);
 }

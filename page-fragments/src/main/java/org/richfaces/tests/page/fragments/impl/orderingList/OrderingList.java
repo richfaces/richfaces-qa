@@ -33,8 +33,9 @@ public interface OrderingList {
      * Selects the first option, which matches given text.
      *
      * @param visibleText text to match
-     * @return PuttingSelectedItem (@see PuttingSelectedItem) state of OrderingList
+     * @return object by which it is possible to interact with ordering functions
      * @throws RuntimeException when no such option found
+     * @see PuttingSelectedItem
      */
     PuttingSelectedItem select(String visibleText);
 
@@ -42,7 +43,7 @@ public interface OrderingList {
      * Selects the choice at index.
      *
      * @param index index of the choice
-     * @return PuttingSelectedItem (@see PuttingSelectedItem) state of OrderingList
+     * @return object by which it is possible to interact with ordering functions
      * @throws RuntimeException when no such option found
      */
     PuttingSelectedItem select(Integer index);
@@ -51,10 +52,10 @@ public interface OrderingList {
      * Selects a choice from suggestions.
      *
      * @param picker for picking from the choices
-     * @return PuttingSelectedItem (@see PuttingSelectedItem) state of OrderingList
+     * @return object by which it is possible to interact with ordering functions
      * @throws RuntimeException when no such option found
-     * @see org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.ByIndexChoicePicker
-     * @see org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.ByVisibleTextChoicePicker
+     * @see ByIndexChoicePicker
+     * @see ByVisibleTextChoicePicker
      */
     PuttingSelectedItem select(ChoicePicker picker);
 }

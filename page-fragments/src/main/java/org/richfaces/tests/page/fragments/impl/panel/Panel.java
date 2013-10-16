@@ -23,7 +23,20 @@ package org.richfaces.tests.page.fragments.impl.panel;
 
 public interface Panel<HEADER, BODY> {
 
+    /**
+     * Gets the class representing the header of this panel.
+     *
+     * @return header page object of this panel
+     * @throws IllegalStateException when this panel has no header element
+     * @see TextualRichFacesPanel
+     */
     HEADER getHeaderContent();
 
+    /**
+     * Gets the class representing the body of this panel.
+     *
+     * @return body page object of this panel
+     * @see TextualRichFacesPanel
+     */
     BODY getBodyContent();
 }

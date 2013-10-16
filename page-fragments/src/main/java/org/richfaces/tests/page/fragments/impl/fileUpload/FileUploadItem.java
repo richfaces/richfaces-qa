@@ -30,10 +30,25 @@ import org.richfaces.tests.page.fragments.impl.list.ListItem;
  */
 public interface FileUploadItem extends ListItem {
 
+    /**
+     * Finds out whether this item representing a file is already uploaded.
+     *
+     * @return <code>true</code> if this file item is already uploaded, <code>false</code> otherwise
+     */
     boolean isUploaded();
 
+    /**
+     * Clears/deletes the log of already uploaded/to be uploaded file from the list of the files of the already uploaded files/to be uploaded files.
+     *
+     * @return
+     */
     WebElement getClearOrDeleteElement();
 
+    /**
+     * Gets the name of the this file.
+     *
+     * @return file name
+     */
     String getFilename();
 
     WebElement getFilenameElement();

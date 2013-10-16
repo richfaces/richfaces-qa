@@ -27,6 +27,11 @@ package org.richfaces.tests.page.fragments.impl.common;
  */
 public interface TextInputComponent {
 
+    /**
+     * Clears this input.
+     *
+     * @return text input itself
+     */
     TextInputComponent clear();
 
     /**

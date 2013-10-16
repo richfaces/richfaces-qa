@@ -36,6 +36,12 @@ import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
  */
 public interface Messages<T extends Message & ListItem> extends ListComponent<T>, AdvancedInteractions<Messages.AdvancedMessagesInteractions> {
 
+    /**
+     * Gets multiple messages which have given <code>type<code>.
+     *
+     * @param type the message type (its severity) to determine which messages to return
+     * @return     all messages with given type
+     */
     List<? extends Message> getItems(MessageType type);
 
     public interface AdvancedMessagesInteractions {

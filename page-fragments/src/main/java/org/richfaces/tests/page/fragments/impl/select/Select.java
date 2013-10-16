@@ -28,15 +28,19 @@ package org.richfaces.tests.page.fragments.impl.select;
 public interface Select {
 
     /**
-     * Deletes input and types a text to it.
+     * Types a text to the input, deletes its value before doing it.
+     *
      * @param text text to write
-     * @return SelectSuggestions(@see SelectSuggestions)
+     * @return object by which it will be possible to select an option from select
+     * @see SelectSuggestions
      */
     SelectSuggestions type(String text);
 
     /**
      * Opens popup with suggestions list.
-     * @return SelectSuggestions(@see SelectSuggestions)
+     *
+     * @return object by which it will be possible to select an option from select
+     * @see SelectSuggestions
      */
     SelectSuggestions openSelect();
 }

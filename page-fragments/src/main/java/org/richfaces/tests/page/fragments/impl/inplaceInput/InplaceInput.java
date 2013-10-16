@@ -25,7 +25,20 @@ import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 
 public interface InplaceInput {
 
+    /**
+     * Gets the associated text input.
+     *
+     * @return the text input of the component
+     * @see TextInputComponentImpl
+     */
     TextInputComponentImpl getTextInput();
 
+    /**
+     * Types given <code>text</code> to the input, thus switching the input into editing state.
+     *
+     * @param text text to be typed into the input
+     * @return object by which a user can actually change the input value (confirm), or return to the previous text (cancel)
+     * @throws IllegalStateException if typing to the input have switched the inplace input to an editing state
+     */
     ConfirmOrCancel type(String text);
 }

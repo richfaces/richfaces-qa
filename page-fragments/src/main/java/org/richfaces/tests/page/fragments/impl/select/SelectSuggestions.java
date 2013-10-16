@@ -29,9 +29,24 @@ import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
  */
 public interface SelectSuggestions {
 
+    /**
+     * Selects the first option according to the given rules in <code>picker<code> param.
+     *
+     * @param picker
+     */
     void select(ChoicePicker picker);
 
+    /**
+     * Selects the first option, which matches the given text.
+     *
+     * @param match string to match the option
+     */
     void select(String match);
 
+    /**
+     * Selects the option from the list of the options at index.
+     *
+     * @param index index of option
+     */
     void select(int index);
 }

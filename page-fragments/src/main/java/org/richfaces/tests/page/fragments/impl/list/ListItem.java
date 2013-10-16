@@ -29,11 +29,15 @@ import org.jboss.arquillian.graphene.GrapheneElement;
 public interface ListItem {
 
     /**
+     * Gets the text representation of this item.
+     *
      * @return text from this item
      */
     String getText();
 
     /**
+     * Gets the root element of this item.
+     *
      * @return root of this item
      */
     GrapheneElement getRootElement();

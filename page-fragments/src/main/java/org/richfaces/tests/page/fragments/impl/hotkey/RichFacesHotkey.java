@@ -104,13 +104,16 @@ public class RichFacesHotkey implements Hotkey, AdvancedInteractions<RichFacesHo
     @Override
     public void setupHotkey(String hotkey) {
         if (hotkey == null || hotkey.isEmpty()) {
-            throw new NullPointerException("Hotkey cannot be empty or null. Set up hotkey from widget if you want to reset it.");
+            throw new IllegalArgumentException("Hotkey cannot be empty or null. Set up hotkey from widget if you want to reset it.");
         }
         this.hotkey = parseHotKey(hotkey);
     }
 
     @Override
     public void setupSelector(String selector) {
+        if(selector == null || selector.isEmpty()) {
+            throw new IllegalArgumentException("Selector cannot be empty or null.");
+        }
         this.selector = selector;
     }
 

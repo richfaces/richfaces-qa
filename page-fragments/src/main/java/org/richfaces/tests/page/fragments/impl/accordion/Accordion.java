@@ -25,5 +25,10 @@ import org.richfaces.tests.page.fragments.impl.switchable.SwitchableComponent;
 
 public interface Accordion extends SwitchableComponent<RichFacesAccordionItem> {
 
+    /**
+     * Gets the number of the particular accordion parts.
+     *
+     * @return number of the accordion panels, parts which can be switched among
+     */
     int getNumberOfAccordionItems();
 }

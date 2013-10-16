@@ -26,6 +26,12 @@ package org.richfaces.tests.page.fragments.impl.dataScroller;
  */
 public interface DataScroller {
 
+    /**
+     * Represents the buttons by which the dataScroller can be controlled.
+     *
+     * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+     *
+     */
     enum DataScrollerSwitchButton {
 
         FIRST,
@@ -36,15 +42,25 @@ public interface DataScroller {
         LAST;
     }
 
+    /**
+     * Gets the index of the currently selected page. Indexed from 1.
+     *
+     * @return the position of the page at which the dataScroller currently is
+     */
     int getActivePageNumber();
 
     /**
      * Direct switch to page. Indexed from 1. Page must exist. Without any waiting.
+     *
+     * @param pageNumber of the page which will be selected
      */
     void switchTo(int pageNumber);
 
     /**
      * Switch by buttons. Clicks on the chosen button. Without any waiting.
+     *
+     * @param btn the button which will be used to control the dataScroller in order to switch to a wished page
+     * @see DataScrollerSwitchButton
      */
     void switchTo(DataScrollerSwitchButton btn);
 }

@@ -29,9 +29,25 @@ import java.io.File;
  */
 public interface FileUpload {
 
+    /**
+     * Adds the given <code>file</code> in to the list of to be uploaded files.
+     *
+     * @param file to be uploaded
+     * @return <code>true</code> if the file was added successfully, <code>false</code> otherwise
+     */
     boolean addFile(File file);
 
+    /**
+     * Clears all to be uploaded or already uploaded files from the list.
+     *
+     * @return back the fileUpload object
+     */
     FileUpload clearAll();
 
+    /**
+     * Uploads all to be uploaded files.
+     *
+     * @return back the fileUpload object
+     */
     FileUpload upload();
 }

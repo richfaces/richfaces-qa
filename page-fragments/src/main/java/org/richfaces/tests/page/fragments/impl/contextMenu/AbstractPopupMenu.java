@@ -99,7 +99,11 @@ public abstract class AbstractPopupMenu implements PopupMenu, AdvancedInteractio
     @Override
     public void selectItem(ChoicePicker picker) {
         advanced().show();
-        picker.pick(getMenuItemElementsInternal()).click();
+        WebElement item = picker.pick(getMenuItemElementsInternal());
+        if(item == null) {
+            throw new IllegalArgumentException("There is no such option to be selected, which satisfied the given rules!");
+        }
+        item.click();
     }
 
     @Override

@@ -31,29 +31,80 @@ public interface PickList {
 
     /**
      * Picks and adds value from source list to target list.
-     * @param picker
+     *
+     * @param picker object which defines rules to pick the value
+     * @return the pickList itself
      */
     PickList add(ChoicePicker picker);
 
+    /**
+     * Picks and adds value from source list to target list.
+     *
+     * @param match the textual representation of the value which should be picked and added to target list
+     * @return the pickList itself
+     */
     PickList add(String match);
 
+    /**
+     * Picks and adds value from source list to target list.
+     *
+     * @param index index of the value which should be picked and added to target list
+     * @return the pickList itself
+     */
     PickList add(int index);
 
+    /**
+     * Picks and adds multiple values from source list to target list.
+     *
+     * @param picker defines rules to pick the multiple values and add them to the target list
+     * @return the pickList itself
+     */
     PickList addMultiple(MultipleChoicePicker picker);
 
+    /**
+     * Picks and adds all values from source list to target list.
+     *
+     * @return the pickList itself
+     */
     PickList addAll();
 
     /**
-     * Picks and removes value from target list.
-     * @param picker
+     * Removes the value from target list back to the source list.
+     *
+     * @param picker object which defines rules to pick the value
+     * @return the pickList itself
      */
     PickList remove(ChoicePicker picker);
 
+    /**
+     * Removes the value from target list back to the source list.
+     *
+     * @param match the textual representation of the
+     *              value which should be picked and removed from target list back to the source list
+     * @return the pickList itself
+     */
     PickList remove(String match);
 
+    /**
+     * Removes the value from target list back to the source list.
+     *
+     * @param index index of the value which should be picked and removed from target list back to the source list
+     * @return the pickList itself
+     */
     PickList remove(int index);
 
+    /**
+     * Picks and removes multiple values from target list back to source list.
+     *
+     * @param picker defines rules to pick the multiple values and remove them from target list back to the source list
+     * @return the pickList itself
+     */
     PickList removeMultiple(MultipleChoicePicker picker);
 
+    /**
+     * Removes all values from target list back to the source list.
+     *
+     * @return the pickList itself
+     */
     PickList removeAll();
 }

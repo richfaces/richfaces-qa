@@ -28,12 +28,16 @@ package org.richfaces.tests.page.fragments.impl.autocomplete;
 public interface Autocomplete {
 
     /**
-     * Types @text to Autocomplete input. If the input is not empty, then it types a token in it and then sends the value.
+     * Types text to Autocomplete input. If the input is not empty, then it types a token in it and then sends the value.
      *
-     * @param text text to be send to input
-     * @return SelectOrConfirm (@see SelectOrConfirm) state of autocomplete
+     * @param  text text to be send to input
+     * @return      a object of <code>SelectOrConfirm</code> class which enables selection from suggestions or confirming the typed text
+     * @see         SelectOrConfirm
      */
     SelectOrConfirm type(String text);
 
+    /**
+     * Erases the input associated with the autocomplete component.
+     */
     void clear();
 }
