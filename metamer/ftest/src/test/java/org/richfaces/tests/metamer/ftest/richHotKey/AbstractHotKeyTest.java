@@ -30,12 +30,14 @@ import java.util.List;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.richHotKey.TestHotKeyAttributes.KeysEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.hotkey.RichFacesHotkey;
 import org.richfaces.tests.page.fragments.impl.log.LogEntry;
 import org.richfaces.tests.page.fragments.impl.log.RichFacesLog;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
+import org.testng.annotations.BeforeMethod;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -81,5 +83,11 @@ public abstract class AbstractHotKeyTest extends AbstractWebDriverTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richHotKey/simple.xhtml");
+    }
+
+    @BeforeMethod
+    public void setHotKeyAndSelector() {
+//        hotkey1.setupHotkey(KeysEnum.CTRL_X.toString());
+//        hotkey2.setupHotkey("alt+x");
     }
 }

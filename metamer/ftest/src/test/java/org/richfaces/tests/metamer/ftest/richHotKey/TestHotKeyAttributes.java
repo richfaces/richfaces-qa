@@ -36,16 +36,22 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
     @Use(empty = false)
     private KeysEnum key;
 
-    private enum KeysEnum {
+    public enum KeysEnum {
 
         CONTROL_Z("ctrl+z"),
         T("t"),
         CTRL_X("ctrl+x"),
         ALT_CONTROL_X("alt+ctrl+x");
+
         private final String keysString;
 
         private KeysEnum(String keysString) {
             this.keysString = keysString;
+        }
+
+        @Override
+        public String toString() {
+            return keysString;
         }
     }
 
@@ -65,6 +71,7 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
     @Use(field = "key", enumeration = true)
     public void testKey() {
         firstHotkeyAttributes.set(HotKeyAttributes.key, key.keysString);
+        hotkey1.setupHotkey(key.toString());
         hotkey1.invoke();
         checkEvents(1, 0);
         clearHotKeyEvents();
@@ -72,6 +79,7 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
 
     private void testKeyForPreventDefault(String keyString, int expectedNum) {
         firstHotkeyAttributes.set(HotKeyAttributes.key, keyString);
+        hotkey1.setupHotkey(keyString);
         hotkey1.invoke();
         hotkey1.invoke();
         checkEvent("onkeydown", expectedNum);
@@ -80,7 +88,7 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
 
     @Test
     public void testOnkeydownOnkeyup() {
-        //these events are already binded, they add message to a4j:log on the page
+        // these events are already binded, they add message to a4j:log on the page
         hotkey1.invoke();
         checkEvents(1, 0);
         hotkey2.invoke();
