@@ -29,6 +29,12 @@ import org.richfaces.tests.page.fragments.impl.list.ListComponent;
  */
 public interface Log {
 
+    /**
+     * Represents the various levels of logs.
+     *
+     * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+     *
+     */
     enum LogEntryLevel {
 
         DEBUG,
@@ -38,18 +44,24 @@ public interface Log {
     }
 
     /**
-     * Change log level of.
+     * Changes log level of this component.
+     *
+     * Thus it will log only logs with the same severity as given <code>level</code>, or bigger.
+     *
+     * @param level the severity level to be set to this log component
      * @see LogEntryLevel
      */
     void changeLevel(LogEntryLevel level);
 
     /**
-     * Clear the all messages in log. Wait until log is cleared.
+     * Clears the all messages in log. Waits until log is cleared.
      */
     void clear();
 
     /**
      * Returns all log entries.
+     *
+     * @return list of all logs in this component
      */
     ListComponent<? extends LogEntry> getLogEntries();
 }

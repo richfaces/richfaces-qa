@@ -23,15 +23,51 @@ package org.richfaces.tests.page.fragments.impl.inputNumberSlider;
 
 public interface NumberInput {
 
+    /**
+     * Increases the current value of this number input by the value of the step.
+     *
+     * @throws RuntimeException if there is no handler for increasing the value (for example arrow)
+     */
     void increase();
 
+    /**
+     * Decreases the current value of this number input by the value of the step.
+     *
+     * @throws RuntimeException if there is no handler for decreasing the value (for example arrow)
+     */
     void decrease();
 
+    /**
+     * Increases the current value of this number input by the value of the step <code>n</code> times.
+     *
+     * In other words, if the step is 2, and given param <code>n</code> is 3, the input value is increased by 6.
+     *
+     * @param n how many times the increasing should be executed
+     * @throws RuntimeException if there is no handler for increasing the value (for example arrow)
+     */
     void increase(int n);
 
+    /**
+     * Dcreases the current value of this number input by the value of the step <code>n</code> times.
+     *
+     * In other words, if the step is 2, and given param <code>n</code> is 3, the input value is decreased by 6.
+     *
+     * @param n how many times the decreasing should be executed
+     * @throws RuntimeException if there is no handler for decreasing the value (for example arrow)
+     */
     void decrease(int n);
 
+    /**
+     * Sets the exact number value to the input.
+     *
+     * @param value value to be set
+     */
     void setValue(double value);
 
+    /**
+     * Gets the current number value of this number input.
+     *
+     * @return the current value of the number input
+     */
     double getValue();
 }

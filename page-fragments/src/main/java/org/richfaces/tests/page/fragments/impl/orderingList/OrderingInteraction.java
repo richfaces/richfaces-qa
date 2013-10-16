@@ -29,12 +29,14 @@ public interface OrderingInteraction {
 
     /**
      * Clicks on the 'bottom' button.
+     *
      * @throws RuntimeException when button cannot be clicked.
      */
     void bottom();
 
     /**
      * Clicks on the 'down' button.
+     *
      * @param times how many times to click on the button
      * @throws RuntimeException when button cannot be clicked.
      */
@@ -42,12 +44,14 @@ public interface OrderingInteraction {
 
     /**
      * Clicks on the 'top' button.
+     *
      * @throws RuntimeException when button cannot be clicked.
      */
     void top();
 
     /**
      * Clicks on the 'up' button.
+     *
      * @param times how many times to click on the button
      * @throws RuntimeException when button cannot be clicked.
      */

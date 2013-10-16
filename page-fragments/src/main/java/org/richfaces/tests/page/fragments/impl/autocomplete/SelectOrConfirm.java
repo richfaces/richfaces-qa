@@ -32,44 +32,48 @@ public interface SelectOrConfirm {
     /**
      * Confirms previously typed value.
      *
-     * @return returns back the Autocomplete component.
+     * In other words it puts the already typed text into the associated autocomplete input.
+     *
+     * @return back the Autocomplete component.
      */
     Autocomplete confirm();
 
     /**
-     * Selects the first option.
+     * Selects the first suggestion.
      *
-     * @return returns back the Autocomplete component.
+     * @return                  back the Autocomplete component.
      * @throws RuntimeException when no option found
      */
     Autocomplete select();
 
     /**
-     * Selects the option at index.
+     * Selects the suggestion from the list of the suggestions at index.
      *
-     * @param index index of suggestion
-     * @return returns back the Autocomplete component.
+     * @param  index            index of suggestion
+     * @return                  back the Autocomplete component.
      * @throws RuntimeException when no option found
      */
     Autocomplete select(int index);
 
     /**
-     * Selects the first option, which matches given text.
+     * Selects the first suggestion, which matches the given text.
      *
-     * @param match string to match the suggestion
-     * @return returns back the Autocomplete component.
+     * @param  match            string to match the suggestion
+     * @return returns          back the Autocomplete component.
      * @throws RuntimeException when no option found
      */
     Autocomplete select(String match);
 
     /**
-     * Selects a choice from suggestions.
+     * Selects the first suggestion according to the given rules in <code>picker<code> param.
      *
-     * @param picker for picking from the choices
-     * @return returns back the Autocomplete component.
+     * In other words, it selects the first suggestion which satisfies the choice picking rules defined in <code>picker</code>
+     *
+     * @param  picker           for defining the rules by which the suggestion will be selected
+     * @return returns          back the Autocomplete component.
      * @throws RuntimeException when no such option found
-     * @see org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.ByIndexChoicePicker
-     * @see org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.ByVisibleTextChoicePicker
+     * @see    org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.ByIndexChoicePicker
+     * @see    org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.ByVisibleTextChoicePicker
      */
     Autocomplete select(ChoicePicker picker);
 }

@@ -31,6 +31,11 @@ import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
  */
 public interface Message extends AdvancedInteractions<Message.AdvancedMessageInteractions> {
 
+    /**
+     * Represents the severity of the messages represented by Message component.
+     *
+     * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+     */
     public enum MessageType {
 
         FATAL,
@@ -40,10 +45,25 @@ public interface Message extends AdvancedInteractions<Message.AdvancedMessageInt
         OK;
     }
 
+    /**
+     * Gets the summary part of the message.
+     *
+     * @return the message summary
+     */
     String getSummary();
 
+    /**
+     * Gets the detail part of the message.
+     *
+     * @return the message detail
+     */
     String getDetail();
 
+    /**
+     * Gets the message severity.
+     *
+     * @return the message type which represents the severity
+     */
     MessageType getType();
 
     public interface AdvancedMessageInteractions {

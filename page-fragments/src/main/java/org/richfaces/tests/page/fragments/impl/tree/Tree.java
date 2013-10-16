@@ -24,7 +24,6 @@ package org.richfaces.tests.page.fragments.impl.tree;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
@@ -35,31 +34,31 @@ public interface Tree {
      * Collapses child node at index.
      *
      * @param index index of node
-     * @return collapsed node
+     * @return      collapsed node
      */
     TreeNode collapseNode(int index);
 
     /**
      * Collapses child node chosen by picker.
      *
-     * @param picker
-     * @return collapsed node
+     * @param  picker object for defining rules according which the child node will be picked and collapsed
+     * @return        collapsed node
      */
     TreeNode collapseNode(ChoicePicker picker);
 
     /**
      * Expands child node at index.
      *
-     * @param index index of node
-     * @return expanded node
+     * @param  index index of node
+     * @return       expanded node
      */
     TreeNode expandNode(int index);
 
     /**
      * Expands child node chosen by picker.
      *
-     * @param picker
-     * @return expanded node
+     * @param picker object for defining rules according which the child node will be picked and expanded
+     * @return       expanded node
      */
     TreeNode expandNode(ChoicePicker picker);
 
@@ -67,15 +66,15 @@ public interface Tree {
      * Selects child node at index.
      *
      * @param index index of node
-     * @return selected node
+     * @return      selected node
      */
     TreeNode selectNode(int index);
 
     /**
      * Selects child node chosen by picker.
      *
-     * @param picker
-     * @return selected node
+     * @param picker object for defining rules according which the child node will be picked and selected
+     * @return       selected node
      */
     TreeNode selectNode(ChoicePicker picker);
 

@@ -26,5 +26,10 @@ import org.richfaces.tests.page.fragments.impl.switchable.SwitchableComponent;
 
 public interface TabPanel<T extends ComponentContainer> extends SwitchableComponent<T> {
 
+    /**
+     * Gets the number of tabs, the building blocks of the tabPanel component.
+     *
+     * @return Number of panels which can be switched among.
+     */
     int getNumberOfTabs();
 }

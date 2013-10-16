@@ -34,19 +34,24 @@ import org.richfaces.tests.page.fragments.impl.utils.picker.MultipleChoicePicker
 public interface ListComponent<T extends ListItem> {
 
     /**
-     * @param index
-     * @return item at index or null
+     * Gets the item on the given <code>index</code>.
+     *
+     * @param index index of the item to be returned
+     * @return      item at index or null
      */
     T getItem(int index);
 
     /**
-     * @param text
-     * @return first item which matches given text or null
+     * Gets the item which text representation is exact match with the given param <code>text</code>
+     *
+     * @param  text  the text according to which the item will be returned
+     * @return       first item which matches given text or null
      */
     T getItem(String text);
 
     /**
-     * Returns item found by @picker.
+     * Gets item found by <code>picker</code>.
+     *
      * @param picker for picking from the items
      * @return found item or null
      * @see org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.ByIndexChoicePicker
@@ -56,24 +61,38 @@ public interface ListComponent<T extends ListItem> {
     T getItem(ChoicePicker picker);
 
     /**
+     * Gets all items from this list.
+     *
      * @return all items in list
      */
     List<T> getItems();
 
     /**
+     * Gets multiple items accoriding to the rules given in <code>picker</code> param.
+     *
      * @param picker for picking from list
      * @return all items that returns picker
+     * @see MultipleChoicePicker
      */
     List<T> getItems(MultipleChoicePicker picker);
 
+    /**
+     * Gets the root of this component.
+     *
+     * @return the root element of this component
+     */
     WebElement getRoot();
 
     /**
-     * @return true if size() == 0 otherwise false
+     * Founds out whether the list is empty or not.
+     *
+     * @return true if size() == 0, false otherwise
      */
     boolean isEmpty();
 
     /**
+     * Gets the size of this list component.
+     *
      * @return size of the list
      */
     int size();

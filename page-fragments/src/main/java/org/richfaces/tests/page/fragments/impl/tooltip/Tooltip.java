@@ -29,13 +29,52 @@ import org.openqa.selenium.WebElement;
  */
 public interface Tooltip<CONTENT> {
 
-    Tooltip show();
+    /**
+     * Invokes the tooltip over an element, which is found by injected root element to his component.
+     *
+     * Note that, invoking of the tooltip should be rather by implicit action (for example hover of the mouse over some
+     * element), than this explicit call.
+     *
+     * @return tooltip itself
+     */
+    Tooltip<CONTENT> show();
 
-    Tooltip show(WebElement target);
+    /**
+     * Invokes the tooltip over the given <code>target</code>.
+     *
+     * Note that, invoking of the tooltip should be rather by implicit action (for example hover of the mouse over some
+     * element), than this explicit call.
+     *
+     * @param target the element on which the tooltip will be invoked
+     * @return tooltip itself
+     */
+    Tooltip<CONTENT> show(WebElement target);
 
-    Tooltip hide();
+    /**
+     * Dismiss the tooltip, which is found by injected root element to his component.
+     *
+     * Note that, hiding of the tooltip should be rather by implicit action (for example hover of the mouse out from some
+     * element), than this explicit call.
+     *
+     * @return tooltip itself
+     */
+    Tooltip<CONTENT> hide();
 
-    Tooltip hide(WebElement target);
+    /**
+     * Dismiss the tooltip over the given <code>target</code>.
+     *
+     * Note that, hiding of the tooltip should be rather by implicit action (for example hover of the mouse out from some
+     * element), than this explicit call.
+     *
+     * @return tooltip itself
+     */
+    Tooltip<CONTENT> hide(WebElement target);
 
+    /**
+     * Gets the object representing the content of the tooltip.
+     *
+     * @return initialized page object with the content of this tooltip
+     * @see TextualRichFacesTooltip
+     */
     CONTENT getContent();
 }

@@ -94,8 +94,9 @@ public final class ChoicePickerHelper {
 
         /**
          * Picks every nth index from 0 (including).
-         * @param nth has to be greater than 1
-         * @return same instance
+         *
+         * @param  nth has to be greater than 1
+         * @return     same instance
          */
         public ByIndexChoicePicker everyNth(final int nth) {
             return everyNth(nth, 0);
@@ -103,9 +104,10 @@ public final class ChoicePickerHelper {
 
         /**
          * Picks every nth index from @from (including).
-         * @param nth has to be greater than 1 (the iteration step)
+         *
+         * @param nth  has to be greater than 1 (the iteration step)
          * @param from has to be greater or equals to 0
-         * @return same instance
+         * @return     same instance
          */
         public ByIndexChoicePicker everyNth(final int nth, final int from) {
             Preconditions.checkArgument(nth > 1);
