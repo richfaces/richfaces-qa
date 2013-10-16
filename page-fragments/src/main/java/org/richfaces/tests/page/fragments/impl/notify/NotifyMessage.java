@@ -30,11 +30,20 @@ import org.richfaces.tests.page.fragments.impl.message.Message;
  */
 public interface NotifyMessage extends Message {
 
-    public enum NotifyMessagePosition {
+    /**
+     * The position of this notify message on the display.
+     *
+     * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+     *
+     */
+    enum NotifyMessagePosition {
 
         BOTTOM_LEFT, BOTTOM_RIGHT, TOP_LEFT, TOP_RIGHT;
     }
 
+    /**
+     * Closes this notify message prior it disappears.
+     */
     void close();
 
     @Override

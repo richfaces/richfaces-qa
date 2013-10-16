@@ -28,8 +28,19 @@ import org.richfaces.tests.page.fragments.impl.panel.Panel;
  */
 public interface PopupPanel<HEADER, HEADERCONTROLS, BODY> extends Panel<HEADER, BODY> {
 
+    /**
+     * Gets the controls of the popup panel. They are user defined controls usually to close popup panel.
+     *
+     * @return the object representing popup panel controls
+     */
     HEADERCONTROLS getHeaderControlsContent();
 
+    /**
+     * Represents the direction where the popup panel should be resized.
+     *
+     * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+     *
+     */
     enum ResizerLocation {
 
         N, E, S, W, NE, NW, SE, SW

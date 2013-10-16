@@ -30,15 +30,58 @@ import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
  */
 public interface PopupMenu {
 
+    /**
+     * Selects the menu item according to the rules defined in the <code>picker</code> param.
+     *
+     * @param picker for defining the rules by which the item will be selected
+     * @throws IllegalArgumentException if there is no such element which satisfies the rules given by <code>picker</code>
+     */
     void selectItem(ChoicePicker picker);
 
+    /**
+     * Selects the menu item according to the exact match of its text representation with passed <code>header</code> param.
+     *
+     * @param header text representation of the menu item to be selected
+     * @throws IllegalArgumentException if there is no such element with text representation matching the given <code>text</code>
+     */
     void selectItem(String header);
 
+    /**
+     * Selects the menu item according to its index in the list of all menu items.
+     *
+     * Items are indexed from 0. A top menu item (the one which is the closest to the root of the popup menu component) has index 0.
+     *
+     * @param index zero based index of the item to be selected
+     * @throws IllegalArgumentException if there is no such element with index <code>index</code>
+     */
     void selectItem(int index);
 
+    /**
+     * Selects the menu item according to the rules defined in the <code>picker</code> param.
+     *
+     * @param picker for defining the rules by which the item will be selected
+     * @param target for defining the popup menu which will be invoked and from which the item will be selected
+     * @throws IllegalArgumentException if there is no such element which satisfies the rules given by <code>picker</code>
+     */
     void selectItem(ChoicePicker picker, WebElement target);
 
+    /**
+     * Selects the menu item according to the exact match of its text representation with passed <code>header</code> param.
+     *
+     * @param header text representation of the menu item to be selected
+     * @param target for defining the popup menu which will be invoked and from which the item will be selected
+     * @throws IllegalArgumentException if there is no such element with text representation matching the given <code>text</code>
+     */
     void selectItem(String header, WebElement target);
 
+    /**
+     * Selects the menu item according to its index in the list of all menu items.
+     *
+     * Items are indexed from 0. A top menu item (the one which is the closest to the root of the popup menu component) has index 0.
+     *
+     * @param index zero based index of the item to be selected
+     * @param target for defining the popup menu which will be invoked and from which the item will be selected
+     * @throws IllegalArgumentException if there is no such element with index <code>index</code>
+     */
     void selectItem(int index, WebElement target);
 }

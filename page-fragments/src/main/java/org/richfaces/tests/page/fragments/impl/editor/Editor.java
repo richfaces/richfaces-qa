@@ -23,9 +23,22 @@ package org.richfaces.tests.page.fragments.impl.editor;
 
 public interface Editor {
 
+    /**
+     * Types the given <code>text</code> into the editor's input.
+     *
+     * @param text to be filled into the editor
+     */
     void type(String text);
 
+    /**
+     * Clears the editor's input. In other words it erases all characters from the editor.
+     */
     void clear();
 
+    /**
+     * Gets the text which is currently typed in the editor.
+     *
+     * @return text filled in the editor
+     */
     String getText();
 }

@@ -98,6 +98,9 @@ public class RichFacesInplaceSelect implements InplaceSelect, AdvancedInteractio
     public ConfirmOrCancel select(ChoicePicker picker) {
         advanced().switchToEditingState();
         WebElement optionToBeSelected = picker.pick(advanced().getOptions());
+        if(optionToBeSelected == null) {
+            throw new IllegalArgumentException("There is no such option to be selected, which satisfied the given rules!");
+        }
         optionToBeSelected.click();
         if (advanced().isSaveOnSelect() && !isShowControlls()) {
             textInput.advanced().trigger("blur");

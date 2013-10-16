@@ -21,13 +21,54 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.inplaceInput;
 
+/**
+ * Class for confirming the already typed text in various input components,
+ * or for canceling it, and returning to the previous state.
+ *
+ * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ *
+ */
 public interface ConfirmOrCancel {
 
+    /**
+     * Confirms the text which is in the input during its editing state.
+     *
+     * In other words, an user firstly type text, and then confirms it
+     * in order to really change it.
+     */
     void confirm();
 
+    /**
+     * By using the built in controls, it confirms the text, which is in
+     * the inplaceInput during its editing state.
+     *
+     * In other words, a user firstly type text into the inplaceInput and then
+     * confirms it in order to really change the input's value.
+     *
+     * @throws IllegalStateException when the inplaceInput on which it was
+     *                               called does not contain controls
+     */
     void confirmByControlls();
 
+    /**
+     * Cancels the text which is in the input during its editing state,
+     * thus it returns back the previous confirmed text.
+     *
+     * In other words, an user firstly type text, then change his/her
+     * mind and can return back to the previous state by issuing this method.
+     */
     void cancel();
 
+    /**
+     * By using the built in controls, it cancels the text which is in the
+     * input during its editing state, thus it returns back the previous
+     * confirmed text.
+     *
+     * In other words, an user firstly type text, then change his/her
+     * mind and can return back to the previous state by issuing this method.
+     *
+     * @throws IllegalStateException when the inplaceInput on which it was
+     *                               called does not contain controls
+     */
     void cancelByControlls();
 }

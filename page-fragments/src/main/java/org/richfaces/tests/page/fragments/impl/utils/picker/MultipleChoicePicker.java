@@ -32,8 +32,9 @@ public interface MultipleChoicePicker {
 
     /**
      * Picks multiple WebElements from the @options, that meets all requirements depending on implementation.
-     * @param options options to be picked from.
-     * @return List of WebElement that meets all requirements or an empty list.
+     *
+     * @param options options to be picked from
+     * @return        List of WebElement that meets all requirements or an empty list
      */
     List<WebElement> pickMultiple(List<WebElement> options);
 }
