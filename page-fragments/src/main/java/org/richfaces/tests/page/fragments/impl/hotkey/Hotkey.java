@@ -29,14 +29,19 @@ import org.openqa.selenium.WebElement;
 public interface Hotkey {
 
     /**
-     * Invokes the hotkey on an element which is specified by selector attribute of hotkey,
-     * when the selector is empty, then the hotkey will be invoked on <code>html</code> element.
+     * Invokes the hotkey on an element which is specified by selector attribute of hotkey, when the selector is empty, then the
+     * hotkey will be invoked on <code>html</code> element.
      */
     void invoke();
 
     /**
      * Invokes the hotkey on specified element.
+     *
      * @param element element on which the hotkey will be invoked. Element cannot be null.
      */
     void invoke(WebElement element);
+
+    void setupHotkey(String hotkey);
+
+    void setupSelector(String selector);
 }
