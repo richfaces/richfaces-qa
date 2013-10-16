@@ -1,0 +1,29 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="seleniumTest">
+
+    <test name="All Selenium 2 Tests" preserve-order="false">
+        <groups>
+            <run>
+                <exclude name="4.3" />
+                <exclude name="4.Future" />
+                <exclude name="Future" />
+                <exclude name="extended" />
+            </run>
+        </groups>
+
+        <packages>
+        </packages>
+
+        <classes>
+            <class name="org.richfaces.tests.metamer.ftest.richAutocomplete.TestAutocompleteValidationMessages" />
+            <class name="org.richfaces.tests.metamer.ftest.richCalendar.TestCalendarValidationMessages" />
+            <class name="org.richfaces.tests.metamer.ftest.richInplaceInput.TestInplaceInputValidationMessages" />
+            <class name="org.richfaces.tests.metamer.ftest.richInplaceSelect.TestInplaceSelectValidationMessages" />
+            <class name="org.richfaces.tests.metamer.ftest.richInputNumberSlider.TestInputNumberSliderValidationMessages" />
+            <class name="org.richfaces.tests.metamer.ftest.richInputNumberSpinner.TestInputNumberSpinnerValidationMessages" />
+            <class name="org.richfaces.tests.metamer.ftest.richSelect.TestSelectValidationMessages" />
+        </classes>
+    </test>
+
+</suite>
+

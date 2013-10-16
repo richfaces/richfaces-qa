@@ -22,8 +22,10 @@ package org.richfaces.tests.metamer.validation;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -87,7 +89,7 @@ public class ValidationMessagesBean implements Serializable {
     private Integer value2JSF = new Integer(5);
     private Date dateJSF = new Date(pastTime);
     private Date date2JSF = new Date(pastTime);
-    private Converter converter = FacesContext.getCurrentInstance().getApplication().createConverter(Integer.class);
+    private final Converter converter = FacesContext.getCurrentInstance().getApplication().createConverter(Integer.class);
     private List<SelectItem> validationOptions = null;
 
     @PostConstruct
@@ -98,15 +100,19 @@ public class ValidationMessagesBean implements Serializable {
     }
 
     public List<SelectItem> getValidationOptions() {
-        return validationOptions;
+        return Collections.unmodifiableList(validationOptions);
     }
 
     public Converter getConverter() {
         return converter;
     }
 
-    public String getDescription() {
-        return "Integer, from 2 to 9";
+    public String getNumberInputDescription() {
+        return "All inputs expect: number from 2 to 9.";
+    }
+
+    public String getDateInputDescription() {
+        return "All inputs expect: date from past.";
     }
 
     public void activate() {
