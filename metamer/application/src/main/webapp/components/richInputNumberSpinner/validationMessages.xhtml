@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"  xmlns:r="http://richfaces.org">
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"  xmlns:r="http://richfaces.org"
+      xmlns:validationMessages="http://java.sun.com/jsf/composite/validationMessages">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -34,31 +35,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </f:metadata>
         </ui:define>
 
-        <ui:define name="js">
-            <script type="text/javascript">
-                function setCorrectValues() {
-                    $('[name$=jsr-303-inBean]').val('5').change();
-                    $('[name$=jsr-303-inAtt]').val('5').change();
-                    $('[name$=jsr-303-inBundle]').val('5').change();
-                    $('[name$=csv-inBean]').val('5').change();
-                    $('[name$=csv-inAtt]').val('5').change();
-                    $('[name$=csv-inBundle]').val('5').change();
-                    $('[name$=jsf-inBundle]').val('5').change();
-                    $('[name$=jsf-inAtt]').val('5').change();
-                }
-
-                function setWrongValues() {
-                    $('[name$=jsr-303-inBean]').val('10').change();
-                    $('[name$=jsr-303-inAtt]').val('10').change();
-                    $('[name$=jsr-303-inBundle]').val('10').change();
-                    $('[name$=csv-inBean]').val('10').change();
-                    $('[name$=csv-inAtt]').val('10').change();
-                    $('[name$=csv-inBundle]').val('10').change();
-                    $('[name$=jsf-inBundle]').val('10').change();
-                    $('[name$=jsf-inAtt]').val('10').change();
-                }
-            </script>
-        </ui:define>
+        <ui:define name="locatorFunction">
+            <validationMessages:locatorFunction className="rf-insp"/>
+        </ui:define> 
 
         <ui:define name="jsr-303-inBean">
             <r:inputNumberSpinner id="jsr-303-inBean" value="#{validationMessagesBean.valueWithMessagesJSR}" converter="#{validationMessagesBean.converter}"/>
@@ -66,8 +45,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="jsr-303-inAtt">
             <r:inputNumberSpinner id="jsr-303-inAtt" value="#{validationMessagesBean.valueWithoutMessagesJSR}" 
-                                     validatorMessage="Custom validator error message from attribute of component."
-                                     converter="#{validationMessagesBean.converter}"/>
+                                  validatorMessage="Custom validator error message from attribute of component."
+                                  converter="#{validationMessagesBean.converter}"/>
         </ui:define> 
 
         <ui:define name="jsr-303-inBundle">
@@ -80,8 +59,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="csv-inAtt">
             <r:inputNumberSpinner id="csv-inAtt" value="#{validationMessagesBean.valueWithoutMessagesCSV}" 
-                                     validatorMessage="Custom validator error message from attribute of component."
-                                     converter="#{validationMessagesBean.converter}"/>
+                                  validatorMessage="Custom validator error message from attribute of component."
+                                  converter="#{validationMessagesBean.converter}"/>
         </ui:define>  
 
         <ui:define name="csv-inBundle">
@@ -90,8 +69,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="jsf-inAtt">
             <r:inputNumberSpinner id="jsf-inAtt" value="#{validationMessagesBean.valueJSF}" 
-                                     validatorMessage="Custom validator error message from attribute of component."
-                                     converter="#{validationMessagesBean.converter}">
+                                  validatorMessage="Custom validator error message from attribute of component."
+                                  converter="#{validationMessagesBean.converter}">
                 <f:validateDoubleRange minimum="2" maximum="9"/>
             </r:inputNumberSpinner>
         </ui:define>  

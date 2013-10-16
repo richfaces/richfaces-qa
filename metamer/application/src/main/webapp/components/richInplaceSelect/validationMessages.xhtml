@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"  xmlns:r="http://richfaces.org">
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"  xmlns:r="http://richfaces.org"
+      xmlns:validationMessages="http://java.sun.com/jsf/composite/validationMessages">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -33,39 +34,39 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </f:metadata>
         </ui:define>
 
+
+        <ui:define name="locatorFunction">
+            <validationMessages:locatorFunction className="rf-is"/>
+        </ui:define>
         <ui:define name="js">
+            <ui:remove>
+                TODO: remove whole 'define @name="js"' after issue with JS API solved (https://issues.jboss.org/browse/RF-12853). 
+            </ui:remove>
             <script type="text/javascript">
-                var arr = [
-                    "jsr-303-inBean",
-                    "jsr-303-inAtt",
-                    "jsr-303-inBundle",
-                    "csv-inBean",
-                    "csv-inAtt",
-                    "csv-inBundle",
-                    "jsf-inAtt",
-                    "jsf-inBundle"
-                ];
-
-                function setValue(id, item) {
-                    var cssInput = '[id$=' + id + 'Input]';
-                    var cssItem = '[id$=' + id + item + ']';
-                    $(cssInput).click();
-                    $(cssItem).click();
-                    $(cssInput).blur();
+                function setValues(value) {
+                    $(getLocator()).each(function() {
+                        $(this).click();
+                        $(".rf-is-opt:visible:contains(" + value + ")").click();
+                        RichFaces.component($(this)).save();
+                    });
                 }
-
-                function setValues(item) {
-                    for (var i = 0; arr.length > i; i++) {
-                        setValue(arr[i], item);
+                function command(button) {
+                    document.valuesSettingState = "started";
+                    if (button == "wrong") {
+                        setValues(getBadValue());
+                    } else {
+                        setValues(getGoodValue());
                     }
+                    document.valuesSettingState = "finished";
                 }
-
-                function setCorrectValues() {
-                    setValues('Item0')
-                }
-
-                function setWrongValues() {
-                    setValues('Item1')
+                if (window.onload == null) {
+                    window.onload = function() {
+                        document.valuesSettingState = "";
+                    }
+                } else {
+                    window.onload += function() {
+                        document.valuesSettingState = "";
+                    }
                 }
             </script>
         </ui:define>

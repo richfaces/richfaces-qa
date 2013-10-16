@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"   xmlns:composite="http://java.sun.com/jsf/composite"  >
+
+    <h:body>
+        <composite:interface>
+            <composite:attribute name="bad" type="java.lang.String" required="true" />
+            <composite:attribute name="good" type="java.lang.String" required="true" />
+        </composite:interface>
+
+        <composite:implementation>
+            <script type="text/javascript">
+                function getBadValue() {
+                    return #{cc.attrs.bad};
+                }
+                function getGoodValue(){
+                    return #{cc.attrs.good};
+                }
+            </script>
+        </composite:implementation>
+    </h:body>
+</html>
