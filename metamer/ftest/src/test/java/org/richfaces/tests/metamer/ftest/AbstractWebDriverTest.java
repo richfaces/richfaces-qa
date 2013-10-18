@@ -24,7 +24,6 @@
  */
 package org.richfaces.tests.metamer.ftest;
 
-import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.basicAttributes;
 import static org.testng.Assert.assertEquals;
@@ -715,7 +714,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * Method used to run selenium test in portal environment.
      */
     private void goToTestInPortal() {
-        driver.get(format("{0}://{1}:{2}/{3}", contextPath.getProtocol(), contextPath.getHost(), contextPath.getPort(),
+        driver.get(String.format("%s://%s:%s/%s", contextPath.getProtocol(), contextPath.getHost(), contextPath.getPort(),
             "portal/classic/metamer"));
         try {
             driver.findElement(By.cssSelector("a[id$='controlsForm:goHomeLink']")).click();
@@ -723,10 +722,10 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         } catch (NoSuchElementException ex) {
         }
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        String setTextQuery = "document.querySelector(\"input[id$='linksForm:{0}']\").value = '{1}';";
+        String setTextQuery = "document.querySelector(\"input[id$='linksForm:%s']\").value = '%s';";
         String testUrl = getTestUrl().toExternalForm().substring(getTestUrl().toExternalForm().indexOf("faces"));
-        js.executeScript(format(setTextQuery, "linkToTest", testUrl));
-        js.executeScript(format(setTextQuery, "template", template.toString()));
+        js.executeScript(String.format(setTextQuery, "linkToTest", testUrl));
+        js.executeScript(String.format(setTextQuery, "template", template.toString()));
         js.executeScript("document.querySelector(\"a[id$='linksForm:redirectToPortlet']\").click()");
     }
 
@@ -736,10 +735,10 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     public void testRequestEventsBefore(WebElement attributesTable, String... events) {
         for (String event : events) {
-            String inputExp = format("input[id$=on{0}Input]", event);
+            String inputExp = String.format("input[id$=on%sInput]", event);
             WebElement input = attributesTable.findElement(By.cssSelector(inputExp));
             // Note: To avoid lost metamerEvents variable when @mode=server, use sessionStorage
-            String inputVal = format("metamerEvents += \"{0} \"", event);
+            String inputVal = String.format("metamerEvents += \"%s \"", event);
             String inputValFull = "sessionStorage.setItem('metamerEvents', " + inputVal + ")";
             // even there would be some events (in params) twice, don't expect handle routine to be executed twice
             input.clear();
@@ -769,7 +768,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         assertEquals(
             actualEvents,
             events,
-            format("The events ({0}) don't came in right order ({1})", Arrays.deepToString(actualEvents),
+            String.format("The events (%s) don't came in right order (%s)", Arrays.deepToString(actualEvents),
             Arrays.deepToString(events)));
     }
 

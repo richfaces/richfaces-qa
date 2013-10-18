@@ -21,8 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richValidator;
 
-import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
-
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -101,7 +99,7 @@ public class ValidatorSimplePage extends MetamerPage {
     public WebElement simpleErrorMessage;
 
     public WebElement getSelectionItemByLabel(String label) {
-        return driver.findElement(By.cssSelector(format("table[id$=size] tr > td > input[value='{0}']", label)));
+        return driver.findElement(By.cssSelector(String.format("table[id$=size] tr > td > input[value='%s']", label)));
     }
 
     @FindByJQuery("span[id$=futureMsg] span.rf-msg-det")
