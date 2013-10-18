@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.bean.rich;
 
-import com.google.common.collect.Lists;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,11 +31,13 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import org.richfaces.sandbox.select.orderingList.UIOrderingList;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.model.Capital;
-import org.richfaces.ui.select.orderingList.UIOrderingList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.Lists;
 
 /**
  * Simple bean for rich:orderingList component example.
