@@ -21,9 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.richItemChangeListener;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
+
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.page.Page;

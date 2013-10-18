@@ -1,6 +1,6 @@
 package org.richfaces.tests.metamer.ftest.richPanelMenu;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.junit.Assert.fail;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuAttributes;

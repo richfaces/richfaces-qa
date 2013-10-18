@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richToolbarGroup;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemStyle;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.toolbarGroupAttributes;

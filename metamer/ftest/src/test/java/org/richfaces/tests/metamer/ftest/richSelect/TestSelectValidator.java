@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richSelect;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.selectAttributes;
 
 import java.net.URL;

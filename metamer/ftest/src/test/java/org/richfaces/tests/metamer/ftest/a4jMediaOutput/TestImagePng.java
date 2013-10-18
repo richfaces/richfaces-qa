@@ -21,8 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jMediaOutput;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
@@ -33,8 +32,6 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-import org.jboss.arquillian.ajocado.dom.Attribute;
-import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.testng.annotations.Test;
 
 

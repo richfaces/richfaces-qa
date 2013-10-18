@@ -21,10 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.disabledClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.leftIconClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.rightIconClass;
@@ -44,14 +44,12 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemA
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuItemAttributes;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
 
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.page.Page;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -62,6 +60,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.ui.toggle.panelMenu.PanelMenuMode;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 import com.google.common.base.Predicate;
 
 /**

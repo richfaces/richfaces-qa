@@ -21,11 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jRegion;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.regionAttributes;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.regionAttributes;
+
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;

@@ -22,7 +22,7 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jStatus;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.statusAttributes;
 
 import java.net.URL;

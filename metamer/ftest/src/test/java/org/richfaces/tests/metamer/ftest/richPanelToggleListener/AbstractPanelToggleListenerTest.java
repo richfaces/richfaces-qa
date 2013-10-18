@@ -21,7 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richPanelToggleListener;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
 import javax.faces.event.PhaseId;

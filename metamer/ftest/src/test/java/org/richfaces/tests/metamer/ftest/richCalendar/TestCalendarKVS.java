@@ -21,11 +21,11 @@
  */
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
@@ -47,7 +47,7 @@ public class TestCalendarKVS extends AbstractCalendarTest {
 
     @Override
     public URL getTestUrl() {
-        return URLUtils.buildUrl(contextPath, "faces/components/richCalendar/simple.xhtml");
+        return buildUrl(contextPath, "faces/components/richCalendar/simple.xhtml");
     }
 
     private void submitWithA4jSubmitBtn() {

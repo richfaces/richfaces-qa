@@ -22,7 +22,7 @@
 package org.richfaces.tests.metamer.ftest;
 
 import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.basicAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -62,7 +62,6 @@ import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.VisibleComponent;
-import org.richfaces.tests.page.fragments.impl.common.ClearType;
 import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.richfaces.ui.common.SwitchType;

@@ -22,7 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
 import static java.text.MessageFormat.format;
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
