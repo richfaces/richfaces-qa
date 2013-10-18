@@ -30,10 +30,10 @@ import static org.testng.Assert.assertTrue;
 import java.awt.Color;
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.utils.ColorUtils;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.page.Page;
+import org.jboss.test.selenium.support.color.ColorUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
