@@ -21,19 +21,12 @@
  *******************************************************************************/
 package org.jboss.test.selenium.listener;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.jboss.arquillian.ajocado.browser.BrowserType;
-import org.jboss.arquillian.ajocado.framework.GrapheneConfigurationContext;
-import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
-import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
-import org.jboss.arquillian.ajocado.network.NetworkTrafficType;
+import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
 import org.jboss.test.selenium.utils.testng.TestInfo;
 import org.jboss.test.selenium.utils.testng.TestLoggingUtils;
 import org.openqa.selenium.OutputType;
@@ -43,9 +36,6 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
-
-import com.thoughtworks.selenium.SeleniumException;
-import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
 
 /**
  * Test listener which provides the methods injected in lifecycle of test case to catch the additional information in
@@ -57,11 +47,10 @@ import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
  */
 public class FailureLoggingTestListener extends TestListenerAdapter {
 
-//    protected static final Logger LOGGER = Logger.getLogger(FailureLoggingTestListener.class.getName());
+    // protected static final Logger LOGGER = Logger.getLogger(FailureLoggingTestListener.class.getName());
     protected File mavenProjectBuildDirectory = new File(System.getProperty("maven.project.build.directory",
         "./target/"));
     protected File failuresOutputDir = new File(mavenProjectBuildDirectory, "failures");
-    protected GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
 
     @Override
     public void onStart(ITestContext testContext) {
@@ -84,72 +73,10 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
         onFailure(result);
     }
 
-    /**
-     * Override this method if you need to distinguish between Selenium 1 and Selenium 2/WebDriver API. By default,
-     * Selenium 1 API is used.
-     *
-     * @param result
-     */
     public void onFailure(ITestResult result) {
-        onFailureForSelenium1(result);
-    }
-
-    public void onFailureForSelenium1(ITestResult result) {
-        if (!selenium.isStarted()) {
-            return;
-        }
-
-        Throwable throwable = result.getThrowable();
-        String stacktrace = null;
-
-        if (throwable != null) {
-            stacktrace = ExceptionUtils.getStackTrace(throwable);
-        }
-
-        String filenameIdentification = getFilenameIdentification(result);
-
-        String traffic;
-        try {
-            traffic = selenium.captureNetworkTraffic(NetworkTrafficType.PLAIN).getTraffic();
-        } catch (SeleniumException e) {
-            traffic = ExceptionUtils.getFullStackTrace(e);
-        }
-
-        BrowserType browser = GrapheneConfigurationContext.getProxy().getBrowser().getType();
-        BufferedImage screenshot = null;
-
-        if (browser == BrowserType.FIREFOX) {
-            screenshot = selenium.captureEntirePageScreenshot();
-        }
-
-        String htmlSource = selenium.getHtmlSource();
-
-        File stacktraceOutputFile = new File(failuresOutputDir, filenameIdentification + "/stacktrace.txt");
-        File imageOutputFile = new File(failuresOutputDir, filenameIdentification + "/screenshot.png");
-        File trafficOutputFile = new File(failuresOutputDir, filenameIdentification + "/network-traffic.txt");
-        // File logOutputFile = new File(failuresOutputDir, filenameIdentification + "/selenium-log.txt");
-        File htmlSourceOutputFile = new File(failuresOutputDir, filenameIdentification + "/html-source.html");
-
-        try {
-            File directory = imageOutputFile.getParentFile();
-            FileUtils.forceMkdir(directory);
-
-            FileUtils.writeStringToFile(stacktraceOutputFile, stacktrace);
-            if (browser == BrowserType.FIREFOX) {
-                ImageIO.write(screenshot, "PNG", imageOutputFile);
-            }
-            FileUtils.writeStringToFile(trafficOutputFile, traffic);
-            // FileUtils.writeLines(logOutputFile, methodLog);
-            FileUtils.writeStringToFile(htmlSourceOutputFile, htmlSource);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void onFailureForSelenium2(ITestResult result) {
         if (getWebDriver() == null) {
             System.out.println("Can't take a screenshot and save HTML, because there is no driver available.");
-//            LOGGER.info("Can't take a screenshot and save HTML, because there is no driver available.");
+            // LOGGER.info("Can't take a screenshot and save HTML, because there is no driver available.");
             return;
         }
 
@@ -195,10 +122,10 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
             // FileUtils.writeStringToFile(trafficOutputFile, traffic);
             // FileUtils.writeLines(logOutputFile, methodLog);
             FileUtils.writeStringToFile(htmlSourceOutputFile, htmlSource);
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.err.println("Can't take a screenshot/save HTML source: " + e.getMessage());
             e.printStackTrace(System.err);
-//            LOGGER.log(Level.WARNING, "Can't take a screenshot/save HTML source.", e);
+            // LOGGER.log(Level.WARNING, "Can't take a screenshot/save HTML source.", e);
         }
     }
 
@@ -216,10 +143,10 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
     }
 
     protected WebDriver getWebDriver() {
-//        if (GrapheneContext.isInitialized()) {
-//            return GrapheneContext.getProxyForInterfaces(TakesScreenshot.class);
-//        } else {
-            return null;
-//        }
+        // if (GrapheneContext.isInitialized()) {
+        // return GrapheneContext.getProxyForInterfaces(TakesScreenshot.class);
+        // } else {
+        return null;
+        // }
     }
 }
