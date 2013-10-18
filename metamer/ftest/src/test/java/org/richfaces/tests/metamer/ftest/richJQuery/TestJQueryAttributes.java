@@ -31,8 +31,8 @@ import java.awt.Color;
 import java.net.URL;
 import java.util.List;
 
-import org.jboss.arquillian.ajocado.utils.ColorUtils;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.test.selenium.support.color.ColorUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
