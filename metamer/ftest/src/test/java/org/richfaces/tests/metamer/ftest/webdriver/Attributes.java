@@ -28,7 +28,6 @@ import com.google.common.collect.Lists;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.drone.api.annotation.Default;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
@@ -279,10 +278,6 @@ public class Attributes<T extends AttributeEnum> {
 
     public void set(T attribute, Boolean bool) {
         set(attribute.toString(), bool);
-    }
-
-    public void set(T attribute, JavaScript js) {
-        set(attribute.toString(), js);
     }
 
     public void set(T attribute, Enum<?> item) {

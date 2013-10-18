@@ -43,7 +43,6 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-//FIXME should not be generic
 public abstract class AbstractPlaceholderTest extends AbstractWebDriverTest {
 
     public static final String INPUT1_ID = "[id$=input1]";
