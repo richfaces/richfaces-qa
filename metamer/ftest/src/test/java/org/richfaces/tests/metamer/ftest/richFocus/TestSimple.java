@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richFocus;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 

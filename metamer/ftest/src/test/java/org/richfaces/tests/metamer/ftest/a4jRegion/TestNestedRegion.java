@@ -22,15 +22,13 @@
 package org.richfaces.tests.metamer.ftest.a4jRegion;
 
 import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
-
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 import java.util.EnumSet;
-import org.jboss.arquillian.graphene.page.Page;
 
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.a4jRegion.NestedRegionModel.Component;
 import org.richfaces.tests.metamer.ftest.a4jRegion.NestedRegionModel.Execute;

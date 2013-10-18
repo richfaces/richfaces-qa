@@ -21,7 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richPlaceholder;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.placeholderAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;

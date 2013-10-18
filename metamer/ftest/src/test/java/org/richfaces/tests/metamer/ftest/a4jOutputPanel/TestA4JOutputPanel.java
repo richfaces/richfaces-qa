@@ -21,18 +21,18 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jOutputPanel;
 
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.outputPanelAttributes;
 import static org.richfaces.tests.page.fragments.impl.utils.Event.CLICK;
 import static org.richfaces.tests.page.fragments.impl.utils.Event.DBLCLICK;
 import static org.richfaces.tests.page.fragments.impl.utils.Event.KEYDOWN;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.KEYPRESS;
 import static org.richfaces.tests.page.fragments.impl.utils.Event.KEYUP;
 import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEDOWN;
 import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEMOVE;
 import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOUT;
 import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOVER;
 import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEUP;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.KEYPRESS;
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.outputPanelAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;

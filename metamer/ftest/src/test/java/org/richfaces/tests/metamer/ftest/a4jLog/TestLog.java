@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jLog;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.page.fragments.impl.common.ClearType.DELETE;
 import static org.richfaces.tests.page.fragments.impl.log.Log.LogEntryLevel.INFO;
 import static org.richfaces.tests.page.fragments.impl.log.Log.LogEntryLevel.values;
