@@ -21,8 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jPoll;
 
-import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
-import static org.jboss.arquillian.ajocado.utils.PrimitiveUtils.asLong;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.pollAttributes;
 import static org.testng.Assert.assertTrue;
@@ -147,7 +145,7 @@ public class TestPollInterval extends AbstractWebDriverTest {
         long deviation = Math.abs(interval - runTime);
 
         assertTrue(deviation <= (2 * interval),
-            format("Deviation ({0}) is greater than two intervals (2 * {1})", deviation, interval));
+            String.format("Deviation (%s) is greater than two intervals (2 * %s)", deviation, interval));
 
         deviationTotal += deviation;
         deviationCount += 1;
@@ -159,7 +157,7 @@ public class TestPollInterval extends AbstractWebDriverTest {
 
         assertTrue(
             averageDeviation <= maximumAvgDeviation,
-            format("Average deviation for all the intervals ({0}) should not be greater than defined maximum {1}",
+            String.format("Average deviation for all the intervals (%s) should not be greater than defined maximum %s",
             averageDeviation, maximumAvgDeviation));
     }
 
@@ -169,6 +167,6 @@ public class TestPollInterval extends AbstractWebDriverTest {
      * @return the time of poll event (the time when arrived the response from server)
      */
     private long getClientTime() {
-        return asLong(outputTime.getAttribute("title"));
+        return Long.parseLong(outputTime.getAttribute("title"));
     }
 }
