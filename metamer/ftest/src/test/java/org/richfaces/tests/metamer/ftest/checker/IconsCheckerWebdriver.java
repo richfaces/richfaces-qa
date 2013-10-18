@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.Validate;
-import org.jboss.arquillian.ajocado.css.CssProperty;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -54,10 +53,14 @@ public class IconsCheckerWebdriver<A extends AttributeEnum> {
     /**
      * Create a new instance of icons checker
      *
-     * @param driver instance of WebDriver
-     * @param attributes Attributes instance used to set component attributes
-     * @param iconPrefix prefix used for icon elements
-     * @param iconSuffix suffix used for icon elements
+     * @param driver
+     *            instance of WebDriver
+     * @param attributes
+     *            Attributes instance used to set component attributes
+     * @param iconPrefix
+     *            prefix used for icon elements
+     * @param iconSuffix
+     *            suffix used for icon elements
      */
     public IconsCheckerWebdriver(WebDriver driver, Attributes<A> attributes, String iconPrefix, String iconSuffix) {
         Validate.notNull(driver);
@@ -73,7 +76,8 @@ public class IconsCheckerWebdriver<A extends AttributeEnum> {
     /**
      * Checks whether icons controlled by CSS work properly (only icons which produce an image)
      *
-     * @param attribute icon attribute
+     * @param attribute
+     *            icon attribute
      * @param icon
      * @param classSuffix
      */
@@ -92,41 +96,46 @@ public class IconsCheckerWebdriver<A extends AttributeEnum> {
         cssImageIcons.put("triangle", "triangle");
         cssImageIcons.put("triangleDown", "triangle-down");
         cssImageIcons.put("triangleUp", "triangle-up");
-        for(String cssIcon : cssImageIcons.keySet()) {
+        for (String cssIcon : cssImageIcons.keySet()) {
             if (!setAttributeSilently(attribute, cssIcon)) {
                 continue;
             }
-            assertTrue(icon.findElement().getAttribute("class").contains(iconPrefix + cssImageIcons.get(cssIcon) + iconSuffix + classSuffix),
-                    "Div should have set class " + iconPrefix + cssImageIcons.get(cssIcon) + iconSuffix + classSuffix + ".");
-            assertTrue(icon.findElement().getCssValue(CssProperty.BACKGROUND_IMAGE.getPropertyName()).contains(cssIcon + imageNameSuffix),
-                    "Icon should contain a " + cssIcon + ".");
+            assertTrue(
+                icon.findElement().getAttribute("class")
+                    .contains(iconPrefix + cssImageIcons.get(cssIcon) + iconSuffix + classSuffix),
+                "Div should have set class " + iconPrefix + cssImageIcons.get(cssIcon) + iconSuffix + classSuffix + ".");
+            assertTrue(icon.findElement().getCssValue("background-image").contains(cssIcon + imageNameSuffix),
+                "Icon should contain a " + cssIcon + ".");
         }
     }
 
     /**
      * Checks whether icons controlled by CSS work properly (only icons which don't produce any image)
      *
-     * @param attribute icon attribute
+     * @param attribute
+     *            icon attribute
      * @param icon
      * @param classSuffix
      */
     public void checkCssNoImageIcons(A attribute, ElementLocator icon, String classSuffix) {
         String[] cssNoImageIcons = new String[] { "transparent" };
-        for(String cssIcon : cssNoImageIcons) {
+        for (String cssIcon : cssNoImageIcons) {
             if (!setAttributeSilently(attribute, cssIcon)) {
                 continue;
             }
-            assertTrue(icon.findElement().getAttribute("class").contains(iconPrefix + cssIcon + iconSuffix + classSuffix),
-                "Div should have set class " + iconPrefix + cssIcon + iconSuffix + classSuffix +".");
-            assertTrue(icon.findElement().getCssValue(CssProperty.BACKGROUND_IMAGE.getPropertyName()).equals("none"),
-                    "Icon should not contain any image.");
+            assertTrue(
+                icon.findElement().getAttribute("class").contains(iconPrefix + cssIcon + iconSuffix + classSuffix),
+                "Div should have set class " + iconPrefix + cssIcon + iconSuffix + classSuffix + ".");
+            assertTrue(icon.findElement().getCssValue("background-image").equals("none"),
+                "Icon should not contain any image.");
         }
     }
 
     /**
      * Checks whether icon with custom URL works properly
      *
-     * @param attribute icon attribute
+     * @param attribute
+     *            icon attribute
      * @param icon
      * @param image
      * @param classSuffix
@@ -138,61 +147,73 @@ public class IconsCheckerWebdriver<A extends AttributeEnum> {
     /**
      * Checks whether icon with custom URL works properly
      *
-     * @param attribute icon attribute
+     * @param attribute
+     *            icon attribute
      * @param icon
      * @param image
      * @param classSuffix
-     * @param disableIcon set to TRUE if the presence of image element causes that icon element shouldn't be present
+     * @param disableIcon
+     *            set to TRUE if the presence of image element causes that icon element shouldn't be present
      */
     public void checkImageIcons(A attribute, ElementLocator icon, By image, String classSuffix, boolean disableIcon) {
         // option -> image
         Map<String, String> imageIcons = new HashMap<String, String>();
         imageIcons.put("nonexisting", "nonexisting");
         imageIcons.put("star", "star.png");
-        for(String imageIcon : imageIcons.keySet()) {
+        for (String imageIcon : imageIcons.keySet()) {
             if (!setAttributeSilently(attribute, imageIcon)) {
                 continue;
             }
             if (disableIcon) {
-                assertFalse(new WebElementConditionFactory(icon.findElement()).isPresent().apply(driver), "Icon's div (" + icon + ") should not be present when icon=" + imageIcon + ".");
+                assertFalse(new WebElementConditionFactory(icon.findElement()).isPresent().apply(driver),
+                    "Icon's div (" + icon + ") should not be present when icon=" + imageIcon + ".");
             }
-            assertTrue(new WebElementConditionFactory(driver.findElement(image)).isPresent().apply(driver), "Icon's image should be rendered (" + image + ") when icon=" + imageIcon + ".");
+            assertTrue(new WebElementConditionFactory(driver.findElement(image)).isPresent().apply(driver),
+                "Icon's image should be rendered (" + image + ") when icon=" + imageIcon + ".");
             assertTrue(driver.findElement(image).getAttribute("src").contains(imageIcons.get(imageIcon)),
-                    "Icon's src attribute (" + image + ") should contain " + imageIcons.get(imageIcon) + " when icon=" + imageIcon + ".");
+                "Icon's src attribute (" + image + ") should contain " + imageIcons.get(imageIcon) + " when icon="
+                    + imageIcon + ".");
         }
     }
 
     /**
      * Verify img icon at location given as icon param
      *
-     * It is useful when using page fragments where icon element is reliable and unique localized,
-     * but img child element doesn't contains any additional attributes for unique identification.
-     * Which is no longer needed since parent element is reliable identified.
+     * It is useful when using page fragments where icon element is reliable and unique localized, but img child element
+     * doesn't contains any additional attributes for unique identification. Which is no longer needed since parent
+     * element is reliable identified.
      *
-     * Used e.g. for PanelMenuGroup icons, where more groups present within menu,
-     * but icon images are difficult to localize unique over whole page.
+     * Used e.g. for PanelMenuGroup icons, where more groups present within menu, but icon images are difficult to
+     * localize unique over whole page.
      *
-     * @param attribute icon attribute
-     * @param icon - root of icon "element" - it is div for CSS icons, and img for image icons (2nd make sense in this test)
+     * @param attribute
+     *            icon attribute
+     * @param icon
+     *            - root of icon "element" - it is div for CSS icons, and img for image icons (2nd make sense in this
+     *            test)
      * @param classSuffix
-     * @param disableIcon set to TRUE if the presence of image element causes that icon element shouldn't be present
+     * @param disableIcon
+     *            set to TRUE if the presence of image element causes that icon element shouldn't be present
      */
-    public void checkImageIcons(A attribute, ElementLocator icon, WebElement imgIconElem, String classSuffix, boolean disableIcon) {
+    public void checkImageIcons(A attribute, ElementLocator icon, WebElement imgIconElem, String classSuffix,
+        boolean disableIcon) {
         // option -> image
         Map<String, String> imageIcons = new HashMap<String, String>();
         imageIcons.put("nonexisting", "nonexisting");
         imageIcons.put("star", "star.png");
-        for(String imageIcon : imageIcons.keySet()) {
+        for (String imageIcon : imageIcons.keySet()) {
             if (!setAttributeSilently(attribute, imageIcon)) {
                 continue;
             }
             if (disableIcon) {
-                assertFalse(new WebElementConditionFactory(icon.findElement()).isPresent().apply(driver), "Icon's div (" + icon + ") should not be present when icon=" + imageIcon + ".");
+                assertFalse(new WebElementConditionFactory(icon.findElement()).isPresent().apply(driver),
+                    "Icon's div (" + icon + ") should not be present when icon=" + imageIcon + ".");
             }
             // iconElem as var to easier debug/verify what element was reached
-            assertTrue(new WebElementConditionFactory(imgIconElem).isPresent().apply(driver), "Icon's image should be rendered (" + icon + ") when icon=" + imageIcon + ".");
-            assertTrue(imgIconElem.getAttribute("src").contains(imageIcons.get(imageIcon)),
-                    "Icon's src attribute (" + icon + ") should contain " + imageIcons.get(imageIcon) + " when icon=" + imageIcon + ".");
+            assertTrue(new WebElementConditionFactory(imgIconElem).isPresent().apply(driver),
+                "Icon's image should be rendered (" + icon + ") when icon=" + imageIcon + ".");
+            assertTrue(imgIconElem.getAttribute("src").contains(imageIcons.get(imageIcon)), "Icon's src attribute ("
+                + icon + ") should contain " + imageIcons.get(imageIcon) + " when icon=" + imageIcon + ".");
         }
     }
 
@@ -200,7 +221,8 @@ public class IconsCheckerWebdriver<A extends AttributeEnum> {
         if (!setAttributeSilently(attribute, "none")) {
             return;
         }
-        assertFalse(new WebElementConditionFactory(icon.findElement()).isPresent().apply(driver), "Icon should not be present when icon=none.");
+        assertFalse(new WebElementConditionFactory(icon.findElement()).isPresent().apply(driver),
+            "Icon should not be present when icon=none.");
     }
 
     private boolean setAttributeSilently(A attribute, String value) {
@@ -208,7 +230,7 @@ public class IconsCheckerWebdriver<A extends AttributeEnum> {
         try {
             attributes.set(attribute, value);
             return true;
-        } catch(RuntimeException ignored) {
+        } catch (RuntimeException ignored) {
             return false;
         }
     }
