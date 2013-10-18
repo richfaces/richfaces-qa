@@ -21,18 +21,76 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest;
 
-import org.jboss.test.selenium.listener.SeleniumLoggingTestListener;
+import org.apache.commons.lang.StringUtils;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
+import org.jboss.test.selenium.utils.testng.TestLoggingUtils;
 import org.testng.ITestResult;
-
+import org.testng.TestListenerAdapter;
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 21424 $
+ * Class determined to logging into Selenium Server's logs server.log via the Selenium.getEval(String) method which will
+ * evaluate JavaScript comment.
+ *
+ * You must rewrite the Selenium selenium property to allow logging facility.
+ *
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>, <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
+ * @version $Revision$
  */
-public class MetamerSeleniumLoggingTestListener extends SeleniumLoggingTestListener {
+public class MetamerSeleniumLoggingTestListener extends TestListenerAdapter {
+
+    /**
+     * Proxy to local selenium instance
+     */
+    private GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
+
     @Override
+    public void onTestStart(ITestResult result) {
+        logStatus(result);
+    }
+
+    @Override
+    public void onTestFailure(ITestResult result) {
+        logStatus(result);
+    }
+
+    @Override
+    public void onTestSkipped(ITestResult result) {
+        logStatus(result);
+    }
+
+    @Override
+    public void onTestSuccess(ITestResult result) {
+        logStatus(result);
+    }
+
+    @Override
+    public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
+        logStatus(result);
+    }
+
+    /**
+     * This method will output method name and status into Selenium Server's log server.log via the
+     * Selenium.getEval(String) method which will evaluate JavaScript comment
+     *
+     * @param result
+     *            from the fine-grained listener's method such as onTestFailure(ITestResult)
+     */
+    private void logStatus(ITestResult result) {
+        final String hashes = "##########";
+        final String message = getMessage(result);
+
+        String messageLine = String.format("%s %s %s", hashes, message, hashes);
+        String line = StringUtils.repeat("#", messageLine.length());
+
+        if (selenium.isStarted()) {
+            String output = String.format("\n%s\n%s\n%s\n", line, messageLine, line);
+            selenium.logToBrowser(output);
+        }
+    }
+
     protected String getMessage(ITestResult result) {
-        String message = super.getMessage(result);
+        String message = TestLoggingUtils.getTestDescription(result);
         return message + " " + MetamerTestInfo.getConfigurationInfoInParenthesses();
     }
 }
