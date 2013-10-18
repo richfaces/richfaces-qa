@@ -31,7 +31,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
-import org.jboss.arquillian.ajocado.format.SimplifiedFormat;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
@@ -65,12 +64,12 @@ public abstract class AbstractTreeSelectionTest extends AbstractTreeTest {
     @Use(value = "selectionTypes")
     private SwitchType selectionType;
 
-    private static final SwitchType[] selectionTypes = new SwitchType[]{ SwitchType.ajax, SwitchType.client };
-    private static final SwitchType[] selectionTypeAjax = new SwitchType[]{ SwitchType.ajax };
-    private static final SwitchType[] selectionTypeClient = new SwitchType[]{ SwitchType.client };
-    private static final SwitchType[] eventEnabledSelectionTypes = new SwitchType[]{ SwitchType.ajax };
+    private static final SwitchType[] selectionTypes = new SwitchType[] { SwitchType.ajax, SwitchType.client };
+    private static final SwitchType[] selectionTypeAjax = new SwitchType[] { SwitchType.ajax };
+    private static final SwitchType[] selectionTypeClient = new SwitchType[] { SwitchType.client };
+    private static final SwitchType[] eventEnabledSelectionTypes = new SwitchType[] { SwitchType.ajax };
 
-    protected Integer[][] selectionPaths = new Integer[][]{ { 3, 2 }, { 1, 0, 0 }, { 1 }, { 3, 9, 2 } };
+    protected Integer[][] selectionPaths = new Integer[][] { { 3, 2 }, { 1, 0, 0 }, { 1 }, { 3, 9, 2 } };
 
     protected TreeNode treeNode;
 
@@ -79,9 +78,8 @@ public abstract class AbstractTreeSelectionTest extends AbstractTreeTest {
             treeNode = null;
             for (int i = 0; i < path.length; i++) {
                 int index = path[i];
-                treeNode = (treeNode == null)
-                    ? tree.advanced().getNodes().get(index)
-                    : treeNode.advanced().getNodes().get(index);
+                treeNode = (treeNode == null) ? tree.advanced().getNodes().get(index) : treeNode.advanced().getNodes()
+                    .get(index);
                 if (i < path.length - 1) {
                     treeNode.advanced().expand();
                 }
@@ -132,7 +130,8 @@ public abstract class AbstractTreeSelectionTest extends AbstractTreeTest {
         for (Integer[] path : selectionPaths) {
             treeNode = null;
             for (int index : path) {
-                treeNode = (treeNode == null) ? tree.advanced().getNodes().get(index) : treeNode.advanced().getNodes().get(index);
+                treeNode = (treeNode == null) ? tree.advanced().getNodes().get(index) : treeNode.advanced().getNodes()
+                    .get(index);
             }
             assertFalse(treeNode.advanced().isSelected());
             getGuarded(treeNode.advanced(), selectionType).select();
@@ -147,7 +146,8 @@ public abstract class AbstractTreeSelectionTest extends AbstractTreeTest {
         for (Integer[] path : selectionPaths) {
             treeNode = null;
             for (int index : path) {
-                treeNode = (treeNode == null) ? tree.advanced().getNodes().get(index) : treeNode.advanced().getNodes().get(index);
+                treeNode = (treeNode == null) ? tree.advanced().getNodes().get(index) : treeNode.advanced().getNodes()
+                    .get(index);
             }
             String previousSelectionValue = selection.getText();
             getGuarded(treeNode.advanced(), selectionType).select();
@@ -161,20 +161,20 @@ public abstract class AbstractTreeSelectionTest extends AbstractTreeTest {
             assertEquals(
                 getSelection(),
                 path,
-                SimplifiedFormat.format("Actual Selection ({0}) doesn't correspond to expected ({1})",
-                Arrays.deepToString(getSelection()), Arrays.deepToString(path)));
+                String.format("Actual Selection (%s) doesn't correspond to expected (%s)",
+                    Arrays.deepToString(getSelection()), Arrays.deepToString(path)));
 
             assertEquals(
                 getNewSelection(),
                 path,
-                SimplifiedFormat.format("Actual New selection ({0}) doesn't correspond to expected ({1})",
-                Arrays.deepToString(getNewSelection()), Arrays.deepToString(path)));
+                String.format("Actual New selection (%s) doesn't correspond to expected (%s)",
+                    Arrays.deepToString(getNewSelection()), Arrays.deepToString(path)));
             if (old != null) {
                 assertEquals(
                     getOldSelection(),
                     old,
-                    SimplifiedFormat.format("Actual Old selection ({0}) doesn't correspond to expected ({1})",
-                    Arrays.deepToString(getOldSelection()), Arrays.deepToString(old)));
+                    String.format("Actual Old selection (%s) doesn't correspond to expected (%s)",
+                        Arrays.deepToString(getOldSelection()), Arrays.deepToString(old)));
             } else {
                 assertEquals(oldSelection.getText(), "[]");
             }

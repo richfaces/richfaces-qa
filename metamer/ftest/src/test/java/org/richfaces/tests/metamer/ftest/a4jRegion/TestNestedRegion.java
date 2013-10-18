@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jRegion;
 
-import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 
@@ -120,7 +119,7 @@ public class TestNestedRegion extends AbstractWebDriverTest {
         EnumSet<Component> redundant = EnumSet.complementOf(expectedChanges);
         redundant.retainAll(actualChanges);
 
-        StringBuilder message = new StringBuilder(format("Component: {0}, Execute: {1}; ", component, execute));
+        StringBuilder message = new StringBuilder(String.format("Component: %s, Execute: %s; ", component, execute));
 
         if (!missing.isEmpty()) {
             message.append("Expected to change: " + missing + "; ");

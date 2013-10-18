@@ -21,8 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jRepeat;
 
-import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,10 +88,10 @@ public class SimplePage {
     }
 
     private String parseValue(String name, String text) {
-        Pattern pattern = Pattern.compile(format("(?:^|.* ){0}=([^,]+)(?:,.*|$)", name));
+        Pattern pattern = Pattern.compile(String.format("(?:^|.* )%s=([^,]+)(?:,.*|$)", name));
         Matcher matcher = pattern.matcher(text);
         if (!matcher.find()) {
-            throw new IllegalArgumentException(format("the text '{0}' cannot be parsed", text));
+            throw new IllegalArgumentException(String.format("the text '%s' cannot be parsed", text));
         }
         return matcher.group(1);
     }
