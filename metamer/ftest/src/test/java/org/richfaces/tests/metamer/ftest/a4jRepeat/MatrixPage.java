@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jRepeat;
 
-import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
 import static org.testng.Assert.assertEquals;
 
 import java.util.List;
@@ -89,7 +88,7 @@ public class MatrixPage extends MetamerPage {
 
     public Integer obtainInputValue(int row, int column) {
         return Integer.valueOf(inputRows.get(row).findElements(BY_CELL).get(column).findElement(BY_INPUT)
-                .getAttribute("value"));
+            .getAttribute("value"));
     }
 
     public void checkMatrix() {
@@ -97,9 +96,9 @@ public class MatrixPage extends MetamerPage {
             for (int column = 0; column < COLUMNS_COUNT; column++) {
                 Integer expectedValue = matrix.get(row).get(column);
                 assertEquals(obtainInputValue(row, column), expectedValue,
-                        format("The input value on coordinates row:{0}, column:{1} does not match: ", row, column));
+                    String.format("The input value on coordinates row: %s, column: %s does not match: ", row, column));
                 assertEquals(obtainOutputValue(row, column), expectedValue,
-                        format("The output value on coordinates row:{0}, column:{1} does not match: ", row, column));
+                    String.format("The output value on coordinates row: %s, column: %s does not match: ", row, column));
             }
         }
     }
