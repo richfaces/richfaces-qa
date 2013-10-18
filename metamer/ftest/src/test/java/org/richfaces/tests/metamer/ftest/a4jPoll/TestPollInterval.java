@@ -23,7 +23,7 @@ package org.richfaces.tests.metamer.ftest.a4jPoll;
 
 import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
 import static org.jboss.arquillian.ajocado.utils.PrimitiveUtils.asLong;
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.pollAttributes;
 import static org.testng.Assert.assertTrue;
 

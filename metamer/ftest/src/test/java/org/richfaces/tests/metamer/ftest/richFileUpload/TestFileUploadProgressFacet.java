@@ -21,7 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richFileUpload;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.fileUploadAttributes;
 
 import java.net.URL;

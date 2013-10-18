@@ -21,14 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jMediaOutput;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.richfaces.tests.metamer.bean.a4j.A4JMediaOutputBean;
 import org.testng.annotations.Test;
 

@@ -1,6 +1,6 @@
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.inplaceInputAttributes;
 import static org.testng.Assert.assertEquals;
 

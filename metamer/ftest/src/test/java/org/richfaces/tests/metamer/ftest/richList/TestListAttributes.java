@@ -21,9 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richList;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.listAttributes;
-import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 import java.util.List;
