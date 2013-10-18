@@ -22,18 +22,14 @@
 package org.richfaces.tests.metamer.ftest.a4jMediaOutput;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.graphene.GrapheneElement;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for page /faces/components/a4jMediaOutput/elementScript.xhtml

@@ -28,9 +28,7 @@ import com.google.common.collect.Lists;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.drone.api.annotation.Default;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
@@ -44,6 +42,7 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -284,10 +283,6 @@ public class Attributes<T extends AttributeEnum> {
 
     public void set(T attribute, JavaScript js) {
         set(attribute.toString(), js);
-    }
-
-    public void set(T attribute, JQueryLocator locator) {
-        set(attribute.toString(), locator.getRawLocator());
     }
 
     public void set(T attribute, Enum<?> item) {
