@@ -23,13 +23,12 @@ package org.richfaces.tests.metamer.ftest.richAccordionItem;
 
 import java.util.List;
 
-import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.accordion.RichFacesAccordion;
+
 /**
  * Page object for rich accordion item
  *
@@ -83,9 +82,6 @@ public class AccordionItemPage extends MetamerPage {
     public String getRightIconSelector() {
         return rightIconSelector;
     }
-
-    @Drone
-    private WebDriver browser;
 
     public RichFacesAccordion getAccordion() {
         return accordion;
