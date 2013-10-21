@@ -26,6 +26,8 @@ import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
+import org.jboss.arquillian.drone.api.annotation.Default;
+import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
 import org.jboss.test.selenium.utils.testng.TestInfo;
 import org.jboss.test.selenium.utils.testng.TestLoggingUtils;
@@ -76,7 +78,6 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
     public void onFailure(ITestResult result) {
         if (getWebDriver() == null) {
             System.out.println("Can't take a screenshot and save HTML, because there is no driver available.");
-            // LOGGER.info("Can't take a screenshot and save HTML, because there is no driver available.");
             return;
         }
 
@@ -143,10 +144,6 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
     }
 
     protected WebDriver getWebDriver() {
-        // if (GrapheneContext.isInitialized()) {
-        // return GrapheneContext.getProxyForInterfaces(TakesScreenshot.class);
-        // } else {
-        return null;
-        // }
+        return GrapheneContext.getContextFor(Default.class).getWebDriver(TakesScreenshot.class);
     }
 }
