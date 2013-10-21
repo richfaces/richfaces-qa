@@ -84,7 +84,6 @@ FSF site: http://www.fsf.org. -->
             <groupId>org.jboss.shrinkwrap.resolver</groupId>
             <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
             <scope>test</scope>
-            <version>2.0.0-alpha-6</version>
         </dependency>
 
         <dependency>
@@ -130,14 +129,6 @@ FSF site: http://www.fsf.org. -->
             <artifactId>joda-time</artifactId>
             <scope>test</scope>
             <type>jar</type>
-        </dependency>
-
-        <!-- Selenium 2.26.0 requires httpcore 4.2 but 4.1 comes with Shrinkwrap 2.0.0-alpha-5 -->
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcore</artifactId>
-            <version>4.2.2</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
