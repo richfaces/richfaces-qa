@@ -91,7 +91,7 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
     }
 
     @Test
-    @Use(field = "delay", ints = { 1000, 1500, 2500 })
+    @Use(field = "delay", ints = { 1000, 1500, 1900 })
     public void testHideDelay() {
         super.testHideDelay(delay);
     }
@@ -108,7 +108,7 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
     }
 
     @Test
-    @Use(field = "delay", ints = { 1000, 1500, 2500 })
+    @Use(field = "delay", ints = { 1000, 1500, 1900 })
     public void testShowDelay() {
         super.testShowDelay(delay);
     }
