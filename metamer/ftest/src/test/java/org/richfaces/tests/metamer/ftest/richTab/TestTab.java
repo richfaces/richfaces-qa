@@ -51,7 +51,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:manovotn@redhat.com">Matej Novotny</a>
  * @version $Revision: 22963 $
  */
-public class TestRichTab extends AbstractWebDriverTest {
+public class TestTab extends AbstractWebDriverTest {
 
     @Page
     TabSimplePage page;
