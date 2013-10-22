@@ -213,7 +213,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "delay", ints = { 0, 1000, 2500 })
+    @Use(field = "delay", ints = { 0, 1000, 1900 })
     public void testHideDelay() {
         testDelay(new Action() {
             @Override
@@ -473,7 +473,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "delay", ints = { 0, 1000, 2500 })
+    @Use(field = "delay", ints = { 0, 1000, 1900 })
     public void testShowDelay() {
         testDelay(new Action() {
             @Override
