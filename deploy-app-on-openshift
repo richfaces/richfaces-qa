@@ -9,6 +9,7 @@ function cloneRepository {
 function cleanRepository {
 	rm -rf $WORKSPACE/$APPNAME/src
 	rm -rf $WORKSPACE/$APPNAME/pom.xml
+	rm $WORKSPACE/$APPNAME/deployments/*.war
 }
 
 function buildAndDeploy {
