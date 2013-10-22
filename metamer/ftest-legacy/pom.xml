@@ -15,269 +15,268 @@
 	FSF site: http://www.fsf.org. -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>org.richfaces.tests</groupId>
-		<artifactId>metamer-root</artifactId>
-		<version>5.0.0-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
-	</parent>
+    <parent>
+        <groupId>org.richfaces.tests</groupId>
+        <artifactId>metamer-root</artifactId>
+        <version>5.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
 
-	<artifactId>metamer-ftest-legacy</artifactId>
-	<name>RichFaces Metamer Ftest Legacy</name>
+    <artifactId>metamer-ftest-legacy</artifactId>
+    <name>RichFaces Metamer Ftest Legacy</name>
 
-	<properties>
+    <properties>
 		<!-- arquillian properties -->
 		<!-- default values according to http://docs.oracle.com/javase/7/docs/technotes/guides/net/ipv6_guide/index.html -->
-		<jvm.args.ip>-Djava.net.preferIPv4Stack=false
-			-Djava.net.preferIPv6Addresses=false</jvm.args.ip>
+        <jvm.args.ip>-Djava.net.preferIPv4Stack=false
+            -Djava.net.preferIPv6Addresses=false</jvm.args.ip>
 		<!-- jvm args for all containers without setting prefered IP -->
-		<arquillian.container.all.jvm.args>-Xms1024m -Xmx1024m
-			-XX:MaxPermSize=512m</arquillian.container.all.jvm.args>
-		<arquillian.container.all.jvm.args.withIP>${arquillian.container.all.jvm.args}
-			${jvm.args.ip}</arquillian.container.all.jvm.args.withIP>
+        <arquillian.container.all.jvm.args>-Xms1024m -Xmx1024m
+            -XX:MaxPermSize=512m</arquillian.container.all.jvm.args>
+        <arquillian.container.all.jvm.args.withIP>${arquillian.container.all.jvm.args}
+            ${jvm.args.ip}</arquillian.container.all.jvm.args.withIP>
 		<!-- following will be set as system properties -->
-		<arquillian.container.jbossas.7-1.node0>127.0.0.1</arquillian.container.jbossas.7-1.node0>
-		<arquillian.container.jbossas.7-1.jvm.args>${arquillian.container.all.jvm.args.withIP}
-			-Djboss.bind.address=${arquillian.container.jbossas.7-1.node0}
-			-Djboss.bind.address.management=${arquillian.container.jbossas.7-1.node0}
-			-Djboss.bind.address.unsecure=${arquillian.container.jbossas.7-1.node0}</arquillian.container.jbossas.7-1.jvm.args>
+        <arquillian.container.jbossas.7-1.node0>127.0.0.1</arquillian.container.jbossas.7-1.node0>
+        <arquillian.container.jbossas.7-1.jvm.args>${arquillian.container.all.jvm.args.withIP}
+            -Djboss.bind.address=${arquillian.container.jbossas.7-1.node0}
+            -Djboss.bind.address.management=${arquillian.container.jbossas.7-1.node0}
+            -Djboss.bind.address.unsecure=${arquillian.container.jbossas.7-1.node0}</arquillian.container.jbossas.7-1.jvm.args>
 
-		<templates>plain</templates>
+        <templates>plain</templates>
 
-		<testng.listeners>org.richfaces.tests.metamer.ftest.MatrixConfigurator,org.richfaces.tests.metamer.ftest.MetamerSeleniumLoggingTestListener,org.richfaces.tests.metamer.ftest.MetamerConsoleStatusTestListener,org.richfaces.tests.metamer.ftest.MetamerFailureLoggingTestListener</testng.listeners>
-		<testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
-	</properties>
+        <testng.listeners>org.richfaces.tests.metamer.ftest.MatrixConfigurator,org.richfaces.tests.metamer.ftest.MetamerSeleniumLoggingTestListener,org.richfaces.tests.metamer.ftest.MetamerConsoleStatusTestListener,org.richfaces.tests.metamer.ftest.MetamerFailureLoggingTestListener</testng.listeners>
+        <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
+    </properties>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.jboss.arquillian.selenium</groupId>
-				<artifactId>selenium-bom</artifactId>
-				<version>2.35.0</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.arquillian.extension</groupId>
-				<artifactId>arquillian-drone-bom</artifactId>
-				<version>1.1.0.Final</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.arquillian.selenium</groupId>
+                <artifactId>selenium-bom</artifactId>
+                <version>2.35.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-drone-bom</artifactId>
+                <version>1.1.0.Final</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.richfaces.tests</groupId>
-			<artifactId>metamer</artifactId>
-			<version>${project.version}</version>
-			<classifier>classes</classifier>
-			<scope>test</scope>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>org.richfaces.tests</groupId>
+            <artifactId>metamer</artifactId>
+            <version>${project.version}</version>
+            <classifier>classes</classifier>
+            <scope>test</scope>
+        </dependency>
 		<!-- Arquillian dependencies -->
-		<dependency>
-			<groupId>org.jboss.arquillian.graphene</groupId>
-			<artifactId>graphene-selenium</artifactId>
-			<version>2.0.0.Alpha3</version>
-			<type>pom</type>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.arquillian.testng</groupId>
-			<artifactId>arquillian-testng-container</artifactId>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.graphene</groupId>
+            <artifactId>graphene-selenium</artifactId>
+            <version>2.0.0.Alpha3</version>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.testng</groupId>
+            <artifactId>arquillian-testng-container</artifactId>
+            <scope>test</scope>
+        </dependency>
 
 		<!-- Resolution of JAR libraries into WAR archive -->
-		<dependency>
-			<groupId>org.jboss.shrinkwrap.resolver</groupId>
-			<artifactId>shrinkwrap-resolver-impl-maven</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.shrinkwrap.descriptors</groupId>
-			<artifactId>shrinkwrap-descriptors-impl-javaee</artifactId>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.jboss.shrinkwrap.resolver</groupId>
+            <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+            <artifactId>shrinkwrap-descriptors-impl-javaee</artifactId>
+            <scope>test</scope>
+        </dependency>
 
 		<!-- TestNG listeners for better console output -->
-		<dependency>
-			<groupId>org.richfaces.tests</groupId>
-			<artifactId>testng-listeners</artifactId>
-			<version>${project.version}</version>
-			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.jboss.arquillian.graphene</groupId>
-					<artifactId>arquillian-graphene</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+        <dependency>
+            <groupId>org.richfaces.tests</groupId>
+            <artifactId>testng-listeners</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jboss.arquillian.graphene</groupId>
+                    <artifactId>arquillian-graphene</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 		<!-- XHRHalter support -->
-		<dependency>
-			<groupId>org.richfaces.tests</groupId>
-			<artifactId>xhrhalter</artifactId>
-			<scope>test</scope>
-			<version>${project.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.jboss.arquillian.graphene</groupId>
-					<artifactId>arquillian-graphene</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+        <dependency>
+            <groupId>org.richfaces.tests</groupId>
+            <artifactId>xhrhalter</artifactId>
+            <scope>test</scope>
+            <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jboss.arquillian.graphene</groupId>
+                    <artifactId>arquillian-graphene</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 		<!-- see the https://community.jboss.org/wiki/WhatsTheCauseOfThisExceptionJavalangClassFormatErrorAbsentCode -->
-		<dependency>
-			<groupId>org.jboss.spec</groupId>
-			<artifactId>jboss-javaee-6.0</artifactId>
-			<version>3.0.1.Final</version>
-			<type>pom</type>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.jboss.spec</groupId>
+            <artifactId>jboss-javaee-6.0</artifactId>
+            <version>3.0.1.Final</version>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<testFailureIgnore>true</testFailureIgnore>
-					<suiteXmlFiles>
-						<suiteXmlFiles>${testng.suite.xml}</suiteXmlFiles>
-					</suiteXmlFiles>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <suiteXmlFiles>
+                        <suiteXmlFiles>${testng.suite.xml}</suiteXmlFiles>
+                    </suiteXmlFiles>
 					<!-- Logging configuration for Selenium , templates, ip -->
-					<argLine>-Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties
-						-Dtemplates='${templates}' ${jvm.args.ip}</argLine>
-					<properties>
-						<property>
-							<name>listener</name>
-							<value>${testng.listeners}</value>
-						</property>
-					</properties>
-					<systemPropertyVariables>
-						<arquillian.container.jbossas.7-1.node0>${arquillian.container.jbossas.7-1.node0}</arquillian.container.jbossas.7-1.node0>
-						<arquillian.container.jbossas.7-1.jvm.args>${arquillian.container.jbossas.7-1.jvm.args}</arquillian.container.jbossas.7-1.jvm.args>
-						<arquillian.container.all.jvm.args>${arquillian.container.all.jvm.args}</arquillian.container.all.jvm.args>
-						<version.tomee1-1>${version.tomee1-1}</version.tomee1-1>
-						<version.tomee1-5>${version.tomee1-5}</version.tomee1-5>
-						<logging.props.dir>${project.basedir}/src/test/resources</logging.props.dir>
-					</systemPropertyVariables>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-installed</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>copy</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>org.richfaces.tests</groupId>
-									<artifactId>metamer</artifactId>
-									<version>${project.version}</version>
-									<classifier>${metamer.classifier}</classifier>
-									<type>war</type>
-									<destFileName>metamer.war</destFileName>
-								</artifactItem>
-							</artifactItems>
-							<outputDirectory>${project.build.directory}</outputDirectory>
-							<overWriteIfNewer>false</overWriteIfNewer>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+                    <argLine>-Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties
+                        -Dtemplates='${templates}' ${jvm.args.ip}</argLine>
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>${testng.listeners}</value>
+                        </property>
+                    </properties>
+                    <systemPropertyVariables>
+                        <arquillian.container.jbossas.7-1.node0>${arquillian.container.jbossas.7-1.node0}</arquillian.container.jbossas.7-1.node0>
+                        <arquillian.container.jbossas.7-1.jvm.args>${arquillian.container.jbossas.7-1.jvm.args}</arquillian.container.jbossas.7-1.jvm.args>
+                        <arquillian.container.all.jvm.args>${arquillian.container.all.jvm.args}</arquillian.container.all.jvm.args>
+                        <version.tomee1-1>${version.tomee1-1}</version.tomee1-1>
+                        <version.tomee1-5>${version.tomee1-5}</version.tomee1-5>
+                        <logging.props.dir>${project.basedir}/src/test/resources</logging.props.dir>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-installed</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.richfaces.tests</groupId>
+                                    <artifactId>metamer</artifactId>
+                                    <version>${project.version}</version>
+                                    <classifier>${metamer.classifier}</classifier>
+                                    <type>war</type>
+                                    <destFileName>metamer.war</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <overWriteIfNewer>false</overWriteIfNewer>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
-	<profiles>
-		<profile>
-			<id>screenshots</id>
-			<properties>
-				<testng.suite.xml>src/test/resources/testng/testng-screenshots.xml</testng.suite.xml>
-			</properties>
-		</profile>
-		<profile>
+    <profiles>
+        <profile>
+            <id>screenshots</id>
+            <properties>
+                <testng.suite.xml>src/test/resources/testng/testng-screenshots.xml</testng.suite.xml>
+            </properties>
+        </profile>
+        <profile>
 			<!-- only jbossas-managed-7-1 supported by now -->
-			<id>ipv6</id>
-			<activation>
-				<property>
-					<name>ipv6</name>
-				</property>
-			</activation>
-			<properties>
-				<jvm.args.ip>-Djava.net.preferIPv4Stack=false
-					-Djava.net.preferIPv6Addresses=true</jvm.args.ip>
-				<arquillian.container.jbossas.7-1.node0>[::1]</arquillian.container.jbossas.7-1.node0>
-			</properties>
-		</profile>
+            <id>ipv6</id>
+            <activation>
+                <property>
+                    <name>ipv6</name>
+                </property>
+            </activation>
+            <properties>
+                <jvm.args.ip>-Djava.net.preferIPv4Stack=false
+                    -Djava.net.preferIPv6Addresses=true</jvm.args.ip>
+                <arquillian.container.jbossas.7-1.node0>[::1]</arquillian.container.jbossas.7-1.node0>
+            </properties>
+        </profile>
 
 		<!-- Jenkins Profile -->
-		<profile>
-			<id>jenkins</id>
-			<properties>
-				<firefox.version>12</firefox.version>
-				<firefox.bin.solaris10>/qa/tools/SunOS/${os.arch}/firefox-${firefox.version}/firefox</firefox.bin.solaris10>
-				<firefox.bin.solaris11>/qa/tools/OpenSolaris/${os.arch}/firefox-${firefox.version}/firefox</firefox.bin.solaris11>
-				<firefox.bin.linux>/qa/tools/opt/firefox-${firefox.version}/firefox</firefox.bin.linux>
-				<firefox.bin.windows>t:/opt/windows/firefox-${firefox.version}/firefox.exe</firefox.bin.windows>
-			</properties>
-			<build>
-				<plugins>
-					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<executions>
-							<execution>
-								<phase>generate-resources</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<target name="firefox.bin">
-										<condition property="firefox.bin" value="${firefox.bin.solaris10}">
-											<os name="SunOS" version="5.10" />
-										</condition>
-										<condition property="firefox.bin" value="${firefox.bin.solaris11}">
-											<os name="SunOS" version="5.11" />
-										</condition>
-										<condition property="firefox.bin" value="${firefox.bin.linux}">
-											<os name="Linux" />
-										</condition>
-										<condition property="firefox.bin" value="${firefox.bin.windows}">
-											<os family="windows" />
-										</condition>
-										<condition property="firefox.bin"
-											value="undefined firefox binary for ${os.name}-${os.arch}">
-											<not>
-												<isset property="firefox.bin" />
-											</not>
-										</condition>
-										<property name="firefox.bin" value="${firefox.bin}" />
-										<echo>using firefox binary: ${firefox.bin}</echo>
-									</target>
-									<exportAntProperties>true</exportAntProperties>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<configuration>
-							<systemProperties>
-								<webdriver.firefox.bin>${firefox.bin}</webdriver.firefox.bin>
-								<arquillian.graphene.browser>*firefox ${firefox.bin}</arquillian.graphene.browser>
-							</systemProperties>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
+        <profile>
+            <id>jenkins</id>
+            <properties>
+                <firefox.version>12</firefox.version>
+                <firefox.bin.solaris10>/qa/tools/SunOS/${os.arch}/firefox-${firefox.version}/firefox</firefox.bin.solaris10>
+                <firefox.bin.solaris11>/qa/tools/OpenSolaris/${os.arch}/firefox-${firefox.version}/firefox</firefox.bin.solaris11>
+                <firefox.bin.linux>/qa/tools/opt/firefox-${firefox.version}/firefox</firefox.bin.linux>
+                <firefox.bin.windows>t:/opt/windows/firefox-${firefox.version}/firefox.exe</firefox.bin.windows>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target name="firefox.bin">
+                                        <condition property="firefox.bin" value="${firefox.bin.solaris10}">
+                                            <os name="SunOS" version="5.10" />
+                                        </condition>
+                                        <condition property="firefox.bin" value="${firefox.bin.solaris11}">
+                                            <os name="SunOS" version="5.11" />
+                                        </condition>
+                                        <condition property="firefox.bin" value="${firefox.bin.linux}">
+                                            <os name="Linux" />
+                                        </condition>
+                                        <condition property="firefox.bin" value="${firefox.bin.windows}">
+                                            <os family="windows" />
+                                        </condition>
+                                        <condition property="firefox.bin" value="undefined firefox binary for ${os.name}-${os.arch}">
+                                            <not>
+                                                <isset property="firefox.bin" />
+                                            </not>
+                                        </condition>
+                                        <property name="firefox.bin" value="${firefox.bin}" />
+                                        <echo>using firefox binary: ${firefox.bin}</echo>
+                                    </target>
+                                    <exportAntProperties>true</exportAntProperties>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <webdriver.firefox.bin>${firefox.bin}</webdriver.firefox.bin>
+                                <arquillian.graphene.browser>*firefox ${firefox.bin}</arquillian.graphene.browser>
+                            </systemProperties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
