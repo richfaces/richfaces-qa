@@ -13,7 +13,7 @@
     <name>Richfaces Photoalbum Ftest</name>
 
     <properties>
-        <testng.listeners>org.jboss.test.selenium.listener.ConsoleStatusTestListener,org.jboss.test.selenium.listener.FailureLoggingTestListener,org.jboss.test.selenium.listener.SeleniumLoggingTestListener</testng.listeners>
+        <testng.listeners>org.jboss.test.selenium.listener.ConsoleStatusTestListener,org.jboss.test.selenium.listener.FailureLoggingTestListener</testng.listeners>
         <testng.suite.xml>src/test/resources/testng.xml</testng.suite.xml>
     </properties>
 
@@ -110,15 +110,4 @@
             </plugin>
         </plugins>
     </build>
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <configuration>
-                    <configLocation>config/sun_checks.xml</configLocation>
-                </configuration>
-            </plugin>
-        </plugins>
-    </reporting>
 </project>
