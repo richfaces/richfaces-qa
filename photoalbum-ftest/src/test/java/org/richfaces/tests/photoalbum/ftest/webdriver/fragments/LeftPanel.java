@@ -44,16 +44,14 @@ public class LeftPanel {
 
     @FindByJQuery("a:contains('Pre-defined shelves')")
     private WebElement preDefinedShelvesLink;
-    @FindByJQuery(".rf-tr[id$='PreDefinedTree']")
-//    @FindByJQuery(".rf-tr:eq(0)")
-    private RichFacesTree preDefinedShelvesTree;
+    @FindBy(css = ".rf-tr[id$='PreDefinedTree']")
+    private CustomTree preDefinedShelvesTree;
     @FindByJQuery("td:has(> a:contains('Pre-defined shelves')) + td > a")
     private WebElement preDefinedShelvesHelpLink;
     @FindByJQuery("a:contains('My shelves')")
     private WebElement myShelvesLink;
     @FindBy(css = ".rf-tr[id$='userTree']")
-//    @FindByJQuery(".rf-tr:eq(1)")
-    private RichFacesTree myShelvesTree;
+    private CustomTree myShelvesTree;
     @FindByJQuery("td:has(> a:contains('My shelves')) + td > a")
     private WebElement myShelvesHelpLink;
 
