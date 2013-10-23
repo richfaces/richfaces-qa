@@ -27,16 +27,12 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Lists;
-
 import java.net.URL;
 import java.util.List;
 
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -59,6 +55,9 @@ import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
 
 /**
  * Test for rich:pickList on page faces/components/richPickList/simple.xhtml.
@@ -229,7 +228,7 @@ public class TestPickList extends AbstractWebDriverTest {
         item = pickList.advanced().getSourceList().getItem(ChoicePickerHelper.byIndex().last());
         assertTrue(item.getRootElement().getAttribute("class").contains("rf-pick-sel"));
         assertEquals(item.getText(), textSource);
-        assertEquals(Utils.getIndexOfElement(((GrapheneElement) item.getRootElement()).getWrappedElement()), pickList
+        assertEquals(Utils.getIndexOfElement(item.getRootElement()), pickList
             .advanced().getSourceList().size() - 1, "Index of removed item.");
     }
 
