@@ -243,7 +243,7 @@ public class TestTab extends AbstractWebDriverTest {
         page.getTab().switchTo(4);
         waitGui(driver).until().element(ByJQuery.selector("div[id$=tab5] > div.rf-tab-cnt:visible")).is().present();
 
-        executeJS("RichFaces.component('" + page.getTabAsWebElement().getAttribute("id") + "').switchToItem('metamer')");
+        executeJS("RichFaces.$('" + page.getTabAsWebElement().getAttribute("id") + "').switchToItem('metamer')");
         waitGui(driver).until().element(ByJQuery.selector("div[id$=tab1] > div.rf-tab-cnt:visible")).is().present();
     }
 
