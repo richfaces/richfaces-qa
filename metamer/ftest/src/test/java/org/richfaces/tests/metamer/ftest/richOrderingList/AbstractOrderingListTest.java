@@ -28,7 +28,6 @@ import static org.testng.Assert.assertTrue;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.GrapheneElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -61,8 +60,7 @@ public abstract class AbstractOrderingListTest extends AbstractWebDriverTest {
     }
 
     private TwoColumnListItem convertItem(WebElement itemRoot) {
-        WebElement trueRoot = (itemRoot instanceof GrapheneElement ? ((GrapheneElement) itemRoot).getWrappedElement() : itemRoot);
-        return Graphene.createPageFragment(TwoColumnListItem.class, trueRoot);
+        return Graphene.createPageFragment(TwoColumnListItem.class, itemRoot);
     }
 
     protected void assertButtonDisabled(WebElement element, String buttonName) {
