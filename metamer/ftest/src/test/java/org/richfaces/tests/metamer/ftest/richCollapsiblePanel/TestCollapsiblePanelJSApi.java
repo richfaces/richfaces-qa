@@ -49,7 +49,7 @@ public class TestCollapsiblePanelJSApi extends AbstractWebDriverTest {
     @Test
     @Templates(value = {"plain"})
     public void testSwitchPanel() {
-        String JScode = "RichFaces.component('" + panel.getAttribute("id") + "').switchPanel()";
+        String JScode = "RichFaces.$('" + panel.getAttribute("id") + "').switchPanel()";
         // assert content is visible after page is loaded
         assertVisible(content, "Content of collapsible panel should be visible!");
 
