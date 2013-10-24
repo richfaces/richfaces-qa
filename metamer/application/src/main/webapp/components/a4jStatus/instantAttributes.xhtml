@@ -42,12 +42,22 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <fieldset style="height: 3em">
                     <legend>status (inside form)</legend>
                     <r:status id="status"
-                                onerror="#{a4jStatusBean.attributes['onerror'].value}"
-                                onstart="#{a4jStatusBean.attributes['onstart'].value}"
-                                onstop="#{a4jStatusBean.attributes['onstop'].value}"
-                                onsuccess="#{a4jStatusBean.attributes['onsuccess'].value}"
-                                rendered="#{a4jStatusBean.attributes['rendered'].value}"
-                                >
+                              errorStyle="#{a4jStatusBean.attributes['errorStyle'].value}"
+                              errorStyleClass="#{a4jStatusBean.attributes['errorStyleClass'].value}"
+                              errorText="#{a4jStatusBean.attributes['errorText'].value}"
+                              name="#{a4jStatusBean.attributes['name'].value}"
+                              onerror="#{a4jStatusBean.attributes['onerror'].value}"
+                              onstart="#{a4jStatusBean.attributes['onstart'].value}"
+                              onstop="#{a4jStatusBean.attributes['onstop'].value}"
+                              onsuccess="#{a4jStatusBean.attributes['onsuccess'].value}"
+                              rendered="#{a4jStatusBean.attributes['rendered'].value}"
+                              startStyle="#{a4jStatusBean.attributes['startStyle'].value}"
+                              startStyleClass="#{a4jStatusBean.attributes['startStyleClass'].value}"
+                              startText="#{a4jStatusBean.attributes['startText'].value}"
+                              stopStyle="#{a4jStatusBean.attributes['stopStyle'].value}"
+                              stopStyleClass="#{a4jStatusBean.attributes['stopStyleClass'].value}"
+                              stopText="#{a4jStatusBean.attributes['stopText'].value}"
+                              >
 
                         <f:facet name="start">
                             <h:outputText id="statusTextStart" style="font-size: large; color: red;" value="START" />
@@ -68,15 +78,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <r:commandButton id="button2" value="Send Ajax Request" />
                 <br />
                 <r:commandButton id="button3"
-                                   value="Send Ajax Request Causing Error"
-                                   action="#{richBean.causeError}" />
+                                 value="Send Ajax Request Causing Error"
+                                 action="#{richBean.causeError}" />
             </h:form>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
             <h:form id="attributesForm">
                 <metamer:attributes value="#{a4jStatusBean.attributes}"
-                                    id="attributes" type="ajax" render="commonGrid" />
+                                    id="attributes" render="commonGrid" />
             </h:form>
         </ui:define>
 

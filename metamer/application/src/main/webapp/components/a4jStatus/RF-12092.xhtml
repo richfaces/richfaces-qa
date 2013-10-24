@@ -32,27 +32,26 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 <ui:composition template="/templates/template.xhtml">
 
 	<ui:define name="component">
-		<h:form id="mainForm">
-
-			<r:queue timeout="20000" />
-
-			<!-- Keep this in mainForm so we can read in the table rows selected and reRender them on table updates-->
+            <p>
+                Every 5 seconds there is an ajax request. With the ajax request the status component should change to 'In progress'
+                and back to 'Done', but it stays at 'In progress' state. <a href="https://issues.jboss.org/browse/RF-12092">RF-12092</a>.            
+            </p>
+            
 			<r:poll id="ajaxPoll" interval="5000" enabled="true"
 				render="helloText" />
 
-			<r:status id="a4jstatus">
-
+            &gt;&gt;&gt;
+			<r:status id="status">
 				<f:facet name="start">
-					<h:outputText value="In progress " />
-					<!-- <img src='/appiq/images/ajax-loader.gif' /> -->
+					<h:outputText value="In progress" />
 				</f:facet>
-				<!--<f:facet name="stop">-->
-				<!--<img src="/appiq/images/minor_icon.gif"/>-->
-				<!--</f:facet>-->
+				<f:facet name="stop">
+					<h:outputText value="Done" />
+				</f:facet>
 			</r:status>
+            &lt;&lt;&lt;
 
-			<h:outputText id="helloText" value="hello" />
-		</h:form>
+			<h:outputText id="helloText" value=" hello" />
 	</ui:define>
 
 </ui:composition>
