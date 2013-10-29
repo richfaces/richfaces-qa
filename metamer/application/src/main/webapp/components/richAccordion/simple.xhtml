@@ -38,40 +38,40 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
             <r:accordion id="accordion"
-                            activeItem="#{richAccordionBean.attributes['activeItem'].value}"
-                            cycledSwitching="#{richAccordionBean.attributes['cycledSwitching'].value}"
-                            dir="#{richAccordionBean.attributes['dir'].value}"
-                            height="#{richAccordionBean.attributes['height'].value}"
-                            immediate="#{richAccordionBean.attributes['immediate'].value}"
-                            itemChangeListener="#{richBean.itemChangeListener}"
-                            itemActiveHeaderClass="#{richAccordionBean.attributes['itemActiveHeaderClass'].value}"
-                            itemActiveLeftIcon="#{richAccordionBean.attributes['itemActiveLeftIcon'].value}"
-                            itemActiveRightIcon="#{richAccordionBean.attributes['itemActiveRightIcon'].value}"
-                            itemContentClass="#{richAccordionBean.attributes['itemContentClass'].value}"
-                            itemDisabledHeaderClass="#{richAccordionBean.attributes['itemDisabledHeaderClass'].value}"
-                            itemDisabledLeftIcon="#{richAccordionBean.attributes['itemDisabledLeftIcon'].value}"
-                            itemDisabledRightIcon="#{richAccordionBean.attributes['itemDisabledRightIcon'].value}"
-                            itemHeaderClass="#{richAccordionBean.attributes['itemHeaderClass'].value}"
-                            itemInactiveHeaderClass="#{richAccordionBean.attributes['itemInactiveHeaderClass'].value}"
-                            itemInactiveLeftIcon="#{richAccordionBean.attributes['itemInactiveLeftIcon'].value}"
-                            itemInactiveRightIcon="#{richAccordionBean.attributes['itemInactiveRightIcon'].value}"
-                            lang="#{richAccordionBean.attributes['lang'].value}"
-                            onbeforeitemchange="#{richAccordionBean.attributes['onbeforeitemchange'].value}"
-                            onclick="#{richAccordionBean.attributes['onclick'].value}"
-                            ondblclick="#{richAccordionBean.attributes['ondblclick'].value}"
-                            onitemchange="#{richAccordionBean.attributes['onitemchange'].value}"
-                            onmousedown="#{richAccordionBean.attributes['onmousedown'].value}"
-                            onmousemove="#{richAccordionBean.attributes['onmousemove'].value}"
-                            onmouseout="#{richAccordionBean.attributes['onmouseout'].value}"
-                            onmouseover="#{richAccordionBean.attributes['onmouseover'].value}"
-                            onmouseup="#{richAccordionBean.attributes['onmouseup'].value}"
-                            rendered="#{richAccordionBean.attributes['rendered'].value}"
-                            style="#{richAccordionBean.attributes['style'].value}"
-                            styleClass="#{richAccordionBean.attributes['styleClass'].value}"
-                            switchType="#{richAccordionBean.attributes['switchType'].value}"
-                            title="#{richAccordionBean.attributes['title'].value}"
-                            width="#{richAccordionBean.attributes['width'].value}"
-                            >
+                         activeItem="#{richAccordionBean.attributes['activeItem'].value}"
+                         cycledSwitching="#{richAccordionBean.attributes['cycledSwitching'].value}"
+                         dir="#{richAccordionBean.attributes['dir'].value}"
+                         height="#{richAccordionBean.attributes['height'].value}"
+                         immediate="#{richAccordionBean.attributes['immediate'].value}"
+                         itemChangeListener="#{richBean.itemChangeListener}"
+                         itemActiveHeaderClass="#{richAccordionBean.attributes['itemActiveHeaderClass'].value}"
+                         itemActiveLeftIcon="#{richAccordionBean.attributes['itemActiveLeftIcon'].value}"
+                         itemActiveRightIcon="#{richAccordionBean.attributes['itemActiveRightIcon'].value}"
+                         itemContentClass="#{richAccordionBean.attributes['itemContentClass'].value}"
+                         itemDisabledHeaderClass="#{richAccordionBean.attributes['itemDisabledHeaderClass'].value}"
+                         itemDisabledLeftIcon="#{richAccordionBean.attributes['itemDisabledLeftIcon'].value}"
+                         itemDisabledRightIcon="#{richAccordionBean.attributes['itemDisabledRightIcon'].value}"
+                         itemHeaderClass="#{richAccordionBean.attributes['itemHeaderClass'].value}"
+                         itemInactiveHeaderClass="#{richAccordionBean.attributes['itemInactiveHeaderClass'].value}"
+                         itemInactiveLeftIcon="#{richAccordionBean.attributes['itemInactiveLeftIcon'].value}"
+                         itemInactiveRightIcon="#{richAccordionBean.attributes['itemInactiveRightIcon'].value}"
+                         lang="#{richAccordionBean.attributes['lang'].value}"
+                         onbeforeitemchange="#{richAccordionBean.attributes['onbeforeitemchange'].value}"
+                         onclick="#{richAccordionBean.attributes['onclick'].value}"
+                         ondblclick="#{richAccordionBean.attributes['ondblclick'].value}"
+                         onitemchange="#{richAccordionBean.attributes['onitemchange'].value}"
+                         onmousedown="#{richAccordionBean.attributes['onmousedown'].value}"
+                         onmousemove="#{richAccordionBean.attributes['onmousemove'].value}"
+                         onmouseout="#{richAccordionBean.attributes['onmouseout'].value}"
+                         onmouseover="#{richAccordionBean.attributes['onmouseover'].value}"
+                         onmouseup="#{richAccordionBean.attributes['onmouseup'].value}"
+                         rendered="#{richAccordionBean.attributes['rendered'].value}"
+                         style="#{richAccordionBean.attributes['style'].value}"
+                         styleClass="#{richAccordionBean.attributes['styleClass'].value}"
+                         switchType="#{richAccordionBean.attributes['switchType'].value}"
+                         title="#{richAccordionBean.attributes['title'].value}"
+                         width="#{richAccordionBean.attributes['width'].value}"
+                         >
 
                 <r:accordionItem id="item1" name="item1"  header="Item 1">
                     content of item 1
@@ -93,52 +93,32 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/><br/>
             <fieldset>
                 <legend>JavaScript API</legend>
-
-                <script type="text/javascript">
-                    testedComponentId = "#{r:clientId('accordion')}";
-                </script>
-
-                <h:commandButton id="switchButton1" value="item1">
-                    <r:componentControl event="click" operation="switchToItem" target="accordion" >
-                        <f:param value="item1" />
-                    </r:componentControl>
-                </h:commandButton>
-                <h:commandButton id="switchButton2" value="item2">
-                    <r:componentControl event="click" operation="switchToItem" target="accordion" >
-                        <f:param value="item2" />
-                    </r:componentControl>
-                </h:commandButton>
-                <h:commandButton id="switchButton3" value="item3">
-                    <r:componentControl event="click" operation="switchToItem" target="accordion" >
-                        <f:param value="item3" />
-                    </r:componentControl>
-                </h:commandButton>
-                <h:commandButton id="switchButton4" value="item4">
-                    <r:componentControl event="click" operation="switchToItem" target="accordion" >
-                        <f:param value="item4" />
-                    </r:componentControl>
-                </h:commandButton>
-                <h:commandButton id="switchButton5" value="item5">
-                    <r:componentControl event="click" operation="switchToItem" target="accordion" >
-                        <f:param value="item5" />
-                    </r:componentControl>
-                </h:commandButton>
-
+                Output value for all get methods: <h:inputText id="value" size="30"/>
                 <br/>
-
-                <h:commandButton id="switcFirsthButton" value="first">
-                    <r:toggleControl targetPanel="accordion" targetItem="@first" />
-                </h:commandButton>
-                <h:commandButton id="switchPrevButton" value="previous">
-                    <r:toggleControl targetPanel="accordion" targetItem="@prev" />
-                </h:commandButton>
-                <h:commandButton id="switchNextButton" value="next">
-                    <r:toggleControl targetPanel="accordion" targetItem="@next"/>
-                </h:commandButton>
-                <h:commandButton id="switchLastButton" value="last">
-                    <r:toggleControl targetPanel="accordion" targetItem="@last"/>
-                </h:commandButton>
-
+                <br/>
+                On click:
+                <br/>
+                <input id="switchTo1" type="button" name="siwtchTo1" value="switchToItem('item1')" onclick="#{r:component('accordion')}.switchToItem('item1')" />
+                <input id="switchTo2" type="button" name="switchTo2" value="switchToItem('item2')" onclick="#{r:component('accordion')}.switchToItem('item2')" />
+                <input id="switchTo3" type="button" name="switchTo3" value="switchToItem('item3')" onclick="#{r:component('accordion')}.switchToItem('item3')" />
+                <input id="switchTo4" type="button" name="switchTo4" value="switchToItem('item4')" onclick="#{r:component('accordion')}.switchToItem('item4')" />
+                <input id="switchTo5" type="button" name="switchTo5" value="switchToItem('item5')" onclick="#{r:component('accordion')}.switchToItem('item5')" />
+                <br/>
+                <input id="getItems" name="getItems" type="button" value="getItems().length" onclick="$('[id$=value]').val(String(#{r:component('accordion')}.getItems().length))" />
+                <input id="getItemsNames" name="getItemsNames" type="button" value="getItemsNames()" onclick="$('[id$=value]').val(String(#{r:component('accordion')}.getItemsNames()))" />
+                <br/>
+                <input id="firstItem" type="button" name="firstItem" value="firstItem()" onclick="$('[id$=value]').val(String(#{r:component('accordion')}.firstItem()))" />
+                <input id="prevItem" type="button" name="prevItem" value="prevItem()" onclick="$('[id$=value]').val(String(#{r:component('accordion')}.prevItem()))" />
+                <input id="nextItem" type="button" name="nextItem" value="nextItem()" onclick="$('[id$=value]').val(String(#{r:component('accordion')}.nextItem()))" />
+                <input id="lastItem" type="button" name="lastItem" value="lastItem()" onclick="$('[id$=value]').val(String(#{r:component('accordion')}.lastItem()))" />
+                <br/>
+                <br/>
+                Chaining of functions:
+                <br/>
+                <input id="switchToFirst" type="button" name="switchToFirst" value="switchToFirst" onclick="#{r:component('accordion')}.switchToItem(#{r:component('accordion')}.firstItem())" />
+                <input id="switchToPrevious" type="button" name="switchToPrevious" value="switchToPrevious" onclick="#{r:component('accordion')}.switchToItem(#{r:component('accordion')}.prevItem())" />
+                <input id="switchToNext" type="button" name="switchToNext" value="switchToNext" onclick="#{r:component('accordion')}.switchToItem(#{r:component('accordion')}.nextItem())" />
+                <input id="switchToLast" type="button" name="switchToLast" value="switchToLast" onclick="#{r:component('accordion')}.switchToItem(#{r:component('accordion')}.lastItem())" />
             </fieldset>
         </ui:define>
 
