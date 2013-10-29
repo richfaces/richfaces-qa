@@ -26,8 +26,9 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import org.richfaces.ui.ajax.status.UIAjaxStatus;
+
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.ui.ajax.status.UIAjaxStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -98,16 +99,5 @@ public class A4JStatusBean implements Serializable {
 
     public void setFacetErrorValue(String facetErrorValue) {
         this.facetErrorValue = facetErrorValue;
-    }
-
-    /**
-     * Action that creates a 2-second delay.
-     *
-     * @throws InterruptedException
-     *             if any thread has interrupted the current thread. The interrupted status of the current thread is
-     *             cleared when this exception is thrown.
-     */
-    public void delay() throws InterruptedException {
-        Thread.sleep(2000);
     }
 }

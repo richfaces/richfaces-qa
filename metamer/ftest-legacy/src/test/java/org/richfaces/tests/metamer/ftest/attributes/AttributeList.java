@@ -7,7 +7,6 @@ import org.jboss.arquillian.ajocado.request.RequestType;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.MetamerAttributes;
 import org.richfaces.tests.metamer.ftest.a4jQueue.QueueAttributes;
-import org.richfaces.tests.metamer.ftest.a4jStatus.StatusAttributes;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets;
 import org.richfaces.tests.metamer.ftest.richCollapsiblePanel.CollapsiblePanelAttributes;
 import org.richfaces.tests.metamer.ftest.richCollapsibleSubTableToggler.CollapsibleSubTableTogglerAttributes;
@@ -39,7 +38,6 @@ public class AttributeList {
         jq("form[id$=displayControlsForm]"));
     public static Attributes<QueueAttributes> queueAttributes = new Attributes<QueueAttributes>(
         pjq("table.attributes[id$=queueAttributes]"));
-    public static Attributes<StatusAttributes> statusAttributes = new Attributes<StatusAttributes>();
     public static Attributes<TooltipAttributes> tooltipAttributes = new Attributes<TooltipAttributes>();
 
 }
