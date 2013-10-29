@@ -36,12 +36,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <a4j:jsFunction id="statusFunction1" name="statusFunction1" status="status1" action="#{a4jStatusBean.delay}" />
-            <a4j:jsFunction id="statusFunction2" name="statusFunction2" status="status2" action="#{a4jStatusBean.delay}" />
+            <a4j:jsFunction id="statusFunction1" name="statusFunction1" status="status1"/>
+            <a4j:jsFunction id="statusFunction2" name="statusFunction2" status="status2"/>
 
             <h:panelGrid columns="2">
 
-                <h:commandButton id="button1" value="Named status 1" onclick="statusFunction1(); return false;" />
+                <h:commandButton id="button1" value="Named status 1" onclick="statusFunction1();
+                        return false;" />
                 <a4j:status id="status1" name="status1">
                     <f:facet name="start">
                         <h:outputText id="status1TextStart" style="font-size: large; color: red;" value="START" />
@@ -56,7 +57,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </f:facet>
                 </a4j:status>
 
-                <h:commandButton id="button2" value="Named status 2" onclick="statusFunction2(); return false;" />
+                <h:commandButton id="button2" value="Named status 2" onclick="statusFunction2();
+                        return false;" />
                 <a4j:status id="status2" name="status2">
                     <f:facet name="start">
                         <h:outputText id="status2TextStart" style="font-size: large; color: red;" value="START" />

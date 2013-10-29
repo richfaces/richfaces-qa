@@ -48,7 +48,7 @@ public abstract class AbstractStatusTest extends AbstractWebDriverTest {
     @FindBy(css = "span[id$=a4jStatus]")
     private RichFacesStatus defaultStatus;
 
-    private Attributes<StatusAttributes> statusAttributes = getAttributes();
+    private final Attributes<StatusAttributes> statusAttributes = getAttributes();
 
     protected static final long DELAY = 2000;
     protected static final long WAIT_TIME_STATUS_CHANGES = DELAY + 1000;
