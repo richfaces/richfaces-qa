@@ -21,15 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jStatus;
 
-import static org.jboss.arquillian.ajocado.Graphene.jq;
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.cheiron.halt.XHRHalter;
+import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
@@ -40,25 +37,23 @@ import org.testng.annotations.Test;
  */
 public class TestRF12092 extends AbstractStatusTest {
 
-    private JQueryLocator statusMessageStart = jq("span[id$=a4jstatus]");
-
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jStatus/RF-12092.xhtml");
     }
 
-    @Test(groups="Future")
-    @IssueTracking("https://issues.jboss.org/browse/RFPL-12092")
-    public void testStatusIsClearedWhenRequestCompleted() {
-
-        XHRHalter.enable();
-        XHRHalter halt = getCurrentXHRHalter();
-
-        String status = selenium.getText(statusMessageStart).trim();
-        assertEquals(status, "In progress", "The status was not rendered for the request!");
-        halt.complete();
-
-        assertFalse(selenium.isVisible(statusMessageStart));
+    @Override
+    public void setupDelay() {
+        // do not setup the delay
     }
 
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-12092")
+    public void testStatusIsClearedWhenRequestCompleted() {
+        // the page should update after 5 seconds
+        String requestTimeBefore = getMetamerPage().getRequestTimeElement().getText();
+        Graphene.waitModel().withTimeout(7, TimeUnit.SECONDS).until().element(getMetamerPage().getRequestTimeElement()).text().not().equalTo(requestTimeBefore);
+        // the tested status text should change back to "Done" after request processed and before the next request starts
+        getStatus().advanced().waitUntilStatusTextChanges("Done").withTimeout(3, TimeUnit.SECONDS).perform();
+    }
 }
