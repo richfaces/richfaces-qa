@@ -101,7 +101,7 @@ public class RichFacesCalendar implements Calendar, AdvancedInteractions<RichFac
 
         @Override
         public DateTime getDate() {
-            return DateTime.parse(Utils.invokeRichFacesJSAPIFunction(root, "getValueAsString()"), advanced().getDatePattern());
+            return DateTime.parse(Utils.<String>invokeRichFacesJSAPIFunction(root, "getValueAsString()"), advanced().getDatePattern());
         }
 
         @Override
