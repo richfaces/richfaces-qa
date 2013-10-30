@@ -32,6 +32,7 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.page.fragments.impl.Utils;
 
 /**
  * Abstract test case for testing h:selectManyMenu and h:selectManyListbox with a4j:ajax.
@@ -262,8 +263,8 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
 
     protected void typeKeys(String text) {
         for (int i = 1; i <= text.length(); i++) {
-            ((JavascriptExecutor) driver).executeScript("$(\"[id$=input]\").val('" + text.substring(0, i) + "');");
-            ((JavascriptExecutor) driver).executeScript("$(\"[id$=input]\").trigger('keyup');");
+            Utils.jQ(executor, "val('" + text.subSequence(0, i) + "')", page.input);
+            Utils.jQ(executor, "trigger('keyup')", page.input);
             waiting(200);
         }
     }
