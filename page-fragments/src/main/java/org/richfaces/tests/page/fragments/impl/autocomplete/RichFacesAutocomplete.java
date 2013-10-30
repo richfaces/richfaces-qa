@@ -129,7 +129,7 @@ public class RichFacesAutocomplete implements Autocomplete, AdvancedInteractions
                 // elements
                 return Collections.unmodifiableList(foundElements);
             } else {
-                return Collections.EMPTY_LIST;
+                return Collections.emptyList();
             }
         }
 
@@ -206,7 +206,7 @@ public class RichFacesAutocomplete implements Autocomplete, AdvancedInteractions
 
         @Override
         public Autocomplete confirm() {
-            new Actions(driver).sendKeys(Keys.RETURN).click(driver.findElement(Utils.BY_BODY)).perform();
+            new Actions(driver).sendKeys(Keys.RETURN).click(driver.findElement(By.tagName("body"))).perform();
             advanced().waitForSuggestionsToBeNotVisible().perform();
             return RichFacesAutocomplete.this;
         }

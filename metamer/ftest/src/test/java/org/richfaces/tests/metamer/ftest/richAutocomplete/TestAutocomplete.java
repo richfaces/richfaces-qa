@@ -75,7 +75,10 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
         assertTrue(autocomplete.advanced().getSuggestionsElements().isEmpty());
         SelectOrConfirm typed = Graphene.guardAjax(autocomplete).type("ala");
         assertFalse(autocomplete.advanced().getSuggestionsElements().isEmpty());
-        Graphene.guardAjax(typed).confirm();
+        if (selectFirst == false) {
+            waiting(200); // wait for DOM update
+        }
+        typed.confirm();
         assertTrue(autocomplete.advanced().getSuggestionsElements().isEmpty());
         String expectedStateForPrefix = getExpectedStateForPrefix("ala", selectFirst);
         assertEquals(autocomplete.advanced().getInput().getStringValue(), expectedStateForPrefix);
@@ -96,6 +99,8 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
     @Test
     public void testSimpleSelectionWithMouse() {
         autocomplete.type("a").select(ChoicePickerHelper.byVisibleText().endsWith("na"));
+        getMetamerPage().getRequestTimeElement().click(); // blur from autocomplete
+
         checkOutput("Arizona");
     }
 
