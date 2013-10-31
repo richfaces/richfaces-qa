@@ -21,11 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
-import static java.text.MessageFormat.format;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
+
+import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
@@ -35,13 +36,15 @@ import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  */
-public class TestAutocompleteAttributes<P> extends AbstractAutocompleteTest {
+public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
 
     @Page
     private SimplePage page;
 
-    private static final String PHASE_LISTENER_LOG_FORMAT = "*1 value changed: {0} -> {1}";
+    private static final String FIRST_LISTENER_MSG_FORMAT = "1 value changed: %s -> %s";
+    private static final String SECOND_LISTENER_MSG = "2 value changed";
 
     @Override
     public URL getTestUrl() {
@@ -50,18 +53,28 @@ public class TestAutocompleteAttributes<P> extends AbstractAutocompleteTest {
 
     @Test
     public void testValueChangeListener() {
-        autocomplete.clear();
-        Graphene.guardAjax(autocomplete).type("something");
+        Graphene.guardAjax(autocomplete).type("h").select("Hawaii");
         Graphene.guardAjax(page).blur();
+        checkOutput("Hawaii");
 
-        checkOutput("something");
+        page.assertListener(PhaseId.PROCESS_VALIDATIONS, String.format(FIRST_LISTENER_MSG_FORMAT, "null", "Hawaii"));
+        page.assertListener(PhaseId.INVOKE_APPLICATION, SECOND_LISTENER_MSG);
 
         autocomplete.clear();
-        Graphene.guardAjax(autocomplete).type("something else");
+        Graphene.guardAjax(autocomplete).type("ka").select("Kansas");
         Graphene.guardAjax(page).blur();
-        // valueChangeListener output as 4th record
-        checkOutput("something else");
-        assertEquals(page.getPhases().get(3), format(PHASE_LISTENER_LOG_FORMAT, "something", "something else"));
+        checkOutput("Kansas");
+
+        page.assertListener(PhaseId.PROCESS_VALIDATIONS, String.format(FIRST_LISTENER_MSG_FORMAT, "Hawaii", "Kansas"));
+        page.assertListener(PhaseId.INVOKE_APPLICATION, SECOND_LISTENER_MSG);
+
+        autocomplete.clear();
+        Graphene.guardAjax(autocomplete).type("nonexisting");
+        Graphene.guardAjax(page).blur();
+        checkOutput("nonexisting");
+
+        page.assertListener(PhaseId.PROCESS_VALIDATIONS, String.format(FIRST_LISTENER_MSG_FORMAT, "Kansas", "nonexisting"));
+        page.assertListener(PhaseId.INVOKE_APPLICATION, SECOND_LISTENER_MSG);
     }
 
     @Test(groups = "Future")
