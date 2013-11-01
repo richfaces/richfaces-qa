@@ -63,7 +63,6 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                fetchValue="#{capital.state}"
                                immediate="#{richAutocompleteBean.attributes['immediate'].value}"
                                inputClass="#{richAutocompleteBean.attributes['inputClass'].value}"
-                               layout="#{richAutocompleteBean.attributes['layout'].value}"
                                minChars="#{richAutocompleteBean.attributes['minChars'].value}"
                                mode="#{richAutocompleteBean.attributes['mode'].value}"
                                onbeforedomupdate="#{richAutocompleteBean.attributes['onbeforedomupdate'].value}"
@@ -115,10 +114,6 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                           render="#{richAutocompleteBean.ajaxAttributes['render'].value}"
                           execute="#{richAutocompleteBean.ajaxAttributes['execute'].value}"
                           listener="#{richBean.changeEventListener}" />
-
-                <r:ajax event="selectitem" render="output"
-                	listener="#{richBean.actionListener}"
-                />
 
             </r:autocomplete>
 
