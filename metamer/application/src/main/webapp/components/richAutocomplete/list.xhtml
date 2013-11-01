@@ -33,7 +33,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             <metamer:testPageLink id="autocomplete" outcome="autocomplete" value="Simple">
                 Simple page that contains <b>r:autocomplete</b> (with model containing capitals) and
-                input boxes for all its attributes.
+                input boxes for all its attributes. Autocomplete sends its value to the server on change event.
+            </metamer:testPageLink>
+            
+            <metamer:testPageLink id="ajaxOnSelectitem" outcome="ajaxOnSelectitem" value="Select item event">
+                Simple page that contains <b>r:autocomplete</b> (with model containing capitals) and
+                input boxes for all its attributes. Autocomplete sends its value to the server on selectitem event.
             </metamer:testPageLink>
 
             <metamer:testPageLink id="fetchValueAttr" outcome="fetchValueAttr" value="Formatted suggestions">
