@@ -136,6 +136,14 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         driverType = DriverType.getCurrentType(driver);
     }
 
+    protected MetamerPage getMetamerPage() {
+        return metamerPage;
+    }
+
+    protected Attributes<MetamerAttributes> getMetamerAttributes() {
+        return getAttributes();
+    }
+
     /**
      * Sets component attribute to chosen @value. Always uses the first attribute table, unless a more specific attribute
      * locator provided (e.g. @attributename="table2:onChange").
@@ -769,7 +777,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             actualEvents,
             events,
             String.format("The events (%s) don't came in right order (%s)", Arrays.deepToString(actualEvents),
-            Arrays.deepToString(events)));
+                Arrays.deepToString(events)));
     }
 
     public void cleanMetamerEventsVariable() {

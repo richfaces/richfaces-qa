@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+    xmlns:r="http://richfaces.org/rich" xmlns:a="http://richfaces.org/a4j">
+
+<!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2013, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+<ui:composition template="/templates/template.xhtml">
+
+    <ui:define name="view">
+        <f:metadata>
+            <f:viewParam name="templates" value="#{templateBean.templates}">
+                <f:converter converterId="templatesListConverter" />
+            </f:viewParam>
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="component">
+        <r:autocomplete id="autocomplete" autofill="#{richAutocompleteBean.attributes['autofill'].value}"
+            autocompleteMethod="#{richAutocompleteBean.autocomplete}"
+            clientFilterFunction="#{richAutocompleteBean.attributes['clientFilterFunction'].value}"
+            converterMessage="#{richAutocompleteBean.attributes['converterMessage'].value}"
+            disabled="#{richAutocompleteBean.attributes['disabled'].value}"
+            immediate="#{richAutocompleteBean.attributes['immediate'].value}"
+            inputClass="#{richAutocompleteBean.attributes['inputClass'].value}"
+            minChars="#{richAutocompleteBean.attributes['minChars'].value}"
+            mode="#{richAutocompleteBean.attributes['mode'].value}"
+            onbeforedomupdate="#{richAutocompleteBean.attributes['onbeforedomupdate'].value}"
+            onbegin="#{richAutocompleteBean.attributes['onbegin'].value}"
+            onblur="#{richAutocompleteBean.attributes['onblur'].value}"
+            onchange="#{richAutocompleteBean.attributes['onchange'].value}"
+            onclick="#{richAutocompleteBean.attributes['onclick'].value}"
+            oncomplete="#{richAutocompleteBean.attributes['oncomplete'].value}"
+            ondblclick="#{richAutocompleteBean.attributes['ondblclick'].value}"
+            onerror="#{richAutocompleteBean.attributes['onerror'].value}"
+            onfocus="#{richAutocompleteBean.attributes['onfocus'].value}"
+            onkeydown="#{richAutocompleteBean.attributes['onkeydown'].value}"
+            onkeypress="#{richAutocompleteBean.attributes['onkeypress'].value}"
+            onkeyup="#{richAutocompleteBean.attributes['onkeyup'].value}"
+            onlistclick="#{richAutocompleteBean.attributes['onlistclick'].value}"
+            onlistdblclick="#{richAutocompleteBean.attributes['onlistdblclick'].value}"
+            onlistkeydown="#{richAutocompleteBean.attributes['onlistkeydown'].value}"
+            onlistkeypress="#{richAutocompleteBean.attributes['onlistkeypress'].value}"
+            onlistkeyup="#{richAutocompleteBean.attributes['onlistkeyup'].value}"
+            onlistmousedown="#{richAutocompleteBean.attributes['onlistmousedown'].value}"
+            onlistmousemove="#{richAutocompleteBean.attributes['onlistmousemove'].value}"
+            onlistmouseout="#{richAutocompleteBean.attributes['onlistmouseout'].value}"
+            onlistmouseover="#{richAutocompleteBean.attributes['onlistmouseover'].value}"
+            onlistmouseup="#{richAutocompleteBean.attributes['onlistmouseup'].value}"
+            onmousedown="#{richAutocompleteBean.attributes['onmousedown'].value}"
+            onmousemove="#{richAutocompleteBean.attributes['onmousemove'].value}"
+            onmouseout="#{richAutocompleteBean.attributes['onmouseout'].value}"
+            onmouseover="#{richAutocompleteBean.attributes['onmouseover'].value}"
+            onmouseup="#{richAutocompleteBean.attributes['onmouseup'].value}"
+            onselectitem="#{richAutocompleteBean.attributes['onselectitem'].value}"
+            popupClass="#{richAutocompleteBean.attributes['popupClass'].value}"
+            rendered="#{richAutocompleteBean.attributes['rendered'].value}"
+            required="#{richAutocompleteBean.attributes['required'].value}"
+            requiredMessage="#{richAutocompleteBean.attributes['requiredMessage'].value}"
+            selectFirst="#{richAutocompleteBean.attributes['selectFirst'].value}"
+            selectedItemClass="#{richAutocompleteBean.attributes['selectedItemClass'].value}"
+            showButton="#{richAutocompleteBean.attributes['showButton'].value}"
+            style="#{richAutocompleteBean.attributes['style'].value}"
+            styleClass="#{richAutocompleteBean.attributes['styleClass'].value}"
+            tokens="#{richAutocompleteBean.attributes['tokens'].value}"
+            validatorMessage="#{richAutocompleteBean.attributes['validatorMessage'].value}"
+            value="#{richAutocompleteBean.attributes['value'].value}" valueChangeListener="#{richBean.valueChangeListener}">
+
+            <a:ajax event="selectitem" render="#{richAutocompleteBean.ajaxAttributes['render'].value}"
+                execute="#{richAutocompleteBean.ajaxAttributes['execute'].value}" listener="#{richBean.changeEventListener}" />
+
+        </r:autocomplete>
+
+        <br />
+        <br />
+            Your selection: <h:outputText id="output" value="#{richAutocompleteBean.attributes['value'].value}" />
+
+    </ui:define>
+
+    <ui:define name="outOfTemplateAfter">
+        <metamer:attributes value="#{richAutocompleteBean.attributes}" id="attributes" />
+        <metamer:attributes value="#{richAutocompleteBean.ajaxAttributes}" id="ajaxAttributes" />
+    </ui:define>
+
+</ui:composition>
+</html>

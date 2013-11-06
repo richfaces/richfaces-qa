@@ -19,44 +19,19 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richCollapsiblePanel;
-
-import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+package org.richfaces.tests.page.fragments.impl.status;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public enum CollapsiblePanelAttributes implements AttributeEnum {
+public interface Status {
 
-    binding,
-    bodyClass,
-    converter,
-    dir,
-    expanded,
-    header,
-    headerClass,
-    id,
-    immediate,
-    lang,
-    leftCollapsedIcon,
-    leftExpandedIcon,
-    onbeforeswitch,
-    onclick,
-    ondblclick,
-    onmousedown,
-    onmousemove,
-    onmouseout,
-    onmouseover,
-    onmouseup,
-    onswitch,
-    rendered,
-    rightCollapsedIcon,
-    rightExpandedIcon,
-    style,
-    styleClass,
-    switchType,
-    title,
-    toggleListener,
-    value
+    StatusState getStatusState();
 
+    String getStatusText();
+
+    enum StatusState {
+
+        START, STOP, ERROR;
+    }
 }

@@ -93,52 +93,32 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/><br/>
             <fieldset>
                 <legend>JavaScript API</legend>
-
-                <script type="text/javascript">
-                    testedComponentId = "#{rich:clientId('accordion')}";
-                </script>
-
-                <h:commandButton id="switchButton1" value="item1">
-                    <rich:componentControl event="click" operation="switchToItem" target="accordion" >
-                        <f:param value="item1" />
-                    </rich:componentControl>
-                </h:commandButton>
-                <h:commandButton id="switchButton2" value="item2">
-                    <rich:componentControl event="click" operation="switchToItem" target="accordion" >
-                        <f:param value="item2" />
-                    </rich:componentControl>
-                </h:commandButton>
-                <h:commandButton id="switchButton3" value="item3">
-                    <rich:componentControl event="click" operation="switchToItem" target="accordion" >
-                        <f:param value="item3" />
-                    </rich:componentControl>
-                </h:commandButton>
-                <h:commandButton id="switchButton4" value="item4">
-                    <rich:componentControl event="click" operation="switchToItem" target="accordion" >
-                        <f:param value="item4" />
-                    </rich:componentControl>
-                </h:commandButton>
-                <h:commandButton id="switchButton5" value="item5">
-                    <rich:componentControl event="click" operation="switchToItem" target="accordion" >
-                        <f:param value="item5" />
-                    </rich:componentControl>
-                </h:commandButton>
-
+                Output value for all get methods: <h:inputText id="value" size="30"/>
                 <br/>
-
-                <h:commandButton id="switcFirsthButton" value="first">
-                    <rich:toggleControl targetPanel="accordion" targetItem="@first" />
-                </h:commandButton>
-                <h:commandButton id="switchPrevButton" value="previous">
-                    <rich:toggleControl targetPanel="accordion" targetItem="@prev" />
-                </h:commandButton>
-                <h:commandButton id="switchNextButton" value="next">
-                    <rich:toggleControl targetPanel="accordion" targetItem="@next"/>
-                </h:commandButton>
-                <h:commandButton id="switchLastButton" value="last">
-                    <rich:toggleControl targetPanel="accordion" targetItem="@last"/>
-                </h:commandButton>
-
+                <br/>
+                On click:
+                <br/>
+                <input id="switchTo1" type="button" name="siwtchTo1" value="switchToItem('item1')" onclick="#{rich:component('accordion')}.switchToItem('item1')" />
+                <input id="switchTo2" type="button" name="switchTo2" value="switchToItem('item2')" onclick="#{rich:component('accordion')}.switchToItem('item2')" />
+                <input id="switchTo3" type="button" name="switchTo3" value="switchToItem('item3')" onclick="#{rich:component('accordion')}.switchToItem('item3')" />
+                <input id="switchTo4" type="button" name="switchTo4" value="switchToItem('item4')" onclick="#{rich:component('accordion')}.switchToItem('item4')" />
+                <input id="switchTo5" type="button" name="switchTo5" value="switchToItem('item5')" onclick="#{rich:component('accordion')}.switchToItem('item5')" />
+                <br/>
+                <input id="getItems" name="getItems" type="button" value="getItems().length" onclick="$('[id$=value]').val(String(#{rich:component('accordion')}.getItems().length))" />
+                <input id="getItemsNames" name="getItemsNames" type="button" value="getItemsNames()" onclick="$('[id$=value]').val(String(#{rich:component('accordion')}.getItemsNames()))" />
+                <br/>
+                <input id="firstItem" type="button" name="firstItem" value="firstItem()" onclick="$('[id$=value]').val(String(#{rich:component('accordion')}.firstItem()))" />
+                <input id="prevItem" type="button" name="prevItem" value="prevItem()" onclick="$('[id$=value]').val(String(#{rich:component('accordion')}.prevItem()))" />
+                <input id="nextItem" type="button" name="nextItem" value="nextItem()" onclick="$('[id$=value]').val(String(#{rich:component('accordion')}.nextItem()))" />
+                <input id="lastItem" type="button" name="lastItem" value="lastItem()" onclick="$('[id$=value]').val(String(#{rich:component('accordion')}.lastItem()))" />
+                <br/>
+                <br/>
+                Chaining of functions:
+                <br/>
+                <input id="switchToFirst" type="button" name="switchToFirst" value="switchToFirst" onclick="#{rich:component('accordion')}.switchToItem(#{rich:component('accordion')}.firstItem())" />
+                <input id="switchToPrevious" type="button" name="switchToPrevious" value="switchToPrevious" onclick="#{rich:component('accordion')}.switchToItem(#{rich:component('accordion')}.prevItem())" />
+                <input id="switchToNext" type="button" name="switchToNext" value="switchToNext" onclick="#{rich:component('accordion')}.switchToItem(#{rich:component('accordion')}.nextItem())" />
+                <input id="switchToLast" type="button" name="switchToLast" value="switchToLast" onclick="#{rich:component('accordion')}.switchToItem(#{rich:component('accordion')}.lastItem())" />
             </fieldset>
         </ui:define>
 

@@ -100,15 +100,4 @@ public class A4JStatusBean implements Serializable {
     public void setFacetErrorValue(String facetErrorValue) {
         this.facetErrorValue = facetErrorValue;
     }
-
-    /**
-     * Action that creates a 2-second delay.
-     *
-     * @throws InterruptedException
-     *             if any thread has interrupted the current thread. The interrupted status of the current thread is
-     *             cleared when this exception is thrown.
-     */
-    public void delay() throws InterruptedException {
-        Thread.sleep(2000);
-    }
 }

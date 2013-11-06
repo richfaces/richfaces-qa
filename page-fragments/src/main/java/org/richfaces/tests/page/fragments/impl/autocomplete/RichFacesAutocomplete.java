@@ -227,7 +227,7 @@ public class RichFacesAutocomplete implements Autocomplete, AdvancedInteractions
             if (advanced().getScrollingType() == ScrollingType.BY_KEYS) {
                 selectWithKeys(foundValue);
             } else {
-                foundValue.click();
+                new Actions(driver).moveToElement(foundValue).click(foundValue).perform();
             }
 
             advanced().waitForSuggestionsToBeNotVisible().perform();

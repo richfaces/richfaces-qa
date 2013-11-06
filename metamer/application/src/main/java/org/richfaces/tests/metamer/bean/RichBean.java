@@ -458,7 +458,7 @@ public class RichBean implements Serializable {
      *            an event representing the activation of a user interface component
      */
     public void valueChangeListener(ValueChangeEvent event) {
-        logToPage("*1 value changed: " + event.getOldValue() + " -> " + event.getNewValue());
+        logToPage("* 1 value changed: " + event.getOldValue() + " -> " + event.getNewValue());
     }
 
     /**
@@ -469,7 +469,7 @@ public class RichBean implements Serializable {
      *            an event representing the activation of a user interface component
      */
     public void changeEventListener(AjaxBehaviorEvent event) {
-        logToPage("*2 value changed ");
+        logToPage("* 2 value changed ");
     }
 
     /**
