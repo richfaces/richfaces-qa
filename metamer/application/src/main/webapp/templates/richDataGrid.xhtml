@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org">
+    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org">
 
-    <!--
+<!--
 JBoss, Home of Professional Open Source
 Copyright 2010-2013, Red Hat, Inc. and individual contributors
 by the @authors tag. See the copyright.txt in the distribution for a
@@ -25,19 +25,20 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-    <ui:composition>
-        <r:dataGrid value="#{model.simple}" var="containerRichDataGridItem" id="containerRichDataGrid" columns="2" style="width: 100%;">
+<ui:composition>
+    <r:dataGrid value="#{model.simple}" var="containerRichDataGridItem" id="containerRichDataGrid" columns="2"
+        style="width: 100%;" styleClass="template-data-grid">
 
-            <f:facet name="header">
+        <f:facet name="header">
                 Rich Data Grid
             </f:facet>
 
-            <h:panelGroup rendered="#{containerRichDataGridItem == 'row 4'}">
-                <ui:decorate template="#{templateBean.nextTemplate}.xhtml" />
-            </h:panelGroup>
-            <h:outputText value="#{containerRichDataGridItem}" rendered="#{containerRichDataGridItem != 'row 4'}" />
+        <h:panelGroup rendered="#{containerRichDataGridItem == 'row 4'}">
+            <ui:decorate template="#{templateBean.nextTemplate}.xhtml" />
+        </h:panelGroup>
+        <h:outputText value="#{containerRichDataGridItem}" rendered="#{containerRichDataGridItem != 'row 4'}" />
 
-        </r:dataGrid>
+    </r:dataGrid>
 
-    </ui:composition>
+</ui:composition>
 </html>
