@@ -45,6 +45,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
 
     private static final String FIRST_LISTENER_MSG_FORMAT = "1 value changed: %s -> %s";
     private static final String SECOND_LISTENER_MSG = "2 value changed";
+    private static final String THIRD_LISTENER_MSG = "action listener invoked";
 
     @Override
     public URL getTestUrl() {
@@ -54,18 +55,22 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     @Test
     public void testValueChangeListener() {
         Graphene.guardAjax(autocomplete).type("h").select("Hawaii");
-        Graphene.guardAjax(page).blur();
         checkOutput("Hawaii");
 
         page.assertListener(PhaseId.PROCESS_VALIDATIONS, String.format(FIRST_LISTENER_MSG_FORMAT, "null", "Hawaii"));
+        page.assertListener(PhaseId.INVOKE_APPLICATION, THIRD_LISTENER_MSG);
+
+        Graphene.guardAjax(page).blur();
         page.assertListener(PhaseId.INVOKE_APPLICATION, SECOND_LISTENER_MSG);
 
         autocomplete.clear();
         Graphene.guardAjax(autocomplete).type("ka").select("Kansas");
-        Graphene.guardAjax(page).blur();
         checkOutput("Kansas");
 
         page.assertListener(PhaseId.PROCESS_VALIDATIONS, String.format(FIRST_LISTENER_MSG_FORMAT, "Hawaii", "Kansas"));
+        page.assertListener(PhaseId.INVOKE_APPLICATION, THIRD_LISTENER_MSG);
+
+        Graphene.guardAjax(page).blur();
         page.assertListener(PhaseId.INVOKE_APPLICATION, SECOND_LISTENER_MSG);
 
         autocomplete.clear();
