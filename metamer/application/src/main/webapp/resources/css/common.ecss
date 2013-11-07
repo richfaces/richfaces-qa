@@ -42,3 +42,11 @@ ul a.link {
 .log-panel {
     display: none;
 }
+
+.width-50 {
+	width: 50px;
+}
+
+.template-data-grid > tbody > tr > td:first-child {
+	width: 50px;
+}
