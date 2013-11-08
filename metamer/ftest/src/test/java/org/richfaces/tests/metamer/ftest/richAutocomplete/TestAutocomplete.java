@@ -75,9 +75,7 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
         assertTrue(autocomplete.advanced().getSuggestionsElements().isEmpty());
         SelectOrConfirm typed = Graphene.guardAjax(autocomplete).type("ala");
         assertFalse(autocomplete.advanced().getSuggestionsElements().isEmpty());
-        if (selectFirst == false) {
-            waiting(200); // wait for DOM update
-        }
+
         typed.confirm();
         assertTrue(autocomplete.advanced().getSuggestionsElements().isEmpty());
         String expectedStateForPrefix = getExpectedStateForPrefix("ala", selectFirst);
