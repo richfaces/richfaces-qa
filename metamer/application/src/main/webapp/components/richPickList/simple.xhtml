@@ -43,14 +43,10 @@
                         collectionType="java.util.LinkedList"
                         columnClasses="#{richPickListBean.attributes['columnClasses'].value}"
                         disabled="#{richPickListBean.attributes['disabled'].value}"
-                        disabledClass="#{richPickListBean.attributes['disabledClass'].value}"
                         downBottomText="#{richPickListBean.attributes['downBottomText'].value}"
                         downText="#{richPickListBean.attributes['downText'].value}"
-                        headerClass="#{richPickListBean.attributes['headerClass'].value}"
                         immediate="#{richPickListBean.attributes['immediate'].value}"
-                        itemClass="#{richPickListBean.attributes['itemClass'].value}"
                         listHeight="#{richPickListBean.attributes['listHeight'].value}"
-                        listWidth="#{richPickListBean.attributes['listWidth'].value}"
                         maxListHeight="#{richPickListBean.attributes['maxListHeight'].value}"
                         minListHeight="#{richPickListBean.attributes['minListHeight'].value}"
                         onadditems="#{richPickListBean.attributes['onadditems'].value}"
@@ -68,37 +64,12 @@
                         onmouseover="#{richPickListBean.attributes['onmouseover'].value}"
                         onmouseup="#{richPickListBean.attributes['onmouseup'].value}"
                         onremoveitems="#{richPickListBean.attributes['onremoveitems'].value}"
-                        onsourceblur="#{richPickListBean.attributes['onsourceblur'].value}"
-                        onsourceclick="#{richPickListBean.attributes['onsourceclick'].value}"
-                        onsourcedblclick="#{richPickListBean.attributes['onsourcedblclick'].value}"
-                        onsourcefocus="#{richPickListBean.attributes['onsourcefocus'].value}"
-                        onsourcekeydown="#{richPickListBean.attributes['onsourcekeydown'].value}"
-                        onsourcekeypress="#{richPickListBean.attributes['onsourcekeypress'].value}"
-                        onsourcekeyup="#{richPickListBean.attributes['onsourcekeyup'].value}"
-                        onsourcemousedown="#{richPickListBean.attributes['onsourcemousedown'].value}"
-                        onsourcemousemove="#{richPickListBean.attributes['onsourcemousemove'].value}"
-                        onsourcemouseout="#{richPickListBean.attributes['onsourcemouseout'].value}"
-                        onsourcemouseover="#{richPickListBean.attributes['onsourcemouseover'].value}"
-                        onsourcemouseup="#{richPickListBean.attributes['onsourcemouseup'].value}"
-                        ontargetblur="#{richPickListBean.attributes['ontargetblur'].value}"
-                        ontargetclick="#{richPickListBean.attributes['ontargetclick'].value}"
-                        ontargetdblclick="#{richPickListBean.attributes['ontargetdblclick'].value}"
-                        ontargetfocus="#{richPickListBean.attributes['ontargetfocus'].value}"
-                        ontargetkeydown="#{richPickListBean.attributes['ontargetkeydown'].value}"
-                        ontargetkeypress="#{richPickListBean.attributes['ontargetkeypress'].value}"
-                        ontargetkeyup="#{richPickListBean.attributes['ontargetkeyup'].value}"
-                        ontargetmousedown="#{richPickListBean.attributes['ontargetmousedown'].value}"
-                        ontargetmousemove="#{richPickListBean.attributes['ontargetmousemove'].value}"
-                        ontargetmouseout="#{richPickListBean.attributes['ontargetmouseout'].value}"
-                        ontargetmouseover="#{richPickListBean.attributes['ontargetmouseover'].value}"
-                        ontargetmouseup="#{richPickListBean.attributes['ontargetmouseup'].value}"
                         orderable="#{richPickListBean.attributes['orderable'].value}"
                         removeAllText="#{richPickListBean.attributes['removeAllText'].value}"
                         removeText="#{richPickListBean.attributes['removeText'].value}"
                         rendered="#{richPickListBean.attributes['rendered'].value}"
                         required="#{richPickListBean.attributes['required'].value}"
                         requiredMessage="#{richPickListBean.attributes['requiredMessage'].value}"
-                        selectItemClass="#{richPickListBean.attributes['selectItemClass'].value}"
                         sourceCaption="#{richPickListBean.attributes['sourceCaption'].value}"
                         style="#{richPickListBean.attributes['style'].value}"
                         styleClass="#{richPickListBean.attributes['styleClass'].value}"
@@ -124,19 +95,14 @@
             <br/>
             output: <h:outputText id="output" value="#{richPickListBean.value}" />
             <br/><br/>
-            <fieldset>
+            <fieldset> <b>DOES NOT WORK ATM</b>
                 <legend>JavaScript API</legend>
-                Output value for all get methods: <h:inputText id="value"/>
-                <br/><br/>
                 On click:
                 <br/>
-                <input id="getSourceList" type="button" name="getSourceList" value="getSourceList().length()" onclick="$('[id$=value]').val(#{r:component('pickList')}.getSourceList().length())" />
-                <input id="getTargetList" type="button" name="getTargetList" value="getTargetList().length()" onclick="$('[id$=value]').val(#{r:component('pickList')}.getTargetList().length())" />
-                <input id="add" type="button" name="add" value="add()" onclick="#{r:component('pickList')}.add()" />
-                <input id="addAll" type="button" name="addAll" value="addAll()" onclick="#{r:component('pickList')}.addAll()" />
-                <input id="remove" type="button" name="remove" value="remove()" onclick="#{r:component('pickList')}.remove()" />
-                <input id="removeAll" type="button" name="removeAll" value="removeAll()" onclick="#{r:component('pickList')}.removeAll()" />
-                <input id="toggleButtons" type="button" name="toggleButtons" value="toggleButtons()" onclick="#{r:component('pickList')}.toggleButtons()" />
+                <input id="addItemsSome" type="button" name="addItemsSome" value="addItems(firstThree)" onclick="RichFaces.component('form:pickList').addItems()" />
+                <input id="addItemsAll" type="button" name="addItemsSome" value="addItems(allItems)" onclick="#{r:component('pickList')}.addItems()" />
+                <input id="removeItemsSome" type="button" name="removeItemsSome" value="removeItems(firstTwo)" onclick="#{r:component('pickList')}.removeItems()" />
+                <input id="removeItemsAll" type="button" name="removeItemsAll" value="removeItems(allItems)" onclick="#{r:component('pickList')}.removeItems()" />
             </fieldset>
         </ui:define>
 

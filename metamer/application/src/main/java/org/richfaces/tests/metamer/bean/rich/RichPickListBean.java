@@ -81,6 +81,7 @@ public class RichPickListBean implements Serializable {
 
         attributes.setAttribute("rendered", Boolean.TRUE);
         attributes.setAttribute("minListHeight", "100");
+        attributes.setAttribute("orderable", Boolean.TRUE);
 
         attributes.setAttribute("requiredMessage", "Not empty target list is required!");
         attributes.setAttribute("validatorMessage", "We are sorry, but @ is not allowed to join us!");
