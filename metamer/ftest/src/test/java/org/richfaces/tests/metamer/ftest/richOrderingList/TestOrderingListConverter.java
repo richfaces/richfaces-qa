@@ -30,7 +30,7 @@ import org.testng.annotations.Test;
  */
 public class TestOrderingListConverter extends AbstractConverterTest {
 
-    private static final String VALUE = "VALUE";
+    private static final String VALUE = "";
 
     @Override
     protected String badValue() {

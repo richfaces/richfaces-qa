@@ -28,7 +28,6 @@ import static org.testng.Assert.assertTrue;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.GrapheneElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -61,23 +60,20 @@ public abstract class AbstractOrderingListTest extends AbstractWebDriverTest {
     }
 
     private TwoColumnListItem convertItem(WebElement itemRoot) {
-        WebElement trueRoot = (itemRoot instanceof GrapheneElement ? ((GrapheneElement) itemRoot).getWrappedElement() : itemRoot);
-        return Graphene.createPageFragment(TwoColumnListItem.class, trueRoot);
+        return Graphene.createPageFragment(TwoColumnListItem.class, itemRoot);
     }
 
     protected void assertButtonDisabled(WebElement element, String buttonName) {
-        assertTrue(element.getAttribute("class").contains("rf-ord-btn-dis"), "Button should contain disabled class 'rf-ord-btn-dis'");
         assertFalse(element.isEnabled(), "The button [" + buttonName + "] should be disabled.");
     }
 
     protected void assertButtonEnabled(WebElement element, String buttonName) {
-        assertFalse(element.getAttribute("class").contains("rf-ord-btn-dis"), "Button should contain disabled class 'rf-ord-btn-dis'");
         assertTrue(element.isEnabled(), "The button [" + buttonName + "] should be enabled.");
     }
 
     protected void checkButtonsStateBottom() {
-        assertButtonDisabled(orderingList.advanced().getBottomButtonElement(), "botom");
-        assertButtonDisabled(orderingList.advanced().getDownButtonElement(), "down");
+        assertButtonEnabled(orderingList.advanced().getBottomButtonElement(), "botom");
+        assertButtonEnabled(orderingList.advanced().getDownButtonElement(), "down");
         assertButtonEnabled(orderingList.advanced().getTopButtonElement(), "top");
         assertButtonEnabled(orderingList.advanced().getUpButtonElement(), "up");
     }
@@ -92,8 +88,8 @@ public abstract class AbstractOrderingListTest extends AbstractWebDriverTest {
     protected void checkButtonsStateTop() {
         assertButtonEnabled(orderingList.advanced().getBottomButtonElement(), "botom");
         assertButtonEnabled(orderingList.advanced().getDownButtonElement(), "down");
-        assertButtonDisabled(orderingList.advanced().getTopButtonElement(), "top");
-        assertButtonDisabled(orderingList.advanced().getUpButtonElement(), "up");
+        assertButtonEnabled(orderingList.advanced().getTopButtonElement(), "top");
+        assertButtonEnabled(orderingList.advanced().getUpButtonElement(), "up");
     }
 
     private void checkColumnValuesMoved(int indexA, String stateA, String cityA, int indexB, String stateB, String cityB) {

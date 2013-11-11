@@ -64,7 +64,6 @@ public class RichOrderingListBean implements Serializable {
 
         attributes.setAttribute("downText", "Down");
         attributes.setAttribute("downBottomText", "Bottom");
-        attributes.setAttribute("listWidth", 300);
         attributes.setAttribute("listHeight", 500);
         attributes.setAttribute("rendered", true);
         attributes.setAttribute("upText", "Up");

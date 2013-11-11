@@ -47,10 +47,10 @@ public class TestOrderingList extends AbstractOrderingListTest {
     @Test
     public void testInit() {
         assertVisible(orderingList.advanced().getRootElement(), "The ordering list should be visible.");
-        assertButtonDisabled(orderingList.advanced().getBottomButtonElement(), "The button [bottom] should be disabled.");
-        assertButtonDisabled(orderingList.advanced().getDownButtonElement(), "The button [down] should be disabled.");
-        assertButtonDisabled(orderingList.advanced().getTopButtonElement(), "The button [top] should be disabled.");
-        assertButtonDisabled(orderingList.advanced().getUpButtonElement(), "The button [up] should be disabled.");
+        assertButtonEnabled(orderingList.advanced().getBottomButtonElement(), "bottom");
+        assertButtonEnabled(orderingList.advanced().getDownButtonElement(), "down");
+        assertButtonEnabled(orderingList.advanced().getTopButtonElement(), "top");
+        assertButtonEnabled(orderingList.advanced().getUpButtonElement(), "up");
     }
 
     @Test
@@ -76,15 +76,19 @@ public class TestOrderingList extends AbstractOrderingListTest {
         String firstBefore = orderingList.advanced().getItemsElements().get(0).getText();
         String secondBefore = orderingList.advanced().getItemsElements().get(1).getText();
         orderingList.select(1).putItBefore(0);
-        submit();
         String firstAfter = orderingList.advanced().getItemsElements().get(0).getText();
         String secondAfter = orderingList.advanced().getItemsElements().get(1).getText();
-        assertEquals(firstAfter, secondBefore, "After submitting the ordering list doesn't preserve the chosen order.");
-        assertEquals(firstBefore, secondAfter, "After submitting the ordering list doesn't preserve the chosen order.");
+        assertEquals(firstAfter, secondBefore, "Items should be moved.");
+        assertEquals(firstBefore, secondAfter, "Items should be moved.");
         submit();
         firstAfter = orderingList.advanced().getItemsElements().get(0).getText();
         secondAfter = orderingList.advanced().getItemsElements().get(1).getText();
         assertEquals(firstAfter, secondBefore, "After submitting the ordering list doesn't preserve the chosen order.");
         assertEquals(firstBefore, secondAfter, "After submitting the ordering list doesn't preserve the chosen order.");
+        submit();
+        firstAfter = orderingList.advanced().getItemsElements().get(0).getText();
+        secondAfter = orderingList.advanced().getItemsElements().get(1).getText();
+        assertEquals(firstAfter, secondBefore, "After second submitting the ordering list doesn't preserve the chosen order.");
+        assertEquals(firstBefore, secondAfter, "After second submitting the ordering list doesn't preserve the chosen order.");
     }
 }

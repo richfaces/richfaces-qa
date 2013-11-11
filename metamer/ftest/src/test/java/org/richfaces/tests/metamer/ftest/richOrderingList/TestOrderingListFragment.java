@@ -24,8 +24,6 @@ package org.richfaces.tests.metamer.ftest.richOrderingList;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 
-import com.google.common.collect.Lists;
-
 import java.net.URL;
 import java.util.List;
 
@@ -36,13 +34,15 @@ import org.richfaces.tests.page.fragments.impl.orderingList.RichFacesOrderingLis
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.annotations.Test;
 
+import com.google.common.collect.Lists;
+
 /**
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestOrderingListFragment extends AbstractWebDriverTest {
 
-    @FindBy(css = "div.rf-ord")
+    @FindBy(css = "[id$='orderingList']")
     private RichFacesOrderingList orderingList;
 
     private static final int LIST_SIZE = 50;
