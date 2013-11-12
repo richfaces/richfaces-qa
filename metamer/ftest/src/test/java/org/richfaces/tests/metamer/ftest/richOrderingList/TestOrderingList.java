@@ -26,6 +26,7 @@ import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.annotations.Test;
 
@@ -72,6 +73,7 @@ public class TestOrderingList extends AbstractOrderingListTest {
     }
 
     @Test
+    @IssueTracking("https://issues.jboss.org/browse/RF-13339")
     public void testSubmit() {
         String firstBefore = orderingList.advanced().getItemsElements().get(0).getText();
         String secondBefore = orderingList.advanced().getItemsElements().get(1).getText();

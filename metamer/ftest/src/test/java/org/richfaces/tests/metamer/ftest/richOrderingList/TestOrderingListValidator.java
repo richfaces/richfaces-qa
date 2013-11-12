@@ -26,6 +26,7 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.validator.PhoenixFirstValidator;
 import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
 import org.testng.Assert;
@@ -46,6 +47,7 @@ public class TestOrderingListValidator extends AbstractOrderingListTest {
     }
 
     @Test
+    @IssueTracking("https://issues.jboss.org/browse/RF-13339")
     public void testValidatorMessage() {
         String customMessage = "Phoenix first!";
         submit();

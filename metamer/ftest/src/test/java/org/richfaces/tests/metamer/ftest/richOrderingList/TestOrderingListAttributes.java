@@ -36,6 +36,7 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.Utils;
@@ -67,6 +68,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
 
     @Test
     @Templates(value = "plain")
+    @IssueTracking("https://github.com/richwidgets/richwidgets/issues/124")
     public void testColumnClasses() {
         String testedClass = "metamer-ftest-class";
         attributes.set(OrderingListAttributes.columnClasses, testedClass);
@@ -107,6 +109,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @IssueTracking("https://issues.jboss.org/browse/RF-13339")
     public void testImmediate() {
         attributes.set(OrderingListAttributes.immediate, Boolean.FALSE);
         orderingList.select(1).putItBefore(0);
@@ -233,6 +236,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
 
     @Test
     @Templates(value = "plain")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13340")
     public void testStyle() {
         testStyle(orderingList.advanced().getRootElement().findElement(By.tagName("div")));
     }
@@ -260,6 +264,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @IssueTracking({"https://issues.jboss.org/browse/RF-13339", "https://issues.jboss.org/browse/RF-13340"} )
     public void testValueChangeListener() {
         orderingList.select(0).putItAfter(ChoicePickerHelper.byIndex().last());
         submit();
