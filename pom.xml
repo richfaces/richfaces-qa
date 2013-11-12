@@ -113,7 +113,7 @@ FSF site: http://www.fsf.org. -->
                 </plugin>
                 <plugin>
                     <artifactId>maven-dependency-plugin</artifactId>
-                    <version>2.5.1</version>
+                    <version>2.8</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
