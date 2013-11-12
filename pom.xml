@@ -63,7 +63,7 @@ FSF site: http://www.fsf.org. -->
         <arquillian.android.version>1.0.0.Alpha2</arquillian.android.version>
         <shrinkwrap.descriptors.version>2.0.0-alpha-5</shrinkwrap.descriptors.version>
 
-        <version.selenium>2.35.0</version.selenium>
+        <version.selenium>2.37.1</version.selenium>
         <version.slf4j.jbossas6>1.6.1</version.slf4j.jbossas6>
 
         <!-- these are set as Environmental variables to let Arquillian know where distribution of managed containers are -->
@@ -544,6 +544,17 @@ FSF site: http://www.fsf.org. -->
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${apache-commons-io.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.googlecode.json-simple</groupId>
+                <artifactId>json-simple</artifactId>
+                <version>${google.json.version}</version>
+            </dependency>
+            <!-- needs to be defined explicitly because version provided by Selenium is overriden -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpcore</artifactId>
+                <version>4.3</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
