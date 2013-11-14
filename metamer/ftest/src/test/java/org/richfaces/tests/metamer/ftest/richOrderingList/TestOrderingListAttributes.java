@@ -23,10 +23,12 @@ package org.richfaces.tests.metamer.ftest.richOrderingList;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 import java.net.URL;
+import java.util.List;
 
 import javax.faces.event.PhaseId;
 
@@ -54,6 +56,26 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     @Page
     private MetamerPage page;
 
+    private void checkHeightAttribute(OrderingListAttributes heightAtt, boolean withUnit) {
+        int testedValue = 600;
+        int tolerance = 10;
+
+        attributes.set(heightAtt, String.format((withUnit ? "%spx" : "%s"), testedValue));
+        switch (heightAtt) {
+            case listHeight:
+                assertEquals(Integer.valueOf(orderingList.advanced().getScrollBoxElement().getCssValue("height").replace("px", "")), testedValue, tolerance);
+                break;
+            case maxListHeight:
+                assertEquals(Integer.valueOf(orderingList.advanced().getScrollBoxElement().getCssValue("max-height").replace("px", "")), testedValue, tolerance);
+                break;
+            case minListHeight:
+                assertEquals(Integer.valueOf(orderingList.advanced().getScrollBoxElement().getCssValue("min-height").replace("px", "")), testedValue, tolerance);
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown height attribute " + heightAtt);
+        }
+    }
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richOrderingList/withColumn.xhtml");
@@ -70,26 +92,58 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     @Templates(value = "plain")
     @IssueTracking("https://github.com/richwidgets/richwidgets/issues/124")
     public void testColumnClasses() {
+        // test single class applies only to the first column
         String testedClass = "metamer-ftest-class";
         attributes.set(OrderingListAttributes.columnClasses, testedClass);
+
         for (WebElement li : orderingList.advanced().getItemsElements()) {
-            for (WebElement e : li.findElements(By.tagName("td"))) {
-                assertTrue(e.getAttribute("class").contains(testedClass), "Item @class should contain " + testedClass);
-            }
+            List<WebElement> columns = li.findElements(By.tagName("td"));
+            assertEquals(columns.size(), 2);
+            assertTrue(columns.get(0).getAttribute("class").contains(testedClass), "Item @class should contain " + testedClass);
+            assertFalse(columns.get(1).getAttribute("class").contains(testedClass), "Item @class should not contain " + testedClass);
+        }
+
+        // test more classes than columns, redundant classes are ignored
+        testedClass = "class1, class2, class3";
+        attributes.set(OrderingListAttributes.columnClasses, testedClass);
+
+        for (WebElement li : orderingList.advanced().getItemsElements()) {
+            List<WebElement> columns = li.findElements(By.tagName("td"));
+            assertEquals(columns.size(), 2);
+            assertTrue(columns.get(0).getAttribute("class").contains("class1"), "Item @class should contain class1");
+            assertFalse(columns.get(0).getAttribute("class").contains("class2"), "Item @class should not contain class2");
+            assertFalse(columns.get(0).getAttribute("class").contains("class3"), "Item @class should not contain class3");
+            assertFalse(columns.get(1).getAttribute("class").contains("class1"), "Item @class should not contain class1");
+            assertTrue(columns.get(1).getAttribute("class").contains("class2"), "Item @class should contain class2");
+            assertFalse(columns.get(1).getAttribute("class").contains("class3"), "Item @class should not contain class3");
         }
     }
 
     @Test
+    @Templates(value = "plain")
     public void testDisabled() {
         attributes.set(OrderingListAttributes.disabled, Boolean.TRUE);
-        for (WebElement li : orderingList.advanced().getItemsElements()) {
-            assertTrue(li.getAttribute("class").contains("rf-ord-opt-dis"), "Item @class should contain " + "rf-ord-opt-dis");
+        List<WebElement> items = orderingList.advanced().getItemsElements();
+        assertEquals(items.size(), 50, "List should contain 50 items");
+        for (WebElement li : items) {
+            assertTrue(li.getAttribute("class").contains("ui-disabled"), "Item @class should contain ui-disabled");
+            assertFalse(li.getAttribute("class").contains("ui-selectee"), "Item @class should not contain ui-selectee");
         }
         try {
             orderingList.select(0);
             fail("The attribute <disabled> is set to true, but the ordering list is still enabled.");
         } catch (TimeoutException e) {
         }
+
+        attributes.set(OrderingListAttributes.disabled, Boolean.FALSE);
+        items = orderingList.advanced().getItemsElements();
+        assertEquals(items.size(), 50, "List should contain 50 items");
+        for (WebElement li : items) {
+            assertFalse(li.getAttribute("class").contains("ui-disabled"), "Item @class should not contain ui-disabled");
+            assertTrue(li.getAttribute("class").contains("ui-selectee"), "Item @class should contain ui-selectee");
+        }
+        orderingList.select(0);
+        assertEquals(orderingList.advanced().getSelectedItemsElements().size(), 1);
     }
 
     @Test
@@ -126,28 +180,30 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
 
     @Test
     public void testListHeight() {
-        int testedValue = 600;
-        int tolerance = 10;
-        attributes.set(OrderingListAttributes.listHeight,  String.format("%spx", testedValue));
-        assertEquals(Integer.valueOf(orderingList.advanced().getScrollBoxElement().getCssValue("height").replace("px", "")), testedValue, tolerance);
+        checkHeightAttribute(OrderingListAttributes.listHeight, Boolean.FALSE);
+        checkHeightAttribute(OrderingListAttributes.listHeight, Boolean.TRUE);
     }
 
     @Test
-    public void testMaxListHeight() {
-        int testedValue = 600;
-        int tolerance = 10;
-        attributes.set(OrderingListAttributes.maxListHeight, String.format("%spx", testedValue));
-        attributes.set(OrderingListAttributes.listHeight, "");
-        assertEquals(Integer.valueOf(orderingList.advanced().getScrollBoxElement().getCssValue("max-height").replace("px", "")), testedValue, tolerance);
+    public void testMaxListHeight_withUnit() {
+        checkHeightAttribute(OrderingListAttributes.maxListHeight, Boolean.TRUE);
     }
 
     @Test
-    public void testMinListHeight() {
-        int testedValue = 600;
-        int tolerance = 10;
-        attributes.set(OrderingListAttributes.listHeight, "");
-        attributes.set(OrderingListAttributes.minListHeight,  String.format("%spx", testedValue));
-        assertEquals(Integer.valueOf(orderingList.advanced().getScrollBoxElement().getCssValue("min-height").replace("px", "")), testedValue, tolerance);
+    @IssueTracking("https://issues.jboss.org/browse/RF-13346")
+    public void testMaxListHeight_withoutUnit() {
+        checkHeightAttribute(OrderingListAttributes.maxListHeight, Boolean.FALSE);
+    }
+
+    @Test
+    public void testMinListHeight_withUnit() {
+        checkHeightAttribute(OrderingListAttributes.minListHeight, Boolean.TRUE);
+    }
+
+    @Test
+    @IssueTracking("https://issues.jboss.org/browse/RF-13346")
+    public void testMinListHeight_withoutUnit() {
+        checkHeightAttribute(OrderingListAttributes.minListHeight, Boolean.FALSE);
     }
 
     @Test
@@ -264,7 +320,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
-    @IssueTracking({"https://issues.jboss.org/browse/RF-13339", "https://issues.jboss.org/browse/RF-13340"} )
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-13339", "https://issues.jboss.org/browse/RF-13340" })
     public void testValueChangeListener() {
         orderingList.select(0).putItAfter(ChoicePickerHelper.byIndex().last());
         submit();
