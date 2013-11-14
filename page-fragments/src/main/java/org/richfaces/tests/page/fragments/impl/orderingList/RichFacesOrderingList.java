@@ -56,6 +56,8 @@ public class RichFacesOrderingList extends AbstractOrderingList {
 
     @FindBy(className = "ui-selectee")
     private List<WebElement> itemsElements;
+    @FindBy(className = "ui-disabled")
+    private List<WebElement> disabledItemsElements;
     @FindBy(className = SELECTED_ITEM_CLASS)
     private List<WebElement> selectedItemsElements;
 
@@ -93,7 +95,7 @@ public class RichFacesOrderingList extends AbstractOrderingList {
 
         @Override
         public List<WebElement> getItemsElements() {
-            return itemsElements;
+            return (itemsElements.isEmpty() ? disabledItemsElements : itemsElements);
         }
 
         @Override
