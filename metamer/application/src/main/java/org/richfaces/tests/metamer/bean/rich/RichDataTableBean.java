@@ -32,9 +32,9 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.ajax4jsf.model.DataComponentState;
 import org.richfaces.component.UIDataTable;
 import org.richfaces.component.UIDataTableBase;
+import org.richfaces.model.DataComponentState;
 import org.richfaces.model.Filter;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.ColumnSortingMap;
