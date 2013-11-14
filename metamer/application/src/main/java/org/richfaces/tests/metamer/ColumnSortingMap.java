@@ -25,7 +25,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.TreeMap;
 
-import org.richfaces.component.SortOrder;
+import org.richfaces.model.SortOrder;
 import org.richfaces.component.UIDataTableBase;
 import org.richfaces.model.SortMode;
 
