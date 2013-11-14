@@ -22,13 +22,12 @@
 package org.richfaces.tests.metamer.ftest.richColumn;
 
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.columnAttributes;
-
 import static org.testng.Assert.assertEquals;
 
 import java.util.Collections;
 
 import org.jboss.arquillian.ajocado.request.RequestType;
-import org.richfaces.component.SortOrder;
+import org.richfaces.model.SortOrder;
 import org.richfaces.tests.metamer.bean.rich.RichColumnBean;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
