@@ -28,15 +28,22 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.event.Event;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import org.richfaces.application.push.MessageException;
-import org.richfaces.application.push.TopicKey;
 
-import org.richfaces.application.push.TopicsContext;
-import org.richfaces.cdi.push.Push;
+
+
+
+
+
+
 import org.richfaces.component.UIPush;
+
 import javax.inject.Inject;
 
 import org.joda.time.DateTime;
+import org.richfaces.push.MessageException;
+import org.richfaces.push.TopicKey;
+import org.richfaces.push.TopicsContext;
+import org.richfaces.push.cdi.Push;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.Message;
 import org.slf4j.Logger;
