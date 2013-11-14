@@ -74,7 +74,7 @@
     </servlet>
     <servlet>
         <servlet-name>Resource Servlet</servlet-name>
-        <servlet-class>org.richfaces.webapp.ResourceServlet</servlet-class>
+        <servlet-class>org.richfaces.servlet.ResourceServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
