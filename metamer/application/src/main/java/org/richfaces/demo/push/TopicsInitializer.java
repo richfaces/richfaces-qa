@@ -30,10 +30,10 @@ import javax.naming.InitialContext;
 import javax.naming.NameNotFoundException;
 import javax.naming.NamingException;
 
-import org.richfaces.application.push.Topic;
-import org.richfaces.application.push.TopicKey;
-import org.richfaces.application.push.TopicsContext;
-import org.richfaces.application.push.impl.DefaultMessageDataSerializer;
+import org.richfaces.push.DefaultMessageDataSerializer;
+import org.richfaces.push.Topic;
+import org.richfaces.push.TopicKey;
+import org.richfaces.push.TopicsContext;
 
 /**
  * Registers topics in RichFaces subsytem.
