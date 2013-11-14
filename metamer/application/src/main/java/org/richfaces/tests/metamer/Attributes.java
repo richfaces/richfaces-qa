@@ -83,8 +83,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     /**
      * Constructor for empty Attributes.
      *
-     * @param beanClass
-     *            class object of a managed bean
+     * @param beanClass class object of a managed bean
      */
     private Attributes(Class<?> beanClass) {
         this.beanClass = beanClass;
@@ -94,10 +93,8 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     /**
      * Constructor for class Attributes.
      *
-     * @param componentClass
-     *            class object of a JSF component whose attributes will be stored
-     * @param beanClass
-     *            class object of a managed bean
+     * @param componentClass class object of a JSF component whose attributes will be stored
+     * @param beanClass class object of a managed bean
      */
     private Attributes(Class<?> componentClass, Class<?> beanClass, boolean loadFromClass) {
         this.beanClass = beanClass;
@@ -105,7 +102,12 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
         logger.debug("creating attributes map for " + componentClass);
 
         if (!loadFromClass && richfacesAttributes == null) {
-            loadRichFacesComponents();
+            // load RF 4 components
+            loadRichFacesComponents("richfaces-components-rich", false);
+            // load RF 4 a4j
+            loadRichFacesComponents("richfaces-components-a4j", false);
+            // load RF 5 components (using regex from RF 5 Metamer), second param is true in order to use exact regex match
+            loadRichFacesComponents(".*richfaces[^/]+jar.*", true);
         }
 
         if (!loadFromClass && richfacesAttributes.containsKey(componentClass)) {
@@ -133,10 +135,8 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     /**
      * Constructor for empty class Attributes.
      *
-     * @param componentClass
-     *            class object of a JSF component whose attributes will be stored
-     * @param beanClass
-     *            class object of a managed bean
+     * @param componentClass class object of a JSF component whose attributes will be stored
+     * @param beanClass class object of a managed bean
      */
     private Attributes(Class<?> componentClass, Class<?> beanClass) {
         logger.debug("creating attributes map for " + componentClass);
@@ -147,10 +147,8 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     /**
      * Factory method for creating instances of class Attributes. Attributes are loaded from faces-config.xml.
      *
-     * @param clazz
-     *            class object of a JSF component whose attributes will be stored
-     * @param beanClass
-     *            class object of a managed bean
+     * @param clazz class object of a JSF component whose attributes will be stored
+     * @param beanClass class object of a managed bean
      */
     public static Attributes getComponentAttributesFromFacesConfig(Class<? extends UIComponent> clazz, Class<?> beanClass) {
         return new Attributes(clazz, beanClass, false);
@@ -159,10 +157,8 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     /**
      * Factory method for creating instances of class Attributes. Attributes are loaded from class.
      *
-     * @param interfaze
-     *            general class object whose attributes will be stored
-     * @param beanClass
-     *            class object of a managed bean
+     * @param interfaze general class object whose attributes will be stored
+     * @param beanClass class object of a managed bean
      */
     public static Attributes getAttributesFromClass(Class<?> interfaze, Class<?> beanClass) {
         return new Attributes(interfaze, beanClass, true);
@@ -171,10 +167,8 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     /**
      * Factory method for creating instances of class Attributes. Attributes are loaded from class.
      *
-     * @param clazz
-     *            class object of a JSF component whose attributes will be stored
-     * @param beanClass
-     *            class object of a managed bean
+     * @param clazz class object of a JSF component whose attributes will be stored
+     * @param beanClass class object of a managed bean
      */
     public static Attributes getComponentAttributesFromClass(Class<? extends UIComponent> clazz, Class<?> beanClass) {
         return new Attributes(clazz, beanClass, true);
@@ -183,10 +177,8 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     /**
      * Factory method for creating instances of class Attributes. Attributes are loaded from faces-config.xml.
      *
-     * @param clazz
-     *            class object of a JSF behavior whose attributes will be stored
-     * @param beanClass
-     *            class object of a managed bean
+     * @param clazz class object of a JSF behavior whose attributes will be stored
+     * @param beanClass class object of a managed bean
      */
     public static Attributes getBehaviorAttributesFromFacesConfig(Class<? extends BehaviorBase> clazz, Class<?> beanClass) {
         return new Attributes(clazz, beanClass, false);
@@ -195,21 +187,17 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     /**
      * Factory method for creating instances of class Attributes. Attributes are loaded from class.
      *
-     * @param clazz
-     *            class object of a JSF behavior whose attributes will be stored
-     * @param beanClass
-     *            class object of a managed bean
+     * @param clazz class object of a JSF behavior whose attributes will be stored
+     * @param beanClass class object of a managed bean
      */
     public static Attributes getBehaviorAttributesFromClass(Class<? extends BehaviorBase> clazz, Class<?> beanClass) {
         return new Attributes(clazz, beanClass, true);
     }
 
     /**
-     * Factory method for creating empty instance of class Attributes.
-     * Needs to be filled with attributes explicitly.
+     * Factory method for creating empty instance of class Attributes. Needs to be filled with attributes explicitly.
      *
-     * @param beanClass
-     *            class object of a managed bean
+     * @param beanClass class object of a managed bean
      */
     public static Attributes getEmptyAttributes(Class<?> beanClass) {
         return new Attributes(beanClass);
@@ -218,10 +206,8 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     /**
      * Factory method for creating instances of class Attributes.
      *
-     * @param componentClass
-     *            class object of a JSF behavior whose attributes will be stored
-     * @param beanClass
-     *            class object of a managed bean
+     * @param componentClass class object of a JSF behavior whose attributes will be stored
+     * @param beanClass class object of a managed bean
      */
     public static Attributes getFaceletsComponentAttributes(String componentClass, Class<?> beanClass) {
         Class<?> faceletsClass = null;
@@ -231,9 +217,11 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
         } catch (ClassNotFoundException cnfe1) {
             try {
                 if (componentClass.startsWith("com.sun.faces.facelets")) {
-                    faceletsClass = Class.forName(componentClass.replace("com.sun.faces.facelets", "org.apache.myfaces.view.facelets"));
+                    faceletsClass = Class.forName(componentClass.replace("com.sun.faces.facelets",
+                        "org.apache.myfaces.view.facelets"));
                 } else {
-                    faceletsClass = Class.forName(componentClass.replace("org.apache.myfaces.view.facelets", "com.sun.faces.facelets"));
+                    faceletsClass = Class.forName(componentClass.replace("org.apache.myfaces.view.facelets",
+                        "com.sun.faces.facelets"));
                 }
             } catch (ClassNotFoundException cnfe2) {
                 logger.error(cnfe2.getMessage());
@@ -438,8 +426,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     /**
      * Determines whether given object represents an EL expression, e.g. #{bean.property}.
      *
-     * @param value
-     *            value of a property of tested JSF component
+     * @param value value of a property of tested JSF component
      * @return true if object is a string representing an expression, e.g. #{bean.property}, false otherwise
      */
     private boolean isStringEL(Object value) {
@@ -479,9 +466,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
         // if select options for "action" are defined in property file
         if (hasSelectOptions("action")) {
-            method =
-                    getExpressionFactory().createMethodExpression(elContext, getMethodEL(outcome), String.class,
-                    new Class[0]);
+            method = getExpressionFactory().createMethodExpression(elContext, getMethodEL(outcome), String.class, new Class[0]);
 
             return (String) method.invoke(elContext, null);
         }
@@ -493,8 +478,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     /**
      * An action listener for tested JSF component. Can be modified dynamically.
      *
-     * @param event
-     *            event representing the activation of a user interface component
+     * @param event event representing the activation of a user interface component
      */
     public void actionListener(ActionEvent event) {
         ELContext elContext = FacesContext.getCurrentInstance().getELContext();
@@ -514,26 +498,23 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
         // if no select options for "actionListener" are defined in property file and it is an EL expression
         if (!hasSelectOptions("actionListener") && isStringEL(listener)) {
-            method =
-                    getExpressionFactory().createMethodExpression(elContext, listener, void.class,
-                    new Class[]{ActionEvent.class});
-            method.invoke(elContext, new Object[]{event});
+            method = getExpressionFactory().createMethodExpression(elContext, listener, void.class,
+                new Class[] { ActionEvent.class });
+            method.invoke(elContext, new Object[] { event });
         }
 
         // if select options for "actionListener" are defined in property file
         if (hasSelectOptions("actionListener")) {
-            method =
-                    getExpressionFactory().createMethodExpression(elContext, getMethodEL(listener), void.class,
-                    new Class[]{ActionEvent.class});
-            method.invoke(elContext, new Object[]{event});
+            method = getExpressionFactory().createMethodExpression(elContext, getMethodEL(listener), void.class,
+                new Class[] { ActionEvent.class });
+            method.invoke(elContext, new Object[] { event });
         }
     }
 
     /**
      * An action listener for tested JSF component. Can be modified dynamically.
      *
-     * @param event
-     *            event representing the activation of a user interface component
+     * @param event event representing the activation of a user interface component
      */
     public void listener(AjaxBehaviorEvent event) {
         ELContext elContext = FacesContext.getCurrentInstance().getELContext();
@@ -553,25 +534,23 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
         // if no select options for "listener" are defined in property file and it is an EL expression
         if (!hasSelectOptions("listener") && isStringEL(listener)) {
-            method =
-                    getExpressionFactory().createMethodExpression(elContext, listener, void.class,
-                    new Class[]{AjaxBehaviorEvent.class});
-            method.invoke(elContext, new Object[]{event});
+            method = getExpressionFactory().createMethodExpression(elContext, listener, void.class,
+                new Class[] { AjaxBehaviorEvent.class });
+            method.invoke(elContext, new Object[] { event });
         }
 
         // if select options for "listener" are defined in property file
         if (hasSelectOptions("listener")) {
             method = getExpressionFactory().createMethodExpression(elContext, getMethodEL(listener), void.class,
-                    new Class[]{AjaxBehaviorEvent.class});
-            method.invoke(elContext, new Object[]{event});
+                new Class[] { AjaxBehaviorEvent.class });
+            method.invoke(elContext, new Object[] { event });
         }
     }
 
     /**
      * Method used for creating EL expressions for methods.
      *
-     * @param methodName
-     *            name of the action or action listener, e.g. toUpperCaseAction
+     * @param methodName name of the action or action listener, e.g. toUpperCaseAction
      * @return string containing an expression for an action or action listener, e.g. #{bean.toUpperCaseAction}
      */
     private String getMethodEL(String methodName) {
@@ -595,8 +574,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     /**
      * Decides if there are any select options for given attribute. If true, radio buttons should be rendered on a page.
      *
-     * @param attributeName
-     *            name of a component attribute
+     * @param attributeName name of a component attribute
      * @return true if select options were defined, false otherwise
      */
     public boolean hasSelectOptions(String attributeName) {
@@ -658,8 +636,16 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
         }
     }
 
-    private void loadRichFacesComponents() {
-        richfacesAttributes = new HashMap<Class<?>, List<Attribute>>();
+    /**
+     * Method for loading RF 4 and RF 5 components based on the na of a file to search or a regex
+     *
+     * @param urlPathPartOrRegex String name of a jar file to be searched, can be a regex
+     * @param useRegexMatch Using true will result in a .matches(regex) whilst false will check for .contains()
+     */
+    private void loadRichFacesComponents(String urlPathPartOrRegex, Boolean useRegexMatch) {
+        if (richfacesAttributes == null) {
+            richfacesAttributes = new HashMap<Class<?>, List<Attribute>>();
+        }
 
         try {
             ClassLoader cl = UIStatus.class.getClassLoader();
@@ -668,9 +654,16 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
             while (fileUrls.hasMoreElements()) {
                 URL url = fileUrls.nextElement();
-                if (url.getPath().contains("richfaces-components-rich")) {
-                    configFile = url;
+                if (useRegexMatch) {
+                    if (url.getPath().matches(urlPathPartOrRegex)) {
+                        configFile = url;
+                    }
+                } else {
+                    if (url.getPath().contains(urlPathPartOrRegex)) {
+                        configFile = url;
+                    }
                 }
+
             }
 
             JAXBContext context = JAXBContext.newInstance(FacesConfigHolder.class);
