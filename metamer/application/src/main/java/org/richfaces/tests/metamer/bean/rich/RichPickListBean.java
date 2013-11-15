@@ -86,15 +86,15 @@ public class RichPickListBean implements Serializable {
         attributes.setAttribute("requiredMessage", "Not empty target list is required!");
         attributes.setAttribute("validatorMessage", "We are sorry, but @ is not allowed to join us!");
 
-        attributes.setAttribute("addText", ">");
-        attributes.setAttribute("addAllText", ">>");
-        attributes.setAttribute("removeText", "<");
-        attributes.setAttribute("removeAllText", "<<");
+        attributes.setAttribute("addText", "add");
+        attributes.setAttribute("addAllText", "add all");
+        attributes.setAttribute("removeText", "remove");
+        attributes.setAttribute("removeAllText", "remove all");
 
-        attributes.setAttribute("upTopText", "⇑ First");
-        attributes.setAttribute("upText", "↑ Up");
-        attributes.setAttribute("downText", "↓ Down");
-        attributes.setAttribute("downBottomText", "⇓ Last");
+        attributes.setAttribute("upTopText", "First");
+        attributes.setAttribute("upText", "Up");
+        attributes.setAttribute("downText", "Down");
+        attributes.setAttribute("downBottomText", "Last");
 
         attributes.setAttribute("listWidth", "220");
 

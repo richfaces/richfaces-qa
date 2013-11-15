@@ -24,12 +24,14 @@ package org.richfaces.tests.page.fragments.impl.pickList;
 import java.util.List;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.common.AdvancedInteractions;
 import org.richfaces.tests.page.fragments.impl.list.ListComponent;
+import org.richfaces.tests.page.fragments.impl.list.ListItem;
 import org.richfaces.tests.page.fragments.impl.orderingList.OrderingList;
 import org.richfaces.tests.page.fragments.impl.orderingList.RichFacesOrderingList;
 import org.richfaces.tests.page.fragments.impl.orderingList.RichFacesOrderingList.SelectableListImpl;
@@ -57,7 +59,7 @@ public class RichFacesPickList implements PickList, AdvancedInteractions<RichFac
     private List<WebElement> selectedSourceListItems;
     @FindBy(css = ".source .ui-selectee")
     private List<WebElement> sourceListItems;
-    @FindBy(css = ".target .ui-selected")
+    @FindBy(css = ".target ." + SELECTED_ITEM_CLASS)
     private List<WebElement> selectedTargetListItems;
     @FindBy(css = ".target .ui-selectee")
     private List<WebElement> targetListItems;
@@ -65,12 +67,21 @@ public class RichFacesPickList implements PickList, AdvancedInteractions<RichFac
     private SelectableListImpl sourceList;
     @FindBy(className = "target-wrapper")
     private RichFacesOrderingList targetList;
-    @FindBy(className = ".source")
+    @FindBy(css = ".source")
     private WebElement listAreaElement;
-    @FindBy(className = "header")
-    private WebElement captionElement;
+    @FindBy(css = ".source.header")
+    private WebElement sourceCaptionElement;
+    @FindBy(css = ".target.header")
+    private WebElement targetCaptionElement;
     @FindBy(tagName = "thead")
     private WebElement headerElement;
+    @FindByJQuery(".scroll-box:eq(0)")
+    private WebElement scrollBoxWithSourceList;
+    @FindBy(className = "inner")
+    private WebElement pickListInteractionPartElement;
+
+    private static final String DISABLED_ITEM_CLASS = "ui-disabled";
+    private static final String SELECTED_ITEM_CLASS = "ui-selected";
 
     private final AdvancedPickListInteractions interactions = new AdvancedPickListInteractions();
 
@@ -171,6 +182,10 @@ public class RichFacesPickList implements PickList, AdvancedInteractions<RichFac
 
     public class AdvancedPickListInteractions {
 
+        public WebElement getPickListInteractionPartElement() {
+            return pickListInteractionPartElement;
+        }
+
         public WebElement getAddAllButtonElement() {
             return addAllButtonElement;
         }
@@ -184,11 +199,11 @@ public class RichFacesPickList implements PickList, AdvancedInteractions<RichFac
         }
 
         public WebElement getSourceCaptionElement() {
-            return captionElement;
+            return sourceCaptionElement;
         }
 
         public WebElement getTargetCaptionElement() {
-            return targetList.advanced().getCaptionElement();
+            return targetCaptionElement;
         }
 
         public WebElement getDownButtonElement() {
@@ -240,8 +255,91 @@ public class RichFacesPickList implements PickList, AdvancedInteractions<RichFac
         }
 
         /**
-         * Operations over the orderable target list.
-         * If the list is not orderable than some Exception is thrown.
+         * Figures out whether the whole pickList is disabled. All required elements has to be disabled.
+         *
+         * @return true if whole pickList is disabled, false otherwise
+         */
+        public boolean isDisabled() {
+            return areAllButtonsDisabled() && areAllGivenItemsDisabled(getSourceList().getItems())
+                && areAllGivenItemsDisabled(getTargetList().getItems());
+        }
+
+        /**
+         * Figures out whether the given item is selected.
+         *
+         * @param item
+         * @return true if the given item is currently selected, false otherwise
+         */
+        public boolean isItemSelected(ListItem item) {
+            String classAttr = item.getRootElement().getAttribute("class");
+            return classAttr != null && classAttr.contains(SELECTED_ITEM_CLASS);
+        }
+
+        /**
+         * Gets the current computed height of the this pickList sourceList/targetList (they are equal).
+         *
+         * @return
+         * @throws NumberFormatException when the height property is not set
+         */
+        public double getHeight() {
+            return Double.valueOf(scrollBoxWithSourceList.getCssValue("height").replace("px", ""));
+        }
+
+        /**
+         * Gets the current computed max-height of the this pickList sourceList/targetList (they are equal).
+         *
+         * @return
+         * @throws NumberFormatException when the max-height property is not set
+         */
+        public double getMaxHeight() {
+            return Double.valueOf(scrollBoxWithSourceList.getCssValue("max-height").replace("px", ""));
+        }
+
+        /**
+         * Gets the current computed min-height of the this pickList sourceList/targetList (they are equal).
+         *
+         * @return
+         * @throws NumberFormatException when the min-height property is not set
+         */
+        public double getMinHeight() {
+            return Double.valueOf(scrollBoxWithSourceList.getCssValue("min-height").replace("px", ""));
+        }
+
+        private boolean areAllGivenItemsDisabled(List<? extends SelectableListItem> items) {
+            boolean result = true;
+            for (SelectableListItem sourceItem : items) {
+                String classAttr = sourceItem.getRootElement().getAttribute("class");
+                if (classAttr == null || !classAttr.contains(DISABLED_ITEM_CLASS)) {
+                    result = false;
+                }
+            }
+            return result;
+        }
+
+        private boolean areAllButtonsDisabled() {
+            boolean result = true;
+            if (getAddAllButtonElement().isEnabled()) {
+                result = false;
+            } else if (getAddButtonElement().isEnabled()) {
+                result = false;
+            } else if (getRemoveAllButtonElement().isEnabled()) {
+                result = false;
+            } else if (getRemoveButtonElement().isEnabled()) {
+                result = false;
+            } else if (getUpButtonElement().isEnabled()) {
+                result = false;
+            } else if (getTopButtonElement().isEnabled()) {
+                result = false;
+            } else if (getDownButtonElement().isEnabled()) {
+                result = false;
+            } else if (getBottomButtonElement().isEnabled()) {
+                result = false;
+            }
+            return result;
+        }
+
+        /**
+         * Operations over the orderable target list. If the list is not orderable than some Exception is thrown.
          */
         public OrderingList orderTargetList() {
             return targetList;
