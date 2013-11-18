@@ -35,10 +35,11 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.switchable.SwitchType;
+import org.richfaces.fragment.tree.Tree.TreeNode;
+import org.richfaces.fragment.tree.Tree;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.page.fragments.impl.tree.Tree.TreeNode;
-import org.richfaces.ui.common.SwitchType;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -64,10 +65,10 @@ public abstract class AbstractTreeSelectionTest extends AbstractTreeTest {
     @Use(value = "selectionTypes")
     private SwitchType selectionType;
 
-    private static final SwitchType[] selectionTypes = new SwitchType[] { SwitchType.ajax, SwitchType.client };
-    private static final SwitchType[] selectionTypeAjax = new SwitchType[] { SwitchType.ajax };
-    private static final SwitchType[] selectionTypeClient = new SwitchType[] { SwitchType.client };
-    private static final SwitchType[] eventEnabledSelectionTypes = new SwitchType[] { SwitchType.ajax };
+    private static final SwitchType[] selectionTypes = new SwitchType[] { SwitchType.AJAX, SwitchType.CLIENT };
+    private static final SwitchType[] selectionTypeAjax = new SwitchType[] { SwitchType.AJAX };
+    private static final SwitchType[] selectionTypeClient = new SwitchType[] { SwitchType.CLIENT };
+    private static final SwitchType[] eventEnabledSelectionTypes = new SwitchType[] { SwitchType.AJAX };
 
     protected Integer[][] selectionPaths = new Integer[][] { { 3, 2 }, { 1, 0, 0 }, { 1 }, { 3, 9, 2 } };
 

@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richHotKey;
 
-import org.richfaces.tests.page.fragments.impl.hotkey.Hotkey;
+import org.richfaces.fragment.hotkey.Hotkey;
 import org.testng.annotations.Test;
 
 /**

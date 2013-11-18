@@ -34,8 +34,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.page.fragments.impl.dataScroller.DataScroller.DataScrollerSwitchButton;
 import org.testng.annotations.Test;
+import org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton;
 
 /**
  *

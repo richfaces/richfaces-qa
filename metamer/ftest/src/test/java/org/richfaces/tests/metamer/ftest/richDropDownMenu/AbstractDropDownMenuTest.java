@@ -41,11 +41,11 @@ import org.openqa.selenium.interactions.HasInputDevices;
 import org.openqa.selenium.interactions.Mouse;
 import org.openqa.selenium.interactions.internal.Coordinates;
 import org.openqa.selenium.internal.Locatable;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.dropDownMenu.RichFacesDropDownMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuSimplePage;
-import org.richfaces.tests.page.fragments.impl.dropDownMenu.RichFacesDropDownMenu;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
 
 /**
  * Abstract test used for testing both drop down menus - top and side

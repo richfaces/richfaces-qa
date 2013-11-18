@@ -38,16 +38,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.inplaceInput.ConfirmOrCancel;
+import org.richfaces.fragment.inplaceInput.InplaceComponentState;
+import org.richfaces.fragment.inplaceInput.RichFacesInplaceInput;
+import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.ConfirmOrCancel;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceComponentState;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.RichFacesInplaceInput;
-import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.Test;
 
 /**

@@ -69,12 +69,6 @@ FSF site: http://www.fsf.org. -->
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.richfaces.tests</groupId>
-            <artifactId>richfaces-page-fragments</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
             <artifactId>arquillian-screen-recorder</artifactId>
         </dependency>
@@ -114,6 +108,11 @@ FSF site: http://www.fsf.org. -->
             <scope>test</scope>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+    	    <groupId>org.richfaces</groupId>
+    	    <artifactId>richfaces-page-fragments</artifactId>
+    	    <scope>test</scope>
+	</dependency>
         <!-- see the https://community.jboss.org/wiki/WhatsTheCauseOfThisExceptionJavalangClassFormatErrorAbsentCode -->
         <dependency>
             <groupId>org.jboss.spec</groupId>

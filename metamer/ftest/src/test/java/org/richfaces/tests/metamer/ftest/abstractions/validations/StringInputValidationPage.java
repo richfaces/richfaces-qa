@@ -21,12 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.abstractions.validations;
 
-import com.google.common.collect.Sets;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBean;
-import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
+
+import com.google.common.collect.Sets;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>

@@ -34,12 +34,12 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
+import org.richfaces.fragment.calendar.HeaderControls;
+import org.richfaces.fragment.calendar.PopupCalendar;
+import org.richfaces.fragment.calendar.TimeEditor;
+import org.richfaces.fragment.calendar.YearAndMonthEditor;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.calendar.DayPicker.CalendarDay;
-import org.richfaces.tests.page.fragments.impl.calendar.HeaderControls;
-import org.richfaces.tests.page.fragments.impl.calendar.PopupCalendar;
-import org.richfaces.tests.page.fragments.impl.calendar.TimeEditor;
-import org.richfaces.tests.page.fragments.impl.calendar.YearAndMonthEditor;
 import org.testng.annotations.Test;
 
 /**

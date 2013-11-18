@@ -101,7 +101,6 @@ FSF site: http://www.fsf.org. -->
         <module>showcase-webdriver-ftest</module>
         <module>testng-listeners</module>
         <module>common</module>
-        <module>page-fragments</module>
     </modules>
 
     <build>
@@ -433,6 +432,11 @@ FSF site: http://www.fsf.org. -->
                         <artifactId>graphene-webdriver</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.richfaces</groupId>
+                <artifactId>richfaces-page-fragments</artifactId>
+                <version>${version.richfaces}</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.spec</groupId>

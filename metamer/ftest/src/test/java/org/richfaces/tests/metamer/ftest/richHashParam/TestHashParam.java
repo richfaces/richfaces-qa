@@ -30,12 +30,12 @@ import java.net.URL;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.Locations;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.popupPanel.TextualRichFacesPopupPanel;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.page.fragments.impl.Locations;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.popupPanel.PopupPanel.ResizerLocation;
-import org.richfaces.tests.page.fragments.impl.popupPanel.TextualRichFacesPopupPanel;
 import org.testng.annotations.Test;
+import org.richfaces.fragment.popupPanel.PopupPanel.ResizerLocation;
 
 /**
  * Test case for page /faces/components/richHashParam/simple.xhtml

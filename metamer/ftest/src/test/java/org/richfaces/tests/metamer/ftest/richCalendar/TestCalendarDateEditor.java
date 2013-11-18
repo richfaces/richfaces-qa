@@ -34,10 +34,10 @@ import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
+import org.richfaces.fragment.calendar.HeaderControls;
+import org.richfaces.fragment.calendar.YearAndMonthEditor;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.calendar.HeaderControls;
-import org.richfaces.tests.page.fragments.impl.calendar.YearAndMonthEditor;
 import org.testng.annotations.Test;
 
 /**

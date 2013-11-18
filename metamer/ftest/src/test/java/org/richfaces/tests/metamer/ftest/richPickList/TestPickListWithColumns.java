@@ -30,10 +30,10 @@ import java.net.URL;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.orderingList.SelectableListItem;
+import org.richfaces.fragment.pickList.RichFacesPickList;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
-import org.richfaces.tests.page.fragments.impl.orderingList.SelectableListItem;
-import org.richfaces.tests.page.fragments.impl.pickList.RichFacesPickList;
 import org.testng.annotations.Test;
 
 /**

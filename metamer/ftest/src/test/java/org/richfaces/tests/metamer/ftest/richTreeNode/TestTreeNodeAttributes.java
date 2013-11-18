@@ -25,20 +25,20 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import com.google.common.base.Optional;
-
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.richfaces.fragment.common.Actions;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.tree.Tree.TreeNode;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.richTree.AbstractTreeTest;
 import org.richfaces.tests.metamer.ftest.richTree.TreeAttributes;
-import org.richfaces.tests.page.fragments.impl.tree.Tree.TreeNode;
-import org.richfaces.tests.page.fragments.impl.utils.Actions;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.richfaces.ui.common.SwitchType;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import com.google.common.base.Optional;
 
 /**
  *

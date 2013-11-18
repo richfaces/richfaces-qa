@@ -28,11 +28,11 @@ import static org.testng.Assert.assertEquals;
 import java.net.URL;
 
 import org.openqa.selenium.interactions.Action;
+import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.status.Status.StatusState;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.richfaces.fragment.status.Status.StatusState;
 
 /**
  * Tests for a4jStatus JS API. Tests are done via testFireEvent

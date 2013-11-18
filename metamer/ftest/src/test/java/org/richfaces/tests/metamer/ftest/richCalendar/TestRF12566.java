@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.richCalendar;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.page.fragments.impl.log.Log.LogEntryLevel.ERROR;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
@@ -32,10 +31,11 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.log.RichFacesLog;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.log.RichFacesLog;
 import org.testng.annotations.Test;
+import org.richfaces.fragment.log.Log.LogEntryLevel;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -52,7 +52,7 @@ public class TestRF12566 extends AbstractWebDriverTest {
 
     @Test(groups = "Future")
     public void testClickOnTheNextMonthAndJSErrorIsThrown() {
-        page.getLog().changeLevel(ERROR);
+        page.getLog().changeLevel(LogEntryLevel.ERROR);
         page.getShowCalendarButton().click();
         Graphene.waitAjax().until().element(page.getNextMonthScroller()).is().visible();
         guardAjax(page.getNextMonthScroller()).click();

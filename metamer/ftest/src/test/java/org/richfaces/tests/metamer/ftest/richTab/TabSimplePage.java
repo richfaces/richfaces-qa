@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.richfaces.fragment.tabPanel.RichFacesTabPanel;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.tabPanel.RichFacesTabPanel;
 
 public class TabSimplePage extends MetamerPage {
 

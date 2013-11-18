@@ -25,24 +25,24 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import com.google.common.base.Optional;
-import com.google.common.collect.Lists;
-
 import java.util.List;
 
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.richfaces.fragment.common.Actions;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.switchable.SwitchType;
+import org.richfaces.fragment.tree.Tree.TreeNode;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
-import org.richfaces.tests.page.fragments.impl.tree.Tree.TreeNode;
-import org.richfaces.tests.page.fragments.impl.utils.Actions;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
-import org.richfaces.ui.common.SwitchType;
 import org.testng.annotations.Test;
+
+import com.google.common.base.Optional;
+import com.google.common.collect.Lists;
 
 /**
  *
@@ -89,18 +89,18 @@ public class TestTreeAttributes extends AbstractTreeTest {
     @Test
     @Templates(value = "plain")
     public void testHandleClass() {
-        TreeNode node = getGuarded(tree, SwitchType.ajax).expandNode(0);
+        TreeNode node = getGuarded(tree, SwitchType.AJAX).expandNode(0);
         testStyleClass(node.advanced().getHandleElement(), BasicAttributes.handleClass);
-        testStyleClass(getGuarded(node, SwitchType.ajax).expandNode(0).advanced().getHandleElement(),
+        testStyleClass(getGuarded(node, SwitchType.AJAX).expandNode(0).advanced().getHandleElement(),
             BasicAttributes.handleClass);
     }
 
     @Test
     @Templates(value = "plain")
     public void testIconClass() {
-        TreeNode node = getGuarded(tree, SwitchType.ajax).expandNode(0);
+        TreeNode node = getGuarded(tree, SwitchType.AJAX).expandNode(0);
         testStyleClass(node.advanced().getIconElement(), BasicAttributes.iconClass);
-        testStyleClass(getGuarded(node, SwitchType.ajax).expandNode(0).advanced().getIconElement(), BasicAttributes.iconClass);
+        testStyleClass(getGuarded(node, SwitchType.AJAX).expandNode(0).advanced().getIconElement(), BasicAttributes.iconClass);
     }
 
     @Test
@@ -110,9 +110,9 @@ public class TestTreeAttributes extends AbstractTreeTest {
         TreeNode node = tree.advanced().getFirstNode();
         assertTrue(node.advanced().getIconElement().getAttribute("src").endsWith(IMAGE_URL));
         String attribute = Optional.fromNullable(
-            getGuarded(node.advanced(), SwitchType.ajax).expand().advanced().getIconElement().getAttribute("src")).or("");
+            getGuarded(node.advanced(), SwitchType.AJAX).expand().advanced().getIconElement().getAttribute("src")).or("");
         assertFalse(attribute.endsWith(IMAGE_URL));
-        assertTrue(getGuarded(node.advanced(), SwitchType.ajax).collapse().advanced().getIconElement().getAttribute("src")
+        assertTrue(getGuarded(node.advanced(), SwitchType.AJAX).collapse().advanced().getIconElement().getAttribute("src")
             .endsWith(IMAGE_URL));
     }
 
@@ -120,19 +120,19 @@ public class TestTreeAttributes extends AbstractTreeTest {
     @Templates(value = "plain")
     public void testIconExpanded() {
         treeAttributes.set(TreeAttributes.iconExpanded, IMAGE_URL);
-        TreeNode node = getGuarded(tree, SwitchType.ajax).expandNode(0);
+        TreeNode node = getGuarded(tree, SwitchType.AJAX).expandNode(0);
         assertTrue(node.advanced().getIconElement().getAttribute("src").endsWith(IMAGE_URL));
         String attribute = Optional.fromNullable(
-            getGuarded(node.advanced(), SwitchType.ajax).collapse().advanced().getIconElement().getAttribute("src")).or("");
+            getGuarded(node.advanced(), SwitchType.AJAX).collapse().advanced().getIconElement().getAttribute("src")).or("");
         assertFalse(attribute.endsWith(IMAGE_URL));
-        assertTrue(getGuarded(node.advanced(), SwitchType.ajax).expand().expandNode(0).advanced().getIconElement()
+        assertTrue(getGuarded(node.advanced(), SwitchType.AJAX).expand().expandNode(0).advanced().getIconElement()
             .getAttribute("src").endsWith(IMAGE_URL));
     }
 
     @Test
     @Templates(value = "plain")
     public void testIconLeaf() {
-        treeAttributes.set(TreeAttributes.toggleType, SwitchType.client);
+        treeAttributes.set(TreeAttributes.toggleType, SwitchType.CLIENT);
         treeAttributes.set(TreeAttributes.iconLeaf, IMAGE_URL);
         TreeNode leaf = tree.expandNode(0).expandNode(0).advanced().getFirstNode();
         assertTrue(leaf.advanced().isLeaf());
@@ -369,10 +369,10 @@ public class TestTreeAttributes extends AbstractTreeTest {
 
     @Test
     public void testSelectionType() {
-        treeAttributes.set(TreeAttributes.selectionType, SwitchType.ajax);
+        treeAttributes.set(TreeAttributes.selectionType, SwitchType.AJAX);
         selectFirstNodeAjaxAction.perform();
 
-        treeAttributes.set(TreeAttributes.selectionType, SwitchType.client);
+        treeAttributes.set(TreeAttributes.selectionType, SwitchType.CLIENT);
         Graphene.guardNoRequest(tree).selectNode(1);
     }
 
@@ -413,7 +413,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-10265")
     public void testToggleClientSideEventsOrder() {
-        treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax);
+        treeAttributes.set(TreeAttributes.toggleType, SwitchType.AJAX);
         String[] events = new String[] { "beforenodetoggle", "begin", "beforedomupdate", "complete", "nodetoggle" };
         testRequestEventsBefore(events);
         expandFirstNodeAjaxAction.perform();
@@ -422,7 +422,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
 
     @Test
     public void testToggleNodeEvent() {
-        treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax);
+        treeAttributes.set(TreeAttributes.toggleType, SwitchType.AJAX);
         List<Event> testedEvents = Lists.newArrayList(Event.CLICK, Event.CONTEXTCLICK, Event.DBLCLICK);
         for (boolean toggleByHandle : new boolean[] { true, false }) {
             tree.advanced().setupToggleByHandle(toggleByHandle);
@@ -439,14 +439,14 @@ public class TestTreeAttributes extends AbstractTreeTest {
 
     @Test
     public void testToggleType() {
-        treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax);
-        getGuarded(tree, SwitchType.ajax).expandNode(0);
+        treeAttributes.set(TreeAttributes.toggleType, SwitchType.AJAX);
+        getGuarded(tree, SwitchType.AJAX).expandNode(0);
 
-        treeAttributes.set(TreeAttributes.toggleType, SwitchType.client);
-        getGuarded(tree, SwitchType.client).expandNode(1);
+        treeAttributes.set(TreeAttributes.toggleType, SwitchType.CLIENT);
+        getGuarded(tree, SwitchType.CLIENT).expandNode(1);
 
-        treeAttributes.set(TreeAttributes.toggleType, SwitchType.server);
-        getGuarded(tree, SwitchType.server).expandNode(2);
+        treeAttributes.set(TreeAttributes.toggleType, SwitchType.SERVER);
+        getGuarded(tree, SwitchType.SERVER).expandNode(2);
     }
 
     @Test

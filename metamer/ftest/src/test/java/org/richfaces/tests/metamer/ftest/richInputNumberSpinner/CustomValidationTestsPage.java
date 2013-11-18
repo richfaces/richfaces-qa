@@ -22,14 +22,14 @@
 package org.richfaces.tests.metamer.ftest.richInputNumberSpinner;
 
 import static java.lang.Double.parseDouble;
-import org.jboss.arquillian.graphene.wait.WebDriverWait;
 
+import org.jboss.arquillian.graphene.wait.WebDriverWait;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.inputNumberSpinner.RichFacesInputNumberSpinner;
 import org.richfaces.tests.metamer.ftest.abstractions.validations.NumberInputValidationPage;
 import org.richfaces.tests.metamer.ftest.abstractions.validations.ValidationMessageCase;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.inputNumberSpinner.RichFacesInputNumberSpinner;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>

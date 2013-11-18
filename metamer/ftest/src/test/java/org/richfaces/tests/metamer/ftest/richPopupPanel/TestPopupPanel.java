@@ -38,6 +38,11 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.common.Locations;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.panel.TextualFragmentPart;
+import org.richfaces.fragment.popupPanel.RichFacesPopupPanel;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
@@ -47,14 +52,9 @@ import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.Locations;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.panel.TextualFragmentPart;
-import org.richfaces.tests.page.fragments.impl.popupPanel.PopupPanel.ResizerLocation;
-import org.richfaces.tests.page.fragments.impl.popupPanel.RichFacesPopupPanel;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.richfaces.fragment.popupPanel.PopupPanel.ResizerLocation;
 
 /**
  * Test case for page /faces/components/richPopupPanel/simple.xhtml

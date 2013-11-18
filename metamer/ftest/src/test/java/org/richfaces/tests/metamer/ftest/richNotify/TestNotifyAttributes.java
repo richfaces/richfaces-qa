@@ -33,15 +33,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.notify.RichFacesNotifyMessage;
 import org.richfaces.tests.metamer.bean.rich.RichNotifyBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.notify.NotifyMessage.NotifyMessagePosition;
-import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotifyMessage;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>

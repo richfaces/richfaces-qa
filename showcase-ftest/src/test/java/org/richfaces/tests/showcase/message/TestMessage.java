@@ -22,7 +22,7 @@
 package org.richfaces.tests.showcase.message;
 
 import org.jboss.arquillian.graphene.page.Page;
-import org.richfaces.tests.page.fragments.impl.message.Message;
+import org.richfaces.fragment.message.Message;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.message.page.MessagePage;
 import org.testng.Assert;

@@ -42,8 +42,8 @@ import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.dataScroller.DataScroller.DataScrollerSwitchButton;
 import org.testng.annotations.Test;
+import org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>

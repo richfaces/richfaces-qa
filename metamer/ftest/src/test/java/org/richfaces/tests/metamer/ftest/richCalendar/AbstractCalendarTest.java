@@ -21,8 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
-import static org.richfaces.tests.page.fragments.impl.calendar.RichFacesAdvancedPopupCalendar.OpenedBy.INPUT_CLICKING;
-import static org.richfaces.tests.page.fragments.impl.calendar.RichFacesAdvancedPopupCalendar.OpenedBy.OPEN_BUTTON_CLICKING;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -39,19 +37,20 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
+import org.richfaces.fragment.calendar.PopupCalendar;
+import org.richfaces.fragment.calendar.PopupCalendar.PopupFooterControls;
+import org.richfaces.fragment.calendar.PopupCalendar.PopupHeaderControls;
+import org.richfaces.fragment.calendar.RichFacesAdvancedInlineCalendar;
+import org.richfaces.fragment.calendar.RichFacesAdvancedPopupCalendar;
+import org.richfaces.fragment.calendar.RichFacesCalendar;
+import org.richfaces.fragment.calendar.YearAndMonthEditor;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.calendar.DayPicker.CalendarDay;
-import org.richfaces.tests.page.fragments.impl.calendar.PopupCalendar;
-import org.richfaces.tests.page.fragments.impl.calendar.PopupCalendar.PopupFooterControls;
-import org.richfaces.tests.page.fragments.impl.calendar.PopupCalendar.PopupHeaderControls;
-import org.richfaces.tests.page.fragments.impl.calendar.RichFacesCalendar;
-import org.richfaces.tests.page.fragments.impl.calendar.RichFacesAdvancedInlineCalendar;
-import org.richfaces.tests.page.fragments.impl.calendar.RichFacesAdvancedPopupCalendar;
-import org.richfaces.tests.page.fragments.impl.calendar.YearAndMonthEditor;
 import org.testng.annotations.BeforeMethod;
+import org.richfaces.fragment.calendar.RichFacesAdvancedPopupCalendar.OpenedBy;
 
 import com.google.common.collect.Lists;
 
@@ -93,12 +92,12 @@ public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
     }
 
     public void testOpenPopupClickOnInput() {
-        PopupCalendar openedPopup = Graphene.guardNoRequest(popupCalendar).openPopup(INPUT_CLICKING);
+        PopupCalendar openedPopup = Graphene.guardNoRequest(popupCalendar).openPopup(OpenedBy.INPUT_CLICKING);
         assertTrue(openedPopup.isVisible(), "Popup should be visible.");
     }
 
     public void testOpenPopupClickOnImage() {
-        PopupCalendar openedPopup = Graphene.guardNoRequest(popupCalendar).openPopup(OPEN_BUTTON_CLICKING);
+        PopupCalendar openedPopup = Graphene.guardNoRequest(popupCalendar).openPopup(OpenedBy.OPEN_BUTTON_CLICKING);
         assertTrue(openedPopup.isVisible(), "Popup should be visible.");
     }
 

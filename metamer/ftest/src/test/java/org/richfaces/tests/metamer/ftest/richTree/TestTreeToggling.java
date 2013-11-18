@@ -24,10 +24,10 @@ package org.richfaces.tests.metamer.ftest.richTree;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+import org.richfaces.fragment.switchable.SwitchType;
+import org.richfaces.fragment.tree.Tree.TreeNode;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.page.fragments.impl.tree.Tree.TreeNode;
-import org.richfaces.ui.common.SwitchType;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -42,7 +42,7 @@ public class TestTreeToggling extends AbstractTreeTest {
 
     @Inject
     @Use(enumeration = true)
-    private SwitchType toggleType = SwitchType.client;
+    private SwitchType toggleType = SwitchType.CLIENT;
 
     private TreeNode treeNode;
 

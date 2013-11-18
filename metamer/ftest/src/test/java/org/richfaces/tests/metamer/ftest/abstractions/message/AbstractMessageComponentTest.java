@@ -23,13 +23,14 @@ package org.richfaces.tests.metamer.ftest.abstractions.message;
 
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
+
 import org.openqa.selenium.interactions.Action;
+import org.richfaces.fragment.common.ClearType;
+import org.richfaces.fragment.message.Message;
 import org.richfaces.tests.metamer.ftest.richMessage.MessageAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.AttributeList;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.message.Message;
 
 /**
  * Base for testing of message components (rich:message, rich:notifyMessage)

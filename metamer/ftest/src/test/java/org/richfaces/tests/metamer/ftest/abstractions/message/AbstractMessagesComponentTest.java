@@ -25,18 +25,17 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
+import org.richfaces.fragment.common.ClearType;
+import org.richfaces.fragment.message.Message;
+import org.richfaces.fragment.message.Message.MessageType;
+import org.richfaces.fragment.messages.Messages;
 import org.richfaces.tests.metamer.ftest.richMessages.MessagesAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.AttributeList;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.validation.MultipleValidationRulesBean;
-import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.message.Message;
-import org.richfaces.tests.page.fragments.impl.message.Message.MessageType;
-import org.richfaces.tests.page.fragments.impl.messages.Messages;
 import org.testng.Assert;
 
 /**

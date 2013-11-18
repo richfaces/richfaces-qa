@@ -23,10 +23,10 @@ package org.richfaces.tests.showcase.notify;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.junit.Assert;
-import org.richfaces.tests.page.fragments.impl.notify.NotifyMessage.NotifyMessagePosition;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.notify.page.StackingMessagesPage;
 import org.testng.annotations.Test;
+import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>

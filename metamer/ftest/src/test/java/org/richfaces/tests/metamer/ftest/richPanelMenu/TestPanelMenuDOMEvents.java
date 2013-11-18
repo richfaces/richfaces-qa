@@ -21,6 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richPanelMenu;
 
+import static org.richfaces.fragment.common.Event.CLICK;
+import static org.richfaces.fragment.common.Event.DBLCLICK;
+import static org.richfaces.fragment.common.Event.MOUSEDOWN;
+import static org.richfaces.fragment.common.Event.MOUSEMOVE;
+import static org.richfaces.fragment.common.Event.MOUSEOUT;
+import static org.richfaces.fragment.common.Event.MOUSEOVER;
+import static org.richfaces.fragment.common.Event.MOUSEUP;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.collapseEvent;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.expandEvent;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.onclick;
@@ -31,13 +38,6 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttribute
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.onmouseover;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.onmouseup;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuAttributes;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.CLICK;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.DBLCLICK;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEDOWN;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEMOVE;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOUT;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOVER;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEUP;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -46,10 +46,10 @@ import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactor
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.panelMenu.RichFacesPanelMenuGroup;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.page.fragments.impl.panelMenu.RichFacesPanelMenuGroup;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.Test;
 
 import com.google.common.base.Predicate;

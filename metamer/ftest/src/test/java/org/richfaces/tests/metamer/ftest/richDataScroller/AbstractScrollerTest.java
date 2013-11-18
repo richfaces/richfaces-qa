@@ -13,12 +13,12 @@ import java.util.Random;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
+import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.page.fragments.impl.dataScroller.DataScroller.DataScrollerSwitchButton;
-import org.richfaces.tests.page.fragments.impl.dataScroller.RichFacesDataScroller;
 import org.testng.annotations.BeforeMethod;
+import org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton;
 
 public class AbstractScrollerTest extends AbstractWebDriverTest {
 

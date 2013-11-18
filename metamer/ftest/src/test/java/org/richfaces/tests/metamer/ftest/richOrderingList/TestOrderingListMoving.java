@@ -25,7 +25,7 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
 
-import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
+import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.testng.annotations.Test;
 
 /**

@@ -25,7 +25,7 @@ import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
+import org.richfaces.fragment.common.TextInputComponentImpl;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>

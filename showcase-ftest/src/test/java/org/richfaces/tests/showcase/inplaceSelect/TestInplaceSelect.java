@@ -24,8 +24,8 @@ package org.richfaces.tests.showcase.inplaceSelect;
 import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.page.Page;
-import org.richfaces.tests.page.fragments.impl.inplaceSelect.RichFacesInplaceSelect;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.inplaceSelect.RichFacesInplaceSelect;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.inplaceSelect.page.SimplePage;
 import org.testng.annotations.Test;

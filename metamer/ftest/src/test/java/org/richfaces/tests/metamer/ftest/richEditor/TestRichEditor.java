@@ -21,10 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richEditor;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
 import static org.jboss.arquillian.graphene.Graphene.waitAjax;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.richEditor.EditorAttributes.styleClass;
 import static org.richfaces.tests.metamer.ftest.richEditor.EditorAttributes.title;
 import static org.richfaces.tests.metamer.ftest.richEditor.EditorAttributes.toolbar;

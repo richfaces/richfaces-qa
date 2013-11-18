@@ -27,7 +27,7 @@ import java.util.List;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
+import org.richfaces.fragment.common.TextInputComponentImpl;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>

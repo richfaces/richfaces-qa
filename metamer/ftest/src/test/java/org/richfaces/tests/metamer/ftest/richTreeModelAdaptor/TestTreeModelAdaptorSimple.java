@@ -28,11 +28,11 @@ import static org.testng.Assert.fail;
 
 import java.net.URL;
 
+import org.richfaces.fragment.switchable.SwitchType;
+import org.richfaces.fragment.tree.Tree.TreeNode;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.richTree.AbstractTreeTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.page.fragments.impl.tree.Tree.TreeNode;
-import org.richfaces.ui.common.SwitchType;
 import org.testng.annotations.Test;
 
 /**
@@ -52,8 +52,8 @@ public class TestTreeModelAdaptorSimple extends AbstractTreeTest {
 
     @Test
     public void testModelAdaptorRendered() {
-        treeNode = getGuarded(tree, SwitchType.ajax).expandNode(1);
-        treeNode = getGuarded(treeNode, SwitchType.ajax).expandNode(1);
+        treeNode = getGuarded(tree, SwitchType.AJAX).expandNode(1);
+        treeNode = getGuarded(treeNode, SwitchType.AJAX).expandNode(1);
         treeNode = treeNode.advanced().getFirstNode();
 
         assertTrue(treeNode.advanced().isLeaf());
@@ -65,8 +65,8 @@ public class TestTreeModelAdaptorSimple extends AbstractTreeTest {
 
     @Test
     public void testRecursiveModelAdaptorRendered() {
-        treeNode = getGuarded(tree, SwitchType.ajax).expandNode(1);
-        treeNode = getGuarded(treeNode, SwitchType.ajax).expandNode(1);
+        treeNode = getGuarded(tree, SwitchType.AJAX).expandNode(1);
+        treeNode = getGuarded(treeNode, SwitchType.AJAX).expandNode(1);
 
         boolean subnodePresent = false;
         for (TreeNode actTreeNode : treeNode.advanced().getNodes()) {

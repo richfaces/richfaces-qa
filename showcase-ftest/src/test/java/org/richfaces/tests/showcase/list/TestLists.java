@@ -24,8 +24,8 @@ package org.richfaces.tests.showcase.list;
 import org.jboss.arquillian.graphene.page.Page;
 import org.junit.Assert;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.ListType;
 import org.richfaces.tests.showcase.list.page.ListsPage;
-import org.richfaces.ui.iteration.list.ListType;
 import org.testng.annotations.Test;
 
 /**

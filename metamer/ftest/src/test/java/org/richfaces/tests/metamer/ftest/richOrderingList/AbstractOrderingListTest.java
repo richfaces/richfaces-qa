@@ -30,15 +30,15 @@ import java.util.List;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.common.picker.ChoicePickerHelper;
+import org.richfaces.fragment.list.ListItem;
+import org.richfaces.fragment.list.RichFacesListItem;
+import org.richfaces.fragment.orderingList.RichFacesOrderingList;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.list.ListItem;
-import org.richfaces.tests.page.fragments.impl.list.RichFacesListItem;
-import org.richfaces.tests.page.fragments.impl.orderingList.RichFacesOrderingList;
-import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 
 /**
  * Abstract test case for pages faces/components/richOrderingList/

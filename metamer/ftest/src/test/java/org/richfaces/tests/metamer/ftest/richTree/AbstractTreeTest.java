@@ -29,14 +29,14 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.switchable.SwitchType;
+import org.richfaces.fragment.tree.RichFacesTree;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.tree.RichFacesTree;
-import org.richfaces.ui.common.SwitchType;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -57,21 +57,21 @@ public abstract class AbstractTreeTest extends AbstractWebDriverTest {
 
         @Override
         public void perform() {
-            getGuardedTree(SwitchType.ajax).expandNode(0);
+            getGuardedTree(SwitchType.AJAX).expandNode(0);
         }
     };
     protected final Action collapseFirstNodeAjaxAction = new Action() {
 
         @Override
         public void perform() {
-            getGuardedTree(SwitchType.ajax).collapseNode(0);
+            getGuardedTree(SwitchType.AJAX).collapseNode(0);
         }
     };
     protected final Action selectFirstNodeAjaxAction = new Action() {
 
         @Override
         public void perform() {
-            getGuardedTree(SwitchType.ajax).selectNode(0);
+            getGuardedTree(SwitchType.AJAX).selectNode(0);
         }
     };
     @Inject
@@ -83,11 +83,11 @@ public abstract class AbstractTreeTest extends AbstractWebDriverTest {
 
     protected <T> T getGuarded(T something, SwitchType type) {
         switch (type) {
-            case ajax:
+            case AJAX:
                 return Graphene.guardAjax(something);
-            case client:
+            case CLIENT:
                 return Graphene.guardNoRequest(something);
-            case server:
+            case SERVER:
                 return Graphene.guardHttp(something);
         }
         throw new UnsupportedOperationException("Uknown switch " + type);

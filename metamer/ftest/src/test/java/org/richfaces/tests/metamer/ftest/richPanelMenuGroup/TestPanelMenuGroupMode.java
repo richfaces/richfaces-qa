@@ -33,8 +33,8 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMen
 import static org.richfaces.ui.common.Mode.ajax;
 import static org.richfaces.ui.common.Mode.client;
 import static org.richfaces.ui.common.Mode.server;
-import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 import java.util.LinkedList;
 

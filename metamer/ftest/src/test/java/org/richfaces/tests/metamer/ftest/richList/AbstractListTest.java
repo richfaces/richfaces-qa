@@ -23,19 +23,18 @@ package org.richfaces.tests.metamer.ftest.richList;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-
 import static org.testng.Assert.assertEquals;
 
 import java.util.List;
 
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.list.RichFacesList;
+import org.richfaces.fragment.list.RichFacesListItem;
 import org.richfaces.tests.metamer.bean.Model;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.model.Employee;
-import org.richfaces.tests.page.fragments.impl.list.RichFacesList;
-import org.richfaces.tests.page.fragments.impl.list.RichFacesListItem;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>

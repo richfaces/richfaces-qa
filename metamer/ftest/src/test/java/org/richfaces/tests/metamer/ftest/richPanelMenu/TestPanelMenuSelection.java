@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.richPanelMenu;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuAttributes;
-
 import static org.testng.Assert.assertEquals;
 
 import org.richfaces.tests.metamer.ftest.annotations.Inject;

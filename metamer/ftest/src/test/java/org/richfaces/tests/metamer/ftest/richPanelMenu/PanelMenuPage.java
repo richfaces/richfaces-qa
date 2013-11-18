@@ -21,13 +21,12 @@
  */
 package org.richfaces.tests.metamer.ftest.richPanelMenu;
 
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.panelMenu.RichFacesPanelMenu;
+import org.richfaces.fragment.panelMenu.RichFacesPanelMenuGroup;
+import org.richfaces.fragment.panelMenu.RichFacesPanelMenuItem;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.panelMenu.RichFacesPanelMenu;
-import org.richfaces.tests.page.fragments.impl.panelMenu.RichFacesPanelMenuGroup;
-import org.richfaces.tests.page.fragments.impl.panelMenu.RichFacesPanelMenuItem;
 
 /**
  * @author <a href="jhuska@redhat.com">Juraj Huska</a>

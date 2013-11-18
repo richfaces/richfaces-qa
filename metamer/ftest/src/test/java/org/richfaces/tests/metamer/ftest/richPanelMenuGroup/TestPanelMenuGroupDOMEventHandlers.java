@@ -33,7 +33,7 @@ import static org.richfaces.ui.common.Mode.client;
 
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
+import org.richfaces.fragment.common.Event;
 import org.testng.annotations.Test;
 
 
