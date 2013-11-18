@@ -42,13 +42,13 @@
 
     <dependencyManagement>
         <dependencies>
-            <!--dependency>
+            <dependency>
                 <groupId>org.richfaces</groupId>
-                <artifactId>richfaces-bom</artifactId>
-                <version>${version.richfaces}</version>
-                <scope>import</scope>
+                <artifactId>richfaces-build</artifactId>
+                <version>${version.richfaces5}</version>
                 <type>pom</type>
-            </dependency-->
+                <scope>import</scope>
+            </dependency>
 
             <dependency>
                 <groupId>javax.el</groupId>

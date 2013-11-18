@@ -32,8 +32,9 @@
             <artifactId>selenium-java</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.richfaces.ui</groupId>
-            <artifactId>richfaces-components-api</artifactId>
+            <groupId>org.richfaces</groupId>
+            <artifactId>richfaces</artifactId>
+            <version>${version.richfaces5}</version>
         </dependency>
 
         <dependency>

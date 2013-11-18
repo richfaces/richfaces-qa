@@ -38,7 +38,7 @@ FSF site: http://www.fsf.org. -->
 
         <templates>plain</templates>
 
-        <testng.listeners>org.richfaces.tests.metamer.ftest.MatrixConfigurator,org.richfaces.tests.metamer.ftest.MetamerConsoleStatusTestListener,org.richfaces.tests.metamer.ftest.MetamerFailureLoggingTestListener</testng.listeners>
+        <testng.listeners>org.richfaces.tests.metamer.ftest.MatrixConfigurator,org.richfaces.tests.metamer.ftest.MetamerConsoleStatusTestListener</testng.listeners>
         <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
         <metamer-portlet.version>3.2.1.Final</metamer-portlet.version>
         <jboss-portal.version>7.1.3.Final</jboss-portal.version>
@@ -52,15 +52,10 @@ FSF site: http://www.fsf.org. -->
             <classifier>classes</classifier>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.richfaces.ui.common</groupId>
-            <artifactId>richfaces-ui-common-api</artifactId>
-        </dependency>
         <!-- Arquillian dependencies -->
         <dependency>
             <groupId>org.jboss.arquillian.graphene</groupId>
             <artifactId>graphene-webdriver</artifactId>
-            <version>${arquillian.graphene.version}</version>
             <type>pom</type>
             <scope>test</scope>
         </dependency>
@@ -115,7 +110,6 @@ FSF site: http://www.fsf.org. -->
         <dependency>
             <groupId>org.jboss.spec</groupId>
             <artifactId>jboss-javaee-6.0</artifactId>
-            <version>3.0.1.Final</version>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>

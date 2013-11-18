@@ -97,7 +97,7 @@
                                     <groupId>org.richfaces.examples</groupId>
                                     <artifactId>richfaces-showcase</artifactId>
                                     <type>war</type>
-                                    <version>${version.richfaces}</version>
+                                    <version>${version.richfaces4}</version>
                                     <classifier>${showcase.classifier}</classifier>
                                     <destFileName>showcase.war</destFileName>
                                 </artifactItem>
