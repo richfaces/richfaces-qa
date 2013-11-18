@@ -121,6 +121,23 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
 
     @Test
     @Templates(value = "plain")
+    @IssueTracking("https://github.com/richwidgets/richwidgets/issues/135")
+    public void testColumnClasses_repeating() {
+        // test single class repeating
+        String testedClass = "metamer-ftest-class";
+        String testedClassRepeating = testedClass + ", *";
+        attributes.set(OrderingListAttributes.columnClasses, testedClassRepeating);
+
+        for (WebElement li : orderingList.advanced().getItemsElements()) {
+            List<WebElement> columns = li.findElements(By.tagName("td"));
+            assertEquals(columns.size(), 2);
+            assertTrue(columns.get(0).getAttribute("class").contains(testedClass), "Item @class should contain " + testedClass);
+            assertTrue(columns.get(1).getAttribute("class").contains(testedClass), "Item @class should contain " + testedClass);
+        }
+    }
+
+    @Test
+    @Templates(value = "plain")
     public void testDisabled() {
         attributes.set(OrderingListAttributes.disabled, Boolean.TRUE);
         List<WebElement> items = orderingList.advanced().getItemsElements();
@@ -294,13 +311,13 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     @Templates(value = "plain")
     @IssueTracking("https://issues.jboss.org/browse/RF-13340")
     public void testStyle() {
-        testStyle(orderingList.advanced().getRootElement().findElement(By.tagName("div")));
+        testStyle(orderingList.advanced().getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyleClass() {
-        testStyleClass(orderingList.advanced().getRootElement().findElement(By.tagName("div")));
+        testStyleClass(orderingList.advanced().getRootElement());
     }
 
     @Test
