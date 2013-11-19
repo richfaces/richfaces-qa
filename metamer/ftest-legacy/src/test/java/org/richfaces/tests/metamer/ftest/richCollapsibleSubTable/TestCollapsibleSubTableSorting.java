@@ -39,14 +39,14 @@ import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
 import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.richfaces.component.SortOrder;
 import org.richfaces.model.SortMode;
+import org.richfaces.model.SortOrder;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.model.DataTable;
 import org.richfaces.tests.metamer.model.Employee;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -73,8 +73,8 @@ public class TestCollapsibleSubTableSorting extends AbstractCollapsibleSubTableT
         Column.resetAll();
     }
 
-    @Test(groups = { "Future" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-11302")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11302")
     public void testSorting() {
         collapsibleSubTabAttributes.set(CollapsibleSubTableAttributes.rows, rows);
         collapsibleSubTabAttributes.set(CollapsibleSubTableAttributes.sortMode, sortMode);
