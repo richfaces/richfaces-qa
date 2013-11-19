@@ -49,13 +49,6 @@ FSF site: http://www.fsf.org. -->
             <version>${version.richfaces5}</version>
             <type>pom</type>
         </dependency>
-    
-<!--         This is to be removed once richfaces-components-rich contains this version explicitly -->
-        <dependency>
-            <groupId>net.sourceforge.cssparser</groupId>
-            <artifactId>cssparser</artifactId>
-            <version>0.9.11</version>
-        </dependency>
         
         <dependency>
             <groupId>javax.validation</groupId>
