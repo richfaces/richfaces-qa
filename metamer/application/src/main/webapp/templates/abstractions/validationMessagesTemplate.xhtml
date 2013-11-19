@@ -54,7 +54,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <script type="text/javascript">
                 function setValues(value) {
                     $(getLocator()).each(function() {
-                        RichFaces.$($(this)).setValue(value);//invoke RichFaces JS API function
+                        RichFaces.component($(this)).setValue(value);//invoke RichFaces JS API function
                     });
                 }
                 function command(button) {
