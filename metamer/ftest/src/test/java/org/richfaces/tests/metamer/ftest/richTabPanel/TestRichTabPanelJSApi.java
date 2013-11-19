@@ -59,12 +59,12 @@ public class TestRichTabPanelJSApi extends AbstractWebDriverTest {
     private List<WebElement> switchToButtons;
 
     private String JsPrevItem() {
-        return (String) executeJS("return RichFaces.$('" + page.getPanelTabAsWebElement().getAttribute("id")
+        return (String) executeJS("return RichFaces.component('" + page.getPanelTabAsWebElement().getAttribute("id")
             + "').prevItem()");
     }
 
     private String JsNextItem() {
-        return (String) executeJS("return RichFaces.$('" + page.getPanelTabAsWebElement().getAttribute("id")
+        return (String) executeJS("return RichFaces.component('" + page.getPanelTabAsWebElement().getAttribute("id")
             + "').nextItem()");
     }
 
@@ -97,9 +97,9 @@ public class TestRichTabPanelJSApi extends AbstractWebDriverTest {
     public void testJsGetItems() {
         // Using JS API get IDs and isSelected attributes and assert
         for (int i = 0; i < 5; i++) {
-            String id = (String) executeJS("return RichFaces.$('" + page.getPanelTabAsWebElement().getAttribute("id")
+            String id = (String) executeJS("return RichFaces.component('" + page.getPanelTabAsWebElement().getAttribute("id")
                 + "').getItems()['" + i + "'].id");
-            Boolean selected = (Boolean) executeJS("return RichFaces.$('"
+            Boolean selected = (Boolean) executeJS("return RichFaces.component('"
                 + page.getPanelTabAsWebElement().getAttribute("id") + "').getItems()['" + i + "'].isSelected()");
 
             assertTrue(page.getPanelTab().advanced().getAllActiveHeadersElements().get(i).getAttribute("id").contains(id));
@@ -116,7 +116,7 @@ public class TestRichTabPanelJSApi extends AbstractWebDriverTest {
     @Templates(value = { "plain" })
     public void testJsGetItemsNames() {
         @SuppressWarnings("unchecked")
-        List<String> result = (ArrayList<String>) executeJS("return RichFaces.$('"
+        List<String> result = (ArrayList<String>) executeJS("return RichFaces.component('"
             + page.getPanelTabAsWebElement().getAttribute("id") + "').getItemsNames()");
         assertTrue(result.size() == 5);
         assertEquals("tab1, tab2, tab3, tab4, tab5", result.toString().substring(1, result.toString().length() - 1));
@@ -125,7 +125,7 @@ public class TestRichTabPanelJSApi extends AbstractWebDriverTest {
     @Test
     @Templates(value = { "plain" })
     public void testJsFirstItem() {
-        String result = (String) executeJS("return RichFaces.$('" + page.getPanelTabAsWebElement().getAttribute("id")
+        String result = (String) executeJS("return RichFaces.component('" + page.getPanelTabAsWebElement().getAttribute("id")
             + "').firstItem()");
         assertEquals("tab1", result);
     }
@@ -181,7 +181,7 @@ public class TestRichTabPanelJSApi extends AbstractWebDriverTest {
     @Test
     @Templates(value = { "plain" })
     public void testJsLastItem() {
-        String result = (String) executeJS("return RichFaces.$('" + page.getPanelTabAsWebElement().getAttribute("id")
+        String result = (String) executeJS("return RichFaces.component('" + page.getPanelTabAsWebElement().getAttribute("id")
             + "').lastItem()");
         assertEquals("tab5", result);
     }

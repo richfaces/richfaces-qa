@@ -185,19 +185,19 @@ public class TestRichTabPanel extends AbstractWebDriverTest {
     public void testCycledSwitching() {
         String panelId = (String) executeJS("return testedComponentId");
         String result = "someString";
-        result = (String) executeJS("return RichFaces.$('" + panelId + "').nextItem('tab5')");
+        result = (String) executeJS("return RichFaces.component('" + panelId + "').nextItem('tab5')");
 
         assertEquals(result, null);
 
-        result = (String) executeJS("return RichFaces.$('" + panelId + "').prevItem('tab1')");
+        result = (String) executeJS("return RichFaces.component('" + panelId + "').prevItem('tab1')");
         assertEquals(result, null);
 
         // turn cycled switching on
         tabPanelAttributes.set(TabPanelAttributes.cycledSwitching, Boolean.TRUE);
-        result = (String) executeJS("return RichFaces.$('" + panelId + "').nextItem('tab5')");
+        result = (String) executeJS("return RichFaces.component('" + panelId + "').nextItem('tab5')");
         assertEquals(result, "tab1");
 
-        result = (String) executeJS("return RichFaces.$('" + panelId + "').prevItem('tab1')");
+        result = (String) executeJS("return RichFaces.component('" + panelId + "').prevItem('tab1')");
         assertEquals(result, "tab5");
     }
 
