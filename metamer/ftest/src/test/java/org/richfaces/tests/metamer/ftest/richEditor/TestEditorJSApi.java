@@ -65,20 +65,20 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
     }
 
     private void jsSetFocus() {
-        executeJS("RichFaces.$('" + getEditorId() + "').focus()");
+        executeJS("RichFaces.component('" + getEditorId() + "').focus()");
     }
 
     private void jsBlur() {
-        executeJS("RichFaces.$('" + getEditorId() + "').blur()");
+        executeJS("RichFaces.component('" + getEditorId() + "').blur()");
     }
 
     private Boolean jsIsFocused() {
-        Boolean jsResult = (Boolean) executeJS("return RichFaces.$('" + getEditorId() + "').isFocused()");
+        Boolean jsResult = (Boolean) executeJS("return RichFaces.component('" + getEditorId() + "').isFocused()");
         return jsResult;
     }
 
     private String jsGetValue() {
-        return (String) executeJS("return RichFaces.$('" + getEditorId() + "').getValue()");
+        return (String) executeJS("return RichFaces.component('" + getEditorId() + "').getValue()");
     }
 
     @Test
@@ -96,7 +96,7 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
         // should be empty
         assertEquals(page.getEditor().getText(), "");
         String testText = "NEW VALUE SET BY JS!";
-        executeJS("RichFaces.$('" + getEditorId() + "').setValue('" + testText + "')");
+        executeJS("RichFaces.component('" + getEditorId() + "').setValue('" + testText + "')");
         assertEquals(page.getEditor().getText(), testText);
     }
 
@@ -104,7 +104,7 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
     @Templates(value = { "plain" })
     public void testJsGetInput() {
         RemoteWebElement textArea;
-        textArea = (RemoteWebElement) executeJS("return RichFaces.$('" + getEditorId() + "').getInput()");
+        textArea = (RemoteWebElement) executeJS("return RichFaces.component('" + getEditorId() + "').getInput()");
         assertEquals(textArea.getAttribute("id"), getEditorTextArea().getAttribute("id"));
     }
 
@@ -173,11 +173,11 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
     @Templates(value = { "plain" })
     public void testJsIsDirty() {
         page.getEditor().type("Some text");
-        assertTrue((Boolean) executeJS("return RichFaces.$('" + getEditorId() + "').isDirty()"));
+        assertTrue((Boolean) executeJS("return RichFaces.component('" + getEditorId() + "').isDirty()"));
 
         page.getEditor().type("even more text!");
         guardAjax(page.getA4jButton()).click();
-        assertFalse((Boolean) executeJS("return RichFaces.$('" + getEditorId() + "').isDirty()"));
+        assertFalse((Boolean) executeJS("return RichFaces.component('" + getEditorId() + "').isDirty()"));
     }
 
     @Test
@@ -185,22 +185,22 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
     public void testJsIsValueChanged() {
         // edit, submit changes and assert
         page.getEditor().type("Hello");
-        assertTrue((Boolean) executeJS("return RichFaces.$('" + getEditorId() + "').isValueChanged()"));
+        assertTrue((Boolean) executeJS("return RichFaces.component('" + getEditorId() + "').isValueChanged()"));
 
         // click submit again with no changes
         page.fullPageRefresh();
-        assertFalse((Boolean) executeJS("return RichFaces.$('" + getEditorId() + "').isValueChanged()"));
+        assertFalse((Boolean) executeJS("return RichFaces.component('" + getEditorId() + "').isValueChanged()"));
     }
 
     @Test
     @Templates(value = { "plain" })
     public void testJsIsReadOnly() {
         // initially false
-        assertFalse((Boolean) executeJS("return RichFaces.$('" + getEditorId() + "').isReadOnly()"));
+        assertFalse((Boolean) executeJS("return RichFaces.component('" + getEditorId() + "').isReadOnly()"));
 
         // set read only and assert true
         editorAttributes.set(EditorAttributes.readonly, true);
-        assertTrue((Boolean) executeJS("return RichFaces.$('" + getEditorId() + "').isReadOnly()"));
+        assertTrue((Boolean) executeJS("return RichFaces.component('" + getEditorId() + "').isReadOnly()"));
     }
 
     @Test
@@ -213,17 +213,17 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
         assertEquals(page.getEditor().getText(), testText);
         page.getEditor().clear();
 
-        executeJS("RichFaces.$('" + getEditorId() + "').setReadOnly(true)");
+        executeJS("RichFaces.component('" + getEditorId() + "').setReadOnly(true)");
         try {
             page.getEditor().type(testText);
         } catch (Exception e) {
             // OK exception should be thrown as you cannot edit read only editor
         }
         // additional check with JS function
-        assertTrue((Boolean) executeJS("return RichFaces.$('" + getEditorId() + "').isReadOnly()"));
+        assertTrue((Boolean) executeJS("return RichFaces.component('" + getEditorId() + "').isReadOnly()"));
 
         // revert back to editable and assert
-        executeJS("RichFaces.$('" + getEditorId() + "').setReadOnly(false)");
+        executeJS("RichFaces.component('" + getEditorId() + "').setReadOnly(false)");
         page.getEditor().type(testText);
         guardAjax(page.getA4jButton()).click();
         assertEquals(page.getEditor().getText(), testText);
@@ -236,18 +236,18 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
     @Templates(value = { "plain" })
     public void testJsGetEditor() {
         String someText = "some text";
-        executeJS("RichFaces.$('" + getEditorId() + "').getEditor().setReadOnly()");
+        executeJS("RichFaces.component('" + getEditorId() + "').getEditor().setReadOnly()");
         try {
             page.getEditor().type("Nice text");
         } catch (Exception e) {
             // OK exception should be thrown as you cannot edit read only editor
         }
         // additional check with JS function
-        assertTrue((Boolean) executeJS("return RichFaces.$('" + getEditorId() + "').isReadOnly()"));
+        assertTrue((Boolean) executeJS("return RichFaces.component('" + getEditorId() + "').isReadOnly()"));
         // set back to editable
-        executeJS("RichFaces.$('" + getEditorId() + "').getEditor().setReadOnly(false)");
+        executeJS("RichFaces.component('" + getEditorId() + "').getEditor().setReadOnly(false)");
 
-        executeJS("RichFaces.$('" + getEditorId() + "').getEditor().setData('" + someText + "')");
+        executeJS("RichFaces.component('" + getEditorId() + "').getEditor().setData('" + someText + "')");
         assertEquals(page.getEditor().getText(), someText);
     }
 }
