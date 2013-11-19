@@ -21,8 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.bean.rich;
 
-import com.google.common.collect.Lists;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,6 +48,8 @@ import org.richfaces.tests.metamer.validation.groups.ValidationGroupNumericInput
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Lists;
+
 /**
  * Managed Bean for rich:graphValidator
  *
@@ -68,20 +68,16 @@ public class RichGraphValidatorBean implements Serializable, Cloneable {
     public static final String SUCCESSFULL_ACTION_MSG = "Action successfully done!";
     public static final String VALIDATION_MSG_BOOLEANS = "Select Boolean Checkbox isn't checked!";
     public static final String VALIDATION_MSG_NUMERICS = "One of the numeric inputs doesn't contain required value "
-            + REQUIRED_INT_VALUE + "!";
+        + REQUIRED_INT_VALUE + "!";
     public static final String VALIDATION_MSG_ALL = "One of the inputs doesn't contain smile or numeric value "
-            + REQUIRED_INT_VALUE + ", date is from future or boolean checkbox is not checked!";
-    public static final List<SelectItem> SELECT_ITEMS = Lists.newArrayList(
-            new SelectItem("Abcd"),
-            new SelectItem("Bcde"),
-            new SelectItem("Cdef"),
-            new SelectItem("Defg"),
-            new SelectItem(SMILE));
+        + REQUIRED_INT_VALUE + ", date is from future or boolean checkbox is not checked!";
+    public static final List<SelectItem> SELECT_ITEMS = Lists.newArrayList(new SelectItem("Abcd"), new SelectItem("Bcde"),
+        new SelectItem("Cdef"), new SelectItem("Defg"), new SelectItem(SMILE));
     //
     private Attributes attributes;
     private List<SelectItem> selectItems = Collections.unmodifiableList(SELECT_ITEMS);
-    //////////////
-    //Input values
+    // ////////////
+    // Input values
     @NotNull
     @NotEmpty
     private String autocompleteInput = SMILE;
@@ -130,14 +126,17 @@ public class RichGraphValidatorBean implements Serializable, Cloneable {
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIGraphValidator.class, getClass());
 
         attributes.setAttribute("rendered", true);
-        attributes.setAttribute("type", "org.richfaces.BeanValidator");
 
-        //used in sample, value contains reference to this validation bean
+        // causes an exception FacesException: Expression Error: Named Object: org.richfaces.BeanValidator not found.
+        // attributes.setAttribute("type", "org.richfaces.BeanValidator");
+
+        // used in sample, value contains reference to this validation bean
         attributes.remove("value");
     }
 
     public void anotherActionOnAllComponents() {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, SUCCESSFULL_ACTION_MSG, SUCCESSFULL_ACTION_MSG));
+        FacesContext.getCurrentInstance().addMessage(null,
+            new FacesMessage(FacesMessage.SEVERITY_INFO, SUCCESSFULL_ACTION_MSG, SUCCESSFULL_ACTION_MSG));
     }
 
     public List<String> autocomplete(String prefix) {
@@ -151,7 +150,7 @@ public class RichGraphValidatorBean implements Serializable, Cloneable {
             while (iterator.hasNext()) {
                 SelectItem elem = ((SelectItem) iterator.next());
                 if ((elem.getLabel() != null && elem.getLabel().toLowerCase().indexOf(prefix.toLowerCase()) == 0)
-                        || "".equals(prefix)) {
+                    || "".equals(prefix)) {
                     result.add(elem.getLabel());
                 }
             }
@@ -236,7 +235,7 @@ public class RichGraphValidatorBean implements Serializable, Cloneable {
     }
 
     public Class<?>[] getValidationGroups() throws ClassNotFoundException {
-        Attribute group = attributes.get("groups");//only one group at time is used
+        Attribute group = attributes.get("groups");// only one group at time is used
         Class<?> groupClass;
         Object _value = group.getValue();
         String value = (_value != null ? _value.toString() : null);
@@ -245,42 +244,28 @@ public class RichGraphValidatorBean implements Serializable, Cloneable {
         } else {
             groupClass = Default.class;
         }
-        return new Class[]{ groupClass };
+        return new Class[] { groupClass };
     }
 
-    @AssertTrue(message = VALIDATION_MSG_BOOLEANS,
-    groups = { ValidationGroupBooleanInputs.class })
+    @AssertTrue(message = VALIDATION_MSG_BOOLEANS, groups = { ValidationGroupBooleanInputs.class })
     public boolean isAllBooleanInputsCorrect() {
         return selectBooleanCheckbox.booleanValue();
     }
 
-    @AssertTrue(message = VALIDATION_MSG_ALL,
-    groups = { Default.class, ValidationGroupAllComponents.class })
+    @AssertTrue(message = VALIDATION_MSG_ALL, groups = { Default.class, ValidationGroupAllComponents.class })
     public boolean isAllInputsCorrect() {
-        return autocompleteInput.contains(SMILE)
-                && inplaceSelect.contains(SMILE)
-                && inplaceInput.contains(SMILE)
-                && select.contains(SMILE)
-                && inputNumberSlider.equals(REQUIRED_INTEGER_VALUE)
-                && inputNumberSpinner.equals(REQUIRED_INTEGER_VALUE)
-                && inputText.contains(SMILE)
-                && inputSecret.contains(SMILE)
-                && inputTextarea.contains(SMILE)
-                && selectBooleanCheckbox.booleanValue()
-                && selectManyCheckbox.contains(SMILE)
-                && selectOneListbox.contains(SMILE)
-                && selectManyListbox.contains(SMILE)
-                && selectOneMenu.contains(SMILE)
-                && selectManyMenu.contains(SMILE)
-                && selectOneRadio.contains(SMILE)
-                && !calendar.after(new Date(System.currentTimeMillis()));
+        return autocompleteInput.contains(SMILE) && inplaceSelect.contains(SMILE) && inplaceInput.contains(SMILE)
+            && select.contains(SMILE) && inputNumberSlider.equals(REQUIRED_INTEGER_VALUE)
+            && inputNumberSpinner.equals(REQUIRED_INTEGER_VALUE) && inputText.contains(SMILE) && inputSecret.contains(SMILE)
+            && inputTextarea.contains(SMILE) && selectBooleanCheckbox.booleanValue() && selectManyCheckbox.contains(SMILE)
+            && selectOneListbox.contains(SMILE) && selectManyListbox.contains(SMILE) && selectOneMenu.contains(SMILE)
+            && selectManyMenu.contains(SMILE) && selectOneRadio.contains(SMILE)
+            && !calendar.after(new Date(System.currentTimeMillis()));
     }
 
-    @AssertTrue(message = VALIDATION_MSG_NUMERICS,
-    groups = { ValidationGroupNumericInputs.class })
+    @AssertTrue(message = VALIDATION_MSG_NUMERICS, groups = { ValidationGroupNumericInputs.class })
     public boolean isAllNumericInputsCorrect() {
-        return inputNumberSlider.equals(REQUIRED_INTEGER_VALUE)
-                && inputNumberSpinner.equals(REQUIRED_INTEGER_VALUE);
+        return inputNumberSlider.equals(REQUIRED_INTEGER_VALUE) && inputNumberSpinner.equals(REQUIRED_INTEGER_VALUE);
     }
 
     public void setAttributes(Attributes attributes) {
