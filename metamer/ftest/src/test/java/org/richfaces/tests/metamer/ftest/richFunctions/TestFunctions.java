@@ -152,7 +152,7 @@ public class TestFunctions extends AbstractWebDriverTest {
         assertEquals(output, "document.getElementById('" + clientId + "')", "Function element() doesn't work.");
 
         output = componentOutput.getText();
-        assertEquals(output, "RichFaces.$('" + clientId + "')", "Function component() doesn't work.");
+        assertEquals(output, "RichFaces.component('" + clientId + "')", "Function component() doesn't work.");
 
         output = findComponentOutput.getText();
         assertEquals(output, "abc", "Function findComponent() doesn't work.");
@@ -165,7 +165,7 @@ public class TestFunctions extends AbstractWebDriverTest {
         assertEquals(output, "#form\\\\:subview\\\\:input", "Function jQuerySelector() doesn't work.");
 
         output = jQueryOutput.getText();
-        assertEquals(output, "jQuery(document.getElementById('" + clientId + "'))", "Function jQuerySelector() doesn't work.");
+        assertEquals(output, "RichFaces.jQuery(document.getElementById('" + clientId + "'))", "Function jQuerySelector() doesn't work.");
     }
 
     @Test(groups = { "Future" })
