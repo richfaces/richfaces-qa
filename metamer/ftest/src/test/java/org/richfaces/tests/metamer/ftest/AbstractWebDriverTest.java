@@ -35,7 +35,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.lang.Validate;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
@@ -596,19 +595,20 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     /**
      * Helper method for testing of attribute 'status'. At first it sets @status to "statusChecker", then saves Metamer's
-     * 'statusCheckerOutput' time, then fires <code>statusChangingAction</code>, and finally checks if Metamer's
-     * 'statusCheckerOutput' time was changed.
+     * 'statusCheckerOutput' time, then fires <code>statusChangingAction</code> (if not null), and finally checks if Metamer's
+     * 'statusCheckerOutput' time was changed before Graphene.waitModel() interval expires.
      *
-     * @param statusChangingAction action that will change the status.
+     * @param statusChangingAction action that will change the status. Can be null.
      */
     protected void testStatus(Action statusChangingAction) {
-        Validate.notNull(statusChangingAction, "The @statusChangingAction cannot be null");
         String checker = "statusChecker";
         // set attribute
         getUnsafeAttributes("").set("status", checker);
 
         String statusCheckerTimeBefore = metamerPage.getStatusCheckerOutputElement().getText();
-        Graphene.guardAjax(new ActionWrapper(statusChangingAction)).perform();
+        if (statusChangingAction != null) {
+            Graphene.guardAjax(new ActionWrapper(statusChangingAction)).perform();
+        }
         Graphene.waitModel().until().element(metamerPage.getStatusCheckerOutputElement()).text().not()
             .equalTo(statusCheckerTimeBefore);
     }
