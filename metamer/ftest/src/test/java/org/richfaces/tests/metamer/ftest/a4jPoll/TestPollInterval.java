@@ -77,13 +77,13 @@ public class TestPollInterval extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "interval", ints = { 1000 })
+    @Use(field = "interval", ints = { 1500 })
     public void testClientAllTemplates() throws IOException {
         testClient();
     }
 
     @Test
-    @Use(field = "interval", ints = { 500, 5000 })
+    @Use(field = "interval", ints = { 1500, 3000 })
     @Templates(value = "plain")
     public void testClientDifferentIntervals() throws IOException {
         testClient();

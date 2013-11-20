@@ -28,6 +28,7 @@ import static javax.faces.event.PhaseId.PROCESS_VALIDATIONS;
 import static javax.faces.event.PhaseId.RENDER_RESPONSE;
 import static javax.faces.event.PhaseId.RESTORE_VIEW;
 import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
+
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes.bypassUpdates;
 import static org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes.data;
@@ -39,7 +40,6 @@ import static org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes.limitRend
 import static org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes.oncomplete;
 import static org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes.render;
 import static org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes.rendered;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.pollAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -49,24 +49,18 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.javascript.JavaScript;
 import org.jboss.arquillian.graphene.page.Page;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22681 $
  */
 public class TestPollSimple extends AbstractWebDriverTest {
-
-    @FindBy(css="span[id$=outputCounter]")
-    private WebElement outputCounter;
 
     @Page
     private MetamerPage metamerPage;
@@ -74,10 +68,13 @@ public class TestPollSimple extends AbstractWebDriverTest {
     @JavaScript
     private Window window;
 
+    private final Attributes<PollAttributes> pollAttributes = getAttributes();
+    private static final int INTERVAL = 2500;// ms
+
     @Inject
     @Use(empty = true)
-    String event;
-    String[] events = new String[] { "timer", "begin", "beforedomupdate", "complete" };
+    private String event;
+    private String[] events = new String[]{ "timer", "begin", "beforedomupdate", "complete" };
 
     @Override
     public URL getTestUrl() {
@@ -86,9 +83,8 @@ public class TestPollSimple extends AbstractWebDriverTest {
 
     @BeforeMethod
     public void enablePoll() {
-        pollAttributes.set(interval, 2500);
+        pollAttributes.set(interval, INTERVAL);
         pollAttributes.set(enabled, true);
-
     }
 
     @Test
@@ -114,6 +110,24 @@ public class TestPollSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Use(field = "event", value = "events")
+    public void testClientSideEvent() {
+        testClientSideEventHandlers(event);
+    }
+
+    private void testClientSideEventHandlers(String... events) {
+        pollAttributes.set(enabled, false);
+        super.testRequestEventsBefore(events);
+        pollAttributes.set(enabled, true);
+        super.testRequestEventsAfter(events);
+    }
+
+    @Test
+    public void testClientSideEventsOrder() {
+        testClientSideEventHandlers(events);
+    }
+
+    @Test
     public void testData() {
         pollAttributes.set(data, "RichFaces 4");
         pollAttributes.set(oncomplete, "data = event.data");
@@ -124,34 +138,14 @@ public class TestPollSimple extends AbstractWebDriverTest {
     }
 
     @Test
-    public void testImmediate() {
-        pollAttributes.set(immediate, true);
-        waitForNSubsequentRequests(2);
-        metamerPage.assertListener(APPLY_REQUEST_VALUES, "action invoked");
-        metamerPage.assertPhases(RESTORE_VIEW, APPLY_REQUEST_VALUES, RENDER_RESPONSE);
-    }
-
-    @Test
-    @Use(field = "event", value = "events")
-    public void testClientSideEvent() {
-        testClientSideEventHandlers(event);
-    }
-
-    @Test
-    public void testClientSideEventsOrder() {
-        testClientSideEventHandlers(events);
-    }
-
-    @Test
-    public void testRendered() {
-        pollAttributes.set(enabled, true);
-        pollAttributes.set(rendered, false);
+    public void testEnabled() {
+        pollAttributes.set(enabled, false);
 
         String time = metamerPage.getRequestTimeElement().getText();
-        waiting(5000);
+        waiting(2 * INTERVAL);
         assertTrue(time.equals(metamerPage.getRequestTimeElement().getText()));
 
-        pollAttributes.set(rendered, true);
+        pollAttributes.set(enabled, true);
         waitForNSubsequentRequests(2);
     }
 
@@ -165,28 +159,11 @@ public class TestPollSimple extends AbstractWebDriverTest {
     }
 
     @Test
-    public void testEnabled() {
-        pollAttributes.set(enabled, false);
-
-        String time = metamerPage.getRequestTimeElement().getText();
-        waiting(5000);
-        assertTrue(time.equals(metamerPage.getRequestTimeElement().getText()));
-
-        pollAttributes.set(enabled, true);
+    public void testImmediate() {
+        pollAttributes.set(immediate, true);
         waitForNSubsequentRequests(2);
-    }
-
-    @Test
-    public void testRender() {
-        pollAttributes.set(render, "renderChecker");
-        String render = metamerPage.getRenderCheckerOutputElement().getText();
-        String time = metamerPage.getRequestTimeElement().getText();
-
-        Graphene.waitModel()
-                .until()
-                .element(metamerPage.getRenderCheckerOutputElement())
-                .text().not().equalTo(render);
-        assertFalse(time.equals(metamerPage.getRequestTimeElement().getText()));
+        metamerPage.assertListener(APPLY_REQUEST_VALUES, "action invoked");
+        metamerPage.assertPhases(RESTORE_VIEW, APPLY_REQUEST_VALUES, RENDER_RESPONSE);
     }
 
     @Test
@@ -196,32 +173,56 @@ public class TestPollSimple extends AbstractWebDriverTest {
         String render = metamerPage.getRenderCheckerOutputElement().getText();
         String time = metamerPage.getRequestTimeElement().getText();
         Graphene.waitModel()
-                .until()
-                .element(metamerPage.getRenderCheckerOutputElement())
-                .text().not().equalTo(render);
+            .until()
+            .element(metamerPage.getRenderCheckerOutputElement())
+            .text().not().equalTo(render);
         assertTrue(time.equals(metamerPage.getRequestTimeElement().getText()));
     }
 
-    private void testClientSideEventHandlers(String... events) {
-        pollAttributes.set(enabled, false);
-        super.testRequestEventsBefore(events);
-        pollAttributes.set(enabled, true);
+    @Test
+    public void testRender() {
+        pollAttributes.set(render, "renderChecker");
+        String render = metamerPage.getRenderCheckerOutputElement().getText();
         String time = metamerPage.getRequestTimeElement().getText();
-        super.testRequestEventsAfter(events);
+
+        Graphene.waitModel()
+            .until()
+            .element(metamerPage.getRenderCheckerOutputElement())
+            .text().not().equalTo(render);
+        assertFalse(time.equals(metamerPage.getRequestTimeElement().getText()));
+    }
+
+    @Test
+    public void testRendered() {
+        pollAttributes.set(enabled, true);
+        pollAttributes.set(rendered, false);
+
+        String time = metamerPage.getRequestTimeElement().getText();
+        waiting(2 * INTERVAL);
+        assertTrue(time.equals(metamerPage.getRequestTimeElement().getText()));
+
+        pollAttributes.set(rendered, true);
+        waitForNSubsequentRequests(2);
+    }
+
+    @Test
+    public void testStatus() {
+        testStatus(null);
     }
 
     private void waitForNSubsequentRequests(int n) {
-        for (int i=0; i<n; i++) {
+        for (int i = 0; i < n; i++) {
             String time = metamerPage.getRequestTimeElement().getText();
             Graphene.waitModel()
-                    .until()
-                    .element(metamerPage.getRequestTimeElement())
-                    .text().not().equalTo(time);
+                .until()
+                .element(metamerPage.getRequestTimeElement())
+                .text().not().equalTo(time);
         }
     }
 
     @JavaScript("window")
     public interface Window {
+
         String getData();
     }
 }
