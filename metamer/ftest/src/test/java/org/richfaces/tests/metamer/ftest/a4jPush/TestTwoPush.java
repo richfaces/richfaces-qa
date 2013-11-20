@@ -38,11 +38,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.metamer.bean.a4j.A4JPushBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 import com.google.common.base.Predicate;
 
+@Test(groups = "Future")
+@IssueTracking("https://issues.jboss.org/browse/RF-13365")
 public class TestTwoPush extends AbstractWebDriverTest {
 
     @Page
