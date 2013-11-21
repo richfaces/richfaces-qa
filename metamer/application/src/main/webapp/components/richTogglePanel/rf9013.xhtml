@@ -37,17 +37,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
 
-            <h:commandLink id="tcLink1" value="Toggle Panel Item 1">
-                <r:toggleControl targetPanel="panel1" targetItem="item1" />
-            </h:commandLink>
+            <a id="tcLink1" name="tcLink1" style="cursor:pointer" onclick="#{r:component('panel1')}.switchToItem('item1')">Item 1</a>
             <h:outputText value=" | " />
-            <h:commandLink id="tcLink2" value="Toggle Panel Item 2">
-                <r:toggleControl targetPanel="panel1" targetItem="item2" />
-            </h:commandLink>
+            <a id="tcLink2" name="tcLink2" style="cursor:pointer" onclick="#{r:component('panel1')}.switchToItem('item2')">Item 2</a>
             <h:outputText value=" | " />
-            <h:commandLink id="tcLink3" value="Toggle Panel Item 3">
-                <r:toggleControl targetPanel="panel1" targetItem="item3" />
-            </h:commandLink>
+            <a id="tcLink3" name="tcLink2" style="cursor:pointer" onclick="#{r:component('panel1')}.switchToItem('item3')">Item 3</a>
 
             <br/><br/>
 
