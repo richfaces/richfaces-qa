@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" >
+      xmlns:r="http://richfaces.org/rich" >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -44,69 +44,53 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             <br/><br/>
 
-            <h:commandLink id="tcLink1" value="Item 1">
-                <rich:toggleControl targetPanel="richTogglePanel" targetItem="item1" />
-            </h:commandLink>
+            <a id="tcLink1" name="tcLink1" style="cursor:pointer" onclick="#{r:component('richTogglePanel')}.switchToItem('item1')">Item 1</a>
             <h:outputText value=" | " />
-            <h:commandLink id="tcLink2" value="Item 2">
-                <rich:toggleControl targetPanel="richTogglePanel" targetItem="item2" />
-            </h:commandLink>
+            <a id="tcLink2" name="tcLink2" style="cursor:pointer" onclick="#{r:component('richTogglePanel')}.switchToItem('item2')">Item 2</a>
             <h:outputText value=" | " />
-            <h:commandLink id="tcLink3" value="Item 3">
-                <rich:toggleControl targetPanel="richTogglePanel" targetItem="item3" />
-            </h:commandLink>
-
+            <a id="tcLink3" name="tcLink2" style="cursor:pointer" onclick="#{r:component('richTogglePanel')}.switchToItem('item3')">Item 3</a>
             <br/>
-            <h:commandLink id="tcFirst" value="First Item">
-                <rich:toggleControl targetPanel="richTogglePanel" targetItem="@first" />
-            </h:commandLink>
+            <a id="tcFirst" name="tcFirst" style="cursor:pointer" onclick="#{r:component('richTogglePanel')}.switchToItem(#{r:component('richTogglePanel')}.firstItem())">First Item</a>
             <h:outputText value=" | " />
-            <h:commandLink id="tcPrev" value="Prev Item">
-                <rich:toggleControl targetPanel="richTogglePanel" targetItem="@prev" />
-            </h:commandLink>
+            <a id="tcPrev" name="tcPrev" style="cursor:pointer" onclick="#{r:component('richTogglePanel')}.switchToItem(#{r:component('richTogglePanel')}.prevItem())">Prev Item</a>
             <h:outputText value=" | " />
-            <h:commandLink id="tcNext" value="Next Item">
-                <rich:toggleControl targetPanel="richTogglePanel" targetItem="@next" />
-            </h:commandLink>
+            <a id="tcNext" style="cursor:pointer" name="tcNext" onclick="#{r:component('richTogglePanel')}.switchToItem(#{r:component('richTogglePanel')}.nextItem())">Next Item</a>
             <h:outputText value=" | " />
-            <h:commandLink id="tcLast" value="Last Item">
-                <rich:toggleControl targetPanel="richTogglePanel" targetItem="@last" />
-            </h:commandLink>
-
+            <a id="tcLast" style="cursor:pointer" name="tcLast" onclick="#{r:component('richTogglePanel')}.switchToItem(#{r:component('richTogglePanel')}.lastItem())">Last Item</a>
             <br/><br/>
 
-            <rich:togglePanel id="richTogglePanel"
-                              activeItem="#{richTogglePanelBean.attributes['activeItem'].value}"
-                              cycledSwitching="#{richTogglePanelBean.attributes['cycledSwitching'].value}"
-                              dir="#{richTogglePanelBean.attributes['dir'].value}"
-                              immediate="#{richTogglePanelBean.attributes['immediate'].value}"
-                              itemChangeListener="#{richBean.itemChangeListener}"
-                              lang="#{richTogglePanelBean.attributes['lang'].value}"
-                              onbeforeitemchange="#{richTogglePanelBean.attributes['onbeforeitemchange'].value}"
-                              onclick="#{richTogglePanelBean.attributes['onclick'].value}"
-                              ondblclick="#{richTogglePanelBean.attributes['ondblclick'].value}"
-                              onitemchange="#{richTogglePanelBean.attributes['onitemchange'].value}"
-                              onmousedown="#{richTogglePanelBean.attributes['onmousedown'].value}"
-                              onmousemove="#{richTogglePanelBean.attributes['onmousemove'].value}"
-                              onmouseout="#{richTogglePanelBean.attributes['onmouseout'].value}"
-                              onmouseover="#{richTogglePanelBean.attributes['onmouseover'].value}"
-                              onmouseup="#{richTogglePanelBean.attributes['onmouseup'].value}"
-                              rendered="#{richTogglePanelBean.attributes['rendered'].value}"
-                              style="#{richTogglePanelBean.attributes['style'].value}"
-                              styleClass="#{richTogglePanelBean.attributes['styleClass'].value}"
-                              switchType="#{richTogglePanelBean.attributes['switchType'].value}"
-                              title="#{richTogglePanelBean.attributes['title'].value}"
-                              >
-                <rich:togglePanelItem id="item1" name="item1">
+            <r:togglePanel id="richTogglePanel"
+                           activeItem="#{richTogglePanelBean.attributes['activeItem'].value}"
+                           cycledSwitching="#{richTogglePanelBean.attributes['cycledSwitching'].value}"
+                           dir="#{richTogglePanelBean.attributes['dir'].value}"
+                           immediate="#{richTogglePanelBean.attributes['immediate'].value}"
+                           itemChangeListener="#{richBean.itemChangeListener}"
+                           lang="#{richTogglePanelBean.attributes['lang'].value}"
+                           onbeforeitemchange="#{richTogglePanelBean.attributes['onbeforeitemchange'].value}"
+                           onclick="#{richTogglePanelBean.attributes['onclick'].value}"
+                           ondblclick="#{richTogglePanelBean.attributes['ondblclick'].value}"
+                           onitemchange="#{richTogglePanelBean.attributes['onitemchange'].value}"
+                           onmousedown="#{richTogglePanelBean.attributes['onmousedown'].value}"
+                           onmousemove="#{richTogglePanelBean.attributes['onmousemove'].value}"
+                           onmouseout="#{richTogglePanelBean.attributes['onmouseout'].value}"
+                           onmouseover="#{richTogglePanelBean.attributes['onmouseover'].value}"
+                           onmouseup="#{richTogglePanelBean.attributes['onmouseup'].value}"
+                           rendered="#{richTogglePanelBean.attributes['rendered'].value}"
+                           style="#{richTogglePanelBean.attributes['style'].value}"
+                           styleClass="#{richTogglePanelBean.attributes['styleClass'].value}"
+                           switchType="#{richTogglePanelBean.attributes['switchType'].value}"
+                           title="#{richTogglePanelBean.attributes['title'].value}"
+                           >
+                <r:togglePanelItem id="item1" name="item1">
                     <p>content of panel 1</p>
-                </rich:togglePanelItem>
-                <rich:togglePanelItem id="item2" name="item2">
+                </r:togglePanelItem>
+                <r:togglePanelItem id="item2" name="item2">
                     <p>content of panel 2</p>
-                </rich:togglePanelItem>
-                <rich:togglePanelItem id="item3" name="item3">
+                </r:togglePanelItem>
+                <r:togglePanelItem id="item3" name="item3">
                     <p>content of panel 3</p>
-                </rich:togglePanelItem>
-            </rich:togglePanel>
+                </r:togglePanelItem>
+            </r:togglePanel>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

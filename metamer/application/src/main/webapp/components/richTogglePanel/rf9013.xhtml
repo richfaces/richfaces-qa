@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -37,31 +37,25 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
 
-            <h:commandLink id="tcLink1" value="Toggle Panel Item 1">
-                <rich:toggleControl targetPanel="panel1" targetItem="item1" />
-            </h:commandLink>
+            <a id="tcLink1" name="tcLink1" style="cursor:pointer" onclick="#{r:component('panel1')}.switchToItem('item1')">Item 1</a>
             <h:outputText value=" | " />
-            <h:commandLink id="tcLink2" value="Toggle Panel Item 2">
-                <rich:toggleControl targetPanel="panel1" targetItem="item2" />
-            </h:commandLink>
+            <a id="tcLink2" name="tcLink2" style="cursor:pointer" onclick="#{r:component('panel1')}.switchToItem('item2')">Item 2</a>
             <h:outputText value=" | " />
-            <h:commandLink id="tcLink3" value="Toggle Panel Item 3">
-                <rich:toggleControl targetPanel="panel1" targetItem="item3" />
-            </h:commandLink>
+            <a id="tcLink3" name="tcLink2" style="cursor:pointer" onclick="#{r:component('panel1')}.switchToItem('item3')">Item 3</a>
 
             <br/><br/>
 
-            <rich:togglePanel id="panel1" activeItem="item1">
-                <rich:togglePanelItem id="item1" name="item1">
+            <r:togglePanel id="panel1" activeItem="item1">
+                <r:togglePanelItem id="item1" name="item1">
                     <p>content of panel 1</p>
-                </rich:togglePanelItem>
-                <rich:togglePanelItem id="item2" name="item2">
+                </r:togglePanelItem>
+                <r:togglePanelItem id="item2" name="item2">
                     <p>content of panel 2</p>
-                </rich:togglePanelItem>
-                <rich:togglePanelItem id="item3" name="item3">
+                </r:togglePanelItem>
+                <r:togglePanelItem id="item3" name="item3">
                     <p>content of panel 3</p>
-                </rich:togglePanelItem>
-            </rich:togglePanel>
+                </r:togglePanelItem>
+            </r:togglePanel>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

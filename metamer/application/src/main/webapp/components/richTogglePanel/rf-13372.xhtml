@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:r="http://richfaces.org" >
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2013, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="component">
+
+            <h:outputText id="time" value="#{phasesBean.date}">
+                <f:convertDateTime pattern="HH:mm:ss.SSS" />
+            </h:outputText>
+
+            <p>
+                The component content cannot be switched with r:toggleControl.
+                <a href="https://issues.jboss.org/browse/RF-13372">RF-13372</a>.
+                Try to switch the items with the following links. Not automated.
+            </p>
+
+            <br/><br/>
+
+            <h:commandLink id="tcLink1" value="Item 1">
+                <r:toggleControl targetPanel="richTogglePanel" targetItem="item1" />
+            </h:commandLink>
+            <h:outputText value=" | " />
+            <h:commandLink id="tcLink2" value="Item 2">
+                <r:toggleControl targetPanel="richTogglePanel" targetItem="item2" />
+            </h:commandLink>
+            <h:outputText value=" | " />
+            <h:commandLink id="tcLink3" value="Item 3">
+                <r:toggleControl targetPanel="richTogglePanel" targetItem="item3" />
+            </h:commandLink>
+
+            <br/>
+            <h:commandLink id="tcFirst" value="First Item">
+                <r:toggleControl targetPanel="richTogglePanel" targetItem="@first" />
+            </h:commandLink>
+            <h:outputText value=" | " />
+            <h:commandLink id="tcPrev" value="Prev Item">
+                <r:toggleControl targetPanel="richTogglePanel" targetItem="@prev" />
+            </h:commandLink>
+            <h:outputText value=" | " />
+            <h:commandLink id="tcNext" value="Next Item">
+                <r:toggleControl targetPanel="richTogglePanel" targetItem="@next" />
+            </h:commandLink>
+            <h:outputText value=" | " />
+            <h:commandLink id="tcLast" value="Last Item">
+                <r:toggleControl targetPanel="richTogglePanel" targetItem="@last" />
+            </h:commandLink>
+
+            <br/><br/>
+
+            <r:togglePanel id="richTogglePanel"
+                           activeItem="#{richTogglePanelBean.attributes['activeItem'].value}"
+                           cycledSwitching="#{richTogglePanelBean.attributes['cycledSwitching'].value}"
+                           dir="#{richTogglePanelBean.attributes['dir'].value}"
+                           immediate="#{richTogglePanelBean.attributes['immediate'].value}"
+                           itemChangeListener="#{richBean.itemChangeListener}"
+                           lang="#{richTogglePanelBean.attributes['lang'].value}"
+                           onbeforeitemchange="#{richTogglePanelBean.attributes['onbeforeitemchange'].value}"
+                           onclick="#{richTogglePanelBean.attributes['onclick'].value}"
+                           ondblclick="#{richTogglePanelBean.attributes['ondblclick'].value}"
+                           onitemchange="#{richTogglePanelBean.attributes['onitemchange'].value}"
+                           onmousedown="#{richTogglePanelBean.attributes['onmousedown'].value}"
+                           onmousemove="#{richTogglePanelBean.attributes['onmousemove'].value}"
+                           onmouseout="#{richTogglePanelBean.attributes['onmouseout'].value}"
+                           onmouseover="#{richTogglePanelBean.attributes['onmouseover'].value}"
+                           onmouseup="#{richTogglePanelBean.attributes['onmouseup'].value}"
+                           rendered="#{richTogglePanelBean.attributes['rendered'].value}"
+                           style="#{richTogglePanelBean.attributes['style'].value}"
+                           styleClass="#{richTogglePanelBean.attributes['styleClass'].value}"
+                           switchType="#{richTogglePanelBean.attributes['switchType'].value}"
+                           title="#{richTogglePanelBean.attributes['title'].value}"
+                           >
+                <r:togglePanelItem id="item1" name="item1">
+                    <p>content of panel 1</p>
+                </r:togglePanelItem>
+                <r:togglePanelItem id="item2" name="item2">
+                    <p>content of panel 2</p>
+                </r:togglePanelItem>
+                <r:togglePanelItem id="item3" name="item3">
+                    <p>content of panel 3</p>
+                </r:togglePanelItem>
+            </r:togglePanel>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{richTogglePanelBean.attributes}" id="attributes" />
+        </ui:define>
+
+    </ui:composition>
+</html>
