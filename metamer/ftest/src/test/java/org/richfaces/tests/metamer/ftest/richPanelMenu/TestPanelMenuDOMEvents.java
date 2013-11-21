@@ -49,6 +49,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.panelMenu.RichFacesPanelMenuGroup;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
 
@@ -89,39 +90,44 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     }
 
     @Test
-    public void testOnClick() {
+    @Templates("plain")
+    public void testOnclick() {
         Action click = new Actions(driver).click(page.getPanelMenu().advanced().getRootElement()).build();
         testFireEvent(panelMenuAttributes, onclick, click);
     }
 
     @Test
-    public void testOnDblclick() {
+    @Templates("plain")
+    public void testOndblclick() {
         Action dblClick = new Actions(driver).doubleClick(page.getPanelMenu().advanced().getRootElement()).build();
         testFireEvent(panelMenuAttributes, ondblclick, dblClick);
     }
 
     @Test
-    public void testOnMousedown() {
+    public void testOnmousedown() {
         Action mousedown = new Actions(driver).clickAndHold(page.getPanelMenu().advanced().getRootElement()).build();
         testFireEvent(panelMenuAttributes, onmousedown, mousedown);
         new Actions(driver).release().build();
     }
 
     @Test
-    public void testOnMousemove() {
+    @Templates("plain")
+    public void testOnmousemove() {
         Action mousemove = new Actions(driver).moveToElement(page.getPanelMenu().advanced().getRootElement(), 3, 3).build();
         testFireEvent(panelMenuAttributes, onmousemove, mousemove);
     }
 
     @Test
-    public void testOnMouseout() {
+    @Templates("plain")
+    public void testOnmouseout() {
         Action mouseout = new Actions(driver).moveToElement(page.getPanelMenu().advanced().getRootElement())
             .moveByOffset(-5, -5).build();
         testFireEvent(panelMenuAttributes, onmouseout, mouseout);
     }
 
     @Test
-    public void testOnMouseover() {
+    @Templates("plain")
+    public void testOnmouseover() {
         Action mouseover = new Actions(driver).moveToElement(page.getPanelMenu().advanced().getRootElement(), 3, 3).build();
         testFireEvent(panelMenuAttributes, onmouseover, mouseover);
     }
