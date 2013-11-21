@@ -45,6 +45,7 @@ import org.richfaces.tests.metamer.validation.groups.ValidationGroupAllComponent
 import org.richfaces.tests.metamer.validation.groups.ValidationGroupBooleanInputs;
 import org.richfaces.tests.metamer.validation.groups.ValidationGroupNumericInputs;
 import org.richfaces.ui.validation.graphValidator.UIGraphValidator;
+import org.richfaces.validator.FacesBeanValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -130,7 +131,7 @@ public class RichGraphValidatorBean implements Serializable, Cloneable {
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIGraphValidator.class, getClass());
 
         attributes.setAttribute("rendered", true);
-        attributes.setAttribute("type", "org.richfaces.BeanValidator");
+        attributes.setAttribute("type", FacesBeanValidator.BEAN_VALIDATOR_TYPE);
 
         //used in sample, value contains reference to this validation bean
         attributes.remove("value");
