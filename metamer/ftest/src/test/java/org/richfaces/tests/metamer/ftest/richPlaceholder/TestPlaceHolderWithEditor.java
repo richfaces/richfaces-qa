@@ -38,9 +38,9 @@ import org.testng.annotations.Test;
 public class TestPlaceHolderWithEditor extends AbstractPlaceholderTest {
 
     @FindBy(css = INPUT1_ID + " textarea")
-    WebElement input1;
+    private WebElement input1;
     @FindBy(css = INPUT2_ID + " textarea")
-    WebElement input2;
+    private WebElement input2;
 
     public TestPlaceHolderWithEditor() {
         super("editor");

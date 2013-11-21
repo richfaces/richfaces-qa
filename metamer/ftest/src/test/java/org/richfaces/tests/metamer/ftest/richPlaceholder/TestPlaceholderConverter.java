@@ -38,7 +38,7 @@ import org.testng.annotations.Test;
 public class TestPlaceholderConverter extends AbstractWebDriverTest {
 
     @FindBy(css = "[id$=input]")
-    WebElement input;
+    private WebElement input;
 
     @Override
     public URL getTestUrl() {

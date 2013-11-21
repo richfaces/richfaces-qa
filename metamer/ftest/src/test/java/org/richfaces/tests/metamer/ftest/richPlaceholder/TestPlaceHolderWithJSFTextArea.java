@@ -33,9 +33,9 @@ import org.testng.annotations.Test;
 public class TestPlaceHolderWithJSFTextArea extends AbstractPlaceholderJSFTest {
 
     @FindBy(css = INPUT1_ID)
-    WebElement input1;
+    private WebElement input1;
     @FindBy(css = INPUT2_ID)
-    WebElement input2;
+    private WebElement input2;
 
     public TestPlaceHolderWithJSFTextArea() {
         super("inputTextarea");
