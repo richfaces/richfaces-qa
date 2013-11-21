@@ -34,6 +34,7 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMen
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
 /**
@@ -41,6 +42,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @since 4.3.1
  */
+@Templates("plain")
 public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTest {
 
     @Test
