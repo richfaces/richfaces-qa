@@ -29,6 +29,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -53,6 +54,7 @@ public class Attributes<T extends AttributeEnum> {
     private static final String PROPERTY_CSS_SELECTOR = "[id$='%s:%sInput']";
     private static final String NULLSTRING = "null";
     private static final String[] NULLSTRINGOPTIONS = { NULLSTRING, "", " " };
+    private static final int TRIES = 5;
 
     @Deprecated
     public Attributes() {
@@ -183,7 +185,15 @@ public class Attributes<T extends AttributeEnum> {
         // valid richfaces attribute. So we use this attribute name in upper case in enum
         String propertyName = attribute.toString();
         String propertyNameCorrect = (propertyName.equals(propertyName.toUpperCase()) ? propertyName.toLowerCase() : propertyName);
-        return getProperty(propertyNameCorrect);
+        StaleElementReferenceException exception = null;
+        for (int i = 0; i < TRIES; i++) {
+            try {
+                return getProperty(propertyNameCorrect);
+            } catch (StaleElementReferenceException e) {
+                exception = e;
+            }
+        }
+        throw exception;
     }
 
     private By getCssSelectorForProperty(String property) {
@@ -268,7 +278,16 @@ public class Attributes<T extends AttributeEnum> {
     }
 
     protected void set(String attribute, Object value) {
-        setProperty(attribute, value);
+        StaleElementReferenceException ex = null;
+        for (int i = 0; i < TRIES; i++) {
+            try {
+                setProperty(attribute, value);
+                return;
+            } catch (StaleElementReferenceException e) {
+                ex = e;
+            }
+        }
+        throw ex;
     }
 
     // TODO jjamrich 2011-09-02: make sure that this resolve to correct string representation of number given as attr
