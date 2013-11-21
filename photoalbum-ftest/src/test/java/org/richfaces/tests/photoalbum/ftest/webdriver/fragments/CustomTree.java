@@ -31,7 +31,7 @@ import org.richfaces.tests.page.fragments.impl.tree.RichFacesTree;
 import org.richfaces.tests.page.fragments.impl.tree.RichFacesTreeNode;
 
 /**
- * Custom tree 
+ * Custom tree
  *
  * @author Jiri Stefek <jstefek@redhat.com>
  */
