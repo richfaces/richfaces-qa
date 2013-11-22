@@ -76,9 +76,8 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
     /**
      * This should test combination of @var and @fetchValue attributes of autocomplete
      */
-    @Test
-    @Uses({
-        @Use(field = "autofill", booleans = { true, false }),
+    // @Test
+    @Uses({ @Use(field = "autofill", booleans = { true, false }),
         @Use(field = "selectFirst", booleans = { true, false }) })
     public void testFormatting() {
         assertTrue(autocomplete.advanced().getSuggestionsElements().isEmpty());
@@ -93,7 +92,7 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
             + "' found.");
     }
 
-    @Test
+    // @Test
     public void testLayout() {
         Graphene.guardAjax(autocomplete).type("Co");
 
@@ -112,8 +111,7 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
             case LIST:
                 return ByJQuery.selector("ul[id$=autocompleteItems] > li:contains('" + value + "')");
             case TABLE:
-                return ByJQuery.selector("table[id$=autocompleteItems] > tbody > tr > td:contains('" + value
-                    + "')");
+                return ByJQuery.selector("table[id$=autocompleteItems] > tbody > tr > td:contains('" + value + "')");
             default:
                 throw new UnsupportedOperationException();
         }
