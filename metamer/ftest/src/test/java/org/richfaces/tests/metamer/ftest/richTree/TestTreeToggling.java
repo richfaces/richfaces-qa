@@ -149,7 +149,7 @@ public class TestTreeToggling extends AbstractTreeTest {
 
     @BeforeMethod
     public void verifyInitialState() {
-        treeAttributes.set(TreeAttributes.toggleType, toggleType);
+        treeAttributes.set(TreeAttributes.toggleType, toggleType.toString().toLowerCase());
 //        disabled because of https://issues.jboss.org/browse/ARQGRA-309
 //        chechInitialState();
     }

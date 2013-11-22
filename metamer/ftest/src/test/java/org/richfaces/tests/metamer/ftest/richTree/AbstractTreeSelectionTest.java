@@ -120,8 +120,8 @@ public abstract class AbstractTreeSelectionTest extends AbstractTreeTest {
 
     @BeforeMethod
     public void prepareTest() {
-        treeAttributes.set(TreeAttributes.selectionType, selectionType);
-        treeAttributes.set(TreeAttributes.toggleType, selectionType);
+        treeAttributes.set(TreeAttributes.selectionType, selectionType.toString().toLowerCase());
+        treeAttributes.set(TreeAttributes.toggleType, selectionType.toString().toLowerCase());
     }
 
     protected void testSubNodesSelection() {
