@@ -68,6 +68,7 @@ public class RichAutocompleteBean extends StringInputValidationBeanImpl implemen
 
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIAutocomplete.class, getClass());
         attributes.setAttribute("converterMessage", "converter message");
+        attributes.setAttribute("minChars", 1);
         attributes.setAttribute("mode", "ajax");
         attributes.setAttribute("rendered", true);
         attributes.setAttribute("required", true);
