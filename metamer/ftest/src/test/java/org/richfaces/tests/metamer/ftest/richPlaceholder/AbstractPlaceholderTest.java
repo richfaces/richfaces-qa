@@ -53,17 +53,18 @@ public abstract class AbstractPlaceholderTest extends AbstractWebDriverTest {
     private final String componentName;
     //
     @FindBy(css = "[id$=placeholder]")
-    WebElement placeholder;
+    private WebElement placeholder;
     @FindBy(css = "[id$=a4jButton]")
-    WebElement a4jSubmitBtn;
+    private WebElement a4jSubmitBtn;
     @FindBy(css = "[id$=hButton]")
-    WebElement hSubmitBtn;
+    private WebElement hSubmitBtn;
     @FindBy(css = "[id$=output1]")
-    WebElement output1;
+    private WebElement output1;
     @FindBy(css = "[id$=output2]")
-    WebElement output2;
+    private WebElement output2;
+
     @Page
-    MetamerPage page;
+    private MetamerPage page;
 
     public AbstractPlaceholderTest(String componentName) {
         this.componentName = componentName;

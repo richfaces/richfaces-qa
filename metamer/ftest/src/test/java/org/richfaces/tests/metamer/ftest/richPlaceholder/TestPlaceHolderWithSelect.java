@@ -36,9 +36,9 @@ import org.testng.annotations.Test;
 public class TestPlaceHolderWithSelect extends AbstractPlaceholderJSFTest {
 
     @FindBy(css = INPUT1_ID + " [id$=Input]")
-    WebElement input1;
+    private WebElement input1;
     @FindBy(css = INPUT2_ID + " [id$=Input]")
-    WebElement input2;
+    private WebElement input2;
 
     public TestPlaceHolderWithSelect() {
         super("select");
@@ -100,7 +100,7 @@ public class TestPlaceHolderWithSelect extends AbstractPlaceholderJSFTest {
     }
 
     @Test
-    @RegressionTest({"https://issues.jboss.org/browse/RF-12623", "https://issues.jboss.org/browse/RF-12650"})
+    @RegressionTest({ "https://issues.jboss.org/browse/RF-12623", "https://issues.jboss.org/browse/RF-12650" })
     @Override
     public void testRendered() {
         super.testRendered();

@@ -31,7 +31,6 @@ import java.awt.Color;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
-import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.test.selenium.support.color.ColorUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -53,17 +52,15 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
     private final String componentName;
 
     @FindBy(css = "[id$=placeholder]")
-    WebElement placeholder;
+    private WebElement placeholder;
     @FindBy(css = "[id$=a4jButton]")
-    WebElement a4jSubmitBtn;
+    private WebElement a4jSubmitBtn;
     @FindBy(css = "[id$=hButton]")
-    WebElement hSubmitBtn;
+    private WebElement hSubmitBtn;
     @FindBy(css = "[id$=output1]")
-    WebElement output1;
+    private WebElement output1;
     @FindBy(css = "[id$=output2]")
-    WebElement output2;
-    @Page
-    MetamerPage page;
+    private WebElement output2;
 
     public AbstractPlaceholderJSFTest(String componentName) {
         this.componentName = componentName;
