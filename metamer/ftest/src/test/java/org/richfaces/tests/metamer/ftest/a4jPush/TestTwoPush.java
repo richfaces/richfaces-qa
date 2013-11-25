@@ -44,7 +44,6 @@ import org.testng.annotations.Test;
 
 import com.google.common.base.Predicate;
 
-@Test(groups = "Future")
 @IssueTracking("https://issues.jboss.org/browse/RF-13365")
 public class TestTwoPush extends AbstractWebDriverTest {
 
