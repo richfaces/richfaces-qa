@@ -39,7 +39,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
     <!-- human-readable browser detection -->
 
-    <h:outputScript name="jquery.js" target="head" />
+    <h:outputScript library="org.richfaces" name="jquery.js" target="head" />
     <h:outputScript library="script" name="detect-browser.js" target="head" />
     <script type="text/javascript">
                 jQuery("span[id$=browserVersion]").text(jQuery.browser.name + ' ' + jQuery.browser.version + ' @ ' + jQuery.browser.os);
