@@ -35,13 +35,13 @@ import org.testng.annotations.Test;
 public class TestPlaceHolderWithInplaceInput extends AbstractPlaceholderJSFTest {
 
     @FindBy(css = INPUT1_ID + " [id$=Input]")
-    WebElement input1;
+    private WebElement input1;
     @FindBy(css = INPUT2_ID + " [id$=Input]")
-    WebElement input2;
+    private WebElement input2;
     @FindBy(css = INPUT1_ID)
-    RichFacesInplaceInput ii1;
+    private RichFacesInplaceInput ii1;
     @FindBy(css = INPUT2_ID)
-    RichFacesInplaceInput ii2;
+    private RichFacesInplaceInput ii2;
 
     public TestPlaceHolderWithInplaceInput() {
         super("inplaceInput");

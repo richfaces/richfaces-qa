@@ -43,7 +43,6 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-//FIXME should not be generic
 public abstract class AbstractPlaceholderNonJSFTest extends AbstractWebDriverTest {
 
     private static final String INPUT1_ID = "[id$=input1]";
@@ -51,9 +50,9 @@ public abstract class AbstractPlaceholderNonJSFTest extends AbstractWebDriverTes
     private static final String INPUT3_ID = "[id$=input3]";
     private static final String DEFAULT_PLACEHOLDER_TEXT = "Watermark text";
     private static final String DEFAULT_PLACEHOLDER_CLASS = "rf-plhdr";
-    //
+
     private final String componentName;
-    //
+
     @FindBy(css = "[id$=placeholder]")
     private WebElement placeholder;
     @FindBy(css = INPUT1_ID)
@@ -62,10 +61,7 @@ public abstract class AbstractPlaceholderNonJSFTest extends AbstractWebDriverTes
     private WebElement input2;
     @FindBy(css = INPUT3_ID)
     private WebElement input3;
-    @FindBy(css = "[id$=a4jButton]")
-    private WebElement a4jSubmitBtn;
-    @FindBy(css = "[id$=hButton]")
-    private WebElement hSubmitBtn;
+
     @Page
     private MetamerPage page;
 
