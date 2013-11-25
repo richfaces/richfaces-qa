@@ -97,7 +97,7 @@ public class TestTwoPush extends AbstractWebDriverTest {
         // there are 2 push components on page (this example verify that one doesn't influence another one)
         assertEquals(event, expected1, "Attribute onsubscribed should be called 2 times on page load");
         clickPushEnableCheckbox(false);//disable
-        clickPushEnableCheckbox(true);//enable
+        clickPushEnableCheckbox(false);//enable
         // second onsubscribed event receive after manual re-attach by checkbox
         Graphene.waitModel()
             .withMessage("Onsubscribed should be called 3 times after push reenabled")
