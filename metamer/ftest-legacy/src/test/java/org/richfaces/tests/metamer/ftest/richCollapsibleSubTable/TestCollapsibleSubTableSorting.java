@@ -22,11 +22,8 @@
 package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 
 import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
@@ -39,7 +36,6 @@ import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
 import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.richfaces.component.SortOrder;
 import org.richfaces.model.SortMode;
-import org.richfaces.model.SortOrder;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
@@ -141,6 +137,7 @@ public class TestCollapsibleSubTableSorting extends AbstractCollapsibleSubTableT
     }
 
     public enum Column {
+
         NAME, TITLE, BIRTHDAY;
 
         GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
