@@ -36,24 +36,4 @@ public class TestTwoPushCDI extends TestTwoPush {
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jPush/twoPushCDI.xhtml");
     }
-
-    @Test
-    public void testBothPushes() {
-        super.testBothPushes();
-    }
-
-    @Test
-    public void testOnSubscribed() {
-        super.testOnSubscribed();
-    }
-
-    @Test
-    public void testPushEnable() {
-        super.testPushEnable();
-    }
-
-    @Test
-    public void testSimplePushEventReceive() {
-        super.testSimplePushEventReceive();
-    }
 }
