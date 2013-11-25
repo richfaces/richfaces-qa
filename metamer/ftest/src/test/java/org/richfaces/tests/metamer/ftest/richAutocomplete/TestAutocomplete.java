@@ -30,6 +30,7 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.fragment.autocomplete.SelectOrConfirm;
+import org.richfaces.fragment.common.ClearType;
 import org.richfaces.fragment.common.ScrollingType;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
@@ -87,7 +88,7 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-11323")
     public void testTypingPrefixAndThenDeleteAll() {
         Graphene.guardAjax(autocomplete).type("ala");
-        autocomplete.clear();
+        autocomplete.advanced().clear(ClearType.BACKSPACE);
         autocomplete.advanced().waitForSuggestionsToBeNotVisible().perform();
         assertTrue(autocomplete.advanced().getSuggestionsElements().isEmpty());
         Graphene.guardAjax(autocomplete).type("ala");
