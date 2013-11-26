@@ -132,7 +132,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     @Test
     @Templates(value = "plain")
     public void testIconLeaf() {
-        treeAttributes.set(TreeAttributes.toggleType, SwitchType.CLIENT);
+        treeAttributes.set(TreeAttributes.toggleType, SwitchType.CLIENT.toString().toLowerCase());
         treeAttributes.set(TreeAttributes.iconLeaf, IMAGE_URL);
         TreeNode leaf = tree.expandNode(0).expandNode(0).advanced().getFirstNode();
         assertTrue(leaf.advanced().isLeaf());
@@ -369,10 +369,10 @@ public class TestTreeAttributes extends AbstractTreeTest {
 
     @Test
     public void testSelectionType() {
-        treeAttributes.set(TreeAttributes.selectionType, SwitchType.AJAX);
+        treeAttributes.set(TreeAttributes.selectionType, SwitchType.AJAX.toString().toLowerCase());
         selectFirstNodeAjaxAction.perform();
 
-        treeAttributes.set(TreeAttributes.selectionType, SwitchType.CLIENT);
+        treeAttributes.set(TreeAttributes.selectionType, SwitchType.CLIENT.toString().toLowerCase());
         Graphene.guardNoRequest(tree).selectNode(1);
     }
 
@@ -413,7 +413,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-10265")
     public void testToggleClientSideEventsOrder() {
-        treeAttributes.set(TreeAttributes.toggleType, SwitchType.AJAX);
+        treeAttributes.set(TreeAttributes.toggleType, SwitchType.AJAX.toString().toLowerCase());
         String[] events = new String[] { "beforenodetoggle", "begin", "beforedomupdate", "complete", "nodetoggle" };
         testRequestEventsBefore(events);
         expandFirstNodeAjaxAction.perform();
@@ -422,7 +422,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
 
     @Test
     public void testToggleNodeEvent() {
-        treeAttributes.set(TreeAttributes.toggleType, SwitchType.AJAX);
+        treeAttributes.set(TreeAttributes.toggleType, SwitchType.AJAX.toString().toLowerCase());
         List<Event> testedEvents = Lists.newArrayList(Event.CLICK, Event.CONTEXTCLICK, Event.DBLCLICK);
         for (boolean toggleByHandle : new boolean[] { true, false }) {
             tree.advanced().setupToggleByHandle(toggleByHandle);
@@ -439,13 +439,13 @@ public class TestTreeAttributes extends AbstractTreeTest {
 
     @Test
     public void testToggleType() {
-        treeAttributes.set(TreeAttributes.toggleType, SwitchType.AJAX);
+        treeAttributes.set(TreeAttributes.toggleType, SwitchType.AJAX.toString().toLowerCase());
         getGuarded(tree, SwitchType.AJAX).expandNode(0);
 
-        treeAttributes.set(TreeAttributes.toggleType, SwitchType.CLIENT);
+        treeAttributes.set(TreeAttributes.toggleType, SwitchType.CLIENT.toString().toLowerCase());
         getGuarded(tree, SwitchType.CLIENT).expandNode(1);
 
-        treeAttributes.set(TreeAttributes.toggleType, SwitchType.SERVER);
+        treeAttributes.set(TreeAttributes.toggleType, SwitchType.SERVER.toString().toLowerCase());
         getGuarded(tree, SwitchType.SERVER).expandNode(2);
     }
 
