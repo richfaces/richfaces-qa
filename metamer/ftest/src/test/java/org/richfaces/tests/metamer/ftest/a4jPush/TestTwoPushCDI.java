@@ -26,6 +26,7 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.testng.annotations.Test;
 
 @IssueTracking("https://issues.jboss.org/browse/RF-13365")
 public class TestTwoPushCDI extends TestTwoPush {
@@ -33,5 +34,25 @@ public class TestTwoPushCDI extends TestTwoPush {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jPush/twoPushCDI.xhtml");
+    }
+
+    @Test
+    public void testBothPushes() {
+        super.testBothPushes();
+    }
+
+    @Test
+    public void testOnSubscribed() {
+        super.testOnSubscribed();
+    }
+
+    @Test
+    public void testPushEnable() {
+        super.testPushEnable();
+    }
+
+    @Test
+    public void testSimplePushEventReceive() {
+       super.testSimplePushEventReceive();
     }
 }
