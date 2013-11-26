@@ -25,10 +25,32 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
 
+import org.testng.annotations.Test;
+
 public class TestTwoPushCDI extends TestTwoPush {
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jPush/twoPushCDI.xhtml");
+    }
+
+    @Test
+    public void testBothPushes() {
+        super.testBothPushes();
+    }
+
+    @Test
+    public void testOnSubscribed() {
+        super.testOnSubscribed();
+    }
+
+    @Test
+    public void testPushEnable() {
+        super.testPushEnable();
+    }
+
+    @Test
+    public void testSimplePushEventReceive() {
+       super.testSimplePushEventReceive();
     }
 }
