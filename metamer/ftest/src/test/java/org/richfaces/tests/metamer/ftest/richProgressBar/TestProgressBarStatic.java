@@ -127,7 +127,7 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
 
         MetamerPage.waitRequest(page.childrenRenderedCheckbox, WaitRequestType.HTTP).click();
         assertEquals(page.label.getText(), "child + metamer",
-                "Label when set to metamer and children are rendered too.");
+            "Label when set to metamer and children are rendered too.");
     }
 
     @Test
@@ -200,7 +200,9 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
         if (width.contains("%")) {
             return Integer.parseInt(width.replace("%", ""));
         } else {
-            return Integer.parseInt(width.replace("px", "")) / 2; // progress bar width is 200px
+            float widthInPixels = Float.parseFloat(width.replace("px", "")) / 2.0f;
+            // round the decimal number to integer and divide by 2 to obtain per cents because progress bar width is 200px
+            return Math.round(widthInPixels);
         }
     }
 }
