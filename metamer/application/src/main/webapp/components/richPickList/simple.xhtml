@@ -100,10 +100,10 @@
                 <legend>JavaScript API</legend>
                 On click:
                 <br/>
-                <input id="addItemsSome" type="button" name="addItemsSome" value="addItems(firstThree)" onclick="RichFaces.component('form:pickList').addItems()" />
-                <input id="addItemsAll" type="button" name="addItemsSome" value="addItems(allItems)" onclick="#{r:component('pickList')}.addItems()" />
-                <input id="removeItemsSome" type="button" name="removeItemsSome" value="removeItems(firstTwo)" onclick="#{r:component('pickList')}.removeItems()" />
-                <input id="removeItemsAll" type="button" name="removeItemsAll" value="removeItems(allItems)" onclick="#{r:component('pickList')}.removeItems()" />
+                <input id="addItemsSome" type="button" name="addItemsSome" value="add items" onclick="#{r:component('pickList')}.addItems()" />
+                <input id="addItemsAll" type="button" name="addItemsSome" value="add all items" onclick="#{r:component('pickList')}.addAllItems()" />
+                <input id="removeItemsSome" type="button" name="removeItemsSome" value="remove items" onclick="#{r:component('pickList')}.removeItems()" />
+                <input id="removeItemsAll" type="button" name="removeItemsAll" value="remove all items" onclick="#{r:component('pickList')}.removeAllItems()" />
             </fieldset>
         </ui:define>
 

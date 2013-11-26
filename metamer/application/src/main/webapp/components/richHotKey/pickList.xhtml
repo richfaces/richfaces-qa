@@ -65,7 +65,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <r:hotKey id="richHotKey1"
             enabledInInput="#{richHotKeyBean.attributes['enabledInInput'].value}"
             key="#{richHotKeyBean.attributes['key'].value}"
-            onkeydown="#{r:component('pickList')}.add()"
+            onkeydown="#{r:component('pickList')}.addItems()"
             preventDefault="#{richHotKeyBean.attributes['preventDefault'].value}"
             rendered="#{richHotKeyBean.attributes['rendered'].value}"
             selector="#{richHotKeyBean.attributes['selector'].value}" />
@@ -73,7 +73,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <r:hotKey id="richHotKey2"
             enabledInInput="#{richHotKeyBean.attributes2['enabledInInput'].value}"
             key="#{richHotKeyBean.attributes2['key'].value}"
-            onkeydown="#{r:component('pickList')}.remove()"
+            onkeydown="#{r:component('pickList')}.removeItems()"
             preventDefault="#{richHotKeyBean.attributes['preventDefault'].value}"
             rendered="#{richHotKeyBean.attributes2['rendered'].value}"
             selector="#{richHotKeyBean.attributes2['selector'].value}"/>
@@ -82,14 +82,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
     <ui:define name="outOfTemplateAfter">
         <fieldset>
-            <legend>Hot key that calls pick list's add() function</legend>
+            <legend>Hot key that calls pick list's addItems() function</legend>
             <metamer:attributes value="#{richHotKeyBean.attributes}" id="attributes" />
         </fieldset>
 
         <br />
 
         <fieldset>
-            <legend>Hot key that calls pick list's remove() function</legend>
+            <legend>Hot key that calls pick list's removeItems() function</legend>
             <metamer:attributes value="#{richHotKeyBean.attributes2}" id="attributes2" />
         </fieldset>
         <hr />
