@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richInplaceSelect;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.inplaceSelectAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -36,13 +36,10 @@ import javax.faces.event.PhaseId;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.page.Page;
-import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.bean.Model;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -56,7 +53,9 @@ import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.inplaceInput.ConfirmOrCancel;
 import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceComponentState;
 import org.richfaces.tests.page.fragments.impl.inplaceSelect.RichFacesInplaceSelect;
+import org.richfaces.tests.page.fragments.impl.utils.Actions;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -67,9 +66,9 @@ import org.testng.annotations.Test;
  */
 public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
-    private By listBy = By.cssSelector("span.rf-is-lst-cord");
-    private By listHeightBy = By.cssSelector("span.rf-is-lst-scrl");
-    private By listWidthBy = By.cssSelector("span.rf-is-lst-pos");
+    private final By listBy = By.cssSelector("span.rf-is-lst-cord");
+    private final By listHeightBy = By.cssSelector("span.rf-is-lst-scrl");
+    private final By listWidthBy = By.cssSelector("span.rf-is-lst-pos");
     //
     @FindBy(css = "[id$=inplaceSelect]")
     private RichFacesInplaceSelect select;
@@ -81,8 +80,6 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     private WebElement output;
     @Page
     private MetamerPage page;
-    @ArquillianResource
-    private JavascriptExecutor executor;
 
     private String getOutputText() {
         return output.getText().trim();
@@ -91,6 +88,11 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richInplaceSelect/simple.xhtml");
+    }
+
+    @BeforeMethod
+    public void initFragment() {
+        select.advanced().setupSaveOnSelect(true);
     }
 
     @Test
@@ -106,10 +108,10 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
             "Select should not contain " + testedClass);
 
         select.advanced().switchToEditingState();
-        assertTrue(select.advanced().getRootElement().getAttribute("class").contains(testedClass), "Select should contain "
-            + testedClass);
+        assertTrue(select.advanced().getRootElement().getAttribute("class").contains(testedClass),
+            "Select should contain " + testedClass);
 
-        guardAjax(select).select("Hawaii");
+        guardAjax(select).select(10);
         assertFalse(select.advanced().getRootElement().getAttribute("class").contains(testedClass),
             "Select should not contain " + testedClass);
     }
@@ -121,12 +123,14 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         String testedClass = "metamer-ftest-class";
         inplaceSelectAttributes.set(InplaceSelectAttributes.changedClass, testedClass);
 
-        assertFalse(new WebElementConditionFactory(select.advanced().getRootElement()).attribute("class").contains(testedClass)
-            .apply(driver), "Inplace select should not have class metamer-ftest-class.");
+        assertFalse(
+            new WebElementConditionFactory(select.advanced().getRootElement()).attribute("class").contains(testedClass)
+                .apply(driver), "Inplace select should not have class metamer-ftest-class.");
 
         guardAjax(select).select(10);
-        assertTrue(new WebElementConditionFactory(select.advanced().getRootElement()).attribute("class").contains(testedClass)
-            .apply(driver), "Inplace select should have class metamer-ftest-class.");
+        assertTrue(
+            new WebElementConditionFactory(select.advanced().getRootElement()).attribute("class").contains(testedClass)
+                .apply(driver), "Inplace select should have class metamer-ftest-class.");
     }
 
     @Test
@@ -176,7 +180,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
         ConfirmOrCancel confOrCancl = select.select(10);
         assertEquals(getOutputText(), "", "Output should be empty.");
-        confOrCancl.confirmByControlls();
+        Graphene.guardAjax(confOrCancl).confirmByControlls();
         assertEquals(getOutputText(), "Hawaii", "Output should contain selected value.");
     }
 
@@ -573,6 +577,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     public void testSaveOnBlurSelectFalseFalse() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnBlur, Boolean.FALSE);
+        select.advanced().setupSaveOnSelect(Boolean.FALSE);
         // select
         select.select(10);
         assertEquals(getOutputText(), "", "Output should be empty.");
@@ -598,6 +603,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     @Test
     public void testSaveOnBlurSelectTrueFalse() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
+        select.advanced().setupSaveOnSelect(Boolean.FALSE);
         // select
         select.select(10);
         assertEquals(getOutputText(), "", "Output should be empty.");
@@ -628,19 +634,21 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         assertTrue(select.advanced().getSelectedOption().getAttribute("class").contains(testedStyleClass),
             "Selected item should contain class " + testedStyleClass);
         for (int i = 1; i < list.size(); i++) {
-            assertFalse(list.get(i).getAttribute("class").contains(testedStyleClass), "Selected item should not contain class "
-                + testedStyleClass);
+            assertFalse(list.get(i).getAttribute("class").contains(testedStyleClass),
+                "Selected item should not contain class " + testedStyleClass);
         }
     }
 
     @Test
     public void testShowControls() {
         select.advanced().switchToEditingState();
-        assertFalse(new WebElementConditionFactory(select.advanced().getConfirmButtonElement()).isVisible().apply(driver));
+        assertFalse(new WebElementConditionFactory(select.advanced().getConfirmButtonElement()).isVisible().apply(
+            driver));
 
         inplaceSelectAttributes.set(InplaceSelectAttributes.showControls, Boolean.TRUE);
         select.advanced().switchToEditingState();
-        assertTrue(new WebElementConditionFactory(select.advanced().getConfirmButtonElement()).isVisible().apply(driver));
+        assertTrue(new WebElementConditionFactory(select.advanced().getConfirmButtonElement()).isVisible()
+            .apply(driver));
     }
 
     @Test
