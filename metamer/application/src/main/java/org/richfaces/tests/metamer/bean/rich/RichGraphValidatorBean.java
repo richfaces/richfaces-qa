@@ -144,7 +144,7 @@ public class RichGraphValidatorBean implements Serializable, Cloneable {
     public List<String> autocomplete(String prefix) {
         ArrayList<String> result = new ArrayList<String>();
         if ((prefix == null) || (prefix.length() == 0)) {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < getSelectItems().size(); i++) {
                 result.add(getSelectItems().get(i).getLabel());
             }
         } else {
