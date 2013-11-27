@@ -156,12 +156,14 @@ public class TestPanel extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testOnmousedown() {
         Action mouseDownAction = new Actions(driver).moveToElement(panelWithHeader.advanced().getRootElement())
-            .clickAndHold(panelWithHeader.advanced().getRootElement()).release().build();
+            .clickAndHold(panelWithHeader.advanced().getRootElement()).build();
         testFireEvent(panelAttributes, PanelAttributes.onmousedown, mouseDownAction);
 
-        mouseDownAction = new Actions(driver).moveToElement(panelWithoutHeader.advanced().getRootElement())
-            .clickAndHold(panelWithoutHeader.advanced().getRootElement()).release().build();
+        mouseDownAction = new Actions(driver).release().moveToElement(panelWithoutHeader.advanced().getRootElement())
+            .clickAndHold(panelWithoutHeader.advanced().getRootElement()).build();
         testFireEvent(panelAttributes, PanelAttributes.onmousedown, mouseDownAction);
+
+        new Actions(driver).release().perform();
     }
 
     @Test
