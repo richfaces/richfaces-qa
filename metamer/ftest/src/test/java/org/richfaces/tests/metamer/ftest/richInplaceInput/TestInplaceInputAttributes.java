@@ -32,6 +32,7 @@ import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
@@ -126,7 +127,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-9872")
     public void testClickCancelButton() {
         inplaceInputAttributes.set(InplaceInputAttributes.showControls, Boolean.TRUE);
-        MetamerPage.waitRequest(inplaceInput.type("value that will be canceled"), WaitRequestType.HTTP).cancelByControlls();
+        Graphene.guardNoRequest(inplaceInput.type("value that will be canceled")).cancelByControlls();
         assertEquals(inplaceInput.advanced().getLabelValue(), "RichFaces 4", "Default value was expected.");
     }
 
@@ -134,7 +135,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     public void testClickOkButton() {
         inplaceInputAttributes.set(InplaceInputAttributes.showControls, Boolean.TRUE);
         String testedValue = "value that will be confirmed and changed";
-        MetamerPage.waitRequest(inplaceInput.type(testedValue), WaitRequestType.XHR).confirm();
+        Graphene.guardAjax(inplaceInput.type(testedValue)).confirm();
         assertEquals(inplaceInput.advanced().getLabelValue(), testedValue);
     }
 
