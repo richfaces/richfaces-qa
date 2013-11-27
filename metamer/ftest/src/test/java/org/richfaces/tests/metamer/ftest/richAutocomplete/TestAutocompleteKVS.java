@@ -67,7 +67,7 @@ public class TestAutocompleteKVS extends AbstractAutocompleteTest {
 
         @Override
         public void doRequest(String inputValue) {
-            Graphene.guardAjax(autocomplete).type(inputValue).confirm();
+            Graphene.guardAjax(autocomplete).type(inputValue.substring(0, 3)).select(inputValue);
         }
 
         @Override
