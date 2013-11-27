@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.abstractions.converter;
 
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -36,8 +37,6 @@ import org.richfaces.tests.metamer.converter.SwitchableFailingConverter;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 
 /**
  * Base for testing of @converter and @converterMessage of input components.
@@ -110,7 +109,8 @@ public abstract class AbstractConverterTest extends AbstractWebDriverTest {
     protected abstract void setBadValue();
 
     private void submitAjax() {
-        MetamerPage.waitRequest(ajaxSubmitButton, WaitRequestType.XHR).click();
+        guardAjax(ajaxSubmitButton).click();
+//        MetamerPage.waitRequest(ajaxSubmitButton, WaitRequestType.XHR).click();
     }
 
     private enum ConverterAttributes implements AttributeEnum {

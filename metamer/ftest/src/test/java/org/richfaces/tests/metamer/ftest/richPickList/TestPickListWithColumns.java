@@ -33,7 +33,6 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.orderingList.SelectableListItem;
 import org.richfaces.fragment.pickList.RichFacesPickList;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.testng.annotations.Test;
 
 /**
@@ -52,18 +51,13 @@ public class TestPickListWithColumns extends AbstractWebDriverTest {
 
     @Test
     public void testColumnClasses() {
-        String testedClass = "metamer-ftest-class";
-        pickListAttributes.set(PickListAttributes.columnClasses, testedClass);
+        String testedClassPattern = "foo, *";
+        String actualClass = "foo";
+        pickListAttributes.set(PickListAttributes.columnClasses, testedClassPattern);
         for (SelectableListItem li : picklist.advanced().getSourceList().getItems()) {
             for (WebElement e : li.getRootElement().findElements(By.tagName("td"))) {
-                assertTrue(e.getAttribute("class").contains(testedClass), "Item @class should contain " + testedClass);
+                assertTrue(e.getAttribute("class").contains(actualClass), "Item @class should contain " + actualClass);
             }
         }
-    }
-
-    @Test
-    public void testHeaderClass() {
-        testStyleClass(picklist.advanced().getSourceHeaderElement(), BasicAttributes.headerClass);
-        testStyleClass(picklist.advanced().getTargetHeaderElement(), BasicAttributes.headerClass);
     }
 }

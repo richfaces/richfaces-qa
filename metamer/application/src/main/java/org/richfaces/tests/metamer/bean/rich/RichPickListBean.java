@@ -96,8 +96,6 @@ public class RichPickListBean implements Serializable {
         attributes.setAttribute("downText", "Down");
         attributes.setAttribute("downBottomText", "Last");
 
-        attributes.setAttribute("listWidth", "220");
-
         attributes.remove("converter");
         attributes.remove("converterMessage");
         attributes.remove("valueChangeListener");

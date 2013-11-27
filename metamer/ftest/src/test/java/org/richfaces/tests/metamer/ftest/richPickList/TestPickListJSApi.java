@@ -27,7 +27,6 @@ import java.net.URL;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.fragment.pickList.RichFacesPickList;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.Assert;
@@ -38,20 +37,14 @@ import org.testng.annotations.Test;
  */
 public class TestPickListJSApi extends AbstractWebDriverTest {
 
-    @FindBy(id = "getSourceList")
-    private WebElement getSourceListLength;
-    @FindBy(id = "getTargetList")
-    private WebElement getTargetListLength;
-    @FindBy(id = "add")
-    private WebElement addButton;
-    @FindBy(id = "addAll")
+    @FindBy(id = "addFirstFourItems")
+    private WebElement addFirstFourButton;
+    @FindBy(id = "addAllItems")
     private WebElement addAllButton;
-    @FindBy(id = "remove")
-    private WebElement removeButton;
-    @FindBy(id = "removeAll")
+    @FindBy(id = "removeItemsFirstThree")
+    private WebElement removeFirstThreeButton;
+    @FindBy(id = "removeAllItems")
     private WebElement removeAllButton;
-    @FindBy(css = "input[id$=value]")
-    private TextInputComponentImpl value;
     @FindBy(css = "[id$=pickList]")
     private RichFacesPickList pickList;
 
@@ -61,61 +54,34 @@ public class TestPickListJSApi extends AbstractWebDriverTest {
     }
 
     @Test
-    public void testAdd() {
-        addButton.click();
-        Assert.assertTrue(pickList.advanced().getTargetList().isEmpty(), "Target list should be empty.");
-        String text = pickList.advanced().getSourceList().getItem(0).getText();
-        pickList.advanced().getSourceList().getItem(0).select();
-        addButton.click();
-        Assert.assertEquals(pickList.advanced().getTargetList().size(), 1);
-        Assert.assertEquals(pickList.advanced().getTargetList().getItem(0).getText(), text);
+    public void testAddItems() {
+        addFirstFourButton.click();
+        Assert.assertEquals(pickList.advanced().getTargetList().size(), 4);
+        Assert.assertEquals(pickList.advanced().getTargetList().getItem(0).getText(), "Alabama");
     }
 
     @Test
-    public void testAddAll() {
+    public void testRemoveItems() {
+        testAddItems();
+        removeFirstThreeButton.click();
+        Assert.assertEquals(pickList.advanced().getTargetList().size(), 1);
+        Assert.assertEquals(pickList.advanced().getTargetList().getItem(0).getText(), "Arkansas");
+        Assert.assertEquals(pickList.advanced().getSourceList().getItem(0).getText(), "Alabama");
+    }
+
+    @Test
+    public void testAddAllItems() {
         int size = pickList.advanced().getSourceList().size();
         addAllButton.click();
         Assert.assertEquals(pickList.advanced().getTargetList().size(), size);
     }
 
     @Test
-    public void testRemove() {
-        addAllButton.click();
-        String text = pickList.advanced().getTargetList().getItem(0).getText();
-        pickList.advanced().getTargetList().getItem(0).select();
-        removeButton.click();
-        Assert.assertEquals(pickList.advanced().getSourceList().size(), 1);
-        Assert.assertEquals(pickList.advanced().getSourceList().getItem(0).getText(), text);
-    }
-
-    @Test
-    public void testRemoveAll() {
+    public void testRemoveAllItems() {
         int size = pickList.advanced().getSourceList().size();
-        testAddAll();
+        testAddAllItems();
         removeAllButton.click();
         Assert.assertEquals(pickList.advanced().getSourceList().size(), size);
         Assert.assertEquals(pickList.advanced().getTargetList().size(), 0);
-    }
-
-    @Test
-    public void testTargetList() {
-        getTargetListLength.click();
-        int size = value.getIntValue();
-        Assert.assertEquals(size, 0);
-        addAllButton.click();
-        getTargetListLength.click();
-        size = value.getIntValue();
-        Assert.assertEquals(size, pickList.advanced().getTargetList().size());
-    }
-
-    @Test
-    public void testSourceList() {
-        getSourceListLength.click();
-        int size = value.getIntValue();
-        Assert.assertEquals(size, pickList.advanced().getSourceList().size());
-        addAllButton.click();
-        getSourceListLength.click();
-        size = value.getIntValue();
-        Assert.assertEquals(size, 0);
     }
 }

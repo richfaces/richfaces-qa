@@ -96,14 +96,14 @@
             <br/>
             output: <h:outputText id="output" value="#{richPickListBean.value}" />
             <br/><br/>
-            <fieldset> <b>DOES NOT WORK ATM</b>
+            <fieldset>
                 <legend>JavaScript API</legend>
                 On click:
                 <br/>
-                <input id="addItemsSome" type="button" name="addItemsSome" value="add items" onclick="#{r:component('pickList')}.addItems()" />
-                <input id="addItemsAll" type="button" name="addItemsSome" value="add all items" onclick="#{r:component('pickList')}.addAllItems()" />
-                <input id="removeItemsSome" type="button" name="removeItemsSome" value="remove items" onclick="#{r:component('pickList')}.removeItems()" />
-                <input id="removeItemsAll" type="button" name="removeItemsAll" value="remove all items" onclick="#{r:component('pickList')}.removeAllItems()" />
+                <input id="addFirstFourItems" type="button" name="addFirstFourItems" value="add first four items" onclick="#{r:component('pickList')}.addItems($('.source .ui-selectee:lt(4)'))" />
+                <input id="addAllItems" type="button" name="addAllItems" value="add all items" onclick="#{r:component('pickList')}.addAllItems()" />
+                <input id="removeItemsFirstThree" type="button" name="removeItemsFirstThree" value="remove first three items" onclick="#{r:component('pickList')}.removeItems($('.target .ui-selectee:lt(3)'))" />
+                <input id="removeAllItems" type="button" name="removeAllItems" value="remove all items" onclick="#{r:component('pickList')}.removeAllItems()" />
             </fieldset>
         </ui:define>
 
