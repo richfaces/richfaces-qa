@@ -36,14 +36,12 @@ import javax.faces.event.PhaseId;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.page.Page;
-import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.Actions;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.inplaceInput.ConfirmOrCancel;
@@ -57,6 +55,7 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.model.Capital;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -67,9 +66,9 @@ import org.testng.annotations.Test;
  */
 public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
-    private By listBy = By.cssSelector("span.rf-is-lst-cord");
-    private By listHeightBy = By.cssSelector("span.rf-is-lst-scrl");
-    private By listWidthBy = By.cssSelector("span.rf-is-lst-pos");
+    private final By listBy = By.cssSelector("span.rf-is-lst-cord");
+    private final By listHeightBy = By.cssSelector("span.rf-is-lst-scrl");
+    private final By listWidthBy = By.cssSelector("span.rf-is-lst-pos");
     //
     @FindBy(css = "[id$=inplaceSelect]")
     private RichFacesInplaceSelect select;
@@ -81,8 +80,6 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     private WebElement output;
     @Page
     private MetamerPage page;
-    @ArquillianResource
-    private JavascriptExecutor executor;
 
     private String getOutputText() {
         return output.getText().trim();
@@ -91,6 +88,11 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richInplaceSelect/simple.xhtml");
+    }
+
+    @BeforeMethod
+    public void initFragment() {
+        select.advanced().setupSaveOnSelect(true);
     }
 
     @Test
@@ -109,7 +111,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         assertTrue(select.advanced().getRootElement().getAttribute("class").contains(testedClass), "Select should contain "
             + testedClass);
 
-        guardAjax(select).select("Hawaii");
+        guardAjax(select).select(10);
         assertFalse(select.advanced().getRootElement().getAttribute("class").contains(testedClass),
             "Select should not contain " + testedClass);
     }
@@ -174,7 +176,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
         ConfirmOrCancel confOrCancl = select.select(10);
         assertEquals(getOutputText(), "", "Output should be empty.");
-        confOrCancl.confirmByControlls();
+        Graphene.guardAjax(confOrCancl).confirmByControlls();
         assertEquals(getOutputText(), "Hawaii", "Output should contain selected value.");
     }
 
@@ -571,6 +573,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     public void testSaveOnBlurSelectFalseFalse() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnBlur, Boolean.FALSE);
+        select.advanced().setupSaveOnSelect(Boolean.FALSE);
         // select
         select.select(10);
         assertEquals(getOutputText(), "", "Output should be empty.");
@@ -596,6 +599,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     @Test
     public void testSaveOnBlurSelectTrueFalse() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
+        select.advanced().setupSaveOnSelect(Boolean.FALSE);
         // select
         select.select(10);
         assertEquals(getOutputText(), "", "Output should be empty.");

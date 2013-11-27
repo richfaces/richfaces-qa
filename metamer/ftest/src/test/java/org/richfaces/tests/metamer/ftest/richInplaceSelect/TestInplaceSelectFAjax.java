@@ -59,8 +59,6 @@ public class TestInplaceSelectFAjax extends AbstractWebDriverTest {
     private RichFacesInplaceSelect select;
     @FindBy(css = "[id$=output]")
     private WebElement output;
-    @FindBy(css = "[id$=inplaceSelect] span.rf-is-lst-cord")
-    private WebElement popup;
     @FindBy(css = "body > span.rf-is-lst-cord")
     private WebElement globalPopup;
 
@@ -93,8 +91,7 @@ public class TestInplaceSelectFAjax extends AbstractWebDriverTest {
             assertEquals(options.get(i).getText(), capitals.get(i).getState());
         }
 
-        select.select(10).confirmByControlls();
-        Graphene.waitModel().until().element(output).text().equalTo("Hawaii");
+        Graphene.guardAjax(select.select(10)).confirmByControlls();
         assertEquals(getOutputText(), "Hawaii", "Output should contain selected value.");
         assertEquals(select.advanced().getLabelValue(), "Hawaii", "Label should contain selected value.");
         assertTrue(select.advanced().isInState(InplaceComponentState.CHANGED), "Select should have changed value.");
