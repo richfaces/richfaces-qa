@@ -45,7 +45,7 @@ import org.testng.annotations.Test;
  *
  * @author <a href="mailto:manovotn@redhat.com">Matej Novotny</a>
  */
-public class TestRichTabPanelJSApi extends AbstractWebDriverTest {
+public class TestTabPanelJSApi extends AbstractWebDriverTest {
 
     @Override
     public URL getTestUrl() {
