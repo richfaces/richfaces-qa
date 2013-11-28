@@ -31,7 +31,6 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.autocomplete.RichFacesAutocomplete;
 import org.richfaces.fragment.autocomplete.SelectOrConfirm;
-import org.richfaces.fragment.common.ClearType;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
@@ -65,13 +64,13 @@ public class TestAutocompleteFragment extends AbstractAutocompleteTest {
 
         autocompleteAttributes.set(AutocompleteAttributes.tokens, ";");
         autocomplete.advanced().setupToken(";");
-        autocomplete.advanced().clear(ClearType.DELETE);
-        Graphene.guardHttp(autocomplete.advanced().getInput().advanced().getInputElement()).submit();
+        autocomplete.clear();
         Graphene.waitAjax().until().element(autocomplete.advanced().getInput().advanced().getInputElement()).text().equalTo("");
+
         autocomplete
-            .type("m").select(ChoicePickerHelper.byVisibleText().contains("ss"))// selects the first one containing 'ss'
-            .type("w").select(ChoicePickerHelper.byIndex().index(2))
-            .type("k").select();// selects the first one
+            .type("m").select(ChoicePickerHelper.byVisibleText().contains("ss"))// selects Massachusetts
+            .type("w").select(ChoicePickerHelper.byIndex().index(2))// selects Wisconsin
+            .type("k").select();// selects Kansas
         checkOutput("Massachusetts; Wisconsin; Kansas");
     }
 
