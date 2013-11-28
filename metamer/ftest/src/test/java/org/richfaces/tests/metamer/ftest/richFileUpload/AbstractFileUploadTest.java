@@ -25,12 +25,9 @@ import static org.testng.Assert.assertTrue;
 
 import java.io.File;
 import java.net.URISyntaxException;
-import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.fileUpload.RichFacesFileUpload;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -43,10 +40,6 @@ import org.testng.annotations.BeforeMethod;
  */
 public abstract class AbstractFileUploadTest extends AbstractWebDriverTest {
 
-    @Page
-    protected MetamerPage page;
-    @FindBy(css = "span[id$=uploadedFilesPanel] li")
-    protected List<WebElement> uploadedFilesList;
     @FindBy(css = "div[id$=fileUpload]")
     protected RichFacesFileUpload fileUpload;
 
