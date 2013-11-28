@@ -35,7 +35,6 @@ import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
-import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -47,7 +46,6 @@ import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.model.Capital;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.inplaceInput.ConfirmOrCancel;
@@ -62,14 +60,13 @@ import org.testng.annotations.Test;
  * Test case for page faces/components/richInplaceSelect/simple.xhtml.
  *
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
- * @version $Revision: 23054 $
  */
 public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
     private final By listBy = By.cssSelector("span.rf-is-lst-cord");
     private final By listHeightBy = By.cssSelector("span.rf-is-lst-scrl");
     private final By listWidthBy = By.cssSelector("span.rf-is-lst-pos");
-    //
+
     @FindBy(css = "[id$=inplaceSelect]")
     private RichFacesInplaceSelect select;
     @FindBy(css = "[id$=inplaceSelect] span.rf-is-lst-cord")
@@ -78,8 +75,6 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     private WebElement globalPopup;
     @FindBy(css = "span[id$=output]")
     private WebElement output;
-    @Page
-    private MetamerPage page;
 
     private String getOutputText() {
         return output.getText().trim();
@@ -92,7 +87,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
     @BeforeMethod
     public void initFragment() {
-        select.advanced().setupSaveOnSelect(true);
+        select.advanced().setupSaveOnSelect(Boolean.TRUE);
     }
 
     @Test
@@ -156,7 +151,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         assertTrue(select.advanced().isInState(InplaceComponentState.CHANGED), "Select should have changed value.");
         assertFalse(select.advanced().isInState(InplaceComponentState.ACTIVE), "Select should not be active.");
 
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Hawaii");
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Hawaii");
     }
 
     @Test
@@ -164,6 +159,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     public void testClickCancelButton() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.showControls, Boolean.TRUE);
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
+        select.advanced().setupSaveOnSelect(Boolean.FALSE);
 
         ConfirmOrCancel confirmOrCancel = select.select(10);
         assertEquals(getOutputText(), "", "Output should be empty.");
@@ -239,8 +235,8 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
         guardAjax(select).select("Hawaii");
 
-        page.assertPhases(PhaseId.ANY_PHASE);
-        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: -> Hawaii");
+        getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: -> Hawaii");
     }
 
     @Test
@@ -319,7 +315,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 select.select(10);
-                page.getRequestTimeElement().click();
+                getMetamerPage().getRequestTimeElement().click();
             }
         });
     }
@@ -582,10 +578,10 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         select.select(10);
         assertEquals(getOutputText(), "", "Output should be empty.");
         // blur
-        String requestTime = page.getRequestTimeElement().getText().trim();
+        String requestTime = getMetamerPage().getRequestTimeElement().getText().trim();
         Utils.triggerJQ(executor, "blur", select.advanced().getEditInputElement());
         waiting(2000L);
-        assertEquals(page.getRequestTimeElement().getText().trim(), requestTime, "Request time shouldn't change.");
+        assertEquals(getMetamerPage().getRequestTimeElement().getText().trim(), requestTime, "Request time shouldn't change.");
         assertEquals(getOutputText(), "", "Output should be empty.");
         // with confirmation
         guardAjax(select.select(10)).confirm();
@@ -608,9 +604,9 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         select.select(10);
         assertEquals(getOutputText(), "", "Output should be empty.");
         // blur
-        String requestTime = page.getRequestTimeElement().getText();
+        String requestTime = getMetamerPage().getRequestTimeElement().getText();
         Utils.triggerJQ(executor, "blur", select.advanced().getEditInputElement());
-        Graphene.waitAjax().until().element(page.getRequestTimeElement()).text().not().equalTo(requestTime);
+        Graphene.waitAjax().until().element(getMetamerPage().getRequestTimeElement()).text().not().equalTo(requestTime);
         assertEquals(getOutputText(), "Hawaii", "Output should contain selected value.");
     }
 
