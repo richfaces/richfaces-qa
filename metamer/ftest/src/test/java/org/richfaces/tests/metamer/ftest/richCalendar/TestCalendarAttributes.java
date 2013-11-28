@@ -34,9 +34,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.faces.event.PhaseId;
 
@@ -54,6 +56,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.calendar.DayPicker;
 import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
+import org.richfaces.fragment.calendar.DayPicker.CalendarDay.DayType;
 import org.richfaces.fragment.calendar.DayPicker.CalendarWeek;
 import org.richfaces.fragment.calendar.HeaderControls;
 import org.richfaces.fragment.calendar.PopupCalendar.PopupFooterControls;
@@ -73,7 +76,6 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.richfaces.fragment.calendar.DayPicker.CalendarDay.DayType;
 
 import com.google.common.collect.Lists;
 
@@ -130,6 +132,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         BOTTOMRIGHT("bottomRight"),
         NULL("null");
         private final String value;
+        public static final Set<Direction> STRICT_POSITIONS = Collections.unmodifiableSet(EnumSet.of(TOPLEFT, TOPRIGHT, BOTTOMLEFT, BOTTOMRIGHT));
 
         private Direction(String value) {
             this.value = value;
@@ -187,8 +190,8 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
             case INACTIVE:
             case NULL:
                 try {
-                MetamerPage.waitRequest(dayPicker.getBoundaryDays().get(0), WaitRequestType.NONE).select();
-                fail("Item should not be selected.");
+                    MetamerPage.waitRequest(dayPicker.getBoundaryDays().get(0), WaitRequestType.NONE).select();
+                    fail("Item should not be selected.");
                 } catch (TimeoutException ex) {// ok
                 }
                 // apply and check, that the date has not changed
@@ -199,8 +202,8 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
             case SCROLL:
                 // scroll to 28th of October 2012
                 try {
-                MetamerPage.waitRequest(dayPicker.getBoundaryDays().get(0), WaitRequestType.NONE).select();
-                fail("Item should not be selected.");
+                    MetamerPage.waitRequest(dayPicker.getBoundaryDays().get(0), WaitRequestType.NONE).select();
+                    fail("Item should not be selected.");
                 } catch (TimeoutException ex) {// ok
                 }
                 yearAndMonth = headerControls.getYearAndMonth();
@@ -364,27 +367,24 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         calendarAttributes.set(CalendarAttributes.direction, direction.value);
         calendarAttributes.set(CalendarAttributes.jointPoint, Direction.BOTTOMLEFT.value);
         // scrolls page down
-        Point locationInput, locationPopup = null;
-        locationInput = popupCalendar.getLocations().getBottomLeft();
+        Point locationInput = popupCalendar.getLocations().getBottomLeft();
         Locations popupLocations = popupCalendar.openPopup().getLocations();
-        switch (direction) {
-            case TOPLEFT:
-                locationPopup = popupLocations.getBottomRight();
-                break;
-            case TOPRIGHT:
-                locationPopup = popupLocations.getBottomLeft();
-                break;
-            case BOTTOMLEFT:
-                locationPopup = popupLocations.getTopRight();
-                break;
-            case NULL:
-            case AUTO:// auto (direction depends on browser/screen resolution)
-            case BOTTOMRIGHT:
-                locationPopup = popupLocations.getTopLeft();
-                break;
-
+        if (Direction.STRICT_POSITIONS.contains(direction)) {
+            tolerantAssertLocations(getPositionForDirection(popupLocations, direction),
+                locationInput, tolerance);
+        } else {// 'auto' or 'null'
+            // cycle through all strict directions, one must be the same as the 'auto',
+            // which  depends on browser/screen resolution and actual position
+            for (Direction d : Direction.STRICT_POSITIONS) {
+                try {
+                    tolerantAssertLocations(getPositionForDirection(popupLocations, d),
+                        locationInput, tolerance);
+                    return;
+                } catch (AssertionError ignored) {
+                }
+            }
+            fail("No position was close enough for direction " + direction.toString());
         }
-        tolerantAssertLocations(locationPopup, locationInput, tolerance);
     }
 
     @Test
@@ -497,26 +497,22 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         int tolerance = 4;
         calendarAttributes.set(CalendarAttributes.jointPoint, direction.value);
         Locations inputLocations = popupCalendar.getLocations();
-        Point locationInput = null;
         Point locationPopup = popupCalendar.openPopup().getLocations().getTopLeft();
-        switch (direction) {
-            case NULL:
-            case AUTO:
-            // auto (direction depends on browser/screen resolution)
-            case BOTTOMLEFT:
-                locationInput = inputLocations.getBottomLeft();
-                break;
-            case BOTTOMRIGHT:
-                locationInput = inputLocations.getBottomRight();
-                break;
-            case TOPLEFT:
-                locationInput = inputLocations.getTopLeft();
-                break;
-            case TOPRIGHT:
-                locationInput = inputLocations.getTopRight();
-                break;
+
+        if (Direction.STRICT_POSITIONS.contains(direction)) {
+            tolerantAssertLocations(getPositionForJointPoint(inputLocations, direction), locationPopup, tolerance);
+        } else {// 'auto' or 'null'
+            // cycle through all strict directions, one must be the same as the 'auto',
+            // which  depends on browser/screen resolution and actual position
+            for (Direction d : Direction.STRICT_POSITIONS) {
+                try {
+                    tolerantAssertLocations(getPositionForJointPoint(inputLocations, d), locationPopup, tolerance);
+                    return;
+                } catch (AssertionError ignored) {
+                }
+            }
+            fail("No position was close enough for jointPoint " + direction.toString());
         }
-        tolerantAssertLocations(locationInput, locationPopup, tolerance);
     }
 
     @Test
@@ -1109,6 +1105,48 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         for (WebElement webElement : list) {
             assertNotVisible(webElement);
         }
+    }
+
+    private Point getPositionForDirection(Locations locations, Direction direction) {
+        Point position = null;
+        switch (direction) {
+            case TOPLEFT:
+                position = locations.getBottomRight();
+                break;
+            case TOPRIGHT:
+                position = locations.getBottomLeft();
+                break;
+            case BOTTOMLEFT:
+                position = locations.getTopRight();
+                break;
+            case BOTTOMRIGHT:
+                position = locations.getTopLeft();
+                break;
+            default:
+                throw new UnsupportedOperationException("Not supported direction: " + direction);
+        }
+        return position;
+    }
+
+    private Point getPositionForJointPoint(Locations locations, Direction direction) {
+        Point point = null;
+        switch (direction) {
+            case BOTTOMLEFT:
+                point = locations.getBottomLeft();
+                break;
+            case BOTTOMRIGHT:
+                point = locations.getBottomRight();
+                break;
+            case TOPLEFT:
+                point = locations.getTopLeft();
+                break;
+            case TOPRIGHT:
+                point = locations.getTopRight();
+                break;
+            default:
+                throw new UnsupportedOperationException("Not supported direction: " + direction);
+        }
+        return point;
     }
 
     private void submitWithA4jSubmitBtn() {
