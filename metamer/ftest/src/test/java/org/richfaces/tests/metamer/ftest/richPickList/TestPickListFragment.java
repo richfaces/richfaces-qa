@@ -96,7 +96,7 @@ public class TestPickListFragment extends AbstractWebDriverTest {
 
         assertEquals(pickList.advanced().getSourceList().size(), sizeS + 1);
         assertEquals(pickList.advanced().getTargetList().size(), sizeT - 1);
-        assertEquals(pickList.advanced().getSourceList().getItem(ChoicePickerHelper.byIndex().last()).getText(), itemText);
+        assertEquals(pickList.advanced().getSourceList().getItem(ChoicePickerHelper.byIndex().first()).getText(), itemText);
     }
 
     @Test
