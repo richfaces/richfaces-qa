@@ -89,6 +89,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @Use(field = "delay", ints = { 1500, 2000, 2500 })
     public void testHideDelay() {
         updateShowAction();
+        page.getContextMenu().advanced().setupHideDelay(delay);
         testDelay(new Action() {
             @Override
             public void perform() {
@@ -501,6 +502,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @Use(field = "delay", ints = { 1500, 2000, 2500 })
     public void testShowDelay() {
         updateShowAction();
+        page.getContextMenu().advanced().setupShowDelay(delay);
         testDelay(new Action() {
             @Override
             public void perform() {
