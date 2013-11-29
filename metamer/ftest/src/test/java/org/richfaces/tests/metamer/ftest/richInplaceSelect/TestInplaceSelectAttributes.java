@@ -161,11 +161,11 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
         select.advanced().setupSaveOnSelect(Boolean.FALSE);
 
-        ConfirmOrCancel confirmOrCancel = select.select(10);
+        ConfirmOrCancel confirmOrCancel = Graphene.guardNoRequest(select).select(10);
         assertEquals(getOutputText(), "", "Output should be empty.");
-        confirmOrCancel.confirmByControlls();
+        Graphene.guardAjax(confirmOrCancel).confirmByControlls();
         assertEquals(getOutputText(), "Hawaii", "Output should contain selected value.");
-        select.select(11).cancelByControlls();
+        Graphene.guardNoRequest(select.select(11)).cancelByControlls();
         assertEquals(getOutputText(), "Hawaii", "Output should contain previously selected value.");
     }
 
@@ -174,7 +174,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     public void testClickOkButton() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.showControls, Boolean.TRUE);
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
-        ConfirmOrCancel confOrCancl = select.select(10);
+        ConfirmOrCancel confOrCancl = Graphene.guardNoRequest(select).select(10);
         assertEquals(getOutputText(), "", "Output should be empty.");
         Graphene.guardAjax(confOrCancl).confirmByControlls();
         assertEquals(getOutputText(), "Hawaii", "Output should contain selected value.");
@@ -575,7 +575,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnBlur, Boolean.FALSE);
         select.advanced().setupSaveOnSelect(Boolean.FALSE);
         // select
-        select.select(10);
+        Graphene.guardNoRequest(select).select(10);
         assertEquals(getOutputText(), "", "Output should be empty.");
         // blur
         String requestTime = getMetamerPage().getRequestTimeElement().getText().trim();
@@ -601,7 +601,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
         select.advanced().setupSaveOnSelect(Boolean.FALSE);
         // select
-        select.select(10);
+        Graphene.guardNoRequest(select).select(10);
         assertEquals(getOutputText(), "", "Output should be empty.");
         // blur
         String requestTime = getMetamerPage().getRequestTimeElement().getText();
