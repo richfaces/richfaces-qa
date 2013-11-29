@@ -21,11 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTab;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.tabAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -33,6 +33,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.page.Page;
@@ -264,9 +265,13 @@ public class TestTab extends AbstractWebDriverTest {
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-9537 https://issues.jboss.org/browse/RF-10488")
     public void testOnenter() {
-        Action action = new Actions(driver).click(page.getInactiveHeaders().get(1)).click(page.getInactiveHeaders().get(0))
-            .build();
-        testFireEvent(tabAttributes, TabAttributes.onenter, action);
+        testFireEvent(tabAttributes, TabAttributes.onenter, new Action() {
+            @Override
+            public void perform() {
+                Graphene.guardAjax(page.getInactiveHeaders().get(1)).click();
+                Graphene.guardAjax(page.getInactiveHeaders().get(0)).click();
+            }
+        });
         // tabAttributes.set(TabAttributes.onenter, "metamerEvents += \"enter \"");
         // selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
         // String time1Value = selenium.getText(time);
