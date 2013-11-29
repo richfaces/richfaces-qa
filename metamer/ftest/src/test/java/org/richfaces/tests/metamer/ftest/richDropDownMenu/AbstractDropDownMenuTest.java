@@ -203,6 +203,8 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
     public void testHideDelay(int delay) {
         dropDownMenuAttributes.set(DropDownMenuAttributes.showDelay, 0);
         updateDropDownMenuInvoker();
+        getCurrentMenu().advanced().setupHideDelay(delay);
+
         testDelay(new Action() {
             @Override
             public void perform() {
@@ -237,6 +239,8 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
     public void testShowDelay(int delay) {
         dropDownMenuAttributes.set(DropDownMenuAttributes.hideDelay, 0);
         updateDropDownMenuInvoker();
+        getCurrentMenu().advanced().setupShowDelay(delay);
+
         testDelay(new Action() {
             @Override
             public void perform() {
