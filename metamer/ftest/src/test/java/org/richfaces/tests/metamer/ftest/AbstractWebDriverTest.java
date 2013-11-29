@@ -31,8 +31,8 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
@@ -383,8 +383,8 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Helper method for testing of delays (showDelay, hideDelay). Runs the @actionWithDelay 3 times and measure time spent in it.
-     * Then count an average time from these 3 values and asserts it to the @expectedDelay with 50% tolerance.
+     * Helper method for testing of delays (showDelay, hideDelay). Runs the @actionWithDelay 4 times and measure time spent in it.
+     * Then count a median from these 4 values and asserts it to the @expectedDelay with 50% tolerance.
      *
      * @param actionBefore action before the measured action. Can be used for e.g. close/open menu. Can be null.
      * @param actionWithDelay the measured action. Can be e.g. open/close menu.
@@ -394,20 +394,16 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     protected void testDelay(final Action actionBefore, final Action actionWithDelay, String attributeName, long expectedDelayInMillis) {
         getUnsafeAttributes("").set(attributeName, expectedDelayInMillis);
         double tolerance = expectedDelayInMillis == 0 ? 500 : expectedDelayInMillis * 0.5;
-        int cycles = 3;
-        ArrayList<Long> delays = Lists.newArrayList();
+        int cycles = 4;
+        List<Long> delays = Lists.newArrayList();
         for (int i = 0; i < cycles; i++) {
             if (actionBefore != null) {
                 actionBefore.perform();
             }
             delays.add(StopWatch.watchTimeSpentInAction(actionWithDelay).inMillis().longValue());
         }
-        double avg = 0;
-        for (Long delay : delays) {
-            avg += delay;
-        }
-        avg /= delays.size();
-        assertEquals(avg, expectedDelayInMillis, tolerance, "The delay is not in tolerance.");
+        Number median = countMedian(delays);
+        assertEquals(median.doubleValue(), expectedDelayInMillis, tolerance, "The delay is not in tolerance. Median of delays was " + median);
     }
 
     /**
@@ -784,6 +780,54 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         // since metamerEvents variable stored on session too, make sure that cleaned both of them
         executeJS("window.metamerEvents = \"\";");
         executeJS("sessionStorage.removeItem('metamerEvents')");
+    }
+
+    private static <T extends Number & Comparable<T>> Number countMedian(List<T> values) {
+        assertTrue(values.size() > 0);
+        if (values.size() == 1) {
+            return values.get(0);
+        }
+
+        final List<T> copy = Lists.newArrayList(values);
+        Collections.sort(copy);
+
+        int middleIndex = (copy.size() - 1) / 2;
+
+        double result = copy.get(middleIndex).doubleValue();
+        if (copy.size() % 2 == 0) {
+            result = (result + copy.get(middleIndex + 1).doubleValue()) / 2.0;
+        }
+        final Double median = Double.valueOf(result);
+        return new Number() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public int intValue() {
+                return median.intValue();
+            }
+
+            @Override
+            public long longValue() {
+                return median.longValue();
+            }
+
+            @Override
+            public float floatValue() {
+                return median.floatValue();
+
+            }
+
+            @Override
+            public double doubleValue() {
+                return median.doubleValue();
+
+            }
+
+            @Override
+            public String toString() {
+                return median.doubleValue() + " from values(sorted) " + copy.toString() + '.';
+            }
+        };
     }
 
     /**
