@@ -28,13 +28,6 @@ http://www.fsf.org. -->
         </configuration>
     </container>
 
-    <container qualifier="jbossas-managed-6">
-        <configuration>
-            <property name="javaVmArguments">${arquillian.container.all.jvm.args}</property>
-            <property name="enableAssertions">false</property>
-        </configuration>
-    </container>
-
     <container qualifier="jbossas-managed-7">
         <configuration>
             <!-- must use jboss.bind.address because AS7MessagingProviderManagement for jboss7 have problems with "localhost" [ipv6]-->
