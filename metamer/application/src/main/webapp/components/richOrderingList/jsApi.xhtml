@@ -44,35 +44,49 @@
             <br/>
             <r:orderingList id="orderingList"
                             collectionType="java.util.LinkedList"
-                            listHeight="300px"
                             itemLabel="#{capital.name}"
                             itemValue="#{capital}"
-                            value="#{richOrderingListBean.capitals}"
-                            var="capital">
+                            value="#{richOrderingListBean.firstFewCapitals}"
+                            var="capital"
+                            >
                 <f:converter converterId="capitalConverter" />
             </r:orderingList>
-
+            <ui:remove>
+                <br/>
+                <br/>
+                <r:orderingList id="orderingList2"
+                                collectionType="java.util.LinkedList"
+                                itemLabel="#{capital.name}"
+                                itemValue="#{capital}"
+                                value="#{richOrderingListBean.firstFewCapitals2}"
+                                var="capital"
+                                >
+                    <f:converter converterId="capitalConverter" />
+                </r:orderingList>
+            </ui:remove>
             <br/><br/>
             <fieldset>
-                <legend>JavaScript API (not working atm)</legend>
+                <legend>JavaScript API</legend>
                 Output value for all get methods: <h:inputText id="value"/>
                 <br/><br/>
                 On click:
-                
+
                 <br/>
                 <input id="add" type="button" name="add" value="add('&lt;li&gt;New item&lt;/li&gt;')" onclick="#{r:component('orderingList')}.add('&lt;li&gt;New item&lt;/li&gt;')" />
-                <input id="getOrderedElements" type="button" name="getOrderedElements" value="getOrderedElements()" onclick="$('[id$=value]').val(#{r:component('orderingList')}.getOrderedElements())" />
+                <!--<input id="connectWith" type="button" name="connectWith" value="connectWith($('[id$=orderingList2List]'))" onclick="#{r:component('orderingList')}.connectWith($('[id$=orderingList2List]'))" />-->
+                <input id="getOrderedElements" type="button" name="getOrderedElements" value="getOrderedElements().length" onclick="$('[id$=value]').val(#{r:component('orderingList')}.getOrderedElements().length)" />
                 <input id="getOrderedKeys" type="button" name="getOrderedKeys" value="getOrderedKeys()" onclick="$('[id$=value]').val(#{r:component('orderingList')}.getOrderedKeys())" />
-                <input id="getSelected" type="button" name="getSelected" value="getSelected()" onclick="$('[id$=value]').val(#{r:component('orderingList')}.getSelected())" />
-                <input id="isSelected" type="button" name="isSelected" value="isSelected()" onclick="$('[id$=value]').val(#{r:component('orderingList')}.isSelected())" />
+                <input id="getSelected" type="button" name="getSelected" value="getSelected().length" onclick="$('[id$=value]').val(#{r:component('orderingList')}.getSelected().length)" />
+                <input id="isSelected" type="button" name="isSelected" value="isSelected($('.ui-selectee:first'))" onclick="$('[id$=value]').val(#{r:component('orderingList')}.isSelected($('.ui-selectee:first')))" />
                 <input id="moveDown" type="button" name="moveDown" value="moveDown()" onclick="#{r:component('orderingList')}.moveDown()" />
                 <input id="moveLast" type="button" name="moveLast" value="moveLast()" onclick="#{r:component('orderingList')}.moveLast()" />
-                <input id="moveTop" type="button" name="moveTop" value="moveTop()" onclick="#{r:component('orderingList')}.moveTop()" />
+                <input id="moveFirst" type="button" name="moveFirst" value="moveFirst()" onclick="#{r:component('orderingList')}.moveFirst()" />
                 <input id="moveUp" type="button" name="moveUp" value="moveUp()" onclick="#{r:component('orderingList')}.moveUp()" />
-                <input id="remove" type="button" name="remove" value="remove('$('.ui.selectee:contains(Montgomery)')')" onclick="#{r:component('orderingList')}.remove($('.ui.selectee:contains(Montgomery)'))" />
-                <input id="selectItem" type="button" name="selectItem" value="selectItem('$('.ui.selectee:contains(Montgomery)')')" onclick="#{r:component('orderingList')}.selectItem($('.ui.selectee:contains(Montgomery)'))" />
+                <input id="remove" type="button" name="remove" value="remove('$('.ui-selectee:first')')" onclick="#{r:component('orderingList')}.remove($('.ui-selectee:first'))" />
+                <input id="selectAll" type="button" name="selectAll" value="selectAll()" onclick="#{r:component('orderingList')}.selectAll()" />
+                <input id="selectItem" type="button" name="selectItem" value="selectItem('$('.ui-selectee:first')')" onclick="#{r:component('orderingList')}.selectItem($('.ui-selectee:first'))" />
                 <input id="unSelectAll" type="button" name="unSelectAll" value="unSelectAll()" onclick="#{r:component('orderingList')}.unSelectAll()" />
-                <input id="unSelectItem" type="button" name="unSelectItem" value="unSelectItem('$('.ui.selectee:contains(Montgomery)')')" onclick="#{r:component('orderingList')}.unSelectItem($('.ui.selectee:contains(Montgomery)'))" />
+                <input id="unSelectItem" type="button" name="unSelectItem" value="unSelectItem('$('.ui-selectee:first')')" onclick="#{r:component('orderingList')}.unSelectItem($('.ui-selectee:first'))" />
             </fieldset>
         </ui:define>
     </ui:composition>

@@ -48,10 +48,13 @@ import com.google.common.collect.Lists;
 @ViewScoped
 public class RichOrderingListBean implements Serializable {
 
+    public static final int LIST_SIZE = 7;
     private static final long serialVersionUID = 5868941019675985273L;
     private static final Logger LOGGER = LoggerFactory.getLogger(RichOrderingListBean.class);
     @ManagedProperty("#{model.capitals}")
     private List<Capital> capitals;
+    private List<Capital> firstFewCapitals;
+    private List<Capital> firstFewCapitals2;
     private List<Capital> emptyCapitals = Lists.newArrayList();
     private Attributes attributes;
     private Collection<String> hiddenAttributes = new ArrayList<String>();
@@ -71,8 +74,8 @@ public class RichOrderingListBean implements Serializable {
         attributes.setAttribute("required", false);
 
         // TODO has to be tested in another way
-        String[] attrsToHide = new String[]{"collectionType", "itemLabel", "itemValue", "value", "var",
-            "converter", "converterMessage", "validator", "validatorMessage", "valueChangeListener"};
+        String[] attrsToHide = new String[]{ "collectionType", "itemLabel", "itemValue", "value", "var",
+            "converter", "converterMessage", "validator", "validatorMessage", "valueChangeListener" };
         for (String attribute : attrsToHide) {
             hiddenAttributes.add(attribute);
             attributes.remove(attribute);
@@ -81,6 +84,14 @@ public class RichOrderingListBean implements Serializable {
 
     public Attributes getAttributes() {
         return attributes;
+    }
+
+    public List<Capital> getFirstFewCapitals() {
+        return (firstFewCapitals == null ? capitals.subList(0, LIST_SIZE) : firstFewCapitals);
+    }
+
+    public List<Capital> getFirstFewCapitals2() {
+        return (firstFewCapitals2 == null ? capitals.subList(LIST_SIZE, LIST_SIZE * 2) : firstFewCapitals2);
     }
 
     public List<Capital> getCapitals() {
@@ -109,6 +120,14 @@ public class RichOrderingListBean implements Serializable {
 
     public void setEmptyCapitals(List<Capital> emptyCapitals) {
         this.emptyCapitals = emptyCapitals;
+    }
+
+    public void setFirstFewCapitals(List<Capital> capitals) {
+        this.firstFewCapitals = capitals;
+    }
+
+    public void setFirstFewCapitals2(List<Capital> capitals) {
+        this.firstFewCapitals2 = capitals;
     }
 
     public void setHiddenAttributes(Collection<String> hiddenAttributes) {
