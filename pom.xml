@@ -103,7 +103,7 @@ FSF site: http://www.fsf.org. -->
         <module>testng-listeners</module>
         <module>common</module>
         <module>page-fragments</module>
-        <module>photoalbum-ftest</module>
+        <!--<module>photoalbum-ftest</module>-->
     </modules>
 
     <build>
