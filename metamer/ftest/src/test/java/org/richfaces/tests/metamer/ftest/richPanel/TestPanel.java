@@ -155,27 +155,15 @@ public class TestPanel extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testOnmousedown() {
-        Action mouseDownAction = new Actions(driver).moveToElement(panelWithHeader.advanced().getRootElement())
-            .clickAndHold(panelWithHeader.advanced().getRootElement()).build();
-        testFireEvent(panelAttributes, PanelAttributes.onmousedown, mouseDownAction);
-
-        mouseDownAction = new Actions(driver).release().moveToElement(panelWithoutHeader.advanced().getRootElement())
-            .clickAndHold(panelWithoutHeader.advanced().getRootElement()).build();
-        testFireEvent(panelAttributes, PanelAttributes.onmousedown, mouseDownAction);
-
-        new Actions(driver).release().perform();
+        testFireEventWithJS(panelWithHeader.advanced().getRootElement(), panelAttributes, PanelAttributes.onmousedown);
+        testFireEventWithJS(panelWithoutHeader.advanced().getRootElement(), panelAttributes, PanelAttributes.onmousedown);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmousemove() {
-        Action mouseMoveAction = new Actions(driver).moveToElement(panelWithHeader.advanced().getRootElement(), 3, 3)
-            .build();
-        testFireEvent(panelAttributes, PanelAttributes.onmousemove, mouseMoveAction);
-
-        mouseMoveAction = new Actions(driver).moveToElement(panelWithoutHeader.advanced().getRootElement(), 3, 3)
-            .build();
-        testFireEvent(panelAttributes, PanelAttributes.onmousemove, mouseMoveAction);
+        testFireEventWithJS(panelWithHeader.advanced().getRootElement(), panelAttributes, PanelAttributes.onmousemove);
+        testFireEventWithJS(panelWithoutHeader.advanced().getRootElement(), panelAttributes, PanelAttributes.onmousemove);
     }
 
     @Test
@@ -201,13 +189,8 @@ public class TestPanel extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testOnmouseup() {
-        Action mouseUpAction = new Actions(driver).moveToElement(panelWithHeader.advanced().getRootElement())
-            .clickAndHold().release().build();
-        testFireEvent(panelAttributes, PanelAttributes.onmouseup, mouseUpAction);
-
-        mouseUpAction = new Actions(driver).moveToElement(panelWithoutHeader.advanced().getRootElement())
-            .clickAndHold().release().build();
-        testFireEvent(panelAttributes, PanelAttributes.onmouseup, mouseUpAction);
+        testFireEventWithJS(panelWithHeader.advanced().getRootElement(), panelAttributes, PanelAttributes.onmouseup);
+        testFireEventWithJS(panelWithoutHeader.advanced().getRootElement(), panelAttributes, PanelAttributes.onmouseup);
     }
 
     @Test
