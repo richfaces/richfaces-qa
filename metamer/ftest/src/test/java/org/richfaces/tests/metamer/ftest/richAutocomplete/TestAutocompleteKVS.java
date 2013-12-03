@@ -68,6 +68,8 @@ public class TestAutocompleteKVS extends AbstractAutocompleteTest {
         @Override
         public void doRequest(String inputValue) {
             Graphene.guardAjax(autocomplete).type(inputValue.substring(0, 3)).select(inputValue);
+            // trigger the change event >>> the value will be saved
+            Graphene.guardAjax(autocomplete.advanced().getInput().advanced()).trigger("blur");
         }
 
         @Override
