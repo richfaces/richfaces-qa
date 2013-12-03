@@ -38,9 +38,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
     <ui:define name="component">
 
-        <r:orderingList id="orderingList" listHeight="#{richOrderingListBean.attributes['listHeight'].value}"
-            listWidth="#{richOrderingListBean.attributes['listWidth'].value}" value="#{richOrderingListBean.capitals}"
-            var="capital">
+        <r:orderingList id="orderingList" 
+                        listHeight="#{richOrderingListBean.attributes['listHeight'].value}"
+                        value="#{richOrderingListBean.capitals}"
+                        var="capital">
 
             <f:converter converterId="capitalConverter" />
 
@@ -58,7 +59,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <r:hotKey id="richHotKey1"
             enabledInInput="#{richHotKeyBean.attributes['enabledInInput'].value}"
             key="#{richHotKeyBean.attributes['key'].value}"
-            onkeydown="#{r:component('orderingList')}.upTop()"
+            onkeydown="#{r:component('orderingList')}.moveFirst()"
             preventDefault="#{richHotKeyBean.attributes['preventDefault'].value}"
             rendered="#{richHotKeyBean.attributes['rendered'].value}"
             selector="#{richHotKeyBean.attributes['selector'].value}" />
@@ -66,7 +67,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <r:hotKey id="richHotKey2"
             enabledInInput="#{richHotKeyBean.attributes2['enabledInInput'].value}"
             key="#{richHotKeyBean.attributes2['key'].value}"
-            onkeydown="#{r:component('orderingList')}.downBottom()"
+            onkeydown="#{r:component('orderingList')}.moveLast()"
             preventDefault="#{richHotKeyBean.attributes['preventDefault'].value}"
             rendered="#{richHotKeyBean.attributes2['rendered'].value}"
             selector="#{richHotKeyBean.attributes2['selector'].value}" />
@@ -75,14 +76,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
     <ui:define name="outOfTemplateAfter">
         <fieldset>
-            <legend>>Hot key that calls ordering list's upTop() function</legend>
+            <legend>>Hot key that calls ordering list's moveFirst() function</legend>
             <metamer:attributes value="#{richHotKeyBean.attributes}" id="attributes1" />
         </fieldset>
 
         <br />
 
         <fieldset>
-            <legend>>Hot key that calls ordering list's downBottom() function</legend>
+            <legend>>Hot key that calls ordering list's moveLast() function</legend>
             <metamer:attributes value="#{richHotKeyBean.attributes2}" id="attributes2" />
         </fieldset>
         <hr />
