@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -25,22 +25,30 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-    <ui:composition template="/templates/list.xhtml">
+    <ui:composition template="/templates/template.xhtml">
 
-        <ui:define name="pageTitle">Rich Functions</ui:define>
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
 
-        <ui:define name="links">
+        <ui:define name="component">
+            <p>
+                The following picture is enlarged after mouseover, but is not released (animated to default width) after mouseout. Not automatized.
+            </p>
 
-            <metamer:testPageLink id="all" outcome="all" value="All">
-                Page containing all RichFaces client functions.
-            </metamer:testPageLink>
+            <h:graphicImage width="50" library="images" name="back.png" onmouseover="enlargePic(this, {pwidth: '100px'})" onmouseout="releasePic(this)"  />
+            
+            <r:jQuery name="enlargePic" query="animate({width:options.pwidth})" />
+            <r:jQuery name="releasePic" query="animate({width:'50px'})"/>
+            
+        </ui:define>
 
-            <metamer:testPageLink id="rf-13090" outcome="rf-13090" value="rf-13090">
-                Page reproducing <a href="https://issues.jboss.org/browse/RF-13090">RF-13090</a>.
-            </metamer:testPageLink>
-
+        <ui:define name="outOfTemplateAfter">
         </ui:define>
 
     </ui:composition>
-
 </html>
