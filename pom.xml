@@ -14,7 +14,7 @@ FSF site: http://www.fsf.org. -->
 
     <groupId>org.richfaces.tests</groupId>
     <artifactId>richfaces-qa-parent</artifactId>
-    <version>4.5.0-SNAPSHOT</version>
+    <version>4.5.0.20131204-Alpha1</version>
     <packaging>pom</packaging>
 
     <name>RichFaces QA Parent</name>
@@ -80,11 +80,11 @@ FSF site: http://www.fsf.org. -->
         <showcase.classifier>jbas71</showcase.classifier>
         <metamer.classifier>jbas71</metamer.classifier>
 
-        <openshift.password/>
+        <openshift.password />
         <openshift.namespace>richfacesqa</openshift.namespace>
         <openshift.application>ftest</openshift.application>
         <openshift.ssh.user>54abf287bcf646319d0b1c8d35f15546</openshift.ssh.user>
-        <openshift.identity.file/>
+        <openshift.identity.file />
 
         <jodatime.version>2.3</jodatime.version>
         <commons-lang.version>2.6</commons-lang.version>
@@ -350,7 +350,7 @@ FSF site: http://www.fsf.org. -->
         <connection>scm:git:git://github.com/richfaces/qa.git</connection>
         <developerConnection>scm:git:git@github.com:richfaces/qa.git</developerConnection>
         <url>https://github.com/richfaces/qa</url>
-        <tag>HEAD</tag>
+        <tag>4.5.0.20131204-Alpha1</tag>
     </scm>
 
     <dependencyManagement>
