@@ -206,7 +206,9 @@ public class RichFacesAutocomplete implements Autocomplete, AdvancedInteractions
 
         @Override
         public Autocomplete confirm() {
-            new Actions(driver).sendKeys(Keys.RETURN).click(driver.findElement(Utils.BY_BODY)).perform();
+            // these two actions need to be split in order to prevent NoSuchElementException
+            new Actions(driver).sendKeys(Keys.RETURN).perform();
+            new Actions(driver).click(driver.findElement(Utils.BY_BODY)).perform();
             advanced().waitForSuggestionsToBeNotVisible().perform();
             return RichFacesAutocomplete.this;
         }
