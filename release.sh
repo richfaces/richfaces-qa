@@ -1,5 +1,5 @@
 #!/bin/bash
-RICHFACES_VERSION=`grep '<version.richfaces>' pom.xml | sed -r 's#.*>([^<]+)<.*#\1#'`
+RICHFACES_VERSION=`grep '<version.richfaces4>' pom.xml | sed -r 's#.*>([^<]+)<.*#\1#'`
 
 echo "Project defines following version of RichFaces: ${RICHFACES_VERSION}"
 echo $RICHFACES_VERSION | egrep -q '\-SNAPSHOT$' && { echo "The project cannot depend on SNAPSHOT version, correct the version first and try again."; exit 2; }
