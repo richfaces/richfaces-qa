@@ -263,7 +263,7 @@ public abstract class AbstractPopupMenu implements PopupMenu, AdvancedInteractio
             }
             hideDelay = newHideDelayInMillis;
         }
-        
+
         public void setupShowEvent() {
             invokeEvent = DEFAULT_INVOKE_EVENT;
         }
