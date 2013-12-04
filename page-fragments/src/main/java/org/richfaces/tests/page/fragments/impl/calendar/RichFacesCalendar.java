@@ -97,8 +97,6 @@ public class RichFacesCalendar implements Calendar, AdvancedInteractions<RichFac
      */
     private class CalendarJavaScriptStrategy implements Calendar {
 
-        private final DateTimeFormatter dateTimeFormatForJS = DateTimeFormat.forPattern("MMMM d, yyyy HH:mm:ss");
-
         @Override
         public DateTime getDate() {
             return DateTime.parse(Utils.<String>invokeRichFacesJSAPIFunction(root, "getValueAsString()"), advanced().getDatePattern());
@@ -106,7 +104,7 @@ public class RichFacesCalendar implements Calendar, AdvancedInteractions<RichFac
 
         @Override
         public void setDate(DateTime d) {
-            Utils.invokeRichFacesJSAPIFunction(root, "setValue(new Date('" + d.toString(dateTimeFormatForJS) + "'))");
+            Utils.invokeRichFacesJSAPIFunction(root, "setValue(new Date(" + d.getMillis()+ "))");
         }
     }
 
