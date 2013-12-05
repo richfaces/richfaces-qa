@@ -1,7 +1,6 @@
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.inplaceInputAttributes;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
@@ -9,9 +8,12 @@ import java.net.URL;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.inplaceInput.RichFacesInplaceInput;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 public class TestRefactoredInplaceInputShowcase extends AbstractWebDriverTest {
+
+    private final Attributes<InplaceInputAttributes> inplaceInputAttributes = getAttributes();
 
     @FindBy(className = "rf-ii")
     private RichFacesInplaceInput inplaceInput;

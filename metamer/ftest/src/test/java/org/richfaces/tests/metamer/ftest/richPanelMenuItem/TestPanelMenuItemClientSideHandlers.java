@@ -25,7 +25,6 @@ import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.mode;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuItemAttributes;
 import static org.richfaces.ui.common.Mode.ajax;
 import static org.richfaces.ui.common.Mode.client;
 import static org.richfaces.ui.common.Mode.server;
@@ -38,6 +37,7 @@ import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.richPanelMenuGroup.AbstractPanelMenuCommonTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
@@ -49,15 +49,17 @@ import org.testng.annotations.Test;
 @RegressionTest("https://issues.jboss.org/browse/RF-10486")
 public class TestPanelMenuItemClientSideHandlers extends AbstractPanelMenuCommonTest {
 
+    private final Attributes<PanelMenuItemAttributes> panelMenuItemAttributes = getAttributes();
+
     @Page
-    PanelMenuItemPage page;
+    private PanelMenuItemPage page;
 
     @Inject
     @Use(empty = true)
-    String event;
-    String[] ajaxEvents = new String[] { "beforeselect", "begin", "beforedomupdate", "select", "complete" };
-    String[] clientEvents = new String[] { "beforeselect", "select" };
-    String[] serverEvents = new String[] { "select" };
+    private String event;
+    private String[] ajaxEvents = new String[]{ "beforeselect", "begin", "beforedomupdate", "select", "complete" };
+    private String[] clientEvents = new String[]{ "beforeselect", "select" };
+    private String[] serverEvents = new String[] { "select" };
 
     @Override
     public URL getTestUrl() {

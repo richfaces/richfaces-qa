@@ -23,8 +23,8 @@ package org.richfaces.tests.metamer.ftest.a4jRepeat;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
+
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.repeatAttributes;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
@@ -35,6 +35,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 
@@ -44,6 +45,8 @@ import org.testng.annotations.Test;
  * @since 5.0.0.Alpha1
  */
 public class TestSimple extends AbstractWebDriverTest {
+
+    private final Attributes<RepeatAttributes> repeatAttributes = getAttributes();
 
     protected static final int ELEMENTS_TOTAL = 20;
 

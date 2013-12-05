@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jAjax;
 
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.ajaxAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
@@ -33,6 +32,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 
 /**
  * Abstract test case for testing h:selectManyMenu and h:selectManyListbox with a4j:ajax.
@@ -41,6 +41,8 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
  * @since 4.3.0.M2
  */
 public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
+
+    private final Attributes<AjaxAttributes> ajaxAttributes = getAttributes();
 
     @Page
     protected AjaxPage page;

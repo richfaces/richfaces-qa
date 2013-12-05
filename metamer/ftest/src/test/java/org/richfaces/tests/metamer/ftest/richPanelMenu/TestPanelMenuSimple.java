@@ -26,7 +26,6 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttribute
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.itemMode;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.rendered;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.width;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -38,6 +37,7 @@ import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.ui.toggle.panelMenu.PanelMenuMode;
 import org.testng.annotations.Test;
 
@@ -47,9 +47,11 @@ import org.testng.annotations.Test;
  */
 public class TestPanelMenuSimple extends AbstractPanelMenuTest {
 
+    private final Attributes<PanelMenuAttributes> panelMenuAttributes = getAttributes();
+
     @Inject
     @Use(empty = true)
-    Boolean expandSingle = true;
+    private Boolean expandSingle = true;
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10158")

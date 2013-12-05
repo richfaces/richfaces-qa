@@ -22,8 +22,8 @@
 package org.richfaces.tests.metamer.ftest.richEditor;
 
 import static java.text.MessageFormat.format;
+
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.editorAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -35,6 +35,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 import com.google.common.base.Predicate;
@@ -43,6 +44,8 @@ import com.google.common.base.Predicate;
  * @author <a href="mailto:manovotn@redhat.com">Matej Novotny</a>
  */
 public class TestRichEditorWithTyping extends AbstractWebDriverTest {
+
+    private final Attributes<EditorAttributes> editorAttributes = getAttributes();
 
     @Page
     private EditorSimplePage page;

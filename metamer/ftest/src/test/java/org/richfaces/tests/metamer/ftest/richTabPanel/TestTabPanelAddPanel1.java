@@ -25,7 +25,6 @@ import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.tabPanelAttributes;
 import static org.testng.AssertJUnit.assertEquals;
 
 import java.net.URL;
@@ -37,6 +36,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -45,6 +45,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:manovotn@redhat.com">Matej Novotny</a>
  */
 public class TestTabPanelAddPanel1 extends AbstractWebDriverTest {
+
+    private final Attributes<TabPanelAttributes> tabPanelAttributes = getAttributes();
 
     @Override
     public URL getTestUrl() {

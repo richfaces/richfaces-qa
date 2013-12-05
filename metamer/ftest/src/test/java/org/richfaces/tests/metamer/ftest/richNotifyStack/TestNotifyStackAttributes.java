@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richNotifyStack;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.notifyStackAttributes;
 
 import java.net.URL;
 import java.util.Locale;
@@ -37,22 +36,25 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.fragment.common.Locations;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.notify.NotifyMessage;
+import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
 import org.richfaces.fragment.notify.RichFacesNotify;
 import org.richfaces.fragment.notify.RichFacesNotify.NotifyMessageItemImpl;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestNotifyStackAttributes extends AbstractWebDriverTest {
+
+    private final Attributes<NotifyStackAttributes> notifyStackAttributes = getAttributes();
 
     @FindBy(css = "input[id$='generateMessage']")
     private WebElement generateMessageButton;

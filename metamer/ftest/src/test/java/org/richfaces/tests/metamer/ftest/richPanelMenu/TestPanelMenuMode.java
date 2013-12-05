@@ -27,11 +27,11 @@ import static javax.faces.event.PhaseId.PROCESS_VALIDATIONS;
 import static javax.faces.event.PhaseId.RENDER_RESPONSE;
 import static javax.faces.event.PhaseId.RESTORE_VIEW;
 import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
+
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.groupMode;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.itemMode;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuAttributes;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -39,6 +39,7 @@ import javax.faces.event.PhaseId;
 
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.ui.common.Mode;
 import org.testng.annotations.Test;
 
@@ -48,12 +49,14 @@ import org.testng.annotations.Test;
  */
 public class TestPanelMenuMode extends AbstractPanelMenuTest {
 
+    private final Attributes<PanelMenuAttributes> panelMenuAttributes = getAttributes();
+
     @Inject
     @Use(enumeration = true)
-    Mode mode;
+    private Mode mode;
 
-    PhaseId[] expectedPhases = new PhaseId[] { RESTORE_VIEW, APPLY_REQUEST_VALUES, PROCESS_VALIDATIONS, UPDATE_MODEL_VALUES,
-            INVOKE_APPLICATION, RENDER_RESPONSE };
+    private PhaseId[] expectedPhases = new PhaseId[]{ RESTORE_VIEW, APPLY_REQUEST_VALUES, PROCESS_VALIDATIONS, UPDATE_MODEL_VALUES,
+        INVOKE_APPLICATION, RENDER_RESPONSE };
 
     @Test
     public void testGroupMode() {

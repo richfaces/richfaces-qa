@@ -32,7 +32,6 @@ import static org.richfaces.fragment.common.Event.MOUSEMOVE;
 import static org.richfaces.fragment.common.Event.MOUSEOUT;
 import static org.richfaces.fragment.common.Event.MOUSEOVER;
 import static org.richfaces.fragment.common.Event.MOUSEUP;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.outputPanelAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -52,6 +51,7 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
@@ -63,15 +63,17 @@ import org.testng.annotations.Test;
  */
 public class TestA4JOutputPanel extends AbstractWebDriverTest {
 
-    Event[] events = new Event[] { CLICK, DBLCLICK, KEYDOWN, KEYPRESS, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER,
-            MOUSEUP };
-    String[] layouts = new String[] { "block", "inline" };
+    private final Attributes<OutputPanelAttributes> outputPanelAttributes = getAttributes();
+
+    private Event[] events = new Event[]{ CLICK, DBLCLICK, KEYDOWN, KEYPRESS, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER,
+        MOUSEUP };
+    private String[] layouts = new String[]{ "block", "inline" };
     @Inject
     @Use(empty = true)
-    Event event;
+    private Event event;
     @Inject
     @Use(empty = true)
-    String layout;
+    private String layout;
     @FindBy(css = "input[id$=button]")
     private WebElement increaseCounterButton;
     @FindBy(css = "div[id$=outputPanel]")

@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richNotify;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.notifyAttributes;
 
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
@@ -35,18 +34,21 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
 import org.richfaces.fragment.notify.RichFacesNotifyMessage;
 import org.richfaces.tests.metamer.bean.rich.RichNotifyBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestNotifyAttributes extends AbstractWebDriverTest {
+
+    private final Attributes<NotifyAttributes> notifyAttributes = getAttributes();
 
     @FindBy(className = "rf-ntf")
     private RichFacesNotifyMessage message;

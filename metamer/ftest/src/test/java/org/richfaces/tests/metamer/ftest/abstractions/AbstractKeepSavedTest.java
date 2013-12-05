@@ -45,10 +45,10 @@ public class AbstractKeepSavedTest extends AbstractWebDriverTest {
 
     private static final String TEXT_CORRECT = "123";
     private static final String TEXT_WRONG = "BAD VALUE";
-    private static final Attributes<KeepSavedAttributes> attributes = new Attributes<KeepSavedAttributes>();
-    //
+
+    private final Attributes<KeepSavedAttributes> attributes = getAttributes();
     private final String componentName;
-    //
+
     @FindByJQuery("[id$=panel] input[type=text]:first")
     private TextInputComponentImpl firstInput;
     @FindBy(css = "input[id$=submitButton]")

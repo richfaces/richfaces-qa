@@ -25,7 +25,6 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.hideEvent;
 import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.showEvent;
 import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.target;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.tooltipAttributes;
 
 import java.net.URL;
 
@@ -34,6 +33,7 @@ import org.openqa.selenium.WebElement;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.Lists;
@@ -45,6 +45,8 @@ import com.google.common.collect.Lists;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestTooltipTarget extends AbstractWebDriverTest {
+
+    private final Attributes<TooltipAttributes> tooltipAttributes = getAttributes();
 
     @Page
     private TooltipPage page;

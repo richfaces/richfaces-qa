@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.a4jMediaOutput;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.mediaOutputAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -32,6 +31,7 @@ import java.net.URL;
 import org.richfaces.tests.metamer.bean.a4j.A4JMediaOutputBean;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 
@@ -41,6 +41,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestElementA extends AbstractMediaOutputTest {
+
+    private final Attributes<MediaOutputAttributes> mediaOutputAttributes = getAttributes();
 
     @Inject
     @Use(empty = false)

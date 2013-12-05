@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richList;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.listAttributes;
 
 import java.net.URL;
 import java.util.List;
@@ -34,6 +33,7 @@ import org.richfaces.fragment.list.RichFacesListItem;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -41,6 +41,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestListAttributes extends AbstractListTest {
+
+    private final Attributes<ListAttributes> listAttributes = getAttributes();
 
     enum ListType {
 

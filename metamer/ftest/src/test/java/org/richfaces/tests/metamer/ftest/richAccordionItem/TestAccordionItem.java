@@ -21,20 +21,19 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richAccordionItem;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
 import static org.jboss.arquillian.graphene.Graphene.waitAjax;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.contentClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.headerActiveClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.headerClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.headerDisabledClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.headerInactiveClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.headerStyle;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.accordionItemAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 
@@ -49,10 +48,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 /**
  * Test rich:accordionItem attributes on page faces/components/richAccordion/simple.xhtml
@@ -60,6 +59,9 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:manovotn@redhat.com">Matej Novotny</a>
  */
 public class TestAccordionItem extends AbstractWebDriverTest {
+
+    private final Attributes<AccordionItemAttributes> accordionItemAttributes = getAttributes();
+
     @Page
     private AccordionItemPage page;
 

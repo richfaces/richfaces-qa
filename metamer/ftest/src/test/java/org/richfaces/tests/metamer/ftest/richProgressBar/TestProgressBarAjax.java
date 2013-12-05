@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richProgressBar;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.progressBarAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -46,6 +45,7 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -58,6 +58,8 @@ import org.testng.annotations.Test;
  * @since 4.3.0.M3
  */
 public class TestProgressBarAjax extends AbstractWebDriverTest {
+
+    private final Attributes<ProgressBarAttributes> progressBarAttributes = getAttributes();
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormat.forPattern("HH:mm:ss.SSS");
     @Inject

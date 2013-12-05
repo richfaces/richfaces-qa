@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richInputNumberSpinner;
 
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.inputNumberSpinnerAttributes;
 import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.page.Page;
@@ -32,6 +31,7 @@ import org.richfaces.fragment.inputNumberSpinner.RichFacesInputNumberSpinner;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 
@@ -41,22 +41,25 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
  */
 public abstract class AbstractInputNumberSpinnerTest extends AbstractWebDriverTest {
 
+    private final Attributes<InputNumberSpinnerAttributes> inputNumberSpinnerAttributes = getAttributes();
+
     @Page
-    MetamerPage page;
+    private MetamerPage page;
     @FindBy(css = "span[id$=output]")
-    WebElement output;
+    private WebElement output;
     @FindBy(css = "span[id$=spinner]")
     protected RichFacesInputNumberSpinner spinner;
-    //
+
     protected static final String DEFAULT_MAX_VALUE = "10";
     protected static final String DEFAULT_MIN_VALUE = "-10";
     protected static final String DEFAULT_VALUE = "2";
     protected static final int DEFAULT_VALUE_INT = 2;
-    //
+
     protected String[] correctNumbers = { "-10", "-5", "-1", "0", "1", "5", "10" };
     protected String[] smallNumbers = { "-11", "-15", "-100" };
     protected String[] bigNumbers = { "11", "15", "100" };
     protected String[] decimalNumbers = { "1.4999", "5.6", "7.0001", "-5.50001", "-9.9", "1.222e0", "0e0", "-5.50001e0" };
+
     @Inject
     @Use(empty = true)
     protected String number;

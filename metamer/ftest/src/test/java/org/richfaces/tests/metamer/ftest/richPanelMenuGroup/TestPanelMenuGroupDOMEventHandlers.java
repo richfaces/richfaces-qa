@@ -28,13 +28,13 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGrou
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.onmousemove;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.onmouseover;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.onmouseup;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuGroupAttributes;
 import static org.richfaces.ui.common.Mode.client;
 
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 
@@ -45,6 +45,8 @@ import org.testng.annotations.Test;
  */
 @Templates("plain")
 public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTest {
+
+    private final Attributes<PanelMenuGroupAttributes> panelMenuGroupAttributes = getAttributes();
 
     @Test
     public void testOnclick() {

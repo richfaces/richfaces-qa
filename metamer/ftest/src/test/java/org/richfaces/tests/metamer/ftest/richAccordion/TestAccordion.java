@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richAccordion;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.accordionAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -44,6 +43,7 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -51,6 +51,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
 public class TestAccordion extends AbstractWebDriverTest {
+
+    private final Attributes<AccordionAttributes> accordionAttributes = getAttributes();
 
     @Page
     private AccordionPage page;

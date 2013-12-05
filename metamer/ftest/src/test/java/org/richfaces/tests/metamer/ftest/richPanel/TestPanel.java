@@ -24,7 +24,6 @@ package org.richfaces.tests.metamer.ftest.richPanel;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.bodyClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.headerClass;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -37,6 +36,7 @@ import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.panel.TextualRichFacesPanel;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -47,6 +47,8 @@ import org.testng.annotations.Test;
  * @version $Revision: 22733 $
  */
 public class TestPanel extends AbstractWebDriverTest {
+
+    private final Attributes<PanelAttributes> panelAttributes = getAttributes();
 
     @FindBy(css = "div[id$=panelWithHeader]")
     private TextualRichFacesPanel panelWithHeader;

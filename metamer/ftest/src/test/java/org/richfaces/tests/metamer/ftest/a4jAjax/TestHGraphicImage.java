@@ -22,13 +22,13 @@
 package org.richfaces.tests.metamer.ftest.a4jAjax;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.ajaxAttributes;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
@@ -40,6 +40,8 @@ import org.testng.annotations.Test;
  * @since 4.3.0.M2
  */
 public class TestHGraphicImage extends AbstractAjaxTest {
+
+    private final Attributes<AjaxAttributes> ajaxAttributes = getAttributes();
 
     @Override
     public URL getTestUrl() {

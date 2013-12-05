@@ -37,7 +37,6 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttribute
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.onmouseout;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.onmouseover;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.onmouseup;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuAttributes;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -51,6 +50,7 @@ import org.richfaces.fragment.panelMenu.RichFacesPanelMenuGroup;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 import com.google.common.base.Predicate;
@@ -61,11 +61,13 @@ import com.google.common.base.Predicate;
  */
 public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
 
+    private final Attributes<PanelMenuAttributes> panelMenuAttributes = getAttributes();
+
     @Inject
     @Use(empty = true)
-    Event event = DBLCLICK;
+    private Event event = DBLCLICK;
 
-    Event[] events = new Event[] { CLICK, DBLCLICK, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER, MOUSEUP };
+    private Event[] events = new Event[]{ CLICK, DBLCLICK, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER, MOUSEUP };
 
     @Test
     @Use(field = "event", value = "events")

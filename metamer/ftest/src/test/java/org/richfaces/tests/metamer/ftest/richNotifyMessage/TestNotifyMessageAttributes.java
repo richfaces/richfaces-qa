@@ -27,17 +27,19 @@ import java.net.URL;
 
 import org.openqa.selenium.TimeoutException;
 import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.richNotify.TestNotifyAttributes;
-import org.richfaces.tests.metamer.ftest.webdriver.AttributeList;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
+
+    private final Attributes<NotifyMessageAttributes> notifyMessageAttributes = getAttributes();
 
     @Override
     public URL getTestUrl() {
@@ -79,8 +81,8 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
 
     @Test
     public void testNonblocking() {
-        AttributeList.notifyMessageAttributes.set(NotifyMessageAttributes.nonblocking, Boolean.TRUE);
-        AttributeList.notifyMessageAttributes.set(NotifyMessageAttributes.nonblockingOpacity, 0);
+        notifyMessageAttributes.set(NotifyMessageAttributes.nonblocking, Boolean.TRUE);
+        notifyMessageAttributes.set(NotifyMessageAttributes.nonblockingOpacity, 0);
         generateValidationMessagesWithWait();
         Utils.triggerJQ(executor, "mouseover", getPage().getMessageComponentForFirstInput().advanced().getRootElement());
         TestNotifyAttributes.waitForOpacityChange(0, getPage().getMessageComponentForFirstInput().advanced().getRootElement());
@@ -90,8 +92,8 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
 
     @Test
     public void testNonblockingOpacity() {
-        AttributeList.notifyMessageAttributes.set(NotifyMessageAttributes.nonblocking, Boolean.TRUE);
-        AttributeList.notifyMessageAttributes.set(NotifyMessageAttributes.nonblockingOpacity, 0.5);
+        notifyMessageAttributes.set(NotifyMessageAttributes.nonblocking, Boolean.TRUE);
+        notifyMessageAttributes.set(NotifyMessageAttributes.nonblockingOpacity, 0.5);
         generateValidationMessagesWithWait();
         Utils.triggerJQ(executor, "mouseover", getPage().getMessageComponentForFirstInput().advanced().getRootElement());
         TestNotifyAttributes.waitForOpacityChange(0.5, getPage().getMessageComponentForFirstInput().advanced().getRootElement());
@@ -156,13 +158,13 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
 
     @Test
     public void testShowCloseButton() {
-        AttributeList.notifyMessageAttributes.set(NotifyMessageAttributes.showCloseButton, Boolean.TRUE);
+        notifyMessageAttributes.set(NotifyMessageAttributes.showCloseButton, Boolean.TRUE);
         generateValidationMessagesWithWait();
         int sizeBefore = getPage().getGlobalNotify().size();
         getPage().getGlobalNotify().getItem(0).close();
         Assert.assertEquals(getPage().getGlobalNotify().size(), sizeBefore - 1);
 
-        AttributeList.notifyMessageAttributes.set(NotifyMessageAttributes.showCloseButton, Boolean.FALSE);
+        notifyMessageAttributes.set(NotifyMessageAttributes.showCloseButton, Boolean.FALSE);
         generateValidationMessagesWithWait();
         try {
             getPage().getGlobalNotify().getItem(0).close();
@@ -179,11 +181,11 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
 
     @Test
     public void testShowShadow() {
-        AttributeList.notifyMessageAttributes.set(NotifyMessageAttributes.showShadow, Boolean.TRUE);
+        notifyMessageAttributes.set(NotifyMessageAttributes.showShadow, Boolean.TRUE);
         generateValidationMessagesWithWait();
         assertVisible(getPage().getGlobalNotify().getItem(0).advanced().getShadowElement(), "Shadow should be visible");
 
-        AttributeList.notifyMessageAttributes.set(NotifyMessageAttributes.showShadow, Boolean.FALSE);
+        notifyMessageAttributes.set(NotifyMessageAttributes.showShadow, Boolean.FALSE);
         generateValidationMessagesWithWait();
         assertNotVisible(getPage().getGlobalNotify().getItem(0).advanced().getShadowElement(), "Shadow should not be visible");
     }
@@ -197,19 +199,19 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
     public void testStack() {
         String[] stacks = { "topLeftStack", "bottomRightStack", "notRenderedStack" };
         //default position is top right
-        AttributeList.notifyMessageAttributes.set(NotifyMessageAttributes.stack, "");
+        notifyMessageAttributes.set(NotifyMessageAttributes.stack, "");
         generateValidationMessagesWithWait();
         Assert.assertEquals(getPage().getMessageComponentForFirstInput().advanced().getPosition(), NotifyMessagePosition.TOP_RIGHT);
 
-        AttributeList.notifyMessageAttributes.set(NotifyMessageAttributes.stack, stacks[0]);
+        notifyMessageAttributes.set(NotifyMessageAttributes.stack, stacks[0]);
         generateValidationMessagesWithWait();
         Assert.assertEquals(getPage().getMessageComponentForFirstInput().advanced().getPosition(), NotifyMessagePosition.TOP_LEFT);
 
-        AttributeList.notifyMessageAttributes.set(NotifyMessageAttributes.stack, stacks[1]);
+        notifyMessageAttributes.set(NotifyMessageAttributes.stack, stacks[1]);
         generateValidationMessagesWithWait();
         Assert.assertEquals(getPage().getMessageComponentForFirstInput().advanced().getPosition(), NotifyMessagePosition.BOTTOM_RIGHT);
 
-        AttributeList.notifyMessageAttributes.set(NotifyMessageAttributes.stack, stacks[2]);
+        notifyMessageAttributes.set(NotifyMessageAttributes.stack, stacks[2]);
         generateValidationMessagesWithWait();
         Assert.assertFalse(getPage().getMessageComponentForFirstInput().advanced().isVisible());
         Assert.assertFalse(getPage().getMessageComponentForSecondInput().advanced().isVisible());
@@ -218,8 +220,8 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
 
     @Test
     public void testStaytime() {
-        AttributeList.notifyMessageAttributes.set(NotifyMessageAttributes.stayTime, 1000);
-        AttributeList.notifyMessageAttributes.set(NotifyMessageAttributes.sticky, Boolean.FALSE);
+        notifyMessageAttributes.set(NotifyMessageAttributes.stayTime, 1000);
+        notifyMessageAttributes.set(NotifyMessageAttributes.sticky, Boolean.FALSE);
         generateValidationMessagesWithWait();
         waiting(3000);
         Assert.assertEquals(getPage().getGlobalNotify().size(), 0, "There should be no message anymore.");
@@ -227,8 +229,8 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
 
     @Test
     public void testSticky() {
-        AttributeList.notifyMessageAttributes.set(NotifyMessageAttributes.stayTime, 1000);
-        AttributeList.notifyMessageAttributes.set(NotifyMessageAttributes.sticky, Boolean.TRUE);
+        notifyMessageAttributes.set(NotifyMessageAttributes.stayTime, 1000);
+        notifyMessageAttributes.set(NotifyMessageAttributes.sticky, Boolean.TRUE);
         generateValidationMessagesWithWait();
         waiting(3000);
         Assert.assertTrue(getPage().getGlobalNotify().size() > 0, "There should be some messages.");

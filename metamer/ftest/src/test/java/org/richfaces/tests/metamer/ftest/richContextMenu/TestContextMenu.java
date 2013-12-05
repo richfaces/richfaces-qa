@@ -27,7 +27,6 @@ import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.contextMenuAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -53,6 +52,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.ui.common.Positioning;
 import org.testng.annotations.Test;
 
@@ -66,6 +66,8 @@ import org.testng.annotations.Test;
  */
 public class TestContextMenu extends AbstractWebDriverTest {
 
+    private final Attributes<ContextMenuAttributes> contextMenuAttributes = getAttributes();
+
     @Page
     private ContextMenuSimplePage page;
     @Inject
@@ -78,6 +80,14 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richContextMenu/simple.xhtml");
+    }
+
+    public Locations getContextMenuLocationsWhenPosition(Positioning positioning) {
+        contextMenuAttributes.set(ContextMenuAttributes.direction, positioning);
+        page.getContextMenu().advanced().show(page.getTargetPanel2());
+        Locations contextMenuLocations = Utils.getLocations(page.getContextMenuContent());
+        page.getContextMenu().advanced().hide();
+        return contextMenuLocations;
     }
 
     private void updateShowAction() {
@@ -167,7 +177,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         contextMenuAttributes.set(ContextMenuAttributes.direction, "bottomRight");
 
         Locations defaultLocations = page.getContextMenuLocations();// bottom right
-        Locations actMenuLocation = page.getContextMenuLocationsWhenPosition(positioning);
+        Locations actMenuLocation = getContextMenuLocationsWhenPosition(positioning);
 
         int defaultWidth = defaultLocations.getWidth();
         int defaultHeight = defaultLocations.getHeight();

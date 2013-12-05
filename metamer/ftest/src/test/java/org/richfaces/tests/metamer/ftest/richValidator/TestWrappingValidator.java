@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richValidator;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.validatorAttributes;
 
 import java.net.URL;
 
@@ -30,6 +29,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -40,7 +40,8 @@ import org.testng.annotations.Test;
  */
 public class TestWrappingValidator extends AbstractValidatorsTest {
 
-    /** component page locator */
+    private final Attributes<ValidatorAttributes> validatorAttributes = getAttributes();
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richValidator/wrapping.xhtml");

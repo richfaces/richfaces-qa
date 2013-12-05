@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richInputNumberSpinner;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.inputNumberSpinnerAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -40,6 +39,7 @@ import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
@@ -53,10 +53,12 @@ import org.testng.annotations.Test;
 @RegressionTest("https://issues.jboss.org/browse/RF-12365")
 public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinnerTest {
 
+    private final Attributes<InputNumberSpinnerAttributes> inputNumberSpinnerAttributes = getAttributes();
+
     @FindBy(css = "span.rf-insp-inc-dis")
-    WebElement disabledIncreaseBtn;
+    private WebElement disabledIncreaseBtn;
     @FindBy(css = "span.rf-insp-dec-dis")
-    WebElement disabledDecreaseBtn;
+    private WebElement disabledDecreaseBtn;
 
     @Override
     public URL getTestUrl() {
@@ -122,8 +124,8 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
         String testedValue = "4";
         String listenerMsg = "value changed: " + DEFAULT_VALUE + " -> " + testedValue;
         typeToInput(testedValue);
-        page.assertPhases(PhaseId.ANY_PHASE);
-        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, listenerMsg);
+        getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, listenerMsg);
     }
 
     @Test
@@ -224,7 +226,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     @Templates(value = "plain")
     public void testOnblur() {
         testFireEvent(inputNumberSpinnerAttributes, InputNumberSpinnerAttributes.onblur,
-            new Actions(driver).click(spinner.advanced().getInput().advanced().getInputElement()).click(page.getRequestTimeElement())
+            new Actions(driver).click(spinner.advanced().getInput().advanced().getInputElement()).click(getMetamerPage().getRequestTimeElement())
                 .build());
     }
 

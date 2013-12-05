@@ -44,14 +44,15 @@ import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
  */
 public abstract class AbstractConverterTest extends AbstractWebDriverTest {
 
+    private static final String CUSTOM_CONVERTER_MESSAGE = "Custom converter message";
+    private final Attributes<ConverterAttributes> attributes = getAttributes();
+
     @FindBy(css = "[id$=output]")
     private WebElement output;
     @FindBy(css = "[id$=a4jButton]")
     private WebElement ajaxSubmitButton;
     @FindBy(css = "[id$=msg]")
     private RichFacesMessage message;
-    private static final String CUSTOM_CONVERTER_MESSAGE = "Custom converter message";
-    private static final Attributes<ConverterAttributes> attributes = new Attributes<ConverterAttributes>();
 
     protected abstract String badValue();
 

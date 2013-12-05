@@ -22,13 +22,13 @@
 package org.richfaces.tests.metamer.ftest.a4jAjax;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.ajaxAttributes;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.ui.Select;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -38,6 +38,8 @@ import org.testng.annotations.Test;
  * @since 4.3.0.M2
  */
 public class TestHSelectManyListbox extends AbstractAjaxTest {
+
+    private final Attributes<AjaxAttributes> ajaxAttributes = getAttributes();
 
     @Override
     public URL getTestUrl() {

@@ -29,7 +29,6 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemA
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.onmousemove;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.onmouseover;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.onmouseup;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuItemAttributes;
 import static org.richfaces.ui.common.Mode.client;
 
 import java.net.URL;
@@ -40,6 +39,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 
@@ -51,8 +51,10 @@ import org.testng.annotations.Test;
 @Templates("plain")
 public class TestPanelMenuItemDOMEventHandlers extends AbstractWebDriverTest {
 
+    private final Attributes<PanelMenuItemAttributes> panelMenuItemAttributes = getAttributes();
+
     @Page
-    PanelMenuItemPage page;
+    private PanelMenuItemPage page;
 
     @Override
     public URL getTestUrl() {
