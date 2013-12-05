@@ -778,6 +778,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     public void testOninputmousedown() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputmousedown,
             new Actions(driver).clickAndHold(popupCalendar.getInput().advanced().getInputElement()).build());
+        // cleanup
         new Actions(driver).release().perform();
     }
 
@@ -798,11 +799,8 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testOninputmouseover() {
-        testFireEvent(
-            calendarAttributes,
-            CalendarAttributes.oninputmouseover,
-            new Actions(driver).moveToElement(page.getPhasesElements().get(0))
-                .moveToElement(driver.findElement(ByJQuery.selector("input[id$='calendarInputDate']"))).build());
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseover,
+            new Actions(driver).moveToElement(page.getRequestTimeElement()).moveToElement(popupCalendar.getInput().advanced().getInputElement()).build());
     }
 
     @Test
