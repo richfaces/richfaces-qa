@@ -28,16 +28,11 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -88,6 +83,16 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         }
     }
 
+    private final Action delayTestAction = new Action() {
+        private String timeBefore = "";
+
+        @Override
+        public void perform() {
+            Graphene.waitModel().until().element(getMetamerPage().getRequestTimeElement()).text().not().equalTo(timeBefore);
+            timeBefore = getMetamerPage().getRequestTimeElement().getText();
+        }
+    };
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richInputNumberSlider/simple.xhtml");
@@ -136,13 +141,14 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
-    @Use(field = "delay", ints = { 800, 1250, 1900 })
+    @Use(field = "delay", ints = { 1000, 2000 })
     public void testDelay() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.delay, delay);
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
 
-        verifyDelay(slider.advanced().getArrowDecreaseElement(), delay);
-        verifyDelay(slider.advanced().getArrowIncreaseElement(), delay);
+        fireEvent(slider.advanced().getArrowIncreaseElement(), Event.MOUSEDOWN);// starts with increasing/decreasing of the value
+        testDelay(delayTestAction, delayTestAction, "delay", delay);
+        fireEvent(slider.advanced().getArrowIncreaseElement(), Event.MOUSEUP);
     }
 
     @Test
@@ -519,7 +525,6 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.delay, 100);
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.step, 7);
-        String startValue = slider.advanced().getInput().getStringValue();
 
         MetamerPage.waitRequest(slider, WaitRequestType.XHR).increase();
         assertEquals(output.getText(), "9", "Wrong output");
@@ -651,44 +656,5 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
 
         assertEquals(output.getText(), number, "Output was not updated.");
         assertEquals(slider.advanced().getInput().getStringValue(), min, "Input was not updated.");
-    }
-
-    /**
-     * Clicks on slider's arrow and verifies delay.
-     *
-     * @param arrow slider's left or right arrow element
-     * @param delay delay of request
-     */
-    private void verifyDelay(WebElement arrow, int delay) {
-        DateTimeFormatter dtf = DateTimeFormat.forPattern("HH:mm:ss.SSS");
-        long delta = (long) (delay * 0.5);
-        int numberOfValues = 5;
-        List<String> timesList = new ArrayList<String>(numberOfValues);
-
-        String beforeTime = getMetamerPage().getRequestTimeElement().getText();
-        fireEvent(arrow, Event.MOUSEDOWN);// starts with increasing/decreasing of the value
-        for (int i = 0; i < numberOfValues; i++) {
-            Graphene.waitModel().until().element(getMetamerPage().getRequestTimeElement()).text().not().equalTo(beforeTime);
-            beforeTime = getMetamerPage().getRequestTimeElement().getText();
-            timesList.add(beforeTime);
-        }
-        fireEvent(arrow, Event.MOUSEUP);// stops with increasing/decreasing of the value
-
-        DateTime[] timesArray = new DateTime[numberOfValues];
-        for (int i = 0; i < numberOfValues; i++) {
-            timesArray[i] = dtf.parseDateTime(timesList.get(i));
-        }
-
-        long average = countAverage(timesArray);
-        assertTrue(Math.abs(average - delay) < delta, "Average delay " + average + " is too far from set value (" + delay
-            + "). Delta was: " + delta + "[ms].");
-    }
-
-    private long countAverage(DateTime[] times) {
-        long total = 0L;
-        for (int i = 0; i < times.length - 1; i++) {
-            total += (times[i].getMillis() - times[i + 1].getMillis());
-        }
-        return Math.abs(total / (times.length - 1));
     }
 }
