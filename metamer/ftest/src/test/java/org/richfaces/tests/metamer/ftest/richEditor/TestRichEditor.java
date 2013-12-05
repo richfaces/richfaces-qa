@@ -130,6 +130,7 @@ public class TestRichEditor extends AbstractWebDriverTest {
 
     @Test
     public void testSkin() {
+        // WebElement elemWithClassAttribute = driver.findElement(ByJQuery.jquerySelector(".cke_skin_richfaces"));
         WebElement elemWithClassAttribute = driver.findElement(By.cssSelector("span[id$='editor:inp']"));
         verifySkin("kama", elemWithClassAttribute);
         verifySkin("office2003", elemWithClassAttribute);
