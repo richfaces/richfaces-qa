@@ -21,11 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.webdriver;
 
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Lists;
-
-import java.util.Iterator;
 import java.util.List;
 
 import org.jboss.arquillian.drone.api.annotation.Default;
@@ -43,6 +38,10 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
+
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -107,25 +106,13 @@ public class Attributes<T extends AttributeEnum> {
 
     private void applySelect(WebElement selectElement, String valueToBeSet) {
         Select select = new Select(selectElement);
-        if (valueToBeSet.equals(NULLSTRING)) {
-            for (WebElement element : select.getOptions()) {
-                String val = element.getAttribute("value");
-                if (new StringEqualsWrapper(val).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
-                    if (!element.isSelected()) {
-                        MetamerPage.waitRequest(element, WaitRequestType.HTTP).click();
-                    }
-                    return;
-                }
-            }
-        } else {
-            if (isSelectOptionsContainingValue(valueToBeSet, select.getOptions())) {
-                select.selectByValue(valueToBeSet);
-            } else {
-                select.selectByVisibleText(valueToBeSet);
-            }
-            return;
+        String option = valueToBeSet;
+        if (new StringEqualsWrapper(valueToBeSet).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
+            option = NULLSTRING;
         }
-        throw new IllegalArgumentException("No property with value " + valueToBeSet + " was found");
+        if (!select.getFirstSelectedOption().getText().equals(option)) {// == is selected?
+            MetamerPage.waitRequest(select, WaitRequestType.HTTP).selectByVisibleText(option);
+        }
     }
 
     /**
@@ -258,15 +245,6 @@ public class Attributes<T extends AttributeEnum> {
 
     private String getValueFromSelect(WebElement selectElement) {
         return getValueFromList(new Select(selectElement).getAllSelectedOptions());
-    }
-
-    private boolean isSelectOptionsContainingValue(String value, List<WebElement> options) {
-        for (Iterator<WebElement> i = options.iterator(); i.hasNext();) {
-            if (value.equals(i.next().getAttribute("value"))) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public void reset(T attribute) {
