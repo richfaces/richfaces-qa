@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.a4jCommandLink;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.commandLinkAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -38,6 +37,7 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.a4jCommandButton.CommandButtonLinkPage;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
@@ -49,6 +49,8 @@ import org.testng.annotations.Test;
  * @since 4.3.0.M2
  */
 public class TestCommandLink extends AbstractWebDriverTest {
+
+    private final Attributes<CommandLinkAttributes> commandLinkAttributes = getAttributes();
 
     @Page
     private CommandButtonLinkPage page;

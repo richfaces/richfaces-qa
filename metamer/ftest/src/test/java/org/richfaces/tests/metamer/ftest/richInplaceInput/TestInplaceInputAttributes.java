@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.inplaceInputAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -42,6 +41,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.inplaceInput.ConfirmOrCancel;
@@ -58,6 +58,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestInplaceInputAttributes extends AbstractWebDriverTest {
+
+    private final Attributes<InplaceInputAttributes> inplaceInputAttributes = getAttributes();
 
     @Page
     private MetamerPage page;

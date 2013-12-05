@@ -26,7 +26,6 @@ import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.tabAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -43,6 +42,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -53,6 +53,8 @@ import org.testng.annotations.Test;
  * @version $Revision: 22963 $
  */
 public class TestTab extends AbstractWebDriverTest {
+
+    private final Attributes<TabAttributes> tabAttributes = getAttributes();
 
     @Page
     TabSimplePage page;

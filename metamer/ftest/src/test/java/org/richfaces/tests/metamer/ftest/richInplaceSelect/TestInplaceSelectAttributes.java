@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.richInplaceSelect;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.inplaceSelectAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -46,6 +45,7 @@ import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.model.Capital;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.inplaceInput.ConfirmOrCancel;
@@ -62,6 +62,8 @@ import org.testng.annotations.Test;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  */
 public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
+
+    private final Attributes<InplaceSelectAttributes> inplaceSelectAttributes = getAttributes();
 
     private final By listBy = By.cssSelector("span.rf-is-lst-cord");
     private final By listHeightBy = By.cssSelector("span.rf-is-lst-scrl");

@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richGraphValidator;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.graphValidatorAttributes;
 
 import java.net.URL;
 
@@ -33,6 +32,7 @@ import org.richfaces.tests.metamer.bean.rich.RichGraphValidatorBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.common.CheckboxInputComponentImpl;
@@ -52,6 +52,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestGraphValidator extends AbstractWebDriverTest {
+
+    private final Attributes<GraphValidatorAttributes> graphValidatorAttributes = getAttributes();
 
     private static final String CORRECT_STRING_VALUE = ":-)";
     private static final String CORRECT_INT_VALUE = "10";

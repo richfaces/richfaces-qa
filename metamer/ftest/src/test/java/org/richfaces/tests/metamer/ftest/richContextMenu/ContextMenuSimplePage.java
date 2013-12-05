@@ -21,13 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richContextMenu;
 
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.contextMenuAttributes;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.richfaces.component.Positioning;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.DriverType;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -94,14 +91,6 @@ public class ContextMenuSimplePage extends MetamerPage {
     }
 
     public Locations getContextMenuLocations() {
-        contextMenu.advanced().show(targetPanel2);
-        Locations contextMenuLocations = Utils.getLocations(contextMenuContent);
-        contextMenu.advanced().hide();
-        return contextMenuLocations;
-    }
-
-    public Locations getContextMenuLocationsWhenPosition(Positioning positioning) {
-        contextMenuAttributes.set(ContextMenuAttributes.direction, positioning);
         contextMenu.advanced().show(targetPanel2);
         Locations contextMenuLocations = Utils.getLocations(contextMenuContent);
         contextMenu.advanced().hide();

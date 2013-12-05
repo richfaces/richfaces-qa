@@ -24,7 +24,6 @@ package org.richfaces.tests.metamer.ftest.richToolbarGroup;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemStyle;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.toolbarGroupAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -45,6 +44,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.richToolbar.ToolbarPage;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -54,6 +54,8 @@ import org.testng.annotations.Test;
  * @since 4.3.4.Final
  */
 public class TestToolbarGroup extends AbstractWebDriverTest {
+
+    private final Attributes<ToolbarGroupAttributes> toolbarGroupAttributes = getAttributes();
 
     @Page
     private ToolbarPage page;

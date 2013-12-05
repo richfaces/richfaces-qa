@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.a4jJSFunction;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.jsFunctionAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotSame;
 
@@ -35,6 +34,7 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.JavascriptExecutor;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
@@ -46,6 +46,8 @@ import org.testng.annotations.Test;
  * @since 5.0.0.Alpha1
  */
 public class TestJSFunctionSimple extends AbstractWebDriverTest {
+
+    private final Attributes<JSFunctionAttributes> jsFunctionAttributes = getAttributes();
 
     @Page
     private JSFunctionPage page;

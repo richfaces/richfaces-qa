@@ -21,13 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richToggleControl;
 
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.toggleControlAttributes;
 import static org.testng.Assert.assertFalse;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 
 /**
  * Abstract test case for rich:toggleControl.
@@ -36,6 +36,8 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
  * @version $Revision: 21115 $
  */
 public abstract class AbstractTestToggleControl extends AbstractWebDriverTest {
+
+    private final Attributes<ToggleControlAttributes> toggleControlAttributes = getAttributes();
 
     @Page
     ToggleControlPage page;

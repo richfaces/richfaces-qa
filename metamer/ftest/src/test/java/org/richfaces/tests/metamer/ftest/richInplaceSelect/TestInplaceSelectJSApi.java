@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richInplaceSelect;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.inplaceSelectAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -33,6 +32,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceComponentState;
@@ -47,19 +47,21 @@ import org.testng.annotations.Test;
  */
 public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
 
+    private final Attributes<InplaceSelectAttributes> inplaceSelectAttributes = getAttributes();
+
     @FindBy(css = "span[id$=inplaceSelect]")
     private RichFacesInplaceSelect inplaceSelect;
-    //
+
     @FindBy(css = "[id$=inplaceSelect] span.rf-is-lst-cord")
     private WebElement popup;
     @FindBy(css = "body > span.rf-is-lst-cord")
     private WebElement globalPopup;
-    //
+
     @FindBy(css = "input[id$=':value']")
     private WebElement output;
     @FindBy(css = "input[id$=a4jButton]")
     private WebElement a4jButton;
-    //
+
     @FindBy(id = "cancel")
     private WebElement cancelButton;
     @FindBy(id = "getInput")
@@ -82,7 +84,7 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
     private WebElement setValueButton;
     @FindBy(id = "showPopup")
     private WebElement showPopup;
-    //
+
     private static final String SOME_VALUE = "Hawaii";
 
     @Override

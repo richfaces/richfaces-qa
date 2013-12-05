@@ -21,14 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTabPanel;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
 import static org.jboss.arquillian.graphene.Graphene.waitAjax;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.tabPanelAttributes;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -50,6 +49,7 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -58,6 +58,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:manovotn@redhat.com">Matej Novotny</a>
  */
 public class TestTabPanel extends AbstractWebDriverTest {
+
+    private final Attributes<TabPanelAttributes> tabPanelAttributes = getAttributes();
 
     @Override
     public URL getTestUrl() {

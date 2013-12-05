@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richNotifyStack;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.notifyStackAttributes;
 
 import java.net.URL;
 import java.util.Locale;
@@ -38,6 +37,7 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.Locations;
@@ -53,6 +53,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestNotifyStackAttributes extends AbstractWebDriverTest {
+
+    private final Attributes<NotifyStackAttributes> notifyStackAttributes = getAttributes();
 
     @FindBy(css = "input[id$='generateMessage']")
     private WebElement generateMessageButton;

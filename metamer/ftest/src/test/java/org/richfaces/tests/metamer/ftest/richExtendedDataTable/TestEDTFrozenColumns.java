@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.extendedDataTableAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotEquals;
@@ -41,6 +40,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
@@ -48,6 +48,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestEDTFrozenColumns extends AbstractWebDriverTest {
+
+    private final Attributes<ExtendedDataTableAttributes> extendedDataTableAttributes = getAttributes();
 
     @Page
     private FrozenColumnsPage page;

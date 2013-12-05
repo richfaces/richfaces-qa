@@ -28,7 +28,6 @@ import static org.richfaces.component.Mode.ajax;
 import static org.richfaces.component.Mode.client;
 import static org.richfaces.component.Mode.server;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.mode;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuGroupAttributes;
 
 import java.net.URL;
 
@@ -37,6 +36,7 @@ import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
@@ -48,21 +48,23 @@ import org.testng.annotations.Test;
  */
 public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroupTest {
 
+    private final Attributes<PanelMenuGroupAttributes> panelMenuGroupAttributes = getAttributes();
+
     @Inject
     @Use(empty = true)
-    String event;
+    private String event;
 
-    String[] ajaxExpansionEvents = new String[] { "beforeselect", "beforeswitch", "beforeexpand", "begin", "beforedomupdate",
-            "select", "expand", "switch", "complete" };
-    String[] ajaxCollapsionEvents = new String[] { "beforeselect", "beforeswitch", "beforecollapse", "begin",
-            "beforedomupdate", "select", "collapse", "switch", "complete" };
-    String[] clientExpansionEvents = new String[] { "beforeselect", "beforeswitch", "beforeexpand", "select", "expand",
-            "switch" };
-    String[] clientCollapsionEvents = new String[] { "beforeselect", "beforeswitch", "beforecollapse", "select", "collapse",
-            "collapse", "switch" };
-    String[] serverExpansionEvents1 = new String[] { "beforeswitch" };
-    String[] serverExpansionEvents2 = new String[] { "beforeexpand" };
-    String[] serverCollapsionEvents = new String[] { "beforeswitch", "beforecollapse" };
+    private String[] ajaxExpansionEvents = new String[]{ "beforeselect", "beforeswitch", "beforeexpand", "begin", "beforedomupdate",
+        "select", "expand", "switch", "complete" };
+    private String[] ajaxCollapsionEvents = new String[]{ "beforeselect", "beforeswitch", "beforecollapse", "begin",
+        "beforedomupdate", "select", "collapse", "switch", "complete" };
+    private String[] clientExpansionEvents = new String[]{ "beforeselect", "beforeswitch", "beforeexpand", "select", "expand",
+        "switch" };
+    private String[] clientCollapsionEvents = new String[]{ "beforeselect", "beforeswitch", "beforecollapse", "select", "collapse",
+        "collapse", "switch" };
+    private String[] serverExpansionEvents1 = new String[]{ "beforeswitch" };
+    private String[] serverExpansionEvents2 = new String[]{ "beforeexpand" };
+    private String[] serverCollapsionEvents = new String[]{ "beforeswitch", "beforecollapse" };
 
     @Override
     public URL getTestUrl() {

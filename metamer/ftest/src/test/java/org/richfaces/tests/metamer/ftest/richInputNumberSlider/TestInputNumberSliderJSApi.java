@@ -22,13 +22,13 @@
 package org.richfaces.tests.metamer.ftest.richInputNumberSlider;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.inputNumberSliderAttributes;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
@@ -40,19 +40,21 @@ import org.testng.annotations.Test;
  */
 public class TestInputNumberSliderJSApi extends AbstractSliderTest {
 
+    private final Attributes<InputNumberSliderAttributes> inputNumberSliderAttributes = getAttributes();
+
     private static final String DEFAULT_VALUE = "2";
     private static final String SET_VALUE = "5";
-    //
+
     @FindBy(css = "[id$=getValue]")
-    WebElement getValueButton;
+    private WebElement getValueButton;
     @FindBy(css = "[id$=setValue]")
-    WebElement setValueButton;
+    private WebElement setValueButton;
     @FindBy(css = "[id$=increase]")
-    WebElement increaseButton;
+    private WebElement increaseButton;
     @FindBy(css = "[id$=decrease]")
-    WebElement decreaseButton;
+    private WebElement decreaseButton;
     @FindBy(css = "input[id$=':value']")
-    WebElement value;
+    private WebElement value;
 
     @Override
     public URL getTestUrl() {

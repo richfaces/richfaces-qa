@@ -22,19 +22,21 @@
 package org.richfaces.tests.metamer.ftest.richFileUpload;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.fileUploadAttributes;
 
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestFileUploadProgressFacet extends AbstractFileUploadTest {
+
+    private final Attributes<FileUploadAttributes> fileUploadAttributes = getAttributes();
 
     @FindBy(css = "div[id$=customProgressBar]")
     private WebElement customPB;

@@ -24,7 +24,6 @@ package org.richfaces.tests.metamer.ftest.richEditor;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.editorAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -39,9 +38,12 @@ import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 public class TestEditorJSApi extends AbstractWebDriverTest {
+
+    private final Attributes<EditorAttributes> editorAttributes = getAttributes();
 
     @Override
     public URL getTestUrl() {

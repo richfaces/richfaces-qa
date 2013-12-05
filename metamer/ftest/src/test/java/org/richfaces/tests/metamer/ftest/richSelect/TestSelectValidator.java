@@ -22,13 +22,13 @@
 package org.richfaces.tests.metamer.ftest.richSelect;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.selectAttributes;
 
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.validator.CaliforniaFirstValidator;
 import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
 import org.richfaces.tests.page.fragments.impl.select.RichFacesSelect;
@@ -41,6 +41,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestSelectValidator extends AbstractWebDriverTest {
+
+    private final Attributes<SelectAttributes> selectAttributes = getAttributes();
 
     @FindBy(css = "div[id$=select]")
     private RichFacesSelect select;

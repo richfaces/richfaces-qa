@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richMenuSeparator;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.menuSeparatorAttributes;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
@@ -31,6 +30,7 @@ import java.util.List;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -40,6 +40,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestMenuSeparator extends AbstractWebDriverTest {
+
+    private final Attributes<MenuSeparatorAttributes> menuSeparatorAttributes = getAttributes();
 
     @FindBy(css = "div.rf-ddm-sep")
     private List<WebElement> separators;

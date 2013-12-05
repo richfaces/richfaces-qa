@@ -27,10 +27,9 @@ import static javax.faces.event.PhaseId.PROCESS_VALIDATIONS;
 import static javax.faces.event.PhaseId.RENDER_RESPONSE;
 import static javax.faces.event.PhaseId.RESTORE_VIEW;
 import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuItemAttributes;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
 import java.util.LinkedList;
@@ -42,6 +41,7 @@ import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 
@@ -52,25 +52,27 @@ import org.testng.annotations.Test;
  */
 public class TestPanelMenuItemMode extends AbstractWebDriverTest {
 
+    private final Attributes<PanelMenuItemAttributes> panelMenuItemAttributes = getAttributes();
+
     @Page
-    PanelMenuItemPage page;
+    private PanelMenuItemPage page;
 
     @Inject
     @Use(booleans = { true, false })
-    Boolean immediate;
+    private Boolean immediate;
 
     @Inject
     @Use(booleans = { true, false })
-    Boolean bypassUpdates;
+    private Boolean bypassUpdates;
 
     @Inject
     @Use(enumeration = true)
-    Mode mode;
+    private Mode mode;
 
     @Inject
     @Use("listeners")
-    String listener;
-    String[] listeners = new String[] { "phases", "action invoked", "action listener invoked", "executeChecker",
+    private String listener;
+    private String[] listeners = new String[]{ "phases", "action invoked", "action listener invoked", "executeChecker",
         "item changed" };
 
     @Override

@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.richInputNumberSlider;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.inputNumberSliderAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -50,6 +49,7 @@ import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.Utils;
@@ -65,8 +65,11 @@ import org.testng.annotations.Test;
  */
 public class TestInputNumberSliderAttributes extends AbstractSliderTest {
 
+    private final Attributes<InputNumberSliderAttributes> inputNumberSliderAttributes = getAttributes();
+
     @FindBy(css = "span.rf-insl > br")
-    WebElement br;
+    private WebElement br;
+
     @Inject
     @Use(empty = false)
     private Position position;
@@ -188,8 +191,8 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         slider.advanced().getInput().advanced().clear(ClearType.JS).sendKeys("-10");
         guardAjax(slider.advanced().getInput().advanced()).trigger("blur");
 
-        page.assertPhases(PhaseId.ANY_PHASE);
-        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: 2 -> -10");
+        getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: 2 -> -10");
 
         assertEquals(output.getText(), "-10", "Output was not updated.");
     }
@@ -618,7 +621,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     @Test
     public void testValueChangeListener() {
         typeToInputActionWithXHRWaitRequest("5").perform();
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: 2 -> 5");
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: 2 -> 5");
     }
 
     @Test
@@ -662,11 +665,11 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         int numberOfValues = 5;
         List<String> timesList = new ArrayList<String>(numberOfValues);
 
-        String beforeTime = page.getRequestTimeElement().getText();
+        String beforeTime = getMetamerPage().getRequestTimeElement().getText();
         fireEvent(arrow, Event.MOUSEDOWN);// starts with increasing/decreasing of the value
         for (int i = 0; i < numberOfValues; i++) {
-            Graphene.waitModel().until().element(page.getRequestTimeElement()).text().not().equalTo(beforeTime);
-            beforeTime = page.getRequestTimeElement().getText();
+            Graphene.waitModel().until().element(getMetamerPage().getRequestTimeElement()).text().not().equalTo(beforeTime);
+            beforeTime = getMetamerPage().getRequestTimeElement().getText();
             timesList.add(beforeTime);
         }
         fireEvent(arrow, Event.MOUSEUP);// stops with increasing/decreasing of the value

@@ -42,12 +42,12 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttribute
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.topItemDisabledRightIcon;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.topItemLeftIcon;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.topItemRightIcon;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuAttributes;
 
 import org.openqa.selenium.WebElement;
 import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -57,6 +57,8 @@ import org.testng.annotations.Test;
  * @since 4.3.1.Final
  */
 public class TestPanelMenuIcon extends AbstractPanelMenuTest {
+
+    private final Attributes<PanelMenuAttributes> panelMenuAttributes = getAttributes();
 
     @BeforeMethod(alwaysRun = true)
     public void initializePage() {

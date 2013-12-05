@@ -21,7 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richPlaceholder;
 
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.placeholderAttributes;
 import static org.testng.Assert.assertTrue;
 
 import org.openqa.selenium.By;
@@ -29,6 +28,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -36,6 +36,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestPlaceHolderWithEditor extends AbstractPlaceholderTest {
+
+    private final Attributes<PlaceholderAttributes> placeholderAttributes = getAttributes();
 
     @FindBy(css = INPUT1_ID + " textarea")
     private WebElement input1;
