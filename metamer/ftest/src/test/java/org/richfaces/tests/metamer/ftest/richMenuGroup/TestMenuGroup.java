@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richMenuGroup;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.menuGroupAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -41,6 +40,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.Locations;
 import org.richfaces.tests.page.fragments.impl.Utils;
@@ -56,6 +56,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestMenuGroup extends AbstractWebDriverTest {
+
+    private final Attributes<MenuGroupAttributes> menuGroupAttributes = getAttributes();
 
     @FindByJQuery(".rf-tb-itm:eq(0)")
     private RichFacesDropDownMenu fileDropDownMenu;

@@ -23,7 +23,6 @@
 package org.richfaces.tests.metamer.ftest.a4jParam;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.paramAttributes;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
@@ -33,6 +32,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
@@ -44,6 +44,8 @@ import org.testng.annotations.Test;
  * @since 5.0.0.Alpha1
  */
 public class TestParam extends AbstractWebDriverTest {
+
+    private final Attributes<ParamAttributes> paramAttributes = getAttributes();
 
     @Page
     private SimpleParamPage page;

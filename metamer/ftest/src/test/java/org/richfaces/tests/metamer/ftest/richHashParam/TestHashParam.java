@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richHashParam;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.hashParamAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -31,6 +30,7 @@ import java.net.URL;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.page.fragments.impl.Locations;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.popupPanel.PopupPanel.ResizerLocation;
@@ -44,6 +44,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestHashParam extends AbstractWebDriverTest {
+
+    private final Attributes<HashParamAttributes> hashParamAttributes = getAttributes();
 
     //params set on page with hashParam
     private static final int MIN_WIDTH = 300;

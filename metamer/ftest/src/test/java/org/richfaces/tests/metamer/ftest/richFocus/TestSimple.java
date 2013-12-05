@@ -32,13 +32,15 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.webdriver.AttributeList;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
 public class TestSimple extends AbstractWebDriverTest {
+
+    private final Attributes<FocusAttributes> focusAttributes = getAttributes();
 
     @Page
     private FocusSimplePage page;
@@ -59,7 +61,7 @@ public class TestSimple extends AbstractWebDriverTest {
 
     @Test
     public void testAjaxRenderedFalse() {
-        AttributeList.focusAttributes.set(FocusAttributes.ajaxRendered, false);
+        focusAttributes.set(FocusAttributes.ajaxRendered, false);
 
         page.ajaxValidateInputs();
 
@@ -89,7 +91,7 @@ public class TestSimple extends AbstractWebDriverTest {
     public void testValidationAwareFalse() {
         // richPopupPanel is disabled because in place where following attribute is to be set the popup
         // window appears, therefore making it unclickable
-        AttributeList.focusAttributes.set(FocusAttributes.validationAware, false);
+        focusAttributes.set(FocusAttributes.validationAware, false);
 
         page.getNameInput().sendKeys("Robert");
         page.getAgeInput().sendKeys("38");

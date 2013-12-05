@@ -25,7 +25,6 @@
 package org.richfaces.tests.metamer.ftest;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.basicAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -135,12 +134,16 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         driverType = DriverType.getCurrentType(driver);
     }
 
-    protected MetamerPage getMetamerPage() {
-        return metamerPage;
+    protected Attributes<BasicAttributes> getBasicAttributes() {
+        return getAttributes();
     }
 
     protected Attributes<MetamerAttributes> getMetamerAttributes() {
         return getAttributes();
+    }
+
+    protected MetamerPage getMetamerPage() {
+        return metamerPage;
     }
 
     /**
@@ -373,7 +376,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         final String TESTVALUE = "cz";
         String attLang;
         // set lang to TESTVALUE
-        basicAttributes.set(BasicAttributes.lang, TESTVALUE);
+        getBasicAttributes().set(BasicAttributes.lang, TESTVALUE);
         // get attribute lang of element
         String lang1 = element.getAttribute("xml:lang");
         String lang2 = element.getAttribute("lang");
@@ -412,9 +415,9 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * @param element WebElement reference of tested element
      */
     protected void testDir(WebElement element) {
-        testHTMLAttribute(element, basicAttributes, BasicAttributes.dir, "null");
-        testHTMLAttribute(element, basicAttributes, BasicAttributes.dir, "ltr");
-        testHTMLAttribute(element, basicAttributes, BasicAttributes.dir, "rtl");
+        testHTMLAttribute(element, getBasicAttributes(), BasicAttributes.dir, "null");
+        testHTMLAttribute(element, getBasicAttributes(), BasicAttributes.dir, "ltr");
+        testHTMLAttribute(element, getBasicAttributes(), BasicAttributes.dir, "rtl");
     }
 
     /**
@@ -618,7 +621,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      */
     protected void testStyle(final WebElement element, BasicAttributes attribute) {
         final String value = "background-color: yellow; font-size: 1.5em;";
-        testHTMLAttribute(element, basicAttributes, attribute, value);
+        testHTMLAttribute(element, getBasicAttributes(), attribute, value);
     }
 
     /**
@@ -640,7 +643,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      */
     protected void testStyleClass(WebElement element, BasicAttributes attribute) {
         final String styleClass = "metamer-ftest-class";
-        testHTMLAttribute(element, basicAttributes, attribute, styleClass);
+        testHTMLAttribute(element, getBasicAttributes(), attribute, styleClass);
     }
 
     /**
@@ -660,7 +663,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      */
     protected void testTitle(WebElement element) {
         final String testTitle = "RichFaces 4";
-        testHTMLAttribute(element, basicAttributes, BasicAttributes.title, testTitle);
+        testHTMLAttribute(element, getBasicAttributes(), BasicAttributes.title, testTitle);
     }
 
     /**

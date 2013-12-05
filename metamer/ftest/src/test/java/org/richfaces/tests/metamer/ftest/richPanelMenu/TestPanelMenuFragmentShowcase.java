@@ -2,7 +2,6 @@ package org.richfaces.tests.metamer.ftest.richPanelMenu;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
@@ -16,9 +15,12 @@ import org.richfaces.tests.page.fragments.impl.panelMenu.RichFacesPanelMenu;
 import org.richfaces.tests.page.fragments.impl.panelMenu.RichFacesPanelMenuItem;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 public class TestPanelMenuFragmentShowcase extends AbstractWebDriverTest {
+
+    private final Attributes<PanelMenuAttributes> panelMenuAttributes = getAttributes();
 
     @Override
     public URL getTestUrl() {

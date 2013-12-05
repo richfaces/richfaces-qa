@@ -40,7 +40,6 @@ import static org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttribu
 import static org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttributes.onbegin;
 import static org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttributes.oncomplete;
 import static org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttributes.render;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.dropTargetAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -58,6 +57,7 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
@@ -71,8 +71,10 @@ import org.testng.annotations.Test;
 @Templates(value = {"plain", "richCollapsibleSubTable"} )
 public class TestDropTargetInCollapsibleSubTable extends AbstractWebDriverTest {
 
+    private final Attributes<DropTargetAttributes> dropTargetAttributes = getAttributes();
+
     @Page
-    DropTargetSimplePage page;
+    private DropTargetSimplePage page;
 
     private Indicator indicator;
 

@@ -25,7 +25,7 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.abstractions.message.AbstractMessagesComponentTest;
 import org.richfaces.tests.metamer.ftest.richMessages.MessagesAttributes;
-import org.richfaces.tests.metamer.ftest.webdriver.AttributeList;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.Assert;
 
 /**
@@ -36,26 +36,28 @@ import org.testng.Assert;
  */
 public abstract class AbstractNotifyMessagesTest extends AbstractMessagesComponentTest {
 
+    private final Attributes<MessagesAttributes> messagesAttributes = getAttributes();
+
     @Page
     protected NotifyMessagesPage page;
 
     @Override
     public void checkFor(int expectedMessages) {
-        AttributeList.messagesAttributes.set(MessagesAttributes.FOR, "");
+        messagesAttributes.set(MessagesAttributes.FOR, "");
         generateValidationMessagesWithoutWait();
         submitWithA4jBtn();
 
         Assert.assertFalse(getPage().getMessagesComponentWithFor().advanced().isVisible());
 
         // now set for attribute to "simpleInput1"
-        AttributeList.messagesAttributes.set(MessagesAttributes.FOR, "simpleInput1");
+        messagesAttributes.set(MessagesAttributes.FOR, "simpleInput1");
         generateValidationMessagesWithWait();
 
         Assert.assertTrue(page.getMessagesComponentWithFor().advanced().isVisible());
         Assert.assertEquals(page.getMessagesComponentWithFor().size(), expectedMessages);
 
         // now set for attribute back to "simpleInput2"
-        AttributeList.messagesAttributes.set(MessagesAttributes.FOR, "simpleInput2");
+        messagesAttributes.set(MessagesAttributes.FOR, "simpleInput2");
         generateValidationMessagesWithWait();
 
         Assert.assertTrue(page.getMessagesComponentWithFor().advanced().isVisible());
@@ -64,13 +66,13 @@ public abstract class AbstractNotifyMessagesTest extends AbstractMessagesCompone
 
     @Override
     public void checkGlobalOnly(int expectedMessagesPerInput) {
-        AttributeList.messagesAttributes.set(MessagesAttributes.globalOnly, Boolean.FALSE);
+        messagesAttributes.set(MessagesAttributes.globalOnly, Boolean.FALSE);
         generateValidationMessagesWithWait();
         //messages for both inputs should appear
         Assert.assertTrue(page.getMessagesComponentWithGlobal().advanced().isVisible());
         Assert.assertEquals(page.getMessagesComponentWithGlobal().size(), expectedMessagesPerInput * 2);
 
-        AttributeList.messagesAttributes.set(MessagesAttributes.globalOnly, Boolean.TRUE);
+        messagesAttributes.set(MessagesAttributes.globalOnly, Boolean.TRUE);
         generateValidationMessagesWithoutWait();
         submitWithA4jBtn();
         //no messages should appear, because validation messages are bound to inputs not to 'null'

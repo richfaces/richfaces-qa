@@ -37,7 +37,6 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGrou
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.rightExpandedIcon;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.selectable;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.status;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuGroupAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -48,6 +47,7 @@ import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -56,6 +56,8 @@ import org.testng.annotations.Test;
  * @since 4.3.1
  */
 public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
+
+    private final Attributes<PanelMenuGroupAttributes> panelMenuGroupAttributes = getAttributes();
 
     @Test
     public void testData() {

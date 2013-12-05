@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richProgressBar;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.progressBarAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -37,11 +36,10 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.page.Page;
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.bean.rich.RichProgressBarBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.testng.annotations.Test;
@@ -54,7 +52,8 @@ import org.testng.annotations.Test;
  */
 public class TestProgressBarClient extends AbstractWebDriverTest {
 
-    private static final DateTimeFormatter FORMATTER = DateTimeFormat.forPattern("HH:mm:ss.SSS");
+    private final Attributes<ProgressBarAttributes> progressBarAttributes = getAttributes();
+
     @Page
     private ProgressBarPage page;
 

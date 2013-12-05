@@ -23,9 +23,7 @@ package org.richfaces.tests.metamer.ftest.webdriver;
 
 import java.util.List;
 
-import org.jboss.arquillian.drone.api.annotation.Default;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -48,26 +46,18 @@ import com.google.common.collect.Lists;
  */
 public class Attributes<T extends AttributeEnum> {
 
-    private FutureTarget<WebDriver> driver;
-    private final String attributesID;
     private static final String PROPERTY_CSS_SELECTOR = "[id$='%s:%sInput']";
     private static final String NULLSTRING = "null";
     private static final String[] NULLSTRINGOPTIONS = { NULLSTRING, "", " " };
     private static final int TRIES = 5;
 
-    @Deprecated
-    public Attributes() {
-        this("");
-    }
+    private final String attributesID;
 
-    @Deprecated
-    public Attributes(String attributesID) {
-        this(null, attributesID);
-    }
+    private FutureTarget<WebDriver> browser;
 
     public Attributes(FutureTarget<WebDriver> driver, String attributesID) {
         this.attributesID = attributesID;
-        this.driver = driver;
+        this.browser = driver;
     }
 
     public static <T extends AttributeEnum> Attributes<T> getAttributesFor(FutureTarget<WebDriver> driver) {
@@ -124,7 +114,7 @@ public class Attributes<T extends AttributeEnum> {
     private void applyText(WebElement input, String value) {
         String text = input.getAttribute("value");
         if (!value.equals(text)) {
-            Utils.jQ((JavascriptExecutor) getDriver(), "val(\"" + value + "\")", input);
+            Utils.jQ((JavascriptExecutor) getBrowser(), "val(\"" + value + "\")", input);
             MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();
         }
     }
@@ -187,11 +177,8 @@ public class Attributes<T extends AttributeEnum> {
         return By.cssSelector(String.format(PROPERTY_CSS_SELECTOR, attributesID, property));
     }
 
-    private WebDriver getDriver() {
-        if (driver == null) {
-            return GrapheneContext.getContextFor(Default.class).getWebDriver(JavascriptExecutor.class);
-        }
-        return driver.getTarget();
+    private WebDriver getBrowser() {
+        return browser.getTarget();
     }
 
     /**
@@ -202,7 +189,7 @@ public class Attributes<T extends AttributeEnum> {
      */
     private String getProperty(String propertyName) {
         By by = getCssSelectorForProperty(propertyName);
-        WebElement element = getDriver().findElement(by);
+        WebElement element = getBrowser().findElement(by);
         Graphene.waitModel().until().element(element).is().visible();
         SearchResult result = SearchResult.getResultForElement(element);
         switch (result.getTag()) {
@@ -303,7 +290,7 @@ public class Attributes<T extends AttributeEnum> {
 
         //element for all types of input elements
         By by = getCssSelectorForProperty(propertyNameCorrect);
-        WebElement element = getDriver().findElement(by);
+        WebElement element = getBrowser().findElement(by);
         Graphene.waitModel().until().element(element).is().visible();
         SearchResult result = SearchResult.getResultForElement(element);
         switch (result.getTag()) {

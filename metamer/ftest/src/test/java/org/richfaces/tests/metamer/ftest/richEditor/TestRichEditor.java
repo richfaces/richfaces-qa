@@ -28,7 +28,6 @@ import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.richfaces.tests.metamer.ftest.richEditor.EditorAttributes.styleClass;
 import static org.richfaces.tests.metamer.ftest.richEditor.EditorAttributes.title;
 import static org.richfaces.tests.metamer.ftest.richEditor.EditorAttributes.toolbar;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.editorAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -40,6 +39,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -49,6 +49,8 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestRichEditor extends AbstractWebDriverTest {
+
+    private final Attributes<EditorAttributes> editorAttributes = getAttributes();
 
     @Override
     public URL getTestUrl() {

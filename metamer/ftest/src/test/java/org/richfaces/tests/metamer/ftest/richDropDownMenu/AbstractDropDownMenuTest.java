@@ -26,7 +26,6 @@ import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.dropDownMenuAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
@@ -46,6 +45,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuSimplePage;
 import org.richfaces.tests.page.fragments.impl.dropDownMenu.RichFacesDropDownMenu;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 
 /**
  * Abstract test used for testing both drop down menus - top and side
@@ -54,8 +54,16 @@ import org.richfaces.tests.page.fragments.impl.utils.Event;
  */
 public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
 
+    private final Attributes<DropDownMenuAttributes> dropDownMenuAttributes = getAttributes();
+
     private RichFacesDropDownMenu getCurrentMenu() {
         return page.getFileDropDownMenu(driver.getCurrentUrl());
+    }
+
+    public String returnPopupWidth(String minWidth, RichFacesDropDownMenu dropDownMenu) {
+        dropDownMenuAttributes.set(DropDownMenuAttributes.popupWidth, minWidth);
+        dropDownMenu.advanced().show(page.getTarget1());
+        return page.getDropDownMenuContent().getCssValue("min-width");
     }
 
     private void updateDropDownMenuInvoker() {
@@ -221,13 +229,13 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
     public void testPopupWidth() {
         updateDropDownMenuInvoker();
         String minWidth = "333";
-        assertEquals(page.returnPopupWidth(minWidth, getCurrentMenu()), minWidth + "px");
+        assertEquals(returnPopupWidth(minWidth, getCurrentMenu()), minWidth + "px");
 
         minWidth = "250";
-        assertEquals(page.returnPopupWidth(minWidth, getCurrentMenu()), minWidth + "px");
+        assertEquals(returnPopupWidth(minWidth, getCurrentMenu()), minWidth + "px");
 
         minWidth = "250";
-        assertEquals(page.returnPopupWidth(minWidth, getCurrentMenu()), minWidth + "px");
+        assertEquals(returnPopupWidth(minWidth, getCurrentMenu()), minWidth + "px");
     }
 
     public void testRendered() {

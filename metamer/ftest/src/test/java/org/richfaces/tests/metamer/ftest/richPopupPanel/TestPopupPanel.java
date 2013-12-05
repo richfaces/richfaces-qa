@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richPopupPanel;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.popupPanelAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertTrue;
@@ -45,6 +44,7 @@ import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.Locations;
@@ -64,6 +64,8 @@ import org.testng.annotations.Test;
  */
 public class TestPopupPanel extends AbstractWebDriverTest {
 
+    private final Attributes<PopupPanelAttributes> popupPanelAttributes = getAttributes();
+
     @FindBy(css = "input[id$=openPanelButton]")
     private WebElement openButton;
     @FindBy(css = "div.rf-pp-shade[id$=popupPanel_shade]")
@@ -72,9 +74,10 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     private TestedPopupPanel panel;
     @FindBy(css = "input[id$=resize]")
     private WebElement resize;
+
     @Use(empty = false)
     @Inject
-    ResizerLocation resizer;
+    private ResizerLocation resizer;
 
     private void checkCssValueOf(String cssValue, double value, WebElement element) {
         int tolerance = 5;

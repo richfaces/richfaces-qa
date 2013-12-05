@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richPlaceholder;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.placeholderAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -37,6 +36,7 @@ import org.jboss.test.selenium.support.color.ColorUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 
 /**
@@ -44,6 +44,8 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public abstract class AbstractPlaceholderNonJSFTest extends AbstractWebDriverTest {
+
+    private final Attributes<PlaceholderAttributes> placeholderAttributes = getAttributes();
 
     private static final String INPUT1_ID = "[id$=input1]";
     private static final String INPUT2_ID = "[id$=input2]";

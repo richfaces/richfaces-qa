@@ -41,7 +41,6 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemA
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.rightIcon;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.selectable;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.status;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuItemAttributes;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -57,6 +56,7 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -70,8 +70,10 @@ import com.google.common.base.Predicate;
  */
 public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
 
+    private final Attributes<PanelMenuItemAttributes> panelMenuItemAttributes = getAttributes();
+
     @Page
-    PanelMenuItemPage page;
+    private PanelMenuItemPage page;
 
     @Override
     public URL getTestUrl() {

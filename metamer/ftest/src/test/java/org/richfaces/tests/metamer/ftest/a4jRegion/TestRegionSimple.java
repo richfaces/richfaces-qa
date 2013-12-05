@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.a4jRegion;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.regionAttributes;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -33,6 +32,7 @@ import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -40,6 +40,8 @@ import org.testng.annotations.Test;
  * @version $Revision: 22691 $
  */
 public class TestRegionSimple extends AbstractWebDriverTest {
+
+    private final Attributes<RegionAttributes> regionAttributes = getAttributes();
 
     @FindByJQuery("input:text[id$=user2NameInput]")
     private GrapheneElement nameInput;
