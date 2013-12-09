@@ -27,9 +27,7 @@ import static org.testng.Assert.assertEquals;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 /**
@@ -40,9 +38,6 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestAutocompleteKVS extends AbstractAutocompleteTest {
-
-    @Page
-    private MetamerPage page;
 
     @Override
     public URL getTestUrl() {
@@ -60,10 +55,6 @@ public class TestAutocompleteKVS extends AbstractAutocompleteTest {
     }
 
     private class AutocompleteReloadTester extends AbstractWebDriverTest.ReloadTester<String> {
-
-        public AutocompleteReloadTester() {
-            super(page);
-        }
 
         @Override
         public void doRequest(String inputValue) {

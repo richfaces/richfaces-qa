@@ -127,10 +127,6 @@ public class TestMatrix extends AbstractWebDriverTest {
 
     private class MatrixReloadTester extends ReloadTester<int[]> {
 
-        public MatrixReloadTester() {
-            super(page);
-        }
-
         @Override
         public void doRequest(int[] coords) {
             page.changeValue(coords[0], coords[1], 12);
