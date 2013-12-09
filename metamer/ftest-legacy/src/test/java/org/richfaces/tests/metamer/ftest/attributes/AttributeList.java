@@ -20,7 +20,6 @@ import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.ExtendedDataTableAttributes;
 import org.richfaces.tests.metamer.ftest.richTogglePanel.TogglePanelAttributes;
 import org.richfaces.tests.metamer.ftest.richTogglePanelItem.TogglePanelItemAttributes;
-import org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes;
 
 public class AttributeList {
 
@@ -44,7 +43,6 @@ public class AttributeList {
         jq("form[id$=displayControlsForm]"));
     public static Attributes<QueueAttributes> queueAttributes = new Attributes<QueueAttributes>(
         pjq("table.attributes[id$=queueAttributes]"));
-    public static Attributes<TooltipAttributes> tooltipAttributes = new Attributes<TooltipAttributes>();
     public static Attributes<TogglePanelItemAttributes> togglePanelItemAttributes = new Attributes<TogglePanelItemAttributes>();
     public static Attributes<TogglePanelAttributes> togglePanelAttributes = new Attributes<TogglePanelAttributes>();
 }
