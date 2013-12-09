@@ -21,9 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.richAccordionItem;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
 
@@ -34,7 +34,6 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 /**
@@ -56,7 +55,7 @@ public class TestAccordionItemKVS extends AbstractWebDriverTest {
     @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
             "richList" })
     public void testRefreshFullPage() {
-        new AccordionReloadTester(page).testFullPageRefresh();
+        new AccordionReloadTester().testFullPageRefresh();
     }
 
     @Test(groups = { "keepVisualStateTesting" })
@@ -70,14 +69,10 @@ public class TestAccordionItemKVS extends AbstractWebDriverTest {
     @Test(groups = { "keepVisualStateTesting", "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-12035")
     public void testRenderAll() {
-        new AccordionReloadTester(page).testRerenderAll();
+        new AccordionReloadTester().testRerenderAll();
     }
 
     private class AccordionReloadTester extends ReloadTester<String> {
-
-        public AccordionReloadTester(MetamerPage page) {
-            super(page);
-        }
 
         /**
          * Used to create a variable JQuery expression based in accordion item ID number and find the element. The pattern

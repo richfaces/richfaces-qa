@@ -870,13 +870,6 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      */
     public abstract class ReloadTester<T> {
 
-        private MetamerPage page;
-
-        public ReloadTester(MetamerPage page) {
-            super();
-            this.page = page;
-        }
-
         public abstract void doRequest(T inputValue);
 
         public abstract void verifyResponse(T inputValue);
@@ -887,7 +880,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             for (T inputValue : getInputValues()) {
                 doRequest(inputValue);
                 verifyResponse(inputValue);
-                page.rerenderAll();
+                getMetamerPage().rerenderAll();
                 verifyResponse(inputValue);
             }
         }
@@ -896,7 +889,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             for (T inputValue : getInputValues()) {
                 doRequest(inputValue);
                 verifyResponse(inputValue);
-                page.fullPageRefresh();
+                getMetamerPage().fullPageRefresh();
                 verifyResponse(inputValue);
             }
         }

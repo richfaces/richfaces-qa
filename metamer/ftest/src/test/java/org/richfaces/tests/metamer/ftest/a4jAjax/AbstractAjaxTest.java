@@ -240,10 +240,6 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
 
     private class LocalReloadTester extends ReloadTester<String> {
 
-        public LocalReloadTester() {
-            super(page);
-        }
-
         @Override
         public void doRequest(String inputValue) {
             String reqTime = page.getRequestTimeElement().getText();

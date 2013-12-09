@@ -82,10 +82,6 @@ public class TestCalendarKVS extends AbstractCalendarTest {
     /** Test visual state get by typing date into input */
     private class CalendarInputReloadTester extends ReloadTester<String> {
 
-        public CalendarInputReloadTester() {
-            super(page);
-        }
-
         @Override
         public void doRequest(String inputValue) {
             calendarAttributes.set(CalendarAttributes.enableManualInput, Boolean.TRUE);
@@ -106,10 +102,6 @@ public class TestCalendarKVS extends AbstractCalendarTest {
 
     /** Test visual state get by selection from popup and confirmed by apply button */
     private class CalendarPopupReloadTester extends ReloadTester<String> {
-
-        public CalendarPopupReloadTester() {
-            super(page);
-        }
 
         private String selectedDate = null;
 
