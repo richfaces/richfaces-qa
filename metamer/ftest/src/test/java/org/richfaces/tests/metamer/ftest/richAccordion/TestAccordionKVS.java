@@ -62,10 +62,6 @@ public class TestAccordionKVS extends AbstractWebDriverTest {
 
     private class AccordionReloadTester extends ReloadTester<Integer> {
 
-        public AccordionReloadTester() {
-            super(page);
-        }
-
         @Override
         public void doRequest(Integer accordionIndex) {
             page.getAccordion().switchTo(accordionIndex.intValue());
