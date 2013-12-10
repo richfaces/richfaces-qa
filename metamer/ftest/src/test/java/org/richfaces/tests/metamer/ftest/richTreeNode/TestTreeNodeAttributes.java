@@ -64,13 +64,14 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @Templates("plain")
     public void testDir() {
         testHTMLAttribute(getFirstNode().advanced().getNodeInfoElement(), firstNodeAttributes, TreeNodeAttributes.dir, "rtl");
         testHTMLAttribute(getFirstNode().advanced().getNodeInfoElement(), firstNodeAttributes, TreeNodeAttributes.dir, "ltr");
     }
 
     @Test
-    @Templates(value = "plain")
+    @Templates("plain")
     public void testHandleClass() {
         testHTMLAttribute(getFirstNode().advanced().getHandleElement(), firstNodeAttributes, TreeNodeAttributes.handleClass, "metamer-ftest-class");
         // check child node
@@ -78,7 +79,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
-    @Templates(value = "plain")
+    @Templates("plain")
     public void testIconClass() {
         testHTMLAttribute(getFirstNode().advanced().getIconElement(), firstNodeAttributes, TreeNodeAttributes.iconClass, "metamer-ftest-class");
         // check child node
@@ -86,7 +87,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
-    @Templates(value = "plain")
+    @Templates("plain")
     public void testIconCollapsed() {
         firstNodeAttributes.set(TreeNodeAttributes.iconCollapsed, IMAGE_URL);
         String attribute = getImageSrcFromTreeNode(getFirstNode());
@@ -106,7 +107,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
-    @Templates(value = "plain")
+    @Templates("plain")
     public void testIconExpanded() {
         firstNodeAttributes.set(TreeNodeAttributes.iconExpanded, IMAGE_URL);
         String attribute = getImageSrcFromTreeNode(getFirstNode());
@@ -123,7 +124,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
-    @Templates(value = "plain")
+    @Templates("plain")
     public void testIconLeaf() {
         lastNodeAttributes.set(TreeNodeAttributes.iconLeaf, IMAGE_URL);
         TreeNode leaf = tree.expandNode(0).expandNode(0).advanced().getFirstNode();
@@ -145,7 +146,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
-    @Templates(value = "plain")
+    @Templates("plain")
     public void testLabelClass() {
         testHTMLAttribute(getFirstNode().advanced().getLabelElement(), firstNodeAttributes, TreeNodeAttributes.labelClass, "metamer-ftest-class");
         // check child node
@@ -153,7 +154,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
-    @Templates(value = "plain")
+    @Templates("plain")
     public void testLang() {
         testHTMLAttribute(getFirstNode().advanced().getNodeInfoElement(), firstNodeAttributes, TreeNodeAttributes.lang);
     }
@@ -165,57 +166,67 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @Templates("plain")
     public void testOnclick() {
         testFireEvent(firstNodeAttributes, TreeNodeAttributes.onclick,
             new Actions(driver).triggerEventByWD(Event.CLICK, getFirstNode().advanced().getLabelElement()).build());
     }
 
     @Test
+    @Templates("plain")
     public void testOndblclick() {
         testFireEvent(firstNodeAttributes, TreeNodeAttributes.ondblclick,
             new Actions(driver).doubleClick(getFirstNode().advanced().getLabelElement()).build());
     }
 
     @Test
+    @Templates("plain")
     public void testOnkeydown() {
         testFireEventWithJS(getFirstNode().advanced().getLabelElement(), firstNodeAttributes, TreeNodeAttributes.onkeydown);
     }
 
     @Test
+    @Templates("plain")
     public void testOnkeypress() {
         testFireEventWithJS(getFirstNode().advanced().getLabelElement(), firstNodeAttributes, TreeNodeAttributes.onkeypress);
     }
 
     @Test
+    @Templates("plain")
     public void testOnkeyup() {
         testFireEventWithJS(getFirstNode().advanced().getLabelElement(), firstNodeAttributes, TreeNodeAttributes.onkeyup);
     }
 
     @Test
+    @Templates("plain")
     public void testOnmousedown() {
         testFireEvent(firstNodeAttributes, TreeNodeAttributes.onmousedown,
             new Actions(driver).triggerEventByWD(Event.CLICK, getFirstNode().advanced().getLabelElement()).build());
     }
 
     @Test
+    @Templates("plain")
     public void testOnmousemove() {
         testFireEvent(firstNodeAttributes, TreeNodeAttributes.onmousemove,
             new Actions(driver).triggerEventByWD(Event.MOUSEMOVE, getFirstNode().advanced().getLabelElement()).build());
     }
 
     @Test
+    @Templates("plain")
     public void testOnmouseout() {
         testFireEvent(firstNodeAttributes, TreeNodeAttributes.onmouseout,
             new Actions(driver).triggerEventByWD(Event.MOUSEOUT, getFirstNode().advanced().getLabelElement()).build());
     }
 
     @Test
+    @Templates("plain")
     public void testOnmouseover() {
         testFireEvent(firstNodeAttributes, TreeNodeAttributes.onmouseover,
             new Actions(driver).triggerEventByWD(Event.MOUSEOVER, getFirstNode().advanced().getLabelElement()).build());
     }
 
     @Test
+    @Templates("plain")
     public void testOnmouseup() {
         testFireEvent(firstNodeAttributes, TreeNodeAttributes.onmouseup,
             new Actions(driver).triggerEventByWD(Event.CLICK, getFirstNode().advanced().getLabelElement()).build());
@@ -228,6 +239,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @Templates("plain")
     public void testRendered() {
         firstNodeAttributes.set(TreeNodeAttributes.rendered, Boolean.TRUE);
         assertVisible(getFirstNode().advanced().getRootElement(), "Tree node should be visible");
@@ -236,16 +248,19 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @Templates("plain")
     public void testStyle() {
         testHTMLAttribute(getFirstNode().advanced().getNodeInfoElement(), firstNodeAttributes, TreeNodeAttributes.style, "background-color: yellow; font-size: 1.5em;");
     }
 
     @Test
+    @Templates("plain")
     public void testStyleClass() {
         testHTMLAttribute(getFirstNode().advanced().getNodeInfoElement(), firstNodeAttributes, TreeNodeAttributes.styleClass, "metamer-ftest-class");
     }
 
     @Test
+    @Templates("plain")
     public void testTitle() {
         testHTMLAttribute(getFirstNode().advanced().getNodeInfoElement(), firstNodeAttributes, TreeNodeAttributes.title);
     }
