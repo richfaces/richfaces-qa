@@ -204,7 +204,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
         assertVisible(fileMenuList, "Menu should be expanded");
 
         assertVisible(icon, "Icon of menu item should be visible on the page");
-        assertTrue(icon.getAttribute("src").endsWith("create_doc.gif"), "Default menu item icon should be 'create_doc.gif'");
+        assertTrue(icon.getAttribute("src").contains("create_doc.gif"), "Default menu item icon should be 'create_doc.gif'");
 
         assertVisible(label, "Label of menu item should be visible on the page");
         assertEquals(label.getText(), "New", "Label of the menu item");
