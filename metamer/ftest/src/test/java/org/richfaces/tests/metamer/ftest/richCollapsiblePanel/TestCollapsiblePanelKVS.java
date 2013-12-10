@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2010, Red Hat, Inc., and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc., and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -21,31 +21,34 @@
  */
 package org.richfaces.tests.metamer.ftest.richCollapsiblePanel;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.utils.URLUtils;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.test.selenium.support.url.URLUtils;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.collapsiblePanel.TextualRichFacesCollapsiblePanel;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
 /**
- * Test keeping visual state for page /faces/components/richCollapsiblePanel/simple.xhtml
+ * Test keeping visual state for page
+ * /faces/components/richCollapsiblePanel/simple.xhtml
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision$
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestCollapsiblePanelKVS extends AbstractGrapheneTest {
+public class TestCollapsiblePanelKVS extends AbstractWebDriverTest {
 
-    CollapsiblePanelReloadTester reloadTester = new CollapsiblePanelReloadTester();
+    @FindBy(css = ".rf-cp[id$=collapsiblePanel]")
+    private TextualRichFacesCollapsiblePanel panel;
+
+    private final CollapsiblePanelReloadTester reloadTester = new CollapsiblePanelReloadTester();
 
     @Override
     public URL getTestUrl() {
@@ -73,43 +76,27 @@ public class TestCollapsiblePanelKVS extends AbstractGrapheneTest {
 
     private class CollapsiblePanelReloadTester extends ReloadTester<Boolean> {
 
-        private JQueryLocator content = pjq("div[id$=collapsiblePanel:content]");
-        private JQueryLocator header = pjq("div[id$=collapsiblePanel:header]");
-        private JQueryLocator headerExp = pjq("div[id$=collapsiblePanel:header] div.rf-cp-lbl-exp");
-        private JQueryLocator headerColps = pjq("div[id$=collapsiblePanel:header] div.rf-cp-lbl-colps");
-
         @Override
-        public void doRequest(Boolean expanded) {
-            String reqTime = selenium.getText(time);
-            if (expanded) {
-                if (!isExpanded()) {
-                    guardXhr(selenium).click(header);
-                    waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
-                }
+        public void doRequest(Boolean willBeCollapsed) {
+            if (willBeCollapsed) {
+                Graphene.guardAjax(panel).collapse();
             } else {
-                if (isExpanded()) {
-                    guardXhr(selenium).click(header);
-                    waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
-                }
+                Graphene.guardAjax(panel).expand();
             }
         }
 
         @Override
-        public void verifyResponse(Boolean expanded) {
-            if (expanded) {
-                assertTrue(isExpanded());
+        public void verifyResponse(Boolean willBeCollapsed) {
+            if (willBeCollapsed) {
+                assertTrue(panel.advanced().isCollapsed(), "Panel should be collapsed");
             } else {
-                assertFalse(isExpanded());
+                assertFalse(panel.advanced().isCollapsed(), "Panel should be expanded");
             }
         }
 
         @Override
         public Boolean[] getInputValues() {
-            return new Boolean[] { Boolean.TRUE, Boolean.FALSE };
-        }
-
-        private boolean isExpanded() {
-            return selenium.isVisible(headerExp) && !selenium.isVisible(headerColps) && selenium.isVisible(content);
+            return new Boolean[]{ Boolean.TRUE, Boolean.FALSE };
         }
     }
 }
