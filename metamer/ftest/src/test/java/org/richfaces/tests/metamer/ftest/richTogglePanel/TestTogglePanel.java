@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richTogglePanel;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -74,6 +75,12 @@ public class TestTogglePanel extends AbstractWebDriverTest {
     private GrapheneElement tcNext;
     @FindBy(css = "a[id$=tcLast]")
     private GrapheneElement tcLast;
+    @FindBy(css = "[id$=getItems]")
+    private GrapheneElement getItems;
+    @FindBy(css = "[id$=getItemsNames]")
+    private GrapheneElement getItemsNames;
+    @FindBy(css = "[id$=value]")
+    private GrapheneElement jsApiOutput;
 
     @Inject
     @Use
@@ -160,6 +167,18 @@ public class TestTogglePanel extends AbstractWebDriverTest {
         Graphene.guardAjax(tc3).click();
         assertTrue(item3.isDisplayed(), "Item 3 should be displayed");
         getMetamerPage().assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: item1 -> item3");
+    }
+
+    @Test
+    public void testJSApiGetItems() {
+        getItems.click();
+        assertEquals(jsApiOutput.getAttribute("value"), "3");
+    }
+
+    @Test
+    public void testJSApiGetItemsNames() {
+        getItemsNames.click();
+        assertEquals(jsApiOutput.getAttribute("value"), "item1,item2,item3");
     }
 
     @Test
