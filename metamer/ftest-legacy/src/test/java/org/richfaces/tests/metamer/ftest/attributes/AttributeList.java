@@ -14,7 +14,6 @@ import org.richfaces.tests.metamer.ftest.richColumn.ColumnAttributes;
 import org.richfaces.tests.metamer.ftest.richColumnGroup.ColumnGroupAttributes;
 import org.richfaces.tests.metamer.ftest.richComponentControl.ComponentControlAttributes;
 import org.richfaces.tests.metamer.ftest.richDataGrid.DataGridAttributes;
-import org.richfaces.tests.metamer.ftest.richDataScroller.DataScrollerAttributes;
 import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.ExtendedDataTableAttributes;
 
@@ -33,7 +32,6 @@ public class AttributeList {
     public static Attributes<DataGridAttributes> dataGridAttributes = new Attributes<DataGridAttributes>();
     public static Attributes<DataTableAttributes> dataTableAttributes = new Attributes<DataTableAttributes>();
     public static Attributes<DataTableFacets> dataTableFacets = new Attributes<DataTableFacets>(RequestType.XHR); // for facets
-    public static Attributes<DataScrollerAttributes> dataScrollerAttributes = new Attributes<DataScrollerAttributes>();
     public static Attributes<ExtendedDataTableAttributes> extendedDataTableAttributes = new Attributes<ExtendedDataTableAttributes>();
     public static Attributes<MetamerAttributes> metamerAttributes = new Attributes<MetamerAttributes>(
         jq("form[id$=displayControlsForm]"));
