@@ -38,27 +38,6 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
 
-            <h:outputText id="time" value="#{phasesBean.date}">
-                <f:convertDateTime pattern="HH:mm:ss.SSS" />
-            </h:outputText>
-
-            <br/><br/>
-
-            <a id="tcLink1" name="tcLink1" style="cursor:pointer" onclick="#{r:component('richTogglePanel')}.switchToItem('item1')">Item 1</a>
-            <h:outputText value=" | " />
-            <a id="tcLink2" name="tcLink2" style="cursor:pointer" onclick="#{r:component('richTogglePanel')}.switchToItem('item2')">Item 2</a>
-            <h:outputText value=" | " />
-            <a id="tcLink3" name="tcLink2" style="cursor:pointer" onclick="#{r:component('richTogglePanel')}.switchToItem('item3')">Item 3</a>
-            <br/>
-            <a id="tcFirst" name="tcFirst" style="cursor:pointer" onclick="#{r:component('richTogglePanel')}.switchToItem(#{r:component('richTogglePanel')}.firstItem())">First Item</a>
-            <h:outputText value=" | " />
-            <a id="tcPrev" name="tcPrev" style="cursor:pointer" onclick="#{r:component('richTogglePanel')}.switchToItem(#{r:component('richTogglePanel')}.prevItem())">Prev Item</a>
-            <h:outputText value=" | " />
-            <a id="tcNext" style="cursor:pointer" name="tcNext" onclick="#{r:component('richTogglePanel')}.switchToItem(#{r:component('richTogglePanel')}.nextItem())">Next Item</a>
-            <h:outputText value=" | " />
-            <a id="tcLast" style="cursor:pointer" name="tcLast" onclick="#{r:component('richTogglePanel')}.switchToItem(#{r:component('richTogglePanel')}.lastItem())">Last Item</a>
-            <br/><br/>
-
             <r:togglePanel id="richTogglePanel"
                            activeItem="#{richTogglePanelBean.attributes['activeItem'].value}"
                            cycledSwitching="#{richTogglePanelBean.attributes['cycledSwitching'].value}"
@@ -91,6 +70,30 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <p>content of panel 3</p>
                 </r:togglePanelItem>
             </r:togglePanel>
+
+            <fieldset>
+                <legend>JavaScript API</legend>
+                Output value for all get methods: <h:inputText id="value"/>
+                <br/>
+                On click:
+                <br/>
+                <a id="tcLink1" name="tcLink1" style="cursor:pointer" onclick="#{r:component('richTogglePanel')}.switchToItem('item1')">Item 1</a>
+                <h:outputText value=" | " />
+                <a id="tcLink2" name="tcLink2" style="cursor:pointer" onclick="#{r:component('richTogglePanel')}.switchToItem('item2')">Item 2</a>
+                <h:outputText value=" | " />
+                <a id="tcLink3" name="tcLink2" style="cursor:pointer" onclick="#{r:component('richTogglePanel')}.switchToItem('item3')">Item 3</a>
+                <br/>
+                <a id="tcFirst" name="tcFirst" style="cursor:pointer" onclick="#{r:component('richTogglePanel')}.switchToItem(#{r:component('richTogglePanel')}.firstItem())">First Item</a>
+                <h:outputText value=" | " />
+                <a id="tcPrev" name="tcPrev" style="cursor:pointer" onclick="#{r:component('richTogglePanel')}.switchToItem(#{r:component('richTogglePanel')}.prevItem())">Prev Item</a>
+                <h:outputText value=" | " />
+                <a id="tcNext" style="cursor:pointer" name="tcNext" onclick="#{r:component('richTogglePanel')}.switchToItem(#{r:component('richTogglePanel')}.nextItem())">Next Item</a>
+                <h:outputText value=" | " />
+                <a id="tcLast" style="cursor:pointer" name="tcLast" onclick="#{r:component('richTogglePanel')}.switchToItem(#{r:component('richTogglePanel')}.lastItem())">Last Item</a>
+                <br/>
+                <input id="getItems" type="button" name="getItems" value="getItems().length" onclick="$('[id$=value]').val(#{r:component('richTogglePanel')}.getItems().length)" />
+                <input id="getItemsNames" type="button" name="getItemsNames" value="getItemsNames()" onclick="$('[id$=value]').val(#{r:component('richTogglePanel')}.getItemsNames())" />
+            </fieldset>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
