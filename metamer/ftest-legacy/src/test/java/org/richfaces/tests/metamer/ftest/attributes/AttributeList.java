@@ -17,7 +17,6 @@ import org.richfaces.tests.metamer.ftest.richDataGrid.DataGridAttributes;
 import org.richfaces.tests.metamer.ftest.richDataScroller.DataScrollerAttributes;
 import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.ExtendedDataTableAttributes;
-import org.richfaces.tests.metamer.ftest.richTogglePanelItem.TogglePanelItemAttributes;
 
 public class AttributeList {
 
@@ -40,5 +39,4 @@ public class AttributeList {
         jq("form[id$=displayControlsForm]"));
     public static Attributes<QueueAttributes> queueAttributes = new Attributes<QueueAttributes>(
         pjq("table.attributes[id$=queueAttributes]"));
-    public static Attributes<TogglePanelItemAttributes> togglePanelItemAttributes = new Attributes<TogglePanelItemAttributes>();
 }
