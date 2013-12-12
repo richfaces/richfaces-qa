@@ -158,7 +158,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
         testData(new Action() {
             @Override
             public void perform() {
-                MetamerPage.waitRequest(tooltip(), WaitRequestType.XHR).show();
+                tooltip().show();
             }
         });
     }

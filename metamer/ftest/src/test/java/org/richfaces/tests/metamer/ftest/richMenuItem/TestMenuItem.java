@@ -121,11 +121,12 @@ public class TestMenuItem extends AbstractWebDriverTest {
 
     @Test
     public void testData() {
-        String testedValue = "RichFaces 4";
-        menuItemAttributes.set(MenuItemAttributes.data, testedValue);
-        menuItemAttributes.set(MenuItemAttributes.oncomplete, "data = event.data");
-        openMenuAndClickOnTheItem();
-        assertEquals(expectedReturnJS("return data;", testedValue), "RichFaces 4", "Data sent with ajax request");
+        testData(new Action() {
+            @Override
+            public void perform() {
+                openMenuAndClickOnTheItem();
+            }
+        });
     }
 
     @Test

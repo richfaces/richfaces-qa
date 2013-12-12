@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTree;
 
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -52,12 +51,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
 
     @Test
     public void testData() {
-        String testData = "RichFaces 4";
-        treeAttributes.set(TreeAttributes.data, testData);
-        treeAttributes.set(TreeAttributes.oncomplete, "data = event.data");
-
-        selectFirstNodeAjaxAction.perform();
-        assertEquals(expectedReturnJS("return window.data;", testData), testData);
+        testData(selectFirstNodeAjaxAction);
     }
 
     @Test(groups = { "Future" })

@@ -38,6 +38,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.bean.rich.RichProgressBarBean;
@@ -116,18 +117,16 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
 
     @Test
     public void testData() {
-        String testedString = "RichFaces 4";
-        progressBarAttributes.set(ProgressBarAttributes.data, testedString);
-        progressBarAttributes.set(ProgressBarAttributes.oncomplete, "data = event.data");
-
-        MetamerPage.requestTimeChangesWaiting(page.startButton).click();
-        //waiting for next request, which will carry the data
-        String reqTime = page.getRequestTimeElement().getText();
-        Graphene.waitAjax().withMessage("Page was not updated")
-                .until().element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
-
-        String data = expectedReturnJS("return data", testedString);
-        assertEquals(data, "RichFaces 4", "Data sent with ajax request");
+        testData(new Action() {
+            @Override
+            public void perform() {
+                MetamerPage.requestTimeChangesWaiting(page.startButton).click();
+                // waiting for next request, which will carry the data
+                String reqTime = page.getRequestTimeElement().getText();
+                Graphene.waitAjax().withMessage("Page was not updated")
+                    .until().element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
+            }
+        });
     }
 
     @Test

@@ -28,13 +28,11 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.disabledClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.leftIconClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.rightIconClass;
-import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.data;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.disabled;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.leftDisabledIcon;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.leftIcon;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.limitRender;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.mode;
-import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.oncomplete;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.render;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.rendered;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.rightDisabledIcon;
@@ -51,6 +49,7 @@ import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactor
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
@@ -87,13 +86,12 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
 
     @Test
     public void testData() {
-        String RF = "RichFaces 4";
-        panelMenuItemAttributes.set(data, RF);
-        panelMenuItemAttributes.set(oncomplete, "data = event.data");
-
-        MetamerPage.requestTimeChangesWaiting(page.getItem()).select();
-
-        expectedReturnJS("return window.data", RF);
+        testData(new Action() {
+            @Override
+            public void perform() {
+                page.getItem().select();
+            }
+        });
     }
 
     @Test

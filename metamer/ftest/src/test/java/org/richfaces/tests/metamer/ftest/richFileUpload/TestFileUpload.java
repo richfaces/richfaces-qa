@@ -106,7 +106,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     @IssueTracking(value = "https://issues.jboss.org/browse/RF-12039")
     @Test(groups = "Future")
     public void testData() {
-        testFireEvent(fileUploadAttributes, FileUploadAttributes.data, succesfulFileUploadAction);
+        testData(succesfulFileUploadAction);
     }
 
     @Test

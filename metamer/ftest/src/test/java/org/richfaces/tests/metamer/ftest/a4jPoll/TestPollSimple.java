@@ -30,7 +30,6 @@ import static javax.faces.event.PhaseId.RESTORE_VIEW;
 import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -136,12 +135,12 @@ public class TestPollSimple extends AbstractWebDriverTest {
 
     @Test
     public void testData() {
-        pollAttributes.set(PollAttributes.data, "RichFaces 4");
-        pollAttributes.set(PollAttributes.oncomplete, "data = event.data");
-
-        waitForNSubsequentRequests(1);
-
-        assertEquals(window.getData(), "RichFaces 4");
+        testData(new Action() {
+            @Override
+            public void perform() {
+                waitForNSubsequentRequests(1);
+            }
+        });
     }
 
     @Test

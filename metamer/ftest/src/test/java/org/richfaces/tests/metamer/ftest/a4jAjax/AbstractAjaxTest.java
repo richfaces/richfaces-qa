@@ -30,6 +30,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -90,15 +91,12 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
     }
 
     public void testData() {
-        ajaxAttributes.set(AjaxAttributes.data, "RichFaces 4 data");
-        ajaxAttributes.set(AjaxAttributes.oncomplete, "data = event.data");
-
-        String reqTime = page.getRequestTimeElement().getText();
-        performAction();
-        Graphene.waitModel().until("Page was not updated").element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
-
-        String data = ((JavascriptExecutor) driver).executeScript("return data").toString();
-        assertEquals(data, "RichFaces 4 data", "Data sent with ajax request");
+        testData(new Action() {
+            @Override
+            public void perform() {
+                performAction();
+            }
+        });
     }
 
     public void testDisabledForTextInputs() {
