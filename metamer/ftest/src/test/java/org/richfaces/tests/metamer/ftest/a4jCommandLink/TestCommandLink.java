@@ -151,14 +151,15 @@ public class TestCommandLink extends AbstractWebDriverTest {
 
     @Test
     public void testData() {
-        commandLinkAttributes.set(CommandLinkAttributes.data, CommandButtonLinkPage.STRING_RF1);
-        commandLinkAttributes.set(CommandLinkAttributes.oncomplete, "data = event.data");
-        //Does not matter what we type here
-        page.typeToInput(CommandButtonLinkPage.STRING_RF1);
-        page.submitByLink();
-        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
-        String data = expectedReturnJS("return window.data", CommandButtonLinkPage.STRING_RF1);
-        assertEquals(data, CommandButtonLinkPage.STRING_RF1);
+        testData(new Action() {
+            @Override
+            public void perform() {
+                //Does not matter what we type here
+                page.typeToInput(CommandButtonLinkPage.STRING_RF1);
+                page.submitByLink();
+                page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
+            }
+        });
     }
 
     @Test
