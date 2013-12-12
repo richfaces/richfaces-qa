@@ -23,11 +23,7 @@ package org.richfaces.tests.metamer.ftest.richPanelMenu;
 
 import static org.richfaces.fragment.common.Event.CLICK;
 import static org.richfaces.fragment.common.Event.DBLCLICK;
-import static org.richfaces.fragment.common.Event.MOUSEDOWN;
-import static org.richfaces.fragment.common.Event.MOUSEMOVE;
-import static org.richfaces.fragment.common.Event.MOUSEOUT;
 import static org.richfaces.fragment.common.Event.MOUSEOVER;
-import static org.richfaces.fragment.common.Event.MOUSEUP;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.collapseEvent;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.expandEvent;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.onclick;
@@ -40,20 +36,14 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttribute
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.fragment.common.Event;
-import org.richfaces.fragment.panelMenu.RichFacesPanelMenuGroup;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
-
-import com.google.common.base.Predicate;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -67,7 +57,7 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     @Use(empty = true)
     private Event event = DBLCLICK;
 
-    private Event[] events = new Event[]{ CLICK, DBLCLICK, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER, MOUSEUP };
+    private final Event[] events = new Event[]{ CLICK, DBLCLICK, MOUSEOVER };
 
     @Test
     @Use(field = "event", value = "events")
@@ -76,7 +66,7 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
         assertFalse(page.getGroup2().advanced().isExpanded());
 
         fireEvent(page.getGroup2().advanced().getLabelElement(), event);
-        Graphene.waitModel(driver).until(new GroupIsExpanded(page.getGroup2()));
+        page.getGroup2().advanced().waitUntilMenuGroupExpanded(page.getGroup2().advanced().getHeaderElement());
     }
 
     @Test
@@ -88,7 +78,7 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
         assertTrue(page.getGroup2().advanced().isExpanded());
 
         fireEvent(page.getGroup2().advanced().getLabelElement(), event);
-        Graphene.waitModel().until(new GroupIsCollapsed(page.getGroup2()));
+        page.getGroup2().advanced().waitUntilMenuGroupExpanded(page.getGroup2().advanced().getHeaderElement());
     }
 
     @Test
@@ -139,31 +129,4 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
         Action mouseup = new Actions(driver).click(page.getPanelMenu().advanced().getRootElement()).build();
         testFireEvent(panelMenuAttributes, onmouseup, mouseup);
     }
-
-    private class GroupIsExpanded implements Predicate<WebDriver> {
-        private RichFacesPanelMenuGroup group;
-
-        public GroupIsExpanded(RichFacesPanelMenuGroup element) {
-            this.group = element;
-        }
-
-        @Override
-        public boolean apply(WebDriver browser) {
-            Boolean present = new WebElementConditionFactory(group.advanced().getRootElement()).isPresent().apply(driver);
-            return present && group.advanced().isExpanded();
-        }
-    }
-
-    private class GroupIsCollapsed implements Predicate<WebDriver> {
-        private RichFacesPanelMenuGroup group;
-
-        public GroupIsCollapsed(RichFacesPanelMenuGroup element) {
-            group = element;
-        }
-
-        public boolean apply(WebDriver driver) {
-            Boolean present = new WebElementConditionFactory(group.advanced().getRootElement()).isPresent().apply(driver);
-            return present && !group.advanced().isExpanded();
-        }
-    };
 }
