@@ -34,6 +34,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
@@ -82,14 +83,12 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
 
     @Test
     public void testData() {
-        // attributes
-        attributes.set(DataScrollerAttributes.data, "RichFaces");
-        attributes.set(DataScrollerAttributes.oncomplete, "data = event.data");
-        // action
-        MetamerPage.waitRequest(page.getScroller(scroller), WaitRequestType.XHR).switchTo(
-            DataScrollerSwitchButton.FAST_FORWARD);
-        // check
-        assertEquals(executor.executeScript("return data").toString(), "RichFaces", "Data sent with ajax request");
+        testData(new Action() {
+            @Override
+            public void perform() {
+                page.getScroller(scroller).switchTo(DataScrollerSwitchButton.FAST_FORWARD);
+            }
+        });
     }
 
     @Test

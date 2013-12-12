@@ -145,14 +145,15 @@ public class TestCommandButton extends AbstractWebDriverTest {
 
     @Test
     public void testData() {
-        commandButtonAttributes.set(CommandButtonAttributes.data, CommandButtonLinkPage.STRING_RF1);
-        commandButtonAttributes.set(CommandButtonAttributes.oncomplete, "data = event.data");
-        //Does not matter what we type here
-        page.typeToInput(CommandButtonLinkPage.STRING_RF1);
-        page.submitByButton();
-        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
-        String data = expectedReturnJS("return window.data", CommandButtonLinkPage.STRING_RF1);
-        assertEquals(data, CommandButtonLinkPage.STRING_RF1);
+        testData(new Action() {
+            @Override
+            public void perform() {
+                //Does not matter what we type here
+                page.typeToInput(CommandButtonLinkPage.STRING_RF1);
+                page.submitByButton();
+                page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
+            }
+        });
     }
 
     @Test
