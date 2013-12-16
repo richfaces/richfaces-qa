@@ -34,9 +34,11 @@ public class AbstractProgressBarTest extends AbstractWebDriverTest {
     protected List<Integer> numbersOfProcess = new ArrayList<Integer>();
 
     protected void getTheNumberFromValueAndSaveToList(String value) {
-        int number = Integer.valueOf(value.trim().substring(0, value.length() - 2));//trims the % sign
-        if (!numbersOfProcess.contains(number)) {
-            numbersOfProcess.add(number);
+        if(!value.isEmpty()) {
+            int number = Integer.valueOf(value.trim().substring(0, value.length() - 2));//trims the % sign
+            if (!numbersOfProcess.contains(number)) {
+                numbersOfProcess.add(number);
+            }
         }
     }
 
