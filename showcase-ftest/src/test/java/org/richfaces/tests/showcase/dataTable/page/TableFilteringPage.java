@@ -54,7 +54,7 @@ public class TableFilteringPage {
     private WebElement vendorSelect;
     @FindByJQuery("input[type=text]:first")
     private WebElement mileageInput;
-    @FindByJQuery("input[type=text]:last")
+    @FindByJQuery("input[type=text]:nth(1)")
     private WebElement vinInput;
     @FindBy(css = "*.rf-dt-b")
     private WebElement tBody;
