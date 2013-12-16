@@ -61,7 +61,7 @@ FSF site: http://www.fsf.org. -->
         <arquillian.android.version>1.0.0.Alpha2</arquillian.android.version>
         <shrinkwrap.descriptors.version>2.0.0-alpha-5</shrinkwrap.descriptors.version>
 
-        <version.selenium>2.37.1</version.selenium>
+        <version.selenium>2.38.0</version.selenium>
 
         <!-- these are set as Environmental variables to let Arquillian know where distribution of managed containers are -->
         <glassfish3-1home>${project.build.directory}/glassfish3</glassfish3-1home>
