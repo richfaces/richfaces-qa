@@ -26,6 +26,7 @@ import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
@@ -46,6 +47,8 @@ public class TestJQuery extends AbstractWebDriverTest {
 
     @Test
     public void testImagesAreBecomingBiggerAfterHover() {
+        ((JavascriptExecutor) webDriver).executeScript("window.scrollBy(0, 250)");
+        //images won't react to hover action if they are not visible on screen - thus we need to scroll down little bit
         for (int i = 0; i < NUMBER_OF_IMGS; i++) {
             WebElement image = webDriver.findElement(ByJQuery.selector("span[id$='gallery'] img:eq(" + i + ")"));
             assertEquals(getWidthOfImage(image), WIDTH_OF_IMG_BEFORE_HOVER, "The initial width is wrong");
