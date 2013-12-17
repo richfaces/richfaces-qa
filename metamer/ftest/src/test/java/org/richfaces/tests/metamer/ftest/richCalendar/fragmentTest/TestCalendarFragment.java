@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.metamer.ftest.richCalendar;
+package org.richfaces.tests.metamer.ftest.richCalendar.fragmentTest;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
@@ -29,6 +29,8 @@ import java.net.URL;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.openqa.selenium.Dimension;
+import org.richfaces.tests.metamer.ftest.richCalendar.AbstractCalendarTest;
+import org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
