@@ -25,9 +25,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -51,6 +53,7 @@ public class AbstractWebDriverTest extends AbstractShowcaseTest {
         this.contextRoot = getContextRoot();
         ShowcaseLayout layout = loadLayout();
         if (runInPortalEnv) {
+            webDriver.manage().window().setSize(new Dimension(800, 600));
             webDriver.get(String.format("%s://%s:%s/%s",
                     contextRoot.getProtocol(), contextRoot.getHost(), contextRoot.getPort(), "portal/classic/showcase"));
             JavascriptExecutor js = (JavascriptExecutor) webDriver;
