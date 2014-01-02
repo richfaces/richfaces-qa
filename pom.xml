@@ -36,7 +36,7 @@ FSF site: http://www.fsf.org. -->
         <!-- version of JBoss containers to use and download -->
         <version.jbossas7>7.0.2.Final</version.jbossas7>
         <version.jbossas7-1>7.1.1.Final</version.jbossas7-1>
-        <version.wildfly8-0>8.0.0.Beta1</version.wildfly8-0>
+        <version.wildfly8-0>8.0.0.CR1</version.wildfly8-0>
         <eap61Zip>path/to/your/eap/distribution/zip</eap61Zip>
 
         <!-- version of Glassfish containers to use and download       -->
@@ -74,7 +74,7 @@ FSF site: http://www.fsf.org. -->
         <jboss7-1Home>${project.build.directory}/jboss-as-${version.jbossas7-1}</jboss7-1Home>
         <jbossEAP61Home>${project.build.directory}/jboss-eap-6.1</jbossEAP61Home>
         <jbossEAP62Home>${project.build.directory}/jboss-eap-6.2</jbossEAP62Home>
-        <wildfly8-0Home>${project.build.directory}/jboss-as-${version.wildfly8-0}</wildfly8-0Home>
+        <wildfly8-0Home>${project.build.directory}/wildfly-${version.wildfly8-0}</wildfly8-0Home>
 
         <showcase.classifier>jbas71</showcase.classifier>
         <metamer.classifier>jbas71</metamer.classifier>
@@ -1086,7 +1086,7 @@ FSF site: http://www.fsf.org. -->
                         </configuration>
                     </plugin>
                     <!-- workaround for RF-11983-->
-                    <plugin>
+                    <!--<plugin>
                         <artifactId>maven-resources-plugin</artifactId>
                         <executions>
                             <execution>
@@ -1106,7 +1106,7 @@ FSF site: http://www.fsf.org. -->
                                 </configuration>
                             </execution>
                         </executions>
-                    </plugin>
+                    </plugin>-->
                 </plugins>
             </build>
         </profile>
