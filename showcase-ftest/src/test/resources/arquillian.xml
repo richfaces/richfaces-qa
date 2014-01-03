@@ -92,7 +92,7 @@
     </extension>
 
     <extension qualifier="webdriver">
-        <property name="browserCapabilities">${browser.capabilities}</property>
+        <property name="browser">${browser.capabilities}</property>
         <property name="remoteAddress">http://localhost:4444/wd/hub/</property>
         <property name="javascriptEnabled">true</property>
     </extension>
