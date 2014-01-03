@@ -21,6 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.status;
 
+import java.util.concurrent.TimeUnit;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
@@ -31,7 +33,8 @@ import org.richfaces.tests.showcase.AbstractWebDriverTest;
 public abstract class TestUsage extends AbstractWebDriverTest {
 
     protected void assertProgressPictureAppearsOnAjaxRequest(WebElement progressImage) {
-        Graphene.waitAjax(webDriver).until("There should be an image of ajax request progress!")
+        Graphene.waitAjax(webDriver).withTimeout(4000, TimeUnit.MILLISECONDS)
+                .until("There should be an image of ajax request progress!")
                 .element(progressImage)
                 .is()
                 .visible();

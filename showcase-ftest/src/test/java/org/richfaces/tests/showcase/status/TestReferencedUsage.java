@@ -21,7 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.status;
 
+import static org.testng.Assert.assertEquals;
+
 import org.jboss.arquillian.graphene.page.Page;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.status.page.TestReferencedUsagePage;
 import org.testng.annotations.Test;
 
@@ -34,16 +39,29 @@ public class TestReferencedUsage extends TestUsage {
     @Page
     private TestReferencedUsagePage page;
 
+    @ArquillianResource
+    private JavascriptExecutor jsExecutor;
+
     @Test
     public void testUserNameAndAjaxRequestProgressImage() {
-        page.userNameInput.sendKeys("a");
-        assertProgressPictureAppearsOnAjaxRequest(page.firstAjaxRequestProgressImage);
+        checkTypingIntoInputAndItsStatus(page.userNameInput, TestReferencedUsagePage.FIRST_PROGRESS_LOCATOR);
     }
 
     @Test
     public void testAddressAndAjaxRequestProgressImage() {
-        page.addressInput.sendKeys("a");
-        assertProgressPictureAppearsOnAjaxRequest(page.secondAjaxRequestProgressImage);
+        checkTypingIntoInputAndItsStatus(page.addressInput, TestReferencedUsagePage.SECOND_PROGRESS_LOCATOR);
     }
 
+    private void checkTypingIntoInputAndItsStatus(WebElement input, String statusLocator) {
+        registerKeyPressHandlerToInput(input, statusLocator);
+        for (int i = 0; i < 15; i++) {
+            input.sendKeys("abcdefg");
+        }
+        assertEquals(jsExecutor.executeScript("return window.document.progressVisibility"), true);
+    }
+
+    private void registerKeyPressHandlerToInput(WebElement input, String progressLocator) {
+        jsExecutor.executeScript("window.document.progressVisibility = false;" + "$(arguments[0]).keypress(function() {"
+            + "window.document.progressVisibility = $(\"" + progressLocator + "\").is(':visible');" + "});", input);
+    }
 }

@@ -43,7 +43,7 @@ public class TestPushJms extends AbstractPollTest {
     @FindByJQuery("table tbody:visible:last")
     private WebElement serverDate;
 
-    @Test
+    @Test(groups = { "4.Future" }) //JMS sample is disabled for all wars
     public void testDeviationInServerDate() {
 
         List<Integer> deviations = new ArrayList<Integer>();
@@ -62,5 +62,4 @@ public class TestPushJms extends AbstractPollTest {
         Collections.sort(deviations);
         assertEquals(deviations.get(9).intValue(), 5, "Median of push deviations is wrong!");
     }
-
 }

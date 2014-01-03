@@ -21,12 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.autocomplete;
 
-import static org.jboss.arquillian.graphene.Graphene.waitAjax;
 import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.test.api.ArquillianResource;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.autocomplete.page.ClientFilterPage;
@@ -46,13 +44,8 @@ public class TestClientFilter extends AbstractWebDriverTest {
 
     @Test
     public void testClientFilterFunctionContains() {
-        page.input.sendKeys("ska");
-        waitAjax(webDriver).until("The selection should be visible, since there is correct sequence of chars!")
-                .element(page.selection)
-                .is()
-                .visible();
-        actions.sendKeys(page.input, Keys.ENTER).build().perform();
-        assertEquals(page.input.getText(), "Alaska", "The content should be Alaska, since it contains string ska");
+        page.getAutocomplete().type("ska").select(0);
+        assertEquals(page.getAutocomplete().advanced().getInput().getStringValue(), "Alaska", "The content should be Alaska, since it contains string ska");
     }
 
 }

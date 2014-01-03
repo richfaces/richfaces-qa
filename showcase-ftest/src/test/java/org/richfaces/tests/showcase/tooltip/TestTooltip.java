@@ -27,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.tooltip.page.TooltipPage;
@@ -38,10 +39,10 @@ import org.testng.annotations.Test;
  */
 public class TestTooltip extends AbstractWebDriverTest {
 
-    private static final String TOOLTIP_TEXT_AJAX_CLICK = "This tool-tip content was rendered on server\ntooltips requested: 0";
-    private static final String TOOLTIP_TEXT_AJAX = "This tool-tip content was rendered on the server\ntooltips requested: 0";
-    private static final String TOOLTIP_CLIENT_AJAX = "This tool-tip content was pre-rendered to the page.\nThe tool-tip is also following mouse around.";
-    private static final String TOOLTIP_CLIENT_AJAX_DELAY = "This tool-tip content is also pre-rendered to the page.";
+    private static final String TOOLTIP_TEXT_AJAX_CLICK = "This tool-tip content was rendered on server";
+    private static final String TOOLTIP_TEXT_AJAX = "This tool-tip content was rendered on the server";
+    private static final String TOOLTIP_CLIENT = "This tool-tip content was pre-rendered to the page.";
+    private static final String TOOLTIP_CLIENT_WITH_DELAY = "This tool-tip content is also pre-rendered to the page.";
 
     @Page
     private TooltipPage page;
@@ -52,24 +53,26 @@ public class TestTooltip extends AbstractWebDriverTest {
     @Test
     public void testClientTooltip() {
         actions.moveToElement(page.clientTooltipActivatingArea).build().perform();
-        waitForTooltipText(TOOLTIP_CLIENT_AJAX);
+        waitForTooltipText(TOOLTIP_CLIENT);
     }
 
     @Test
     public void testClientWithDelayTooltip() {
         actions.moveToElement(page.clientWithDelayTooltipActivatingArea).build().perform();
-        waitForTooltipText(TOOLTIP_CLIENT_AJAX_DELAY);
+        waitForTooltipText(TOOLTIP_CLIENT_WITH_DELAY);
     }
 
     @Test
     public void testAjaxTooltip() {
+        ((JavascriptExecutor) webDriver).executeScript("window.scrollBy(0, 250)");
         actions.moveToElement(page.ajaxTooltipActivatingArea).build().perform();
         waitForTooltipText(TOOLTIP_TEXT_AJAX);
     }
 
     @Test
     public void testAjaxClickTooltip() {
-        page.ajaxClickTooltipActivatingArea.click();
+        ((JavascriptExecutor) webDriver).executeScript("window.scrollBy(0, 250)");
+        actions.moveToElement(page.ajaxClickTooltipActivatingArea).click().build().perform();
         waitForTooltipText(TOOLTIP_TEXT_AJAX_CLICK);
     }
 
@@ -78,6 +81,6 @@ public class TestTooltip extends AbstractWebDriverTest {
                 .until("The tool tip text is different!")
                 .element(page.tooltip)
                 .text()
-                .equalTo(message);
+                .contains(message);
     }
 }
