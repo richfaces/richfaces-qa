@@ -27,6 +27,8 @@ import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.contextMenu.page.TableContextMenuPage;
 import org.testng.annotations.Test;
@@ -74,6 +76,9 @@ public class TestTable extends AbstractContextMenuTest {
     @Test
     public void testContextMenuRenderedOnTheCorrectPosition() {
         WebElement elementToTryOn = page.getPrices().get(5);
+        Point elementLocation = elementToTryOn.getLocation();
+        ((JavascriptExecutor) webDriver).executeScript("window.scrollTo(" + elementLocation.getX() + ", "
+            + elementLocation.getY() + ")");
 
         checkContextMenuRenderedAtCorrectPosition(elementToTryOn, page.getContextMenu().advanced().getMenuPopup(),
             InvocationType.RIGHT_CLICK, page.getWaitConditionOnSelectingRow(elementToTryOn));

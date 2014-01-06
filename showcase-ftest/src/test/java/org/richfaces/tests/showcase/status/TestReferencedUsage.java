@@ -21,12 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.status;
 
-import static org.testng.Assert.assertEquals;
-
 import org.jboss.arquillian.graphene.page.Page;
-import org.jboss.arquillian.test.api.ArquillianResource;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.status.page.TestReferencedUsagePage;
 import org.testng.annotations.Test;
 
@@ -34,13 +29,10 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestReferencedUsage extends TestUsage {
+public class TestReferencedUsage extends AbstractStatusTest {
 
     @Page
     private TestReferencedUsagePage page;
-
-    @ArquillianResource
-    private JavascriptExecutor jsExecutor;
 
     @Test
     public void testUserNameAndAjaxRequestProgressImage() {
@@ -50,18 +42,5 @@ public class TestReferencedUsage extends TestUsage {
     @Test
     public void testAddressAndAjaxRequestProgressImage() {
         checkTypingIntoInputAndItsStatus(page.addressInput, TestReferencedUsagePage.SECOND_PROGRESS_LOCATOR);
-    }
-
-    private void checkTypingIntoInputAndItsStatus(WebElement input, String statusLocator) {
-        registerKeyPressHandlerToInput(input, statusLocator);
-        for (int i = 0; i < 15; i++) {
-            input.sendKeys("abcdefg");
-        }
-        assertEquals(jsExecutor.executeScript("return window.document.progressVisibility"), true);
-    }
-
-    private void registerKeyPressHandlerToInput(WebElement input, String progressLocator) {
-        jsExecutor.executeScript("window.document.progressVisibility = false;" + "$(arguments[0]).keypress(function() {"
-            + "window.document.progressVisibility = $(\"" + progressLocator + "\").is(':visible');" + "});", input);
     }
 }

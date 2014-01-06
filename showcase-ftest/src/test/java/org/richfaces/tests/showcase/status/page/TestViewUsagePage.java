@@ -29,6 +29,8 @@ import org.openqa.selenium.WebElement;
  */
 public class TestViewUsagePage {
 
+    public static final String PROGRESS_IMAGE_LOC = "span[class='rf-st-start'] img";
+
     @FindByJQuery("input[type='text']:eq(0)")
     public WebElement userNameInput;
 
@@ -40,7 +42,4 @@ public class TestViewUsagePage {
 
     @FindByJQuery("input[type='button']:eq(1)")
     public WebElement searchButton;
-
-    @FindByJQuery("span[class='rf-st-start'] img")
-    public WebElement progressImage;
 }

@@ -27,7 +27,10 @@ import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.tooltip.page.TooltipPage;
@@ -52,28 +55,36 @@ public class TestTooltip extends AbstractWebDriverTest {
 
     @Test
     public void testClientTooltip() {
+        scrollToElementSoItIsFullyVisible(page.clientTooltipActivatingArea);
         actions.moveToElement(page.clientTooltipActivatingArea).build().perform();
         waitForTooltipText(TOOLTIP_CLIENT);
     }
 
     @Test
     public void testClientWithDelayTooltip() {
+        scrollToElementSoItIsFullyVisible(page.clientWithDelayTooltipActivatingArea);
         actions.moveToElement(page.clientWithDelayTooltipActivatingArea).build().perform();
         waitForTooltipText(TOOLTIP_CLIENT_WITH_DELAY);
     }
 
     @Test
     public void testAjaxTooltip() {
-        ((JavascriptExecutor) webDriver).executeScript("window.scrollBy(0, 250)");
+        scrollToElementSoItIsFullyVisible(page.ajaxTooltipActivatingArea);
         actions.moveToElement(page.ajaxTooltipActivatingArea).build().perform();
         waitForTooltipText(TOOLTIP_TEXT_AJAX);
     }
 
     @Test
     public void testAjaxClickTooltip() {
-        ((JavascriptExecutor) webDriver).executeScript("window.scrollBy(0, 250)");
+        scrollToElementSoItIsFullyVisible(page.ajaxClickTooltipActivatingArea);
         actions.moveToElement(page.ajaxClickTooltipActivatingArea).click().build().perform();
         waitForTooltipText(TOOLTIP_TEXT_AJAX_CLICK);
+    }
+
+    private void scrollToElementSoItIsFullyVisible(WebElement element) {
+        Point elementLocation = element.getLocation();
+        Dimension elementDimension = element.getSize();
+        ((JavascriptExecutor) webDriver).executeScript("window.scrollTo(" + elementLocation.getX() + elementDimension.width + ", " + elementLocation.getY() + ")");
     }
 
     private void waitForTooltipText(String message) {
