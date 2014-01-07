@@ -30,10 +30,10 @@ import org.openqa.selenium.support.FindBy;
  */
 public class TooltipPage {
 
-    @FindBy(css = "*[id~=sample1]")
+    @FindBy(css = "[id*=sample1]")
     public WebElement clientTooltipActivatingArea;
 
-    @FindBy(css = "*[id~=sample2]")
+    @FindBy(css = "[id*=sample2]")
     public WebElement clientWithDelayTooltipActivatingArea;
 
     @FindByJQuery("[id*=sample3]")
