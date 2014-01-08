@@ -67,10 +67,10 @@ FSF site: http://www.fsf.org. -->
             <artifactId>arquillian-testng-container</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
             <artifactId>arquillian-screen-recorder</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!-- Resolution of JAR libraries into WAR archive -->
         <dependency>
