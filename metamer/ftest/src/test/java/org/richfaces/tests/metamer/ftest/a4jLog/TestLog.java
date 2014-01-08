@@ -22,9 +22,9 @@
 package org.richfaces.tests.metamer.ftest.a4jLog;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.page.fragments.impl.common.ClearType.DELETE;
-import static org.richfaces.tests.page.fragments.impl.log.Log.LogEntryLevel.INFO;
-import static org.richfaces.tests.page.fragments.impl.log.Log.LogEntryLevel.values;
+import static org.richfaces.fragment.common.ClearType.DELETE;
+import static org.richfaces.fragment.log.Log.LogEntryLevel.INFO;
+import static org.richfaces.fragment.log.Log.LogEntryLevel.values;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -34,16 +34,16 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
+import org.richfaces.fragment.common.ClearType;
+import org.richfaces.fragment.common.TextInputComponentImpl;
+import org.richfaces.fragment.log.RichFacesLog;
+import org.richfaces.fragment.log.Log.LogEntryLevel;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
-import org.richfaces.tests.page.fragments.impl.log.Log.LogEntryLevel;
-import org.richfaces.tests.page.fragments.impl.log.RichFacesLog;
 import org.testng.annotations.Test;
 
 /**

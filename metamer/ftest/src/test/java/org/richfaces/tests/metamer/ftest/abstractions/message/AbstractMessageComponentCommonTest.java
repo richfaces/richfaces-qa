@@ -23,14 +23,14 @@ package org.richfaces.tests.metamer.ftest.abstractions.message;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
+import org.richfaces.fragment.common.ClearType;
+import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.richMessage.MessageAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.Assert;
 
 /**

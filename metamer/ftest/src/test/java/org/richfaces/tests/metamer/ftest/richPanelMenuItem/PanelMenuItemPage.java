@@ -22,8 +22,8 @@
 package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.richfaces.fragment.panelMenu.RichFacesPanelMenuItem;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.panelMenu.RichFacesPanelMenuItem;
 
 /**
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>

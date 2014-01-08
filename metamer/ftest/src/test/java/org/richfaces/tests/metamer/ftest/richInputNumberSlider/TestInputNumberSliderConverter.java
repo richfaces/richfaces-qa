@@ -22,9 +22,9 @@
 package org.richfaces.tests.metamer.ftest.richInputNumberSlider;
 
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.ClearType;
+import org.richfaces.fragment.inputNumberSlider.RichFacesInputNumberSlider;
 import org.richfaces.tests.metamer.ftest.abstractions.converter.AbstractConverterTest;
-import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.inputNumberSlider.RichFacesInputNumberSlider;
 import org.testng.annotations.Test;
 
 /**

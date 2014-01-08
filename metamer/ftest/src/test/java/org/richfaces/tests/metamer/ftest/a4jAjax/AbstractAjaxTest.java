@@ -31,8 +31,8 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
+import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 
 /**

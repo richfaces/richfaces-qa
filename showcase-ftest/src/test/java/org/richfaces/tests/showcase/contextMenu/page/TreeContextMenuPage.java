@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.richfaces.tests.page.fragments.impl.contextMenu.RichFacesContextMenu;
+import org.richfaces.fragment.contextMenu.RichFacesContextMenu;
 
 public class TreeContextMenuPage {
 

@@ -23,8 +23,8 @@ package org.richfaces.tests.metamer.ftest.richTabPanel;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.richfaces.fragment.tabPanel.RichFacesTabPanel;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.tabPanel.RichFacesTabPanel;
 
 public class TabPanelSimplePage extends MetamerPage {
 

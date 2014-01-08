@@ -27,12 +27,12 @@ import static org.testng.Assert.assertEquals;
 import java.net.URL;
 
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.list.RichFacesList;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.richList.TestListAttributes.ListType;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.page.fragments.impl.list.RichFacesList;
 import org.testng.annotations.Test;
 
 /**

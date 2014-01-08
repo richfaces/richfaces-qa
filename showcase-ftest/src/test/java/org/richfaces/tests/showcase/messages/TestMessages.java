@@ -24,8 +24,8 @@ package org.richfaces.tests.showcase.messages;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.page.Page;
-import org.richfaces.tests.page.fragments.impl.message.Message;
-import org.richfaces.tests.page.fragments.impl.message.Message.MessageType;
+import org.richfaces.fragment.message.Message;
+import org.richfaces.fragment.message.Message.MessageType;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.messages.page.MessagesPage;
 import org.testng.Assert;

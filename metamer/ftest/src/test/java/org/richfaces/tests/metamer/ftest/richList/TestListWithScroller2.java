@@ -29,9 +29,9 @@ import java.util.List;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.dataScroller.RichFacesDataScroller;
-import org.richfaces.tests.page.fragments.impl.list.AbstractListComponent;
-import org.richfaces.tests.page.fragments.impl.list.RichFacesListItem;
+import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
+import org.richfaces.fragment.list.AbstractListComponent;
+import org.richfaces.fragment.list.RichFacesListItem;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

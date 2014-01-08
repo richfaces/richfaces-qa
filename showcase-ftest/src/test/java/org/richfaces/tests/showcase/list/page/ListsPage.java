@@ -26,9 +26,9 @@ import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.richfaces.component.ListType;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.list.ListComponent;
-import org.richfaces.tests.page.fragments.impl.list.ListItem;
-import org.richfaces.tests.page.fragments.impl.list.RichFacesList;
+import org.richfaces.fragment.list.ListComponent;
+import org.richfaces.fragment.list.ListItem;
+import org.richfaces.fragment.list.RichFacesList;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>

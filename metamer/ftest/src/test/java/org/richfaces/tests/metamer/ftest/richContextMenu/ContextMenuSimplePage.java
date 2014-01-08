@@ -26,11 +26,11 @@ import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.Locations;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.contextMenu.RichFacesContextMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.DriverType;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.Locations;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.contextMenu.RichFacesContextMenu;
 
 /**
  * Page object rich:contextMenu component at faces/components/richContextMenu/simple.xhtml

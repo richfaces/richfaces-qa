@@ -23,11 +23,11 @@ package org.richfaces.tests.metamer.ftest.richInputNumberSlider;
 
 import org.jboss.arquillian.graphene.wait.WebDriverWait;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.inputNumberSlider.RichFacesInputNumberSlider;
 import org.richfaces.tests.metamer.ftest.abstractions.validations.NumberInputValidationPage;
 import org.richfaces.tests.metamer.ftest.abstractions.validations.ValidationMessageCase;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.inputNumberSlider.RichFacesInputNumberSlider;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>

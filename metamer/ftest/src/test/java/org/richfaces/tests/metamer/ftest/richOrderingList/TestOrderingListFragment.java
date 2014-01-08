@@ -24,17 +24,17 @@ package org.richfaces.tests.metamer.ftest.richOrderingList;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 
-import com.google.common.collect.Lists;
-
 import java.net.URL;
 import java.util.List;
 
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.picker.ChoicePickerHelper;
+import org.richfaces.fragment.orderingList.RichFacesOrderingList;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.page.fragments.impl.orderingList.RichFacesOrderingList;
-import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.annotations.Test;
+
+import com.google.common.collect.Lists;
 
 /**
  *

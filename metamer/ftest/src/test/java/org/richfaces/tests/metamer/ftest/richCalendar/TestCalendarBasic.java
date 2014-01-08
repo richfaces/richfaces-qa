@@ -35,12 +35,12 @@ import java.util.List;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.joda.time.DateTime;
 import org.openqa.selenium.Dimension;
+import org.richfaces.fragment.calendar.DayPicker;
+import org.richfaces.fragment.calendar.PopupCalendar;
+import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
+import org.richfaces.fragment.calendar.PopupCalendar.PopupHeaderControls;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.calendar.DayPicker;
-import org.richfaces.tests.page.fragments.impl.calendar.DayPicker.CalendarDay;
-import org.richfaces.tests.page.fragments.impl.calendar.PopupCalendar;
-import org.richfaces.tests.page.fragments.impl.calendar.PopupCalendar.PopupHeaderControls;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

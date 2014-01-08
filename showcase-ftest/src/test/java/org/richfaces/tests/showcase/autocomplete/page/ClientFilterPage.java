@@ -22,7 +22,7 @@
 package org.richfaces.tests.showcase.autocomplete.page;
 
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
+import org.richfaces.fragment.autocomplete.RichFacesAutocomplete;
 
 /**
  *

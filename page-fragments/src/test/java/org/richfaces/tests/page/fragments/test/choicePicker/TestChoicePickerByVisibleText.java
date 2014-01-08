@@ -1,3 +1,25 @@
+/*
+ * JBoss, Home of Professional Open Source
+ * Copyright 2013, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+
 package org.richfaces.tests.page.fragments.test.choicePicker;
 
 import static org.testng.Assert.assertEquals;
@@ -7,28 +29,15 @@ import static org.testng.Assert.assertTrue;
 
 import java.util.List;
 
-import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.testng.Arquillian;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
-import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.ByVisibleTextChoicePicker;
-import org.richfaces.tests.page.fragments.test.choicePicker.fragments.MyPageFragment;
+import org.richfaces.fragment.common.picker.ChoicePickerHelper;
+import org.richfaces.fragment.common.picker.ChoicePickerHelper.ByVisibleTextChoicePicker;
 import org.testng.annotations.Test;
 
-public class TestChoicePickerByVisibleText extends Arquillian {
-
-    @Drone
-    private WebDriver browser;
-
-    @FindBy(tagName = "body")
-    private MyPageFragment myFragment;
+public class TestChoicePickerByVisibleText extends AbstractChoicePickerTest {
 
     @Test
     public void testMultipleChoicePickerNonExistingElement() {
-        browser.get(TestChoicePickerByVisibleText.class.getResource("choicePickerByVisibleText.html").toExternalForm());
-
         ByVisibleTextChoicePicker picker = ChoicePickerHelper.byVisibleText().match("non existing");
         List<WebElement> elements = picker.pickMultiple(myFragment.getDivs());
         assertTrue(elements.isEmpty());
@@ -36,8 +45,6 @@ public class TestChoicePickerByVisibleText extends Arquillian {
 
     @Test
     public void testPickExistingElement() {
-        browser.get(TestChoicePickerByVisibleText.class.getResource("choicePickerByVisibleText.html").toExternalForm());
-
         ByVisibleTextChoicePicker picker = ChoicePickerHelper.byVisibleText().match("1");
         WebElement element = picker.pick(myFragment.getDivs());
         assertNotNull(element);
@@ -46,8 +53,6 @@ public class TestChoicePickerByVisibleText extends Arquillian {
 
     @Test
     public void testPickNotExistingElement() {
-        browser.get(TestChoicePickerByVisibleText.class.getResource("choicePickerByVisibleText.html").toExternalForm());
-
         ByVisibleTextChoicePicker picker = ChoicePickerHelper.byVisibleText().match("non existing");
         WebElement element = picker.pick(myFragment.getDivs());
         assertNull(element);

@@ -3,8 +3,8 @@ package org.richfaces.tests.metamer.ftest.richDataScroller;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.WebElement;
+import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.dataScroller.RichFacesDataScroller;
 
 public class FacetPage extends MetamerPage {
     @Root

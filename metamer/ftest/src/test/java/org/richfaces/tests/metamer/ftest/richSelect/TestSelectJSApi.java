@@ -28,10 +28,10 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.TextInputComponentImpl;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.select.RichFacesSelect;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
-import org.richfaces.tests.page.fragments.impl.select.RichFacesSelect;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

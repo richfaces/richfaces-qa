@@ -22,9 +22,9 @@
 package org.richfaces.tests.metamer.ftest.richMessage;
 
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.message.Message;
+import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.ftest.abstractions.message.MessageComponentTestPage;
-import org.richfaces.tests.page.fragments.impl.message.Message;
-import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
