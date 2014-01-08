@@ -12,7 +12,8 @@
         </groups>
 
         <packages>
-            <package name="org.richfaces.tests.metamer.ftest.*" />
+            <package name="org.richfaces.tests.metamer.ftest.richDataTable" />
+            <package name="org.richfaces.tests.metamer.ftest.richDragIndicator" />
         </packages>
     </test>
     
