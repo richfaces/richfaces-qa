@@ -2,7 +2,7 @@
 <suite name="All Components">
 
     <suite-files>
-        <suite-file path="testng-core.xml"/>
+        <!--<suite-file path="testng-core.xml"/>-->
         <suite-file path="testng-dnd.xml"/>
         <suite-file path="testng-input.xml"/>
         <suite-file path="testng-misc.xml"/>
