@@ -30,10 +30,10 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.openqa.selenium.By;
+import org.richfaces.fragment.autocomplete.SelectOrConfirm;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
-import org.richfaces.tests.page.fragments.impl.autocomplete.SelectOrConfirm;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

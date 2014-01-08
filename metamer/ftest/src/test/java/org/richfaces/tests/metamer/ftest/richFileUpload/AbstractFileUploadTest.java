@@ -29,10 +29,10 @@ import java.net.URISyntaxException;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.fileUpload.RichFacesFileUpload;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.fileUpload.RichFacesFileUpload;
 import org.testng.annotations.BeforeMethod;
 
 /**

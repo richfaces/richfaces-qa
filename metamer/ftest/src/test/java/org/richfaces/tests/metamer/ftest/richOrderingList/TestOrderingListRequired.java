@@ -28,8 +28,8 @@ import static org.testng.Assert.assertTrue;
 import java.net.URL;
 
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
 import org.testng.annotations.Test;
 
 /**

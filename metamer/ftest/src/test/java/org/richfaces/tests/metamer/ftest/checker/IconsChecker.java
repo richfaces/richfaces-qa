@@ -29,9 +29,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.Validate;
+import org.richfaces.fragment.common.Icon;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.page.fragments.impl.common.Icon;
 
 import com.google.common.collect.Lists;
 

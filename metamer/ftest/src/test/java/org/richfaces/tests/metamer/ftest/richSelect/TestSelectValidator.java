@@ -27,11 +27,11 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.message.RichFacesMessage;
+import org.richfaces.fragment.select.RichFacesSelect;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.validator.CaliforniaFirstValidator;
-import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
-import org.richfaces.tests.page.fragments.impl.select.RichFacesSelect;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

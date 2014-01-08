@@ -30,14 +30,14 @@ import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.component.SwitchType;
+import org.richfaces.fragment.common.Actions;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.tree.Tree.TreeNode;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
-import org.richfaces.tests.page.fragments.impl.tree.Tree.TreeNode;
-import org.richfaces.tests.page.fragments.impl.utils.Actions;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.Test;
 
 import com.google.common.base.Optional;

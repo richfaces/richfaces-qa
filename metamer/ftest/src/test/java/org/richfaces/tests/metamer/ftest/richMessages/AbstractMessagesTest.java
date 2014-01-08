@@ -23,10 +23,10 @@ package org.richfaces.tests.metamer.ftest.richMessages;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
+import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.metamer.ftest.abstractions.message.AbstractMessagesComponentTest;
 import org.richfaces.tests.metamer.ftest.abstractions.message.MessagesComponentTestPage;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.Assert;
 
 /**

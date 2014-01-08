@@ -23,9 +23,9 @@ package org.richfaces.tests.metamer.ftest.richPlaceholder;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.inplaceInput.RichFacesInplaceInput;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.RichFacesInplaceInput;
 import org.testng.annotations.Test;
 
 /**

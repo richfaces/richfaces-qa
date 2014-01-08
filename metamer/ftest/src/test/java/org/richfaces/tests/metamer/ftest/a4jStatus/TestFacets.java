@@ -27,9 +27,9 @@ import java.net.URL;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.TextInputComponentImpl;
+import org.richfaces.fragment.status.Status.StatusState;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
-import org.richfaces.tests.page.fragments.impl.status.Status.StatusState;
 import org.testng.annotations.Test;
 
 /**

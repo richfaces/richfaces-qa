@@ -22,9 +22,9 @@
 package org.richfaces.tests.metamer.ftest.richPanelMenuGroup;
 
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.panelMenu.RichFacesPanelMenu;
+import org.richfaces.fragment.panelMenu.RichFacesPanelMenuGroup;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.panelMenu.RichFacesPanelMenu;
-import org.richfaces.tests.page.fragments.impl.panelMenu.RichFacesPanelMenuGroup;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>

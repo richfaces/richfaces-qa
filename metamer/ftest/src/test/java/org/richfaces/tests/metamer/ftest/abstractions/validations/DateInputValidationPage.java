@@ -29,8 +29,8 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.bean.abstractions.DateInputValidationBean;
-import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>

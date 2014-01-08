@@ -30,13 +30,13 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.component.SwitchType;
+import org.richfaces.fragment.tree.RichFacesTree;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.tree.RichFacesTree;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>

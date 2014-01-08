@@ -22,7 +22,7 @@
 package org.richfaces.tests.showcase.inplaceSelect.page;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.richfaces.tests.page.fragments.impl.inplaceSelect.RichFacesInplaceSelect;
+import org.richfaces.fragment.inplaceSelect.RichFacesInplaceSelect;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>

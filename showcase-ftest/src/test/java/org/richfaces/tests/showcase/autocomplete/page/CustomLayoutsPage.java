@@ -22,7 +22,7 @@
 package org.richfaces.tests.showcase.autocomplete.page;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
+import org.richfaces.fragment.autocomplete.RichFacesAutocomplete;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>

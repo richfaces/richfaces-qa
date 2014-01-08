@@ -29,10 +29,10 @@ import static org.testng.Assert.fail;
 import java.net.URL;
 
 import org.richfaces.component.SwitchType;
+import org.richfaces.fragment.tree.Tree.TreeNode;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.richTree.AbstractTreeTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.page.fragments.impl.tree.Tree.TreeNode;
 import org.testng.annotations.Test;
 
 /**

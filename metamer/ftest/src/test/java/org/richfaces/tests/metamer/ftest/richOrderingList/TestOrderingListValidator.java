@@ -26,8 +26,8 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.validator.PhoenixFirstValidator;
-import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

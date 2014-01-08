@@ -22,9 +22,9 @@
 package org.richfaces.tests.showcase.messages.page;
 
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.message.Message;
-import org.richfaces.tests.page.fragments.impl.messages.Messages;
-import org.richfaces.tests.page.fragments.impl.messages.RichFacesMessages;
+import org.richfaces.fragment.message.Message;
+import org.richfaces.fragment.messages.Messages;
+import org.richfaces.fragment.messages.RichFacesMessages;
 import org.richfaces.tests.showcase.message.page.AbstractMessagePage;
 
 /**

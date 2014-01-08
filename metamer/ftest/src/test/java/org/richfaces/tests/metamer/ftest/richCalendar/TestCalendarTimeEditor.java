@@ -29,10 +29,10 @@ import static org.testng.Assert.assertTrue;
 import java.net.URL;
 
 import org.joda.time.DateTime;
+import org.richfaces.fragment.calendar.TimeEditor;
+import org.richfaces.fragment.calendar.TimeEditor.SetValueBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.calendar.TimeEditor;
-import org.richfaces.tests.page.fragments.impl.calendar.TimeEditor.SetValueBy;
 import org.testng.annotations.Test;
 
 /**

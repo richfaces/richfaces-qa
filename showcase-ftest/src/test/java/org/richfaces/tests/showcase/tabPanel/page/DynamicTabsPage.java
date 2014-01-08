@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.tabPanel.RichFacesTabPanel;
+import org.richfaces.fragment.tabPanel.RichFacesTabPanel;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>

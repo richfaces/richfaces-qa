@@ -22,19 +22,19 @@
 package org.richfaces.tests.metamer.ftest.a4jOutputPanel;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.CLICK;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.DBLCLICK;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.KEYDOWN;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.KEYPRESS;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.KEYUP;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEDOWN;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEMOVE;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOUT;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOVER;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEUP;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
+import static org.richfaces.fragment.common.Event.CLICK;
+import static org.richfaces.fragment.common.Event.DBLCLICK;
+import static org.richfaces.fragment.common.Event.KEYDOWN;
+import static org.richfaces.fragment.common.Event.KEYPRESS;
+import static org.richfaces.fragment.common.Event.KEYUP;
+import static org.richfaces.fragment.common.Event.MOUSEDOWN;
+import static org.richfaces.fragment.common.Event.MOUSEMOVE;
+import static org.richfaces.fragment.common.Event.MOUSEOUT;
+import static org.richfaces.fragment.common.Event.MOUSEOVER;
+import static org.richfaces.fragment.common.Event.MOUSEUP;
 
 import java.net.URL;
 
@@ -43,6 +43,7 @@ import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
@@ -52,7 +53,6 @@ import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.Test;
 
 /**

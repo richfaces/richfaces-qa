@@ -22,8 +22,8 @@
 package org.richfaces.tests.showcase.message.page;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.richfaces.tests.page.fragments.impl.message.Message;
-import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
+import org.richfaces.fragment.message.Message;
+import org.richfaces.fragment.message.RichFacesMessage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>

@@ -27,7 +27,7 @@ import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.status.RichFacesStatus;
+import org.richfaces.fragment.status.RichFacesStatus;
 import org.testng.annotations.Test;
 
 /**

@@ -23,7 +23,7 @@ package org.richfaces.tests.showcase.editor.page;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.editor.RichFacesEditor;
+import org.richfaces.fragment.editor.RichFacesEditor;
 
 public class AutosavingPage {
 

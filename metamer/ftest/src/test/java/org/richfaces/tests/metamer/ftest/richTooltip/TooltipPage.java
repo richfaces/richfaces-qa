@@ -23,8 +23,8 @@ package org.richfaces.tests.metamer.ftest.richTooltip;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.tooltip.TextualRichFacesTooltip;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.tooltip.TextualRichFacesTooltip;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>

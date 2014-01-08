@@ -22,10 +22,10 @@
 package org.richfaces.tests.metamer.ftest.richNotifyMessage;
 
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.notify.NotifyMessage;
+import org.richfaces.fragment.notify.RichFacesNotify;
+import org.richfaces.fragment.notify.RichFacesNotifyMessage;
 import org.richfaces.tests.metamer.ftest.abstractions.message.MessageComponentTestPage;
-import org.richfaces.tests.page.fragments.impl.notify.NotifyMessage;
-import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotify;
-import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotifyMessage;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>

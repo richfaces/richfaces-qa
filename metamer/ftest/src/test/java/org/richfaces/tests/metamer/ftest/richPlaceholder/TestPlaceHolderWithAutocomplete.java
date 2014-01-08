@@ -23,8 +23,8 @@ package org.richfaces.tests.metamer.ftest.richPlaceholder;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.autocomplete.RichFacesAutocomplete;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
 import org.testng.annotations.Test;
 
 /**

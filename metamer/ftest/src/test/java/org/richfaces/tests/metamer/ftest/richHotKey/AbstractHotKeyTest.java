@@ -29,14 +29,14 @@ import java.util.List;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.TextInputComponentImpl;
+import org.richfaces.fragment.common.picker.ChoicePickerHelper;
+import org.richfaces.fragment.hotkey.RichFacesHotkey;
+import org.richfaces.fragment.log.LogEntry;
+import org.richfaces.fragment.log.RichFacesLog;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.richHotKey.TestHotKeyAttributes.KeysEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
-import org.richfaces.tests.page.fragments.impl.hotkey.RichFacesHotkey;
-import org.richfaces.tests.page.fragments.impl.log.LogEntry;
-import org.richfaces.tests.page.fragments.impl.log.RichFacesLog;
-import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.annotations.BeforeMethod;
 
 /**
