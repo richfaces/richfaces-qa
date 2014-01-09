@@ -31,7 +31,7 @@ import java.util.List;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.openqa.selenium.WebElement;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
 
 import com.google.common.collect.Lists;
 
@@ -40,7 +40,7 @@ public class AbstractChoicePickerTest {
     @Mock
     protected MyPageFragment myFragment;
 
-    @BeforeTest
+    @BeforeMethod
     public void setUp() {
       MockitoAnnotations.initMocks(this);
 
