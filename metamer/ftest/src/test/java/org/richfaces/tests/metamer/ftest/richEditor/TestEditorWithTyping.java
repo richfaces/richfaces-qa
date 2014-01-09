@@ -43,7 +43,7 @@ import com.google.common.base.Predicate;
 /**
  * @author <a href="mailto:manovotn@redhat.com">Matej Novotny</a>
  */
-public class TestRichEditorWithTyping extends AbstractWebDriverTest {
+public class TestEditorWithTyping extends AbstractWebDriverTest {
 
     private final Attributes<EditorAttributes> editorAttributes = getAttributes();
 
