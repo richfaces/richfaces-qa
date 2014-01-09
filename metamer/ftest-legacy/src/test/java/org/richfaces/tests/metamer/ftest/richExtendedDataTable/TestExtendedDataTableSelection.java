@@ -187,6 +187,13 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     public void testMultiSelectionRemovingUsingCtrlIterationComponents() {
         testMultiSelectionRemovingUsingCtrl();
     }
+    
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13474")
+    @Templates("a4jRegion")
+    public void testMultiSelectionRemovingUsingCtrlRegion() {
+        testMultiSelectionRemovingUsingCtrl();
+    }
 
     private Collection<Integer> order(int... selection) {
         return Arrays.asList(ArrayUtils.toObject(selection));
