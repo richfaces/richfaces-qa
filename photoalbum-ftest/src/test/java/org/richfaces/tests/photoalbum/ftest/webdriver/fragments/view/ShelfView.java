@@ -37,8 +37,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.RichFacesInplaceInput;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.inplaceInput.RichFacesInplaceInput;
 import org.richfaces.tests.photoalbum.ftest.webdriver.utils.PhotoalbumUtils;
 
 import com.google.common.collect.Lists;

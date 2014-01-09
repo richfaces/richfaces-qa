@@ -24,8 +24,8 @@ package org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.fileUpload.RichFacesFileUpload;
-import org.richfaces.tests.page.fragments.impl.select.RichFacesSelect;
+import org.richfaces.fragment.fileUpload.RichFacesFileUpload;
+import org.richfaces.fragment.select.RichFacesSelect;
 import org.richfaces.tests.photoalbum.ftest.webdriver.utils.PhotoalbumUtils;
 
 /**

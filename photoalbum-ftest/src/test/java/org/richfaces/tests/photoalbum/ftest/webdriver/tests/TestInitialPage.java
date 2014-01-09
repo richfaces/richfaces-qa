@@ -25,8 +25,8 @@ import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.message.Message;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.message.Message;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.LoginPanel;
 import org.testng.annotations.Test;
 

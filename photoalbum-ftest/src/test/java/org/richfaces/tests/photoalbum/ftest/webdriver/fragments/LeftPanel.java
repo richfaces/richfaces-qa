@@ -25,8 +25,8 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.tree.RichFacesTree;
-import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
+import org.richfaces.fragment.common.picker.ChoicePickerHelper;
+import org.richfaces.fragment.tree.RichFacesTree;
 import org.richfaces.tests.photoalbum.ftest.webdriver.utils.PhotoalbumUtils;
 
 import com.google.common.collect.Lists;
