@@ -33,7 +33,7 @@ import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.openqa.selenium.WebDriver;
-import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.photoalbum.ftest.webdriver.pages.PhotoalbumPage;
 import org.testng.ITestResult;
 import org.testng.SkipException;

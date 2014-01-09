@@ -23,7 +23,7 @@ package org.richfaces.tests.photoalbum.ftest.webdriver.pages;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.messages.RichFacesMessages;
+import org.richfaces.fragment.messages.RichFacesMessages;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.AddAlbumPanel;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.AddShelfPanel;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.ConfirmationPanel;

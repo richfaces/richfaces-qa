@@ -29,9 +29,9 @@ import java.util.concurrent.TimeUnit;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.panel.TextualFragmentPart;
-import org.richfaces.tests.page.fragments.impl.popupPanel.RichFacesPopupPanel;
-import org.richfaces.tests.page.fragments.impl.tooltip.TextualRichFacesTooltip;
+import org.richfaces.fragment.panel.TextualFragmentPart;
+import org.richfaces.fragment.popupPanel.RichFacesPopupPanel;
+import org.richfaces.fragment.tooltip.TextualRichFacesTooltip;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.HowItWorksPopupPanel.Controls;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.SlideShowPanel.Body;
 

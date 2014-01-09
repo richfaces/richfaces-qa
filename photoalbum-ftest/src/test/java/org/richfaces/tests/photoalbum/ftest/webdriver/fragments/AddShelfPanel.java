@@ -27,10 +27,10 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.common.CheckboxInputComponentImpl;
-import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
-import org.richfaces.tests.page.fragments.impl.panel.TextualFragmentPart;
-import org.richfaces.tests.page.fragments.impl.popupPanel.RichFacesPopupPanel;
+import org.richfaces.fragment.common.CheckboxInputComponentImpl;
+import org.richfaces.fragment.common.TextInputComponentImpl;
+import org.richfaces.fragment.panel.TextualFragmentPart;
+import org.richfaces.fragment.popupPanel.RichFacesPopupPanel;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.AddShelfPanel.Body;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.HowItWorksPopupPanel.Controls;
 

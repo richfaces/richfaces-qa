@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.photoalbum.ftest.webdriver.tests;
 
-import static org.richfaces.tests.page.fragments.impl.dataScroller.DataScroller.DataScrollerSwitchButton.LAST;
+import static org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton.LAST;
 import static org.testng.Assert.assertEquals;
 
 import java.util.EnumSet;
@@ -29,9 +29,9 @@ import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.list.RichFacesList;
-import org.richfaces.tests.page.fragments.impl.switchable.SwitchType;
-import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
+import org.richfaces.fragment.common.picker.ChoicePickerHelper;
+import org.richfaces.fragment.list.RichFacesList;
+import org.richfaces.fragment.switchable.SwitchType;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.ErrorPanel;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.SearchPanel.SearchOptionsEnum;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.AlbumView;

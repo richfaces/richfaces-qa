@@ -27,7 +27,7 @@ import static org.testng.Assert.assertTrue;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.fragment.common.Utils;
 
 import com.google.common.collect.Lists;
 

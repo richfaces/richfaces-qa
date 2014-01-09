@@ -26,7 +26,7 @@ import static org.testng.Assert.assertEquals;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.richfaces.tests.page.fragments.impl.tree.Tree;
+import org.richfaces.fragment.tree.Tree;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.AlbumView;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.ShelfView;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.ShelvesView;

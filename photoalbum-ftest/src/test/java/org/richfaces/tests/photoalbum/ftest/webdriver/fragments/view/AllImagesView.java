@@ -32,9 +32,9 @@ import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.dataScroller.RichFacesDataScroller;
-import org.richfaces.tests.page.fragments.impl.inputNumberSlider.RichFacesInputNumberSlider;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
+import org.richfaces.fragment.inputNumberSlider.RichFacesInputNumberSlider;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.AlbumView.PhotoInfo;
 
 /**
