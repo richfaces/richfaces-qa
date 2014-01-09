@@ -305,8 +305,8 @@ public class TestTab extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testOnheadermousedown() {
-        Action action = new Actions(driver).click(page.getInactiveHeaders().get(2))
-            .clickAndHold(page.getInactiveHeaders().get(0)).build();
+        new Actions(driver).click(page.getInactiveHeaders().get(2)).perform();
+        Action action = new Actions(driver).clickAndHold(page.getInactiveHeaders().get(0)).build();
         testFireEvent(tabAttributes, TabAttributes.onheadermousedown, action);
         new Actions(driver).release().build().perform();
     }
@@ -368,8 +368,8 @@ public class TestTab extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testOnmouseup() {
-        Action action = new Actions(driver).clickAndHold(page.getDisabledHeaders().get(0))
-            .release(page.getItemContents().get(0)).build();
+        new Actions(driver).clickAndHold(page.getItemContents().get(0)).perform();
+        Action action = new Actions(driver).release(page.getItemContents().get(0)).build();
         testFireEvent(tabAttributes, TabAttributes.onmouseup, action);
     }
 
