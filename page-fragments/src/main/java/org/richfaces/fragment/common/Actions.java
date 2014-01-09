@@ -21,6 +21,8 @@
  */
 package org.richfaces.fragment.common;
 
+import static org.richfaces.fragment.common.Event.CLICK;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
