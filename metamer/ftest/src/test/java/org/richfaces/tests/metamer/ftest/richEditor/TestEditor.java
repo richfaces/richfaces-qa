@@ -48,7 +48,7 @@ import org.testng.annotations.Test;
  * @author <<a href="mailto:manovotn@redhat.com">Matej Novotny</a>
  * @version $Revision$
  */
-public class TestRichEditor extends AbstractWebDriverTest {
+public class TestEditor extends AbstractWebDriverTest {
 
     private final Attributes<EditorAttributes> editorAttributes = getAttributes();
 
