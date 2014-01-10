@@ -56,7 +56,6 @@ public class AbstractWebDriverTest extends AbstractShowcaseTest {
         this.contextRoot = getContextRoot();
         ShowcaseLayout layout = loadLayout();
         if (runInPortalEnv) {
-            webDriver.manage().window().setSize(new Dimension(BROWSER_WINDOW_WIDTH, BROWSER_WINDOW_HEIGHT));
             webDriver.get(String.format("%s://%s:%s/%s", contextRoot.getProtocol(), contextRoot.getHost(),
                 contextRoot.getPort(), "portal/classic/showcase"));
             JavascriptExecutor js = (JavascriptExecutor) webDriver;
