@@ -80,7 +80,7 @@ public final class Utils {
     public static Optional<String> getComponentOption(WebElement rootOfComponent, String option) {
         JavascriptExecutor executor = getExecutorFromElement(rootOfComponent);
         String result = (String) executor
-            .executeScript("return RichFaces.component(arguments[0]).options." + option, rootOfComponent);
+            .executeScript("return RichFaces.$(arguments[0]).options." + option, rootOfComponent);
         return Optional.of(result);
     }
 
@@ -95,7 +95,7 @@ public final class Utils {
      */
     public static Optional<String> getComponentOptionDocumentObjectSafe(WebElement rootOfComponent, String option) {
         JavascriptExecutor executor = getExecutorFromElement(rootOfComponent);
-        Boolean resultIsDocumentObject = (Boolean) executor.executeScript("return RichFaces.component(arguments[0]).options."
+        Boolean resultIsDocumentObject = (Boolean) executor.executeScript("return RichFaces.$(arguments[0]).options."
             + option + " == document", rootOfComponent);
         if (!resultIsDocumentObject) {
             return getComponentOption(rootOfComponent, option);
