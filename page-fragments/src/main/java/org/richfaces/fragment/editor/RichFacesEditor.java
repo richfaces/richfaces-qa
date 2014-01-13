@@ -112,6 +112,10 @@ public class RichFacesEditor implements Editor, AdvancedInteractions<RichFacesEd
             }
         }
 
+        public WebElement getRootElement() {
+            return root;
+        }
+
         public RichFacesEditorToolbar getToolbar() {
             return toolbar;
         }
