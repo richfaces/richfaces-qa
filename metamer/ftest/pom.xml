@@ -55,6 +55,7 @@ FSF site: http://www.fsf.org. -->
         <dependency>
             <groupId>org.richfaces.ui.common</groupId>
             <artifactId>richfaces-ui-common-api</artifactId>
+            <version>${version.richfaces}</version>
         </dependency>
         <!-- Arquillian dependencies -->
         <dependency>
