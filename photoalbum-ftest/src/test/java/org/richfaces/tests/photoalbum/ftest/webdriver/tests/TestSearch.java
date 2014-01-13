@@ -31,8 +31,8 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.fragment.list.RichFacesList;
+import org.richfaces.fragment.notify.RichFacesNotifyMessage;
 import org.richfaces.fragment.switchable.SwitchType;
-import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.ErrorPanel;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.SearchPanel.SearchOptionsEnum;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.AlbumView;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.SearchView;
@@ -50,13 +50,13 @@ import com.google.common.collect.Lists;
 public class TestSearch extends AbstractPhotoalbumTest {
 
     private static final List<String> TABNAMES = Lists.newArrayList(
-        "Shelf search result",
+        "Album Group search result",
         "Albums search result",
         "Images search result",
         "Users search result",
         "Tags search result");
     private static final List<String> ALL_CRITERIAS = Lists.newArrayList(
-        "Shelves", "Albums", "Images", "Users", "Tags");
+        "Album Groups", "Albums", "Images", "Users", "Tags");
 
     @FindBy(className = "rf-ulst")
     private RichFacesList list;
@@ -68,7 +68,7 @@ public class TestSearch extends AbstractPhotoalbumTest {
     }
 
     private SearchView searchView() {
-        SearchView searchView = page.getContentPanel().searchView();
+        SearchView searchView = getView(SearchView.class);
         searchView.getTabPanel().advanced().setupSwitchType(SwitchType.CLIENT);
         return searchView;
     }
@@ -108,9 +108,9 @@ public class TestSearch extends AbstractPhotoalbumTest {
     public void testSearchOptions_searchInNowhere() {
         // set all options off
         page.getSearchPanel().searchFor("a", EnumSet.noneOf(SearchOptionsEnum.class));
-        ErrorPanel errorPanel = page.getErrorPanel();
-        errorPanel.advanced().waitUntilPopupIsVisible().perform();
-        errorPanel.checkAll("You must select at least one search option");
+        RichFacesNotifyMessage message = page.getMessage();
+        message.advanced().waitUntilMessageIsVisible().perform();
+        assertEquals(message.getDetail(), "You must select at least one search option");
     }
 
     @Test
@@ -128,11 +128,11 @@ public class TestSearch extends AbstractPhotoalbumTest {
 
     @Test
     public void testSearchOptions_searchWithoutOptions() {
-        ErrorPanel errorPanel = page.getErrorPanel();
         // set all options off
         page.getSearchPanel().searchFor("a", EnumSet.noneOf(SearchOptionsEnum.class));
-        errorPanel.advanced().waitUntilPopupIsVisible().perform();
-        errorPanel.checkAll("You must select at least one search option");
+        RichFacesNotifyMessage message = page.getMessage();
+        message.advanced().waitUntilMessageIsVisible().perform();
+        assertEquals(message.getDetail(), "You must select at least one search option");
     }
 
     @Test

@@ -34,12 +34,13 @@ import com.google.common.collect.Lists;
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestAlbumView extends AbstractPhotoalbumTest {
+public class TestAlbumViewActivities extends AbstractPhotoalbumTest {
 
     @Test
-    public void testImageSizeSlider() {
+    public void testImagesResizingWithSlider() {
         page.getLeftPanel().openAlbumInPredefinedShelf("Animals", "Nature");
-        AlbumView albumView = page.getContentPanel().albumView();
+
+        AlbumView albumView = getView(AlbumView.class);
         albumView.checkSliderVisible();
         Graphene.guardAjax(albumView.getSlider()).slideToValue(1);
         List<AlbumView.PhotoInfo> photos = albumView.getPhotos();
@@ -56,7 +57,7 @@ public class TestAlbumView extends AbstractPhotoalbumTest {
     @Test
     public void testSlideShow() {
         page.getLeftPanel().openAlbumInPredefinedShelf("Monuments and just buildings", "Monuments");
-        AlbumView albumView = page.getContentPanel().albumView();
+        AlbumView albumView = getView(AlbumView.class);
         albumView.openSlideShow();
         SlideShowPanel slideShowPanel = page.getSlideShowPanel();
         slideShowPanel.advanced().waitUntilPopupIsVisible().perform();

@@ -22,6 +22,7 @@
 package org.richfaces.tests.photoalbum.ftest.webdriver.tests;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.net.URL;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -34,6 +35,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.openqa.selenium.WebDriver;
 import org.richfaces.fragment.common.Utils;
+import org.richfaces.tests.photoalbum.ftest.webdriver.annotations.DoNotLogoutAfter;
 import org.richfaces.tests.photoalbum.ftest.webdriver.pages.PhotoalbumPage;
 import org.testng.ITestResult;
 import org.testng.SkipException;
@@ -63,32 +65,42 @@ public abstract class AbstractPhotoalbumTest extends Arquillian {
         return ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/photoalbum.war"));
     }
 
-//    @BeforeMethod(alwaysRun = true)
-//    public void loadPage(Method m) {
-//        if (browser == null) {
-//            throw new SkipException("webDriver isn't initialized");
-//        }
-//        browser.manage().deleteAllCookies();
-//        browser.get(contextPath.toString() + "/index.jsf");
-//        // this method could also handle user logging
-//        // i.e by introducing an annotation @LoggedUser used for marking test methods
-//        // but https://issues.jboss.org/browse/ARQGRA-309
-//        // so the logging has to be done manually
-//    }
+    public void gPlusLogin() {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    protected <T> T getView(Class<T> klass) {
+        for (Method m : page.getContentPanel().getClass().getMethods()) {
+            if (m.getReturnType().equals(klass)) {
+                try {
+                    return (T) m.invoke(page.getContentPanel());
+                } catch (Exception ex) {
+                    throw new RuntimeException("Cannot obtain view " + klass.getSimpleName());
+                }
+            }
+        }
+        throw new UnsupportedOperationException("Not supported view " + klass.getSimpleName());
+    }
+
     @BeforeMethod(alwaysRun = true)
-    public void loadPage() {
+    public void loadPage(Method m) {
         if (browser == null) {
             throw new SkipException("webDriver isn't initialized");
         }
-        browser.manage().deleteAllCookies();
         browser.get(contextPath.toString() + "/index.jsf");
-    }
-
-    @AfterMethod(alwaysRun = true)
-    public void logoutAfter(ITestResult m) throws Exception {
-        if (Utils.isVisible(page.getHeaderPanel().getLogoutLink())) {
-            logout();
-        }
+        // this method could also handle user logging
+        // i.e by introducing an annotation @LoggedUser used for marking test methods
+        // but it cannot be done because of https://issues.jboss.org/browse/ARQGRA-309
+        // so the logging needs to be done manually
+        /**
+         * E.g.:
+         *
+         * public void loadPage(Method m) {
+         *   if(m.isAnnotationPresent(LoggedUser.class)){
+         *     login(LoggedUser.getName(), LoggedUser.getPassword());
+         *   }
+         * }
+         */
     }
 
     public void login() {
@@ -105,5 +117,22 @@ public abstract class AbstractPhotoalbumTest extends Arquillian {
 
     public void logout() {
         page.logout();
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void logoutAfter(ITestResult m) throws Exception {
+        if (!m.getMethod().getConstructorOrMethod().getMethod().isAnnotationPresent(DoNotLogoutAfter.class)) {
+            if (Utils.isVisible(page.getHeaderPanel().getLogoutLink())) {
+                logout();
+                browser.manage().deleteAllCookies();
+            }
+        }
+    }
+
+    public void waitFor(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException ex) {
+        }
     }
 }

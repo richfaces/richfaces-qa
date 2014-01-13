@@ -57,7 +57,7 @@ public class AddShelfPanel extends RichFacesPopupPanel<TextualFragmentPart, Cont
         advanced().waitUntilPopupIsNotVisible().perform();
     }
 
-    public void check() {
+    public void check()  {
         assertEquals(getBodyContent().getNameText().getText(), "Name");
         assertEquals(getBodyContent().getSharedText().getText(), "Shared");
         assertEquals(getHeaderContent().getText(), "Add shelf");

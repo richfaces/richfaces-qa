@@ -37,6 +37,6 @@ http://www.fsf.org. -->
     </extension>
 
     <extension qualifier="webdriver">
-        <property name="browserCapabilities">firefox</property>
+        <property name="browser">firefox</property>
     </extension>
 </arquillian>

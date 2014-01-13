@@ -29,7 +29,6 @@ import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Utils;
@@ -42,15 +41,12 @@ import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.AlbumView.P
  */
 public class AllImagesView {
 
-    @Root
-    private WebElement root;
-
     @FindBy(className = "image-header-table")
     private WebElement headerInfo;
 
     @FindBy(className = "rf-insl")
     private RichFacesInputNumberSlider slider;
-    @FindByJQuery("div a:has(img[src='img/icons/help_sign.png'])")
+    @FindByJQuery("div a:contains(?)")
     private WebElement sliderHelpLink;
 
     @FindBy(css = "a.slideshow-link")

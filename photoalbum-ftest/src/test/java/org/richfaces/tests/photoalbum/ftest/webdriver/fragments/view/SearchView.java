@@ -62,7 +62,7 @@ public class SearchView {
     public void checkContainsCriterias(List<String> criterias) {
         String actualCriterias = criteria.getText();
         for (String crit : criterias) {
-            assertTrue(actualCriterias.contains(crit));
+            assertTrue(actualCriterias.contains(crit), "Actual criterias: " + actualCriterias + " should contain: [" + crit + ']');
         }
     }
 

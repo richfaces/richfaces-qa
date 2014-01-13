@@ -23,18 +23,35 @@ package org.richfaces.tests.photoalbum.ftest.webdriver.tests;
 
 import static org.testng.Assert.assertEquals;
 
-import org.openqa.selenium.By;
-import org.richfaces.fragment.common.Utils;
+import org.jboss.arquillian.graphene.Graphene;
+import org.richfaces.fragment.message.Message;
+import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.LoginPanel;
 import org.testng.annotations.Test;
 
 /**
- *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestInitialPage extends AbstractPhotoalbumTest {
+public class TestUserLogging extends AbstractPhotoalbumTest {
 
     @Test
-    public void testTitle() {
-        assertEquals(Utils.getTextFromHiddenElement(browser.findElement(By.tagName("title"))), "RichFaces PhotoAlbum demo");
+    public void testBadLoginWillShowErrorMessages() {
+        Graphene.guardAjax(page.getHeaderPanel().getLoginLink()).click();
+        LoginPanel loginPanel = page.getLoginPanel();
+        loginPanel.advanced().waitUntilPopupIsVisible();
+        loginPanel.loginWithoutWait("amarkhel", "bad password");
+        assertEquals(loginPanel.getBodyContent().getMessages().size(), 1);
+        assertEquals(loginPanel.getBodyContent().getMessages().getItem(0).getSummary(), "Invalid login or password");
+        assertEquals(loginPanel.getBodyContent().getMessages().getItem(0).getType(), Message.MessageType.ERROR);
+        loginPanel.getHeaderControlsContent().close();
+        loginPanel.advanced().waitUntilPopupIsNotVisible().perform();
+        page.checkNotLogged();
+    }
+
+    @Test
+    public void testLogInAndOut() {
+        page.login("amarkhel", "12345");
+        page.checkLogged("amarkhel");
+        page.logout();
+        page.checkNotLogged();
     }
 }

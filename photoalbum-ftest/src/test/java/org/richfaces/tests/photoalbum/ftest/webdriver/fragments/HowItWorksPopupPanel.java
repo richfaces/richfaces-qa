@@ -37,17 +37,17 @@ import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.HowItWorksPopupP
  */
 public class HowItWorksPopupPanel extends RichFacesPopupPanel<TextualFragmentPart, Controls, TextualFragmentPart> {
 
-    public void checkAll(String contentStartsWith) {
+    public void checkAllAndClose(String contentStartsWith) {
         checkHeader();
         checkContent(contentStartsWith);
-        checkControls();
+        checkClose();
     }
 
     public void checkContent(String contentStartsWith) {
         assertTrue(getContentText().startsWith(contentStartsWith));
     }
 
-    public void checkControls() {
+    public void checkClose() {
         Graphene.guardNoRequest(this).close();
         advanced().waitUntilPopupIsNotVisible().perform();
     }

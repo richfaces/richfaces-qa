@@ -26,6 +26,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.util.List;
 
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.richfaces.fragment.common.Utils;
 
@@ -70,5 +71,10 @@ public final class PhotoalbumUtils {
             result.add(webElement.getText());
         }
         return result;
+    }
+
+    public static void scrollToElement(WebElement element) {
+        Point location = element.getLocation();
+        Utils.getExecutorFromElement(element).executeScript("scrollTo(" + location.x + "," + location.y + ")");
     }
 }

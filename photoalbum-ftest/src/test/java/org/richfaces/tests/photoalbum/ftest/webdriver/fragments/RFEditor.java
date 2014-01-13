@@ -1,6 +1,6 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,23 +18,26 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
-package org.richfaces.tests.photoalbum.ftest.webdriver.tests;
+ */
+package org.richfaces.tests.photoalbum.ftest.webdriver.fragments;
 
-import static org.testng.Assert.assertEquals;
-
-import org.openqa.selenium.By;
 import org.richfaces.fragment.common.Utils;
-import org.testng.annotations.Test;
+import org.richfaces.fragment.editor.RichFacesEditor;
 
 /**
+ * Simplified editor using JS API.
  *
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @author Jiri Stefek <jstefek@redhat.com>
  */
-public class TestInitialPage extends AbstractPhotoalbumTest {
+public class RFEditor extends RichFacesEditor {
 
-    @Test
-    public void testTitle() {
-        assertEquals(Utils.getTextFromHiddenElement(browser.findElement(By.tagName("title"))), "RichFaces PhotoAlbum demo");
+    @Override
+    public void type(String text) {
+        Utils.invokeRichFacesJSAPIFunction(advanced().getRootElement(), "setValue('" + text + "')");
+    }
+
+    @Override
+    public String getText() {
+        return Utils.invokeRichFacesJSAPIFunction(advanced().getRootElement(), "getValue()");
     }
 }

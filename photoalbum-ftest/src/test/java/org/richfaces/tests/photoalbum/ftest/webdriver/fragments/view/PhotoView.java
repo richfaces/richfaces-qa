@@ -33,9 +33,10 @@ import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Utils;
+import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.RFEditor;
+import org.richfaces.tests.photoalbum.ftest.webdriver.utils.PhotoalbumUtils;
 
 /**
- *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class PhotoView {
@@ -48,7 +49,7 @@ public class PhotoView {
     @FindBy(css = "a.slideshow-link")
     private WebElement slideShowLink;
 
-    @FindByJQuery("a:has(img[src='img/icons/help_sign.png']):eq(1)")
+    @FindByJQuery("a:contains(?):last")
     private WebElement slideShowLinkHelp;
     @FindBy(css = "div[id$='imagesTable']")
     private ImagesScroller imagesScroller;
@@ -109,7 +110,7 @@ public class PhotoView {
 
     public static class ImagesScroller {
 
-        @FindByJQuery("a:last")
+        @FindByJQuery("a:contains(?):last")
         private WebElement imageScrollerHelp;
         @FindBy(css = "span.image-scroller-left-arrow img")
         private WebElement scrollLeftImage;
@@ -198,8 +199,8 @@ public class PhotoView {
         private WebElement panelName;
         @FindByJQuery("> div.comment")
         private List<Comment> comments;
-        @FindBy(css = ".rf-ed textarea")
-        private WebElement addCommentEditor;
+        @FindByJQuery(".rf-ed")
+        private RFEditor addCommentEditor;
         @FindBy(css = ".photoalbumButton input")
         private WebElement addCommentButton;
 
@@ -208,7 +209,9 @@ public class PhotoView {
         }
 
         public void addComment(String comment) {
-            addCommentEditor.sendKeys(comment);
+            addCommentEditor.type(comment);
+            // does not work without the scrolling
+            PhotoalbumUtils.scrollToElement(getAddCommentButton());
             Graphene.guardAjax(getAddCommentButton()).click();
         }
 
@@ -235,7 +238,7 @@ public class PhotoView {
             @FindByJQuery("div.comment-deleteLink > span.additional-info-text")
             private WebElement additionalInfo;
 
-            public void checkAll(String info, String commentText, String userImage, String userName) {
+            public void checkAll(String info, String commentText, String userImage, String userName) throws AssertionError {
                 checkAdditionalInfo(info);
                 checkCommentText(commentText);
                 checkImageBackground();
@@ -269,6 +272,10 @@ public class PhotoView {
 
             public void delete() {
                 Graphene.guardAjax(deleteLink).click();
+            }
+
+            public WebElement getUserImage() {
+                return userImage;
             }
         }
     }

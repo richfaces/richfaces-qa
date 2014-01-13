@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -18,16 +18,14 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.photoalbum.ftest.webdriver.fragments;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.test.api.ArquillianResource;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.photoalbum.ftest.webdriver.utils.PhotoalbumUtils;
@@ -42,9 +40,6 @@ public class HeaderPanel {
     @ArquillianResource
     private WebDriver driver;
 
-    @FindByJQuery("div.header-content-div a:has('> img')")
-    private WebElement imageIndexLink;
-
     @FindByJQuery("div.header-content-div div[id$='logInOutMenu'] span.logged-user")
     private WebElement loggedUserSpan;
     @FindByJQuery("div.header-content-div div[id$='logInOutMenu'] span.logged-user + a")
@@ -56,8 +51,6 @@ public class HeaderPanel {
     @FindByJQuery("div.header-content-div div[id$='logInOutMenu'] a:contains('Register')")
     private WebElement registerLink;
 
-    @FindByJQuery("div.header-content-div div.top-right-menu a:contains('GuideLine')")
-    private WebElement guideLineLink;
     @FindByJQuery("div.header-content-div div.top-right-menu a:contains('Wiki page')")
     private WebElement wikiPageLink;
     @FindByJQuery("div.header-content-div div.top-right-menu a:contains('Downloads')")
@@ -69,9 +62,7 @@ public class HeaderPanel {
     private Toolbar toolbar;
 
     private void checkAlwaysPresentElements() {
-        PhotoalbumUtils.checkVisible(Lists.newArrayList(imageIndexLink, loggedUserSpan, guideLineLink, wikiPageLink, downloadsLink, communityLink, getStatusHelpLink()));
-        WebElement image = imageIndexLink.findElement(By.tagName("img"));
-        assertTrue(image.getAttribute("src").contains("img/shell/logo_top.gif"));
+        PhotoalbumUtils.checkVisible(Lists.newArrayList(loggedUserSpan, wikiPageLink, downloadsLink, communityLink, getStatusHelpLink()));
     }
 
     public void checkIfUserLogged(String user) {
@@ -99,14 +90,6 @@ public class HeaderPanel {
         return downloadsLink;
     }
 
-    public WebElement getGuideLineLink() {
-        return guideLineLink;
-    }
-
-    public WebElement getImageIndexLink() {
-        return imageIndexLink;
-    }
-
     public WebElement getLoggedUserLink() {
         return loggedUserLink;
     }
@@ -128,7 +111,7 @@ public class HeaderPanel {
     }
 
     public WebElement getStatusHelpLink() {
-        return driver.findElement(ByJQuery.selector("a:last"));
+        return driver.findElement(ByJQuery.selector("a:visible:last"));
     }
 
     public Toolbar getToolbar() {

@@ -26,7 +26,11 @@ import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.HowItWorksPopupPanel;
+import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.AddImagesView;
+import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.AlbumView;
+import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.EditUserProfileView;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.PhotoView;
+import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.UserProfileView;
 import org.testng.annotations.Test;
 
 /**
@@ -37,43 +41,49 @@ public class TestHowItWorksPanels extends AbstractPhotoalbumTest {
     @FindBy(className = "rf-pp-cntr[id*='helpPanel']")
     private HowItWorksPopupPanel howItWorksPanel;
 
-    @FindByJQuery("a:has(img):eq(0)")
-    private WebElement howItWorksNavigation;
-    @FindByJQuery("a:has(img):last")
+    @FindByJQuery("a:contains(?):last")
     private WebElement howItWorksStatus;
+
+    @Test
+    public void testHowItWorksButton() {
+        login();
+        Graphene.guardAjax(page.getHeaderPanel().getToolbar().getAddImagesLink()).click();
+        Graphene.guardAjax(getView(AddImagesView.class).getButtonHelpLink()).click();
+        howItWorksPanel.advanced().waitUntilPopupIsVisible().perform();
+        howItWorksPanel.checkAllAndClose("How the button is created and how it acts");
+    }
 
     @Test
     public void testHowItWorksFileUpload() {
         login();
         Graphene.guardAjax(page.getHeaderPanel().getToolbar().getAddImagesLink()).click();
-        Graphene.guardAjax(page.getContentPanel().addImagesView().getFileUploadHelpLink()).click();
+        Graphene.guardAjax(getView(AddImagesView.class).getFileUploadHelpLink()).click();
         howItWorksPanel.advanced().waitUntilPopupIsVisible().perform();
-        howItWorksPanel.checkAll("Upload Images");
+        howItWorksPanel.checkAllAndClose("Upload Images");
     }
 
     @Test
     public void testHowItWorksImagesScroller() {
         page.getLeftPanel().openAlbumInPredefinedShelf("Animals", "Nature");
-        page.getContentPanel().albumView().getPhotos().get(0).open();
-        PhotoView photoView = page.getContentPanel().photoView();
+        PhotoView photoView = getView(AlbumView.class).getPhotos().get(0).open();
         Graphene.guardAjax(photoView.getImagesScroller().getImageScrollerHelp()).click();
         howItWorksPanel.advanced().waitUntilPopupIsVisible().perform();
-        howItWorksPanel.checkAll("Images Scroller");
+        howItWorksPanel.checkAllAndClose("Images Scroller");
     }
 
     @Test
     public void testHowItWorksInputNumberSlider() {
         page.getLeftPanel().openAlbumInPredefinedShelf("Animals", "Nature");
-        Graphene.guardAjax(page.getContentPanel().albumView().getSliderHelpLink()).click();
+        Graphene.guardAjax(getView(AlbumView.class).getSliderHelpLink()).click();
         howItWorksPanel.advanced().waitUntilPopupIsVisible().perform();
-        howItWorksPanel.checkAll("Image Size Control with <rich:inputNumberSlider>");
+        howItWorksPanel.checkAllAndClose("Image Size Control with <rich:inputNumberSlider>");
     }
 
     @Test
     public void testHowItWorksNavigationForPredefinedShelves() {
         Graphene.guardAjax(page.getLeftPanel().getPreDefinedShelvesHelpLink()).click();
         howItWorksPanel.advanced().waitUntilPopupIsVisible().perform();
-        howItWorksPanel.checkAll("Navigation tree with pre-defined shelves.");
+        howItWorksPanel.checkAllAndClose("Navigation tree with public album groups.");
     }
 
     @Test
@@ -82,30 +92,45 @@ public class TestHowItWorksPanels extends AbstractPhotoalbumTest {
 
         Graphene.guardAjax(page.getLeftPanel().getMyShelvesHelpLink()).click();
         howItWorksPanel.advanced().waitUntilPopupIsVisible().perform();
-        howItWorksPanel.checkAll("Navigation tree for a registered user");
+        howItWorksPanel.checkAllAndClose("Navigation tree for a registered user");
     }
-    @Test
-    public void testHowItWorksSelect() {
-        login();
-        Graphene.guardAjax(page.getHeaderPanel().getToolbar().getAddImagesLink()).click();
-        Graphene.guardAjax(page.getContentPanel().addImagesView().getSelectHelpLink()).click();
+
+    @Test(enabled = false)
+    public void testHowItWorksNavigationForGPlusAlbums() {
+        gPlusLogin();
+
+        Graphene.guardAjax(page.getLeftPanel().getGPlusShelvesHelpLink()).click();
         howItWorksPanel.advanced().waitUntilPopupIsVisible().perform();
-        howItWorksPanel.checkAll("How the button is created and how it acts");
+        howItWorksPanel.checkAllAndClose("Google+ albums");
     }
+
     @Test
     public void testHowItWorksSlideShow() {
         page.getLeftPanel().openAlbumInPredefinedShelf("Animals", "Nature");
-        page.getContentPanel().albumView().getPhotos().get(0).open();
-        PhotoView photoView = page.getContentPanel().photoView();
+        getView(AlbumView.class).getPhotos().get(0).open();
+        PhotoView photoView = getView(PhotoView.class);
         Graphene.guardAjax(photoView.getSlideShowHelp()).click();
         howItWorksPanel.advanced().waitUntilPopupIsVisible().perform();
-        howItWorksPanel.checkAll("Slideshow mechanism.");
+        howItWorksPanel.checkAllAndClose("Slideshow mechanism.");
     }
 
     @Test
     public void testHowItWorksStatus() {
         Graphene.guardAjax(howItWorksStatus).click();
         howItWorksPanel.advanced().waitUntilPopupIsVisible().perform();
-        howItWorksPanel.checkAll("The <a4j:status> component");
+        howItWorksPanel.checkAllAndClose("The <a4j:status> component");
+    }
+
+    @Test
+    public void testHowItWorksValidation() {
+        login();
+
+        Graphene.guardAjax(page.getHeaderPanel().getLoggedUserLink()).click();
+        UserProfileView preView = getView(UserProfileView.class);
+        preView.openEditProfile();
+        EditUserProfileView view = getView(EditUserProfileView.class);
+        Graphene.guardAjax(view.getValidationHelpLink()).click();
+        howItWorksPanel.advanced().waitUntilPopupIsVisible().perform();
+        howItWorksPanel.checkAllAndClose("User Input Data Validation");
     }
 }

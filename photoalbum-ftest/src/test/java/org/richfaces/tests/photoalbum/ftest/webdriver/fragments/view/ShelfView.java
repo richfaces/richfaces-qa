@@ -106,11 +106,11 @@ public class ShelfView {
         private RichFacesInplaceInput input;
         @FindByJQuery(".additional-info-text:not('a')")
         private WebElement additionalInfo;
-        @FindByJQuery(".shelf-header-table-col2 a:contains('View shelf')")
+        @FindByJQuery(".shelf-header-table-col2 a:contains('View album group')")
         private WebElement viewShelfLink;
-        @FindByJQuery(".shelf-header-table-col2 a:contains('Edit shelf properties')")
+        @FindByJQuery(".shelf-header-table-col2 a:contains('Edit album group properties')")
         private WebElement editShelfPropertiesLink;
-        @FindByJQuery(".shelf-header-table-col2 a:contains('Delete shelf')")
+        @FindByJQuery(".shelf-header-table-col2 a:contains('Delete album group')")
         private WebElement deleteShelfLink;
 
         public void checkAll(String name, String additionalInfo, boolean visible) {
