@@ -91,6 +91,6 @@ public class TestPushTopicsContext extends AbstractWebDriverTest {
      */
     private void checkTheUuid(String uuid) {
         assertEquals(uuid.length(), 36, "The length of uuid is wrong!");
-        assertEquals(uuid.matches("-{4}"), "Wrong uuid, there should be 4 hyphens");
+        assertTrue(uuid.trim().matches("\\S{8}-\\S{4}-\\S{4}-\\S{4}-\\S{12}"), "Wrong uuid, there should be 4 hyphens");
     }
 }
