@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+    xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
-    <!--
+<!--
 JBoss, Home of Professional Open Source
 Copyright 2010-2013, Red Hat, Inc. and individual contributors
 by the @authors tag. See the copyright.txt in the distribution for a
@@ -25,18 +25,26 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-    <ui:composition template="/templates/list.xhtml">
+<ui:composition template="/templates/list.xhtml">
 
-        <ui:define name="pageTitle">Rich Panel Menu</ui:define>
+    <ui:define name="pageTitle">Rich Panel Menu</ui:define>
 
-        <ui:define name="links">
+    <ui:define name="links">
 
-            <metamer:testPageLink id="simple" outcome="simple" value="Simple">
-                Simple page containing <b>r:panelMenu</b> and input boxes for all its attributes.
+        <metamer:testPageLink id="simple" outcome="simple" value="Simple">
+                Simple page containing <b>rich:panelMenu</b> and input boxes for all its attributes.
             </metamer:testPageLink>
 
-        </ui:define>
+        <metamer:testPageLink id="rf12813" outcome="rf12813" value="Reproducer for RF-12813">
+                Reproducer for <a href="https://issues.jboss.org/browse/RF-12813">RF-12813</a> rich:panelMenuItem executes action even if disabled attribute evaluates to true
+            </metamer:testPageLink>
 
-    </ui:composition>
+        <metamer:testPageLink id="rf13358" outcome="rf13358" value="Reproducer for RF-13358">
+                Reproducer for <a href="https://issues.jboss.org/browse/RF-13358">RF-13358</a> rich:panelMenuGroup allowing actions executions even if originally disabled
+            </metamer:testPageLink>
+
+    </ui:define>
+
+</ui:composition>
 
 </html>
