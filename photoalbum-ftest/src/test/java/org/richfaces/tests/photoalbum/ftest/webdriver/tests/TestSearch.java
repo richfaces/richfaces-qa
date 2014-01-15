@@ -148,8 +148,8 @@ public class TestSearch extends AbstractPhotoalbumTest {
 
         ShelfView content = searchView().getTabPanel().switchTo(TABNAMES.get(1)).getContent(ShelfView.class);
         List<ShelfView.AlbumPreview> albumPreviews = content.getAlbumPreviews();
-        albumPreviews.get(0).checkAll("Animals", "Dec 17, 2009", "Andrey Markhel");
-        albumPreviews.get(5).checkAll("Water", "Dec 17, 2009", "John Smith");
+        albumPreviews.get(0).checkAll("Animals", DEC_17_2009, "Andrey Markhel");
+        albumPreviews.get(5).checkAll("Water", DEC_17_2009, "John Smith");
         assertEquals(albumPreviews.size(), 6);
     }
 
@@ -164,16 +164,17 @@ public class TestSearch extends AbstractPhotoalbumTest {
         assertEquals(albumView.getDataScroller().getActivePageNumber(), 1);
         List<AlbumView.PhotoInfo> photos = albumView.getPhotos();
         assertEquals(photos.size(), 8);
-        photos.get(0).checkAll(120, "1750979205_6e51b47ce9_o.jpg", "Dec 17, 2009", "Andrey Markhel");
-        photos.get(1).checkAll(120, "1906662004_655d0f6ccf_o.jpg", "Dec 17, 2009", "Andrey Markhel");
-        photos.get(2).checkAll(120, "2090459727_f2888e5cbe_o.jpg", "Dec 17, 2009", "Andrey Markhel");
+        photos.get(0).checkAll(120, "1750979205_6e51b47ce9_o.jpg", DEC_17_2009, "Andrey Markhel");
+        photos.get(1).checkAll(120, "1906662004_655d0f6ccf_o.jpg", DEC_17_2009, "Andrey Markhel");
+        photos.get(2).checkAll(120, "2090459727_f2888e5cbe_o.jpg", DEC_17_2009, "Andrey Markhel");
 
+        // interact with the scroller
         Graphene.guardAjax(albumView.getDataScroller()).switchTo(LAST);
         assertEquals(albumView.getDataScroller().advanced().getCountOfVisiblePages(), 5);
         assertEquals(albumView.getDataScroller().getActivePageNumber(), 5);
         photos = albumView.getPhotos();
         assertEquals(photos.size(), 1);
-        photos.get(0).checkAll(120, "3170219697_4d259ff802_o.jpg", "Dec 17, 2009", "John Smith");
+        photos.get(0).checkAll(120, "3170219697_4d259ff802_o.jpg", DEC_17_2009, "John Smith");
     }
 
     @Test

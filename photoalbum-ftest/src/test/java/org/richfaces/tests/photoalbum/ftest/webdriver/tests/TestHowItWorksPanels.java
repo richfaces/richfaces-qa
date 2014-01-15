@@ -21,6 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.photoalbum.ftest.webdriver.tests;
 
+import java.util.concurrent.TimeUnit;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
@@ -128,9 +130,10 @@ public class TestHowItWorksPanels extends AbstractPhotoalbumTest {
         Graphene.guardAjax(page.getHeaderPanel().getLoggedUserLink()).click();
         UserProfileView preView = getView(UserProfileView.class);
         preView.openEditProfile();
+
         EditUserProfileView view = getView(EditUserProfileView.class);
         Graphene.guardAjax(view.getValidationHelpLink()).click();
-        howItWorksPanel.advanced().waitUntilPopupIsVisible().perform();
+        howItWorksPanel.advanced().waitUntilPopupIsVisible().withTimeout(10, TimeUnit.SECONDS).perform();
         howItWorksPanel.checkAllAndClose("User Input Data Validation");
     }
 }

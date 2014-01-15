@@ -55,10 +55,10 @@ public class TestToolbarLinks extends AbstractPhotoalbumTest {
         AllAlbumsView albumsView = getView(AllAlbumsView.class);
         albumsView.checkAlbumsHeader("My all albums (4)");
         assertEquals(albumsView.getAlbumPreviews().size(), 4);
-        albumsView.getAlbumPreview(0).checkAll("Animals", "Dec 17, 2009");
-        albumsView.getAlbumPreview(1).checkAll("Nature", "Dec 17, 2009");
-        albumsView.getAlbumPreview(2).checkAll("Cars", "Dec 17, 2009");
-        albumsView.getAlbumPreview(3).checkAll("Sport", "Dec 17, 2009");
+        albumsView.getAlbumPreview(0).checkAll("Animals", DEC_17_2009);
+        albumsView.getAlbumPreview(1).checkAll("Nature", DEC_17_2009);
+        albumsView.getAlbumPreview(2).checkAll("Cars", DEC_17_2009);
+        albumsView.getAlbumPreview(3).checkAll("Sport", DEC_17_2009);
     }
 
     @Test
@@ -73,13 +73,13 @@ public class TestToolbarLinks extends AbstractPhotoalbumTest {
         allImagesView.checkSliderVisible();
         assertEquals(allImagesView.getDataScroller().advanced().getCountOfVisiblePages(), 2);
         assertEquals(allImagesView.getPhotos().size(), 12);
-        allImagesView.getPhotos().get(0).checkAll(120, "1750979205_6e51b47ce9_o.jpg", "Dec 17, 2009");
-        allImagesView.getPhotos().get(11).checkAll(120, "3392993334_36d7f097df_o.jpg", "Dec 17, 2009");
+        allImagesView.getPhotos().get(0).checkAll(120, "1750979205_6e51b47ce9_o.jpg", DEC_17_2009);
+        allImagesView.getPhotos().get(11).checkAll(120, "3392993334_36d7f097df_o.jpg", DEC_17_2009);
 
         // scroll to next page
         Graphene.guardAjax(allImagesView.getDataScroller()).switchTo(2);
         assertEquals(allImagesView.getPhotos().size(), 9);
-        allImagesView.getPhotos().get(0).checkAll(120, "190193308_ce2a4de5fa_o.jpg", "Dec 17, 2009");
-        allImagesView.getPhotos().get(8).checkAll(120, "2042654579_d25c0db64f_o.jpg", "Dec 17, 2009");
+        allImagesView.getPhotos().get(0).checkAll(120, "190193308_ce2a4de5fa_o.jpg", DEC_17_2009);
+        allImagesView.getPhotos().get(8).checkAll(120, "2042654579_d25c0db64f_o.jpg", DEC_17_2009);
     }
 }

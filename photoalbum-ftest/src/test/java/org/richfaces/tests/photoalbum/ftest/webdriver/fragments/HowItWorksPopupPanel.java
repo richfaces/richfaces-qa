@@ -24,9 +24,11 @@ package org.richfaces.tests.photoalbum.ftest.webdriver.fragments;
 import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.GrapheneElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.panel.TextualFragmentPart;
 import org.richfaces.fragment.popupPanel.RichFacesPopupPanel;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.HowItWorksPopupPanel.Controls;
@@ -72,10 +74,11 @@ public class HowItWorksPopupPanel extends RichFacesPopupPanel<TextualFragmentPar
     public static class Controls {
 
         @FindBy(tagName = "img")
-        private WebElement closeButton;
+        private GrapheneElement closeButton;
 
         public void close() {
-            closeButton.click();
+            // the button is not visible for WebDriver, have to trigger the event with JavaScript
+            Utils.triggerJQ("click", closeButton);
         }
 
         public WebElement getCloseButton() {

@@ -77,7 +77,7 @@ public class AddAlbumPanel extends RichFacesPopupPanel<TextualFragmentPart, Cont
         @FindBy(css = "input[id$='albumName']")
         private TextInputComponentImpl albumNameInput;
         @FindBy(css = ".rf-is")
-        private RFInplaceSelect shelfSelect;// FIXME: replace with RichFacesInplaceSelect after method saveOnSelect fixed.
+        private RFInplaceSelect shelfSelect;
 
         public TextInputComponentImpl getAlbumNameInput() {
             return albumNameInput;

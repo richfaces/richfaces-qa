@@ -54,7 +54,7 @@ public class EditUserProfileView {
     @FindBy(css = ".user-prefs-button div:contains(Cancel) + input")
     private WebElement cancelButton;
 
-    @FindBy(tagName = "a")
+    @FindBy(css = ".reg-table a")
     private WebElement validationHelpLink;
 
     public WebElement getBindWithFBButton() {
