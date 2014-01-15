@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:r="http://richfaces.org" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+    <title>Test</title>
+</h:head>
+
+<h:body>
+
+    <h:form>
+        <r:extendedDataTable id="myTable" value="#{model.simple}" var="row" rows="10">
+            <r:column>
+                #{row}
+			</r:column>
+        </r:extendedDataTable>
+
+        <r:commandButton value="push" render="myTable" />
+
+        <r:contextMenu target="myTable" mode="ajax">
+            <r:menuItem label="Delete" mode="ajax" onclick="alert('hello, world!')" />
+        </r:contextMenu>
+
+    </h:form>
+</h:body>
+</html>
