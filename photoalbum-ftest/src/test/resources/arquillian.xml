@@ -16,7 +16,7 @@ http://www.fsf.org. -->
 
     <container qualifier="jbossas-managed-7-1">
         <configuration>
-            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -Duser.timezone=UTC+1</property>
+            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -Duser.timezone=UTC</property>
             <property name="serverConfig">standalone-full.xml</property>
         </configuration>
         <protocol type="jmx-as7">

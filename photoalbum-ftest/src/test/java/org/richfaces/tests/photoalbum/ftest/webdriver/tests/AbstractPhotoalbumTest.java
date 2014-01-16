@@ -50,7 +50,8 @@ public abstract class AbstractPhotoalbumTest extends Arquillian {
 
     public static final String UNKNOWN_IMG_SRC = "-1";
     public static final String NO_OWNER = "-1";
-    public static final String DEC_17_2009 = "Dec 17, 2009";
+    public static final String IMAGES_DEC_DATE = "Dec 18, 2009";
+    public static final String JAN_DATE = "Jan 8, 1985";
 
     @Drone
     protected WebDriver browser;

@@ -57,9 +57,9 @@ public class TestAddAndDeleteComment extends AbstractPhotoalbumTest {
         // check previous comments
         List<PhotoView.CommentsPanel.Comment> comments = commentPanel.getComments();
         assertEquals(comments.size(), 3);
-        comments.get(0).checkAll("Jan 7, 1985", "Superb Shot and so beautiful Colors !!!", "avatar_w_default.png", "Noname");
-        comments.get(1).checkAll("Jan 7, 1985", "really pretty. it looks like there is a lady in the _center_, blowing kisses!!", "avatar_default.png", "amarkhel");
-        comments.get(2).checkAll("Jan 7, 1985", "that is a beautiful flower with great colours", "avatar_default.png", "amarkhel");
+        comments.get(0).checkAll(JAN_DATE, "Superb Shot and so beautiful Colors !!!", "avatar_w_default.png", "Noname");
+        comments.get(1).checkAll(JAN_DATE, "really pretty. it looks like there is a lady in the _center_, blowing kisses!!", "avatar_default.png", "amarkhel");
+        comments.get(2).checkAll(JAN_DATE, "that is a beautiful flower with great colours", "avatar_default.png", "amarkhel");
 
         // add comment
         String comment = "new comment";
@@ -68,9 +68,9 @@ public class TestAddAndDeleteComment extends AbstractPhotoalbumTest {
         // check comments
         comments = commentPanel.getComments();
         assertEquals(comments.size(), 4);
-        comments.get(0).checkAll("Jan 7, 1985", "Superb Shot and so beautiful Colors !!!", "avatar_w_default.png", "Noname");
-        comments.get(1).checkAll("Jan 7, 1985", "really pretty. it looks like there is a lady in the _center_, blowing kisses!!", "avatar_default.png", "amarkhel");
-        comments.get(2).checkAll("Jan 7, 1985", "that is a beautiful flower with great colours", "avatar_default.png", "amarkhel");
+        comments.get(0).checkAll(JAN_DATE, "Superb Shot and so beautiful Colors !!!", "avatar_w_default.png", "Noname");
+        comments.get(1).checkAll(JAN_DATE, "really pretty. it looks like there is a lady in the _center_, blowing kisses!!", "avatar_default.png", "amarkhel");
+        comments.get(2).checkAll(JAN_DATE, "that is a beautiful flower with great colours", "avatar_default.png", "amarkhel");
         comments.get(3).checkAll(dt.toString(pattern), comment, "avatar_default.png", "amarkhel");
         comments.get(3).checkIfUsersComment();
 
@@ -81,9 +81,9 @@ public class TestAddAndDeleteComment extends AbstractPhotoalbumTest {
         // check comments again
         comments = commentPanel.getComments();
         assertEquals(comments.size(), 4);
-        comments.get(0).checkAll("Jan 7, 1985", "Superb Shot and so beautiful Colors !!!", "avatar_w_default.png", "Noname");
-        comments.get(1).checkAll("Jan 7, 1985", "really pretty. it looks like there is a lady in the _center_, blowing kisses!!", "avatar_default.png", "amarkhel");
-        comments.get(2).checkAll("Jan 7, 1985", "that is a beautiful flower with great colours", "avatar_default.png", "amarkhel");
+        comments.get(0).checkAll(JAN_DATE, "Superb Shot and so beautiful Colors !!!", "avatar_w_default.png", "Noname");
+        comments.get(1).checkAll(JAN_DATE, "really pretty. it looks like there is a lady in the _center_, blowing kisses!!", "avatar_default.png", "amarkhel");
+        comments.get(2).checkAll(JAN_DATE, "that is a beautiful flower with great colours", "avatar_default.png", "amarkhel");
         comments.get(3).checkAll(dt.toString(pattern), comment, "avatar_default.png", "amarkhel");
         comments.get(3).checkIfUsersComment();
     }
@@ -102,8 +102,8 @@ public class TestAddAndDeleteComment extends AbstractPhotoalbumTest {
         // check if deleted
         comments = photoView.getCommentPanel().getComments();
         assertEquals(comments.size(), 3);
-        comments.get(0).checkAll("Jan 7, 1985", "Superb Shot and so beautiful Colors !!!", "avatar_w_default.png", "Noname");
-        comments.get(1).checkAll("Jan 7, 1985", "really pretty. it looks like there is a lady in the _center_, blowing kisses!!", "avatar_default.png", "amarkhel");
-        comments.get(2).checkAll("Jan 7, 1985", "that is a beautiful flower with great colours", "avatar_default.png", "amarkhel");
+        comments.get(0).checkAll(JAN_DATE, "Superb Shot and so beautiful Colors !!!", "avatar_w_default.png", "Noname");
+        comments.get(1).checkAll(JAN_DATE, "really pretty. it looks like there is a lady in the _center_, blowing kisses!!", "avatar_default.png", "amarkhel");
+        comments.get(2).checkAll(JAN_DATE, "that is a beautiful flower with great colours", "avatar_default.png", "amarkhel");
     }
 }

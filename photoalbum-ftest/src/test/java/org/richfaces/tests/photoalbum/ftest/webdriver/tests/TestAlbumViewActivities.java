@@ -44,14 +44,14 @@ public class TestAlbumViewActivities extends AbstractPhotoalbumTest {
         albumView.checkSliderVisible();
         Graphene.guardAjax(albumView.getSlider()).slideToValue(1);
         List<AlbumView.PhotoInfo> photos = albumView.getPhotos();
-        photos.get(0).checkAll(200, "1750979205_6e51b47ce9_o.jpg", DEC_17_2009);
-        photos.get(2).checkAll(200, "2090459727_f2888e5cbe_o.jpg", DEC_17_2009);
-        photos.get(5).checkAll(200, "2508246015_313952406c_o.jpg", DEC_17_2009);
+        photos.get(0).checkAll(200, "1750979205_6e51b47ce9_o.jpg", IMAGES_DEC_DATE);
+        photos.get(2).checkAll(200, "2090459727_f2888e5cbe_o.jpg", IMAGES_DEC_DATE);
+        photos.get(5).checkAll(200, "2508246015_313952406c_o.jpg", IMAGES_DEC_DATE);
         Graphene.guardAjax(albumView.getSlider()).slideToValue(0);
         photos = albumView.getPhotos();
-        photos.get(0).checkAll(80, "1750979205_6e51b47ce9_o.jpg", DEC_17_2009);
-        photos.get(2).checkAll(80, "2090459727_f2888e5cbe_o.jpg", DEC_17_2009);
-        photos.get(5).checkAll(80, "2508246015_313952406c_o.jpg", DEC_17_2009);
+        photos.get(0).checkAll(80, "1750979205_6e51b47ce9_o.jpg", IMAGES_DEC_DATE);
+        photos.get(2).checkAll(80, "2090459727_f2888e5cbe_o.jpg", IMAGES_DEC_DATE);
+        photos.get(5).checkAll(80, "2508246015_313952406c_o.jpg", IMAGES_DEC_DATE);
     }
 
     @Test
