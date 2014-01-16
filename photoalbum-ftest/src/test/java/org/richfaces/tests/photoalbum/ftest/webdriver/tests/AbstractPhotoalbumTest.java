@@ -89,7 +89,8 @@ public abstract class AbstractPhotoalbumTest extends Arquillian {
         if (browser == null) {
             throw new SkipException("webDriver isn't initialized");
         }
-        browser.get(contextPath.toString() + "/index.jsf");
+        // the address needs to contain "localhost" instead of local loop IP, workaround for socials login
+        browser.get(contextPath.toString().replace("127.0.0.1", "localhost") + "index.jsf");
         // this method could also handle user logging
         // i.e by introducing an annotation @LoggedUser used for marking test methods
         // but it cannot be done because of https://issues.jboss.org/browse/ARQGRA-309
@@ -128,13 +129,6 @@ public abstract class AbstractPhotoalbumTest extends Arquillian {
                 logout();
                 browser.manage().deleteAllCookies();
             }
-        }
-    }
-
-    public void waitFor(long millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException ex) {
         }
     }
 }

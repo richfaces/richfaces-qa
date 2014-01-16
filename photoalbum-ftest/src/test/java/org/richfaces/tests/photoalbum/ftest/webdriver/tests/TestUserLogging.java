@@ -50,7 +50,23 @@ public class TestUserLogging extends AbstractPhotoalbumTest {
     @Test
     public void testLogInAndOut() {
         page.login("amarkhel", "12345");
-        page.checkLogged("amarkhel");
+        page.checkUserLogged("amarkhel", true, false, false);
+        page.logout();
+        page.checkNotLogged();
+    }
+
+    @Test
+    public void testLogInAndOutWithFB() {
+        page.openLoginPanel().loginWithFB();
+        page.checkUserLogged("rich.faces.3", false, true, false);
+        page.logout();
+        page.checkNotLogged();
+    }
+
+    @Test
+    public void testLogInAndOutWithGPlus() {
+        page.openLoginPanel().loginWithGPlus();
+        page.checkUserLogged("Rich", false, false, true);
         page.logout();
         page.checkNotLogged();
     }

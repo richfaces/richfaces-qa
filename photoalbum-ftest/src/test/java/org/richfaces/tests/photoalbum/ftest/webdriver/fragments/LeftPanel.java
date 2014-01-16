@@ -56,18 +56,34 @@ public class LeftPanel {
     private WebElement myShelvesHelpLink;
     @FindByJQuery("a:contains('G+ Albums')")
     private WebElement gPlusShelvesLink;
-
     @FindByJQuery("td:has(> a:contains('G+ Albums')) + td a:contains(?)")
     private WebElement gPlusShelvesHelpLink;
+    @FindByJQuery("a:contains('Facebook Albums')")
+    private WebElement fbShelvesLink;
 
-    public void checkIfUserLogged() {
+    public void checkIfUserLogged(boolean hasOwnAlbums, boolean hasFBAlbums, boolean hasGPlusAlbums) {
         checkVisibleForAll();
-        PhotoalbumUtils.checkVisible(Lists.newArrayList(myShelvesHelpLink, myShelvesLink, myShelvesTree.advanced().getRootElement()));
+        PhotoalbumUtils.checkVisible(myShelvesHelpLink, myShelvesLink);
+        if (hasOwnAlbums) {
+            PhotoalbumUtils.checkVisible(Lists.newArrayList(myShelvesTree.advanced().getRootElement()));
+        } else {
+            PhotoalbumUtils.checkNotVisible(Lists.newArrayList(myShelvesTree.advanced().getRootElement()));
+        }
+        if (hasFBAlbums) {
+            PhotoalbumUtils.checkVisible(Lists.newArrayList(fbShelvesLink));
+        } else {
+            PhotoalbumUtils.checkNotVisible(Lists.newArrayList(fbShelvesLink));
+        }
+        if (hasGPlusAlbums) {
+            PhotoalbumUtils.checkVisible(Lists.newArrayList(gPlusShelvesLink, gPlusShelvesHelpLink));
+        } else {
+            PhotoalbumUtils.checkNotVisible(Lists.newArrayList(gPlusShelvesLink, gPlusShelvesHelpLink));
+        }
     }
 
     public void checkIfUserNotLogged() {
         checkVisibleForAll();
-        PhotoalbumUtils.checkNotVisible(Lists.newArrayList(myShelvesHelpLink, myShelvesLink, myShelvesTree.advanced().getRootElement()));
+        PhotoalbumUtils.checkNotVisible(Lists.newArrayList(myShelvesHelpLink, myShelvesLink, myShelvesTree.advanced().getRootElement(), fbShelvesLink, gPlusShelvesHelpLink, gPlusShelvesLink));
     }
 
     private void checkVisibleForAll() {

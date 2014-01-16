@@ -30,7 +30,9 @@ import java.net.URISyntaxException;
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.fragment.fileUpload.FileUploadItem;
 import org.richfaces.fragment.fileUpload.RichFacesFileUpload;
+import org.richfaces.fragment.notify.RichFacesNotifyMessage;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.AddImagesView;
+import org.richfaces.tests.photoalbum.ftest.webdriver.utils.PhotoalbumUtils;
 import org.testng.annotations.Test;
 
 /**
@@ -67,8 +69,7 @@ public class TestAddImage extends AbstractPhotoalbumTest {
         RichFacesFileUpload fileUpload = addImagesView.getFileUpload();
         fileUpload.addFile(getFileFromFileName(GOOD_IMAGE_TO_UPLOAD));
         Graphene.guardAjax(fileUpload).upload();
-        waitFor(1000);// implicit wait time to handle callbacks
-//        DateTime now = new DateTime();
+        PhotoalbumUtils.waitFor(1000);// implicit wait time to handle callbacks
 
         assertEquals(fileUpload.advanced().getItems().size(), 1);
         FileUploadItem uploadedItem = fileUpload.advanced().getItems().getItem(0);
@@ -77,8 +78,29 @@ public class TestAddImage extends AbstractPhotoalbumTest {
 
         AddImagesView.UploadedFilesPanel uploadedFilesPanel = addImagesView.getUploadedFilesPanel();
         assertEquals(uploadedFilesPanel.getCompleteLabel().getText(), "Image upload is completed: 1 images was uploaded to Nature");
+        assertTrue(uploadedFilesPanel.uploadedImagesLabelIsVisible());
         assertEquals(uploadedFilesPanel.getUploadedPhotos().size(), 1);
-//        uploadedFilesPanel.getUploadedPhotos().get(0).checkAll(120, GOOD_IMAGE_TO_UPLOAD, now.toString(DateTimeFormat.forPattern("MMM d, yyyy")));
-        uploadedFilesPanel.getUploadedPhotos().get(0).checkAll(200, GOOD_IMAGE_TO_UPLOAD, String.valueOf(getFileFromFileName(GOOD_IMAGE_TO_UPLOAD).length()*1.0));
+        uploadedFilesPanel.getUploadedPhotos().get(0).checkAll(200, GOOD_IMAGE_TO_UPLOAD, String.valueOf(getFileFromFileName(GOOD_IMAGE_TO_UPLOAD).length() * 1.0));
+    }
+
+    @Test
+    public void testAddInvalidImage_messageWillShow() {
+        login();
+
+        // open view
+        Graphene.guardAjax(page.getHeaderPanel().getToolbar().getAddImagesLink()).click();
+        AddImagesView addImagesView = getView(AddImagesView.class);
+
+        // select album to add the pictures
+        addImagesView.getSelect().openSelect().select("Nature");
+
+        // upload the picture
+        RichFacesFileUpload fileUpload = addImagesView.getFileUpload();
+        fileUpload.addFile(getFileFromFileName(BAD_IMAGE_TO_UPLOAD));
+
+        RichFacesNotifyMessage message = page.getMessage();
+        message.advanced().waitUntilMessageIsVisible().perform();
+        assertEquals(message.getSummary(), "Error");
+        assertEquals(message.getDetail(), "Invalid file type. Only JPG is allowed.");
     }
 }

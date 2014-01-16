@@ -105,7 +105,7 @@ public class TestSearch extends AbstractPhotoalbumTest {
     }
 
     @Test
-    public void testSearchOptions_searchInNowhere() {
+    public void testSearchOptions_searchInNowhere_messageWillShow() {
         // set all options off
         page.getSearchPanel().searchFor("a", EnumSet.noneOf(SearchOptionsEnum.class));
         RichFacesNotifyMessage message = page.getMessage();
@@ -127,7 +127,7 @@ public class TestSearch extends AbstractPhotoalbumTest {
     }
 
     @Test
-    public void testSearchOptions_searchWithoutOptions() {
+    public void testSearchOptions_searchWithoutOptions_messageWillShow() {
         // set all options off
         page.getSearchPanel().searchFor("a", EnumSet.noneOf(SearchOptionsEnum.class));
         RichFacesNotifyMessage message = page.getMessage();
