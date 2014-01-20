@@ -25,7 +25,12 @@ http://www.fsf.org. -->
     </container>
     
     <container qualifier="jbossas-remote-7-1"/>
-    <container qualifier="jbosseap-managed-6-1"/>
+
+    <container qualifier="jbosseap-managed-6-1">
+        <configuration>
+            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -Duser.timezone=UTC</property>
+        </configuration>
+    </container>
 
     <extension qualifier="graphene">
         <property name="browser">*firefox</property>

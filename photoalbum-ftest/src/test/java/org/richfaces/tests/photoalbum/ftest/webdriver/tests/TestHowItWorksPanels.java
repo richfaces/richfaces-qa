@@ -43,7 +43,7 @@ public class TestHowItWorksPanels extends AbstractPhotoalbumTest {
     @FindBy(className = "rf-pp-cntr[id*='helpPanel']")
     private HowItWorksPopupPanel howItWorksPanel;
 
-    @FindByJQuery("a:contains(?):last")
+    @FindByJQuery("a:contains(?):first")
     private WebElement howItWorksStatus;
 
     @Test
