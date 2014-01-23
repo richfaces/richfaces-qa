@@ -37,7 +37,7 @@ public class TestNotifyMessageCSV extends AbstractNotifyMessageTest {
         return buildUrl(contextPath, "faces/components/richNotifyMessage/csv.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testSimple() {
         checkSimple();
     }

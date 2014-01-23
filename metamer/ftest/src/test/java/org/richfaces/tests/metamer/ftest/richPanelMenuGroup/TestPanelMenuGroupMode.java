@@ -60,7 +60,7 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
     private String listener;
     private String[] listeners = new String[]{ "phases", "action invoked", "action listener invoked", "executeChecker", "item changed" };
 
-    @Test
+    @Test(groups = "smoke")
     @Uses({
         @UseWithField(field = "immediate", valuesFrom = FROM_FIELD, value = "booleans"),
         @UseWithField(field = "bypassUpdates", valuesFrom = FROM_FIELD, value = "booleans"),
@@ -101,7 +101,7 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
         }
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testClientMode() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.client);
 

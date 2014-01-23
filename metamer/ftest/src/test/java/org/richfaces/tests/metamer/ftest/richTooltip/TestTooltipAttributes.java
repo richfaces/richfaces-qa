@@ -74,7 +74,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richTooltip/simple.xhtml");
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = "smoke")
     public void setupAttributes() {
         tooltipAttributes.set(TooltipAttributes.hideEvent, "mouseout");
         tooltipAttributes.set(TooltipAttributes.showEvent, "click");
@@ -143,7 +143,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
         });
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testFollowMouse() {
         tooltipAttributes.set(TooltipAttributes.followMouse, Boolean.FALSE);
@@ -200,7 +200,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
         testLang(tooltip().show().advanced().getTooltipElement());
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testLayout() {
         tooltipAttributes.set(TooltipAttributes.layout, "inline");

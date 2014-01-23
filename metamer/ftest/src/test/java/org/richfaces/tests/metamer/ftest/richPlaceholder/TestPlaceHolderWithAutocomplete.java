@@ -60,7 +60,7 @@ public class TestPlaceHolderWithAutocomplete extends AbstractPlaceholderJSFTest 
         super.testAjaxSubmit();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-12623")
     @Override
     public void testClickOnInputWithPlaceholder() {

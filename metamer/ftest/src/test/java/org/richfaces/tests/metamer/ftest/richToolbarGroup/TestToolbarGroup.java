@@ -75,7 +75,7 @@ public class TestToolbarGroup extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richToolbarGroup/simple.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testInit() {
         assertTrue(new WebElementConditionFactory(page.getToolbar()).isPresent().apply(driver), "Toolbar should be present on the page.");
@@ -126,7 +126,7 @@ public class TestToolbarGroup extends AbstractWebDriverTest {
         assertFalse(new WebElementConditionFactory(page.getSeparator().getRoot()).isPresent().apply(driver), "No item separator should be present on the page.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testItemSeparatorCustom() {
         toolbarGroupAttributes.set(ToolbarGroupAttributes.itemSeparator, "star");
 

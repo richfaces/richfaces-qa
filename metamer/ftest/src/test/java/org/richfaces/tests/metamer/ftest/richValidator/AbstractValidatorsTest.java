@@ -131,7 +131,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
     private String past;
     private boolean firstRun = true;
 
-    @BeforeClass
+    @BeforeClass(groups = "smoke")
     public void init() {
         messages.put(ID.assertTrue, AssertTrueBean.VALIDATION_MSG);
         messages.put(ID.assertFalse, AssertFalseBean.VALIDATION_MSG);

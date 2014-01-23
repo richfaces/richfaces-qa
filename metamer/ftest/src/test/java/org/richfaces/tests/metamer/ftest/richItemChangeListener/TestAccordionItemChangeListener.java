@@ -40,7 +40,7 @@ public class TestAccordionItemChangeListener extends AbstractItemChangeListenerT
         super("accordion");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid" })
     public void testICLAsAttribute() {
         super.testICLAsAttributeOfComponent(ICL_as_ComponentAttribute_PhaseName);
@@ -59,7 +59,7 @@ public class TestAccordionItemChangeListener extends AbstractItemChangeListenerT
         super.testICLInComponentWithType(ICL_inComponent_usingType_PhaseName);
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid" })
     @RegressionTest("https://issues.jboss.org/browse/RF-12173")
     public void testICLInsideComponentUsingTypeInIterationComponents() {

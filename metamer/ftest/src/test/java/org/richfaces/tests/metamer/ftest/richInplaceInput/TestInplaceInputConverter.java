@@ -56,12 +56,12 @@ public class TestInplaceInputConverter extends AbstractConverterTest {
         input.type(VALUE).confirm();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testConverter() {
         checkConverter();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testConverterMessage() {
         checkConverterMessage();
     }

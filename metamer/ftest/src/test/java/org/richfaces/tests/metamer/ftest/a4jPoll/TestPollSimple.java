@@ -137,7 +137,7 @@ public class TestPollSimple extends AbstractWebDriverTest {
         });
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testEnabled() {
         pollAttributes.set(PollAttributes.enabled, false);
 

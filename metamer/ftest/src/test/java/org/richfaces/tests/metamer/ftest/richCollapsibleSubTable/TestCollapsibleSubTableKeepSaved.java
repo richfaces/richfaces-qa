@@ -33,12 +33,12 @@ public class TestCollapsibleSubTableKeepSaved extends AbstractKeepSavedTest {
         super("richCollapsibleSubTable");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testKeepSavedFalse() {
         checkKeepSavedFalse();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testKeepSavedTrue() {
         checkKeepSavedTrue();
     }

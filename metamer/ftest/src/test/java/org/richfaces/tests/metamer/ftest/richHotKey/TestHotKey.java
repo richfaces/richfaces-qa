@@ -44,7 +44,7 @@ public class TestHotKey extends AbstractHotKeyTest {
         }
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testFirstPair() {
         testPair(hotkey1, 1);
     }
@@ -63,7 +63,7 @@ public class TestHotKey extends AbstractHotKeyTest {
         }
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testSecondPair() {
         testPair(hotkey2, 2);
     }

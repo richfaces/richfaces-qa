@@ -61,7 +61,7 @@ public class TestCollapsiblePanelKVS extends AbstractWebDriverTest {
         reloadTester.testFullPageRefresh();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richExtendedDataTable" })
     @RegressionTest("https://issues.jboss.org/browse/RF-12131")
     public void testRefreshFullPageInIterationComponents() {

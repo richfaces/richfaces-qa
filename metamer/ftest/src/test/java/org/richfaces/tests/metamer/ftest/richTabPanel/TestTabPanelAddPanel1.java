@@ -95,7 +95,7 @@ public class TestTabPanelAddPanel1 extends AbstractWebDriverTest {
     /**
      * Create new tab by clicking on a4j:commandButton
      */
-    @Test
+    @Test(groups = "smoke")
     public void testCreateTabAjax() {
         createAndVerifyTab(page.getCreateTabButtonA4j());
     }
@@ -103,7 +103,7 @@ public class TestTabPanelAddPanel1 extends AbstractWebDriverTest {
     /**
      * Delete newly created tabs
      */
-    @Test
+    @Test(groups = "smoke")
     public void testRemoveTab() {
         createAndVerifyTab(page.getCreateTabButtonA4j());
         for (int i = 2; i >= 0; i--) {
@@ -115,7 +115,7 @@ public class TestTabPanelAddPanel1 extends AbstractWebDriverTest {
     /**
      * Verify that all tabs displays correct content when switch tab
      */
-    @Test
+    @Test(groups = "smoke")
     public void testContentOfDynamicTab() {
         int basicTabCount = page.getPanelTab().getNumberOfTabs();
 

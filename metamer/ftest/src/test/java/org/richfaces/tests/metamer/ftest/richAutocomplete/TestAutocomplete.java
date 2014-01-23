@@ -54,14 +54,14 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
         return buildUrl(contextPath, "faces/components/richAutocomplete/autocomplete.xhtml");
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = "smoke")
     public void prepareProperties() {
         autocompleteAttributes.set(AutocompleteAttributes.autofill, autofill);
         autocompleteAttributes.set(AutocompleteAttributes.selectFirst, selectFirst);
         autocomplete.clear();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-11323")
     public void testTypePrefixDeleteAll_typePrefixConfirm() {
         Graphene.guardAjax(autocomplete).type("ala");

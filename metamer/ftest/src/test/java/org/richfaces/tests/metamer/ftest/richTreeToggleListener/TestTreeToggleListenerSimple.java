@@ -38,7 +38,7 @@ public class TestTreeToggleListenerSimple extends AbstractTreeToggleListenerTest
         super("simple");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testTTLAsAttribute() {
         super.testTTLAsAttributeOfComponent(TTL_as_ComponentAttribute_PhaseName);
     }

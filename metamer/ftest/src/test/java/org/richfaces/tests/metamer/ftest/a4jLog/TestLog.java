@@ -109,7 +109,7 @@ public class TestLog extends AbstractWebDriverTest {
         assertTrue(log.getLogEntries().isEmpty(), "There should be no messages in log after clear button was clicked.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     @Uses({
         @UseWithField(field = "levelToSet", valuesFrom = FROM_ENUM, value = ""),

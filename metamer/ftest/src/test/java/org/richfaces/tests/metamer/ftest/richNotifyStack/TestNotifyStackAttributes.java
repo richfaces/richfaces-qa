@@ -170,7 +170,7 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
         }
     }
 
-    @Test
+    @Test(groups = "smoke")
     @UseWithField(field = "position", valuesFrom = FROM_ENUM, value = "")
     @Templates(value = "plain")
     public void testPosition() {
@@ -203,7 +203,7 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
         Assert.fail("There should be no message when @rendered=false");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testRerenderStack() {
         waiting(500); // wait for notify to initialize
 

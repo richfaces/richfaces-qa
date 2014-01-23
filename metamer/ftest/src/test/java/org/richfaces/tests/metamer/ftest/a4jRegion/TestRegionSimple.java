@@ -59,7 +59,7 @@ public class TestRegionSimple extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/a4jRegion/simple.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testExecution() {
         String name = nameOutput.getText();
 

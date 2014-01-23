@@ -104,7 +104,7 @@ public class TestGraphValidator extends AbstractGraphValidatorTest {
         checkGraphValidatorSuccessMessage();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testRendered() {
         assertPresent(panel, "Panel should be present.");

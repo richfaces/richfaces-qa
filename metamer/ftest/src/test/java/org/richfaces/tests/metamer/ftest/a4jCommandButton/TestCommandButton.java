@@ -75,7 +75,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
         page.verifyOutput3Text();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-9665")
     public void testSimpleClickUnicode() {
         page.typeToInput(CommandButtonLinkPage.STRING_UNICODE1);

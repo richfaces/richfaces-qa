@@ -115,7 +115,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         }, "hideDelay", delay);
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testOnhide() {
         updateShowAction();
         final String VALUE = "hide";
@@ -182,7 +182,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         assertEquals(page.getContextMenu().advanced().getLangAttribute(), langVal, "The lang attribute was not set correctly!");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testMode() {
         updateShowAction();
         // ajax
@@ -302,7 +302,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         assertEquals(style, minWidth + "px");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testOnshow() {
         updateShowAction();
         testFireEvent(contextMenuAttributes, ContextMenuAttributes.onshow, new Actions(driver).click(page.getTargetPanel1())

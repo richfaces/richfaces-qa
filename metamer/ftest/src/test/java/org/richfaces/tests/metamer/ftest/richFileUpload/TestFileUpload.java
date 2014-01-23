@@ -68,7 +68,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
         assertEquals(returnedString, testedAttribute.toString(), "Event " + e + " does not work.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testAcceptedTypes() {
         String acceptable = "txt";
         fileUploadAttributes.set(FileUploadAttributes.acceptedTypes, acceptable);
@@ -142,7 +142,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
         assertNotVisible(fileUpload.advanced().getClearAllButtonElement(), "Clear all button should not be on the page.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates("plain")
     @RegressionTest("https://issues.jboss.org/browse/RF-12122")
     public void testDoneLabel() {
@@ -163,7 +163,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
         getMetamerPage().assertListener(PhaseId.UPDATE_MODEL_VALUES, "executeChecker");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testImmediateUpload() {
         fileUploadAttributes.set(FileUploadAttributes.immediateUpload, Boolean.TRUE);
         sendFileToInputWithWaiting(filenames[0], true);

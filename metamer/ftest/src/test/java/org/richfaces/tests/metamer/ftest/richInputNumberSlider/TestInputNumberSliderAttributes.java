@@ -105,7 +105,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
             InputNumberSliderAttributes.accesskey);
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Override
     public void testClickLeftArrow() {
         super.testClickLeftArrow();
@@ -166,7 +166,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
             "Slider's input should be disabled.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testEnableManualInput() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.enableManualInput, Boolean.FALSE);
         assertEquals(slider.advanced().getInput().advanced().getInputElement().getAttribute("readonly"), "true",

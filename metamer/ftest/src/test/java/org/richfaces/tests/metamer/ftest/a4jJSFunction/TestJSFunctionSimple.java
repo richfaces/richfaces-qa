@@ -75,7 +75,7 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
         assertNotSame(page.ajaxRenderedTime.getText(), ajaxRenderedTimeValue, "Ajax rendered time did not change");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testAction() {
         jsFunctionAttributes.set(JSFunctionAttributes.action, "increaseYearAction");
 

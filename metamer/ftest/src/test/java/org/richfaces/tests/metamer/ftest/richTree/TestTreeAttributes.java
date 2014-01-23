@@ -69,7 +69,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
         testDir(tree.advanced().getRootElement());
     }
 
-    @Test
+    @Test(groups = "smoke")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testExecute() {
         treeAttributes.set(TreeAttributes.execute, "executeChecker @this");
@@ -103,7 +103,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
         testStyleClass(getGuarded(node, SwitchType.ajax).expandNode(0).advanced().getIconElement(), BasicAttributes.iconClass);
     }
 
-    @Test
+    @Test(groups = "smoke")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testIconCollapsed() {
@@ -117,7 +117,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
             .endsWith(IMAGE_URL));
     }
 
-    @Test
+    @Test(groups = "smoke")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testIconExpanded() {

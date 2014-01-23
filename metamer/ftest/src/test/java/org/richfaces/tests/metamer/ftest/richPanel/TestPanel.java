@@ -61,7 +61,7 @@ public class TestPanel extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richPanel/simple.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testInit() {
         assertPresent(panelWithHeader.advanced().getRootElement(),

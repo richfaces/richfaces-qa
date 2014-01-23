@@ -97,7 +97,7 @@ public class TestJQueryAttributes extends AbstractWebDriverTest {
         }
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testAttachTypeOne() {
         setupImmediateTypeAttributes();
         jQueryAttributes.set(JQueryAttributes.attachType, "one");

@@ -49,18 +49,18 @@ public class TestHInputText extends AbstractAjaxTest {
         super.testType();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-9665")
     public void testSimpleTypeUnicode() {
         super.testTypeUnicode();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testBypassUpdates() {
         super.testBypassUpdates();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testData() {
         super.testData();
     }
@@ -70,12 +70,12 @@ public class TestHInputText extends AbstractAjaxTest {
         super.testDisabledForTextInputs();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testExecute() {
         super.testExecute();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testImmediate() {
         super.testImmediate();
     }
@@ -85,7 +85,7 @@ public class TestHInputText extends AbstractAjaxTest {
         super.testImmediateBypassUpdates();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testLimitRender() {
         super.testLimitRender("RichFaces 4");
     }
@@ -95,12 +95,12 @@ public class TestHInputText extends AbstractAjaxTest {
         super.testEventsForTextInputs();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testRender() {
         super.testRender();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testStatus() {
         super.testStatus();
     }

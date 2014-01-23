@@ -78,7 +78,7 @@ public class TestOrderingListMoving extends AbstractOrderingListTest {
         moveSelectedDown();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testMoveMiddleTop() {
         orderingList.select(2);
         moveSelectedToTop();

@@ -96,7 +96,7 @@ public class TestSelect extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richSelect/simple.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testClientFilterFunction() {
         selectAttributes.set(SelectAttributes.clientFilterFunction, "filterValuesByLength");
         select.type("4");// get all states with 4 letters
@@ -139,7 +139,7 @@ public class TestSelect extends AbstractWebDriverTest {
         Assert.fail("Select should be disabled.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest(value = { "https://issues.jboss.org/browse/RF-9663", "https://issues.jboss.org/browse/RF-9855" })
     public void testEnableManualInput() {
         selectAttributes.set(SelectAttributes.enableManualInput, Boolean.FALSE);
@@ -154,7 +154,7 @@ public class TestSelect extends AbstractWebDriverTest {
         assertEquals(output.getText(), "Hawaii");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-11320")
     public void testFiltering() {
         select.type("a");

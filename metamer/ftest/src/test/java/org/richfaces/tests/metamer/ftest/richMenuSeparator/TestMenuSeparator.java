@@ -52,7 +52,7 @@ public class TestMenuSeparator extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richMenuSeparator/simple.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testRendered() {
         assertEquals(separators.size(), 2, "There should be two separators on the page -- after 'Open Recent' and after 'Close'.");

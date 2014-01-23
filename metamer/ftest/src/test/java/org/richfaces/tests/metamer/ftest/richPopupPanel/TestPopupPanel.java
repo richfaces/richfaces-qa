@@ -193,7 +193,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
         testStyleClass(panel.advanced().getHeaderControlsElement(), BasicAttributes.controlsClass);
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-10249")
     public void testDomElementAttachment() {
         popupPanelAttributes.set(PopupPanelAttributes.domElementAttachment, "");
@@ -277,7 +277,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
         assertNotVisible(panel.advanced().getRootElement(), "Popup panel is visible.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testInit() {
         assertPresent(openButton, "Button for opening popup should be on the page.");
         assertNotVisible(panel.advanced().getRootElement(), "Popup panel is visible.");
@@ -389,7 +389,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
         checkCssValueOfPanel("width", 200);
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testModal() {
         popupPanelAttributes.set(PopupPanelAttributes.modal, Boolean.FALSE);

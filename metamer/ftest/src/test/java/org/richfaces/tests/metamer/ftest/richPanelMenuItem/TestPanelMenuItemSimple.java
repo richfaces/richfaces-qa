@@ -84,7 +84,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
         panelMenuItemAttributes.set(mode, PanelMenuMode.ajax);
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testData() {
         testData(new Action() {
             @Override
@@ -139,7 +139,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
         testStyleClass(page.getItem().advanced().getLeftIconElement(), leftIconClass);
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testLimitRender() {
         panelMenuItemAttributes.set(render, "renderChecker");
         panelMenuItemAttributes.set(limitRender, true);

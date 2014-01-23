@@ -61,7 +61,7 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richNotify/simple.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testDetail() {
         String detail = "Some detail";
         notifyAttributes.set(NotifyAttributes.detail, detail);
@@ -69,7 +69,7 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
         Assert.assertEquals(message.getSummary(), RichNotifyBean.DEFAULT_SUMMARY);
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testEscape() {
         String newSpanString = "<span id='newSpan'>new span</span>";
         notifyAttributes.set(NotifyAttributes.detail, newSpanString);

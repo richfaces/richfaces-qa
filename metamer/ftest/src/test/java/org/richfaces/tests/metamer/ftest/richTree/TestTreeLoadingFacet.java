@@ -52,7 +52,7 @@ public class TestTreeLoadingFacet extends AbstractTreeTest {
         page.getResponseDelayElement().submit();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "simpleSwingTreeNode")
     @RegressionTest("https://issues.jboss.org/browse/RF-12696")
     public void testLoadingFacet() {

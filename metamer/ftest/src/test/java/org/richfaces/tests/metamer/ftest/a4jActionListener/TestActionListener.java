@@ -46,6 +46,7 @@ import com.google.common.base.Predicate;
  * @since 4.3.0.M2
  */
 @Templates("plain")
+@Test(groups = "smoke")
 public class TestActionListener extends AbstractWebDriverTest {
 
     @Page

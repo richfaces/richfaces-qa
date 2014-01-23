@@ -36,7 +36,7 @@ import org.testng.annotations.Test;
  */
 public class TestTreeSelection extends AbstractTreeSelectionTest {
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(exclude = "a4jRegion")
     @Uses({
         @UseWithField(field = "selectionType", valuesFrom = FROM_FIELD, value = "selectionTypeAjax"),

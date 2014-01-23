@@ -87,7 +87,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richInplaceSelect/simple.xhtml");
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = "smoke")
     public void initFragment() {
         select.advanced().setupSaveOnSelect(Boolean.TRUE);
     }
@@ -128,7 +128,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
             .apply(driver), "Inplace select should have class metamer-ftest-class.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-11227")
     public void testClick() {
         select.advanced().switchToEditingState();
@@ -154,7 +154,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Hawaii");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(exclude = { "richAccordion", "richTabPanel" })
     public void testClickCancelButton() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.showControls, Boolean.TRUE);

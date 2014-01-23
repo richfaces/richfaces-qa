@@ -79,7 +79,7 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
         assertPresent(page.label, "Progress bar should show progress.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testFinishFacet() {
         progressBarAttributes.set(ProgressBarAttributes.maxValue, 100);
         progressBarAttributes.set(ProgressBarAttributes.value, 100);

@@ -45,7 +45,7 @@ public class TestScrollerOutsideTable extends AbstractScrollerTest {
     public TestScrollerOutsideTable() throws JAXBException {
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testNumberedPages() {
         testNumberedPages(page.getScroller(ScrollerPosition.DATA_SCROLLER_OUTSIDE_TABLE));
     }

@@ -69,7 +69,7 @@ public class TestInputNumberSpinnerJSApi extends AbstractWebDriverTest {
         return value.getAttribute("value");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testDecrease() {
         inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.minValue, -1);
         MetamerPage.waitRequest(decreaseButton, WaitRequestType.XHR).click();

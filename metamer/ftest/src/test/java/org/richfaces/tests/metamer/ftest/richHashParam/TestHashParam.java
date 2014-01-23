@@ -84,7 +84,7 @@ public class TestHashParam extends AbstractWebDriverTest {
         assertTrue(onClick.contains(String.format(generatedOnClickFunctionPartTemplate, testedName)), "The attribute @name does not work.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testPanelHeight() {
         openPopup();
@@ -156,7 +156,7 @@ public class TestHashParam extends AbstractWebDriverTest {
         assertEquals(panel.advanced().getRootElement().getLocation().y, DEFAULT_TOP_MARGIN, TOLERANCE, "Top margin of the panel.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testPanelWidth() {
         openPopup();

@@ -41,17 +41,17 @@ public class TestStatus extends AbstractStatusTest {
         return buildUrl(contextPath, "faces/components/a4jStatus/facets.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testRequestButton1() {
         checkStatus(getButton1(), "START", "STOP");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testRequestButton2() {
         checkStatus(getButton2(), "START", "STOP");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testRequestButtonError() {
         checkStatus(getButtonError(), "START", "ERROR");
     }

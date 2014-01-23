@@ -70,7 +70,7 @@ public class TestToolbar extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richToolbar/simple.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testInit() {
         assertTrue(new WebElementConditionFactory(page.getToolbar()).isPresent().apply(driver), "Toolbar should be present on the page.");
@@ -110,7 +110,7 @@ public class TestToolbar extends AbstractWebDriverTest {
         }
     }
 
-    @Test
+    @Test(groups = "smoke")
     @UseWithField(field = "itemSeparator", valuesFrom = FROM_FIELD, value = "separators")
     public void testItemSeparatorCorrect() {
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, itemSeparator);

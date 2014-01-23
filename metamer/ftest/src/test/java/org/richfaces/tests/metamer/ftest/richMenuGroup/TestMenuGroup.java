@@ -145,7 +145,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
         });
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-9989")
     @Templates(value = "plain")
     public void testIcon() {
@@ -176,7 +176,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
         assertTrue(icon.getAttribute("src").contains("nonexisting"), "Icon's src attribute should contain \"nonexisting\".");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testInit() {
         assertPresent(fileMenu, "Drop down menu \"File\" should be present on the page");
         assertVisible(fileMenu, "Drop down menu \"File\" should be visible on the page");
@@ -211,7 +211,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
         assertEquals(fileMenuLabel.getText(), "File", "Label of the menu");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates("plain")
     @RegressionTest("https://issues.jboss.org/browse/RF-10218")
     @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "")
@@ -362,7 +362,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
         });
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = "smoke")
     private void updateDropDownMenuInvoker() {
         fileDropDownMenu.advanced().setupShowEvent(Event.MOUSEOVER);
     }

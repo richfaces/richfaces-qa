@@ -39,12 +39,12 @@ public class TestTwoPushCDI extends TestTwoPush {
         super.testBothPushes();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testOnSubscribed() {
         super.testOnSubscribed();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testPushEnable() {
         super.testPushEnable();
     }

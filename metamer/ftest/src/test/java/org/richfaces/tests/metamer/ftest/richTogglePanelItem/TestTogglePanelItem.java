@@ -107,7 +107,7 @@ public class TestTogglePanelItem extends AbstractWebDriverTest {
         testLang(item1);
     }
 
-    @Test
+    @Test(groups = "smoke")
     @IssueTracking("https://issues.jboss.org/browse/RF-10488")
     public void testName() {
         togglePanelItemAttributes.set(TogglePanelItemAttributes.name, "nameThatIsNotUsedInComponentControlInFirstLink");

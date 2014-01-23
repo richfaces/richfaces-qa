@@ -91,7 +91,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
         assertFalse(getFirstNodesFirstChild().advanced().getHandleElement().getAttribute("class").contains("metamer-ftest-class"));
     }
 
-    @Test
+    @Test(groups = "smoke")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testIconCollapsed() {
@@ -112,7 +112,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
         assertFalse(attribute.endsWith(IMAGE_URL));
     }
 
-    @Test
+    @Test(groups = "smoke")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testIconExpanded() {
@@ -140,7 +140,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
         assertTrue(leaf.advanced().getIconElement().getAttribute("src").endsWith(IMAGE_URL));
     }
 
-    @Test
+    @Test(groups = "smoke")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testImmediate() {
         treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax);

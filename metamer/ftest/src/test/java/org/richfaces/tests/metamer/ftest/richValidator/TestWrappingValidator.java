@@ -47,7 +47,7 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
         return buildUrl(contextPath, "faces/components/richValidator/wrapping.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testAllWrong() {
         verifyAllWrongWithAjaxSubmit();
     }
@@ -58,7 +58,7 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
         verifyAllWrongWithJSFSubmit();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testBooleanTrue() {
         verifyBooleanTrue();
     }

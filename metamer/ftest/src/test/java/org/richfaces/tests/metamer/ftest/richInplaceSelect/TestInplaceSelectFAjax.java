@@ -73,7 +73,7 @@ public class TestInplaceSelectFAjax extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richInplaceSelect/fAjax.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-11227")
     public void testClick() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.showControls, Boolean.TRUE);

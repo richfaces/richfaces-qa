@@ -59,7 +59,7 @@ public class TestTreeToggling extends AbstractTreeTest {
         assertEquals(tree.advanced().getNodesExpanded().size(), 0);
     }
 
-    @Test
+    @Test(groups = "smoke")
     @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "simpleSwingTreeNode")
     public void testDeepExpansionAndCollapsion() {
         checkInitialState();
@@ -124,7 +124,7 @@ public class TestTreeToggling extends AbstractTreeTest {
         testTopLevelNodesExpansionAndCollapsion();
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = "smoke")
     public void verifyInitialState() {
         treeAttributes.set(TreeAttributes.toggleType, toggleType);
 //        disabled because of https://issues.jboss.org/browse/ARQGRA-309

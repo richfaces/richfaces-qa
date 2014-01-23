@@ -212,7 +212,7 @@ public class TestPlaceHolderWithEditor extends AbstractPlaceholderTest {
         super.testSelector();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest({ "https://issues.jboss.org/browse/RF-12621", "https://issues.jboss.org/browse/RF-12624" })
     @Override
     public void testSelectorEmpty() {

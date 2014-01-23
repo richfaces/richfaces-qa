@@ -48,7 +48,7 @@ public class TestRowKeyConverter extends AbstractTreeTest {
         return expanded.size();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "richFacesTreeNodes")
     public void testToggle() {
         toggle();

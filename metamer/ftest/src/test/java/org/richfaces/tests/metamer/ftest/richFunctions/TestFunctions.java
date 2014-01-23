@@ -138,7 +138,7 @@ public class TestFunctions extends AbstractWebDriverTest {
         assertVisible(input.advanced().getInputElement(), "Input should be visible");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
         "richExtendedDataTable", "richList", "hDataTable", "uiRepeat" })
     public void testFunctions() {
@@ -176,7 +176,7 @@ public class TestFunctions extends AbstractWebDriverTest {
         testFunctions();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testRoles() {
         assertUserIs(Role.NOBODY);
 
