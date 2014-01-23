@@ -245,7 +245,7 @@ public class TestGraphValidator extends AbstractWebDriverTest {
         checkGraphValidatorSuccessMessage();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testSummary() {
         String msg = "My own validation message!";
         graphValidatorAttributes.set(GraphValidatorAttributes.summary, msg);

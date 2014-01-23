@@ -203,7 +203,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
         Utils.tolerantAssertPointEquals(invokeLocation, tooltipLocation, tolerance, tolerance, "Direction does not work as expected.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testFollowMouse() {
         tooltipAttributes.set(TooltipAttributes.followMouse, Boolean.FALSE);
@@ -251,7 +251,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
         testAttributeLang(tooltip().show().advanced().getTooltipElement());
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testLayout() {
         tooltipAttributes.set(TooltipAttributes.layout, "inline");

@@ -114,7 +114,7 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
         Graphene.waitGui().until().element(outputDiv).text().equalTo("2");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @IssueTracking("https://issues.jboss.org/browse/RF-10555")
     public void testAjaxRendered() {
         outputPanelAttributes.set(OutputPanelAttributes.ajaxRendered, false);

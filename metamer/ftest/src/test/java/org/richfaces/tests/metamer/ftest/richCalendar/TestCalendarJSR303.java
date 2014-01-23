@@ -35,7 +35,7 @@ public class TestCalendarJSR303 extends AbstractDateInputComponentValidationTest
         return "richCalendar";
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Use(field = "commonCase", value = "commonCases")
     public void testCommonCases() {
         verifyCases();

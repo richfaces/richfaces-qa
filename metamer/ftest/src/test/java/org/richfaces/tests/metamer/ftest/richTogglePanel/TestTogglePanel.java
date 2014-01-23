@@ -101,7 +101,7 @@ public class TestTogglePanel extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richTogglePanel/simple.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testActiveItem() {
         togglePanelAttributes.set(TogglePanelAttributes.activeItem, "item3");
         assertFalse(item1.isDisplayed(), "Item 1 should not be displayed");
@@ -114,7 +114,7 @@ public class TestTogglePanel extends AbstractWebDriverTest {
         assertFalse(item3.isDisplayed(), "Item 3 should not be displayed");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testCycledSwitching() {
         togglePanelAttributes.set(TogglePanelAttributes.cycledSwitching, Boolean.FALSE);
         assertTrue(item1.isDisplayed(), "Item 1 should be displayed");

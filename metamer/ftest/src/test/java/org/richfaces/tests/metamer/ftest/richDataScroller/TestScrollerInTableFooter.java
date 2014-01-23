@@ -39,7 +39,7 @@ public class TestScrollerInTableFooter extends AbstractScrollerTest {
     public TestScrollerInTableFooter() throws JAXBException {
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testNumberedPages() {
         testNumberedPages(page.getScroller(ScrollerPosition.DATA_SCROLLER_IN_TABLE_FOOTER));
     }

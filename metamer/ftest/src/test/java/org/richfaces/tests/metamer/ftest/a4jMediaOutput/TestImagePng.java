@@ -48,7 +48,7 @@ public class TestImagePng extends AbstractMediaOutputTest {
         return buildUrl(contextPath, "faces/components/a4jMediaOutput/imagePng.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void init() {
         URL imageURL = buildUrl(contextPath, mediaOutput.getAttribute("src"));
 

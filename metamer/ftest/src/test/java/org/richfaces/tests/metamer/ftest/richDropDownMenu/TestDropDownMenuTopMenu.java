@@ -51,7 +51,7 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
         super.testInit();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testShowEvent() {
         super.testShowEvent();
     }
@@ -80,7 +80,7 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
         super.testLang();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testMode() {
         super.testMode();
     }

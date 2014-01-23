@@ -86,7 +86,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
         assertFalse(getFirstNodesFirstChild().advanced().getHandleElement().getAttribute("class").contains("metamer-ftest-class"));
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates("plain")
     public void testIconCollapsed() {
         firstNodeAttributes.set(TreeNodeAttributes.iconCollapsed, IMAGE_URL);
@@ -106,7 +106,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
         assertFalse(attribute.endsWith(IMAGE_URL));
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates("plain")
     public void testIconExpanded() {
         firstNodeAttributes.set(TreeNodeAttributes.iconExpanded, IMAGE_URL);
@@ -132,7 +132,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
         assertTrue(leaf.advanced().getIconElement().getAttribute("src").endsWith(IMAGE_URL));
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testImmediate() {
         treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax);
 

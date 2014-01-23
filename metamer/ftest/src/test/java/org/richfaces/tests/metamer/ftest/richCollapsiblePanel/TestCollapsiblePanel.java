@@ -100,7 +100,7 @@ public class TestCollapsiblePanel extends TestFacets {
         testStyleClass(panel.advanced().getHeaderElement(), BasicAttributes.headerClass);
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-10054")
     public void testImmediate() {
         collapsiblePanelAttributes.set(CollapsiblePanelAttributes.immediate, Boolean.TRUE);

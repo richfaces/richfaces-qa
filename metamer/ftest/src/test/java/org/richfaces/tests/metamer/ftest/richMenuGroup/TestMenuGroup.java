@@ -183,7 +183,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
             "Horizontal Offset does not work");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-9989")
     public void testIcon() {
         menuGroupAttributes.set(MenuGroupAttributes.icon, "null");
@@ -212,7 +212,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
         assertTrue(icon.getAttribute("src").contains("nonexisting"), "Icon's src attribute should contain \"nonexisting\".");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testInit() {
         assertPresent(fileMenu, "Drop down menu \"File\" should be present on the page");
         assertVisible(fileMenu, "Drop down menu \"File\" should be visible on the page");
@@ -244,7 +244,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
         assertEquals(fileMenuLabel.getText(), "File", "Label of the menu");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-10218")
     @Use(field = "direction", enumeration = true)
     public void testJointPoint() {

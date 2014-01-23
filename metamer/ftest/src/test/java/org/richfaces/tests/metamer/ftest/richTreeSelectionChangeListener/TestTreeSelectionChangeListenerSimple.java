@@ -43,12 +43,12 @@ public class TestTreeSelectionChangeListenerSimple extends AbstractTreeSelection
         super.testTSCLAsAttributeOfComponent(TSCL_as_ComponentAttribute_PhaseName);
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testTSCLInsideComponentUsingType() {
         super.testTSCLInComponentWithListener(TSCL_inComponent_usingType_PhaseName);
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testTSCLInsideComponentUsingListener() {
         super.testTSCLInComponentWithListener(TSCL_inComponent_usingListener_PhaseName);
     }

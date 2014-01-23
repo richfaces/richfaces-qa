@@ -103,7 +103,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
         page.assertListener(PhaseId.INVOKE_APPLICATION, "action invoked");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testActionListener() {
         openMenu();
         MetamerPage.waitRequest(menuItem1, WaitRequestType.XHR).click();
@@ -144,7 +144,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
         assertPresent(emptyIcon, "Empty icon should be present.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testExecute() {
         menuItemAttributes.set(MenuItemAttributes.execute, "@this executeChecker");
         openMenuAndClickOnTheItem();
@@ -193,7 +193,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
         page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "action listener invoked");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testInit() {
         assertPresent(fileMenu, "Drop down menu \"File\" should be present on the page");
         assertVisible(fileMenu, "Drop down menu \"File\" should be visible on the page");

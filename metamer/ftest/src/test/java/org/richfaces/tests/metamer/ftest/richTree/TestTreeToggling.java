@@ -57,7 +57,7 @@ public class TestTreeToggling extends AbstractTreeTest {
         assertEquals(tree.advanced().getNodesExpanded().size(), 0);
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Use(field = "sample", value = "simpleSwingTreeNode")
     public void testDeepCollapsion() {
         checkInitialState();

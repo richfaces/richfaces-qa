@@ -70,7 +70,7 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
         autocomplete.clear();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-11323")
     public void testTypingPrefixAndThenConfirm() {
         assertTrue(autocomplete.advanced().getSuggestionsElements().isEmpty());

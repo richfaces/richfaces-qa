@@ -65,7 +65,7 @@ public class TestWrappingValidatorSingle extends AbstractValidatorsTest {
      * Check validation on input after blur event fired and no XHR request as well
      *
      */
-    @Test
+    @Test(groups = "smoke")
     public void testValidateOnBlur() {
         page.setCorrectBtn.click();
 

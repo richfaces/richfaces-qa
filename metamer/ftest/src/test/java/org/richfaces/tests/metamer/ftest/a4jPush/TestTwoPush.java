@@ -71,7 +71,7 @@ public class TestTwoPush extends AbstractWebDriverTest {
         return dtf.parseDateTime(text);
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testBothPushes() {
         verifyPushUpdate(3, false, page.push1Btn, page.output1);
         verifyPushUpdate(3, false, page.push2Btn, page.output2);

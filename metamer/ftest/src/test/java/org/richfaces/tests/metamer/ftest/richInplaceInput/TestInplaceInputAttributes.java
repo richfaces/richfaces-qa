@@ -75,7 +75,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richInplaceInput/simple.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testActiveClass() {
         String testedClass = "metamer-ftest-class";
@@ -93,7 +93,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
             "Inplace input should not have class metamer-ftest-class.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testChangedClass() {
         String testedClass = "metamer-ftest-class";

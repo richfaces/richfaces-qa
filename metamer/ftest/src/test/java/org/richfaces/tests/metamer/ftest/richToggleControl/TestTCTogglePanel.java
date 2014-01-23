@@ -49,12 +49,12 @@ public class TestTCTogglePanel extends AbstractTestToggleControl {
         testSwitchFirstPanel(getItems1());
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testSwitchSecondPanel() {
         testSwitchSecondPanel(getItems2());
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testTargetItem() {
         testTargetItem(getItems1());
     }

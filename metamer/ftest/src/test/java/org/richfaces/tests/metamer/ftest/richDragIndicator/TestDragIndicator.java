@@ -63,7 +63,7 @@ public class TestDragIndicator extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richDragIndicator/simple.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testRendered() throws InterruptedException {
 
         dragIndicatorAttributes.set(draggingClass, DRAGGING_CLASS);
@@ -114,7 +114,7 @@ public class TestDragIndicator extends AbstractWebDriverTest {
         actionQueue.release().perform();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testDragging() {
 
         dragIndicatorAttributes.set(draggingClass, DRAGGING_CLASS);

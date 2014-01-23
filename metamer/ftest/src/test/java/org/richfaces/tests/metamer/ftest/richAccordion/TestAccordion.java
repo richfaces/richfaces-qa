@@ -74,7 +74,7 @@ public class TestAccordion extends AbstractWebDriverTest {
         }
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testActiveItem() {
         accordionAttributes.set(AccordionAttributes.activeItem, "item5");
 
@@ -102,7 +102,7 @@ public class TestAccordion extends AbstractWebDriverTest {
         }
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testCycledSwitching() {
         WebElement rootElement = page.getAccordion().advanced().getRootElement();
         // RichFaces.$('form:accordion').nextItem('item5') will be null

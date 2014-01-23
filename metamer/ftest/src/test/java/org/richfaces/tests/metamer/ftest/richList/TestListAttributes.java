@@ -81,7 +81,7 @@ public class TestListAttributes extends AbstractListTest {
         testDir(list.getRoot());
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Use(field = "first", value = "INTS")
     public void testFirst() {
         listAttributes.set(ListAttributes.first, first);
@@ -113,7 +113,7 @@ public class TestListAttributes extends AbstractListTest {
             ListAttributes.onkeydown);
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testOnkeypress() {
         testFireEventWithJS(list.getRoot(), listAttributes,
             ListAttributes.onkeypress);
@@ -232,7 +232,7 @@ public class TestListAttributes extends AbstractListTest {
         testStyleClass(items.get(items.size() - 1).getRootElement(), BasicAttributes.rowClasses);
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Use(field = "rows", value = "INTS")
     public void testRows() {
         listAttributes.set(ListAttributes.rows, rows);
@@ -254,7 +254,7 @@ public class TestListAttributes extends AbstractListTest {
         testTitle(list.getRoot());
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Use(field = "type", enumeration = true)
     public void testType() {
         listAttributes.set(ListAttributes.type, type.getValue());

@@ -70,7 +70,7 @@ public class TestTreeModelAdaptorLazyLoading extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richTree/treeAdaptors.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testLazyLoading() {
         assertEquals(getLazyInitialized(), getListOfVisibleNodes());
         for (Integer[] path : paths) {

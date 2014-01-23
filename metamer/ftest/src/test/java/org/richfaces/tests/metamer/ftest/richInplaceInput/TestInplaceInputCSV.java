@@ -37,7 +37,7 @@ public class TestInplaceInputCSV extends AbstractStringInputComponentValidationT
         return "richInplaceInput";
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Use(field = "commonCase", value = "commonCases")
     public void testCommonCases() {
         verifyCases();

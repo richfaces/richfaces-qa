@@ -73,7 +73,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
             InputNumberSpinnerAttributes.accesskey, "x");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testCycled() {
         inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.cycled, Boolean.TRUE);
         typeToInput(DEFAULT_MAX_VALUE);
@@ -128,7 +128,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
         getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, listenerMsg);
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testIncrease() {
         super.testIncrease();
     }
@@ -194,7 +194,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
         assertEquals(getOutputText(), "13", "Output should stay same as before.");// max is 13
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testMinValueClick() {
         inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.minValue, -13);
         decrease(9);

@@ -57,13 +57,13 @@ public class TestEditorWithTyping extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richEditor/anotherSimple.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testImmediate() {
         editorAttributes.set(EditorAttributes.immediate, Boolean.TRUE);
         verifyValueChangeListener(page.getHButton(), page.getValueChangeListenerAfterImmediate());
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testOnDirty() {
         String testedValue = "dirty";
         editorAttributes.set(EditorAttributes.ondirty, "metamerEvents += \"" + testedValue + " \"");
@@ -73,7 +73,7 @@ public class TestEditorWithTyping extends AbstractWebDriverTest {
         assertEquals(event, "dirty", "Attribute ondirty doesn't work");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testTypeAndSubmit() throws InterruptedException {
         page.getEditor().type("SOMETHING");
         page.getHButton().submit();

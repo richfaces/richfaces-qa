@@ -41,7 +41,7 @@ public class TestPanelMenuSelection extends AbstractPanelMenuTest {
     @Use(booleans = { true, false })
     private Boolean bubbleSelection;
 
-    @Test
+    @Test(groups = "smoke")
     public void testBubbleSelection() {
         panelMenuAttributes.set(PanelMenuAttributes.bubbleSelection, bubbleSelection);
 

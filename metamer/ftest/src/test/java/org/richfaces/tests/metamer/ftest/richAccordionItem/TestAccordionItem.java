@@ -313,7 +313,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
         testFireEvent(accordionItemAttributes, AccordionItemAttributes.onheadermouseup, action);
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-9821 https://issues.jboss.org/browse/RF-10488")
     public void testOnleave() {
         Action action = new Actions(driver).click(page.getItemHeaders().get(0)).click(page.getItemHeaders().get(2)).build();
@@ -436,7 +436,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
         waitAjax(driver).until().element(page.getItemContents().get(0)).is().visible();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates("plain")
     public void testSwitchTypeAjax() {
         accordionItemAttributes.set(AccordionItemAttributes.switchType, "ajax");
@@ -452,7 +452,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
         waitGui(driver).until().element(page.getItemContents().get(0)).is().visible();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testSwitchTypeServer() {
         accordionItemAttributes.set(AccordionItemAttributes.switchType, "server");
 

@@ -48,7 +48,7 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
         return buildUrl(contextPath, "faces/components/richNotifyMessages/jsr303.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testAjaxRendered() {
         checkAjaxRendered();
     }
@@ -64,14 +64,14 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
         checkEscape();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
     public void testFor() {
         checkFor(2);//2 messages
     }
 
-    @Test
+    @Test(groups = "smoke")
     @IssueTracking("https://issues.jboss.org/browse/RF-11298")
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
@@ -79,7 +79,7 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
         testFor();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(exclude = { "richAccordion", "richCollapsiblePanel" })
     public void testGlobalOnly() {
         checkGlobalOnly(2);//2 messages

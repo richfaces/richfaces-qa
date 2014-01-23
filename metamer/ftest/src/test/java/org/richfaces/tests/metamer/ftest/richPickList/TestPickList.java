@@ -95,7 +95,7 @@ public class TestPickList extends AbstractWebDriverTest {
         MetamerPage.waitRequest(hSubmit, WaitRequestType.HTTP).click();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testAddAllBtn() {
         pickList.addAll();// fragment contains checking
         assertEquals(pickList.advanced().getSourceList().getItems().size(), 0);
@@ -218,7 +218,7 @@ public class TestPickList extends AbstractWebDriverTest {
      * Verify that item keep selected even moved from source to target, or back. If selected Alaska from sources, and
      * then added to target, it should remain selected in target list
      */
-    @Test
+    @Test(groups = "smoke")
     public void testKeepSelected() {
         String textSource = pickList.advanced().getSourceList().getItem(0).getText();
         pickList.add(0);

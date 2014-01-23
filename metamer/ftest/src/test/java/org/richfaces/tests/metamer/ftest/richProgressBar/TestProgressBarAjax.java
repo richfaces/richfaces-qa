@@ -129,7 +129,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         });
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testEnabled() {
         progressBarAttributes.set(ProgressBarAttributes.maxValue, 100);//longer progress
         int timeout = Integer.parseInt(progressBarAttributes.get(ProgressBarAttributes.interval)) + 300;

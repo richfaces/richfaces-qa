@@ -66,7 +66,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
         testDir(tree.advanced().getRootElement());
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testExecute() {
         treeAttributes.set(TreeAttributes.execute, "executeChecker @this");
         selectFirstNodeAjaxAction.perform();
@@ -97,7 +97,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
         testStyleClass(getGuarded(node, SwitchType.ajax).expandNode(0).advanced().getIconElement(), BasicAttributes.iconClass);
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates("plain")
     public void testIconCollapsed() {
         treeAttributes.set(TreeAttributes.iconCollapsed, IMAGE_URL);
@@ -110,7 +110,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
             .endsWith(IMAGE_URL));
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates("plain")
     public void testIconExpanded() {
         treeAttributes.set(TreeAttributes.iconExpanded, IMAGE_URL);

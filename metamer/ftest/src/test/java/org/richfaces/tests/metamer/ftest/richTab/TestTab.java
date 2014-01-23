@@ -264,7 +264,7 @@ public class TestTab extends AbstractWebDriverTest {
         testFireEvent(tabAttributes, TabAttributes.ondblclick, action);
     }
 
-    @Test
+    @Test(groups = "smoke")
     @IssueTracking("https://issues.jboss.org/browse/RF-9537 https://issues.jboss.org/browse/RF-10488")
     public void testOnenter() {
         testFireEvent(tabAttributes, TabAttributes.onenter, new Action() {
@@ -402,14 +402,14 @@ public class TestTab extends AbstractWebDriverTest {
         waitGui(driver).withMessage("Tab 1 is not displayed.").until().element(page.getItemContents().get(0)).is().visible();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testSwitchTypeAjax() {
         tabAttributes.set(TabAttributes.switchType, "ajax");
         testSwitchTypeNull();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testSwitchTypeClient() {
         tabAttributes.set(TabAttributes.switchType, "client");
 

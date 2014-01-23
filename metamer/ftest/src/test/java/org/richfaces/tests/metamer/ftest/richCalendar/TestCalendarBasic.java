@@ -62,12 +62,12 @@ public class TestCalendarBasic extends AbstractCalendarTest {
         driver.manage().window().setSize(new Dimension(1024, 768));
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testApplyButton() {
         super.testApplyButton();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testCleanButton() {
         DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
         dayPicker.getWeek(3).getCalendarDays().get(3).select();

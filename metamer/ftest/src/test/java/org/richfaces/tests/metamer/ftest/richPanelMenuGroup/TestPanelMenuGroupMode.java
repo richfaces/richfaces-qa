@@ -75,7 +75,7 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
     private String listener;
     private String[] listeners = new String[] { "phases", "action invoked", "action listener invoked", "executeChecker", "item changed" };
 
-    @Test
+    @Test(groups = "smoke")
     public void testRequestMode() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.immediate, immediate);
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.bypassUpdates, bypassUpdates);
@@ -110,7 +110,7 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
         }
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Uses({ @Use(field = "immediate", empty = true), @Use(field = "bypassUpdates", empty = true),
             @Use(field = "mode", empty = true), @Use(field = "listener", empty = true) })
     public void testClientMode() {

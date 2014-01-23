@@ -55,7 +55,7 @@ public class TestParam extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/a4jParam/simple.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testParameter() {
         MetamerPage.waitRequest(page.button1, WaitRequestType.XHR).click();
 

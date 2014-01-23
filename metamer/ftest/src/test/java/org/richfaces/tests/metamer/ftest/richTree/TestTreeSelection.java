@@ -32,7 +32,7 @@ import org.testng.annotations.Test;
  */
 public class TestTreeSelection extends AbstractTreeSelectionTest {
 
-    @Test
+    @Test(groups = "smoke")
     @Uses({
         @Use(field = "selectionType", value = "selectionTypeAjax"),
         @Use(field = "sample", strings = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" }) })
@@ -89,7 +89,7 @@ public class TestTreeSelection extends AbstractTreeSelectionTest {
         testTopLevelSelection();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Use(field = "selectionType", value = "selectionTypeClient")
     public void testTopLevelSelectionClient() {
         testTopLevelSelection();
