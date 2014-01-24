@@ -72,7 +72,7 @@ FSF site: http://www.fsf.org. -->
 
         <jboss7Home>${project.build.directory}/jboss-as-${version.jbossas7}</jboss7Home>
         <jboss7-1Home>${project.build.directory}/jboss-as-${version.jbossas7-1}</jboss7-1Home>
-        <jbossEAP60Home>${project.build.directory}/jboss-eap-6.0</jbossEAP61Home>
+        <jbossEAP60Home>${project.build.directory}/jboss-eap-6.0</jbossEAP60Home>
         <jbossEAP61Home>${project.build.directory}/jboss-eap-6.1</jbossEAP61Home>
         <jbossEAP62Home>${project.build.directory}/jboss-eap-6.2</jbossEAP62Home>
         <wildfly8-0Home>${project.build.directory}/wildfly-${version.wildfly8-0}</wildfly8-0Home>
