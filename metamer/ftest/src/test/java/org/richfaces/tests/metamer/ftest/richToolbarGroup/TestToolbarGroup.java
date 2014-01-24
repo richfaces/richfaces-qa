@@ -24,7 +24,6 @@ package org.richfaces.tests.metamer.ftest.richToolbarGroup;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemStyle;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.toolbarGroupAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -38,13 +37,14 @@ import org.jboss.test.selenium.support.ui.AttributeContains;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.richToolbar.ToolbarPage;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -54,6 +54,8 @@ import org.testng.annotations.Test;
  * @since 4.3.4.Final
  */
 public class TestToolbarGroup extends AbstractWebDriverTest {
+
+    private final Attributes<ToolbarGroupAttributes> toolbarGroupAttributes = getAttributes();
 
     @Page
     private ToolbarPage page;
@@ -75,7 +77,7 @@ public class TestToolbarGroup extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richToolbarGroup/simple.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testInit() {
         assertTrue(new WebElementConditionFactory(page.getToolbar()).isPresent().apply(driver), "Toolbar should be present on the page.");
@@ -126,7 +128,7 @@ public class TestToolbarGroup extends AbstractWebDriverTest {
         assertFalse(new WebElementConditionFactory(page.getSeparator().getRoot()).isPresent().apply(driver), "No item separator should be present on the page.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testItemSeparatorCustom() {
         toolbarGroupAttributes.set(ToolbarGroupAttributes.itemSeparator, "star");
 

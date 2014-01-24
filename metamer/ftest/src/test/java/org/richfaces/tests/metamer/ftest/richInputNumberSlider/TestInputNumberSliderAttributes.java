@@ -23,38 +23,33 @@ package org.richfaces.tests.metamer.ftest.richInputNumberSlider;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.inputNumberSliderAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.ClearType;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.Test;
 
 /**
@@ -65,8 +60,11 @@ import org.testng.annotations.Test;
  */
 public class TestInputNumberSliderAttributes extends AbstractSliderTest {
 
+    private final Attributes<InputNumberSliderAttributes> inputNumberSliderAttributes = getAttributes();
+
     @FindBy(css = "span.rf-insl > br")
-    WebElement br;
+    private WebElement br;
+
     @Inject
     @Use(empty = false)
     private Position position;
@@ -85,6 +83,16 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         }
     }
 
+    private final Action delayTestAction = new Action() {
+        private String timeBefore = "";
+
+        @Override
+        public void perform() {
+            Graphene.waitModel().until().element(getMetamerPage().getRequestTimeElement()).text().not().equalTo(timeBefore);
+            timeBefore = getMetamerPage().getRequestTimeElement().getText();
+        }
+    };
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richInputNumberSlider/simple.xhtml");
@@ -98,7 +106,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
             InputNumberSliderAttributes.accesskey);
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Override
     public void testClickLeftArrow() {
         super.testClickLeftArrow();
@@ -133,13 +141,14 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
-    @Use(field = "delay", ints = { 800, 1250, 1900 })
+    @Use(field = "delay", ints = { 1000, 2000 })
     public void testDelay() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.delay, delay);
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
 
-        verifyDelay(slider.advanced().getArrowDecreaseElement(), delay);
-        verifyDelay(slider.advanced().getArrowIncreaseElement(), delay);
+        fireEvent(slider.advanced().getArrowIncreaseElement(), Event.MOUSEDOWN);// starts with increasing/decreasing of the value
+        testDelay(delayTestAction, delayTestAction, "delay", delay);
+        fireEvent(slider.advanced().getArrowIncreaseElement(), Event.MOUSEUP);
     }
 
     @Test
@@ -157,7 +166,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
             "Slider's input should be disabled.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testEnableManualInput() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.enableManualInput, Boolean.FALSE);
         assertEquals(slider.advanced().getInput().advanced().getInputElement().getAttribute("readonly"), "true",
@@ -188,8 +197,8 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         slider.advanced().getInput().advanced().clear(ClearType.JS).sendKeys("-10");
         guardAjax(slider.advanced().getInput().advanced()).trigger("blur");
 
-        page.assertPhases(PhaseId.ANY_PHASE);
-        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: 2 -> -10");
+        getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: 2 -> -10");
 
         assertEquals(output.getText(), "-10", "Output was not updated.");
     }
@@ -516,7 +525,6 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.delay, 100);
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.step, 7);
-        String startValue = slider.advanced().getInput().getStringValue();
 
         MetamerPage.waitRequest(slider, WaitRequestType.XHR).increase();
         assertEquals(output.getText(), "9", "Wrong output");
@@ -618,7 +626,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     @Test
     public void testValueChangeListener() {
         typeToInputActionWithXHRWaitRequest("5").perform();
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: 2 -> 5");
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: 2 -> 5");
     }
 
     @Test
@@ -648,44 +656,5 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
 
         assertEquals(output.getText(), number, "Output was not updated.");
         assertEquals(slider.advanced().getInput().getStringValue(), min, "Input was not updated.");
-    }
-
-    /**
-     * Clicks on slider's arrow and verifies delay.
-     *
-     * @param arrow slider's left or right arrow element
-     * @param delay delay of request
-     */
-    private void verifyDelay(WebElement arrow, int delay) {
-        DateTimeFormatter dtf = DateTimeFormat.forPattern("HH:mm:ss.SSS");
-        long delta = (long) (delay * 0.5);
-        int numberOfValues = 5;
-        List<String> timesList = new ArrayList<String>(numberOfValues);
-
-        String beforeTime = page.getRequestTimeElement().getText();
-        fireEvent(arrow, Event.MOUSEDOWN);// starts with increasing/decreasing of the value
-        for (int i = 0; i < numberOfValues; i++) {
-            Graphene.waitModel().until().element(page.getRequestTimeElement()).text().not().equalTo(beforeTime);
-            beforeTime = page.getRequestTimeElement().getText();
-            timesList.add(beforeTime);
-        }
-        fireEvent(arrow, Event.MOUSEUP);// stops with increasing/decreasing of the value
-
-        DateTime[] timesArray = new DateTime[numberOfValues];
-        for (int i = 0; i < numberOfValues; i++) {
-            timesArray[i] = dtf.parseDateTime(timesList.get(i));
-        }
-
-        long average = countAverage(timesArray);
-        assertTrue(Math.abs(average - delay) < delta, "Average delay " + average + " is too far from set value (" + delay
-            + "). Delta was: " + delta + "[ms].");
-    }
-
-    private long countAverage(DateTime[] times) {
-        long total = 0L;
-        for (int i = 0; i < times.length - 1; i++) {
-            total += (times[i].getMillis() - times[i + 1].getMillis());
-        }
-        return Math.abs(total / (times.length - 1));
     }
 }

@@ -26,9 +26,9 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
+import org.richfaces.fragment.common.Actions;
+import org.richfaces.fragment.tooltip.TextualRichFacesTooltip;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.page.fragments.impl.tooltip.TextualRichFacesTooltip;
-import org.richfaces.tests.page.fragments.impl.utils.Actions;
 import org.testng.annotations.Test;
 
 public class TestTooltipJSApi extends AbstractWebDriverTest {

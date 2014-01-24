@@ -27,15 +27,15 @@ import static javax.faces.event.PhaseId.PROCESS_VALIDATIONS;
 import static javax.faces.event.PhaseId.RENDER_RESPONSE;
 import static javax.faces.event.PhaseId.RESTORE_VIEW;
 import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
+
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuGroupAttributes;
 import static org.richfaces.component.Mode.ajax;
 import static org.richfaces.component.Mode.client;
 import static org.richfaces.component.Mode.server;
 
-import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 import java.util.LinkedList;
 
@@ -45,6 +45,7 @@ import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -54,25 +55,27 @@ import org.testng.annotations.Test;
  */
 public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
 
-    @Inject
-    @Use(booleans = { true, false })
-    Boolean immediate;
+    private final Attributes<PanelMenuGroupAttributes> panelMenuGroupAttributes = getAttributes();
 
     @Inject
     @Use(booleans = { true, false })
-    Boolean bypassUpdates;
+    private Boolean immediate;
+
+    @Inject
+    @Use(booleans = { true, false })
+    private Boolean bypassUpdates;
 
     @Inject
     @Use("requestModes")
-    Mode mode;
-    Mode[] requestModes = new Mode[] { ajax, server };
+    private Mode mode;
+    private Mode[] requestModes = new Mode[]{ ajax, server };
 
     @Inject
     @Use("listeners")
-    String listener;
-    String[] listeners = new String[] { "phases", "action invoked", "action listener invoked", "executeChecker", "item changed" };
+    private String listener;
+    private String[] listeners = new String[] { "phases", "action invoked", "action listener invoked", "executeChecker", "item changed" };
 
-    @Test
+    @Test(groups = "smoke")
     public void testRequestMode() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.immediate, immediate);
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.bypassUpdates, bypassUpdates);
@@ -107,7 +110,7 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
         }
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Uses({ @Use(field = "immediate", empty = true), @Use(field = "bypassUpdates", empty = true),
             @Use(field = "mode", empty = true), @Use(field = "listener", empty = true) })
     public void testClientMode() {

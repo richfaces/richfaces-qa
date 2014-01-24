@@ -15,12 +15,6 @@
         <property name="deploymentExportPath">target/</property>
     </engine>
 
-    <container qualifier="jbossas-managed-6">
-        <configuration>
-            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
-        </configuration>
-    </container>
-
     <container qualifier="jbossas-managed-7">
         <configuration>
             <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
@@ -99,7 +93,7 @@
     </extension>
 
     <extension qualifier="webdriver">
-        <property name="browserCapabilities">${browser.capabilities}</property>
+        <property name="browser">${browser.capabilities}</property>
         <property name="remoteAddress">http://localhost:4444/wd/hub/</property>
         <property name="javascriptEnabled">true</property>
     </extension>

@@ -32,35 +32,39 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="links">
 
             <metamer:testPageLink id="elementA" outcome="elementA" value="Element &lt;a&gt;&lt;/a&gt;">
-                Simple page that contains <b>a4j:mediaOutput</b> (a, text/html) and input boxes for all its attributes.
+                Simple page that contains <b>r:mediaOutput</b> (a, text/html) and input boxes for all its attributes.
             </metamer:testPageLink>
 
             <metamer:testPageLink id="elementLink" outcome="elementLink" value="Element &lt;link/&gt;">
-                Simple page that contains <b>a4j:mediaOutput</b> (link, text/css) and input boxes for all its attributes.
+                Simple page that contains <b>r:mediaOutput</b> (link, text/css) and input boxes for all its attributes.
             </metamer:testPageLink>
 
             <metamer:testPageLink id="elementScript" outcome="elementScript" value="Element &lt;script&gt;&lt;/script&gt;">
-                Simple page that contains <b>a4j:mediaOutput</b> (script, text/javascript) and input boxes for all its attributes.
+                Simple page that contains <b>r:mediaOutput</b> (script, text/javascript) and input boxes for all its attributes.
             </metamer:testPageLink>
 
             <metamer:testPageLink id="imagePng" outcome="imagePng" value="Image Png">
-                Simple page that contains <b>a4j:mediaOutput</b> (img, image/png) and input boxes for all its attributes.
+                Simple page that contains <b>r:mediaOutput</b> (img, image/png) and input boxes for all its attributes.
             </metamer:testPageLink>
 
             <metamer:testPageLink id="textHtml" outcome="textHtml" value="Text HTML">
-                Simple page that contains <b>a4j:mediaOutput</b> (object, text/html) and input boxes for all its attributes.
+                Simple page that contains <b>r:mediaOutput</b> (object, text/html) and input boxes for all its attributes.
             </metamer:testPageLink>
 
             <metamer:testPageLink id="textPlain" outcome="textPlain" value="Text Plain">
-                Simple page that contains <b>a4j:mediaOutput</b> (object, text/plain) and input boxes for all its attributes.
+                Simple page that contains <b>r:mediaOutput</b> (object, text/plain) and input boxes for all its attributes.
+            </metamer:testPageLink>
+
+            <metamer:testPageLink id="rf13098" outcome="rf13098" value="RF-13098">
+                Reproducer for issue <a href="https://issues.jboss.org/browse/RF-13098">RF-13098</a>.
             </metamer:testPageLink>
 
             <ui:remove>
                 <metamer:testPageLink id="audioMpeg" outcome="audioMpeg" value="Audio Mpeg">
-                    Simple page that contains <b>a4j:mediaOutput</b> (object, audio/mpeg) and input boxes for all its attributes.
+                    Simple page that contains <b>r:mediaOutput</b> (object, audio/mpeg) and input boxes for all its attributes.
                 </metamer:testPageLink>               
                 <metamer:testPageLink id="flash" outcome="flash" value="Flash">
-                    Simple page that contains <b>a4j:mediaOutput</b> (flash) and input boxes for all its attributes.
+                    Simple page that contains <b>r:mediaOutput</b> (flash) and input boxes for all its attributes.
                 </metamer:testPageLink>         
             </ui:remove>
 

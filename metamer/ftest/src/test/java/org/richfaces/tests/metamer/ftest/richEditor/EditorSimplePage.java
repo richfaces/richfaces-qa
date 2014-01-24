@@ -23,8 +23,8 @@ package org.richfaces.tests.metamer.ftest.richEditor;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.editor.RichFacesEditor;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.editor.RichFacesEditor;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>

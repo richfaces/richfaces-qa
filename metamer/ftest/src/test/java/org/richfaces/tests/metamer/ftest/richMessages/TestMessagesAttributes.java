@@ -72,7 +72,7 @@ public class TestMessagesAttributes extends AbstractMessagesTest {
         testFor();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(exclude = { "richAccordion", "richCollapsiblePanel" })
     public void testGlobalOnly() {
         checkGlobalOnly(2);//2 messages
@@ -96,7 +96,7 @@ public class TestMessagesAttributes extends AbstractMessagesTest {
         checkMessagesTypes();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testNoShowDetailNoShowSummary() {
         checkNoShowDetailNoShowSummary();
     }

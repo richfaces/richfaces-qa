@@ -25,7 +25,6 @@ import static javax.faces.event.PhaseId.APPLY_REQUEST_VALUES;
 import static javax.faces.event.PhaseId.RENDER_RESPONSE;
 import static javax.faces.event.PhaseId.RESTORE_VIEW;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.tooltipAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
@@ -38,17 +37,18 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.TooltipMode;
 import org.richfaces.component.SwitchType;
+import org.richfaces.fragment.common.Actions;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.common.Locations;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.tooltip.TextualRichFacesTooltip;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.Locations;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.tooltip.TextualRichFacesTooltip;
-import org.richfaces.tests.page.fragments.impl.utils.Actions;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -57,6 +57,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestTooltipAttributes extends AbstractWebDriverTest {
+
+    private final Attributes<TooltipAttributes> tooltipAttributes = getAttributes();
 
     @Page
     private TooltipPage page;
@@ -111,7 +113,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richTooltip/simple.xhtml");
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = "smoke")
     public void setupAttributes() {
         tooltipAttributes.set(TooltipAttributes.hideEvent, "mouseout");
         tooltipAttributes.set(TooltipAttributes.showEvent, "click");
@@ -155,7 +157,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
         testData(new Action() {
             @Override
             public void perform() {
-                MetamerPage.waitRequest(tooltip(), WaitRequestType.XHR).show();
+                tooltip().show();
             }
         });
     }
@@ -201,7 +203,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
         Utils.tolerantAssertPointEquals(invokeLocation, tooltipLocation, tolerance, tolerance, "Direction does not work as expected.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testFollowMouse() {
         tooltipAttributes.set(TooltipAttributes.followMouse, Boolean.FALSE);
@@ -249,7 +251,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
         testAttributeLang(tooltip().show().advanced().getTooltipElement());
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testLayout() {
         tooltipAttributes.set(TooltipAttributes.layout, "inline");

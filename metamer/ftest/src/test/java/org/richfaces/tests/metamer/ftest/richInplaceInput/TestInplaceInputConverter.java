@@ -22,9 +22,9 @@
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.inplaceInput.RichFacesInplaceInput;
 import org.richfaces.tests.metamer.bean.ConverterBean;
 import org.richfaces.tests.metamer.ftest.abstractions.converter.AbstractConverterTest;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.RichFacesInplaceInput;
 import org.testng.annotations.Test;
 
 /**
@@ -56,12 +56,12 @@ public class TestInplaceInputConverter extends AbstractConverterTest {
         input.type(VALUE).confirm();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testConverter() {
         checkConverter();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testConverterMessage() {
         checkConverterMessage();
     }

@@ -27,11 +27,12 @@ import java.util.List;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.tree.RichFacesTree;
-import org.richfaces.tests.page.fragments.impl.tree.RichFacesTreeNode;
+import org.richfaces.fragment.tree.RichFacesTree;
+import org.richfaces.fragment.tree.RichFacesTreeNode;
+import org.richfaces.fragment.tree.Tree.TreeNode;
 
 /**
- * Custom tree 
+ * Custom tree
  *
  * @author Jiri Stefek <jstefek@redhat.com>
  */

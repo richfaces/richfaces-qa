@@ -25,9 +25,9 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import org.richfaces.component.SwitchType;
+import org.richfaces.fragment.tree.Tree.TreeNode;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.page.fragments.impl.tree.Tree.TreeNode;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -57,7 +57,7 @@ public class TestTreeToggling extends AbstractTreeTest {
         assertEquals(tree.advanced().getNodesExpanded().size(), 0);
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Use(field = "sample", value = "simpleSwingTreeNode")
     public void testDeepCollapsion() {
         checkInitialState();
@@ -147,7 +147,7 @@ public class TestTreeToggling extends AbstractTreeTest {
         testTopLevelNodesExpansion();
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = "smoke")
     public void verifyInitialState() {
         treeAttributes.set(TreeAttributes.toggleType, toggleType);
 //        disabled because of https://issues.jboss.org/browse/ARQGRA-309

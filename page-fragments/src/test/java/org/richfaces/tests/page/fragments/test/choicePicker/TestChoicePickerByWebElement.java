@@ -1,31 +1,84 @@
+/*
+ * JBoss, Home of Professional Open Source
+ * Copyright 2013, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+
 package org.richfaces.tests.page.fragments.test.choicePicker;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.testng.Arquillian;
-import org.openqa.selenium.WebDriver;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
-import org.richfaces.tests.page.fragments.impl.utils.picker.MultipleChoicePicker;
-import org.richfaces.tests.page.fragments.test.choicePicker.fragments.MyPageFragment;
+import org.richfaces.fragment.common.picker.ChoicePickerHelper;
+import org.richfaces.fragment.common.picker.MultipleChoicePicker;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.Lists;
 
-public class TestChoicePickerByWebElement extends Arquillian {
+public class TestChoicePickerByWebElement {
 
-    @Drone
-    private WebDriver browser;
+    @Mock
+    protected MyPageFragment myFragment;
 
-    @FindBy(tagName = "body")
-    private MyPageFragment myFragment;
+    @BeforeTest
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
 
-    private List<String> getStringsFromElements(List<WebElement> list) {
+        List<WebElement> divs = new ArrayList<WebElement>();
+        for (int i = 1; i <= 6; i++) {
+            WebElement elem = mock(WebElement.class);
+            when(elem.getText()).thenReturn("" + i);
+            switch (i) {
+                case 1:
+                    when(elem.getAttribute("class")).thenReturn("odd first");
+                    break;
+                case 2:
+                    when(elem.getAttribute("class")).thenReturn("even second");
+                    break;
+                case 3:
+                    when(elem.getAttribute("class")).thenReturn("odd");
+                    break;
+                case 4:
+                    when(elem.getAttribute("class")).thenReturn("even");
+                    break;
+                case 5:
+                    when(elem.getAttribute("class")).thenReturn("odd");
+                    break;
+                case 6:
+                    when(elem.getAttribute("class")).thenReturn("even last");
+                    break;
+            }
+            divs.add(elem);
+        }
+        when(myFragment.getDivs()).thenReturn(divs);
+    }
+
+    protected List<String> getStringsFromElements(List<WebElement> list) {
         List<String> result = Lists.newArrayList();
         for (WebElement webElement : list) {
             result.add(webElement.getText());
@@ -35,10 +88,7 @@ public class TestChoicePickerByWebElement extends Arquillian {
 
     @Test
     public void testPickByStyleClassEvenANDOddElements() {
-        browser.get(TestChoicePickerByWebElement.class.getResource("choicePickerByWebElement.html").toExternalForm());
-        MultipleChoicePicker picker = ChoicePickerHelper.byWebElement()
-            .attribute("class").contains("even")
-            .and()
+        MultipleChoicePicker picker = ChoicePickerHelper.byWebElement().attribute("class").contains("even").and()
             .attribute("class").contains("odd");
         List<WebElement> elements = picker.pickMultiple(myFragment.getDivs());
         assertEquals(getStringsFromElements(elements), Collections.EMPTY_LIST);
@@ -46,31 +96,24 @@ public class TestChoicePickerByWebElement extends Arquillian {
 
     @Test
     public void testPickByStyleClassEvenElements() {
-        browser.get(TestChoicePickerByWebElement.class.getResource("choicePickerByWebElement.html").toExternalForm());
-        MultipleChoicePicker evenPicker = ChoicePickerHelper.byWebElement()
-            .attribute("class").contains("even");
+        MultipleChoicePicker evenPicker = ChoicePickerHelper.byWebElement().attribute("class").contains("even");
         List<WebElement> elements = evenPicker.pickMultiple(myFragment.getDivs());
         assertEquals(getStringsFromElements(elements), Lists.newArrayList("2", "4", "6"));
     }
 
     @Test
     public void testPickByStyleClassEvenElementsIsEqualToPickNotOdd() {
-        browser.get(TestChoicePickerByWebElement.class.getResource("choicePickerByWebElement.html").toExternalForm());
-        MultipleChoicePicker evenPicker = ChoicePickerHelper.byWebElement()
-            .attribute("class").contains("even");
-        MultipleChoicePicker notOddPicker = ChoicePickerHelper.byWebElement()
-            .attribute("class").contains("odd").not();
+        MultipleChoicePicker evenPicker = ChoicePickerHelper.byWebElement().attribute("class").contains("even");
+        MultipleChoicePicker notOddPicker = ChoicePickerHelper.byWebElement().attribute("class").contains("odd").not();
         assertEquals(getStringsFromElements(evenPicker.pickMultiple(myFragment.getDivs())), Lists.newArrayList("2", "4", "6"));
         assertEquals(getStringsFromElements(notOddPicker.pickMultiple(myFragment.getDivs())), Lists.newArrayList("2", "4", "6"));
-        assertEquals(getStringsFromElements(notOddPicker.pickMultiple(myFragment.getDivs())), getStringsFromElements(evenPicker.pickMultiple(myFragment.getDivs())));
+        assertEquals(getStringsFromElements(notOddPicker.pickMultiple(myFragment.getDivs())),
+            getStringsFromElements(evenPicker.pickMultiple(myFragment.getDivs())));
     }
 
     @Test
     public void testPickByStyleClassFirstAndLastElements() {
-        browser.get(TestChoicePickerByWebElement.class.getResource("choicePickerByWebElement.html").toExternalForm());
-        MultipleChoicePicker oddPicker = ChoicePickerHelper.byWebElement()
-            .attribute("class").contains("first")
-            .and()
+        MultipleChoicePicker oddPicker = ChoicePickerHelper.byWebElement().attribute("class").contains("first").and()
             .attribute("class").contains("last");
         List<WebElement> elements = oddPicker.pickMultiple(myFragment.getDivs());
         assertEquals(getStringsFromElements(elements), Lists.<String>newArrayList());
@@ -78,19 +121,14 @@ public class TestChoicePickerByWebElement extends Arquillian {
 
     @Test
     public void testPickByStyleClassOddElements() {
-        browser.get(TestChoicePickerByWebElement.class.getResource("choicePickerByWebElement.html").toExternalForm());
-        MultipleChoicePicker oddPicker = ChoicePickerHelper.byWebElement()
-            .attribute("class").contains("odd");
+        MultipleChoicePicker oddPicker = ChoicePickerHelper.byWebElement().attribute("class").contains("odd");
         List<WebElement> elements = oddPicker.pickMultiple(myFragment.getDivs());
         assertEquals(getStringsFromElements(elements), Lists.newArrayList("1", "3", "5"));
     }
 
     @Test
     public void testPickByStyleClassOddOrEvenElements() {
-        browser.get(TestChoicePickerByWebElement.class.getResource("choicePickerByWebElement.html").toExternalForm());
-        MultipleChoicePicker oddPicker = ChoicePickerHelper.byWebElement()
-            .attribute("class").contains("odd")
-            .or()
+        MultipleChoicePicker oddPicker = ChoicePickerHelper.byWebElement().attribute("class").contains("odd").or()
             .attribute("class").contains("even");
         List<WebElement> elements = oddPicker.pickMultiple(myFragment.getDivs());
         assertEquals(getStringsFromElements(elements), Lists.newArrayList("1", "2", "3", "4", "5", "6"));
@@ -98,28 +136,18 @@ public class TestChoicePickerByWebElement extends Arquillian {
 
     @Test
     public void testPickByStyleClassOddOrFirstOrSecondOrLastElements() {
-        browser.get(TestChoicePickerByWebElement.class.getResource("choicePickerByWebElement.html").toExternalForm());
-        MultipleChoicePicker picker = ChoicePickerHelper.byWebElement()
-            .attribute("class").contains("odd")
-            .or()
-            .attribute("class").contains("first")
-            .or()
-            .attribute("class").contains("second")
-            .or()
-            .attribute("class").contains("last");
+        MultipleChoicePicker picker = ChoicePickerHelper.byWebElement().attribute("class").contains("odd").or()
+            .attribute("class").contains("first").or().attribute("class").contains("second").or().attribute("class")
+            .contains("last");
         List<WebElement> elements = picker.pickMultiple(myFragment.getDivs());
         assertEquals(getStringsFromElements(elements), Lists.newArrayList("1", "2", "3", "5", "6"));
     }
 
     @Test
     public void testPickByStyleClassOddWithoutFirstElements() {
-        browser.get(TestChoicePickerByWebElement.class.getResource("choicePickerByWebElement.html").toExternalForm());
-        MultipleChoicePicker oddPicker = ChoicePickerHelper.byWebElement()
-            .attribute("class").contains("odd")
-            .and()
+        MultipleChoicePicker oddPicker = ChoicePickerHelper.byWebElement().attribute("class").contains("odd").and()
             .attribute("class").contains("first").not();
         List<WebElement> elements = oddPicker.pickMultiple(myFragment.getDivs());
         assertEquals(getStringsFromElements(elements), Lists.newArrayList("3", "5"));
     }
-
 }

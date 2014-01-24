@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richPopupPanel;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.popupPanelAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertTrue;
@@ -38,6 +37,12 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.common.Locations;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.panel.TextualFragmentPart;
+import org.richfaces.fragment.popupPanel.RichFacesPopupPanel;
+import org.richfaces.fragment.popupPanel.PopupPanel.ResizerLocation;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
@@ -45,14 +50,9 @@ import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.Locations;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.panel.TextualFragmentPart;
-import org.richfaces.tests.page.fragments.impl.popupPanel.PopupPanel.ResizerLocation;
-import org.richfaces.tests.page.fragments.impl.popupPanel.RichFacesPopupPanel;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -64,6 +64,8 @@ import org.testng.annotations.Test;
  */
 public class TestPopupPanel extends AbstractWebDriverTest {
 
+    private final Attributes<PopupPanelAttributes> popupPanelAttributes = getAttributes();
+
     @FindBy(css = "input[id$=openPanelButton]")
     private WebElement openButton;
     @FindBy(css = "div.rf-pp-shade[id$=popupPanel_shade]")
@@ -72,9 +74,10 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     private TestedPopupPanel panel;
     @FindBy(css = "input[id$=resize]")
     private WebElement resize;
+
     @Use(empty = false)
     @Inject
-    ResizerLocation resizer;
+    private ResizerLocation resizer;
 
     private void checkCssValueOf(String cssValue, double value, WebElement element) {
         int tolerance = 5;
@@ -192,7 +195,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
         testStyleClass(panel.advanced().getHeaderControlsElement(), BasicAttributes.controlsClass);
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-10249")
     public void testDomElementAttachment() {
         popupPanelAttributes.set(PopupPanelAttributes.domElementAttachment, "");
@@ -274,7 +277,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
         assertNotVisible(panel.advanced().getRootElement(), "Popup panel is visible.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testInit() {
         assertPresent(openButton, "Button for opening popup should be on the page.");
         assertNotVisible(panel.advanced().getRootElement(), "Popup panel is visible.");
@@ -382,7 +385,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
         checkCssValueOfPanel("width", 200);
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testModal() {
         popupPanelAttributes.set(PopupPanelAttributes.modal, Boolean.FALSE);

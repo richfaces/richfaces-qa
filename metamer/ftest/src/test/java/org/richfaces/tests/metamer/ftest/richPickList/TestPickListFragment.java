@@ -27,9 +27,9 @@ import static org.testng.Assert.assertEquals;
 import java.net.URL;
 
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.picker.ChoicePickerHelper;
+import org.richfaces.fragment.pickList.RichFacesPickList;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.page.fragments.impl.pickList.RichFacesPickList;
-import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.annotations.Test;
 
 /**

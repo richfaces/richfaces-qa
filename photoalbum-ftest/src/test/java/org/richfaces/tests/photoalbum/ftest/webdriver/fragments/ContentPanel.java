@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.photoalbum.ftest.webdriver.fragments;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -28,10 +28,12 @@ import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.AddImagesVi
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.AlbumView;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.AllAlbumsView;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.AllImagesView;
+import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.EditUserProfileView;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.PhotoView;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.SearchView;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.ShelfView;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.ShelvesView;
+import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.UserProfileView;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -57,6 +59,10 @@ public class ContentPanel {
         return Graphene.createPageFragment(AllImagesView.class, root);
     }
 
+    public EditUserProfileView editUserProfileView() {
+        return Graphene.createPageFragment(EditUserProfileView.class, root);
+    }
+
     public PhotoView photoView() {
         return Graphene.createPageFragment(PhotoView.class, root);
     }
@@ -71,5 +77,9 @@ public class ContentPanel {
 
     public ShelvesView shelvesView() {
         return Graphene.createPageFragment(ShelvesView.class, root);
+    }
+
+    public UserProfileView userProfileView() {
+        return Graphene.createPageFragment(UserProfileView.class, root);
     }
 }

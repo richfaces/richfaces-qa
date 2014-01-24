@@ -29,7 +29,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.lang.StringUtils;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -92,6 +91,6 @@ public class TestPushTopicsContext extends AbstractWebDriverTest {
      */
     private void checkTheUuid(String uuid) {
         assertEquals(uuid.length(), 36, "The length of uuid is wrong!");
-        assertEquals(StringUtils.countMatches(uuid, "-"), 4, "Wrong uuid, there should be 4 hyphens");
+        assertTrue(uuid.trim().matches("\\S{8}-\\S{4}-\\S{4}-\\S{4}-\\S{12}"), "Wrong uuid, there should be 4 hyphens");
     }
 }

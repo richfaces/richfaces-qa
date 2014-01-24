@@ -25,17 +25,15 @@
 package org.richfaces.tests.metamer.ftest;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.basicAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.lang.Validate;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
@@ -57,16 +55,16 @@ import org.openqa.selenium.iphone.IPhoneDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.component.SwitchType;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.common.TextInputComponentImpl;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.common.VisibleComponent;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.VisibleComponent;
-import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 
@@ -136,12 +134,16 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         driverType = DriverType.getCurrentType(driver);
     }
 
-    protected MetamerPage getMetamerPage() {
-        return metamerPage;
+    protected Attributes<BasicAttributes> getBasicAttributes() {
+        return getAttributes();
     }
 
     protected Attributes<MetamerAttributes> getMetamerAttributes() {
         return getAttributes();
+    }
+
+    protected MetamerPage getMetamerPage() {
+        return metamerPage;
     }
 
     /**
@@ -374,7 +376,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         final String TESTVALUE = "cz";
         String attLang;
         // set lang to TESTVALUE
-        basicAttributes.set(BasicAttributes.lang, TESTVALUE);
+        getBasicAttributes().set(BasicAttributes.lang, TESTVALUE);
         // get attribute lang of element
         String lang1 = element.getAttribute("xml:lang");
         String lang2 = element.getAttribute("lang");
@@ -384,8 +386,8 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Helper method for testing of delays (showDelay, hideDelay). Runs the @actionWithDelay 3 times and measure time spent in it.
-     * Then count an average time from these 3 values and asserts it to the @expectedDelay with 50% tolerance.
+     * Helper method for testing of delays (showDelay, hideDelay). Runs the @actionWithDelay 4 times and measure time spent in it.
+     * Then count a median from these 4 values and asserts it to the @expectedDelay with 50% tolerance.
      *
      * @param actionBefore action before the measured action. Can be used for e.g. close/open menu. Can be null.
      * @param actionWithDelay the measured action. Can be e.g. open/close menu.
@@ -395,20 +397,16 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     protected void testDelay(final Action actionBefore, final Action actionWithDelay, String attributeName, long expectedDelayInMillis) {
         getUnsafeAttributes("").set(attributeName, expectedDelayInMillis);
         double tolerance = expectedDelayInMillis == 0 ? 500 : expectedDelayInMillis * 0.5;
-        int cycles = 3;
-        ArrayList<Long> delays = Lists.newArrayList();
+        int cycles = 4;
+        List<Long> delays = Lists.newArrayList();
         for (int i = 0; i < cycles; i++) {
             if (actionBefore != null) {
                 actionBefore.perform();
             }
             delays.add(StopWatch.watchTimeSpentInAction(actionWithDelay).inMillis().longValue());
         }
-        double avg = 0;
-        for (Long delay : delays) {
-            avg += delay;
-        }
-        avg /= delays.size();
-        assertEquals(avg, expectedDelayInMillis, tolerance, "The delay is not in tolerance.");
+        Number median = countMedian(delays);
+        assertEquals(median.doubleValue(), expectedDelayInMillis, tolerance, "The delay is not in tolerance. Median of delays was " + median);
     }
 
     /**
@@ -417,9 +415,9 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * @param element WebElement reference of tested element
      */
     protected void testDir(WebElement element) {
-        testHTMLAttribute(element, basicAttributes, BasicAttributes.dir, "null");
-        testHTMLAttribute(element, basicAttributes, BasicAttributes.dir, "ltr");
-        testHTMLAttribute(element, basicAttributes, BasicAttributes.dir, "rtl");
+        testHTMLAttribute(element, getBasicAttributes(), BasicAttributes.dir, "null");
+        testHTMLAttribute(element, getBasicAttributes(), BasicAttributes.dir, "ltr");
+        testHTMLAttribute(element, getBasicAttributes(), BasicAttributes.dir, "rtl");
     }
 
     /**
@@ -596,19 +594,20 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     /**
      * Helper method for testing of attribute 'status'. At first it sets @status to "statusChecker", then saves Metamer's
-     * 'statusCheckerOutput' time, then fires <code>statusChangingAction</code>, and finally checks if Metamer's
-     * 'statusCheckerOutput' time was changed.
+     * 'statusCheckerOutput' time, then fires <code>statusChangingAction</code> (if not null), and finally checks if Metamer's
+     * 'statusCheckerOutput' time was changed before Graphene.waitModel() interval expires.
      *
-     * @param statusChangingAction action that will change the status.
+     * @param statusChangingAction action that will change the status. Can be null.
      */
     protected void testStatus(Action statusChangingAction) {
-        Validate.notNull(statusChangingAction, "The @statusChangingAction cannot be null");
         String checker = "statusChecker";
         // set attribute
         getUnsafeAttributes("").set("status", checker);
 
         String statusCheckerTimeBefore = metamerPage.getStatusCheckerOutputElement().getText();
-        Graphene.guardAjax(new ActionWrapper(statusChangingAction)).perform();
+        if (statusChangingAction != null) {
+            Graphene.guardAjax(new ActionWrapper(statusChangingAction)).perform();
+        }
         Graphene.waitModel().until().element(metamerPage.getStatusCheckerOutputElement()).text().not()
             .equalTo(statusCheckerTimeBefore);
     }
@@ -622,7 +621,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      */
     protected void testStyle(final WebElement element, BasicAttributes attribute) {
         final String value = "background-color: yellow; font-size: 1.5em;";
-        testHTMLAttribute(element, basicAttributes, attribute, value);
+        testHTMLAttribute(element, getBasicAttributes(), attribute, value);
     }
 
     /**
@@ -644,7 +643,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      */
     protected void testStyleClass(WebElement element, BasicAttributes attribute) {
         final String styleClass = "metamer-ftest-class";
-        testHTMLAttribute(element, basicAttributes, attribute, styleClass);
+        testHTMLAttribute(element, getBasicAttributes(), attribute, styleClass);
     }
 
     /**
@@ -664,7 +663,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      */
     protected void testTitle(WebElement element) {
         final String testTitle = "RichFaces 4";
-        testHTMLAttribute(element, basicAttributes, BasicAttributes.title, testTitle);
+        testHTMLAttribute(element, getBasicAttributes(), BasicAttributes.title, testTitle);
     }
 
     /**
@@ -786,6 +785,54 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         executeJS("sessionStorage.removeItem('metamerEvents')");
     }
 
+    private static <T extends Number & Comparable<T>> Number countMedian(List<T> values) {
+        assertTrue(values.size() > 0);
+        if (values.size() == 1) {
+            return values.get(0);
+        }
+
+        final List<T> copy = Lists.newArrayList(values);
+        Collections.sort(copy);
+
+        int middleIndex = (copy.size() - 1) / 2;
+
+        double result = copy.get(middleIndex).doubleValue();
+        if (copy.size() % 2 == 0) {
+            result = (result + copy.get(middleIndex + 1).doubleValue()) / 2.0;
+        }
+        final Double median = Double.valueOf(result);
+        return new Number() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public int intValue() {
+                return median.intValue();
+            }
+
+            @Override
+            public long longValue() {
+                return median.longValue();
+            }
+
+            @Override
+            public float floatValue() {
+                return median.floatValue();
+
+            }
+
+            @Override
+            public double doubleValue() {
+                return median.doubleValue();
+
+            }
+
+            @Override
+            public String toString() {
+                return median.doubleValue() + " from values(sorted) " + copy.toString() + '.';
+            }
+        };
+    }
+
     /**
      * Decoder for Attributes. Converts given Attribute to String. If Attribute ends with 'class' or 'style', then it returns
      * the correct one, when the attribute does not end with none of those, then it returns toString() method of attribute
@@ -823,13 +870,6 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      */
     public abstract class ReloadTester<T> {
 
-        private MetamerPage page;
-
-        public ReloadTester(MetamerPage page) {
-            super();
-            this.page = page;
-        }
-
         public abstract void doRequest(T inputValue);
 
         public abstract void verifyResponse(T inputValue);
@@ -840,7 +880,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             for (T inputValue : getInputValues()) {
                 doRequest(inputValue);
                 verifyResponse(inputValue);
-                page.rerenderAll();
+                getMetamerPage().rerenderAll();
                 verifyResponse(inputValue);
             }
         }
@@ -849,7 +889,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             for (T inputValue : getInputValues()) {
                 doRequest(inputValue);
                 verifyResponse(inputValue);
-                page.fullPageRefresh();
+                getMetamerPage().fullPageRefresh();
                 verifyResponse(inputValue);
             }
         }

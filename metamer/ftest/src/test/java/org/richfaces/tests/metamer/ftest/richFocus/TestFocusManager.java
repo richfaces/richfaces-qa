@@ -48,7 +48,7 @@ public class TestFocusManager extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richFocus/focusManager.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(exclude = { "richCollapsibleSubTable", "richExtendedDataTable", "richDataTable", "richDataGrid", "richList", "a4jRepeat", "uiRepeat" })
     public void testFocusManager() {
         Assert.assertTrue(new ElementIsFocused(page.getAgeInput().advanced().getInputElement()).apply(driver), "Age input is not focused");

@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richMenuItem;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.menuItemAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -36,11 +35,12 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.dropDownMenu.RichFacesDropDownMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.dropDownMenu.RichFacesDropDownMenu;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -51,6 +51,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestMenuItem extends AbstractWebDriverTest {
+
+    private final Attributes<MenuItemAttributes> menuItemAttributes = getAttributes();
 
     @FindByJQuery(".rf-tb-itm:eq(0)")
     private RichFacesDropDownMenu fileDropDownMenu;
@@ -101,7 +103,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
         page.assertListener(PhaseId.INVOKE_APPLICATION, "action invoked");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testActionListener() {
         openMenu();
         MetamerPage.waitRequest(menuItem1, WaitRequestType.XHR).click();
@@ -119,11 +121,12 @@ public class TestMenuItem extends AbstractWebDriverTest {
 
     @Test
     public void testData() {
-        String testedValue = "RichFaces 4";
-        menuItemAttributes.set(MenuItemAttributes.data, testedValue);
-        menuItemAttributes.set(MenuItemAttributes.oncomplete, "data = event.data");
-        openMenuAndClickOnTheItem();
-        assertEquals(expectedReturnJS("return data;", testedValue), "RichFaces 4", "Data sent with ajax request");
+        testData(new Action() {
+            @Override
+            public void perform() {
+                openMenuAndClickOnTheItem();
+            }
+        });
     }
 
     @Test
@@ -141,7 +144,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
         assertPresent(emptyIcon, "Empty icon should be present.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testExecute() {
         menuItemAttributes.set(MenuItemAttributes.execute, "@this executeChecker");
         openMenuAndClickOnTheItem();
@@ -190,7 +193,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
         page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "action listener invoked");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testInit() {
         assertPresent(fileMenu, "Drop down menu \"File\" should be present on the page");
         assertVisible(fileMenu, "Drop down menu \"File\" should be visible on the page");
@@ -202,7 +205,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
         assertVisible(fileMenuList, "Menu should be expanded");
 
         assertVisible(icon, "Icon of menu item should be visible on the page");
-        assertTrue(icon.getAttribute("src").endsWith("create_doc.gif"), "Default menu item icon should be 'create_doc.gif'");
+        assertTrue(icon.getAttribute("src").contains("create_doc.gif"), "Default menu item icon should be 'create_doc.gif'");
 
         assertVisible(label, "Label of menu item should be visible on the page");
         assertEquals(label.getText(), "New", "Label of the menu item");

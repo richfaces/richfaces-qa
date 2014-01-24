@@ -39,16 +39,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.common.ScrollingType;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.select.RichFacesSelect;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.common.ScrollingType;
-import org.richfaces.tests.page.fragments.impl.select.RichFacesSelect;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -96,7 +96,7 @@ public class TestSelect extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richSelect/simple.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testClientFilterFunction() {
         selectAttributes.set(SelectAttributes.clientFilterFunction, "filterValuesByLength");
         select.type("4");// get all states with 4 letters
@@ -138,7 +138,7 @@ public class TestSelect extends AbstractWebDriverTest {
         Assert.fail("Select should be disabled.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest(value = { "https://issues.jboss.org/browse/RF-9663", "https://issues.jboss.org/browse/RF-9855" })
     public void testEnableManualInput() {
         selectAttributes.set(SelectAttributes.enableManualInput, Boolean.FALSE);
@@ -153,7 +153,7 @@ public class TestSelect extends AbstractWebDriverTest {
         assertEquals(output.getText(), "Hawaii");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-11320")
     public void testFiltering() {
         select.type("a");

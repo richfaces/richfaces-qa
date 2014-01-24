@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.inplaceInputAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -32,22 +31,24 @@ import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.inplaceInput.ConfirmOrCancel;
+import org.richfaces.fragment.inplaceInput.InplaceComponentState;
+import org.richfaces.fragment.inplaceInput.RichFacesInplaceInput;
+import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.ConfirmOrCancel;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceComponentState;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.RichFacesInplaceInput;
-import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.Test;
 
 /**
@@ -57,6 +58,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestInplaceInputAttributes extends AbstractWebDriverTest {
+
+    private final Attributes<InplaceInputAttributes> inplaceInputAttributes = getAttributes();
 
     @Page
     private MetamerPage page;
@@ -72,7 +75,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richInplaceInput/simple.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testActiveClass() {
         String testedClass = "metamer-ftest-class";
@@ -90,7 +93,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
             "Inplace input should not have class metamer-ftest-class.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testChangedClass() {
         String testedClass = "metamer-ftest-class";
@@ -126,7 +129,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-9872")
     public void testClickCancelButton() {
         inplaceInputAttributes.set(InplaceInputAttributes.showControls, Boolean.TRUE);
-        MetamerPage.waitRequest(inplaceInput.type("value that will be canceled"), WaitRequestType.HTTP).cancelByControlls();
+        Graphene.guardNoRequest(inplaceInput.type("value that will be canceled")).cancelByControlls();
         assertEquals(inplaceInput.advanced().getLabelValue(), "RichFaces 4", "Default value was expected.");
     }
 
@@ -134,7 +137,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     public void testClickOkButton() {
         inplaceInputAttributes.set(InplaceInputAttributes.showControls, Boolean.TRUE);
         String testedValue = "value that will be confirmed and changed";
-        MetamerPage.waitRequest(inplaceInput.type(testedValue), WaitRequestType.XHR).confirm();
+        Graphene.guardAjax(inplaceInput.type(testedValue)).confirm();
         assertEquals(inplaceInput.advanced().getLabelValue(), testedValue);
     }
 

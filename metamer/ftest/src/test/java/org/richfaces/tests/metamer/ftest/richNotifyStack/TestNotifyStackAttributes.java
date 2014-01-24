@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richNotifyStack;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.notifyStackAttributes;
 
 import java.net.URL;
 import java.util.Locale;
@@ -34,18 +33,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.richfaces.fragment.common.Locations;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.notify.NotifyMessage;
+import org.richfaces.fragment.notify.RichFacesNotify;
+import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
+import org.richfaces.fragment.notify.RichFacesNotify.NotifyMessageItemImpl;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.Locations;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.notify.NotifyMessage;
-import org.richfaces.tests.page.fragments.impl.notify.NotifyMessage.NotifyMessagePosition;
-import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotify;
-import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotify.NotifyMessageItemImpl;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -53,6 +53,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestNotifyStackAttributes extends AbstractWebDriverTest {
+
+    private final Attributes<NotifyStackAttributes> notifyStackAttributes = getAttributes();
 
     @FindBy(css = "input[id$='generateMessage']")
     private WebElement generateMessageButton;
@@ -172,7 +174,7 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
         }
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Use(field = "position", enumeration = true)
     public void testPosition() {
         notifyStackAttributes.set(NotifyStackAttributes.position, position.value);
@@ -203,7 +205,7 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
         Assert.fail("There should be no message when @rendered=false");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testRerenderStack() {
         waiting(500); // wait for notify to initialize
 

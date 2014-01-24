@@ -54,7 +54,7 @@ public class TableFilteringPage {
     private WebElement vendorSelect;
     @FindByJQuery("input[type=text]:first")
     private WebElement mileageInput;
-    @FindByJQuery("input[type=text]:last")
+    @FindByJQuery("input[type=text]:nth(1)")
     private WebElement vinInput;
     @FindBy(css = "*.rf-dt-b")
     private WebElement tBody;
@@ -64,7 +64,7 @@ public class TableFilteringPage {
 
     public boolean isNothingFound() {
         try {
-            tBody.findElement(ByJQuery.selector("tr > td:contains('Nothing found')"));
+            browser.findElement(ByJQuery.selector(".rf-dt-b tr > td:contains('Nothing found')"));
             return true;
         } catch (NoSuchElementException ignored) {
             return false;

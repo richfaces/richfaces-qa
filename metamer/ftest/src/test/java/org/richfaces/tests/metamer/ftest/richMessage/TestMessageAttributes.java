@@ -38,7 +38,7 @@ public class TestMessageAttributes extends AbstractMessageTest {
         return buildUrl(contextPath, "faces/components/richMessage/jsr303.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testAjaxRendered() {
         checkAjaxRendered();
     }
@@ -49,12 +49,12 @@ public class TestMessageAttributes extends AbstractMessageTest {
         checkDir();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testEscape() {
         checkEscape();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testFor() {
         checkFor();
     }

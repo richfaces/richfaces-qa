@@ -34,15 +34,15 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.AbstractConfirmOrCancel;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.ConfirmOrCancel;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceComponentState;
-import org.richfaces.tests.page.fragments.impl.inplaceSelect.InplaceSelect;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
-import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
-import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.common.TextInputComponentImpl;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.common.picker.ChoicePicker;
+import org.richfaces.fragment.common.picker.ChoicePickerHelper;
+import org.richfaces.fragment.inplaceInput.AbstractConfirmOrCancel;
+import org.richfaces.fragment.inplaceInput.ConfirmOrCancel;
+import org.richfaces.fragment.inplaceInput.InplaceComponentState;
+import org.richfaces.fragment.inplaceSelect.InplaceSelect;
 
 /**
  * InplaceSelect with predefined saveOnSelect.
@@ -105,7 +105,7 @@ public class RFInplaceSelect implements InplaceSelect {
         WebElement optionToBeSelected = picker.pick(advanced().getOptions());
         optionToBeSelected.click();
         if (isSaveOnSelect() && !isShowControlls()) {
-            textInput.advanced().trigger("blur");
+            textInput.advanced().trigger("selectitem");
             waitForPopupHide();
         }
         return new ConfirmOrCancelImpl();
@@ -232,6 +232,6 @@ public class RFInplaceSelect implements InplaceSelect {
 
     private void waitForPopupHide() {
         Graphene.waitModel().until().element(localList).is().present();
-        Graphene.waitModel().until().element(globalList).is().not().visible();
+//        Graphene.waitModel().until().element(globalList).is().not().visible();
     }
 }

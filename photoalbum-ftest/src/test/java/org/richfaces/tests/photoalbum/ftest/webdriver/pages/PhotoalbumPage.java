@@ -23,7 +23,8 @@ package org.richfaces.tests.photoalbum.ftest.webdriver.pages;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.messages.RichFacesMessages;
+import org.richfaces.fragment.messages.RichFacesMessages;
+import org.richfaces.fragment.notify.RichFacesNotifyMessage;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.AddAlbumPanel;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.AddShelfPanel;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.ConfirmationPanel;
@@ -46,6 +47,8 @@ public class PhotoalbumPage {
      */
     @FindBy(className = "rf-msgs")
     private RichFacesMessages messages;
+    @FindBy(css = ".rf-ntf.photoalbum-message")
+    private RichFacesNotifyMessage message;
     @FindBy(css = ".rf-p.header-panel")
     private HeaderPanel headerPanel;
     @FindBy(css = "div[id$='treePanel']")
@@ -70,14 +73,14 @@ public class PhotoalbumPage {
     @FindBy(css = ".rf-pp-cntr[id*='confirmation']")
     private ConfirmationPanel confirmationPanel;
 
-    public void checkLogged(String user) {
-        headerPanel.checkIfUserLogged(user);
-        leftPanel.checkIfUserLogged();
+    public void checkUserLogged(String user, boolean hasOwnAlbums, boolean isLoggedInWithFB, boolean isLoggedInWithGPlus) {
+        headerPanel.checkUserLogged(user, isLoggedInWithFB, isLoggedInWithGPlus);
+        leftPanel.checkIfUserLogged(hasOwnAlbums, isLoggedInWithFB, isLoggedInWithGPlus);
         footerPanel.check();
     }
 
     public void checkNotLogged() {
-        headerPanel.checkIfUserNotLogged();
+        headerPanel.checkUserNotLogged();
         leftPanel.checkIfUserNotLogged();
         footerPanel.check();
     }
@@ -118,6 +121,10 @@ public class PhotoalbumPage {
         return loginPanel;
     }
 
+    public RichFacesNotifyMessage getMessage() {
+        return message;
+    }
+
     public RichFacesMessages getMessages() {
         return messages;
     }
@@ -130,10 +137,15 @@ public class PhotoalbumPage {
         return slideShowPanel;
     }
 
-    public void login(String user, String pswd) {
+    public LoginPanel openLoginPanel() {
+        Graphene.waitAjax().until().element(headerPanel.getLoginLink()).is().visible();
         Graphene.guardAjax(headerPanel.getLoginLink()).click();
         loginPanel.advanced().waitUntilPopupIsVisible().perform();
-        loginPanel.login(user, pswd);
+        return loginPanel;
+    }
+
+    public void login(String user, String pswd) {
+        openLoginPanel().login(user, pswd);
     }
 
     public void logout() {

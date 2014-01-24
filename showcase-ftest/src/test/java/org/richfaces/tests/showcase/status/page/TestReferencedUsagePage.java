@@ -36,9 +36,7 @@ public class TestReferencedUsagePage {
     @FindByJQuery("input[type='text']:eq(1)")
     public WebElement addressInput;
 
-    @FindByJQuery("span[class=rf-st-start] img:first")
-    public WebElement firstAjaxRequestProgressImage;
+    public static final String FIRST_PROGRESS_LOCATOR = "span[class=rf-st-start] img:first";
 
-    @FindByJQuery("span[class=rf-st-start] img:last")
-    public WebElement secondAjaxRequestProgressImage;
+    public static final String SECOND_PROGRESS_LOCATOR = "span[class=rf-st-start] img:last";
 }

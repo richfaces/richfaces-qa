@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richPickList;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.pickListAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -40,19 +39,20 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.common.picker.ChoicePickerHelper;
+import org.richfaces.fragment.list.ListItem;
+import org.richfaces.fragment.message.RichFacesMessage;
+import org.richfaces.fragment.orderingList.OrderingList;
+import org.richfaces.fragment.pickList.RichFacesPickList;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.list.ListItem;
-import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
-import org.richfaces.tests.page.fragments.impl.orderingList.OrderingList;
-import org.richfaces.tests.page.fragments.impl.pickList.RichFacesPickList;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
-import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -66,6 +66,8 @@ import com.google.common.collect.Lists;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestPickList extends AbstractWebDriverTest {
+
+    private final Attributes<PickListAttributes> pickListAttributes = getAttributes();
 
     @FindBy(css = "input[id$=hButton]")
     private WebElement hSubmit;
@@ -93,7 +95,7 @@ public class TestPickList extends AbstractWebDriverTest {
         MetamerPage.waitRequest(hSubmit, WaitRequestType.HTTP).click();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testAddAllBtn() {
         pickList.addAll();// fragment contains checking
         assertEquals(pickList.advanced().getSourceList().getItems().size(), 0);
@@ -216,7 +218,7 @@ public class TestPickList extends AbstractWebDriverTest {
      * Verify that item keep selected even moved from source to target, or back. If selected Alaska from sources, and
      * then added to target, it should remain selected in target list
      */
-    @Test
+    @Test(groups = "smoke")
     public void testKeepSelected() {
         String textSource = pickList.advanced().getSourceList().getItem(0).getText();
         pickList.add(0);

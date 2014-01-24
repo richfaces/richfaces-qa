@@ -27,7 +27,6 @@ import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.contextMenuAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -46,14 +45,15 @@ import org.openqa.selenium.interactions.Mouse;
 import org.openqa.selenium.interactions.internal.Coordinates;
 import org.openqa.selenium.internal.Locatable;
 import org.richfaces.component.Positioning;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.common.Locations;
+import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.page.fragments.impl.Locations;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -65,6 +65,8 @@ import org.testng.annotations.Test;
  * @since 4.2.1.Final
  */
 public class TestContextMenu extends AbstractWebDriverTest {
+
+    private final Attributes<ContextMenuAttributes> contextMenuAttributes = getAttributes();
 
     @Page
     private ContextMenuSimplePage page;
@@ -80,6 +82,14 @@ public class TestContextMenu extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richContextMenu/simple.xhtml");
     }
 
+    public Locations getContextMenuLocationsWhenPosition(Positioning positioning) {
+        contextMenuAttributes.set(ContextMenuAttributes.direction, positioning);
+        page.getContextMenu().advanced().show(page.getTargetPanel2());
+        Locations contextMenuLocations = Utils.getLocations(page.getContextMenuContent());
+        page.getContextMenu().advanced().hide();
+        return contextMenuLocations;
+    }
+
     private void updateShowAction() {
         contextMenuAttributes.set(ContextMenuAttributes.showEvent, "click");
         page.getContextMenu().advanced().setupShowEvent(Event.CLICK);
@@ -89,6 +99,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @Use(field = "delay", ints = { 1500, 2000, 2500 })
     public void testHideDelay() {
         updateShowAction();
+        page.getContextMenu().advanced().setupHideDelay(delay);
         testDelay(new Action() {
             @Override
             public void perform() {
@@ -104,7 +115,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         }, "hideDelay", delay);
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testOnhide() {
         updateShowAction();
         final String VALUE = "hide";
@@ -166,7 +177,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         contextMenuAttributes.set(ContextMenuAttributes.direction, "bottomRight");
 
         Locations defaultLocations = page.getContextMenuLocations();// bottom right
-        Locations actMenuLocation = page.getContextMenuLocationsWhenPosition(positioning);
+        Locations actMenuLocation = getContextMenuLocationsWhenPosition(positioning);
 
         int defaultWidth = defaultLocations.getWidth();
         int defaultHeight = defaultLocations.getHeight();
@@ -213,7 +224,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         assertEquals(page.getContextMenu().advanced().getLangAttribute(), langVal, "The lang attribute was not set correctly!");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testMode() {
         updateShowAction();
         // ajax
@@ -335,7 +346,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         assertEquals(style, minWidth + "px");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testOnshow() {
         updateShowAction();
         testFireEvent(contextMenuAttributes, ContextMenuAttributes.onshow, new Actions(driver).click(page.getTargetPanel1())
@@ -501,6 +512,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @Use(field = "delay", ints = { 1500, 2000, 2500 })
     public void testShowDelay() {
         updateShowAction();
+        page.getContextMenu().advanced().setupShowDelay(delay);
         testDelay(new Action() {
             @Override
             public void perform() {

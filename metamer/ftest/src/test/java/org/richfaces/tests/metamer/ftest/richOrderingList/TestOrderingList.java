@@ -26,7 +26,7 @@ import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
-import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
+import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.testng.annotations.Test;
 
 /**
@@ -53,7 +53,7 @@ public class TestOrderingList extends AbstractOrderingListTest {
         assertButtonDisabled(orderingList.advanced().getUpButtonElement(), "The button [up] should be disabled.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testSelectFirst() {
         orderingList.select(0);
         checkButtonsStateTop();
@@ -71,7 +71,7 @@ public class TestOrderingList extends AbstractOrderingListTest {
         checkButtonsStateMiddle();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testSubmit() {
         String firstBefore = orderingList.advanced().getItemsElements().get(0).getText();
         String secondBefore = orderingList.advanced().getItemsElements().get(1).getText();

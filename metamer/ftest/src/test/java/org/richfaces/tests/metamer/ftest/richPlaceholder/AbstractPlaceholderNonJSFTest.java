@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richPlaceholder;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.placeholderAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -37,23 +36,25 @@ import org.jboss.test.selenium.support.color.ColorUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 
 /**
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-//FIXME should not be generic
 public abstract class AbstractPlaceholderNonJSFTest extends AbstractWebDriverTest {
+
+    private final Attributes<PlaceholderAttributes> placeholderAttributes = getAttributes();
 
     private static final String INPUT1_ID = "[id$=input1]";
     private static final String INPUT2_ID = "[id$=input2]";
     private static final String INPUT3_ID = "[id$=input3]";
     private static final String DEFAULT_PLACEHOLDER_TEXT = "Watermark text";
     private static final String DEFAULT_PLACEHOLDER_CLASS = "rf-plhdr";
-    //
+
     private final String componentName;
-    //
+
     @FindBy(css = "[id$=placeholder]")
     private WebElement placeholder;
     @FindBy(css = INPUT1_ID)
@@ -62,10 +63,7 @@ public abstract class AbstractPlaceholderNonJSFTest extends AbstractWebDriverTes
     private WebElement input2;
     @FindBy(css = INPUT3_ID)
     private WebElement input3;
-    @FindBy(css = "[id$=a4jButton]")
-    private WebElement a4jSubmitBtn;
-    @FindBy(css = "[id$=hButton]")
-    private WebElement hSubmitBtn;
+
     @Page
     private MetamerPage page;
 

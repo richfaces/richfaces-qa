@@ -33,9 +33,9 @@ import org.testng.annotations.Test;
 public class TestPlaceHolderWithCalendar extends AbstractPlaceholderJSFTest {
 
     @FindBy(css = INPUT1_ID + " input")
-    WebElement input1;
+    private WebElement input1;
     @FindBy(css = INPUT2_ID + " input")
-    WebElement input2;
+    private WebElement input2;
 
     public TestPlaceHolderWithCalendar() {
         super("calendar");

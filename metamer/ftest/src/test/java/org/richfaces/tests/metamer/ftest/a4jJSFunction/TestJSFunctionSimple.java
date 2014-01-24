@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.a4jJSFunction;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.jsFunctionAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotSame;
 
@@ -33,8 +32,10 @@ import javax.faces.event.PhaseId;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
@@ -46,6 +47,8 @@ import org.testng.annotations.Test;
  * @since 5.0.0.Alpha1
  */
 public class TestJSFunctionSimple extends AbstractWebDriverTest {
+
+    private final Attributes<JSFunctionAttributes> jsFunctionAttributes = getAttributes();
 
     @Page
     private JSFunctionPage page;
@@ -71,7 +74,7 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
         assertNotSame(page.ajaxRenderedTime.getText(), ajaxRenderedTimeValue, "Ajax rendered time did not change");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testAction() {
         jsFunctionAttributes.set(JSFunctionAttributes.action, "increaseYearAction");
 
@@ -130,13 +133,12 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
 
     @Test
     public void testData() {
-        jsFunctionAttributes.set(JSFunctionAttributes.data, "RichFaces 4");
-        jsFunctionAttributes.set(JSFunctionAttributes.oncomplete, "data = event.data");
-
-        MetamerPage.waitRequest(page.link, WaitRequestType.XHR).click();
-
-        String data = executeJS("return window.data").toString();
-        assertEquals(data, "RichFaces 4", "Data sent with ajax request");
+        testData(new Action() {
+            @Override
+            public void perform() {
+                MetamerPage.waitRequest(page.link, WaitRequestType.XHR).click();
+            }
+        });
     }
 
     @Test

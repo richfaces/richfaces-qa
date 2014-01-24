@@ -25,10 +25,17 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.util.List;
+import java.util.Set;
 
+import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.tests.photoalbum.ftest.webdriver.pages.SocialLoginPage;
 
+import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
 /**
@@ -46,7 +53,6 @@ public final class PhotoalbumUtils {
     public static void checkNotVisible(List<WebElement> list) {
         int i = 0;
         for (WebElement webElement : list) {
-
             assertFalse(Utils.isVisible(webElement), i + "(nth) element should not be visible");
             i++;
         }
@@ -70,5 +76,92 @@ public final class PhotoalbumUtils {
             result.add(webElement.getText());
         }
         return result;
+    }
+
+    public static void loginWithSocial(Class<? extends SocialLoginPage> pageClass, final WebDriver browser, WebElement loginLink, boolean workaroundGplusAccInChache) {
+        String originalWindow = browser.getWindowHandle();
+        Graphene.guardAjax(loginLink).click();
+        Graphene.waitAjax().until(new Predicate<WebDriver>() {
+            @Override
+            public boolean apply(WebDriver input) {
+                return browser.getWindowHandles().size() == 2;
+            }
+
+            @Override
+            public String toString() {
+                return "2 windows should be opened, but have: " + browser.getWindowHandles().size();
+            }
+        });
+        Set<String> windowHandles = browser.getWindowHandles();
+        windowHandles.remove(originalWindow);
+        try {
+            WebDriver window = browser.switchTo().window(windowHandles.iterator().next());
+            Graphene.waitModel().until().element(By.tagName("body")).is().visible();
+            Graphene.createPageFragment(pageClass, window.findElement(By.tagName("body")))
+                .login("rf.photoalbum@gmail.com", "rf.photoalbumrf.photoalbum");
+        } finally {
+            browser.switchTo().window(originalWindow);
+            PhotoalbumUtils.waitFor(5000);// FIXME: replace with some wait condition
+            Graphene.waitModel().until(new Predicate<WebDriver>() {
+                @Override
+                public boolean apply(WebDriver input) {
+                    return browser.getWindowHandles().size() == 1;
+                }
+
+                @Override
+                public String toString() {
+                    return "Only one window should be opened, but have: " + browser.getWindowHandles().size();
+                }
+            });
+        }
+    }
+    public static void loginWithSocial(Class<? extends SocialLoginPage> pageClass, final WebDriver browser, WebElement loginLink) {
+        String originalWindow = browser.getWindowHandle();
+        Graphene.guardAjax(loginLink).click();
+        Graphene.waitModel().until(new Predicate<WebDriver>() {
+            @Override
+            public boolean apply(WebDriver input) {
+                return browser.getWindowHandles().size() == 2;
+            }
+
+            @Override
+            public String toString() {
+                return "2 windows should be opened, but have: " + browser.getWindowHandles().size();
+            }
+        });
+        Set<String> windowHandles = browser.getWindowHandles();
+        windowHandles.remove(originalWindow);
+        try {
+            WebDriver window = browser.switchTo().window(windowHandles.iterator().next());
+            Graphene.waitModel().until().element(By.tagName("body")).is().visible();
+            Graphene.createPageFragment(pageClass, window.findElement(By.tagName("body")))
+                .login("rf.photoalbum@gmail.com", "rf.photoalbumrf.photoalbum");
+        } finally {
+            browser.switchTo().window(originalWindow);
+            PhotoalbumUtils.waitFor(5000);// FIXME: replace with some wait condition
+            Graphene.waitModel().until(new Predicate<WebDriver>() {
+                @Override
+                public boolean apply(WebDriver input) {
+                    return browser.getWindowHandles().size() == 1;
+                }
+
+                @Override
+                public String toString() {
+                    return "Only one window should be opened, but have: " + browser.getWindowHandles().size();
+                }
+            });
+        }
+    }
+
+    public static void scrollToElement(WebElement element) {
+        Point location = element.getLocation();
+        Utils.getExecutorFromElement(element).executeScript("scrollTo(" + location.x + "," + location.y + ")");
+    }
+
+    public static void waitFor(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException ex) {
+        }
     }
 }

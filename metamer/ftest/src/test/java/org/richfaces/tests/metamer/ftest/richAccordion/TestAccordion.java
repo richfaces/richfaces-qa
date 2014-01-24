@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richAccordion;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.accordionAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -34,16 +33,17 @@ import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
+import org.richfaces.fragment.accordion.RichFacesAccordionItem;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.switchable.SwitchType;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.page.fragments.impl.accordion.RichFacesAccordionItem;
-import org.richfaces.tests.page.fragments.impl.switchable.SwitchType;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -51,6 +51,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
 public class TestAccordion extends AbstractWebDriverTest {
+
+    private final Attributes<AccordionAttributes> accordionAttributes = getAttributes();
 
     @Page
     private AccordionPage page;
@@ -72,7 +74,7 @@ public class TestAccordion extends AbstractWebDriverTest {
         }
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testActiveItem() {
         accordionAttributes.set(AccordionAttributes.activeItem, "item5");
 
@@ -100,28 +102,22 @@ public class TestAccordion extends AbstractWebDriverTest {
         }
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testCycledSwitching() {
-        String accordionId = ((JavascriptExecutor) driver).executeScript("return testedComponentId").toString();
-        Object result = null;
-
-        // RichFaces.$('form:accordion').nextItem('item4') will be null
-        result = ((JavascriptExecutor) driver).executeScript("return RichFaces.$('" + accordionId + "').nextItem('item4')");
-        assertEquals(result, null, "Result of function nextItem('item4')");
+        WebElement rootElement = page.getAccordion().advanced().getRootElement();
+        // RichFaces.$('form:accordion').nextItem('item5') will be null
+        assertEquals(Utils.invokeRichFacesJSAPIFunction(rootElement, "nextItem('item5')"), null, "Result of function nextItem('item5')");
 
         // RichFaces.$('form:accordion').prevItem('item1') will be null
-        result = ((JavascriptExecutor) driver).executeScript("return RichFaces.$('" + accordionId + "').prevItem('item1')");
-        assertEquals(result, null, "Result of function prevItem('item1')");
+        assertEquals(Utils.invokeRichFacesJSAPIFunction(rootElement, "prevItem('item1')"), null, "Result of function prevItem('item1')");
 
         accordionAttributes.set(AccordionAttributes.cycledSwitching, true);
 
         // RichFaces.$('form:accordion').nextItem('item5') will be item1
-        result = ((JavascriptExecutor) driver).executeScript("return RichFaces.$('" + accordionId + "').nextItem('item5')");
-        assertEquals(result.toString(), "item1", "Result of function nextItem('item5')");
+        assertEquals(Utils.invokeRichFacesJSAPIFunction(rootElement, "nextItem('item5')"), "item1", "Result of function nextItem('item5')");
 
         // RichFaces.$('form:accordion').prevItem('item1') will be item5
-        result = ((JavascriptExecutor) driver).executeScript("return RichFaces.$('" + accordionId + "').prevItem('item1')");
-        assertEquals(result.toString(), "item5", "Result of function prevItem('item1')");
+        assertEquals(Utils.invokeRichFacesJSAPIFunction(rootElement, "prevItem('item1')"), "item5", "Result of function prevItem('item1')");
     }
 
     @Test

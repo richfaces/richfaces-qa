@@ -30,8 +30,8 @@ import java.util.List;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.tabPanel.RichFacesTabPanel;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.tabPanel.RichFacesTabPanel;
 import org.richfaces.tests.photoalbum.ftest.webdriver.utils.PhotoalbumUtils;
 
 /**
@@ -62,7 +62,7 @@ public class SearchView {
     public void checkContainsCriterias(List<String> criterias) {
         String actualCriterias = criteria.getText();
         for (String crit : criterias) {
-            assertTrue(actualCriterias.contains(crit));
+            assertTrue(actualCriterias.contains(crit), "Actual criterias: " + actualCriterias + " should contain: [" + crit + ']');
         }
     }
 

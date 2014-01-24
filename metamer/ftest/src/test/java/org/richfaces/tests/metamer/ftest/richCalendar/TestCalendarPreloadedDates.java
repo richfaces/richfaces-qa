@@ -30,11 +30,11 @@ import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
+import org.richfaces.fragment.calendar.DayPicker;
+import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.model.CalendarModel;
-import org.richfaces.tests.page.fragments.impl.calendar.DayPicker;
-import org.richfaces.tests.page.fragments.impl.calendar.DayPicker.CalendarDay;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.Lists;

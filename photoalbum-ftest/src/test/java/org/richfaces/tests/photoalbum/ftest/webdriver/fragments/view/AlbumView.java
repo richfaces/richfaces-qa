@@ -38,10 +38,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.dataScroller.RichFacesDataScroller;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.RichFacesInplaceInput;
-import org.richfaces.tests.page.fragments.impl.inputNumberSlider.RichFacesInputNumberSlider;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
+import org.richfaces.fragment.inplaceInput.RichFacesInplaceInput;
+import org.richfaces.fragment.inputNumberSlider.RichFacesInputNumberSlider;
 import org.richfaces.tests.photoalbum.ftest.webdriver.utils.PhotoalbumUtils;
 
 import com.google.common.collect.Lists;
@@ -51,9 +51,6 @@ import com.google.common.collect.Lists;
  */
 public class AlbumView {
 
-    @Root
-    private WebElement root;
-
     @FindBy(className = "album-header-table")
     private AlbumHeader albumHeader;
     @FindBy(css = ".album-header-table + div")
@@ -61,7 +58,7 @@ public class AlbumView {
 
     @FindBy(className = "rf-insl")
     private RichFacesInputNumberSlider slider;
-    @FindByJQuery("div a:has(img[src='img/icons/help_sign.png'])")
+    @FindByJQuery("a:contains(?):eq(0)")
     private WebElement sliderHelpLink;
 
     @FindBy(css = "a.slideshow-link")
@@ -159,9 +156,7 @@ public class AlbumView {
             checkName(info);
             checkAdditionalInfo(additionalInfo);
             assertEquals(getLinks().size(), linkText.length);
-            for (int i = 0; i < linkText.length; i++) {
-                assertEquals(getLinks().get(i).getText(), linkText[i]);
-            }
+            assertEquals(PhotoalbumUtils.getStringsFromElements(links), Lists.newArrayList(linkText));
         }
 
         public void checkName(String name) {
@@ -241,7 +236,7 @@ public class AlbumView {
             checkPhotoName(name);
             checkFirstData(data);
             if (!secondData.equals(NO_OWNER)) {
-                checkSecondaData(secondData);
+                checkSecondData(secondData);
             } else {
                 PhotoalbumUtils.checkNotVisible(this.secondData);
             }
@@ -250,7 +245,7 @@ public class AlbumView {
             }
         }
 
-        private void checkSecondaData(String authorName) {
+        private void checkSecondData(String authorName) {
             assertEquals(secondData.getText(), authorName);
         }
 

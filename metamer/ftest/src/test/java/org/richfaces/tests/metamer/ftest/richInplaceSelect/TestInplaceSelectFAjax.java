@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richInplaceSelect;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.inplaceSelectAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -36,13 +35,14 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.inplaceInput.InplaceComponentState;
+import org.richfaces.fragment.inplaceSelect.RichFacesInplaceSelect;
 import org.richfaces.tests.metamer.bean.Model;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.model.Capital;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceComponentState;
-import org.richfaces.tests.page.fragments.impl.inplaceSelect.RichFacesInplaceSelect;
 import org.testng.annotations.Test;
 
 /**
@@ -53,14 +53,14 @@ import org.testng.annotations.Test;
  */
 public class TestInplaceSelectFAjax extends AbstractWebDriverTest {
 
+    private final Attributes<InplaceSelectAttributes> inplaceSelectAttributes = getAttributes();
+
     @Page
     private MetamerPage page;
     @FindBy(css = "[id$=inplaceSelect]")
     private RichFacesInplaceSelect select;
     @FindBy(css = "[id$=output]")
     private WebElement output;
-    @FindBy(css = "[id$=inplaceSelect] span.rf-is-lst-cord")
-    private WebElement popup;
     @FindBy(css = "body > span.rf-is-lst-cord")
     private WebElement globalPopup;
 
@@ -73,7 +73,7 @@ public class TestInplaceSelectFAjax extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richInplaceSelect/fAjax.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-11227")
     public void testClick() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.showControls, Boolean.TRUE);
@@ -93,8 +93,7 @@ public class TestInplaceSelectFAjax extends AbstractWebDriverTest {
             assertEquals(options.get(i).getText(), capitals.get(i).getState());
         }
 
-        select.select(10).confirmByControlls();
-        Graphene.waitModel().until().element(output).text().equalTo("Hawaii");
+        Graphene.guardAjax(select.select(10)).confirmByControlls();
         assertEquals(getOutputText(), "Hawaii", "Output should contain selected value.");
         assertEquals(select.advanced().getLabelValue(), "Hawaii", "Label should contain selected value.");
         assertTrue(select.advanced().isInState(InplaceComponentState.CHANGED), "Select should have changed value.");

@@ -35,12 +35,12 @@ import java.util.List;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.joda.time.DateTime;
 import org.openqa.selenium.Dimension;
+import org.richfaces.fragment.calendar.DayPicker;
+import org.richfaces.fragment.calendar.PopupCalendar;
+import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
+import org.richfaces.fragment.calendar.PopupCalendar.PopupHeaderControls;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.calendar.DayPicker;
-import org.richfaces.tests.page.fragments.impl.calendar.DayPicker.CalendarDay;
-import org.richfaces.tests.page.fragments.impl.calendar.PopupCalendar;
-import org.richfaces.tests.page.fragments.impl.calendar.PopupCalendar.PopupHeaderControls;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -62,12 +62,12 @@ public class TestCalendarBasic extends AbstractCalendarTest {
         driver.manage().window().setSize(new Dimension(1024, 768));
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testApplyButton() {
         super.testApplyButton();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testCleanButton() {
         DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
         dayPicker.getWeek(3).getCalendarDays().get(3).select();

@@ -45,7 +45,7 @@ public class TestCollapsiblePanelJSApi extends AbstractWebDriverTest {
     @FindBy(css = "[id$=switch]")
     private WebElement switchPanelButton;
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = { "plain" })
     public void testSwitchPanel() {
         assertVisible(collapsiblePanelContent, "Content of collapsible panel should be visible!");

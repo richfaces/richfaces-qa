@@ -31,11 +31,11 @@ import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.inplaceInput.InplaceComponentState;
+import org.richfaces.fragment.inplaceInput.RichFacesInplaceInput;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceComponentState;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.RichFacesInplaceInput;
 import org.testng.annotations.Test;
 
 /**

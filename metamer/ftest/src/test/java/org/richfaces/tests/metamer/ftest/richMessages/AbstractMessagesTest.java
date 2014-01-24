@@ -23,11 +23,10 @@ package org.richfaces.tests.metamer.ftest.richMessages;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
+import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.metamer.ftest.abstractions.message.AbstractMessagesComponentTest;
 import org.richfaces.tests.metamer.ftest.abstractions.message.MessagesComponentTestPage;
-import org.richfaces.tests.metamer.ftest.webdriver.AttributeList;
-import org.richfaces.tests.page.fragments.impl.message.Message;
-import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.Assert;
 
 /**
@@ -37,6 +36,8 @@ import org.testng.Assert;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public abstract class AbstractMessagesTest extends AbstractMessagesComponentTest {
+
+    private final Attributes<MessagesAttributes> messagesAttributes = getAttributes();
 
     @Page
     protected MessagesPage page;
@@ -48,14 +49,14 @@ public abstract class AbstractMessagesTest extends AbstractMessagesComponentTest
 
     @Override
     public void checkFor(int expectedMessages) {
-        AttributeList.messagesAttributes.set(MessagesAttributes.FOR, "");
+        messagesAttributes.set(MessagesAttributes.FOR, "");
         generateValidationMessagesWithoutWait();
         submitWithHBtn();
 
         Assert.assertFalse(page.getMessagesComponentWithFor().advanced().isVisible());
 
         // now set @for attribute to "simpleInput1"
-        AttributeList.messagesAttributes.set(MessagesAttributes.FOR, "simpleInput1");
+        messagesAttributes.set(MessagesAttributes.FOR, "simpleInput1");
         generateValidationMessagesWithoutWait();
         submitWithHBtn();
 
@@ -65,7 +66,7 @@ public abstract class AbstractMessagesTest extends AbstractMessagesComponentTest
         Assert.assertEquals(page.getMessagesComponentWithFor().getItems(ChoicePickerHelper.byWebElement().attribute("id").contains(getSimpleInput2ID())).size(), 0, "No messages for input 2 were expected.");
 
         // now set @for attribute to "simpleInput2"
-        AttributeList.messagesAttributes.set(MessagesAttributes.FOR, "simpleInput2");
+        messagesAttributes.set(MessagesAttributes.FOR, "simpleInput2");
         generateValidationMessagesWithoutWait();
         submitWithHBtn();
 
@@ -77,7 +78,7 @@ public abstract class AbstractMessagesTest extends AbstractMessagesComponentTest
 
     @Override
     public void checkGlobalOnly(int expectedMessagesPerInput) {
-        AttributeList.messagesAttributes.set(MessagesAttributes.globalOnly, Boolean.FALSE);
+        messagesAttributes.set(MessagesAttributes.globalOnly, Boolean.FALSE);
         generateValidationMessagesWithWait();
         //messages for both inputs should appear
         Assert.assertTrue(page.getMessagesComponentWithGlobal().advanced().isVisible());
@@ -85,7 +86,7 @@ public abstract class AbstractMessagesTest extends AbstractMessagesComponentTest
         Assert.assertEquals(page.getMessagesComponentWithGlobal().getItems(ChoicePickerHelper.byWebElement().attribute("id").contains(getSimpleInput1ID())).size(), expectedMessagesPerInput, expectedMessagesPerInput + " messages for input 1 were expected.");
         Assert.assertEquals(page.getMessagesComponentWithGlobal().getItems(ChoicePickerHelper.byWebElement().attribute("id").contains(getSimpleInput2ID())).size(), expectedMessagesPerInput, expectedMessagesPerInput + " messages for input 2 were expected.");
 
-        AttributeList.messagesAttributes.set(MessagesAttributes.globalOnly, Boolean.TRUE);
+        messagesAttributes.set(MessagesAttributes.globalOnly, Boolean.TRUE);
         generateValidationMessagesWithoutWait();
         submitWithA4jBtn();
         //no messages should appear, because validation messages are bound to inputs not to 'null'

@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.a4jPush;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.pushAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -38,13 +37,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.metamer.bean.a4j.A4JPushBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 import com.google.common.base.Predicate;
 
 public class TestTwoPush extends AbstractWebDriverTest {
+
+    private final Attributes<PushAttributes> pushAttributes = getAttributes();
 
     @Page
     private TwoPushPage page;
@@ -70,7 +71,7 @@ public class TestTwoPush extends AbstractWebDriverTest {
         return dtf.parseDateTime(text);
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testBothPushes() {
         verifyPushUpdate(3, false, page.push1Btn, page.output1);
         verifyPushUpdate(3, false, page.push2Btn, page.output2);
@@ -90,25 +91,25 @@ public class TestTwoPush extends AbstractWebDriverTest {
 
     @Test
     public void testOnSubscribed() {
-        pushAttributes.set(PushAttributes.onsubscribed, "sessionStorage.setItem('metamerEvents', metamerEvents += \"onsubscribed \")");
+        pushAttributes.set(PushAttributes.onsubscribed, "sessionStorage.setItem('metamerEvents', metamerEvents += 'onsubscribed ')");
         final String expected1 = "onsubscribed onsubscribed";
         final String expected2 = "onsubscribed onsubscribed onsubscribed";
         // first onsubscribed event receive immediatelly after form update
         String event = expectedReturnJS("return sessionStorage.getItem('metamerEvents')", expected1);
         // there are 2 push components on page (this example verify that one doesn't influence another one)
-        assertEquals(event, expected1, "Attribute onsubscribed doesn't work");
+        assertEquals(event, expected1, "Attribute onsubscribed should be called 2 times on page load");
         clickPushEnableCheckbox(false);//disable
-        clickPushEnableCheckbox(true);//enable
+        clickPushEnableCheckbox(false);//enable
         // second onsubscribed event receive after manual re-attach by checkbox
-        Graphene.waitModel().until(new Predicate<WebDriver>() {
-            @Override
-            public boolean apply(WebDriver arg0) {
-                String events = expectedReturnJS("return sessionStorage.getItem('metamerEvents')", expected2);
-                // note there should be 3rd event invoked on re-attach to topic
-                return expected2.equals(events);
-            }
-        });
-        executeJS("window.metamerEvents = \"\";");
+        Graphene.waitModel()
+            .withMessage("Onsubscribed should be called 3 times after push reenabled")
+            .until(new Predicate<WebDriver>() {
+                @Override
+                public boolean apply(WebDriver arg0) {
+                    // note there should be 3rd event invoked on re-attach to topic
+                    return expected2.equals(expectedReturnJS("return sessionStorage.getItem('metamerEvents')", expected2));
+                }
+            });
         executeJS("sessionStorage.removeItem('metamerEvents')");
     }
 
@@ -145,22 +146,26 @@ public class TestTwoPush extends AbstractWebDriverTest {
     }
 
     /**
-     * When push component on page is disabled/re-enabled the same and even other
+     * When push component on page is disabled/re-enabled the same and even
+     * other
      * push components don't receive updates for some time. This method should
      * wait until push receives updates. It continously clicks the second push
-     * button (second push is always enabled) and checks if it received an update.
+     * button (second push is always enabled) and checks if it received an
+     * update.
      * Because of https://issues.jboss.org/browse/RF-12096.
      */
     private void waitUntilPushReinits() {
-        new WebDriverWait(driver, 70, 2000).until(new Predicate<WebDriver>() {
+        new WebDriverWait(driver, 70, 2000)
+            .withMessage("Waiting for push to reinitialize")
+            .until(new Predicate<WebDriver>() {
 
-            @Override
-            public boolean apply(WebDriver input) {
-                DateTime time1 = getTimeFromOutput(page.output2);
-                MetamerPage.requestTimeChangesWaiting(page.push2Btn).click();
-                DateTime time2 = getTimeFromOutput(page.output2);
-                return time2.isAfter(time1);
-            }
-        });
+                @Override
+                public boolean apply(WebDriver input) {
+                    DateTime time1 = getTimeFromOutput(page.output2);
+                    MetamerPage.requestTimeChangesWaiting(page.push2Btn).click();
+                    DateTime time2 = getTimeFromOutput(page.output2);
+                    return time2.isAfter(time1);
+                }
+            });
     }
 }

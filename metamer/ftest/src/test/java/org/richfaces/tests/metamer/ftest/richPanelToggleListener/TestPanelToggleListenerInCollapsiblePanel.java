@@ -40,7 +40,7 @@ public class TestPanelToggleListenerInCollapsiblePanel extends AbstractPanelTogg
         super("collapsiblePanel");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(exclude={"richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "richCollapsiblePanel", "a4jRepeat"})
     public void testPTLAsAttribute() {
         super.testPTLAsAttributeOfComponent(PTL_as_ComponentAttribute_PhaseName);

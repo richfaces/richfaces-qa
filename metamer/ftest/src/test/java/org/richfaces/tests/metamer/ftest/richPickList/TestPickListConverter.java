@@ -22,9 +22,9 @@
 package org.richfaces.tests.metamer.ftest.richPickList;
 
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.pickList.RichFacesPickList;
 import org.richfaces.tests.metamer.bean.ConverterBean;
 import org.richfaces.tests.metamer.ftest.abstractions.converter.AbstractConverterTest;
-import org.richfaces.tests.page.fragments.impl.pickList.RichFacesPickList;
 import org.testng.annotations.Test;
 
 /**

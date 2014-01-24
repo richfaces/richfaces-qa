@@ -22,8 +22,6 @@
 package org.richfaces.tests.metamer.ftest.a4jCommandButton;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.commandButtonAttributes;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.commandLinkAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -37,12 +35,12 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.a4jCommandLink.CommandLinkAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
@@ -53,6 +51,8 @@ import org.testng.annotations.Test;
  * @since 4.3.0.M1
  */
 public class TestCommandButton extends AbstractWebDriverTest {
+
+    private final Attributes<CommandButtonAttributes> commandButtonAttributes = getAttributes();
 
     @Page
     private CommandButtonLinkPage page;
@@ -77,7 +77,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
         page.verifyOutput3Text();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-9665")
     public void testSimpleClickUnicode() {
         page.typeToInput(CommandButtonLinkPage.STRING_UNICODE1);
@@ -145,14 +145,15 @@ public class TestCommandButton extends AbstractWebDriverTest {
 
     @Test
     public void testData() {
-        commandButtonAttributes.set(CommandButtonAttributes.data, CommandButtonLinkPage.STRING_RF1);
-        commandButtonAttributes.set(CommandButtonAttributes.oncomplete, "data = event.data");
-        //Does not matter what we type here
-        page.typeToInput(CommandButtonLinkPage.STRING_RF1);
-        page.submitByButton();
-        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
-        String data = expectedReturnJS("return window.data", CommandButtonLinkPage.STRING_RF1);
-        assertEquals(data, CommandButtonLinkPage.STRING_RF1);
+        testData(new Action() {
+            @Override
+            public void perform() {
+                //Does not matter what we type here
+                page.typeToInput(CommandButtonLinkPage.STRING_RF1);
+                page.submitByButton();
+                page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
+            }
+        });
     }
 
     @Test
@@ -197,9 +198,9 @@ public class TestCommandButton extends AbstractWebDriverTest {
 
     @Test
     public void testEvents() {
-        commandLinkAttributes.set(CommandLinkAttributes.onbegin, "metamerEvents += \"begin \"");
-        commandLinkAttributes.set(CommandLinkAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
-        commandLinkAttributes.set(CommandLinkAttributes.oncomplete, "metamerEvents += \"complete \"");
+        commandButtonAttributes.set(CommandButtonAttributes.onbegin, "metamerEvents += \"begin \"");
+        commandButtonAttributes.set(CommandButtonAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
+        commandButtonAttributes.set(CommandButtonAttributes.oncomplete, "metamerEvents += \"complete \"");
 
         ((JavascriptExecutor) driver).executeScript("metamerEvents = \"\"");
         MetamerPage.waitRequest(page.button, WaitRequestType.XHR).click();

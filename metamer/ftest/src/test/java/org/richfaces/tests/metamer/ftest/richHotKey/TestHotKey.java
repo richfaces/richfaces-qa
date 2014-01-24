@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richHotKey;
 
-import org.richfaces.tests.page.fragments.impl.hotkey.Hotkey;
+import org.richfaces.fragment.hotkey.Hotkey;
 import org.testng.annotations.Test;
 
 /**
@@ -44,7 +44,7 @@ public class TestHotKey extends AbstractHotKeyTest {
         }
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testFirstPair() {
         testPair(hotkey1, 1);
     }
@@ -63,7 +63,7 @@ public class TestHotKey extends AbstractHotKeyTest {
         }
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testSecondPair() {
         testPair(hotkey2, 2);
     }

@@ -29,21 +29,18 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestReferencedUsage extends TestUsage {
+public class TestReferencedUsage extends AbstractStatusTest {
 
     @Page
     private TestReferencedUsagePage page;
 
     @Test
     public void testUserNameAndAjaxRequestProgressImage() {
-        page.userNameInput.sendKeys("a");
-        assertProgressPictureAppearsOnAjaxRequest(page.firstAjaxRequestProgressImage);
+        checkTypingIntoInputAndItsStatus(page.userNameInput, TestReferencedUsagePage.FIRST_PROGRESS_LOCATOR);
     }
 
     @Test
     public void testAddressAndAjaxRequestProgressImage() {
-        page.addressInput.sendKeys("a");
-        assertProgressPictureAppearsOnAjaxRequest(page.secondAjaxRequestProgressImage);
+        checkTypingIntoInputAndItsStatus(page.addressInput, TestReferencedUsagePage.SECOND_PROGRESS_LOCATOR);
     }
-
 }

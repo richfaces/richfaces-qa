@@ -21,21 +21,20 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richInputNumberSlider;
 
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.inputNumberSliderAttributes;
 import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.ClearType;
+import org.richfaces.fragment.inputNumberSlider.RichFacesInputNumberSlider;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.inputNumberSlider.RichFacesInputNumberSlider;
 
 /**
  * Abstract test case for rich:inputNumberSlider.
@@ -45,26 +44,25 @@ import org.richfaces.tests.page.fragments.impl.inputNumberSlider.RichFacesInputN
  */
 public abstract class AbstractSliderTest extends AbstractWebDriverTest {
 
-    @Page
-    MetamerPage page;
-    //
+    private final Attributes<InputNumberSliderAttributes> inputNumberSliderAttributes = getAttributes();
+
     protected static final int DEFAULT_MAX_VALUE = 10;
     protected static final String DEFAULT_MAX_VALUE_STR = "10";
     protected static final int DEFAULT_MIN_VALUE = -10;
     protected static final String DEFAULT_MIN_VALUE_STR = "-10";
-    //
+
     protected String[] correctNumbers = { "-10", "-5", "-1", "0", "1", "5", "10" };
     protected String[] smallNumbers = { "-11", "-15", "-100" };
     protected String[] bigNumbers = { "11", "15", "100" };
     protected String[] decimalNumbers = { "1.4999", "5.6", "7.0001", "-5.50001", "-9.9", "1.222e0", "0e0", "-5.50001e0" };
-    //
+
     @Inject
     @Use(empty = true)
     protected String number;
     @Inject
     @Use(empty = true)
     protected Integer delay;
-    //
+
     @FindBy(css = "span[id$=slider]")
     protected RichFacesInputNumberSlider slider;
     @FindBy(css = "span[id$=output]")

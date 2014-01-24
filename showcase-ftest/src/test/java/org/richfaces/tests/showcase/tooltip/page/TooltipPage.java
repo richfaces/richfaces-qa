@@ -23,22 +23,23 @@ package org.richfaces.tests.showcase.tooltip.page;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:pmensik@redhat.com">Petr Mensik</a>
  */
 public class TooltipPage {
 
-    @FindByJQuery("div[class*='rf-p tooltip-text']:eq(0)")
+    @FindBy(css = "[id*=sample1]")
     public WebElement clientTooltipActivatingArea;
 
-    @FindByJQuery("div[class*='rf-p tooltip-text']:eq(1)")
+    @FindBy(css = "[id*=sample2]")
     public WebElement clientWithDelayTooltipActivatingArea;
 
-    @FindByJQuery("div[class*='rf-p tooltip-text']:eq(2)")
+    @FindByJQuery("[id*=sample3]")
     public WebElement ajaxTooltipActivatingArea;
 
-    @FindByJQuery("div[class*='rf-p tooltip-text']:eq(3)")
+    @FindByJQuery("[id*=sample4]")
     public WebElement ajaxClickTooltipActivatingArea;
 
     @FindByJQuery("div[class*='rf-tt tooltip']:visible")

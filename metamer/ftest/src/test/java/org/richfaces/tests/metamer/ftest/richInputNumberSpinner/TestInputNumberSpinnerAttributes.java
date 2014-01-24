@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richInputNumberSpinner;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.inputNumberSpinnerAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -34,14 +33,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.ClearType;
+import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.Test;
 
 /**
@@ -53,10 +53,12 @@ import org.testng.annotations.Test;
 @RegressionTest("https://issues.jboss.org/browse/RF-12365")
 public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinnerTest {
 
+    private final Attributes<InputNumberSpinnerAttributes> inputNumberSpinnerAttributes = getAttributes();
+
     @FindBy(css = "span.rf-insp-inc-dis")
-    WebElement disabledIncreaseBtn;
+    private WebElement disabledIncreaseBtn;
     @FindBy(css = "span.rf-insp-dec-dis")
-    WebElement disabledDecreaseBtn;
+    private WebElement disabledDecreaseBtn;
 
     @Override
     public URL getTestUrl() {
@@ -71,7 +73,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
             InputNumberSpinnerAttributes.accesskey, "x");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testCycled() {
         inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.cycled, Boolean.TRUE);
         typeToInput(DEFAULT_MAX_VALUE);
@@ -122,11 +124,11 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
         String testedValue = "4";
         String listenerMsg = "value changed: " + DEFAULT_VALUE + " -> " + testedValue;
         typeToInput(testedValue);
-        page.assertPhases(PhaseId.ANY_PHASE);
-        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, listenerMsg);
+        getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, listenerMsg);
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testIncrease() {
         super.testIncrease();
     }
@@ -192,7 +194,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
         assertEquals(getOutputText(), "13", "Output should stay same as before.");// max is 13
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testMinValueClick() {
         inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.minValue, -13);
         decrease(9);
@@ -224,7 +226,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     @Templates(value = "plain")
     public void testOnblur() {
         testFireEvent(inputNumberSpinnerAttributes, InputNumberSpinnerAttributes.onblur,
-            new Actions(driver).click(spinner.advanced().getInput().advanced().getInputElement()).click(page.getRequestTimeElement())
+            new Actions(driver).click(spinner.advanced().getInput().advanced().getInputElement()).click(getMetamerPage().getRequestTimeElement())
                 .build());
     }
 

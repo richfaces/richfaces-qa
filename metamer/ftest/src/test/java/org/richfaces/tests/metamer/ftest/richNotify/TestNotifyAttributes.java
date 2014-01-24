@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richNotify;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.notifyAttributes;
 
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
@@ -33,13 +32,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.notify.RichFacesNotifyMessage;
+import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
 import org.richfaces.tests.metamer.bean.rich.RichNotifyBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.notify.NotifyMessage.NotifyMessagePosition;
-import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotifyMessage;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -47,6 +47,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestNotifyAttributes extends AbstractWebDriverTest {
+
+    private final Attributes<NotifyAttributes> notifyAttributes = getAttributes();
 
     @FindBy(className = "rf-ntf")
     private RichFacesNotifyMessage message;
@@ -58,7 +60,7 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richNotify/simple.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testDetail() {
         String detail = "Some detail";
         notifyAttributes.set(NotifyAttributes.detail, detail);
@@ -66,7 +68,7 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
         Assert.assertEquals(message.getSummary(), RichNotifyBean.DEFAULT_SUMMARY);
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testEscape() {
         String newSpanString = "<span id='newSpan'>new span</span>";
         notifyAttributes.set(NotifyAttributes.detail, newSpanString);

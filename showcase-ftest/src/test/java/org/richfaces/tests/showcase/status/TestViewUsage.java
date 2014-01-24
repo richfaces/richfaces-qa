@@ -29,33 +29,29 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestViewUsage extends TestUsage {
+public class TestViewUsage extends AbstractStatusTest {
 
     @Page
     private TestViewUsagePage page;
 
     @Test
     public void testUserNameAndImagePresentionOfAjaxProgress() {
-        page.userNameInput.sendKeys("a");
-        assertProgressPictureAppearsOnAjaxRequest(page.progressImage);
+        checkTypingIntoInputAndItsStatus(page.userNameInput, TestViewUsagePage.PROGRESS_IMAGE_LOC);
     }
 
     @Test
     public void testAddressAndImagePresentionOfAjaxProgress() {
-        page.addressInput.sendKeys("a");
-        assertProgressPictureAppearsOnAjaxRequest(page.progressImage);
+        checkTypingIntoInputAndItsStatus(page.addressInput, TestViewUsagePage.PROGRESS_IMAGE_LOC);
     }
 
     @Test
     public void testSumbitForUserDetailsAndImagePresentionOfAjaxProgress() {
-        page.submitButton.click();
-        assertProgressPictureAppearsOnAjaxRequest(page.progressImage);
+        checkClickingOnSubmitButtonAndItsStatus(page.submitButton, TestViewUsagePage.PROGRESS_IMAGE_LOC);
     }
 
     @Test
     public void testSubmitForSearchPanelAndImagePresentionOfAjaxProgress() {
-        page.searchButton.click();
-        assertProgressPictureAppearsOnAjaxRequest(page.progressImage);
+        checkClickingOnSubmitButtonAndItsStatus(page.searchButton, TestViewUsagePage.PROGRESS_IMAGE_LOC);
     }
 
 }

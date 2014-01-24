@@ -105,7 +105,7 @@ public abstract class AbstractInputComponentValidationTest extends AbstractWebDr
         }
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = "smoke")
     public void init() {
         getPage().initCustomMessages();
         wait = getWait();

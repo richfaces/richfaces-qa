@@ -22,26 +22,26 @@
 package org.richfaces.tests.metamer.ftest.richGraphValidator;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.graphValidatorAttributes;
 
 import java.net.URL;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.CheckboxInputComponentImpl;
+import org.richfaces.fragment.common.ClearType;
+import org.richfaces.fragment.common.TextInputComponentImpl;
+import org.richfaces.fragment.inputNumberSlider.RichFacesInputNumberSlider;
+import org.richfaces.fragment.inputNumberSpinner.RichFacesInputNumberSpinner;
+import org.richfaces.fragment.message.RichFacesMessage;
+import org.richfaces.fragment.messages.RichFacesMessages;
 import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBean;
 import org.richfaces.tests.metamer.bean.rich.RichGraphValidatorBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.common.CheckboxInputComponentImpl;
-import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
-import org.richfaces.tests.page.fragments.impl.inputNumberSlider.RichFacesInputNumberSlider;
-import org.richfaces.tests.page.fragments.impl.inputNumberSpinner.RichFacesInputNumberSpinner;
-import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
-import org.richfaces.tests.page.fragments.impl.messages.RichFacesMessages;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -52,6 +52,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestGraphValidator extends AbstractWebDriverTest {
+
+    private final Attributes<GraphValidatorAttributes> graphValidatorAttributes = getAttributes();
 
     private static final String CORRECT_STRING_VALUE = ":-)";
     private static final String CORRECT_INT_VALUE = "10";
@@ -243,7 +245,7 @@ public class TestGraphValidator extends AbstractWebDriverTest {
         checkGraphValidatorSuccessMessage();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testSummary() {
         String msg = "My own validation message!";
         graphValidatorAttributes.set(GraphValidatorAttributes.summary, msg);

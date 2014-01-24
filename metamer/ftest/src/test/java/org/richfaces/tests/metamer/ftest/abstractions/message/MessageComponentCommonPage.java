@@ -23,7 +23,7 @@ package org.richfaces.tests.metamer.ftest.abstractions.message;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
+import org.richfaces.fragment.common.TextInputComponentImpl;
 
 /**
  * Common page of all message(s) components (rich:message(s), rich:notifyMessage(s)).

@@ -21,19 +21,20 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.autocomplete.page;
 
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.autocomplete.RichFacesAutocomplete;
 
 /**
  *
  * @author <a href="mailto:pmensik@redhat.com">Petr Mensik</a>
+ * @author <a href="mailto:pmensik@redhat.com">Juraj Huska</a>
  */
 public class ClientFilterPage {
 
-    @FindByJQuery("input[type='text']:eq(0)")
-    public WebElement input;
+    @FindBy(className = "rf-au")
+    private RichFacesAutocomplete autocomplete;
 
-    @FindBy(css = "div[class='rf-au-itm']")
-    public WebElement selection;
+    public RichFacesAutocomplete getAutocomplete() {
+        return autocomplete;
+    }
 }

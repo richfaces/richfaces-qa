@@ -27,7 +27,6 @@ import static org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.Indi
 import static org.richfaces.tests.metamer.ftest.richDragSource.DragSourceAttributes.dragIndicator;
 import static org.richfaces.tests.metamer.ftest.richDragSource.DragSourceAttributes.rendered;
 import static org.richfaces.tests.metamer.ftest.richDragSource.DragSourceAttributes.type;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.dragSourceAttributes;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -38,11 +37,14 @@ import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
  */
 public abstract class AbstractDragSourceTest extends AbstractWebDriverTest {
+
+    private final Attributes<DragSourceAttributes> dragSourceAttributes = getAttributes();
 
     @Page
     private DragSourceSimplePage page;

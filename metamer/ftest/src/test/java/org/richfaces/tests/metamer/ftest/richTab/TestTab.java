@@ -21,18 +21,18 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTab;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.tabAttributes;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.page.Page;
@@ -42,6 +42,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -52,6 +53,8 @@ import org.testng.annotations.Test;
  * @version $Revision: 22963 $
  */
 public class TestTab extends AbstractWebDriverTest {
+
+    private final Attributes<TabAttributes> tabAttributes = getAttributes();
 
     @Page
     TabSimplePage page;
@@ -261,12 +264,16 @@ public class TestTab extends AbstractWebDriverTest {
         testFireEvent(tabAttributes, TabAttributes.ondblclick, action);
     }
 
-    @Test
+    @Test(groups = "smoke")
     @IssueTracking("https://issues.jboss.org/browse/RF-9537 https://issues.jboss.org/browse/RF-10488")
     public void testOnenter() {
-        Action action = new Actions(driver).click(page.getInactiveHeaders().get(1)).click(page.getInactiveHeaders().get(0))
-            .build();
-        testFireEvent(tabAttributes, TabAttributes.onenter, action);
+        testFireEvent(tabAttributes, TabAttributes.onenter, new Action() {
+            @Override
+            public void perform() {
+                Graphene.guardAjax(page.getInactiveHeaders().get(1)).click();
+                Graphene.guardAjax(page.getInactiveHeaders().get(0)).click();
+            }
+        });
         // tabAttributes.set(TabAttributes.onenter, "metamerEvents += \"enter \"");
         // selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
         // String time1Value = selenium.getText(time);
@@ -298,8 +305,8 @@ public class TestTab extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testOnheadermousedown() {
-        Action action = new Actions(driver).click(page.getInactiveHeaders().get(2))
-            .clickAndHold(page.getInactiveHeaders().get(0)).build();
+        new Actions(driver).click(page.getInactiveHeaders().get(2)).perform();
+        Action action = new Actions(driver).clickAndHold(page.getInactiveHeaders().get(0)).build();
         testFireEvent(tabAttributes, TabAttributes.onheadermousedown, action);
         new Actions(driver).release().build().perform();
     }
@@ -361,8 +368,8 @@ public class TestTab extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testOnmouseup() {
-        Action action = new Actions(driver).clickAndHold(page.getDisabledHeaders().get(0))
-            .release(page.getItemContents().get(0)).build();
+        new Actions(driver).clickAndHold(page.getItemContents().get(0)).perform();
+        Action action = new Actions(driver).release(page.getItemContents().get(0)).build();
         testFireEvent(tabAttributes, TabAttributes.onmouseup, action);
     }
 
@@ -395,14 +402,14 @@ public class TestTab extends AbstractWebDriverTest {
         waitGui(driver).withMessage("Tab 1 is not displayed.").until().element(page.getItemContents().get(0)).is().visible();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testSwitchTypeAjax() {
         tabAttributes.set(TabAttributes.switchType, "ajax");
         testSwitchTypeNull();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testSwitchTypeClient() {
         tabAttributes.set(TabAttributes.switchType, "client");
 

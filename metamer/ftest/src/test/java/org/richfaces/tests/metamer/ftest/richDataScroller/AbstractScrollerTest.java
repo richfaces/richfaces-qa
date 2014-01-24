@@ -1,7 +1,6 @@
 package org.richfaces.tests.metamer.ftest.richDataScroller;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.dataScrollerAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 
@@ -11,19 +10,18 @@ import java.util.List;
 import java.util.Random;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
+import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
+import org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.page.fragments.impl.dataScroller.DataScroller.DataScrollerSwitchButton;
-import org.richfaces.tests.page.fragments.impl.dataScroller.RichFacesDataScroller;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.BeforeMethod;
 
 public class AbstractScrollerTest extends AbstractWebDriverTest {
 
-    @Page
-    private SimplePage page;
+    private final Attributes<DataScrollerAttributes> dataScrollerAttributes = getAttributes();
 
     private String tableText;
 
@@ -50,7 +48,7 @@ public class AbstractScrollerTest extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richDataScroller/simple.xhtml");
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = "smoke")
     public void prepareComponent() {
         // dataScrollerAttributes.set(DataScrollerAttributes.fastStep, fastStep);
         dataScrollerAttributes.set(DataScrollerAttributes.maxPages, maxPages);

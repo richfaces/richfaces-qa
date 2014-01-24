@@ -183,8 +183,15 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10256")
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRegion", "a4jRepeat" })
+        "richList", "a4jRepeat" })
     public void testMultiSelectionRemovingUsingCtrlIterationComponents() {
+        testMultiSelectionRemovingUsingCtrl();
+    }
+
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13474")
+    @Templates("a4jRegion")
+    public void testMultiSelectionRemovingUsingCtrlRegion() {
         testMultiSelectionRemovingUsingCtrl();
     }
 

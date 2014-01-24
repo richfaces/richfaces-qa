@@ -23,9 +23,9 @@ package org.richfaces.tests.metamer.ftest.richPlaceholder;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.Test;
 
 /**
@@ -35,13 +35,13 @@ import org.testng.annotations.Test;
 public class TestPlaceHolderWithInplaceSelect extends AbstractPlaceholderJSFTest {
 
     @FindBy(css = INPUT1_ID + " [id$=Input]")
-    WebElement input1;
+    private WebElement input1;
     @FindBy(css = INPUT2_ID + " [id$=Input]")
-    WebElement input2;
+    private WebElement input2;
     @FindBy(css = INPUT1_ID + " [id$=Label]")
-    WebElement input1Label;
+    private WebElement input1Label;
     @FindBy(css = INPUT2_ID + " [id$=Label]")
-    WebElement input2Label;
+    private WebElement input2Label;
 
     public TestPlaceHolderWithInplaceSelect() {
         super("inplaceSelect");

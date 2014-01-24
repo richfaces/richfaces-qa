@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.abstractions.message;
 
-import org.richfaces.tests.page.fragments.impl.message.Message;
+import org.richfaces.fragment.message.Message;
 
 /**
  * Page for testing message components (rich:message, rich:notifyMessage)

@@ -29,8 +29,6 @@ FSF site: http://www.fsf.org. -->
         <version.hornetq>2.2.13.Final</version.hornetq>
         <glassfish31.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*</glassfish31.excluded.libraries>
         <jbas71.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*</jbas71.excluded.libraries>
-        <jbas6-mojarra.excluded.libraries>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*</jbas6-mojarra.excluded.libraries>
-        <jbas6-myfaces.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*</jbas6-myfaces.excluded.libraries>
         <tomee11.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*</tomee11.excluded.libraries>
         <tomcat7-mojarra.excluded.libraries>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/jsp-api*</tomcat7-mojarra.excluded.libraries>
         <tomcat7-myfaces.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/jsp-api*</tomcat7-myfaces.excluded.libraries>
@@ -260,32 +258,6 @@ FSF site: http://www.fsf.org. -->
             </build>
         </profile>
         <profile>
-            <id>war-jbas6-bundled-mojarra</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-war-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>jbas6-bundled-mojarra</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>war</goal>
-                                </goals>
-                                <configuration>
-                                    <filters>
-                                        <filter>${basedir}/src/main/filters/bundles-jsf.properties</filter>
-                                    </filters>
-                                    <classifier>jbas6-bundled-mojarra</classifier>
-                                    <packagingExcludes>${jbas6-mojarra.excluded.libraries}</packagingExcludes>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
             <id>war-tomee11</id>
             <build>
                 <plugins>
@@ -307,44 +279,6 @@ FSF site: http://www.fsf.org. -->
                     </plugin>
                 </plugins>
             </build>
-        </profile>
-        <profile>
-            <id>war-jbas6-bundled-myfaces</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-war-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>jbas6-bundled-myfaces</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>war</goal>
-                                </goals>
-                                <configuration>
-                                    <filters>
-                                        <filter>${basedir}/src/main/filters/bundles-jsf.properties</filter>
-                                    </filters>
-                                    <classifier>jbas6-bundled-myfaces</classifier>
-                                    <packagingExcludes>${jbas6-myfaces.excluded.libraries}</packagingExcludes>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-            <dependencies>
-                <dependency>
-                    <groupId>org.apache.myfaces.core</groupId>
-                    <artifactId>myfaces-api</artifactId>
-                    <scope>compile</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.myfaces.core</groupId>
-                    <artifactId>myfaces-impl</artifactId>
-                    <scope>runtime</scope>
-                </dependency>
-            </dependencies>
         </profile>
         <profile>
             <id>war-tomcat7-mojarra</id>
@@ -544,38 +478,6 @@ FSF site: http://www.fsf.org. -->
                                 <configuration>
                                     <classifier>tomee11</classifier>
                                     <packagingExcludes>${tomee11.excluded.libraries}</packagingExcludes>
-                                    <attachClasses>false</attachClasses>
-                                    <attachSources>false</attachSources>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>jbas6-bundled-mojarra</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>war</goal>
-                                </goals>
-                                <configuration>
-                                    <filters>
-                                        <filter>${basedir}/src/main/filters/bundles-jsf.properties</filter>
-                                    </filters>
-                                    <classifier>jbas6-bundled-mojarra</classifier>
-                                    <packagingExcludes>${jba6-mojarra.excluded.libraries}</packagingExcludes>
-                                    <attachClasses>false</attachClasses>
-                                    <attachSources>false</attachSources>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>jbas6-bundled-myfaces</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>war</goal>
-                                </goals>
-                                <configuration>
-                                    <filters>
-                                        <filter>${basedir}/src/main/filters/bundles-jsf.properties</filter>
-                                    </filters>
-                                    <classifier>jbas6-bundled-myfaces</classifier>
-                                    <packagingExcludes>${jbas6-myfaces.excluded.libraries}</packagingExcludes>
                                     <attachClasses>false</attachClasses>
                                     <attachSources>false</attachSources>
                                 </configuration>

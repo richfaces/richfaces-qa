@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richProgressBar;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.progressBarAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -39,14 +38,16 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
+import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.bean.rich.RichProgressBarBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.Utils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -58,6 +59,8 @@ import org.testng.annotations.Test;
  * @since 4.3.0.M3
  */
 public class TestProgressBarAjax extends AbstractWebDriverTest {
+
+    private final Attributes<ProgressBarAttributes> progressBarAttributes = getAttributes();
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormat.forPattern("HH:mm:ss.SSS");
     @Inject
@@ -114,21 +117,19 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
 
     @Test
     public void testData() {
-        String testedString = "RichFaces 4";
-        progressBarAttributes.set(ProgressBarAttributes.data, testedString);
-        progressBarAttributes.set(ProgressBarAttributes.oncomplete, "data = event.data");
-
-        MetamerPage.requestTimeChangesWaiting(page.startButton).click();
-        //waiting for next request, which will carry the data
-        String reqTime = page.getRequestTimeElement().getText();
-        Graphene.waitAjax().withMessage("Page was not updated")
-                .until().element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
-
-        String data = expectedReturnJS("return data", testedString);
-        assertEquals(data, "RichFaces 4", "Data sent with ajax request");
+        testData(new Action() {
+            @Override
+            public void perform() {
+                MetamerPage.requestTimeChangesWaiting(page.startButton).click();
+                // waiting for next request, which will carry the data
+                String reqTime = page.getRequestTimeElement().getText();
+                Graphene.waitAjax().withMessage("Page was not updated")
+                    .until().element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
+            }
+        });
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testEnabled() {
         progressBarAttributes.set(ProgressBarAttributes.maxValue, 100);//longer progress
         int timeout = Integer.parseInt(progressBarAttributes.get(ProgressBarAttributes.interval)) + 300;

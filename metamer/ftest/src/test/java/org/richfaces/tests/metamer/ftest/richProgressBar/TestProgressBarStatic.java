@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richProgressBar;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.progressBarAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -33,6 +32,7 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
@@ -44,6 +44,8 @@ import org.testng.annotations.Test;
  * @since 4.3.0.M3
  */
 public class TestProgressBarStatic extends AbstractWebDriverTest {
+
+    private final Attributes<ProgressBarAttributes> progressBarAttributes = getAttributes();
 
     @Page
     private ProgressBarPage page;
@@ -77,7 +79,7 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
         assertPresent(page.label, "Progress bar should show progress.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testFinishFacet() {
         progressBarAttributes.set(ProgressBarAttributes.maxValue, 100);
         progressBarAttributes.set(ProgressBarAttributes.value, 100);
@@ -127,7 +129,7 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
 
         MetamerPage.waitRequest(page.childrenRenderedCheckbox, WaitRequestType.HTTP).click();
         assertEquals(page.label.getText(), "child + metamer",
-                "Label when set to metamer and children are rendered too.");
+            "Label when set to metamer and children are rendered too.");
     }
 
     @Test
@@ -200,7 +202,9 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
         if (width.contains("%")) {
             return Integer.parseInt(width.replace("%", ""));
         } else {
-            return Integer.parseInt(width.replace("px", "")) / 2; // progress bar width is 200px
+            float widthInPixels = Float.parseFloat(width.replace("px", "")) / 2.0f;
+            // round the decimal number to integer and divide by 2 to obtain per cents because progress bar width is 200px
+            return Math.round(widthInPixels);
         }
     }
 }

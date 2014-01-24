@@ -22,10 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richJQuery;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.jQueryAttributes;
 import static org.testng.Assert.assertEquals;
-
-import com.google.common.base.Predicate;
 
 import java.awt.Color;
 import java.net.URL;
@@ -37,13 +34,18 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
+
+import com.google.common.base.Predicate;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestJQueryAttributes extends AbstractWebDriverTest {
+
+    private final Attributes<JQueryAttributes> jQueryAttributes = getAttributes();
 
     @FindBy(css = "#jQueryTestButton")
     private WebElement button;
@@ -95,7 +97,7 @@ public class TestJQueryAttributes extends AbstractWebDriverTest {
         }
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testAttachTypeOne() {
         setupImmediateTypeAttributes();
         jQueryAttributes.set(JQueryAttributes.attachType, "one");

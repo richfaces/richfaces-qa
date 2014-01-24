@@ -47,7 +47,7 @@ public class TestMatrix extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/a4jRepeat/matrix.xhtml");
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = "smoke")
     public void initializeTest() {
         page.initializeMatrix();
     }
@@ -68,7 +68,7 @@ public class TestMatrix extends AbstractWebDriverTest {
                 "number of columns in the fourth row of output matrix");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testIncrementing() {
         page.incrementValue(0, 3);
         page.incrementValue(0, 3);
@@ -126,10 +126,6 @@ public class TestMatrix extends AbstractWebDriverTest {
     }
 
     private class MatrixReloadTester extends ReloadTester<int[]> {
-
-        public MatrixReloadTester() {
-            super(page);
-        }
 
         @Override
         public void doRequest(int[] coords) {

@@ -173,6 +173,11 @@ public class MatrixConfigurator extends TestMethodSelector implements IInvokedMe
         if (testMethod != null) {
             super.transform(annotation, testClass, testConstructor, testMethod);
             int invocationCount = createConfiguration(testMethod.getDeclaringClass(), testMethod);
+            if(invocationCount == 0){
+                // disabling methods with 0 invocations because the suite used to freeze when this was the last method in class/suite:
+                // arquillian did not undeploy war and browser window did not close
+                annotation.setEnabled(Boolean.FALSE);
+            }
             annotation.setInvocationCount(invocationCount);
         }
     }

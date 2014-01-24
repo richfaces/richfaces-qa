@@ -25,9 +25,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -45,14 +47,17 @@ public class AbstractWebDriverTest extends AbstractShowcaseTest {
     @Drone
     protected WebDriver webDriver;
 
+    public static final int BROWSER_WINDOW_WIDTH = 800;
+    public static final int BROWSER_WINDOW_HEIGHT = 600;
+
     @BeforeMethod
     public void loadPage() {
         String addition = getAdditionToContextRoot();
         this.contextRoot = getContextRoot();
         ShowcaseLayout layout = loadLayout();
         if (runInPortalEnv) {
-            webDriver.get(String.format("%s://%s:%s/%s",
-                    contextRoot.getProtocol(), contextRoot.getHost(), contextRoot.getPort(), "portal/classic/showcase"));
+            webDriver.get(String.format("%s://%s:%s/%s", contextRoot.getProtocol(), contextRoot.getHost(),
+                contextRoot.getPort(), "portal/classic/showcase"));
             JavascriptExecutor js = (JavascriptExecutor) webDriver;
             String setTextQuery = "document.querySelector(\"input[id$='portalForm:%s']\").value = '%s';";
             js.executeScript(String.format(setTextQuery, "seleniumTestDemo", getDemoName()));
@@ -64,10 +69,7 @@ public class AbstractWebDriverTest extends AbstractShowcaseTest {
             }
             webDriver.get(contextRoot.toExternalForm() + addition);
             if (layout == ShowcaseLayout.MOBILE) {
-                Graphene.waitAjax()
-                        .until()
-                        .element(By.className("sourceView"))
-                        .is().visible();
+                Graphene.waitAjax().until().element(By.className("sourceView")).is().visible();
             }
         }
     }

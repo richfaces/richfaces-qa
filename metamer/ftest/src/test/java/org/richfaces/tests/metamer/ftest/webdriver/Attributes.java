@@ -21,52 +21,43 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.webdriver;
 
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Lists;
-
-import java.util.Iterator;
 import java.util.List;
 
-import org.jboss.arquillian.drone.api.annotation.Default;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.FutureTarget;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
+
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class Attributes<T extends AttributeEnum> {
 
-    private FutureTarget<WebDriver> driver;
-    private final String attributesID;
     private static final String PROPERTY_CSS_SELECTOR = "[id$='%s:%sInput']";
     private static final String NULLSTRING = "null";
     private static final String[] NULLSTRINGOPTIONS = { NULLSTRING, "", " " };
+    private static final int TRIES = 5;
 
-    @Deprecated
-    public Attributes() {
-        this("");
-    }
+    private final String attributesID;
 
-    @Deprecated
-    public Attributes(String attributesID) {
-        this(null, attributesID);
-    }
+    private FutureTarget<WebDriver> browser;
 
     public Attributes(FutureTarget<WebDriver> driver, String attributesID) {
         this.attributesID = attributesID;
-        this.driver = driver;
+        this.browser = driver;
     }
 
     public static <T extends AttributeEnum> Attributes<T> getAttributesFor(FutureTarget<WebDriver> driver) {
@@ -105,25 +96,13 @@ public class Attributes<T extends AttributeEnum> {
 
     private void applySelect(WebElement selectElement, String valueToBeSet) {
         Select select = new Select(selectElement);
-        if (valueToBeSet.equals(NULLSTRING)) {
-            for (WebElement element : select.getOptions()) {
-                String val = element.getAttribute("value");
-                if (new StringEqualsWrapper(val).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
-                    if (!element.isSelected()) {
-                        MetamerPage.waitRequest(element, WaitRequestType.HTTP).click();
-                    }
-                    return;
-                }
-            }
-        } else {
-            if (isSelectOptionsContainingValue(valueToBeSet, select.getOptions())) {
-                select.selectByValue(valueToBeSet);
-            } else {
-                select.selectByVisibleText(valueToBeSet);
-            }
-            return;
+        String option = valueToBeSet;
+        if (new StringEqualsWrapper(valueToBeSet).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
+            option = NULLSTRING;
         }
-        throw new IllegalArgumentException("No property with value " + valueToBeSet + " was found");
+        if (!select.getFirstSelectedOption().getText().equals(option)) {// == is selected?
+            MetamerPage.waitRequest(select, WaitRequestType.HTTP).selectByVisibleText(option);
+        }
     }
 
     /**
@@ -135,7 +114,7 @@ public class Attributes<T extends AttributeEnum> {
     private void applyText(WebElement input, String value) {
         String text = input.getAttribute("value");
         if (!value.equals(text)) {
-            Utils.jQ((JavascriptExecutor) getDriver(), "val(\"" + value + "\")", input);
+            Utils.jQ((JavascriptExecutor) getBrowser(), "val(\"" + value + "\")", input);
             MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();
         }
     }
@@ -183,18 +162,23 @@ public class Attributes<T extends AttributeEnum> {
         // valid richfaces attribute. So we use this attribute name in upper case in enum
         String propertyName = attribute.toString();
         String propertyNameCorrect = (propertyName.equals(propertyName.toUpperCase()) ? propertyName.toLowerCase() : propertyName);
-        return getProperty(propertyNameCorrect);
+        StaleElementReferenceException exception = null;
+        for (int i = 0; i < TRIES; i++) {
+            try {
+                return getProperty(propertyNameCorrect);
+            } catch (StaleElementReferenceException e) {
+                exception = e;
+            }
+        }
+        throw exception;
     }
 
     private By getCssSelectorForProperty(String property) {
         return By.cssSelector(String.format(PROPERTY_CSS_SELECTOR, attributesID, property));
     }
 
-    private WebDriver getDriver() {
-        if (driver == null) {
-            return GrapheneContext.getContextFor(Default.class).getWebDriver(JavascriptExecutor.class);
-        }
-        return driver.getTarget();
+    private WebDriver getBrowser() {
+        return browser.getTarget();
     }
 
     /**
@@ -205,7 +189,7 @@ public class Attributes<T extends AttributeEnum> {
      */
     private String getProperty(String propertyName) {
         By by = getCssSelectorForProperty(propertyName);
-        WebElement element = getDriver().findElement(by);
+        WebElement element = getBrowser().findElement(by);
         Graphene.waitModel().until().element(element).is().visible();
         SearchResult result = SearchResult.getResultForElement(element);
         switch (result.getTag()) {
@@ -250,15 +234,6 @@ public class Attributes<T extends AttributeEnum> {
         return getValueFromList(new Select(selectElement).getAllSelectedOptions());
     }
 
-    private boolean isSelectOptionsContainingValue(String value, List<WebElement> options) {
-        for (Iterator<WebElement> i = options.iterator(); i.hasNext();) {
-            if (value.equals(i.next().getAttribute("value"))) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public void reset(T attribute) {
         set(attribute.toString(), "");
     }
@@ -268,7 +243,16 @@ public class Attributes<T extends AttributeEnum> {
     }
 
     protected void set(String attribute, Object value) {
-        setProperty(attribute, value);
+        StaleElementReferenceException ex = null;
+        for (int i = 0; i < TRIES; i++) {
+            try {
+                setProperty(attribute, value);
+                return;
+            } catch (StaleElementReferenceException e) {
+                ex = e;
+            }
+        }
+        throw ex;
     }
 
     // TODO jjamrich 2011-09-02: make sure that this resolve to correct string representation of number given as attr
@@ -306,7 +290,7 @@ public class Attributes<T extends AttributeEnum> {
 
         //element for all types of input elements
         By by = getCssSelectorForProperty(propertyNameCorrect);
-        WebElement element = getDriver().findElement(by);
+        WebElement element = getBrowser().findElement(by);
         Graphene.waitModel().until().element(element).is().visible();
         SearchResult result = SearchResult.getResultForElement(element);
         switch (result.getTag()) {

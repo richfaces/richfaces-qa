@@ -23,31 +23,26 @@ package org.richfaces.tests.metamer.ftest.richPanelMenuGroup;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.disabledClass;
-import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.data;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.disabled;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.leftCollapsedIcon;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.leftDisabledIcon;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.leftExpandedIcon;
-import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.limitRender;
-import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.oncomplete;
-import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.render;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.rendered;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.rightCollapsedIcon;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.rightDisabledIcon;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.rightExpandedIcon;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.selectable;
-import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.status;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuGroupAttributes;
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -57,17 +52,18 @@ import org.testng.annotations.Test;
  */
 public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
 
+    private final Attributes<PanelMenuGroupAttributes> panelMenuGroupAttributes = getAttributes();
+
+    final Action collapseFirstGroupAction = new Action() {
+        @Override
+        public void perform() {
+            Graphene.guardAjax(page.getMenu()).collapseGroup(1);
+        }
+    };
+
     @Test
     public void testData() {
-        final String RF_STRING = "RichFaces 4";
-        panelMenuGroupAttributes.set(data, RF_STRING);
-        panelMenuGroupAttributes.set(oncomplete, "data = event.data");
-
-        String requestTime = page.getRequestTimeElement().getText();
-        page.getMenu().collapseGroup(1);
-        Graphene.waitModel().until().element(page.getRequestTimeElement()).text().not().equals(requestTime);
-
-        assertEquals(expectedReturnJS("return window.data", RF_STRING), RF_STRING);
+        testData(collapseFirstGroupAction);
     }
 
     @Test
@@ -103,7 +99,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     @Test
     @Templates(value = "plain")
     public void testLeftCollapsedIcon() {
-        page.getMenu().collapseGroup(1);
+        Graphene.guardAjax(page.getMenu()).collapseGroup(1);
 
         verifyStandardIcons(leftCollapsedIcon, page.getTopGroup().advanced().getLeftIconElement(), page.getTopGroup().advanced().getLeftIconElement(), "");
 
@@ -124,16 +120,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
 
     @Test
     public void testLimitRender() {
-        panelMenuGroupAttributes.set(render, "renderChecker");
-        panelMenuGroupAttributes.set(limitRender, true);
-
-        String requestTime = page.getRequestTimeElement().getText();
-        String renderCheckerTime = page.getRenderCheckerOutputElement().getText();
-
-        page.getMenu().collapseGroup(1);
-
-        Graphene.waitModel().until("Page was not updated").element(page.getRenderCheckerOutputElement()).text().not().equalTo(renderCheckerTime);
-        assertEquals(page.getRequestTimeElement().getText(), requestTime);
+        testLimitRender(collapseFirstGroupAction);
     }
 
     @Test
@@ -166,7 +153,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     @Test
     @Templates(value = "plain")
     public void testRightCollapsedIcon() {
-        page.getMenu().collapseGroup(1);
+        Graphene.guardAjax(page.getMenu()).collapseGroup(1);
 
         verifyStandardIcons(rightCollapsedIcon, page.getTopGroup().advanced().getRightIconElement(), page.getTopGroup().advanced().getRightIconElement(), "");
 
@@ -187,11 +174,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
 
     @Test
     public void testStatus() {
-        panelMenuGroupAttributes.set(status, "statusChecker");
-
-        String statusCheckerTime = page.getStatusCheckerOutputElement().getText();
-        guardAjax(page.getMenu()).collapseGroup(1);
-        Graphene.waitModel().until("Page was not updated").element(page.getStatusCheckerOutputElement()).text().not().equalTo(statusCheckerTime);
+        testStatus(collapseFirstGroupAction);
     }
 
     @Test
@@ -215,6 +198,5 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
         checker.checkCssNoImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
         checker.checkImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), imgIcon, classSuffix, false);
         checker.checkNone(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
-
     }
 }

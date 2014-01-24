@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richPickList;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.pickListAttributes;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
@@ -30,10 +29,11 @@ import java.net.URL;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.orderingList.SelectableListItem;
+import org.richfaces.fragment.pickList.RichFacesPickList;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
-import org.richfaces.tests.page.fragments.impl.orderingList.SelectableListItem;
-import org.richfaces.tests.page.fragments.impl.pickList.RichFacesPickList;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -41,6 +41,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestPickListWithColumns extends AbstractWebDriverTest {
+
+    private final Attributes<PickListAttributes> pickListAttributes = getAttributes();
 
     @FindBy(css = "[id$=pickList]")
     private RichFacesPickList picklist;

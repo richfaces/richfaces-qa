@@ -30,6 +30,7 @@ import java.net.URL;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.bean.ConverterBean;
 import org.richfaces.tests.metamer.converter.SwitchableFailingConverter;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -37,7 +38,6 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
 
 /**
  * Base for testing of @converter and @converterMessage of input components.
@@ -45,14 +45,15 @@ import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
  */
 public abstract class AbstractConverterTest extends AbstractWebDriverTest {
 
+    private static final String CUSTOM_CONVERTER_MESSAGE = "Custom converter message";
+    private final Attributes<ConverterAttributes> attributes = getAttributes();
+
     @FindBy(css = "[id$=output]")
     private WebElement output;
     @FindBy(css = "[id$=a4jButton]")
     private WebElement ajaxSubmitButton;
     @FindBy(css = "[id$=msg]")
     private RichFacesMessage message;
-    private static final String CUSTOM_CONVERTER_MESSAGE = "Custom converter message";
-    private static final Attributes<ConverterAttributes> attributes = new Attributes<ConverterAttributes>();
 
     protected abstract String badValue();
 

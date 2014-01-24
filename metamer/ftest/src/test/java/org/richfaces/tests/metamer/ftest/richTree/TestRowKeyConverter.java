@@ -45,7 +45,7 @@ public class TestRowKeyConverter extends AbstractTreeTest {
         return expanded.size();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testToggle() {
         toggle();
         Assert.assertEquals(getNumberOfExpandedNodes(), 1, "Number of expanded nodes after expanding one node doesn't match.");

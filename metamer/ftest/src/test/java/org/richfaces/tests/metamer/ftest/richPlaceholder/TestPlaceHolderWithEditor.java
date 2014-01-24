@@ -21,7 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richPlaceholder;
 
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.placeholderAttributes;
 import static org.testng.Assert.assertTrue;
 
 import org.openqa.selenium.By;
@@ -29,6 +28,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -37,10 +37,12 @@ import org.testng.annotations.Test;
  */
 public class TestPlaceHolderWithEditor extends AbstractPlaceholderTest {
 
+    private final Attributes<PlaceholderAttributes> placeholderAttributes = getAttributes();
+
     @FindBy(css = INPUT1_ID + " textarea")
-    WebElement input1;
+    private WebElement input1;
     @FindBy(css = INPUT2_ID + " textarea")
-    WebElement input2;
+    private WebElement input2;
 
     public TestPlaceHolderWithEditor() {
         super("editor");
@@ -208,7 +210,7 @@ public class TestPlaceHolderWithEditor extends AbstractPlaceholderTest {
         super.testSelector();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest({ "https://issues.jboss.org/browse/RF-12621", "https://issues.jboss.org/browse/RF-12624" })
     @Override
     public void testSelectorEmpty() {

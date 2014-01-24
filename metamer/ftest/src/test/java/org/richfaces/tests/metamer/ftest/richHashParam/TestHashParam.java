@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richHashParam;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.hashParamAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -30,11 +29,12 @@ import java.net.URL;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.Locations;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.popupPanel.TextualRichFacesPopupPanel;
+import org.richfaces.fragment.popupPanel.PopupPanel.ResizerLocation;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.page.fragments.impl.Locations;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.popupPanel.PopupPanel.ResizerLocation;
-import org.richfaces.tests.page.fragments.impl.popupPanel.TextualRichFacesPopupPanel;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -44,6 +44,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestHashParam extends AbstractWebDriverTest {
+
+    private final Attributes<HashParamAttributes> hashParamAttributes = getAttributes();
 
     //params set on page with hashParam
     private static final int MIN_WIDTH = 300;
@@ -81,7 +83,7 @@ public class TestHashParam extends AbstractWebDriverTest {
         assertTrue(onClick.contains(String.format(generatedOnClickFunctionPartTemplate, testedName)), "The attribute @name does not work.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testPanelHeight() {
         openPopup();
         assertEquals(panel.advanced().getLocations().getHeight(), DEFAULT_HEIGHT, TOLERANCE, "Panel height.");
@@ -152,7 +154,7 @@ public class TestHashParam extends AbstractWebDriverTest {
         assertEquals(panel.advanced().getRootElement().getLocation().y, DEFAULT_TOP_MARGIN, TOLERANCE, "Top margin of the panel.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testPanelWidth() {
         openPopup();
         assertEquals(Utils.getLocations(panel.advanced().getRootElement()).getWidth(), DEFAULT_WIDTH, TOLERANCE, "Panel width.");

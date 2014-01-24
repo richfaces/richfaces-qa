@@ -29,10 +29,10 @@ import java.util.Set;
 
 import org.jboss.arquillian.graphene.wait.WebDriverWait;
 import org.openqa.selenium.WebElement;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
 
 /**
  * Crate for validation message test case.

@@ -22,15 +22,15 @@
 package org.richfaces.tests.metamer.ftest.richPopupPanel;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.popupPanelAttributes;
 
 import java.net.URL;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.richPopupPanel.TestPopupPanel.TestedPopupPanel;
-import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -40,6 +40,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestPopupPanelJSApi extends AbstractWebDriverTest {
+
+    private final Attributes<PopupPanelAttributes> popupPanelAttributes = getAttributes();
 
     @FindBy(css = "input[id$=value]")
     private TextInputComponentImpl value;

@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richPlaceholder;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.placeholderAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -31,11 +30,11 @@ import java.awt.Color;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
-import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.test.selenium.support.color.ColorUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 
@@ -45,6 +44,8 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
  */
 public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
 
+    private final Attributes<PlaceholderAttributes> placeholderAttributes = getAttributes();
+
     public static final String INPUT1_ID = "[id$=input1]";
     public static final String INPUT2_ID = "[id$=input2]";
     public static final String DEFAULT_PLACEHOLDER_TEXT = "Watermark text";
@@ -53,17 +54,15 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
     private final String componentName;
 
     @FindBy(css = "[id$=placeholder]")
-    WebElement placeholder;
+    private WebElement placeholder;
     @FindBy(css = "[id$=a4jButton]")
-    WebElement a4jSubmitBtn;
+    private WebElement a4jSubmitBtn;
     @FindBy(css = "[id$=hButton]")
-    WebElement hSubmitBtn;
+    private WebElement hSubmitBtn;
     @FindBy(css = "[id$=output1]")
-    WebElement output1;
+    private WebElement output1;
     @FindBy(css = "[id$=output2]")
-    WebElement output2;
-    @Page
-    MetamerPage page;
+    private WebElement output2;
 
     public AbstractPlaceholderJSFTest(String componentName) {
         this.componentName = componentName;

@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richFileUpload;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.fileUploadAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotEquals;
@@ -36,10 +35,11 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
+import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
@@ -49,43 +49,26 @@ import org.testng.annotations.Test;
  */
 public class TestFileUpload extends AbstractFileUploadTest {
 
-    private Action succesfulFileUploadAction = new SuccesfulFileUploadAction();
+    private final Attributes<FileUploadAttributes> fileUploadAttributes = getAttributes();
+
+    private final Action succesfulFileUploadAction = new SuccesfulFileUploadAction();
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richFileUpload/simple.xhtml");
     }
 
-    @Test
-    public void testInit() {
-
-        assertVisible(fileUpload.advanced().getRootElement(), "File upload is not on the page.");
-        assertVisible(fileUpload.advanced().getAddButtonElement(), "Add button should be on the page.");
-        assertNotVisible(fileUpload.advanced().getDisabledAddButtonElement(), "Disabled add button should not be on the page.");
-        assertNotVisible(fileUpload.advanced().getUploadButtonElement(), "Upload button should not be on the page.");
-        assertNotVisible(fileUpload.advanced().getClearAllButtonElement(), "Clear all button should not be on the page.");
+    private void _testFireEventWithJS(FileUploadAttributes testedAttribute, WebElement element) {
+        // same as 'testFireEventWithJS', but added a ';return false;' to the attribute value to not open the file dialog
+        fileUploadAttributes.set(testedAttribute, "metamerEvents += \"" + testedAttribute.toString() + " \";return false;");
+        executeJS("metamerEvents = \"\";");
+        Event e = new Event(testedAttribute.toString().substring(2));// remove prefix "on"
+        fireEvent(element, e);
+        String returnedString = expectedReturnJS("return metamerEvents", testedAttribute.toString());
+        assertEquals(returnedString, testedAttribute.toString(), "Event " + e + " does not work.");
     }
 
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12122")
-    public void testSingleFileUpload() {
-        sendFileToInputWithWaiting(filenames[0], true);
-
-        assertEquals(fileUpload.advanced().getItems().size(), 1, "File not loaded");
-        assertEquals(fileUpload.advanced().getItems().getItem(0).getFilename(), filenames[0], "Label with filename does not appear.");
-        assertPresent(fileUpload.advanced().getItems().getItem(0).getClearOrDeleteElement(), "Clear button does not appear.");
-        assertPresent(fileUpload.advanced().getUploadButtonElement(), "Upload button should be on the page.");
-        assertPresent(fileUpload.advanced().getClearAllButtonElement(), "Clear all button should be on the page.");
-
-        MetamerPage.waitRequest(fileUpload, WaitRequestType.XHR).upload();
-
-        waitUntilUploadedFilesListShow(1);
-        assertEquals(uploadedFilesList.size(), 1, "List of uploaded files should contain one file.");
-        assertEquals(uploadedFilesList.get(0).getText(), filenames[0],
-            "Uploaded file does not appear in uploadedList.");
-    }
-
-    @Test
+    @Test(groups = "smoke")
     public void testAcceptedTypes() {
         String acceptable = "txt";
         fileUploadAttributes.set(FileUploadAttributes.acceptedTypes, acceptable);
@@ -123,7 +106,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     @IssueTracking(value = "https://issues.jboss.org/browse/RF-12039")
     @Test(groups = "Future")
     public void testData() {
-        testFireEvent(fileUploadAttributes, FileUploadAttributes.data, succesfulFileUploadAction);
+        testData(succesfulFileUploadAction);
     }
 
     @Test
@@ -159,7 +142,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
         assertNotVisible(fileUpload.advanced().getClearAllButtonElement(), "Clear all button should not be on the page.");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates("plain")
     @RegressionTest("https://issues.jboss.org/browse/RF-12122")
     public void testDoneLabel() {
@@ -177,17 +160,26 @@ public class TestFileUpload extends AbstractFileUploadTest {
         String cmd = "executeChecker";
         fileUploadAttributes.set(FileUploadAttributes.execute, cmd);
         succesfulFileUploadAction.perform();
-        page.assertListener(PhaseId.UPDATE_MODEL_VALUES, "executeChecker");
+        getMetamerPage().assertListener(PhaseId.UPDATE_MODEL_VALUES, "executeChecker");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testImmediateUpload() {
         fileUploadAttributes.set(FileUploadAttributes.immediateUpload, Boolean.TRUE);
         sendFileToInputWithWaiting(filenames[0], true);
         waitUntilUploadedFilesListShow(1);
-        assertEquals(uploadedFilesList.size(), 1);
-        assertEquals(uploadedFilesList.get(0).getText(), filenames[0]);
-        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "upload listener");
+        assertEquals(fileUpload.advanced().getItems().size(), 1);
+        assertEquals(fileUpload.advanced().getItems().getItem(0).getFilename(), filenames[0]);
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "upload listener");
+    }
+
+    @Test
+    public void testInit() {
+        assertVisible(fileUpload.advanced().getRootElement(), "File upload is not on the page.");
+        assertVisible(fileUpload.advanced().getAddButtonElement(), "Add button should be on the page.");
+        assertNotVisible(fileUpload.advanced().getDisabledAddButtonElement(), "Disabled add button should not be on the page.");
+        assertNotVisible(fileUpload.advanced().getUploadButtonElement(), "Upload button should not be on the page.");
+        assertNotVisible(fileUpload.advanced().getClearAllButtonElement(), "Clear all button should not be on the page.");
     }
 
     @Test
@@ -203,13 +195,13 @@ public class TestFileUpload extends AbstractFileUploadTest {
         fileUploadAttributes.set(FileUploadAttributes.render, "statusCheckerOutput, requestTime, uploadedFilesPanel");
         fileUploadAttributes.set(FileUploadAttributes.limitRender, Boolean.TRUE);
 
-        String statusCheckerTime = page.getStatusCheckerOutputElement().getText();
-        String renderCheckerTime = page.getRenderCheckerOutputElement().getText();
+        String statusCheckerTime = getMetamerPage().getStatusCheckerOutputElement().getText();
+        String renderCheckerTime = getMetamerPage().getRenderCheckerOutputElement().getText();
 
         succesfulFileUploadAction.perform();
 
-        String statusCheckerTime2 = page.getStatusCheckerOutputElement().getText();
-        String renderCheckerTime2 = page.getRenderCheckerOutputElement().getText();
+        String statusCheckerTime2 = getMetamerPage().getStatusCheckerOutputElement().getText();
+        String renderCheckerTime2 = getMetamerPage().getRenderCheckerOutputElement().getText();
         assertNotEquals(statusCheckerTime, statusCheckerTime2, "status checker time did not change as expected");
         assertEquals(renderCheckerTime, renderCheckerTime2, "render checker time changed as not expected");
     }
@@ -239,9 +231,9 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
         MetamerPage.waitRequest(fileUpload, WaitRequestType.XHR).upload();
 
-        assertEquals(uploadedFilesList.size(), maxFilesQuantity, "Uploaded files list contains more/less files than there should be. List: " + uploadedFilesList + " .");
+        assertEquals(fileUpload.advanced().getItems().size(), maxFilesQuantity, "Uploaded files list contains more/less files than there should be. List: " + fileUpload.advanced().getItems() + " .");
         for (int i = 0; i < maxFilesQuantity; i++) {
-            assertTrue(uploadedFilesList.get(i).getText().equals(filenames[i]),
+            assertTrue(fileUpload.advanced().getItems().getItem(i).getFilename().equals(filenames[i]),
                 "Uploaded file " + filenames[i] + " does not appear in uploadedList.");
         }
     }
@@ -256,19 +248,19 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12037")
     @Test(groups = "Future")
-    public void testOnBeforeDOMUpdate() {
+    public void testOnbeforedomupdate() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onbeforedomupdate, succesfulFileUploadAction);
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12037")
     @Test(groups = "Future")
-    public void testOnBegin() {
+    public void testOnbegin() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onbegin, succesfulFileUploadAction);
     }
 
     @Test
     @Templates("plain")
-    public void testOnClear() {
+    public void testOnclear() {
         testFireEvent("clear", new Action() {
             @Override
             public void perform() {
@@ -281,25 +273,23 @@ public class TestFileUpload extends AbstractFileUploadTest {
     @Test
     @Templates("plain")
     public void testOnclick() {
-        testFireEvent(fileUploadAttributes, FileUploadAttributes.onclick,
-            new Actions(driver).click(fileUpload.advanced().getFileInputElement()).build());
+        _testFireEventWithJS(FileUploadAttributes.onclick, fileUpload.advanced().getFileInputElement());
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12037")
     @Test(groups = "Future")
-    public void testOnComplete() {
+    public void testOncomplete() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.oncomplete, succesfulFileUploadAction);
     }
 
     @Test
     @Templates("plain")
     public void testOndblclick() {
-        testFireEvent(fileUploadAttributes, FileUploadAttributes.ondblclick, new Actions(driver)
-            .doubleClick(fileUpload.advanced().getFileInputElement()).build());
+        _testFireEventWithJS(FileUploadAttributes.ondblclick, fileUpload.advanced().getFileInputElement());
     }
 
     @Test
-    public void testOnFileSelect() {
+    public void testOnfileselect() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onfileselect, new Action() {
             @Override
             public void perform() {
@@ -309,7 +299,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
-    public void testOnFileSubmit() {
+    public void testOnfilesubmit() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onfilesubmit, succesfulFileUploadAction);
     }
 
@@ -333,9 +323,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
     @Test
     public void testOnmousedown() {
-        testFireEvent(fileUploadAttributes, FileUploadAttributes.onmousedown, new Actions(driver).clickAndHold(fileUpload.advanced().getFileInputElement()).build());
-        // mouse button needs to be released
-        new Actions(driver).release().perform();
+        _testFireEventWithJS(FileUploadAttributes.onmousedown, fileUpload.advanced().getFileInputElement());
     }
 
     @Test
@@ -359,11 +347,11 @@ public class TestFileUpload extends AbstractFileUploadTest {
     @Test
     @Templates("plain")
     public void testOnmouseup() {
-        testFireEvent(fileUploadAttributes, FileUploadAttributes.onmousedown, new Actions(driver).click(fileUpload.advanced().getFileInputElement()).build());
+        _testFireEventWithJS(FileUploadAttributes.onmousedown, fileUpload.advanced().getFileInputElement());
     }
 
     @Test
-    public void testOnTypeRejected() {
+    public void testOntyperejected() {
         String acceptable = "txt";
         fileUploadAttributes.set(FileUploadAttributes.acceptedTypes, acceptable);
         testFireEvent(fileUploadAttributes, FileUploadAttributes.ontyperejected, new Action() {
@@ -375,7 +363,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
-    public void testOnUploadcomplete() {
+    public void testOnuploadcomplete() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onuploadcomplete, succesfulFileUploadAction);
     }
 
@@ -389,6 +377,26 @@ public class TestFileUpload extends AbstractFileUploadTest {
     @Test(enabled = false)
     public void testServerErrorLabel() {
         //TODO how to test it
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12122")
+    public void testSingleFileUpload() {
+        sendFileToInputWithWaiting(filenames[0], true);
+
+        assertEquals(fileUpload.advanced().getItems().size(), 1, "File not loaded");
+        assertEquals(fileUpload.advanced().getItems().getItem(0).getFilename(), filenames[0], "Label with filename does not appear.");
+        assertPresent(fileUpload.advanced().getItems().getItem(0).getClearOrDeleteElement(), "Clear button does not appear.");
+        assertPresent(fileUpload.advanced().getUploadButtonElement(), "Upload button should be on the page.");
+        assertPresent(fileUpload.advanced().getClearAllButtonElement(), "Clear all button should be on the page.");
+
+        MetamerPage.waitRequest(fileUpload, WaitRequestType.XHR).upload();
+
+        waitUntilUploadedFilesListShow(1);
+
+        assertEquals(fileUpload.advanced().getItems().size(), 1, "List of uploaded files should contain one file.");
+        assertEquals(fileUpload.advanced().getItems().getItem(0).getFilename(), filenames[0],
+            "Uploaded file does not appear in uploadedList.");
     }
 
     @Test

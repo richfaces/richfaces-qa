@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTree;
 
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -31,14 +30,14 @@ import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.component.SwitchType;
+import org.richfaces.fragment.common.Actions;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.tree.Tree.TreeNode;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
-import org.richfaces.tests.page.fragments.impl.tree.Tree.TreeNode;
-import org.richfaces.tests.page.fragments.impl.utils.Actions;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.Test;
 
 import com.google.common.base.Optional;
@@ -52,12 +51,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
 
     @Test
     public void testData() {
-        String testData = "RichFaces 4";
-        treeAttributes.set(TreeAttributes.data, testData);
-        treeAttributes.set(TreeAttributes.oncomplete, "data = event.data");
-
-        selectFirstNodeAjaxAction.perform();
-        assertEquals(expectedReturnJS("return window.data;", testData), testData);
+        testData(selectFirstNodeAjaxAction);
     }
 
     @Test(groups = { "Future" })
@@ -72,7 +66,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
         testDir(tree.advanced().getRootElement());
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testExecute() {
         treeAttributes.set(TreeAttributes.execute, "executeChecker @this");
         selectFirstNodeAjaxAction.perform();
@@ -87,7 +81,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
-    @Templates(value = "plain")
+    @Templates("plain")
     public void testHandleClass() {
         TreeNode node = getGuarded(tree, SwitchType.ajax).expandNode(0);
         testStyleClass(node.advanced().getHandleElement(), BasicAttributes.handleClass);
@@ -96,15 +90,15 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
-    @Templates(value = "plain")
+    @Templates("plain")
     public void testIconClass() {
         TreeNode node = getGuarded(tree, SwitchType.ajax).expandNode(0);
         testStyleClass(node.advanced().getIconElement(), BasicAttributes.iconClass);
         testStyleClass(getGuarded(node, SwitchType.ajax).expandNode(0).advanced().getIconElement(), BasicAttributes.iconClass);
     }
 
-    @Test
-    @Templates(value = "plain")
+    @Test(groups = "smoke")
+    @Templates("plain")
     public void testIconCollapsed() {
         treeAttributes.set(TreeAttributes.iconCollapsed, IMAGE_URL);
         TreeNode node = tree.advanced().getFirstNode();
@@ -116,8 +110,8 @@ public class TestTreeAttributes extends AbstractTreeTest {
             .endsWith(IMAGE_URL));
     }
 
-    @Test
-    @Templates(value = "plain")
+    @Test(groups = "smoke")
+    @Templates("plain")
     public void testIconExpanded() {
         treeAttributes.set(TreeAttributes.iconExpanded, IMAGE_URL);
         TreeNode node = getGuarded(tree, SwitchType.ajax).expandNode(0);
@@ -130,7 +124,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
-    @Templates(value = "plain")
+    @Templates("plain")
     public void testIconLeaf() {
         treeAttributes.set(TreeAttributes.toggleType, SwitchType.client);
         treeAttributes.set(TreeAttributes.iconLeaf, IMAGE_URL);
@@ -151,13 +145,13 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
-    @Templates(value = "plain")
+    @Templates("plain")
     public void testLabelClass() {
         testStyleClass(tree.advanced().getFirstNode().advanced().getLabelElement(), BasicAttributes.labelClass);
     }
 
     @Test
-    @Templates(value = "plain")
+    @Templates("plain")
     public void testLang() {
         testAttributeLang(tree.advanced().getRootElement());
     }
@@ -179,7 +173,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
-    @Templates(value = "plain")
+    @Templates("plain")
     public void testNodeClass() {
         testStyleClass(tree.advanced().getFirstNode().advanced().getNodeInfoElement(), BasicAttributes.nodeClass);
     }
@@ -233,6 +227,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @Templates("plain")
     public void testOnclick() {
         testFireEvent(treeAttributes, TreeAttributes.onclick, expandFirstNodeAjaxAction);
     }
@@ -250,45 +245,53 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @Templates("plain")
     public void testOndblclick() {
         testFireEvent(treeAttributes, TreeAttributes.ondblclick,
             new Actions(driver).doubleClick(tree.advanced().getRootElement()).build());
     }
 
     @Test
+    @Templates("plain")
     public void testOnkeydown() {
         testFireEventWithJS(tree.advanced().getRootElement(), treeAttributes, TreeAttributes.onkeydown);
     }
 
     @Test
+    @Templates("plain")
     public void testOnkeypress() {
         testFireEventWithJS(tree.advanced().getRootElement(), treeAttributes, TreeAttributes.onkeypress);
     }
 
     @Test
+    @Templates("plain")
     public void testOnkeyup() {
         testFireEventWithJS(tree.advanced().getRootElement(), treeAttributes, TreeAttributes.onkeyup);
     }
 
     @Test
+    @Templates("plain")
     public void testOnmousedown() {
         testFireEvent(treeAttributes, TreeAttributes.onmousedown,
             new Actions(driver).triggerEventByWD(Event.CLICK, tree.advanced().getRootElement()).build());
     }
 
     @Test
+    @Templates("plain")
     public void testOnmousemove() {
         testFireEvent(treeAttributes, TreeAttributes.onmousemove,
             new Actions(driver).triggerEventByWD(Event.MOUSEMOVE, tree.advanced().getRootElement()).build());
     }
 
     @Test
+    @Templates("plain")
     public void testOnmouseout() {
         testFireEvent(treeAttributes, TreeAttributes.onmouseout,
             new Actions(driver).triggerEventByWD(Event.MOUSEOUT, tree.advanced().getRootElement()).build());
     }
 
     @Test
+    @Templates("plain")
     public void testOnmouseover() {
         new Actions(driver).moveToElement(page.getRequestTimeElement()).perform();
         testFireEvent(treeAttributes, TreeAttributes.onmouseover,
@@ -296,6 +299,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @Templates("plain")
     public void testOnmouseup() {
         testFireEvent(treeAttributes, TreeAttributes.onmouseup,
             new Actions(driver).triggerEventByWD(Event.CLICK, tree.advanced().getRootElement()).build());
@@ -334,6 +338,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @Templates("plain")
     public void testRendered() {
         treeAttributes.set(TreeAttributes.rendered, Boolean.TRUE);
         assertVisible(tree.advanced().getRootElement(), "Tree should be visible");
@@ -395,16 +400,19 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @Templates("plain")
     public void testStyle() {
         testStyle(tree.advanced().getRootElement());
     }
 
     @Test
+    @Templates("plain")
     public void testStyleClass() {
         testStyleClass(tree.advanced().getRootElement());
     }
 
     @Test
+    @Templates("plain")
     public void testTitle() {
         testStyleClass(tree.advanced().getRootElement());
     }

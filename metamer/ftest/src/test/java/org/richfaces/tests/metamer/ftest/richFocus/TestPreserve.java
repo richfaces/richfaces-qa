@@ -30,7 +30,7 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.webdriver.AttributeList;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -39,6 +39,8 @@ import org.testng.annotations.Test;
  * @since 4.3.0.Final
  */
 public class TestPreserve extends AbstractWebDriverTest {
+
+    private final Attributes<FocusAttributes> focusAttributes = getAttributes();
 
     @Page
     private FocusSimplePage page;
@@ -57,7 +59,7 @@ public class TestPreserve extends AbstractWebDriverTest {
     @Test(groups = "Future")
     // false negative - should be fixed
     public void testPreserveTrueValidationAwareFalse() {
-        AttributeList.focusAttributes.set(FocusAttributes.validationAware, false);
+        focusAttributes.set(FocusAttributes.validationAware, false);
 
         testPreserveTrue();
     }

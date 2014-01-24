@@ -34,13 +34,13 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.ClearType;
+import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 import org.testng.annotations.Test;
 
 /**
@@ -138,7 +138,7 @@ public class TestFunctions extends AbstractWebDriverTest {
         assertVisible(input.advanced().getInputElement(), "Input should be visible");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
         "richExtendedDataTable", "richList", "hDataTable", "uiRepeat" })
     public void testFunctions() {
@@ -176,7 +176,7 @@ public class TestFunctions extends AbstractWebDriverTest {
         testFunctions();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testRoles() {
         assertUserIs(Role.NOBODY);
 

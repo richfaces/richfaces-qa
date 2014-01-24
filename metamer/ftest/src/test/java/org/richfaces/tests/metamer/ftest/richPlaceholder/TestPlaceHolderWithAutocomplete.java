@@ -23,8 +23,8 @@ package org.richfaces.tests.metamer.ftest.richPlaceholder;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.autocomplete.RichFacesAutocomplete;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.Test;
 
 /**
@@ -33,10 +33,10 @@ import org.testng.annotations.Test;
  */
 public class TestPlaceHolderWithAutocomplete extends AbstractPlaceholderJSFTest {
 
-    @FindBy(css = INPUT1_ID + " > span > input")
-    WebElement input1;
-    @FindBy(css = INPUT2_ID + " > span > input")
-    WebElement input2;
+    @FindBy(css = INPUT1_ID)
+    private RichFacesAutocomplete input1;
+    @FindBy(css = INPUT2_ID)
+    private RichFacesAutocomplete input2;
 
     public TestPlaceHolderWithAutocomplete() {
         super("autocomplete");
@@ -44,22 +44,12 @@ public class TestPlaceHolderWithAutocomplete extends AbstractPlaceholderJSFTest 
 
     @Override
     WebElement getInput1() {
-        return input1;
+        return input1.advanced().getInput().advanced().getInputElement();
     }
 
     @Override
     WebElement getInput2() {
-        return input2;
-    }
-
-    @Override
-    protected void clickOnInput1() {
-        fireEvent(getInput1(), Event.FOCUS);
-    }
-
-    @Override
-    protected void clickOnInput2() {
-        fireEvent(getInput2(), Event.FOCUS);
+        return input2.advanced().getInput().advanced().getInputElement();
     }
 
     @Test
@@ -69,7 +59,7 @@ public class TestPlaceHolderWithAutocomplete extends AbstractPlaceholderJSFTest 
         super.testAjaxSubmit();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-12623")
     @Override
     public void testClickOnInputWithPlaceholder() {

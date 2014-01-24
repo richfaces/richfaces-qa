@@ -2,8 +2,8 @@ package org.richfaces.tests.showcase.contextMenu.page;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.contextMenu.RichFacesContextMenu;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.contextMenu.RichFacesContextMenu;
 
 public class SimpleContextMenuPage {
 

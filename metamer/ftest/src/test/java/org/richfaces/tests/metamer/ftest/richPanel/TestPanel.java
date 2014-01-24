@@ -24,7 +24,6 @@ package org.richfaces.tests.metamer.ftest.richPanel;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.bodyClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.headerClass;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -33,10 +32,11 @@ import java.net.URL;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.panel.TextualRichFacesPanel;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.page.fragments.impl.panel.TextualRichFacesPanel;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -47,6 +47,8 @@ import org.testng.annotations.Test;
  * @version $Revision: 22733 $
  */
 public class TestPanel extends AbstractWebDriverTest {
+
+    private final Attributes<PanelAttributes> panelAttributes = getAttributes();
 
     @FindBy(css = "div[id$=panelWithHeader]")
     private TextualRichFacesPanel panelWithHeader;
@@ -59,7 +61,7 @@ public class TestPanel extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richPanel/simple.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testInit() {
         assertPresent(panelWithHeader.advanced().getRootElement(),
@@ -155,25 +157,15 @@ public class TestPanel extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testOnmousedown() {
-        Action mouseDownAction = new Actions(driver).moveToElement(panelWithHeader.advanced().getRootElement())
-            .clickAndHold(panelWithHeader.advanced().getRootElement()).release().build();
-        testFireEvent(panelAttributes, PanelAttributes.onmousedown, mouseDownAction);
-
-        mouseDownAction = new Actions(driver).moveToElement(panelWithoutHeader.advanced().getRootElement())
-            .clickAndHold(panelWithoutHeader.advanced().getRootElement()).release().build();
-        testFireEvent(panelAttributes, PanelAttributes.onmousedown, mouseDownAction);
+        testFireEventWithJS(panelWithHeader.advanced().getRootElement(), panelAttributes, PanelAttributes.onmousedown);
+        testFireEventWithJS(panelWithoutHeader.advanced().getRootElement(), panelAttributes, PanelAttributes.onmousedown);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmousemove() {
-        Action mouseMoveAction = new Actions(driver).moveToElement(panelWithHeader.advanced().getRootElement(), 3, 3)
-            .build();
-        testFireEvent(panelAttributes, PanelAttributes.onmousemove, mouseMoveAction);
-
-        mouseMoveAction = new Actions(driver).moveToElement(panelWithoutHeader.advanced().getRootElement(), 3, 3)
-            .build();
-        testFireEvent(panelAttributes, PanelAttributes.onmousemove, mouseMoveAction);
+        testFireEventWithJS(panelWithHeader.advanced().getRootElement(), panelAttributes, PanelAttributes.onmousemove);
+        testFireEventWithJS(panelWithoutHeader.advanced().getRootElement(), panelAttributes, PanelAttributes.onmousemove);
     }
 
     @Test
@@ -199,13 +191,8 @@ public class TestPanel extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testOnmouseup() {
-        Action mouseUpAction = new Actions(driver).moveToElement(panelWithHeader.advanced().getRootElement())
-            .clickAndHold().release().build();
-        testFireEvent(panelAttributes, PanelAttributes.onmouseup, mouseUpAction);
-
-        mouseUpAction = new Actions(driver).moveToElement(panelWithoutHeader.advanced().getRootElement())
-            .clickAndHold().release().build();
-        testFireEvent(panelAttributes, PanelAttributes.onmouseup, mouseUpAction);
+        testFireEventWithJS(panelWithHeader.advanced().getRootElement(), panelAttributes, PanelAttributes.onmouseup);
+        testFireEventWithJS(panelWithoutHeader.advanced().getRootElement(), panelAttributes, PanelAttributes.onmouseup);
     }
 
     @Test

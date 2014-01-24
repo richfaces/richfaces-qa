@@ -24,7 +24,6 @@ package org.richfaces.tests.metamer.ftest.richToolbar;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemStyle;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.toolbarAttributes;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -36,11 +35,12 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -50,6 +50,8 @@ import org.testng.annotations.Test;
  * @version $Revision: 23119 $
  */
 public class TestToolbar extends AbstractWebDriverTest {
+
+    private final Attributes<ToolbarAttributes> toolbarAttributes = getAttributes();
 
     @Page
     private ToolbarPage page;
@@ -70,7 +72,7 @@ public class TestToolbar extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richToolbar/simple.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testInit() {
         assertTrue(new WebElementConditionFactory(page.getToolbar()).isPresent().apply(driver), "Toolbar should be present on the page.");
@@ -109,7 +111,7 @@ public class TestToolbar extends AbstractWebDriverTest {
         }
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Use(field = "itemSeparator", value = "separators")
     public void testItemSeparatorCorrect() {
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, itemSeparator);

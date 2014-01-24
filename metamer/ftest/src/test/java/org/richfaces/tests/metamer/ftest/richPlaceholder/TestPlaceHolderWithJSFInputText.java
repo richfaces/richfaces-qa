@@ -33,9 +33,9 @@ import org.testng.annotations.Test;
 public class TestPlaceHolderWithJSFInputText extends AbstractPlaceholderJSFTest {
 
     @FindBy(css = INPUT1_ID)
-    WebElement input1;
+    private WebElement input1;
     @FindBy(css = INPUT2_ID)
-    WebElement input2;
+    private WebElement input2;
 
     public TestPlaceHolderWithJSFInputText() {
         super("inputText");
@@ -51,32 +51,32 @@ public class TestPlaceHolderWithJSFInputText extends AbstractPlaceholderJSFTest 
         return input2;
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-12625")
     @Override
     public void testAjaxSubmit() {
         super.testAjaxSubmit();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Override
     public void testClickOnInputWithPlaceholder() {
         super.testClickOnInputWithPlaceholder();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Override
     public void testDeleteTextFromInputWithPlaceholder() {
         super.testDeleteTextFromInputWithPlaceholder();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Override
     public void testHTTPSubmit() {
         super.testHTTPSubmit();
     }
 
-    @Test
+    @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-12650")
     @Override
     public void testRendered() {

@@ -121,7 +121,7 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
     @Test
     public void testSelector() {
         firstHotkeyAttributes.set(HotKeyAttributes.selector, "input.first-input");
-        hotkey1.advanced().setupSelectorFromWidget();
+        hotkey1.setupSelector("input.first-input");
         hotkey1.invoke();// invoke on element found by selector
         checkEvents(1, 0);
         hotkey1.invoke(secondInput.advanced().getInputElement());

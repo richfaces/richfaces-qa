@@ -28,7 +28,7 @@ import static org.testng.Assert.assertTrue;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.select.RichFacesSelect;
+import org.richfaces.fragment.select.RichFacesSelect;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;

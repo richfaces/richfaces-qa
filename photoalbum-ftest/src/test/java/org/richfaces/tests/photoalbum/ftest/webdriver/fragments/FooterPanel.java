@@ -34,27 +34,15 @@ import com.google.common.collect.Lists;
  */
 public class FooterPanel {
 
-    @FindByJQuery("a:contains('Terms And Conditions')")
-    private WebElement termAndConditionsLink;
-    @FindByJQuery("a:contains('Privacy Statement')")
-    private WebElement privacyStatementLink;
     @FindByJQuery("img:eq(0)")
     private WebElement bottomLogoImage;
 
     public void check() {
-        PhotoalbumUtils.checkVisible(Lists.newArrayList(termAndConditionsLink, privacyStatementLink, bottomLogoImage));
+        PhotoalbumUtils.checkVisible(Lists.newArrayList(bottomLogoImage));
         assertTrue(bottomLogoImage.getAttribute("src").contains("img/shell/logo_bottom.gif"));
     }
 
     public WebElement getBottomLogoImage() {
         return bottomLogoImage;
-    }
-
-    public WebElement getPrivacyStatementLink() {
-        return privacyStatementLink;
-    }
-
-    public WebElement getTermAndConditionsLink() {
-        return termAndConditionsLink;
     }
 }

@@ -24,8 +24,12 @@ package org.richfaces.tests.showcase.jquery;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
 import static org.testng.Assert.assertEquals;
 
-import org.jboss.arquillian.graphene.findby.ByJQuery;
+import java.util.List;
+
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
@@ -37,18 +41,23 @@ import org.testng.annotations.Test;
  */
 public class TestJQuery extends AbstractWebDriverTest {
 
-    private final int NUMBER_OF_IMGS = 9;
     private final String WIDTH_OF_IMG_BEFORE_HOVER = "120";
     private final String WIDTH_OF_IMG_AFTER_HOVER = "180";
 
     @ArquillianResource
-    private Actions actions;
+    Actions actions;
+
+    @FindByJQuery("span[id$='gallery'] img")
+    List<WebElement> images;
 
     @Test
     public void testImagesAreBecomingBiggerAfterHover() {
-        for (int i = 0; i < NUMBER_OF_IMGS; i++) {
-            WebElement image = webDriver.findElement(ByJQuery.selector("span[id$='gallery'] img:eq(" + i + ")"));
+        for (WebElement image : images) {
             assertEquals(getWidthOfImage(image), WIDTH_OF_IMG_BEFORE_HOVER, "The initial width is wrong");
+
+            //images won't react to hover action if they are not visible on screen - thus we need to scroll a little bit
+            Point imageLocation = image.getLocation();
+            ((JavascriptExecutor) webDriver).executeScript("window.scrollTo(" + imageLocation.getX() + ", " + imageLocation.getY() + ")");
 
             actions.moveToElement(image).build().perform();
             waitModel().until("The width of image after hovering is wrong!")

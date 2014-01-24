@@ -28,15 +28,15 @@ import static org.testng.Assert.assertTrue;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
+import org.richfaces.fragment.common.ClearType;
+import org.richfaces.fragment.message.Message;
+import org.richfaces.fragment.message.Message.MessageType;
+import org.richfaces.fragment.messages.Messages;
 import org.richfaces.tests.metamer.ftest.richMessages.MessagesAttributes;
-import org.richfaces.tests.metamer.ftest.webdriver.AttributeList;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.validation.MultipleValidationRulesBean;
-import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.message.Message;
-import org.richfaces.tests.page.fragments.impl.message.Message.MessageType;
-import org.richfaces.tests.page.fragments.impl.messages.Messages;
 import org.testng.Assert;
 
 /**
@@ -45,6 +45,8 @@ import org.testng.Assert;
  */
 public abstract class AbstractMessagesComponentTest extends AbstractMessageComponentCommonTest {
 
+    private final Attributes<MessagesAttributes> messagesAttributes = getAttributes();
+
     private final Action generateMessagesAction = new GenerateMessagesAction();
 
     public void checkAjaxRendered() {
@@ -52,7 +54,7 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
         assertTrue(getPage().getMessagesComponentWithFor().advanced().isVisible());
         assertTrue(getPage().getMessagesComponentWithGlobal().advanced().isVisible());
 
-        AttributeList.messagesAttributes.set(MessagesAttributes.ajaxRendered, Boolean.FALSE);
+        messagesAttributes.set(MessagesAttributes.ajaxRendered, Boolean.FALSE);
         generateValidationMessagesWithoutWait();
 
         assertFalse(getPage().getMessagesComponentWithFor().advanced().isVisible());
@@ -86,8 +88,8 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
     }
 
     public void checkNoShowDetailNoShowSummary() {
-        AttributeList.messagesAttributes.set(MessagesAttributes.showSummary, Boolean.FALSE);
-        AttributeList.messagesAttributes.set(MessagesAttributes.showDetail, Boolean.FALSE);
+        messagesAttributes.set(MessagesAttributes.showSummary, Boolean.FALSE);
+        messagesAttributes.set(MessagesAttributes.showDetail, Boolean.FALSE);
 
         generateValidationMessagesWithoutWait();
         submitWithA4jBtn();
@@ -97,13 +99,13 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
     }
 
     public void checkRendered() {
-        AttributeList.messagesAttributes.set(MessagesAttributes.rendered, Boolean.TRUE);
+        messagesAttributes.set(MessagesAttributes.rendered, Boolean.TRUE);
         generateValidationMessagesWithWait();
 
         assertTrue(getPage().getMessagesComponentWithGlobal().advanced().isVisible());
         assertTrue(getPage().getMessagesComponentWithFor().advanced().isVisible());
 
-        AttributeList.messagesAttributes.set(MessagesAttributes.rendered, Boolean.FALSE);
+        messagesAttributes.set(MessagesAttributes.rendered, Boolean.FALSE);
         generateValidationMessagesWithoutWait();
         submitWithA4jBtn();
 
@@ -112,14 +114,14 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
     }
 
     public void checkShowDetail() {
-        AttributeList.messagesAttributes.set(MessagesAttributes.showSummary, Boolean.TRUE);
-        AttributeList.messagesAttributes.set(MessagesAttributes.showDetail, Boolean.TRUE);
+        messagesAttributes.set(MessagesAttributes.showSummary, Boolean.TRUE);
+        messagesAttributes.set(MessagesAttributes.showDetail, Boolean.TRUE);
         generateValidationMessagesWithWait();
 
         assertVisible(getPage().getMessagesComponentWithGlobal().getItem(0).advanced().getDetailElement(), "Detail should be visible");
         assertVisible(getPage().getMessagesComponentWithFor().getItem(0).advanced().getDetailElement(), "Detail should be visible");
 
-        AttributeList.messagesAttributes.set(MessagesAttributes.showDetail, Boolean.FALSE);
+        messagesAttributes.set(MessagesAttributes.showDetail, Boolean.FALSE);
         generateValidationMessagesWithWait();
 
         assertNotVisible(getPage().getMessagesComponentWithGlobal().getItem(0).advanced().getDetailElement(), "Detail should not be visible");
@@ -127,14 +129,14 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
     }
 
     public void checkShowSummary() {
-        AttributeList.messagesAttributes.set(MessagesAttributes.showDetail, Boolean.TRUE);
-        AttributeList.messagesAttributes.set(MessagesAttributes.showSummary, Boolean.TRUE);
+        messagesAttributes.set(MessagesAttributes.showDetail, Boolean.TRUE);
+        messagesAttributes.set(MessagesAttributes.showSummary, Boolean.TRUE);
         generateValidationMessagesWithWait();
 
         assertVisible(getPage().getMessagesComponentWithGlobal().getItem(0).advanced().getSummaryElement(), "Summary should be visible");
         assertVisible(getPage().getMessagesComponentWithFor().getItem(0).advanced().getSummaryElement(), "Summary should be visible");
 
-        AttributeList.messagesAttributes.set(MessagesAttributes.showSummary, Boolean.FALSE);
+        messagesAttributes.set(MessagesAttributes.showSummary, Boolean.FALSE);
         generateValidationMessagesWithWait();
 
         assertNotVisible(getPage().getMessagesComponentWithGlobal().getItem(0).advanced().getSummaryElement(), "Summary should not be visible");

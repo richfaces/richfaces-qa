@@ -22,18 +22,18 @@
 package org.richfaces.tests.metamer.ftest.richList;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.listAttributes;
 
 import java.net.URL;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.list.RichFacesListItem;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.page.fragments.impl.list.RichFacesListItem;
-import org.richfaces.tests.page.fragments.impl.utils.Event;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -41,6 +41,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestListAttributes extends AbstractListTest {
+
+    private final Attributes<ListAttributes> listAttributes = getAttributes();
 
     enum ListType {
 
@@ -79,7 +81,7 @@ public class TestListAttributes extends AbstractListTest {
         testDir(list.getRoot());
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Use(field = "first", value = "INTS")
     public void testFirst() {
         listAttributes.set(ListAttributes.first, first);
@@ -111,7 +113,7 @@ public class TestListAttributes extends AbstractListTest {
             ListAttributes.onkeydown);
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testOnkeypress() {
         testFireEventWithJS(list.getRoot(), listAttributes,
             ListAttributes.onkeypress);
@@ -230,7 +232,7 @@ public class TestListAttributes extends AbstractListTest {
         testStyleClass(items.get(items.size() - 1).getRootElement(), BasicAttributes.rowClasses);
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Use(field = "rows", value = "INTS")
     public void testRows() {
         listAttributes.set(ListAttributes.rows, rows);
@@ -252,7 +254,7 @@ public class TestListAttributes extends AbstractListTest {
         testTitle(list.getRoot());
     }
 
-    @Test
+    @Test(groups = "smoke")
     @Use(field = "type", enumeration = true)
     public void testType() {
         listAttributes.set(ListAttributes.type, type.getValue());

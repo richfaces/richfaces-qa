@@ -25,9 +25,9 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.graphene.page.Page;
-import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
-import org.richfaces.tests.page.fragments.impl.autocomplete.SelectOrConfirm;
-import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
+import org.richfaces.fragment.autocomplete.RichFacesAutocomplete;
+import org.richfaces.fragment.autocomplete.SelectOrConfirm;
+import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.autocomplete.page.CustomLayoutsPage;
 import org.testng.annotations.Test;

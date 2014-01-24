@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jAjax;
 
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.ajaxAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
@@ -31,8 +30,10 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 
 /**
  * Abstract test case for testing h:selectManyMenu and h:selectManyListbox with a4j:ajax.
@@ -41,6 +42,8 @@ import org.richfaces.tests.page.fragments.impl.Utils;
  * @since 4.3.0.M2
  */
 public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
+
+    private final Attributes<AjaxAttributes> ajaxAttributes = getAttributes();
 
     @Page
     protected AjaxPage page;
@@ -88,15 +91,12 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
     }
 
     public void testData() {
-        ajaxAttributes.set(AjaxAttributes.data, "RichFaces 4 data");
-        ajaxAttributes.set(AjaxAttributes.oncomplete, "data = event.data");
-
-        String reqTime = page.getRequestTimeElement().getText();
-        performAction();
-        Graphene.waitModel().until("Page was not updated").element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
-
-        String data = ((JavascriptExecutor) driver).executeScript("return data").toString();
-        assertEquals(data, "RichFaces 4 data", "Data sent with ajax request");
+        testData(new Action() {
+            @Override
+            public void perform() {
+                performAction();
+            }
+        });
     }
 
     public void testDisabledForTextInputs() {
@@ -237,10 +237,6 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
     }
 
     private class LocalReloadTester extends ReloadTester<String> {
-
-        public LocalReloadTester() {
-            super(page);
-        }
 
         @Override
         public void doRequest(String inputValue) {

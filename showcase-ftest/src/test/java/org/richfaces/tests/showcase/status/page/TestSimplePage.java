@@ -30,6 +30,8 @@ import org.openqa.selenium.support.FindBy;
  */
 public class TestSimplePage {
 
+    public static final String PROGRESS_IMG_LOC = "span.rf-st-start img";
+
     @FindByJQuery("input[type='text']:eq(0)")
     public WebElement userNameInput;
 
@@ -41,7 +43,4 @@ public class TestSimplePage {
 
     @FindBy(css = "span[id$='out']")
     public WebElement output;
-
-    @FindBy(css = "span.rf-st-start img")
-    public WebElement progressImage;
 }

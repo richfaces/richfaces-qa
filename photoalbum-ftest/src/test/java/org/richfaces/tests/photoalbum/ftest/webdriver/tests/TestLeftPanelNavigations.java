@@ -26,7 +26,7 @@ import static org.testng.Assert.assertEquals;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.richfaces.tests.page.fragments.impl.tree.Tree;
+import org.richfaces.fragment.tree.Tree;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.AlbumView;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.ShelfView;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.ShelvesView;
@@ -60,57 +60,57 @@ public class TestLeftPanelNavigations extends AbstractPhotoalbumTest {
     public void testOwnAlbumView() {
         login();
 
-        AlbumView album = page.getContentPanel().albumView();
+        AlbumView album = getView(AlbumView.class);
         // check Nature shelf
         Tree.TreeNode node = Graphene.guardNoRequest(page.getLeftPanel().getMyShelvesTree()).expandNode(0);
         assertEquals(node.advanced().getNodes().size(), 2);
         // open Animals album
         Graphene.guardAjax(node).selectNode(0);
-        album.checkAll("Animals", "Created 2009-12-18, contains 6 images", "Animals pictures", "Shelf: Nature");
+        album.checkAll("Animals", "Created 2009-12-18, contains 6 images", "Animals pictures", "Album group: Nature");
         assertEquals(album.getPhotos().size(), 6);
-        album.getPhotos().get(0).checkAll(120, "1750979205_6e51b47ce9_o.jpg", "Dec 17, 2009");
-        album.getPhotos().get(1).checkAll(120, "1906662004_655d0f6ccf_o.jpg", "Dec 17, 2009");
-        album.getPhotos().get(4).checkAll(120, "2298556444_2151b7a6c4_o.jpg", "Dec 17, 2009");
-        album.getPhotos().get(5).checkAll(120, "2508246015_313952406c_o.jpg", "Dec 17, 2009");
+        album.getPhotos().get(0).checkAll(120, "1750979205_6e51b47ce9_o.jpg", IMAGES_DEC_DATE);
+        album.getPhotos().get(1).checkAll(120, "1906662004_655d0f6ccf_o.jpg", IMAGES_DEC_DATE);
+        album.getPhotos().get(4).checkAll(120, "2298556444_2151b7a6c4_o.jpg", IMAGES_DEC_DATE);
+        album.getPhotos().get(5).checkAll(120, "2508246015_313952406c_o.jpg", IMAGES_DEC_DATE);
 
         // check Sport & Cars shelf
         node = Graphene.guardNoRequest(page.getLeftPanel().getMyShelvesTree()).expandNode(1);
         assertEquals(node.advanced().getNodes().size(), 2);
         // open Sport album
         Graphene.guardAjax(node).selectNode(1);
-        album.checkAll("Sport", "Created 2009-12-18, contains 3 images", "Sport pictures", "Shelf: Sport & Cars");
+        album.checkAll("Sport", "Created 2009-12-18, contains 3 images", "Sport pictures", "Album group: Sport & Cars");
         assertEquals(album.getPhotos().size(), 3);
-        album.getPhotos().get(0).checkAll(120, "103193233_860c47c909_o.jpg", "Dec 17, 2009");
-        album.getPhotos().get(1).checkAll(120, "1350250361_2d963dd4e7_o.jpg", "Dec 17, 2009");
-        album.getPhotos().get(2).checkAll(120, "2042654579_d25c0db64f_o.jpg", "Dec 17, 2009");
+        album.getPhotos().get(0).checkAll(120, "103193233_860c47c909_o.jpg", IMAGES_DEC_DATE);
+        album.getPhotos().get(1).checkAll(120, "1350250361_2d963dd4e7_o.jpg", IMAGES_DEC_DATE);
+        album.getPhotos().get(2).checkAll(120, "2042654579_d25c0db64f_o.jpg", IMAGES_DEC_DATE);
     }
 
     @Test
     public void testOwnShelfView() {
         login();
-        ShelfView shelf = page.getContentPanel().shelfView();
+        ShelfView shelf = getView(ShelfView.class);
 
         // check Nature shelf
         page.getLeftPanel().openOwnShelf(0);
         shelf.checkAll("Nature", "Created 2009-12-18, contains 12 images into 2 albums", "Nature pictures", false);
         assertEquals(shelf.getAlbumPreviews().size(), 2);
-        shelf.getAlbumPreview(0).checkAll("Animals", "Dec 17, 2009");
-        shelf.getAlbumPreview(1).checkAll("Nature", "Dec 17, 2009");
+        shelf.getAlbumPreview(0).checkAll("Animals", IMAGES_DEC_DATE);
+        shelf.getAlbumPreview(1).checkAll("Nature", IMAGES_DEC_DATE);
 
         // check Sport & Cars shelf
         page.getLeftPanel().openOwnShelf(1);
         shelf.checkAll("Sport & Cars", "Created 2009-12-18, contains 9 images into 2 albums", "Sport & Cars pictures", false);
         assertEquals(shelf.getAlbumPreviews().size(), 2);
-        shelf.getAlbumPreview(0).checkAll("Cars", "Dec 17, 2009");
-        shelf.getAlbumPreview(1).checkAll("Sport", "Dec 17, 2009");
+        shelf.getAlbumPreview(0).checkAll("Cars", IMAGES_DEC_DATE);
+        shelf.getAlbumPreview(1).checkAll("Sport", IMAGES_DEC_DATE);
     }
 
     @Test
     public void testOwnShelvesView() {
         login();
         page.getLeftPanel().openOwnShelves();
-        ShelvesView shelvesView = page.getContentPanel().shelvesView();
-        shelvesView.checkHeader("My shelves (2)");
+        ShelvesView shelvesView = getView(ShelvesView.class);
+        shelvesView.checkHeader("My album groups (2)");
         List<ShelfView> shelves = shelvesView.getShelves();
         assertEquals(shelves.size(), 2);
 
@@ -118,77 +118,77 @@ public class TestLeftPanelNavigations extends AbstractPhotoalbumTest {
         ShelfView shelf = shelves.get(0);
         shelf.checkAll("Nature", "Created 2009-12-18, contains 12 images into 2 albums", "Nature pictures", true);
         assertEquals(shelf.getAlbumPreviews().size(), 2);
-        shelf.getAlbumPreview(0).checkAll("Animals", "Dec 17, 2009");
-        shelf.getAlbumPreview(1).checkAll("Nature", "Dec 17, 2009");
+        shelf.getAlbumPreview(0).checkAll("Animals", IMAGES_DEC_DATE);
+        shelf.getAlbumPreview(1).checkAll("Nature", IMAGES_DEC_DATE);
 
         // check Nature shelf
         shelf = shelves.get(1);
         shelf.checkAll("Sport & Cars", "Created 2009-12-18, contains 9 images into 2 albums", "Sport & Cars pictures", true);
         assertEquals(shelf.getAlbumPreviews().size(), 2);
-        shelf.getAlbumPreview(0).checkAll("Cars", "Dec 17, 2009");
-        shelf.getAlbumPreview(1).checkAll("Sport", "Dec 17, 2009");
+        shelf.getAlbumPreview(0).checkAll("Cars", IMAGES_DEC_DATE);
+        shelf.getAlbumPreview(1).checkAll("Sport", IMAGES_DEC_DATE);
     }
 
     @Test
-    public void testPredefinedAlbumView() {
-        AlbumView album = page.getContentPanel().albumView();
+    public void testPublicAlbumView() {
+        AlbumView album = getView(AlbumView.class);
         // check Monuments shelf
         Tree.TreeNode node = Graphene.guardNoRequest(page.getLeftPanel().getPreDefinedShelvesTree()).expandNode(0);
         assertEquals(node.advanced().getNodes().size(), 1);
         // open Monuments and just buildings album
         Graphene.guardAjax(node).selectNode(0);
-        album.checkAll("Monuments and just buildings", "Created 2009-12-18, contains 3 images", "Monuments and just buildings pictures", "Shelf: Monuments");
+        album.checkAll("Monuments and just buildings", "Created 2009-12-18, contains 3 images", "Monuments and just buildings pictures", "Album group: Monuments");
         assertEquals(album.getPhotos().size(), 3);
-        album.getPhotos().get(0).checkAll(120, "05[303x457].jpg", "Dec 17, 2009");
-        album.getPhotos().get(1).checkAll(120, "07[303x457].jpg", "Dec 17, 2009");
-        album.getPhotos().get(2).checkAll(120, "1805365000_ca64d20b10_o.jpg", "Dec 17, 2009");
+        album.getPhotos().get(0).checkAll(120, "05[303x457].jpg", IMAGES_DEC_DATE);
+        album.getPhotos().get(1).checkAll(120, "07[303x457].jpg", IMAGES_DEC_DATE);
+        album.getPhotos().get(2).checkAll(120, "1805365000_ca64d20b10_o.jpg", IMAGES_DEC_DATE);
 
         // check Nature shelf
         node = Graphene.guardNoRequest(page.getLeftPanel().getPreDefinedShelvesTree()).expandNode(1);
         assertEquals(node.advanced().getNodes().size(), 2);
         // open Animals album
         Graphene.guardAjax(node).selectNode(0);
-        album.checkAll("Animals", "Created 2009-12-18, contains 6 images", "Animals pictures", "Shelf: Nature");
+        album.checkAll("Animals", "Created 2009-12-18, contains 6 images", "Animals pictures", "Album group: Nature");
         assertEquals(album.getPhotos().size(), 6);
-        album.getPhotos().get(0).checkAll(120, "1750979205_6e51b47ce9_o.jpg", "Dec 17, 2009");
-        album.getPhotos().get(1).checkAll(120, "1906662004_655d0f6ccf_o.jpg", "Dec 17, 2009");
-        album.getPhotos().get(4).checkAll(120, "2298556444_2151b7a6c4_o.jpg", "Dec 17, 2009");
-        album.getPhotos().get(5).checkAll(120, "2508246015_313952406c_o.jpg", "Dec 17, 2009");
+        album.getPhotos().get(0).checkAll(120, "1750979205_6e51b47ce9_o.jpg", IMAGES_DEC_DATE);
+        album.getPhotos().get(1).checkAll(120, "1906662004_655d0f6ccf_o.jpg", IMAGES_DEC_DATE);
+        album.getPhotos().get(4).checkAll(120, "2298556444_2151b7a6c4_o.jpg", IMAGES_DEC_DATE);
+        album.getPhotos().get(5).checkAll(120, "2508246015_313952406c_o.jpg", IMAGES_DEC_DATE);
 
         assertEquals(node.advanced().getNodes().size(), 2);
         // open Nature album
         Graphene.guardAjax(node).selectNode(1);
-        album.checkAll("Nature", "Created 2009-12-18, contains 6 images", "Nature pictures", "Shelf: Nature");
+        album.checkAll("Nature", "Created 2009-12-18, contains 6 images", "Nature pictures", "Album group: Nature");
         assertEquals(album.getPhotos().size(), 6);
-        album.getPhotos().get(0).checkAll(120, "01[303x202].jpg", "Dec 17, 2009");
-        album.getPhotos().get(1).checkAll(120, "1[305x457].jpg", "Dec 17, 2009");
-        album.getPhotos().get(4).checkAll(120, "3392730627_1cdb18cba6_o.jpg", "Dec 17, 2009");
-        album.getPhotos().get(5).checkAll(120, "3392993334_36d7f097df_o.jpg", "Dec 17, 2009");
+        album.getPhotos().get(0).checkAll(120, "01[303x202].jpg", IMAGES_DEC_DATE);
+        album.getPhotos().get(1).checkAll(120, "1[305x457].jpg", IMAGES_DEC_DATE);
+        album.getPhotos().get(4).checkAll(120, "3392730627_1cdb18cba6_o.jpg", IMAGES_DEC_DATE);
+        album.getPhotos().get(5).checkAll(120, "3392993334_36d7f097df_o.jpg", IMAGES_DEC_DATE);
     }
 
     @Test
-    public void testPredefinedShelfView() {
-        ShelfView shelf = page.getContentPanel().shelfView();
+    public void testPublicShelfView() {
+        ShelfView shelf = getView(ShelfView.class);
 
         // check Monuments shelf
         page.getLeftPanel().openPredefinedShelf(0);
         shelf.checkAll("Monuments", "Created 2009-12-18, contains 3 images into 1 albums", "Monuments pictures", false);
         assertEquals(shelf.getAlbumPreviews().size(), 1);
-        shelf.getAlbumPreview(0).checkAll("Monuments and just buildings", "Dec 17, 2009");
+        shelf.getAlbumPreview(0).checkAll("Monuments and just buildings", IMAGES_DEC_DATE);
 
         // check Nature shelf
         page.getLeftPanel().openPredefinedShelf(1);
         shelf.checkAll("Nature", "Created 2009-12-18, contains 12 images into 2 albums", "Nature pictures", false);
         assertEquals(shelf.getAlbumPreviews().size(), 2);
-        shelf.getAlbumPreview(0).checkAll("Animals", "Dec 17, 2009");
-        shelf.getAlbumPreview(1).checkAll("Nature", "Dec 17, 2009");
+        shelf.getAlbumPreview(0).checkAll("Animals", IMAGES_DEC_DATE);
+        shelf.getAlbumPreview(1).checkAll("Nature", IMAGES_DEC_DATE);
     }
 
     @Test
-    public void testPredefinedShelvesView() {
+    public void testPublicShelvesView() {
         page.getLeftPanel().openPredefinedShelves();
-        ShelvesView shelvesView = page.getContentPanel().shelvesView();
-        shelvesView.checkHeader("Pre-defined shelves (5)");
+        ShelvesView shelvesView = getView(ShelvesView.class);
+        shelvesView.checkHeader("Public album groups (5)");
         List<ShelfView> shelves = shelvesView.getShelves();
         assertEquals(shelves.size(), 5);
 
@@ -196,13 +196,13 @@ public class TestLeftPanelNavigations extends AbstractPhotoalbumTest {
         ShelfView shelf = shelves.get(0);
         shelf.checkAll("Monuments", "Created 2009-12-18, contains 3 images into 1 albums", "Monuments pictures", true);
         assertEquals(shelf.getAlbumPreviews().size(), 1);
-        shelf.getAlbumPreview(0).checkAll("Monuments and just buildings", "Dec 17, 2009");
+        shelf.getAlbumPreview(0).checkAll("Monuments and just buildings", IMAGES_DEC_DATE);
 
         // check Nature shelf
         shelf = shelves.get(1);
         shelf.checkAll("Nature", "Created 2009-12-18, contains 12 images into 2 albums", "Nature pictures", true);
         assertEquals(shelf.getAlbumPreviews().size(), 2);
-        shelf.getAlbumPreview(0).checkAll("Animals", "Dec 17, 2009");
-        shelf.getAlbumPreview(1).checkAll("Nature", "Dec 17, 2009");
+        shelf.getAlbumPreview(0).checkAll("Animals", IMAGES_DEC_DATE);
+        shelf.getAlbumPreview(1).checkAll("Nature", IMAGES_DEC_DATE);
     }
 }

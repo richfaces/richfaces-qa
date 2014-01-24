@@ -25,8 +25,8 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.tree.RichFacesTree;
-import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
+import org.richfaces.fragment.common.picker.ChoicePickerHelper;
+import org.richfaces.fragment.tree.RichFacesTree;
 import org.richfaces.tests.photoalbum.ftest.webdriver.utils.PhotoalbumUtils;
 
 import com.google.common.collect.Lists;
@@ -42,31 +42,60 @@ public class LeftPanel {
     public static final String SPORT_AND_CARS_PAGE = "Sport & Cars";
     public static final String WATER_PAGE = "Water";
 
-    @FindByJQuery("a:contains('Pre-defined shelves')")
+    @FindByJQuery("a:contains('Public album groups')")
     private WebElement preDefinedShelvesLink;
     @FindBy(css = ".rf-tr[id$='PreDefinedTree']")
     private CustomTree preDefinedShelvesTree;
-    @FindByJQuery("td:has(> a:contains('Pre-defined shelves')) + td > a")
+    @FindByJQuery("td:has(> a:contains('Public album groups')) + td a:contains(?)")
     private WebElement preDefinedShelvesHelpLink;
-    @FindByJQuery("a:contains('My shelves')")
+    @FindByJQuery("a:contains('My album groups')")
     private WebElement myShelvesLink;
     @FindBy(css = ".rf-tr[id$='userTree']")
     private CustomTree myShelvesTree;
-    @FindByJQuery("td:has(> a:contains('My shelves')) + td > a")
+    @FindByJQuery("td:has(> a:contains('My album groups')) + td a:contains(?)")
     private WebElement myShelvesHelpLink;
+    @FindByJQuery("a:contains('G+ Albums')")
+    private WebElement gPlusShelvesLink;
+    @FindByJQuery("td:has(> a:contains('G+ Albums')) + td a:contains(?)")
+    private WebElement gPlusShelvesHelpLink;
+    @FindByJQuery("a:contains('Facebook Albums')")
+    private WebElement fbShelvesLink;
 
-    public void checkIfUserLogged() {
+    public void checkIfUserLogged(boolean hasOwnAlbums, boolean hasFBAlbums, boolean hasGPlusAlbums) {
         checkVisibleForAll();
-        PhotoalbumUtils.checkVisible(Lists.newArrayList(myShelvesHelpLink, myShelvesLink, myShelvesTree.advanced().getRootElement()));
+        PhotoalbumUtils.checkVisible(myShelvesHelpLink, myShelvesLink);
+        if (hasOwnAlbums) {
+            PhotoalbumUtils.checkVisible(Lists.newArrayList(myShelvesTree.advanced().getRootElement()));
+        } else {
+            PhotoalbumUtils.checkNotVisible(Lists.newArrayList(myShelvesTree.advanced().getRootElement()));
+        }
+        if (hasFBAlbums) {
+            PhotoalbumUtils.checkVisible(Lists.newArrayList(fbShelvesLink));
+        } else {
+            PhotoalbumUtils.checkNotVisible(Lists.newArrayList(fbShelvesLink));
+        }
+        if (hasGPlusAlbums) {
+            PhotoalbumUtils.checkVisible(Lists.newArrayList(gPlusShelvesLink, gPlusShelvesHelpLink));
+        } else {
+            PhotoalbumUtils.checkNotVisible(Lists.newArrayList(gPlusShelvesLink, gPlusShelvesHelpLink));
+        }
     }
 
     public void checkIfUserNotLogged() {
         checkVisibleForAll();
-        PhotoalbumUtils.checkNotVisible(Lists.newArrayList(myShelvesHelpLink, myShelvesLink, myShelvesTree.advanced().getRootElement()));
+        PhotoalbumUtils.checkNotVisible(Lists.newArrayList(myShelvesHelpLink, myShelvesLink, myShelvesTree.advanced().getRootElement(), fbShelvesLink, gPlusShelvesHelpLink, gPlusShelvesLink));
     }
 
     private void checkVisibleForAll() {
         PhotoalbumUtils.checkVisible(Lists.newArrayList(preDefinedShelvesHelpLink, preDefinedShelvesLink, preDefinedShelvesTree.advanced().getRootElement()));
+    }
+
+    public WebElement getGPlusShelvesHelpLink() {
+        return gPlusShelvesHelpLink;
+    }
+
+    public WebElement getGPlusShelvesLink() {
+        return gPlusShelvesLink;
     }
 
     public WebElement getMyShelvesHelpLink() {

@@ -26,7 +26,6 @@ import static org.richfaces.tests.metamer.ftest.richDragIndicator.DragIndicatorA
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.DragIndicatorAttributes.draggingClass;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.DragIndicatorAttributes.rejectClass;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.DragIndicatorAttributes.rendered;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.dragIndicatorAttributes;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -38,6 +37,7 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -48,6 +48,8 @@ import org.testng.annotations.Test;
  * @since 4.3.0.CR1
  */
 public class TestDragIndicator extends AbstractWebDriverTest {
+
+    private final Attributes<DragIndicatorAttributes> dragIndicatorAttributes = getAttributes();
 
     @Page
     private DragIndicatorSimplePage page;
@@ -61,7 +63,7 @@ public class TestDragIndicator extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richDragIndicator/simple.xhtml");
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testRendered() throws InterruptedException {
 
         dragIndicatorAttributes.set(draggingClass, DRAGGING_CLASS);
@@ -112,7 +114,7 @@ public class TestDragIndicator extends AbstractWebDriverTest {
         actionQueue.release().perform();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testDragging() {
 
         dragIndicatorAttributes.set(draggingClass, DRAGGING_CLASS);

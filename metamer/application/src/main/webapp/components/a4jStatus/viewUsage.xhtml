@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a="http://richfaces.org/a4j"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
     <!--
@@ -38,57 +38,57 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <fieldset style="height: 3em">
-                <legend>status (outside form)</legend>
-                <a4j:status id="status"
-                            errorStyle="#{a4jStatusBean.attributes['errorStyle'].value}"
-                            errorStyleClass="#{a4jStatusBean.attributes['errorStyleClass'].value}"
-                            errorText="#{a4jStatusBean.attributes['errorText'].value}"
-                            name="#{a4jStatusBean.attributes['name'].value}"
-                            onerror="#{a4jStatusBean.attributes['onerror'].value}"
-                            onstart="#{a4jStatusBean.attributes['onstart'].value}"
-                            onstop="#{a4jStatusBean.attributes['onstop'].value}"
-                            onsuccess="#{a4jStatusBean.attributes['onsuccess'].value}"
-                            rendered="#{a4jStatusBean.attributes['rendered'].value}"
-                            startStyle="#{a4jStatusBean.attributes['startStyle'].value}"
-                            startStyleClass="#{a4jStatusBean.attributes['startStyleClass'].value}"
-                            startText="#{a4jStatusBean.attributes['startText'].value}"
-                            stopStyle="#{a4jStatusBean.attributes['stopStyle'].value}"
-                            stopStyleClass="#{a4jStatusBean.attributes['stopStyleClass'].value}"
-                            stopText="#{a4jStatusBean.attributes['stopText'].value}"
-                            >
-                    <f:facet name="start">
-                        <h:outputText id="statusTextStart" style="font-size: large; color: red;" value="START" />
-                    </f:facet>
 
-                    <f:facet name="stop">
-                        <h:outputText id="statusTextStop" style="font-size: large; color: red;" value="STOP" />
-                    </f:facet>
+            Status outside form &gt;&gt;&gt;
+            <a:status id="status"
+                      errorStyle="#{a4jStatusBean.attributes['errorStyle'].value}"
+                      errorStyleClass="#{a4jStatusBean.attributes['errorStyleClass'].value}"
+                      errorText="#{a4jStatusBean.attributes['errorText'].value}"
+                      name="#{a4jStatusBean.attributes['name'].value}"
+                      onerror="#{a4jStatusBean.attributes['onerror'].value}"
+                      onstart="#{a4jStatusBean.attributes['onstart'].value}"
+                      onstop="#{a4jStatusBean.attributes['onstop'].value}"
+                      onsuccess="#{a4jStatusBean.attributes['onsuccess'].value}"
+                      rendered="#{a4jStatusBean.attributes['rendered'].value}"
+                      startStyle="#{a4jStatusBean.attributes['startStyle'].value}"
+                      startStyleClass="#{a4jStatusBean.attributes['startStyleClass'].value}"
+                      startText="#{a4jStatusBean.attributes['startText'].value}"
+                      stopStyle="#{a4jStatusBean.attributes['stopStyle'].value}"
+                      stopStyleClass="#{a4jStatusBean.attributes['stopStyleClass'].value}"
+                      stopText="#{a4jStatusBean.attributes['stopText'].value}"
+                      >
+                <f:facet name="start">
+                    <h:outputText id="statusTextStart" style="font-size: large; color: red;" value="START" />
+                </f:facet>
 
-                    <f:facet name="error">
-                        <h:outputText id="statusTextError" style="font-size: large; color: red;" value="ERROR" />
-                    </f:facet>
-                </a4j:status>
-            </fieldset>
+                <f:facet name="stop">
+                    <h:outputText id="statusTextStop" style="font-size: large; color: red;" value="STOP" />
+                </f:facet>
+
+                <f:facet name="error">
+                    <h:outputText id="statusTextError" style="font-size: large; color: red;" value="ERROR" />
+                </f:facet>
+            </a:status>
+            &lt;&lt;&lt;
 
             <fieldset>
                 <legend>form1</legend>
                 <h:form id="form1">
-                    <a4j:commandButton id="button1" value="Send Ajax Request"/>
+                    <a:commandButton id="button1" value="Send Ajax Request"/>
                 </h:form>
             </fieldset>
 
             <fieldset>
                 <legend>form2</legend>
                 <h:form id="form2">
-                    <a4j:commandButton id="button2" value="Send Ajax Request"/>
+                    <a:commandButton id="button2" value="Send Ajax Request"/>
                 </h:form>
             </fieldset>
 
             <fieldset>
                 <legend>form3</legend>
                 <h:form id="form3">
-                    <a4j:commandButton id="button3" value="Send Ajax Request Causing Error" action="#{richBean.causeError}"/>
+                    <a:commandButton id="button3" value="Send Ajax Request Causing Error" action="#{richBean.causeError}"/>
                 </h:form>
             </fieldset>
 

@@ -27,10 +27,10 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
-import org.richfaces.tests.page.fragments.impl.inplaceSelect.InplaceSelect;
-import org.richfaces.tests.page.fragments.impl.panel.TextualFragmentPart;
-import org.richfaces.tests.page.fragments.impl.popupPanel.RichFacesPopupPanel;
+import org.richfaces.fragment.common.TextInputComponentImpl;
+import org.richfaces.fragment.inplaceSelect.InplaceSelect;
+import org.richfaces.fragment.panel.TextualFragmentPart;
+import org.richfaces.fragment.popupPanel.RichFacesPopupPanel;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.AddAlbumPanel.Body;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.HowItWorksPopupPanel.Controls;
 
@@ -77,7 +77,7 @@ public class AddAlbumPanel extends RichFacesPopupPanel<TextualFragmentPart, Cont
         @FindBy(css = "input[id$='albumName']")
         private TextInputComponentImpl albumNameInput;
         @FindBy(css = ".rf-is")
-        private RFInplaceSelect shelfSelect;// FIXME: replace with RichFacesInplaceSelect after method saveOnSelect fixed.
+        private RFInplaceSelect shelfSelect;
 
         public TextInputComponentImpl getAlbumNameInput() {
             return albumNameInput;

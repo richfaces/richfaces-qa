@@ -22,13 +22,12 @@
 package org.richfaces.tests.metamer.ftest.richOrderingList;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.fragment.common.Utils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

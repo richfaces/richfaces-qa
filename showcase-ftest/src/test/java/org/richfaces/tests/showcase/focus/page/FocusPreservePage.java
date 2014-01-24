@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
+import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.tests.showcase.focus.TestFocus;
 
 /**

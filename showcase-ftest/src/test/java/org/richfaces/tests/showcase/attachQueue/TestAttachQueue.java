@@ -21,10 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.attachQueue;
 
-import static org.jboss.arquillian.graphene.Graphene.waitGui;
-import static org.testng.Assert.assertTrue;
-
-import java.util.concurrent.TimeUnit;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
+import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
@@ -37,14 +35,19 @@ import org.testng.annotations.Test;
  */
 public class TestAttachQueue extends AbstractWebDriverTest {
 
-    private static final int DELAY_IN_MILISECONDS = 2000;
-    private static final int NO_DELAY = 0;
+    private static final int INPUT_DELAY = 2500;
+    private static final int BUTTON_NO_DELAY = 500;
+    private static final int DELTA = 500;
 
     @Page
     private AttachQueuePage page;
 
     @Test
     public void testInput() {
+        //warm up
+        for(int i = 0; i < 5; i++) {
+            guardAjax(page.input).sendKeys("a");
+        }
         for (int i = 0; i < 5; i++) {
             typeToTheInputAndCheckTheDelay();
         }
@@ -52,6 +55,10 @@ public class TestAttachQueue extends AbstractWebDriverTest {
 
     @Test
     public void testButton() {
+        //warm up
+        for(int i = 0; i < 5; i++) {
+            guardAjax(page.submit).click();
+        }
         for (int i = 0; i < 5; i++) {
             clickOnTheButtonAndCheckTheDelay();
         }
@@ -63,22 +70,10 @@ public class TestAttachQueue extends AbstractWebDriverTest {
      */
     private void typeToTheInputAndCheckTheDelay() {
         long timeBeforePressingKey = System.currentTimeMillis();
-        page.input.sendKeys("a");
-        waitGui(webDriver).withTimeout(3, TimeUnit.SECONDS)
-                .until()
-                .element(page.ajaxRequestProcessing)
-                .is()
-                .visible();
+        guardAjax(page.input).sendKeys("a");
         long timeAfterAjaxRequestIsPresent = System.currentTimeMillis();
-        page.submit.click();
-        waitGui(webDriver).until()
-                .element(page.ajaxRequestProcessing)
-                .is()
-                .visible();
         long actualDelay = timeAfterAjaxRequestIsPresent - timeBeforePressingKey;
-        assertTrue((actualDelay >= DELAY_IN_MILISECONDS) && (actualDelay <= DELAY_IN_MILISECONDS + 1000),
-            "The delay should be between " + DELAY_IN_MILISECONDS + "ms and " + (DELAY_IN_MILISECONDS + 1000)
-                + "ms but was:" + actualDelay);
+        assertEquals(actualDelay, INPUT_DELAY, DELTA);
     }
 
     /*
@@ -86,13 +81,8 @@ public class TestAttachQueue extends AbstractWebDriverTest {
      * */
     private void clickOnTheButtonAndCheckTheDelay() {
         long timeBeforePressingKey = System.currentTimeMillis();
-        page.submit.click();
-        waitGui(webDriver).until()
-                .element(page.ajaxRequestProcessing)
-                .is()
-                .visible();
+        guardAjax(page.submit).click();
         long actualDelay = System.currentTimeMillis() - timeBeforePressingKey;
-        assertTrue((actualDelay >= NO_DELAY) && (actualDelay <= NO_DELAY + 500), "The delay should be between "
-            + NO_DELAY + "ms and " + (NO_DELAY + 500) + "ms but was:!" + actualDelay);
+        assertEquals(actualDelay, BUTTON_NO_DELAY, DELTA);
     }
 }
