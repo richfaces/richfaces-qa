@@ -48,7 +48,7 @@ public class AbstractScrollerTest extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richDataScroller/simple.xhtml");
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = "smoke")
     public void prepareComponent() {
         // dataScrollerAttributes.set(DataScrollerAttributes.fastStep, fastStep);
         dataScrollerAttributes.set(DataScrollerAttributes.maxPages, maxPages);

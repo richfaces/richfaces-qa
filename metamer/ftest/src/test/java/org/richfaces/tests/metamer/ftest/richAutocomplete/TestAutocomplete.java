@@ -57,7 +57,7 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
         return buildUrl(contextPath, "faces/components/richAutocomplete/autocomplete.xhtml");
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = "smoke")
     public void prepareProperties() {
         autocompleteAttributes.set(AutocompleteAttributes.autofill, autofill);
         autocompleteAttributes.set(AutocompleteAttributes.selectFirst, selectFirst);

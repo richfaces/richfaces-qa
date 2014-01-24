@@ -147,7 +147,7 @@ public class TestTreeToggling extends AbstractTreeTest {
         testTopLevelNodesExpansion();
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = "smoke")
     public void verifyInitialState() {
         treeAttributes.set(TreeAttributes.toggleType, toggleType);
 //        disabled because of https://issues.jboss.org/browse/ARQGRA-309

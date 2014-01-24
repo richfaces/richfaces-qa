@@ -47,7 +47,7 @@ public class TestMatrix extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/a4jRepeat/matrix.xhtml");
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = "smoke")
     public void initializeTest() {
         page.initializeMatrix();
     }

@@ -117,7 +117,7 @@ public abstract class AbstractTreeSelectionTest extends AbstractTreeTest {
         return getIntsFromString(selection.getText());
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = "smoke")
     public void prepareTest() {
         treeAttributes.set(TreeAttributes.selectionType, selectionType);
         treeAttributes.set(TreeAttributes.toggleType, selectionType);

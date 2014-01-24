@@ -87,7 +87,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richInplaceSelect/simple.xhtml");
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = "smoke")
     public void initFragment() {
         select.advanced().setupSaveOnSelect(Boolean.TRUE);
     }

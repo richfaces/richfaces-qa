@@ -113,7 +113,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richTooltip/simple.xhtml");
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = "smoke")
     public void setupAttributes() {
         tooltipAttributes.set(TooltipAttributes.hideEvent, "mouseout");
         tooltipAttributes.set(TooltipAttributes.showEvent, "click");
