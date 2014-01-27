@@ -13,8 +13,6 @@
 
         <packages>
             <package name="org.richfaces.tests.metamer.ftest.richDragIndicator" />
-            <package name="org.richfaces.tests.metamer.ftest.richDragSource" />
-            <package name="org.richfaces.tests.metamer.ftest.richDropTarget" />
         </packages>
     </test>
 

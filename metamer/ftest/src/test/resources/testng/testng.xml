@@ -4,13 +4,6 @@
     <suite-files>
         <suite-file path="testng-core.xml"/>
         <suite-file path="testng-dnd.xml"/>
-        <suite-file path="testng-input.xml"/>
-        <suite-file path="testng-misc.xml"/>
-        <suite-file path="testng-output.xml"/>
-        <suite-file path="testng-switchable.xml"/>
-        <suite-file path="testng-tables.xml"/>
-        <suite-file path="testng-treemodel.xml"/>
-        <suite-file path="testng-trees.xml"/>
     </suite-files>
     
 </suite>
