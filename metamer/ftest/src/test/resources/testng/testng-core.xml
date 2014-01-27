@@ -12,7 +12,22 @@
         </groups>
 
         <packages>
+            <package name="org.richfaces.tests.metamer.ftest.a4jActionListener" />
+            <package name="org.richfaces.tests.metamer.ftest.a4jAjax" />
+            <package name="org.richfaces.tests.metamer.ftest.a4jAttachQueue" />
+            <package name="org.richfaces.tests.metamer.ftest.a4jCommandButton" />
+            <package name="org.richfaces.tests.metamer.ftest.a4jCommandLink" />
             <package name="org.richfaces.tests.metamer.ftest.a4jJSFunction" />
+            <package name="org.richfaces.tests.metamer.ftest.a4jLog" />
+            <package name="org.richfaces.tests.metamer.ftest.a4jMediaOutput" />
+            <package name="org.richfaces.tests.metamer.ftest.a4jOutputPanel" />
+            <package name="org.richfaces.tests.metamer.ftest.a4jParam" />
+            <package name="org.richfaces.tests.metamer.ftest.a4jPoll" />
+            <package name="org.richfaces.tests.metamer.ftest.a4jPush" />
+            <package name="org.richfaces.tests.metamer.ftest.a4jQueue" />
+            <package name="org.richfaces.tests.metamer.ftest.a4jRegion" />
+            <package name="org.richfaces.tests.metamer.ftest.a4jRepeat" />
+            <package name="org.richfaces.tests.metamer.ftest.a4jStatus" />        
         </packages>
     </test>
 
