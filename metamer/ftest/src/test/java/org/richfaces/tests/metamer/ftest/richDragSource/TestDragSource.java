@@ -25,6 +25,8 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
 
+import org.junit.Before;
+import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
@@ -38,6 +40,11 @@ public class TestDragSource extends AbstractDragSourceTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richDragSource/simple.xhtml");
+    }
+
+    @Before
+    public void clearActions() {
+        new Actions(driver).release().build().perform();
     }
 
     @Test
