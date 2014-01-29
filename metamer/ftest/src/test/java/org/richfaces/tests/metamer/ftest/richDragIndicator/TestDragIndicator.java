@@ -34,6 +34,7 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.page.Page;
+import org.junit.Before;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -41,8 +42,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
- * Test for rich:contextMenu component at
- * faces/components/richContextMenu/simple.xhtml
+ * Test for rich:contextMenu component at faces/components/richContextMenu/simple.xhtml
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @since 4.3.0.CR1
@@ -63,6 +63,11 @@ public class TestDragIndicator extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richDragIndicator/simple.xhtml");
     }
 
+    @Before
+    public void clearActions() {
+        new Actions(driver).release().build().perform();
+    }
+
     @Test
     public void testRendered() throws InterruptedException {
 
@@ -77,10 +82,7 @@ public class TestDragIndicator extends AbstractWebDriverTest {
         // firstly just drag and don't move. Indicator no displayed
         Action dragging = actionQueue.clickAndHold(page.drag1).build();
         dragging.perform();
-        Graphene.waitModel()
-                .until()
-                .element(page.indicator)
-                .is().not().present();
+        Graphene.waitModel().until().element(page.indicator).is().not().present();
 
         // just small move to display indicator
         dragging = actionQueue.moveByOffset(1, 1).build();
@@ -90,15 +92,9 @@ public class TestDragIndicator extends AbstractWebDriverTest {
 
         // simulate drop
         dragging = actionQueue.release().build();
-        Graphene.waitModel()
-                .until()
-                .element(page.indicator)
-                .is().present();
+        Graphene.waitModel().until().element(page.indicator).is().present();
         dragging.perform();
-        Graphene.waitModel()
-                .until()
-                .element(page.indicator)
-                .is().not().present();
+        Graphene.waitModel().until().element(page.indicator).is().not().present();
 
         // and now the same with indicator not rendered
         dragIndicatorAttributes.set(rendered, false);
@@ -107,10 +103,7 @@ public class TestDragIndicator extends AbstractWebDriverTest {
         // just small move to attempt display indicator
         dragging = actionQueue.clickAndHold(page.drag1).moveByOffset(1, 1).build();
         dragging.perform();
-        Graphene.waitModel()
-                .until()
-                .element(page.indicator)
-                .is().not().present();
+        Graphene.waitModel().until().element(page.indicator).is().not().present();
         actionQueue.release().perform();
     }
 
@@ -128,10 +121,7 @@ public class TestDragIndicator extends AbstractWebDriverTest {
         // firstly just drag and don't move. Indicator no displayed
         Action dragging = actionQueue.clickAndHold(page.drag1).build();
         dragging.perform();
-        Graphene.waitModel()
-                .until()
-                .element(page.indicator)
-                .is().not().present();
+        Graphene.waitModel().until().element(page.indicator).is().not().present();
 
         // just small move to display indicator
         dragging = actionQueue.moveByOffset(1, 1).build();
@@ -148,10 +138,7 @@ public class TestDragIndicator extends AbstractWebDriverTest {
         // this one as well
         dragging = actionQueue.release().build();
         dragging.perform();
-        Graphene.waitModel()
-                .until()
-                .element(page.indicator)
-                .is().not().present();
+        Graphene.waitModel().until().element(page.indicator).is().not().present();
     }
 
     @Test
@@ -164,10 +151,7 @@ public class TestDragIndicator extends AbstractWebDriverTest {
 
         Action dragging = actionQueue.clickAndHold(page.drag1).build();
         dragging.perform();
-        Graphene.waitModel()
-                .until()
-                .element(page.indicator)
-                .is().not().present();
+        Graphene.waitModel().until().element(page.indicator).is().not().present();
 
         // just small move to display indicator
         dragging = actionQueue.moveByOffset(1, 1).build();
@@ -184,10 +168,7 @@ public class TestDragIndicator extends AbstractWebDriverTest {
         dragging = actionQueue.release().build();
         String drop1Content = page.drop1.getText();
         dragging.perform();
-        Graphene.waitModel()
-                .until()
-                .element(page.indicator)
-                .is().not().present();
+        Graphene.waitModel().until().element(page.indicator).is().not().present();
         Graphene.waitModel().until().element(page.drop1).text().not().equalTo(drop1Content);
     }
 
@@ -200,10 +181,7 @@ public class TestDragIndicator extends AbstractWebDriverTest {
 
         Action dragging = actionQueue.clickAndHold(page.drag1).build();
         dragging.perform();
-        Graphene.waitModel()
-                .until()
-                .element(page.indicator)
-                .is().not().present();
+        Graphene.waitModel().until().element(page.indicator).is().not().present();
 
         // just small move to display indicator
         dragging = actionQueue.moveByOffset(1, 1).build();
@@ -219,10 +197,7 @@ public class TestDragIndicator extends AbstractWebDriverTest {
         // then release
         dragging = actionQueue.release().build();
         dragging.perform();
-        Graphene.waitModel()
-                .until()
-                .element(page.indicator)
-                .is().not().present();
+        Graphene.waitModel().until().element(page.indicator).is().not().present();
     }
 
     @Test
@@ -231,15 +206,12 @@ public class TestDragIndicator extends AbstractWebDriverTest {
         dragIndicatorAttributes.set(rejectClass, REJECT_CLASS);
         dragIndicatorAttributes.set(acceptClass, ACCEPT_CLASS);
 
-        for (int i=0; i <= 20; ++i) {
+        for (int i = 0; i <= 20; ++i) {
             Actions actionQueue = new Actions(driver);
 
             Action dragging = actionQueue.clickAndHold(page.drag1).build();
             dragging.perform();
-            Graphene.waitModel()
-                .until()
-                .element(page.indicator)
-                .is().not().present();
+            Graphene.waitModel().until().element(page.indicator).is().not().present();
 
             // just small move to display indicator
             dragging = actionQueue.moveByOffset(1, 1).build();
@@ -266,10 +238,7 @@ public class TestDragIndicator extends AbstractWebDriverTest {
             // then release
             dragging = actionQueue.release().build();
             dragging.perform();
-            Graphene.waitModel()
-                .until()
-                .element(page.indicator)
-                .is().not().present();
+            Graphene.waitModel().until().element(page.indicator).is().not().present();
         }
 
     }

@@ -28,7 +28,6 @@ import static javax.faces.event.PhaseId.PROCESS_VALIDATIONS;
 import static javax.faces.event.PhaseId.RENDER_RESPONSE;
 import static javax.faces.event.PhaseId.RESTORE_VIEW;
 import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
-
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState.ACCEPTING;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState.REJECTING;
@@ -49,6 +48,7 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.page.Page;
+import org.junit.Before;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -66,7 +66,7 @@ import org.testng.annotations.Test;
  * @since 4.3.0.CR1
  *
  */
-@Templates(exclude="richCollapsibleSubTable")
+@Templates(exclude = "richCollapsibleSubTable")
 public class TestDropTarget extends AbstractWebDriverTest {
 
     private final Attributes<DropTargetAttributes> dropTargetAttributes = getAttributes();
@@ -81,20 +81,31 @@ public class TestDropTarget extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richDropTarget/simple.xhtml");
     }
 
+    @Before
+    public void clearActions() {
+        new Actions(driver).release().build().perform();
+    }
+
     @Test
     public void testAcceptedTypes() {
         dropTargetAttributes.set(acceptedTypes, "drg2");
         indicator = new Indicator(page.indicator);
 
-        testAcception(page.drg1, REJECTING); doDrop();
-        testAcception(page.drg2, ACCEPTING); doDrop();
-        testAcception(page.drg3, REJECTING); doDrop();
+        testAcception(page.drg1, REJECTING);
+        doDrop();
+        testAcception(page.drg2, ACCEPTING);
+        doDrop();
+        testAcception(page.drg3, REJECTING);
+        doDrop();
 
         dropTargetAttributes.set(acceptedTypes, "drg1, drg3");
 
-        testAcception(page.drg1, ACCEPTING); doDrop();
-        testAcception(page.drg2, REJECTING); doDrop();
-        testAcception(page.drg3, ACCEPTING); doDrop();
+        testAcception(page.drg1, ACCEPTING);
+        doDrop();
+        testAcception(page.drg2, REJECTING);
+        doDrop();
+        testAcception(page.drg3, ACCEPTING);
+        doDrop();
     }
 
     @Test
@@ -109,7 +120,7 @@ public class TestDropTarget extends AbstractWebDriverTest {
         String drop2Content = page.drop2.getText();
         new Actions(driver).release(page.drop1).perform();
 
-//        new Actions(driver).dragAndDrop(page.drg1, page.drop1).build().perform();
+        // new Actions(driver).dragAndDrop(page.drg1, page.drop1).build().perform();
 
         // TODO JJa: find replacement
         // waitAjax.waitForChange(retrieveDrop1);
@@ -122,7 +133,7 @@ public class TestDropTarget extends AbstractWebDriverTest {
     @Test
     public void testDropListenerAndEvent() {
 
-        indicator =  new Indicator(page.indicator);
+        indicator = new Indicator(page.indicator);
 
         testAcceptedDropping(page.drg1);
         assertTrue(page.clientId.getText().endsWith("richDropTarget1"));
@@ -171,7 +182,7 @@ public class TestDropTarget extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-10535")
     public void testImmediate() {
         dropTargetAttributes.set(immediate, true);
-        indicator =  new Indicator(page.indicator);
+        indicator = new Indicator(page.indicator);
 
         testAcception(page.drg1, ACCEPTING);
         guardedDrop();
@@ -185,7 +196,7 @@ public class TestDropTarget extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-10535")
     public void testBypassUpdates() {
         dropTargetAttributes.set(bypassUpdates, true);
-        indicator =  new Indicator(page.indicator);
+        indicator = new Indicator(page.indicator);
 
         testAcception(page.drg1, ACCEPTING);
         guardedDrop();
@@ -201,7 +212,7 @@ public class TestDropTarget extends AbstractWebDriverTest {
         dropTargetAttributes.set(onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
         dropTargetAttributes.set(onbegin, "metamerEvents += \"begin \"");
         dropTargetAttributes.set(oncomplete, "metamerEvents += \"complete \"");
-        indicator =  new Indicator(page.indicator);
+        indicator = new Indicator(page.indicator);
 
         executeJS("metamerEvents = \"\";");
 
