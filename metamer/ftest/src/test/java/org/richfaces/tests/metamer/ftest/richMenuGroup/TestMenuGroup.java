@@ -394,7 +394,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
             "Vertical Offset does not work");
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = "smoke")
     private void updateDropDownMenuInvoker() {
         fileDropDownMenu.advanced().setupShowEvent(Event.MOUSEOVER);
     }
