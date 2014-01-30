@@ -462,8 +462,8 @@ public class TestPickList extends AbstractWebDriverTest {
         testStyle(pickList.advanced().getPickListInteractionPartElement());
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-13350")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-13350")
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(pickList.advanced().getPickListInteractionPartElement());

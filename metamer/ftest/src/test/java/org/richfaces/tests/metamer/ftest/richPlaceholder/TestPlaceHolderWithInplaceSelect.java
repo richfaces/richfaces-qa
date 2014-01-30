@@ -139,9 +139,8 @@ public class TestPlaceHolderWithInplaceSelect extends AbstractPlaceholderJSFTest
         super.testRendered();
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12651")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12623 https://issues.jboss.org/browse/RF-12651")
     @Override
     public void testStyleClass() {
         super.testStyleClass();
