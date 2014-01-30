@@ -359,7 +359,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
         testTitle(menuItem1);
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = "smoke")
     private void updateDropDownMenuInvoker() {
         fileDropDownMenu.advanced().setupShowEvent(Event.MOUSEOVER);
     }
