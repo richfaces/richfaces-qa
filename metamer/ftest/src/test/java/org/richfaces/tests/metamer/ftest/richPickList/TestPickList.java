@@ -675,6 +675,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-13350")
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(pickList.advanced().getRootElement());
