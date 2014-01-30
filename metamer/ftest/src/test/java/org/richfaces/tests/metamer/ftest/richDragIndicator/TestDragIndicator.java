@@ -34,7 +34,6 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.page.Page;
-import org.junit.Before;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -63,14 +62,8 @@ public class TestDragIndicator extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richDragIndicator/simple.xhtml");
     }
 
-    @Before
-    public void clearActions() {
-        new Actions(driver).release().build().perform();
-    }
-
     @Test
-    public void testRendered() throws InterruptedException {
-
+    public void testAAAA() throws InterruptedException {
         dragIndicatorAttributes.set(draggingClass, DRAGGING_CLASS);
         dragIndicatorAttributes.set(rendered, true);
 
@@ -109,7 +102,6 @@ public class TestDragIndicator extends AbstractWebDriverTest {
 
     @Test
     public void testDragging() {
-
         dragIndicatorAttributes.set(draggingClass, DRAGGING_CLASS);
         dragIndicatorAttributes.set(acceptClass, ACCEPT_CLASS);
 
@@ -143,7 +135,6 @@ public class TestDragIndicator extends AbstractWebDriverTest {
 
     @Test
     public void testAccepting() {
-
         dragIndicatorAttributes.set(draggingClass, DRAGGING_CLASS);
         dragIndicatorAttributes.set(acceptClass, ACCEPT_CLASS);
 
@@ -240,7 +231,5 @@ public class TestDragIndicator extends AbstractWebDriverTest {
             dragging.perform();
             Graphene.waitModel().until().element(page.indicator).is().not().present();
         }
-
     }
-
 }
