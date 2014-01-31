@@ -14,7 +14,7 @@ FSF site: http://www.fsf.org. -->
 
     <groupId>org.richfaces.tests</groupId>
     <artifactId>richfaces-qa-parent</artifactId>
-    <version>5.0.0.20140131-Alpha3</version>
+    <version>5.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>RichFaces QA Parent</name>
@@ -346,7 +346,7 @@ FSF site: http://www.fsf.org. -->
         <connection>scm:git:git://github.com/richfaces/qa.git</connection>
         <developerConnection>scm:git:git@github.com:richfaces/qa.git</developerConnection>
         <url>https://github.com/richfaces/qa</url>
-        <tag>5.0.0.20140131-Alpha3</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <dependencyManagement>

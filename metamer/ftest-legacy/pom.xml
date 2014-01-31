@@ -20,7 +20,7 @@
     <parent>
         <groupId>org.richfaces.tests</groupId>
         <artifactId>metamer-root</artifactId>
-        <version>5.0.0.20140131-Alpha3</version>
+        <version>5.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
