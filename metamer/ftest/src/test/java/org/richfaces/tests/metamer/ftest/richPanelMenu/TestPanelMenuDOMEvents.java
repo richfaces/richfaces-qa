@@ -99,7 +99,7 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     public void testOnmousedown() {
         Action mousedown = new Actions(driver).clickAndHold(page.getPanelMenu().advanced().getRootElement()).build();
         testFireEvent(panelMenuAttributes, onmousedown, mousedown);
-        new Actions(driver).release().build();
+        new Actions(driver).release().perform();
     }
 
     @Test
