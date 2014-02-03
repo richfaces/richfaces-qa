@@ -311,8 +311,15 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-13322")
+    @Templates(exclude = "a4jRegion")
     public void testOnselectionchange() {
+        testFireEvent(treeAttributes, TreeAttributes.onselectionchange, selectFirstNodeAjaxAction);
+    }
+
+    @Test(groups = "Future")
+    @Templates(value = "a4jRegion")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13322")
+    public void testOnselectionchangeInRegion() {
         testFireEvent(treeAttributes, TreeAttributes.onselectionchange, selectFirstNodeAjaxAction);
     }
 

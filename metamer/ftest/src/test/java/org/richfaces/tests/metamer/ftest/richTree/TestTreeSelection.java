@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richTree;
 
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
 import org.testng.annotations.Test;
@@ -33,10 +34,21 @@ import org.testng.annotations.Test;
 public class TestTreeSelection extends AbstractTreeSelectionTest {
 
     @Test
+    @Templates(exclude = "a4jRegion")
     @Uses({
         @Use(field = "selectionType", value = "selectionTypeAjax"),
         @Use(field = "sample", strings = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" }) })
     public void testSubNodesSelectionAjax() {
+        testSubNodesSelection();
+    }
+
+    @Test(groups = "Future")
+    @Templates(value = "a4jRegion")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13322")
+    @Uses({
+        @Use(field = "selectionType", value = "selectionTypeAjax"),
+        @Use(field = "sample", strings = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" }) })
+    public void testSubNodesSelectionAjaxInRegion() {
         testSubNodesSelection();
     }
 
@@ -73,10 +85,21 @@ public class TestTreeSelection extends AbstractTreeSelectionTest {
     }
 
     @Test
+    @Templates(exclude = "a4jRegion")
     @Uses({
         @Use(field = "selectionType", value = "selectionTypeAjax"),
         @Use(field = "sample", strings = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" }) })
     public void testTopLevelSelectionAjax() {
+        testTopLevelSelection();
+    }
+
+    @Test(groups = "Future")
+    @Templates(value = "a4jRegion")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13322")
+    @Uses({
+        @Use(field = "selectionType", value = "selectionTypeAjax"),
+        @Use(field = "sample", strings = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" }) })
+    public void testTopLevelSelectionAjaxInRegion() {
         testTopLevelSelection();
     }
 
