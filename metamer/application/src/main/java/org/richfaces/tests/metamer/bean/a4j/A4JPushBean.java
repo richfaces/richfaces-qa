@@ -27,10 +27,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Event;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.joda.time.DateTime;
 import org.richfaces.push.MessageException;
@@ -49,7 +49,7 @@ import org.slf4j.LoggerFactory;
  * @author Nick Belaevski, <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 23169 $
  */
-@ManagedBean(name = "a4jPushBean")
+@Named("a4jPushBean")
 @SessionScoped
 public class A4JPushBean implements Serializable {
 
