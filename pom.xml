@@ -54,8 +54,8 @@ FSF site: http://www.fsf.org. -->
         <!-- arquillian versions -->
         <arquillian.bom.version>1.1.2.Final</arquillian.bom.version>
         <arquillian.tomcat.version>1.0.0.CR5</arquillian.tomcat.version>
-        <arquillian.drone.version>1.2.2.Final</arquillian.drone.version>
-        <arquillian.graphene.version>2.0.0.Final</arquillian.graphene.version>
+        <arquillian.drone.version>1.2.3.Final</arquillian.drone.version>
+        <arquillian.graphene.version>2.0.1.Final</arquillian.graphene.version>
         <arquillian.glassfish3-1.version>1.0.0.CR4</arquillian.glassfish3-1.version>
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
         <arquillian.android.version>1.0.0.Alpha2</arquillian.android.version>
