@@ -131,9 +131,8 @@ public class TestPlaceHolderWithInplaceInput extends AbstractPlaceholderJSFTest 
         super.testHTTPSubmit();
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12650")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12623 https://issues.jboss.org/browse/RF-12650")
     @Override
     public void testRendered() {
         super.testRendered();

@@ -51,6 +51,7 @@ import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -385,8 +386,8 @@ public class TestContextMenu extends AbstractWebDriverTest {
         testOnclick();
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12792")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12792")
     public void testOnkeydown() {
         updateShowAction();
         page.getContextMenu().advanced().show(page.getTargetPanel1());
