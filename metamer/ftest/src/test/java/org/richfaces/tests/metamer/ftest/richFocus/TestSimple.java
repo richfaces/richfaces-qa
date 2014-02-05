@@ -31,6 +31,7 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -87,7 +88,7 @@ public class TestSimple extends AbstractWebDriverTest {
     }
 
     @Test
-    @Templates(exclude = { "richPopupPanel" })
+    @Templates(exclude = { "richPopupPanel", "richAccordion", "richCollapsiblePanel", "richTabPanel" })
     public void testValidationAwareFalse() {
         // richPopupPanel is disabled because in place where following attribute is to be set the popup
         // window appears, therefore making it unclickable
@@ -104,5 +105,12 @@ public class TestSimple extends AbstractWebDriverTest {
         String actual = page.getNameInput().getStringValue();
         assertTrue(actual.contains(AbstractFocusPage.EXPECTED_STRING), "The name input should contain string "
             + AbstractFocusPage.EXPECTED_STRING + ", because validationAware is false!");
+    }
+
+    @Test(groups = "Future")
+    @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-13263")
+    public void testValidationAwareFalseInSwitchablePanels() {
+        testValidationAwareFalse();
     }
 }
