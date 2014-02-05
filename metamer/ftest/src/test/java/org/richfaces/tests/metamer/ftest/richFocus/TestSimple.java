@@ -73,6 +73,7 @@ public class TestSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(exclude = { "richAccordion", "richCollapsiblePanel", "richTabPanel" })
     public void testValidationAwareTrue() {
         page.getNameInput().sendKeys("Robert");
         page.getAgeInput().sendKeys("38");
@@ -85,6 +86,13 @@ public class TestSimple extends AbstractWebDriverTest {
         String actual = page.getAddressInput().getStringValue();
         assertEquals(actual, AbstractFocusPage.EXPECTED_STRING,
             "The address input should be focused! Since validationAware is true and that input is incorrect!");
+    }
+
+    @Test(groups = "Future")
+    @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-13263")
+    public void testValidationAwareTrueInSwitchablePanels() {
+        testValidationAwareTrue();
     }
 
     @Test
