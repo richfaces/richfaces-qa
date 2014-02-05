@@ -70,6 +70,7 @@ import org.testng.annotations.BeforeMethod;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
+import java.util.concurrent.TimeUnit;
 
 public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
@@ -127,6 +128,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             throw new SkipException("webDriver isn't initialized");
         }
         if (runInPortalEnv) {
+            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
             goToTestInPortal();
         } else {
             driver.get(buildUrl(getTestUrl() + "?templates=" + template.toString()).toExternalForm());
