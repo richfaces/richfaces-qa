@@ -28,6 +28,7 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -40,6 +41,7 @@ import org.testng.annotations.Test;
  * @since 4.3.0.M2
  */
 @RegressionTest("https://issues.jboss.org/browse/RF-10482")
+@Templates("plain")
 public class TestHCommandLink extends AbstractAjaxTest {
 
     private final Attributes<AjaxAttributes> ajaxAttributes = getAttributes();
