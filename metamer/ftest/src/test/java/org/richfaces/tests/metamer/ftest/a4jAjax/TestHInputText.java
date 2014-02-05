@@ -27,6 +27,7 @@ import static org.testng.Assert.assertEquals;
 import java.net.URL;
 
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
 /**
@@ -35,6 +36,7 @@ import org.testng.annotations.Test;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @since 4.3.0.M2
  */
+@Templates("plain")
 public class TestHInputText extends AbstractAjaxTest {
 
     @Override
