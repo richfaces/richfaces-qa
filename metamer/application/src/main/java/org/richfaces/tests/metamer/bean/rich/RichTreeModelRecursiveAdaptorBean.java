@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.annotation.PostConstruct;
 import javax.el.ELContext;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.richfaces.component.UITreeModelRecursiveAdaptor;
@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22460 $
  */
 @ManagedBean(name = "richTreeModelRecursiveAdaptorBean")
-@ViewScoped
+@SessionScoped
 public class RichTreeModelRecursiveAdaptorBean implements Serializable {
 
 

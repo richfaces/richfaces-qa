@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.component.UIPanel;
 import org.richfaces.tests.metamer.Attributes;
@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22460 $
  */
 @ManagedBean(name = "richPanelBean")
-@ViewScoped
+@SessionScoped
 public class RichPanelBean implements Serializable {
 
     private static final long serialVersionUID = 48122475400649801L;

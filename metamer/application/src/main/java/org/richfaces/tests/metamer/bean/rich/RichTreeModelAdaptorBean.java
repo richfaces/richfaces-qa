@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.component.UITreeModelAdaptor;
 import org.richfaces.tests.metamer.Attributes;
@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22460 $
  */
 @ManagedBean(name = "richTreeModelAdaptorBean")
-@ViewScoped
+@SessionScoped
 public class RichTreeModelAdaptorBean implements Serializable {
 
     private static final long serialVersionUID = 4008175400649809L;
