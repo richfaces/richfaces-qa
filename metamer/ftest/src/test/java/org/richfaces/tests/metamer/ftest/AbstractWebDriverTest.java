@@ -123,6 +123,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         if (driver == null) {
             throw new SkipException("webDriver isn't initialized");
         }
+        driver.manage().deleteAllCookies();
         driver.get(buildUrl(getTestUrl() + "?templates=" + template.toString()).toExternalForm());
         driverType = DriverType.getCurrentType(driver);
     }
