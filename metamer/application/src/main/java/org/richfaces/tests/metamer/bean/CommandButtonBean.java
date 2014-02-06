@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.event.ActionEvent;
 
@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 21194 $
  */
 @ManagedBean(name = "buttonBean")
-@ViewScoped
+@SessionScoped
 public class CommandButtonBean implements Serializable {
 
     private static final long serialVersionUID = -2576526843426776944L;

@@ -36,7 +36,7 @@ import java.util.TreeSet;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.event.ComponentSystemEvent;
 
 import org.richfaces.component.UITree;
@@ -63,7 +63,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 23123 $
  */
 @ManagedBean(name = "richTreeBean")
-@ViewScoped
+@SessionScoped
 public class RichTreeBean implements Serializable {
 
     private static final long serialVersionUID = 1L;

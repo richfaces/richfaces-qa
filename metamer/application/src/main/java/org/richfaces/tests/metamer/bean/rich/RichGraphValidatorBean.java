@@ -33,7 +33,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.validation.constraints.AssertTrue;
@@ -57,7 +57,7 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @ManagedBean(name = "richGraphValidatorBean")
-@ViewScoped
+@SessionScoped
 public class RichGraphValidatorBean implements Serializable, Cloneable {
 
     private static final long serialVersionUID = 1L;

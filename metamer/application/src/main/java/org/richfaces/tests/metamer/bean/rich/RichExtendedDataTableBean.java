@@ -28,7 +28,7 @@ import java.util.TreeSet;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.ajax4jsf.model.DataComponentState;
 import org.richfaces.component.UIDataTableBase;
@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22460 $
  */
 @ManagedBean(name = "richExtendedDataTableBean")
-@ViewScoped
+@SessionScoped
 public class RichExtendedDataTableBean implements Serializable {
 
     private static final long serialVersionUID = 1L;

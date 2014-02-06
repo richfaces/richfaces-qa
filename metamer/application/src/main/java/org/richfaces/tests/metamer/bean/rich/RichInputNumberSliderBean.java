@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.component.html.HtmlInputNumberSlider;
 import org.richfaces.tests.metamer.Attributes;
@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @ManagedBean(name = "richInputNumberSliderBean")
-@ViewScoped
+@SessionScoped
 public class RichInputNumberSliderBean extends NumberInputValidationBeanImpl implements Serializable {
 
     private static final long serialVersionUID = 595154649809L;

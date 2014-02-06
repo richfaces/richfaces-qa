@@ -26,7 +26,7 @@ import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
 
 import org.richfaces.component.UIPoll;
@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22460 $
  */
 @ManagedBean(name = "a4jPollBean")
-@ViewScoped
+@SessionScoped
 public class A4JPollBean implements Serializable {
 
     private static final long serialVersionUID = 4810889475400649809L;

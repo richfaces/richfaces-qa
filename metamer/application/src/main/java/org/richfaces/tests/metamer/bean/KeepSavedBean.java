@@ -24,13 +24,13 @@ package org.richfaces.tests.metamer.bean;
 import com.google.common.collect.Lists;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class KeepSavedBean {
 
     private List<Data> dataList = Lists.newArrayList(new Data(1), new Data(2), new Data(3), new Data(4));

@@ -27,7 +27,7 @@ import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.component.UINotify;
 import org.richfaces.tests.metamer.Attributes;
@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @ManagedBean(name = "richNotifyBean")
-@ViewScoped
+@SessionScoped
 public class RichNotifyBean implements Serializable {
 
     private static final long serialVersionUID = 1L;

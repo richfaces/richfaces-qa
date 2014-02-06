@@ -23,7 +23,7 @@ package org.richfaces.tests.metamer.bean;
 import static org.richfaces.tests.metamer.bean.RichBean.logToPage;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.event.AbortProcessingException;
 import org.richfaces.event.ItemChangeEvent;
 import org.richfaces.event.ItemChangeListener;
@@ -32,7 +32,7 @@ import org.richfaces.event.ItemChangeListener;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class ItemChangeListenerBean2 implements ItemChangeListener {
 
     @Override

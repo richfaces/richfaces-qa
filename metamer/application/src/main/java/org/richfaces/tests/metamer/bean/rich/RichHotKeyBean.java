@@ -27,7 +27,7 @@ import java.util.Collection;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.component.UIHotKey;
 import org.richfaces.tests.metamer.Attributes;
@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 23135 $
  */
 @ManagedBean(name = "richHotKeyBean")
-@ViewScoped
+@SessionScoped
 public class RichHotKeyBean implements Serializable {
 
     private static final long serialVersionUID = -1L;
