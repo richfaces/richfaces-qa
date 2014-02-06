@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.ui.toggle.togglePanel.UITogglePanelItem;
@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22460 $
  */
 @ManagedBean(name = "richTogglePanelItemBean")
-@ViewScoped
+@SessionScoped
 public class RichTogglePanelItemBean implements Serializable {
 
     private static final long serialVersionUID = -1L;

@@ -23,13 +23,13 @@ package org.richfaces.tests.metamer.bean;
 
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @ManagedBean(name = "valueBean")
-@ViewScoped
+@SessionScoped
 public class ValueBean implements Serializable {
 
     public static final String DEFAULT_VALUE = "Default value";

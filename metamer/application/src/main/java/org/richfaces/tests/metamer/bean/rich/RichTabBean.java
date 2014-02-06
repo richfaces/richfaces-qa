@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.ui.toggle.tabPanel.UITab;
@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22825 $
  */
 @ManagedBean(name = "richTabBean")
-@ViewScoped
+@SessionScoped
 public class RichTabBean implements Serializable {
 
     private static final long serialVersionUID = -1L;

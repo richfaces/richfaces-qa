@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22620 $
  */
 @ManagedBean(name = "a4jRegionBean")
-@ViewScoped
+@SessionScoped
 public class A4JRegionBean implements Serializable {
 
     private static final long serialVersionUID = -1L;

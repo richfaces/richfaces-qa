@@ -27,7 +27,7 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.ui.iteration.dataScroller.UIDataScroller;
@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22977 $
  */
 @ManagedBean(name = "richDataScrollerBean")
-@ViewScoped
+@SessionScoped
 public class RichDataScrollerBean implements Serializable {
 
     private static final long serialVersionUID = 122475400649809L;

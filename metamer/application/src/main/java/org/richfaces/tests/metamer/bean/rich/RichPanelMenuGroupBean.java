@@ -27,7 +27,7 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.bean.RichBean;
@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22460 $
  */
 @ManagedBean(name = "richPanelMenuGroupBean")
-@ViewScoped
+@SessionScoped
 public class RichPanelMenuGroupBean implements Serializable {
 
     private static final long serialVersionUID = -1L;

@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.ui.iteration.column.UIColumnGroup;
@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 23047 $
  */
 @ManagedBean(name = "richColumnGroupBean")
-@ViewScoped
+@SessionScoped
 public class RichColumnGroupBean implements Serializable {
 
     private static final long serialVersionUID = -1L;

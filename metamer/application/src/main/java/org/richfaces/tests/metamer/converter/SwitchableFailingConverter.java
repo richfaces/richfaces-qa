@@ -25,7 +25,7 @@ import static java.lang.Boolean.FALSE;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -37,7 +37,7 @@ import javax.faces.event.PhaseId;
  * Converter for testing of input components @converter and @converterMessage.
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-@ViewScoped
+@SessionScoped
 @FacesConverter(value = "switchableFailingConverter")
 @ManagedBean(name = "switchableFailingConverter")
 public class SwitchableFailingConverter implements Converter {

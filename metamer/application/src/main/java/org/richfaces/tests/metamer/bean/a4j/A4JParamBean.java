@@ -26,7 +26,7 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.richfaces.ui.ajax.parameter.UIParameter;
@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22460 $
  */
 @ManagedBean(name = "a4jParamBean")
-@ViewScoped
+@SessionScoped
 public class A4JParamBean implements Serializable {
 
     private static final long serialVersionUID = -23993426776944L;

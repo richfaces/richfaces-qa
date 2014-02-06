@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
 
 import org.richfaces.tests.metamer.Attributes;
@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22460 $
  */
 @ManagedBean(name = "a4jLinkBean")
-@ViewScoped
+@SessionScoped
 public class A4JCommandLinkBean implements Serializable {
 
     private static final long serialVersionUID = -2556076843426776944L;

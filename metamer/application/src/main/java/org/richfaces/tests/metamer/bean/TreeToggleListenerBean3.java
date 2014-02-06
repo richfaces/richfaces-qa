@@ -23,7 +23,7 @@ package org.richfaces.tests.metamer.bean;
 import static org.richfaces.tests.metamer.bean.RichBean.logToPage;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.event.AbortProcessingException;
 import org.richfaces.ui.iteration.tree.TreeToggleEvent;
 import org.richfaces.ui.iteration.tree.TreeToggleListener;
@@ -31,7 +31,7 @@ import org.richfaces.ui.iteration.tree.TreeToggleListener;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-@ViewScoped
+@SessionScoped
 @ManagedBean
 public class TreeToggleListenerBean3 implements TreeToggleListener {
 

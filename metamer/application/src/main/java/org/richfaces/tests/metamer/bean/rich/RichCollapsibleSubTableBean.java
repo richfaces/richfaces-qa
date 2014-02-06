@@ -30,7 +30,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.ColumnSortingMap;
@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 23004 $
  */
 @ManagedBean(name = "richSubTableBean")
-@ViewScoped
+@SessionScoped
 public class RichCollapsibleSubTableBean implements Serializable {
 
     private static final long serialVersionUID = -1L;

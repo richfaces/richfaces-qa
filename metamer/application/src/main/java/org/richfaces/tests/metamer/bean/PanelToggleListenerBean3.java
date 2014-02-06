@@ -21,7 +21,7 @@
 package org.richfaces.tests.metamer.bean;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.event.AbortProcessingException;
 import org.richfaces.ui.toggle.PanelToggleEvent;
 import org.richfaces.ui.toggle.PanelToggleListener;
@@ -30,7 +30,7 @@ import org.richfaces.ui.toggle.PanelToggleListener;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class PanelToggleListenerBean3 implements PanelToggleListener {
 
     @Override

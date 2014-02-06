@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.validation.constraints.Size;
 
 import org.richfaces.tests.metamer.Attributes;
@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @ManagedBean(name = "richPlaceholderBean")
-@ViewScoped
+@SessionScoped
 public class RichPlaceholderBean implements Serializable {
 
     private static final long serialVersionUID = 1L;

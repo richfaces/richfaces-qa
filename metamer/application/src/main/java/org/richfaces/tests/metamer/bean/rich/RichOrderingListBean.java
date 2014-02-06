@@ -29,7 +29,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.model.Capital;
@@ -45,7 +45,7 @@ import com.google.common.collect.Lists;
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 @ManagedBean(name = "richOrderingListBean")
-@ViewScoped
+@SessionScoped
 public class RichOrderingListBean implements Serializable {
 
     public static final int LIST_SIZE = 7;

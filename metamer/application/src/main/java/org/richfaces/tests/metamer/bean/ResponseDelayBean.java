@@ -25,13 +25,13 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @ManagedBean(name = "responseDelayBean")
-@ViewScoped
+@SessionScoped
 public class ResponseDelayBean implements Serializable {
 
     private static final long serialVersionUID = -8116123004872799500L;

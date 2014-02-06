@@ -27,7 +27,7 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.ui.iteration.dataGrid.UIDataGrid;
@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22460 $
  */
 @ManagedBean(name = "richDataGridBean")
-@ViewScoped
+@SessionScoped
 public class RichDataGridBean implements Serializable {
 
     private static final long serialVersionUID = 4814439475400649809L;

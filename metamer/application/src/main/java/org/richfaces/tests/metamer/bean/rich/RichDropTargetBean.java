@@ -31,7 +31,7 @@ import java.util.Map.Entry;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.model.drag.DragValue;
@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22460 $
  */
 @ManagedBean(name = "richDropTargetBean")
-@ViewScoped
+@SessionScoped
 public class RichDropTargetBean implements Serializable {
 
     private static final long serialVersionUID = 4008175400649809L;

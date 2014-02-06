@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import org.richfaces.tests.metamer.Attribute;
 
 import org.richfaces.tests.metamer.Attributes;
@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22460 $
  */
 @ManagedBean(name = "richProgressBarBean")
-@ViewScoped
+@SessionScoped
 public class RichProgressBarBean implements Serializable {
 
     public static final long UPDATE_INTERVAL = 500; //1 update per 500ms

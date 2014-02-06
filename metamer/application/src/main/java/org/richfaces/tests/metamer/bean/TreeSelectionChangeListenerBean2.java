@@ -23,7 +23,7 @@ package org.richfaces.tests.metamer.bean;
 import static org.richfaces.tests.metamer.bean.RichBean.logToPage;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.event.AbortProcessingException;
 import org.richfaces.ui.iteration.tree.TreeSelectionChangeEvent;
 import org.richfaces.ui.iteration.tree.TreeSelectionChangeListener;
@@ -31,7 +31,7 @@ import org.richfaces.ui.iteration.tree.TreeSelectionChangeListener;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-@ViewScoped
+@SessionScoped
 @ManagedBean
 public class TreeSelectionChangeListenerBean2 implements TreeSelectionChangeListener {
 

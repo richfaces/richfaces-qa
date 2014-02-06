@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.ui.menu.contextMenu.UIContextMenu;
@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision$
  */
 @ManagedBean(name = "richContextMenuBean")
-@ViewScoped
+@SessionScoped
 public class RichContextMenuBean implements Serializable {
 
     /** Generated serial version UID */

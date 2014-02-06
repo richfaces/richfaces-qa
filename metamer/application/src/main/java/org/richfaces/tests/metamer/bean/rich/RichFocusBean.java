@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.services.ServiceTracker;
 import org.richfaces.tests.metamer.Attributes;
@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22460 $
  */
 @ManagedBean(name = "richFocusBean")
-@ViewScoped
+@SessionScoped
 public class RichFocusBean implements Serializable {
 
     private static final long serialVersionUID = 111475400679809L;

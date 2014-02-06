@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.ui.output.popupPanel.UIPopupPanel;
@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22630 $
  */
 @ManagedBean(name = "richPopupPanelBean")
-@ViewScoped
+@SessionScoped
 public class RichPopupPanelBean implements Serializable {
 
     private static final long serialVersionUID = -1L;

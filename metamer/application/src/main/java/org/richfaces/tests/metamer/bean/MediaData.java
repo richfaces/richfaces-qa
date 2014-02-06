@@ -22,12 +22,12 @@
 package org.richfaces.tests.metamer.bean;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.resource.SerializableResource;
 
 @ManagedBean(name = "mediaData")
-@ViewScoped
+@SessionScoped
 public class MediaData implements SerializableResource {
 
     private static final long serialVersionUID = 1L;

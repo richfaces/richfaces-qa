@@ -30,7 +30,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
 import org.richfaces.tests.metamer.converter.SwitchableFailingConverter;
@@ -40,7 +40,7 @@ import org.richfaces.tests.metamer.converter.SwitchableFailingConverter;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @ManagedBean(name = "converterBean")
-@ViewScoped
+@SessionScoped
 public class ConverterBean implements Serializable {
 
     public static final String DEFAULT_VALUE = "";

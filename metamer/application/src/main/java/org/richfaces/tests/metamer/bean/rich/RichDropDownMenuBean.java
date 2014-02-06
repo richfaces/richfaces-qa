@@ -28,7 +28,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 23042 $
  */
 @ManagedBean(name = "richDropDownMenuBean")
-@ViewScoped
+@SessionScoped
 public class RichDropDownMenuBean implements Serializable {
 
     private static final long serialVersionUID = -1L;

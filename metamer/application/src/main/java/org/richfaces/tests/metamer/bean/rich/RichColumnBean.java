@@ -26,7 +26,7 @@ import java.util.Comparator;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.model.Filter;
 import org.richfaces.tests.metamer.Attributes;
@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22460 $
  */
 @ManagedBean(name = "richColumnBean")
-@ViewScoped
+@SessionScoped
 public class RichColumnBean implements Serializable {
 
     public static final Comparator<Capital> STATE_NAME_LENGTH_COMPARATOR = new Comparator<Capital>() {
