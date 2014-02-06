@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 /**
  *  Backing bean for RF-12084 issue simulation
@@ -33,7 +33,7 @@ import javax.faces.bean.ViewScoped;
  * @version $Revision$
  */
 @ManagedBean(name="testBean")
-@ViewScoped
+@SessionScoped
 public class TestBean implements Serializable {
     /** Generated serial version UID */
     private static final long serialVersionUID = 4286023483110293076L;

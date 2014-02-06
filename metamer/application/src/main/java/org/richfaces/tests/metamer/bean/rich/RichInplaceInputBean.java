@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.component.UIInplaceInput;
 import org.richfaces.tests.metamer.Attributes;
@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @ManagedBean(name = "richInplaceInputBean")
-@ViewScoped
+@SessionScoped
 public class RichInplaceInputBean extends StringInputValidationBeanImpl implements Serializable {
 
     private static final long serialVersionUID = -1L;

@@ -26,7 +26,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.component.html.HtmlMessage;
 import org.richfaces.tests.metamer.Attributes;
@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 23138 $
  */
 @ManagedBean(name = "richMessageBean")
-@ViewScoped
+@SessionScoped
 public class RichMessageBean extends MessageTestingBean implements Serializable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RichMessageBean.class);

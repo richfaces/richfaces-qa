@@ -28,7 +28,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.component.UICollapsibleSubTableToggleControl;
 import org.richfaces.tests.metamer.Attributes;
@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22460 $
  */
 @ManagedBean(name="richSubTableTogglerBean")
-@ViewScoped
+@SessionScoped
 public class RichCollapsibleSubTableTogglerBean implements Serializable {
 
     private static final long serialVersionUID = -1L;

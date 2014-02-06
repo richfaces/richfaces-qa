@@ -30,7 +30,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.component.UIOrderingList;
 import org.richfaces.tests.metamer.Attributes;
@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 @ManagedBean(name = "richOrderingListBean")
-@ViewScoped
+@SessionScoped
 public class RichOrderingListBean implements Serializable {
 
     private static final long serialVersionUID = 5868941019675985273L;

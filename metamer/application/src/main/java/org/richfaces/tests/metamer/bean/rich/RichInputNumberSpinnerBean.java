@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.component.html.HtmlInputNumberSpinner;
 import org.richfaces.tests.metamer.Attributes;
@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22460 $
  */
 @ManagedBean(name = "richInputNumberSpinnerBean")
-@ViewScoped
+@SessionScoped
 public class RichInputNumberSpinnerBean extends NumberInputValidationBeanImpl implements Serializable {
 
     private static final long serialVersionUID = -1L;

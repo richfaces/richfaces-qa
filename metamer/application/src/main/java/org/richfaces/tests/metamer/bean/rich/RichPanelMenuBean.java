@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.component.UIPanelMenu;
 import org.richfaces.event.ItemChangeEvent;
@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22460 $
  */
 @ManagedBean(name = "richPanelMenuBean")
-@ViewScoped
+@SessionScoped
 public class RichPanelMenuBean implements Serializable {
 
     private static final long serialVersionUID = -1L;
