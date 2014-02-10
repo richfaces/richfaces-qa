@@ -46,9 +46,6 @@ FSF site: http://www.fsf.org. -->
         <version.tomcat6>6.0.36</version.tomcat6>
         <version.tomcat7>7.0.50</version.tomcat7>
         <version.tomcat8>8.0.1</version.tomcat8>
-        <tomcat6Zip>path/to/your/tomcat/distribution/zip</tomcat6Zip>
-        <tomcat7Zip>path/to/your/tomcat/distribution/zip</tomcat7Zip>
-        <tomcat8Zip>path/to/your/tomcat/distribution/zip</tomcat8Zip>
 
         <!-- versions of TomEE containers to use and download -->
         <version.tomee1-1>1.1.0-SNAPSHOT</version.tomee1-1>
