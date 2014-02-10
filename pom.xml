@@ -1293,18 +1293,26 @@ FSF site: http://www.fsf.org. -->
             <build>
                 <plugins>
                     <plugin>
-                        <artifactId>maven-antrun-plugin</artifactId>
+                        <artifactId>maven-dependency-plugin</artifactId>
                         <executions>
                             <execution>
-                                <phase>generate-resources</phase>
-                                <configuration>
-                                    <tasks>
-                                        <unzip src="${tomcat7Zip}" dest="${project.build.directory}" />
-                                    </tasks>
-                                </configuration>
+                                <id>unpack</id>
+                                <phase>process-test-classes</phase>
                                 <goals>
-                                    <goal>run</goal>
+                                    <goal>unpack</goal>
                                 </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.apache.tomcat</groupId>
+                                            <artifactId>tomcat</artifactId>
+                                            <version>${version.tomcat7}</version>
+                                            <type>zip</type>
+                                            <overWrite>false</overWrite>
+                                            <outputDirectory>${project.build.directory}</outputDirectory>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
@@ -1313,7 +1321,7 @@ FSF site: http://www.fsf.org. -->
                         <executions>
                             <execution>
                                 <id>copy-resources</id>
-                                <phase>process-resources</phase>
+                                <phase>process-test-classes</phase>
                                 <goals>
                                     <goal>copy-resources</goal>
                                 </goals>
