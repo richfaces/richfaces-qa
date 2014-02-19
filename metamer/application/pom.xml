@@ -27,11 +27,13 @@ FSF site: http://www.fsf.org. -->
     <properties>
         <jetty.port>8080</jetty.port>
         <version.hornetq>2.2.13.Final</version.hornetq>
+        <version.jstlapi>1.2-rev-1</version.jstlapi>
         <glassfish31.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*</glassfish31.excluded.libraries>
         <jbas71.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*</jbas71.excluded.libraries>
         <tomee11.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*</tomee11.excluded.libraries>
         <tomcat7-mojarra.excluded.libraries>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/jsp-api*</tomcat7-mojarra.excluded.libraries>
         <tomcat7-myfaces.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/jsp-api*</tomcat7-myfaces.excluded.libraries>
+        <prepareExplodedWar.filesToDelete/>
     </properties>
 
     <dependencies>
@@ -82,10 +84,6 @@ FSF site: http://www.fsf.org. -->
             <groupId>javax.el</groupId>
             <artifactId>el-api</artifactId>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet.jsp.jstl</groupId>
-            <artifactId>jstl-api</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -171,6 +169,16 @@ FSF site: http://www.fsf.org. -->
             <artifactId>joda-time</artifactId>
             <type>jar</type>
         </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sourceforge.cssparser</groupId>
+            <artifactId>cssparser</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -234,6 +242,9 @@ FSF site: http://www.fsf.org. -->
                     <name>!disable-default-war</name>
                 </property>
             </activation>
+            <properties>
+                <prepareExplodedWar.filesToDelete>${jbas71.excluded.libraries}</prepareExplodedWar.filesToDelete>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -259,6 +270,9 @@ FSF site: http://www.fsf.org. -->
         </profile>
         <profile>
             <id>war-tomee11</id>
+            <properties>
+                <prepareExplodedWar.filesToDelete>${tomee11.excluded.libraries}</prepareExplodedWar.filesToDelete>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -282,6 +296,9 @@ FSF site: http://www.fsf.org. -->
         </profile>
         <profile>
             <id>war-tomcat7-mojarra</id>
+            <properties>
+                <prepareExplodedWar.filesToDelete>${tomcat7-mojarra.excluded.libraries}</prepareExplodedWar.filesToDelete>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -305,9 +322,19 @@ FSF site: http://www.fsf.org. -->
                     </plugin>
                 </plugins>
             </build>
+            <dependencies>
+                <dependency>
+                    <groupId>javax.servlet.jsp.jstl</groupId>
+                    <artifactId>jstl-api</artifactId>
+                    <version>${version.jstlapi}</version>
+                </dependency>
+            </dependencies>
         </profile>
         <profile>
             <id>war-tomcat7-myfaces</id>
+            <properties>
+                <prepareExplodedWar.filesToDelete>${tomcat7-myfaces.excluded.libraries}</prepareExplodedWar.filesToDelete>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -342,10 +369,18 @@ FSF site: http://www.fsf.org. -->
                     <artifactId>myfaces-impl</artifactId>
                     <scope>runtime</scope>
                 </dependency>
+                <dependency>
+                    <groupId>javax.servlet.jsp.jstl</groupId>
+                    <artifactId>jstl-api</artifactId>
+                    <version>${version.jstlapi}</version>
+                </dependency>
             </dependencies>
         </profile>
         <profile>
             <id>war-glassfish31</id>
+            <properties>
+                <prepareExplodedWar.filesToDelete>${glassfish31.excluded.libraries}</prepareExplodedWar.filesToDelete>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -361,6 +396,37 @@ FSF site: http://www.fsf.org. -->
                                     <classifier>glassfish31</classifier>
                                     <packagingExcludes>${glassfish31.excluded.libraries}</packagingExcludes>
                                 </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>prepareExplodedWar</id>
+            <activation>
+                <property>
+                    <name>prepareExplodedWar</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <configuration>
+                                    <target>
+                                        <echo message="deleting from folder: ${basedir}/target/metamer/ , files: ${prepareExplodedWar.filesToDelete}"/>
+                                        <delete>
+                                            <fileset dir="${basedir}/target/metamer/" includes="${prepareExplodedWar.filesToDelete}"/>
+                                        </delete>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
                             </execution>
                         </executions>
                     </plugin>
@@ -514,7 +580,3 @@ FSF site: http://www.fsf.org. -->
         </profile>
     </profiles>
 </project>
-
-
-
-

@@ -91,10 +91,6 @@
         <url-pattern>/org.richfaces.resources/*</url-pattern>
     </servlet-mapping>
     
-    <!-- <listener>
-        <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
-    </listener>-->
-    
     <!-- to enable CDI (with Weld) on Tomcat -->
     ${listeners}
     
