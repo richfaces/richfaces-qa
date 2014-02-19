@@ -117,7 +117,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:selectBooleanCheckbox id="reComponentCheckbox" value="#{richBean.reComponent}" onchange="submit();" />
 
                     <h:outputLabel id="metamerResponseDelayLabel" value="Delay response by [ms]: " for="metamerResponseDelayInput" />
-                    <h:inputText id="metamerResponseDelayInput" style="width: 50px;" value="#{responseDelayBean.delay}" onchange="submit();"  />
+                    <h:inputText id="metamerResponseDelayInput" style="width: 50px;" value="#{richBean.delay}" onchange="submit();" />
+
+                    <h:outputLabel id="metamerStatelessViewLabel" value="Stateless view (JSF 2.2+): " for="metamerStatelessViewInput" />
+                    <h:selectBooleanCheckbox id="metamerStatelessViewInput" value="#{richBean.stateless}" onchange="submit();"/>
                 </h:panelGrid>
             </h:form>
 
