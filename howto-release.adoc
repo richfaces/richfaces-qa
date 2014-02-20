@@ -1,0 +1,70 @@
+= Release Process
+
+This guide provides a chronological steps which goes through release tagging, and publishing. Every RichFaces 5.x release is tested both automatically (i.e. Jenkins runs Selenium test suite) and manually in chosen web browsers. All release Jenkins jobs can be found in https://jenkins.mw.lab.eng.bos.redhat.com/hudson/view/RichFaces/view/Release/[Release] tab on Jenkins.
+
+== Prerequisites
+
+You need to make sure you have access to the internal JBoss QA nexus server, with permissions to release. The documents above have information on this, but if you are not sure please contact JBoss helpdesk, and follow up with the project lead.
+
+=== Release settings
+
+Before beginning any of the procedures below you need to setup your maven installation.
+
+Use following template for a `release-settings.xml` and pass it to all Maven executions (just change `username`, `password` and `localRepository` settings as convenient):
+
+[source,xml]
+----
+<settings>
+    <localRepository>/path/to/repository/you/can/write/to</localRepository>
+
+    <mirrors>
+        <mirror>
+            <id>jboss-staging-repository-group</id>
+            <mirrorOf>!jboss-qa-releases,!jboss-public-repository-group,central</mirrorOf>
+            <name>JBoss.org Staging Repository Group</name>
+            <url>https://repository.jboss.org/nexus/content/groups/staging</url>
+        </mirror>
+    </mirrors>
+
+    <servers>
+        <server>
+            <id>jboss-qa-releases</id>
+            <username>{your_username}</username>
+            <password>{your_password}</password>
+        </server>
+    </servers>
+
+</settings>
+----
+
+Using these settings you will use separated local repository which will be popullated only with artifacts from https://repository.jboss.org/nexus/content/repositories/staging/[JBoss Staging repository] and released artifacts. That way you can verify that the build is reproducible using JBoss Maven repositories.
+
+=== Nexus Information
+
+Once the release is done and Nexus's Staging repository for given release is closed (published), the bits are available through https://repository.jboss.org/nexus/content/repositories/staging/[JBoss Staging repository]. They are waiting there for verification and promotion to https://repository.jboss.org/nexus/content/repositories/releases/[JBoss Releases repository]. In the case of needed respin, broken RichFaces bits are removed from the staging repository.
+
+=== First Steps
+
+QE team lead will create a JIRA task in project RFPL for testing release containing subtasks for each member of team. The parent task and its subtask need to have "QE" component set. The easiest way is to clone QE release task from latest release, e.g. https://issues.jboss.org/browse/RFPL-3008[RFPL-3008]. Fix version and task summary need to be changed manually in both parent task and all subtask. The umbrella JIRA task should be linked to this QE task. Sub tasks should be self-describing or should contain details about what needs to be tested.
+
+=== Releasing Functional Test Suite
+
+. Verify that you are able to commit to RichFaces QA repository.
+. Verify that you are able to upload artifacts to https://mojo.redhat.com/docs/DOC-71905[Nexus QA] (setup and check setting.xml) - you have to setup credentials for repository with id  jboss-qa-releases
+.. see the settings.xml example on the top of this document
+. Clone the git repository.
+.. `git clone git@github.com:richfaces/richfaces-qa.git`
+. Update RichFaces version from snapshot to release version and push to Github.
+.. Usually the `release.sh` script would fail if there are snapshot dependencies.
+.. Exceptionally, it is possible to add `-DignoreSnapshots=true` to the `CONF` variable in release.sh script.
+. Run release script.
+.. First, script will ask you if the specified version of RichFaces is correct.
+.. Then the release script will ask for tests release version. Use timestamp format, e.g. `4.3.4.20130919-Final`.
+.. Then the release script will ask for new development version, use next suitable snapshot, e.g. `4.3.5-SNAPSHOT`.
+.. At the end the release script will ask for path to your settings.xml file, use path to the file prepared in step 2.1.
+. Follow the instructions (press ENTER) to go through all the steps: clean, dry run, clean, prepare, perform.
+. After prepare, the tag is created. You should see the tag on Github at this moment.
+. After perform, the artifacts are released to http://nexus.qa.jboss.com:8081/nexus/content/repositories/releases/org/richfaces/tests/[Nexus QA repository].
+. After release, change RichFaces version back to snapshot and push changes to Github.
+
+
