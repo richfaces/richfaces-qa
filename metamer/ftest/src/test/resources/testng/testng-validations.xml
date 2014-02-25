@@ -1,7 +1,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="seleniumTest">
+<suite name="Validations suite">
 
-    <test name="All Selenium 2 Tests" preserve-order="false">
+    <test name="All CSV and JSR-303 Tests" preserve-order="false">
         <groups>
             <run>
                 <exclude name="4.3" />

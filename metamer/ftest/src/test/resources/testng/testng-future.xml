@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="seleniumTest">
+<suite name="Tests in Future group suite">
 
     <test name="All Components to Be Fixed in Future" preserve-order="false">
         <groups>
