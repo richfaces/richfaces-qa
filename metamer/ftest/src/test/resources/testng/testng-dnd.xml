@@ -1,7 +1,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="seleniumTest">
+<suite name="DnD components suite">
 
-    <test name="Miscellaneous Components" preserve-order="false">
+    <test name="DnD Components" preserve-order="false">
         <groups>
             <run>
                 <exclude name="4.3" />

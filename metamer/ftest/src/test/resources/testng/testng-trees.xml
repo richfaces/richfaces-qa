@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="seleniumTest">
+<suite name="Trees components suite">
 
     <test name="Tree Components" preserve-order="false">
         <groups>

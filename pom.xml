@@ -61,7 +61,8 @@ FSF site: http://www.fsf.org. -->
         <arquillian.android.version>1.0.0.Alpha2</arquillian.android.version>
         <shrinkwrap.descriptors.version>2.0.0-alpha-5</shrinkwrap.descriptors.version>
 
-        <version.selenium>2.37.1</version.selenium>
+        <version.selenium>2.39.0</version.selenium>
+        <version.testng>6.8.7</version.testng>
 
         <!-- these are set as Environmental variables to let Arquillian know where distribution of managed containers are -->
         <glassfish3-1home>${project.build.directory}/glassfish3</glassfish3-1home>
@@ -358,7 +359,7 @@ FSF site: http://www.fsf.org. -->
             <dependency>
                 <groupId>org.testng</groupId>
                 <artifactId>testng</artifactId>
-                <version>6.1.1</version>
+                <version>${version.testng}</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.arquillian.graphene</groupId>

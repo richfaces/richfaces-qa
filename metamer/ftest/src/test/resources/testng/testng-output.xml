@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="seleniumTest">
+<suite name="Output components suite">
 
     <test name="Output Components" preserve-order="false">
         <groups>
