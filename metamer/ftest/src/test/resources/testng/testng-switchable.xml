@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="seleniumTest">
+<suite name="Switchable components suite">
 
     <test name="Switchable Components" preserve-order="false">
         <groups>
