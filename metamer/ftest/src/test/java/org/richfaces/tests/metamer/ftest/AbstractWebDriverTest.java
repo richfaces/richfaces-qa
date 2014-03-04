@@ -40,6 +40,7 @@ import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactor
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.SearchContext;
@@ -135,6 +136,9 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             driver.get(buildUrl(getTestUrl() + "?templates=" + template.toString()).toExternalForm());
         }
         driverType = DriverType.getCurrentType(driver);
+
+        // resize browser window to 1280x1024 or full screen
+        driver.manage().window().setSize(new Dimension(1280, 1024));
     }
 
     protected Attributes<BasicAttributes> getBasicAttributes() {
