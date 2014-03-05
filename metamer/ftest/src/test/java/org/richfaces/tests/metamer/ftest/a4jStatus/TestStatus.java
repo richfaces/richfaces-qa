@@ -33,7 +33,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestSimple extends AbstractStatusTest {
+public class TestStatus extends AbstractStatusTest {
 
     @Override
     public URL getTestUrl() {
