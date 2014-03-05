@@ -44,7 +44,7 @@ import org.testng.annotations.Test;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @since 5.0.0.Alpha1
  */
-public class TestSimple extends AbstractWebDriverTest {
+public class TestRepeat extends AbstractWebDriverTest {
 
     private final Attributes<RepeatAttributes> repeatAttributes = getAttributes();
 
