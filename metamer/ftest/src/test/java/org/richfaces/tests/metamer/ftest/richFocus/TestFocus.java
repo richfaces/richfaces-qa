@@ -39,7 +39,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class TestSimple extends AbstractWebDriverTest {
+public class TestFocus extends AbstractWebDriverTest {
 
     private final Attributes<FocusAttributes> focusAttributes = getAttributes();
 
