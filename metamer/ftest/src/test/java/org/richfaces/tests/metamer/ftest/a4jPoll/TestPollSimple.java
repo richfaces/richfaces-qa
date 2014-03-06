@@ -30,6 +30,7 @@ import static javax.faces.event.PhaseId.RESTORE_VIEW;
 import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -40,9 +41,8 @@ import org.jboss.arquillian.graphene.javascript.JavaScript;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.BeforeMethod;
@@ -60,15 +60,9 @@ public class TestPollSimple extends AbstractWebDriverTest {
     @Page
     private MetamerPage metamerPage;
 
-    @JavaScript
-    private Window window;
-
-    @Inject
-    @Use(empty = false)
     private Integer interval;
+    private Integer[] ints = { 1500, 2500 };
 
-    @Inject
-    @Use(empty = true)
     private String event;
     private String[] events = new String[]{ "timer", "begin", "beforedomupdate", "complete" };
 
@@ -116,7 +110,7 @@ public class TestPollSimple extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "event", value = "events")
+    @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "events")
     public void testClientSideEvent() {
         testClientSideEventHandlers(event);
     }
@@ -178,7 +172,7 @@ public class TestPollSimple extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "interval", ints = { 1500, 2500 })
+    @UseWithField(field = "interval", valuesFrom = FROM_FIELD, value = "ints")
     @Templates("plain")
     public void testIntervals() {
         testDelay(intervalTestingAction, intervalTestingAction, "interval", interval);

@@ -38,9 +38,8 @@ FSF site: http://www.fsf.org. -->
             -Djboss.bind.address.unsecure=${arquillian.container.jbossas.7-1.node0}</arquillian.container.jbossas.7-1.jvm.args>
 
         <templates>plain</templates>
-
-        <testng.listeners>org.richfaces.tests.metamer.ftest.MatrixConfigurator,org.richfaces.tests.metamer.ftest.MetamerConsoleStatusTestListener,org.richfaces.tests.metamer.ftest.MetamerFailureLoggingTestListener</testng.listeners>
-        <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
+        <testng.listeners>org.richfaces.tests.metamer.ftest.extension.configurator.transformer.DataProviderTestTransformer</testng.listeners>
+        <testng.suite.xml>src/test/resources/testng/testng-all.xml</testng.suite.xml>
     </properties>
 
     <dependencies>
@@ -109,10 +108,10 @@ FSF site: http://www.fsf.org. -->
             <version>${project.version}</version>
         </dependency>
         <dependency>
-    	    <groupId>org.richfaces</groupId>
-    	    <artifactId>richfaces-page-fragments</artifactId>
-    	    <scope>test</scope>
-	</dependency>
+            <groupId>org.richfaces</groupId>
+            <artifactId>richfaces-page-fragments</artifactId>
+            <scope>test</scope>
+        </dependency>
         <!-- see the https://community.jboss.org/wiki/WhatsTheCauseOfThisExceptionJavalangClassFormatErrorAbsentCode -->
         <dependency>
             <groupId>org.jboss.spec</groupId>

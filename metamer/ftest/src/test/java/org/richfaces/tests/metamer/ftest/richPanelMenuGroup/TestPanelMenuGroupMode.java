@@ -30,6 +30,7 @@ import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.richfaces.ui.common.Mode.ajax;
 import static org.richfaces.ui.common.Mode.client;
 import static org.richfaces.ui.common.Mode.server;
@@ -40,9 +41,8 @@ import java.util.LinkedList;
 
 import javax.faces.event.PhaseId;
 
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.metamer.ftest.annotations.Uses;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.ui.common.Mode;
 import org.testng.annotations.Test;
@@ -56,25 +56,20 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
 
     private final Attributes<PanelMenuGroupAttributes> panelMenuGroupAttributes = getAttributes();
 
-    @Inject
-    @Use(booleans = { true, false })
     private Boolean immediate;
-
-    @Inject
-    @Use(booleans = { true, false })
     private Boolean bypassUpdates;
-
-    @Inject
-    @Use("requestModes")
     private Mode mode;
     private Mode[] requestModes = new Mode[]{ ajax, server };
-
-    @Inject
-    @Use("listeners")
     private String listener;
-    private String[] listeners = new String[] { "phases", "action invoked", "action listener invoked", "executeChecker", "item changed" };
+    private String[] listeners = new String[]{ "phases", "action invoked", "action listener invoked", "executeChecker", "item changed" };
 
     @Test
+    @Uses({
+        @UseWithField(field = "immediate", valuesFrom = FROM_FIELD, value = "booleans"),
+        @UseWithField(field = "bypassUpdates", valuesFrom = FROM_FIELD, value = "booleans"),
+        @UseWithField(field = "listener", valuesFrom = FROM_FIELD, value = "listeners"),
+        @UseWithField(field = "mode", valuesFrom = FROM_FIELD, value = "requestModes")
+    })
     public void testRequestMode() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.immediate, immediate);
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.bypassUpdates, bypassUpdates);
@@ -110,8 +105,6 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
     }
 
     @Test
-    @Uses({ @Use(field = "immediate", empty = true), @Use(field = "bypassUpdates", empty = true),
-            @Use(field = "mode", empty = true), @Use(field = "listener", empty = true) })
     public void testClientMode() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, client);
 

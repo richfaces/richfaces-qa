@@ -21,9 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richHotKey;
 
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
+
 import org.openqa.selenium.Keys;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.annotations.Test;
 
 /**
@@ -32,8 +33,6 @@ import org.testng.annotations.Test;
  */
 public class TestHotKeyAttributes extends AbstractHotKeyTest {
 
-    @Inject
-    @Use(empty = false)
     private KeysEnum key;
 
     public enum KeysEnum {
@@ -68,7 +67,7 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
     }
 
     @Test
-    @Use(field = "key", enumeration = true)
+    @UseWithField(field = "key", valuesFrom = FROM_ENUM, value = "")
     public void testKey() {
         firstHotkeyAttributes.set(HotKeyAttributes.key, key.keysString);
         hotkey1.setupHotkey(key.toString());

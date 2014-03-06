@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -32,8 +33,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
 import org.richfaces.fragment.calendar.DayPicker;
 import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.model.CalendarModel;
 import org.testng.annotations.Test;
 
@@ -48,8 +48,7 @@ public class TestCalendarPreloadedDates extends AbstractCalendarTest {
 
     private static final DateTime secondOfJanuary2012 = new DateTime(2012, 1, 2, 12, 0);
     private static final DateTime firstOfFebruary2012 = new DateTime(2012, 2, 1, 12, 0);
-    @Inject
-    @Use(empty = false)
+
     private DateTime date;
     private DateTime[] inBoundsDates = { secondOfJanuary2012, firstOfFebruary2012, secondOfJanuary2012.plusYears(1) };
     private DateTime[] outOfBounds = { secondOfJanuary2012.minusMonths(1), firstOfFebruary2012.plusYears(1) };
@@ -90,14 +89,14 @@ public class TestCalendarPreloadedDates extends AbstractCalendarTest {
     }
 
     @Test
-    @Use(field = "date", value = "inBoundsDates")
+    @UseWithField(field = "date", valuesFrom = FROM_FIELD, value = "inBoundsDates")
     public void testClassesInPreloadedBoundaries() {
         Graphene.guardAjax(popupCalendar.openPopup()).setDateTime(date);
         checkClasses(Boolean.TRUE);
     }
 
     @Test
-    @Use(field = "date", value = "outOfBounds")
+    @UseWithField(field = "date", valuesFrom = FROM_FIELD, value = "outOfBounds")
     public void testClassesOutOfPreloadedBoundaries() {
         Graphene.guardAjax(popupCalendar.openPopup()).setDateTime(date);
         checkClasses(Boolean.FALSE);

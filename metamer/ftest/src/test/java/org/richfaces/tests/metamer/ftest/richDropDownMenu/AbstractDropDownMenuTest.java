@@ -43,7 +43,6 @@ import org.openqa.selenium.internal.Locatable;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.dropDownMenu.RichFacesDropDownMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuSimplePage;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 
@@ -55,6 +54,8 @@ import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
 
     private final Attributes<DropDownMenuAttributes> dropDownMenuAttributes = getAttributes();
+    protected Integer delay;
+    protected Integer[] delays = { 1000, 1500, 1900 };
 
     private RichFacesDropDownMenu getCurrentMenu() {
         return page.getFileDropDownMenu(driver.getCurrentUrl());
@@ -95,7 +96,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         assertNotVisible(page.getGroupList(), "Submenu should not be expanded.");
         guardNoRequest(
             new Actions(driver).moveToElement(
-            getCurrentMenu().advanced().getItemsElements().get(3)).build())
+                getCurrentMenu().advanced().getItemsElements().get(3)).build())
             .perform();
         assertVisible(page.getGroupList(), "Submenu should be expanded.");
 
@@ -207,7 +208,6 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         }
     }
 
-    @Use(field = "delay", ints = { 1000, 1500, 2500 })
     public void testHideDelay(int delay) {
         dropDownMenuAttributes.set(DropDownMenuAttributes.showDelay, 0);
         updateDropDownMenuInvoker();
@@ -306,7 +306,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
                 getCurrentMenu().advanced().show(page.getTarget1());
                 new Actions(driver)
                     .moveToElement(
-                    getCurrentMenu().advanced().getItemsElements().get(3)).build()
+                        getCurrentMenu().advanced().getItemsElements().get(3)).build()
                     .perform();
                 waitGui().until().element(page.getGroupList()).is().visible();
                 new Actions(driver)
@@ -325,7 +325,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
                 getCurrentMenu().advanced().show(page.getTarget1());
                 new Actions(driver)
                     .moveToElement(
-                    getCurrentMenu().advanced().getItemsElements().get(3)).build()
+                        getCurrentMenu().advanced().getItemsElements().get(3)).build()
                     .perform();
                 waitGui().until().element(page.getGroupList()).is().visible();
             }
@@ -356,9 +356,9 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
                 getCurrentMenu().advanced().show(page.getTarget1());
                 new Actions(driver)
                     .keyDown(getCurrentMenu().advanced().getItemsElements().get(2),
-                    Keys.CONTROL)
+                        Keys.CONTROL)
                     .keyUp(getCurrentMenu().advanced().getItemsElements().get(2),
-                    Keys.CONTROL).build().perform();
+                        Keys.CONTROL).build().perform();
             }
         });
     }
@@ -406,7 +406,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
                 getCurrentMenu().advanced().show(page.getTarget1());
                 new Actions(driver)
                     .moveToElement(
-                    getCurrentMenu().advanced().getItemsElements().get(3)).build()
+                        getCurrentMenu().advanced().getItemsElements().get(3)).build()
                     .perform();
                 waitModel().until().element(page.getGroupList()).is().visible();
                 new Actions(driver).moveToElement(page.getRequestTimeElement()).build().perform();

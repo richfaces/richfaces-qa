@@ -26,6 +26,8 @@ import static javax.faces.event.PhaseId.RENDER_RESPONSE;
 import static javax.faces.event.PhaseId.RESTORE_VIEW;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
@@ -42,9 +44,8 @@ import org.richfaces.fragment.common.Locations;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.tooltip.TextualRichFacesTooltip;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -64,17 +65,11 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     @Page
     private TooltipPage page;
 
-    @Inject
-    @Use(empty = false)
     private Direction direction;
-
-    @Inject
-    @Use(empty = true)
-    private Integer delay;
-
-    @Inject
-    @Use(empty = true)
     private TooltipMode mode;
+
+    private Integer delay;
+    private final Integer[] delays = { 0, 1000, 1900 };
 
     private enum Direction {
 
@@ -142,11 +137,11 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
                 @Override
                 public void perform() {
                     Utils.tolerantAssertLocationsEquals(
-                    tooltip().advanced().getTooltipElement(),
-                    tooltipWillMove
-                    ? locations.getLocations().moveAllBy(-moveBy, 0)
-                    : locations.getLocations(),
-                    tolerance, tolerance, "");
+                        tooltip().advanced().getTooltipElement(),
+                        tooltipWillMove
+                        ? locations.getLocations().moveAllBy(-moveBy, 0)
+                        : locations.getLocations(),
+                        tolerance, tolerance, "");
                 }
             })
             .perform();
@@ -170,7 +165,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "direction", enumeration = true)
+    @UseWithField(field = "direction", valuesFrom = FROM_ENUM, value = "")
     @Templates(value = "plain")
     public void testDirection() {
         int tolerance = 5;
@@ -215,7 +210,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "delay", ints = { 0, 1000, 1900 })
+    @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
     public void testHideDelay() {
         testDelay(new Action() {
             @Override
@@ -279,7 +274,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "mode", enumeration = true)
+    @UseWithField(field = "mode", valuesFrom = FROM_ENUM, value = "")
     public void testMode() {
         tooltipAttributes.set(TooltipAttributes.mode, mode);
         (mode.equals(TooltipMode.ajax)
@@ -475,7 +470,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "delay", ints = { 0, 1000, 1900 })
+    @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
     public void testShowDelay() {
         testDelay(new Action() {
             @Override

@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-
 package org.richfaces.tests.metamer.converter;
 
 import javax.faces.FacesException;
@@ -27,13 +26,13 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+
 import org.richfaces.tests.metamer.Template;
 
 /**
  * Converter used for view parameter "template".
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22330 $
  */
 @FacesConverter(value = "templateNameConverter")
 public class TemplateNameConverter implements Converter {
@@ -43,7 +42,7 @@ public class TemplateNameConverter implements Converter {
      */
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         try {
-            return Template.valueOf(value.toUpperCase());
+            return Template.valueFrom(value);
         } catch (IllegalArgumentException iae) {
             throw new FacesException("Cannot convert parameter \"" + value + "\" to the name of template.", iae);
         }
@@ -56,11 +55,9 @@ public class TemplateNameConverter implements Converter {
         if (value instanceof String) {
             return (String) value;
         }
-
         if (value instanceof Template) {
             return ((Template) value).toString();
         }
-
         throw new FacesException("Cannot convert parameter \"" + value + "\" to the name of template.");
     }
 }

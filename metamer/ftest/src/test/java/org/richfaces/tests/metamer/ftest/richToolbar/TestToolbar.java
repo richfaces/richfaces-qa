@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.ftest.richToolbar;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemStyle;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -37,9 +38,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -63,8 +63,6 @@ public class TestToolbar extends AbstractWebDriverTest {
         By.cssSelector("td[id$=copy_itm]"), By.cssSelector("td[id$=save_itm]"), By.cssSelector("td[id$=saveAs_itm]"),
         By.cssSelector("td[id$=saveAll_itm]"), By.cssSelector("td[id$=input_itm]"), By.cssSelector("td[id$=button_itm]") };
 
-    @Inject
-    @Use(empty = true)
     private String itemSeparator;
 
     @Override
@@ -112,7 +110,7 @@ public class TestToolbar extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "itemSeparator", value = "separators")
+    @UseWithField(field = "itemSeparator", valuesFrom = FROM_FIELD, value = "separators")
     public void testItemSeparatorCorrect() {
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, itemSeparator);
 
@@ -278,7 +276,7 @@ public class TestToolbar extends AbstractWebDriverTest {
             "Attribute style should have 100% width when it is not set.");
 
         toolbarAttributes.set(ToolbarAttributes.width, "500px");
-         styleAttr = page.getToolbar().getAttribute("style");
+        styleAttr = page.getToolbar().getAttribute("style");
         assertTrue(styleAttr.contains("width: 500px"), "Attribute style should have width 500px.");
     }
 

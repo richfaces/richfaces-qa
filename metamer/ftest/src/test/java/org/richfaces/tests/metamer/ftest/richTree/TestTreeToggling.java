@@ -21,13 +21,15 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTree;
 
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import org.richfaces.fragment.switchable.SwitchType;
 import org.richfaces.fragment.tree.Tree.TreeNode;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -38,10 +40,9 @@ public class TestTreeToggling extends AbstractTreeTest {
 
     private static final int TOP_LEVEL_NODES = 4;
 
-    protected int[][] paths = new int[][]{ { 0, 1, 0 }, { 3, 3, 0 } };
+    protected Integer[][] paths = new Integer[][]{ { 0, 1, 0 }, { 3, 3, 0 } };
 
-    @Inject
-    @Use(enumeration = true)
+    @UseForAllTests(valuesFrom = FROM_ENUM, value = "")
     private SwitchType toggleType = SwitchType.CLIENT;
 
     private TreeNode treeNode;
@@ -58,7 +59,7 @@ public class TestTreeToggling extends AbstractTreeTest {
     }
 
     @Test
-    @Use(field = "sample", value = "simpleSwingTreeNode")
+    @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "simpleSwingTreeNode")
     public void testDeepCollapsion() {
         checkInitialState();
 
@@ -74,18 +75,18 @@ public class TestTreeToggling extends AbstractTreeTest {
     }
 
     @Test(groups = "extended")
-    @Use(field = "sample", value = "richFacesTreeNodes")
+    @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "richFacesTreeNodes")
     public void testDeepCollapsion2() {
         checkInitialState();
         testDeepCollapsion();
     }
 
     @Test
-    @Use(field = "sample", value = "simpleSwingTreeNode")
+    @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "simpleSwingTreeNode")
     public void testDeepExpansion() {
         checkInitialState();
-        for (int[] path : paths) {
-            int depth = path.length-1;
+        for (Integer[] path : paths) {
+            int depth = path.length - 1;
             for (int d = 0; d <= depth; d++) {
                 int number = path[d];
 
@@ -103,13 +104,13 @@ public class TestTreeToggling extends AbstractTreeTest {
     }
 
     @Test(groups = "extended")
-    @Use(field = "sample", value = "richFacesTreeNodes")
+    @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "richFacesTreeNodes")
     public void testDeepExpansion2() {
         testDeepExpansion();
     }
 
     @Test
-    @Use(field = "sample", value = "simpleSwingTreeNode")
+    @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "simpleSwingTreeNode")
     public void testTopLevelNodesCollapsion() {
         checkInitialState();
         testTopLevelNodesExpansion();
@@ -123,13 +124,13 @@ public class TestTreeToggling extends AbstractTreeTest {
     }
 
     @Test(groups = "extended")
-    @Use(field = "sample", value = "richFacesTreeNodes")
+    @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "richFacesTreeNodes")
     public void testTopLevelNodesCollapsion2() {
         testTopLevelNodesCollapsion();
     }
 
     @Test
-    @Use(field = "sample", value = "simpleSwingTreeNode")
+    @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "simpleSwingTreeNode")
     public void testTopLevelNodesExpansion() {
         checkInitialState();
         for (int i = 1; i <= TOP_LEVEL_NODES; i++) {
@@ -142,7 +143,7 @@ public class TestTreeToggling extends AbstractTreeTest {
     }
 
     @Test(groups = "extended")
-    @Use(field = "sample", value = "richFacesTreeNodes")
+    @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "richFacesTreeNodes")
     public void testTopLevelNodesExpansion2() {
         testTopLevelNodesExpansion();
     }

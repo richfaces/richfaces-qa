@@ -29,7 +29,7 @@ import java.net.URL;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.status.Status.StatusState;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

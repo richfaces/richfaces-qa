@@ -31,6 +31,8 @@ import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 
 import java.net.URL;
 import java.util.LinkedList;
@@ -39,12 +41,10 @@ import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.ui.common.Mode;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -58,21 +58,15 @@ public class TestPanelMenuItemMode extends AbstractWebDriverTest {
     @Page
     private PanelMenuItemPage page;
 
-    @Inject
-    @Use(booleans = { true, false })
+    @UseForAllTests(valuesFrom = FROM_FIELD, value = "booleans")
     private Boolean immediate;
-
-    @Inject
-    @Use(booleans = { true, false })
+    @UseForAllTests(valuesFrom = FROM_FIELD, value = "booleans")
     private Boolean bypassUpdates;
-
-    @Inject
-    @Use(enumeration = true)
+    @UseForAllTests(valuesFrom = FROM_ENUM, value = "")
     private Mode mode;
-
-    @Inject
-    @Use("listeners")
+    @UseForAllTests(valuesFrom = FROM_FIELD, value = "listeners")
     private String listener;
+
     private String[] listeners = new String[]{ "phases", "action invoked", "action listener invoked", "executeChecker",
         "item changed" };
 
@@ -89,10 +83,16 @@ public class TestPanelMenuItemMode extends AbstractWebDriverTest {
 
         panelMenuItemAttributes.set(PanelMenuItemAttributes.execute, "@this executeChecker");
 
-        switch(mode) {
-            case ajax : guardAjax(page.getItem()).select(); break;
-            case server : guardHttp(page.getItem()).select(); break;
-            case client : page.getItem().select(); break;
+        switch (mode) {
+            case ajax:
+                guardAjax(page.getItem()).select();
+                break;
+            case server:
+                guardHttp(page.getItem()).select();
+                break;
+            case client:
+                page.getItem().select();
+                break;
         }
 
         if (mode != Mode.client) {

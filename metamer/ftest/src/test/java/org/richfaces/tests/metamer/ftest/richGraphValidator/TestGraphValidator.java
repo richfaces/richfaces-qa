@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richGraphValidator;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 
 import java.net.URL;
 
@@ -37,8 +38,7 @@ import org.richfaces.fragment.messages.RichFacesMessages;
 import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBean;
 import org.richfaces.tests.metamer.bean.rich.RichGraphValidatorBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -85,8 +85,7 @@ public class TestGraphValidator extends AbstractWebDriverTest {
     private RichFacesMessages graphValidatorGlobalMessages;
     @FindBy(css = "span[id$=graphValidatorMessages]")
     private RichFacesMessages graphValidatorMessages;
-    @Inject
-    @Use(empty = false)
+
     private Group group;
 
     private enum Group {
@@ -195,7 +194,7 @@ public class TestGraphValidator extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "group", enumeration = true)
+    @UseWithField(field = "group", valuesFrom = FROM_ENUM, value = "")
     public void testGroups() {
         graphValidatorAttributes.set(GraphValidatorAttributes.groups, group.toString());
         Assert.assertFalse(graphValidatorGlobalMessages.advanced().isVisible(), "Global messages should not be visible.");

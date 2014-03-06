@@ -22,6 +22,8 @@
 package org.richfaces.tests.metamer.ftest.richSelect;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
@@ -33,9 +35,8 @@ import org.richfaces.fragment.common.ScrollingType;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.fragment.select.RichFacesSelect;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -52,12 +53,10 @@ public class TestSelectFragment extends AbstractWebDriverTest {
 
     private final Attributes<SelectAttributes> attributes = getAttributes();
 
-    @Use(empty = false, enumeration = true)
-    @Inject
+    @UseForAllTests(valuesFrom = FROM_ENUM, value = "")
     private ScrollingType scrollingType;
-    @Use(empty = false, booleans = { true, false })
-    @Inject
-    private boolean selectFirst;
+    @UseForAllTests(valuesFrom = FROM_FIELD, value = "booleans")
+    private Boolean selectFirst;
 
     private String getOutputText() {
         return output.getText();

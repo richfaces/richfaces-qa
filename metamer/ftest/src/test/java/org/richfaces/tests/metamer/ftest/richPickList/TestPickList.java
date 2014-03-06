@@ -48,7 +48,7 @@ import org.richfaces.fragment.pickList.RichFacesPickList;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -232,7 +232,7 @@ public class TestPickList extends AbstractWebDriverTest {
         int tolerance = 10;
         pickListAttributes.set(PickListAttributes.listHeight, "");
         pickListAttributes.set(PickListAttributes.minListHeight, testedValue);
-        assertEquals(pickList.advanced().getMinHeight(),testedValue, tolerance);
+        assertEquals(pickList.advanced().getMinHeight(), testedValue, tolerance);
     }
 
     @Test

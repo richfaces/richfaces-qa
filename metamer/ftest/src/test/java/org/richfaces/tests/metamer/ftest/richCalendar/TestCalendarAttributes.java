@@ -22,6 +22,8 @@
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotEquals;
@@ -68,10 +70,9 @@ import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Locations;
 import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.BeforeMethod;
@@ -85,21 +86,13 @@ import com.google.common.collect.Lists;
 public class TestCalendarAttributes extends AbstractCalendarTest {
 
     private DateTimeFormatter dateTimeFormatter;
-    @Inject
-    @Use(empty = false)
+
     private BoundaryDatesMode boundaryDatesMode;
-    @Inject
-    @Use(empty = false)
     private Direction direction;
-    @Inject
-    @Use(empty = false)
     private Mode mode;
-    @Inject
-    @Use(empty = false)
     private TodayControlMode todayControlMode;
-    @Inject
-    @Use(empty = false)
     private Boolean booleanValue;
+
     @FindBy(css = "input[id$=a4jButton]")
     private WebElement a4jbutton;
     @FindBy(css = "span[id$=msg]")
@@ -177,7 +170,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
-    @Use(field = "boundaryDatesMode", enumeration = true)
+    @UseWithField(field = "boundaryDatesMode", valuesFrom = FROM_ENUM, value = "")
     public void testBoundaryDatesMode() {
         calendarAttributes.set(CalendarAttributes.boundaryDatesMode, boundaryDatesMode.value);
         DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
@@ -361,7 +354,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
-    @Use(field = "direction", enumeration = true)
+    @UseWithField(field = "direction", valuesFrom = FROM_ENUM, value = "")
     public void testDirection() {
         int tolerance = 5;
         calendarAttributes.set(CalendarAttributes.direction, direction.value);
@@ -492,7 +485,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
-    @Use(field = "direction", enumeration = true)
+    @UseWithField(field = "direction", valuesFrom = FROM_ENUM, value = "")
     public void testJointPoint() {
         int tolerance = 4;
         calendarAttributes.set(CalendarAttributes.jointPoint, direction.value);
@@ -559,7 +552,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
-    @Use(field = "mode", enumeration = true)
+    @UseWithField(field = "mode", valuesFrom = FROM_ENUM, value = "")
     public void testMode() {
         calendarAttributes.set(CalendarAttributes.mode, mode.value);
         HeaderControls hc = popupCalendar.openPopup().getHeaderControls();
@@ -854,7 +847,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
-    @Use(field = "booleanValue", booleans = { false, true })
+    @UseWithField(field = "booleanValue", valuesFrom = FROM_FIELD, value = "booleans")
     public void testRequired() {
         calendarAttributes.set(CalendarAttributes.required, booleanValue);
         submitWithA4jSubmitBtn();
@@ -878,7 +871,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
-    @Use(field = "booleanValue", booleans = { false, true })
+    @UseWithField(field = "booleanValue", valuesFrom = FROM_FIELD, value = "booleans")
     public void testResetTimeOnDateSelect() {
         calendarAttributes.set(CalendarAttributes.resetTimeOnDateSelect, booleanValue);
         int minutes = 33;
@@ -898,7 +891,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
-    @Use(field = "booleanValue", booleans = { false, true })
+    @UseWithField(field = "booleanValue", valuesFrom = FROM_FIELD, value = "booleans")
     public void testShowApplyButton() {
         calendarAttributes.set(CalendarAttributes.showApplyButton, booleanValue);
         PopupFooterControls fc = popupCalendar.openPopup().getFooterControls();
@@ -915,7 +908,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
-    @Use(field = "booleanValue", booleans = { false, true })
+    @UseWithField(field = "booleanValue", valuesFrom = FROM_FIELD, value = "booleans")
     public void testShowFooter() {
         setCurrentDateWithCalendarsTodayButtonAction.perform();
         calendarAttributes.set(CalendarAttributes.showFooter, booleanValue);
@@ -932,7 +925,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
-    @Use(field = "booleanValue", booleans = { false, true })
+    @UseWithField(field = "booleanValue", valuesFrom = FROM_FIELD, value = "booleans")
     public void testShowHeader() {
         calendarAttributes.set(CalendarAttributes.showHeader, booleanValue);
         PopupHeaderControls hc = popupCalendar.openPopup().getHeaderControls();
@@ -950,7 +943,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
-    @Use(field = "booleanValue", booleans = { false, true })
+    @UseWithField(field = "booleanValue", valuesFrom = FROM_FIELD, value = "booleans")
     public void testShowInput() {
         calendarAttributes.set(CalendarAttributes.showInput, booleanValue);
         if (booleanValue) {
@@ -961,7 +954,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
-    @Use(field = "booleanValue", booleans = { false, true })
+    @UseWithField(field = "booleanValue", valuesFrom = FROM_FIELD, value = "booleans")
     public void testShowWeekDaysBar() {
         calendarAttributes.set(CalendarAttributes.showWeekDaysBar, booleanValue);
         DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
@@ -973,7 +966,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
-    @Use(field = "booleanValue", booleans = { false, true })
+    @UseWithField(field = "booleanValue", valuesFrom = FROM_FIELD, value = "booleans")
     public void testShowWeeksBar() {
         calendarAttributes.set(CalendarAttributes.showWeeksBar, booleanValue);
         DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
@@ -1016,7 +1009,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
-    @Use(field = "todayControlMode", enumeration = true)
+    @UseWithField(field = "todayControlMode", valuesFrom = FROM_ENUM, value = "")
     public void testTodayControlMode() {
         calendarAttributes.set(CalendarAttributes.todayControlMode, todayControlMode.value);
         switch (todayControlMode) {

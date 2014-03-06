@@ -32,8 +32,6 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.switchable.SwitchType;
 import org.richfaces.fragment.tree.RichFacesTree;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -74,11 +72,9 @@ public abstract class AbstractTreeTest extends AbstractWebDriverTest {
             getGuardedTree(SwitchType.AJAX).selectNode(0);
         }
     };
-    @Inject
-    @Use(strings = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
-    protected String sample;
 
-    protected final String simpleSwingTreeNode = "simpleSwingTreeNode";
+    protected String sample;
+    protected final String[] simpleSwingTreeNode = { "simpleSwingTreeNode" };
     protected final String[] richFacesTreeNodes = { "simpleRichFacesTreeNode", "simpleRichFacesTreeDataModel" };
 
     protected <T> T getGuarded(T something, SwitchType type) {

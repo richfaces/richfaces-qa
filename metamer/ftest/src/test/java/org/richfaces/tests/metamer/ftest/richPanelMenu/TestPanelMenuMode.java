@@ -30,6 +30,7 @@ import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.groupMode;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.itemMode;
 import static org.testng.Assert.assertFalse;
@@ -37,8 +38,7 @@ import static org.testng.Assert.assertTrue;
 
 import javax.faces.event.PhaseId;
 
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.ui.common.Mode;
 import org.testng.annotations.Test;
@@ -51,8 +51,7 @@ public class TestPanelMenuMode extends AbstractPanelMenuTest {
 
     private final Attributes<PanelMenuAttributes> panelMenuAttributes = getAttributes();
 
-    @Inject
-    @Use(enumeration = true)
+    @UseForAllTests(valuesFrom = FROM_ENUM, value = "")
     private Mode mode;
 
     private PhaseId[] expectedPhases = new PhaseId[]{ RESTORE_VIEW, APPLY_REQUEST_VALUES, PROCESS_VALIDATIONS, UPDATE_MODEL_VALUES,
@@ -111,10 +110,16 @@ public class TestPanelMenuMode extends AbstractPanelMenuTest {
         panelMenuAttributes.set(itemMode, mode);
 
         assertFalse(page.getItem3().advanced().isSelected());
-        switch(mode) {
-            case ajax : guardAjax(page.getItem3()).select(); break;
-            case server : guardHttp(page.getItem3()).select(); break;
-            case client : page.getItem3().select(); break;
+        switch (mode) {
+            case ajax:
+                guardAjax(page.getItem3()).select();
+                break;
+            case server:
+                guardHttp(page.getItem3()).select();
+                break;
+            case client:
+                page.getItem3().select();
+                break;
         }
         assertTrue(page.getItem3().advanced().isSelected());
 

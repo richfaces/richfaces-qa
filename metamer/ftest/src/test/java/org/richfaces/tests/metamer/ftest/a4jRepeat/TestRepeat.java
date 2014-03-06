@@ -25,19 +25,18 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -53,17 +52,16 @@ public class TestRepeat extends AbstractWebDriverTest {
     @Page
     private SimplePage page;
 
-    @Inject
-    @Use(empty = false)
     private Integer first;
 
-    @Inject
-    @Use(empty = false)
     private Integer rows;
 
     int expectedBegin;
     int displayedRows;
     int expectedEnd;
+
+    private Integer[] intsFirst = { -1, 0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL, ELEMENTS_TOTAL + 1 };
+    private Integer[] intsRows = { -2, -1, 0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL, ELEMENTS_TOTAL + 1 };
 
     @Override
     public URL getTestUrl() {
@@ -79,7 +77,7 @@ public class TestRepeat extends AbstractWebDriverTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10589")
-    @Use(field = "first", ints = { -1, 0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL, ELEMENTS_TOTAL + 1 })
+    @UseWithField(field = "first", valuesFrom = FROM_FIELD, value = "intsFirst")
     public void testFirst() {
         repeatAttributes.set(RepeatAttributes.first, first);
         verifyRepeat();
@@ -87,8 +85,7 @@ public class TestRepeat extends AbstractWebDriverTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10589")
-    @Use(field = "rows", ints = { -2, -1, 0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL,
-            ELEMENTS_TOTAL + 1 })
+    @UseWithField(field = "rows", valuesFrom = FROM_FIELD, value = "intsRows")
     public void testRowsAttribute() {
         repeatAttributes.set(RepeatAttributes.rows, rows);
         verifyRepeat();
@@ -115,7 +112,7 @@ public class TestRepeat extends AbstractWebDriverTest {
             assertEquals(page.getIndex(position), expectedBegin + position, "index");
             assertEquals(page.getCount(position), position + 1, "count");
             assertEquals(page.isFirst(position), position == 0, "first");
-            assertEquals(page.isLast(position), position == rowCount -1, "last");
+            assertEquals(page.isLast(position), position == rowCount - 1, "last");
             assertEquals(page.isEven(position), (position % 2) != 0, "even");
             assertEquals(page.getRowCount(position), ELEMENTS_TOTAL, "rowCount");
         }
@@ -124,7 +121,6 @@ public class TestRepeat extends AbstractWebDriverTest {
     private void countExpectedValues() {
 
         // expected begin
-
         if (first == null || first < 0) {
             expectedBegin = 0;
         } else {
@@ -134,7 +130,6 @@ public class TestRepeat extends AbstractWebDriverTest {
         expectedBegin = minMax(0, expectedBegin, ELEMENTS_TOTAL);
 
         // expected displayed rows
-
         if (rows == null || rows < 1 || rows > ELEMENTS_TOTAL) {
             displayedRows = ELEMENTS_TOTAL;
         } else {
@@ -148,7 +143,6 @@ public class TestRepeat extends AbstractWebDriverTest {
         displayedRows = min(displayedRows, ELEMENTS_TOTAL - expectedBegin);
 
         // expected end
-
         if (rows == null || rows < 1) {
             expectedEnd = ELEMENTS_TOTAL - 1;
         } else {

@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richPanelMenu;
 
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.disabled;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.groupMode;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.itemMode;
@@ -32,11 +33,10 @@ import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.ui.toggle.panelMenu.PanelMenuMode;
 import org.testng.annotations.Test;
@@ -49,8 +49,6 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
 
     private final Attributes<PanelMenuAttributes> panelMenuAttributes = getAttributes();
 
-    @Inject
-    @Use(empty = true)
     private Boolean expandSingle = true;
 
     @Test
@@ -69,7 +67,7 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     }
 
     @Test
-    @Use(field = "expandSingle", booleans = { true, false })
+    @UseWithField(field = "expandSingle", valuesFrom = FROM_FIELD, value = "booleans")
     @IssueTracking("https://issues.jboss.org/browse/RF-10626")
     public void testExpandSingle() {
         panelMenuAttributes.set(PanelMenuAttributes.expandSingle, expandSingle);

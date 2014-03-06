@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richMenuGroup;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -40,9 +41,8 @@ import org.richfaces.fragment.common.Locations;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.dropDownMenu.RichFacesDropDownMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.BeforeMethod;
@@ -82,15 +82,14 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     private WebElement menuItem41;
     @Page
     private MetamerPage page;
-    @Inject
-    @Use(empty = false)
+
     private Direction direction;
     private int tolerance = 4;
 
     private enum Direction {
 
         AUTO("auto"), TOPLEFT("topLeft"), TOPRIGHT("topRight"), BOTTOMLEFT("bottomLeft"), BOTTOMRIGHT("bottomRight"), NULL(
-        "null");
+            "null");
         private final String value;
 
         private Direction(String value) {
@@ -120,7 +119,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10218")
-    @Use(field = "direction", enumeration = true)
+    @UseWithField(field = "direction", valuesFrom = FROM_ENUM, value = "")
     public void testDirection() {
         menuGroupAttributes.set(MenuGroupAttributes.direction, direction.value);
         menuGroupAttributes.set(MenuGroupAttributes.jointPoint, Direction.TOPRIGHT.value);
@@ -240,7 +239,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10218")
-    @Use(field = "direction", enumeration = true)
+    @UseWithField(field = "direction", valuesFrom = FROM_ENUM, value = "")
     public void testJointPoint() {
         menuGroupAttributes.set(MenuGroupAttributes.jointPoint, direction.value);
         menuGroupAttributes.set(MenuGroupAttributes.direction, Direction.BOTTOMRIGHT.value);

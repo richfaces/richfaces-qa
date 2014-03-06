@@ -32,6 +32,7 @@ import static org.richfaces.fragment.common.Event.MOUSEMOVE;
 import static org.richfaces.fragment.common.Event.MOUSEOUT;
 import static org.richfaces.fragment.common.Event.MOUSEOVER;
 import static org.richfaces.fragment.common.Event.MOUSEUP;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -45,12 +46,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.metamer.ftest.annotations.Uses;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
@@ -68,11 +68,7 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
     private Event[] events = new Event[]{ CLICK, DBLCLICK, KEYDOWN, KEYPRESS, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER,
         MOUSEUP };
     private String[] layouts = new String[]{ "block", "inline" };
-    @Inject
-    @Use(empty = true)
     private Event event;
-    @Inject
-    @Use(empty = true)
     private String layout;
     @FindBy(css = "input[id$=button]")
     private WebElement increaseCounterButton;
@@ -90,7 +86,9 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
     }
 
     @Test
-    @Uses({ @Use(field = "event", value = "events"), @Use(field = "layout", value = "layouts") })
+    @Uses({
+        @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "events"),
+        @UseWithField(field = "layout", valuesFrom = FROM_FIELD, value = "layouts") })
     public void testEvent() {
         WebElement element;
 

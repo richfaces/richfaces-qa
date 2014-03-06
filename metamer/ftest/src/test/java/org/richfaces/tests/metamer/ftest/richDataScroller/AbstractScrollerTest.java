@@ -1,6 +1,7 @@
 package org.richfaces.tests.metamer.ftest.richDataScroller;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 
@@ -14,8 +15,7 @@ import org.openqa.selenium.WebElement;
 import org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton;
 import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.BeforeMethod;
 
@@ -25,9 +25,9 @@ public class AbstractScrollerTest extends AbstractWebDriverTest {
 
     private String tableText;
 
-    @Inject
-    @Use(ints = { 3, 4 })
-    int maxPages;
+    @UseForAllTests(valuesFrom = FROM_FIELD, value = "ints")
+    private Integer maxPages;
+    private Integer[] ints = { 3, 4 };
 
     RichFacesDataScroller dataScroller;
 
@@ -37,7 +37,7 @@ public class AbstractScrollerTest extends AbstractWebDriverTest {
 
     private void verifyAfterScrolling() {
         assertFalse(tableText.equals(dataTable.getText()));
-        assertEquals(maxPages, dataScroller.advanced().getCountOfVisiblePages());
+        assertEquals(maxPages, Integer.valueOf(dataScroller.advanced().getCountOfVisiblePages()));
     }
 
     @FindByJQuery("table.rf-dt[id$=richDataTable]")

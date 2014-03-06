@@ -37,9 +37,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.switchable.SwitchType;
 import org.richfaces.fragment.tree.Tree.TreeNode;
-import org.richfaces.fragment.tree.Tree;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -61,16 +58,14 @@ public abstract class AbstractTreeSelectionTest extends AbstractTreeTest {
     @FindBy(className = "rf-trn-sel")
     private List<WebElement> allSelectedItems;
 
-    @Inject
-    @Use(value = "selectionTypes")
     private SwitchType selectionType;
 
-    private static final SwitchType[] selectionTypes = new SwitchType[] { SwitchType.AJAX, SwitchType.CLIENT };
-    private static final SwitchType[] selectionTypeAjax = new SwitchType[] { SwitchType.AJAX };
-    private static final SwitchType[] selectionTypeClient = new SwitchType[] { SwitchType.CLIENT };
-    private static final SwitchType[] eventEnabledSelectionTypes = new SwitchType[] { SwitchType.AJAX };
+    private static final SwitchType[] selectionTypes = new SwitchType[]{ SwitchType.AJAX, SwitchType.CLIENT };
+    private static final SwitchType[] selectionTypeAjax = new SwitchType[]{ SwitchType.AJAX };
+    private static final SwitchType[] selectionTypeClient = new SwitchType[]{ SwitchType.CLIENT };
+    private static final SwitchType[] eventEnabledSelectionTypes = new SwitchType[]{ SwitchType.AJAX };
 
-    protected Integer[][] selectionPaths = new Integer[][] { { 3, 2 }, { 1, 0, 0 }, { 1 }, { 3, 9, 2 } };
+    protected Integer[][] selectionPaths = new Integer[][]{ { 3, 2 }, { 1, 0, 0 }, { 1 }, { 3, 9, 2 } };
 
     protected TreeNode treeNode;
 
@@ -194,5 +189,4 @@ public abstract class AbstractTreeSelectionTest extends AbstractTreeTest {
             assertEquals(allSelectedItems.size(), 1);
         }
     }
-
 }
