@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Components">
+<suite name="All Components" preserve-order="true">
 
     <suite-files>
         <suite-file path="testng-core.xml"/>
