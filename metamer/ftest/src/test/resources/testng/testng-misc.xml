@@ -1,7 +1,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Misc components suite">
 
-    <test name="Miscellaneous Components" preserve-order="false">
+    <test name="Miscellaneous Components" preserve-order="true">
         <groups>
             <run>
                 <exclude name="4.3" />
