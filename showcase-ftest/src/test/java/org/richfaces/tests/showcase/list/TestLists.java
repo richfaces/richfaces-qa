@@ -22,10 +22,10 @@
 package org.richfaces.tests.showcase.list;
 
 import org.jboss.arquillian.graphene.page.Page;
-import org.junit.Assert;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ListType;
 import org.richfaces.tests.showcase.list.page.ListsPage;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
@@ -70,6 +70,6 @@ public class TestLists extends AbstractWebDriverTest {
         } else if (tag.equals("ul")) {
             actual = ListType.unordered;
         }
-        Assert.assertEquals("Unknown list type with root tag " + tag, type, actual);
+        Assert.assertEquals(actual, type, "Unknown list type with root tag " + tag);
     }
 }

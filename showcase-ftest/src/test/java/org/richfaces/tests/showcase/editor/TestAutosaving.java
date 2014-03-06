@@ -23,7 +23,7 @@ package org.richfaces.tests.showcase.editor;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
-import static org.junit.Assert.assertEquals;
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.util.concurrent.TimeUnit;
@@ -104,9 +104,9 @@ public class TestAutosaving extends AbstractWebDriverTest {
     @Test
     public void testTypingAndClearing() {
         page.getEditor().clear();
-        assertEquals("", page.getEditor().getText());
+        assertEquals(page.getEditor().getText(), "");
         String expectedText = "Lala Foo Bar tralala";
         page.getEditor().type(expectedText);
-        assertEquals(expectedText, page.getEditor().getText());
+        assertEquals(page.getEditor().getText(), expectedText);
     }
 }

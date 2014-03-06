@@ -22,11 +22,11 @@
 package org.richfaces.tests.showcase.notify;
 
 import org.jboss.arquillian.graphene.page.Page;
-import org.junit.Assert;
+import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.notify.page.StackingMessagesPage;
+import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -42,14 +42,14 @@ public class TestStackingMessages extends AbstractWebDriverTest {
     public void testRenderFirst() {
         page.waitUntilThereIsNoNotify();
         page.topLeft();
-        Assert.assertEquals(page.getNotify().getItem(0).advanced().getPosition(), NotifyMessagePosition.TOP_LEFT);
+        Assert.assertEquals(NotifyMessagePosition.TOP_LEFT, page.getNotify().getItem(0).advanced().getPosition());
     }
 
     @Test
     public void testRenderSecond() {
         page.waitUntilThereIsNoNotify();
         page.bottomRight();
-        Assert.assertEquals(page.getNotify().getItem(0).advanced().getPosition(), NotifyMessagePosition.BOTTOM_RIGHT);
+        Assert.assertEquals(NotifyMessagePosition.BOTTOM_RIGHT, page.getNotify().getItem(0).advanced().getPosition());
     }
 
 }
