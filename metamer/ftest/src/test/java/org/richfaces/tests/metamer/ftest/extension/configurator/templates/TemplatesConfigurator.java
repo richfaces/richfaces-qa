@@ -145,8 +145,6 @@ public class TemplatesConfigurator implements ConfiguratorExtension {
         EnumSet<Template> set = null;
         if (annotationOnMethodOrOnClass.value() != null && !Arrays.asList(annotationOnMethodOrOnClass.value()).isEmpty()) {
             set = EnumSet.copyOf(parseTemplates(annotationOnMethodOrOnClass.value()));
-        } else if (annotationOnMethodOrOnClass.include() != null && !Arrays.asList(annotationOnMethodOrOnClass.include()).isEmpty()) {
-            set = EnumSet.copyOf(parseTemplates(annotationOnMethodOrOnClass.include()));
         } else if (annotationOnMethodOrOnClass.exclude() != null && !Arrays.asList(annotationOnMethodOrOnClass.exclude()).isEmpty()) {
             set = defaultTestedTemplates.clone();
             set.removeAll(parseTemplates(annotationOnMethodOrOnClass.exclude()));
@@ -157,19 +155,26 @@ public class TemplatesConfigurator implements ConfiguratorExtension {
     }
 
     private static void checkIfMoreValuesAreNotSet(Templates annotation) throws IllegalStateException {
-        List<String[]> val = Lists.newArrayList(annotation.exclude(), annotation.include(), annotation.value());
-        boolean allEmpty = true;
-        int notEmptys = 0;
-        for (String[] strings : val) {
-            for (String string : strings) {
-                if (string.isEmpty()) {
-                    allEmpty = false;
+        boolean exludedIsEmpty = true, valuesIsEmpty = true;
+        String[] values;
+        if (annotation.exclude() != null) {
+            values = annotation.exclude();
+            for (String string : values) {
+                if (!string.isEmpty()) {
+                    exludedIsEmpty = false;
                 }
             }
-            notEmptys++;
         }
-        if (!allEmpty && notEmptys != 1) {
-            throw new IllegalArgumentException("More annotation fields are set. But only one should not be empty.");
+        if (annotation.value() != null) {
+            values = annotation.value();
+            for (String string : values) {
+                if (!string.isEmpty()) {
+                    valuesIsEmpty = false;
+                }
+            }
+        }
+        if ((!valuesIsEmpty && !exludedIsEmpty) || (valuesIsEmpty && exludedIsEmpty)) {
+            throw new IllegalArgumentException("More annotation fields are set or both fields are empty. Consider using only 'values' or 'excluded'");
         }
     }
 
