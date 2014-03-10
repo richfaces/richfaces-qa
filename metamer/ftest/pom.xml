@@ -38,7 +38,7 @@ FSF site: http://www.fsf.org. -->
             -Djboss.bind.address.unsecure=${arquillian.container.jbossas.7-1.node0}</arquillian.container.jbossas.7-1.jvm.args>
 
         <templates>plain</templates>
-        <testng.listeners>org.richfaces.tests.metamer.ftest.extension.configurator.transformer.DataProviderTestTransformer,org.richfaces.tests.metamer.ftest.MetamerFailureLoggingTestListener</testng.listeners>
+        <testng.listeners>org.richfaces.tests.metamer.ftest.extension.configurator.transformer.DataProviderTestTransformer,org.richfaces.tests.metamer.ftest.MetamerConsoleStatusTestListener,org.richfaces.tests.metamer.ftest.MetamerFailureLoggingTestListener</testng.listeners>
         <testng.suite.xml>src/test/resources/testng/testng-all.xml</testng.suite.xml>
     </properties>
 
