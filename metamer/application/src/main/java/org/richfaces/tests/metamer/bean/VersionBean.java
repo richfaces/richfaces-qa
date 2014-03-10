@@ -44,7 +44,7 @@ import org.richfaces.log.Logger;
  */
 @ManagedBean(name = "metamer")
 @ApplicationScoped
-public final class VersionBean {
+public class VersionBean {
 
     private static final Logger LOGGER = RichfacesLogger.APPLICATION.getLogger();
     private static final String UNKNOWN_JSF = "Unknown version of JSF";
