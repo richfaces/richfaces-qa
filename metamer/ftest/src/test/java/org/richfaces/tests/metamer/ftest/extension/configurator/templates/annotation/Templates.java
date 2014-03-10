@@ -38,6 +38,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Templates {
     String[] value() default {};
-    String[] include() default {};
     String[] exclude() default {};
 }
