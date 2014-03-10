@@ -43,13 +43,11 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.android.AndroidDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.iphone.IPhoneDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
@@ -95,8 +93,6 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         Chrome(ChromeDriver.class),
         HTMLUnit(HtmlUnitDriver.class),
         // Opera(OperaDriver.class),
-        IPhone(IPhoneDriver.class),
-        Android(AndroidDriver.class),
         Remote(RemoteWebDriver.class);
         private final Class<?> clazz;
 
