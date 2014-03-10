@@ -101,18 +101,6 @@ http://www.fsf.org. -->
         </configuration>
     </container>
 
-    <container qualifier="tomee-remote-1-1">
-        <configuration>
-            <property name="httpPort">8080</property>
-            <property name="stopPort">9005</property>
-            <!--             <property name="tomcatVersion"></property> -->
-            <property name="openejbVersion">${version.tomee1-1}</property>
-            <property name="dir">target/apache-tomee-webprofile-${version.tomee1-1}</property>
-            <property name="appWorkingDir">target/arquillian-test-working-dir</property>
-            <property name="enableAssertions">false</property>
-        </configuration>
-    </container>
-
     <container qualifier="tomee-remote-1-5">
         <configuration>
             <property name="conf">src/test/resources/tomEE</property>
@@ -120,6 +108,18 @@ http://www.fsf.org. -->
             <property name="stopPort">9005</property>
             <property name="openejbVersion">${version.tomee1-5}</property>
             <property name="dir">target/apache-tomee-webprofile-${version.tomee1-5}</property>
+            <property name="appWorkingDir">target/arquillian-test-working-dir</property>
+            <property name="enableAssertions">false</property>
+        </configuration>
+    </container>
+    
+    <container qualifier="tomee-remote-1-6">
+        <configuration>
+            <property name="conf">src/test/resources/tomEE</property>
+            <property name="httpPort">8080</property>
+            <property name="stopPort">9005</property>
+            <property name="openejbVersion">${version.tomee1-6}</property>
+            <property name="dir">target/apache-tomee-webprofile-${version.tomee1-6}</property>
             <property name="appWorkingDir">target/arquillian-test-working-dir</property>
             <property name="enableAssertions">false</property>
         </configuration>
