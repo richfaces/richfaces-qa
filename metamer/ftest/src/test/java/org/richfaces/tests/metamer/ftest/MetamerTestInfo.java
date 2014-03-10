@@ -56,10 +56,11 @@ public final class MetamerTestInfo {
         }
 
         List<String> info = new LinkedList<String>();
-        for (FieldConfiguration c : configuration.getConfigurations()) {
-            info.add(c.toString());
+        if (configuration != null) {
+            for (FieldConfiguration c : configuration.getConfigurations()) {
+                info.add(c.toString());
+            }
         }
-
         return StringUtils.join(info, "; ");
     }
 
