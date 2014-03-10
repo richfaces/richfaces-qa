@@ -9,7 +9,8 @@ General Public License for more details. You should have received a copy of the 
 software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the
 FSF site: http://www.fsf.org. -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -28,12 +29,12 @@ FSF site: http://www.fsf.org. -->
         <jetty.port>8080</jetty.port>
         <version.hornetq>2.2.13.Final</version.hornetq>
         <version.jstlapi>1.2-rev-1</version.jstlapi>
-        <glassfish31.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*</glassfish31.excluded.libraries>
-        <jbas71.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*</jbas71.excluded.libraries>
-        <tomee11.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*</tomee11.excluded.libraries>
-        <tomcat7-mojarra.excluded.libraries>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/jsp-api*</tomcat7-mojarra.excluded.libraries>
-        <tomcat7-myfaces.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/jsp-api*</tomcat7-myfaces.excluded.libraries>
-        <prepareExplodedWar.filesToDelete/>
+        <glassfish31.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*,WEB-INF/lib/jboss-as-controller-client*</glassfish31.excluded.libraries>
+        <jbas71.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*,WEB-INF/lib/jboss-as-controller-client*</jbas71.excluded.libraries>
+        <tomee15.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*</tomee15.excluded.libraries>
+        <tomcat7-mojarra.excluded.libraries>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/jboss-as-controller-client*</tomcat7-mojarra.excluded.libraries>
+        <tomcat7-myfaces.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/jboss-as-controller-client*</tomcat7-myfaces.excluded.libraries>
+        <prepareExplodedWar.filesToDelete />
     </properties>
 
     <dependencies>
@@ -255,24 +256,32 @@ FSF site: http://www.fsf.org. -->
             </build>
         </profile>
         <profile>
-            <id>war-tomee11</id>
+            <id>war-tomee15</id>
             <properties>
-                <prepareExplodedWar.filesToDelete>${tomee11.excluded.libraries}</prepareExplodedWar.filesToDelete>
+                <prepareExplodedWar.filesToDelete>${tomee15.excluded.libraries}</prepareExplodedWar.filesToDelete>
             </properties>
+            <dependencies>
+                <!-- TODO find out why this is necessary for TomEE 1.6 and not for 1.5 -->
+                <dependency>
+                    <groupId>org.jboss.as</groupId>
+                    <artifactId>jboss-as-controller-client</artifactId>
+                    <version>7.2.0.Final</version>
+                </dependency>
+            </dependencies>
             <build>
                 <plugins>
                     <plugin>
                         <artifactId>maven-war-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>tomee11</id>
+                                <id>tomee15</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>war</goal>
                                 </goals>
                                 <configuration>
-                                    <classifier>tomee11</classifier>
-                                    <packagingExcludes>${tomee11.excluded.libraries}</packagingExcludes>
+                                    <classifier>tomee15</classifier>
+                                    <packagingExcludes>${tomee15.excluded.libraries}</packagingExcludes>
                                 </configuration>
                             </execution>
                         </executions>
@@ -404,9 +413,10 @@ FSF site: http://www.fsf.org. -->
                                 <phase>package</phase>
                                 <configuration>
                                     <target>
-                                        <echo message="deleting from folder: ${basedir}/target/metamer/ , files: ${prepareExplodedWar.filesToDelete}"/>
+                                        <echo
+                                            message="deleting from folder: ${basedir}/target/metamer/ , files: ${prepareExplodedWar.filesToDelete}" />
                                         <delete>
-                                            <fileset dir="${basedir}/target/metamer/" includes="${prepareExplodedWar.filesToDelete}"/>
+                                            <fileset dir="${basedir}/target/metamer/" includes="${prepareExplodedWar.filesToDelete}" />
                                         </delete>
                                     </target>
                                 </configuration>
@@ -483,6 +493,12 @@ FSF site: http://www.fsf.org. -->
                     <artifactId>myfaces-impl</artifactId>
                     <scope>runtime</scope>
                 </dependency>
+                <!-- TODO find out why this is necessary for TomEE 1.6 and not for 1.5 -->
+                <dependency>
+                    <groupId>org.jboss.as</groupId>
+                    <artifactId>jboss-as-controller-client</artifactId>
+                    <version>7.2.0.Final</version>
+                </dependency>
             </dependencies>
             <build>
                 <plugins>
@@ -522,14 +538,14 @@ FSF site: http://www.fsf.org. -->
                                 </configuration>
                             </execution>
                             <execution>
-                                <id>tomee11</id>
+                                <id>tomee15</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>war</goal>
                                 </goals>
                                 <configuration>
-                                    <classifier>tomee11</classifier>
-                                    <packagingExcludes>${tomee11.excluded.libraries}</packagingExcludes>
+                                    <classifier>tomee15</classifier>
+                                    <packagingExcludes>${tomee15.excluded.libraries}</packagingExcludes>
                                     <attachClasses>false</attachClasses>
                                     <attachSources>false</attachSources>
                                 </configuration>
