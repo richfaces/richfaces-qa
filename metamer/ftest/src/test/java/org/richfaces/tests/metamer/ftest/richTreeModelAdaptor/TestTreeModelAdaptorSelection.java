@@ -99,7 +99,6 @@ public class TestTreeModelAdaptorSelection extends AbstractTreeSelectionTest {
 
     @Test
     @Uses({
-        @UseWithField(field = "selectionType", valuesFrom = FROM_FIELD, value = "selectionTypes"),
         @UseWithField(field = "path", valuesFrom = FROM_FIELD, value = "paths"),
         @UseWithField(field = "selectionType", valuesFrom = FROM_FIELD, value = "eventEnabledSelectionTypes") })
     @Override
