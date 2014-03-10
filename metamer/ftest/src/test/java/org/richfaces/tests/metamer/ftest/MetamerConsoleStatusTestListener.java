@@ -19,17 +19,20 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.extension.consoleLogger;
+package org.richfaces.tests.metamer.ftest;
 
-import org.jboss.arquillian.core.spi.LoadableExtension;
+import org.jboss.test.selenium.listener.ConsoleStatusTestListener;
+import org.testng.ITestResult;
 
 /**
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision: 19564 $
+ *
  */
-public class ConsoleLoggerExtensionLoader implements LoadableExtension {
+public class MetamerConsoleStatusTestListener extends ConsoleStatusTestListener {
 
-    @Override
-    public void register(ExtensionBuilder builder) {
-//        builder.observer(ConsoleLoggerExtension.class);
+    protected String getMessage(ITestResult result) {
+        String message = super.getMessage(result);
+        return message + " " + MetamerTestInfo.getConfigurationInfoInParenthesses(result);
     }
 }
