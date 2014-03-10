@@ -45,7 +45,7 @@ http://www.fsf.org. -->
         <configuration>
             <property name="javaVmArguments">${arquillian.container.jbossas.7-1.jvm.args}</property>
             <property name="managementAddress">${arquillian.container.jbossas.7-1.node0}</property>
-            <property name="serverConfig">standalone-full.xml</property>
+            <property name="serverConfig">standalone.xml</property>
             <property name="enableAssertions">false</property>
         </configuration>
     </container>
@@ -54,7 +54,7 @@ http://www.fsf.org. -->
         <configuration>
             <property name="javaVmArguments">${arquillian.container.jbossas.7-1.jvm.args}</property>
             <property name="managementAddress">${arquillian.container.jbossas.7-1.node0}</property>
-            <property name="serverConfig">standalone-full.xml</property>
+            <property name="serverConfig">standalone.xml</property>
             <property name="enableAssertions">false</property>
         </configuration>
     </container>
@@ -63,7 +63,7 @@ http://www.fsf.org. -->
         <configuration>
             <property name="javaVmArguments">${arquillian.container.jbossas.7-1.jvm.args}</property>
             <property name="managementAddress">${arquillian.container.jbossas.7-1.node0}</property>
-            <property name="serverConfig">standalone-full.xml</property>
+            <property name="serverConfig">standalone.xml</property>
             <property name="enableAssertions">false</property>
         </configuration>
     </container>
@@ -72,7 +72,7 @@ http://www.fsf.org. -->
         <configuration>
             <property name="javaVmArguments">${arquillian.container.jbossas.7-1.jvm.args}</property>
             <property name="managementAddress">${arquillian.container.jbossas.7-1.node0}</property>
-            <property name="serverConfig">standalone-full.xml</property>
+            <property name="serverConfig">standalone.xml</property>
             <property name="enableAssertions">false</property>
         </configuration>
     </container>
