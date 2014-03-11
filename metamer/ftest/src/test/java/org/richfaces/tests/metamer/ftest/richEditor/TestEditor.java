@@ -44,7 +44,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for basic functionality of rich:editor on page faces/components/richEditor/simple.xhtml.
- *
+ * 
  * @author <<a href="mailto:manovotn@redhat.com">Matej Novotny</a>
  * @version $Revision$
  */
@@ -90,9 +90,14 @@ public class TestEditor extends AbstractWebDriverTest {
 
     @Test
     public void testReadonly() {
-        // set readable only
+        // get editor ID
+        String editorId = driver.findElement(By.xpath("//textarea/..")).getAttribute("id");
+        // defaultly readonly should be false
+        assertFalse((Boolean) executeJS("return RichFaces.component('" + editorId + "').isReadOnly()"));
+        // set readonly to true
         editorAttributes.set(EditorAttributes.readonly, Boolean.TRUE);
-        assertEquals(getEditorTextArea().getAttribute("readonly"), "true");
+        // assert via JS that editor is readable only
+        assertTrue((Boolean) executeJS("return RichFaces.component('" + editorId + "').isReadOnly()"));
     }
 
     @Test
