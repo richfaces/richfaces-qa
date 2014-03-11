@@ -44,7 +44,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for basic functionality of rich:editor on page faces/components/richEditor/simple.xhtml.
- * 
+ *
  * @author <<a href="mailto:manovotn@redhat.com">Matej Novotny</a>
  * @version $Revision$
  */
