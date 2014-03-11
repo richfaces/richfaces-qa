@@ -148,7 +148,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      *
      * @param templates templates that will be used for test, e.g. "red_div"
      */
-    @BeforeMethod(alwaysRun = true)
+    @BeforeMethod(alwaysRun = true, dependsOnMethods = "configure")
     public void loadPage() {
         if (driver == null) {
             throw new SkipException("webDriver isn't initialized");
