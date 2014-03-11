@@ -39,6 +39,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -241,5 +242,20 @@ public class TestEditor extends AbstractWebDriverTest {
                 page.fullPageRefresh();
             }
         });
+    }
+
+    /**
+     * Following test is to ensure the bridge between richwidgets and rf works well. JS API methods are tested in-depth in
+     * richwidgets.
+     */
+    @Test
+    @Templates(value = { "plain" })
+    public void testJsGetValue() {
+        String testText = "Some nice and cool text";
+        String editorId = driver.findElement(By.xpath("//textarea/..")).getAttribute("id");
+        page.getEditor().type(testText);
+        // using getValue method from JS API
+        String jsResult = (String) executeJS("return RichFaces.component('" + editorId + "').getValue()");
+        assertTrue(jsResult.contains(testText));
     }
 }
