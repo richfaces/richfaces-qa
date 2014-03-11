@@ -53,53 +53,55 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <r:toolbar id="toolbar" height="26px">
-                <r:dropDownMenu id="menu1" mode="ajax">
-                    <f:facet name="label">
-                        <h:panelGroup>
-                            <h:graphicImage library="images/icons" name="copy.gif" styleClass="pic" />
-                            <h:outputText value="File" />
-                        </h:panelGroup>
-                    </f:facet>
+            <!-- The following padding helps to stabilise automated tests -->
+            <div style="padding: 200px">
+                <r:toolbar id="toolbar" height="26px">
+                    <r:dropDownMenu id="menu1" mode="ajax">
+                        <f:facet name="label">
+                            <h:panelGroup>
+                                <h:graphicImage library="images/icons" name="copy.gif" styleClass="pic" />
+                                <h:outputText value="File" />
+                            </h:panelGroup>
+                        </f:facet>
 
-                    <r:menuItem  label="New" icon="/resources/images/icons/create_doc.gif"/>
+                        <r:menuItem  label="New" icon="/resources/images/icons/create_doc.gif"/>
 
-                    <r:menuItem  label="Open" icon="/resources/images/icons/open.gif" />
+                        <r:menuItem  label="Open" icon="/resources/images/icons/open.gif" />
 
-                    <r:menuGroup label="Open Recent..." disabled="true">
-                        <r:menuItem  label="Save" icon="/resources/images/icons/save.gif" />
-                        <r:menuItem  label="Save All">
-                            <f:facet name="icon">
-                                <h:graphicImage library="images/icons" name="save_all.gif" />
-                            </f:facet>
-                        </r:menuItem>
-                    </r:menuGroup>
+                        <r:menuGroup label="Open Recent..." disabled="true">
+                            <r:menuItem  label="Save" icon="/resources/images/icons/save.gif" />
+                            <r:menuItem  label="Save All">
+                                <f:facet name="icon">
+                                    <h:graphicImage library="images/icons" name="save_all.gif" />
+                                </f:facet>
+                            </r:menuItem>
+                        </r:menuGroup>
 
-                    <r:menuSeparator id="menuSeparator11"
-                                        rendered="#{richMenuSeparatorBean.attributes['rendered'].value}"/>
+                        <r:menuSeparator id="menuSeparator11"
+                                         rendered="#{richMenuSeparatorBean.attributes['rendered'].value}"/>
 
-                    <r:menuGroup id="menuGroup" label="Save As...">
-                        <r:menuItem  label="Save" icon="/resources/images/icons/save.gif" />
-                        <r:menuItem  label="Save All" >
-                            <f:facet name="icon">
-                                <h:graphicImage library="images/icons" name="save_all.gif" />
-                            </f:facet>
-                        </r:menuItem>
-                        <r:menuItem  label="Send Online" icon="/resources/images/icons/save.gif" disabled="true" />
-                    </r:menuGroup>
+                        <r:menuGroup id="menuGroup" label="Save As...">
+                            <r:menuItem  label="Save" icon="/resources/images/icons/save.gif" />
+                            <r:menuItem  label="Save All" >
+                                <f:facet name="icon">
+                                    <h:graphicImage library="images/icons" name="save_all.gif" />
+                                </f:facet>
+                            </r:menuItem>
+                            <r:menuItem  label="Send Online" icon="/resources/images/icons/save.gif" disabled="true" />
+                        </r:menuGroup>
 
-                    <r:menuItem label="Print" disabled="true"/>
+                        <r:menuItem label="Print" disabled="true"/>
 
-                    <r:menuItem label="Close" />
+                        <r:menuItem label="Close" />
 
-                    <r:menuSeparator id="menuSeparator12" />
+                        <r:menuSeparator id="menuSeparator12" />
 
-                    <r:menuItem label="Exit" />
+                        <r:menuItem label="Exit" />
 
-                </r:dropDownMenu>
+                    </r:dropDownMenu>
 
-            </r:toolbar>
-
+                </r:toolbar>
+            </div>
             <br /><br />
         </ui:define>
 

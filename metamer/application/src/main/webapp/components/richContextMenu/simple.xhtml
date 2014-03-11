@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
       xmlns:r="http://richfaces.org"
-       >
+      >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -40,49 +40,52 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <!-- panels must be placed next to each other for testing in chromeDriver. (It cannot click behind showed context menu) -->
-            <h:panelGrid columns="2">
-                <h:panelGroup layout="block" style="width:400px; background-color: lightgreen; padding: 15px" id="targetPanel1">
-                    Righ click here for a contextMenu (targetPanel1)
-                </h:panelGroup>
-                <h:panelGroup layout="block" style="width:400px; background-color: yellow; padding: 15px" id="targetPanel2">
-                    Righ click here for a contextMenu (targetPanel2)
-                </h:panelGroup>
-            </h:panelGrid>
+            <!-- The following padding helps to stabilise automated tests -->
+            <div style="padding: 200px">
+                <!-- panels must be placed next to each other for testing in chromeDriver. (It cannot click behind showed context menu) -->
+                <h:panelGrid columns="2">
+                    <h:panelGroup layout="block" style="width:400px; background-color: lightgreen; padding: 15px" id="targetPanel1">
+                        Righ click here for a contextMenu (targetPanel1)
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" style="width:400px; background-color: yellow; padding: 15px" id="targetPanel2">
+                        Righ click here for a contextMenu (targetPanel2)
+                    </h:panelGroup>
+                </h:panelGrid>
+            </div>
             <r:contextMenu id="ctxMenu"
-                              dir="#{richContextMenuBean.attributes['dir'].value}"
-                              direction="#{richContextMenuBean.attributes['direction'].value}"
-                              disabled="#{richContextMenuBean.attributes['disabled'].value}"
-                              hideDelay="#{richContextMenuBean.attributes['hideDelay'].value}"
-                              horizontalOffset="#{richContextMenuBean.attributes['horizontalOffset'].value}"
-                              jointPoint="#{richContextMenuBean.attributes['jointPoint'].value}"
-                              lang="#{richContextMenuBean.attributes['lang'].value}"
-                              mode="#{richContextMenuBean.attributes['mode'].value}"
-                              onclick="#{richContextMenuBean.attributes['onclick'].value}"
-                              ondblclick="#{richContextMenuBean.attributes['ondblclick'].value}"
-                              ongrouphide="#{richContextMenuBean.attributes['ongrouphide'].value}"
-                              ongroupshow="#{richContextMenuBean.attributes['ongroupshow'].value}"
-                              onhide="#{richContextMenuBean.attributes['onhide'].value}"
-                              onitemclick="#{richContextMenuBean.attributes['onitemclick'].value}"
-                              onkeydown="#{richContextMenuBean.attributes['onkeydown'].value}"
-                              onkeypress="#{richContextMenuBean.attributes['onkeypress'].value}"
-                              onkeyup="#{richContextMenuBean.attributes['onkeyup'].value}"
-                              onmousedown="#{richContextMenuBean.attributes['onmousedown'].value}"
-                              onmousemove="#{richContextMenuBean.attributes['onmousemove'].value}"
-                              onmouseout="#{richContextMenuBean.attributes['onmouseout'].value}"
-                              onmouseover="#{richContextMenuBean.attributes['onmouseover'].value}"
-                              onmouseup="#{richContextMenuBean.attributes['onmouseup'].value}"
-                              onshow="#{richContextMenuBean.attributes['onshow'].value}"
-                              popupWidth="#{richContextMenuBean.attributes['popupWidth'].value}"
-                              rendered="#{richContextMenuBean.attributes['rendered'].value}"
-                              showDelay="#{richContextMenuBean.attributes['showDelay'].value}"
-                              showEvent="#{richContextMenuBean.attributes['showEvent'].value}"
-                              style="#{richContextMenuBean.attributes['style'].value}"
-                              styleClass="#{richContextMenuBean.attributes['styleClass'].value}"
-                              target="#{richContextMenuBean.attributes['target'].value}"
-                              title="#{richContextMenuBean.attributes['title'].value}"
-                              verticalOffset="#{richContextMenuBean.attributes['verticalOffset'].value}"
-                              >
+                           dir="#{richContextMenuBean.attributes['dir'].value}"
+                           direction="#{richContextMenuBean.attributes['direction'].value}"
+                           disabled="#{richContextMenuBean.attributes['disabled'].value}"
+                           hideDelay="#{richContextMenuBean.attributes['hideDelay'].value}"
+                           horizontalOffset="#{richContextMenuBean.attributes['horizontalOffset'].value}"
+                           jointPoint="#{richContextMenuBean.attributes['jointPoint'].value}"
+                           lang="#{richContextMenuBean.attributes['lang'].value}"
+                           mode="#{richContextMenuBean.attributes['mode'].value}"
+                           onclick="#{richContextMenuBean.attributes['onclick'].value}"
+                           ondblclick="#{richContextMenuBean.attributes['ondblclick'].value}"
+                           ongrouphide="#{richContextMenuBean.attributes['ongrouphide'].value}"
+                           ongroupshow="#{richContextMenuBean.attributes['ongroupshow'].value}"
+                           onhide="#{richContextMenuBean.attributes['onhide'].value}"
+                           onitemclick="#{richContextMenuBean.attributes['onitemclick'].value}"
+                           onkeydown="#{richContextMenuBean.attributes['onkeydown'].value}"
+                           onkeypress="#{richContextMenuBean.attributes['onkeypress'].value}"
+                           onkeyup="#{richContextMenuBean.attributes['onkeyup'].value}"
+                           onmousedown="#{richContextMenuBean.attributes['onmousedown'].value}"
+                           onmousemove="#{richContextMenuBean.attributes['onmousemove'].value}"
+                           onmouseout="#{richContextMenuBean.attributes['onmouseout'].value}"
+                           onmouseover="#{richContextMenuBean.attributes['onmouseover'].value}"
+                           onmouseup="#{richContextMenuBean.attributes['onmouseup'].value}"
+                           onshow="#{richContextMenuBean.attributes['onshow'].value}"
+                           popupWidth="#{richContextMenuBean.attributes['popupWidth'].value}"
+                           rendered="#{richContextMenuBean.attributes['rendered'].value}"
+                           showDelay="#{richContextMenuBean.attributes['showDelay'].value}"
+                           showEvent="#{richContextMenuBean.attributes['showEvent'].value}"
+                           style="#{richContextMenuBean.attributes['style'].value}"
+                           styleClass="#{richContextMenuBean.attributes['styleClass'].value}"
+                           target="#{richContextMenuBean.attributes['target'].value}"
+                           title="#{richContextMenuBean.attributes['title'].value}"
+                           verticalOffset="#{richContextMenuBean.attributes['verticalOffset'].value}"
+                           >
                 <r:menuItem id="menuItem2" label="Open" action="#{richContextMenuBean.doOpen}" icon="/resources/images/icons/open.gif" />
 
                 <r:menuGroup id="menuGroup3" label="Open Recent..." disabled="true">
@@ -114,7 +117,6 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                 <r:menuItem id="menuItem7" label="Exit" action="#{richContextMenuBean.doExit}" />
             </r:contextMenu>
-
             <br/>
             <r:outputPanel ajaxRendered="true">
                 Current Selection: 
