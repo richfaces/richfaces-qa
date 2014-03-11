@@ -59,7 +59,6 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.extension.configurator.Configurator;
 import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config;
 import org.richfaces.tests.metamer.ftest.extension.configurator.transformer.DataProviderTestTransformer;
-import org.richfaces.tests.metamer.ftest.extension.consoleLogger.annotations.LogThis;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -93,7 +92,6 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     private static final String ATTRIBUTE_INPUT_TEMPLATE = "input[id$={0}Input]";
     private final Boolean[] booleans = { false, true };
 
-    @LogThis
     private Config currentConfiguration;
 
     public enum DriverType {
