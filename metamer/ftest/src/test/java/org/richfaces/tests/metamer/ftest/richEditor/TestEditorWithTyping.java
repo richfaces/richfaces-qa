@@ -50,7 +50,7 @@ public class TestEditorWithTyping extends AbstractWebDriverTest {
     @Page
     private EditorSimplePage page;
 
-    private String phaseListenerLogFormat = "*3 value changed: <p> {0}</p> -> <p> {1}</p>";
+    private String phaseListenerLogFormat = "*3 value changed: <p>{0}</p> -> <p>{1}</p>";
 
     @Override
     public URL getTestUrl() {
