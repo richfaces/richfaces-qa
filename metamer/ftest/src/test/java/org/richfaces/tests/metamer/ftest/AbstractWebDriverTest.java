@@ -95,6 +95,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     private static final String ATTRIBUTE_INPUT_TEMPLATE = "input[id$={0}Input]";
     private final Boolean[] booleans = { false, true };
 
+    // this field is used by MetamerTestInfo to gather information about actual test method configuration
     private Config currentConfiguration;
 
     public enum DriverType {
