@@ -53,53 +53,55 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <rich:toolbar id="toolbar" height="26px">
-                <rich:dropDownMenu id="menu1" mode="ajax">
-                    <f:facet name="label">
-                        <h:panelGroup>
-                            <h:graphicImage library="images/icons" name="copy.gif" styleClass="pic" />
-                            <h:outputText value="File" />
-                        </h:panelGroup>
-                    </f:facet>
+            <!-- The following padding helps to stabilise automated tests -->
+            <div style="padding: 200px">
+                <rich:toolbar id="toolbar" height="26px">
+                    <rich:dropDownMenu id="menu1" mode="ajax">
+                        <f:facet name="label">
+                            <h:panelGroup>
+                                <h:graphicImage library="images/icons" name="copy.gif" styleClass="pic" />
+                                <h:outputText value="File" />
+                            </h:panelGroup>
+                        </f:facet>
 
-                    <rich:menuItem  label="New" icon="/resources/images/icons/create_doc.gif"/>
+                        <rich:menuItem  label="New" icon="/resources/images/icons/create_doc.gif"/>
 
-                    <rich:menuItem  label="Open" icon="/resources/images/icons/open.gif" />
+                        <rich:menuItem  label="Open" icon="/resources/images/icons/open.gif" />
 
-                    <rich:menuGroup label="Open Recent..." disabled="true">
-                        <rich:menuItem  label="Save" icon="/resources/images/icons/save.gif" />
-                        <rich:menuItem  label="Save All">
-                            <f:facet name="icon">
-                                <h:graphicImage library="images/icons" name="save_all.gif" />
-                            </f:facet>
-                        </rich:menuItem>
-                    </rich:menuGroup>
+                        <rich:menuGroup label="Open Recent..." disabled="true">
+                            <rich:menuItem  label="Save" icon="/resources/images/icons/save.gif" />
+                            <rich:menuItem  label="Save All">
+                                <f:facet name="icon">
+                                    <h:graphicImage library="images/icons" name="save_all.gif" />
+                                </f:facet>
+                            </rich:menuItem>
+                        </rich:menuGroup>
 
-                    <rich:menuSeparator id="menuSeparator11"
-                                        rendered="#{richMenuSeparatorBean.attributes['rendered'].value}"/>
+                        <rich:menuSeparator id="menuSeparator11"
+                                            rendered="#{richMenuSeparatorBean.attributes['rendered'].value}"/>
 
-                    <rich:menuGroup id="menuGroup" label="Save As...">
-                        <rich:menuItem  label="Save" icon="/resources/images/icons/save.gif" />
-                        <rich:menuItem  label="Save All" >
-                            <f:facet name="icon">
-                                <h:graphicImage library="images/icons" name="save_all.gif" />
-                            </f:facet>
-                        </rich:menuItem>
-                        <rich:menuItem  label="Send Online" icon="/resources/images/icons/save.gif" disabled="true" />
-                    </rich:menuGroup>
+                        <rich:menuGroup id="menuGroup" label="Save As...">
+                            <rich:menuItem  label="Save" icon="/resources/images/icons/save.gif" />
+                            <rich:menuItem  label="Save All" >
+                                <f:facet name="icon">
+                                    <h:graphicImage library="images/icons" name="save_all.gif" />
+                                </f:facet>
+                            </rich:menuItem>
+                            <rich:menuItem  label="Send Online" icon="/resources/images/icons/save.gif" disabled="true" />
+                        </rich:menuGroup>
 
-                    <rich:menuItem label="Print" disabled="true"/>
+                        <rich:menuItem label="Print" disabled="true"/>
 
-                    <rich:menuItem label="Close" />
+                        <rich:menuItem label="Close" />
 
-                    <rich:menuSeparator id="menuSeparator12" />
+                        <rich:menuSeparator id="menuSeparator12" />
 
-                    <rich:menuItem label="Exit" />
+                        <rich:menuItem label="Exit" />
 
-                </rich:dropDownMenu>
+                    </rich:dropDownMenu>
 
-            </rich:toolbar>
-
+                </rich:toolbar>
+            </div>
             <br /><br />
         </ui:define>
 
