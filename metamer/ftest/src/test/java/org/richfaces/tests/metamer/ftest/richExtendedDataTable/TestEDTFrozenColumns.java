@@ -167,15 +167,6 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
         assertNotEquals(location, page.movedScroller.getLocation(), "The position of scroller has not been changed.");
     }
 
-    @Test(groups = "Future")
-    public void workaroundForDroneException() {
-        /**
-         * when there are no tests to run, the drone will throw
-         * java.lang.IllegalStateException: Unexpected callable present in Drone Context, should be already instantiated at this moment.
-         * and all following tests will skip
-         */
-    }
-
     public static class FrozenColumnsPage extends MetamerPage {
 
         @FindBy(xpath = "//div[contains(@id,'richEDT')]//td[@class='rf-edt-ftr-fzn']//div//table//tr//td")
