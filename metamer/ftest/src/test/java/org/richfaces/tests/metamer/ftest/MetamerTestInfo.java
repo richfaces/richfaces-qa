@@ -47,12 +47,12 @@ public final class MetamerTestInfo {
 
     public static String getConfigurationInfo(ITestResult result) {
         Object testInstance = result.getInstance();
-        Config configuration;
+        Config configuration = null;
         try {
             Field configField = ReflectionUtils.getFirstFieldWithName("currentConfiguration", testInstance);
             configuration = (Config) ReflectionUtils.getFieldValue(configField, testInstance);
         } catch (Exception ex) {
-            throw new RuntimeException(ex);
+            ex.printStackTrace(System.err);
         }
 
         List<String> info = new LinkedList<String>();
