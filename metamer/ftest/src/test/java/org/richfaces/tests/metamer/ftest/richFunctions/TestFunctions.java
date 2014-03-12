@@ -189,13 +189,4 @@ public class TestFunctions extends AbstractWebDriverTest {
         fillInRoleAndApply("superhero");
         assertUserIs(Role.NOBODY);
     }
-
-    @Test(groups = "Future")
-    public void workaroundForDroneException() {
-        /**
-         * when there are no tests to run, the drone will throw
-         * java.lang.IllegalStateException: Unexpected callable present in Drone Context, should be already instantiated at this moment.
-         * and all following tests will skip
-         */
-    }
 }
