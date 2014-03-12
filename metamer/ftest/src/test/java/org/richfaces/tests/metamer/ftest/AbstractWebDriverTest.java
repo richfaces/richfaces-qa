@@ -69,6 +69,9 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 import org.testng.SkipException;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 
@@ -95,6 +98,8 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     protected DriverType driverType;
     private static final String ATTRIBUTE_INPUT_TEMPLATE = "input[id$={0}Input]";
     private final Boolean[] booleans = { false, true };
+    private Boolean afterClassWasTriggered = Boolean.FALSE;
+    private Boolean atLeastOneTestStarted = Boolean.FALSE;
 
     // this field is used by MetamerTestInfo to gather information about actual test method configuration
     private Config currentConfiguration;
@@ -133,15 +138,51 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     @BeforeMethod(alwaysRun = true)
     public void configure() {
         currentConfiguration = c.configureNextStep();
+        atLeastOneTestStarted = Boolean.TRUE;
     }
 
-//    @AfterSuite(alwaysRun = true)
-//    public void closeBrowserIfNeeded() {
-//        try {
-//            driver.close();
-//        } catch (Exception e) {
-//        }
-//    }
+    @BeforeClass(alwaysRun = true)
+    public void beforeClass() {
+        afterClassWasTriggered = Boolean.FALSE;
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void afterClass() throws Exception {
+        afterClassWasTriggered = Boolean.TRUE;
+        if (!atLeastOneTestStarted) {// no test started, but have afterClass phase
+            /**
+             * Since the tests run conditionally depending on a configuration, there can be a case, when there are no tests to
+             * run (e.g. we run a suite with '-Dtemplates=plain', but this suite contains only one class with only one test,
+             * which could only run in templates='edt', so no test methods will be invoked) and then the Drone will throw an
+             * Exception and all following tests will be skipped. This is because there were no 'before' and 'after' test events
+             * triggered.
+             *
+             * This solution workarounds this problem by invoking arquillianBeforeTest and arquillianAfterTest with an empty
+             * method.
+             */
+            Method emptyMethodToWorkaroundDroneException = AbstractWebDriverTest.class.getDeclaredMethod("emptyMethod");
+            arquillianBeforeTest(emptyMethodToWorkaroundDroneException);
+            arquillianAfterTest(emptyMethodToWorkaroundDroneException);
+        }
+        atLeastOneTestStarted = Boolean.FALSE;
+    }
+
+    /**
+     * Used in a workaround for Arquillian exception, when no before and after test events were triggered. See #afterClass().
+     */
+    public void emptyMethod() {
+    }
+
+    @AfterSuite(alwaysRun = true)
+    public void afterSuite() throws Exception {
+        // Workaround for Arquillian exception.
+        // When running a single test method, the @AfterClass is not triggered, but @AfterSuite is.
+        // This will manually trigger arquillianAfterClass, if it was not invoked before.
+        // This should at least close the browser window.
+        if (!afterClassWasTriggered) {
+            arquillianAfterClass();
+        }
+    }
 
     /**
      * Opens the tested page. If templates is not empty nor null, it appends url parameter with templates.
