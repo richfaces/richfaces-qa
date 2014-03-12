@@ -22,10 +22,16 @@
 package org.richfaces.tests.metamer.ftest.richHotKey;
 
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
+import static org.testng.Assert.assertEquals;
 
-import org.openqa.selenium.Keys;
+import java.util.Set;
+
+import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.WebDriver;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.annotations.Test;
+
+import com.google.common.base.Predicate;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -54,6 +60,63 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
         }
     }
 
+    /**
+     * Will try to create a new window with hotkey. If preventDefault is true, then no window will be created. Should work at
+     * least in IE, Chrome and Firefox.
+     */
+    private void checkPreventDefault(boolean preventDefault) {
+        String originalWindow = driver.getWindowHandle();
+        firstHotkeyAttributes.set(HotKeyAttributes.preventDefault, preventDefault);
+        firstHotkeyAttributes.set(HotKeyAttributes.key, "ctrl+n");
+        hotkey1.setupHotkey("ctrl+n");
+        hotkey1.invoke();
+        try {
+            if (!preventDefault) {
+                Graphene.waitModel().until(new Predicate<WebDriver>() {
+                    @Override
+                    public boolean apply(WebDriver input) {
+                        return driver.getWindowHandles().size() == 2;
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "2 windows should be opened now, but have: " + driver.getWindowHandles().size();
+                    }
+                });
+            } else {
+                waiting(2000L);
+                assertEquals(driver.getWindowHandles().size(), 1, "Only one window should be opened.");
+            }
+        } finally {
+            closeAllWindowsExceptOriginalAndSwitchToIt(originalWindow);
+        }
+        checkEvent("onkeydown", 1);
+        checkEvent("onkeyup", 1);
+    }
+
+    private void closeAllWindowsExceptOriginalAndSwitchToIt(String originalWindowHandle) {
+        Set<String> windowHandles = driver.getWindowHandles();
+        windowHandles.remove(originalWindowHandle);
+
+        for (String window : windowHandles) {
+            driver.switchTo().window(window).close();
+        }
+
+        Graphene.waitModel().until(new Predicate<WebDriver>() {
+            @Override
+            public boolean apply(WebDriver input) {
+                return driver.getWindowHandles().size() == 1;
+            }
+
+            @Override
+            public String toString() {
+                return "Only one window should be opened now, but have: " + driver.getWindowHandles().size();
+            }
+        });
+
+        driver.switchTo().window(originalWindowHandle);
+    }
+
     @Test
     public void enabledInInput() {
         // true
@@ -76,15 +139,6 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
         clearHotKeyEvents();
     }
 
-    private void testKeyForPreventDefault(String keyString, int expectedNum) {
-        firstHotkeyAttributes.set(HotKeyAttributes.key, keyString);
-        hotkey1.setupHotkey(keyString);
-        hotkey1.invoke();
-        hotkey1.invoke();
-        checkEvent("onkeydown", expectedNum);
-        clearHotKeyEvents();
-    }
-
     @Test
     public void testOnkeydownOnkeyup() {
         // these events are already binded, they add message to a4j:log on the page
@@ -96,18 +150,12 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
 
     @Test
     public void testPreventDefaultFalse() {
-        firstHotkeyAttributes.set(HotKeyAttributes.preventDefault, Boolean.FALSE);
-        try {
-            testKeyForPreventDefault("ctrl+f", 1);
-        } finally {
-            firstInput.advanced().getInputElement().sendKeys(Keys.ESCAPE);
-        }
+        checkPreventDefault(false);
     }
 
     @Test
     public void testPreventDefaultTrue() {
-        firstHotkeyAttributes.set(HotKeyAttributes.preventDefault, Boolean.TRUE);
-        testKeyForPreventDefault("ctrl+f", 2);
+        checkPreventDefault(true);
     }
 
     @Test
