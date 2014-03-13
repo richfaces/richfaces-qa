@@ -34,11 +34,14 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
+import javax.validation.constraints.Future;
+
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -137,9 +140,10 @@ public class TestEditor extends AbstractWebDriverTest {
     }
 
     @Test
+    @Future
     public void testSkin() {
-        // WebElement elemWithClassAttribute = driver.findElement(ByJQuery.jquerySelector(".cke_skin_richfaces"));
-        WebElement elemWithClassAttribute = driver.findElement(By.cssSelector("span[id$='editor:inp']"));
+        // this is not yet to be tested, in RF 5 skins will be reworked
+        WebElement elemWithClassAttribute = driver.findElement(By.cssSelector("span[id$='editorInput_arialbl']"));
         verifySkin("kama", elemWithClassAttribute);
         verifySkin("office2003", elemWithClassAttribute);
         verifySkin("richfaces", elemWithClassAttribute);
@@ -177,6 +181,7 @@ public class TestEditor extends AbstractWebDriverTest {
     }
 
     @Test
+    @IssueTracking(value="RF-13574")
     public void testToolbar() {
 
         editorAttributes.set(toolbar, "basic");
