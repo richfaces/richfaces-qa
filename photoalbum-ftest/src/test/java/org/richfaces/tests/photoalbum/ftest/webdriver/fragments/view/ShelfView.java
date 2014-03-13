@@ -188,11 +188,11 @@ public class ShelfView {
             return getAlbumView();
         }
 
-        public void checkAll(String albumName, String albumData) {
+        public void checkAll(String albumName, Object albumData) {
             checkAll(albumName, albumData, NO_OWNER);
         }
 
-        public void checkAll(String albumName, String albumData, String albumOwner) {
+        public void checkAll(String albumName, Object albumData, String albumOwner) {
             checkAlbumBackGroundImage();
             checkAlbumData(albumData);
             checkAlbumName(albumName);
@@ -209,7 +209,7 @@ public class ShelfView {
 //                assertTrue(albumCoverImage.getAttribute("src").contains(imageSrc));
 //            }
 //        }
-        private void checkAlbumData(String data) {
+        private void checkAlbumData(Object data) {
             assertEquals(albumData.getText(), data);
         }
 

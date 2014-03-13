@@ -45,13 +45,13 @@ public class TestAlbumViewActivities extends AbstractPhotoalbumTest {
         Graphene.guardAjax(albumView.getSlider()).slideToValue(1);
         List<AlbumView.PhotoInfo> photos = albumView.getPhotos();
         photos.get(0).checkAll(200, "1750979205_6e51b47ce9_o.jpg", IMAGES_DEC_DATE);
-        photos.get(2).checkAll(200, "2090459727_f2888e5cbe_o.jpg", IMAGES_DEC_DATE);
-        photos.get(5).checkAll(200, "2508246015_313952406c_o.jpg", IMAGES_DEC_DATE);
+        photos.get(2).checkAll(200, "4845901485_62db3c5d62_o.jpg", IMAGES_DEC_DATE);
+        photos.get(5).checkAll(200, "5395800621_c0bc80ca53_o.jpg", IMAGES_DEC_DATE);
         Graphene.guardAjax(albumView.getSlider()).slideToValue(0);
         photos = albumView.getPhotos();
         photos.get(0).checkAll(80, "1750979205_6e51b47ce9_o.jpg", IMAGES_DEC_DATE);
-        photos.get(2).checkAll(80, "2090459727_f2888e5cbe_o.jpg", IMAGES_DEC_DATE);
-        photos.get(5).checkAll(80, "2508246015_313952406c_o.jpg", IMAGES_DEC_DATE);
+        photos.get(2).checkAll(80, "4845901485_62db3c5d62_o.jpg", IMAGES_DEC_DATE);
+        photos.get(5).checkAll(80, "5395800621_c0bc80ca53_o.jpg", IMAGES_DEC_DATE);
     }
 
     @Test
@@ -61,6 +61,10 @@ public class TestAlbumViewActivities extends AbstractPhotoalbumTest {
         albumView.openSlideShow();
         SlideShowPanel slideShowPanel = page.getSlideShowPanel();
         slideShowPanel.advanced().waitUntilPopupIsVisible().perform();
-        slideShowPanel.checkImagesInfoFromTooltip("Monuments and just buildings", Lists.newArrayList("05[303x457].jpg", "07[303x457].jpg", "1805365000_ca64d20b10_o.jpg"));
+        slideShowPanel.checkImagesInfoFromTooltip(Lists.newArrayList(
+            "\"<a href=\"http://www.flickr.com/photos/staceycav/8561041065/\">Brandenburg Gate by Night</a>\", by <a href=\"http://www.flickr.com/photos/staceycav/\">Stacey Cavanagh</a>, licensed under <a href=\"http://creativecommons.org/licenses/by/2.0/\">CC BY</a>",
+            "\"<a href=\"http://www.flickr.com/photos/jimmyharris/2523480499/\">London Eye</a>\", by <a href=\"http://www.flickr.com/photos/jimmyharris/\">Jimmy Harris</a>, licensed under <a href=\"http://creativecommons.org/licenses/by/2.0/\">CC BY</a>",
+            "\"<a href=\"http://www.flickr.com/photos/matt512/4065627169/\">Great Wall of China</a>\", by <a href=\"http://www.flickr.com/photos/matt512/\">Matt Barber</a>, licensed under <a href=\"http://creativecommons.org/licenses/by/2.0/\">CC BY</a>"
+        ));
     }
 }

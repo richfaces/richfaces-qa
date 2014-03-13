@@ -121,6 +121,5 @@ public class TestAddAndDeleteShelf extends AbstractPhotoalbumTest {
         RichFacesTree myShelvesTree = page.getLeftPanel().getMyShelvesTree();
         assertEquals(myShelvesTree.advanced().getNodes().size(), 2);
         assertEquals(myShelvesTree.advanced().getLeafNodes().size(), 0);
-
     }
 }

@@ -45,12 +45,11 @@ public class SlideShowPanel extends RichFacesPopupPanel<TextualFragmentPart, Con
         advanced().waitUntilPopupIsNotVisible().perform();
     }
 
-    public void checkImagesInfoFromTooltip(String albumName, List<String> photoNames) {
-        String template = "%s - %s image";
+    public void checkImagesInfoFromTooltip(List<String> photoNames) {
         String actImgSrc;
         for (int i = 0; i < photoNames.size(); i++) {
             actImgSrc = getBodyContent().getImage().getAttribute("src");
-            assertEquals(getBodyContent().getTooltipOnImage().show().getContent().getText(), String.format(template, albumName, photoNames.get(i)));
+            assertEquals(getBodyContent().getTooltipOnImage().show().getContent().getText(), photoNames.get(i));
             getBodyContent().getTooltipOnImage().hide();
             if (i == (photoNames.size() - 1)) {
                 advanced().waitUntilPopupIsNotVisible().withTimeout(5, TimeUnit.SECONDS).perform();

@@ -75,7 +75,7 @@ public class TestHowItWorksPanels extends AbstractPhotoalbumTest {
 
     @Test
     public void testHowItWorksInputNumberSlider() {
-        page.getLeftPanel().openAlbumInPredefinedShelf("Animals", "Nature");
+        page.getLeftPanel().openAlbumInPredefinedShelf("Nature", "Nature");
         Graphene.guardAjax(getView(AlbumView.class).getSliderHelpLink()).click();
         howItWorksPanel.advanced().waitUntilPopupIsVisible().perform();
         howItWorksPanel.checkAllAndClose("Image Size Control with <rich:inputNumberSlider>");

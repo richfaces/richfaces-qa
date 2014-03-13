@@ -23,7 +23,6 @@ package org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view;
 
 import static org.testng.Assert.assertEquals;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
@@ -44,6 +43,6 @@ public class ShelvesView {
     }
 
     public List<ShelfView> getShelves() {
-        return Collections.unmodifiableList(shelves);
+        return shelves;
     }
 }
