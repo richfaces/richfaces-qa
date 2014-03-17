@@ -87,9 +87,9 @@ public class TemplatesConfigurator implements ConfiguratorExtension {
         String[] split = System.getProperty(TEMPLATE_PROPERTY_NAME, "plain").split(TEMPLATE_LIST_SEPARATOR);
         for (String templatesListString : split) {
             if (isAllTemplateString(templatesListString)) {
-                createAllTemplatesTemplatesList();
+                createTemplatesListForEachTestedTemplate(shouldRunInTemplates);
             } else {
-                shouldRunInTemplates.add(TemplatesList.parseFrom(templatesListString));
+                shouldRunInTemplates.add(removeRedundantPlainTemplate(TemplatesList.parseFrom(templatesListString)));
             }
         }
         if (shouldRunInTemplates.isEmpty()) {
@@ -97,9 +97,17 @@ public class TemplatesConfigurator implements ConfiguratorExtension {
         }
     }
 
-    private void createAllTemplatesTemplatesList() {
+    private TemplatesList removeRedundantPlainTemplate(TemplatesList tList) {
+        if (tList.size() > 1 && tList.get(tList.size() - 1).equals(Template.PLAIN)) {
+            // the TemplateList implementation inserts PLAIN template as the last record => delete it
+            tList.remove(tList.size() - 1);
+        }
+        return tList;
+    }
+
+    private void createTemplatesListForEachTestedTemplate(List<TemplatesList> toList) {
         for (Template template : defaultTestedTemplates) {
-            shouldRunInTemplates.add(TemplatesList.fromTemplate(template));
+            toList.add(removeRedundantPlainTemplate(TemplatesList.fromTemplate(template)));
         }
     }
 
