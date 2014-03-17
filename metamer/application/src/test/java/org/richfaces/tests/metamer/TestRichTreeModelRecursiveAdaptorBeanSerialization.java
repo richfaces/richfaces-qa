@@ -43,7 +43,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.google.common.io.NullOutputStream;
+import com.google.common.io.ByteStreams;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -57,7 +57,7 @@ public class TestRichTreeModelRecursiveAdaptorBeanSerialization {
     @BeforeClass
     public void redirectOut() {
         sysout = System.out;
-        System.setOut(new PrintStream(new NullOutputStream()));
+        System.setOut(new PrintStream(ByteStreams.nullOutputStream()));
     }
 
     @AfterClass(alwaysRun = true)
@@ -65,10 +65,9 @@ public class TestRichTreeModelRecursiveAdaptorBeanSerialization {
         System.setOut(sysout);
     }
 
-    //@Test
+    @Test
     public void testBeanSerialization() throws IOException, ClassNotFoundException, IllegalArgumentException,
         IllegalAccessException {
-
         RichTreeModelRecursiveAdaptorBean bean = new RichTreeModelRecursiveAdaptorBean();
         bean.init();
 
