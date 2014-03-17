@@ -86,7 +86,7 @@ public class TestRepeat extends AbstractWebDriverTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10589")
     @UseWithField(field = "rows", valuesFrom = FROM_FIELD, value = "intsRows")
-    public void testRowsAttribute() {
+    public void testRows() {
         repeatAttributes.set(RepeatAttributes.rows, rows);
         verifyRepeat();
     }
@@ -119,7 +119,18 @@ public class TestRepeat extends AbstractWebDriverTest {
     }
 
     private void countExpectedValues() {
-
+        String firstAtt = repeatAttributes.get(RepeatAttributes.first);
+        if (firstAtt != null && !firstAtt.isEmpty()) {
+            first = Integer.valueOf(firstAtt);
+        } else {
+            first = null;
+        }
+        String rowsAtt = repeatAttributes.get(RepeatAttributes.rows);
+        if (rowsAtt != null && !rowsAtt.isEmpty()) {
+            rows = Integer.valueOf(rowsAtt);
+        } else {
+            rows = null;
+        }
         // expected begin
         if (first == null || first < 0) {
             expectedBegin = 0;
