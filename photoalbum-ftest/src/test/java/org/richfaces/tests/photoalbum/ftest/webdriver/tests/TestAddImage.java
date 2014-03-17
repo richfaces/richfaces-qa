@@ -69,7 +69,7 @@ public class TestAddImage extends AbstractPhotoalbumTest {
         RichFacesFileUpload fileUpload = addImagesView.getFileUpload();
         fileUpload.addFile(getFileFromFileName(GOOD_IMAGE_TO_UPLOAD));
         Graphene.guardAjax(fileUpload).upload();
-        PhotoalbumUtils.waitFor(1000);// implicit wait time to handle callbacks
+        PhotoalbumUtils.waitFor(4000);// implicit wait time to handle callbacks
 
         assertEquals(fileUpload.advanced().getItems().size(), 1);
         FileUploadItem uploadedItem = fileUpload.advanced().getItems().getItem(0);
