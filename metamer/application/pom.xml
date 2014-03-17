@@ -159,10 +159,6 @@ FSF site: http://www.fsf.org. -->
         </dependency>
 
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
-        <dependency>
             <groupId>net.sourceforge.cssparser</groupId>
             <artifactId>cssparser</artifactId>
         </dependency>
