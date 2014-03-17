@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- JBoss, Home of Professional Open Source Copyright 2010-2013, Red Hat, Inc. and individual contributors by the @authors tag.
+<!-- JBoss, Home of Professional Open Source Copyright 2010-2014, Red Hat, Inc. and individual contributors by the @authors tag.
 See the copyright.txt in the distribution for a full listing of individual contributors. This is free software; you can redistribute
 it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either
 version 2.1 of the License, or (at your option) any later version. This software is distributed in the hope that it will be useful,
@@ -23,11 +23,12 @@ FSF site: http://www.fsf.org. -->
     <name>RichFaces Metamer Ftest</name>
 
     <properties>
+        <statelessViews>false</statelessViews>
         <!-- arquillian properties -->
         <!-- default values according to http://docs.oracle.com/javase/7/docs/technotes/guides/net/ipv6_guide/index.html -->
         <jvm.args.ip>-Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=false</jvm.args.ip>
         <!-- jvm args for all containers without setting prefered IP -->
-        <arquillian.container.all.jvm.args>-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</arquillian.container.all.jvm.args>
+        <arquillian.container.all.jvm.args>-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -DstatelessViews=${statelessViews}</arquillian.container.all.jvm.args>
         <arquillian.container.all.jvm.args.withIP>${arquillian.container.all.jvm.args} ${jvm.args.ip}</arquillian.container.all.jvm.args.withIP>
         <!-- following will be set as system properties -->
         <arquillian.container.jbossas.7-1.node0>127.0.0.1</arquillian.container.jbossas.7-1.node0>

@@ -1,6 +1,6 @@
 /**
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -131,9 +131,8 @@ public class TestPlaceHolderWithInplaceInput extends AbstractPlaceholderJSFTest 
         super.testHTTPSubmit();
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12650")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12623 https://issues.jboss.org/browse/RF-12650")
     @Override
     public void testRendered() {
         super.testRendered();

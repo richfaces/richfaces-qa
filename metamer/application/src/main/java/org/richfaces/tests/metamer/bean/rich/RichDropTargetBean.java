@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -31,7 +31,7 @@ import java.util.Map.Entry;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.component.UIDropTarget;
 import org.richfaces.tests.metamer.Attributes;
@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22460 $
  */
 @ManagedBean(name = "richDropTargetBean")
-@ViewScoped
+@SessionScoped
 public class RichDropTargetBean implements Serializable {
 
     private static final long serialVersionUID = 4008175400649809L;

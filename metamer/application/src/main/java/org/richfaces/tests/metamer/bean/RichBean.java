@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -72,6 +72,8 @@ public class RichBean implements Serializable {
     private String container;
     private boolean dummyBooleanResp;
     private String activeTabOnIndex = "a4j";
+    private int delay;
+    private boolean stateless;
 
     public enum Skinning {
 
@@ -94,6 +96,8 @@ public class RichBean implements Serializable {
         skinning = Skinning.SKINNING;
         reTests = false;
         reComponent = true;
+        this.stateless = Boolean.valueOf(System.getProperty("statelessViews", "false"));
+        this.delay = 0;
     }
 
     private void createComponentsMap() {
@@ -200,6 +204,22 @@ public class RichBean implements Serializable {
         skins.add("ruby");
         skins.add("wine");
         skins.add("plain");
+    }
+
+    public int getDelay() {
+        return delay;
+    }
+
+    public boolean isStateless() {
+        return stateless;
+    }
+
+    public void setDelay(int delay) {
+        this.delay = delay;
+    }
+
+    public void setStateless(boolean stateless) {
+        this.stateless = stateless;
     }
 
     /**

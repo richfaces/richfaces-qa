@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- JBoss, Home of Professional Open Source Copyright 2010-2013, Red Hat, Inc. and individual contributors by the @authors tag.
+<!-- JBoss, Home of Professional Open Source Copyright 2010-2014, Red Hat, Inc. and individual contributors by the @authors tag.
 See the copyright.txt in the distribution for a full listing of individual contributors. This is free software; you can redistribute
 it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either
 version 2.1 of the License, or (at your option) any later version. This software is distributed in the hope that it will be useful,
@@ -8,7 +8,8 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY o
 General Public License for more details. You should have received a copy of the GNU Lesser General Public License along with this
 software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the
 FSF site: http://www.fsf.org. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -35,7 +36,7 @@ FSF site: http://www.fsf.org. -->
         <!-- version of JBoss containers to use and download -->
         <version.jbossas7>7.0.2.Final</version.jbossas7>
         <version.jbossas7-1>7.1.1.Final</version.jbossas7-1>
-        <version.wildfly8-0>8.0.0.CR1</version.wildfly8-0>
+        <version.wildfly8-0>8.0.0.Final</version.wildfly8-0>
         <eap61Zip>path/to/your/eap/distribution/zip</eap61Zip>
 
         <!-- version of Glassfish containers to use and download       -->
@@ -43,18 +44,17 @@ FSF site: http://www.fsf.org. -->
 
         <!-- version of Tomcat containers to use-->
         <version.tomcat6>6.0.36</version.tomcat6>
-        <version.tomcat7>7.0.42</version.tomcat7>
-        <tomcat6Zip>path/to/your/tomcat/distribution/zip</tomcat6Zip>
-        <tomcat7Zip>path/to/your/tomcat/distribution/zip</tomcat7Zip>
+        <version.tomcat7>7.0.52</version.tomcat7>
+        <version.tomcat8>8.0.3</version.tomcat8>
 
         <!-- versions of TomEE containers to use and download -->
-        <version.tomee1-1>1.1.0-SNAPSHOT</version.tomee1-1>
         <version.tomee1-5>1.5.1</version.tomee1-5>
+        <version.tomee1-6>1.6.0</version.tomee1-6>
 
         <!-- arquillian versions -->
-        <arquillian.bom.version>1.1.2.Final</arquillian.bom.version>
-        <arquillian.tomcat.version>1.0.0.CR5</arquillian.tomcat.version>
-        <arquillian.drone.version>1.2.1.Final</arquillian.drone.version>
+        <arquillian.bom.version>1.1.3.Final</arquillian.bom.version>
+        <arquillian.tomcat.version>1.0.0.CR6</arquillian.tomcat.version>
+        <arquillian.drone.version>1.3.0.Final</arquillian.drone.version>
         <arquillian.graphene.version>2.0.0.Final</arquillian.graphene.version>
         <arquillian.glassfish3-1.version>1.0.0.CR4</arquillian.glassfish3-1.version>
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
@@ -62,13 +62,15 @@ FSF site: http://www.fsf.org. -->
         <shrinkwrap.descriptors.version>2.0.0-alpha-4</shrinkwrap.descriptors.version>
         <arquillian.eap.managed.version>7.1.3.Final</arquillian.eap.managed.version>
 
-        <version.selenium>2.37.1</version.selenium>
+        <version.selenium>2.39.0</version.selenium>
+        <version.testng>6.8.7</version.testng>
 
         <!-- these are set as Environmental variables to let Arquillian know where distribution of managed containers are -->
         <glassfish3-1home>${project.build.directory}/glassfish3</glassfish3-1home>
 
         <tomcat6.home>${project.build.directory}/apache-tomcat-${version.tomcat6}</tomcat6.home>
         <tomcat7.home>${project.build.directory}/apache-tomcat-${version.tomcat7}</tomcat7.home>
+        <tomcat8.home>${project.build.directory}/apache-tomcat-${version.tomcat8}</tomcat8.home>
 
         <jboss7Home>${project.build.directory}/jboss-as-${version.jbossas7}</jboss7Home>
         <jboss7-1Home>${project.build.directory}/jboss-as-${version.jbossas7-1}</jboss7-1Home>
@@ -359,7 +361,7 @@ FSF site: http://www.fsf.org. -->
             <dependency>
                 <groupId>org.testng</groupId>
                 <artifactId>testng</artifactId>
-                <version>6.1.1</version>
+                <version>${version.testng}</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.arquillian.graphene</groupId>
@@ -566,15 +568,15 @@ FSF site: http://www.fsf.org. -->
 
     <profiles>
         <profile>
-            <id>tomee-remote-1-1</id>
+            <id>tomee-remote-1-6</id>
             <properties>
-                <metamer.classifier>tomee11</metamer.classifier>
+                <metamer.classifier>tomee15</metamer.classifier>
             </properties>
             <dependencies>
                 <dependency>
                     <groupId>org.apache.openejb</groupId>
                     <artifactId>arquillian-tomee-remote</artifactId>
-                    <version>${version.tomee1-1}</version>
+                    <version>${version.tomee1-6}</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
@@ -594,7 +596,7 @@ FSF site: http://www.fsf.org. -->
                                         <artifactItem>
                                             <groupId>org.apache.openejb</groupId>
                                             <artifactId>apache-tomee</artifactId>
-                                            <version>${version.tomee1-1}</version>
+                                            <version>${version.tomee1-6}</version>
                                             <classifier>webprofile</classifier>
                                             <type>zip</type>
                                             <overWrite>false</overWrite>
@@ -609,7 +611,7 @@ FSF site: http://www.fsf.org. -->
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <systemProperties>
-                                <arquillian.launch>tomee-remote-1-1</arquillian.launch>
+                                <arquillian.launch>tomee-remote-1-6</arquillian.launch>
                             </systemProperties>
                         </configuration>
                     </plugin>
@@ -619,7 +621,7 @@ FSF site: http://www.fsf.org. -->
         <profile>
             <id>tomee-remote-1-5</id>
             <properties>
-                <metamer.classifier>tomee11</metamer.classifier>
+                <metamer.classifier>tomee15</metamer.classifier>
             </properties>
             <dependencies>
                 <dependency>
@@ -1344,18 +1346,26 @@ FSF site: http://www.fsf.org. -->
             <build>
                 <plugins>
                     <plugin>
-                        <artifactId>maven-antrun-plugin</artifactId>
+                        <artifactId>maven-dependency-plugin</artifactId>
                         <executions>
                             <execution>
-                                <phase>generate-resources</phase>
-                                <configuration>
-                                    <tasks>
-                                        <unzip src="${tomcat7Zip}" dest="${project.build.directory}" />
-                                    </tasks>
-                                </configuration>
+                                <id>unpack</id>
+                                <phase>process-test-classes</phase>
                                 <goals>
-                                    <goal>run</goal>
+                                    <goal>unpack</goal>
                                 </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.apache.tomcat</groupId>
+                                            <artifactId>tomcat</artifactId>
+                                            <version>${version.tomcat7}</version>
+                                            <type>zip</type>
+                                            <overWrite>false</overWrite>
+                                            <outputDirectory>${project.build.directory}</outputDirectory>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
@@ -1364,7 +1374,7 @@ FSF site: http://www.fsf.org. -->
                         <executions>
                             <execution>
                                 <id>copy-resources</id>
-                                <phase>process-resources</phase>
+                                <phase>process-test-classes</phase>
                                 <goals>
                                     <goal>copy-resources</goal>
                                 </goals>
@@ -1388,6 +1398,81 @@ FSF site: http://www.fsf.org. -->
                             </systemProperties>
                             <environmentVariables>
                                 <CATALINA_HOME>${tomcat7.home}</CATALINA_HOME>
+                            </environmentVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>tomcat-managed-8</id>
+            <properties>
+                <metamer.classifier>tomcat7-mojarra</metamer.classifier>
+                <showcase.classifier>tomcat6</showcase.classifier>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.arquillian.container</groupId>
+                    <artifactId>arquillian-tomcat-managed-7</artifactId>
+                    <version>${arquillian.tomcat.version}</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>unpack</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>unpack</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.apache.tomcat</groupId>
+                                            <artifactId>tomcat</artifactId>
+                                            <version>${version.tomcat8}</version>
+                                            <type>zip</type>
+                                            <overWrite>false</overWrite>
+                                            <outputDirectory>${project.build.directory}</outputDirectory>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-resources</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${tomcat8.home}/conf</outputDirectory>
+                                    <overwrite>true</overwrite>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/src/test/resources/tomcat7</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <arquillian.launch>tomcat-managed-7</arquillian.launch>
+                            </systemProperties>
+                            <environmentVariables>
+                                <CATALINA_HOME>${tomcat8.home}</CATALINA_HOME>
                             </environmentVariables>
                         </configuration>
                     </plugin>

@@ -1,5 +1,5 @@
 /**
- * JBoss, Home of Professional Open Source Copyright 2010-2013, Red Hat, Inc. and
+ * JBoss, Home of Professional Open Source Copyright 2010-2014, Red Hat, Inc. and
  * individual contributors by the @authors tag. See the copyright.txt in the
  * distribution for a full listing of individual contributors.
  *
@@ -29,7 +29,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -43,7 +43,7 @@ import javax.validation.constraints.Past;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class ValidationMessagesBean implements Serializable {
 
     private static final long serialVersionUID = -8259550540482799013L;

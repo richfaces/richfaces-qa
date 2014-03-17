@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -66,18 +66,22 @@ public class TestLeftPanelNavigations extends AbstractPhotoalbumTest {
         assertEquals(node.advanced().getNodes().size(), 2);
         // open Animals album
         Graphene.guardAjax(node).selectNode(0);
+        PhotoalbumUtils.waitFor(2000L);
+
         album.checkAll("Animals", "Created 2009-12-18, contains 6 images", "Animals pictures", "Album group: Nature");
         assertEquals(album.getPhotos().size(), 6);
         album.getPhotos().get(0).checkAll(120, "1750979205_6e51b47ce9_o.jpg", IMAGES_DEC_DATE);
         album.getPhotos().get(1).checkAll(120, "1906662004_655d0f6ccf_o.jpg", IMAGES_DEC_DATE);
-        album.getPhotos().get(4).checkAll(120, "2298556444_2151b7a6c4_o.jpg", IMAGES_DEC_DATE);
-        album.getPhotos().get(5).checkAll(120, "2508246015_313952406c_o.jpg", IMAGES_DEC_DATE);
+        album.getPhotos().get(4).checkAll(120, "9855284863_da027be6cf_o.jpg", IMAGES_DEC_DATE);
+        album.getPhotos().get(5).checkAll(120, "5395800621_c0bc80ca53_o.jpg", IMAGES_DEC_DATE);
 
         // check Sport & Cars shelf
         node = Graphene.guardNoRequest(page.getLeftPanel().getMyShelvesTree()).expandNode(1);
         assertEquals(node.advanced().getNodes().size(), 2);
         // open Sport album
         Graphene.guardAjax(node).selectNode(1);
+        PhotoalbumUtils.waitFor(2000L);
+
         album.checkAll("Sport", "Created 2009-12-18, contains 3 images", "Sport pictures", "Album group: Sport & Cars");
         assertEquals(album.getPhotos().size(), 3);
         album.getPhotos().get(0).checkAll(120, "103193233_860c47c909_o.jpg", IMAGES_DEC_DATE);
@@ -137,31 +141,37 @@ public class TestLeftPanelNavigations extends AbstractPhotoalbumTest {
         assertEquals(node.advanced().getNodes().size(), 1);
         // open Monuments and just buildings album
         Graphene.guardAjax(node).selectNode(0);
+        PhotoalbumUtils.waitFor(2000L);
+
         album.checkAll("Monuments and just buildings", "Created 2009-12-18, contains 3 images", "Monuments and just buildings pictures", "Album group: Monuments");
         assertEquals(album.getPhotos().size(), 3);
-        album.getPhotos().get(0).checkAll(120, "05[303x457].jpg", IMAGES_DEC_DATE);
-        album.getPhotos().get(1).checkAll(120, "07[303x457].jpg", IMAGES_DEC_DATE);
-        album.getPhotos().get(2).checkAll(120, "1805365000_ca64d20b10_o.jpg", IMAGES_DEC_DATE);
+        album.getPhotos().get(0).checkAll(120, "8561041065_43449e8697_o.jpg", IMAGES_DEC_DATE);
+        album.getPhotos().get(1).checkAll(120, "2523480499_e988ddf4c1_o.jpg", IMAGES_DEC_DATE);
+        album.getPhotos().get(2).checkAll(120, "4065627169_2e3cea3acf_o.jpg", IMAGES_DEC_DATE);
 
         // check Nature shelf
         node = Graphene.guardNoRequest(page.getLeftPanel().getPreDefinedShelvesTree()).expandNode(1);
         assertEquals(node.advanced().getNodes().size(), 2);
         // open Animals album
         Graphene.guardAjax(node).selectNode(0);
+        PhotoalbumUtils.waitFor(2000L);
+
         album.checkAll("Animals", "Created 2009-12-18, contains 6 images", "Animals pictures", "Album group: Nature");
         assertEquals(album.getPhotos().size(), 6);
         album.getPhotos().get(0).checkAll(120, "1750979205_6e51b47ce9_o.jpg", IMAGES_DEC_DATE);
         album.getPhotos().get(1).checkAll(120, "1906662004_655d0f6ccf_o.jpg", IMAGES_DEC_DATE);
-        album.getPhotos().get(4).checkAll(120, "2298556444_2151b7a6c4_o.jpg", IMAGES_DEC_DATE);
-        album.getPhotos().get(5).checkAll(120, "2508246015_313952406c_o.jpg", IMAGES_DEC_DATE);
+        album.getPhotos().get(4).checkAll(120, "9855284863_da027be6cf_o.jpg", IMAGES_DEC_DATE);
+        album.getPhotos().get(5).checkAll(120, "5395800621_c0bc80ca53_o.jpg", IMAGES_DEC_DATE);
 
         assertEquals(node.advanced().getNodes().size(), 2);
         // open Nature album
         Graphene.guardAjax(node).selectNode(1);
+        PhotoalbumUtils.waitFor(2000L);
+
         album.checkAll("Nature", "Created 2009-12-18, contains 6 images", "Nature pictures", "Album group: Nature");
         assertEquals(album.getPhotos().size(), 6);
-        album.getPhotos().get(0).checkAll(120, "01[303x202].jpg", IMAGES_DEC_DATE);
-        album.getPhotos().get(1).checkAll(120, "1[305x457].jpg", IMAGES_DEC_DATE);
+        album.getPhotos().get(0).checkAll(120, "294928909_01ab1f5696_o.jpg", IMAGES_DEC_DATE);
+        album.getPhotos().get(1).checkAll(120, "1352614209_6bfde3b6c2_o.jpg", IMAGES_DEC_DATE);
         album.getPhotos().get(4).checkAll(120, "3392730627_1cdb18cba6_o.jpg", IMAGES_DEC_DATE);
         album.getPhotos().get(5).checkAll(120, "3392993334_36d7f097df_o.jpg", IMAGES_DEC_DATE);
     }

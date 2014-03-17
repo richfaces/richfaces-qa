@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -63,6 +63,18 @@ public abstract class AbstractListTest extends AbstractWebDriverTest {
     List<Employee> expectedEmployees;
 
     private void countExpectedValues() {
+        String firstAtt = getAttributes().get(ListAttributes.first);
+        if (firstAtt != null && !firstAtt.isEmpty()) {
+            first = Integer.valueOf(firstAtt);
+        } else {
+            first = null;
+        }
+        String rowsAtt = getAttributes().get(ListAttributes.rows);
+        if (rowsAtt != null && !rowsAtt.isEmpty()) {
+            rows = Integer.valueOf(rowsAtt);
+        } else {
+            rows = null;
+        }
         // expected begin
         if (first == null || first < 0) {
             expectedBegin = 0;

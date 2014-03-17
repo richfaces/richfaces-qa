@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -23,6 +23,7 @@ package org.richfaces.tests.showcase;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -56,6 +57,7 @@ public class AbstractWebDriverTest extends AbstractShowcaseTest {
         this.contextRoot = getContextRoot();
         ShowcaseLayout layout = loadLayout();
         if (runInPortalEnv) {
+            webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
             webDriver.get(String.format("%s://%s:%s/%s", contextRoot.getProtocol(), contextRoot.getHost(),
                 contextRoot.getPort(), "portal/classic/showcase"));
             JavascriptExecutor js = (JavascriptExecutor) webDriver;

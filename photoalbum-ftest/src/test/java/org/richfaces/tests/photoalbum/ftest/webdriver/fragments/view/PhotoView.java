@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -238,7 +238,7 @@ public class PhotoView {
             @FindByJQuery("div.comment-deleteLink > span.additional-info-text")
             private WebElement additionalInfo;
 
-            public void checkAll(String info, String commentText, String userImage, String userName) throws AssertionError {
+            public void checkAll(Object info, String commentText, String userImage, String userName) throws AssertionError {
                 checkAdditionalInfo(info);
                 checkCommentText(commentText);
                 checkImageBackground();
@@ -246,28 +246,28 @@ public class PhotoView {
                 checkUserName(userName);
             }
 
-            private void checkAdditionalInfo(String info) {
-                assertEquals(this.additionalInfo.getText(), info);
+            private void checkAdditionalInfo(Object info) {
+                assertEquals(this.additionalInfo.getText(), info, "Additional info");
             }
 
             private void checkCommentText(String commentText) {
-                assertEquals(this.commentText.getText(), commentText);
+                assertEquals(this.commentText.getText(), commentText, "Comment text");
             }
 
             public void checkIfUsersComment() {
-                assertTrue(Utils.isVisible(deleteLink));
+                assertTrue(Utils.isVisible(deleteLink), "Delete link is not visible.");
             }
 
             private void checkImageBackground() {
-                assertTrue(imageBackground.getAttribute("src").contains("/img/shell/frame_photo_200.png"));
+                assertTrue(imageBackground.getAttribute("src").contains("/img/shell/frame_photo_200.png"), "Image bg");
             }
 
             private void checkUserImage(String userImage) {
-                assertTrue(this.userImage.getAttribute("src").contains(userImage));
+                assertTrue(this.userImage.getAttribute("src").contains(userImage), "User Image");
             }
 
             private void checkUserName(String userName) {
-                assertEquals(this.userName.getText(), userName);
+                assertEquals(this.userName.getText(), userName, "User name");
             }
 
             public void delete() {

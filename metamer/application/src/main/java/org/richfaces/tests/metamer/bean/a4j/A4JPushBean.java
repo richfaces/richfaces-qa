@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -21,28 +21,27 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.bean.a4j;
 
+import static org.richfaces.demo.push.TopicsContextMessageProducer.PUSH_TOPICS_CONTEXT_TOPIC;
+
 import java.io.Serializable;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Event;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.joda.time.DateTime;
 import org.richfaces.application.push.MessageException;
 import org.richfaces.application.push.TopicKey;
-
 import org.richfaces.application.push.TopicsContext;
 import org.richfaces.cdi.push.Push;
 import org.richfaces.component.UIPush;
-import javax.inject.Inject;
-
-import org.joda.time.DateTime;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static org.richfaces.demo.push.TopicsContextMessageProducer.PUSH_TOPICS_CONTEXT_TOPIC;
 
 /**
  * Managed bean for a4j:push.
@@ -50,7 +49,7 @@ import static org.richfaces.demo.push.TopicsContextMessageProducer.PUSH_TOPICS_C
  * @author Nick Belaevski, <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 23169 $
  */
-@ManagedBean(name = "a4jPushBean")
+@Named("a4jPushBean")
 @SessionScoped
 public class A4JPushBean implements Serializable {
 

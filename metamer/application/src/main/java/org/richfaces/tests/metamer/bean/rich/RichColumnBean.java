@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -26,7 +26,7 @@ import java.util.Comparator;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.component.SortOrder;
 import org.richfaces.component.UIColumn;
@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22460 $
  */
 @ManagedBean(name = "richColumnBean")
-@ViewScoped
+@SessionScoped
 public class RichColumnBean implements Serializable {
 
     public static final Comparator<Capital> STATE_NAME_LENGTH_COMPARATOR = new Comparator<Capital>() {

@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -31,6 +31,7 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -38,7 +39,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class TestSimple extends AbstractWebDriverTest {
+public class TestFocus extends AbstractWebDriverTest {
 
     private final Attributes<FocusAttributes> focusAttributes = getAttributes();
 
@@ -72,6 +73,7 @@ public class TestSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(exclude = { "richAccordion", "richCollapsiblePanel", "richTabPanel" })
     public void testValidationAwareTrue() {
         page.getNameInput().sendKeys("Robert");
         page.getAgeInput().sendKeys("38");
@@ -86,8 +88,15 @@ public class TestSimple extends AbstractWebDriverTest {
             "The address input should be focused! Since validationAware is true and that input is incorrect!");
     }
 
+    @Test(groups = "Future")
+    @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-13263")
+    public void testValidationAwareTrueInSwitchablePanels() {
+        testValidationAwareTrue();
+    }
+
     @Test
-    @Templates(exclude = { "richPopupPanel" })
+    @Templates(exclude = { "richPopupPanel", "richAccordion", "richCollapsiblePanel", "richTabPanel" })
     public void testValidationAwareFalse() {
         // richPopupPanel is disabled because in place where following attribute is to be set the popup
         // window appears, therefore making it unclickable
@@ -104,5 +113,12 @@ public class TestSimple extends AbstractWebDriverTest {
         String actual = page.getNameInput().getStringValue();
         assertTrue(actual.contains(AbstractFocusPage.EXPECTED_STRING), "The name input should contain string "
             + AbstractFocusPage.EXPECTED_STRING + ", because validationAware is false!");
+    }
+
+    @Test(groups = "Future")
+    @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-13263")
+    public void testValidationAwareFalseInSwitchablePanels() {
+        testValidationAwareFalse();
     }
 }

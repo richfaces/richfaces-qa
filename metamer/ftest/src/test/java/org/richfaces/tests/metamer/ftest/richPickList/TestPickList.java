@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -675,6 +675,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-13350")
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(pickList.advanced().getRootElement());

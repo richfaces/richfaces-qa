@@ -1,5 +1,5 @@
 /**
- * JBoss, Home of Professional Open Source Copyright 2010-2013, Red Hat, Inc. and
+ * JBoss, Home of Professional Open Source Copyright 2010-2014, Red Hat, Inc. and
  * individual contributors by the @authors tag. See the copyright.txt in the
  * distribution for a full listing of individual contributors.
  *
@@ -20,17 +20,21 @@
  */
 package org.richfaces.tests.metamer;
 
+import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
-import org.richfaces.tests.metamer.bean.ResponseDelayBean;
+
+import org.richfaces.tests.metamer.bean.RichBean;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class ResponseDelayListener implements PhaseListener {
 
-    private ResponseDelayBean bean;
+    private static final long serialVersionUID = 1L;
+
+    private RichBean bean;
 
     @Override
     public void beforePhase(PhaseEvent event) {
@@ -38,14 +42,12 @@ public class ResponseDelayListener implements PhaseListener {
 
     @Override
     public void afterPhase(PhaseEvent event) {
-        Object obj = event.getFacesContext().getViewRoot().getViewMap().get("responseDelayBean");
-        if (obj != null) {
-            bean = (ResponseDelayBean) obj;
-            if (bean.getDelay() != 0) {
-                try {
-                    Thread.sleep(bean.getDelay());
-                } catch (InterruptedException ex) {
-                }
+        FacesContext context = FacesContext.getCurrentInstance();
+        bean = context.getApplication().evaluateExpressionGet(context, "#{richBean}", RichBean.class);
+        if (bean != null && bean.getDelay() > 0) {
+            try {
+                Thread.sleep(bean.getDelay());
+            } catch (InterruptedException ex) {
             }
         }
     }

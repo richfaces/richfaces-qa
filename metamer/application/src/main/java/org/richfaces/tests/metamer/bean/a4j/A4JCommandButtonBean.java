@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -24,7 +24,7 @@ package org.richfaces.tests.metamer.bean.a4j;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
 
 import org.richfaces.component.UICommandButton;
@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22969 $
  */
 @ManagedBean(name = "a4jButtonBean")
-@ViewScoped
+@SessionScoped
 public class A4JCommandButtonBean implements Serializable {
 
     private static final long serialVersionUID = -2556026843426776944L;

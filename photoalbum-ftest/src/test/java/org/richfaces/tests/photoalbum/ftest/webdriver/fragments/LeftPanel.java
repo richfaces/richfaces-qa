@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -124,33 +124,41 @@ public class LeftPanel {
 
     public void openAlbumInOwnShelf(String albumName, String shelfName) {
         Graphene.guardAjax(Graphene.guardNoRequest(myShelvesTree).expandNode(ChoicePickerHelper.byVisibleText().contains(shelfName))).selectNode(ChoicePickerHelper.byVisibleText().contains(albumName));
+        PhotoalbumUtils.waitFor(2000L);
     }
 
     public void openAlbumInPredefinedShelf(String albumName, String shelfName) {
         Graphene.guardAjax(Graphene.guardNoRequest(preDefinedShelvesTree).expandNode(ChoicePickerHelper.byVisibleText().contains(shelfName))).selectNode(ChoicePickerHelper.byVisibleText().contains(albumName));
+        PhotoalbumUtils.waitFor(2000L);
     }
 
     public void openOwnShelf(String name) {
         Graphene.guardAjax(myShelvesTree).selectNode(ChoicePickerHelper.byVisibleText().contains(name));
+        PhotoalbumUtils.waitFor(2000L);
     }
 
     public void openOwnShelf(int index) {
         Graphene.guardAjax(myShelvesTree).selectNode(index);
+        PhotoalbumUtils.waitFor(2000L);
     }
 
     public void openOwnShelves() {
         Graphene.guardAjax(myShelvesLink).click();
+        PhotoalbumUtils.waitFor(2000L);
     }
 
     public void openPredefinedShelf(String name) {
         Graphene.guardAjax(preDefinedShelvesTree).selectNode(ChoicePickerHelper.byVisibleText().contains(name));
+        PhotoalbumUtils.waitFor(2000L);
     }
 
     public void openPredefinedShelf(int index) {
         Graphene.guardAjax(preDefinedShelvesTree).selectNode(index);
+        PhotoalbumUtils.waitFor(2000L);
     }
 
     public void openPredefinedShelves() {
         Graphene.guardAjax(preDefinedShelvesLink).click();
+        PhotoalbumUtils.waitFor(2000L);
     }
 }

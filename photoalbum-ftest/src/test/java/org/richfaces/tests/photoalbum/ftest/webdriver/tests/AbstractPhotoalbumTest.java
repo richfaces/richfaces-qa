@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -24,6 +24,7 @@ package org.richfaces.tests.photoalbum.ftest.webdriver.tests;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.util.Arrays;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -50,8 +51,15 @@ public abstract class AbstractPhotoalbumTest extends Arquillian {
 
     public static final String UNKNOWN_IMG_SRC = "-1";
     public static final String NO_OWNER = "-1";
-    public static final String IMAGES_DEC_DATE = "Dec 18, 2009";
-    public static final String JAN_DATE = "Jan 8, 1985";
+
+    public static final String IMAGES_DEC_DATE1 = "Dec 17, 2009";
+    public static final String IMAGES_DEC_DATE2 = "Dec 18, 2009";
+    public static final PossibleStringOptions IMAGES_DEC_DATE = new PossibleStringOptions(IMAGES_DEC_DATE1, IMAGES_DEC_DATE2);
+
+    public static final String JAN_DATE1 = "Jan 7, 1985";
+    public static final String JAN_DATE2 = "Jan 8, 1985";
+    public static final PossibleStringOptions JAN_DATE_85 = new PossibleStringOptions(JAN_DATE1, JAN_DATE2);
+    public static final PossibleStringOptions JAN_DATE_70 = new PossibleStringOptions("Jan 7, 1970", "Jan 8, 1970");
 
     @Drone
     protected WebDriver browser;
@@ -90,7 +98,9 @@ public abstract class AbstractPhotoalbumTest extends Arquillian {
             throw new SkipException("webDriver isn't initialized");
         }
         // the address needs to contain "localhost" instead of local loop IP, workaround for socials login
-        browser.get(contextPath.toString().replace("127.0.0.1", "localhost") + "index.jsf");
+        String replaced = contextPath.toString();
+        replaced = "localhost" + replaced.substring(replaced.indexOf(":8080"));
+        browser.get(replaced + "index.jsf");
         // this method could also handle user logging
         // i.e by introducing an annotation @LoggedUser used for marking test methods
         // but it cannot be done because of https://issues.jboss.org/browse/ARQGRA-309
@@ -129,6 +139,37 @@ public abstract class AbstractPhotoalbumTest extends Arquillian {
                 logout();
                 browser.manage().deleteAllCookies();
             }
+        }
+    }
+
+    public static class PossibleStringOptions {
+
+        private final String[] strings;
+
+        public PossibleStringOptions(String... strings) {
+            this.strings = strings;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            for (String string : strings) {
+                if (string.equals(o)) {
+                    return Boolean.TRUE;
+                }
+            }
+            return Boolean.FALSE;
+        }
+
+        @Override
+        public int hashCode() {
+            int hash = 3;
+            hash = 23 * hash + Arrays.deepHashCode(this.strings);
+            return hash;
+        }
+
+        @Override
+        public String toString() {
+            return Arrays.asList(strings).toString();
         }
     }
 }

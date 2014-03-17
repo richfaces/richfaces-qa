@@ -1,6 +1,6 @@
 /**
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -30,7 +30,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
 import org.richfaces.tests.metamer.converter.SwitchableFailingConverter;
@@ -40,7 +40,7 @@ import org.richfaces.tests.metamer.converter.SwitchableFailingConverter;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @ManagedBean(name = "converterBean")
-@ViewScoped
+@SessionScoped
 public class ConverterBean implements Serializable {
 
     public static final String DEFAULT_VALUE = "";

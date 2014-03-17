@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -28,7 +28,7 @@ import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.component.UIJQuery;
 import org.richfaces.tests.metamer.Attributes;
@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 22460 $
  */
 @ManagedBean(name = "richJQueryBean")
-@ViewScoped
+@SessionScoped
 public class RichJQueryBean implements Serializable {
 
     private static final long serialVersionUID = 111475400649809L;

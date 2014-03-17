@@ -46,6 +46,7 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
+            <version>6.1.1</version>
         </dependency>
         <!-- TestNG listeners for better console output -->
         <dependency>

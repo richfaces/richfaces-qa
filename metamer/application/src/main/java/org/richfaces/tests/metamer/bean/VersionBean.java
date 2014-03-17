@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -44,7 +44,7 @@ import org.richfaces.log.Logger;
  */
 @ManagedBean(name = "metamer")
 @ApplicationScoped
-public final class VersionBean {
+public class VersionBean {
 
     private static final Logger LOGGER = RichfacesLogger.APPLICATION.getLogger();
     private static final String UNKNOWN_JSF = "Unknown version of JSF";

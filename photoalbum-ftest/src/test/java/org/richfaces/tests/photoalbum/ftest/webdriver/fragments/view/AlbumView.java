@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -115,7 +115,7 @@ public class AlbumView {
     }
 
     public List<PhotoInfo> getPhotos() {
-        return Collections.unmodifiableList(photos);
+        return photos;
     }
 
     public WebElement getSlideShowLink() {
@@ -223,15 +223,15 @@ public class AlbumView {
             return photoView;
         }
 
-        public void checkAll(int photoSize, String name, String data) {
+        public void checkAll(int photoSize, String name, Object data) {
             checkAll(photoSize, name, data, NO_OWNER);
         }
 
-        public void checkAll(int photoSize, String name, String data, String secondData) {
+        public void checkAll(int photoSize, String name, Object data, Object secondData) {
             checkAll(photoSize, name, data, secondData, UNKNOWN_IMG_SRC);
         }
 
-        public void checkAll(int photoSize, String name, String data, String secondData, String imageSource) {
+        public void checkAll(int photoSize, String name, Object data, Object secondData, String imageSource) {
             checkBackgroundPhoto(photoSize);
             checkPhotoName(name);
             checkFirstData(data);
@@ -245,7 +245,7 @@ public class AlbumView {
             }
         }
 
-        private void checkSecondData(String authorName) {
+        private void checkSecondData(Object authorName) {
             assertEquals(secondData.getText(), authorName);
         }
 
@@ -257,7 +257,7 @@ public class AlbumView {
             assertTrue(photoImage.getAttribute("src").contains(photoSrc));
         }
 
-        private void checkFirstData(String data) {
+        private void checkFirstData(Object data) {
             assertEquals(firstData.getText(), data);
         }
 

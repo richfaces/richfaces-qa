@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -30,7 +30,7 @@ import java.util.TimeZone;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
@@ -51,7 +51,7 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @ManagedBean(name = "richCalendarBean")
-@ViewScoped
+@SessionScoped
 public class RichCalendarBean extends DateInputValidationBeanImpl implements Serializable {
 
     private static final long serialVersionUID = -1L;

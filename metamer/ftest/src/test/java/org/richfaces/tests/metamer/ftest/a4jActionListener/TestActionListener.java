@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -32,6 +32,7 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebDriver;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
@@ -45,6 +46,7 @@ import com.google.common.base.Predicate;
  * @since 4.3.0.M2
  */
 @Test(groups = "smoke")
+@Templates("plain")
 public class TestActionListener extends AbstractWebDriverTest {
 
     @Page

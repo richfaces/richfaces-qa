@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -27,7 +27,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.component.UIFileUpload;
 import org.richfaces.model.UploadedFile;
@@ -44,7 +44,7 @@ import org.richfaces.tests.metamer.bean.RichBean;
  * @version $Revision: 22507 $
  */
 @ManagedBean(name = "richFileUploadBean")
-@ViewScoped
+@SessionScoped
 public class RichFileUploadBean implements Serializable {
 
     private static final long serialVersionUID = -1L;

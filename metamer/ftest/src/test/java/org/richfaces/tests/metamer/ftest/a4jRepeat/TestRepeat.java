@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -44,7 +44,7 @@ import org.testng.annotations.Test;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @since 5.0.0.Alpha1
  */
-public class TestSimple extends AbstractWebDriverTest {
+public class TestRepeat extends AbstractWebDriverTest {
 
     private final Attributes<RepeatAttributes> repeatAttributes = getAttributes();
 
@@ -89,7 +89,7 @@ public class TestSimple extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-10589")
     @Use(field = "rows", ints = { -2, -1, 0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL,
             ELEMENTS_TOTAL + 1 })
-    public void testRowsAttribute() {
+    public void testRows() {
         repeatAttributes.set(RepeatAttributes.rows, rows);
         verifyRepeat();
     }
@@ -122,7 +122,18 @@ public class TestSimple extends AbstractWebDriverTest {
     }
 
     private void countExpectedValues() {
-
+        String firstAtt = repeatAttributes.get(RepeatAttributes.first);
+        if (firstAtt != null && !firstAtt.isEmpty()) {
+            first = Integer.valueOf(firstAtt);
+        } else {
+            first = null;
+        }
+        String rowsAtt = repeatAttributes.get(RepeatAttributes.rows);
+        if (rowsAtt != null && !rowsAtt.isEmpty()) {
+            rows = Integer.valueOf(rowsAtt);
+        } else {
+            rows = null;
+        }
         // expected begin
 
         if (first == null || first < 0) {

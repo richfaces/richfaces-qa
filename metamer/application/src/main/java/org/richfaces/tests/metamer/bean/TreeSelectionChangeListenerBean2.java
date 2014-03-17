@@ -1,5 +1,5 @@
 /**
- * JBoss, Home of Professional Open Source Copyright 2010-2013, Red Hat, Inc. and
+ * JBoss, Home of Professional Open Source Copyright 2010-2014, Red Hat, Inc. and
  * individual contributors by the @authors tag. See the copyright.txt in the
  * distribution for a full listing of individual contributors.
  *
@@ -23,7 +23,7 @@ package org.richfaces.tests.metamer.bean;
 import static org.richfaces.tests.metamer.bean.RichBean.logToPage;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.event.AbortProcessingException;
 import org.richfaces.event.TreeSelectionChangeEvent;
 import org.richfaces.event.TreeSelectionChangeListener;
@@ -31,7 +31,7 @@ import org.richfaces.event.TreeSelectionChangeListener;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-@ViewScoped
+@SessionScoped
 @ManagedBean
 public class TreeSelectionChangeListenerBean2 implements TreeSelectionChangeListener {
 
