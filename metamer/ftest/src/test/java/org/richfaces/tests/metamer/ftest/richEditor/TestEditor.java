@@ -34,8 +34,6 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
-import javax.validation.constraints.Future;
-
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -70,13 +68,6 @@ public class TestEditor extends AbstractWebDriverTest {
         return driver.findElement(By.tagName(editorTextAreaTag));
     }
 
-    private void verifySkin(String skinName, WebElement elemWithClassAttribute) {
-        editorAttributes.set(EditorAttributes.skin, skinName);
-        String editorClass = elemWithClassAttribute.getAttribute("class");
-        assertTrue(editorClass.contains("cke_skin_" + skinName), "Seems that skin '" + skinName
-            + "' didn't influence editor's @class attribute!");
-    }
-
     @Test
     public void testHeight() {
         String height = "500px";
@@ -97,11 +88,11 @@ public class TestEditor extends AbstractWebDriverTest {
         // get editor ID
         String editorId = driver.findElement(By.xpath("//textarea/..")).getAttribute("id");
         // defaultly readonly should be false
-        assertFalse((Boolean) executeJS("return RichFaces.component('" + editorId + "').isReadOnly()"));
+        assertFalse((Boolean) executeJS("return RichFaces.component('" + editorId + "').readOnly()"));
         // set readonly to true
         editorAttributes.set(EditorAttributes.readonly, Boolean.TRUE);
         // assert via JS that editor is readable only
-        assertTrue((Boolean) executeJS("return RichFaces.component('" + editorId + "').isReadOnly()"));
+        assertTrue((Boolean) executeJS("return RichFaces.component('" + editorId + "').readOnly()"));
     }
 
     @Test
@@ -140,17 +131,6 @@ public class TestEditor extends AbstractWebDriverTest {
     }
 
     @Test
-    @Future
-    public void testSkin() {
-        // this is not yet to be tested, in RF 5 skins will be reworked
-        WebElement elemWithClassAttribute = driver.findElement(By.cssSelector("span[id$='editorInput_arialbl']"));
-        verifySkin("kama", elemWithClassAttribute);
-        verifySkin("office2003", elemWithClassAttribute);
-        verifySkin("richfaces", elemWithClassAttribute);
-        verifySkin("v2", elemWithClassAttribute);
-    }
-
-    @Test
     public void testStyle() {
         final String style = "background-color: yellow; font-size: 1.5em;";
         editorAttributes.set(EditorAttributes.style, style);
@@ -181,7 +161,7 @@ public class TestEditor extends AbstractWebDriverTest {
     }
 
     @Test
-    @IssueTracking(value="RF-13574")
+    @IssueTracking(value = "RF-13574")
     public void testToolbar() {
 
         editorAttributes.set(toolbar, "basic");
@@ -260,7 +240,7 @@ public class TestEditor extends AbstractWebDriverTest {
         String editorId = driver.findElement(By.xpath("//textarea/..")).getAttribute("id");
         page.getEditor().type(testText);
         // using getValue method from JS API
-        String jsResult = (String) executeJS("return RichFaces.component('" + editorId + "').getValue()");
+        String jsResult = (String) executeJS("return RichFaces.component('" + editorId + "').value()");
         assertTrue(jsResult.contains(testText));
     }
 }
