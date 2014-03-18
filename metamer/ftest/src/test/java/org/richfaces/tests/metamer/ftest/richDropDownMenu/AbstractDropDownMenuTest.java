@@ -32,7 +32,6 @@ import static org.testng.Assert.fail;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -476,31 +475,23 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
 
     public void testHorizontalOffset() {
         updateDropDownMenuInvoker();
-        int offset = 11;
-
-        getCurrentMenu().advanced().show(page.getTarget1());
-        Point positionBefore = page.getDropDownMenuContent().getLocation();
-
-        dropDownMenuAttributes.set(DropDownMenuAttributes.horizontalOffset, offset);
-        getCurrentMenu().advanced().show(page.getTarget1());
-
-        Point positionAfter = page.getDropDownMenuContent().getLocation();
-
-        assertEquals(positionAfter.getX(), positionBefore.getX() + offset);
+        testHorizontalOffset(new ShowElementAndReturnAction() {
+            @Override
+            public WebElement perform() {
+                getCurrentMenu().advanced().show(page.getTarget1());
+                return getCurrentMenu().advanced().getMenuPopup();
+            }
+        });
     }
 
     public void testVerticalOffset() {
         updateDropDownMenuInvoker();
-        int offset = 11;
-
-        getCurrentMenu().advanced().show(page.getTarget1());
-        Point positionBefore = page.getDropDownMenuContent().getLocation();
-
-        dropDownMenuAttributes.set(DropDownMenuAttributes.verticalOffset, offset);
-        getCurrentMenu().advanced().show(page.getTarget1());
-
-        Point positionAfter = page.getDropDownMenuContent().getLocation();
-
-        assertEquals(positionAfter.getY(), positionBefore.getY() + offset);
+        testVerticalOffset(new ShowElementAndReturnAction() {
+            @Override
+            public WebElement perform() {
+                getCurrentMenu().advanced().show(page.getTarget1());
+                return getCurrentMenu().advanced().getMenuPopup();
+            }
+        });
     }
 }

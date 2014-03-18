@@ -564,6 +564,41 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
+     * @param showAction action which will show the tested menu and will return it as a WebElement.
+     */
+    protected void testHorizontalOffset(ShowElementAndReturnAction showAction) {
+        testOffset(false, showAction);
+    }
+
+    /**
+     * @param showAction action which will show the tested menu and will return it as a WebElement.
+     */
+    protected void testVerticalOffset(ShowElementAndReturnAction showAction) {
+        testOffset(true, showAction);
+    }
+
+    private void testOffset(boolean isVerticalOffset, ShowElementAndReturnAction showAction) {
+        int tolerance = 10;
+        int testedOffset = 50;
+
+        try {
+            getUnsafeAttributes("").set("direction", Positioning.bottomRight);
+        } catch (NoSuchElementException ignored) {
+        }
+        try {
+            getUnsafeAttributes("").set("jointPoint", Positioning.bottomRight);
+        } catch (NoSuchElementException ignored) {
+        }
+
+        Locations locationsBefore = Utils.getLocations(showAction.perform());
+
+        getUnsafeAttributes("").set((isVerticalOffset ? "verticalOffset" : "horizontalOffset"), testedOffset);
+        Locations locationsAfter = Utils.getLocations(showAction.perform());
+
+        Utils.tolerantAssertLocationsEquals(locationsAfter, locationsBefore.moveAllBy((isVerticalOffset ? 0 : testedOffset), (isVerticalOffset ? testedOffset : 0)), tolerance, tolerance, "");
+    }
+
+    /**
      * A helper method for testing JavaScripts events. It sets "metamerEvents += "testedAttribute" to the input field of the
      * tested attribute and fires the event @event using jQuery on the given element @element. Then it checks if the event was
      * fired. This method should only be used for attributes consistent with DOM events (e.g. (on)click, (on)change...).

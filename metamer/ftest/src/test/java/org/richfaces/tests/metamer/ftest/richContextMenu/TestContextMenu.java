@@ -37,7 +37,6 @@ import static org.testng.Assert.fail;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -132,25 +131,16 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testVerticalOffset() {
         updateShowAction();
-        int offset = 11;
-        // show context menu
-        page.clickOnFirstPanel(driverType);
-        // check whether the context menu is displayed
-        page.waitUntilContextMenuAppears();
-        // get position before offset is set
-        Point before = page.getContextMenuContent().getLocation();
-        // set verticalOffset
-        contextMenuAttributes.set(ContextMenuAttributes.verticalOffset, offset);
-        // show context menu
-        page.clickOnFirstPanel(driverType);
-        // check whether the context menu is displayed
-        page.waitUntilContextMenuAppears();
-        // get position after offset is set
-        Point after = page.getContextMenuContent().getLocation();
-        // check offset
-        assertEquals(before.getY(), after.getY() - offset);
+        testVerticalOffset(new ShowElementAndReturnAction() {
+            @Override
+            public WebElement perform() {
+                page.getContextMenu().advanced().show(page.getTargetPanel1());
+                return page.getContextMenu().advanced().getMenuPopup();
+            }
+        });
     }
 
     @Test
@@ -228,19 +218,16 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testHorizontalOffset() {
         updateShowAction();
-        int offset = 11;
-
-        page.getContextMenu().advanced().show(page.getTargetPanel1());
-        Point positionBefore = page.getContextMenuContent().getLocation();
-
-        contextMenuAttributes.set(ContextMenuAttributes.horizontalOffset, offset);
-        page.getContextMenu().advanced().show(page.getTargetPanel1());
-
-        Point positionAfter = page.getContextMenuContent().getLocation();
-
-        assertEquals(positionAfter.getX(), positionBefore.getX() + offset);
+        testHorizontalOffset(new ShowElementAndReturnAction() {
+            @Override
+            public WebElement perform() {
+                page.getContextMenu().advanced().show(page.getTargetPanel1());
+                return page.getContextMenu().advanced().getMenuPopup();
+            }
+        });
     }
 
     @Test

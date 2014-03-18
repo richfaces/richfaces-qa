@@ -36,7 +36,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -48,7 +47,6 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -420,8 +418,14 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates("plain")
     public void testHorizontalOffset() {
-        testOffset(Boolean.TRUE);
+        testHorizontalOffset(new ShowElementAndReturnAction() {
+            @Override
+            public WebElement perform() {
+                return popupCalendar.openPopup().getRoot();
+            }
+        });
     }
 
     @Test
@@ -559,27 +563,6 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
             .getShortMonthsLabels();
 
         assertEquals(shortMonthsLabels, expectedLabels, "Month label in calendar");
-    }
-
-    private void testOffset(boolean horizontal) {
-        int offset = 15;
-        int tolerance = 5;
-
-        Locations before = popupCalendar.openPopup().getLocations();
-        Locations movedFromBefore = (horizontal ? before.moveAllBy(offset, 0) : before.moveAllBy(0, offset));
-        if (horizontal) {
-            calendarAttributes.set(CalendarAttributes.horizontalOffset, offset);
-        } else {
-            calendarAttributes.set(CalendarAttributes.verticalOffset, offset);
-        }
-
-        Locations after = popupCalendar.openPopup().getLocations();
-
-        Iterator<Point> itAfter = after.iterator();
-        Iterator<Point> itMovedBefore = movedFromBefore.iterator();
-        while (itAfter.hasNext()) {
-            tolerantAssertLocations(itAfter.next(), itMovedBefore.next(), tolerance);
-        }
     }
 
     @Test
@@ -1004,8 +987,14 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates("plain")
     public void testVerticalOffset() {
-        testOffset(Boolean.FALSE);
+        testVerticalOffset(new ShowElementAndReturnAction() {
+            @Override
+            public WebElement perform() {
+                return popupCalendar.openPopup().getRoot();
+            }
+        });
     }
 
     @Test
@@ -1028,14 +1017,6 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         calendarAttributes.set(CalendarAttributes.zindex, zindex);
         String contentZindex = popupCalendar.openPopup().getRoot().getCssValue("z-index");
         assertEquals(contentZindex, zindex, "Z-index of the popup");
-    }
-
-    private void tolerantAssertLocations(Point actual, Point expected, int tolerance) {
-        assertTrue(_tolerantAssertLocations(actual, expected, tolerance), "actual " + actual + ", expected " + expected);
-    }
-
-    private boolean _tolerantAssertLocations(Point actual, Point expected, int tolerance) {
-        return (Math.abs(actual.x - expected.x) <= tolerance && Math.abs(actual.y - expected.y) <= tolerance);
     }
 
     private void assertVisible(WebElement element) {

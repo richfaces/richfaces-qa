@@ -70,24 +70,6 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     private Integer delay;
     private final Integer[] delays = { 0, 1000, 1900 };
 
-    private void checkOffset(boolean horizontal) {
-        int offset = 20;
-        int tolerance = 5;
-        // the show>hide>show is intentional to calibrate the tooltip to center.
-        Locations before = Utils.getLocations(tooltip().show().hide().show().advanced().getTooltipElement());
-        Locations movedFromBefore = horizontal
-            ? before.moveAllBy(offset, 0)
-            : before.moveAllBy(0, -offset);
-        if (horizontal) {
-            tooltipAttributes.set(TooltipAttributes.horizontalOffset, offset);
-        } else {
-            tooltipAttributes.set(TooltipAttributes.verticalOffset, offset);
-        }
-        // the show>hide>show is intentional to calibrate the tooltip to center.
-        Locations after = Utils.getLocations(tooltip().show().hide().show().advanced().getTooltipElement());
-        Utils.tolerantAssertLocationsEquals(movedFromBefore, after, tolerance, tolerance, "");
-    }
-
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richTooltip/simple.xhtml");
@@ -201,7 +183,13 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testHorizontalOffset() {
-        checkOffset(true);
+        tooltip().show().hide();// workaround: first the tooltip will show on the corner of the panel, then always in the middle
+        testHorizontalOffset(new ShowElementAndReturnAction() {
+            @Override
+            public WebElement perform() {
+                return tooltip().show().advanced().getTooltipElement();
+            }
+        });
     }
 
     @Test
@@ -488,8 +476,15 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testVerticalOffset() {
-        checkOffset(false);
+        tooltip().show().hide();// workaround: first the tooltip will show on the corner of the panel, then always in the middle
+        testVerticalOffset(new ShowElementAndReturnAction() {
+            @Override
+            public WebElement perform() {
+                return tooltip().show().advanced().getTooltipElement();
+            }
+        });
     }
 
     @Test
