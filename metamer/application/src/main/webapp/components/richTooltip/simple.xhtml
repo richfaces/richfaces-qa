@@ -47,56 +47,57 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
 
-            <r:panel id="panel" style="width: 200px">
+            <div style="padding: 200px">
+                <r:panel id="panel" style="width: 200px">
 
-            	Panel's content 8
+                    Panel's content 8
 
-                <r:tooltip id="tooltip"
-                              attached="#{richTooltipBean.attributes['attached'].value}"
-                              data="#{richTooltipBean.attributes['data'].value}"
-                              dir="#{richTooltipBean.attributes['dir'].value}"
-                              direction="#{richTooltipBean.attributes['direction'].value}"
-                              followMouse="#{richTooltipBean.attributes['followMouse'].value}"
-                              hideDelay="#{richTooltipBean.attributes['hideDelay'].value}"
-                              hideEvent="#{richTooltipBean.attributes['hideEvent'].value}"
-                              horizontalOffset="#{richTooltipBean.attributes['horizontalOffset'].value}"
-                              jointPoint="#{richTooltipBean.attributes['jointPoint'].value}"
-                              lang="#{richTooltipBean.attributes['lang'].value}"
-                              layout="#{richTooltipBean.attributes['layout'].value}"
-                              limitRender="#{richTooltipBean.attributes['limitRender'].value}"
-                              mode="#{richTooltipBean.attributes['mode'].value}"
-                              onbeforehide="#{richTooltipBean.attributes['onbeforehide'].value}"
-                              onbeforeshow="#{richTooltipBean.attributes['onbeforeshow'].value}"
-                              onclick="#{richTooltipBean.attributes['onclick'].value}"
-                              ondblclick="#{richTooltipBean.attributes['ondblclick'].value}"
-                              onhide="#{richTooltipBean.attributes['onhide'].value}"
-                              onmousedown="#{richTooltipBean.attributes['onmousedown'].value}"
-                              onmousemove="#{richTooltipBean.attributes['onmousemove'].value}"
-                              onmouseout="#{richTooltipBean.attributes['onmouseout'].value}"
-                              onmouseover="#{richTooltipBean.attributes['onmouseover'].value}"
-                              onmouseup="#{richTooltipBean.attributes['onmouseup'].value}"
-                              onbegin="#{richTooltipBean.attributes['onbegin'].value}"
-                              onbeforedomupdate="#{richTooltipBean.attributes['onbeforedomupdate'].value}"
-                              oncomplete="#{richTooltipBean.attributes['oncomplete'].value}"
-                              onshow="#{richTooltipBean.attributes['onshow'].value}"
-                              render="#{richTooltipBean.attributes['render'].value}"
-                              rendered="#{richTooltipBean.attributes['rendered'].value}"
-                              showDelay="#{richTooltipBean.attributes['showDelay'].value}"
-                              showEvent="#{richTooltipBean.attributes['showEvent'].value}"
-                              status="#{richTooltipBean.attributes['status'].value}"
-                              style="#{richTooltipBean.attributes['style'].value}"
-                              styleClass="#{richTooltipBean.attributes['styleClass'].value}"
-                              title="#{richTooltipBean.attributes['title'].value}"
-                              value="#{richTooltipBean.attributes['value'].value}"
-                              verticalOffset="#{richTooltipBean.attributes['verticalOffset'].value}"
-                              zindex="#{richTooltipBean.attributes['zindex'].value}"
-                              >
+                    <r:tooltip id="tooltip"
+                               attached="#{richTooltipBean.attributes['attached'].value}"
+                               data="#{richTooltipBean.attributes['data'].value}"
+                               dir="#{richTooltipBean.attributes['dir'].value}"
+                               direction="#{richTooltipBean.attributes['direction'].value}"
+                               followMouse="#{richTooltipBean.attributes['followMouse'].value}"
+                               hideDelay="#{richTooltipBean.attributes['hideDelay'].value}"
+                               hideEvent="#{richTooltipBean.attributes['hideEvent'].value}"
+                               horizontalOffset="#{richTooltipBean.attributes['horizontalOffset'].value}"
+                               jointPoint="#{richTooltipBean.attributes['jointPoint'].value}"
+                               lang="#{richTooltipBean.attributes['lang'].value}"
+                               layout="#{richTooltipBean.attributes['layout'].value}"
+                               limitRender="#{richTooltipBean.attributes['limitRender'].value}"
+                               mode="#{richTooltipBean.attributes['mode'].value}"
+                               onbeforehide="#{richTooltipBean.attributes['onbeforehide'].value}"
+                               onbeforeshow="#{richTooltipBean.attributes['onbeforeshow'].value}"
+                               onclick="#{richTooltipBean.attributes['onclick'].value}"
+                               ondblclick="#{richTooltipBean.attributes['ondblclick'].value}"
+                               onhide="#{richTooltipBean.attributes['onhide'].value}"
+                               onmousedown="#{richTooltipBean.attributes['onmousedown'].value}"
+                               onmousemove="#{richTooltipBean.attributes['onmousemove'].value}"
+                               onmouseout="#{richTooltipBean.attributes['onmouseout'].value}"
+                               onmouseover="#{richTooltipBean.attributes['onmouseover'].value}"
+                               onmouseup="#{richTooltipBean.attributes['onmouseup'].value}"
+                               onbegin="#{richTooltipBean.attributes['onbegin'].value}"
+                               onbeforedomupdate="#{richTooltipBean.attributes['onbeforedomupdate'].value}"
+                               oncomplete="#{richTooltipBean.attributes['oncomplete'].value}"
+                               onshow="#{richTooltipBean.attributes['onshow'].value}"
+                               render="#{richTooltipBean.attributes['render'].value}"
+                               rendered="#{richTooltipBean.attributes['rendered'].value}"
+                               showDelay="#{richTooltipBean.attributes['showDelay'].value}"
+                               showEvent="#{richTooltipBean.attributes['showEvent'].value}"
+                               status="#{richTooltipBean.attributes['status'].value}"
+                               style="#{richTooltipBean.attributes['style'].value}"
+                               styleClass="#{richTooltipBean.attributes['styleClass'].value}"
+                               title="#{richTooltipBean.attributes['title'].value}"
+                               value="#{richTooltipBean.attributes['value'].value}"
+                               verticalOffset="#{richTooltipBean.attributes['verticalOffset'].value}"
+                               zindex="#{richTooltipBean.attributes['zindex'].value}"
+                               >
 
-                    Tooltip content (counter: #{richTooltipBean.counter})
+                        Tooltip content (counter: #{richTooltipBean.counter})
 
-                </r:tooltip>
-            </r:panel>
-            
+                    </r:tooltip>
+                </r:panel>
+            </div>
             <br/>
             <fieldset>
                 <legend>rich:tooltip JS API (triggered by click event)</legend>
@@ -104,7 +105,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <br/>
                 <input type="button" id="hideClick" name="hideClick" value="Click to hide()" onclick="#{r:component('tooltip')}.hide()" />
             </fieldset>    
-                
+
             <fieldset>
                 <legend>rich:tooltip JS API (triggered by mouseover event)</legend>     
                 <input type="button" id="showMouseOver" name="showMouseOver" value="show(mouseover)" onmouseover="#{r:component('tooltip')}.show(event)" />

@@ -36,11 +36,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.faces.event.PhaseId;
 
@@ -68,6 +66,7 @@ import org.richfaces.fragment.calendar.TimeEditor;
 import org.richfaces.fragment.calendar.TimeEditor.SetValueBy;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Locations;
+import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
@@ -88,7 +87,6 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     private DateTimeFormatter dateTimeFormatter;
 
     private BoundaryDatesMode boundaryDatesMode;
-    private Direction direction;
     private Mode mode;
     private TodayControlMode todayControlMode;
     private Boolean booleanValue;
@@ -112,22 +110,6 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         private final String value;
 
         private BoundaryDatesMode(String value) {
-            this.value = value;
-        }
-    }
-
-    private enum Direction {
-
-        AUTO("auto"),
-        TOPLEFT("topLeft"),
-        TOPRIGHT("topRight"),
-        BOTTOMLEFT("bottomLeft"),
-        BOTTOMRIGHT("bottomRight"),
-        NULL("null");
-        private final String value;
-        public static final Set<Direction> STRICT_POSITIONS = Collections.unmodifiableSet(EnumSet.of(TOPLEFT, TOPRIGHT, BOTTOMLEFT, BOTTOMRIGHT));
-
-        private Direction(String value) {
             this.value = value;
         }
     }
@@ -354,30 +336,15 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
-    @UseWithField(field = "direction", valuesFrom = FROM_ENUM, value = "")
+    @Templates("plain")
+    @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "")
     public void testDirection() {
-        int tolerance = 5;
-        calendarAttributes.set(CalendarAttributes.direction, direction.value);
-        calendarAttributes.set(CalendarAttributes.jointPoint, Direction.BOTTOMLEFT.value);
-        // scrolls page down
-        Point locationInput = popupCalendar.getLocations().getBottomLeft();
-        Locations popupLocations = popupCalendar.openPopup().getLocations();
-        if (Direction.STRICT_POSITIONS.contains(direction)) {
-            tolerantAssertLocations(getPositionForDirection(popupLocations, direction),
-                locationInput, tolerance);
-        } else {// 'auto' or 'null'
-            // cycle through all strict directions, one must be the same as the 'auto',
-            // which  depends on browser/screen resolution and actual position
-            for (Direction d : Direction.STRICT_POSITIONS) {
-                try {
-                    tolerantAssertLocations(getPositionForDirection(popupLocations, d),
-                        locationInput, tolerance);
-                    return;
-                } catch (AssertionError ignored) {
-                }
+        testDirection(new ShowElementAndReturnAction() {
+            @Override
+            public WebElement perform() {
+                return popupCalendar.openPopup().getRoot();
             }
-            fail("No position was close enough for direction " + direction.toString());
-        }
+        });
     }
 
     @Test
@@ -485,27 +452,16 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
-    @UseWithField(field = "direction", valuesFrom = FROM_ENUM, value = "")
+    @Templates("plain")
+    @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "")
     public void testJointPoint() {
-        int tolerance = 4;
-        calendarAttributes.set(CalendarAttributes.jointPoint, direction.value);
-        Locations inputLocations = popupCalendar.getLocations();
-        Point locationPopup = popupCalendar.openPopup().getLocations().getTopLeft();
-
-        if (Direction.STRICT_POSITIONS.contains(direction)) {
-            tolerantAssertLocations(getPositionForJointPoint(inputLocations, direction), locationPopup, tolerance);
-        } else {// 'auto' or 'null'
-            // cycle through all strict directions, one must be the same as the 'auto',
-            // which  depends on browser/screen resolution and actual position
-            for (Direction d : Direction.STRICT_POSITIONS) {
-                try {
-                    tolerantAssertLocations(getPositionForJointPoint(inputLocations, d), locationPopup, tolerance);
-                    return;
-                } catch (AssertionError ignored) {
-                }
+        Locations l = Utils.getLocations(popupCalendar.getRootElement());
+        testJointPoint(l.getWidth(), l.getHeight(), new ShowElementAndReturnAction() {
+            @Override
+            public WebElement perform() {
+                return popupCalendar.openPopup().getRoot();
             }
-            fail("No position was close enough for jointPoint " + direction.toString());
-        }
+        });
     }
 
     @Test
@@ -1100,48 +1056,6 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         for (WebElement webElement : list) {
             assertNotVisible(webElement);
         }
-    }
-
-    private Point getPositionForDirection(Locations locations, Direction direction) {
-        Point position = null;
-        switch (direction) {
-            case TOPLEFT:
-                position = locations.getBottomRight();
-                break;
-            case TOPRIGHT:
-                position = locations.getBottomLeft();
-                break;
-            case BOTTOMLEFT:
-                position = locations.getTopRight();
-                break;
-            case BOTTOMRIGHT:
-                position = locations.getTopLeft();
-                break;
-            default:
-                throw new UnsupportedOperationException("Not supported direction: " + direction);
-        }
-        return position;
-    }
-
-    private Point getPositionForJointPoint(Locations locations, Direction direction) {
-        Point point = null;
-        switch (direction) {
-            case BOTTOMLEFT:
-                point = locations.getBottomLeft();
-                break;
-            case BOTTOMRIGHT:
-                point = locations.getBottomRight();
-                break;
-            case TOPLEFT:
-                point = locations.getTopLeft();
-                break;
-            case TOPRIGHT:
-                point = locations.getTopRight();
-                break;
-            default:
-                throw new UnsupportedOperationException("Not supported direction: " + direction);
-        }
-        return point;
     }
 
     private void submitWithA4jSubmitBtn() {

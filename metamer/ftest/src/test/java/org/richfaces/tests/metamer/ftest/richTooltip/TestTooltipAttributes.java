@@ -35,8 +35,8 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.common.Actions;
 import org.richfaces.fragment.common.Event;
@@ -65,26 +65,10 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     @Page
     private TooltipPage page;
 
-    private Direction direction;
     private TooltipMode mode;
 
     private Integer delay;
     private final Integer[] delays = { 0, 1000, 1900 };
-
-    private enum Direction {
-
-        AUTO("auto"),
-        TOPLEFT("topLeft"),
-        TOPRIGHT("topRight"),
-        BOTTOMLEFT("bottomLeft"),
-        BOTTOMRIGHT("bottomRight"),
-        NULL("null");
-        private final String value;
-
-        private Direction(String value) {
-            this.value = value;
-        }
-    }
 
     private void checkOffset(boolean horizontal) {
         int offset = 20;
@@ -165,38 +149,17 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
-    @UseWithField(field = "direction", valuesFrom = FROM_ENUM, value = "")
-    @Templates(value = "plain")
+    @Templates("plain")
+    @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "")
     public void testDirection() {
-        int tolerance = 5;
+        tooltip().show().hide();// workaround: first the tooltip will show on the corner of the panel, then always in the middle
         tooltipAttributes.set(TooltipAttributes.followMouse, Boolean.FALSE);
-        tooltipAttributes.set(TooltipAttributes.direction, direction.value);
-        tooltipAttributes.set(TooltipAttributes.jointPoint, Direction.TOPRIGHT.value);
-        tooltipAttributes.set(TooltipAttributes.mode, SwitchType.client);
-        // scrolls page down
-        Point invokeLocation, tooltipLocation = null;
-        Locations panelLocations = Utils.getLocations(page.getPanel());
-        invokeLocation = page.getPanel()
-            .getLocation()
-            .moveBy(panelLocations.getWidth() / 2, panelLocations.getHeight() / 2);// middle of the panel
-        Locations tooltipLocations = Utils.getLocations(tooltip().show().advanced().getTooltipElement());
-        switch (direction) {
-            case TOPLEFT:
-                tooltipLocation = tooltipLocations.getBottomRight();
-                break;
-            case NULL:
-            case AUTO:// auto (direction depends on browser/screen resolution)
-            case TOPRIGHT:
-                tooltipLocation = tooltipLocations.getBottomLeft();
-                break;
-            case BOTTOMLEFT:
-                tooltipLocation = tooltipLocations.getTopRight();
-                break;
-            case BOTTOMRIGHT:
-                tooltipLocation = tooltipLocations.getTopLeft();
-                break;
-        }
-        Utils.tolerantAssertPointEquals(invokeLocation, tooltipLocation, tolerance, tolerance, "Direction does not work as expected.");
+        testDirection(new ShowElementAndReturnAction() {
+            @Override
+            public WebElement perform() {
+                return tooltip().show().advanced().getTooltipElement();
+            }
+        });
     }
 
     @Test
