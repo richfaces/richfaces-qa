@@ -54,7 +54,7 @@ public class TestTwoPush extends AbstractWebDriverTest {
         // Graphene.guardAjax doesn't work here
         String requestTime = page.getRequestTimeElement().getText();
         page.pushEnabledChckBox.click();
-        Graphene.waitAjax().until().element(page.getRequestTimeElement()).text().not().equalTo(requestTime);
+        Graphene.waitModel().until().element(page.getRequestTimeElement()).text().not().equalTo(requestTime);
         if (waitForReinitialization) {
             waitUntilPushReinits();
         }
