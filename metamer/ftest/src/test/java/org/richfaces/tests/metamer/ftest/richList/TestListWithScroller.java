@@ -79,14 +79,13 @@ public class TestListWithScroller extends AbstractListTest {
     }
 
     private void testNumberedPages(RichFacesDataScroller dataScroller) {
-        final int[] testPages = new int[]{ 3, 10, 1, 9, 2 };
+        final int[] testPages = new int[]{ 3, 10, 1 };
         rows = 20;
 
         for (int pageNumber : testPages) {
             dataScroller.switchTo(pageNumber);
-
-            first = rows * (dataScroller.getActivePageNumber() - 1);
-            verifyList();
+            waiting(5000);
+            verifyList(dataScroller.getActivePageNumber(), rows);
         }
     }
 }
