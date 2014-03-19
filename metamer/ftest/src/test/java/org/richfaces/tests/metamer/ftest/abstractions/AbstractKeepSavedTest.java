@@ -25,6 +25,7 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -34,8 +35,6 @@ import org.richfaces.fragment.messages.RichFacesMessages;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.Assert;
 
 /**
@@ -82,7 +81,7 @@ public class AbstractKeepSavedTest extends AbstractWebDriverTest {
     }
 
     protected void submit() {
-        MetamerPage.waitRequest(submitButton, WaitRequestType.XHR).click();
+        Graphene.guardAjax(submitButton).click();
     }
 
     protected void checkKeepSaved(boolean keepSaved) {
