@@ -192,8 +192,11 @@ public class TestMenuGroup extends AbstractWebDriverTest {
         assertNotVisible(menuItem41, "Menu item \"Save\" should not be visible on the page");
 
         assertNotVisible(groupList, "Submenu should not be expanded.");
-        Graphene.guardNoRequest(new Actions(driver).moveToElement(group).build()).perform();
-        assertVisible(groupList, "Submenu should be expanded.");
+        Graphene.guardNoRequest(new Actions(driver)
+            .moveToElement(group)
+            .moveByOffset(1, 1))
+            .perform();
+        Graphene.waitGui().withMessage("Submenu should be expanded.").until().element(group).is().visible();
 
         assertPresent(menuItem41, "Menu item \"Save\" should be present on the page");
         assertVisible(menuItem41, "Menu item \"Save\" should be visible on the page");
