@@ -22,7 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
 import org.richfaces.tests.metamer.ftest.abstractions.validations.AbstractDateInputComponentValidationTest;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.annotations.Test;
 
 /**
@@ -36,7 +36,7 @@ public class TestCalendarJSR303 extends AbstractDateInputComponentValidationTest
     }
 
     @Test(groups = "smoke")
-    @Use(field = "commonCase", value = "commonCases")
+    @UseWithField(field = "commonCase", valuesFrom = FROM_FIELD, value = "commonCases")
     public void testCommonCases() {
         verifyCases();
     }

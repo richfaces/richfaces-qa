@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richTogglePanelItem;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.STRINGS;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -33,11 +34,10 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -66,8 +66,6 @@ public class TestTogglePanelItem extends AbstractWebDriverTest {
 
     private final Attributes<TogglePanelItemAttributes> togglePanelItemAttributes = getAttributes();
 
-    @Inject
-    @Use
     private String switchType;
 
     private GrapheneElement getGuardedLink(GrapheneElement button) {
@@ -215,7 +213,7 @@ public class TestTogglePanelItem extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "switchType", strings = { "null", "ajax", "client", "server" })
+    @UseWithField(field = "switchType", valuesFrom = STRINGS, value = { "null", "ajax", "client", "server" })
     @RegressionTest("https://issues.jboss.org/browse/RF-10488")
     public void testSwitchType() {
         togglePanelItemAttributes.set(TogglePanelItemAttributes.switchType, switchType);

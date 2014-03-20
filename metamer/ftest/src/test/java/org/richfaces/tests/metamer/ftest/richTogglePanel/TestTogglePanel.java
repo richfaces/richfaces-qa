@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richTogglePanel;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.STRINGS;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -35,10 +36,9 @@ import org.jboss.arquillian.graphene.GrapheneElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -82,8 +82,6 @@ public class TestTogglePanel extends AbstractWebDriverTest {
     @FindBy(css = "[id$=value]")
     private GrapheneElement jsApiOutput;
 
-    @Inject
-    @Use
     private String switchType;
 
     private GrapheneElement getGuardedLink(GrapheneElement button) {
@@ -259,7 +257,7 @@ public class TestTogglePanel extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "switchType", strings = { "null", "ajax", "client", "server" })
+    @UseWithField(field = "switchType", valuesFrom = STRINGS, value = { "null", "ajax", "client", "server" })
     @RegressionTest("https://issues.jboss.org/browse/RF-10040")
     public void testSwitchType() {
         togglePanelAttributes.set(TogglePanelAttributes.switchType, switchType);

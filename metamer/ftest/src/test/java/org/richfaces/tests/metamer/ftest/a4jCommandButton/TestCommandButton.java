@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.a4jCommandButton;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.STRINGS;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -35,11 +36,10 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -57,8 +57,6 @@ public class TestCommandButton extends AbstractWebDriverTest {
     @Page
     private CommandButtonLinkPage page;
 
-    @Inject
-    @Use(empty = false)
     private String type;
 
     @Override
@@ -357,7 +355,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "type", strings = { "image", "reset", "submit", "button" })
+    @UseWithField(field = "type", valuesFrom = STRINGS, value = { "image", "reset", "submit", "button" })
     public void testType() {
         testHTMLAttribute(page.button, commandButtonAttributes, CommandButtonAttributes.type, type);
     }

@@ -29,17 +29,6 @@ import static javax.faces.event.PhaseId.RENDER_RESPONSE;
 import static javax.faces.event.PhaseId.RESTORE_VIEW;
 import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState.ACCEPTING;
-import static org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState.REJECTING;
-import static org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttributes.acceptedTypes;
-import static org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttributes.bypassUpdates;
-import static org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttributes.execute;
-import static org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttributes.immediate;
-import static org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttributes.onbeforedomupdate;
-import static org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttributes.onbegin;
-import static org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttributes.oncomplete;
-import static org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttributes.render;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -53,12 +42,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -79,6 +69,11 @@ public class TestDropTarget extends AbstractWebDriverTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richDropTarget/simple.xhtml");
+    }
+
+    @BeforeMethod
+    public void clearActions() {
+        new Actions(driver).release().build().perform();
     }
 
     @Test
@@ -109,8 +104,7 @@ public class TestDropTarget extends AbstractWebDriverTest {
         String drop2Content = page.drop2.getText();
         new Actions(driver).release(page.drop1).perform();
 
-//        new Actions(driver).dragAndDrop(page.drg1, page.drop1).build().perform();
-
+        // new Actions(driver).dragAndDrop(page.drg1, page.drop1).build().perform();
         // TODO JJa: find replacement
         // waitAjax.waitForChange(retrieveDrop1);
         // assertTrue(retrieveDrop2.isValueChanged());

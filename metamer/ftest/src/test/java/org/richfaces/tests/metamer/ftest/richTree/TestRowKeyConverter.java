@@ -28,6 +28,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -46,6 +47,7 @@ public class TestRowKeyConverter extends AbstractTreeTest {
     }
 
     @Test(groups = "smoke")
+    @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "richFacesTreeNodes")
     public void testToggle() {
         toggle();
         Assert.assertEquals(getNumberOfExpandedNodes(), 1, "Number of expanded nodes after expanding one node doesn't match.");

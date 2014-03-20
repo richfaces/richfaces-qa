@@ -21,21 +21,19 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richPanelMenuGroup;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
-import static org.richfaces.component.Mode.ajax;
-import static org.richfaces.component.Mode.client;
-import static org.richfaces.component.Mode.server;
-import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.mode;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.STRINGS;
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
+import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
@@ -50,8 +48,6 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
 
     private final Attributes<PanelMenuGroupAttributes> panelMenuGroupAttributes = getAttributes();
 
-    @Inject
-    @Use(empty = true)
     private String event;
 
     private String[] ajaxExpansionEvents = new String[]{ "beforeselect", "beforeswitch", "beforeexpand", "begin", "beforedomupdate",
@@ -76,20 +72,20 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     }
 
     @Test
-    @Use(field = "event", value = "ajaxCollapsionEvents")
+    @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "ajaxCollapsionEvents")
     public void testClientSideCollapsionEvent() {
-        panelMenuGroupAttributes.set(mode, ajax);
+        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.ajax);
         testRequestEventsBefore(event);
         guardAjax(page.getMenu()).collapseGroup(1);
         testRequestEventsAfter(event);
     }
 
     @Test
-    @Use(field = "event", value = "ajaxExpansionEvents")
+    @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "ajaxExpansionEvents")
     @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
-            "richList" })
+        "richList" })
     public void testClientSideExpansionEvent() {
-        panelMenuGroupAttributes.set(mode, ajax);
+        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.ajax);
         guardAjax(page.getMenu()).collapseGroup(1);
         testRequestEventsBefore(event);
         guardAjax(page.getMenu()).expandGroup(1);
@@ -97,26 +93,26 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     }
 
     @Test
-    @Use(field = "event", strings = { "beforeselect", "beforeswitch", "begin", "beforedomupdate", "select", "switch",
-            "complete" })
+    @UseWithField(field = "event", valuesFrom = STRINGS, value = { "beforeselect", "beforeswitch", "begin", "beforedomupdate", "select", "switch",
+        "complete" })
     @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
-            "richList" })
+        "richList" })
     public void testClientSideExpansionEventInIterationComponents() {
         testClientSideExpansionEvent();
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11547")
-    @Use(field = "event", strings = { "beforeexpand", "expand" })
+    @UseWithField(field = "event", valuesFrom = STRINGS, value = { "beforeexpand", "expand" })
     @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
-            "richList" })
+        "richList" })
     public void testClientSideExpansionEventInIterationComponentsExpand() {
         testClientSideExpansionEvent();
     }
 
     @Test
     public void testClientSideExpansionEventsOrderClient() {
-        panelMenuGroupAttributes.set(mode, client);
+        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.client);
         testRequestEventsBefore(clientExpansionEvents);
         page.getMenu().collapseGroup(1);
         page.getMenu().expandGroup(0);
@@ -128,7 +124,7 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     @Test(groups = { "Future" }) //false negative, need to fix
     @RegressionTest("https://issues.jboss.org/browse/RF-10564")
     public void testClientSideCollapsionEventsOrderClient() {
-        panelMenuGroupAttributes.set(mode, client);
+        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.client);
         page.getMenu().collapseGroup(1);
         testRequestEventsBefore(clientCollapsionEvents);
         page.getMenu().expandGroup(1);
@@ -138,9 +134,9 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-12549")
     @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
-            "richList" })
+        "richList" })
     public void testClientSideExpansionEventsOrderAjax() {
-        panelMenuGroupAttributes.set(mode, ajax);
+        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.ajax);
         guardAjax(page.getMenu()).collapseGroup(1);
         testRequestEventsBefore(ajaxExpansionEvents);
         cleanMetamerEventsVariable();
@@ -151,7 +147,7 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11547")
     @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
-            "richList" })
+        "richList" })
     public void testClientSideExpansionEventsOrderAjaxInIterationComponents() {
         testClientSideExpansionEventsOrderAjax();
     }
@@ -159,16 +155,16 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-12549")
     public void testClientSideCollapsionEventsOrderAjax() {
-        panelMenuGroupAttributes.set(mode, ajax);
+        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.ajax);
         testRequestEventsBefore(ajaxCollapsionEvents);
         guardAjax(page.getMenu()).collapseGroup(1);
         testRequestEventsAfter(ajaxCollapsionEvents);
     }
 
     @Test
-    @Use(field = "event", value = "serverExpansionEvents1")
+    @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "serverExpansionEvents1")
     public void testClientSideExpansionEventsServerBeforeSwitch() {
-        panelMenuGroupAttributes.set(mode, server);
+        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.server);
         guardHttp(page.getMenu()).collapseGroup(1);
         // testRequestEventsBeforeByAlert(event);
         testRequestEventsBefore(event);
@@ -179,11 +175,11 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
 
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-11547")
-    @Use(field = "event", value = "serverExpansionEvents2")
+    @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "serverExpansionEvents2")
     @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
-            "richList" })
+        "richList" })
     public void testClientSideExpansionEventsServerBeforeExpand() {
-        panelMenuGroupAttributes.set(mode, server);
+        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.server);
         guardHttp(page.getMenu()).collapseGroup(1);
         // testRequestEventsBeforeByAlert(event);
         testRequestEventsBefore(event);
@@ -194,17 +190,17 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11547")
-    @Use(field = "event", value = "serverExpansionEvents2")
+    @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "serverExpansionEvents2")
     @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
-            "richList" })
+        "richList" })
     public void testClientSideExpansionEventsServerBeforeExpandIterationComponents() {
         testClientSideExpansionEventsServerBeforeExpand();
     }
 
     @Test
-    @Use(field = "event", value = "serverCollapsionEvents")
+    @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "serverCollapsionEvents")
     public void testClientSideCollapsionEventsServer() {
-        panelMenuGroupAttributes.set(mode, server);
+        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.server);
         // testRequestEventsBeforeByAlert(event);
         testRequestEventsBefore(event);
         guardHttp(page.getMenu()).collapseGroup(1);

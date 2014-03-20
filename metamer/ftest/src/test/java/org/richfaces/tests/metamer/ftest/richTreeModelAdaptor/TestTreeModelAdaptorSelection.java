@@ -22,6 +22,8 @@
 package org.richfaces.tests.metamer.ftest.richTreeModelAdaptor;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 
 import java.net.URL;
 import java.util.LinkedList;
@@ -31,9 +33,9 @@ import java.util.regex.Pattern;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.metamer.ftest.annotations.Uses;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
 import org.richfaces.tests.metamer.ftest.richTree.AbstractTreeSelectionTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.BeforeMethod;
@@ -49,20 +51,17 @@ public class TestTreeModelAdaptorSelection extends AbstractTreeSelectionTest {
     @FindByJQuery(":checkbox[id$=recursiveLeafChildrenNullable]")
     private WebElement recursiveLeafChildrenNullableElement;
 
-    @Inject
-    private PathsCrate paths;
-    private final PathsCrate pathsForListModel = new PathsCrate("listModel", new Integer[][]{ { 1, 0, 2 }, { 2, 2, 1, 1 } });
-    private final PathsCrate pathsForMapModel = new PathsCrate("mapModel", new Integer[][]{ { 1, 0, 4 }, { 2, 2, 1, 5 } });
-    private final PathsCrate pathsForRecursiveModel = new PathsCrate("recursiveModel", new Integer[][]{ { 3, 0, 9, 1 },
-    { 0, 3, 2, 10, 3 } });
+    private PathsCrate path;
+    private final PathsCrate[] paths = new PathsCrate[]{
+        new PathsCrate("listModel", new Integer[][]{ { 1, 0, 2 }, { 2, 2, 1, 1 } }),
+        new PathsCrate("mapModel", new Integer[][]{ { 1, 0, 4 }, { 2, 2, 1, 5 } }),
+        new PathsCrate("recursiveModel", new Integer[][]{ { 3, 0, 9, 1 }, { 0, 3, 2, 10, 3 } }) };
 
-    @Inject
-    @Use(enumeration = true)
+    @UseForAllTests(valuesFrom = FROM_ENUM, value = "")
     private RecursiveModelRepresentation representation;
 
-    @Inject
-    @Use(booleans = { true, false })
-    private boolean recursiveLeafChildrenNullable;
+    @UseForAllTests(valuesFrom = FROM_FIELD, value = "booleans")
+    private Boolean recursiveLeafChildrenNullable;
 
     @Override
     public URL getTestUrl() {
@@ -71,8 +70,8 @@ public class TestTreeModelAdaptorSelection extends AbstractTreeSelectionTest {
 
     @BeforeMethod
     public void initPathsAndModelRepresentation() {
-        if (paths != null) {
-            selectionPaths = paths.paths;
+        if (path != null) {
+            selectionPaths = path.paths;
         }
         if (representation == RecursiveModelRepresentation.MAP) {
             MetamerPage.requestTimeChangesWaiting(recursiveModelRepresentations.get(1)).click();
@@ -83,9 +82,7 @@ public class TestTreeModelAdaptorSelection extends AbstractTreeSelectionTest {
     }
 
     @Test
-    @Uses({
-        @Use(field = "paths", empty = true),
-        @Use(field = "sample", empty = true) })
+    @UseWithField(field = "selectionType", valuesFrom = FROM_FIELD, value = "selectionTypes")
     @Override
     public void testTopLevelSelection() {
         super.testTopLevelSelection();
@@ -93,8 +90,8 @@ public class TestTreeModelAdaptorSelection extends AbstractTreeSelectionTest {
 
     @Test
     @Uses({
-        @Use(field = "paths", value = "paths*"),
-        @Use(field = "sample", empty = true) })
+        @UseWithField(field = "selectionType", valuesFrom = FROM_FIELD, value = "selectionTypes"),
+        @UseWithField(field = "path", valuesFrom = FROM_FIELD, value = "paths"), })
     @Override
     public void testSubNodesSelection() {
         super.testSubNodesSelection();
@@ -102,9 +99,9 @@ public class TestTreeModelAdaptorSelection extends AbstractTreeSelectionTest {
 
     @Test
     @Uses({
-        @Use(field = "paths", value = "paths*"),
-        @Use(field = "sample", empty = true),
-        @Use(field = "selectionType", value = "eventEnabledSelectionTypes") })
+        @UseWithField(field = "selectionType", valuesFrom = FROM_FIELD, value = "selectionTypes"),
+        @UseWithField(field = "path", valuesFrom = FROM_FIELD, value = "paths"),
+        @UseWithField(field = "selectionType", valuesFrom = FROM_FIELD, value = "eventEnabledSelectionTypes") })
     @Override
     public void testSubNodesSelectionEvents() {
         super.testSubNodesSelectionEvents();
@@ -130,17 +127,17 @@ public class TestTreeModelAdaptorSelection extends AbstractTreeSelectionTest {
         if (!list.isEmpty()) {
             if (list.get(0) % 2 == 1) {
                 if (list.size() == 2) {
-                    if (paths.toString().equals(pathsForRecursiveModel.toString())) {
+                    if (path.toString().equals(paths[2].toString())) {
                         return integer + 7;
-                    } else if (paths.toString().equals(pathsForMapModel.toString())) {
+                    } else if (path.toString().equals(paths[1].toString())) {
                         return integer + 3;
                     }
                 }
             } else {
                 if (list.size() == 3) {
-                    if (paths.toString().equals(pathsForRecursiveModel.toString())) {
+                    if (path.toString().equals(paths[2].toString())) {
                         return integer + 7;
-                    } else if (paths.toString().equals(pathsForMapModel.toString())) {
+                    } else if (path.toString().equals(paths[1].toString())) {
                         return integer + 3;
                     }
                 }

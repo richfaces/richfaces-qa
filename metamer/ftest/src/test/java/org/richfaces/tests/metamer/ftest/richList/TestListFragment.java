@@ -22,15 +22,15 @@
 package org.richfaces.tests.metamer.ftest.richList;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.list.RichFacesList;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.richfaces.tests.metamer.ftest.richList.TestListAttributes.ListType;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -48,8 +48,7 @@ public class TestListFragment extends AbstractListTest {
     private static final int ROW_COUNT_DEFINITIONS = ROW_COUNT * 2;
     private final Attributes<ListAttributes> attributes = getAttributes();
 
-    @Use(empty = false, enumeration = true)
-    @Inject
+    @UseForAllTests(valuesFrom = FROM_ENUM, value = "")
     private ListType type;
 
     @Override

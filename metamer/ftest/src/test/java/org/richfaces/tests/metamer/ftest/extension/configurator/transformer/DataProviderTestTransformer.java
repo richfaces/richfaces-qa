@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2014, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -19,20 +19,24 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest;
+package org.richfaces.tests.metamer.ftest.extension.configurator.transformer;
 
-import org.jboss.test.selenium.listener.ConsoleStatusTestListener;
-import org.testng.ITestResult;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 
+import org.testng.IAnnotationTransformer;
+import org.testng.annotations.ITestAnnotation;
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 19564 $
- *
+ * Testng annotation transformer to enhance all @Test annotations with dataprovider used by the Configurator.
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class MetamerConsoleStatusTestListener extends ConsoleStatusTestListener {
-    protected String getMessage(ITestResult result) {
-        String message = super.getMessage(result);
-        return message + " " +  MetamerTestInfo.getConfigurationInfoInParenthesses();
+public class DataProviderTestTransformer implements IAnnotationTransformer {
+
+    public static final String DATAPROVIDER_NAME = "matrix-configurator";
+
+    @Override
+    public void transform(ITestAnnotation ita, Class type, Constructor c, Method method) {
+        ita.setDataProvider(DATAPROVIDER_NAME);
     }
 }

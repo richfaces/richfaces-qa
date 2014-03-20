@@ -21,14 +21,14 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richHotKey;
 
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.testng.Assert.assertEquals;
 
 import java.util.Set;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebDriver;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.annotations.Test;
 
 import com.google.common.base.Predicate;
@@ -39,8 +39,6 @@ import com.google.common.base.Predicate;
  */
 public class TestHotKeyAttributes extends AbstractHotKeyTest {
 
-    @Inject
-    @Use(empty = false)
     private KeysEnum key;
 
     public enum KeysEnum {
@@ -132,7 +130,7 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
     }
 
     @Test
-    @Use(field = "key", enumeration = true)
+    @UseWithField(field = "key", valuesFrom = FROM_ENUM, value = "")
     public void testKey() {
         firstHotkeyAttributes.set(HotKeyAttributes.key, key.keysString);
         hotkey1.setupHotkey(key.toString());

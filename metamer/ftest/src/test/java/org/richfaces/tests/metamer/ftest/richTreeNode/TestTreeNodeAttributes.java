@@ -32,7 +32,8 @@ import org.richfaces.component.SwitchType;
 import org.richfaces.fragment.common.Actions;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.tree.Tree.TreeNode;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.richTree.AbstractTreeTest;
 import org.richfaces.tests.metamer.ftest.richTree.TreeAttributes;
 import org.testng.annotations.BeforeMethod;
@@ -64,6 +65,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testDir() {
         testHTMLAttribute(getFirstNode().advanced().getNodeInfoElement(), firstNodeAttributes, TreeNodeAttributes.dir, "rtl");
@@ -71,6 +73,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testHandleClass() {
         testHTMLAttribute(getFirstNode().advanced().getHandleElement(), firstNodeAttributes, TreeNodeAttributes.handleClass, "metamer-ftest-class");
@@ -79,6 +82,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testIconClass() {
         testHTMLAttribute(getFirstNode().advanced().getIconElement(), firstNodeAttributes, TreeNodeAttributes.iconClass, "metamer-ftest-class");
@@ -87,6 +91,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test(groups = "smoke")
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testIconCollapsed() {
         firstNodeAttributes.set(TreeNodeAttributes.iconCollapsed, IMAGE_URL);
@@ -107,6 +112,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test(groups = "smoke")
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testIconExpanded() {
         firstNodeAttributes.set(TreeNodeAttributes.iconExpanded, IMAGE_URL);
@@ -124,6 +130,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testIconLeaf() {
         lastNodeAttributes.set(TreeNodeAttributes.iconLeaf, IMAGE_URL);
@@ -133,6 +140,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test(groups = "smoke")
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testImmediate() {
         treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax);
 
@@ -146,6 +154,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testLabelClass() {
         testHTMLAttribute(getFirstNode().advanced().getLabelElement(), firstNodeAttributes, TreeNodeAttributes.labelClass, "metamer-ftest-class");
@@ -154,18 +163,21 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testLang() {
         testHTMLAttribute(getFirstNode().advanced().getNodeInfoElement(), firstNodeAttributes, TreeNodeAttributes.lang);
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testOnbeforetoggle() {
         treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax);
         testFireEvent(firstNodeAttributes, TreeNodeAttributes.onbeforetoggle, expandFirstNodeAjaxAction);
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnclick() {
         testFireEvent(firstNodeAttributes, TreeNodeAttributes.onclick,
@@ -174,30 +186,35 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
 
     @Test
     @Templates("plain")
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testOndblclick() {
         testFireEvent(firstNodeAttributes, TreeNodeAttributes.ondblclick,
             new Actions(driver).doubleClick(getFirstNode().advanced().getLabelElement()).build());
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnkeydown() {
         testFireEventWithJS(getFirstNode().advanced().getLabelElement(), firstNodeAttributes, TreeNodeAttributes.onkeydown);
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnkeypress() {
         testFireEventWithJS(getFirstNode().advanced().getLabelElement(), firstNodeAttributes, TreeNodeAttributes.onkeypress);
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnkeyup() {
         testFireEventWithJS(getFirstNode().advanced().getLabelElement(), firstNodeAttributes, TreeNodeAttributes.onkeyup);
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnmousedown() {
         testFireEvent(firstNodeAttributes, TreeNodeAttributes.onmousedown,
@@ -205,6 +222,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnmousemove() {
         testFireEvent(firstNodeAttributes, TreeNodeAttributes.onmousemove,
@@ -212,6 +230,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnmouseout() {
         testFireEvent(firstNodeAttributes, TreeNodeAttributes.onmouseout,
@@ -219,6 +238,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnmouseover() {
         testFireEvent(firstNodeAttributes, TreeNodeAttributes.onmouseover,
@@ -227,18 +247,21 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
 
     @Test
     @Templates("plain")
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testOnmouseup() {
         testFireEvent(firstNodeAttributes, TreeNodeAttributes.onmouseup,
             new Actions(driver).triggerEventByWD(Event.CLICK, getFirstNode().advanced().getLabelElement()).build());
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testOntoggle() {
         treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax);
         testFireEvent(firstNodeAttributes, TreeNodeAttributes.ontoggle, expandFirstNodeAjaxAction);
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testRendered() {
         firstNodeAttributes.set(TreeNodeAttributes.rendered, Boolean.TRUE);
@@ -249,23 +272,27 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
 
     @Test
     @Templates("plain")
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testStyle() {
         testHTMLAttribute(getFirstNode().advanced().getNodeInfoElement(), firstNodeAttributes, TreeNodeAttributes.style, "background-color: yellow; font-size: 1.5em;");
     }
 
     @Test
     @Templates("plain")
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testStyleClass() {
         testHTMLAttribute(getFirstNode().advanced().getNodeInfoElement(), firstNodeAttributes, TreeNodeAttributes.styleClass, "metamer-ftest-class");
     }
 
     @Test
     @Templates("plain")
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testTitle() {
         testHTMLAttribute(getFirstNode().advanced().getNodeInfoElement(), firstNodeAttributes, TreeNodeAttributes.title);
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testToggleListener() {
         treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax);
         expandFirstNodeAjaxAction.perform();

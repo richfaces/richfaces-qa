@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-
 package org.richfaces.tests.metamer.converter;
 
 import javax.faces.FacesException;
@@ -27,6 +26,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+
 import org.richfaces.tests.metamer.Template;
 import org.richfaces.tests.metamer.TemplatesList;
 
@@ -34,7 +34,6 @@ import org.richfaces.tests.metamer.TemplatesList;
  * Converter used for view parameter "template".
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22330 $
  */
 @FacesConverter(value = "templatesListConverter")
 public class TemplatesListConverter implements Converter {
@@ -46,10 +45,9 @@ public class TemplatesListConverter implements Converter {
         try {
             TemplatesList list = new TemplatesList();
 
-            for (String template : value.split(",")) {
-                list.add(Template.valueOf(template.toUpperCase()));
+            for (String template : value.split(TemplatesList.ITEMS_SEPARATOR_WEB)) {
+                list.add(Template.valueFrom(template));
             }
-
             return list;
         } catch (IllegalArgumentException iae) {
             throw new FacesException("Cannot convert parameter \"" + value + "\" to the list of templates.", iae);
@@ -63,11 +61,9 @@ public class TemplatesListConverter implements Converter {
         if (value instanceof String) {
             return (String) value;
         }
-
         if (value instanceof TemplatesList) {
             return value.toString();
         }
-
         throw new FacesException("Cannot convert parameter \"" + value + "\" to the list of templates.");
     }
 }

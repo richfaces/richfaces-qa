@@ -19,25 +19,23 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.annotations;
+package org.richfaces.tests.metamer.ftest.extension.configurator.config;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.PARAMETER;
-import static java.lang.annotation.ElementType.TYPE;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.reflect.Method;
+import java.util.List;
 
 /**
- * @author <a href="mailto:ppitonak@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22407 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-@Target({ TYPE, FIELD, METHOD, PARAMETER })
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Templates {
-    String[] value() default {};
-    String[] include() default {};
-    String[] exclude() default {};
+public interface ConfiguratorExtension {
+
+    /**
+     * Create and return list of possible configurations.
+     */
+    List<Config> createConfigurations(Method m, Object testInstance);
+
+    /**
+     * If true, the the test method should not run when the list of returned configurations is empty(or null).
+     */
+    boolean skipIfEmpty();
 }

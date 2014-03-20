@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotEquals;
@@ -36,10 +37,9 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
@@ -54,8 +54,9 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
     @Page
     private FrozenColumnsPage page;
 
-    @Inject
-    @Use(empty = false)
+    private Integer[] ints = { 0, 2, 4 };
+    private Integer[] ints2 = { 1, 3 };
+
     private Integer numberOfColumns;
     private Point location;// for testScrollerForNotFrozenColumns
 
@@ -76,7 +77,7 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
      */
     @Test
     @Templates(exclude = { "richExtendedDataTable" })
-    @Use(field = "numberOfColumns", ints = { 0, 2, 4 })
+    @UseWithField(field = "numberOfColumns", valuesFrom = FROM_FIELD, value = "ints")
     public void testFrozenColumnsShow() {
         extendedDataTableAttributes.set(ExtendedDataTableAttributes.frozenColumns, numberOfColumns);
         // test
@@ -96,7 +97,7 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
     }
 
     @Test(groups = { "Future" })
-    @Use(field = "numberOfColumns", ints = { 0, 2, 4 })
+    @UseWithField(field = "numberOfColumns", valuesFrom = FROM_FIELD, value = "ints")
     @Templates(value = "richExtendedDataTable")
     @IssueTracking("https://issues.jboss.org/browse/RF-13046")
     public void testFrozenColumnsShowInEDT() {
@@ -118,7 +119,7 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
      * if scroller is still there after switching to another data page.
      */
     @Test
-    @Use(field = "numberOfColumns", ints = { 1, 3 })
+    @UseWithField(field = "numberOfColumns", valuesFrom = FROM_FIELD, value = "ints2")
     @Templates(exclude = { "richExtendedDataTable" })
     // TODO https://issues.jboss.org/browse/RF-12236 , when numberOfColumns=4
     public void testScrollerForNotFrozenColumns() {
@@ -147,7 +148,7 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
      * if scroller is still there after switching to another data page.
      */
     @Test(groups = { "Future" })
-    @Use(field = "numberOfColumns", ints = { 1, 3 })
+    @UseWithField(field = "numberOfColumns", valuesFrom = FROM_FIELD, value = "ints2")
     @Templates(value = "richExtendedDataTable")
     @IssueTracking("https://issues.jboss.org/browse/RF-12278")
     // TODO https://issues.jboss.org/browse/RF-12236 , when numberOfColumns=4

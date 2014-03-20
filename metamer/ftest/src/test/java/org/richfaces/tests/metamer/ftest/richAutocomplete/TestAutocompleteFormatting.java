@@ -22,6 +22,8 @@
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.STRINGS;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -31,9 +33,9 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.openqa.selenium.By;
 import org.richfaces.fragment.autocomplete.SelectOrConfirm;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.metamer.ftest.annotations.Uses;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -42,17 +44,11 @@ import org.testng.annotations.Test;
  */
 public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
 
-    @Inject
-    @Use(empty = true)
-    Boolean autofill;
+    private Boolean autofill;
+    private Boolean selectFirst;
 
-    @Inject
-    @Use(empty = true)
-    Boolean selectFirst;
-
-    @Inject
-    @Use(strings = { "div", "list", "table" })
-    String layout;
+    @UseForAllTests(valuesFrom = STRINGS, value = { "div", "list", "table" })
+    private String layout;
 
     @Override
     public URL getTestUrl() {
@@ -78,8 +74,9 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
      */
     @Test
     @Uses({
-        @Use(field = "autofill", booleans = { true, false }),
-        @Use(field = "selectFirst", booleans = { true, false }) })
+        @UseWithField(field = "autofill", valuesFrom = FROM_FIELD, value = "booleans"),
+        @UseWithField(field = "selectFirst", valuesFrom = FROM_FIELD, value = "booleans")
+    })
     public void testFormatting() {
         assertTrue(autocomplete.advanced().getSuggestionsElements().isEmpty());
         autocomplete.clear();

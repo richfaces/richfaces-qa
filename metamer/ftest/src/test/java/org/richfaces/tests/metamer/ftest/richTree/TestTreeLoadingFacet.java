@@ -31,10 +31,9 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.tree.Tree.TreeNode;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.annotations.Test;
 
-@Use(field = "sample", value = "simpleSwingTreeNode")
 public class TestTreeLoadingFacet extends AbstractTreeTest {
 
     @FindBy(css = "input[id$=loadingFacet]")
@@ -53,6 +52,7 @@ public class TestTreeLoadingFacet extends AbstractTreeTest {
     }
 
     @Test(groups = "smoke")
+    @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "simpleSwingTreeNode")
     @RegressionTest("https://issues.jboss.org/browse/RF-12696")
     public void testLoadingFacet() {
         int sufficientTimeToCheckHandles = 2000;// ms
@@ -73,5 +73,4 @@ public class TestTreeLoadingFacet extends AbstractTreeTest {
             treeNode.advanced().waitUntilNodeIsExpanded().perform();
         }
     }
-
 }
