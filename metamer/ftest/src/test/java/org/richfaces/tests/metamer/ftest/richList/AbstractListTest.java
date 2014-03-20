@@ -57,14 +57,17 @@ public abstract class AbstractListTest extends AbstractWebDriverTest {
     List<Employee> expectedEmployees;
 
     private void countExpectedValues() {
-        System.out.println("***** first: " + expectedBegin);
         String firstAtt = getAttributes().get(ListAttributes.first);
         if (firstAtt != null && !firstAtt.isEmpty()) {
             first = Integer.valueOf(firstAtt);
+        } else {
+            first = null;
         }
         String rowsAtt = getAttributes().get(ListAttributes.rows);
         if (rowsAtt != null && !rowsAtt.isEmpty()) {
             rows = Integer.valueOf(rowsAtt);
+        } else {
+            rows = null;
         }
         // expected begin
         if (first == null || first < 0) {
@@ -103,7 +106,6 @@ public abstract class AbstractListTest extends AbstractWebDriverTest {
     }
 
     private void verifyCounts() {
-        List<RichFacesListItem> items = list.getItems();
         assertEquals(list.getItems().size(), displayedRows);
     }
 
