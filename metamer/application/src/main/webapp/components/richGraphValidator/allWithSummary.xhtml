@@ -39,7 +39,8 @@
     <ui:define name="component">
         <r:graphValidator id="graphValidator" value="#{richGraphValidatorBean}"
             groups="#{richGraphValidatorBean.validationGroups}" type="#{richGraphValidatorBean.attributes['type'].value}"
-            rendered="#{richGraphValidatorBean.attributes['rendered'].value}">
+            rendered="#{richGraphValidatorBean.attributes['rendered'].value}"
+            summary="#{richGraphValidatorBean.attributes['summary'].value}">
             <ui:include src="panelWithInputs.xhtml" />
         </r:graphValidator>
     </ui:define>
