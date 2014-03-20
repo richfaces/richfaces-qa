@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.a4jMediaOutput;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.STRINGS;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -29,11 +30,9 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.richfaces.tests.metamer.bean.a4j.A4JMediaOutputBean;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for page /faces/components/a4jMediaOutput/elementA.xhtml
@@ -44,8 +43,6 @@ public class TestElementA extends AbstractMediaOutputTest {
 
     private final Attributes<MediaOutputAttributes> mediaOutputAttributes = getAttributes();
 
-    @Inject
-    @Use(empty = false)
     private String typeValue;
 
     @Override
@@ -68,7 +65,7 @@ public class TestElementA extends AbstractMediaOutputTest {
     }
 
     @Test
-    @Use(field = "typeValue", strings = { "text/html", "image/png", "image/gif", "video/mpeg", "text/css", "audio/basic" })
+    @UseWithField(field = "typeValue", valuesFrom = STRINGS, value = { "text/html", "image/png", "image/gif", "video/mpeg", "text/css", "audio/basic" })
     public void testType() {
         testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.type, typeValue);
     }

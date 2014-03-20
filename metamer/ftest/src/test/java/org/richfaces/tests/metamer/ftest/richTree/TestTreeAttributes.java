@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTree;
 
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.STRINGS;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -35,9 +36,8 @@ import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.tree.Tree.TreeNode;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.metamer.ftest.annotations.Uses;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.annotations.Test;
 
 import com.google.common.base.Optional;
@@ -50,23 +50,26 @@ import com.google.common.collect.Lists;
 public class TestTreeAttributes extends AbstractTreeTest {
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testData() {
         testData(selectFirstNodeAjaxAction);
     }
 
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
-    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = "simpleRichFacesTreeNode")
     public void testDataRFTreeNode() {
         testData();
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testDir() {
         testDir(tree.advanced().getRootElement());
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testExecute() {
         treeAttributes.set(TreeAttributes.execute, "executeChecker @this");
         selectFirstNodeAjaxAction.perform();
@@ -75,12 +78,13 @@ public class TestTreeAttributes extends AbstractTreeTest {
 
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
-    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = "simpleRichFacesTreeNode")
     public void testExecuteRFTreeNode() {
         testExecute();
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testHandleClass() {
         TreeNode node = getGuarded(tree, SwitchType.ajax).expandNode(0);
@@ -90,6 +94,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testIconClass() {
         TreeNode node = getGuarded(tree, SwitchType.ajax).expandNode(0);
@@ -98,6 +103,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testIconCollapsed() {
         treeAttributes.set(TreeAttributes.iconCollapsed, IMAGE_URL);
@@ -111,6 +117,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testIconExpanded() {
         treeAttributes.set(TreeAttributes.iconExpanded, IMAGE_URL);
@@ -124,6 +131,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testIconLeaf() {
         treeAttributes.set(TreeAttributes.toggleType, SwitchType.client);
@@ -134,6 +142,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testImmediate() {
         treeAttributes.set(TreeAttributes.immediate, Boolean.FALSE);
         expandFirstNodeAjaxAction.perform();
@@ -145,18 +154,21 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testLabelClass() {
         testStyleClass(tree.advanced().getFirstNode().advanced().getLabelElement(), BasicAttributes.labelClass);
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testLang() {
         testAttributeLang(tree.advanced().getRootElement());
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testLimitRender() {
         treeAttributes.set(TreeAttributes.limitRender, true);
         treeAttributes.set(TreeAttributes.render, "@this renderChecker");
@@ -167,84 +179,92 @@ public class TestTreeAttributes extends AbstractTreeTest {
 
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
-    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = "simpleRichFacesTreeNode")
     public void testLimitRenderRFTreeNode() {
         testLimitRender();
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testNodeClass() {
         testStyleClass(tree.advanced().getFirstNode().advanced().getNodeInfoElement(), BasicAttributes.nodeClass);
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testOnbeforedomupdate() {
         testFireEvent(treeAttributes, TreeAttributes.onbeforedomupdate, selectFirstNodeAjaxAction);
     }
 
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
-    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = "simpleRichFacesTreeNode")
     public void testOnbeforedomupdateRFTreeNode() {
         testOnbeforedomupdate();
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testOnbeforenodetoggle() {
         testFireEvent(treeAttributes, TreeAttributes.onbeforenodetoggle, expandFirstNodeAjaxAction);
     }
 
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
-    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = "simpleRichFacesTreeNode")
     public void testOnbeforenodetoggleRFTreeNode() {
         testOnbeforenodetoggle();
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testOnbeforeselectionchange() {
         testFireEvent(treeAttributes, TreeAttributes.onbeforeselectionchange, selectFirstNodeAjaxAction);
     }
 
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
-    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = "simpleRichFacesTreeNode")
     public void testOnbeforeselectionchangeRFTreeNode() {
         testOnbeforeselectionchange();
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testOnbegin() {
         testFireEvent(treeAttributes, TreeAttributes.onbegin, selectFirstNodeAjaxAction);
     }
 
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
-    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = "simpleRichFacesTreeNode")
     public void testOnbeginRFTreeNode() {
         testOnbegin();
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnclick() {
         testFireEvent(treeAttributes, TreeAttributes.onclick, expandFirstNodeAjaxAction);
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testOncomplete() {
         testFireEvent(treeAttributes, TreeAttributes.oncomplete, selectFirstNodeAjaxAction);
     }
 
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
-    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = "simpleRichFacesTreeNode")
     public void testOncompleteRFTreeNode() {
         testOncomplete();
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOndblclick() {
         testFireEvent(treeAttributes, TreeAttributes.ondblclick,
@@ -252,24 +272,28 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnkeydown() {
         testFireEventWithJS(tree.advanced().getRootElement(), treeAttributes, TreeAttributes.onkeydown);
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnkeypress() {
         testFireEventWithJS(tree.advanced().getRootElement(), treeAttributes, TreeAttributes.onkeypress);
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnkeyup() {
         testFireEventWithJS(tree.advanced().getRootElement(), treeAttributes, TreeAttributes.onkeyup);
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnmousedown() {
         testFireEvent(treeAttributes, TreeAttributes.onmousedown,
@@ -277,6 +301,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnmousemove() {
         testFireEvent(treeAttributes, TreeAttributes.onmousemove,
@@ -284,6 +309,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnmouseout() {
         testFireEvent(treeAttributes, TreeAttributes.onmouseout,
@@ -291,6 +317,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnmouseover() {
         new Actions(driver).moveToElement(page.getRequestTimeElement()).perform();
@@ -299,6 +326,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnmouseup() {
         testFireEvent(treeAttributes, TreeAttributes.onmouseup,
@@ -306,11 +334,13 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testOnnodetoggle() {
         testFireEvent(treeAttributes, TreeAttributes.onnodetoggle, expandFirstNodeAjaxAction);
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates(exclude = "a4jRegion")
     public void testOnselectionchange() {
         testFireEvent(treeAttributes, TreeAttributes.onselectionchange, selectFirstNodeAjaxAction);
@@ -325,12 +355,13 @@ public class TestTreeAttributes extends AbstractTreeTest {
 
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
-    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = "simpleRichFacesTreeNode")
     public void testOnselectionChangeRFTreeNode() {
         testOnselectionchange();
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testRender() {
         treeAttributes.set(TreeAttributes.render, "renderChecker");
         String renderCheckerText = page.getRenderCheckerOutputElement().getText();
@@ -340,12 +371,13 @@ public class TestTreeAttributes extends AbstractTreeTest {
 
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
-    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = "simpleRichFacesTreeNode")
     public void testRenderRFTreeNode() {
         testRender();
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testRendered() {
         treeAttributes.set(TreeAttributes.rendered, Boolean.TRUE);
@@ -355,10 +387,10 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
-    @Use(field = "sample", strings = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates(exclude = "a4jRegion")
     public void testSelectionClientSideEventsOrder() {
-        String[] events = new String[] { "beforeselectionchange", "begin", "beforedomupdate", "complete", "selectionchange" };
+        String[] events = new String[]{ "beforeselectionchange", "begin", "beforedomupdate", "complete", "selectionchange" };
         testRequestEventsBefore(events);
         selectFirstNodeAjaxAction.perform();
         testRequestEventsAfter(events);
@@ -366,7 +398,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
 
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
-    @Use(field = "sample", strings = { "simpleRichFacesTreeNode" })
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = "simpleRichFacesTreeNode")
     @Templates(exclude = "a4jRegion")
     public void testSelectionClientSideEventsOrderWithSimpleTreeNode() {
         testSelectionClientSideEventsOrder();
@@ -374,12 +406,14 @@ public class TestTreeAttributes extends AbstractTreeTest {
 
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11319")
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates(value = "a4jRegion")
     public void testSelectionClientSideEventsOrderInRegion() {
         testSelectionClientSideEventsOrder();
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testSelectionType() {
         treeAttributes.set(TreeAttributes.selectionType, SwitchType.ajax);
         selectFirstNodeAjaxAction.perform();
@@ -390,56 +424,62 @@ public class TestTreeAttributes extends AbstractTreeTest {
 
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
-    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = "simpleRichFacesTreeNode")
     public void testSelectionTypeRFTreeNode() {
         testSelectionType();
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testStatus() {
         testStatus(selectFirstNodeAjaxAction);
     }
 
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
-    @Uses({ @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = "simpleRichFacesTreeNode")
     public void testStatusRFTreeNode() {
         testStatus();
     }
 
     @Test
     @Templates("plain")
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testStyle() {
         testStyle(tree.advanced().getRootElement());
     }
 
     @Test
     @Templates("plain")
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testStyleClass() {
         testStyleClass(tree.advanced().getRootElement());
     }
 
     @Test
     @Templates("plain")
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testTitle() {
         testStyleClass(tree.advanced().getRootElement());
     }
 
     @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-10265")
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testToggleClientSideEventsOrder() {
-        treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax);
-        String[] events = new String[] { "beforenodetoggle", "begin", "beforedomupdate", "complete", "nodetoggle" };
+        treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax.toString().toLowerCase());
+        String[] events = new String[]{ "beforenodetoggle", "begin", "beforedomupdate", "complete", "nodetoggle" };
         testRequestEventsBefore(events);
         expandFirstNodeAjaxAction.perform();
         testRequestEventsAfter(events);
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testToggleNodeEvent() {
         treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax);
         List<Event> testedEvents = Lists.newArrayList(Event.CLICK, Event.CONTEXTCLICK, Event.DBLCLICK);
-        for (boolean toggleByHandle : new boolean[] { true, false }) {
+        for (boolean toggleByHandle : new boolean[]{ true, false }) {
             tree.advanced().setupToggleByHandle(toggleByHandle);
             for (Event event : testedEvents) {
                 treeAttributes.set(TreeAttributes.toggleNodeEvent, event.toString());
@@ -453,6 +493,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testToggleType() {
         treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax);
         getGuarded(tree, SwitchType.ajax).expandNode(0);
@@ -465,7 +506,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
-    @Use(field = "sample", strings = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testTreeSelectionChangeListener() {
         selectFirstNodeAjaxAction.perform();
         page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "selection change listener invoked");
@@ -473,12 +514,13 @@ public class TestTreeAttributes extends AbstractTreeTest {
 
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
-    @Use(field = "sample", strings = { "simpleRichFacesTreeNode" })
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = "simpleRichFacesTreeNode")
     public void testTreeSelectionChangeListenerWithSimpleTreeNode() {
         testTreeSelectionChangeListener();
     }
 
     @Test
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testTreeToggleListener() {
         expandFirstNodeAjaxAction.perform();
         page.assertListener(PhaseId.PROCESS_VALIDATIONS, "tree toggle listener invoked");

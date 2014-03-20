@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richDataScroller;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -37,8 +38,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.richfaces.tests.metamer.ftest.richDataScroller.SimplePage.ScrollerPosition;
 import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -55,8 +55,7 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     private final Attributes<DataScrollerAttributes> attributes = getAttributes("attributes");
     private final Attributes<DataTableAttributes> tableAttributes = getAttributes("tableAttributes");
 
-    @Inject
-    @Use(enumeration = true)
+    @UseForAllTests(valuesFrom = FROM_ENUM, value = "")
     private ScrollerPosition scroller;
     @Page
     private SimplePage page;

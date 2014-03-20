@@ -36,8 +36,8 @@ import org.jboss.shrinkwrap.descriptor.api.Descriptors;
 import org.jboss.shrinkwrap.descriptor.api.javaee6.ParamValueType;
 import org.jboss.shrinkwrap.descriptor.api.webapp30.WebAppDescriptor;
 import org.richfaces.tests.metamer.TemplatesList;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.consoleLogger.annotations.LogThis;
 
 /**
  * Abstract test case used as a basis for majority of test cases.
@@ -62,7 +62,6 @@ public abstract class AbstractMetamerTest extends Arquillian {
     /** Key to manage packedStages context-param in web.xml */
     public static final String RESOURCE_MAPPING_PACKED_STAGES = "org.richfaces.resourceMapping.packedStages";
 
-    @Inject
     @Templates({ "plain", "richAccordion", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richCollapsiblePanel", "richTabPanel", "richPopupPanel", "a4jRegion", "a4jRepeat", "uiRepeat" })
     protected TemplatesList template;
@@ -103,7 +102,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
     private static WebArchive updateArchiveWebXml(WebArchive defaultWar, Boolean compressedStages, Boolean packedStages) {
         // 1. load existing web.xml from metamer.war
         WebAppDescriptor webXmlDefault = Descriptors.importAs(WebAppDescriptor.class).fromStream(
-                defaultWar.get("WEB-INF/web.xml").getAsset().openStream());
+            defaultWar.get("WEB-INF/web.xml").getAsset().openStream());
         List<ParamValueType<WebAppDescriptor>> allContextParams = webXmlDefault.getAllContextParam();
         // 2. Iterate over all context params and alter the particular ones
         for (ParamValueType<WebAppDescriptor> param : allContextParams) {

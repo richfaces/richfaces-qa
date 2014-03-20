@@ -54,7 +54,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -68,7 +68,7 @@ import org.testng.annotations.Test;
  *
  */
 @IssueTracking("https://issues.jboss.org/browse/RFPL-2751")
-@Templates(value = {"plain", "richCollapsibleSubTable"} )
+@Templates(value = { "plain", "richCollapsibleSubTable" })
 public class TestDropTargetInCollapsibleSubTable extends AbstractWebDriverTest {
 
     private final Attributes<DropTargetAttributes> dropTargetAttributes = getAttributes();
@@ -88,15 +88,21 @@ public class TestDropTargetInCollapsibleSubTable extends AbstractWebDriverTest {
         dropTargetAttributes.set(acceptedTypes, "drg2");
         indicator = new Indicator(page.indicator);
 
-        testAcception(page.drg1, REJECTING); doDrop();
-        testAcception(page.drg2, ACCEPTING); doDrop();
-        testAcception(page.drg3, REJECTING); doDrop();
+        testAcception(page.drg1, REJECTING);
+        doDrop();
+        testAcception(page.drg2, ACCEPTING);
+        doDrop();
+        testAcception(page.drg3, REJECTING);
+        doDrop();
 
         dropTargetAttributes.set(acceptedTypes, "drg1, drg3");
 
-        testAcception(page.drg1, ACCEPTING); doDrop();
-        testAcception(page.drg2, REJECTING); doDrop();
-        testAcception(page.drg3, ACCEPTING); doDrop();
+        testAcception(page.drg1, ACCEPTING);
+        doDrop();
+        testAcception(page.drg2, REJECTING);
+        doDrop();
+        testAcception(page.drg3, ACCEPTING);
+        doDrop();
     }
 
     @Test(groups = "Future")
@@ -123,7 +129,7 @@ public class TestDropTargetInCollapsibleSubTable extends AbstractWebDriverTest {
     @Test(groups = "Future")
     public void testDropListenerAndEvent() {
 
-        indicator =  new Indicator(page.indicator);
+        indicator = new Indicator(page.indicator);
 
         testAcceptedDropping(page.drg1);
         assertTrue(page.clientId.getText().endsWith("richDropTarget1"));
@@ -172,7 +178,7 @@ public class TestDropTargetInCollapsibleSubTable extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-10535")
     public void testImmediate() {
         dropTargetAttributes.set(immediate, true);
-        indicator =  new Indicator(page.indicator);
+        indicator = new Indicator(page.indicator);
 
         testAcception(page.drg1, ACCEPTING);
         guardedDrop();
@@ -186,7 +192,7 @@ public class TestDropTargetInCollapsibleSubTable extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-10535")
     public void testBypassUpdates() {
         dropTargetAttributes.set(bypassUpdates, true);
-        indicator =  new Indicator(page.indicator);
+        indicator = new Indicator(page.indicator);
 
         testAcception(page.drg1, ACCEPTING);
         guardedDrop();
@@ -202,7 +208,7 @@ public class TestDropTargetInCollapsibleSubTable extends AbstractWebDriverTest {
         dropTargetAttributes.set(onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
         dropTargetAttributes.set(onbegin, "metamerEvents += \"begin \"");
         dropTargetAttributes.set(oncomplete, "metamerEvents += \"complete \"");
-        indicator =  new Indicator(page.indicator);
+        indicator = new Indicator(page.indicator);
 
         executeJS("metamerEvents = \"\";");
 

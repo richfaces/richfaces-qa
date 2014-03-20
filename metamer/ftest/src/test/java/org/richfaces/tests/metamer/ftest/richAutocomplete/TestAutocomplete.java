@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -33,9 +34,8 @@ import org.richfaces.fragment.autocomplete.SelectOrConfirm;
 import org.richfaces.fragment.common.ClearType;
 import org.richfaces.fragment.common.ScrollingType;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -44,13 +44,10 @@ import org.testng.annotations.Test;
  */
 public class TestAutocomplete extends AbstractAutocompleteTest {
 
-    @Inject
-    @Use(booleans = { true, false })
-    Boolean autofill;
-
-    @Inject
-    @Use(booleans = { true, false })
-    Boolean selectFirst;
+    @UseForAllTests(valuesFrom = FROM_FIELD, value = "booleans")
+    private Boolean autofill;
+    @UseForAllTests(valuesFrom = FROM_FIELD, value = "booleans")
+    private Boolean selectFirst;
 
     @Override
     public URL getTestUrl() {
@@ -61,12 +58,6 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
     public void prepareProperties() {
         autocompleteAttributes.set(AutocompleteAttributes.autofill, autofill);
         autocompleteAttributes.set(AutocompleteAttributes.selectFirst, selectFirst);
-        if (autofill == null) {
-            autofill = false;
-        }
-        if (selectFirst == null) {
-            selectFirst = false;
-        }
         autocomplete.clear();
     }
 

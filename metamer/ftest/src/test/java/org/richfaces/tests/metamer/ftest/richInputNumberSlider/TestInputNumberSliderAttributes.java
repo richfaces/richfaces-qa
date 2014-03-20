@@ -23,6 +23,8 @@ package org.richfaces.tests.metamer.ftest.richInputNumberSlider;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -42,11 +44,10 @@ import org.richfaces.fragment.common.ClearType;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -65,8 +66,6 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     @FindBy(css = "span.rf-insl > br")
     private WebElement br;
 
-    @Inject
-    @Use(empty = false)
     private Position position;
 
     public enum Position {
@@ -141,7 +140,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
-    @Use(field = "delay", ints = { 1000, 2000 })
+    @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
     public void testDelay() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.delay, delay);
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
@@ -244,7 +243,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
-    @Use(field = "position", enumeration = true)
+    @UseWithField(field = "position", valuesFrom = FROM_ENUM, value = "")
     public void testInputPosition() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.inputPosition, position.value);
         Point inputPosition = Utils.getLocations(slider.advanced().getInput().advanced().getInputElement()).getTopLeft();
@@ -590,21 +589,21 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
-    @Use(field = "number", value = "bigNumbers")
+    @UseWithField(field = "number", valuesFrom = FROM_FIELD, value = "bigNumbers")
     @Override
     public void testTypeIntoInputBig() {
         super.testTypeIntoInputBig();
     }
 
     @Test
-    @Use(field = "number", value = "correctNumbers")
+    @UseWithField(field = "number", valuesFrom = FROM_FIELD, value = "correctNumbers")
     @Override
     public void testTypeIntoInputCorrect() {
         super.testTypeIntoInputCorrect();
     }
 
     @Test
-    @Use(field = "number", value = "decimalNumbers")
+    @UseWithField(field = "number", valuesFrom = FROM_FIELD, value = "decimalNumbers")
     @Override
     public void testTypeIntoInputDecimal() {
         super.testTypeIntoInputDecimal();
@@ -617,7 +616,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
-    @Use(field = "number", value = "smallNumbers")
+    @UseWithField(field = "number", valuesFrom = FROM_FIELD, value = "smallNumbers")
     @Override
     public void testTypeIntoInputSmall() {
         super.testTypeIntoInputSmall();
@@ -630,7 +629,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
-    @Use(field = "number", value = "bigNumbers")
+    @UseWithField(field = "number", valuesFrom = FROM_FIELD, value = "bigNumbers")
     public void testValueBig() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.value, number);
         String max = inputNumberSliderAttributes.get(InputNumberSliderAttributes.maxValue);
@@ -640,7 +639,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
-    @Use(field = "number", value = "correctNumbers")
+    @UseWithField(field = "number", valuesFrom = FROM_FIELD, value = "correctNumbers")
     public void testValueCorrect() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.value, number);
 
@@ -649,7 +648,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
-    @Use(field = "number", value = "smallNumbers")
+    @UseWithField(field = "number", valuesFrom = FROM_FIELD, value = "smallNumbers")
     public void testValueSmall() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.value, number);
         String min = inputNumberSliderAttributes.get(InputNumberSliderAttributes.minValue);

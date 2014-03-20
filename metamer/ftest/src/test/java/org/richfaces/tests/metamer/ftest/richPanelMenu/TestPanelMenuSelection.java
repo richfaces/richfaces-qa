@@ -22,10 +22,10 @@
 package org.richfaces.tests.metamer.ftest.richPanelMenu;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -37,8 +37,7 @@ public class TestPanelMenuSelection extends AbstractPanelMenuTest {
 
     private final Attributes<PanelMenuAttributes> panelMenuAttributes = getAttributes();
 
-    @Inject
-    @Use(booleans = { true, false })
+    @UseForAllTests(valuesFrom = FROM_FIELD, value = "booleans")
     private Boolean bubbleSelection;
 
     @Test

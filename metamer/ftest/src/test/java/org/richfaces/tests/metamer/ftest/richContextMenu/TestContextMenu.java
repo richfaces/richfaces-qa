@@ -27,6 +27,8 @@ import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -49,11 +51,10 @@ import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Locations;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -71,11 +72,10 @@ public class TestContextMenu extends AbstractWebDriverTest {
 
     @Page
     private ContextMenuSimplePage page;
-    @Inject
-    @Use(empty = false)
+
     private Integer delay;
-    @Inject
-    @Use(empty = false)
+    private Integer[] delays = { 1500, 2000, 2500 };
+
     private Positioning positioning;
 
     @Override
@@ -97,7 +97,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "delay", ints = { 1500, 2000, 2500 })
+    @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
     public void testHideDelay() {
         updateShowAction();
         page.getContextMenu().advanced().setupHideDelay(delay);
@@ -168,7 +168,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "positioning", enumeration = true)
+    @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "")
     public void testDirection() {
         driver.manage().window().setSize(new Dimension(1280, 1024));// for stabilizing job in all templates
         int tolerance = 10;// px
@@ -510,7 +510,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "delay", ints = { 1500, 2000, 2500 })
+    @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
     public void testShowDelay() {
         updateShowAction();
         page.getContextMenu().advanced().setupShowDelay(delay);

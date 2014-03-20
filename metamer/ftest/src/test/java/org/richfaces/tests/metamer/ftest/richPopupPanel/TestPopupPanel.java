@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richPopupPanel;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertTrue;
@@ -45,11 +46,10 @@ import org.richfaces.fragment.popupPanel.RichFacesPopupPanel;
 import org.richfaces.fragment.popupPanel.PopupPanel.ResizerLocation;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -75,8 +75,6 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     @FindBy(css = "input[id$=resize]")
     private WebElement resize;
 
-    @Use(empty = false)
-    @Inject
     private ResizerLocation resizer;
 
     private void checkCssValueOf(String cssValue, double value, WebElement element) {
@@ -560,7 +558,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(enumeration = true, field = "resizer")
+    @UseWithField(field = "resizer", valuesFrom = FROM_ENUM, value = "")
     public void testResize() {
         driver.manage().window().setSize(new Dimension(1024, 768));// to stabilize job on Jenkins
         popupPanelAttributes.set(PopupPanelAttributes.height, 400);

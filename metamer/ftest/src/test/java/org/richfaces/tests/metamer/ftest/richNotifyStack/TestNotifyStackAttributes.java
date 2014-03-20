@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richNotifyStack;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 
 import java.net.URL;
 import java.util.Locale;
@@ -40,9 +41,8 @@ import org.richfaces.fragment.notify.RichFacesNotify;
 import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
 import org.richfaces.fragment.notify.RichFacesNotify.NotifyMessageItemImpl;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.metamer.ftest.annotations.Uses;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -62,14 +62,8 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
     private WebElement rerenderStackButton;
     @FindBy(tagName = "body")
     private RichFacesNotify notify;
-    @Use
-    @Inject
     private Position position;
-    @Use
-    @Inject
     private Direction direction;
-    @Use
-    @Inject
     private Method method;
 
     private enum Direction {
@@ -147,8 +141,8 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
 
     @Test
     @Uses({
-        @Use(field = "direction", enumeration = true),
-        @Use(field = "method", enumeration = true)
+        @UseWithField(field = "direction", valuesFrom = FROM_ENUM, value = ""),
+        @UseWithField(field = "method", valuesFrom = FROM_ENUM, value = "")
     })
     public void testDirectionAndMethod() {
         notifyStackAttributes.set(NotifyStackAttributes.direction, direction.name().toLowerCase(Locale.ENGLISH));
@@ -175,7 +169,7 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "position", enumeration = true)
+    @UseWithField(field = "position", valuesFrom = FROM_ENUM, value = "")
     public void testPosition() {
         notifyStackAttributes.set(NotifyStackAttributes.position, position.value);
         waiting(500); // workaround for document not ready error

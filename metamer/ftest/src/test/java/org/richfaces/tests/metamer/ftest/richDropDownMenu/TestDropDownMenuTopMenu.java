@@ -22,13 +22,13 @@
 package org.richfaces.tests.metamer.ftest.richDropDownMenu;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.annotations.Test;
 
 /**
@@ -42,8 +42,6 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
         return buildUrl(contextPath, "faces/components/richDropDownMenu/topMenu.xhtml");
     }
 
-    @Inject
-    @Use(empty = false)
     private Integer delay;
 
     @Test
@@ -91,7 +89,7 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
     }
 
     @Test
-    @Use(field = "delay", ints = { 1000, 1500, 1900 })
+    @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
     public void testHideDelay() {
         super.testHideDelay(delay);
     }
@@ -108,7 +106,7 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
     }
 
     @Test
-    @Use(field = "delay", ints = { 1000, 1500, 1900 })
+    @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
     public void testShowDelay() {
         super.testShowDelay(delay);
     }

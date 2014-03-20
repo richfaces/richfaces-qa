@@ -22,14 +22,15 @@
 package org.richfaces.tests.metamer.ftest.richTreeModelAdaptor;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 
 import java.net.URL;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.richfaces.tests.metamer.ftest.richTree.TestTreeToggling;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.BeforeClass;
@@ -46,13 +47,11 @@ public class TestTreeModelAdaptorToggling extends TestTreeToggling {
     @FindByJQuery(":checkbox[id$=recursiveLeafChildrenNullable]")
     private WebElement recursiveLeafChildrenNullableElement;
 
-    @Inject
-    @Use(enumeration = true)
+    @UseForAllTests(valuesFrom = FROM_ENUM, value = "")
     private RecursiveModelRepresentation representation;
 
-    @Inject
-    @Use(booleans = { true, false })
-    private boolean recursiveLeafChildrenNullable;
+    @UseForAllTests(valuesFrom = FROM_FIELD, value = "booleans")
+    private Boolean recursiveLeafChildrenNullable;
 
     @Override
     public URL getTestUrl() {
@@ -71,32 +70,28 @@ public class TestTreeModelAdaptorToggling extends TestTreeToggling {
 
     @BeforeClass
     public void setupTreeModelTesting() {
-        paths = new int[][]{ { 2, 1, 0, 1 }, { 1, 3, 5 } };
+        paths = new Integer[][]{ { 2, 1, 0, 1 }, { 1, 3, 5 } };
     }
 
     @Test
-    @Use(field = "sample", empty = true)
     @Override
     public void testDeepCollapsion() {
         super.testDeepCollapsion();
     }
 
     @Test
-    @Use(field = "sample", empty = true)
     @Override
     public void testDeepExpansion() {
         super.testDeepExpansion();
     }
 
     @Test
-    @Use(field = "sample", empty = true)
     @Override
     public void testTopLevelNodesCollapsion() {
         super.testTopLevelNodesCollapsion();
     }
 
     @Test
-    @Use(field = "sample", empty = true)
     @Override
     public void testTopLevelNodesExpansion() {
         super.testTopLevelNodesExpansion();

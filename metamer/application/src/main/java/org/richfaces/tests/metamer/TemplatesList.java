@@ -33,6 +33,9 @@ import java.util.Iterator;
  */
 public class TemplatesList extends ArrayList<Template> {
 
+    public static final String ITEMS_SEPARATOR_COMMANDLINE = "\\+";
+    public static final String ITEMS_SEPARATOR_WEB = ">";
+
     public TemplatesList() {
         super.add(Template.PLAIN);
     }
@@ -89,11 +92,25 @@ public class TemplatesList extends ArrayList<Template> {
                 if (template == Template.PLAIN) {
                     continue;
                 }
-                sb.append(",");
+                sb.append(ITEMS_SEPARATOR_WEB);
             }
             sb.append(template.toString());
         }
 
         return sb.toString();
+    }
+
+    public static TemplatesList parseFrom(String s) {
+        TemplatesList result = new TemplatesList();
+        for (String templateString : s.split(ITEMS_SEPARATOR_COMMANDLINE)) {
+            result.add(Template.valueFrom(templateString));
+        }
+        return result;
+    }
+
+    public static TemplatesList fromTemplate(Template template) {
+        TemplatesList result = new TemplatesList();
+        result.add(template);
+        return result;
     }
 }

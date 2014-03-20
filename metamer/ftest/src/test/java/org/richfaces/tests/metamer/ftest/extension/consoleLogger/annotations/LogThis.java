@@ -19,21 +19,23 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.annotations;
+package org.richfaces.tests.metamer.ftest.extension.consoleLogger.annotations;
 
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.TYPE;
-
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author <a href="mailto:ppitonak@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22407 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-@Target({ TYPE, METHOD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Uses {
-    Use[] value() default {};
+@Target({ ElementType.FIELD })
+public @interface LogThis {
+
+    String logFormat() default "%s";
+
+    boolean logEmptyValue() default false;
+
+    String objectLogMethod() default "toString";
 }

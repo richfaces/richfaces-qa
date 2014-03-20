@@ -28,6 +28,7 @@ import static javax.faces.event.PhaseId.PROCESS_VALIDATIONS;
 import static javax.faces.event.PhaseId.RENDER_RESPONSE;
 import static javax.faces.event.PhaseId.RESTORE_VIEW;
 import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
+
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState.ACCEPTING;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState.REJECTING;
@@ -48,17 +49,17 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.page.Page;
-import org.junit.Before;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -81,7 +82,7 @@ public class TestDropTarget extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richDropTarget/simple.xhtml");
     }
 
-    @Before
+    @BeforeMethod
     public void clearActions() {
         new Actions(driver).release().build().perform();
     }
@@ -121,7 +122,6 @@ public class TestDropTarget extends AbstractWebDriverTest {
         new Actions(driver).release(page.drop1).perform();
 
         // new Actions(driver).dragAndDrop(page.drg1, page.drop1).build().perform();
-
         // TODO JJa: find replacement
         // waitAjax.waitForChange(retrieveDrop1);
         // assertTrue(retrieveDrop2.isValueChanged());

@@ -29,7 +29,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.Assert;
@@ -59,7 +59,7 @@ public class TestFocusManager extends AbstractWebDriverTest {
         page.typeStringAndDoNotCareAboutFocus();
         String actual = page.getAgeInput().getStringValue();
         Assert.assertEquals(actual, AbstractFocusPage.EXPECTED_STRING,
-                "Age input should be focused by focus manager from backing bean!");
+            "Age input should be focused by focus manager from backing bean!");
     }
 
     @Test(enabled = false)

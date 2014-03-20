@@ -26,7 +26,7 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
 /**

@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.abstractions.validations;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -32,8 +33,7 @@ import java.util.Map;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.wait.WebDriverWait;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -59,13 +59,10 @@ public abstract class AbstractInputComponentValidationTest extends AbstractWebDr
     public static final String CSV = "csv";
     static final String[] CSV_SUBMIT_METHODS = { A4J_COMMANDBUTTON, H_COMMANDBUTTON, CSV };
     static final String[] JSR303_SUBMIT_METHODS = { A4J_COMMANDBUTTON, H_COMMANDBUTTON };
-    @Inject
-    @Use(value = "submitMethods")
+    @UseForAllTests(valuesFrom = FROM_FIELD, value = "submitMethods")
     protected String submitMethod;
     protected final String[] submitMethods;
     //Cases
-    @Inject
-    @Use(empty = true)
     protected String commonCase;
     protected String[] commonCases;
     //

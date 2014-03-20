@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richProgressBar;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -44,8 +45,7 @@ import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.bean.rich.RichProgressBarBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.Assert;
@@ -63,8 +63,8 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     private final Attributes<ProgressBarAttributes> progressBarAttributes = getAttributes();
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormat.forPattern("HH:mm:ss.SSS");
-    @Inject
-    @Use(empty = false)
+    private final Integer[] ints = { 1200, 1600, 2200 };
+
     private Integer testInterval;
     @Page
     private ProgressBarPage page;
@@ -89,7 +89,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         int updates = (int) (maximumTime / interval) - 1; //-1 to be sure that no invalid values will be gathered
         if (updates < 2) {
             throw new RuntimeException("The measurement will not be possible. "
-                    + "Reduce the @interval or increase the @maxValue.");
+                + "Reduce the @interval or increase the @maxValue.");
         }
         return updates;
     }
@@ -141,8 +141,8 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         String reqTime = page.getRequestTimeElement().getText();
         try {
             Graphene.waitModel()
-                    .withTimeout(timeout, TimeUnit.MILLISECONDS)
-                    .until().element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
+                .withTimeout(timeout, TimeUnit.MILLISECONDS)
+                .until().element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
         } catch (TimeoutException e) {// OK
             String progress = Utils.getTextFromHiddenElement(page.label).replace("%", "").trim();
             Assert.assertTrue(Integer.valueOf(progress) < 100, "Progress should be lower than 100 %");
@@ -163,11 +163,11 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
 
         MetamerPage.requestTimeChangesWaiting(page.startButton).click();
         Graphene.waitAjax()
-                .withTimeout(expectedRunTime, TimeUnit.SECONDS)
-                .withMessage("Progress bar should disappear after it finishes.")
-                .until()
-                .element(page.restartButton)
-                .is().present();
+            .withTimeout(expectedRunTime, TimeUnit.SECONDS)
+            .withMessage("Progress bar should disappear after it finishes.")
+            .until()
+            .element(page.restartButton)
+            .is().present();
 
         String[] events = ((String) executeJS("return metamerEvents")).split(" ");
 
@@ -205,7 +205,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "testInterval", ints = {1200, 1600, 2200})
+    @UseWithField(field = "testInterval", valuesFrom = FROM_FIELD, value = "ints")
     public void testInterval() {
         testOneRunOfProgressBar(page.startButton, testInterval);
     }
@@ -213,13 +213,13 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     @Test
     public void testOnclick() {
         testFireEvent(progressBarAttributes, ProgressBarAttributes.onclick, new Actions(driver).click(page.progressBar)
-                .build());
+            .build());
     }
 
     @Test
     public void testOndblclick() {
         testFireEvent(progressBarAttributes, ProgressBarAttributes.ondblclick,
-                new Actions(driver).doubleClick(page.progressBar).build());
+            new Actions(driver).doubleClick(page.progressBar).build());
     }
 
     private void testOneRunOfProgressBar(WebElement button, int interval) {
@@ -239,8 +239,8 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         timesString.add(timeString);
         for (int i = 0; i < expectedNumberOfUpdates; i++) {
             Graphene.waitGui().withTimeout(maxWaitTime, TimeUnit.MILLISECONDS)
-                    .withMessage("Page was not updated")
-                    .until().element(page.getRequestTimeElement()).text().not().equalTo(timeString);
+                .withMessage("Page was not updated")
+                .until().element(page.getRequestTimeElement()).text().not().equalTo(timeString);
             timeString = page.getRequestTimeElement().getText();
             timesString.add(timeString);
             labelsList.add(page.label.getText().replace(" %", ""));
@@ -255,9 +255,9 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
 
         long average = countAverage(timesList);
         assertTrue(Math.abs(average - interval) < delta, "Average interval " + average + " is too far from set value ("
-                + interval + ")");
+            + interval + ")");
         assertFalse(average < interval, "Average interval " + average + " cannot be smaller than set value ("
-                + interval + ")");
+            + interval + ")");
 
         int first, second;
         for (int i = 0; i < labelsList.size() - 1; i++) {
@@ -273,11 +273,11 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         }
 
         Graphene.waitGui()
-                .withTimeout(expectedRunTime, TimeUnit.SECONDS)
-                .withMessage("Progress bar should disappear after it finishes.")
-                .until()
-                .element(page.restartButton)
-                .is().present();
+            .withTimeout(expectedRunTime, TimeUnit.SECONDS)
+            .withMessage("Progress bar should disappear after it finishes.")
+            .until()
+            .element(page.restartButton)
+            .is().present();
         assertPresent(page.finishOutput, "Complete output should be present on the page.");
         assertPresent(page.progressBar, "Progress bar is not present on the page.");
         assertNotPresent(page.initialOutput, "Initial output should not be present on the page.");
@@ -297,11 +297,11 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
 
         MetamerPage.requestTimeChangesWaiting(page.startButton).click();
         Graphene.waitAjax()
-                .withTimeout(expectedRunTime, TimeUnit.SECONDS)
-                .withMessage("Progress bar should disappear after it finishes.")
-                .until()
-                .element(page.restartButton)
-                .is().present();
+            .withTimeout(expectedRunTime, TimeUnit.SECONDS)
+            .withMessage("Progress bar should disappear after it finishes.")
+            .until()
+            .element(page.restartButton)
+            .is().present();
 
         String[] events = ((String) executeJS("return metamerEvents")).split(" ");
 
@@ -312,7 +312,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     @Test
     public void testOnmousedown() {
         testFireEvent(progressBarAttributes, ProgressBarAttributes.onmousedown,
-                new Actions(driver).clickAndHold(page.progressBar).build());
+            new Actions(driver).clickAndHold(page.progressBar).build());
         // release mouse button (necessary since Selenium 2.35)
         new Actions(driver).release().perform();
     }
@@ -320,7 +320,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     @Test
     public void testOnmousemove() {
         testFireEvent(progressBarAttributes, ProgressBarAttributes.onmousemove,
-                new Actions(driver).moveToElement(page.progressBar).build());
+            new Actions(driver).moveToElement(page.progressBar).build());
     }
 
     @Test
@@ -333,13 +333,13 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         new Actions(driver).moveToElement(page.getRequestTimeElement()).perform();
 
         testFireEvent(progressBarAttributes, ProgressBarAttributes.onmouseover,
-                new Actions(driver).moveToElement(page.progressBar).build());
+            new Actions(driver).moveToElement(page.progressBar).build());
     }
 
     @Test
     public void testOnmouseup() {
         testFireEvent(progressBarAttributes, ProgressBarAttributes.onmouseup,
-                new Actions(driver).click(page.progressBar).build());
+            new Actions(driver).click(page.progressBar).build());
     }
 
     @Test
@@ -370,7 +370,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
 
         String labelValue = page.label.getText();
         assertTrue("1 %".equals(labelValue) || "2 %".equals(labelValue),
-                "Progress bar's label after start should be \"1 %\" or \"2 %\".");
+            "Progress bar's label after start should be \"1 %\" or \"2 %\".");
 
         assertVisible(page.remain, "Progress bar should show progress.");
         assertVisible(page.progress, "Progress bar should not show progress.");
