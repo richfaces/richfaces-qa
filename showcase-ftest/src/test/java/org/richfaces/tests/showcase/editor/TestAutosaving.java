@@ -104,9 +104,9 @@ public class TestAutosaving extends AbstractWebDriverTest {
     @Test
     public void testTypingAndClearing() {
         page.getEditor().clear();
-        assertEquals("", page.getEditor().getText());
+        assertEquals(page.getEditor().getText(), "");
         String expectedText = "Lala Foo Bar tralala";
         page.getEditor().type(expectedText);
-        assertEquals(expectedText, page.getEditor().getText());
+        assertEquals(page.getEditor().getText(), expectedText);
     }
 }
