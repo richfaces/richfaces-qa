@@ -21,6 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richList;
 
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
+
 import java.net.URL;
 import java.util.List;
 
