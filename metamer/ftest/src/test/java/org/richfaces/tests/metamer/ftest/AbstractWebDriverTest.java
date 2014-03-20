@@ -30,6 +30,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -59,6 +60,10 @@ import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.common.VisibleComponent;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import org.richfaces.tests.metamer.ftest.extension.configurator.Configurator;
+import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config;
+import org.richfaces.tests.metamer.ftest.extension.configurator.transformer.DataProviderTestTransformer;
+import org.richfaces.tests.metamer.ftest.extension.consoleLogger.annotations.LogThis;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -66,6 +71,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
@@ -89,6 +95,10 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     protected static final int TRIES = 20;// for guardListSize and expectedReturnJS
     protected DriverType driverType;
     private static final String ATTRIBUTE_INPUT_TEMPLATE = "input[id$={0}Input]";
+    private final Boolean[] booleans = { false, true };
+
+    @LogThis
+    private Config currentConfiguration;
 
     public enum DriverType {
 
@@ -114,13 +124,33 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         }
     }
 
+    private final Configurator c = new Configurator();
+
+    @DataProvider(name = DataProviderTestTransformer.DATAPROVIDER_NAME)
+    public Object[][] provide(Method m) {
+        return c.prepareConfigurationsForMethod(m, this);
+    }
+
+    @BeforeMethod(alwaysRun = true)
+    public void configure() {
+        currentConfiguration = c.configureNextStep();
+    }
+
+//    @AfterSuite(alwaysRun = true)
+//    public void closeBrowserIfNeeded() {
+//        try {
+//            driver.close();
+//        } catch (Exception e) {
+//        }
+//    }
+
     /**
      * Opens the tested page. If templates is not empty nor null, it appends url parameter with templates.
      *
      * @param templates templates that will be used for test, e.g. "red_div"
      */
     @BeforeMethod(alwaysRun = true)
-    public void loadPage(Object[] templates) {
+    public void loadPage() {
         if (driver == null) {
             throw new SkipException("webDriver isn't initialized");
         }

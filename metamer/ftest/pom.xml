@@ -38,9 +38,8 @@ FSF site: http://www.fsf.org. -->
             -Djboss.bind.address.unsecure=${arquillian.container.jbossas.7-1.node0}</arquillian.container.jbossas.7-1.jvm.args>
 
         <templates>plain</templates>
-
-        <testng.listeners>org.richfaces.tests.metamer.ftest.MatrixConfigurator,org.richfaces.tests.metamer.ftest.MetamerConsoleStatusTestListener,org.richfaces.tests.metamer.ftest.MetamerFailureLoggingTestListener</testng.listeners>
-        <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
+        <testng.listeners>org.richfaces.tests.metamer.ftest.extension.configurator.transformer.DataProviderTestTransformer</testng.listeners>
+        <testng.suite.xml>src/test/resources/testng/testng-all.xml</testng.suite.xml>
         <metamerapp.tested.version>4.3.0.Final</metamerapp.tested.version>
         <metamer.unpacked.dir>metamer-unpacked</metamer.unpacked.dir>
         <!-- following property in use only with 'backward-compatibility-tesing-wfk profile, 
@@ -230,30 +229,30 @@ FSF site: http://www.fsf.org. -->
             <build>
                 <plugins>
                     <plugin>
-                         <artifactId>maven-dependency-plugin</artifactId>
-                         <executions>
-                             <execution>
-                                 <id>copy-metamer-portlet</id>
-                                 <phase>validate</phase>
-                                 <goals>
-                                     <goal>copy</goal>
-                                 </goals>
-                                 <configuration>
-                                     <artifactItems>
-                                         <artifactItem>
-                                             <groupId>org.jboss.portletbridge.examples</groupId>
-                                             <artifactId>metamer-portlet</artifactId>
-                                             <version>${metamer-portlet.version}</version>
-                                             <type>war</type>
-                                             <destFileName>metamer-portlet.war</destFileName>
-                                         </artifactItem>
-                                     </artifactItems>
-                                     <outputDirectory>target</outputDirectory>
-                                     <overWriteIfNewer>false</overWriteIfNewer>
-                                 </configuration>
-                             </execution>
-                         </executions>
-                     </plugin>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-metamer-portlet</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.jboss.portletbridge.examples</groupId>
+                                            <artifactId>metamer-portlet</artifactId>
+                                            <version>${metamer-portlet.version}</version>
+                                            <type>war</type>
+                                            <destFileName>metamer-portlet.war</destFileName>
+                                        </artifactItem>
+                                    </artifactItems>
+                                    <outputDirectory>target</outputDirectory>
+                                    <overWriteIfNewer>false</overWriteIfNewer>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
                 
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>

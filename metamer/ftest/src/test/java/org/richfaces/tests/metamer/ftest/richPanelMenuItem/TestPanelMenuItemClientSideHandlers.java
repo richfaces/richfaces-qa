@@ -21,21 +21,18 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
-import static org.richfaces.component.Mode.ajax;
-import static org.richfaces.component.Mode.client;
-import static org.richfaces.component.Mode.server;
-import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.mode;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
+import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.richPanelMenuGroup.AbstractPanelMenuCommonTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -54,12 +51,10 @@ public class TestPanelMenuItemClientSideHandlers extends AbstractPanelMenuCommon
     @Page
     private PanelMenuItemPage page;
 
-    @Inject
-    @Use(empty = true)
     private String event;
     private String[] ajaxEvents = new String[]{ "beforeselect", "begin", "beforedomupdate", "select", "complete" };
     private String[] clientEvents = new String[]{ "beforeselect", "select" };
-    private String[] serverEvents = new String[] { "select" };
+    private String[] serverEvents = new String[]{ "select" };
 
     @Override
     public URL getTestUrl() {
@@ -71,9 +66,9 @@ public class TestPanelMenuItemClientSideHandlers extends AbstractPanelMenuCommon
     }
 
     @Test
-    @Use(field = "event", value = "ajaxEvents")
+    @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "ajaxEvents")
     public void testClientSideEvent() {
-        panelMenuItemAttributes.set(mode, ajax);
+        panelMenuItemAttributes.set(PanelMenuItemAttributes.mode, Mode.ajax);
         testRequestEventsBefore(event);
         guardAjax(page.getItem()).select();
         testRequestEventsAfter(event);
@@ -81,7 +76,7 @@ public class TestPanelMenuItemClientSideHandlers extends AbstractPanelMenuCommon
 
     @Test
     public void testClientSideEventsOrderClient() {
-        panelMenuItemAttributes.set(mode, client);
+        panelMenuItemAttributes.set(PanelMenuItemAttributes.mode, Mode.client);
         testRequestEventsBefore(clientEvents);
         page.getItem().select();
         testRequestEventsAfter(clientEvents);
@@ -90,7 +85,7 @@ public class TestPanelMenuItemClientSideHandlers extends AbstractPanelMenuCommon
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-12549")
     public void testClientSideEventsOrderAjax() {
-        panelMenuItemAttributes.set(mode, ajax);
+        panelMenuItemAttributes.set(PanelMenuItemAttributes.mode, Mode.ajax);
         testRequestEventsBefore(ajaxEvents);
         guardAjax(page.getItem()).select();
         testRequestEventsAfter(ajaxEvents);
@@ -99,7 +94,7 @@ public class TestPanelMenuItemClientSideHandlers extends AbstractPanelMenuCommon
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-10844")
     public void testClientSideEventsOrderServer() {
-        panelMenuItemAttributes.set(mode, server);
+        panelMenuItemAttributes.set(PanelMenuItemAttributes.mode, Mode.server);
         testRequestEventsBefore(serverEvents);
         guardHttp(page.getItem()).select();
         testRequestEventsAfter(serverEvents);

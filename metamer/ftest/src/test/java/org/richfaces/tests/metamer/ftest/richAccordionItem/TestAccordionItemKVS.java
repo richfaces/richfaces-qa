@@ -33,7 +33,7 @@ import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
 /**
@@ -53,14 +53,14 @@ public class TestAccordionItemKVS extends AbstractWebDriverTest {
 
     @Test(groups = { "keepVisualStateTesting" })
     @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
-            "richList" })
+        "richList" })
     public void testRefreshFullPage() {
         new AccordionReloadTester().testFullPageRefresh();
     }
 
     @Test(groups = { "keepVisualStateTesting" })
     @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
-            "richList" })
+        "richList" })
     @RegressionTest("https://issues.jboss.org/browse/RF-12131")
     public void testRefreshFullPageInIterationComponents() {
         testRefreshFullPage();
@@ -110,7 +110,7 @@ public class TestAccordionItemKVS extends AbstractWebDriverTest {
 
         @Override
         public String[] getInputValues() {
-            return new String[] { "1", "2", "3" };
+            return new String[]{ "1", "2", "3" };
         }
     }
 }

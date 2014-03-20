@@ -22,15 +22,15 @@
 package org.richfaces.tests.metamer.ftest.richValidator;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.STRINGS;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.testng.annotations.Test;
 
 /**
@@ -41,8 +41,7 @@ public class TestCustomMessages extends AbstractWebDriverTest {
     @Page
     private CustomMessagesPage page;
 
-    @Inject
-    @Use(strings={"hButton", "a4jButton"})
+    @UseForAllTests(valuesFrom = STRINGS, value = { "hButton", "a4jButton" })
     private String button;
 
     @Test

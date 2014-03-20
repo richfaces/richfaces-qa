@@ -25,6 +25,8 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.fragment.common.ClearType.DELETE;
 import static org.richfaces.fragment.log.Log.LogEntryLevel.INFO;
 import static org.richfaces.fragment.log.Log.LogEntryLevel.values;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -36,13 +38,12 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 import org.richfaces.fragment.common.ClearType;
 import org.richfaces.fragment.common.TextInputComponentImpl;
-import org.richfaces.fragment.log.RichFacesLog;
 import org.richfaces.fragment.log.Log.LogEntryLevel;
+import org.richfaces.fragment.log.RichFacesLog;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.metamer.ftest.annotations.Uses;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -75,11 +76,7 @@ public class TestLog extends AbstractWebDriverTest {
 
     private final Attributes<LogAttributes> attributes = getAttributes();
 
-    @Inject
-    @Use(empty = true)
     private LogEntryLevel levelToSet;
-    @Inject
-    @Use(empty = false)
     private Boolean setLevelByAttribute;
 
     private void checkForEachLevel() {
@@ -115,8 +112,8 @@ public class TestLog extends AbstractWebDriverTest {
     @Test(groups = "smoke")
     @Templates(value = "plain")
     @Uses({
-        @Use(field = "levelToSet", enumeration = true),
-        @Use(field = "setLevelByAttribute", booleans = { false, true })
+        @UseWithField(field = "levelToSet", valuesFrom = FROM_ENUM, value = ""),
+        @UseWithField(field = "setLevelByAttribute", valuesFrom = FROM_FIELD, value = "booleans")
     })
     public void testLevel() {
         if (setLevelByAttribute) {

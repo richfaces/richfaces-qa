@@ -31,7 +31,7 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
 /**

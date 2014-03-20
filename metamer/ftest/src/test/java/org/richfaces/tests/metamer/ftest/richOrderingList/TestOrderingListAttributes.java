@@ -42,7 +42,7 @@ import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 

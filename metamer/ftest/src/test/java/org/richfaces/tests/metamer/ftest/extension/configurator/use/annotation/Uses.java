@@ -19,9 +19,8 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.annotations;
+package org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation;
 
-import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
 
@@ -30,27 +29,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author <a href="mailto:ppitonak@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22407 $
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  */
-@Target({ TYPE, FIELD, METHOD })
+@Target({ TYPE, METHOD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Use {
-    String field() default "";
-
-    String[] value() default {};
-
-    String[] strings() default {};
-
-    boolean[] booleans() default {};
-
-    int[] ints() default {};
-
-    double[] decimals() default {};
-
-    boolean enumeration() default false;
-
-    boolean useNull() default false;
-
-    boolean empty() default false;
+public @interface Uses {
+    UseWithField[] value();
 }

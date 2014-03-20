@@ -1,5 +1,4 @@
-/**
- * *****************************************************************************
+/******************************************************************************
  * JBoss, Home of Professional Open Source Copyright 2010-2014, Red Hat, Inc.
  * and individual contributors by the @authors tag. See the copyright.txt in the
  * distribution for a full listing of individual contributors.
@@ -18,8 +17,7 @@
  * along with this software; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
  * site: http://www.fsf.org.
- * *****************************************************************************
- */
+ ******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richEditor;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
@@ -37,7 +35,7 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 

@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richCollapsiblePanel;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.STRINGS;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 
@@ -34,9 +35,9 @@ import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Icon;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.checker.IconsChecker;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.annotations.Test;
 
 /**
@@ -202,7 +203,7 @@ public class TestCollapsiblePanel extends TestFacets {
 
     @Test
     @Templates(value = "plain")
-    @Use(field = "switchType", strings = { "null", "ajax", "client", "server" })
+    @UseWithField(field = "switchType", valuesFrom = STRINGS, value = { "null", "ajax", "client", "server" })
     @RegressionTest("https://issues.jboss.org/browse/RF-10368")
     public void testSwitchType() {
         super.testSwitchType();
