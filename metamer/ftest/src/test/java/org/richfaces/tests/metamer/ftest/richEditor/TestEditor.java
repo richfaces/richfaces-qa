@@ -34,6 +34,8 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
+import javax.validation.constraints.Future;
+
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -83,6 +85,8 @@ public class TestEditor extends AbstractWebDriverTest {
         assertEquals(getEditorTextArea().getAttribute("lang").toString(), language);
     }
 
+    @Future
+    @IssueTracking(value = "https://issues.jboss.org/browse/RF-13574")
     @Test
     public void testReadonly() {
         // get editor ID
