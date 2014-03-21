@@ -24,15 +24,15 @@ package org.richfaces.tests.metamer.ftest;
 import org.jboss.test.selenium.listener.ConsoleStatusTestListener;
 import org.testng.ITestResult;
 
-
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 19564 $
  *
  */
 public class MetamerConsoleStatusTestListener extends ConsoleStatusTestListener {
+
     protected String getMessage(ITestResult result) {
         String message = super.getMessage(result);
-        return message + " " +  MetamerTestInfo.getConfigurationInfoInParenthesses();
+        return message + " " + MetamerTestInfo.getConfigurationInfoInParenthesses(result);
     }
 }

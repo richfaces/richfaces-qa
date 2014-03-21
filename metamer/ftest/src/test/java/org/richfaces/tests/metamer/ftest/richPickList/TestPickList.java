@@ -49,7 +49,7 @@ import org.richfaces.fragment.pickList.RichFacesPickList;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -460,7 +460,7 @@ public class TestPickList extends AbstractWebDriverTest {
             pickListAttributes,
             PickListAttributes.ontargetfocus,
             new Actions(driver).click(pickList.advanced().getTargetListAreaElement())
-                .click(pickList.advanced().getSourceListAreaElement()).build());
+            .click(pickList.advanced().getSourceListAreaElement()).build());
     }
 
     @Test

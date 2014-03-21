@@ -19,45 +19,24 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest;
+package org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation;
 
-import java.util.LinkedList;
-import java.util.List;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.ElementType.TYPE;
 
-import org.apache.commons.lang.StringUtils;
-import org.richfaces.tests.metamer.TemplatesList;
-import org.richfaces.tests.metamer.converter.TemplatesListConverter;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * @author <a href="mailto:ppitonak@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22332 $
+ * @version $Revision: 22407 $
  */
-public final class MetamerProperties {
-
-    private MetamerProperties() {
-    }
-
-    public static List<TemplatesList> getTemplates() {
-        final String templatesString = System.getProperty("templates");
-
-        if (templatesString == null || "null".equals(templatesString) || "*".equals(templatesString)
-            || "".equals(templatesString)) {
-            return null;
-        }
-
-        String[] templatesArray = StringUtils.split(templatesString, ";");
-
-        return parseTemplates(templatesArray);
-    }
-
-    public static List<TemplatesList> parseTemplates(String[] templatesArray) {
-        final TemplatesListConverter convertor = new TemplatesListConverter();
-        List<TemplatesList> templates = new LinkedList<TemplatesList>();
-
-        for (String template : templatesArray) {
-            templates.add((TemplatesList) convertor.getAsObject(null, null, template));
-        }
-
-        return templates;
-    }
+@Target({ TYPE, FIELD, METHOD, PARAMETER })
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Templates {
+    String[] value() default {};
+    String[] exclude() default {};
 }

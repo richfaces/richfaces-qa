@@ -1,7 +1,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Screenshots tests suite" >
 
-    <test name="Screenshot Tests" preserve-order="false">
+    <test name="Screenshot Tests" preserve-order="true">
 
         <parameter name="takeScreenshots" value="true"/>
 

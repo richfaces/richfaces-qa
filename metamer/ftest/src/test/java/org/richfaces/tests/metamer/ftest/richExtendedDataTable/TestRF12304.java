@@ -29,7 +29,7 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
 /**
@@ -63,5 +63,4 @@ public class TestRF12304 extends AbstractWebDriverTest {
 //    protected RF12304Page createPage() {
 //        return new RF12304Page();
 //    }
-
 }

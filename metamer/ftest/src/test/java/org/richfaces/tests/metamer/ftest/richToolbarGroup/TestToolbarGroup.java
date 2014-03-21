@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.ftest.richToolbarGroup;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemStyle;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -39,10 +40,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.richToolbar.ToolbarPage;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -68,8 +68,6 @@ public class TestToolbarGroup extends AbstractWebDriverTest {
         By.cssSelector("td[id$=copy_itm]"), By.cssSelector("td[id$=save_itm]"), By.cssSelector("td[id$=saveAs_itm]"),
         By.cssSelector("td[id$=saveAll_itm]") };
 
-    @Inject
-    @Use(empty = true)
     private String itemSeparator;
 
     @Override
@@ -107,7 +105,7 @@ public class TestToolbarGroup extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "itemSeparator", value = "separators")
+    @UseWithField(field = "itemSeparator", valuesFrom = FROM_FIELD, value = "separators")
     public void testItemSeparatorCorrect() {
         toolbarGroupAttributes.set(ToolbarGroupAttributes.itemSeparator, itemSeparator);
 

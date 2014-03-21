@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2014, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -19,38 +19,24 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.annotations;
+package org.richfaces.tests.metamer.ftest.extension.configurator.transformer;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.TYPE;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import org.testng.IAnnotationTransformer;
+import org.testng.annotations.ITestAnnotation;
 
 /**
- * @author <a href="mailto:ppitonak@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22407 $
+ * Testng annotation transformer to enhance all @Test annotations with dataprovider used by the Configurator.
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-@Target({ TYPE, FIELD, METHOD })
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Use {
-    String field() default "";
+public class DataProviderTestTransformer implements IAnnotationTransformer {
 
-    String[] value() default {};
+    public static final String DATAPROVIDER_NAME = "matrix-configurator";
 
-    String[] strings() default {};
-
-    boolean[] booleans() default {};
-
-    int[] ints() default {};
-
-    double[] decimals() default {};
-
-    boolean enumeration() default false;
-
-    boolean useNull() default false;
-
-    boolean empty() default false;
+    @Override
+    public void transform(ITestAnnotation ita, Class type, Constructor c, Method method) {
+        ita.setDataProvider(DATAPROVIDER_NAME);
+    }
 }

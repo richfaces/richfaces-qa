@@ -1,7 +1,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="4.3.x group suite">
 
-    <test name="All Components to Be Fixed in 4.3" preserve-order="false">
+    <test name="All Components to Be Fixed in 4.3" preserve-order="true">
         <groups>
             <run>
                 <include name="arquillian" />

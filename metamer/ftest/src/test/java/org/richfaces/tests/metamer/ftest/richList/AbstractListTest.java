@@ -33,8 +33,6 @@ import org.richfaces.fragment.list.RichFacesList;
 import org.richfaces.fragment.list.RichFacesListItem;
 import org.richfaces.tests.metamer.bean.Model;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.model.Employee;
 
 /**
@@ -51,11 +49,7 @@ public abstract class AbstractListTest extends AbstractWebDriverTest {
     @FindBy(css = "[id$=richList]")
     protected RichFacesList list;
 
-    @Inject
-    @Use(empty = true)
     protected Integer first;
-    @Inject
-    @Use(empty = true)
     protected Integer rows;
     protected int expectedBegin;
     protected int displayedRows;
@@ -101,17 +95,28 @@ public abstract class AbstractListTest extends AbstractWebDriverTest {
         expectedEmployees = employees.subList(expectedBegin, expectedBegin + displayedRows);
     }
 
+    private void countExpectedValues(int activePageNumber, int rows) {
+        int expectedBegin = rows * (activePageNumber - 1);
+        displayedRows = rows;
+        expectedEmployees = employees.subList(expectedBegin, expectedBegin + rows);
+    }
+
     private int minMax(int min, int value, int max) {
         return max(min, min(max, value));
     }
 
     private void verifyCounts() {
-        List<RichFacesListItem> items = list.getItems();
         assertEquals(list.getItems().size(), displayedRows);
     }
 
     protected void verifyList() {
         countExpectedValues();
+        verifyCounts();
+        verifyRows();
+    }
+
+    protected void verifyList(int activePageNumber, int rows) {
+        countExpectedValues(activePageNumber, rows);
         verifyCounts();
         verifyRows();
     }

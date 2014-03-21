@@ -40,6 +40,7 @@ import org.testng.ITestResult;
  * @version $Revision: 22728 $
  */
 public class MetamerFailureLoggingTestListener extends FailureLoggingTestListener {
+
     @Override
     protected String getFilenameIdentification(ITestResult result) {
         return MetamerTestInfo.getAssociatedFilename(result);
@@ -48,7 +49,7 @@ public class MetamerFailureLoggingTestListener extends FailureLoggingTestListene
     @Override
     protected String getSeleniumLogIdentification(ITestResult result) {
         String id = super.getSeleniumLogIdentification(result);
-        return id + " " + MetamerTestInfo.getConfigurationInfoInParenthesses();
+        return id + " " + MetamerTestInfo.getConfigurationInfoInParenthesses(result);
     }
 
     @Override

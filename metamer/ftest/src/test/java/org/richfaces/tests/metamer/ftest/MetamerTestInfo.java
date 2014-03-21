@@ -23,17 +23,16 @@ package org.richfaces.tests.metamer.ftest;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.jboss.test.selenium.utils.testng.TestInfo;
+import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config;
+import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config.FieldConfiguration;
+import org.richfaces.tests.metamer.ftest.extension.utils.ReflectionUtils;
 import org.testng.ITestResult;
 
 /**
@@ -46,38 +45,27 @@ public final class MetamerTestInfo {
     private MetamerTestInfo() {
     }
 
-    public static String getConfigurationInfo() {
-        Map<Field, Object> configuration = MatrixConfigurator.getCurrentConfiguration();
-
-        List<String> info = new LinkedList<String>();
-        if (!configuration.isEmpty()) {
-            for (Entry<Field, Object> entry : configuration.entrySet()) {
-                final String name = entry.getKey().getName();
-                final Object value = entry.getValue();
-
-                if (value != null) {
-                    info.add(name + ": " + value);
-                }
-            }
+    public static String getConfigurationInfo(ITestResult result) {
+        Object testInstance = result.getInstance();
+        Config configuration = null;
+        try {
+            Field configField = ReflectionUtils.getFirstFieldWithName("currentConfiguration", testInstance);
+            configuration = (Config) ReflectionUtils.getFieldValue(configField, testInstance);
+        } catch (Exception ex) {
+            ex.printStackTrace(System.err);
         }
 
-        Collections.sort(info, new Comparator<String>() {
-            public int compare(String o1, String o2) {
-                if (o1.startsWith("template: ")) {
-                    return -1;
-                }
-                if (o2.startsWith("template: ")) {
-                    return 1;
-                }
-                return o1.indexOf(":") - o2.indexOf(":");
+        List<String> info = new LinkedList<String>();
+        if (configuration != null) {
+            for (FieldConfiguration c : configuration.getConfigurations()) {
+                info.add(c.toString());
             }
-        });
-
+        }
         return StringUtils.join(info, "; ");
     }
 
-    public static String getConfigurationInfoInParenthesses() {
-        return "{ " + getConfigurationInfo() + " }";
+    public static String getConfigurationInfoInParenthesses(ITestResult result) {
+        return "{ " + getConfigurationInfo(result) + " }";
     }
 
     public static String getAssociatedFilename(ITestResult result) {
@@ -85,19 +73,19 @@ public final class MetamerTestInfo {
         String className = TestInfo.getClassName(result);
         String methodName = TestInfo.getMethodName(result);
 
-        return getFilename(packageName, className, methodName);
+        return getFilename(packageName, className, methodName, result);
     }
 
-    public static String getAssociatedFilename(Method method) {
+    public static String getAssociatedFilename(Method method, ITestResult result) {
         String packageName = TestInfo.getContainingPackageName(method);
         String className = TestInfo.getClassName(method);
         String methodName = TestInfo.getMethodName(method);
 
-        return getFilename(packageName, className, methodName);
+        return getFilename(packageName, className, methodName, result);
     }
 
-    private static String getFilename(String packageName, String className, String methodName) {
-        String testInfo = getConfigurationInfo();
+    private static String getFilename(String packageName, String className, String methodName, ITestResult result) {
+        String testInfo = getConfigurationInfo(result);
         testInfo = StringUtils.replaceChars(testInfo, "\\/*?\"<>|", "");
         testInfo = StringUtils.replaceChars(testInfo, "\r\n \t", "_");
         testInfo = StringUtils.replaceChars(testInfo, ":", "-");

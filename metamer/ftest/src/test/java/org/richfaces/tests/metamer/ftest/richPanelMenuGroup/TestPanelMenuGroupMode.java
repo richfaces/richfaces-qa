@@ -30,10 +30,7 @@ import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
-import static org.richfaces.component.Mode.ajax;
-import static org.richfaces.component.Mode.client;
-import static org.richfaces.component.Mode.server;
-
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -42,9 +39,8 @@ import java.util.LinkedList;
 import javax.faces.event.PhaseId;
 
 import org.richfaces.component.Mode;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.metamer.ftest.annotations.Uses;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -57,25 +53,20 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
 
     private final Attributes<PanelMenuGroupAttributes> panelMenuGroupAttributes = getAttributes();
 
-    @Inject
-    @Use(booleans = { true, false })
     private Boolean immediate;
-
-    @Inject
-    @Use(booleans = { true, false })
     private Boolean bypassUpdates;
-
-    @Inject
-    @Use("requestModes")
     private Mode mode;
-    private Mode[] requestModes = new Mode[]{ ajax, server };
-
-    @Inject
-    @Use("listeners")
+    private Mode[] requestModes = new Mode[]{ Mode.ajax, Mode.server };
     private String listener;
-    private String[] listeners = new String[] { "phases", "action invoked", "action listener invoked", "executeChecker", "item changed" };
+    private String[] listeners = new String[]{ "phases", "action invoked", "action listener invoked", "executeChecker", "item changed" };
 
     @Test(groups = "smoke")
+    @Uses({
+        @UseWithField(field = "immediate", valuesFrom = FROM_FIELD, value = "booleans"),
+        @UseWithField(field = "bypassUpdates", valuesFrom = FROM_FIELD, value = "booleans"),
+        @UseWithField(field = "listener", valuesFrom = FROM_FIELD, value = "listeners"),
+        @UseWithField(field = "mode", valuesFrom = FROM_FIELD, value = "requestModes")
+    })
     public void testRequestMode() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.immediate, immediate);
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.bypassUpdates, bypassUpdates);
@@ -96,7 +87,7 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
         }
         assertFalse(page.getTopGroup().advanced().isExpanded());
 
-        if (mode != client) {
+        if (mode != Mode.client) {
             if ("phases".equals(listener)) {
                 page.assertPhases(getExpectedPhases());
             } else {
@@ -111,10 +102,8 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
     }
 
     @Test(groups = "smoke")
-    @Uses({ @Use(field = "immediate", empty = true), @Use(field = "bypassUpdates", empty = true),
-            @Use(field = "mode", empty = true), @Use(field = "listener", empty = true) })
     public void testClientMode() {
-        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, client);
+        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.client);
 
         assertTrue(page.getTopGroup().advanced().isExpanded());
         page.getMenu().collapseGroup(1);
@@ -141,7 +130,7 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
         PhaseId phase = phases[phases.length - 2];
 
         if ("executeChecker".equals(listener)) {
-            if (phase.compareTo(UPDATE_MODEL_VALUES) < 0 || mode == server) {
+            if (phase.compareTo(UPDATE_MODEL_VALUES) < 0 || mode == Mode.server) {
                 return null;
             } else {
                 return UPDATE_MODEL_VALUES;

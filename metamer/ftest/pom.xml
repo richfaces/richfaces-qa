@@ -38,16 +38,8 @@ FSF site: http://www.fsf.org. -->
             -Djboss.bind.address.unsecure=${arquillian.container.jbossas.7-1.node0}</arquillian.container.jbossas.7-1.jvm.args>
 
         <templates>plain</templates>
-
-        <testng.listeners>org.richfaces.tests.metamer.ftest.MatrixConfigurator,org.richfaces.tests.metamer.ftest.MetamerConsoleStatusTestListener,org.richfaces.tests.metamer.ftest.MetamerFailureLoggingTestListener</testng.listeners>
-        <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
-        <metamerapp.tested.version>4.3.0.Final</metamerapp.tested.version>
-        <metamer.unpacked.dir>metamer-unpacked</metamer.unpacked.dir>
-        <!-- following property in use only with 'backward-compatibility-tesing-wfk profile, 
-           + since there metamer war neither RichFaces dependencies available in (enterprise) maven repo, 
-           + so the idea is put them somewhere before profile execution, and point here through this variable
-           + -->
-        <metamer.wfk.dependencies.dir />
+        <testng.listeners>org.richfaces.tests.metamer.ftest.extension.configurator.transformer.DataProviderTestTransformer,org.richfaces.tests.metamer.ftest.MetamerConsoleStatusTestListener,org.richfaces.tests.metamer.ftest.MetamerFailureLoggingTestListener</testng.listeners>
+        <testng.suite.xml>src/test/resources/testng/testng-all.xml</testng.suite.xml>
         <metamer-portlet.version>3.3.1.Final</metamer-portlet.version>
         <jboss-portal.version>7.1.3.Final</jboss-portal.version>
     </properties>
@@ -230,30 +222,30 @@ FSF site: http://www.fsf.org. -->
             <build>
                 <plugins>
                     <plugin>
-                         <artifactId>maven-dependency-plugin</artifactId>
-                         <executions>
-                             <execution>
-                                 <id>copy-metamer-portlet</id>
-                                 <phase>validate</phase>
-                                 <goals>
-                                     <goal>copy</goal>
-                                 </goals>
-                                 <configuration>
-                                     <artifactItems>
-                                         <artifactItem>
-                                             <groupId>org.jboss.portletbridge.examples</groupId>
-                                             <artifactId>metamer-portlet</artifactId>
-                                             <version>${metamer-portlet.version}</version>
-                                             <type>war</type>
-                                             <destFileName>metamer-portlet.war</destFileName>
-                                         </artifactItem>
-                                     </artifactItems>
-                                     <outputDirectory>target</outputDirectory>
-                                     <overWriteIfNewer>false</overWriteIfNewer>
-                                 </configuration>
-                             </execution>
-                         </executions>
-                     </plugin>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-metamer-portlet</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.jboss.portletbridge.examples</groupId>
+                                            <artifactId>metamer-portlet</artifactId>
+                                            <version>${metamer-portlet.version}</version>
+                                            <type>war</type>
+                                            <destFileName>metamer-portlet.war</destFileName>
+                                        </artifactItem>
+                                    </artifactItems>
+                                    <outputDirectory>target</outputDirectory>
+                                    <overWriteIfNewer>false</overWriteIfNewer>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
                 
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>

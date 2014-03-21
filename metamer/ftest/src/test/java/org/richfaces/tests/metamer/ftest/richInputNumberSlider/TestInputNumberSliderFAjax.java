@@ -22,11 +22,12 @@
 package org.richfaces.tests.metamer.ftest.richInputNumberSlider;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 
 import java.net.URL;
 
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.annotations.Test;
 
 /**
@@ -62,21 +63,21 @@ public class TestInputNumberSliderFAjax extends AbstractSliderTest {
     }
 
     @Test
-    @Use(field = "number", value = "bigNumbers")
+    @UseWithField(field = "number", valuesFrom = FROM_FIELD, value = "bigNumbers")
     @Override
     public void testTypeIntoInputBig() {
         super.testTypeIntoInputBig();
     }
 
     @Test
-    @Use(field = "number", value = "correctNumbers")
+    @UseWithField(field = "number", valuesFrom = FROM_FIELD, value = "correctNumbers")
     @Override
     public void testTypeIntoInputCorrect() {
         super.testTypeIntoInputCorrect();
     }
 
     @Test
-    @Use(field = "number", value = "decimalNumbers")
+    @UseWithField(field = "number", valuesFrom = FROM_FIELD, value = "decimalNumbers")
     @Override
     public void testTypeIntoInputDecimal() {
         super.testTypeIntoInputDecimal();
@@ -89,7 +90,7 @@ public class TestInputNumberSliderFAjax extends AbstractSliderTest {
     }
 
     @Test
-    @Use(field = "number", value = "smallNumbers")
+    @UseWithField(field = "number", valuesFrom = FROM_FIELD, value = "smallNumbers")
     @Override
     public void testTypeIntoInputSmall() {
         super.testTypeIntoInputSmall();

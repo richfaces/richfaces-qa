@@ -29,8 +29,6 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.ClearType;
 import org.richfaces.fragment.inputNumberSpinner.RichFacesInputNumberSpinner;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -60,15 +58,13 @@ public abstract class AbstractInputNumberSpinnerTest extends AbstractWebDriverTe
     protected String[] bigNumbers = { "11", "15", "100" };
     protected String[] decimalNumbers = { "1.4999", "5.6", "7.0001", "-5.50001", "-9.9", "1.222e0", "0e0", "-5.50001e0" };
 
-    @Inject
-    @Use(empty = true)
     protected String number;
 
     protected void decrease(int count) {
         Double minValue = Double.parseDouble(inputNumberSpinnerAttributes
-                .get(InputNumberSpinnerAttributes.minValue));
+            .get(InputNumberSpinnerAttributes.minValue));
         Boolean cycled = Boolean.parseBoolean(inputNumberSpinnerAttributes
-                .get(InputNumberSpinnerAttributes.cycled));
+            .get(InputNumberSpinnerAttributes.cycled));
         Double actValue;
         WaitRequestType type;
         for (int i = 0; i < count; i++) {
@@ -92,9 +88,9 @@ public abstract class AbstractInputNumberSpinnerTest extends AbstractWebDriverTe
 
     protected void increase(int count) {
         Double maxValue = Double.parseDouble(inputNumberSpinnerAttributes
-                .get(InputNumberSpinnerAttributes.maxValue));
+            .get(InputNumberSpinnerAttributes.maxValue));
         Boolean cycled = Boolean.parseBoolean(inputNumberSpinnerAttributes
-                .get(InputNumberSpinnerAttributes.cycled));
+            .get(InputNumberSpinnerAttributes.cycled));
         Double actValue;
         WaitRequestType type;
         for (int i = 0; i < count; i++) {
