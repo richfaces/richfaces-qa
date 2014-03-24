@@ -91,8 +91,8 @@ public class TestTabPanel extends AbstractWebDriverTest {
             "Header is not on the left!");
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-11550")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11550")
     @Templates(value = { "hDataTable", "richCollapsibleSubTable", "richDataGrid", "richDataTable" })
     public void testHeaderAlignmentIterationComponents() {
         testHeaderAlignment();
