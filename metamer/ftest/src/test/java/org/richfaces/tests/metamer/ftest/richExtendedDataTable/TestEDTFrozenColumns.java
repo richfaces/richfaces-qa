@@ -37,7 +37,7 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -96,10 +96,10 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
         _testFrozenColumnsShow();
     }
 
-    @Test(groups = { "Future" })
+    @Test
     @UseWithField(field = "numberOfColumns", valuesFrom = FROM_FIELD, value = "ints")
     @Templates(value = "richExtendedDataTable")
-    @IssueTracking("https://issues.jboss.org/browse/RF-13046")
+    @RegressionTest("https://issues.jboss.org/browse/RF-13046")
     public void testFrozenColumnsShowInEDT() {
         testFrozenColumnsShow();
     }
@@ -147,10 +147,10 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
      * Tests if scroller for not frozen columns is moved to another position and if the default one is removed. Checks
      * if scroller is still there after switching to another data page.
      */
-    @Test(groups = { "Future" })
+    @Test
     @UseWithField(field = "numberOfColumns", valuesFrom = FROM_FIELD, value = "ints2")
     @Templates(value = "richExtendedDataTable")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12278")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12278")
     // TODO https://issues.jboss.org/browse/RF-12236 , when numberOfColumns=4
     public void testScrollerForNotFrozenColumnsInRichExtendedDataTable() {
         testScrollerForNotFrozenColumns();
