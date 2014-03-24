@@ -21,7 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richDropTarget;
 
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
@@ -30,43 +29,43 @@ import org.testng.annotations.Test;
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
  * @since 4.3.0.CR1
  */
-@IssueTracking("https://issues.jboss.org/browse/RFPL-2751")
+@RegressionTest("https://issues.jboss.org/browse/RFPL-2751")
 @Templates(value = { "richCollapsibleSubTable" })
 public class TestDropTargetInCollapsibleSubTable extends TestDropTarget {
 
-    @Test(groups = "Future")
+    @Test
     public void testAcceptedTypes() {
         super.testAcceptedTypes();
     }
 
-    @Test(groups = "Future")
+    @Test
     public void testRender() {
         super.testRender();
     }
 
-    @Test(groups = "Future")
+    @Test
     public void testDropListenerAndEvent() {
         super.testDropListenerAndEvent();
     }
 
-    @Test(groups = "Future")
+    @Test
     public void testExecute() {
         super.testExecute();
     }
 
-    @Test(groups = "Future")
+    @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10535")
     public void testImmediate() {
         super.testImmediate();
     }
 
-    @Test(groups = "Future")
+    @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10535")
     public void testBypassUpdates() {
         super.testBypassUpdates();
     }
 
-    @Test(groups = "Future")
+    @Test
     public void testEvents() {
         super.testEvents();
     }
