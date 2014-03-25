@@ -24,7 +24,6 @@ package org.richfaces.tests.showcase.ftest.webdriver;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
@@ -35,7 +34,6 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.android.AndroidDriver;
 import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
@@ -89,15 +87,6 @@ public abstract class AbstractWebDriverTest extends AbstractShowcaseTest {
     @Override
     protected String getDemoName() {
         return getPage().getDemoName();
-    }
-
-    @Override
-    protected URL getDeployedURL() throws MalformedURLException {
-        if (!(webDriver instanceof AndroidDriver) || getConfiguration().getContextRoot() != null) {
-            return super.getDeployedURL();
-        } else {
-            return new URL(super.getDeployedURL().toString().replace(super.getDeployedURL().getHost(), "10.0.2.2"));
-        }
     }
 
     @Override

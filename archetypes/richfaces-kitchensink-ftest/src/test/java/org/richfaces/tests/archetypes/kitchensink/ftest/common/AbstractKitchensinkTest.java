@@ -32,9 +32,7 @@ import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.android.AndroidDriver;
 import org.testng.annotations.BeforeMethod;
-
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -79,16 +77,7 @@ public class AbstractKitchensinkTest extends Arquillian {
     }
 
     protected URL getDeployedURL() {
-        if (!(webDriver instanceof AndroidDriver)) {
-            return contextRoot;
-        } else {
-            String host = System.getProperty("host");
-            try {
-                return new URL(contextRoot.toString().replace(contextRoot.getHost(), host));
-            } catch (MalformedURLException e) {
-                throw new RuntimeException("You are attempting to load malformed URL");
-            }
-        }
+        return contextRoot;
     }
 
     protected String getUrlSuffix() {

@@ -21,12 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
@@ -35,7 +29,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.android.AndroidDriver;
 import org.openqa.selenium.interactions.Action;
 import org.testng.annotations.BeforeMethod;
 
@@ -73,21 +66,6 @@ public class AbstractWebDriverTest extends AbstractShowcaseTest {
             if (layout == ShowcaseLayout.MOBILE) {
                 Graphene.waitAjax().until().element(By.className("sourceView")).is().visible();
             }
-        }
-    }
-
-    @Override
-    protected URL getContextRoot() {
-        URL contextRootFromParent = super.getContextRoot();
-        if (webDriver instanceof AndroidDriver) {
-            try {
-                return new URL(contextRootFromParent.toExternalForm().replace(contextRootFromParent.getHost(), "10.0.2.2"));
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(AbstractWebDriverTest.class.getName()).log(Level.SEVERE, null, ex);
-                return null;
-            }
-        } else {
-            return contextRootFromParent;
         }
     }
 
