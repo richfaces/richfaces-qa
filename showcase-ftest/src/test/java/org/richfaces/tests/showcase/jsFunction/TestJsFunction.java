@@ -28,7 +28,6 @@ import static org.testng.Assert.assertEquals;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.android.AndroidDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.jsFunction.page.JsFunctionPage;
@@ -67,24 +66,17 @@ public class TestJsFunction extends AbstractWebDriverTest {
          * move mouse out of td element and check whether the output is empty
          */
 
-        for (Entry<String, WebElement> entry: page.getNames().entrySet()) {
+        for (Entry<String, WebElement> entry : page.getNames().entrySet()) {
             String name = entry.getKey();
             WebElement element = entry.getValue();
             activate(element);
-            Graphene.waitGui()
-                    .until("The text in output should be same as in the active td!")
-                    .element(page.output)
-                    .text()
-                    .equalTo(name);
+            Graphene.waitGui().until("The text in output should be same as in the active td!").element(page.output)
+                .text().equalTo(name);
         }
     }
 
     private void activate(WebElement element) {
-        if (webDriver instanceof AndroidDriver) {
-            element.click();
-        } else {
-            actions.moveToElement(element).perform();
-        }
+        actions.moveToElement(element).perform();
     }
 
 }
