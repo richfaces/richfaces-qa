@@ -256,9 +256,7 @@ public class TestSelect extends AbstractWebDriverTest {
         testFireEvent("blur", new Action() {
             @Override
             public void perform() {
-                select.advanced().getInput().advanced().getInputElement().click();// will not be triggered if this step omitted
-                page.getRequestTimeElement().click();// will not be triggered if this step omitted
-                select.advanced().getInput().sendKeys("ABCD").advanced().trigger("blur");
+                Graphene.guardAjax(select.openSelect()).select(0);
             }
         });
     }
