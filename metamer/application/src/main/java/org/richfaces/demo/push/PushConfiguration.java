@@ -34,10 +34,6 @@ import javax.servlet.ServletContext;
 @ManagedBean
 public class PushConfiguration {
 
-    public boolean isJmsEnabled() {
-        return JMSInitializer.isJmsEnabled();
-    }
-
     public boolean isPushEnabled() {
         ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
         String pushDisabled = servletContext.getInitParameter("org.richfaces.showcase.pushDisabled");
