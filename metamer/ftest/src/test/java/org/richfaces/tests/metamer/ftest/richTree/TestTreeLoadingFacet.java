@@ -56,7 +56,7 @@ public class TestTreeLoadingFacet extends AbstractTreeTest {
     @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "simpleSwingTreeNode")
     @RegressionTest("https://issues.jboss.org/browse/RF-12696")
     public void testLoadingFacet() {
-        int sufficientTimeToCheckHandles = 2000;// ms
+        int sufficientTimeToCheckHandles = 1500;// ms
         setLoadingFacet(true);
         setResponseDelay(sufficientTimeToCheckHandles);
         TreeNode treeNode = null;
