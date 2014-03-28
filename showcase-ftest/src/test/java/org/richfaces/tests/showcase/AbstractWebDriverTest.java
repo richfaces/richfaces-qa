@@ -21,10 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase;
 
+import java.util.concurrent.TimeUnit;
+
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
