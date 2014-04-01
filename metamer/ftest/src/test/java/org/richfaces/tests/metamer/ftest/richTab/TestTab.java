@@ -305,8 +305,7 @@ public class TestTab extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testOnheadermousedown() {
-        new Actions(driver).click(page.getInactiveHeaders().get(2)).perform();
-        Action action = new Actions(driver).clickAndHold(page.getInactiveHeaders().get(0)).build();
+        Action action = new Actions(driver).clickAndHold(page.getActiveHeaders().get(0)).build();
         testFireEvent(tabAttributes, TabAttributes.onheadermousedown, action);
         new Actions(driver).release().build().perform();
     }
