@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -30,10 +31,14 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
  */
 public class SimplePage extends MetamerPage {
 
-    @FindBy(css="span[id$=output]")
+    @FindBy(css = "span[id$=output]")
     private WebElement output;
-    @FindBy(id="locale")
+    @FindBy(id = "locale")
     private WebElement locale;
+    @FindByJQuery("span[id$=autocompleteButton]")
+    private WebElement autocompleteButton;
+    @FindByJQuery(value = "span[id$=autocomplete]")
+    private WebElement autocompleteWebElement;
 
     public void blur() {
         locale.click();
@@ -43,4 +48,11 @@ public class SimplePage extends MetamerPage {
         return output;
     }
 
+    public WebElement getAutocompleteButton() {
+        return autocompleteButton;
+    }
+
+    public WebElement getAutocompleteAsWebElement() {
+        return autocompleteWebElement;
+    }
 }
