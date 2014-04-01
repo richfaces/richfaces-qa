@@ -166,6 +166,7 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnBlur, Boolean.FALSE);
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
         inplaceSelect.select(SOME_VALUE);
+        inplaceSelect.advanced().waitForPopupToHide();
         MetamerPage.waitRequest(saveButton, WaitRequestType.XHR).click();
         assertEquals(inplaceSelect.advanced().getLabelValue(), SOME_VALUE);
         assertTrue(inplaceSelect.advanced().isInState(InplaceComponentState.CHANGED));
