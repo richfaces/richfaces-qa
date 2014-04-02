@@ -12,7 +12,6 @@ import org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets;
 import org.richfaces.tests.metamer.ftest.richCollapsibleSubTableToggler.CollapsibleSubTableTogglerAttributes;
 import org.richfaces.tests.metamer.ftest.richColumn.ColumnAttributes;
 import org.richfaces.tests.metamer.ftest.richColumnGroup.ColumnGroupAttributes;
-import org.richfaces.tests.metamer.ftest.richComponentControl.ComponentControlAttributes;
 import org.richfaces.tests.metamer.ftest.richDataGrid.DataGridAttributes;
 import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.ExtendedDataTableAttributes;
@@ -28,7 +27,6 @@ public class AttributeList {
     public static Attributes<CollapsibleSubTableTogglerAttributes> collapsibleSubTableTogglerAttributes = new Attributes<CollapsibleSubTableTogglerAttributes>();
     public static Attributes<ColumnAttributes> columnAttributes = new Attributes<ColumnAttributes>();
     public static Attributes<ColumnGroupAttributes> columnGroupAttributes = new Attributes<ColumnGroupAttributes>();
-    public static Attributes<ComponentControlAttributes> componentControllAttributes = new Attributes<ComponentControlAttributes>();
     public static Attributes<DataGridAttributes> dataGridAttributes = new Attributes<DataGridAttributes>();
     public static Attributes<DataTableAttributes> dataTableAttributes = new Attributes<DataTableAttributes>();
     public static Attributes<DataTableFacets> dataTableFacets = new Attributes<DataTableFacets>(RequestType.XHR); // for facets
