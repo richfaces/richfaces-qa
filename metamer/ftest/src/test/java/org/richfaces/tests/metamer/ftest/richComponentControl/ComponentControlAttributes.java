@@ -26,7 +26,7 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22739 $
+ * @since 4.3.6.Final
  */
 public enum ComponentControlAttributes implements AttributeEnum {
 
