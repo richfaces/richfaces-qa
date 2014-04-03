@@ -106,6 +106,10 @@ public class RichFacesDataScroller implements DataScroller, AdvancedInteractions
         Graphene.waitModel().until().element(activePage).text().not().equalTo(prevPageText);
     }
 
+    public boolean hasPages() {
+        return advanced().getCountOfVisiblePages() > 0;
+    }
+
     @Override
     public AdvancedDataScrollerInteractions advanced() {
         return advancedInteractions;

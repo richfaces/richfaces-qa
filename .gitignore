@@ -13,3 +13,4 @@ metamer/application/bin
 metamer/ftest/bin
 metamer/ftest/src/main/java/rebel.xml
 faces-config.NavData
+nbactions*

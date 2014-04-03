@@ -19,55 +19,29 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.fragment.contextMenu;
+package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
 
 import java.util.List;
-
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.fragment.common.AdvancedInteractions;
+import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleFooterInterface;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class RichFacesContextMenu extends AbstractPopupMenu implements PopupMenu, AdvancedInteractions<AbstractPopupMenu.AdvancedPopupMenuInteractions> {
+public class SimpleFooter implements SimpleFooterInterface {
 
-    @FindBy(className = "rf-ctx-itm")
-    private List<WebElement> menuItemsElements;
+    @FindBy(className = "rf-dt-ftr")
+    private WebElement tableFooterElement;
 
-    @FindBy(css = "div.rf-ctx-lst")
-    private WebElement contextMenuPopup;
+    @FindBy(className = "rf-dt-sftr-c")
+    private List<WebElement> columnFooters;
 
-    @FindByJQuery("script:last")
-    private WebElement script;
-
-    private final AdvancedContextMenuInteractions advancedInteractions = new AdvancedContextMenuInteractions ();
-
-    @Override
-    public AdvancedContextMenuInteractions advanced() {
-        return advancedInteractions;
+    public String getFooterText() {
+        return tableFooterElement.getText();
     }
 
-    @Override
-    protected List<WebElement> getMenuItemElementsInternal() {
-        return menuItemsElements;
-    }
-
-    @Override
-    protected WebElement getMenuPopupInternal() {
-        return contextMenuPopup;
-    }
-
-    @Override
-    protected WebElement getScriptElement() {
-        return script;
-    }
-
-    public class AdvancedContextMenuInteractions extends AbstractPopupMenu.AdvancedPopupMenuInteractions {
-
-        public String getLangAttribute() {
-            return getRootElement().getAttribute("lang");
-        }
+    public String getColumnFooterText(int column) {
+        return columnFooters.get(column).getText();
     }
 }

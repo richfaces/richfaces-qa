@@ -19,21 +19,25 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.abstractions;
+package org.richfaces.tests.metamer.ftest.abstractions.fragments;
 
-import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.metamer.model.Employee;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public enum DataTableFacets implements AttributeEnum {
+public interface FilteringTableHeaderInterface {
 
-    noData,
-    header,
-    footer,
-    stateHeader,
-    stateFooter,
-    capitalHeader,
-    capitalFooter
+    void filterSex(Employee.Sex sex);
 
+    void filterName(String name);
+
+    void filterTitle(String title);
+
+    void filterNumberOfKidsWithSpinner(int numberOfKids);
+
+    WebElement getFilterNameInput();
+
+    WebElement getFilterTitleInput();
 }
