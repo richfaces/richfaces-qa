@@ -63,4 +63,10 @@ public interface DataScroller {
      * @see DataScrollerSwitchButton
      */
     void switchTo(DataScrollerSwitchButton btn);
+
+    /**
+     * Determines whether there are some pages to scroll over with this DataScroller.
+     * @return true if there is more than one page of data, false otherwise
+     */
+    boolean hasPages();
 }

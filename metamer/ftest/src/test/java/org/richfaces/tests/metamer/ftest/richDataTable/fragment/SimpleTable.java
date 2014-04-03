@@ -19,21 +19,13 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.abstractions;
+package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
 
-import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import org.richfaces.fragment.dataTable.RichFacesDataTableWithHeaderAndFooter;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public enum DataTableFacets implements AttributeEnum {
-
-    noData,
-    header,
-    footer,
-    stateHeader,
-    stateFooter,
-    capitalHeader,
-    capitalFooter
+public class SimpleTable extends RichFacesDataTableWithHeaderAndFooter<SimpleHeader, SimpleRow, SimpleFooter> {
 
 }

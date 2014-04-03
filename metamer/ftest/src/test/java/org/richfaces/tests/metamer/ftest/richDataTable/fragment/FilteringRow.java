@@ -19,55 +19,55 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.fragment.contextMenu;
+package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
 
-import java.util.List;
-
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.fragment.common.AdvancedInteractions;
+import org.richfaces.tests.metamer.ftest.abstractions.fragments.FilteringTableRowInterface;
+import org.richfaces.tests.metamer.model.Employee;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class RichFacesContextMenu extends AbstractPopupMenu implements PopupMenu, AdvancedInteractions<AbstractPopupMenu.AdvancedPopupMenuInteractions> {
+public class FilteringRow implements FilteringTableRowInterface {
 
-    @FindBy(className = "rf-ctx-itm")
-    private List<WebElement> menuItemsElements;
+    @FindBy(css = "td:nth-of-type(1) img")
+    private WebElement sexColumnElement;
 
-    @FindBy(css = "div.rf-ctx-lst")
-    private WebElement contextMenuPopup;
+    @FindBy(css = "td:nth-of-type(2)")
+    private WebElement nameColumnElement;
 
-    @FindByJQuery("script:last")
-    private WebElement script;
+    @FindBy(css = "td:nth-of-type(3)")
+    private WebElement titleColumnElement;
 
-    private final AdvancedContextMenuInteractions advancedInteractions = new AdvancedContextMenuInteractions ();
+    @FindBy(css = "td:nth-of-type(4)")
+    private WebElement numberOfKids1ColumnElement;
+
+    @FindBy(css = "td:nth-of-type(5)")
+    private WebElement numberOfKids2ColumnElement;
 
     @Override
-    public AdvancedContextMenuInteractions advanced() {
-        return advancedInteractions;
+    public Employee.Sex getSexColumnValue() {
+        return Employee.Sex.valueOf(sexColumnElement.getAttribute("alt"));
     }
 
     @Override
-    protected List<WebElement> getMenuItemElementsInternal() {
-        return menuItemsElements;
+    public String getNameColumnValue() {
+        return nameColumnElement.getText();
     }
 
     @Override
-    protected WebElement getMenuPopupInternal() {
-        return contextMenuPopup;
+    public String getTitleColumnValue() {
+        return titleColumnElement.getText();
     }
 
     @Override
-    protected WebElement getScriptElement() {
-        return script;
+    public int getNumberOfKids1ColumnValue() {
+        return Integer.parseInt(numberOfKids1ColumnElement.getText());
     }
 
-    public class AdvancedContextMenuInteractions extends AbstractPopupMenu.AdvancedPopupMenuInteractions {
-
-        public String getLangAttribute() {
-            return getRootElement().getAttribute("lang");
-        }
+    @Override
+    public int getNumberOfKids2ColumnValue() {
+        return Integer.parseInt(numberOfKids2ColumnElement.getText());
     }
 }

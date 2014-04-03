@@ -48,12 +48,12 @@ public class TestDataTableSimple extends DataTableSimpleTest {
         model = new DataTable(pjq("table.rf-dt[id$=richDataTable]"));
     }
 
-    @Test
+//    @Test
     public void testRendered() {
         super.testRendered();
     }
 
-    @Test
+//    @Test
     public void testNoDataLabel() {
         super.testNoDataLabel();
     }

@@ -19,55 +19,51 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.fragment.contextMenu;
+package org.richfaces.tests.metamer.ftest.richDataTable;
 
-import java.util.List;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
+
+import java.net.URL;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.fragment.common.AdvancedInteractions;
+import org.richfaces.tests.metamer.ftest.abstractions.DataTableSimpleTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
+import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SimpleTable;
+import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class RichFacesContextMenu extends AbstractPopupMenu implements PopupMenu, AdvancedInteractions<AbstractPopupMenu.AdvancedPopupMenuInteractions> {
+public class TestDataTableSimple extends DataTableSimpleTest {
 
-    @FindBy(className = "rf-ctx-itm")
-    private List<WebElement> menuItemsElements;
-
-    @FindBy(css = "div.rf-ctx-lst")
-    private WebElement contextMenuPopup;
-
-    @FindByJQuery("script:last")
-    private WebElement script;
-
-    private final AdvancedContextMenuInteractions advancedInteractions = new AdvancedContextMenuInteractions ();
+    @FindByJQuery("table.rf-dt[id$=richDataTable]")
+    private SimpleTable table;
 
     @Override
-    public AdvancedContextMenuInteractions advanced() {
-        return advancedInteractions;
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richDataTable/simple.xhtml");
     }
 
-    @Override
-    protected List<WebElement> getMenuItemElementsInternal() {
-        return menuItemsElements;
+    @Test
+    public void testRendered() {
+        super.testRendered(table);
     }
 
-    @Override
-    protected WebElement getMenuPopupInternal() {
-        return contextMenuPopup;
+    @Test
+    public void testNoDataLabel() {
+        super.testNoDataLabel(table);
     }
 
-    @Override
-    protected WebElement getScriptElement() {
-        return script;
+    @Test
+    @UseWithField(field = "first", valuesFrom = FROM_FIELD, value = "COUNTS")
+    public void testFirst() {
+        super.testFirst(table);
     }
 
-    public class AdvancedContextMenuInteractions extends AbstractPopupMenu.AdvancedPopupMenuInteractions {
-
-        public String getLangAttribute() {
-            return getRootElement().getAttribute("lang");
-        }
+    @Test
+    @UseWithField(field = "rows", valuesFrom = FROM_FIELD, value = "COUNTS")
+    public void testRows() {
+        super.testRows(table);
     }
 }
