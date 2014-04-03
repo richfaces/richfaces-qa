@@ -19,21 +19,17 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.abstractions;
+package org.richfaces.fragment.dataTable;
 
-import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import java.util.List;
 
-/**
- * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
- */
-public enum DataTableFacets implements AttributeEnum {
+public interface DataTable<ROW> {
 
-    noData,
-    header,
-    footer,
-    stateHeader,
-    stateFooter,
-    capitalHeader,
-    capitalFooter
+    ROW getRow(int n);
 
+    ROW getFirstRow();
+
+    ROW getLastRow();
+
+    List<ROW> getAllRows();
 }

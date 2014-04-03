@@ -19,55 +19,46 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.fragment.contextMenu;
+package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
 
-import java.util.List;
-
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.fragment.common.AdvancedInteractions;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class RichFacesContextMenu extends AbstractPopupMenu implements PopupMenu, AdvancedInteractions<AbstractPopupMenu.AdvancedPopupMenuInteractions> {
+public class SortingHeader {
 
-    @FindBy(className = "rf-ctx-itm")
-    private List<WebElement> menuItemsElements;
+    @FindBy(css = "th:nth-of-type(1) a")
+    private WebElement sexSortingAnchor;
 
-    @FindBy(css = "div.rf-ctx-lst")
-    private WebElement contextMenuPopup;
+    @FindBy(css = "th:nth-of-type(2) a")
+    private WebElement nameSortingAnchor;
 
-    @FindByJQuery("script:last")
-    private WebElement script;
+    @FindBy(css = "th:nth-of-type(3) a")
+    private WebElement titleSortingAnchor;
 
-    private final AdvancedContextMenuInteractions advancedInteractions = new AdvancedContextMenuInteractions ();
+    @FindBy(css = "th:nth-of-type(4) a")
+    private WebElement numberOfKidsSortingAnchor;
 
-    @Override
-    public AdvancedContextMenuInteractions advanced() {
-        return advancedInteractions;
+    public void sortBySex() {
+        sortByColumn(sexSortingAnchor);
     }
 
-    @Override
-    protected List<WebElement> getMenuItemElementsInternal() {
-        return menuItemsElements;
+    public void sortByName() {
+        sortByColumn(nameSortingAnchor);
     }
 
-    @Override
-    protected WebElement getMenuPopupInternal() {
-        return contextMenuPopup;
+    public void sortByTitle() {
+        sortByColumn(titleSortingAnchor);
     }
 
-    @Override
-    protected WebElement getScriptElement() {
-        return script;
+    public void sortByNumberOfKids() {
+        sortByColumn(numberOfKidsSortingAnchor);
     }
 
-    public class AdvancedContextMenuInteractions extends AbstractPopupMenu.AdvancedPopupMenuInteractions {
-
-        public String getLangAttribute() {
-            return getRootElement().getAttribute("lang");
-        }
+    private void sortByColumn(WebElement sortingTrigger) {
+        Graphene.guardAjax(sortingTrigger).click();
     }
 }
