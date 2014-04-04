@@ -38,7 +38,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
 
-            <r:tabPanel id="tabPanel">
+            <r:tabPanel id="tabPanel" itemChangeListener="#{richBean.itemChangeListener}">
 
                 <r:tab id="tab1"
                           action="#{richBean.dummyAction}"
