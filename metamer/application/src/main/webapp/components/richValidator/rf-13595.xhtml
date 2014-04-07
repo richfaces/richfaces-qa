@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich"
+    xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+<!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2014, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+<ui:composition template="/templates/template.xhtml">
+
+    <ui:define name="component">
+        <h:form id="validationForm">
+            <rich:focus preserve="true" />
+            <rich:messages id="globalMessages" ajaxRendered="true" globalOnly="true" />
+            <!-- This triggers input visibility -->
+            <a4j:commandButton id="setInputVisibleButton" actionListener="#{validationTest.changeInputVisibility}"
+                execute="@this" render="dynamicContent" value="Trigger Visibility Change" />
+
+            <h:panelGrid id="dynamicContent" columns="3">
+
+                <h:outputLabel id="inputLabel" for="inputField" rendered="#{validationTest.inputVisible}"
+                    value="The input field:" />
+                <rich:calendar id="inputField" rendered="#{validationTest.inputVisible}" popup="true"
+                    validator="#{validationTest.validateInput}" value="#{validationTest.input}">
+                    <rich:validator />
+                    <a4j:ajax event="change" render="inputField" />
+                </rich:calendar>
+
+                <rich:message id="inputMessage" ajaxRendered="true" for="inputField" rendered="#{validationTest.inputVisible}" />
+
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+
+
+</ui:composition>
+
+</html>
