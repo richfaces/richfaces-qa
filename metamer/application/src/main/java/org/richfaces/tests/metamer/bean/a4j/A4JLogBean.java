@@ -24,8 +24,8 @@ package org.richfaces.tests.metamer.bean.a4j;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ConversationScoped;
-import javax.inject.Named;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 import org.richfaces.component.UIAjaxLog;
 import org.richfaces.tests.metamer.Attributes;
@@ -38,8 +38,8 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22460 $
  */
-@Named("a4jLogBean")
-@ConversationScoped
+@ManagedBean(name = "a4jLogBean")
+@SessionScoped
 public class A4JLogBean implements Serializable {
 
     private static final long serialVersionUID = -1L;
