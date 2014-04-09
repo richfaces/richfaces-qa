@@ -33,7 +33,9 @@ import static org.testng.Assert.fail;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
@@ -54,8 +56,10 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.component.Positioning;
 import org.richfaces.component.SwitchType;
 import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.common.Locations;
 import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.common.VisibleComponent;
@@ -77,9 +81,12 @@ import org.testng.annotations.DataProvider;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
-import java.util.concurrent.TimeUnit;
 
 public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
+
+    protected static final int WAIT_TIME = 5;// s
+    protected static final int MINOR_WAIT_TIME = 50;// ms
+    protected static final int TRIES = 20;// for guardListSize and expectedReturnJS
 
     @Drone
     protected WebDriver driver;
@@ -92,14 +99,16 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     @Page
     private MetamerPage metamerPage;
-    protected static final int WAIT_TIME = 5;// s
-    protected static final int MINOR_WAIT_TIME = 50;// ms
-    protected static final int TRIES = 20;// for guardListSize and expectedReturnJS
+
     protected DriverType driverType;
-    private static final String ATTRIBUTE_INPUT_TEMPLATE = "input[id$={0}Input]";
-    private final Boolean[] booleans = { false, true };
+
     private Boolean afterClassWasTriggered = Boolean.FALSE;
     private Boolean atLeastOneTestStarted = Boolean.FALSE;
+
+    private final Boolean[] booleans = { false, true };
+
+    private Positioning positioning;// used for testJointPoint, testDirection
+    protected static final EnumSet<Positioning> STRICT_POSITIONING = EnumSet.of(Positioning.bottomLeft, Positioning.bottomRight, Positioning.topLeft, Positioning.topRight);
 
     // this field is used by MetamerTestInfo to gather information about actual test method configuration
     private Config currentConfiguration;
@@ -491,6 +500,78 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         testHTMLAttribute(element, getBasicAttributes(), BasicAttributes.dir, "null");
         testHTMLAttribute(element, getBasicAttributes(), BasicAttributes.dir, "ltr");
         testHTMLAttribute(element, getBasicAttributes(), BasicAttributes.dir, "rtl");
+    }
+
+    /**
+     * Use with <code>@UseWithField(field = "positioning",valuesFrom = FROM_ENUM, value = "")</code>.
+     * @param showAction action which will show the tested menu and will return it as a WebElement.
+     */
+    protected void testDirection(ShowElementAndReturnAction showAction) {
+        testPositioning(showAction, 0, 0);
+    }
+
+    /**
+     * Use with <code>@UseWithField(field = "positioning",valuesFrom = FROM_ENUM, value = "")</code>.
+     * @param maxOffSetX width of the menu item, input, etc. from which will be the menu displayed
+     * @param maxOffsetY height of the menu item, input, etc. from which will be the menu displayed
+     * @param showAction action which will show the tested menu and will return it as a WebElement.
+     */
+    protected void testJointPoint(int maxOffSetX, int maxOffsetY, ShowElementAndReturnAction showAction) {
+        testPositioning(showAction, maxOffSetX, maxOffsetY);
+    }
+
+    private void testPositioning(ShowElementAndReturnAction showAction, int maxOffSetX, int maxOffsetY) {
+        int tolerance = 10;
+        boolean isDirectionTest = (maxOffsetY == 0 && maxOffSetX == 0);
+        getUnsafeAttributes("").set("direction", Positioning.bottomRight);
+        try {
+            getUnsafeAttributes("").set("jointPoint", Positioning.bottomRight);
+        } catch (NoSuchElementException ex) {
+            if (!isDirectionTest) {// == jointPoint test, but no jointPoint attribute found
+                throw ex;
+            }
+        }
+        Locations locationsBottomRight = Utils.getLocations(showAction.perform());
+
+        getUnsafeAttributes("").set((isDirectionTest ? "direction" : "jointPoint"), positioning);
+        Locations locationsAfterReposition = Utils.getLocations(showAction.perform());
+
+        int widthChange = maxOffSetX;
+        int heightChange = maxOffsetY;
+        if (isDirectionTest) {
+            widthChange = locationsBottomRight.getWidth();
+            heightChange = locationsBottomRight.getHeight();
+        }
+
+        if (STRICT_POSITIONING.contains(positioning)) {
+            Utils.tolerantAssertLocationsEquals(getLocationsOfBottomRightAfterPositioningChanges(locationsBottomRight, positioning, widthChange, heightChange), locationsAfterReposition, tolerance, tolerance, "");
+        } else {// some '*auto*' option
+            // cycle through all strict directions, one must be the same as the '*auto*',
+            // which  one it will be depends on browser/screen resolution and actual position
+            for (Positioning pos : STRICT_POSITIONING) {
+                try {
+                    Utils.tolerantAssertLocationsEquals(getLocationsOfBottomRightAfterPositioningChanges(locationsBottomRight, pos, widthChange, heightChange), locationsAfterReposition, tolerance, tolerance, "");
+                    return;
+                } catch (AssertionError ignored) {
+                }
+            }
+            fail("No position was close enough for direction " + positioning.toString());
+        }
+    }
+
+    private Locations getLocationsOfBottomRightAfterPositioningChanges(Locations locations, Positioning jointPoint, int width, int height) {
+        switch (jointPoint) {
+            case topLeft:
+                return locations.moveAllBy(-width, -height);
+            case topRight:
+                return locations.moveAllBy(0, -height);
+            case bottomLeft:
+                return locations.moveAllBy(-width, 0);
+            case bottomRight:
+                return locations;
+            default:
+                throw new UnsupportedOperationException("Not supported positioning: " + jointPoint);
+        }
     }
 
     /**
@@ -966,6 +1047,11 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
                 verifyResponse(inputValue);
             }
         }
+    }
+
+    protected interface ShowElementAndReturnAction {
+
+        WebElement perform();
     }
 
     protected class UnsafeAttributes<T extends AttributeEnum> extends Attributes<T> {
