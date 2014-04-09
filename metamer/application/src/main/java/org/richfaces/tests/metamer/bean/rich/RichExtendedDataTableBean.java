@@ -31,9 +31,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import org.ajax4jsf.model.DataComponentState;
-import org.richfaces.component.UIDataTableBase;
 import org.richfaces.component.UIExtendedDataTable;
 import org.richfaces.model.Filter;
+import org.richfaces.model.SortMode;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.ColumnSortingMap;
 import org.richfaces.tests.metamer.model.Employee;
@@ -63,10 +63,7 @@ public class RichExtendedDataTableBean implements Serializable {
 
         private static final long serialVersionUID = 1L;
 
-        protected UIDataTableBase getBinding() {
-            return binding;
-        }
-
+        @Override
         protected Attributes getAttributes() {
             return attributes;
         }
@@ -75,7 +72,6 @@ public class RichExtendedDataTableBean implements Serializable {
     private Map<String, Object> filtering = new HashMap<String, Object>();
     // facets
     private Map<String, String> facets = new HashMap<String, String>();
-    private transient UIExtendedDataTable binding;
 
     /**
      * Initializes the managed bean.
@@ -91,6 +87,7 @@ public class RichExtendedDataTableBean implements Serializable {
         attributes.setAttribute("rows", 30);
         attributes.setAttribute("styleClass", "extended-data-table");
         attributes.setAttribute("style", null);
+        attributes.setAttribute("sortMode", SortMode.single);
 
         // setup types
         attributes.get("selection").setType(TreeSet.class);
@@ -122,14 +119,6 @@ public class RichExtendedDataTableBean implements Serializable {
 
     public void setAttributes(Attributes attributes) {
         this.attributes = attributes;
-    }
-
-    public UIExtendedDataTable getBinding() {
-        return binding;
-    }
-
-    public void setBinding(UIExtendedDataTable binding) {
-        this.binding = binding;
     }
 
     /**

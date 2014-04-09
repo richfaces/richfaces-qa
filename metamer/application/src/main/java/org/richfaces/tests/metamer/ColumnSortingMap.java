@@ -26,7 +26,6 @@ import java.util.Collection;
 import java.util.TreeMap;
 
 import org.richfaces.component.SortOrder;
-import org.richfaces.component.UIDataTableBase;
 import org.richfaces.model.SortMode;
 
 public abstract class ColumnSortingMap extends TreeMap<String, ColumnSortingMap.ColumnSorting> {
@@ -40,8 +39,6 @@ public abstract class ColumnSortingMap extends TreeMap<String, ColumnSortingMap.
         }
         return super.get(key);
     }
-
-    protected abstract UIDataTableBase getBinding();
 
     protected abstract Attributes getAttributes();
 
@@ -65,14 +62,24 @@ public abstract class ColumnSortingMap extends TreeMap<String, ColumnSortingMap.
 
         @SuppressWarnings("unchecked")
         public void reverseOrder() {
-            SortMode mode = getBinding().getSortMode();
+            Object sortModeAttribute = getAttributes().get("sortMode").getValue();
+            SortMode mode;
+            if(sortModeAttribute != null) {
+                if(sortModeAttribute instanceof String) {
+                    mode = SortMode.valueOf((String) sortModeAttribute);
+                } else {
+                    mode = (SortMode) sortModeAttribute;
+                }
+            } else {
+                throw new IllegalArgumentException("sortMode attribute has to be set correctly!");
+            }
 
             Object sortOrderObject = getAttributes().get("sortPriority").getValue();
             Collection<String> sortPriority;
             if (sortOrderObject instanceof Collection) {
                 sortPriority = (Collection<String>) sortOrderObject;
             } else {
-                throw new IllegalStateException("sortOrder attribute have to be Collection");
+                throw new IllegalStateException("sortOrder attribute has to be Collection");
             }
 
             if (SortMode.single.equals(mode)) {
