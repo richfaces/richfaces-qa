@@ -34,6 +34,7 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.HasInputDevices;
@@ -41,6 +42,8 @@ import org.openqa.selenium.interactions.Mouse;
 import org.openqa.selenium.interactions.internal.Coordinates;
 import org.openqa.selenium.internal.Locatable;
 import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.common.Locations;
+import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.dropDownMenu.RichFacesDropDownMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuSimplePage;
@@ -111,6 +114,19 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         assertEquals(page.getFileMenuLabelOriginal().getText(), "File", "Label of the menu");
     }
 
+    public void testJointPoint() {
+        updateDropDownMenuInvoker();
+        getCurrentMenu().advanced().show(page.getTarget1());
+        Locations l = Utils.getLocations(page.getFileMenu());
+        testJointPoint(l.getWidth(), l.getHeight(), new ShowElementAndReturnAction() {
+            @Override
+            public WebElement perform() {
+                getCurrentMenu().advanced().show(page.getTarget1());
+                return getCurrentMenu().advanced().getMenuPopup();
+            }
+        });
+    }
+
     public void testShowEvent() {
         dropDownMenuAttributes.set(DropDownMenuAttributes.showEvent, "contextmenu");
         getCurrentMenu().advanced().setupShowEvent(Event.CONTEXTCLICK);
@@ -156,6 +172,17 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         String directionCSS = getCurrentMenu().advanced().getItemsElements().get(0)
             .getCssValue("direction");
         assertEquals(directionCSS, expected, "The direction attribute was not applied correctly!");
+    }
+
+    public void testDirection() {
+        updateDropDownMenuInvoker();
+        testDirection(new ShowElementAndReturnAction() {
+            @Override
+            public WebElement perform() {
+                getCurrentMenu().advanced().show(page.getTarget1());
+                return getCurrentMenu().advanced().getMenuPopup();
+            }
+        });
     }
 
     public void testLang() {

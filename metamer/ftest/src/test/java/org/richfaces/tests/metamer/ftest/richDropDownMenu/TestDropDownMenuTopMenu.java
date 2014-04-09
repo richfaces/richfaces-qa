@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richDropDownMenu;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 
 import java.net.URL;
@@ -70,6 +71,20 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
     @Templates("plain")
     public void testDir() {
         super.testDir();
+    }
+
+    @Test
+    @Templates("plain")
+    @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "")
+    public void testDirection() {
+        super.testDirection();
+    }
+
+    @Test
+    @Templates("plain")
+    @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "")
+    public void testJointPoint() {
+        super.testJointPoint();
     }
 
     @Test

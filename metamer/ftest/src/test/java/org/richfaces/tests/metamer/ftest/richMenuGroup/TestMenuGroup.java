@@ -31,7 +31,6 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.page.Page;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
@@ -42,6 +41,7 @@ import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.dropDownMenu.RichFacesDropDownMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -83,19 +83,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     @Page
     private MetamerPage page;
 
-    private Direction direction;
     private int tolerance = 4;
-
-    private enum Direction {
-
-        AUTO("auto"), TOPLEFT("topLeft"), TOPRIGHT("topRight"), BOTTOMLEFT("bottomLeft"), BOTTOMRIGHT("bottomRight"), NULL(
-            "null");
-        private final String value;
-
-        private Direction(String value) {
-            this.value = value;
-        }
-    }
 
     @Override
     public URL getTestUrl() {
@@ -108,7 +96,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
 
     private void openMenuAndSubMenu() {
         openMenu();
-        new Actions(driver).moveToElement(group).perform();
+        new Actions(driver).click(group).perform();
         Graphene.waitGui().until().element(groupList).is().visible();
     }
 
@@ -121,37 +109,17 @@ public class TestMenuGroup extends AbstractWebDriverTest {
      * RichAccordion template is disabled because of a reported bug: https://issues.jboss.org/browse/RF-13264
      */
     @Test
+    @Templates("plain")
     @RegressionTest("https://issues.jboss.org/browse/RF-10218")
-    @UseWithField(field = "direction", valuesFrom = FROM_ENUM, value = "")
+    @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "")
     public void testDirection() {
-        menuGroupAttributes.set(MenuGroupAttributes.direction, direction.value);
-        menuGroupAttributes.set(MenuGroupAttributes.jointPoint, Direction.TOPRIGHT.value);
-
-        Point jointPointLocation, cornerOfPopup = null;
-
-        openMenu();
-        jointPointLocation = Utils.getLocations(group).getTopRight();
-        openMenuAndSubMenu();
-        Locations popupLocations = Utils.getLocations(groupList);
-
-        switch (direction) {
-            case TOPLEFT:
-                cornerOfPopup = popupLocations.getBottomRight();
-                break;
-            case TOPRIGHT:
-                cornerOfPopup = popupLocations.getBottomLeft();
-                break;
-            case BOTTOMLEFT:
-                cornerOfPopup = popupLocations.getTopRight();
-                break;
-            case NULL:
-            case AUTO:// auto (direction depends on browser/screen resolution)
-            case BOTTOMRIGHT:
-                cornerOfPopup = popupLocations.getTopLeft();
-                break;
-
-        }
-        Utils.tolerantAssertPointEquals(cornerOfPopup, jointPointLocation, tolerance, tolerance, "Location of points.");
+        testDirection(new ShowElementAndReturnAction() {
+            @Override
+            public WebElement perform() {
+                openMenuAndSubMenu();
+                return groupList;
+            }
+        });
     }
 
     @Test
@@ -238,34 +206,19 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     @RegressionTest("https://issues.jboss.org/browse/RF-10218")
-    @UseWithField(field = "direction", valuesFrom = FROM_ENUM, value = "")
+    @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "")
     public void testJointPoint() {
-        menuGroupAttributes.set(MenuGroupAttributes.jointPoint, direction.value);
-        menuGroupAttributes.set(MenuGroupAttributes.direction, Direction.BOTTOMRIGHT.value);
-        Point jointPointLocation = null, cornerOfPopup = null;
         openMenu();
-        Locations jointPointLocations = Utils.getLocations(group);
-        switch (direction) {
-            case BOTTOMLEFT:
-                jointPointLocation = jointPointLocations.getBottomLeft();
-                break;
-            case BOTTOMRIGHT:
-                jointPointLocation = jointPointLocations.getBottomRight();
-                break;
-            case TOPLEFT:
-                jointPointLocation = jointPointLocations.getTopLeft();
-                break;
-            case NULL:
-            case AUTO:
-            // auto (direction depends on browser/screen resolution)
-            case TOPRIGHT:
-                jointPointLocation = jointPointLocations.getTopRight();
-                break;
-        }
-        openMenuAndSubMenu();
-        cornerOfPopup = Utils.getLocations(groupList).getTopLeft();
-        Utils.tolerantAssertPointEquals(jointPointLocation, cornerOfPopup, tolerance, tolerance, "Joint Point");
+        Locations l = Utils.getLocations(group);
+        testJointPoint(l.getWidth(), l.getHeight(), new ShowElementAndReturnAction() {
+            @Override
+            public WebElement perform() {
+                openMenuAndSubMenu();
+                return groupList;
+            }
+        });
     }
 
     @Test
