@@ -73,6 +73,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 import org.richfaces.ui.common.Positioning;
 import org.testng.SkipException;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -190,6 +191,11 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         if (!afterClassWasTriggered) {
             arquillianAfterClass();
         }
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void unconfigure() {
+        currentConfiguration.unconfigure();
     }
 
     /**
