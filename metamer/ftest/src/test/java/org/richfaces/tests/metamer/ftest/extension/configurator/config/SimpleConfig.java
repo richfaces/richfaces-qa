@@ -24,6 +24,8 @@ package org.richfaces.tests.metamer.ftest.extension.configurator.config;
 import java.lang.reflect.Field;
 import java.util.List;
 
+import org.richfaces.tests.metamer.ftest.extension.utils.ReflectionUtils;
+
 import com.google.common.collect.Lists;
 
 /**
@@ -31,11 +33,8 @@ import com.google.common.collect.Lists;
  */
 public class SimpleConfig implements Config {
 
+    private final List<FieldConfiguration> initialConfigurations = Lists.newArrayList();
     private final List<FieldConfiguration> injectionsConfigurations;
-
-    public SimpleConfig() {
-        injectionsConfigurations = Lists.newLinkedList();
-    }
 
     public SimpleConfig(Object testInstance, Field f, Object value) {
         injectionsConfigurations = Lists.newLinkedList();
@@ -56,8 +55,17 @@ public class SimpleConfig implements Config {
 
     @Override
     public void configure() {
-        for (FieldConfiguration crate : injectionsConfigurations) {
-            crate.injectValueToField();
+        initialConfigurations.clear();
+        Field f;
+        Object testInstance;
+        for (FieldConfiguration c : getConfigurations()) {
+            f = c.getField();
+            testInstance = c.getTestInstance();
+            // store field configuration for unconfiguration method
+            initialConfigurations.add(new FieldConfiguration(testInstance, ReflectionUtils.getFieldValue(f, testInstance), f));
+
+            // proceed with injection
+            c.injectValueToField();
         }
     }
 
@@ -73,6 +81,14 @@ public class SimpleConfig implements Config {
 
     @Override
     public String toString() {
-        return injectionsConfigurations.toString().replaceAll("\\[", "").replaceAll("\\]", "");
+        return getConfigurations().toString().replaceAll("\\[", "").replaceAll("\\]", "");
+    }
+
+    @Override
+    public void unconfigure() {
+        for (FieldConfiguration c : initialConfigurations) {
+            c.injectValueToField();
+        }
+        initialConfigurations.clear();
     }
 }
