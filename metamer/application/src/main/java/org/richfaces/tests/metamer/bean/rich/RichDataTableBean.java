@@ -34,11 +34,11 @@ import javax.faces.bean.SessionScoped;
 
 import org.richfaces.model.DataComponentState;
 import org.richfaces.model.Filter;
+import org.richfaces.model.SortMode;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.ColumnSortingMap;
 import org.richfaces.tests.metamer.model.Employee;
 import org.richfaces.ui.iteration.dataTable.UIDataTable;
-import org.richfaces.ui.iteration.UIDataTableBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,7 +55,6 @@ public class RichDataTableBean implements Serializable {
     private static final long serialVersionUID = -1L;
     private static Logger logger;
     private Attributes attributes;
-    private transient UIDataTable binding;
     private DataComponentState dataTableState;
     private Map<Object, Integer> stateMap = new HashMap<Object, Integer>();
     private int page = 1;
@@ -69,7 +68,6 @@ public class RichDataTableBean implements Serializable {
     private Map<String, Object> filtering = new HashMap<String, Object>();
     // facets
     private Map<String, String> facets = new HashMap<String, String>();
-
     /**
      * Initializes the managed bean.
      */
@@ -82,6 +80,7 @@ public class RichDataTableBean implements Serializable {
 
         attributes.setAttribute("rendered", true);
         attributes.setAttribute("rows", 10);
+        attributes.setAttribute("sortMode", SortMode.single);
 
         // facets initial values
         facets.put("noData", "There is no data.");
@@ -102,14 +101,6 @@ public class RichDataTableBean implements Serializable {
         attributes.remove("iterationStatusVar");
         attributes.remove("rowKeyVar");
         attributes.remove("stateVar");
-    }
-
-    public void setBinding(UIDataTable binding) {
-        this.binding = binding;
-    }
-
-    public UIDataTable getBinding() {
-        return binding;
     }
 
     public Attributes getAttributes() {
@@ -200,10 +191,7 @@ public class RichDataTableBean implements Serializable {
 
         private static final long serialVersionUID = 1L;
 
-        protected UIDataTableBase getBinding() {
-            return binding;
-        }
-
+        @Override
         protected Attributes getAttributes() {
             return attributes;
         }

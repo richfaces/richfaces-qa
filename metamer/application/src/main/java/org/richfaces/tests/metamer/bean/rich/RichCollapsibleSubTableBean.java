@@ -32,6 +32,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
+import org.richfaces.model.SortMode;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.ColumnSortingMap;
 import org.richfaces.tests.metamer.model.Employee;
@@ -57,7 +58,6 @@ public class RichCollapsibleSubTableBean implements Serializable {
     @ManagedProperty("#{model.employees}")
     private List<Employee> employees;
     private List<List<Employee>> lists;
-    private transient UICollapsibleSubTable binding;
     // true = model, false = empty table
     private boolean state;
     // facets
@@ -67,10 +67,7 @@ public class RichCollapsibleSubTableBean implements Serializable {
 
         private static final long serialVersionUID = 1L;
 
-        protected UIDataTableBase getBinding() {
-            return binding;
-        }
-
+        @Override
         protected Attributes getAttributes() {
             return attributes;
         }
@@ -95,6 +92,7 @@ public class RichCollapsibleSubTableBean implements Serializable {
 
         attributes.setAttribute("rendered", true);
         attributes.setAttribute("rows", 5);
+        attributes.setAttribute("sortMode", SortMode.single);
 
         // TODO these attributes have to be tested in another way
         attributes.remove("expanded");
@@ -163,14 +161,6 @@ public class RichCollapsibleSubTableBean implements Serializable {
 
     public Map<String, String> getFacets() {
         return facets;
-    }
-
-    public UICollapsibleSubTable getBinding() {
-        return binding;
-    }
-
-    public void setBinding(UICollapsibleSubTable binding) {
-        this.binding = binding;
     }
 
     public ColumnSortingMap getSorting() {
