@@ -37,9 +37,9 @@ import static org.testng.Assert.fail;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.HasInputDevices;
@@ -75,8 +75,6 @@ public class TestContextMenu extends AbstractWebDriverTest {
 
     private Integer delay;
     private Integer[] delays = { 1500, 2000, 2500 };
-
-    private Positioning positioning;
 
     @Override
     public URL getTestUrl() {
@@ -168,50 +166,17 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "")
     public void testDirection() {
-        driver.manage().window().setSize(new Dimension(1280, 1024));// for stabilizing job in all templates
-        int tolerance = 10;// px
-        String msg = "The actual menu locations should be same as shifted default locations.";
-        // setting up the right panel because then the context menu will fit on the page
-        contextMenuAttributes.set(ContextMenuAttributes.target, "targetPanel2");
-        contextMenuAttributes.set(ContextMenuAttributes.direction, "bottomRight");
-
-        Locations defaultLocations = page.getContextMenuLocations();// bottom right
-        Locations actMenuLocation = getContextMenuLocationsWhenPosition(positioning);
-
-        int defaultWidth = defaultLocations.getWidth();
-        int defaultHeight = defaultLocations.getHeight();
-        int shiftX = 0;
-        int shiftY = 0;
-
-        assertEquals(actMenuLocation.getHeight(), defaultHeight, tolerance, "Height of context menu should be same as before.");
-        assertEquals(actMenuLocation.getWidth(), defaultWidth, tolerance, "Width of context menu should be same as before.");
-        switch (positioning) {
-            case auto:
-            case bottomRight:
-            case autoRight:
-            case bottomAuto:
-                // no shifting
-                break;
-            case autoLeft:
-            case bottomLeft:
-                shiftX = -defaultWidth;
-                break;
-            case topAuto:
-            case topRight:
-                shiftY = -defaultHeight;
-                break;
-            case topLeft:
-                shiftX = -defaultWidth;
-                shiftY = -defaultHeight;
-                break;
-            default:
-                throw new IllegalArgumentException("Uknown switch " + positioning);
-        }
-        // the actual menu locations should be same as shifted default locations
-        Utils.tolerantAssertLocationsEquals(defaultLocations.moveAllBy(shiftX, shiftY), actMenuLocation, tolerance, tolerance,
-            msg);
+        updateShowAction();
+        testDirection(new ShowElementAndReturnAction() {
+            @Override
+            public WebElement perform() {
+                page.getContextMenu().advanced().show(page.getTargetPanel1());
+                return page.getContextMenuContent();
+            }
+        });
     }
 
     @Test
