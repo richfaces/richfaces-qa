@@ -46,6 +46,11 @@ public interface Config {
      */
     List<FieldConfiguration> getConfigurations();
 
+    /**
+     * Injects initial field values back to the fields.
+     */
+    void unconfigure();
+
     public static class FieldConfiguration {
 
         private final Object testInstance;
@@ -58,6 +63,27 @@ public interface Config {
             this.field = field;
         }
 
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            final FieldConfiguration other = (FieldConfiguration) obj;
+            if (this.testInstance != other.testInstance && (this.testInstance == null || !this.testInstance.equals(other.testInstance))) {
+                return false;
+            }
+            if (this.value != other.value && (this.value == null || !this.value.equals(other.value))) {
+                return false;
+            }
+            if (this.field != other.field && (this.field == null || !this.field.equals(other.field))) {
+                return false;
+            }
+            return true;
+        }
+
         public Field getField() {
             return field;
         }
@@ -68,6 +94,15 @@ public interface Config {
 
         public Object getValue() {
             return value;
+        }
+
+        @Override
+        public int hashCode() {
+            int hash = 3;
+            hash = 67 * hash + (this.testInstance != null ? this.testInstance.hashCode() : 0);
+            hash = 67 * hash + (this.value != null ? this.value.hashCode() : 0);
+            hash = 67 * hash + (this.field != null ? this.field.hashCode() : 0);
+            return hash;
         }
 
         public void injectValueToField() {
