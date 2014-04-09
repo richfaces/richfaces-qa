@@ -132,16 +132,16 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     @RegressionTest("https://issues.jboss.org/browse/RF-10216")
     public void testHorizontalOffset() {
-        int pixels = 100;
-        openMenuAndSubMenu();
-        Locations locationsBefore = Utils.getLocations(groupList);
-        menuGroupAttributes.set(MenuGroupAttributes.horizontalOffset, pixels);
-        openMenuAndSubMenu();
-        Locations locationsAfter = Utils.getLocations(groupList);
-        Utils.tolerantAssertLocationsEquals(locationsBefore.moveAllBy(pixels, 0), locationsAfter, 10, 10,
-            "Horizontal Offset does not work");
+        testHorizontalOffset(new ShowElementAndReturnAction() {
+            @Override
+            public WebElement perform() {
+                openMenuAndSubMenu();
+                return groupList;
+            }
+        });
     }
 
     @Test(groups = "smoke")
@@ -328,16 +328,16 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     @RegressionTest("https://issues.jboss.org/browse/RF-10216")
     public void testVerticalOffset() {
-        int pixels = 100;
-        openMenuAndSubMenu();
-        Locations locationsBefore = Utils.getLocations(groupList);
-        menuGroupAttributes.set(MenuGroupAttributes.verticalOffset, pixels);
-        openMenuAndSubMenu();
-        Locations locationsAfter = Utils.getLocations(groupList);
-        Utils.tolerantAssertLocationsEquals(locationsBefore.moveAllBy(0, pixels), locationsAfter, 10, 10,
-            "Vertical Offset does not work");
+        testVerticalOffset(new ShowElementAndReturnAction() {
+            @Override
+            public WebElement perform() {
+                openMenuAndSubMenu();
+                return groupList;
+            }
+        });
     }
 
     @BeforeMethod(groups = "smoke")

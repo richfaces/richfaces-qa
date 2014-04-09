@@ -215,11 +215,13 @@ public class TestDropDownMenuSideMenu extends AbstractDropDownMenuTest {
     }
 
     @Test
+    @Templates("plain")
     public void testHorizontalOffset() {
         super.testHorizontalOffset();
     }
 
     @Test
+    @Templates("plain")
     public void testVerticalOffset() {
         super.testVerticalOffset();
     }
