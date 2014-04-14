@@ -22,7 +22,7 @@ public class RF13595 implements Serializable {
     private Date input;
 
     public void validateInput(FacesContext ctx, UIComponent comp, Object value) throws ValidatorException {
-        if (value instanceof String) {
+        if (value instanceof Date) {
             Date text = (Date) value;
             System.out.println("Validating input: " + text);
             // create a yesterday Date and validate that selected date is after this new date (the test selects current date)
