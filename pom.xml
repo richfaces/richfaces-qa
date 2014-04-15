@@ -37,7 +37,7 @@ FSF site: http://www.fsf.org. -->
         <!-- version of JBoss containers to use and download -->
         <version.jbossas7>7.0.2.Final</version.jbossas7>
         <version.jbossas7-1>7.1.1.Final</version.jbossas7-1>
-        <version.wildfly8-0>8.0.0.Final</version.wildfly8-0>
+        <version.wildfly8-0>8.1.0.CR1</version.wildfly8-0>
         <eap61Zip>path/to/your/eap/distribution/zip</eap61Zip>
 
         <!-- version of Glassfish containers to use and download       -->
