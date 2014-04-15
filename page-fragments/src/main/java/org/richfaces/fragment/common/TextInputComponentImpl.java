@@ -54,7 +54,7 @@ public class TextInputComponentImpl implements TextInputComponent {
     }
 
     @Override
-    public TextInputComponent clear() {
+    public TextInputComponentImpl clear() {
         advanced().clear(ClearType.DEFAULT_CLEAR_TYPE);
         return this;
     }
