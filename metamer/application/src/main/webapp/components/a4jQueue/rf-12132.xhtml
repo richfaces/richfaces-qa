@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2014, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="component">
+            <p>
+                Richfaces queue is not cleared after js-error in oncomplete attribute. <a href="https://issues.jboss.org/browse/RF-12132">RF-12132</a>.
+                Not automatized.
+            </p>
+            <ol>
+                <li>Submit with a commandButton with not existing js function in @oncomplete.</li>
+                <li>The ajax response arrives, but the queue is not cleaned up after this due to the javascript error.</li>
+                <li>Starting from now no further ajax requests are possible, because queue waits for previous submit results.</li>
+            </ol>
+            <a4j:queue />
+            <h:inputText value="#{a4jButtonBean.input}"/>
+            <br/>
+            <h:outputLabel for="output" value="output (input after upperCasesAction): "/>
+            <h:outputText id="output" value="#{a4jButtonBean.input2}"/>
+            <br/>
+            <a4j:commandButton id="action" 
+                             value="Ajax submit"
+                             render="output"
+                             action="#{a4jButtonBean.toUpperCaseAction()}"
+                             limitRender="true"
+                             />
+            <a4j:commandButton id="actionWithNotExistingOncompleteFunction" 
+                             value="Ajax submit with not existing function in @oncomplete"   
+                             action="#{a4jButtonBean.toUpperCaseAction()}"
+                             oncomplete="notExistingFunction()"
+                             render="output"
+                             limitRender="true"
+                             />
+            <br/>
+            <a4j:log id="log"/>
+        </ui:define>
+    </ui:composition>
+</html>
