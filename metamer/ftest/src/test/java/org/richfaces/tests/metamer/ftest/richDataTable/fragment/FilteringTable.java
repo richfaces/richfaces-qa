@@ -21,12 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
 
-import org.richfaces.fragment.dataTable.NullFooterFragment;
+import org.richfaces.fragment.common.NullFragment;
 import org.richfaces.fragment.dataTable.RichFacesDataTableWithHeaderAndFooter;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class FilteringTable extends RichFacesDataTableWithHeaderAndFooter<FilteringHeader, FilteringRow, NullFooterFragment> {
+public class FilteringTable extends RichFacesDataTableWithHeaderAndFooter<FilteringHeader, FilteringRow, NullFragment> {
 
 }

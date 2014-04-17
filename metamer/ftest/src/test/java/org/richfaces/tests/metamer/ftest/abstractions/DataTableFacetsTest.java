@@ -48,13 +48,13 @@ public abstract class DataTableFacetsTest extends AbstractDataTableTest {
     public void testNoDataInstantChange(RichFacesDataTableWithHeaderAndFooter<?,?,?> table) {
         enableShowData(false);
         dataTableFacets.set(noData, SAMPLE_STRING);
-        assertEquals(table.advanced().getNoData().getText(), SAMPLE_STRING);
+        assertEquals(table.advanced().getNoDataElement().getText(), SAMPLE_STRING);
     }
 
     public void testNoDataEmpty(RichFacesDataTableWithHeaderAndFooter<?,?,?> table) {
         enableShowData(false);
         dataTableFacets.set(noData, EMPTY_STRING);
-        assertEquals(table.advanced().getNoData().getText(), EMPTY_STRING);
+        assertEquals(table.advanced().getNoDataElement().getText(), EMPTY_STRING);
     }
 
     public void testHeaderInstantChange(RichFacesDataTableWithHeaderAndFooter<? extends SimpleHeaderInterface,?,? extends SimpleFooterInterface> table) {
