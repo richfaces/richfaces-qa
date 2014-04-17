@@ -23,6 +23,9 @@ package org.richfaces.fragment.dataTable;
 
 import java.util.List;
 
+/**
+ * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ */
 public interface DataTable<ROW> {
 
     ROW getRow(int n);
