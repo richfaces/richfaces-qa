@@ -35,7 +35,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.AdvancedInteractions;
 import org.richfaces.fragment.common.TypeResolver;
+import org.richfaces.fragment.common.Utils;
 
+/**
+ * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ */
 public abstract class RichFacesDataTable<ROW> implements DataTable<ROW>,
         AdvancedInteractions<RichFacesDataTable.AdvancedDataTableInteractions> {
 
@@ -107,18 +111,18 @@ public abstract class RichFacesDataTable<ROW> implements DataTable<ROW>,
         }
 
         public boolean isVisible() {
-            return new WebElementConditionFactory(root).isVisible().apply(browser);
+            return Utils.isVisible(root);
         }
 
         public boolean isNoData() {
-            return new WebElementConditionFactory(noData).isVisible().apply(browser);
+            return Utils.isVisible(noData);
         }
 
-        public WebElement getNoData() {
+        public WebElement getNoDataElement() {
             return noData;
         }
 
-        public WebElement getCell(int column, int row) {
+        public WebElement getCellElement(int column, int row) {
             return tableRows.get(row).findElement(By.cssSelector(".rf-dt-c:nth-of-type(" + column + ")"));
         }
     }

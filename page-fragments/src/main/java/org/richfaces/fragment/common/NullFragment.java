@@ -19,12 +19,11 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.fragment.dataTable;
+package org.richfaces.fragment.common;
 
 /**
- *
- * @author jhuska
+ * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class NullHeaderFragment {
+public class NullFragment {
 
 }

@@ -68,7 +68,7 @@ public abstract class DataTableSimpleTest extends AbstractDataTableTest {
         assertTrue(table.advanced().isNoData());
         assertEquals(table.advanced().getNumberOfColumns(), 0);
         assertEquals(table.advanced().getNumberOfRows(), 0);
-        assertEquals(table.advanced().getNoData().getText(), NO_DATA);
+        assertEquals(table.advanced().getNoDataElement().getText(), NO_DATA);
     }
 
     public void testFirst(RichFacesDataTable<?> table) {
