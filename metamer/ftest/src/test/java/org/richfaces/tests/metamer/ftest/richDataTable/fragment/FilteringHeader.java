@@ -30,13 +30,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.richfaces.fragment.inputNumberSpinner.RichFacesInputNumberSpinner;
-import org.richfaces.tests.metamer.ftest.abstractions.fragments.FilteringTableHeaderInterface;
+import org.richfaces.tests.metamer.ftest.abstractions.fragments.FilteringHeaderInterface;
 import org.richfaces.tests.metamer.model.Employee;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class FilteringHeader implements FilteringTableHeaderInterface {
+public class FilteringHeader implements FilteringHeaderInterface {
 
     @FindByJQuery("[id$='columnHeaderSexInput']")
     private Select sexSelect;

@@ -22,7 +22,7 @@
 package org.richfaces.tests.metamer.ftest.abstractions;
 
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
-import org.richfaces.fragment.dataTable.RichFacesDataTableWithHeaderAndFooter;
+import org.richfaces.fragment.dataTable.RichFacesDataTable;
 import static org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets.capitalFooter;
 import static org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets.capitalHeader;
 import static org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets.header;
@@ -31,6 +31,7 @@ import static org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets.sta
 import static org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets.stateHeader;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleFooterInterface;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleHeaderInterface;
+import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleRowInterface;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 
 import static org.testng.Assert.assertEquals;
@@ -45,71 +46,73 @@ public abstract class DataTableFacetsTest extends AbstractDataTableTest {
 
     private final Attributes<DataTableFacets> dataTableFacets = getAttributes();
 
-    public void testNoDataInstantChange(RichFacesDataTableWithHeaderAndFooter<?,?,?> table) {
+    protected abstract RichFacesDataTable<? extends SimpleHeaderInterface, ? extends SimpleRowInterface, ? extends SimpleFooterInterface> getTable();
+
+    public void testNoDataInstantChange() {
         enableShowData(false);
         dataTableFacets.set(noData, SAMPLE_STRING);
-        assertEquals(table.advanced().getNoDataElement().getText(), SAMPLE_STRING);
+        assertEquals(getTable().advanced().getNoDataElement().getText(), SAMPLE_STRING);
     }
 
-    public void testNoDataEmpty(RichFacesDataTableWithHeaderAndFooter<?,?,?> table) {
+    public void testNoDataEmpty() {
         enableShowData(false);
         dataTableFacets.set(noData, EMPTY_STRING);
-        assertEquals(table.advanced().getNoDataElement().getText(), EMPTY_STRING);
+        assertEquals(getTable().advanced().getNoDataElement().getText(), EMPTY_STRING);
     }
 
-    public void testHeaderInstantChange(RichFacesDataTableWithHeaderAndFooter<? extends SimpleHeaderInterface,?,? extends SimpleFooterInterface> table) {
+    public void testHeaderInstantChange() {
         dataTableFacets.set(header, SAMPLE_STRING);
-        assertEquals(table.getHeader().getHeaderText(), SAMPLE_STRING);
+        assertEquals(getTable().getHeader().getHeaderText(), SAMPLE_STRING);
     }
 
-    public void testHeaderEmpty(RichFacesDataTableWithHeaderAndFooter<?,?,?> table) {
+    public void testHeaderEmpty() {
         dataTableFacets.set(header, EMPTY_STRING);
 
-        if (new WebElementConditionFactory(table.advanced().getHeaderElement()).isPresent().apply(driver)) {
-            assertEquals(table.advanced().getHeaderElement().getText(), EMPTY_STRING);
+        if (new WebElementConditionFactory(getTable().advanced().getHeaderElement()).isPresent().apply(driver)) {
+            assertEquals(getTable().advanced().getHeaderElement().getText(), EMPTY_STRING);
         } else {
             dataTableFacets.set(header, SAMPLE_STRING);
-            assertEquals(table.advanced().getHeaderElement().getText(), SAMPLE_STRING);
+            assertEquals(getTable().advanced().getHeaderElement().getText(), SAMPLE_STRING);
         }
     }
 
-    public void testStateHeaderInstantChange(RichFacesDataTableWithHeaderAndFooter<? extends SimpleHeaderInterface,?,? extends SimpleFooterInterface> table) {
+    public void testStateHeaderInstantChange() {
         dataTableFacets.set(stateHeader, SAMPLE_STRING);
-        assertEquals(table.getHeader().getColumnHeaderText(COLUMN_STATE), SAMPLE_STRING);
+        assertEquals(getTable().getHeader().getColumnHeaderText(COLUMN_STATE), SAMPLE_STRING);
     }
 
-    public void testStateHeaderEmpty(RichFacesDataTableWithHeaderAndFooter<? extends SimpleHeaderInterface,?,? extends SimpleFooterInterface> table) {
+    public void testStateHeaderEmpty() {
         dataTableFacets.set(stateHeader, EMPTY_STRING);
-        assertEquals(table.getHeader().getColumnHeaderText(COLUMN_STATE), EMPTY_STRING);
+        assertEquals(getTable().getHeader().getColumnHeaderText(COLUMN_STATE), EMPTY_STRING);
     }
 
-    public void testStateFooterInstantChange(RichFacesDataTableWithHeaderAndFooter<? extends SimpleHeaderInterface,?,? extends SimpleFooterInterface> table) {
+    public void testStateFooterInstantChange() {
         dataTableFacets.set(stateFooter, SAMPLE_STRING);
-        assertEquals(table.getFooter().getColumnFooterText(COLUMN_STATE), SAMPLE_STRING);
+        assertEquals(getTable().getFooter().getColumnFooterText(COLUMN_STATE), SAMPLE_STRING);
     }
 
-    public void testStateFooterEmpty(RichFacesDataTableWithHeaderAndFooter<? extends SimpleHeaderInterface,?,? extends SimpleFooterInterface> table) {
+    public void testStateFooterEmpty() {
         dataTableFacets.set(stateFooter, EMPTY_STRING);
-        assertEquals(table.getFooter().getColumnFooterText(COLUMN_STATE), EMPTY_STRING);
+        assertEquals(getTable().getFooter().getColumnFooterText(COLUMN_STATE), EMPTY_STRING);
     }
 
-    public void testCapitalHeaderInstantChange(RichFacesDataTableWithHeaderAndFooter<? extends SimpleHeaderInterface,?,? extends SimpleFooterInterface> table) {
+    public void testCapitalHeaderInstantChange() {
         dataTableFacets.set(capitalHeader, SAMPLE_STRING);
-        assertEquals(table.getHeader().getColumnHeaderText(COLUMN_CAPITAL), SAMPLE_STRING);
+        assertEquals(getTable().getHeader().getColumnHeaderText(COLUMN_CAPITAL), SAMPLE_STRING);
     }
 
-    public void testCapitalHeaderEmpty(RichFacesDataTableWithHeaderAndFooter<? extends SimpleHeaderInterface,?,? extends SimpleFooterInterface> table) {
+    public void testCapitalHeaderEmpty() {
         dataTableFacets.set(capitalHeader, EMPTY_STRING);
-        assertEquals(table.getHeader().getColumnHeaderText(COLUMN_CAPITAL), EMPTY_STRING);
+        assertEquals(getTable().getHeader().getColumnHeaderText(COLUMN_CAPITAL), EMPTY_STRING);
     }
 
-    public void testCapitalFooterInstantChange(RichFacesDataTableWithHeaderAndFooter<? extends SimpleHeaderInterface,?,? extends SimpleFooterInterface> table) {
+    public void testCapitalFooterInstantChange() {
         dataTableFacets.set(capitalFooter, SAMPLE_STRING);
-        assertEquals(table.getFooter().getColumnFooterText(COLUMN_CAPITAL), SAMPLE_STRING);
+        assertEquals(getTable().getFooter().getColumnFooterText(COLUMN_CAPITAL), SAMPLE_STRING);
     }
 
-    public void testCapitalFooterEmpty(RichFacesDataTableWithHeaderAndFooter<? extends SimpleHeaderInterface,?,? extends SimpleFooterInterface> table) {
+    public void testCapitalFooterEmpty() {
         dataTableFacets.set(capitalFooter, EMPTY_STRING);
-        assertEquals(table.getFooter().getColumnFooterText(COLUMN_CAPITAL), EMPTY_STRING);
+        assertEquals(getTable().getFooter().getColumnFooterText(COLUMN_CAPITAL), EMPTY_STRING);
     }
 }

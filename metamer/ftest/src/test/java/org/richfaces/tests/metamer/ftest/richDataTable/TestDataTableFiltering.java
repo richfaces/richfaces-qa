@@ -41,43 +41,50 @@ public class TestDataTableFiltering extends DataTableFilteringTest {
     private FilteringTable table;
 
     @Override
+    protected FilteringTable getTable() {
+        return table;
+    }
+
+    @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richDataTable/filtering.xhtml");
     }
 
     @Test
     public void testFilterSex() {
-        super.testFilterSex(table);
+        super.testFilterSex();
     }
 
     @Test
     public void testFilterName() {
-        super.testFilterName(table);
+        super.testFilterName();
     }
 
     @Test
     public void testFilterTitle() {
-        super.testFilterTitle(table);
+        super.testFilterTitle();
     }
 
     @Test
     public void testFilterNumberOfKidsWithSpinner() {
-        super.testFilterNumberOfKidsWithSpinner(table);
+        super.testFilterNumberOfKidsWithSpinner();
     }
 
     @Test
     public void testFilterCombinations() {
-        super.testFilterCombinations(table);
+        super.testFilterCombinations();
     }
 
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-9932 http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790")
     public void testRerenderAll() {
-        super.testRerenderAll(table);
+        super.testRerenderAll();
     }
 
     @Test
     public void testFullPageRefresh() {
-        super.testFullPageRefresh(table);
+        super.testFullPageRefresh();
     }
+
+
 }
