@@ -25,7 +25,7 @@ import static org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitc
 import static org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton.LAST;
 
 import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
-import org.richfaces.fragment.dataTable.RichFacesDataTableWithHeaderAndFooter;
+import org.richfaces.fragment.dataTable.RichFacesDataTable;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleFooterInterface;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleHeaderInterface;
 import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
@@ -53,7 +53,7 @@ public abstract class DataTableScrollerTest extends AbstractDataTableTest {
         testRowCount(dataScroller1);
     }
 
-    public abstract RichFacesDataTableWithHeaderAndFooter<? extends SimpleHeaderInterface, ?, ? extends SimpleFooterInterface> getTable();
+    public abstract RichFacesDataTable<? extends SimpleHeaderInterface, ?, ? extends SimpleFooterInterface> getTable();
 
     private void testRowCount(RichFacesDataScroller dataScroller) {
         if (rows != null) {

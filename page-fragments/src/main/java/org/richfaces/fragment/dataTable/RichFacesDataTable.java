@@ -21,30 +21,17 @@
  *******************************************************************************/
 package org.richfaces.fragment.dataTable;
 
-import java.util.ArrayList;
 import java.util.List;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 
-import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.jboss.arquillian.graphene.fragment.Root;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.fragment.common.AdvancedInteractions;
-import org.richfaces.fragment.common.TypeResolver;
-import org.richfaces.fragment.common.Utils;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public abstract class RichFacesDataTable<ROW> implements DataTable<ROW>,
-        AdvancedInteractions<RichFacesDataTable.AdvancedDataTableInteractions> {
-
-    @SuppressWarnings("unchecked")
-    private final Class<ROW> rowClass = (Class<ROW>) TypeResolver.resolveRawArguments(DataTable.class, getClass())[0];
+public abstract class RichFacesDataTable<HEADER, ROW, FOOTER> extends AbstractTable<HEADER, ROW, FOOTER> {
 
     @FindBy(css = ".rf-dt-b .rf-dt-r")
     private List<WebElement> tableRows;
@@ -53,77 +40,63 @@ public abstract class RichFacesDataTable<ROW> implements DataTable<ROW>,
     private List<WebElement> firstRowCells;
 
     @FindBy(css = ".rf-dt-nd > .rf-dt-nd-c")
-    private WebElement noData;
+    private WebElement noDataElement;
 
-    @Root
-    private WebElement root;
+    @FindBy(className = "rf-dt-thd")
+    private WebElement wholeTableHeader;
 
-    @Drone
-    private WebDriver browser;
+    @FindBy(className = "rf-dt-tft")
+    private WebElement wholeTableFooter;
 
-    private final AdvancedDataTableInteractions advancedInteractions = new AdvancedDataTableInteractions();
+    @FindBy(css = "th.rf-dt-hdr-c")
+    private WebElement headerElement;
 
-    @Override
-    public ROW getRow(int n) {
-        return Graphene.createPageFragment(rowClass, tableRows.get(n));
+    @FindBy(className = "rf-dt-ftr-c")
+    private WebElement footerElement;
+
+    @FindBy(className = "rf-dt-shdr-c")
+    private List<WebElement> columnHeaders;
+
+    @FindBy(className = "rf-dt-sftr-c")
+    private List<WebElement> columnFooters;
+
+    protected List<WebElement> getTableRows() {
+        return tableRows;
     }
 
-    @Override
-    public ROW getFirstRow() {
-        return getRow(0);
+    protected List<WebElement> getFirstRowCells() {
+        return firstRowCells;
     }
 
-    @Override
-    public ROW getLastRow() {
-        return getRow(advanced().getNumberOfRows() - 1);
+    protected ByJQuery getSelectorForCell(int column) {
+        return ByJQuery.selector(".rf-dt-c:eq(" + column + ")");
     }
 
-    @Override
-    public List<ROW> getAllRows() {
-        List<ROW> result = new ArrayList<ROW>();
-        for (int i = 0; i < advanced().getNumberOfRows(); i++) {
-            result.add(getRow(i));
-        }
-        return result;
+    protected WebElement protectedGetNoData() {
+        return noDataElement;
     }
 
-    @Override
-    public AdvancedDataTableInteractions advanced() {
-        return advancedInteractions;
+    protected WebElement getWholeTableHeader() {
+        return wholeTableHeader;
     }
 
-    public class AdvancedDataTableInteractions {
+    protected WebElement getWholeTableFooter() {
+        return wholeTableFooter;
+    }
 
-        public int getNumberOfColumns() {
-            if (!isVisible()) {
-                return 0;
-            } else {
-                return firstRowCells.size();
-            }
-        }
+    protected WebElement getHeaderElement() {
+        return headerElement;
+    }
 
-        public int getNumberOfRows() {
-            if (!isVisible()) {
-                return 0;
-            } else {
-                return tableRows.size();
-            }
-        }
+    protected WebElement getFooterElement() {
+        return footerElement;
+    }
 
-        public boolean isVisible() {
-            return Utils.isVisible(root);
-        }
+    protected List<WebElement> getColumnHeaderElements() {
+        return columnHeaders;
+    }
 
-        public boolean isNoData() {
-            return Utils.isVisible(noData);
-        }
-
-        public WebElement getNoDataElement() {
-            return noData;
-        }
-
-        public WebElement getCellElement(int column, int row) {
-            return tableRows.get(row).findElement(By.cssSelector(".rf-dt-c:nth-of-type(" + column + ")"));
-        }
+    protected List<WebElement> getColumnFooterElements() {
+        return columnFooters;
     }
 }

@@ -28,6 +28,9 @@ import static org.testng.Assert.assertTrue;
 import java.util.List;
 
 import org.richfaces.fragment.dataTable.RichFacesDataTable;
+import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleFooterInterface;
+import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleHeaderInterface;
+import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleRowInterface;
 import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.model.Capital;
@@ -46,50 +49,52 @@ public abstract class DataTableSimpleTest extends AbstractDataTableTest {
 
     private final Attributes<DataTableAttributes> dataTableAttributes = getAttributes();
 
-    public void testRendered(RichFacesDataTable<?> table) {
-        assertTrue(table.advanced().isVisible());
+    protected abstract RichFacesDataTable<? extends SimpleHeaderInterface, ? extends SimpleRowInterface, ? extends SimpleFooterInterface> getTable();
+
+    public void testRendered() {
+        assertTrue(getTable().advanced().isVisible());
 
         dataTableAttributes.set(DataTableAttributes.rendered, false);
 
-        assertFalse(table.advanced().isVisible());
-        assertFalse(table.advanced().isNoData());
-        assertEquals(table.advanced().getNumberOfColumns(), 0);
-        assertEquals(table.advanced().getNumberOfRows(), 0);
+        assertFalse(getTable().advanced().isVisible());
+        assertFalse(getTable().advanced().isNoData());
+        assertEquals(getTable().advanced().getNumberOfColumns(), 0);
+        assertEquals(getTable().advanced().getNumberOfRows(), 0);
     }
 
-    public void testNoDataLabel(RichFacesDataTable<?> table) {
-        assertTrue(table.advanced().isVisible());
-        assertFalse(table.advanced().isNoData());
+    public void testNoDataLabel() {
+        assertTrue(getTable().advanced().isVisible());
+        assertFalse(getTable().advanced().isNoData());
 
         dataTableAttributes.set(DataTableAttributes.noDataLabel, NO_DATA);
         enableShowData(false);
 
-        assertTrue(table.advanced().isVisible());
-        assertTrue(table.advanced().isNoData());
-        assertEquals(table.advanced().getNumberOfColumns(), 0);
-        assertEquals(table.advanced().getNumberOfRows(), 0);
-        assertEquals(table.advanced().getNoDataElement().getText(), NO_DATA);
+        assertTrue(getTable().advanced().isVisible());
+        assertTrue(getTable().advanced().isNoData());
+        assertEquals(getTable().advanced().getNumberOfColumns(), 0);
+        assertEquals(getTable().advanced().getNumberOfRows(), 0);
+        assertEquals(getTable().advanced().getNoDataElement().getText(), NO_DATA);
     }
 
-    public void testFirst(RichFacesDataTable<?> table) {
+    public void testFirst() {
         setFirstAttribute();
         rows = null;
         setRowsAttribute();
-        verifyTable(table);
+        verifyTable();
     }
 
-    public void testRows(RichFacesDataTable<?> table) {
+    public void testRows() {
         setRowsAttribute();
         first = null;
         setFirstAttribute();
-        verifyTable(table);
+        verifyTable();
     }
 
-    public void verifyTable(RichFacesDataTable<?> table) {
-        assertTrue(table.advanced().isVisible());
-        assertEquals(table.advanced().getNumberOfColumns(), getExpectedColumns());
-        assertEquals(table.advanced().getNumberOfRows(), getExpectedRows());
-        assertFalse(table.advanced().isNoData());
+    public void verifyTable() {
+        assertTrue(getTable().advanced().isVisible());
+        assertEquals(getTable().advanced().getNumberOfColumns(), getExpectedColumns());
+        assertEquals(getTable().advanced().getNumberOfRows(), getExpectedRows());
+        assertFalse(getTable().advanced().isNoData());
     }
 
     private List<Capital> getExpectedElements() {

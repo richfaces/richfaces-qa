@@ -45,25 +45,30 @@ public class TestDataTableSimple extends DataTableSimpleTest {
         return buildUrl(contextPath, "faces/components/richDataTable/simple.xhtml");
     }
 
+    @Override
+    protected SimpleTable getTable() {
+        return table;
+    }
+
     @Test
     public void testRendered() {
-        super.testRendered(table);
+        super.testRendered();
     }
 
     @Test
     public void testNoDataLabel() {
-        super.testNoDataLabel(table);
+        super.testNoDataLabel();
     }
 
     @Test
     @UseWithField(field = "first", valuesFrom = FROM_FIELD, value = "COUNTS")
     public void testFirst() {
-        super.testFirst(table);
+        super.testFirst();
     }
 
     @Test
     @UseWithField(field = "rows", valuesFrom = FROM_FIELD, value = "COUNTS")
     public void testRows() {
-        super.testRows(table);
+        super.testRows();
     }
 }
