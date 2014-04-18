@@ -23,11 +23,12 @@ package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleRowInterface;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class SimpleRow {
+public class SimpleRow implements SimpleRowInterface {
 
     @FindBy(css = ".rf-ft-c:nth-of-type(1)")
     private WebElement stateColumn;
@@ -39,15 +40,7 @@ public class SimpleRow {
         return stateColumn;
     }
 
-    public void setStateColumn(WebElement stateColumn) {
-        this.stateColumn = stateColumn;
-    }
-
     public WebElement getCapitalColumn() {
         return capitalColumn;
-    }
-
-    public void setCapitalColumn(WebElement capitalColumn) {
-        this.capitalColumn = capitalColumn;
     }
 }

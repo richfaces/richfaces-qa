@@ -21,11 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
 
-import org.richfaces.fragment.dataTable.RichFacesDataTableWithHeaderAndFooter;
+import org.richfaces.fragment.dataTable.RichFacesDataTable;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class SimpleTable extends RichFacesDataTableWithHeaderAndFooter<SimpleHeader, SimpleRow, SimpleFooter> {
+public class SimpleTable extends RichFacesDataTable<SimpleHeader, SimpleRow, SimpleFooter> {
 
 }

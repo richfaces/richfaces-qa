@@ -27,7 +27,7 @@ import org.richfaces.tests.metamer.model.Employee;
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public interface FilteringTableHeaderInterface {
+public interface FilteringHeaderInterface {
 
     void filterSex(Employee.Sex sex);
 

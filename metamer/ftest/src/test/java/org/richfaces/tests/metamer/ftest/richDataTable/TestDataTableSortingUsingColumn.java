@@ -25,7 +25,6 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.richfaces.fragment.dataTable.RichFacesDataTableWithHeaderAndFooter;
 
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
@@ -48,7 +47,7 @@ public class TestDataTableSortingUsingColumn extends DataTableSortingTest {
     }
 
     @Override
-    public RichFacesDataTableWithHeaderAndFooter<? extends SortingHeader, ? extends FilteringRow, ?> getTable() {
+    public SortingTable getTable() {
         return table;
     }
 

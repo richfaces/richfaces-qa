@@ -35,12 +35,11 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.richfaces.fragment.dataTable.RichFacesDataTableWithHeaderAndFooter;
+import org.richfaces.fragment.dataTable.RichFacesDataTable;
 import org.richfaces.model.SortMode;
 import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.FilteringRow;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SortingHeader;
-import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SortingTable;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.model.Employee;
 import org.richfaces.tests.metamer.model.Employee.Sex;
@@ -53,6 +52,8 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
     int rowIndex;
     int modelIndex;
     List<Employee> sortedEmployees;
+
+    protected abstract RichFacesDataTable<? extends SortingHeader, ? extends FilteringRow, ?> getTable();
 
     private final Attributes<DataTableAttributes> dataTableAttributes = getAttributes();
 
@@ -210,8 +211,6 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
         getMetamerPage().fullPageRefresh();
         verifySortingByColumns("numberOfKids-", "title-");
     }
-
-    public abstract RichFacesDataTableWithHeaderAndFooter<? extends SortingHeader, ? extends FilteringRow, ?> getTable();
 
     public void sortByColumn(int column) {
         switch (column) {

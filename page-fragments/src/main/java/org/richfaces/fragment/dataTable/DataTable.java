@@ -1,6 +1,6 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2014, Red Hat, Inc. and individual contributors
+ * Copyright 2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,15 +18,16 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.fragment.dataTable;
 
 import java.util.List;
 
 /**
+ *
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public interface DataTable<ROW> {
+public interface DataTable<HEADER, ROW, FOOTER> {
 
     ROW getRow(int n);
 
@@ -35,4 +36,8 @@ public interface DataTable<ROW> {
     ROW getLastRow();
 
     List<ROW> getAllRows();
+
+    HEADER getHeader();
+
+    FOOTER getFooter();
 }

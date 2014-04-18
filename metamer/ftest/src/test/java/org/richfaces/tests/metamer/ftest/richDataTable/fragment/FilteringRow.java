@@ -23,13 +23,13 @@ package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.metamer.ftest.abstractions.fragments.FilteringTableRowInterface;
+import org.richfaces.tests.metamer.ftest.abstractions.fragments.FilteringRowInterface;
 import org.richfaces.tests.metamer.model.Employee;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class FilteringRow implements FilteringTableRowInterface {
+public class FilteringRow implements FilteringRowInterface {
 
     @FindBy(css = "td:nth-of-type(1) img")
     private WebElement sexColumnElement;

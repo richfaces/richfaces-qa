@@ -27,11 +27,11 @@ import static org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitc
 
 import java.util.Collection;
 import java.util.List;
-import org.richfaces.fragment.dataTable.RichFacesDataTableWithHeaderAndFooter;
+import org.richfaces.fragment.dataTable.RichFacesDataTable;
 
 import org.richfaces.model.Filter;
-import org.richfaces.tests.metamer.ftest.abstractions.fragments.FilteringTableHeaderInterface;
-import org.richfaces.tests.metamer.ftest.abstractions.fragments.FilteringTableRowInterface;
+import org.richfaces.tests.metamer.ftest.abstractions.fragments.FilteringHeaderInterface;
+import org.richfaces.tests.metamer.ftest.abstractions.fragments.FilteringRowInterface;
 import org.richfaces.tests.metamer.model.Employee;
 import org.richfaces.tests.metamer.model.Employee.Sex;
 import org.testng.annotations.BeforeMethod;
@@ -54,83 +54,79 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
         filterEmployee = new ExpectedEmployee();
     }
 
-    public void testFilterSex(
-            RichFacesDataTableWithHeaderAndFooter<? extends FilteringTableHeaderInterface,? extends FilteringTableRowInterface,?> table) {
-        table.getHeader().filterSex(Sex.MALE);
+    protected abstract RichFacesDataTable<? extends FilteringHeaderInterface, ? extends FilteringRowInterface, ?> getTable();
+
+    public void testFilterSex() {
+        getTable().getHeader().filterSex(Sex.MALE);
         filterEmployee.sex = Sex.MALE;
-        verifyFiltering(table);
+        verifyFiltering();
 
-        table.getHeader().filterSex(Sex.FEMALE);
+        getTable().getHeader().filterSex(Sex.FEMALE);
         filterEmployee.sex = Sex.FEMALE;
-        verifyFiltering(table);
+        verifyFiltering();
 
-        table.getHeader().filterSex(null);
+        getTable().getHeader().filterSex(null);
         filterEmployee.sex = null;
-        verifyFiltering(table);
+        verifyFiltering();
     }
 
-    public void testFilterName(
-            RichFacesDataTableWithHeaderAndFooter<? extends FilteringTableHeaderInterface,? extends FilteringTableRowInterface,?> table) {
+    public void testFilterName() {
         for (String filterName : FILTER_NAMES) {
-            table.getHeader().getFilterNameInput().clear();
-            table.getHeader().filterName(filterName);
+            getTable().getHeader().getFilterNameInput().clear();
+            getTable().getHeader().filterName(filterName);
             filterEmployee.name = filterName;
-            verifyFiltering(table);
+            verifyFiltering();
         }
     }
 
-    public void testFilterTitle(
-            RichFacesDataTableWithHeaderAndFooter<? extends FilteringTableHeaderInterface,? extends FilteringTableRowInterface,?> table) {
+    public void testFilterTitle() {
         for (String filterTitle : FILTER_TITLES) {
-            table.getHeader().getFilterTitleInput().clear();
-            table.getHeader().filterTitle(filterTitle);
+            getTable().getHeader().getFilterTitleInput().clear();
+            getTable().getHeader().filterTitle(filterTitle);
             filterEmployee.title = filterTitle;
-            verifyFiltering(table);
+            verifyFiltering();
         }
     }
 
-    public void testFilterNumberOfKidsWithSpinner(
-            RichFacesDataTableWithHeaderAndFooter<? extends FilteringTableHeaderInterface,? extends FilteringTableRowInterface,?> table) {
+    public void testFilterNumberOfKidsWithSpinner() {
         for (Integer filterNumberOfKids : FILTER_NUMBER_OF_KIDS) {
-            table.getHeader().filterNumberOfKidsWithSpinner(filterNumberOfKids);
+            getTable().getHeader().filterNumberOfKidsWithSpinner(filterNumberOfKids);
             filterEmployee.numberOfKids1 = filterNumberOfKids;
-            verifyFiltering(table);
+            verifyFiltering();
         }
     }
 
-    public void testFilterCombinations(
-            RichFacesDataTableWithHeaderAndFooter<? extends FilteringTableHeaderInterface,? extends FilteringTableRowInterface,?> table) {
-        table.getHeader().filterTitle("Technology");
+    public void testFilterCombinations() {
+        getTable().getHeader().filterTitle("Technology");
         filterEmployee.title = "Technology";
-        verifyFiltering(table);
+        verifyFiltering();
 
-        table.getHeader().filterNumberOfKidsWithSpinner(1);
+        getTable().getHeader().filterNumberOfKidsWithSpinner(1);
         filterEmployee.numberOfKids1 = 1;
-        verifyFiltering(table);
+        verifyFiltering();
 
-        table.getHeader().filterSex(Sex.MALE);
+        getTable().getHeader().filterSex(Sex.MALE);
         filterEmployee.sex = Sex.MALE;
-        verifyFiltering(table);
+        verifyFiltering();
 
-        table.getHeader().filterName("9");
+        getTable().getHeader().filterName("9");
         filterEmployee.name = "9";
-        verifyFiltering(table);
+        verifyFiltering();
 
-        table.getHeader().filterNumberOfKidsWithSpinner(0);
+        getTable().getHeader().filterNumberOfKidsWithSpinner(0);
         filterEmployee.numberOfKids1 = 0;
-        verifyFiltering(table);
+        verifyFiltering();
 
-        table.getHeader().filterSex(Sex.FEMALE);
+        getTable().getHeader().filterSex(Sex.FEMALE);
         filterEmployee.sex = Sex.FEMALE;
-        verifyFiltering(table);
+        verifyFiltering();
     }
 
-    public void testRerenderAll(
-            RichFacesDataTableWithHeaderAndFooter<? extends FilteringTableHeaderInterface,? extends FilteringTableRowInterface,?> table) {
+    public void testRerenderAll() {
         dataScroller2.switchTo(1);
-        rows = table.advanced().getNumberOfRows();
+        rows = getTable().advanced().getNumberOfRows();
 
-        table.getHeader().filterName("an");
+        getTable().getHeader().filterName("an");
         filterEmployee.name = "an";
 
         expectedEmployees = filter(EMPLOYEES, getFilter());
@@ -142,18 +138,17 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
         getMetamerPage().rerenderAll();
         assertEquals(dataScroller2.getActivePageNumber(), lastPage);
         assertTrue(dataScroller2.advanced().isLastPage());
-        verifyPageContent(lastPage, table);
+        verifyPageContent(lastPage);
 
         dataScroller2.switchTo(1);
-        verifyPageContent(1, table);
+        verifyPageContent(1);
     }
 
-    public void testFullPageRefresh(
-            RichFacesDataTableWithHeaderAndFooter<? extends FilteringTableHeaderInterface,? extends FilteringTableRowInterface,?> table) {
+    public void testFullPageRefresh() {
         dataScroller2.switchTo(1);
-        rows = table.advanced().getNumberOfRows();
+        rows = getTable().advanced().getNumberOfRows();
 
-        table.getHeader().filterName("an");
+        getTable().getHeader().filterName("an");
         filterEmployee.name = "an";
 
         expectedEmployees = filter(EMPLOYEES, getFilter());
@@ -165,67 +160,64 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
         getMetamerPage().fullPageRefresh();
         assertEquals(dataScroller2.getActivePageNumber(), lastPage);
         assertTrue(dataScroller2.advanced().isLastPage());
-        verifyPageContent(lastPage, table);
+        verifyPageContent(lastPage);
 
         dataScroller2.switchTo(1);
-        verifyPageContent(1, table);
+        verifyPageContent(1);
     }
 
-    public void verifyFiltering(
-            RichFacesDataTableWithHeaderAndFooter<? extends FilteringTableHeaderInterface,? extends FilteringTableRowInterface,?> table) {
+    public void verifyFiltering() {
         expectedEmployees = filter(EMPLOYEES, getFilter());
 
         if(dataScroller2.advanced().getCountOfVisiblePages() > 1) {
             dataScroller2.switchTo(1);
         }
-        rows = table.advanced().getNumberOfRows();
-        verifyPageContent(1, table);
+        rows = getTable().advanced().getNumberOfRows();
+        verifyPageContent(1);
 
         if (dataScroller2.advanced().getCountOfVisiblePages() > 1) {
             int lastVisiblePageNumber = dataScroller2.advanced().getLastVisiblePageNumber();
             dataScroller2.switchTo(LAST);
             int lastPage = dataScroller2.getActivePageNumber();
-            verifyPageContent(lastPage, table);
+            verifyPageContent(lastPage);
 
             if (lastVisiblePageNumber > 2) {
                 dataScroller2.switchTo(3);
-                verifyPageContent(3, table);
+                verifyPageContent(3);
             }
 
             if (lastVisiblePageNumber > 3) {
                 dataScroller2.switchTo(lastPage - 1);
-                verifyPageContent(lastPage - 1, table);
+                verifyPageContent(lastPage - 1);
             }
         }
 
     }
 
-    public void verifyPageContent(int page, RichFacesDataTableWithHeaderAndFooter<? extends FilteringTableHeaderInterface,? extends FilteringTableRowInterface,?> table) {
+    public void verifyPageContent(int page) {
         if (expectedEmployees.size() == 0) {
-            assertEquals(table.advanced().getNumberOfRows(), 0);
-            assertTrue(table.advanced().isNoData());
+            assertEquals(getTable().advanced().getNumberOfRows(), 0);
+            assertTrue(getTable().advanced().isNoData());
         } else {
-            for (int row = 0; row < table.advanced().getNumberOfRows(); row++) {
+            for (int row = 0; row < getTable().advanced().getNumberOfRows(); row++) {
                 int index = (page - 1) * rows + row;
                 Employee expectedEmployee = expectedEmployees.get(index);
-                verifyRow(expectedEmployee, row, table);
+                verifyRow(expectedEmployee, row);
             }
         }
     }
 
-    public void verifyRow(Employee expectedEmployee, int row,
-            RichFacesDataTableWithHeaderAndFooter<? extends FilteringTableHeaderInterface,? extends FilteringTableRowInterface,?> table) {
-        verifySex(expectedEmployee.getSex(), row, table);
-        FilteringTableRowInterface actualRow = table.getRow(row);
+    public void verifyRow(Employee expectedEmployee, int row) {
+        verifySex(expectedEmployee.getSex(), row);
+        FilteringRowInterface actualRow = getTable().getRow(row);
         assertEquals(actualRow.getNameColumnValue(), expectedEmployee.getName());
         assertEquals(actualRow.getTitleColumnValue(), expectedEmployee.getTitle());
         assertEquals(actualRow.getNumberOfKids1ColumnValue(), expectedEmployee.getNumberOfKids());
         assertEquals(actualRow.getNumberOfKids2ColumnValue(), expectedEmployee.getNumberOfKids());
     }
 
-    public void verifySex(Employee.Sex expectedSex, int row,
-            RichFacesDataTableWithHeaderAndFooter<? extends FilteringTableHeaderInterface,? extends FilteringTableRowInterface,?> table) {
-        Employee.Sex actualSex = table.getRow(row).getSexColumnValue();
+    public void verifySex(Employee.Sex expectedSex, int row) {
+        Employee.Sex actualSex = getTable().getRow(row).getSexColumnValue();
         assertEquals(actualSex, expectedSex);
     }
 
