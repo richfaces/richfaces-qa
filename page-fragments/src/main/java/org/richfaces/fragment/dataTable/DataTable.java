@@ -24,20 +24,65 @@ package org.richfaces.fragment.dataTable;
 import java.util.List;
 
 /**
+ * Interface representing a data table.
+ *
+ * <p>Each table consists of its header, row and footer. Those should be page
+ * fragments, which will be then returned as a properly initialized objects.</p>
+ *
+ * <p>It is solely on the end user how the implementations of the HEADER, ROW
+ * or FOOTER would look like.</p> For example HEADER page fragment can provide
+ * encapsulated filtering or sorting table services.
+ *
+ * <p> Note that one can use <tt>org.richfaces.fragment.common.NullFragment</tt>
+ * as a Null Object pattern for any of the generic types.</p>
  *
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @param <HEADER>
+ * @param <ROW>
+ * @param <FOOTER>
  */
 public interface DataTable<HEADER, ROW, FOOTER> {
 
+    /**
+    * Returns an initialized <tt>ROW</tt> page fragment with index <tt>n</tt>.
+    *
+    * @param n zero based index of the row to be returned
+    * @return
+    */
     ROW getRow(int n);
 
+    /**
+    * Returns the first initialized <tt>ROW</tt> page fragment.
+    *
+    * @return
+    */
     ROW getFirstRow();
 
+    /**
+    * Returns the last initialized <tt>ROW</tt> page fragment.
+    *
+    * @return
+    */
     ROW getLastRow();
 
+    /**
+    * Returns a list of initialized <tt>ROW</tt> page fragments.
+    *
+    * @return
+    */
     List<ROW> getAllRows();
 
+    /**
+    * Returns an initialized <tt>HEADER</tt> page fragment of this table.
+    *
+    * @return
+    */
     HEADER getHeader();
 
+    /**
+    * Returns an initialized <tt>FOOTER</tt> page fragment of this table.
+    *
+    * @return
+    */
     FOOTER getFooter();
 }
