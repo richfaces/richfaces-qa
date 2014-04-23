@@ -19,14 +19,46 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
+package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
-import org.richfaces.fragment.common.NullFragment;
-import org.richfaces.fragment.dataTable.RichFacesDataTable;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+
+import java.net.URL;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+
+import org.richfaces.tests.metamer.ftest.abstractions.DataTableScrollerTest;
+import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SimpleEDT;
+import org.testng.annotations.Test;
+
 
 /**
- * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version $Revision: 22407 $
  */
-public class FilteringTable extends RichFacesDataTable<FilteringHeader, FilteringRow, NullFragment> {
+public class TestExtendedDataTableScroller extends DataTableScrollerTest {
 
+    @FindByJQuery("div.rf-edt[id$=richEDT]")
+    private SimpleEDT table;
+
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richExtendedDataTable/scroller.xhtml");
+    }
+
+    @Override
+    protected SimpleEDT getTable() {
+        return table;
+    }
+
+    @Test
+    @Override
+    public void testRowCountFooterScroller() {
+        super.testRowCountFooterScroller();
+    }
+
+    @Test
+    @Override
+    public void testRowCountOutsideTable() {
+        super.testRowCountOutsideTable();
+    }
 }

@@ -27,7 +27,7 @@ import static org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitc
 
 import java.util.Collection;
 import java.util.List;
-import org.richfaces.fragment.dataTable.RichFacesDataTable;
+import org.richfaces.fragment.dataTable.AbstractTable;
 
 import org.richfaces.model.Filter;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.FilteringHeaderInterface;
@@ -54,7 +54,7 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
         filterEmployee = new ExpectedEmployee();
     }
 
-    protected abstract RichFacesDataTable<? extends FilteringHeaderInterface, ? extends FilteringRowInterface, ?> getTable();
+    protected abstract AbstractTable<? extends FilteringHeaderInterface, ? extends FilteringRowInterface, ?> getTable();
 
     public void testFilterSex() {
         getTable().getHeader().filterSex(Sex.MALE);
@@ -124,7 +124,7 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
 
     public void testRerenderAll() {
         dataScroller2.switchTo(1);
-        rows = getTable().advanced().getNumberOfRows();
+        rows = getTable().advanced().getNumberOfVisibleRows();
 
         getTable().getHeader().filterName("an");
         filterEmployee.name = "an";
@@ -146,7 +146,7 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
 
     public void testFullPageRefresh() {
         dataScroller2.switchTo(1);
-        rows = getTable().advanced().getNumberOfRows();
+        rows = getTable().advanced().getNumberOfVisibleRows();
 
         getTable().getHeader().filterName("an");
         filterEmployee.name = "an";
@@ -172,7 +172,7 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
         if(dataScroller2.advanced().getCountOfVisiblePages() > 1) {
             dataScroller2.switchTo(1);
         }
-        rows = getTable().advanced().getNumberOfRows();
+        rows = getTable().advanced().getNumberOfVisibleRows();
         verifyPageContent(1);
 
         if (dataScroller2.advanced().getCountOfVisiblePages() > 1) {
@@ -196,10 +196,10 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
 
     public void verifyPageContent(int page) {
         if (expectedEmployees.size() == 0) {
-            assertEquals(getTable().advanced().getNumberOfRows(), 0);
+            assertEquals(getTable().advanced().getNumberOfVisibleRows(), 0);
             assertTrue(getTable().advanced().isNoData());
         } else {
-            for (int row = 0; row < getTable().advanced().getNumberOfRows(); row++) {
+            for (int row = 0; row < getTable().advanced().getNumberOfVisibleRows(); row++) {
                 int index = (page - 1) * rows + row;
                 Employee expectedEmployee = expectedEmployees.get(index);
                 verifyRow(expectedEmployee, row);

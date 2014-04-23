@@ -21,73 +21,58 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 
-import org.richfaces.tests.metamer.ftest.abstractions.DataTableFilteringTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.model.ExtendedDataTable;
-import org.testng.annotations.BeforeClass;
+import org.richfaces.tests.metamer.ftest.abstractions.DataTableSimpleTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
+import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SimpleEDT;
 import org.testng.annotations.Test;
 
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22664 $
+ * @version $Revision: 22407 $
  */
-public class TestExtendedDataTableFiltering extends DataTableFilteringTest {
+public class TestExtendedDataTableSimple extends DataTableSimpleTest {
 
     @Override
     public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richExtendedDataTable/filtering.xhtml");
+        return buildUrl(contextPath, "faces/components/richExtendedDataTable/simple.xhtml");
     }
 
-    @BeforeClass
-    public void setupModel() {
-        model = new ExtendedDataTable(pjq("div.rf-edt[id$=richEDT]"));
+    @FindByJQuery("div.rf-edt[id$=richEDT]")
+    private SimpleEDT table;
+
+
+    @Override
+    protected SimpleEDT getTable() {
+        return table;
     }
 
     @Test
-    @Override
-    public void testFilterSex() {
-        super.testFilterSex();
+    public void testRendered() {
+        super.testRendered();
     }
 
     @Test
-    @Override
-    public void testFilterName() {
-        super.testFilterName();
+    public void testNoDataLabel() {
+        super.testNoDataLabel();
     }
 
     @Test
-    @Override
-    public void testFilterTitle() {
-        super.testFilterTitle();
+    @UseWithField(field = "first", valuesFrom = FROM_FIELD, value = "COUNTS")
+    public void testFirst() {
+        super.testFirst();
     }
 
     @Test
-    @Override
-    public void testFilterNumberOfKids1() {
-        super.testFilterNumberOfKids1();
+    @UseWithField(field = "rows", valuesFrom = FROM_FIELD, value = "COUNTS")
+    public void testRows() {
+        super.testRows();
     }
 
-    @Test
-    @Override
-    public void testFilterCombinations() {
-        super.testFilterCombinations();
-    }
-
-    @Test(groups = { "Future" })
-    @Override
-    @IssueTracking("https://issues.jboss.org/browse/RF-9932 http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790")
-    public void testRerenderAll() {
-        super.testRerenderAll();
-    }
-
-    @Test
-    @Override
-    public void testFullPageRefresh() {
-        super.testFullPageRefresh();
-    }
 }

@@ -35,11 +35,11 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.richfaces.fragment.dataTable.RichFacesDataTable;
+import org.richfaces.fragment.dataTable.AbstractTable;
 import org.richfaces.model.SortMode;
+import org.richfaces.tests.metamer.ftest.abstractions.fragments.FilteringRowInterface;
+import org.richfaces.tests.metamer.ftest.abstractions.fragments.SortingHeaderInterface;
 import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
-import org.richfaces.tests.metamer.ftest.richDataTable.fragment.FilteringRow;
-import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SortingHeader;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.model.Employee;
 import org.richfaces.tests.metamer.model.Employee.Sex;
@@ -53,7 +53,7 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
     int modelIndex;
     List<Employee> sortedEmployees;
 
-    protected abstract RichFacesDataTable<? extends SortingHeader, ? extends FilteringRow, ?> getTable();
+    protected abstract AbstractTable<? extends SortingHeaderInterface, ? extends FilteringRowInterface, ?> getTable();
 
     private final Attributes<DataTableAttributes> dataTableAttributes = getAttributes();
 
@@ -240,22 +240,22 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
             dataScroller2.switchTo(FIRST);
         }
 
-        int pageRows = getTable().advanced().getNumberOfRows();
+        int pageRows = getTable().advanced().getNumberOfVisibleRows();
         for (rowIndex = 0; rowIndex < pageRows; rowIndex++) {
             verifyRow(rowIndex, rowIndex);
         }
 
         dataScroller2.switchTo(2);
 
-        for (rowIndex = 0; rowIndex < getTable().advanced().getNumberOfRows(); rowIndex++) {
+        for (rowIndex = 0; rowIndex < getTable().advanced().getNumberOfVisibleRows(); rowIndex++) {
             modelIndex = pageRows + rowIndex;
             verifyRow(rowIndex, modelIndex);
         }
 
         dataScroller2.switchTo(LAST);
 
-        pageRows = getTable().advanced().getNumberOfRows();
-        for (rowIndex = 0; rowIndex < getTable().advanced().getNumberOfRows(); rowIndex++) {
+        pageRows = getTable().advanced().getNumberOfVisibleRows();
+        for (rowIndex = 0; rowIndex < getTable().advanced().getNumberOfVisibleRows(); rowIndex++) {
             modelIndex = EMPLOYEES.size() - pageRows + rowIndex;
             verifyRow(rowIndex, modelIndex);
         }

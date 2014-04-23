@@ -21,52 +21,69 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 
-import org.richfaces.tests.metamer.ftest.abstractions.DataTableSimpleTest;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.metamer.ftest.model.ExtendedDataTable;
-import org.testng.annotations.BeforeClass;
+import org.richfaces.tests.metamer.ftest.abstractions.DataTableFilteringTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.FilteringEDT;
 import org.testng.annotations.Test;
 
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22407 $
+ * @version $Revision: 22664 $
  */
-public class TestExtendedDataTableSimple extends DataTableSimpleTest {
+public class TestExtendedDataTableFiltering extends DataTableFilteringTest {
+
+    @FindByJQuery("div.rf-edt[id$=richEDT]")
+    private FilteringEDT table;
 
     @Override
     public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richExtendedDataTable/simple.xhtml");
+        return buildUrl(contextPath, "faces/components/richExtendedDataTable/filtering.xhtml");
     }
 
-    @BeforeClass
-    public void setupModel() {
-        model = new ExtendedDataTable(pjq("div.rf-edt[id$=richEDT]"));
-    }
-
-    @Test
-    public void testRendered() {
-        super.testRendered();
+    @Override
+    protected FilteringEDT getTable() {
+        return table;
     }
 
     @Test
-    public void testNoDataLabel() {
-        super.testNoDataLabel();
+    public void testFilterSex() {
+        super.testFilterSex();
     }
 
     @Test
-    @Use(field = "first", value = "COUNTS")
-    public void testFirst() {
-        super.testFirst();
+    public void testFilterName() {
+        super.testFilterName();
     }
 
     @Test
-    @Use(field = "rows", value = "COUNTS")
-    public void testRows() {
-        super.testRows();
+    public void testFilterTitle() {
+        super.testFilterTitle();
+    }
+
+    @Test
+    public void testFilterNumberOfKids1() {
+        super.testFilterNumberOfKidsWithSpinner();
+    }
+
+    @Test
+    public void testFilterCombinations() {
+        super.testFilterCombinations();
+    }
+
+    @Test(groups = { "Future" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-9932 http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790")
+    public void testRerenderAll() {
+        super.testRerenderAll();
+    }
+
+    @Test
+    public void testFullPageRefresh() {
+        super.testFullPageRefresh();
     }
 }

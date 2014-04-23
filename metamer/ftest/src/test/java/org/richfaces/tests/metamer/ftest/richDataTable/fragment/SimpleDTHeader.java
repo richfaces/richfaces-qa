@@ -21,53 +21,27 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
 
+import java.util.List;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.metamer.ftest.abstractions.fragments.FilteringRowInterface;
-import org.richfaces.tests.metamer.model.Employee;
+import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleHeaderInterface;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class FilteringRow implements FilteringRowInterface {
+public class SimpleDTHeader implements SimpleHeaderInterface {
 
-    @FindBy(css = "td:nth-of-type(1) img")
-    private WebElement sexColumnElement;
+    @FindBy(className = "rf-dt-hdr")
+    private WebElement tableHeaderElement;
 
-    @FindBy(css = "td:nth-of-type(2)")
-    private WebElement nameColumnElement;
+    @FindBy(className = "rf-dt-shdr-c")
+    private List<WebElement> columnHeaders;
 
-    @FindBy(css = "td:nth-of-type(3)")
-    private WebElement titleColumnElement;
-
-    @FindBy(css = "td:nth-of-type(4)")
-    private WebElement numberOfKids1ColumnElement;
-
-    @FindBy(css = "td:nth-of-type(5)")
-    private WebElement numberOfKids2ColumnElement;
-
-    @Override
-    public Employee.Sex getSexColumnValue() {
-        return Employee.Sex.valueOf(sexColumnElement.getAttribute("alt"));
+    public String getHeaderText() {
+        return tableHeaderElement.getText();
     }
 
-    @Override
-    public String getNameColumnValue() {
-        return nameColumnElement.getText();
-    }
-
-    @Override
-    public String getTitleColumnValue() {
-        return titleColumnElement.getText();
-    }
-
-    @Override
-    public int getNumberOfKids1ColumnValue() {
-        return Integer.parseInt(numberOfKids1ColumnElement.getText());
-    }
-
-    @Override
-    public int getNumberOfKids2ColumnValue() {
-        return Integer.parseInt(numberOfKids2ColumnElement.getText());
+    public String getColumnHeaderText(int column) {
+        return columnHeaders.get(column).getText();
     }
 }

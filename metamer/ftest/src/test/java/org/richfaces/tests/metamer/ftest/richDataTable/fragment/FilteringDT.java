@@ -19,43 +19,14 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
+package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import java.net.URL;
-
-import org.richfaces.tests.metamer.ftest.abstractions.DataTableScrollerTest;
-import org.richfaces.tests.metamer.ftest.model.ExtendedDataTable;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
+import org.richfaces.fragment.common.NullFragment;
+import org.richfaces.fragment.dataTable.RichFacesDataTable;
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22407 $
+ * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class TestExtendedDataTableScroller extends DataTableScrollerTest {
+public class FilteringDT extends RichFacesDataTable<FilteringDTHeader, FilteringDTRow, NullFragment> {
 
-    @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richExtendedDataTable/scroller.xhtml");
-    }
-
-    @BeforeClass
-    public void setupModel() {
-        model = new ExtendedDataTable(pjq("div.rf-edt[id$=richEDT]"));
-    }
-
-    @Test
-    @Override
-    public void testRowCountFooterScroller() {
-        super.testRowCountFooterScroller();
-    }
-
-    @Test
-    @Override
-    public void testRowCountOutsideTable() {
-        super.testRowCountOutsideTable();
-    }
 }

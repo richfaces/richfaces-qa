@@ -19,29 +19,55 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
+package org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment;
 
-import java.util.List;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleFooterInterface;
+import org.richfaces.tests.metamer.ftest.abstractions.fragments.FilteringRowInterface;
+import org.richfaces.tests.metamer.model.Employee;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class SimpleFooter implements SimpleFooterInterface {
+public class FilteringEDTRow implements FilteringRowInterface {
 
-    @FindBy(className = "rf-dt-ftr")
-    private WebElement tableFooterElement;
+    @FindBy(css = "td:nth-of-type(1) img")
+    private WebElement sexColumnElement;
 
-    @FindBy(className = "rf-dt-sftr-c")
-    private List<WebElement> columnFooters;
+    @FindBy(css = "td:nth-of-type(2)")
+    private WebElement nameColumnElement;
 
-    public String getFooterText() {
-        return tableFooterElement.getText();
+    @FindBy(css = "td:nth-of-type(3)")
+    private WebElement titleColumnElement;
+
+    @FindBy(css = "td:nth-of-type(4)")
+    private WebElement numberOfKids1ColumnElement;
+
+    @FindBy(css = "td:nth-of-type(5)")
+    private WebElement numberOfKids2ColumnElement;
+
+    @Override
+    public Employee.Sex getSexColumnValue() {
+        return Employee.Sex.valueOf(sexColumnElement.getAttribute("alt"));
     }
 
-    public String getColumnFooterText(int column) {
-        return columnFooters.get(column).getText();
+    @Override
+    public String getNameColumnValue() {
+        return nameColumnElement.getText();
+    }
+
+    @Override
+    public String getTitleColumnValue() {
+        return titleColumnElement.getText();
+    }
+
+    @Override
+    public int getNumberOfKids1ColumnValue() {
+        return Integer.parseInt(numberOfKids1ColumnElement.getText());
+    }
+
+    @Override
+    public int getNumberOfKids2ColumnValue() {
+        return Integer.parseInt(numberOfKids2ColumnElement.getText());
     }
 }

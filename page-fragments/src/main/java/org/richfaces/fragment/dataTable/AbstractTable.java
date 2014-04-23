@@ -23,10 +23,13 @@ package org.richfaces.fragment.dataTable;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.fragment.Root;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.richfaces.fragment.common.AdvancedInteractions;
 import org.richfaces.fragment.common.TypeResolver;
 import org.richfaces.fragment.common.Utils;
 
@@ -34,23 +37,24 @@ import org.richfaces.fragment.common.Utils;
  *
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public abstract class AbstractTable<HEADER, ROW, FOOTER> implements DataTable<HEADER,ROW,FOOTER> {
+public abstract class AbstractTable<HEADER, ROW, FOOTER> implements DataTable<HEADER, ROW, FOOTER>, AdvancedInteractions<AbstractTable.AdvancedTableInteractions>{
 
     @Root
-    private WebElement root;
+    protected WebElement root;
 
-    @SuppressWarnings("unchecked")
-    private final Class<ROW> rowClass = (Class<ROW>) TypeResolver.resolveRawArguments(DataTable.class, getClass())[1];
+    @Drone
+    protected WebDriver browser;
+
     @SuppressWarnings("unchecked")
     private final Class<HEADER> headerClass = (Class<HEADER>) TypeResolver.resolveRawArguments(DataTable.class, getClass())[0];
     @SuppressWarnings("unchecked")
+    private final Class<ROW> rowClass = (Class<ROW>) TypeResolver.resolveRawArguments(DataTable.class, getClass())[1];
+    @SuppressWarnings("unchecked")
     private final Class<FOOTER> footerClass = (Class<FOOTER>) TypeResolver.resolveRawArguments(DataTable.class, getClass())[2];
-
-    private final AdvancedTableInteractions advancedInteractions = new AdvancedTableInteractions();
 
     @Override
     public ROW getRow(int n) {
-        return Graphene.createPageFragment(rowClass, getTableRows().get(n));
+        return Graphene.createPageFragment(rowClass, advanced().getTableRowsElements().get(n));
     }
 
     @Override
@@ -60,65 +64,43 @@ public abstract class AbstractTable<HEADER, ROW, FOOTER> implements DataTable<HE
 
     @Override
     public ROW getLastRow() {
-        return getRow(advanced().getNumberOfRows() - 1);
+        return getRow(advanced().getNumberOfVisibleRows() - 1);
     }
 
     @Override
     public List<ROW> getAllRows() {
         List<ROW> result = new ArrayList<ROW>();
-        for (int i = 0; i < advanced().getNumberOfRows(); i++) {
+        for (int i = 0; i < advanced().getNumberOfVisibleRows(); i++) {
             result.add(getRow(i));
         }
         return result;
     }
 
     public HEADER getHeader() {
-        return Graphene.createPageFragment(headerClass, getWholeTableHeader());
+        return Graphene.createPageFragment(headerClass, advanced().getWholeTableHeaderElement());
     }
 
     public FOOTER getFooter() {
-        return Graphene.createPageFragment(footerClass, getWholeTableFooter());
+        return Graphene.createPageFragment(footerClass, advanced().getWholeTableFooterElement());
     }
 
-    public AdvancedTableInteractions advanced() {
-        return advancedInteractions;
-    }
+    public abstract AdvancedTableInteractions advanced();
 
-    protected abstract List<WebElement> getTableRows();
-
-    protected abstract List<WebElement> getFirstRowCells();
-
-    protected abstract ByJQuery getSelectorForCell(int column);
-
-    protected abstract WebElement protectedGetNoData();
-
-    protected abstract WebElement getWholeTableHeader();
-
-    protected abstract WebElement getWholeTableFooter();
-
-    protected abstract WebElement getHeaderElement();
-
-    protected abstract WebElement getFooterElement();
-
-    protected abstract List<WebElement> getColumnHeaderElements();
-
-    protected abstract List<WebElement> getColumnFooterElements();
-
-    public class AdvancedTableInteractions {
+    public abstract class AdvancedTableInteractions {
 
         public int getNumberOfColumns() {
             if (!isVisible()) {
                 return 0;
             } else {
-                return getFirstRowCells().size();
+                return getFirstRowCellsElements().size();
             }
         }
 
-        public int getNumberOfRows() {
+        public int getNumberOfVisibleRows() {
             if (!isVisible()) {
                 return 0;
             } else {
-                return getTableRows().size();
+                return getTableRowsElements().size();
             }
         }
 
@@ -127,23 +109,11 @@ public abstract class AbstractTable<HEADER, ROW, FOOTER> implements DataTable<HE
         }
 
         public boolean isNoData() {
-            return Utils.isVisible(protectedGetNoData());
-        }
-
-        public WebElement getNoDataElement() {
-            return protectedGetNoData();
+            return Utils.isVisible(getNoDataElement());
         }
 
         public WebElement getCellElement(int column, int row) {
-            return getTableRows().get(row).findElement(getSelectorForCell(column));
-        }
-
-        public WebElement getHeaderElement() {
-            return getHeaderElement();
-        }
-
-        public WebElement getFooterElement() {
-            return getFooterElement();
+            return getTableRowsElements().get(row).findElement(getSelectorForCell(column));
         }
 
         public WebElement getColumnHeaderElement(int column) {
@@ -153,5 +123,25 @@ public abstract class AbstractTable<HEADER, ROW, FOOTER> implements DataTable<HE
         public WebElement getColumnFooterElement(int column) {
             return getColumnFooterElements().get(column);
         }
+
+        public abstract WebElement getNoDataElement();
+
+        public abstract List<WebElement> getTableRowsElements();
+
+        public abstract List<WebElement> getFirstRowCellsElements();
+
+        public abstract ByJQuery getSelectorForCell(int column);
+
+        public abstract WebElement getWholeTableHeaderElement();
+
+        public abstract WebElement getWholeTableFooterElement();
+
+        public abstract WebElement getHeaderElement();
+
+        public abstract WebElement getFooterElement();
+
+        public abstract List<WebElement> getColumnHeaderElements();
+
+        public abstract List<WebElement> getColumnFooterElements();
     }
 }

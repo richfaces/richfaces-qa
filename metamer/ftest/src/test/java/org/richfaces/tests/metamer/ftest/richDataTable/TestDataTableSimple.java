@@ -29,7 +29,7 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSimpleTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
-import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SimpleTable;
+import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SimpleDT;
 import org.testng.annotations.Test;
 
 /**
@@ -38,7 +38,7 @@ import org.testng.annotations.Test;
 public class TestDataTableSimple extends DataTableSimpleTest {
 
     @FindByJQuery("table.rf-dt[id$=richDataTable]")
-    private SimpleTable table;
+    private SimpleDT table;
 
     @Override
     public URL getTestUrl() {
@@ -46,7 +46,7 @@ public class TestDataTableSimple extends DataTableSimpleTest {
     }
 
     @Override
-    protected SimpleTable getTable() {
+    protected SimpleDT getTable() {
         return table;
     }
 
