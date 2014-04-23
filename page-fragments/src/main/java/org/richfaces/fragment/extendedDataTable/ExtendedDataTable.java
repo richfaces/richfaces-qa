@@ -24,12 +24,29 @@ package org.richfaces.fragment.extendedDataTable;
 import org.openqa.selenium.Keys;
 
 /**
+ * Interface representing an Extended Data Table.
  *
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
 public interface ExtendedDataTable {
 
+    /**
+    * Selects a particular row.
+    *
+    * @param rowIndex the index of the row to be selected
+    * @param keys the keys to be pressed prior the selecting of the row,
+    * and released afterwards. No more than 2 keys can be passed. Usually,
+    * used ones are SHIFT and CONTROL.
+    */
     void selectRow(int rowIndex, Keys... keys);
 
+    /**
+    * Deselects a particular row.
+    *
+    * @param rowIndex the index of the row to be deselected
+    * @param keys the keys to be pressed prior the deselecting of the row,
+    * and released afterwards. No more than 2 keys can be passed. Usually,
+    * used ones are SHIFT and CONTROL.
+    */
     void deselectRow(int rowIndex, Keys... keys);
 }
