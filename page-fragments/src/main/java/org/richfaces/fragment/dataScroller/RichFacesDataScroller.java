@@ -72,12 +72,26 @@ public class RichFacesDataScroller implements DataScroller, AdvancedInteractions
         Graphene.waitModel().until().element(element).attribute("class").contains("rf-ds-act");
     }
 
+    private boolean checkIfScrollingByFastButtonIsQuickerThanScrollingByPages(int pageNumberBefore) {
+        return Math.abs(pageNumberBefore - getActivePageNumber()) > (int) (advanced().getCountOfVisiblePages() / 2);
+    }
+
     @Override
     public void switchTo(int pageNumber) {
         int counter = 50; // to prevent infinite loops
-
+        int lastPageNumber = getActivePageNumber();
+        boolean isScrollingByFastButtonQuicker = true;
+        boolean scrollingByButtonChecked = false;
         while (pageNumber > advanced().getLastVisiblePageNumber() && counter > 0) {
-            switchTo(DataScrollerSwitchButton.FAST_FORWARD);
+            if (isScrollingByFastButtonQuicker) {
+                switchTo(DataScrollerSwitchButton.FAST_FORWARD);
+            } else {
+                switchTo(advanced().getLastVisiblePageNumber());
+            }
+            if (!scrollingByButtonChecked) {
+                isScrollingByFastButtonQuicker = checkIfScrollingByFastButtonIsQuickerThanScrollingByPages(lastPageNumber);
+                scrollingByButtonChecked = true;
+            }
             counter--;
         }
         if (counter == 0) {
@@ -86,7 +100,15 @@ public class RichFacesDataScroller implements DataScroller, AdvancedInteractions
 
         counter = 50; // to prevent inifinite loops
         while (pageNumber < advanced().getFirstVisiblePageNumber() && counter > 0) {
-            switchTo(DataScrollerSwitchButton.FAST_REWIND);
+            if (isScrollingByFastButtonQuicker) {
+                switchTo(DataScrollerSwitchButton.FAST_REWIND);
+            } else {
+                switchTo(advanced().getFirstVisiblePageNumber());
+            }
+            if (!scrollingByButtonChecked) {
+                isScrollingByFastButtonQuicker = checkIfScrollingByFastButtonIsQuickerThanScrollingByPages(lastPageNumber);
+                scrollingByButtonChecked = true;
+            }
             counter--;
         }
         if (counter == 0) {
