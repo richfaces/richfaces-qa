@@ -28,7 +28,7 @@ import org.jboss.arquillian.graphene.findby.FindByJQuery;
 
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFilteringTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.richDataTable.fragment.FilteringTable;
+import org.richfaces.tests.metamer.ftest.richDataTable.fragment.FilteringDT;
 import org.testng.annotations.Test;
 
 
@@ -38,10 +38,10 @@ import org.testng.annotations.Test;
 public class TestDataTableFiltering extends DataTableFilteringTest {
 
     @FindByJQuery("table.rf-dt[id$=richDataTable]")
-    private FilteringTable table;
+    private FilteringDT table;
 
     @Override
-    protected FilteringTable getTable() {
+    protected FilteringDT getTable() {
         return table;
     }
 

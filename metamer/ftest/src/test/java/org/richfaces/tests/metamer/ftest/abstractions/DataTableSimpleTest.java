@@ -26,8 +26,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.util.List;
-
-import org.richfaces.fragment.dataTable.RichFacesDataTable;
+import org.richfaces.fragment.dataTable.AbstractTable;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleFooterInterface;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleHeaderInterface;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleRowInterface;
@@ -49,7 +48,7 @@ public abstract class DataTableSimpleTest extends AbstractDataTableTest {
 
     private final Attributes<DataTableAttributes> dataTableAttributes = getAttributes();
 
-    protected abstract RichFacesDataTable<? extends SimpleHeaderInterface, ? extends SimpleRowInterface, ? extends SimpleFooterInterface> getTable();
+    protected abstract AbstractTable<? extends SimpleHeaderInterface, ? extends SimpleRowInterface, ? extends SimpleFooterInterface> getTable();
 
     public void testRendered() {
         assertTrue(getTable().advanced().isVisible());
@@ -59,7 +58,7 @@ public abstract class DataTableSimpleTest extends AbstractDataTableTest {
         assertFalse(getTable().advanced().isVisible());
         assertFalse(getTable().advanced().isNoData());
         assertEquals(getTable().advanced().getNumberOfColumns(), 0);
-        assertEquals(getTable().advanced().getNumberOfRows(), 0);
+        assertEquals(getTable().advanced().getNumberOfVisibleRows(), 0);
     }
 
     public void testNoDataLabel() {
@@ -72,7 +71,7 @@ public abstract class DataTableSimpleTest extends AbstractDataTableTest {
         assertTrue(getTable().advanced().isVisible());
         assertTrue(getTable().advanced().isNoData());
         assertEquals(getTable().advanced().getNumberOfColumns(), 0);
-        assertEquals(getTable().advanced().getNumberOfRows(), 0);
+        assertEquals(getTable().advanced().getNumberOfVisibleRows(), 0);
         assertEquals(getTable().advanced().getNoDataElement().getText(), NO_DATA);
     }
 
@@ -93,7 +92,7 @@ public abstract class DataTableSimpleTest extends AbstractDataTableTest {
     public void verifyTable() {
         assertTrue(getTable().advanced().isVisible());
         assertEquals(getTable().advanced().getNumberOfColumns(), getExpectedColumns());
-        assertEquals(getTable().advanced().getNumberOfRows(), getExpectedRows());
+        assertEquals(getTable().advanced().getNumberOfVisibleRows(), getExpectedRows());
         assertFalse(getTable().advanced().isNoData());
     }
 

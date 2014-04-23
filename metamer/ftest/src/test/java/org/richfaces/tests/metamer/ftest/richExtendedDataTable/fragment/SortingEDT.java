@@ -19,28 +19,14 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
+package org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleRowInterface;
+import org.richfaces.fragment.common.NullFragment;
+import org.richfaces.fragment.extendedDataTable.RichFacesExtendedDataTable;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class SimpleRow implements SimpleRowInterface {
+public class SortingEDT extends RichFacesExtendedDataTable<SortingEDTHeader, FilteringEDTRow, NullFragment> {
 
-    @FindBy(css = ".rf-ft-c:nth-of-type(1)")
-    private WebElement stateColumn;
-
-    @FindBy(css = ".rf-ft-c:nth-of-type(2)")
-    private WebElement capitalColumn;
-
-    public WebElement getStateColumn() {
-        return stateColumn;
-    }
-
-    public WebElement getCapitalColumn() {
-        return capitalColumn;
-    }
 }

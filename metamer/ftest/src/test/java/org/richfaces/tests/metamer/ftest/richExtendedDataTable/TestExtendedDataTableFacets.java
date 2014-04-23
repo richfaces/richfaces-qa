@@ -21,14 +21,14 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFacetsTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.model.ExtendedDataTable;
-import org.testng.annotations.BeforeClass;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SimpleEDT;
 import org.testng.annotations.Test;
 
 /**
@@ -38,14 +38,17 @@ import org.testng.annotations.Test;
 @Templates(value = "plain")
 public class TestExtendedDataTableFacets extends DataTableFacetsTest {
 
+    @FindByJQuery("div.rf-edt[id$=richEDT]")
+    private SimpleEDT table;
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richExtendedDataTable/facets.xhtml");
     }
 
-    @BeforeClass
-    public void setupModel() {
-        model = new ExtendedDataTable(pjq("div.rf-edt[id$=richEDT]"));
+    @Override
+    protected SimpleEDT getTable() {
+        return table;
     }
 
     @Test
@@ -107,4 +110,5 @@ public class TestExtendedDataTableFacets extends DataTableFacetsTest {
     public void testCapitalFooterEmpty() {
         super.testCapitalFooterEmpty();
     }
+
 }

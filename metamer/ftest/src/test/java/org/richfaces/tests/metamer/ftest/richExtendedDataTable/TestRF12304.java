@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
+import org.richfaces.tests.metamer.ftest.richExtendedDataTable.page.RF12304Page;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertTrue;
 

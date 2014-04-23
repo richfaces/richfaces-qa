@@ -34,19 +34,19 @@ import org.openqa.selenium.support.FindBy;
 public abstract class RichFacesDataTable<HEADER, ROW, FOOTER> extends AbstractTable<HEADER, ROW, FOOTER> {
 
     @FindBy(css = ".rf-dt-b .rf-dt-r")
-    private List<WebElement> tableRows;
+    private List<WebElement> tableRowsElements;
 
     @FindByJQuery(".rf-dt-b .rf-dt-r:eq(0) .rf-dt-c")
-    private List<WebElement> firstRowCells;
+    private List<WebElement> firstRowCellsElements;
 
     @FindBy(css = ".rf-dt-nd > .rf-dt-nd-c")
     private WebElement noDataElement;
 
     @FindBy(className = "rf-dt-thd")
-    private WebElement wholeTableHeader;
+    private WebElement wholeTableHeaderElement;
 
     @FindBy(className = "rf-dt-tft")
-    private WebElement wholeTableFooter;
+    private WebElement wholeTableFooterElement;
 
     @FindBy(css = "th.rf-dt-hdr-c")
     private WebElement headerElement;
@@ -55,48 +55,68 @@ public abstract class RichFacesDataTable<HEADER, ROW, FOOTER> extends AbstractTa
     private WebElement footerElement;
 
     @FindBy(className = "rf-dt-shdr-c")
-    private List<WebElement> columnHeaders;
+    private List<WebElement> columnHeaderElements;
 
     @FindBy(className = "rf-dt-sftr-c")
-    private List<WebElement> columnFooters;
+    private List<WebElement> columnFooterElements;
 
-    protected List<WebElement> getTableRows() {
-        return tableRows;
+    private final AbstractTable.AdvancedTableInteractions advancedInteractions = new AdvancedDataTableInteractions();
+
+    @Override
+    public AdvancedTableInteractions advanced() {
+        return advancedInteractions;
     }
 
-    protected List<WebElement> getFirstRowCells() {
-        return firstRowCells;
-    }
+    public class AdvancedDataTableInteractions extends AbstractTable<HEADER, ROW, FOOTER>.AdvancedTableInteractions {
 
-    protected ByJQuery getSelectorForCell(int column) {
-        return ByJQuery.selector(".rf-dt-c:eq(" + column + ")");
-    }
+        @Override
+        public WebElement getNoDataElement() {
+            return noDataElement;
+        }
 
-    protected WebElement protectedGetNoData() {
-        return noDataElement;
-    }
+        @Override
+        public List<WebElement> getTableRowsElements() {
+            return tableRowsElements;
+        }
 
-    protected WebElement getWholeTableHeader() {
-        return wholeTableHeader;
-    }
+        @Override
+        public List<WebElement> getFirstRowCellsElements() {
+            return firstRowCellsElements;
+        }
 
-    protected WebElement getWholeTableFooter() {
-        return wholeTableFooter;
-    }
+        @Override
+        public ByJQuery getSelectorForCell(int column) {
+            return ByJQuery.selector(".rf-dt-c:eq(" + column + ")");
+        }
 
-    protected WebElement getHeaderElement() {
-        return headerElement;
-    }
+        @Override
+        public WebElement getWholeTableHeaderElement() {
+            return wholeTableHeaderElement;
+        }
 
-    protected WebElement getFooterElement() {
-        return footerElement;
-    }
+        @Override
+        public WebElement getWholeTableFooterElement() {
+            return wholeTableFooterElement;
+        }
 
-    protected List<WebElement> getColumnHeaderElements() {
-        return columnHeaders;
-    }
+        @Override
+        public WebElement getHeaderElement() {
+            return headerElement;
+        }
 
-    protected List<WebElement> getColumnFooterElements() {
-        return columnFooters;
+        @Override
+        public WebElement getFooterElement() {
+            return footerElement;
+        }
+
+        @Override
+        public List<WebElement> getColumnHeaderElements() {
+            return columnHeaderElements;
+        }
+
+        @Override
+        public List<WebElement> getColumnFooterElements() {
+            return columnFooterElements;
+        }
     }
 }

@@ -19,47 +19,51 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richDataTable;
+package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
-
-import org.richfaces.tests.metamer.ftest.abstractions.DataTableScrollerTest;
-import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
-import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
-import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SimpleDT;
-import org.testng.annotations.Test;
-
+import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.abstractions.fragments.SortingHeaderInterface;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class TestDataTableScroller extends DataTableScrollerTest {
+public class SortingDTHeader implements SortingHeaderInterface {
+
+    @FindBy(css = "th:nth-of-type(1) a")
+    private WebElement sexSortingAnchor;
+
+    @FindBy(css = "th:nth-of-type(2) a")
+    private WebElement nameSortingAnchor;
+
+    @FindBy(css = "th:nth-of-type(3) a")
+    private WebElement titleSortingAnchor;
+
+    @FindBy(css = "th:nth-of-type(4) a")
+    private WebElement numberOfKidsSortingAnchor;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richDataTable/scroller.xhtml");
+    public void sortBySex() {
+        sortByColumn(sexSortingAnchor);
     }
-
-    @FindByJQuery("table.rf-dt[id$=richDataTable]")
-    private SimpleDT table;
 
     @Override
-    protected SimpleDT getTable() {
-        return table;
+    public void sortByName() {
+        sortByColumn(nameSortingAnchor);
     }
 
-    @Test
-    @UseWithField(field = "rows", valuesFrom = FROM_FIELD, value = "COUNTS")
-    public void testRowCountFooterScroller() {
-        super.testRowCountFooterScroller();
+    @Override
+    public void sortByTitle() {
+        sortByColumn(titleSortingAnchor);
     }
 
-    @Test
-    @UseWithField(field = "rows", valuesFrom = FROM_FIELD, value = "COUNTS")
-    public void testRowCountOutsideTable() {
-        super.testRowCountOutsideTable();
+    @Override
+    public void sortByNumberOfKids() {
+        sortByColumn(numberOfKidsSortingAnchor);
+    }
+
+    private void sortByColumn(WebElement sortingTrigger) {
+        Graphene.guardAjax(sortingTrigger).click();
     }
 }

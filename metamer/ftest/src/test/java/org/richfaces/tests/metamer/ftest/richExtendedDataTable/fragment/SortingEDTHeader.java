@@ -19,41 +19,46 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
+package org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.abstractions.fragments.SortingHeaderInterface;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class SortingHeader {
+public class SortingEDTHeader implements SortingHeaderInterface {
 
-    @FindBy(css = "th:nth-of-type(1) a")
+    @FindByJQuery(".rf-edt-hdr-c-cnt:eq(0) a")
     private WebElement sexSortingAnchor;
 
-    @FindBy(css = "th:nth-of-type(2) a")
+    @FindByJQuery(".rf-edt-hdr-c-cnt:eq(1) a")
     private WebElement nameSortingAnchor;
 
-    @FindBy(css = "th:nth-of-type(3) a")
+    @FindByJQuery(".rf-edt-hdr-c-cnt:eq(2) a")
     private WebElement titleSortingAnchor;
 
-    @FindBy(css = "th:nth-of-type(4) a")
+    @FindByJQuery(".rf-edt-hdr-c-cnt:eq(3) a")
     private WebElement numberOfKidsSortingAnchor;
 
+    @Override
     public void sortBySex() {
         sortByColumn(sexSortingAnchor);
     }
 
+    @Override
     public void sortByName() {
         sortByColumn(nameSortingAnchor);
     }
 
+    @Override
     public void sortByTitle() {
         sortByColumn(titleSortingAnchor);
     }
 
+    @Override
     public void sortByNumberOfKids() {
         sortByColumn(numberOfKidsSortingAnchor);
     }

@@ -22,7 +22,7 @@
 package org.richfaces.tests.metamer.ftest.abstractions;
 
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
-import org.richfaces.fragment.dataTable.RichFacesDataTable;
+import org.richfaces.fragment.dataTable.AbstractTable;
 import static org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets.capitalFooter;
 import static org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets.capitalHeader;
 import static org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets.header;
@@ -46,7 +46,7 @@ public abstract class DataTableFacetsTest extends AbstractDataTableTest {
 
     private final Attributes<DataTableFacets> dataTableFacets = getAttributes();
 
-    protected abstract RichFacesDataTable<? extends SimpleHeaderInterface, ? extends SimpleRowInterface, ? extends SimpleFooterInterface> getTable();
+    protected abstract AbstractTable<? extends SimpleHeaderInterface, ? extends SimpleRowInterface, ? extends SimpleFooterInterface> getTable();
 
     public void testNoDataInstantChange() {
         enableShowData(false);

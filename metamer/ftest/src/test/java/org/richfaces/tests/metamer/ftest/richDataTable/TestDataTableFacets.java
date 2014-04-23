@@ -31,7 +31,7 @@ import org.richfaces.tests.metamer.ftest.abstractions.DataTableFacetsTest;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleFooterInterface;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleHeaderInterface;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleRowInterface;
-import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SimpleTable;
+import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SimpleDT;
 import org.testng.annotations.Test;
 
 
@@ -41,7 +41,7 @@ import org.testng.annotations.Test;
 public class TestDataTableFacets extends DataTableFacetsTest {
 
     @FindByJQuery("table.rf-dt[id$=richDataTable]")
-    private SimpleTable table;
+    private SimpleDT table;
 
     @Override
     public URL getTestUrl() {
@@ -50,7 +50,7 @@ public class TestDataTableFacets extends DataTableFacetsTest {
 
 
     @Override
-    protected SimpleTable getTable() {
+    protected SimpleDT getTable() {
         return table;
     }
 

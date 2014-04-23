@@ -25,7 +25,7 @@ import static org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitc
 import static org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton.LAST;
 
 import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
-import org.richfaces.fragment.dataTable.RichFacesDataTable;
+import org.richfaces.fragment.dataTable.AbstractTable;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleFooterInterface;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleHeaderInterface;
 import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
@@ -53,7 +53,7 @@ public abstract class DataTableScrollerTest extends AbstractDataTableTest {
         testRowCount(dataScroller1);
     }
 
-    public abstract RichFacesDataTable<? extends SimpleHeaderInterface, ?, ? extends SimpleFooterInterface> getTable();
+    protected abstract AbstractTable<? extends SimpleHeaderInterface, ?, ? extends SimpleFooterInterface> getTable();
 
     private void testRowCount(RichFacesDataScroller dataScroller) {
         if (rows != null) {
@@ -64,7 +64,7 @@ public abstract class DataTableScrollerTest extends AbstractDataTableTest {
             dataScroller.switchTo(FIRST);
         }
         int rowCountPreset = Integer.parseInt(dataTableAttributes.get(DataTableAttributes.rows));
-        int rowCountActual = getTable().advanced().getNumberOfRows();
+        int rowCountActual = getTable().advanced().getNumberOfVisibleRows();
         assertEquals(rowCountActual, Math.min(ELEMENTS_TOTAL, rowCountPreset));
 
         assertEquals(dataScroller.hasPages(), rowCountActual < ELEMENTS_TOTAL);
@@ -82,7 +82,7 @@ public abstract class DataTableScrollerTest extends AbstractDataTableTest {
             }
 
             int rowCountExpected = rowCountLastPageExpected(rowCountPreset);
-            rowCountActual = getTable().advanced().getNumberOfRows();
+            rowCountActual = getTable().advanced().getNumberOfVisibleRows();
             assertEquals(rowCountActual, rowCountExpected);
         }
     }
