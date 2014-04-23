@@ -19,13 +19,29 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
+package org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment;
 
-import org.richfaces.fragment.dataTable.RichFacesDataTable;
+import java.util.List;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleFooterInterface;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class SimpleTable extends RichFacesDataTable<SimpleHeader, SimpleRow, SimpleFooter> {
+public class SimpleEDTFooter implements SimpleFooterInterface {
 
+    @FindBy(className = "rf-edt-tbl-ftr")
+    private WebElement tableFooterElement;
+
+    @FindBy(className = "rf-edt-ftr-c-cnt")
+    private List<WebElement> columnFooters;
+
+    public String getFooterText() {
+        return tableFooterElement.getText();
+    }
+
+    public String getColumnFooterText(int column) {
+        return columnFooters.get(column).getText();
+    }
 }

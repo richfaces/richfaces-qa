@@ -21,27 +21,26 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
 
-import java.util.List;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleHeaderInterface;
+import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleRowInterface;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class SimpleHeader implements SimpleHeaderInterface {
+public class SimpleDTRow implements SimpleRowInterface {
 
-    @FindBy(className = "rf-dt-hdr")
-    private WebElement tableHeaderElement;
+    @FindBy(css = ".rf-ft-c:nth-of-type(1)")
+    private WebElement stateColumn;
 
-    @FindBy(className = "rf-dt-shdr-c")
-    private List<WebElement> columnHeaders;
+    @FindBy(css = ".rf-ft-c:nth-of-type(2)")
+    private WebElement capitalColumn;
 
-    public String getHeaderText() {
-        return tableHeaderElement.getText();
+    public WebElement getStateColumn() {
+        return stateColumn;
     }
 
-    public String getColumnHeaderText(int column) {
-        return columnHeaders.get(column).getText();
+    public WebElement getCapitalColumn() {
+        return capitalColumn;
     }
 }

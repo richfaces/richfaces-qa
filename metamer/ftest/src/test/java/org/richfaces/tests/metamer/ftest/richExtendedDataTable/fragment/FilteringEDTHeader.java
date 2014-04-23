@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
+package org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
@@ -36,7 +36,7 @@ import org.richfaces.tests.metamer.model.Employee;
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class FilteringHeader implements FilteringHeaderInterface {
+public class FilteringEDTHeader implements FilteringHeaderInterface {
 
     @FindByJQuery("[id$='columnHeaderSexInput']")
     private Select sexSelect;

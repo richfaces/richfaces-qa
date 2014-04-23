@@ -28,9 +28,9 @@ import org.jboss.arquillian.graphene.findby.FindByJQuery;
 
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.richDataTable.fragment.FilteringRow;
-import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SortingHeader;
-import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SortingTable;
+import org.richfaces.tests.metamer.ftest.richDataTable.fragment.FilteringDTRow;
+import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SortingDTHeader;
+import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SortingDT;
 import org.testng.annotations.Test;
 
 /**
@@ -39,7 +39,7 @@ import org.testng.annotations.Test;
 public class TestDataTableSortingUsingColumn extends DataTableSortingTest {
 
     @FindByJQuery("table.rf-dt[id$=richDataTable]")
-    private SortingTable table;
+    private SortingDT table;
 
     @Override
     public URL getTestUrl() {
@@ -47,7 +47,7 @@ public class TestDataTableSortingUsingColumn extends DataTableSortingTest {
     }
 
     @Override
-    public SortingTable getTable() {
+    public SortingDT getTable() {
         return table;
     }
 

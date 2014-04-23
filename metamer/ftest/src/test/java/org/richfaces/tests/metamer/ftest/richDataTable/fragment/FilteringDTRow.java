@@ -19,36 +19,55 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
+package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.abstractions.fragments.FilteringRowInterface;
+import org.richfaces.tests.metamer.model.Employee;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
- * @version $Revision: 22407 $
  */
-public class RF12304Page extends MetamerPage {
+public class FilteringDTRow implements FilteringRowInterface {
 
-    @FindBy(css = "#firstTable tr:nth-of-type(3)")
-    private WebElement thirdRowFirstTable;
+    @FindBy(css = "td:nth-of-type(1) img")
+    private WebElement sexColumnElement;
 
-    @FindBy(css = "#secondTable tr:nth-of-type(3)")
-    private WebElement thirdRowSecondTable;
+    @FindBy(css = "td:nth-of-type(2)")
+    private WebElement nameColumnElement;
 
-    public boolean isSelected(WebElement row) {
-        String clazz = row.getAttribute("class");
+    @FindBy(css = "td:nth-of-type(3)")
+    private WebElement titleColumnElement;
 
-        return clazz.contains("rf-edt-r-sel");
+    @FindBy(css = "td:nth-of-type(4)")
+    private WebElement numberOfKids1ColumnElement;
+
+    @FindBy(css = "td:nth-of-type(5)")
+    private WebElement numberOfKids2ColumnElement;
+
+    @Override
+    public Employee.Sex getSexColumnValue() {
+        return Employee.Sex.valueOf(sexColumnElement.getAttribute("alt"));
     }
 
-    public WebElement getThirdRowFirstTable() {
-        return thirdRowFirstTable;
+    @Override
+    public String getNameColumnValue() {
+        return nameColumnElement.getText();
     }
 
-    public WebElement getThirdRowSecondTable() {
-        return thirdRowSecondTable;
+    @Override
+    public String getTitleColumnValue() {
+        return titleColumnElement.getText();
     }
 
+    @Override
+    public int getNumberOfKids1ColumnValue() {
+        return Integer.parseInt(numberOfKids1ColumnElement.getText());
+    }
+
+    @Override
+    public int getNumberOfKids2ColumnValue() {
+        return Integer.parseInt(numberOfKids2ColumnElement.getText());
+    }
 }

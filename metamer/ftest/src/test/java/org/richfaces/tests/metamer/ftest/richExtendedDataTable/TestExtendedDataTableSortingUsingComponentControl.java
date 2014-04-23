@@ -21,90 +21,95 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.model.ExtendedDataTable;
-import org.testng.annotations.BeforeClass;
+import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SortingEDT;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22664 $
+ * @version $Revision: 22872 $
  */
-public class TestExtendedDataTableSortingUsingColumn extends DataTableSortingTest {
+@IssueTracking("https://issues.jboss.org/browse/RF-11359")
+public class TestExtendedDataTableSortingUsingComponentControl extends DataTableSortingTest {
 
     @Override
     public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richExtendedDataTable/sorting-using-column.xhtml");
+        return buildUrl(contextPath, "faces/components/richExtendedDataTable/sorting-using-component-control.xhtml");
     }
 
-    @BeforeClass
-    public void setupModel() {
-        model = new ExtendedDataTable(pjq("div.rf-edt[id$=richEDT]"));
+    @FindByJQuery("div.rf-edt[id$=richEDT]")
+    private SortingEDT table;
+
+    @Override
+    protected SortingEDT getTable() {
+        return table;
     }
 
-    @Test
+    @Test(groups = {"Future"})
     @Override
     public void testSortModeSingle() {
         super.testSortModeSingle();
     }
 
-    @Test
+    @Test(groups = {"Future"})
     @Override
     public void testSortModeSingleReverse() {
         super.testSortModeSingleReverse();
     }
 
-    @Test
+    @Test(groups = {"Future"})
     @Override
     public void testSortModeSingleDoesntRememberOrder() {
         super.testSortModeSingleDoesntRememberOrder();
     }
 
-    @Test(groups = { "Future" })
+    @Test(groups = {"Future"})
     @Override
-    @IssueTracking("https://issues.jboss.org/browse/RF-9932 http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790")
+    @IssueTracking({"https://issues.jboss.org/browse/RF-9932",
+        "http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790"})
     public void testSortModeSingleRerenderAll() {
         super.testSortModeSingleRerenderAll();
     }
 
-    @Test
+    @Test(groups = {"Future"})
     @Override
     public void testSortModeSingleFullPageRefresh() {
         super.testSortModeSingleFullPageRefresh();
     }
 
-    @Test
+    @Test(groups = {"Future"})
     @Override
     public void testSortModeMulti() {
         super.testSortModeMulti();
     }
 
-    @Test
+    @Test(groups = {"Future"})
     @Override
     public void testSortModeMultiReverse() {
         super.testSortModeMultiReverse();
     }
 
-    @Test
+    @Test(groups = {"Future"})
     @Override
     public void testSortModeMultiReplacingOldOccurences() {
         super.testSortModeMultiReplacingOldOccurences();
     }
 
-    @Test(groups = { "Future" })
+    @Test(groups = {"Future"})
     @Override
-    @IssueTracking("https://issues.jboss.org/browse/RF-9932 http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790")
+    @IssueTracking({"https://issues.jboss.org/browse/RF-9932",
+        "http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790"})
     public void testSortModeMultiRerenderAll() {
         super.testSortModeMultiRerenderAll();
     }
 
-    @Test
+    @Test(groups = {"Future"})
     @Override
     public void testSortModeMultiFullPageRefresh() {
         super.testSortModeMultiFullPageRefresh();
