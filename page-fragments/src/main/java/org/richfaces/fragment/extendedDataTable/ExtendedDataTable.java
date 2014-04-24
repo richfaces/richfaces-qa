@@ -33,6 +33,9 @@ public interface ExtendedDataTable {
     /**
     * Selects a particular row.
     *
+    * All indexes are relative to one page. It does not take into account
+    * table pagination.
+    *
     * @param rowIndex the index of the row to be selected
     * @param keys the keys to be pressed prior the selecting of the row,
     * and released afterwards. No more than 2 keys can be passed. Usually,
@@ -42,6 +45,9 @@ public interface ExtendedDataTable {
 
     /**
     * Deselects a particular row.
+    *
+    * All indexes are relative to one page. It does not take into account
+    * table pagination.
     *
     * @param rowIndex the index of the row to be deselected
     * @param keys the keys to be pressed prior the deselecting of the row,
