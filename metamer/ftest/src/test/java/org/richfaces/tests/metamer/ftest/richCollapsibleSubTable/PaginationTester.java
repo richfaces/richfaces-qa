@@ -19,24 +19,44 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richCollapsibleSubTableToggler;
+package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 
-import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22737 $
  */
-public enum CollapsibleSubTableTogglerAttributes implements AttributeEnum {
+public abstract class PaginationTester {
 
-    binding,
-    collapsedIcon,
-    collapsedLabel,
-    event,
-    expandedIcon,
-    expandedLabel,
-    FOR,
-    id,
-    rendered
+    protected RichFacesDataScroller dataScroller;
+    private int[] testPages;
+
+    public void initializeTestedPages(int lastPage) {
+        int l = lastPage;
+        testPages = new int[]{ 3, l, l / 2, l - 1 };
+        for (int i = 0; i < testPages.length; i++) {
+            testPages[i] = Math.min(l, Math.max(1, testPages[i]));
+        }
+    }
+
+    public void setDataScroller(RichFacesDataScroller dataScroller) {
+        this.dataScroller = dataScroller;
+    }
+
+    public void testNumberedPages() {
+        Integer lastNumber = null;
+        for (int pageNumber : testPages) {
+            if (lastNumber == (Integer) pageNumber) {
+                continue;
+            }
+            verifyBeforeScrolling();
+            dataScroller.switchTo(pageNumber);
+            verifyAfterScrolling();
+            lastNumber = pageNumber;
+        }
+    }
+
+    protected abstract void verifyBeforeScrolling();
+
+    protected abstract void verifyAfterScrolling();
 }
