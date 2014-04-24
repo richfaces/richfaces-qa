@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source
- * Copyright 2013, Red Hat, Inc. and individual contributors
+ * Copyright 2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -23,10 +23,11 @@ package org.richfaces.fragment.dataTable;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.fragment.Root;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.fragment.common.AdvancedInteractions;
@@ -36,8 +37,11 @@ import org.richfaces.fragment.common.Utils;
 /**
  *
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @param <HEADER>
+ * @param <ROW>
+ * @param <FOOTER>
  */
-public abstract class AbstractTable<HEADER, ROW, FOOTER> implements DataTable<HEADER, ROW, FOOTER>, AdvancedInteractions<AbstractTable.AdvancedTableInteractions>{
+public abstract class AbstractTable<HEADER, ROW, FOOTER> implements DataTable<HEADER, ROW, FOOTER>, AdvancedInteractions<AbstractTable.AdvancedTableInteractions> {
 
     @Root
     protected WebElement root;
@@ -76,14 +80,17 @@ public abstract class AbstractTable<HEADER, ROW, FOOTER> implements DataTable<HE
         return result;
     }
 
+    @Override
     public HEADER getHeader() {
         return Graphene.createPageFragment(headerClass, advanced().getWholeTableHeaderElement());
     }
 
+    @Override
     public FOOTER getFooter() {
         return Graphene.createPageFragment(footerClass, advanced().getWholeTableFooterElement());
     }
 
+    @Override
     public abstract AdvancedTableInteractions advanced();
 
     public abstract class AdvancedTableInteractions {
@@ -130,7 +137,7 @@ public abstract class AbstractTable<HEADER, ROW, FOOTER> implements DataTable<HE
 
         public abstract List<WebElement> getFirstRowCellsElements();
 
-        public abstract ByJQuery getSelectorForCell(int column);
+        public abstract By getSelectorForCell(int column);
 
         public abstract WebElement getWholeTableHeaderElement();
 

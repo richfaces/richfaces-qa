@@ -22,14 +22,17 @@
 package org.richfaces.fragment.dataTable;
 
 import java.util.List;
-import org.jboss.arquillian.graphene.findby.ByJQuery;
 
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @param <HEADER>
+ * @param <ROW>
+ * @param <FOOTER>
  */
 public abstract class RichFacesDataTable<HEADER, ROW, FOOTER> extends AbstractTable<HEADER, ROW, FOOTER> {
 
