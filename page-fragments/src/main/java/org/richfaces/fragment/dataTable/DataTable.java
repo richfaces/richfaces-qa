@@ -33,7 +33,11 @@ import java.util.List;
  * or FOOTER would look like.</p> For example HEADER page fragment can provide
  * encapsulated filtering or sorting table services.
  *
- * <p> Note that one can use <tt>org.richfaces.fragment.common.NullFragment</tt>
+ * <p>Note 1: Table does not take into account pagination. Thus one has to
+ *  swith to a different page manually in order to access all rows. All indexes
+ *  used by methods are relative to one page.</p>
+ *
+ * <p>Note 2: that one can use <tt>org.richfaces.fragment.common.NullFragment</tt>
  * as a Null Object pattern for any of the generic types.</p>
  *
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -44,7 +48,10 @@ import java.util.List;
 public interface DataTable<HEADER, ROW, FOOTER> {
 
     /**
-    * Returns an initialized <tt>ROW</tt> page fragment with index <tt>n</tt>.
+    * Returns a <tt>ROW</tt> page fragment with index <tt>n</tt>.
+    *
+    * All indexes are relative to one page. It does not take into account
+    * table pagination.
     *
     * @param n zero based index of the row to be returned
     * @return
@@ -52,35 +59,44 @@ public interface DataTable<HEADER, ROW, FOOTER> {
     ROW getRow(int n);
 
     /**
-    * Returns the first initialized <tt>ROW</tt> page fragment.
+    * Returns the first <tt>ROW</tt> page fragment.
+    *
+    * All indexes are relative to one page. It does not take into account
+    * table pagination.
     *
     * @return
     */
     ROW getFirstRow();
 
     /**
-    * Returns the last initialized <tt>ROW</tt> page fragment.
+    * Returns the last <tt>ROW</tt> page fragment.
+    *
+    * All indexes are relative to one page. It does not take into account
+    * table pagination.
     *
     * @return
     */
     ROW getLastRow();
 
     /**
-    * Returns a list of initialized <tt>ROW</tt> page fragments.
+    * Returns a list of <tt>ROW</tt> page fragments.
+    *
+    * All indexes are relative to one page. It does not take into account
+    * table pagination.
     *
     * @return
     */
     List<ROW> getAllRows();
 
     /**
-    * Returns an initialized <tt>HEADER</tt> page fragment of this table.
+    * Returns a <tt>HEADER</tt> page fragment of this table.
     *
     * @return
     */
     HEADER getHeader();
 
     /**
-    * Returns an initialized <tt>FOOTER</tt> page fragment of this table.
+    * Returns a <tt>FOOTER</tt> page fragment of this table.
     *
     * @return
     */

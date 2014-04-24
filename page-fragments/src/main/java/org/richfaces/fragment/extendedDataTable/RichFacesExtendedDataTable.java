@@ -92,6 +92,10 @@ public abstract class RichFacesExtendedDataTable<HEADER, ROW, FOOTER> extends Ab
         if (rowIndex < 0) {
             throw new IllegalArgumentException("rowIndex must not be negative");
         }
+        if(advanced().getNumberOfVisibleRows() < rowIndex) {
+            throw new IllegalArgumentException("There is not so many rows! Requesting: "
+                    + rowIndex + "but there is only: " + advanced().getNumberOfVisibleRows());
+        }
         if (keys.length > 2) {
             throw new IllegalArgumentException("Only one of: SHIFT, CTRL or their combination can be passed!");
         }
