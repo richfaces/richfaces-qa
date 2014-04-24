@@ -22,8 +22,10 @@
 package org.richfaces.fragment.common;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.jboss.arquillian.graphene.context.GrapheneContext;
+import org.jboss.arquillian.graphene.enricher.WebElementUtils;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxy;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
 import org.openqa.selenium.By;
@@ -65,6 +67,68 @@ public final class Utils {
      */
     public static int getIndexOfElement(WebElement element) {
         return Integer.valueOf(returningJQ(getExecutorFromElement(element), "index()", element));
+    }
+
+    /**
+     * Returns the closest ancestor from the element.
+     *
+     * @param element element from which will be the ancestor found
+     */
+    public static WebElement getAncestorOfElement(WebElement element) {
+        return getAncestorOfElement(element, "*");
+    }
+
+    /**
+     * Returns the closest ancestor with tagName from the element.
+     *
+     * @param element element from which will be the ancestor found
+     * @param tagNameOfAncestorElement tagName of the ancestor to be found
+     */
+    public static WebElement getAncestorOfElement(WebElement element, String tagNameOfAncestorElement) {
+        return getXpathLocatedElement(element, tagNameOfAncestorElement, "ancestor", false);
+    }
+
+    /**
+     * Returns the closest following sibling from the element.
+     *
+     * @param element element from which will be the sibling found
+     */
+    public static WebElement getNextSiblingOfElement(WebElement element) {
+        return getNextSiblingOfElement(element, "*");
+    }
+
+    /**
+     * Returns the closest following sibling with tagName from the element.
+     *
+     * @param element element from which will be the sibling found
+     * @param tagNameofSibling tagName of the sibling to be found
+     */
+    public static WebElement getNextSiblingOfElement(WebElement element, String tagNameofSibling) {
+        return getXpathLocatedElement(element, tagNameofSibling, "following-sibling", true);
+    }
+
+    /**
+     * Returns the closest preceding sibling from the element.
+     *
+     * @param element element from which will be the sibling found
+     */
+    public static WebElement getPreviousSiblingOfElement(WebElement element) {
+        return getPreviousSiblingOfElement(element, "*");
+    }
+
+    /**
+     * Returns the closest preceding sibling with tagName from the element.
+     *
+     * @param element element from which will be the sibling found
+     * @param tagNameofSibling tagName of the sibling to be found
+     */
+    public static WebElement getPreviousSiblingOfElement(WebElement element, String tagNameofSibling) {
+        return getXpathLocatedElement(element, tagNameofSibling, "preceding-sibling", false);
+    }
+
+    private static WebElement getXpathLocatedElement(WebElement fromElement, String tagnameOfSearchedElement, String searchFunction, boolean isFirst) {
+        List<WebElement> elements = WebElementUtils.findElementsLazily(By.xpath(String.format("./%s::%s", searchFunction, tagnameOfSearchedElement)), fromElement);
+        return elements.get(isFirst ? 0 : elements.size() - 1);
     }
 
     /**
