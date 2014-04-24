@@ -78,10 +78,7 @@ public final class Utils {
      * @return
      */
     public static Optional<String> getComponentOption(WebElement rootOfComponent, String option) {
-        JavascriptExecutor executor = getExecutorFromElement(rootOfComponent);
-        String result = (String) executor
-            .executeScript("return RichFaces.$(arguments[0]).options." + option, rootOfComponent);
-        return Optional.of(result);
+        return Optional.of((String) invokeRichFacesJSAPIFunction(rootOfComponent, "options." + option));
     }
 
     /**
@@ -94,10 +91,7 @@ public final class Utils {
      * @return actual component option value, or null if it is equal to document object
      */
     public static Optional<String> getComponentOptionDocumentObjectSafe(WebElement rootOfComponent, String option) {
-        JavascriptExecutor executor = getExecutorFromElement(rootOfComponent);
-        Boolean resultIsDocumentObject = (Boolean) executor.executeScript("return RichFaces.$(arguments[0]).options."
-            + option + " == document", rootOfComponent);
-        if (!resultIsDocumentObject) {
+        if (!(Boolean) invokeRichFacesJSAPIFunction(rootOfComponent, "options." + option + " == document")) {
             return getComponentOption(rootOfComponent, option);
         } else {
             return Optional.fromNullable(null);
