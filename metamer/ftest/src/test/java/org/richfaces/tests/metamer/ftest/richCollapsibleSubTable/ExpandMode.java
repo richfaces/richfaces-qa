@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2014, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -19,24 +19,9 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richCollapsibleSubTableToggler;
+package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 
-import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+public enum ExpandMode {
 
-/**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22737 $
- */
-public enum CollapsibleSubTableTogglerAttributes implements AttributeEnum {
-
-    binding,
-    collapsedIcon,
-    collapsedLabel,
-    event,
-    expandedIcon,
-    expandedLabel,
-    FOR,
-    id,
-    rendered
+    none, ajax, client, server;
 }

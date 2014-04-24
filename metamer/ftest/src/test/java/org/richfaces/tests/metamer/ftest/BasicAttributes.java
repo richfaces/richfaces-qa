@@ -42,6 +42,7 @@ public enum BasicAttributes implements AttributeEnum {
     errorStyle,
     errorStyleClass,
     finishClass,
+    footerClass,
     groupClass,
     groupDisabledClass,
     handleClass,
