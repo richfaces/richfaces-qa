@@ -80,7 +80,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         <rich:column>Filter by <tt>filterExpression</tt></rich:column>
                     </f:facet>
 
-                    <rich:column id="columnState2" filterExpression="#{fn:contains(fn:toLowerCase(record.state), fn:toLowerCase(richColumnBean.stateNameToFilter))}">
+                    <rich:column id="columnState2" filterExpression="#{fn:containsIgnoreCase(record.state, richColumnBean.stateNameToFilter)}">
                         <f:facet name="header">State</f:facet>
                         <h:outputText id="state" value="#{record.state}" />
                     </rich:column>
@@ -91,7 +91,6 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </rich:column>
                 </rich:dataTable>
             </h:panelGrid>
-
 
         </ui:define>
 

@@ -21,27 +21,25 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richColumn;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
 
 import org.testng.annotations.Test;
 
-
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22970 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestColumnComparator extends AbstractColumnSortingTest {
+public class TestColumnSorting extends AbstractColumnSortingTest {
 
     @Override
     public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richColumn/comparator.xhtml");
+        return buildUrl(contextPath, "faces/components/richColumn/sorting.xhtml");
     }
 
     @Test
-    @Override
     public void testSortingWithSortOrder() {
-        super.testSortingWithSortOrder();
+        checkSortingWithSortOrder();
     }
 }

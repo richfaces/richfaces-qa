@@ -21,32 +21,25 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richColumn;
 
-import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+
+import java.net.URL;
+
+import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22738 $
  */
-public enum ColumnAttributes implements AttributeEnum {
+public class TestColumnComparator extends AbstractColumnSortingTest {
 
-    binding,
-    breakRowBefore,
-    colspan,
-    comparator,
-    filter,
-    filterExpression,
-    filterValue,
-    footerClass,
-    headerClass,
-    id,
-    rendered,
-    requestType,
-    rowspan,
-    sortBy,
-    sortOrder,
-    style,
-    styleClass,
-    width
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richColumn/comparator.xhtml");
+    }
 
+    @Test
+    public void testSortingWithSortOrder() {
+        checkSortingWithSortOrder();
+    }
 }

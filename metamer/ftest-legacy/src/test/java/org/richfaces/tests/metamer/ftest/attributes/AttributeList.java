@@ -9,8 +9,6 @@ import org.richfaces.tests.metamer.ftest.MetamerAttributes;
 import org.richfaces.tests.metamer.ftest.a4jAttachQueue.AttachQueueAttributes;
 import org.richfaces.tests.metamer.ftest.a4jQueue.QueueAttributes;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets;
-import org.richfaces.tests.metamer.ftest.richColumn.ColumnAttributes;
-import org.richfaces.tests.metamer.ftest.richColumnGroup.ColumnGroupAttributes;
 import org.richfaces.tests.metamer.ftest.richDataGrid.DataGridAttributes;
 import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 
@@ -22,8 +20,6 @@ public class AttributeList {
     public static Attributes<AttachQueueAttributes> attachQueueAttrs2 = new Attributes<AttachQueueAttributes>(
         pjq("table.attributes[id$=attributes2]"));
     public static Attributes<BasicAttributes> basicAttributes = new Attributes<BasicAttributes>();
-    public static Attributes<ColumnAttributes> columnAttributes = new Attributes<ColumnAttributes>();
-    public static Attributes<ColumnGroupAttributes> columnGroupAttributes = new Attributes<ColumnGroupAttributes>();
     public static Attributes<DataGridAttributes> dataGridAttributes = new Attributes<DataGridAttributes>();
     public static Attributes<DataTableAttributes> dataTableAttributes = new Attributes<DataTableAttributes>();
     public static Attributes<DataTableFacets> dataTableFacets = new Attributes<DataTableFacets>(RequestType.XHR); // for facets

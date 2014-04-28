@@ -26,7 +26,6 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22738 $
  */
 public enum ColumnAttributes implements AttributeEnum {
 
@@ -35,16 +34,18 @@ public enum ColumnAttributes implements AttributeEnum {
     colspan,
     comparator,
     filter,
+    filterConverterMessage,
     filterExpression,
+    filterType,
     filterValue,
     footerClass,
     headerClass,
     id,
     rendered,
-    requestType,
     rowspan,
     sortBy,
     sortOrder,
+    sortType,
     style,
     styleClass,
     width
