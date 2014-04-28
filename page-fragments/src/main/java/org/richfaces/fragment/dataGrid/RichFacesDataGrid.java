@@ -26,7 +26,6 @@ import java.util.List;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.AdvancedInteractions;
@@ -34,8 +33,14 @@ import org.richfaces.fragment.common.TypeResolver;
 import org.richfaces.fragment.common.Utils;
 
 /**
+ * Class representing a page fragment for RichFaces DataGrid.
+ *
+ * <p>Be aware, that this class is not intended to be used directly (injected
+ * into the test with <tt>@FindBy</tt>), but to be extended so the generic types
+ * are substituted with a regular type representing particular part of the grid.</p>
  *
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @param <RECORD>
  */
 public class RichFacesDataGrid<RECORD> implements DataGrid<RECORD>, AdvancedInteractions<RichFacesDataGrid.AdvancedDataGridInteractions> {
 

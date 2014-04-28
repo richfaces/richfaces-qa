@@ -29,6 +29,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 /**
+ * Class representing a page fragment for RichFaces DataTable.
+ *
+ * <p>Be aware, that this class is not intended to be used directly (injected
+ * into the test with <tt>@FindBy</tt>), but to be extended so the generic types
+ * are substituted with a regular type representing particular part of the table.</p>
+ *
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @param <HEADER>
  * @param <ROW>
