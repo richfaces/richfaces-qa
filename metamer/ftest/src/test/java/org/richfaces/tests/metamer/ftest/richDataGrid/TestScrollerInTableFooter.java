@@ -22,36 +22,47 @@
 package org.richfaces.tests.metamer.ftest.richDataGrid;
 
 import javax.xml.bind.JAXBException;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.richfaces.fragment.dataScroller.DataScroller;
+import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
 
-import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22407 $
  */
-@Use(field = "dataScroller", value = "dataScroller2")
-public class TestScrollerInTableFooter extends AbstractScrollerTest {
+public class TestScrollerInTableFooter extends AbstractDataGridScrollerTest {
+
+    @FindByJQuery("span.rf-ds[id$=scroller2]")
+    private RichFacesDataScroller dataScroller2;
+
+    @Override
+    public DataScroller getDataScroller() {
+        return dataScroller2;
+    }
 
     public TestScrollerInTableFooter() throws JAXBException {
     }
 
     @Test
-    @Override
+    @UseWithField(field = "columns", valuesFrom = ValuesFrom.FROM_FIELD, value = "COUNTS1")
     public void testColumnsAttribute() {
         super.testColumnsAttribute();
     }
 
     @Test
-    @Override
+    @UseWithField(field = "elements", valuesFrom = ValuesFrom.FROM_FIELD, value = "COUNTS2")
     public void testElementsAttribute() {
         super.testElementsAttribute();
     }
 
     @Test
-    @Override
+    @UseWithField(field = "first", valuesFrom = ValuesFrom.FROM_FIELD, value = "COUNTS2")
     public void testFirstAttributeDoesntInfluentScroller() {
         super.testFirstAttributeDoesntInfluentScroller();
     }
+
 }
