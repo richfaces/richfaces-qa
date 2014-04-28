@@ -21,30 +21,28 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richColumn;
 
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.columnAttributes;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.testng.Assert.assertEquals;
 
 import java.util.Collections;
 
-import org.jboss.arquillian.ajocado.request.RequestType;
 import org.richfaces.model.SortOrder;
 import org.richfaces.tests.metamer.bean.rich.RichColumnBean;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.model.Capital;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22971 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractColumnSortingTest extends AbstractColumnModelTest {
+public abstract class AbstractColumnSortingTest extends AbstractColumnTest {
 
-    @Inject
-    @Use(enumeration = true)
-    SortOrder sortOrder;
+    @UseForAllTests(valuesFrom = FROM_ENUM, value = "")
+    protected SortOrder sortOrder;
 
-    public void testSortingWithSortOrder() {
-        columnAttributes.setRequestType(RequestType.XHR);
+    public void checkSortingWithSortOrder() {
+        columnAttributes.setRequestType(WaitRequestType.XHR);
         columnAttributes.set(ColumnAttributes.sortOrder, sortOrder);
 
         switch (sortOrder) {
@@ -54,20 +52,16 @@ public abstract class AbstractColumnSortingTest extends AbstractColumnModelTest 
             case descending:
                 Collections.sort(capitals, Collections.reverseOrder(RichColumnBean.STATE_NAME_LENGTH_COMPARATOR));
                 break;
-
             default:
-                // default case required by checkstyle
                 break;
         }
-
+        Capital actualCapital, expectedCapital;
         for (int i = 0; i < capitals.size(); i++) {
-            Capital actualCapital = model.getCapital(i);
-            Capital expectedCapital = capitals.get(i);
+            actualCapital = getTable().getRow(i);
+            expectedCapital = capitals.get(i);
 
             assertEquals(actualCapital.getName(), expectedCapital.getName());
             assertEquals(actualCapital.getState(), expectedCapital.getState());
         }
-
-        columnAttributes.setRequestType(RequestType.HTTP);
     }
 }

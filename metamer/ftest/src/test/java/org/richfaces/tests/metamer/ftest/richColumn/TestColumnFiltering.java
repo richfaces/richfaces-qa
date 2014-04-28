@@ -21,36 +21,41 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richColumn;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.List;
 
-import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.tests.metamer.bean.rich.RichColumnBean;
 import org.richfaces.tests.metamer.model.Capital;
 import org.testng.annotations.Test;
 
 import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22970 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestColumnFiltering extends AbstractColumnModelTest {
+public class TestColumnFiltering extends AbstractColumnTest {
 
     private static final String STATE_NAME = "Maryland";
-    JQueryLocator stateNameToFilter = pjq("input:text[id$=stateNameToFilter]");
-    JQueryLocator tableWithFilter = pjq("table.rf-dt[id$=richDataTable1]");
-    JQueryLocator tableWithFilterExpression = pjq("table.rf-dt[id$=richDataTable2]");
-    RichColumnBean richColumnBean = new RichColumnBean();
+    @FindBy(css = "input[id$=stateNameToFilter]")
+    private TextInputComponentImpl stateNameFilterInput;
+
+    @FindBy(css = ".rf-dt[id$=richDataTable1]")
+    private DataTable tableWithFilter;
+    @FindBy(css = ".rf-dt[id$=richDataTable2]")
+    private DataTable tableWithFilterExpression;
+
+    private RichColumnBean richColumnBean = new RichColumnBean();
+
+    private DataTable actualTable;
 
     @Override
     public URL getTestUrl() {
@@ -59,13 +64,13 @@ public class TestColumnFiltering extends AbstractColumnModelTest {
 
     @Test
     public void testFilterAttribute() {
-        model.setRoot(tableWithFilter);
+        actualTable = tableWithFilter;
         testFiltering();
     }
 
     @Test
     public void testFilterExpressionAttribute() {
-        model.setRoot(tableWithFilterExpression);
+        actualTable = tableWithFilterExpression;
         testFiltering();
     }
 
@@ -73,36 +78,22 @@ public class TestColumnFiltering extends AbstractColumnModelTest {
         for (int i = 1; i <= STATE_NAME.length(); i++) {
             String namePart = STATE_NAME.substring(0, i);
 
-            selenium.type(stateNameToFilter, namePart);
-            guardXhr(selenium).fireEvent(stateNameToFilter, Event.KEYUP);
+            Graphene.guardAjax(stateNameFilterInput.clear()).sendKeys(namePart);
 
-            Collection<Capital> actualCapitals = model.getCapitals();
+            List<? extends Capital> actualCapitals = actualTable.getAllRows();
 
             richColumnBean.setStateNameToFilter(namePart);
-            Collection<Capital> expectedCapitals = Collections2.filter(capitals, new Predicate<Capital>() {
+            List<? extends Capital> expectedCapitals = Lists.newArrayList(Iterables.filter(capitals, new Predicate<Capital>() {
 
                 @Override
                 public boolean apply(Capital capital) {
                     return richColumnBean.getStateNameFilter().accept(capital);
                 }
-            });
-
-            assertEqualsCapitals(actualCapitals, expectedCapitals);
-        }
-    }
-
-    private void assertEqualsCapitals(Collection<Capital> actualCapitals, Collection<Capital> expectedCapitals) {
-        assertEquals(actualCapitals.size(), expectedCapitals.size());
-
-        Iterator<Capital> actualIterator = actualCapitals.iterator();
-        Iterator<Capital> expectedIterator = expectedCapitals.iterator();
-
-        while (actualIterator.hasNext()) {
-            Capital actual = actualIterator.next();
-            Capital expected = expectedIterator.next();
-
-            assertEquals(actual.getName(), expected.getName());
-            assertEquals(actual.getState(), actual.getState());
+            }));
+            assertEquals(actualCapitals.size(), expectedCapitals.size(), "Number of capitals does not match.");
+            for (int j = 0; j < expectedCapitals.size(); j++) {
+                assertEquals(actualCapitals.get(j).toString(), expectedCapitals.get(j).toString());
+            }
         }
     }
 }

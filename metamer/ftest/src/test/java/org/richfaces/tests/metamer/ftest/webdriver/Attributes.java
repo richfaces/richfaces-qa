@@ -54,6 +54,7 @@ public class Attributes<T extends AttributeEnum> {
     private final String attributesID;
 
     private FutureTarget<WebDriver> browser;
+    private WaitRequestType requestType = WaitRequestType.HTTP;
 
     public Attributes(FutureTarget<WebDriver> driver, String attributesID) {
         this.attributesID = attributesID;
@@ -74,19 +75,19 @@ public class Attributes<T extends AttributeEnum> {
             if (valueToBeSet.equals(NULLSTRING)) {
                 if (new StringEqualsWrapper(attributeValue).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
                     if (!element.isSelected()) {
-                        MetamerPage.waitRequest(element, WaitRequestType.HTTP).click();
+                        MetamerPage.waitRequest(element, requestType).click();
                     }
                     return;
                 }
             } else if (valueToBeSet.equals(attributeValue)) {
                 if (!element.isSelected()) {
-                    MetamerPage.waitRequest(element, WaitRequestType.HTTP).click();
+                    MetamerPage.waitRequest(element, requestType).click();
                 }
                 return;
             } else if (attributeValue.contains(valueToBeSet)) {
                 //for image selection radios, which value contains a source url of the image
                 if (!element.isSelected()) {
-                    MetamerPage.waitRequest(element, WaitRequestType.HTTP).click();
+                    MetamerPage.waitRequest(element, requestType).click();
                 }
                 return;
             }
@@ -101,7 +102,7 @@ public class Attributes<T extends AttributeEnum> {
             option = NULLSTRING;
         }
         if (!select.getFirstSelectedOption().getText().equals(option)) {// == is selected?
-            MetamerPage.waitRequest(select, WaitRequestType.HTTP).selectByVisibleText(option);
+            MetamerPage.waitRequest(select, requestType).selectByVisibleText(option);
         }
     }
 
@@ -115,7 +116,7 @@ public class Attributes<T extends AttributeEnum> {
         String text = input.getAttribute("value");
         if (!value.equals(text)) {
             Utils.jQ((JavascriptExecutor) getBrowser(), "val(\"" + value + "\")", input);
-            MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();
+            MetamerPage.waitRequest(input, requestType).submit();
         }
     }
 
@@ -309,6 +310,10 @@ public class Attributes<T extends AttributeEnum> {
                 throw new IllegalArgumentException("Unknown property " + result.getTag());
         }
         checkIfPropertyWasSet(propertyNameCorrect, valueAsString);
+    }
+
+    public void setRequestType(WaitRequestType requestType) {
+        this.requestType = requestType;
     }
 
     private abstract static class SearchResult {
