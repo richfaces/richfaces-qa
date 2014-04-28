@@ -259,7 +259,6 @@ FSF site: http://www.fsf.org. -->
                             <classifier>jbas71</classifier>
                             <packagingExcludes>${jbas71.excluded.libraries}</packagingExcludes>
                             <attachClasses>true</attachClasses>
-                            <attachSources>true</attachSources>
                         </configuration>
                         <executions>
                             <execution>
@@ -525,7 +524,6 @@ FSF site: http://www.fsf.org. -->
                                     <classifier>tomcat7-mojarra</classifier>
                                     <packagingExcludes>${tomcat7-mojarra.excluded.libraries}</packagingExcludes>
                                     <attachClasses>false</attachClasses>
-                                    <attachSources>false</attachSources>
                                 </configuration>
                             </execution>
                             <execution>
@@ -541,7 +539,6 @@ FSF site: http://www.fsf.org. -->
                                     <classifier>tomcat7-myfaces</classifier>
                                     <packagingExcludes>${tomcat7-myfaces.excluded.libraries}</packagingExcludes>
                                     <attachClasses>false</attachClasses>
-                                    <attachSources>false</attachSources>
                                 </configuration>
                             </execution>
                             <execution>
@@ -554,7 +551,6 @@ FSF site: http://www.fsf.org. -->
                                     <classifier>tomee15</classifier>
                                     <packagingExcludes>${tomee15.excluded.libraries}</packagingExcludes>
                                     <attachClasses>false</attachClasses>
-                                    <attachSources>false</attachSources>
                                 </configuration>
                             </execution>
                             <execution>
@@ -567,7 +563,6 @@ FSF site: http://www.fsf.org. -->
                                     <classifier>glassfish31</classifier>
                                     <packagingExcludes>${glassfish31.excluded.libraries}</packagingExcludes>
                                     <attachClasses>false</attachClasses>
-                                    <attachSources>false</attachSources>
                                 </configuration>
                             </execution>
                         </executions>
