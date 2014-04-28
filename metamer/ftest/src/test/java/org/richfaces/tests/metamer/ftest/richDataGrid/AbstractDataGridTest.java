@@ -24,8 +24,6 @@ package org.richfaces.tests.metamer.ftest.richDataGrid;
 import static java.lang.Math.ceil;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-import static org.jboss.arquillian.ajocado.Graphene.guardHttp;
-import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
@@ -34,14 +32,17 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.bind.JAXBException;
+import org.jboss.arquillian.graphene.Graphene;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.openqa.selenium.WebElement;
+import org.richfaces.fragment.dataGrid.RichFacesDataGrid;
 import org.richfaces.tests.metamer.bean.Model;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.metamer.ftest.model.DataGrid;
+import org.richfaces.tests.metamer.ftest.richDataGrid.fragment.GridRecordInterface;
+import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.model.Capital;
 import org.testng.annotations.BeforeMethod;
 
@@ -49,29 +50,29 @@ import org.testng.annotations.BeforeMethod;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22407 $
  */
-public abstract class AbstractDataGridTest extends AbstractGrapheneTest {
+public abstract class AbstractDataGridTest extends AbstractWebDriverTest {
 
     protected static final int ELEMENTS_TOTAL = 50;
 
+    protected static final Integer[] COUNTS1 = {1, 3, 11, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1,
+        ELEMENTS_TOTAL, ELEMENTS_TOTAL + 1};
+
+    protected static final Integer[] COUNTS2 = {0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1,
+        ELEMENTS_TOTAL, ELEMENTS_TOTAL + 1};
+
     List<Capital> capitals;
 
-    JQueryLocator attributeColumns = pjq("input[id$=columnsInput]");
-    JQueryLocator attributeElements = pjq("input[id$=elementsInput]");
-    JQueryLocator attributeFirst = pjq("input[id$=firstInput]");
-    JQueryLocator attributeShowData = pjq("input:checkbox[id$=noDataCheckbox]");
+    @FindByJQuery("input:checkbox[id$=noDataCheckbox]")
+    protected WebElement attributeShowData;
 
-    DataGrid dataGrid = new DataGrid(jq("table.rf-dg[id$=richDataGrid]"));
+    public abstract RichFacesDataGrid<? extends GridRecordInterface> getDataGrid();
 
-    @Inject
-    @Use(ints = { 3 })
-    Integer columns;
+    private final Attributes<DataGridAttributes> dataGridAttributes = getAttributes();
 
-    @Inject
-    @Use(empty = true)
+    Integer columns = 3;
+
     Integer elements;
 
-    @Inject
-    @Use(empty = true)
     Integer first;
 
     int expectedFirst;
@@ -87,14 +88,26 @@ public abstract class AbstractDataGridTest extends AbstractGrapheneTest {
 
     @BeforeMethod
     public void prepareAttributes() {
-        prepareAttribute(attributeColumns, columns);
-        prepareAttribute(attributeElements, elements);
-        prepareAttribute(attributeFirst, first);
+        if (columns != null) {
+            dataGridAttributes.set(DataGridAttributes.columns, columns.toString());
+        } else {
+            dataGridAttributes.reset(DataGridAttributes.columns);
+        }
+        if (elements != null) {
+            dataGridAttributes.set(DataGridAttributes.elements, elements.toString());
+        } else {
+            dataGridAttributes.reset(DataGridAttributes.elements);
+        }
+        if (first != null) {
+            dataGridAttributes.set(DataGridAttributes.first, first.toString());
+        } else {
+            dataGridAttributes.reset(DataGridAttributes.first);
+        }
     }
 
-    private void prepareAttribute(ElementLocator<?> inputLocator, Object value) {
+    private void prepareAttribute(WebElement inputElement, Object value) {
         String v = value == null ? "" : value.toString();
-        guardHttp(selenium).type(inputLocator, v);
+        Graphene.guardHttp(inputElement).sendKeys(v);
     }
 
     protected void verifyGrid() {
@@ -105,9 +118,9 @@ public abstract class AbstractDataGridTest extends AbstractGrapheneTest {
 
     protected void verifyCounts() {
         try {
-            assertEquals(dataGrid.getElementCount(), (int) expectedElements, "elements");
-            assertEquals(dataGrid.getColumnCount(), (int) expectedColumns, "columns");
-            assertEquals(dataGrid.getRowCount(), (int) expectedRows, "rows");
+            assertEquals(getDataGrid().getNumberOfRecords(), expectedElements, "elements");
+            assertEquals(getDataGrid().getNumberOfColumns(), expectedColumns, "columns");
+            assertEquals(getDataGrid().getNumberOfRows(), (int) expectedRows, "rows");
         } catch (AssertionError e) {
             throw e;
         }
@@ -117,7 +130,8 @@ public abstract class AbstractDataGridTest extends AbstractGrapheneTest {
         int elementNumber;
         try {
             Iterator<Capital> capitalIterator = getExpectedCapitalsIterator();
-            Iterator<JQueryLocator> elementIterator = dataGrid.iterateElements();
+            Iterator<? extends GridRecordInterface> elementIterator
+                    = getDataGrid().getAllVisibleRecords().iterator();
 
             elementNumber = 1;
             while (capitalIterator.hasNext()) {
@@ -126,8 +140,7 @@ public abstract class AbstractDataGridTest extends AbstractGrapheneTest {
                     fail("there should be next element for state name: " + capital.getState());
                 }
                 elementNumber += 1;
-                final JQueryLocator element = elementIterator.next().getChild(jq("span"));
-                assertEquals(selenium.getText(element), capital.getState());
+                assertEquals(elementIterator.next().getRecordText(), capital.getState());
             }
         } catch (AssertionError e) {
             throw e;
