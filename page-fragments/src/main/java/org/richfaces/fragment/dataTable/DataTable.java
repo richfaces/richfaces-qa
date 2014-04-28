@@ -34,7 +34,7 @@ import java.util.List;
  * encapsulated filtering or sorting table services.
  *
  * <p>Note 1: Table does not take into account pagination. Thus one has to
- *  swith to a different page manually in order to access all rows. All indexes
+ *  switch to a different page manually in order to access all rows. All indexes
  *  used by methods are relative to one page.</p>
  *
  * <p>Note 2: that one can use <tt>org.richfaces.fragment.common.NullFragment</tt>
