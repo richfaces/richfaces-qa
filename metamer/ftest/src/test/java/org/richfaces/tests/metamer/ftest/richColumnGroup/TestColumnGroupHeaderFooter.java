@@ -21,54 +21,68 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richColumnGroup;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import static org.jboss.arquillian.ajocado.dom.Attribute.ROWSPAN;
-
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.columnAttributes;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.richColumn.ColumnAttributes.rendered;
-
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.richColumn.AbstractColumnModelTest;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.tests.metamer.ftest.richColumn.AbstractColumnTest;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22738 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestColumnGroupHeaderFooter extends AbstractColumnModelTest {
+public class TestColumnGroupHeaderFooter extends AbstractColumnTest {
+
+    private WebElement footerCell(int row, int column) {
+        return getTable().getFooter().getCell(row, column);
+    }
+
+    private int footerCount(int row) {
+        return getTable().getFooter().getRow(row).findElements(By.className("rf-dt-ftr-c")).size();
+    }
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richColumnGroup/headerFooter.xhtml");
     }
 
+    private WebElement headerCell(int row, int column) {
+        return getTable().getHeader().getCell(row, column);
+    }
+
+    private int headerCount(int row) {
+        return getTable().getHeader().getRow(row).findElements(By.className("rf-dt-hdr-c")).size();
+    }
+
     @Test
     public void testRendered() {
-        int bodyRowCount = model.getBodyRowCount();
+        int bodyRowCount = getTable().advanced().getNumberOfVisibleRows();
 
         assertTrue(bodyRowCount > 0);
 
-        assertEquals(model.getHeaderRowCount(), 2);
-        assertEquals(model.getHeaderRowCellCount(1), 2);
-        assertEquals(model.getHeaderRowCellCount(2), 4);
-        assertEquals(selenium.getAttribute(model.getHeaderCell(1, 1).getAttribute(ROWSPAN)), "2");
+        assertEquals(getTable().getHeader().getRows().size(), 2);
+        assertEquals(headerCount(0), 2);
+        assertEquals(headerCount(1), 4);
+        assertEquals(headerCell(0, 0).getAttribute("rowspan"), "2");
 
-        assertEquals(model.getFooterRowCount(), 3);
-        assertEquals(model.getFooterRowCellCount(1), 1);
-        assertEquals(model.getFooterRowCellCount(2), 5);
-        assertEquals(model.getFooterRowCellCount(3), 1);
-        assertEquals(selenium.getAttribute(model.getFooterCell(2, 1).getAttribute(ROWSPAN)), "2");
+        assertEquals(getTable().getFooter().getRows().size(), 3);
+        assertEquals(footerCount(0), 1);
+        assertEquals(footerCount(1), 5);
+        assertEquals(footerCount(2), 1);
+        assertEquals(footerCell(1, 0).getAttribute("rowspan"), "2");
 
         columnAttributes.set(rendered, false);
 
-        assertEquals(model.getBodyRowCount(), bodyRowCount);
-        assertEquals(model.getHeaderRowCount(), 0);
-        assertEquals(model.getFooterRowCount(), 0);
+        assertEquals(getTable().advanced().getNumberOfVisibleRows(), bodyRowCount);
+        assertFalse(Utils.isVisible(getTable().getHeader().getRootElement()));
+        assertFalse(Utils.isVisible(getTable().getFooter().getRootElement()));
     }
 }

@@ -21,25 +21,43 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richColumn;
 
-import java.util.List;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.testng.Assert.assertEquals;
 
-import org.richfaces.tests.metamer.bean.Model;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
-import org.richfaces.tests.metamer.model.Capital;
-import org.testng.annotations.BeforeMethod;
+import java.net.URL;
+
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.testng.annotations.Test;
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22738 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractColumnModelTest extends AbstractGrapheneTest {
+public class TestColumnWidth extends AbstractWebDriverTest {
 
-    protected ColumnModel model = new ColumnModel("richDataTable", pjq("table.rf-dt[id$=richDataTable]"));
+    @FindByJQuery(".rf-edt-c:first")
+    private WebElement firstColumn;
 
-    List<Capital> capitals;
+    private final Attributes<ColumnAttributes> attributes = getAttributes();
 
-    @BeforeMethod
-    public void prepareModel() {
-        capitals = Model.unmarshallCapitals();
+    private String getColumnWidth() {
+        return firstColumn.getCssValue("width");
+    }
+
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richColumn/simpleWithEDT.xhtml");
+    }
+
+    @Test
+    public void testWidth() {
+        String width = "400px";
+        attributes.set(ColumnAttributes.width, width);
+        assertEquals(getColumnWidth(), width);
+        width = "150px";
+        attributes.set(ColumnAttributes.width, width);
+        assertEquals(getColumnWidth(), width);
     }
 }
