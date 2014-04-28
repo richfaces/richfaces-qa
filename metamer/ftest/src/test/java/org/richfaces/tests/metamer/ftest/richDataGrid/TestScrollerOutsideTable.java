@@ -21,61 +21,54 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richDataGrid;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
-
 import javax.xml.bind.JAXBException;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.richfaces.fragment.dataScroller.DataScroller;
+import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
 
-import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
 
-
 /**
+ * <p>
+ * Templates: doesn't work inside iteration components.
+ * </p>
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22499 $
+ * @version $Revision: 22407 $
  */
-public class TestSimple extends AbstractDataGridTest {
+@Templates(exclude = {"a4jRepeat", "hDataTable", "richDataTable", "uiRepeat"})
+public class TestScrollerOutsideTable extends AbstractDataGridScrollerTest {
 
-    public TestSimple() throws JAXBException {
-        super();
-    }
+    @FindByJQuery("span.rf-ds[id$=scroller1]")
+    private RichFacesDataScroller dataScroller1;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richDataGrid/simple.xhtml");
+    public DataScroller getDataScroller() {
+        return dataScroller1;
+    }
+
+    public TestScrollerOutsideTable() throws JAXBException {
     }
 
     @Test
-    @Use(field = "columns", ints = { 1, 3, 11, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL,
-            ELEMENTS_TOTAL + 1 })
+    @UseWithField(field = "columns", valuesFrom = ValuesFrom.FROM_FIELD, value = "COUNTS1")
     public void testColumnsAttribute() {
-        verifyGrid();
+        super.testColumnsAttribute();
     }
 
     @Test
-    @Use(field = "elements", ints = { 0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL, ELEMENTS_TOTAL + 1 })
+    @UseWithField(field = "elements", valuesFrom = ValuesFrom.FROM_FIELD, value = "COUNTS2")
     public void testElementsAttribute() {
-        verifyGrid();
+        super.testElementsAttribute();
     }
 
     @Test
-    @Use(field = "first", ints = { 0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL, ELEMENTS_TOTAL + 1 })
-    public void testFirstAttribute() {
-        verifyGrid();
+    @UseWithField(field = "first", valuesFrom = ValuesFrom.FROM_FIELD, value = "COUNTS2")
+    public void testFirstAttributeDoesntInfluentScroller() {
+        super.testFirstAttributeDoesntInfluentScroller();
     }
 
-    @Test
-    public void testNoDataFacet() {
-        guardXhr(selenium).click(attributeShowData);
-
-        assertEquals(dataGrid.getColumnCount(), 0);
-        assertEquals(dataGrid.getElementCount(), 0);
-        assertTrue(dataGrid.isNoData());
-    }
 }
