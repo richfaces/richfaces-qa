@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:r="http://richfaces.org">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -25,30 +26,17 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-    <ui:composition template="/templates/list.xhtml">
-
-        <ui:define name="pageTitle">A4J Repeat</ui:define>
-
-        <ui:define name="links">
-
-            <metamer:testPageLink id="simple" outcome="simple" value="Simple">
-                Simple page that contains <b>r:repeat</b> and input boxes for all its attributes.
-            </metamer:testPageLink>
-
-            <metamer:testPageLink id="matrix" outcome="matrix" value="Matrix">
-                Simple page that contains <b>r:repeat</b> rendering a table. Page contains input boxes for all repeat's attributes.
-            </metamer:testPageLink>
-
-            <metamer:testPageLink id="keepSaved" outcome="keepSaved" value="Keep Saved">
-                Page for testing attribute keepSaved of <b>r:repeat</b>.
-            </metamer:testPageLink>
-
-            <metamer:testPageLink id="rows" outcome="rows" value="Rows function">
-                Page for testing of @rows function.
-            </metamer:testPageLink>
-
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="component">
+            <ui:insert name="testedComponent"/>
+            <br/>
+            <ui:insert name="incrementButtons" >
+                <r:commandButton id="incrementFirstLast" value="increment all, but update only the first and last item"  action="#{rowsBean.incrementAll()}"  render="componentWithRowsFunction:@rows(rowsBean.firstAndLastItemIndexes):output"/>
+                <r:commandButton id="incrementExceptFirstLast" value="increment all, but update all except first and last item"  action="#{rowsBean.incrementAll()}"  render="componentWithRowsFunction:@rows(rowsBean.exceptFirstAndLastItemIndexes):output"/>
+            </ui:insert>
+            <br/>
+            <r:commandButton id="updateValues" value="update all values" render="@form"/>
+            <r:commandButton id="resetValues" value="reset values" action="#{rowsBean.resetValues()}" render="@form"/>
         </ui:define>
-
     </ui:composition>
-
 </html>
