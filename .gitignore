@@ -15,3 +15,6 @@ metamer/ftest/src/main/java/rebel.xml
 faces-config.NavData
 nbactions*
 nb-configuration.xml
+*.iml
+*.ipr
+*.iws
