@@ -16,3 +16,5 @@ faces-config.NavData
 *.iml
 *.ipr
 *.iws
+nb-configuration.xml
+nbactions*

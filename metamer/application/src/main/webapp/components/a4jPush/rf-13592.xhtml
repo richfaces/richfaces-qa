@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xml:lang="en" lang="en"
+      xmlns:r="http://richfaces.org">
+    <h:head>
+        <title>JSF 2.0 Hello World</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <r:panel header="Steps to reproduce">
+                <ol>
+                    <li>Click on start push</li>
+                    <li>Click on Send message</li>
+                    <li>See JS alert with message</li>
+                    <li>Click on Stop push</li>
+                    <li>Click on Start push again</li>
+                    <li>Click on Send message</li>
+                    <li>See that after push rerender no message is shown</li>
+                </ol>
+            </r:panel>
+            <r:panel header="Push 1">
+                <r:outputPanel id="push-panel1">
+                    <r:push address="TEST_ADDRESS1" ondataavailable="alert('event.rf.data=' + event.rf.data)"
+                              rendered="#{rf13592Bean.enabled1}"/>
+                </r:outputPanel>
+
+                <r:commandButton id="startBtn1" value="Start Push" action="#{rf13592Bean.startPush1}" render="push-panel1"/>
+
+                <r:commandButton id="stopBtn1" value="Stop Push" action="#{rf13592Bean.stopPush1}" render="push-panel1"/>
+
+                <r:commandButton id="sendMessage1" value="Send Message" action="#{rf13592Bean.sendMessage1}"/>
+            </r:panel>
+            <r:panel header="Push 2">
+                <r:outputPanel id="push-panel2">
+                    <r:push address="TEST_ADDRESS2" ondataavailable="alert('event.rf.data=' + event.rf.data)"
+                              rendered="#{rf13592Bean.enabled2}"/>
+                </r:outputPanel>
+
+                <r:commandButton id="startBtn2" value="Start Push" action="#{rf13592Bean.startPush2}" render="push-panel2"/>
+
+                <r:commandButton id="stopBtn2" value="Stop Push" action="#{rf13592Bean.stopPush2}" render="push-panel2"/>
+
+                <r:commandButton id="sendMessage2" value="Send Message" action="#{rf13592Bean.sendMessage2}"/>
+            </r:panel>
+            <r:panel header="Push 3">
+                <r:outputPanel id="push-panel3">
+                    <r:push address="TEST_ADDRESS3" ondataavailable="alert('event.rf.data=' + event.rf.data)"
+                              rendered="#{rf13592Bean.enabled3}"/>
+                </r:outputPanel>
+
+                <r:commandButton id="startBtn3" value="Start Push" action="#{rf13592Bean.startPush3}" render="push-panel3"/>
+
+                <r:commandButton id="stopBtn3" value="Stop Push" action="#{rf13592Bean.stopPush3}" render="push-panel3"/>
+
+                <r:commandButton id="sendMessage3" value="Send Message" action="#{rf13592Bean.sendMessage3}"/>
+            </r:panel>
+        </h:form>
+    </h:body>
+
+</html>
