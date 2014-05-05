@@ -75,7 +75,7 @@ public class TestTab extends AbstractWebDriverTest {
         return elem.getAttribute("class").contains(className);
     }
 
-    @Test(groups = { "Future" })
+    @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-11427")
     public void testActionAndActionListener() {
         MetamerPage.waitRequest(page.getTab(), WaitRequestType.XHR).switchTo(2);
