@@ -67,7 +67,7 @@ public abstract class AbstractCollapsibleSubTableTest extends AbstractWebDriverT
 
     protected final Attributes<CollapsibleSubTableAttributes> attributes = getAttributes();
 
-    @FindBy(className = "rf-dt")
+    @FindBy(css = ".rf-dt[id$=richDataTable]")
     private DataTableWithCST dataTable;
 
     @FindBy(css = "input[id$=noDataCheckbox]")

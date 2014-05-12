@@ -49,7 +49,7 @@ import com.google.common.collect.Collections2;
  */
 public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTableTest {
 
-    @FindBy(className = "rf-dt")
+    @FindBy(css = ".rf-dt[id$=richDataTable]")
     private DataTableWithCSTWithFilteringHeader dataTable;
     private final int rows = 7;
 
