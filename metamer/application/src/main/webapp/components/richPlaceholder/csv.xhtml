@@ -4,7 +4,9 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:rich="http://richfaces.org/rich"
-      xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:f="http://java.sun.com/jsf/core"
+      >
     <!--
     JBoss, Home of Professional Open Source
     Copyright 2010-2014, Red Hat, Inc. and individual contributors
@@ -28,7 +30,13 @@
     -->
 
     <ui:composition template="/templates/template.xhtml">
-
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
         <ui:define name="head">
             <style type="text/css">
                 .customPlaceholderClass {

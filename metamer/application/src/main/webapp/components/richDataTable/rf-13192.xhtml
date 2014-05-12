@@ -7,7 +7,13 @@
 	xmlns:r="http://richfaces.org">
 
 <ui:composition template="/templates/template.xhtml">
-
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
 	<ui:define name="component">
 		<r:dataTable value="#{rf13192.getData()}" var="row" id="table">
 			<r:column id="cell">
