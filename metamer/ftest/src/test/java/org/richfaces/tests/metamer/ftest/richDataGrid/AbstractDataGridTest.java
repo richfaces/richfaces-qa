@@ -26,22 +26,18 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
 
-import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.bind.JAXBException;
-import org.jboss.arquillian.graphene.Graphene;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.richfaces.fragment.dataGrid.RichFacesDataGrid;
 import org.richfaces.tests.metamer.bean.Model;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.richDataGrid.fragment.GridRecordInterface;
-import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.model.Capital;
 import org.testng.annotations.BeforeMethod;
@@ -54,11 +50,11 @@ public abstract class AbstractDataGridTest extends AbstractWebDriverTest {
 
     protected static final int ELEMENTS_TOTAL = 50;
 
-    protected static final Integer[] COUNTS1 = {1, 3, 11, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1,
-        ELEMENTS_TOTAL, ELEMENTS_TOTAL + 1};
+    protected static final Integer[] COUNTS1 = { 1, 3, 11, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1,
+        ELEMENTS_TOTAL, ELEMENTS_TOTAL + 1 };
 
-    protected static final Integer[] COUNTS2 = {0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1,
-        ELEMENTS_TOTAL, ELEMENTS_TOTAL + 1};
+    protected static final Integer[] COUNTS2 = { 0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1,
+        ELEMENTS_TOTAL, ELEMENTS_TOTAL + 1 };
 
     List<Capital> capitals;
 
@@ -127,23 +123,11 @@ public abstract class AbstractDataGridTest extends AbstractWebDriverTest {
     }
 
     protected void verifyElements() {
-        int elementNumber;
-        try {
-            Iterator<Capital> capitalIterator = getExpectedCapitalsIterator();
-            Iterator<? extends GridRecordInterface> elementIterator
-                    = getDataGrid().getAllVisibleRecords().iterator();
-
-            elementNumber = 1;
-            while (capitalIterator.hasNext()) {
-                final Capital capital = capitalIterator.next();
-                if (!elementIterator.hasNext()) {
-                    fail("there should be next element for state name: " + capital.getState());
-                }
-                elementNumber += 1;
-                assertEquals(elementIterator.next().getRecordText(), capital.getState());
-            }
-        } catch (AssertionError e) {
-            throw e;
+        List<Capital> expectedCapitals = getExpectedCapitals();
+        List<? extends GridRecordInterface> records = getDataGrid().getAllVisibleRecords();
+        assertEquals(expectedCapitals.size(), records.size(), "Size of expected capitals and visible capitals does not match.");
+        for (int i = 0; i < expectedCapitals.size(); i += 2) {
+            assertEquals(records.get(i).getRecordText(), expectedCapitals.get(i).getState());
         }
     }
 
@@ -179,7 +163,7 @@ public abstract class AbstractDataGridTest extends AbstractWebDriverTest {
         }
     }
 
-    private Iterator<Capital> getExpectedCapitalsIterator() {
-        return capitals.subList(expectedFirst, expectedFirst + expectedElements).iterator();
+    private List<Capital> getExpectedCapitals() {
+        return capitals.subList(expectedFirst, expectedFirst + expectedElements);
     }
 }

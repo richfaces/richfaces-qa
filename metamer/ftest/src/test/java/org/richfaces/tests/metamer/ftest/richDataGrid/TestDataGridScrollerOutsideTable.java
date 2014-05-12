@@ -25,26 +25,32 @@ import javax.xml.bind.JAXBException;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.fragment.dataScroller.DataScroller;
 import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
 
 import org.testng.annotations.Test;
 
 /**
+ * <p>
+ * Templates: doesn't work inside iteration components.
+ * </p>
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22407 $
  */
-public class TestScrollerInTableFooter extends AbstractDataGridScrollerTest {
+@Templates(exclude = {"a4jRepeat", "hDataTable", "richDataTable", "uiRepeat"})
+public class TestDataGridScrollerOutsideTable extends AbstractDataGridScrollerTest {
 
-    @FindByJQuery("span.rf-ds[id$=scroller2]")
-    private RichFacesDataScroller dataScroller2;
+    @FindByJQuery("span.rf-ds[id$=scroller1]")
+    private RichFacesDataScroller dataScroller1;
 
     @Override
     public DataScroller getDataScroller() {
-        return dataScroller2;
+        return dataScroller1;
     }
 
-    public TestScrollerInTableFooter() throws JAXBException {
+    public TestDataGridScrollerOutsideTable() throws JAXBException {
     }
 
     @Test

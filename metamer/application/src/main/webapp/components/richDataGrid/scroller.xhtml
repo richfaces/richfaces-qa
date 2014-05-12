@@ -50,41 +50,43 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <rich:dataGrid id="richDataGrid"
-                           columns="#{richDataGridBean.attributes['columns'].value}"
-                           elements="#{richDataGridBean.attributes['elements'].value}"
-                           first="#{richDataGridBean.attributes['first'].value}"
-                           iterationStatusVar="#{richDataGridBean.attributes['iterationStatusVar'].value}"
-                           keepSaved="#{richDataGridBean.attributes['keepSaved'].value}"
-                           rendered="#{richDataGridBean.attributes['rendered'].value}"
-                           rowKeyConverter="#{richDataGridBean.attributes['rowKeyConverter'].value}"
-                           style="#{richDataGridBean.attributes['style'].value}"
-                           styleClass="#{richDataGridBean.attributes['styleClass'].value}"
-                           title="#{richDataGridBean.attributes['title'].value}"
-                           value="#{richDataGridBean.state ? model.capitals : null}"
-                           var="record">
+            <!-- The following div is used for horizontal page scroller -->
+            <div id="scrollerDiv" style="padding: 5px; overflow-y: scroll;">
+                <rich:dataGrid id="richDataGrid"
+                               columns="#{richDataGridBean.attributes['columns'].value}"
+                               elements="#{richDataGridBean.attributes['elements'].value}"
+                               first="#{richDataGridBean.attributes['first'].value}"
+                               iterationStatusVar="#{richDataGridBean.attributes['iterationStatusVar'].value}"
+                               keepSaved="#{richDataGridBean.attributes['keepSaved'].value}"
+                               rendered="#{richDataGridBean.attributes['rendered'].value}"
+                               rowKeyConverter="#{richDataGridBean.attributes['rowKeyConverter'].value}"
+                               style="#{richDataGridBean.attributes['style'].value}"
+                               styleClass="#{richDataGridBean.attributes['styleClass'].value}"
+                               title="#{richDataGridBean.attributes['title'].value}"
+                               value="#{richDataGridBean.state ? model.capitals : null}"
+                               var="record">
 
-                <f:facet name="noData">
-                    <h:outputText value="There is no data." style="color: red;"/>
-                </f:facet>
+                    <f:facet name="noData">
+                        <h:outputText value="There is no data." style="color: red;"/>
+                    </f:facet>
 
-                <f:facet name="header">
-                    <h:outputText value="header" />
-                </f:facet>
+                    <f:facet name="header">
+                        <h:outputText value="header" />
+                    </f:facet>
 
-                <f:facet name="сaption">
-                    <h:outputText value="caption" />
-                </f:facet>
+                    <f:facet name="сaption">
+                        <h:outputText value="caption" />
+                    </f:facet>
 
-                <h:outputText value="#{record.state}" style="font-weight: bold;" />
-                <br />
-                <h:outputText value="#{record.name}" />
+                    <h:outputText value="#{record.state}" style="font-weight: bold;" />
+                    <br />
+                    <h:outputText value="#{record.name}" />
 
-                <f:facet name="footer">
-                    <rich:dataScroller id="scroller2" for="richDataGrid" page="#{richDataGridBean.page}" maxPages="7" render="richDataGrid scroller1" />
-                </f:facet>
-            </rich:dataGrid>
-
+                    <f:facet name="footer">
+                        <rich:dataScroller id="scroller2" for="richDataGrid" page="#{richDataGridBean.page}" maxPages="7" render="richDataGrid scroller1" />
+                    </f:facet>
+                </rich:dataGrid>
+            </div>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
