@@ -41,7 +41,7 @@ import org.testng.annotations.BeforeMethod;
  */
 public abstract class AbstractColumnTest extends AbstractWebDriverTest {
 
-    @FindBy(className = "rf-dt")
+    @FindBy(css = ".rf-dt[id$=richDataTable]")
     private DataTable table;
 
     protected List<Capital> capitals;
