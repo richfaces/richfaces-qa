@@ -4,7 +4,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:a4j="http://richfaces.org/a4j"
-      >
+      xmlns:f="http://java.sun.com/jsf/core">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -29,6 +29,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     -->
 
     <ui:composition template="/templates/abstractions/keepSavedTemplate.xhtml">
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
         <ui:define name="testedComponent">
             <a4j:repeat keepSaved="#{keepSavedBean.keepSaved}"
                       value="#{keepSavedBean.dataList}"
