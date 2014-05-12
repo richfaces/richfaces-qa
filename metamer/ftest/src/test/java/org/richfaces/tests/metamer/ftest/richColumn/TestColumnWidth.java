@@ -37,7 +37,7 @@ import org.testng.annotations.Test;
  */
 public class TestColumnWidth extends AbstractWebDriverTest {
 
-    @FindByJQuery(".rf-edt-c:first")
+    @FindByJQuery(".rf-edt[id$=richDataTable] .rf-edt-c:first")
     private WebElement firstColumn;
 
     private final Attributes<ColumnAttributes> attributes = getAttributes();
