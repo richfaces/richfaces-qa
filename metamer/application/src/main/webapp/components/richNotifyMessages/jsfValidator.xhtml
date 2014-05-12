@@ -25,6 +25,13 @@
     02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
     <ui:composition template="notifyMessagesTemplate.xhtml">
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
         <ui:define name="validation">
             <f:validateLongRange minimum="5" maximum="150"/>
             <f:validateLength maximum="2"/>

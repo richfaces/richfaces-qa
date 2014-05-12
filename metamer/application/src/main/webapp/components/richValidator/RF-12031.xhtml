@@ -31,7 +31,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     -->
 
 <ui:composition template="/templates/template.xhtml">
-
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
 	<ui:define name="component">
 		<rich:panel
 			header="Blur on input input(need to toggle to render it) does not fire client side validation">

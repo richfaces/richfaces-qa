@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:rich="http://richfaces.org/rich">
+      xmlns:r="http://richfaces.org"
+      xmlns:f="http://java.sun.com/jsf/core"
+      >
     <!--
     JBoss, Home of Professional Open Source
     Copyright 2010-2014, Red Hat, Inc. and individual contributors
@@ -24,11 +26,18 @@
     02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
     <ui:composition template="notifyMessageTemplate.xhtml">
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
         <ui:define name="validation"/>
         <ui:define name="addition">
-            <rich:notifyStack id="topLeftStack" position="topLeft"/>
-            <rich:notifyStack id="bottomRightStack" position="bottomRight"/>
-            <rich:notifyStack id="notRenderedStack" rendered="false" position="bottomRight"/>
+            <r:notifyStack id="topLeftStack" position="topLeft"/>
+            <r:notifyStack id="bottomRightStack" position="bottomRight"/>
+            <r:notifyStack id="notRenderedStack" rendered="false" position="bottomRight"/>
         </ui:define>
     </ui:composition>
 </html>

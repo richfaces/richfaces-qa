@@ -29,9 +29,15 @@
     02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-    <ui:composition template="/templates/template.xhtml">
-
-        <ui:define name="component">
+<ui:composition template="/templates/template.xhtml">
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+	<ui:define name="component">
             <p>
                 Every 5 seconds there is an ajax request. With the ajax request the status component should change to 'In progress'
                 and back to 'Done', but it stays at 'In progress' state. <a href="https://issues.jboss.org/browse/RF-12092">RF-12092</a>.            
