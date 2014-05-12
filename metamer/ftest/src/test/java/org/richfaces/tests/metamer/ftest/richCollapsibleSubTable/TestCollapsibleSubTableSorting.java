@@ -52,7 +52,7 @@ import com.google.common.collect.Lists;
  */
 public class TestCollapsibleSubTableSorting extends AbstractCollapsibleSubTableTest {
 
-    @FindBy(className = "rf-dt")
+    @FindBy(css = ".rf-dt[id$=richDataTable]")
     private DataTableWithCSTWithSortingHeader dataTable;
 
     private final int rows = 15;
