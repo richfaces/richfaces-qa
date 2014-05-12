@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" 
-      xmlns:rich="http://richfaces.org/rich">
+      xmlns:r="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core"
+      >
 
     <!--
     JBoss, Home of Professional Open Source
@@ -25,8 +27,15 @@
     02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
     <ui:composition template="messagesTemplate.xhtml">
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
         <ui:define name="validation">
-            <rich:validator/>
+            <r:validator/>
         </ui:define>
     </ui:composition>
 </html>
