@@ -23,6 +23,7 @@ package org.richfaces.tests.metamer.ftest.richDataGrid;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
+
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton.FIRST;
 import static org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton.LAST;
@@ -30,6 +31,7 @@ import static org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitc
 import java.net.URL;
 
 import javax.xml.bind.JAXBException;
+
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.dataScroller.DataScroller;
 import org.richfaces.tests.metamer.ftest.richDataGrid.fragment.GridWithStates;
@@ -43,7 +45,7 @@ public abstract class AbstractDataGridScrollerTest extends AbstractDataGridTest 
 
     private Integer elements = 7;
 
-    @FindBy(className = "rf-dg")
+    @FindBy(css = ".rf-dg[id$=richDataGrid]")
     private GridWithStates dataGrid;
 
     @Override

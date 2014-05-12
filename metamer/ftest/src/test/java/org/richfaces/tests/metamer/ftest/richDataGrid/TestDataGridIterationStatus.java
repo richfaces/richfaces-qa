@@ -22,12 +22,12 @@
 package org.richfaces.tests.metamer.ftest.richDataGrid;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
 import javax.xml.bind.JAXBException;
+
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
@@ -36,13 +36,12 @@ import org.openqa.selenium.WebElement;
 import org.richfaces.fragment.dataGrid.RichFacesDataGrid;
 import org.richfaces.tests.metamer.ftest.richDataGrid.fragment.GridRecordInterface;
 import org.richfaces.tests.metamer.ftest.richDataGrid.fragment.GridWithStates;
-
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestIterationStatus extends AbstractDataGridTest {
+public class TestDataGridIterationStatus extends AbstractDataGridTest {
 
     @FindByJQuery("table.rf-dg[id$=richDataGrid]")
     private GridWithStates dataGrid;
@@ -50,7 +49,7 @@ public class TestIterationStatus extends AbstractDataGridTest {
     @Drone
     private WebDriver browser;
 
-    public TestIterationStatus() throws JAXBException {
+    public TestDataGridIterationStatus() throws JAXBException {
         super();
     }
 
@@ -65,34 +64,42 @@ public class TestIterationStatus extends AbstractDataGridTest {
     }
 
     @Test
+    public void testAll() {
+        testBegin();
+        testCount();
+        testEnd();
+        testEven();
+        testFirst();
+        testIndex();
+        testLast();
+        testRowCount();
+    }
+
     public void testBegin() {
-        for (int i = 0; i < dataGrid.getNumberOfRecords(); i++) {
+        for (int i = 0; i < dataGrid.getNumberOfRecords(); i+=2) {
             WebElement beginLocator = browser.findElement(ByJQuery.selector("span[id$=statusBegin]:eq(" + i + ")"));
             assertEquals(beginLocator.getText(), "begin=0", "The iteration status property <begin> doesn't match (item: " + i + ").");
         }
     }
 
-    @Test
     public void testCount() {
-        for (int i = 0; i < dataGrid.getNumberOfRecords(); i++) {
+        for (int i = 0; i < dataGrid.getNumberOfRecords(); i+=2) {
             WebElement propertyLocator = browser.findElement(ByJQuery.selector("span[id$=statusCount]:eq(" + i + ")"));
             String expected = "count=" + (i + 1);
             assertEquals(propertyLocator.getText(), expected, "The iteration status property <count> doesn't match (item: " + i + ").");
         }
     }
 
-    @Test
     public void testEnd() {
         String expected = "end=" + (dataGrid.getNumberOfRecords() - 1);
-        for (int i = 0; i < dataGrid.getNumberOfRecords(); i++) {
+        for (int i = 0; i < dataGrid.getNumberOfRecords(); i+=2) {
             WebElement propertyLocator = browser.findElement(ByJQuery.selector("span[id$=statusEnd]:eq(" + i + ")"));
             assertEquals(propertyLocator.getText(), expected, "The iteration status property <end> doesn't match (item: " + i + ").");
         }
     }
 
-    @Test
     public void testEven() {
-        for (int i = 0; i < dataGrid.getNumberOfRecords(); i++) {
+        for (int i = 0; i < dataGrid.getNumberOfRecords(); i+=2) {
             boolean expected = false;
             if (i % 2 == 1) {
                 expected = true;
@@ -102,9 +109,8 @@ public class TestIterationStatus extends AbstractDataGridTest {
         }
     }
 
-    @Test
     public void testFirst() {
-        for (int i = 0; i < dataGrid.getNumberOfRecords(); i++) {
+        for (int i = 0; i < dataGrid.getNumberOfRecords(); i+=2) {
             boolean expected = false;
             if (i == 0) {
                 expected = true;
@@ -114,18 +120,16 @@ public class TestIterationStatus extends AbstractDataGridTest {
         }
     }
 
-    @Test
     public void testIndex() {
-        for (int i = 0; i < dataGrid.getNumberOfRecords(); i++) {
+        for (int i = 0; i < dataGrid.getNumberOfRecords(); i+=2) {
             WebElement propertyLocator = browser.findElement(ByJQuery.selector("span[id$=statusIndex]:eq(" + i + ")"));
             String expected = "index=" + i;
             assertEquals(propertyLocator.getText(), expected, "The iteration status property <index> doesn't match (item: " + i + ").");
         }
     }
 
-    @Test
     public void testLast() {
-        for (int i = 0; i < dataGrid.getNumberOfRecords(); i++) {
+        for (int i = 0; i < dataGrid.getNumberOfRecords(); i+=2) {
             boolean expected = false;
             if (i == dataGrid.getNumberOfRecords() - 1) {
                 expected = true;
@@ -135,13 +139,11 @@ public class TestIterationStatus extends AbstractDataGridTest {
         }
     }
 
-    @Test
     public void testRowCount() {
         String expected = "rowCount=" + dataGrid.getNumberOfRecords();
-        for (int i = 0; i < dataGrid.getNumberOfRecords(); i++) {
+        for (int i = 0; i < dataGrid.getNumberOfRecords(); i+=2) {
             WebElement propertyLocator = browser.findElement(ByJQuery.selector("span[id$=statusRowCount]:eq(" + i + ")"));
             assertEquals(propertyLocator.getText(), expected, "The iteration status property <rowCount> doesn't match (item: " + i + ").");
         }
     }
-
 }

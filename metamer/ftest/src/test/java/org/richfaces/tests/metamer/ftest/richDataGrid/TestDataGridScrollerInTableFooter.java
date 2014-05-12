@@ -21,69 +21,48 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richDataGrid;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
-
 import javax.xml.bind.JAXBException;
-import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
-
+import org.richfaces.fragment.dataScroller.DataScroller;
+import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
-import org.richfaces.tests.metamer.ftest.richDataGrid.fragment.GridWithStates;
+
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22499 $
+ * @version $Revision: 22407 $
  */
-public class TestSimple extends AbstractDataGridTest {
+public class TestDataGridScrollerInTableFooter extends AbstractDataGridScrollerTest {
 
-    public TestSimple() throws JAXBException {
-        super();
-    }
-
-    @FindByJQuery("table.rf-dg[id$=richDataGrid]")
-    private GridWithStates dataGrid;
+    @FindByJQuery("span.rf-ds[id$=scroller2]")
+    private RichFacesDataScroller dataScroller2;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richDataGrid/simple.xhtml");
+    public DataScroller getDataScroller() {
+        return dataScroller2;
+    }
+
+    public TestDataGridScrollerInTableFooter() throws JAXBException {
     }
 
     @Test
     @UseWithField(field = "columns", valuesFrom = ValuesFrom.FROM_FIELD, value = "COUNTS1")
     public void testColumnsAttribute() {
-        verifyGrid();
+        super.testColumnsAttribute();
     }
 
     @Test
     @UseWithField(field = "elements", valuesFrom = ValuesFrom.FROM_FIELD, value = "COUNTS2")
     public void testElementsAttribute() {
-        verifyGrid();
+        super.testElementsAttribute();
     }
 
     @Test
     @UseWithField(field = "first", valuesFrom = ValuesFrom.FROM_FIELD, value = "COUNTS2")
-    public void testFirstAttribute() {
-        verifyGrid();
+    public void testFirstAttributeDoesntInfluentScroller() {
+        super.testFirstAttributeDoesntInfluentScroller();
     }
 
-    @Test
-    public void testNoDataFacet() {
-        Graphene.guardAjax(attributeShowData).click();
-
-        assertEquals(dataGrid.getNumberOfColumns(), 0);
-        assertEquals(dataGrid.getNumberOfRecords(), 0);
-        assertTrue(dataGrid.advanced().isNoData());
-    }
-
-    @Override
-    public GridWithStates getDataGrid() {
-        return dataGrid;
-    }
 }
