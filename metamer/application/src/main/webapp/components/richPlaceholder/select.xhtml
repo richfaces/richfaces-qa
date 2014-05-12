@@ -28,6 +28,13 @@
     -->
 
     <ui:composition template="placeholderTemplate.xhtml">
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
         <ui:define name="testedComponents">
             <r:select id="input1" enableManualInput="true" value="#{richPlaceholderBean.inputValue1}">
                 <f:selectItems value="#{richInplaceSelectBean.capitalsOptions}" />

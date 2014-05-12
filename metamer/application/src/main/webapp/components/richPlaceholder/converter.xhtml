@@ -3,7 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:r="http://richfaces.org">
+      xmlns:r="http://richfaces.org"
+      xmlns:f="http://java.sun.com/jsf/core"
+      >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -27,7 +29,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
     <ui:composition template="/templates/template.xhtml">
-
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
         <ui:define name="head">
             <style type="text/css">
                 .customPlaceholderClass {
