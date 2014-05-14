@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich"
-    xmlns:a4j="http://richfaces.org/a4j" xmlns:h="http://java.sun.com/jsf/html">
+    xmlns:r="http://richfaces.org" xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:h="http://java.sun.com/jsf/html">
 
 <!--
 JBoss, Home of Professional Open Source
@@ -84,30 +83,30 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <h:panelGrid columnClasses="label,component,required" columns="3">
             <h:outputLabel for="startTimeOverride" value="Start Time Override:" />
 
-            <rich:calendar value="#{richCalendarBean.value}" id="startTimeOverride" popup="true"
+            <r:calendar value="#{richCalendarBean.value}" id="startTimeOverride" popup="true"
                 datePattern="dd/M/yy hh:mm a" required="true" showApplyButton="true">
                 <f:validateRequired />
                 <f:ajax event="change" bypassUpdates="true" />
-            </rich:calendar>
+            </r:calendar>
 
-            <rich:message for="startTimeOverride" ajaxRendered="true" />
+            <r:message for="startTimeOverride" ajaxRendered="true" />
 
             <h:outputLabel for="endTimeOverride" value="End Time Override:" />
 
-            <rich:calendar value="#{richCalendarBean.value2}" id="endTimeOverride" popup="true"
+            <r:calendar value="#{richCalendarBean.value2}" id="endTimeOverride" popup="true"
                 datePattern="dd/M/yy hh:mm a" showApplyButton="true">
                 <f:validateRequired />
                 <f:validator validatorId="org.richfaces.DateRangeValidator" />
-                <rich:validator />
-                <a4j:ajax event="change" bypassUpdates="true" />
-            </rich:calendar>
+                <r:validator />
+                <r:ajax event="change" bypassUpdates="true" />
+            </r:calendar>
 
-            <rich:message for="endTimeOverride" ajaxRendered="true" />
+            <r:message for="endTimeOverride" ajaxRendered="true" />
         </h:panelGrid>
 
 
         <div class="buttons">
-            <a4j:commandButton value="Complete" execute="@form" />
+            <r:commandButton value="Complete" execute="@form" />
         </div>
     </ui:define>
 
