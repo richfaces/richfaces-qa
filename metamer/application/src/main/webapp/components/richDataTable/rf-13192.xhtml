@@ -4,7 +4,9 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:r="http://richfaces.org">
+	xmlns:r="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+    >
 
 <ui:composition template="/templates/template.xhtml">
         <ui:define name="view">
@@ -19,7 +21,7 @@
 			<r:column id="cell">
 				<h:inputText value="#{row[0]}" id="input"
 					style="background-color:#{empty row[0] ? 'red' : 'green'}">
-					<r:ajax event="change" render="table@rows[row]" />
+					<a4j:ajax event="change" render="table@rows[row]" />
 				</h:inputText>
 			</r:column>
 		</r:dataTable>
