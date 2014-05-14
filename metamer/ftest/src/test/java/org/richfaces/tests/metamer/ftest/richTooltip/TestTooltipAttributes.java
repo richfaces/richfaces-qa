@@ -157,6 +157,8 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     @Test
     @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
     public void testHideDelay() {
+        tooltipAttributes.set(TooltipAttributes.showDelay, 0);
+        tooltip().advanced().setupTimoutForTooltipToBeNotVisible(delay + 2000);
         testDelay(new Action() {
             @Override
             public void perform() {
@@ -423,6 +425,8 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     @Test
     @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
     public void testShowDelay() {
+        tooltipAttributes.set(TooltipAttributes.hideDelay, 0);
+        tooltip().advanced().setupTimeoutForTooltipToBeVisible(delay + 2000);
         testDelay(new Action() {
             @Override
             public void perform() {
