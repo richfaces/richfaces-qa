@@ -97,7 +97,9 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
     public void testHideDelay() {
         updateShowAction();
+        contextMenuAttributes.set(ContextMenuAttributes.showDelay, 0);
         page.getContextMenu().advanced().setupHideDelay(delay);
+        page.getContextMenu().advanced().setupTimeoutForPopupMenuToBeNotVisible(delay + 2000);
         testDelay(new Action() {
             @Override
             public void perform() {
@@ -107,7 +109,6 @@ public class TestContextMenu extends AbstractWebDriverTest {
         }, new Action() {
             @Override
             public void perform() {
-                page.getContextMenu().advanced().setupTimeoutForPopupMenuToBeNotVisible(3000);
                 page.getContextMenu().advanced().hide();
             }
         }, "hideDelay", delay);
@@ -465,7 +466,9 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
     public void testShowDelay() {
         updateShowAction();
+        contextMenuAttributes.set(ContextMenuAttributes.hideDelay, 0);
         page.getContextMenu().advanced().setupShowDelay(delay);
+        page.getContextMenu().advanced().setupTimeoutForPopupMenuToBeVisible(delay + 2000);
         testDelay(new Action() {
             @Override
             public void perform() {
@@ -478,7 +481,6 @@ public class TestContextMenu extends AbstractWebDriverTest {
         }, new Action() {
             @Override
             public void perform() {
-                page.getContextMenu().advanced().setupTimeoutForPopupMenuToBeVisible(3000);
                 page.getContextMenu().advanced().show(page.getTargetPanel1());
             }
         }, "showDelay", delay);
