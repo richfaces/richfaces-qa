@@ -139,11 +139,13 @@ public class TestCollapsiblePanel extends TestFacets {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(Event.CLICK, panel.advanced().getRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(Event.DBLCLICK, panel.advanced().getRootElement());
     }

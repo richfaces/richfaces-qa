@@ -117,11 +117,13 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnClick() {
         testFireEvent(Event.CLICK, message.advanced().getRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnDblClick() {
         testFireEvent(Event.DBLCLICK, message.advanced().getRootElement());
     }

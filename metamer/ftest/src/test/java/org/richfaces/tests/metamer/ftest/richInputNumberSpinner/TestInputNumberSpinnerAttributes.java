@@ -274,6 +274,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10581")
+    @Templates(value = "plain")
     public void testOndownclick() {
         testFireEvent(inputNumberSpinnerAttributes, InputNumberSpinnerAttributes.ondownclick, new Action() {
             @Override
@@ -425,6 +426,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnupclick() {
         testFireEvent(inputNumberSpinnerAttributes, InputNumberSpinnerAttributes.onupclick, new Action() {
             @Override

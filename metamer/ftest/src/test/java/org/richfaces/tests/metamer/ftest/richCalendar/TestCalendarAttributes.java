@@ -677,12 +677,14 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOninputclick() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputclick,
             new Actions(driver).click(popupCalendar.getInput().advanced().getInputElement()).build());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOninputdblclick() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputdblclick,
             new Actions(driver).doubleClick(popupCalendar.getInput().advanced().getInputElement()).build());
