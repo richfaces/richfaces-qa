@@ -185,7 +185,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     @Test
     @Templates("plain")
     public void testLang() {
-        testAttributeLang(fileUpload.advanced().getRootElement());
+        testLang(fileUpload.advanced().getRootElement());
     }
 
     @Test

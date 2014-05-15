@@ -115,7 +115,7 @@ public class TestCollapsiblePanel extends TestFacets {
     @Test
     @Templates(value = "plain")
     public void testLang() {
-        testAttributeLang(panel.advanced().getRootElement());
+        testLang(panel.advanced().getRootElement());
     }
 
     @Test

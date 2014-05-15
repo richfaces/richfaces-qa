@@ -449,7 +449,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      *
      * @param element WebElement representing component.
      */
-    protected void testAttributeLang(WebElement element) {
+    protected void testLang(WebElement element) {
         final String TESTVALUE = "cz";
         String attLang;
         // set lang to TESTVALUE
