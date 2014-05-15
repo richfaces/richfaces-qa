@@ -211,12 +211,14 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testButtonClassLabel() {
         calendarAttributes.set(CalendarAttributes.buttonLabel, "label");
         testStyleClass(popupCalendar.getPopupButtonElement(), BasicAttributes.buttonClass);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testButtonClassIcon() {
         calendarAttributes.set(CalendarAttributes.buttonIcon, "heart");
         testStyleClass(popupCalendar.getPopupButtonElement(), BasicAttributes.buttonClass);
@@ -293,6 +295,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testDayClassFunction() {
         int tuesdayDay = 3;
         calendarAttributes.set(CalendarAttributes.dayClassFunction, "yellowTuesdays");

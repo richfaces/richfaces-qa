@@ -223,6 +223,7 @@ public class TestListAttributes extends AbstractListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRowClass() {
         List<RichFacesListItem> items = list.getItems();
         testStyleClass(items.get(0).getRootElement(), BasicAttributes.rowClass);
@@ -230,6 +231,7 @@ public class TestListAttributes extends AbstractListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRowClasses() {
         List<RichFacesListItem> items = list.getItems();
         testStyleClass(items.get(0).getRootElement(), BasicAttributes.rowClasses);

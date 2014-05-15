@@ -201,6 +201,7 @@ public class TestSelect extends AbstractWebDriverTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-9735")
+    @Templates(value = "plain")
     public void testListClass() {
         testStyleClass(listRoot, BasicAttributes.listClass);
     }

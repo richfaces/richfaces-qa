@@ -32,6 +32,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.orderingList.SelectableListItem;
 import org.richfaces.fragment.pickList.RichFacesPickList;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -52,6 +53,7 @@ public class TestPickListWithColumns extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testColumnClasses() {
         String testedClassPattern = "foo, *";
         String actualClass = "foo";

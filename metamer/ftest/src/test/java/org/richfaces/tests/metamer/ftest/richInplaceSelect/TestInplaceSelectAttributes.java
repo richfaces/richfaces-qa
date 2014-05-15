@@ -642,6 +642,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-9896")
+    @Templates(value = "plain")
     public void testSelectItemClass() {
         String testedStyleClass = "metamer-ftest-class";
         inplaceSelectAttributes.set(InplaceSelectAttributes.selectItemClass, testedStyleClass);

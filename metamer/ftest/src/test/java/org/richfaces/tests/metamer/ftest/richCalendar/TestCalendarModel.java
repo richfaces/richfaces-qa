@@ -34,13 +34,15 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.richfaces.fragment.calendar.DayPicker;
 import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
+import org.richfaces.fragment.calendar.DayPicker.CalendarDay.DayType;
 import org.richfaces.fragment.calendar.PopupCalendar;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.model.CalendarModel;
 import org.testng.annotations.Test;
-import org.richfaces.fragment.calendar.DayPicker.CalendarDay.DayType;
+
 import com.google.common.collect.Lists;
 
 /**
@@ -83,6 +85,7 @@ public class TestCalendarModel extends AbstractCalendarTest {
 
     @Test(groups = { "4.0.0.Final" })
     @RegressionTest("https://issues.jboss.org/browse/RFPL-1222")
+    @Templates(value = "plain")
     public void testClasses() {
         int sundays = 1;
         int tuesdays = 3;
