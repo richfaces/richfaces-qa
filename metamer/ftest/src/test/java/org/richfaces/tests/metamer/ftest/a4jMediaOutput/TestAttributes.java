@@ -82,6 +82,7 @@ public class TestAttributes extends AbstractMediaOutputTest {
     }
 
     @Test
+    @Templates("plain")
     public void testHreflang() {
         testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.hreflang, "sk");
     }

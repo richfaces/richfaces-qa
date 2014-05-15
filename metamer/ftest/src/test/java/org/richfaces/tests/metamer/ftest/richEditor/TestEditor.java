@@ -77,6 +77,7 @@ public class TestEditor extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testLanguage() {
         String language = "testLanguage";
         editorAttributes.set(EditorAttributes.lang, language);

@@ -224,6 +224,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testLang() {
         testAttributeLang(menuItem1);
     }
