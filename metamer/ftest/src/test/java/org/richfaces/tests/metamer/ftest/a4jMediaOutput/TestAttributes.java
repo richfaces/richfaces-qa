@@ -76,6 +76,7 @@ public class TestAttributes extends AbstractMediaOutputTest {
     }
 
     @Test
+    @Templates("plain")
     public void testDir() {
         testDir(mediaOutput);
     }
