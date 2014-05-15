@@ -31,6 +31,7 @@ import java.net.URL;
 import org.joda.time.DateTime;
 import org.richfaces.fragment.calendar.TimeEditor;
 import org.richfaces.fragment.calendar.TimeEditor.SetValueBy;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
@@ -49,6 +50,7 @@ public class TestCalendarTimeEditor extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates("plain")
     public void testCancelButton() {
         int plusMinutes = 5;
         MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
@@ -66,38 +68,45 @@ public class TestCalendarTimeEditor extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates("plain")
     public void testHoursInputClick() {
         testTimeSet(new int[]{ 2, 15 }, Time.hours, SetValueBy.BUTTONS);
     }
 
     @Test
+    @Templates("plain")
     public void testHoursInputType() {
         testTimeSet(new int[]{ 2, 15 }, Time.hours, SetValueBy.TYPING);
     }
 
     @Test
+    @Templates("plain")
     public void testMinutesInputClick() {
         testTimeSet(new int[]{ 1, 59 }, Time.minutes, SetValueBy.BUTTONS);
     }
 
     @Test
+    @Templates("plain")
     public void testMinutesInputType() {
         testTimeSet(new int[]{ 1, 59 }, Time.minutes, SetValueBy.TYPING);
     }
 
     @Test
+    @Templates("plain")
     public void testSecondsInputClick() {
         calendarAttributes.set(CalendarAttributes.datePattern, "MMM d, yyyy HH:mm:ss");
         testTimeSet(new int[]{ 1, 59 }, Time.seconds, SetValueBy.BUTTONS);
     }
 
     @Test
+    @Templates("plain")
     public void testSecondsInputType() {
         calendarAttributes.set(CalendarAttributes.datePattern, "MMM d, yyyy HH:mm:ss");
         testTimeSet(new int[]{ 1, 59 }, Time.seconds, SetValueBy.TYPING);
     }
 
     @Test
+    @Templates("plain")
     public void testShowTimeEditor() {
         MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
         TimeEditor openedTimeEditor = popupCalendar.openPopup().getFooterControls().openTimeEditor();
@@ -122,38 +131,38 @@ public class TestCalendarTimeEditor extends AbstractCalendarTest {
     private enum Time {
 
         hours {
-            @Override
-            public DateTime change(DateTime time, int value) {
-                return time.plusHours(value);
-            }
+                @Override
+                public DateTime change(DateTime time, int value) {
+                    return time.plusHours(value);
+                }
 
-            @Override
-            public void checkTimeChanged(DateTime referenceTime, DateTime changedTime) {
-                assertEquals(changedTime.getHourOfDay(), referenceTime.getHourOfDay());
-            }
-        },
+                @Override
+                public void checkTimeChanged(DateTime referenceTime, DateTime changedTime) {
+                    assertEquals(changedTime.getHourOfDay(), referenceTime.getHourOfDay());
+                }
+            },
         minutes {
-            @Override
-            public DateTime change(DateTime time, int value) {
-                return time.plusMinutes(value);
-            }
+                @Override
+                public DateTime change(DateTime time, int value) {
+                    return time.plusMinutes(value);
+                }
 
-            @Override
-            public void checkTimeChanged(DateTime referenceTime, DateTime changedTime) {
-                assertEquals(changedTime.getMinuteOfHour(), referenceTime.getMinuteOfHour());
-            }
-        },
+                @Override
+                public void checkTimeChanged(DateTime referenceTime, DateTime changedTime) {
+                    assertEquals(changedTime.getMinuteOfHour(), referenceTime.getMinuteOfHour());
+                }
+            },
         seconds {
-            @Override
-            public DateTime change(DateTime time, int value) {
-                return time.plusSeconds(value);
-            }
+                @Override
+                public DateTime change(DateTime time, int value) {
+                    return time.plusSeconds(value);
+                }
 
-            @Override
-            public void checkTimeChanged(DateTime referenceTime, DateTime changedTime) {
-                assertEquals(changedTime.getSecondOfMinute(), referenceTime.getSecondOfMinute());
-            }
-        };
+                @Override
+                public void checkTimeChanged(DateTime referenceTime, DateTime changedTime) {
+                    assertEquals(changedTime.getSecondOfMinute(), referenceTime.getSecondOfMinute());
+                }
+            };
 
         public abstract DateTime change(DateTime time, int value);
 

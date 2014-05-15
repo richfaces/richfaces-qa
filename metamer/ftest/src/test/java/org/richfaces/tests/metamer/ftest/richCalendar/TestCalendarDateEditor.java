@@ -36,6 +36,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
 import org.richfaces.fragment.calendar.HeaderControls;
 import org.richfaces.fragment.calendar.YearAndMonthEditor;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
@@ -54,6 +55,7 @@ public class TestCalendarDateEditor extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates("plain")
     public void testCancelButton() {
         MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
 
@@ -71,6 +73,7 @@ public class TestCalendarDateEditor extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates("plain")
     public void testNextDecadeButton() {
         HeaderControls hc = popupCalendar.openPopup().getHeaderControls();
         List<Integer> displayedYears = hc.openYearAndMonthEditor().getDisplayedYears();
@@ -87,6 +90,7 @@ public class TestCalendarDateEditor extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates("plain")
     public void testPreviousDecadeButton() {
         HeaderControls hc = popupCalendar.openPopup().getHeaderControls();
         List<Integer> displayedYears = hc.openYearAndMonthEditor().getDisplayedYears();
@@ -104,6 +108,7 @@ public class TestCalendarDateEditor extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates("plain")
     public void testSelectMonthAndYear() {
         DateTime someFutureDate = todayMidday.plusMonths(1).plusYears(1);
         HeaderControls hc = popupCalendar.openPopup().getHeaderControls();
@@ -117,6 +122,7 @@ public class TestCalendarDateEditor extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates("plain")
     public void testShowDateEditor() {
         YearAndMonthEditor editor = Graphene.guardNoRequest(popupCalendar.openPopup().getHeaderControls()).openYearAndMonthEditor();
         assertTrue(editor.isVisible());
