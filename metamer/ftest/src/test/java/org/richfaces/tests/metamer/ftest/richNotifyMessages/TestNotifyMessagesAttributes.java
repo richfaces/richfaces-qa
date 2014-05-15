@@ -95,6 +95,7 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12923")
     @Test(groups = "Future")
+    @Templates("plain")
     public void testLang() {
         checkLang();
     }

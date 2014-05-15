@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.richfaces.tests.metamer.bean.a4j.A4JMediaOutputBean;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -60,6 +61,7 @@ public class TestElementA extends AbstractMediaOutputTest {
     }
 
     @Test
+    @Templates("plain")
     public void testLang() {
         testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.lang, "cz");
     }
