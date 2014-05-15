@@ -136,7 +136,7 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testLang() {
-        testHTMLAttribute(outputDiv, outputPanelAttributes, OutputPanelAttributes.lang, "sk");
+        testLang(outputDiv);
     }
 
     @Test
