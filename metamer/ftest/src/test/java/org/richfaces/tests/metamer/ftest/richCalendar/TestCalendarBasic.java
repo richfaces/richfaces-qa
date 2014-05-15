@@ -39,6 +39,7 @@ import org.richfaces.fragment.calendar.DayPicker;
 import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
 import org.richfaces.fragment.calendar.PopupCalendar;
 import org.richfaces.fragment.calendar.PopupCalendar.PopupHeaderControls;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.BeforeMethod;
@@ -198,6 +199,7 @@ public class TestCalendarBasic extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates("plain")
     public void testWeekDaysLabels() {
         List<String> weekDayShortNames = popupCalendar.openPopup().getDayPicker().getWeekDayShortNames();
         assertEquals(weekDayShortNames, Arrays.asList("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"));

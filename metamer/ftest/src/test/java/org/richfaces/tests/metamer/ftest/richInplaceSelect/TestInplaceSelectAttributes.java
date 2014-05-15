@@ -180,6 +180,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10739")
+    @Templates("plain")
     public void testDefaultLabel() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.defaultLabel, "new label");
         assertEquals(select.advanced().getLabelValue(), "new label", "Default label should change");

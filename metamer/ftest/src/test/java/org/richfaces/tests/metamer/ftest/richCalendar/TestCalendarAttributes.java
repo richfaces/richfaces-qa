@@ -253,6 +253,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates("plain")
     public void testButtonLabel() {
         calendarAttributes.set(CalendarAttributes.buttonLabel, "label");
 
@@ -351,6 +352,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates("plain")
     public void testDefaultLabel() {
         String defaultLabel = "RichFaces 4";
         calendarAttributes.set(CalendarAttributes.defaultLabel, defaultLabel);
@@ -539,6 +541,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates("plain")
     public void testMonthLabels() {
         String labelsString = "január, február, marec, apríl, máj, jún, júl, august, september, október, november, december";
         calendarAttributes.set(CalendarAttributes.monthLabels, labelsString);
@@ -559,6 +562,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates("plain")
     public void testMonthLabelsShort() {
         String labelsString = "jan, feb, mar, apr, máj, jún, júl, aug, sep, okt, nov, dec";
         calendarAttributes.set(CalendarAttributes.monthLabelsShort, labelsString);
@@ -1015,6 +1019,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates("plain")
     public void testWeekDayLabelsShort() {
         List<String> originalValues = Arrays.asList("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
         List<String> weekDayShortNames = popupCalendar.openPopup().getDayPicker().getWeekDayShortNames();
