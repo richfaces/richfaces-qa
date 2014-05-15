@@ -145,6 +145,7 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
         @UseWithField(field = "direction", valuesFrom = FROM_ENUM, value = ""),
         @UseWithField(field = "method", valuesFrom = FROM_ENUM, value = "")
     })
+    @Templates("plain")
     public void testDirectionAndMethod() {
         notifyStackAttributes.set(NotifyStackAttributes.direction, direction.name().toLowerCase(Locale.ENGLISH));
         notifyStackAttributes.set(NotifyStackAttributes.method, method.name().toLowerCase(Locale.ENGLISH));

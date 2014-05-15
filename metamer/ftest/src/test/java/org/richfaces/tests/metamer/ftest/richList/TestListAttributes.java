@@ -79,6 +79,7 @@ public class TestListAttributes extends AbstractListTest {
     }
 
     @Test
+    @Templates("plain")
     public void testDir() {
         testDir(list.getRoot());
     }

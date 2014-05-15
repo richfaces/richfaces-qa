@@ -131,6 +131,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testDir() {
         testDir(menuItem1);
     }
