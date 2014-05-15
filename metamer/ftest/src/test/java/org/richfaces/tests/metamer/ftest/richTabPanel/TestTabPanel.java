@@ -504,6 +504,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testTitle() {
         testTitle(page.getPanelTabAsWebElement());
     }

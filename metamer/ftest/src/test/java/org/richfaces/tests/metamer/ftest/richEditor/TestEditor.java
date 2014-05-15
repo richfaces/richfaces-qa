@@ -149,6 +149,7 @@ public class TestEditor extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testTitle() {
 
         String titleVal = "RichFaces Test";

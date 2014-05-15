@@ -342,6 +342,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testTitle() {
         testTitle(group);
     }

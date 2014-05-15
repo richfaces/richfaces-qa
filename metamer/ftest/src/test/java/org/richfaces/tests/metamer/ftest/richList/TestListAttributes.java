@@ -276,6 +276,7 @@ public class TestListAttributes extends AbstractListTest {
     }
 
     @Test
+    @Templates("plain")
     public void testTitle() {
         testTitle(list.getRoot());
     }
