@@ -105,6 +105,7 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
 
     @Test
     @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
+    @Templates("plain")
     public void testHideDelay() {
         super.testHideDelay(delay);
     }
@@ -122,6 +123,7 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
 
     @Test
     @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
+    @Templates("plain")
     public void testShowDelay() {
         super.testShowDelay(delay);
     }

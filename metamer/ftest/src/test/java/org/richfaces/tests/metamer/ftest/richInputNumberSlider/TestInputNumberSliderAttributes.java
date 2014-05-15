@@ -141,6 +141,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
 
     @Test
     @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
+    @Templates("plain")
     public void testDelay() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.delay, delay);
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
