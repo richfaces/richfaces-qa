@@ -64,6 +64,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
 
     @Test
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
+    @Templates("plain")
     public void testDir() {
         testDir(tree.advanced().getRootElement());
     }

@@ -54,6 +54,7 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12923")
     @Test(groups = "Future")
+    @Templates("plain")
     public void testDir() {
         checkDir();
     }
