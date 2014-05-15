@@ -95,6 +95,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
 
     @Test
     @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
+    @Templates("plain")
     public void testHideDelay() {
         updateShowAction();
         contextMenuAttributes.set(ContextMenuAttributes.showDelay, 0);
@@ -471,6 +472,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
 
     @Test
     @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
+    @Templates("plain")
     public void testShowDelay() {
         updateShowAction();
         contextMenuAttributes.set(ContextMenuAttributes.hideDelay, 0);
