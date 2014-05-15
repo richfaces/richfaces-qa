@@ -145,16 +145,19 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnKeyDown() {
         checkOnKeyDown();
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnKeyPress() {
         checkOnKeyPress();
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnKeyUp() {
         checkOnKeyUp();
     }
