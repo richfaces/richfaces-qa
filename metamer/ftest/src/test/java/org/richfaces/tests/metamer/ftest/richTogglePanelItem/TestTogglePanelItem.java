@@ -104,7 +104,7 @@ public class TestTogglePanelItem extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testLang() {
-        testAttributeLang(item1);
+        testLang(item1);
     }
 
     @Test(groups = "smoke")

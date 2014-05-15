@@ -165,7 +165,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testLang() {
-        testAttributeLang(tree.advanced().getRootElement());
+        testLang(tree.advanced().getRootElement());
     }
 
     @Test

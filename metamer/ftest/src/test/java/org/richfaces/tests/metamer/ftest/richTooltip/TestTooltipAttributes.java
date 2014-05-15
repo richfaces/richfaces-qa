@@ -197,7 +197,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testLang() {
-        testAttributeLang(tooltip().show().advanced().getTooltipElement());
+        testLang(tooltip().show().advanced().getTooltipElement());
     }
 
     @Test(groups = "smoke")
