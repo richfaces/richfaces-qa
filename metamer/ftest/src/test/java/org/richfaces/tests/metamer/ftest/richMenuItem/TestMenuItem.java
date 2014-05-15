@@ -216,6 +216,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testLabel() {
         testLabelChanges(menuItem1, menuItemAttributes, MenuItemAttributes.label, new Action() {
             @Override

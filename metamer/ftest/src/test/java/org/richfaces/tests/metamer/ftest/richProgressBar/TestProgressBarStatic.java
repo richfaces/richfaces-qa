@@ -119,6 +119,7 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testLabel() {
         MetamerPage.waitRequest(page.initialFacetRenderedCheckbox, WaitRequestType.HTTP).click();
 
