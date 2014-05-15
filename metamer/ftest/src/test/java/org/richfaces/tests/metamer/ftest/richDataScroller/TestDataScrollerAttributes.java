@@ -308,6 +308,7 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testTitle() {
         super.testTitle(page.getScroller(scroller).advanced().getRootElement());
     }
