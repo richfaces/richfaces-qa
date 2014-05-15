@@ -172,6 +172,7 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
 
     @Test
     @UseWithField(field = "position", valuesFrom = FROM_ENUM, value = "")
+    @Templates(value = "plain")
     public void testPosition() {
         notifyStackAttributes.set(NotifyStackAttributes.position, position.value);
         waiting(500); // workaround for document not ready error
