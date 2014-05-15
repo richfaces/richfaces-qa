@@ -115,6 +115,7 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testDefaultLabel() {
         selectAttributes.set(SelectAttributes.defaultLabel, "new label");
         assertEquals(select.advanced().getInput().getStringValue(), "new label", "Default label should change");

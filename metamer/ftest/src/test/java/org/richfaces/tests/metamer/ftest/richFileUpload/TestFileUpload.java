@@ -376,6 +376,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test(enabled = false)
+    @Templates("plain")
     public void testServerErrorLabel() {
         //TODO how to test it
     }
@@ -401,6 +402,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @Templates("plain")
     public void testSizeExceededLabel() {
         testLabelChanges(new FutureTarget<WebElement>() {
             @Override

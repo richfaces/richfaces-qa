@@ -142,6 +142,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testDefaultLabel() {
         inplaceInputAttributes.set(InplaceInputAttributes.value, "");
         String defaultLabel = inplaceInputAttributes.get(InplaceInputAttributes.defaultLabel);
