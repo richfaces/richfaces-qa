@@ -149,26 +149,31 @@ public class TestCollapsiblePanel extends TestFacets {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEvent(Event.MOUSEDOWN, panel.advanced().getRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEvent(Event.MOUSEMOVE, panel.advanced().getRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEvent(Event.MOUSEOUT, panel.advanced().getRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEvent(Event.MOUSEOVER, panel.advanced().getRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEvent(Event.MOUSEUP, panel.advanced().getRootElement());
     }

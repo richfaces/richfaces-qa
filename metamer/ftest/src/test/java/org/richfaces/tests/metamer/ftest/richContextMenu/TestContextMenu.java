@@ -370,6 +370,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousedown() {
         updateShowAction();
         testFireEvent(contextMenuAttributes, ContextMenuAttributes.onmousedown, new Action() {
@@ -385,6 +386,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseup() {
         updateShowAction();
         testFireEvent(contextMenuAttributes, ContextMenuAttributes.onmouseup, new Action() {
@@ -414,6 +416,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
 
     @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-12854")
+    @Templates(value = "plain")
     public void testOnmouseout() {
         updateShowAction();
         testFireEvent(contextMenuAttributes, ContextMenuAttributes.onmouseout, new Action() {
@@ -429,6 +432,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseover() {
         updateShowAction();
         testOnmousemove();

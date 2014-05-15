@@ -38,6 +38,7 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
 /**
@@ -91,7 +92,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     @IssueTracking("https://issues.jboss.org/browse/RF-12820")
     public void testLayout() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
-        String[] layouts = new String[] { "div", "list", "table" };
+        String[] layouts = new String[]{ "div", "list", "table" };
         for (String layout : layouts) {
             autocompleteAttributes.set(AutocompleteAttributes.layout, layout);
             autocomplete.clear();
@@ -170,6 +171,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onmousemove, new Action() {
             @Override
@@ -180,6 +182,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onmouseover, new Action() {
             @Override
@@ -258,6 +261,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onmousedown, new Action() {
             @Override
@@ -269,6 +273,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onmouseout, new Action() {
             @Override
@@ -280,6 +285,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onmouseup, new Action() {
             @Override

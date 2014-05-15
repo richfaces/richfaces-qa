@@ -63,6 +63,7 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousedown() {
         panelMenuGroupAttributes.set(mode, client);
         Action mousedown = new Actions(driver).clickAndHold(page.getTopGroup().advanced().getHeaderElement()).build();
@@ -71,6 +72,7 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousemove() {
         panelMenuGroupAttributes.set(mode, client);
         Action mousemove = new Actions(driver).moveToElement(page.getTopGroup().advanced().getHeaderElement(), 3, 3).build();
@@ -78,6 +80,7 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseout() {
         panelMenuGroupAttributes.set(mode, client);
         // TODO JJa 2013-02-13: Rewrite using webdriver api when fixed (not working now)
@@ -85,6 +88,7 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseover() {
         panelMenuGroupAttributes.set(mode, client);
         Action mouseover = new Actions(driver).moveToElement(page.getTopGroup().advanced().getHeaderElement(), 3, 3).build();
@@ -92,6 +96,7 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseup() {
         panelMenuGroupAttributes.set(mode, client);
         Action mouseup = new Actions(driver).clickAndHold(page.getTopGroup().advanced().getHeaderElement()).release().build();
