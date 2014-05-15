@@ -61,7 +61,7 @@ public class TestCalendarModel extends AbstractCalendarTest {
     }
 
     @Override
-    @Test(groups = { "4.0.0.Final" })
+    @Test
     @RegressionTest("https://issues.jboss.org/browse/RFPL-1222")
     public void testApplyButton() {
         int wednesdays = 4;
@@ -83,7 +83,7 @@ public class TestCalendarModel extends AbstractCalendarTest {
         assertEquals(selectedDate.getDayOfMonth(), referenceDate.getDayOfMonth());
     }
 
-    @Test(groups = { "4.0.0.Final" })
+    @Test
     @RegressionTest("https://issues.jboss.org/browse/RFPL-1222")
     @Templates(value = "plain")
     public void testClasses() {
