@@ -99,6 +99,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testHeaderPosition() {
         // assert initial settings
         assertPresent(driver.findElement(By.xpath("//div[@class = 'rf-tab-hdr-tabline-vis rf-tab-hdr-tabline-top']")),

@@ -245,6 +245,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
 
     @Test
     @UseWithField(field = "position", valuesFrom = FROM_ENUM, value = "")
+    @Templates(value = "plain")
     public void testInputPosition() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.inputPosition, position.value);
         Point inputPosition = Utils.getLocations(slider.advanced().getInput().advanced().getInputElement()).getTopLeft();
