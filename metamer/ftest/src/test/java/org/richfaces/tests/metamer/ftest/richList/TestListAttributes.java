@@ -94,6 +94,7 @@ public class TestListAttributes extends AbstractListTest {
     }
 
     @Test
+    @Templates("plain")
     public void testLang() {
         testAttributeLang(list.getRoot());
     }
