@@ -31,9 +31,9 @@ import java.net.URL;
 
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
-
 
 /**
  * Tests for attributes (page /faces/components/a4jMediaOutput/imagePng.xhtml)
@@ -98,7 +98,7 @@ public class TestAttributes extends AbstractMediaOutputTest {
             assertEquals(attribute, "ismap", "Attribute ismap");
         } else {
             assertEquals(attribute, "true", "Attribute ismap");
-       }
+        }
     }
 
     @Test(groups = "Future")
@@ -169,6 +169,7 @@ public class TestAttributes extends AbstractMediaOutputTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         mediaOutputAttributes.set(MediaOutputAttributes.rendered, false);
         assertFalse(mediaOutput.isPresent(), "Image should not be rendered when rendered=false.");

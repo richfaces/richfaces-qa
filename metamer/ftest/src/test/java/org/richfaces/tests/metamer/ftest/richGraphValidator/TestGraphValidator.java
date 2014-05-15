@@ -27,6 +27,7 @@ import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annot
 import java.net.URL;
 
 import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBean;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -104,6 +105,7 @@ public class TestGraphValidator extends AbstractGraphValidatorTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         assertPresent(panel, "Panel should be present.");
         graphValidatorAttributes.set(GraphValidatorAttributes.rendered, Boolean.FALSE);
