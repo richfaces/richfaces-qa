@@ -311,6 +311,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         menuGroupAttributes.set(MenuGroupAttributes.rendered, false);
         assertNotPresent(group, "Menu group should not be rendered when rendered=false.");

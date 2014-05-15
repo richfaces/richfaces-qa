@@ -39,6 +39,7 @@ import org.richfaces.fragment.notify.RichFacesNotifyMessage;
 import org.richfaces.tests.metamer.bean.rich.RichNotifyBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -166,6 +167,7 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         notifyAttributes.set(NotifyAttributes.rendered, Boolean.TRUE);
         assertVisible(message.advanced().getRootElement(), "Message should be visible.");

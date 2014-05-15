@@ -29,6 +29,7 @@ import org.openqa.selenium.TimeoutException;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richNotify.TestNotifyAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.Assert;
@@ -152,6 +153,7 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         checkRendered();
     }
