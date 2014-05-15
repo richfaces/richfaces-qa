@@ -228,6 +228,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testLabel() {
         String testedLabel = "new label";
         menuGroupAttributes.set(MenuGroupAttributes.label, testedLabel);
