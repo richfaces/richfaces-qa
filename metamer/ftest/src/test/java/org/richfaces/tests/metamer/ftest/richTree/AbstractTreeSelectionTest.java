@@ -119,25 +119,10 @@ public abstract class AbstractTreeSelectionTest extends AbstractTreeTest {
         treeAttributes.set(TreeAttributes.toggleType, selectionType.toString().toLowerCase());
     }
 
-    protected void testSubNodesSelection() {
+    protected void testSubNodesSelectionWithEvents() {
         expandAll();
         assertEquals(allSelectedItems.size(), 0);
-
-        for (Integer[] path : selectionPaths) {
-            treeNode = null;
-            for (int index : path) {
-                treeNode = (treeNode == null) ? tree.advanced().getNodes().get(index) : treeNode.advanced().getNodes()
-                    .get(index);
-            }
-            assertFalse(treeNode.advanced().isSelected());
-            getGuarded(treeNode.advanced(), selectionType).select();
-            assertTrue(treeNode.advanced().isSelected());
-            assertEquals(allSelectedItems.size(), 1);
-        }
-    }
-
-    protected void testSubNodesSelectionEvents() {
-        expandAll();
+        boolean checkEvents = selectionType.equals(eventEnabledSelectionTypes[0]);
         Integer[] old = null;
         for (Integer[] path : selectionPaths) {
             treeNode = null;
@@ -146,47 +131,38 @@ public abstract class AbstractTreeSelectionTest extends AbstractTreeTest {
                     .get(index);
             }
             String previousSelectionValue = selection.getText();
+            assertFalse(treeNode.advanced().isSelected());
             getGuarded(treeNode.advanced(), selectionType).select();
-            // selection output take some time until updated
-            Graphene.waitAjax().until().element(clientId).is().present();
-            assertEquals(getClientId(), "richTree");
 
-            // there is delay before select triggers output update
-            Graphene.waitAjax().until().element(selection).text().not().equalTo(previousSelectionValue);
-
-            assertEquals(
-                getSelection(),
-                path,
-                String.format("Actual Selection (%s) doesn't correspond to expected (%s)",
-                    Arrays.deepToString(getSelection()), Arrays.deepToString(path)));
-
-            assertEquals(
-                getNewSelection(),
-                path,
-                String.format("Actual New selection (%s) doesn't correspond to expected (%s)",
-                    Arrays.deepToString(getNewSelection()), Arrays.deepToString(path)));
-            if (old != null) {
-                assertEquals(
-                    getOldSelection(),
-                    old,
-                    String.format("Actual Old selection (%s) doesn't correspond to expected (%s)",
-                        Arrays.deepToString(getOldSelection()), Arrays.deepToString(old)));
-            } else {
-                assertEquals(oldSelection.getText(), "[]");
-            }
-            old = getNewSelection();
-        }
-    }
-
-    protected void testTopLevelSelection() {
-        assertEquals(allSelectedItems.size(), 0);
-        for (TreeNode node : tree.advanced().getNodes()) {
-            assertFalse(node.advanced().isSelected());
-            assertTrue(node.advanced().isCollapsed());
-            getGuarded(node.advanced().getLabelElement(), selectionType).click();
-            node.advanced().waitUntilNodeIsSelected();
-            assertTrue(node.advanced().isCollapsed());
+            assertTrue(treeNode.advanced().isSelected());
             assertEquals(allSelectedItems.size(), 1);
+
+            if (checkEvents) {
+                // there is delay before select triggers output update
+                Graphene.waitAjax().until().element(selection).text().not().equalTo(previousSelectionValue);
+
+                assertEquals(
+                    getSelection(),
+                    path,
+                    String.format("Actual Selection (%s) doesn't correspond to expected (%s)",
+                        Arrays.deepToString(getSelection()), Arrays.deepToString(path)));
+
+                assertEquals(
+                    getNewSelection(),
+                    path,
+                    String.format("Actual New selection (%s) doesn't correspond to expected (%s)",
+                        Arrays.deepToString(getNewSelection()), Arrays.deepToString(path)));
+                if (old != null) {
+                    assertEquals(
+                        getOldSelection(),
+                        old,
+                        String.format("Actual Old selection (%s) doesn't correspond to expected (%s)",
+                            Arrays.deepToString(getOldSelection()), Arrays.deepToString(old)));
+                } else {
+                    assertEquals(oldSelection.getText(), "[]");
+                }
+                old = getNewSelection();
+            }
         }
     }
 }

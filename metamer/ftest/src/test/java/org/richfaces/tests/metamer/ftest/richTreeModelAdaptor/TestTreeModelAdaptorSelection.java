@@ -82,28 +82,11 @@ public class TestTreeModelAdaptorSelection extends AbstractTreeSelectionTest {
     }
 
     @Test
-    @UseWithField(field = "selectionType", valuesFrom = FROM_FIELD, value = "selectionTypes")
-    @Override
-    public void testTopLevelSelection() {
-        super.testTopLevelSelection();
-    }
-
-    @Test
     @Uses({
         @UseWithField(field = "selectionType", valuesFrom = FROM_FIELD, value = "selectionTypes"),
         @UseWithField(field = "path", valuesFrom = FROM_FIELD, value = "paths"), })
-    @Override
-    public void testSubNodesSelection() {
-        super.testSubNodesSelection();
-    }
-
-    @Test
-    @Uses({
-        @UseWithField(field = "path", valuesFrom = FROM_FIELD, value = "paths"),
-        @UseWithField(field = "selectionType", valuesFrom = FROM_FIELD, value = "eventEnabledSelectionTypes") })
-    @Override
-    public void testSubNodesSelectionEvents() {
-        super.testSubNodesSelectionEvents();
+    public void testSubNodesSelectionAjax() {
+        super.testSubNodesSelectionWithEvents();
     }
 
     @Override
