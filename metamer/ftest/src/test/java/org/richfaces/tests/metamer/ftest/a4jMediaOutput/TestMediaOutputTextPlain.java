@@ -33,18 +33,18 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestTextHtml extends AbstractMediaOutputTest {
+public class TestMediaOutputTextPlain extends AbstractMediaOutputTest {
 
     @Override
     public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jMediaOutput/textHtml.xhtml");
+        return buildUrl(contextPath, "faces/components/a4jMediaOutput/textPlain.xhtml");
     }
 
     @Test
     public void testInit() throws IOException {
         assertTrue(
-            getTextContentByUrlAttribute(mediaOutput, "data").contains(A4JMediaOutputBean.HTML_TEXT),
-            "The HTML content doesn't match."
+            getTextContentByUrlAttribute(mediaOutput, "data").toString().contains(A4JMediaOutputBean.PLAIN_TEXT),
+            "The plain text content doesn't match."
         );
     }
 
