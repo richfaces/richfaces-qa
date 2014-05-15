@@ -63,7 +63,7 @@ public class TestMediaOutputElementA extends AbstractMediaOutputTest {
     @Test
     @Templates("plain")
     public void testLang() {
-        testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.lang, "cz");
+        testLang(mediaOutput);
     }
 
     @Test
