@@ -272,6 +272,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onclick, new Action() {
             @Override
@@ -282,6 +283,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.ondblclick, new Action() {
             @Override

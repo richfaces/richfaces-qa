@@ -159,6 +159,7 @@ public class TestDropDownMenuSideMenu extends AbstractDropDownMenuTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnitemclick() {
         super.testOnitemclick();
     }

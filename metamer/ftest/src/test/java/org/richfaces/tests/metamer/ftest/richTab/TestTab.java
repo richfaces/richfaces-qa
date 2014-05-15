@@ -288,18 +288,6 @@ public class TestTab extends AbstractWebDriverTest {
                 Graphene.guardAjax(page.getInactiveHeaders().get(0)).click();
             }
         });
-        // tabAttributes.set(TabAttributes.onenter, "metamerEvents += \"enter \"");
-        // selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
-        // String time1Value = selenium.getText(time);
-        //
-        // guardXhr(selenium).click(inactiveHeaders[1]);
-        // waitGui.failWith("Page was not updated").waitForChange(time1Value, retrieveText.locator(time));
-        // guardXhr(selenium).click(inactiveHeaders[0]);
-        // waitGui.failWith("Page was not updated").waitForChange(time1Value, retrieveText.locator(time));
-        //
-        // String[] events = selenium.getEval(new JavaScript("window.metamerEvents")).split(" ");
-        //
-        // assertEquals(events[0], "enter", "Attribute onenter doesn't work");
     }
 
     @Test

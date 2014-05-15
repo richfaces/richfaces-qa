@@ -110,11 +110,13 @@ public class TestAttributes extends AbstractMediaOutputTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(Event.CLICK, mediaOutput);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(Event.DBLCLICK, mediaOutput);
     }
