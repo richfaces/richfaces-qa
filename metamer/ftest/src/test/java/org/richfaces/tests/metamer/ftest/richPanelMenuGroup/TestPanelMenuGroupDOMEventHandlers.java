@@ -48,6 +48,7 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     private final Attributes<PanelMenuGroupAttributes> panelMenuGroupAttributes = getAttributes();
 
     @Test
+    @Templates(value = "plain")
     public void testOnclick() {
         panelMenuGroupAttributes.set(mode, client);
 
@@ -56,6 +57,7 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOndblclick() {
         panelMenuGroupAttributes.set(mode, client);
         Action dblClick = new Actions(driver).doubleClick(page.getTopGroup().advanced().getHeaderElement()).build();

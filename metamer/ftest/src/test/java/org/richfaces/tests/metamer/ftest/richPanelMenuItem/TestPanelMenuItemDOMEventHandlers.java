@@ -61,6 +61,7 @@ public class TestPanelMenuItemDOMEventHandlers extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnclick() {
         panelMenuItemAttributes.set(mode, client);
 

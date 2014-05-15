@@ -100,12 +100,14 @@ public class TestListAttributes extends AbstractListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(listAttributes, ListAttributes.onclick,
             new Actions(driver).click(list.getRoot()).build());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(listAttributes, ListAttributes.ondblclick,
             new Actions(driver).doubleClick(list.getRoot()).build());
@@ -170,12 +172,14 @@ public class TestListAttributes extends AbstractListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnrowclick() {
         testFireEvent(listAttributes, ListAttributes.onrowclick,
             new Actions(driver).click(getTestedItem()).build());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnrowdblclick() {
         testFireEvent(listAttributes, ListAttributes.onrowdblclick,
             new Actions(driver).doubleClick(getTestedItem()).build());

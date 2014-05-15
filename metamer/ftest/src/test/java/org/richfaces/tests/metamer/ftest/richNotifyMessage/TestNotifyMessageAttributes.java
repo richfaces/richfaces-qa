@@ -105,11 +105,13 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnClick() {
         checkOnClick();
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnDblClick() {
         checkOnDblClick();
     }

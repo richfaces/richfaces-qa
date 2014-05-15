@@ -160,6 +160,7 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnitemclick() {
         super.testOnitemclick();
     }
