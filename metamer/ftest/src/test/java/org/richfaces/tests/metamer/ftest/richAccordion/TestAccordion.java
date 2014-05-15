@@ -212,7 +212,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testLang() {
-        testHTMLAttribute(page.getAccordionRootElement(), accordionAttributes, AccordionAttributes.lang, "sk");
+        testLang(page.getAccordionRootElement());
     }
 
     @Test
