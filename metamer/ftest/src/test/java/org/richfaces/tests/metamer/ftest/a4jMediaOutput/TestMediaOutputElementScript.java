@@ -22,53 +22,35 @@
 package org.richfaces.tests.metamer.ftest.a4jMediaOutput;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.STRINGS;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-import java.io.IOException;
 import java.net.URL;
 
-import org.richfaces.tests.metamer.bean.a4j.A4JMediaOutputBean;
-import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
-import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
-import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.jboss.arquillian.graphene.GrapheneElement;
+import org.openqa.selenium.support.FindBy;
 import org.testng.annotations.Test;
 
 /**
- * Test case for page /faces/components/a4jMediaOutput/elementA.xhtml
+ * Test case for page /faces/components/a4jMediaOutput/elementScript.xhtml
  *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestElementA extends AbstractMediaOutputTest {
+public class TestMediaOutputElementScript extends AbstractMediaOutputTest {
 
-    private final Attributes<MediaOutputAttributes> mediaOutputAttributes = getAttributes();
-
-    private String typeValue;
+    @FindBy(css="*#mediaOutputJavascriptText")
+    private GrapheneElement javascriptText;
 
     @Override
     public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jMediaOutput/elementA.xhtml");
+        return buildUrl(contextPath, "faces/components/a4jMediaOutput/elementScript.xhtml");
     }
 
     @Test
-    public void init() throws IOException {
-        assertEquals(mediaOutput.getText(), "This is a link", "The link text doesn't match.");
-        assertTrue(
-            getTextContentByUrlAttribute(mediaOutput, "href").contains(A4JMediaOutputBean.HTML_TEXT),
-            "Target HTML page doesn't match."
-        );
+    public void init() {
+        assertTrue(javascriptText.isPresent(), "The javascript text is not present.");
+        assertEquals(javascriptText.getText(), "JAVASCRIPT TEXT", "The javascript text doesn't match.");
     }
 
-    @Test
-    @Templates("plain")
-    public void testLang() {
-        testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.lang, "cz");
-    }
 
-    @Test
-    @UseWithField(field = "typeValue", valuesFrom = STRINGS, value = { "text/html", "image/png", "image/gif", "video/mpeg", "text/css", "audio/basic" })
-    public void testType() {
-        testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.type, typeValue);
-    }
 }
