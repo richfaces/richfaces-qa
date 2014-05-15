@@ -204,12 +204,14 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(attributes, OrderingListAttributes.onlistclick,
             new Actions(driver).click(orderingList.advanced().getListAreaElement()).build());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(Event.DBLCLICK, orderingList.advanced().getListAreaElement());
     }

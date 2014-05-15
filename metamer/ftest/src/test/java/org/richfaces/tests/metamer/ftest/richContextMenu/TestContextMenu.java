@@ -334,6 +334,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnitemclick() {
         updateShowAction();
         testOnclick();

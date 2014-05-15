@@ -299,6 +299,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(Event.CLICK, pickList.advanced().getRootElement());
     }
