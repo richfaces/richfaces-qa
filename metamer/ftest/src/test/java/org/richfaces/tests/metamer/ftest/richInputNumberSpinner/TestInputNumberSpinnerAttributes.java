@@ -165,7 +165,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     @Test
     @Templates(value = "plain")
     public void testLang() {
-        testAttributeLang(spinner.advanced().getRootElement());
+        testLang(spinner.advanced().getRootElement());
     }
 
     @Test

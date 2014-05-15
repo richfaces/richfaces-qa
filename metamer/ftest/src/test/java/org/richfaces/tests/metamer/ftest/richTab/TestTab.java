@@ -249,7 +249,7 @@ public class TestTab extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testLang() {
-        testAttributeLang(page.getFirstTabContentParentElement());
+        testLang(page.getFirstTabContentParentElement());
     }
 
     @Test
