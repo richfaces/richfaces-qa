@@ -31,11 +31,11 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.log.Log.LogEntryLevel;
 import org.richfaces.fragment.log.RichFacesLog;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
-import org.richfaces.fragment.log.Log.LogEntryLevel;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>

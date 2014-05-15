@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.ftest.richCalendar;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
+
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
