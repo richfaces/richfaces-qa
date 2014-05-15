@@ -233,9 +233,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testLang() {
-        String testString = "someLanguage";
-        tabPanelAttributes.set(TabPanelAttributes.lang, testString);
-        assertEquals(page.getPanelTabAsWebElement().getAttribute("lang"), testString);
+        testLang(page.getPanelTabAsWebElement());
     }
 
     @Test
