@@ -22,34 +22,30 @@
 package org.richfaces.tests.metamer.ftest.a4jMediaOutput;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
+import java.io.IOException;
 import java.net.URL;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.bean.a4j.A4JMediaOutputBean;
 import org.testng.annotations.Test;
 
-
 /**
- * Test case for page /faces/components/a4jMediaOutput/elementLink.xhtml
- *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestElementLink extends AbstractMediaOutputTest {
-
-    @FindBy(css="*#mediaOutputMarked")
-    private WebElement markedText;
+public class TestMediaOutputTextHtml extends AbstractMediaOutputTest {
 
     @Override
     public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jMediaOutput/elementLink.xhtml");
+        return buildUrl(contextPath, "faces/components/a4jMediaOutput/textHtml.xhtml");
     }
 
     @Test
-    public void init() {
-        assertEquals(markedText.getCssValue("color"), "rgba(255, 0, 0, 1)", "The marked text should be red.");
+    public void testInit() throws IOException {
+        assertTrue(
+            getTextContentByUrlAttribute(mediaOutput, "data").contains(A4JMediaOutputBean.HTML_TEXT),
+            "The HTML content doesn't match."
+        );
     }
-
 
 }

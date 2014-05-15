@@ -41,7 +41,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestAttributes extends AbstractMediaOutputTest {
+public class TestMediaOutputAttributes extends AbstractMediaOutputTest {
 
     private final Attributes<MediaOutputAttributes> mediaOutputAttributes = getAttributes();
 

@@ -41,7 +41,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22721 $
  */
-public class TestImagePng extends AbstractMediaOutputTest {
+public class TestMediaOutputImagePng extends AbstractMediaOutputTest {
 
     @Override
     public URL getTestUrl() {
