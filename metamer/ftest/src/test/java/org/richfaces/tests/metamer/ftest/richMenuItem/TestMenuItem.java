@@ -154,6 +154,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testIcon() {
         menuItemAttributes.set(MenuItemAttributes.icon, "star");
         assertTrue(icon.getAttribute("src").contains("star.png"),
@@ -169,6 +170,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testIconDisabled() {
         menuItemAttributes.set(MenuItemAttributes.disabled, Boolean.TRUE);
 

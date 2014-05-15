@@ -147,6 +147,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
 
     @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-9989")
+    @Templates(value = "plain")
     public void testIcon() {
         menuGroupAttributes.set(MenuGroupAttributes.icon, "null");
         assertNotPresent(icon, "Icon should not be present.");
@@ -161,6 +162,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-9989")
+    @Templates(value = "plain")
     public void testIconDisabled() {
         menuGroupAttributes.set(MenuGroupAttributes.disabled, Boolean.TRUE);
 
