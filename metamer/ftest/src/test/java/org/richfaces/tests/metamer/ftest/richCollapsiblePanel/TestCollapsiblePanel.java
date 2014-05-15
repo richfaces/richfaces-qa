@@ -119,12 +119,14 @@ public class TestCollapsiblePanel extends TestFacets {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testLeftCollapsedIcon() {
         Graphene.guardAjax(panel).collapse();
         verifyStandardIcons(panel.advanced().getLeftIcon(), CollapsiblePanelAttributes.leftCollapsedIcon);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testLeftExpandedIcon() {
         verifyStandardIcons(panel.advanced().getLeftIcon(), CollapsiblePanelAttributes.leftExpandedIcon);
     }
@@ -179,12 +181,14 @@ public class TestCollapsiblePanel extends TestFacets {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRightCollapsedIcon() {
         Graphene.guardAjax(panel).collapse();
         verifyStandardIcons(panel.advanced().getRightIcon(), CollapsiblePanelAttributes.rightCollapsedIcon);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRightExpandedIcon() {
         verifyStandardIcons(panel.advanced().getRightIcon(), CollapsiblePanelAttributes.rightExpandedIcon);
     }

@@ -34,6 +34,7 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -60,6 +61,7 @@ public class TestAccordionIcons extends AbstractWebDriverTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10352")
+    @Templates(value = "plain")
     public void testItemActiveLeftIcon() {
         By image = By.cssSelector(String.format(leftIcon, "1") + " img");
 
@@ -70,6 +72,7 @@ public class TestAccordionIcons extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testItemActiveRightIcon() {
         By image = By.cssSelector(String.format(rightIcon, "1") + " img");
 
@@ -80,6 +83,7 @@ public class TestAccordionIcons extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testItemDisabledLeftIcon() {
         By image = By.cssSelector(String.format(leftIcon, "4") + " img");
 
@@ -87,6 +91,7 @@ public class TestAccordionIcons extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testItemDisabledRightIcon() {
         By image = By.cssSelector(String.format(rightIcon, "4") + " img");
 
@@ -95,6 +100,7 @@ public class TestAccordionIcons extends AbstractWebDriverTest {
 
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-10352")
+    @Templates(value = "plain")
     public void testItemInactiveLeftIcon() {
         By image = By.cssSelector(String.format(leftIcon, "3") + " img");
 
@@ -102,6 +108,7 @@ public class TestAccordionIcons extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testItemInactiveRightIcon() {
         By image = By.cssSelector(String.format(rightIcon, "3") + " img");
 
@@ -112,7 +119,7 @@ public class TestAccordionIcons extends AbstractWebDriverTest {
         IconsCheckerWebdriver checker = new IconsCheckerWebdriver<AccordionAttributes>(driver, accordionAttributes, "rf-ico-", "-hdr");
         checker.checkCssImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
         checker.checkCssNoImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
-        checker.checkImageIcons(attribute,  new IconsCheckerWebdriver.WebElementLocator(icon), image, classSuffix);
-        checker.checkNone(attribute,  new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
+        checker.checkImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), image, classSuffix);
+        checker.checkNone(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
     }
 }

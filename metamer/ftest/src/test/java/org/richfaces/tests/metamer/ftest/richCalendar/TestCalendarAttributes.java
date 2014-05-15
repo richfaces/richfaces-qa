@@ -225,6 +225,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testButtonIcon() {
         calendarAttributes.set(CalendarAttributes.buttonIcon, "star");
         String src = popupCalendar.getPopupButtonElement().getAttribute("src");
@@ -237,6 +238,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10255")
+    @Templates(value = "plain")
     public void testButtonDisabledIcon() {
         calendarAttributes.set(CalendarAttributes.buttonDisabledIcon, "heart");
         calendarAttributes.set(CalendarAttributes.disabled, Boolean.TRUE);
