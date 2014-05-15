@@ -151,6 +151,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     @UseWithField(field = "boundaryDatesMode", valuesFrom = FROM_ENUM, value = "")
+    @Templates("plain")
     public void testBoundaryDatesMode() {
         calendarAttributes.set(CalendarAttributes.boundaryDatesMode, boundaryDatesMode.value);
         DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
@@ -398,6 +399,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates("plain")
     public void testEnableManualInput() {
         assertEquals(popupCalendar.getInput().advanced().getInputElement().getAttribute("readonly"), "true");
 
@@ -452,6 +454,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates("plain")
     public void testInputSize() {
         calendarAttributes.set(CalendarAttributes.inputSize, "30");
         assertEquals(popupCalendar.getInput().advanced().getInputElement().getAttribute("size"), "30",
@@ -478,6 +481,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates("plain")
     public void testLocale() {
         String locale = "ru";
         calendarAttributes.set(CalendarAttributes.locale, locale);
@@ -879,6 +883,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     @UseWithField(field = "booleanValue", valuesFrom = FROM_FIELD, value = "booleans")
+    @Templates("plain")
     public void testShowFooter() {
         setCurrentDateWithCalendarsTodayButtonAction.perform();
         calendarAttributes.set(CalendarAttributes.showFooter, booleanValue);
@@ -895,6 +900,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     @UseWithField(field = "booleanValue", valuesFrom = FROM_FIELD, value = "booleans")
+    @Templates("plain")
     public void testShowHeader() {
         calendarAttributes.set(CalendarAttributes.showHeader, booleanValue);
         PopupHeaderControls hc = popupCalendar.openPopup().getHeaderControls();
@@ -911,6 +917,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     @UseWithField(field = "booleanValue", valuesFrom = FROM_FIELD, value = "booleans")
+    @Templates("plain")
     public void testShowInput() {
         calendarAttributes.set(CalendarAttributes.showInput, booleanValue);
         if (booleanValue) {
@@ -922,6 +929,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     @UseWithField(field = "booleanValue", valuesFrom = FROM_FIELD, value = "booleans")
+    @Templates("plain")
     public void testShowWeekDaysBar() {
         calendarAttributes.set(CalendarAttributes.showWeekDaysBar, booleanValue);
         DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
@@ -973,6 +981,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates("plain")
     public void testTabindexButton() {
         testHTMLAttribute(popupCalendar.getPopupButtonElement(), calendarAttributes, CalendarAttributes.tabindex, "101");
     }
