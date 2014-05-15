@@ -341,6 +341,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-12792")
+    @Templates(value = "plain")
     public void testOnkeydown() {
         updateShowAction();
         page.getContextMenu().advanced().show(page.getTargetPanel1());
@@ -349,6 +350,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeyup() {
         updateShowAction();
         page.getContextMenu().advanced().show(page.getTargetPanel1());

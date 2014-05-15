@@ -127,16 +127,19 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnKeyDown() {
         testFireEvent(Event.KEYDOWN, message.advanced().getRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnKeyPress() {
         testFireEvent(Event.KEYPRESS, message.advanced().getRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnKeyUp() {
         testFireEvent(Event.KEYUP, message.advanced().getRootElement());
     }
