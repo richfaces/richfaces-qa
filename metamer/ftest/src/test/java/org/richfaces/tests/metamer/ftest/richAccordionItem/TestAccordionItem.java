@@ -190,7 +190,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     @Test
     @Templates("plain")
     public void testLang() {
-        testAttributeLang(testElement);
+        testLang(testElement);
     }
 
     @Test

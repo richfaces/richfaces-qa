@@ -288,7 +288,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     @Test
     @Templates(value = "plain")
     public void testLang() {
-        testAttributeLang(slider.advanced().getRootElement());
+        testLang(slider.advanced().getRootElement());
     }
 
     @Test
