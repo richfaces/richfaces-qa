@@ -24,8 +24,10 @@ package org.richfaces.tests.metamer.ftest.richExtendedDataTable.page;
 import java.util.Collection;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
 import org.apache.commons.lang.StringUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -63,12 +65,12 @@ public class SelectionPage {
 
     public void selectRow(int rowIndex, Keys... keys) {
         dataScroller2.switchTo(getPageForIndex(rowIndex));
-        table.selectRow(getRowForIndex(rowIndex), keys);
+        Graphene.guardAjax(table).selectRow(getRowForIndex(rowIndex), keys);
     }
 
     public void deselectRow(int rowIndex, Keys... keys) {
         dataScroller2.switchTo(getPageForIndex(rowIndex));
-        table.deselectRow(getRowForIndex(rowIndex), keys);
+        Graphene.guardAjax(table).deselectRow(getRowForIndex(rowIndex), keys);
     }
 
     public Collection<Integer> getActualCurrentSelection() {
