@@ -30,6 +30,7 @@ import java.util.List;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.richfaces.tests.metamer.ftest.richTree.TestTreeToggling;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -75,25 +76,14 @@ public class TestTreeModelAdaptorToggling extends TestTreeToggling {
 
     @Test
     @Override
-    public void testDeepCollapsion() {
-        super.testDeepCollapsion();
+    public void testDeepExpansionAndCollapsion() {
+        super.testDeepExpansionAndCollapsion();
     }
 
     @Test
+    @Templates("plain")
     @Override
-    public void testDeepExpansion() {
-        super.testDeepExpansion();
-    }
-
-    @Test
-    @Override
-    public void testTopLevelNodesCollapsion() {
-        super.testTopLevelNodesCollapsion();
-    }
-
-    @Test
-    @Override
-    public void testTopLevelNodesExpansion() {
-        super.testTopLevelNodesExpansion();
+    public void testTopLevelNodesExpansionAndCollapsion() {
+        super.testTopLevelNodesExpansionAndCollapsion();
     }
 }
