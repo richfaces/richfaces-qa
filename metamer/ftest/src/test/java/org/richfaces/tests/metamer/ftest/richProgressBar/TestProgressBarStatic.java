@@ -134,6 +134,7 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testMaxValue() {
         progressBarAttributes.set(ProgressBarAttributes.maxValue, 1000);
         progressBarAttributes.set(ProgressBarAttributes.value, 100);
@@ -141,6 +142,7 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testMinValue() {
         progressBarAttributes.set(ProgressBarAttributes.maxValue, 100);
         progressBarAttributes.set(ProgressBarAttributes.minValue, 90);
@@ -173,6 +175,7 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testValue() {
         progressBarAttributes.set(ProgressBarAttributes.maxValue, 100);
         progressBarAttributes.set(ProgressBarAttributes.value, 0);

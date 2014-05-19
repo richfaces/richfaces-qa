@@ -112,6 +112,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     }
 
     @Test
+    @Templates(value = "plain")
     public void testEnableManualInput() {
         inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.enableManualInput, Boolean.FALSE);
         String attribute = spinner.advanced().getInput().advanced().getInputElement().getAttribute("readonly");
@@ -516,6 +517,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     }
 
     @Test
+    @Templates("plain")
     @UseWithField(field = "number", valuesFrom = FROM_FIELD, value = "bigNumbers")
     public void testValueBig() {
         inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.value, number);
@@ -525,6 +527,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     }
 
     @Test
+    @Templates("plain")
     @UseWithField(field = "number", valuesFrom = FROM_FIELD, value = "correctNumbers")
     public void testValueCorrect() {
         inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.value, number);
@@ -532,6 +535,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     }
 
     @Test
+    @Templates("plain")
     @UseWithField(field = "number", valuesFrom = FROM_FIELD, value = "smallNumbers")
     public void testValueSmall() {
         inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.value, number);
