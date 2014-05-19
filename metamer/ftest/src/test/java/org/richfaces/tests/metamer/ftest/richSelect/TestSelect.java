@@ -574,6 +574,7 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testValue() {
         selectAttributes.set(SelectAttributes.value, "North Carolina");
         assertEquals(select.advanced().getInput().getStringValue(), "North Carolina", "Input should contain selected value.");

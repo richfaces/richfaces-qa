@@ -631,6 +631,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @Templates("plain")
     @UseWithField(field = "number", valuesFrom = FROM_FIELD, value = "bigNumbers")
     public void testValueBig() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.value, number);
@@ -641,6 +642,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @Templates("plain")
     @UseWithField(field = "number", valuesFrom = FROM_FIELD, value = "correctNumbers")
     public void testValueCorrect() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.value, number);
@@ -650,6 +652,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @Templates("plain")
     @UseWithField(field = "number", valuesFrom = FROM_FIELD, value = "smallNumbers")
     public void testValueSmall() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.value, number);

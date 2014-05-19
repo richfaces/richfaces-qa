@@ -476,6 +476,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testValue() {
         String testedValue = "new value";
         inplaceInputAttributes.set(InplaceInputAttributes.value, testedValue);

@@ -479,6 +479,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @Templates("plain")
     public void testValue() {
         autocompleteAttributes.set(AutocompleteAttributes.value, "Johny Derp speaking!");
         checkOutput("Johny Derp speaking!");

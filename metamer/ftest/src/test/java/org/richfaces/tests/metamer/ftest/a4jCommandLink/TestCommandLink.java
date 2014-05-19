@@ -322,6 +322,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
     public void testOnmouseup() {
         testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onmouseup);
     }
+
     @Test
     @Templates(value = "plain")
     public void testRel() {
@@ -401,6 +402,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testValue() {
         commandLinkAttributes.set(CommandLinkAttributes.value, "new label");
         assertEquals(page.link.getText(), "new label", "Value of the button did not change");

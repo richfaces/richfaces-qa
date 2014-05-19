@@ -367,6 +367,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testValue() {
         commandButtonAttributes.set(CommandButtonAttributes.value, CommandButtonLinkPage.STRING_RF1);
         assertEquals(page.button.getAttribute("value"), CommandButtonLinkPage.STRING_RF1, "Button's value did not change");
