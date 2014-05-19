@@ -28,6 +28,7 @@ import static org.testng.Assert.assertTrue;
 
 import org.richfaces.fragment.switchable.SwitchType;
 import org.richfaces.fragment.tree.Tree.TreeNode;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.annotations.BeforeMethod;
@@ -60,31 +61,9 @@ public class TestTreeToggling extends AbstractTreeTest {
 
     @Test
     @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "simpleSwingTreeNode")
-    public void testDeepCollapsion() {
+    public void testDeepExpansionAndCollapsion() {
         checkInitialState();
-
-        testDeepExpansion();
-
-        for (TreeNode treeNode1 : tree.advanced().getNodesExpanded()) {
-            for (TreeNode treeNode2 : treeNode1.advanced().getNodesExpanded()) {
-                getGuarded(treeNode2.advanced(), toggleType).collapse();
-            }
-            treeNode1.advanced().collapse();
-        }
-        checkInitialState();
-    }
-
-    @Test(groups = "extended")
-    @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "richFacesTreeNodes")
-    public void testDeepCollapsion2() {
-        checkInitialState();
-        testDeepCollapsion();
-    }
-
-    @Test
-    @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "simpleSwingTreeNode")
-    public void testDeepExpansion() {
-        checkInitialState();
+        // expansion
         for (Integer[] path : paths) {
             int depth = path.length - 1;
             for (int d = 0; d <= depth; d++) {
@@ -101,19 +80,34 @@ public class TestTreeToggling extends AbstractTreeTest {
                 }
             }
         }
+        // collapsion
+        for (TreeNode treeNode1 : tree.advanced().getNodesExpanded()) {
+            for (TreeNode treeNode2 : treeNode1.advanced().getNodesExpanded()) {
+                getGuarded(treeNode2.advanced(), toggleType).collapse();
+            }
+            treeNode1.advanced().collapse();
+        }
+        checkInitialState();
     }
 
     @Test(groups = "extended")
     @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "richFacesTreeNodes")
-    public void testDeepExpansion2() {
-        testDeepExpansion();
+    public void testDeepExpansionAndCollapsionInRFTreeNodes() {
+        testDeepExpansionAndCollapsion();
     }
 
     @Test
+    @Templates("plain")
     @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "simpleSwingTreeNode")
-    public void testTopLevelNodesCollapsion() {
+    public void testTopLevelNodesExpansionAndCollapsion() {
         checkInitialState();
-        testTopLevelNodesExpansion();
+        for (int i = 1; i <= TOP_LEVEL_NODES; i++) {
+            treeNode = tree.advanced().getNodes().get(i - 1);
+            getGuarded(treeNode.advanced(), toggleType).expand();
+            assertEquals(tree.advanced().getNodesCollapsed().size(), TOP_LEVEL_NODES - i);
+            assertEquals(tree.advanced().getNodesExpanded().size(), i);
+            assertTrue(treeNode.advanced().isExpanded());
+        }
         for (int i = 1; i <= TOP_LEVEL_NODES; i++) {
             treeNode = tree.advanced().getNodes().get(i - 1);
             getGuarded(treeNode.advanced(), toggleType).collapse();
@@ -124,28 +118,10 @@ public class TestTreeToggling extends AbstractTreeTest {
     }
 
     @Test(groups = "extended")
+    @Templates("plain")
     @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "richFacesTreeNodes")
-    public void testTopLevelNodesCollapsion2() {
-        testTopLevelNodesCollapsion();
-    }
-
-    @Test
-    @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "simpleSwingTreeNode")
-    public void testTopLevelNodesExpansion() {
-        checkInitialState();
-        for (int i = 1; i <= TOP_LEVEL_NODES; i++) {
-            treeNode = tree.advanced().getNodes().get(i - 1);
-            getGuarded(treeNode.advanced(), toggleType).expand();
-            assertEquals(tree.advanced().getNodesCollapsed().size(), TOP_LEVEL_NODES - i);
-            assertEquals(tree.advanced().getNodesExpanded().size(), i);
-            assertTrue(treeNode.advanced().isExpanded());
-        }
-    }
-
-    @Test(groups = "extended")
-    @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "richFacesTreeNodes")
-    public void testTopLevelNodesExpansion2() {
-        testTopLevelNodesExpansion();
+    public void testTopLevelNodesExpansionAndCollapsionInRFTreeNodes() {
+        testTopLevelNodesExpansionAndCollapsion();
     }
 
     @BeforeMethod
