@@ -705,6 +705,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testValue() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.value, "North Carolina");
         assertEquals(select.advanced().getLabelValue(), "North Carolina", "Label should contain selected value.");
