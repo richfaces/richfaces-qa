@@ -24,7 +24,7 @@ public class RF13098 extends AbstractMediaOutputTest {
 
     @Override
     public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jMediaOutput/rf13098.xhtml");
+        return buildUrl(contextPath, "faces/components/a4jMediaOutput/rf-13098.xhtml");
     }
 
     @Test
