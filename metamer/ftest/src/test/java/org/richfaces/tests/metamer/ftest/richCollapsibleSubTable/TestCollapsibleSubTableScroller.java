@@ -22,8 +22,8 @@
 package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
+import static org.richfaces.tests.metamer.ftest.richCollapsibleSubTable.ExpandMode.ajax;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -34,9 +34,9 @@ import java.util.List;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.fragment.collapsibleSubTableToggler.RichFacesCollapsibleSubTableToggler;
+import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.model.Employee;
 import org.testng.annotations.BeforeMethod;
@@ -44,14 +44,16 @@ import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22872 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestCollapsibleSubTableScroller extends AbstractCollapsibleSubTableTest {
 
     @FindByJQuery(".rf-ds:eq(0)")
     private RichFacesDataScroller menScroller;
     @FindByJQuery(".rf-ds:eq(1)")
-    private RichFacesDataScroller womenDataScroller;
+    private RichFacesDataScroller womenScroller;
+    private CollapsibleSubTableWithEmployees menSubTable;
+    private CollapsibleSubTableWithEmployees womenSubTable;
 
     private static final int pagesMen = 32;
     private static final int pagesWomen = 9;
@@ -60,9 +62,6 @@ public class TestCollapsibleSubTableScroller extends AbstractCollapsibleSubTable
 
     private final int rows = 5;
 
-    @UseForAllTests(valuesFrom = FROM_FIELD, value = "booleans")
-    private boolean paralelScrolling;
-
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richCollapsibleSubTable/scroller.xhtml");
@@ -70,91 +69,155 @@ public class TestCollapsibleSubTableScroller extends AbstractCollapsibleSubTable
 
     @BeforeMethod
     public void prepareComponent() {
-        if (paralelScrolling) {
-            paginationTester = new ParallelScrollingTester();
-        } else {
-            paginationTester = new BasicPaginationTester();
-        }
+        paginationTester = new ParallelScrollingTester();
         attributes.set(CollapsibleSubTableAttributes.expandMode, expandMode);
-        paginationTester.setDataScroller(isMale ? menScroller : womenDataScroller);
-        paginationTester.initializeTestedPages(isMale ? pagesMen : pagesWomen);
+        paginationTester.setDataScroller(menScroller);
+        paginationTester.initializeTestedPages(pagesMen);
         attributes.set(CollapsibleSubTableAttributes.rows, rows);
     }
 
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-11301")
-    @UseWithField(field = "expandMode", valuesFrom = FROM_ENUM, value = "")
-    public void testScroller() {
+    @UseWithField(field = "expandMode", valuesFrom = FROM_FIELD, value = "expandModeAjax")
+    public void testScrollerExpandModeAjax() {
+        menSubTable = getSubTable(Boolean.TRUE);
+        womenSubTable = getSubTable(Boolean.FALSE);
         paginationTester.testNumberedPages();
     }
 
-    public class BasicPaginationTester extends PaginationTester {
+    @Test(groups = "extended")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11301")
+    @UseWithField(field = "expandMode", valuesFrom = FROM_FIELD, value = "expandModesOtherThanAjax")
+    public void testScrollerExpandModeOtherThanAjax() {
+        testScrollerExpandModeAjax();
+    }
 
-        private int secondScrollerPage;
-        private String secondSubtableText;
+    public class ParallelScrollingTester extends PaginationTester {
+
+        private int womenScrollerPage;
+        private int actPage;
+
+        private List<EmployeeRecord> lastVisibleWomenEmployees;
+        private List<EmployeeRecord> lastVisibleMenEmployees;
+
+        @Override
+        protected void verifyAfterScrolling() {
+            verifyScrollingAfterMenScrollerUsed();
+            verifySubTablesToggling();
+            verifyScrollingWithWomenScroller();
+        }
 
         @Override
         protected void verifyBeforeScrolling() {
-            secondScrollerPage = womenDataScroller.getActivePageNumber();
-            secondSubtableText = getSubTable(!isMale).advanced().getTableRootElement().getText();
+            womenScrollerPage = womenScroller.getActivePageNumber();
+            lastVisibleWomenEmployees = getSubTable(Boolean.FALSE).getAllRows();
+        }
+
+        private void checkEmployeesEquals(List<Employee> expected, List<EmployeeRecord> actualEmployees) {
+            assertEquals(expected.size(), actualEmployees.size());
+            EmployeeRecord actualE;
+            Employee expectedE;
+            for (int i = 0; i < expected.size(); i++) {
+                actualE = actualEmployees.get(i);
+                expectedE = expected.get(i);
+                assertEquals(expectedE.getName(), actualE.getName());
+                assertEquals(expectedE.getTitle(), actualE.getTitle());
+            }
+        }
+
+        private List<Employee> getExpectedEmployeesForScrolledView(boolean isMaleTable) {
+            int start = ((isMaleTable ? menScroller : womenScroller).getActivePageNumber() - 1) * rows;
+            int end = Math.min(start + rows, getEmployees(isMaleTable).size());
+            List<Employee> visibleEmployees = getEmployees(isMaleTable).subList(start, end);
+            return visibleEmployees;
         }
 
         private RichFacesCollapsibleSubTableToggler getGuardedToggler(RichFacesCollapsibleSubTableToggler toggler) {
             switch (expandMode) {
                 case ajax:
                     return Graphene.guardAjax(toggler);
+                case none:
                 case client:
                     return Graphene.guardNoRequest(toggler);
-                case none:
                 case server:
                     return Graphene.guardHttp(toggler);
             }
             return null;
         }
 
-        @Override
-        protected void verifyAfterScrolling() {
-            CollapsibleSubTableWithEmployees subTable = getSubTable(isMale);
-            CollapsibleSubTableWithEmployees secondSubTable = getSubTable(!isMale);
-            if (expandMode != ExpandMode.none) {
-                RichFacesCollapsibleSubTableToggler toggler = getGuardedToggler(subTable.advanced().getTableToggler());
-                assertTrue(subTable.advanced().isVisible());
-                assertTrue(secondSubTable.advanced().isVisible());
-                toggler.toggle();
-                assertFalse(subTable.advanced().isVisible());
-                assertTrue(secondSubTable.advanced().isVisible());
-                toggler.toggle();
-                assertTrue(subTable.advanced().isVisible());
-                assertTrue(secondSubTable.advanced().isVisible());
-            }
-
-            assertEquals(womenDataScroller.getActivePageNumber(), secondScrollerPage);
-            assertEquals(secondSubTable.advanced().getTableRootElement().getText(), secondSubtableText);
-
-            int start = (dataScroller.getActivePageNumber() - 1) * rows;
-            int end = Math.min(start + rows, getEmployees(isMale).size());
-            int count = end - start;
-            List<Employee> visibleEmployees = getEmployees(isMale).subList(start, end);
-
-            assertEquals(subTable.advanced().getNumberOfVisibleRows(), count);
-
-            for (int i = 0; i < count; i++) {
-                assertEquals(subTable.getRow(i).getName(), visibleEmployees.get(i).getName());
-                assertEquals(subTable.getRow(i).getTitle(), visibleEmployees.get(i).getTitle());
-            }
+        private void scrollWithWomenScroller() {
+            womenScroller.switchTo((womenScroller.getActivePageNumber() + 3) % pagesWomen + 1);
         }
-    }
 
-    public class ParallelScrollingTester extends BasicPaginationTester {
+        private void verifyScrollingAfterMenScrollerUsed() {
+            assertEquals(womenScroller.getActivePageNumber(), womenScrollerPage);
+            checkEmployeesEquals(getExpectedEmployeesForScrolledView(Boolean.FALSE), lastVisibleWomenEmployees);
 
-        int notrandomizer = (Integer.MAX_VALUE - 17) * 13;
+            lastVisibleMenEmployees = getSubTable(Boolean.TRUE).getAllRows();
+            checkEmployeesEquals(getExpectedEmployeesForScrolledView(Boolean.TRUE), lastVisibleMenEmployees);
+        }
 
-        @Override
-        protected void verifyBeforeScrolling() {
-            notrandomizer *= 177;
-            int page = (Math.abs(notrandomizer) % (isMale ? pagesWomen : pagesMen)) + 1;
-            womenDataScroller.switchTo(page);
-            super.verifyBeforeScrolling();
+        private void verifyScrollingWithWomenScroller() {
+            scrollWithWomenScroller();
+
+            checkEmployeesEquals(getExpectedEmployeesForScrolledView(Boolean.TRUE), lastVisibleMenEmployees);
+
+            lastVisibleWomenEmployees = getSubTable(Boolean.FALSE).getAllRows();
+            checkEmployeesEquals(getExpectedEmployeesForScrolledView(Boolean.FALSE), lastVisibleWomenEmployees);
+        }
+
+        private void verifySubTablesToggling() {
+            actPage = menScroller.getActivePageNumber();
+            RichFacesCollapsibleSubTableToggler togglerMen = getGuardedToggler(menSubTable.advanced().getTableToggler());
+            RichFacesCollapsibleSubTableToggler togglerWomen = getGuardedToggler(womenSubTable.advanced().getTableToggler());
+            assertTrue(menSubTable.advanced().isVisible());
+            assertTrue(womenSubTable.advanced().isVisible());
+            if (expandMode != ExpandMode.none) {
+                togglerMen.toggle();
+                assertFalse(Utils.isVisible(menScroller.advanced().getRootElement()));
+                assertEquals(womenScroller.getActivePageNumber(), womenScrollerPage);
+                assertFalse(menSubTable.advanced().isVisible());
+                assertTrue(womenSubTable.advanced().isVisible());
+                assertFalse(menSubTable.advanced().isExpanded());
+                assertTrue(womenSubTable.advanced().isExpanded());
+
+                togglerMen.toggle();
+                assertEquals(menScroller.getActivePageNumber(), actPage);
+                assertEquals(womenScroller.getActivePageNumber(), womenScrollerPage);
+                assertTrue(menSubTable.advanced().isVisible());
+                assertTrue(womenSubTable.advanced().isVisible());
+                assertTrue(menSubTable.advanced().isExpanded());
+                assertTrue(womenSubTable.advanced().isExpanded());
+                checkEmployeesEquals(getExpectedEmployeesForScrolledView(Boolean.TRUE), lastVisibleMenEmployees);
+                checkEmployeesEquals(getExpectedEmployeesForScrolledView(Boolean.FALSE), lastVisibleWomenEmployees);
+
+                togglerWomen.toggle();
+                assertEquals(menScroller.getActivePageNumber(), actPage);
+                assertFalse(Utils.isVisible(womenScroller.advanced().getRootElement()));
+                assertTrue(menSubTable.advanced().isVisible());
+                assertFalse(womenSubTable.advanced().isVisible());
+                assertTrue(menSubTable.advanced().isExpanded());
+                assertFalse(womenSubTable.advanced().isExpanded());
+            } else {
+                togglerMen.toggle();
+                assertEquals(menScroller.getActivePageNumber(), actPage);
+                assertEquals(womenScroller.getActivePageNumber(), womenScrollerPage);
+                assertTrue(menSubTable.advanced().isVisible());
+                assertTrue(womenSubTable.advanced().isVisible());
+                assertTrue(menSubTable.advanced().isExpanded());
+                assertTrue(womenSubTable.advanced().isExpanded());
+                checkEmployeesEquals(getExpectedEmployeesForScrolledView(Boolean.TRUE), lastVisibleMenEmployees);
+                checkEmployeesEquals(getExpectedEmployeesForScrolledView(Boolean.FALSE), lastVisibleWomenEmployees);
+            }
+            togglerWomen.toggle();
+            assertEquals(menScroller.getActivePageNumber(), actPage);
+            assertEquals(womenScroller.getActivePageNumber(), womenScrollerPage);
+            assertTrue(menSubTable.advanced().isVisible());
+            assertTrue(womenSubTable.advanced().isVisible());
+            assertTrue(menSubTable.advanced().isExpanded());
+            assertTrue(womenSubTable.advanced().isExpanded());
+            checkEmployeesEquals(getExpectedEmployeesForScrolledView(Boolean.TRUE), lastVisibleMenEmployees);
+            checkEmployeesEquals(getExpectedEmployeesForScrolledView(Boolean.FALSE), lastVisibleWomenEmployees);
         }
     }
 }
