@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
@@ -35,7 +34,6 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
-import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.model.Employee;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -65,56 +63,54 @@ public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTabl
 
     @Test
     @Templates(exclude = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
-    @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
     public void testFilteringExpressionContainsIgnoreCase() {
-        verifyFiltering(true, "Alexander");
-        verifyFiltering(true, "aLEX");
+        verifyFilteringInBothSubTables(Boolean.TRUE, "Alexander");
+        verifyFilteringInBothSubTables(Boolean.TRUE, "aLEX");
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-12673")
     @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
-    @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
     public void testFilteringExpressionContainsIgnoreCaseInSwitchablePanels() {
         testFilteringExpressionContainsIgnoreCase();
     }
 
     @Test
     @Templates(exclude = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
-    @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
     public void testFilteringExpressionEquals() {
-        verifyFiltering(false, "Director");
-        verifyFiltering(false, "director");
-        verifyFiltering(false, "direct");
+        verifyFilteringInBothSubTables(Boolean.FALSE, "Director");
+        verifyFilteringInBothSubTables(Boolean.FALSE, "director");
+        verifyFilteringInBothSubTables(Boolean.FALSE, "direct");
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-12673")
     @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
-    @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
     public void testFilteringExpressionEqualsInSwitchablePanels() {
         testFilteringExpressionEquals();
     }
 
-    public void verifyFiltering(boolean byName, String filter) {
+    public void verifyFilteringInBothSubTables(boolean byName, String filter) {
         getDataTable().filterBy(byName, filter);
-        List<Employee> visibleEmployees = filterCurrentEmployees(byName);
-        if (visibleEmployees.size() > rows) {
-            visibleEmployees = visibleEmployees.subList(0, rows);
-        }
-        CollapsibleSubTableWithEmployees table = getSubTable(isMale);
+        verifyFilteringInSubTable(byName, Boolean.TRUE);
+        verifyFilteringInSubTable(byName, Boolean.FALSE);
+    }
 
-        assertEquals(table.advanced().getNumberOfVisibleRows(), visibleEmployees.size());
-        for (int i = 0; i < visibleEmployees.size(); i++) {
-            assertEquals(table.getRow(i).getName(), visibleEmployees.get(i).getName());
-            assertEquals(table.getRow(i).getTitle(), visibleEmployees.get(i).getTitle());
+    private void verifyFilteringInSubTable(boolean byName, boolean isMaleTable) {
+        List<Employee> expectedEmployees = getExpectedEmployees(byName, isMaleTable);
+        CollapsibleSubTableWithEmployees table = getSubTable(isMaleTable);
+
+        assertEquals(table.advanced().getNumberOfVisibleRows(), expectedEmployees.size());
+        for (int i = 0; i < expectedEmployees.size(); i++) {
+            assertEquals(table.getRow(i).getName(), expectedEmployees.get(i).getName());
+            assertEquals(table.getRow(i).getTitle(), expectedEmployees.get(i).getTitle());
         }
     }
 
-    private List<Employee> filterCurrentEmployees(final boolean byName) {
+    private List<Employee> getExpectedEmployees(final boolean byName, boolean isMaleTable) {
         final String nameFilter = getDataTable().getNameFilterText();
         final String titleFilter = getDataTable().getTitleFilterText();
-        return new LinkedList<Employee>(Collections2.filter(getEmployees(isMale), new Predicate<Employee>() {
+        List<Employee> result = new LinkedList<Employee>(Collections2.filter(getEmployees(isMaleTable), new Predicate<Employee>() {
             @Override
             public boolean apply(Employee employee) {
                 String filterValue = byName ? nameFilter : titleFilter;
@@ -122,6 +118,10 @@ public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTabl
                 return byName ? employeeValue.toLowerCase().contains(filterValue.toLowerCase()) : employeeValue.equals(filterValue);
             }
         }));
+        if (result.size() > rows) {
+            result = result.subList(0, rows);
+        }
+        return result;
     }
 
     @Override

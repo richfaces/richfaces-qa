@@ -76,8 +76,10 @@ public abstract class AbstractCollapsibleSubTableTest extends AbstractWebDriverT
     protected Boolean isMale = Boolean.TRUE;
 
     protected ExpandMode expandMode = ExpandMode.client;
+    protected final ExpandMode[] expandModeAjax = { ExpandMode.ajax };
+    protected final ExpandMode[] expandModesOtherThanAjax = { ExpandMode.none, ExpandMode.client, ExpandMode.server };
 
-    public <T extends RichFacesDataTable<?,? extends CollapsibleSubTableWithEmployees,?>> DataTableWithCST getDataTable() {
+    public <T extends RichFacesDataTable<?, ? extends CollapsibleSubTableWithEmployees, ?>> DataTableWithCST getDataTable() {
         return dataTable;
     }
 
