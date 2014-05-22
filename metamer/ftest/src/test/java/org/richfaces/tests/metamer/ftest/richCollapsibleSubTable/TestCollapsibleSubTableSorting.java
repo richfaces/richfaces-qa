@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
-import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
@@ -40,7 +39,6 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.model.SortMode;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
-import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
 import org.richfaces.tests.metamer.model.Employee;
 import org.testng.annotations.Test;
 
@@ -59,38 +57,43 @@ public class TestCollapsibleSubTableSorting extends AbstractCollapsibleSubTableT
 
     private SortMode sortMode;
 
+    private SortingState sortingStateMen;
+    private SortingState sortingStateWomen;
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richCollapsibleSubTable/sorting-using-column.xhtml");
     }
 
     @Test
-    @Uses({
-        @UseWithField(field = "sortMode", valuesFrom = FROM_ENUM, value = ""),
-        @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
-    })
+    @UseWithField(field = "sortMode", valuesFrom = FROM_ENUM, value = "")
     @RegressionTest("https://issues.jboss.org/browse/RF-11302")
     public void testSorting() {
         attributes.set(CollapsibleSubTableAttributes.rows, rows);
         attributes.set(CollapsibleSubTableAttributes.sortMode, sortMode);
 
-        SortingState sortingState = new SortingState(getEmployees(isMale));
-        verifySorting(sortingState, sortMode, SortBy.NAME);
-        verifySorting(sortingState, sortMode, SortBy.TITLE);
-        verifySorting(sortingState, sortMode, SortBy.NAME);
-        verifySorting(sortingState, sortMode, SortBy.TITLE);
+        sortingStateMen = new SortingState(getEmployees(Boolean.TRUE));
+        sortingStateWomen = new SortingState(getEmployees(Boolean.FALSE));
+
+        verifySortingInBothSubTables(SortBy.NAME);
+        verifySortingInBothSubTables(SortBy.TITLE);
+        verifySortingInBothSubTables(SortBy.NAME);
+        verifySortingInBothSubTables(SortBy.TITLE);
     }
 
-    @Override
-    public DataTableWithCSTWithSortingHeader getDataTable() {
-        return dataTable;
+    private void verifySortingInBothSubTables(final SortBy by) {
+        dataTable.sortBy(by);
+
+        sortingStateMen.sortEmployees(sortMode, by);
+        sortingStateWomen.sortEmployees(sortMode, by);
+        verifySortingInSubTable(sortingStateMen, Boolean.TRUE);
+        verifySortingInSubTable(sortingStateWomen, Boolean.FALSE);
     }
 
-    private void verifySorting(final SortingState state, final SortMode sortMode, final SortBy by) {
-        state.sortEmployees(sortMode, by);
+    private void verifySortingInSubTable(final SortingState state, boolean isMaleTable) {
         List<Employee> expectedSortedEmployees = state.getSortedEmployees().subList(0, rows);
-        getDataTable().sortBy(by);
-        CollapsibleSubTableWithEmployees table = getSubTable(isMale);
+
+        CollapsibleSubTableWithEmployees table = getSubTable(isMaleTable);
         int rowCount = table.advanced().getNumberOfVisibleRows();
         assertEquals(rowCount, expectedSortedEmployees.size());
 

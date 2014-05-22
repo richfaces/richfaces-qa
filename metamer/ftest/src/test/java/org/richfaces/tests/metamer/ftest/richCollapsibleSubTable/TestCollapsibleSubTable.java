@@ -38,7 +38,6 @@ import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
-import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
 import org.richfaces.tests.metamer.model.Employee;
 import org.testng.annotations.Test;
 
@@ -58,6 +57,7 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
     }
 
     @Test
+    @Templates("plain")
     @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
     public void testColumnClasses() {
         attributes.set(CollapsibleSubTableAttributes.columnClasses, "col1,col2,col3");
@@ -72,10 +72,7 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
     }
 
     @Test
-    @Uses({
-        @UseWithField(field = "expandMode", valuesFrom = FROM_ENUM, value = ""),
-        @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
-    })
+    @UseWithField(field = "expandMode", valuesFrom = FROM_ENUM, value = "")
     public void testExpandMode() {
         attributes.set(CollapsibleSubTableAttributes.expandMode, expandMode);
 
@@ -85,7 +82,7 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
         assertTrue(subTable.advanced().isExpanded());
         assertTrue(secondSubtable.advanced().isExpanded());
         if (expandMode.equals(ExpandMode.none)) {
-            // when @expandMode=none, then the table will not be expanded/collapsed
+            // when @expandMode=none, then the table cannot be expanded/collapsed
             toggleSubTable(false, expandMode, subTable);
             assertTrue(subTable.advanced().isExpanded());
             assertTrue(secondSubtable.advanced().isExpanded());
@@ -110,12 +107,23 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
 
     @Test
     @Templates(exclude = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
-    @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
     public void testFirst() {
-        attributes.set(CollapsibleSubTableAttributes.first, 2);
-        CollapsibleSubTableWithEmployees subTable = getSubTable(isMale);
+        verifyFirst(Boolean.TRUE);
+        verifyFirst(Boolean.FALSE);
+    }
 
-        List<Employee> visibleEmployees = getEmployees(isMale).subList(2, subTable.advanced().getNumberOfVisibleRows() + 2);
+    @Test(groups = "Future")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12673")
+    @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
+    public void testFirstInSwitchablePanels() {
+        testFirst();
+    }
+
+    private void verifyFirst(boolean isMaleTable) {
+        attributes.set(CollapsibleSubTableAttributes.first, 2);
+        CollapsibleSubTableWithEmployees subTable = getSubTable(isMaleTable);
+
+        List<Employee> visibleEmployees = getEmployees(isMaleTable).subList(2, subTable.advanced().getNumberOfVisibleRows() + 2);
 
         for (int i = 0; i < visibleEmployees.size(); i++) {
             assertEquals(subTable.getRow(i).getName(), visibleEmployees.get(i).getName());
@@ -123,73 +131,78 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
         }
     }
 
-    @Test(groups = "Future")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12673")
-    @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
-    @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
-    public void testFirstInSwitchablePanels() {
-        testFirst();
-    }
-
     @Test
+    @Templates("plain")
     public void testNoDataLabel() {
         final String label = "new no data label";
         attributes.set(CollapsibleSubTableAttributes.noDataLabel, label);
         showDataInTable(false);
         assertEquals(getSubTable(isMale).advanced().getNoDataElement().getText(), label);
+        assertEquals(getSubTable(!isMale).advanced().getNoDataElement().getText(), label);
     }
 
     @Test
+    @Templates("plain")
     public void testOnrowclick() {
         testFireEvent("onrowclick", new Actions(driver).click(getTestedRow()).build());
     }
 
     @Test
+    @Templates("plain")
     public void testOnrowdblclick() {
         testFireEvent("onrowdblclick", new Actions(driver).doubleClick(getTestedRow()).build());
     }
 
     @Test
+    @Templates("plain")
     public void testOnrowkeydown() {
         testFireEvent("onrowkeydown", new Actions(driver).triggerEventByJS(Event.KEYDOWN, getTestedRow()).build());
     }
 
     @Test
+    @Templates("plain")
     public void testOnrowkeypress() {
         testFireEvent("onrowkeypress", new Actions(driver).triggerEventByJS(Event.KEYPRESS, getTestedRow()).build());
     }
 
     @Test
+    @Templates("plain")
     public void testOnrowkeyup() {
         testFireEvent("onrowkeyup", new Actions(driver).triggerEventByJS(Event.KEYUP, getTestedRow()).build());
     }
 
     @Test
+    @Templates("plain")
     public void testOnrowmousedown() {
         testFireEvent("onrowmousedown", new Actions(driver).triggerEventByJS(Event.MOUSEDOWN, getTestedRow()).build());
     }
 
     @Test
+    @Templates("plain")
     public void testOnrowmousemove() {
         testFireEvent("onrowmousemove", new Actions(driver).triggerEventByJS(Event.MOUSEMOVE, getTestedRow()).build());
     }
 
     @Test
+    @Templates("plain")
     public void testOnrowmouseout() {
         testFireEvent("onrowmouseout", new Actions(driver).triggerEventByJS(Event.MOUSEOUT, getTestedRow()).build());
     }
 
     @Test
+    @Templates("plain")
     public void testOnrowmouseover() {
         testFireEvent("onrowmouseover", new Actions(driver).triggerEventByJS(Event.MOUSEOVER, getTestedRow()).build());
     }
 
     @Test
+    @Templates("plain")
     public void testOnrowmouseup() {
         testFireEvent("onrowmouseup", new Actions(driver).triggerEventByJS(Event.MOUSEUP, getTestedRow()).build());
     }
 
     @Test
+    @Templates("plain")
     public void testRendered() {
         attributes.set(CollapsibleSubTableAttributes.rendered, false);
         CollapsibleSubTableWithEmployees subtable = getSubTable(true);
@@ -206,6 +219,7 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-10212")
     @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
+    @Templates("plain")
     public void testRowClass() {
         attributes.set(CollapsibleSubTableAttributes.rows, 13);
         attributes.set(CollapsibleSubTableAttributes.rowClass, "rowClass");
@@ -224,6 +238,7 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-10212")
     @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
+    @Templates("plain")
     public void testRowClasses() {
         attributes.set(CollapsibleSubTableAttributes.rows, 13);
         attributes.set(CollapsibleSubTableAttributes.rowClasses, "row1,row2,row3");
@@ -241,28 +256,32 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
 
     @Test
     @Templates(exclude = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
-    @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
     public void testRows() {
-        attributes.set(CollapsibleSubTableAttributes.rows, 11);
-        List<Employee> visibleEmployees = getEmployees(isMale).subList(0, 11);
-
-        assertEquals(getSubTable(isMale).advanced().getNumberOfVisibleRows(), 11);
-
-        for (int i = 0; i < visibleEmployees.size(); i += 2) {
-            assertEquals(getSubTable(isMale).getRow(i).getName(), visibleEmployees.get(i).getName());
-            assertEquals(getSubTable(isMale).getRow(i).getTitle(), visibleEmployees.get(i).getTitle());
-        }
+        verifyRows(Boolean.TRUE);
+        verifyRows(Boolean.FALSE);
     }
 
     @Test(groups = "Future")
     @RegressionTest("https://issues.jboss.org/browse/RF-12673")
     @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
-    @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
     public void testRowsInSwitchablePanels() {
         testRows();
     }
 
+    private void verifyRows(boolean isMaleTable) {
+        attributes.set(CollapsibleSubTableAttributes.rows, 11);
+        List<Employee> visibleEmployees = getEmployees(isMaleTable).subList(0, 11);
+
+        assertEquals(getSubTable(isMaleTable).advanced().getNumberOfVisibleRows(), 11);
+
+        for (int i = 0; i < visibleEmployees.size(); i += 2) {
+            assertEquals(getSubTable(isMaleTable).getRow(i).getName(), visibleEmployees.get(i).getName());
+            assertEquals(getSubTable(isMaleTable).getRow(i).getTitle(), visibleEmployees.get(i).getTitle());
+        }
+    }
+
     @Test
+    @Templates("plain")
     public void testStyle() {
         testStyle(getSubTable(isMale).advanced().getTableRootElement());
         testStyle(getSubTable(!isMale).advanced().getTableRootElement());

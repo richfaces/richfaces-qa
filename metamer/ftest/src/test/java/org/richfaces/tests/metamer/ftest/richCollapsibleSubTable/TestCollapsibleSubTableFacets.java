@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -31,11 +30,12 @@ import static org.testng.Assert.fail;
 import java.net.URL;
 
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
-import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -60,7 +60,45 @@ public class TestCollapsibleSubTableFacets extends AbstractCollapsibleSubTableTe
         return buildUrl(contextPath, "faces/components/richCollapsibleSubTable/facets.xhtml");
     }
 
+    private void testFacet(FacetsAttributes attribute) {
+        dataTableFacets.set(attribute, SAMPLE_STRING);
+        WebElement element1, element2;
+        switch (attribute) {
+            case footer:
+                element1 = getSubTable(isMale).advanced().getFooterElement();
+                element2 = getSubTable(!isMale).advanced().getFooterElement();
+                break;
+            case header:
+                element1 = getSubTable(isMale).advanced().getHeaderElement();
+                element2 = getSubTable(!isMale).advanced().getHeaderElement();
+                break;
+            default:
+                throw new UnsupportedOperationException("Unsupported option " + attribute);
+        }
+
+        assertEquals(element1.getText(), SAMPLE_STRING);
+        assertEquals(element2.getText(), SAMPLE_STRING);
+
+        dataTableFacets.set(attribute, EMPTY_STRING);
+
+        try {
+            element1.getText();
+            fail("The table should not have any header elements");
+        } catch (NoSuchElementException ex) {
+        }
+        try {
+            element2.getText();
+            fail("The table should not have any header elements");
+        } catch (NoSuchElementException ex) {
+        }
+        dataTableFacets.set(attribute, SAMPLE_STRING);
+
+        assertEquals(element1.getText(), SAMPLE_STRING);
+        assertEquals(element2.getText(), SAMPLE_STRING);
+    }
+
     @Test
+    @Templates("plain")
     public void testFooterClass() {
         dataTableFacets.set(FacetsAttributes.footer, SAMPLE_STRING);
         testStyleClass(getSubTable(isMale).advanced().getFooterElement(), BasicAttributes.footerClass);
@@ -68,59 +106,39 @@ public class TestCollapsibleSubTableFacets extends AbstractCollapsibleSubTableTe
     }
 
     @Test
-    @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
     public void testFooterFacet() {
-        dataTableFacets.set(FacetsAttributes.footer, SAMPLE_STRING);
-        assertEquals(getSubTable(isMale).advanced().getFooterElement().getText(), SAMPLE_STRING);
-
-        dataTableFacets.set(FacetsAttributes.footer, EMPTY_STRING);
-        try {
-            getSubTable(isMale).advanced().getFooterElement();
-            fail("The table should not have any footer elements");
-        } catch (NoSuchElementException ex) {
-        }
-        dataTableFacets.set(FacetsAttributes.footer, SAMPLE_STRING);
-        assertEquals(getSubTable(isMale).advanced().getFooterElement().getText(), SAMPLE_STRING);
+        testFacet(FacetsAttributes.footer);
     }
 
     @Test
+    @Templates("plain")
     public void testHeaderClass() {
         dataTableFacets.set(FacetsAttributes.header, SAMPLE_STRING);
-
         testStyleClass(getSubTable(isMale).advanced().getHeaderElement(), BasicAttributes.headerClass);
         testStyleClass(getSubTable(!isMale).advanced().getHeaderElement(), BasicAttributes.headerClass);
     }
 
     @Test
-    @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
     public void testHeaderFacet() {
-        dataTableFacets.set(FacetsAttributes.header, SAMPLE_STRING);
-        assertEquals(getSubTable(isMale).advanced().getHeaderElement().getText(), SAMPLE_STRING);
-
-        dataTableFacets.set(FacetsAttributes.header, EMPTY_STRING);
-
-        try {
-            getSubTable(isMale).advanced().getHeaderElement();
-            fail("The table should not have any header elements");
-        } catch (NoSuchElementException ex) {
-        }
-
-        dataTableFacets.set(FacetsAttributes.header, SAMPLE_STRING);
-        assertEquals(getSubTable(isMale).advanced().getHeaderElement().getText(), SAMPLE_STRING);
+        testFacet(FacetsAttributes.header);
     }
 
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1515", "https://issues.jboss.org/browse/RF-12672" })
-    @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
     public void testNoDataFacet() {
         showDataInTable(false);
         assertFalse(getSubTable(isMale).advanced().isVisible());
+        assertFalse(getSubTable(!isMale).advanced().isVisible());
         assertFalse(Utils.isVisible(getSubTable(isMale).advanced().getNoDataElement()));
+        assertFalse(Utils.isVisible(getSubTable(!isMale).advanced().getNoDataElement()));
 
         dataTableFacets.set(FacetsAttributes.noData, SAMPLE_STRING);
         assertEquals(getSubTable(isMale).advanced().getNumberOfVisibleRows(), 0);
+        assertEquals(getSubTable(!isMale).advanced().getNumberOfVisibleRows(), 0);
         assertTrue(Utils.isVisible(getSubTable(isMale).advanced().getNoDataElement()));
+        assertTrue(Utils.isVisible(getSubTable(!isMale).advanced().getNoDataElement()));
         assertEquals(getSubTable(isMale).advanced().getNoDataElement().getText(), SAMPLE_STRING);
+        assertEquals(getSubTable(!isMale).advanced().getNoDataElement().getText(), SAMPLE_STRING);
 
         showDataInTable(true);
         try {
@@ -130,5 +148,12 @@ public class TestCollapsibleSubTableFacets extends AbstractCollapsibleSubTableTe
         }
         assertTrue(getSubTable(isMale).advanced().isVisible());
         assertEquals(getSubTable(isMale).advanced().getNumberOfVisibleRows(), 5);
+        try {
+            getSubTable(!isMale).advanced().getNoDataElement();
+            fail("There should be no noData element now");
+        } catch (NoSuchElementException e) {
+        }
+        assertTrue(getSubTable(!isMale).advanced().isVisible());
+        assertEquals(getSubTable(!isMale).advanced().getNumberOfVisibleRows(), 5);
     }
 }
