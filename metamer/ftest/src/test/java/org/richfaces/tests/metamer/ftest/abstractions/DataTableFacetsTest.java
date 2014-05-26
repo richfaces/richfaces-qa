@@ -21,20 +21,14 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.abstractions;
 
+import static org.testng.Assert.assertEquals;
+
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.richfaces.fragment.dataTable.AbstractTable;
-import static org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets.capitalFooter;
-import static org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets.capitalHeader;
-import static org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets.header;
-import static org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets.noData;
-import static org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets.stateFooter;
-import static org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets.stateHeader;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleFooterInterface;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleHeaderInterface;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleRowInterface;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-
-import static org.testng.Assert.assertEquals;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -48,71 +42,57 @@ public abstract class DataTableFacetsTest extends AbstractDataTableTest {
 
     protected abstract AbstractTable<? extends SimpleHeaderInterface, ? extends SimpleRowInterface, ? extends SimpleFooterInterface> getTable();
 
-    public void testNoDataInstantChange() {
+    public void testNoDataFacet() {
         enableShowData(false);
-        dataTableFacets.set(noData, SAMPLE_STRING);
+        dataTableFacets.set(DataTableFacets.noData, SAMPLE_STRING);
         assertEquals(getTable().advanced().getNoDataElement().getText(), SAMPLE_STRING);
-    }
 
-    public void testNoDataEmpty() {
-        enableShowData(false);
-        dataTableFacets.set(noData, EMPTY_STRING);
+        dataTableFacets.set(DataTableFacets.noData, EMPTY_STRING);
         assertEquals(getTable().advanced().getNoDataElement().getText(), EMPTY_STRING);
     }
 
-    public void testHeaderInstantChange() {
-        dataTableFacets.set(header, SAMPLE_STRING);
+    public void testHeaderFacet() {
+        dataTableFacets.set(DataTableFacets.header, SAMPLE_STRING);
         assertEquals(getTable().getHeader().getHeaderText(), SAMPLE_STRING);
-    }
 
-    public void testHeaderEmpty() {
-        dataTableFacets.set(header, EMPTY_STRING);
-
+        dataTableFacets.set(DataTableFacets.header, EMPTY_STRING);
         if (new WebElementConditionFactory(getTable().advanced().getHeaderElement()).isPresent().apply(driver)) {
             assertEquals(getTable().advanced().getHeaderElement().getText(), EMPTY_STRING);
         } else {
-            dataTableFacets.set(header, SAMPLE_STRING);
+            dataTableFacets.set(DataTableFacets.header, SAMPLE_STRING);
             assertEquals(getTable().advanced().getHeaderElement().getText(), SAMPLE_STRING);
         }
     }
 
-    public void testStateHeaderInstantChange() {
-        dataTableFacets.set(stateHeader, SAMPLE_STRING);
+    public void testStateHeaderFacet() {
+        dataTableFacets.set(DataTableFacets.stateHeader, SAMPLE_STRING);
         assertEquals(getTable().getHeader().getColumnHeaderText(COLUMN_STATE), SAMPLE_STRING);
-    }
 
-    public void testStateHeaderEmpty() {
-        dataTableFacets.set(stateHeader, EMPTY_STRING);
+        dataTableFacets.set(DataTableFacets.stateHeader, EMPTY_STRING);
         assertEquals(getTable().getHeader().getColumnHeaderText(COLUMN_STATE), EMPTY_STRING);
     }
 
-    public void testStateFooterInstantChange() {
-        dataTableFacets.set(stateFooter, SAMPLE_STRING);
+    public void testStateFooterFacet() {
+        dataTableFacets.set(DataTableFacets.stateFooter, SAMPLE_STRING);
         assertEquals(getTable().getFooter().getColumnFooterText(COLUMN_STATE), SAMPLE_STRING);
-    }
 
-    public void testStateFooterEmpty() {
-        dataTableFacets.set(stateFooter, EMPTY_STRING);
+        dataTableFacets.set(DataTableFacets.stateFooter, EMPTY_STRING);
         assertEquals(getTable().getFooter().getColumnFooterText(COLUMN_STATE), EMPTY_STRING);
     }
 
-    public void testCapitalHeaderInstantChange() {
-        dataTableFacets.set(capitalHeader, SAMPLE_STRING);
+    public void testCapitalHeaderFacet() {
+        dataTableFacets.set(DataTableFacets.capitalHeader, SAMPLE_STRING);
         assertEquals(getTable().getHeader().getColumnHeaderText(COLUMN_CAPITAL), SAMPLE_STRING);
-    }
 
-    public void testCapitalHeaderEmpty() {
-        dataTableFacets.set(capitalHeader, EMPTY_STRING);
+        dataTableFacets.set(DataTableFacets.capitalHeader, EMPTY_STRING);
         assertEquals(getTable().getHeader().getColumnHeaderText(COLUMN_CAPITAL), EMPTY_STRING);
     }
 
-    public void testCapitalFooterInstantChange() {
-        dataTableFacets.set(capitalFooter, SAMPLE_STRING);
+    public void testCapitalFooterFacet() {
+        dataTableFacets.set(DataTableFacets.capitalFooter, SAMPLE_STRING);
         assertEquals(getTable().getFooter().getColumnFooterText(COLUMN_CAPITAL), SAMPLE_STRING);
-    }
 
-    public void testCapitalFooterEmpty() {
-        dataTableFacets.set(capitalFooter, EMPTY_STRING);
+        dataTableFacets.set(DataTableFacets.capitalFooter, EMPTY_STRING);
         assertEquals(getTable().getFooter().getColumnFooterText(COLUMN_CAPITAL), EMPTY_STRING);
     }
 }
