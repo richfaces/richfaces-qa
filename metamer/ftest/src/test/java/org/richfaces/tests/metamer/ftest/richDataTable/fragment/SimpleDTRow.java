@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
 
+import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleRowInterface;
@@ -30,10 +31,13 @@ import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleRowInterfa
  */
 public class SimpleDTRow implements SimpleRowInterface {
 
-    @FindBy(css = ".rf-ft-c:nth-of-type(1)")
+    @Root
+    private WebElement rootElement;
+
+    @FindBy(css = ".rf-dt-c:nth-of-type(1)")
     private WebElement stateColumn;
 
-    @FindBy(css = ".rf-ft-c:nth-of-type(2)")
+    @FindBy(css = ".rf-dt-c:nth-of-type(2)")
     private WebElement capitalColumn;
 
     public WebElement getStateColumn() {
@@ -42,5 +46,9 @@ public class SimpleDTRow implements SimpleRowInterface {
 
     public WebElement getCapitalColumn() {
         return capitalColumn;
+    }
+
+    public WebElement getRootElement() {
+        return rootElement;
     }
 }

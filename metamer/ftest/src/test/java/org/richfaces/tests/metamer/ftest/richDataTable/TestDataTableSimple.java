@@ -26,11 +26,13 @@ import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annot
 
 import java.net.URL;
 
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSimpleTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SimpleDT;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -38,8 +40,12 @@ import org.testng.annotations.Test;
  */
 public class TestDataTableSimple extends DataTableSimpleTest {
 
-    @FindByJQuery("table.rf-dt[id$=richDataTable]")
+    @FindBy(css = "table.rf-dt[id$=richDataTable]")
     private SimpleDT table;
+    @FindBy(css = "table.rf-dt[id$=richDataTable]")
+    private WebElement tableRoot;
+
+    private final Attributes<DataTableAttributes> attributes = getAttributes();
 
     @Override
     public URL getTestUrl() {
@@ -52,9 +58,9 @@ public class TestDataTableSimple extends DataTableSimpleTest {
     }
 
     @Test
-    @Templates("plain")
-    public void testRendered() {
-        super.testRendered();
+    @UseWithField(field = "first", valuesFrom = FROM_FIELD, value = "COUNTS")
+    public void testFirst() {
+        super.testFirst();
     }
 
     @Test
@@ -64,14 +70,98 @@ public class TestDataTableSimple extends DataTableSimpleTest {
     }
 
     @Test
-    @UseWithField(field = "first", valuesFrom = FROM_FIELD, value = "COUNTS")
-    public void testFirst() {
-        super.testFirst();
+    @Templates("plain")
+    public void testOnrowclick() {
+        super.testOnrowclick();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testOnrowdblclick() {
+        super.testOnrowdblclick();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testOnrowkeydown() {
+        super.testOnrowkeydown();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testOnrowkeypress() {
+        super.testOnrowkeypress();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testOnrowkeyup() {
+        super.testOnrowkeyup();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testOnrowmousedown() {
+        super.testOnrowmousedown();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testOnrowmousemove() {
+        super.testOnrowmousemove();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testOnrowmouseout() {
+        super.testOnrowmouseout();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testOnrowmouseover() {
+        super.testOnrowmouseover();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testOnrowmouseup() {
+        super.testOnrowmouseup();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testRendered() {
+        super.testRendered();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testRowClass() {
+        super.testRowClass();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testRowClasses() {
+        super.testRowClasses();
     }
 
     @Test
     @UseWithField(field = "rows", valuesFrom = FROM_FIELD, value = "COUNTS")
     public void testRows() {
         super.testRows();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testStyle() {
+        testStyle(tableRoot);
+    }
+
+    @Test
+    @Templates("plain")
+    public void testStyleClass() {
+        testStyleClass(tableRoot);
     }
 }

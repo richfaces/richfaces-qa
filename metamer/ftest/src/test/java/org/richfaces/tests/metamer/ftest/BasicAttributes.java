@@ -34,6 +34,7 @@ public enum BasicAttributes implements AttributeEnum {
 
     buttonClass,
     bodyClass,
+    captionClass,
     contentClass,
     controlsClass,
     decreaseClass,
