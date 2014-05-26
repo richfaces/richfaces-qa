@@ -28,6 +28,7 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSimpleTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SimpleDT;
 import org.testng.annotations.Test;
@@ -51,11 +52,13 @@ public class TestDataTableSimple extends DataTableSimpleTest {
     }
 
     @Test
+    @Templates("plain")
     public void testRendered() {
         super.testRendered();
     }
 
     @Test
+    @Templates("plain")
     public void testNoDataLabel() {
         super.testNoDataLabel();
     }
