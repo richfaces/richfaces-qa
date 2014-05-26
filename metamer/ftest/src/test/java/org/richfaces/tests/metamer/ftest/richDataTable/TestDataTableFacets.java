@@ -24,16 +24,11 @@ package org.richfaces.tests.metamer.ftest.richDataTable;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.richfaces.fragment.dataTable.RichFacesDataTable;
 
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFacetsTest;
-import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleFooterInterface;
-import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleHeaderInterface;
-import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleRowInterface;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SimpleDT;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -48,70 +43,38 @@ public class TestDataTableFacets extends DataTableFacetsTest {
         return buildUrl(contextPath, "faces/components/richDataTable/facets.xhtml");
     }
 
-
     @Override
     protected SimpleDT getTable() {
         return table;
     }
 
     @Test
-    public void testNoDataInstantChange() {
-        super.testNoDataInstantChange();
+    public void testNoDataFacet() {
+        super.testNoDataFacet();
     }
 
     @Test
-    public void testNoDataEmpty() {
-        super.testNoDataEmpty();
+    public void testHeaderFacet() {
+        super.testHeaderFacet();
     }
 
     @Test
-    public void testHeaderInstantChange() {
-        super.testHeaderInstantChange();
+    public void testStateHeaderFacet() {
+        super.testStateHeaderFacet();
     }
 
     @Test
-    public void testHeaderEmpty() {
-        super.testHeaderEmpty();
+    public void testStateFooterFacet() {
+        super.testStateFooterFacet();
     }
 
     @Test
-    public void testStateHeaderInstantChange() {
-        super.testStateHeaderInstantChange();
+    public void testCapitalHeaderFacet() {
+        super.testCapitalHeaderFacet();
     }
 
     @Test
-    public void testStateHeaderEmpty() {
-        super.testStateHeaderEmpty();
+    public void testCapitalFooterFacet() {
+        super.testCapitalFooterFacet();
     }
-
-    @Test
-    public void testStateFooterInstantChange() {
-        super.testStateFooterInstantChange();
-    }
-
-    @Test
-    public void testStateFooterEmpty() {
-        super.testStateFooterEmpty();
-    }
-
-    @Test
-    public void testCapitalHeaderInstantChange() {
-        super.testCapitalHeaderInstantChange();
-    }
-
-    @Test
-    public void testCapitalHeaderEmpty() {
-        super.testCapitalHeaderEmpty();
-    }
-
-    @Test
-    public void testCapitalFooterInstantChange() {
-        super.testCapitalFooterInstantChange();
-    }
-
-    @Test
-    public void testCapitalFooterEmpty() {
-        super.testCapitalFooterEmpty();
-    }
-
 }
