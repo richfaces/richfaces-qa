@@ -29,6 +29,7 @@ import static org.richfaces.tests.metamer.ftest.richColumn.ColumnAttributes.rows
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -131,7 +132,7 @@ public class TestColumnSimple extends AbstractColumnTest {
 
     @Test
     @Templates("plain")
-    public void testRowspanTo1() {
+    public void testRowspan() {
         checkInitialState();
 
         columnAttributes.set(rowspan, 1);
@@ -142,12 +143,6 @@ public class TestColumnSimple extends AbstractColumnTest {
 
         assertEquals(headerCell(0, 0).getAttribute("colspan"), "2");
         assertEquals(headerCell(1, 1).getAttribute("rowspan"), "1");
-    }
-
-    @Test
-    @Templates("plain")
-    public void testRowspanTo3() {
-        checkInitialState();
 
         columnAttributes.set(rowspan, 3);
 
@@ -158,5 +153,23 @@ public class TestColumnSimple extends AbstractColumnTest {
 
         assertEquals(headerCell(0, 0).getAttribute("colspan"), "2");
         assertEquals(headerCell(1, 1).getAttribute("rowspan"), "3");
+    }
+
+    @Test
+    @Templates("plain")
+    public void testStyle() {
+        List<StateCapitalRow> allRows = getTable().getAllRows();
+        for (int i = 0; i < allRows.size(); i++) {
+            testStyle(allRows.get(i).getStateElement());
+        }
+    }
+
+    @Test
+    @Templates("plain")
+    public void testStyleClass() {
+        List<StateCapitalRow> allRows = getTable().getAllRows();
+        for (int i = 0; i < allRows.size(); i++) {
+            testStyleClass(allRows.get(i).getStateElement());
+        }
     }
 }
