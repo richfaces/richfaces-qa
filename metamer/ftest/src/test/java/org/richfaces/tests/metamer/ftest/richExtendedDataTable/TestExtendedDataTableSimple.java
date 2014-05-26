@@ -22,16 +22,16 @@
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 
 import java.net.URL;
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
 
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSimpleTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
-import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SimpleEDT;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -47,18 +47,19 @@ public class TestExtendedDataTableSimple extends DataTableSimpleTest {
     @FindByJQuery("div.rf-edt[id$=richEDT]")
     private SimpleEDT table;
 
-
     @Override
     protected SimpleEDT getTable() {
         return table;
     }
 
     @Test
+    @Templates("plain")
     public void testRendered() {
         super.testRendered();
     }
 
     @Test
+    @Templates("plain")
     public void testNoDataLabel() {
         super.testNoDataLabel();
     }
