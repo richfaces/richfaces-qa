@@ -21,6 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.abstractions.fragments;
 
+import org.openqa.selenium.WebElement;
+
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
@@ -29,4 +31,6 @@ public interface SimpleHeaderInterface {
     String getHeaderText();
 
     String getColumnHeaderText(int column);
+
+    WebElement getTableHeaderElement();
 }

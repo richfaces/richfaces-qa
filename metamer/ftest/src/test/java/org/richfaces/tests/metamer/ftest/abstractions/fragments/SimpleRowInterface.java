@@ -32,4 +32,6 @@ public interface SimpleRowInterface {
     WebElement getStateColumn();
 
     WebElement getCapitalColumn();
+
+    WebElement getRootElement();
 }

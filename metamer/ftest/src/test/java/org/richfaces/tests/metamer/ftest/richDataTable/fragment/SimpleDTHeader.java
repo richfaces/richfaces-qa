@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
 
 import java.util.List;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleHeaderInterface;
@@ -43,5 +44,9 @@ public class SimpleDTHeader implements SimpleHeaderInterface {
 
     public String getColumnHeaderText(int column) {
         return columnHeaders.get(column).getText();
+    }
+
+    public WebElement getTableHeaderElement() {
+        return tableHeaderElement;
     }
 }
