@@ -63,7 +63,7 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
         attributes.set(CollapsibleSubTableAttributes.columnClasses, "col1,col2,col3");
         CollapsibleSubTableWithEmployees subtable = getSubTable(isMale);
         EmployeeRecord entry;
-        for (int i = 0; i <= subtable.advanced().getNumberOfVisibleRows(); i += 2) {
+        for (int i = 0; i < subtable.advanced().getNumberOfVisibleRows(); i += 2) {
             entry = subtable.getRow(i);
             assertTrue(entry.getNameElement().getAttribute("class").contains("col1"));
             assertTrue(entry.getTitleElement().getAttribute("class").contains("col2"));

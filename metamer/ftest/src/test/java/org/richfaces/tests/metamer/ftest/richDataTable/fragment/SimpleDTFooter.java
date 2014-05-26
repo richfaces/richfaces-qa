@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
 
 import java.util.List;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleFooterInterface;
@@ -43,5 +44,9 @@ public class SimpleDTFooter implements SimpleFooterInterface {
 
     public String getColumnFooterText(int column) {
         return columnFooters.get(column).getText();
+    }
+
+    public WebElement getTableFooterElement() {
+        return tableFooterElement;
     }
 }

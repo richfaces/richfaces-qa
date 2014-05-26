@@ -26,11 +26,14 @@ import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annot
 
 import java.net.URL;
 
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSimpleTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SimpleEDT;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -39,17 +42,116 @@ import org.testng.annotations.Test;
  */
 public class TestExtendedDataTableSimple extends DataTableSimpleTest {
 
+    private final Attributes<ExtendedDataTableAttributes> attributes = getAttributes();
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richExtendedDataTable/simple.xhtml");
     }
 
-    @FindByJQuery("div.rf-edt[id$=richEDT]")
+    @FindBy(css = "div.rf-edt[id$=richEDT]")
     private SimpleEDT table;
+
+    @FindBy(css = "div.rf-edt[id$=richEDT]")
+    private WebElement tableRoot;
 
     @Override
     protected SimpleEDT getTable() {
         return table;
+    }
+
+    @Test
+    @UseWithField(field = "first", valuesFrom = FROM_FIELD, value = "COUNTS")
+    public void testFirst() {
+        super.testFirst();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testNoDataLabel() {
+        super.testNoDataLabel();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testOnbeforeselectionchange() {
+        testFireEvent("onbeforeselectionchange", new Action() {
+            @Override
+            public void perform() {
+                table.getFirstRow().getRootElement().click();
+            }
+        });
+    }
+
+    @Test
+    @Templates("plain")
+    public void testOnrowclick() {
+        super.testOnrowclick();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testOnrowdblclick() {
+        super.testOnrowdblclick();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testOnrowkeydown() {
+        super.testOnrowkeydown();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testOnrowkeypress() {
+        super.testOnrowkeypress();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testOnrowkeyup() {
+        super.testOnrowkeyup();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testOnrowmousedown() {
+        super.testOnrowmousedown();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testOnrowmousemove() {
+        super.testOnrowmousemove();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testOnrowmouseout() {
+        super.testOnrowmouseout();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testOnrowmouseover() {
+        super.testOnrowmouseover();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testOnrowmouseup() {
+        super.testOnrowmouseup();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testOnselectionchange() {
+        testFireEvent("onbeforeselectionchange", new Action() {
+            @Override
+            public void perform() {
+                table.getFirstRow().getRootElement().click();
+            }
+        });
     }
 
     @Test
@@ -60,14 +162,14 @@ public class TestExtendedDataTableSimple extends DataTableSimpleTest {
 
     @Test
     @Templates("plain")
-    public void testNoDataLabel() {
-        super.testNoDataLabel();
+    public void testRowClass() {
+        super.testRowClass();
     }
 
     @Test
-    @UseWithField(field = "first", valuesFrom = FROM_FIELD, value = "COUNTS")
-    public void testFirst() {
-        super.testFirst();
+    @Templates("plain")
+    public void testRowClasses() {
+        super.testRowClasses();
     }
 
     @Test
@@ -76,4 +178,15 @@ public class TestExtendedDataTableSimple extends DataTableSimpleTest {
         super.testRows();
     }
 
+    @Test
+    @Templates("plain")
+    public void testStyle() {
+        testStyle(tableRoot);
+    }
+
+    @Test
+    @Templates("plain")
+    public void testStyleClass() {
+        testStyleClass(tableRoot);
+    }
 }

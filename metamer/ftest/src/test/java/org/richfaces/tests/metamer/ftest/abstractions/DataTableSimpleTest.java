@@ -26,6 +26,10 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.util.List;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.dataTable.AbstractTable;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleFooterInterface;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleHeaderInterface;
@@ -73,6 +77,71 @@ public abstract class DataTableSimpleTest extends AbstractDataTableTest {
         assertEquals(getTable().advanced().getNumberOfColumns(), 0);
         assertEquals(getTable().advanced().getNumberOfVisibleRows(), 0);
         assertEquals(getTable().advanced().getNoDataElement().getText(), NO_DATA);
+    }
+
+    public void testOnrowclick() {
+        testFireEvent("onrowclick", new Action() {
+            @Override
+            public void perform() {
+                getTable().getFirstRow().getRootElement().click();
+            }
+        });
+    }
+
+    public void testOnrowdblclick() {
+        testFireEventWithJS(getTable().getFirstRow().getStateColumn(), Event.DBLCLICK, dataTableAttributes, DataTableAttributes.onrowdblclick);
+    }
+
+    public void testOnrowkeydown() {
+        testFireEventWithJS(getTable().getFirstRow().getStateColumn(), Event.KEYDOWN, dataTableAttributes, DataTableAttributes.onrowkeydown);
+    }
+
+    public void testOnrowkeypress() {
+        testFireEventWithJS(getTable().getFirstRow().getStateColumn(), Event.KEYPRESS, dataTableAttributes, DataTableAttributes.onrowkeypress);
+    }
+
+    public void testOnrowkeyup() {
+        testFireEventWithJS(getTable().getFirstRow().getStateColumn(), Event.KEYUP, dataTableAttributes, DataTableAttributes.onrowkeyup);
+    }
+
+    public void testOnrowmousedown() {
+        testFireEventWithJS(getTable().getFirstRow().getStateColumn(), Event.MOUSEDOWN, dataTableAttributes, DataTableAttributes.onrowmousedown);
+    }
+
+    public void testOnrowmousemove() {
+        testFireEventWithJS(getTable().getFirstRow().getStateColumn(), Event.MOUSEMOVE, dataTableAttributes, DataTableAttributes.onrowmousemove);
+    }
+
+    public void testOnrowmouseout() {
+        testFireEventWithJS(getTable().getFirstRow().getStateColumn(), Event.MOUSEOUT, dataTableAttributes, DataTableAttributes.onrowmouseout);
+    }
+
+    public void testOnrowmouseover() {
+        testFireEventWithJS(getTable().getFirstRow().getStateColumn(), Event.MOUSEOVER, dataTableAttributes, DataTableAttributes.onrowmouseover);
+    }
+
+    public void testOnrowmouseup() {
+        testFireEventWithJS(getTable().getFirstRow().getStateColumn(), Event.MOUSEUP, dataTableAttributes, DataTableAttributes.onrowmouseup);
+    }
+
+    public void testRowClass() {
+        dataTableAttributes.set(DataTableAttributes.rowClass, "metamer-ftest-class");
+        for (int i = 0; i < getTable().advanced().getNumberOfVisibleRows(); i += 2) {
+            assertTrue(getTable().getRow(i).getRootElement().getAttribute("class").contains("metamer-ftest-class"));
+        }
+    }
+
+    public void testRowClasses() {
+        dataTableAttributes.set(DataTableAttributes.rows, 13);
+        dataTableAttributes.set(DataTableAttributes.rowClasses, "row1,row2,row3");
+        int rowCount = getTable().advanced().getNumberOfVisibleRows();
+        assertEquals(rowCount, 13);
+        List<WebElement> tableRows = getTable().advanced().getTableRowsElements();
+
+        for (int i = 0; i < rowCount; i++) {
+            WebElement row = tableRows.get(i);
+            assertTrue(row.getAttribute("class").contains("row" + (i % 3 + 1)));
+        }
     }
 
     public void testFirst() {

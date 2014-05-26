@@ -22,12 +22,19 @@
 package org.richfaces.tests.metamer.ftest.richDataTable;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFacetsTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SimpleDT;
+import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SimpleDTRow;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -35,8 +42,13 @@ import org.testng.annotations.Test;
  */
 public class TestDataTableFacets extends DataTableFacetsTest {
 
-    @FindByJQuery("table.rf-dt[id$=richDataTable]")
+    @FindBy(css = "table.rf-dt[id$=richDataTable]")
     private SimpleDT table;
+
+    @FindBy(css = "table.rf-dt[id$=richDataTable]")
+    private WebElement tableRoot;
+
+    private final Attributes<DataTableAttributes> attributes = getAttributes();
 
     @Override
     public URL getTestUrl() {
@@ -49,23 +61,8 @@ public class TestDataTableFacets extends DataTableFacetsTest {
     }
 
     @Test
-    public void testNoDataFacet() {
-        super.testNoDataFacet();
-    }
-
-    @Test
-    public void testHeaderFacet() {
-        super.testHeaderFacet();
-    }
-
-    @Test
-    public void testStateHeaderFacet() {
-        super.testStateHeaderFacet();
-    }
-
-    @Test
-    public void testStateFooterFacet() {
-        super.testStateFooterFacet();
+    public void testCapitalFooterFacet() {
+        super.testCapitalFooterFacet();
     }
 
     @Test
@@ -74,7 +71,53 @@ public class TestDataTableFacets extends DataTableFacetsTest {
     }
 
     @Test
-    public void testCapitalFooterFacet() {
-        super.testCapitalFooterFacet();
+    @Templates("plain")
+    public void testCaptionClass() {
+        testStyleClass(tableRoot.findElement(By.tagName("caption")), BasicAttributes.captionClass);
+    }
+
+    @Test
+    @Templates("plain")
+    public void testColumnClasses() {
+        attributes.set(DataTableAttributes.columnClasses, "col1,col2");
+        SimpleDTRow entry;
+        for (int i = 0; i < table.advanced().getNumberOfVisibleRows(); i += 2) {
+            entry = table.getRow(i);
+            assertTrue(entry.getStateColumn().getAttribute("class").contains("col1"));
+            assertTrue(entry.getCapitalColumn().getAttribute("class").contains("col2"));
+        }
+    }
+
+    @Test
+    @Templates("plain")
+    public void testFooterClass() {
+        testStyleClass(table.getFooter().getTableFooterElement(), BasicAttributes.footerClass);
+
+    }
+
+    @Test
+    @Templates("plain")
+    public void testHeaderClass() {
+        testStyleClass(table.getHeader().getTableHeaderElement(), BasicAttributes.headerClass);
+    }
+
+    @Test
+    public void testHeaderFacet() {
+        super.testHeaderFacet();
+    }
+
+    @Test
+    public void testNoDataFacet() {
+        super.testNoDataFacet();
+    }
+
+    @Test
+    public void testStateFooterFacet() {
+        super.testStateFooterFacet();
+    }
+
+    @Test
+    public void testStateHeaderFacet() {
+        super.testStateHeaderFacet();
     }
 }
