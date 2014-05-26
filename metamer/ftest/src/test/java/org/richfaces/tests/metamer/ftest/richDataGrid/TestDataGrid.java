@@ -22,16 +22,17 @@
 package org.richfaces.tests.metamer.ftest.richDataGrid;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
 import javax.xml.bind.JAXBException;
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
 
+import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
 import org.richfaces.tests.metamer.ftest.richDataGrid.fragment.GridWithStates;
@@ -47,8 +48,11 @@ public class TestDataGrid extends AbstractDataGridTest {
         super();
     }
 
-    @FindByJQuery("table.rf-dg[id$=richDataGrid]")
+    @FindBy(css = "table.rf-dg[id$=richDataGrid]")
     private GridWithStates dataGrid;
+
+    @FindBy(css = "table.rf-dg[id$=richDataGrid]")
+    private WebElement dataGridRoot;
 
     @Override
     public URL getTestUrl() {
@@ -80,6 +84,31 @@ public class TestDataGrid extends AbstractDataGridTest {
         assertEquals(dataGrid.getNumberOfColumns(), 0);
         assertEquals(dataGrid.getNumberOfRecords(), 0);
         assertTrue(dataGrid.advanced().isNoData());
+    }
+
+    @Test
+    @Templates("plain")
+    public void testRendered() {
+        dataGridAttributes.set(DataGridAttributes.rendered, false);
+        assertNotVisible(dataGridRoot, "DataGrid should not be visible.");
+    }
+
+    @Test
+    @Templates("plain")
+    public void testStyle() {
+        testStyle(dataGridRoot);
+    }
+
+    @Test
+    @Templates("plain")
+    public void testStyleClass() {
+        testStyleClass(dataGridRoot);
+    }
+
+    @Test
+    @Templates("plain")
+    public void testTitle() {
+        testTitle(dataGridRoot);
     }
 
     @Override

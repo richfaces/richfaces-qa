@@ -63,7 +63,7 @@ public abstract class AbstractDataGridTest extends AbstractWebDriverTest {
 
     public abstract RichFacesDataGrid<? extends GridRecordInterface> getDataGrid();
 
-    private final Attributes<DataGridAttributes> dataGridAttributes = getAttributes();
+    final Attributes<DataGridAttributes> dataGridAttributes = getAttributes();
 
     Integer columns = 3;
 
