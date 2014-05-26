@@ -32,6 +32,7 @@ import java.net.URL;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.richfaces.fragment.common.Utils;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richColumn.AbstractColumnTest;
 import org.testng.annotations.Test;
 
@@ -63,6 +64,7 @@ public class TestColumnGroupHeaderFooter extends AbstractColumnTest {
     }
 
     @Test
+    @Templates("plain")
     public void testRendered() {
         int bodyRowCount = getTable().advanced().getNumberOfVisibleRows();
 

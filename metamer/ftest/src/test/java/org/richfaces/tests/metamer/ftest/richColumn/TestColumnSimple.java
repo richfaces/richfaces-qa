@@ -33,6 +33,7 @@ import java.net.URL;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
 /**
@@ -70,6 +71,7 @@ public class TestColumnSimple extends AbstractColumnTest {
     }
 
     @Test
+    @Templates("plain")
     public void testBreakRowBefore() {
         checkInitialState();
         columnAttributes.set(breakRowBefore, false);
@@ -83,6 +85,7 @@ public class TestColumnSimple extends AbstractColumnTest {
     }
 
     @Test
+    @Templates("plain")
     public void testColspan() {
         checkInitialState();
 
@@ -98,16 +101,19 @@ public class TestColumnSimple extends AbstractColumnTest {
     }
 
     @Test
+    @Templates("plain")
     public void testFooterClass() {
         testStyleClass(getTable().getColumnFooterElement(), BasicAttributes.footerClass);
     }
 
     @Test
+    @Templates("plain")
     public void testHeaderClass() {
         testStyleClass(getTable().getColumnHeaderElement(), BasicAttributes.headerClass);
     }
 
     @Test
+    @Templates("plain")
     public void testRendered() {
         checkInitialState();
 
@@ -124,6 +130,7 @@ public class TestColumnSimple extends AbstractColumnTest {
     }
 
     @Test
+    @Templates("plain")
     public void testRowspanTo1() {
         checkInitialState();
 
@@ -138,6 +145,7 @@ public class TestColumnSimple extends AbstractColumnTest {
     }
 
     @Test
+    @Templates("plain")
     public void testRowspanTo3() {
         checkInitialState();
 
