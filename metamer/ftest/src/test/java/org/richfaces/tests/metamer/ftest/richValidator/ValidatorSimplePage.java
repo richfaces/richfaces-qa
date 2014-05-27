@@ -32,122 +32,386 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
  */
 public class ValidatorSimplePage extends MetamerPage {
 
-    @FindByJQuery("input[id$=future]")
-    public WebElement inputFuture;
+    @FindByJQuery("input[id$=a4jButton]")
+    private WebElement a4jCommandBtn;
 
-    @FindByJQuery("input[id$=past]")
-    public WebElement inputPast;
+    @FindByJQuery("input[id$=hButton]")
+    private WebElement hCommandBtn;
+    @FindByJQuery(value = "input[id$=assertFalse]")
+    private WebElement inputAssertFalse;
 
     @FindByJQuery("input[id$=assertTrue]")
-    public WebElement inputAssertTrue;
-
-    @FindByJQuery("input[id$=assertFalse]")
-    public WebElement inputAssertFalse;
-
-    @FindByJQuery("input[id$=decimalMinMax]")
-    public WebElement inputDecimalMinMax;
-
-    @FindByJQuery("input[id$=digits]")
-    public WebElement inputDigits;
-
-    @FindByJQuery("input[id$=max]")
-    public WebElement inputMax;
-
-    @FindByJQuery("input[id$=min]")
-    public WebElement inputMin;
-
-    @FindByJQuery("input[id$=minMax]")
-    public WebElement inputMinMax;
-
-    @FindByJQuery("input[id$=notEmpty]")
-    public WebElement inputNotEmpty;
-
-    @FindByJQuery("input[id$=notNull]")
-    public WebElement inputNotNull;
-
-    @FindByJQuery("input[id$=pattern]")
-    public WebElement inputPattern;
+    private WebElement inputAssertTrue;
 
     @FindByJQuery("input[id$=custom]")
-    public WebElement inputCustom;
+    private WebElement inputCustom;
+
+    @FindByJQuery("input[id$=decimalMinMax]")
+    private WebElement inputDecimalMinMax;
+
+    @FindByJQuery("input[id$=digits]")
+    private WebElement inputDigits;
+    @FindByJQuery(value = "input[id$=future]")
+    private WebElement inputFuture;
+
+    @FindByJQuery("input[id$=max]")
+    private WebElement inputMax;
+
+    @FindByJQuery("input[id$=min]")
+    private WebElement inputMin;
+
+    @FindByJQuery("input[id$=minMax]")
+    private WebElement inputMinMax;
+
+    @FindByJQuery("input[id$=notEmpty]")
+    private WebElement inputNotEmpty;
+
+    @FindByJQuery("input[id$=notNull]")
+    private WebElement inputNotNull;
+    @FindByJQuery(value = "input[id$=past]")
+    private WebElement inputPast;
+
+    @FindByJQuery("input[id$=pattern]")
+    private WebElement inputPattern;
 
     @FindByJQuery("input[id$=regexp]")
-    public WebElement inputRegexp;
-
-    @FindByJQuery("input[id$=stringSize]")
-    public WebElement inputStringSize;
+    private WebElement inputRegexp;
 
     @FindByJQuery("input[id$=size]")
-    public WebElement inputSize;
+    private WebElement inputSize;
 
-    @FindByJQuery("input[id$=setWrongValuesButton]")
-    public WebElement setWrongBtn;
+    @FindByJQuery("input[id$=stringSize]")
+    private WebElement inputStringSize;
+    @FindByJQuery("span[id$=assertFalseMsg] span.rf-msg-det")
+    private WebElement msgAssertFalse;
+
+    @FindByJQuery("span[id$=assertTrueMsg] span.rf-msg-det")
+    private WebElement msgAssertTrue;
+
+    @FindByJQuery("span[id$=customMsg] span.rf-msg-det")
+    private WebElement msgCustom;
+
+    @FindByJQuery("span[id$=decimalMinMaxMsg] span.rf-msg-det")
+    private WebElement msgDecimalMinMax;
+
+    @FindByJQuery("span[id$=digitsMsg] span.rf-msg-det")
+    private WebElement msgDigits;
+    @FindByJQuery(value = "span[id$=futureMsg] span.rf-msg-det")
+    private WebElement msgFuture;
+
+    @FindByJQuery("span[id$=maxMsg] span.rf-msg-det")
+    private WebElement msgMax;
+
+    @FindByJQuery("span[id$=minMsg] span.rf-msg-det")
+    private WebElement msgMin;
+
+    @FindByJQuery("span[id$=minMaxMsg] span.rf-msg-det")
+    private WebElement msgMinMax;
+
+    @FindByJQuery("span[id$=notEmptyMsg] span.rf-msg-det")
+    private WebElement msgNotEmpty;
+
+    @FindByJQuery("span[id$=notNullMsg] span.rf-msg-det")
+    private WebElement msgNotNull;
+    @FindByJQuery(value = "span[id$=pastMsg] span.rf-msg-det")
+    private WebElement msgPast;
+
+    @FindByJQuery("span[id$=patternMsg] span.rf-msg-det")
+    private WebElement msgPattern;
+
+    @FindByJQuery("span[id$=regexpMsg] span.rf-msg-det")
+    private WebElement msgRegexp;
+    @FindByJQuery(value = "span[id$=sizeMsg] span.rf-msg-det")
+    private WebElement msgSize;
+
+    @FindByJQuery("span[id$=stringSizeMsg] span.rf-msg-det")
+    private WebElement msgStringSize;
+
     @FindByJQuery("input[id$=setCorrectValuesButton]")
-    public WebElement setCorrectBtn;
-    @FindByJQuery("input[id$=hButton]")
-    public WebElement hCommandBtn;
-    @FindByJQuery("input[id$=a4jButton]")
-    public WebElement a4jCommandBtn;
-
-    @FindByJQuery("input[type=submit]")
-    public WebElement toggleButton;
-
-    @FindByJQuery("input[type=text]")
-    public WebElement simpleInput;
-
+    private WebElement setCorrectBtn;
+    @FindByJQuery(value = "input[id$=setWrongValuesButton]")
+    private WebElement setWrongBtn;
     @FindBy(className = "rf-msg-det")
-    public WebElement simpleErrorMessage;
+    private WebElement simpleErrorMessage;
+    @FindByJQuery(value = "input[type=text]")
+    private WebElement simpleInput;
+    @FindByJQuery(value = "input[type=submit]")
+    private WebElement toggleButton;
+
+    /**
+     * @return the a4jCommandBtn
+     */
+    public WebElement getA4jCommandBtn() {
+        return a4jCommandBtn;
+    }
+
+    /**
+     * @return the inputAssertFalse
+     */
+    public WebElement getInputAssertFalse() {
+        return inputAssertFalse;
+    }
+
+    /**
+     * @return the inputAssertTrue
+     */
+    public WebElement getInputAssertTrue() {
+        return inputAssertTrue;
+    }
+
+    /**
+     * @return the inputCustom
+     */
+    public WebElement getInputCustom() {
+        return inputCustom;
+    }
+
+    /**
+     * @return the inputDecimalMinMax
+     */
+    public WebElement getInputDecimalMinMax() {
+        return inputDecimalMinMax;
+    }
+
+    /**
+     * @return the inputDigits
+     */
+    public WebElement getInputDigits() {
+        return inputDigits;
+    }
+
+    /**
+     * @return the inputFuture
+     */
+    public WebElement getInputFuture() {
+        return inputFuture;
+    }
+
+    /**
+     * @return the inputMax
+     */
+    public WebElement getInputMax() {
+        return inputMax;
+    }
+
+    /**
+     * @return the inputMin
+     */
+    public WebElement getInputMin() {
+        return inputMin;
+    }
+
+    /**
+     * @return the inputMinMax
+     */
+    public WebElement getInputMinMax() {
+        return inputMinMax;
+    }
+
+    /**
+     * @return the inputNotEmpty
+     */
+    public WebElement getInputNotEmpty() {
+        return inputNotEmpty;
+    }
+
+    /**
+     * @return the inputNotNull
+     */
+    public WebElement getInputNotNull() {
+        return inputNotNull;
+    }
+
+    /**
+     * @return the inputPast
+     */
+    public WebElement getInputPast() {
+        return inputPast;
+    }
+
+    /**
+     * @return the inputPattern
+     */
+    public WebElement getInputPattern() {
+        return inputPattern;
+    }
+
+    /**
+     * @return the inputRegexp
+     */
+    public WebElement getInputRegexp() {
+        return inputRegexp;
+    }
+
+    /**
+     * @return the inputSize
+     */
+    public WebElement getInputSize() {
+        return inputSize;
+    }
+
+    /**
+     * @return the inputStringSize
+     */
+    public WebElement getInputStringSize() {
+        return inputStringSize;
+    }
+
+    /**
+     * @return the msgAssertFalse
+     */
+    public WebElement getMsgAssertFalse() {
+        return msgAssertFalse;
+    }
+
+    /**
+     * @return the msgAssertTrue
+     */
+    public WebElement getMsgAssertTrue() {
+        return msgAssertTrue;
+    }
+
+    /**
+     * @return the msgCustom
+     */
+    public WebElement getMsgCustom() {
+        return msgCustom;
+    }
+
+    /**
+     * @return the msgDecimalMinMax
+     */
+    public WebElement getMsgDecimalMinMax() {
+        return msgDecimalMinMax;
+    }
+
+    /**
+     * @return the msgDigits
+     */
+    public WebElement getMsgDigits() {
+        return msgDigits;
+    }
+
+    /**
+     * @return the msgFuture
+     */
+    public WebElement getMsgFuture() {
+        return msgFuture;
+    }
+
+    /**
+     * @return the msgMax
+     */
+    public WebElement getMsgMax() {
+        return msgMax;
+    }
+
+    /**
+     * @return the msgMin
+     */
+    public WebElement getMsgMin() {
+        return msgMin;
+    }
+
+    /**
+     * @return the msgMinMax
+     */
+    public WebElement getMsgMinMax() {
+        return msgMinMax;
+    }
+
+    /**
+     * @return the msgNotEmpty
+     */
+    public WebElement getMsgNotEmpty() {
+        return msgNotEmpty;
+    }
+
+    /**
+     * @return the msgNotNull
+     */
+    public WebElement getMsgNotNull() {
+        return msgNotNull;
+    }
+
+    /**
+     * @return the msgPast
+     */
+    public WebElement getMsgPast() {
+        return msgPast;
+    }
+
+    /**
+     * @return the msgPattern
+     */
+    public WebElement getMsgPattern() {
+        return msgPattern;
+    }
+
+    /**
+     * @return the msgRegexp
+     */
+    public WebElement getMsgRegexp() {
+        return msgRegexp;
+    }
+
+    /**
+     * @return the msgSize
+     */
+    public WebElement getMsgSize() {
+        return msgSize;
+    }
+
+    /**
+     * @return the msgStringSize
+     */
+    public WebElement getMsgStringSize() {
+        return msgStringSize;
+    }
 
     public WebElement getSelectionItemByLabel(String label) {
         return driver.findElement(By.cssSelector(String.format("table[id$=size] tr > td > input[value='%s']", label)));
     }
 
-    @FindByJQuery("span[id$=futureMsg] span.rf-msg-det")
-    public WebElement msgFuture;
+    /**
+     * @return the setCorrectBtn
+     */
+    public WebElement getSetCorrectBtn() {
+        return setCorrectBtn;
+    }
 
-    @FindByJQuery("span[id$=pastMsg] span.rf-msg-det")
-    public WebElement msgPast;
+    /**
+     * @return the setWrongBtn
+     */
+    public WebElement getSetWrongBtn() {
+        return setWrongBtn;
+    }
 
-    @FindByJQuery("span[id$=assertTrueMsg] span.rf-msg-det")
-    public WebElement msgAssertTrue;
+    /**
+     * @return the simpleErrorMessage
+     */
+    public WebElement getSimpleErrorMessage() {
+        return simpleErrorMessage;
+    }
 
-    @FindByJQuery("span[id$=assertFalseMsg] span.rf-msg-det")
-    public WebElement msgAssertFalse;
+    /**
+     * @return the simpleInput
+     */
+    public WebElement getSimpleInput() {
+        return simpleInput;
+    }
 
-    @FindByJQuery("span[id$=decimalMinMaxMsg] span.rf-msg-det")
-    public WebElement msgDecimalMinMax;
+    /**
+     * @return the toggleButton
+     */
+    public WebElement getToggleButton() {
+        return toggleButton;
+    }
 
-    @FindByJQuery("span[id$=digitsMsg] span.rf-msg-det")
-    public WebElement msgDigits;
-
-    @FindByJQuery("span[id$=maxMsg] span.rf-msg-det")
-    public WebElement msgMax;
-
-    @FindByJQuery("span[id$=minMsg] span.rf-msg-det")
-    public WebElement msgMin;
-
-    @FindByJQuery("span[id$=minMaxMsg] span.rf-msg-det")
-    public WebElement msgMinMax;
-
-    @FindByJQuery("span[id$=notEmptyMsg] span.rf-msg-det")
-    public WebElement msgNotEmpty;
-
-    @FindByJQuery("span[id$=notNullMsg] span.rf-msg-det")
-    public WebElement msgNotNull;
-
-    @FindByJQuery("span[id$=patternMsg] span.rf-msg-det")
-    public WebElement msgPattern;
-
-    @FindByJQuery("span[id$=customMsg] span.rf-msg-det")
-    public WebElement msgCustom;
-
-    @FindByJQuery("span[id$=regexpMsg] span.rf-msg-det")
-    public WebElement msgRegexp;
-
-    @FindByJQuery("span[id$=stringSizeMsg] span.rf-msg-det")
-    public WebElement msgStringSize;
-
-    @FindByJQuery("span[id$=sizeMsg] span.rf-msg-det")
-    public WebElement msgSize;
-
+    /**
+     * @return the hCommandBtn
+     */
+    public WebElement gethCommandBtn() {
+        return hCommandBtn;
+    }
 }

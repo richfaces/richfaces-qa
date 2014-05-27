@@ -130,24 +130,24 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-12154")
     @Templates(exclude = { "richPopupPanel" })
     public void testDisabled() {
-
         String invalidValue = "11";
         // set disabled to false
         validatorAttributes.set(ValidatorAttributes.disabled, Boolean.FALSE);
         // put in an invalid value
-        page.inputMax.clear();
-        Graphene.guardNoRequest(page.inputMax).sendKeys(invalidValue);
-        page.a4jCommandBtn.click();
+        page.getInputMax().clear();
+        Graphene.guardNoRequest(page.getInputMax()).sendKeys(invalidValue);
+        submitAjax();
         // check error message from validator
-        assertPresent(page.msgMax, "Element page.msgMax should be present!");
+        assertPresent(page.getMsgMax(), "Element page.msgMax should be present!");
 
         // set disabled to true
         validatorAttributes.set(ValidatorAttributes.disabled, Boolean.TRUE);
         // put in an invalid value
-        Graphene.guardNoRequest(page.inputMax).sendKeys(invalidValue);
-        page.a4jCommandBtn.click();
+        Graphene.guardNoRequest(page.getInputMax()).sendKeys(invalidValue);
+        submitAjax();
         // check error message from validator
-        assertNotPresent(page.msgMax, "Element page.msgMax should be present!");
+        // there will be a message from jsr-303 bean validation, because the ajax submit
+        assertPresent(page.getMsgMax(), "Element page.msgMax should be present!");
     }
 
     @Test(groups = { "Future" })
@@ -155,5 +155,4 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
     public void testSelectionSize() {
         verifySelectionSize();
     }
-
 }
