@@ -45,8 +45,8 @@ FSF site: http://www.fsf.org. -->
 
         <!-- version of Tomcat containers to use-->
         <version.tomcat6>6.0.36</version.tomcat6>
-        <version.tomcat7>7.0.52</version.tomcat7>
-        <version.tomcat8>8.0.3</version.tomcat8>
+        <version.tomcat7>7.0.54</version.tomcat7>
+        <version.tomcat8>8.0.8</version.tomcat8>
 
         <!-- versions of TomEE containers to use and download -->
         <version.tomee1-5>1.5.1</version.tomee1-5>
