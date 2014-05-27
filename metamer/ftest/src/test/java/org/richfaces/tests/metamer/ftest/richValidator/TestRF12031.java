@@ -51,13 +51,12 @@ public class TestRF12031 extends AbstractWebDriverTest {
     @IssueTracking({ "https://issues.jboss.org/browse/RF-12031", "https://issues.jboss.org/browse/RF-12536" })
     public void testCSVOnConditionallyRenderedInput() {
 
-        page.toggleButton.click();
-        Graphene.waitGui().until().element(page.simpleInput).is().present();
+        page.getToggleButton().click();
+        Graphene.waitGui().until().element(page.getSimpleInput()).is().present();
 
-        page.simpleInput.sendKeys("RichFaces 4");
-        fireEvent(page.simpleInput, Event.BLUR);
+        page.getSimpleInput().sendKeys("RichFaces 4");
+        fireEvent(page.getSimpleInput(), Event.BLUR);
 
-        Graphene.waitModel().until().element(page.simpleErrorMessage).is().present();
+        Graphene.waitModel().until().element(page.getSimpleErrorMessage()).is().present();
     }
-
 }
