@@ -32,6 +32,7 @@ import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -48,9 +49,9 @@ public class TestRegionSimple extends AbstractWebDriverTest {
     @FindByJQuery("input:text[id$=user2EmailInput]")
     private GrapheneElement emailInput;
 
-    @FindBy(css="span[id$=user2NameOutput]")
+    @FindBy(css = "span[id$=user2NameOutput]")
     private GrapheneElement nameOutput;
-    @FindBy(css="span[id$=user2EmailOutput]")
+    @FindBy(css = "span[id$=user2EmailOutput]")
     private GrapheneElement emailOutput;
 
     @Override
@@ -67,26 +68,26 @@ public class TestRegionSimple extends AbstractWebDriverTest {
         nameInput.sendKeys("abc");
 
         Graphene.waitAjax()
-                .until()
-                .element(nameOutput)
-                .text()
-                .not().equalTo(name);
+            .until()
+            .element(nameOutput)
+            .text()
+            .not().equalTo(name);
 
         String email = emailOutput.getText();
-
 
         emailInput.click();
         emailInput.clear();
         emailInput.sendKeys("abc");
 
         Graphene.waitAjax()
-                .until()
-                .element(emailOutput)
-                .text()
-                .not().equalTo(email);
+            .until()
+            .element(emailOutput)
+            .text()
+            .not().equalTo(email);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         assertTrue(nameInput.isPresent());
         assertTrue(emailInput.isPresent());

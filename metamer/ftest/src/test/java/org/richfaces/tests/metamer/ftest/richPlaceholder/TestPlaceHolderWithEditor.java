@@ -28,6 +28,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -199,6 +200,7 @@ public class TestPlaceHolderWithEditor extends AbstractPlaceholderTest {
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RF-12624", "https://issues.jboss.org/browse/RF-12632" })
     @Override
+    @Templates(value = "plain")
     public void testRendered() {
         super.testRendered();
     }
