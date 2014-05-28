@@ -141,26 +141,31 @@ public class TestAttributes extends AbstractMediaOutputTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEvent(Event.MOUSEDOWN, mediaOutput);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEvent(Event.MOUSEMOVE, mediaOutput);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEvent(Event.MOUSEOUT, mediaOutput);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEvent(Event.MOUSEOVER, mediaOutput);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEvent(Event.MOUSEUP, mediaOutput);
     }

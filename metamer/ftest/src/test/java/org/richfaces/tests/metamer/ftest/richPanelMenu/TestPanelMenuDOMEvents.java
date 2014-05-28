@@ -94,6 +94,7 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousedown() {
         Action mousedown = new Actions(driver).clickAndHold(page.getPanelMenu().advanced().getRootElement()).build();
         testFireEvent(panelMenuAttributes, onmousedown, mousedown);
@@ -123,6 +124,7 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseup() {
         Action mouseup = new Actions(driver).click(page.getPanelMenu().advanced().getRootElement()).build();
         testFireEvent(panelMenuAttributes, onmouseup, mouseup);

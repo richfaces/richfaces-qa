@@ -286,26 +286,31 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEvent(Event.MOUSEDOWN, orderingList.advanced().getListAreaElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEvent(Event.MOUSEMOVE, orderingList.advanced().getListAreaElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEvent(Event.MOUSEOUT, orderingList.advanced().getListAreaElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEvent(Event.MOUSEOVER, orderingList.advanced().getListAreaElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEvent(Event.MOUSEUP, orderingList.advanced().getListAreaElement());
     }
