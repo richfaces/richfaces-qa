@@ -264,16 +264,19 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeydown() {
         testFireEvent(Event.KEYDOWN, group);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeypress() {
         testFireEvent(Event.KEYPRESS, group);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeyup() {
         testFireEvent(Event.KEYUP, group);
     }

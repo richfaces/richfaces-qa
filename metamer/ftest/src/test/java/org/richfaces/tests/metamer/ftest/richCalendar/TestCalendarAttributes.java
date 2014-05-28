@@ -695,18 +695,21 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOninputkeydown() {
         testFireEventWithJS(popupCalendar.getInput().advanced().getInputElement(), Event.KEYDOWN, calendarAttributes,
             CalendarAttributes.oninputkeydown);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOninputkeypress() {
         testFireEventWithJS(popupCalendar.getInput().advanced().getInputElement(), Event.KEYPRESS, calendarAttributes,
             CalendarAttributes.oninputkeypress);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOninputkeyup() {
         testFireEventWithJS(popupCalendar.getInput().advanced().getInputElement(), Event.KEYUP, calendarAttributes,
             CalendarAttributes.oninputkeyup);

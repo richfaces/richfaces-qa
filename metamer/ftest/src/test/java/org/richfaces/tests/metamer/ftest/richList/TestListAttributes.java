@@ -112,18 +112,21 @@ public class TestListAttributes extends AbstractListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeydown() {
         testFireEventWithJS(list.getRoot(), listAttributes,
             ListAttributes.onkeydown);
     }
 
     @Test(groups = "smoke")
+    @Templates(value = "plain")
     public void testOnkeypress() {
         testFireEventWithJS(list.getRoot(), listAttributes,
             ListAttributes.onkeypress);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeyup() {
         testFireEventWithJS(list.getRoot(), listAttributes,
             ListAttributes.onkeyup);
@@ -179,18 +182,21 @@ public class TestListAttributes extends AbstractListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnrowkeydown() {
         testFireEventWithJS(getTestedItem(), Event.KEYDOWN, listAttributes,
             ListAttributes.onrowkeydown);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnrowkeypress() {
         testFireEventWithJS(getTestedItem(), Event.KEYPRESS, listAttributes,
             ListAttributes.onrowkeypress);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnrowkeyup() {
         testFireEventWithJS(getTestedItem(), Event.KEYUP, listAttributes,
             ListAttributes.onrowkeyup);

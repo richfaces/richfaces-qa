@@ -294,16 +294,19 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeydown() {
         testFireEvent(Event.KEYDOWN, menuItem1);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeypress() {
         testFireEvent(Event.KEYPRESS, menuItem1);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeyup() {
         testFireEvent(Event.KEYUP, menuItem1);
     }
