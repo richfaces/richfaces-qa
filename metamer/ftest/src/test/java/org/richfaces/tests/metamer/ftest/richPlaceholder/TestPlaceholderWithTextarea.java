@@ -67,6 +67,7 @@ public class TestPlaceholderWithTextarea extends AbstractPlaceholderNonJSFTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         super.testStyleClass();
     }

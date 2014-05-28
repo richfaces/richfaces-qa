@@ -333,11 +333,13 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(group);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(group);
     }

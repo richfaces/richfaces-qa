@@ -67,6 +67,7 @@ public class TestPlaceholderWithInput extends AbstractPlaceholderNonJSFTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         super.testStyleClass();
     }

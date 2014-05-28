@@ -257,6 +257,7 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         checkStyleClass();
     }
