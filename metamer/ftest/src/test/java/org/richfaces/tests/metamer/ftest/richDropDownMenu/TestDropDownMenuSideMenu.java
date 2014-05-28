@@ -165,6 +165,7 @@ public class TestDropDownMenuSideMenu extends AbstractDropDownMenuTest {
 
     @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-12792")
+    @Templates(value = "plain")
     public void testOnkeydown() {
         super.testOnkeydown();
     }

@@ -157,6 +157,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeydown() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onkeydown, new Action() {
             @Override
@@ -169,6 +170,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeyup() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onkeyup, new Action() {
             @Override
@@ -301,6 +303,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeypress() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onkeypress, new Action() {
             @Override
