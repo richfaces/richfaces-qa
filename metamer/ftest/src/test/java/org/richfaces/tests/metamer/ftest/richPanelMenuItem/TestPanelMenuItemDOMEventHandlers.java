@@ -77,6 +77,7 @@ public class TestPanelMenuItemDOMEventHandlers extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousedown() {
         panelMenuItemAttributes.set(mode, client);
         Action mousedown = new Actions(driver).clickAndHold(page.getItem().advanced().getRootElement()).build();
@@ -85,6 +86,7 @@ public class TestPanelMenuItemDOMEventHandlers extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousemove() {
         panelMenuItemAttributes.set(mode, client);
         Action mousemove = new Actions(driver).moveToElement(page.getItem().advanced().getRootElement(), 3, 3).build();
@@ -92,6 +94,7 @@ public class TestPanelMenuItemDOMEventHandlers extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseout() {
         panelMenuItemAttributes.set(mode, client);
         // TODO JJa 2013-02-25: Rewrite using webdriver api when fixed (not working now)
@@ -99,6 +102,7 @@ public class TestPanelMenuItemDOMEventHandlers extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseover() {
         panelMenuItemAttributes.set(mode, client);
         Action mouseover = new Actions(driver).moveToElement(page.getItem().advanced().getRootElement(), 3, 3).build();
@@ -106,6 +110,7 @@ public class TestPanelMenuItemDOMEventHandlers extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseup() {
         panelMenuItemAttributes.set(mode, client);
         Action mouseup = new Actions(driver).clickAndHold(page.getItem().advanced().getRootElement()).release().build();

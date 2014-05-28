@@ -313,6 +313,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEvent(progressBarAttributes, ProgressBarAttributes.onmousedown,
             new Actions(driver).clickAndHold(page.progressBar).build());
@@ -321,17 +322,20 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEvent(progressBarAttributes, ProgressBarAttributes.onmousemove,
             new Actions(driver).moveToElement(page.progressBar).build());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEventWithJS(page.progressBar, progressBarAttributes, ProgressBarAttributes.onmouseout);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseover() {
         new Actions(driver).moveToElement(page.getRequestTimeElement()).perform();
 
@@ -340,6 +344,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEvent(progressBarAttributes, ProgressBarAttributes.onmouseup,
             new Actions(driver).click(page.progressBar).build());
