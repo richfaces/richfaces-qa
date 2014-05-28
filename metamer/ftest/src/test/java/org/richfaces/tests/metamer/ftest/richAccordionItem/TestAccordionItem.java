@@ -345,6 +345,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseover() {
         Action action = new Actions(driver).moveToElement(page.getRequestTimeElement()).moveToElement(page.getItemHeaders().get(0)).build();
         testFireEvent(accordionItemAttributes, AccordionItemAttributes.onmouseover, action);

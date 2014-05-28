@@ -619,6 +619,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOndatemouseout() {
         testFireEvent(calendarAttributes, CalendarAttributes.ondatemouseout, new Action() {
             @Override
@@ -629,6 +630,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOndatemouseover() {
         testFireEvent(calendarAttributes, CalendarAttributes.ondatemouseover, new Action() {
             @Override
@@ -711,6 +713,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOninputmousedown() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputmousedown,
             new Actions(driver).clickAndHold(popupCalendar.getInput().advanced().getInputElement()).build());
@@ -719,12 +722,14 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOninputmousemove() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputmousemove,
             new Actions(driver).moveToElement(popupCalendar.getInput().advanced().getInputElement()).build());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOninputmouseout() {
         testFireEvent(
             calendarAttributes,
@@ -734,12 +739,14 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOninputmouseover() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseover,
             new Actions(driver).moveToElement(page.getRequestTimeElement()).moveToElement(popupCalendar.getInput().advanced().getInputElement()).build());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOninputmouseup() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseup,
             new Actions(driver).click(popupCalendar.getInput().advanced().getInputElement()).build());

@@ -130,26 +130,31 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnMouseDown() {
         checkOnMouseDown();
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnMouseMove() {
         checkOnMouseMove();
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnMouseOut() {
         checkOnMouseOut();
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnMouseOver() {
         checkOnMouseOver();
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnMouseUp() {
         checkOnMouseUp();
     }

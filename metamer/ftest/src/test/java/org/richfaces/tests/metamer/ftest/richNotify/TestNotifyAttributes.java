@@ -142,26 +142,31 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnMouseDown() {
         testFireEvent(Event.MOUSEDOWN, message.advanced().getRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnMouseMove() {
         testFireEvent(Event.MOUSEMOVE, message.advanced().getRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnMouseOut() {
         testFireEvent(Event.MOUSEOUT, message.advanced().getRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnMouseOver() {
         testFireEvent(Event.MOUSEOVER, message.advanced().getRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnMouseUp() {
         testFireEvent(Event.MOUSEUP, message.advanced().getRootElement());
     }

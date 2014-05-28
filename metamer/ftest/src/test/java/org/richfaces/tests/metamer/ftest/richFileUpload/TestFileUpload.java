@@ -322,6 +322,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousedown() {
         _testFireEventWithJS(FileUploadAttributes.onmousedown, fileUpload.advanced().getFileInputElement());
     }

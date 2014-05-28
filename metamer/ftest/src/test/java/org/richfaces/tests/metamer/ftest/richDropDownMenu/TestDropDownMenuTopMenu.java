@@ -183,6 +183,7 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousedown() {
         super.testOnmousedown();
     }
@@ -195,6 +196,7 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
 
     @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-12854")
+    @Templates(value = "plain")
     public void testOnmouseout() {
         super.testOnmouseout();
     }
@@ -206,6 +208,7 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseup() {
         super.testOnmouseup();
     }

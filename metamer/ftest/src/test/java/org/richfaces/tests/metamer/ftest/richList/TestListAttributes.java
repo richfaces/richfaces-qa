@@ -131,12 +131,14 @@ public class TestListAttributes extends AbstractListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEventWithJS(list.getRoot(), listAttributes,
             ListAttributes.onmousedown);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEventWithJS(list.getRoot(), listAttributes,
             ListAttributes.onmousemove);
@@ -144,18 +146,21 @@ public class TestListAttributes extends AbstractListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEventWithJS(list.getRoot(), listAttributes,
             ListAttributes.onmouseout);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEventWithJS(list.getRoot(), listAttributes,
             ListAttributes.onmouseover);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEventWithJS(list.getRoot(), listAttributes,
             ListAttributes.onmouseup);
@@ -192,12 +197,14 @@ public class TestListAttributes extends AbstractListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnrowmousedown() {
         testFireEventWithJS(getTestedItem(), Event.MOUSEDOWN, listAttributes,
             ListAttributes.onrowmousedown);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnrowmousemove() {
         testFireEventWithJS(getTestedItem(), Event.MOUSEMOVE, listAttributes,
             ListAttributes.onrowmousemove);
@@ -205,18 +212,21 @@ public class TestListAttributes extends AbstractListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnrowmouseout() {
         testFireEventWithJS(getTestedItem(), Event.MOUSEOUT, listAttributes,
             ListAttributes.onrowmouseout);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnrowmouseover() {
         testFireEventWithJS(getTestedItem(), Event.MOUSEOVER, listAttributes,
             ListAttributes.onrowmouseover);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnrowmouseup() {
         testFireEventWithJS(getTestedItem(), Event.MOUSEUP, listAttributes,
             ListAttributes.onrowmouseup);
