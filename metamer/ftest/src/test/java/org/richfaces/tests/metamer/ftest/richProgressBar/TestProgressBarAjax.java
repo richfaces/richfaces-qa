@@ -45,6 +45,7 @@ import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.bean.rich.RichProgressBarBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -359,6 +360,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         progressBarAttributes.set(ProgressBarAttributes.rendered, Boolean.FALSE);
         assertNotPresent(page.progressBar, "Progress bar should not be rendered when rendered=false.");

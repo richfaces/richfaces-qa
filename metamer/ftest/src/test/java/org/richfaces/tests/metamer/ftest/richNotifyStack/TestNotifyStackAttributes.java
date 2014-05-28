@@ -41,6 +41,7 @@ import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
 import org.richfaces.fragment.notify.RichFacesNotify;
 import org.richfaces.fragment.notify.RichFacesNotify.NotifyMessageItemImpl;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -184,6 +185,7 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         notifyStackAttributes.set(NotifyStackAttributes.rendered, Boolean.TRUE);
         generateMessagesWithWait(1);

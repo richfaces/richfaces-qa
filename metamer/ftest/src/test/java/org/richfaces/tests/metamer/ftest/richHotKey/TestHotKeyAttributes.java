@@ -28,6 +28,7 @@ import java.util.Set;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebDriver;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.annotations.Test;
 
@@ -159,6 +160,7 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         firstHotkeyAttributes.set(HotKeyAttributes.rendered, false);
         assertNotPresent(hotkey1.advanced().getRootElement(), "Hotkey 1 should not be present on page.");

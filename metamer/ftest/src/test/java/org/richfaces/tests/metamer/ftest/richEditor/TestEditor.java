@@ -96,6 +96,7 @@ public class TestEditor extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         editorAttributes.set(EditorAttributes.rendered, Boolean.FALSE);
         assertNotPresent(page.getEditorFrame(), "Editor should not be rendered.");

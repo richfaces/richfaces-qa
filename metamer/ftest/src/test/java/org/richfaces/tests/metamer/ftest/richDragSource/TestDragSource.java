@@ -26,6 +26,7 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
 /**
@@ -52,6 +53,7 @@ public class TestDragSource extends AbstractDragSourceTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         super.testRendered();
     }

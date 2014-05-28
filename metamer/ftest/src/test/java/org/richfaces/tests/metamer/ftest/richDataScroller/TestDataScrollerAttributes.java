@@ -38,6 +38,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.richfaces.tests.metamer.ftest.richDataScroller.SimplePage.ScrollerPosition;
 import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
@@ -208,6 +209,7 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         attributes.set(DataScrollerAttributes.rendered, false);
         Graphene.waitGui().until().element(page.getScroller(scroller).advanced().getRootElement()).is().not().present();
