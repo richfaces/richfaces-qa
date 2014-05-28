@@ -33,6 +33,7 @@ import org.richfaces.fragment.orderingList.SelectableListItem;
 import org.richfaces.fragment.pickList.RichFacesPickList;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -53,6 +54,7 @@ public class TestPickListWithColumns extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testColumnClasses() {
         String testedClass = "metamer-ftest-class";
         pickListAttributes.set(PickListAttributes.columnClasses, testedClass);

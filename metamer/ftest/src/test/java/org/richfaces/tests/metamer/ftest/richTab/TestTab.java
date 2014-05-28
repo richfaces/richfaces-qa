@@ -180,6 +180,7 @@ public class TestTab extends AbstractWebDriverTest {
 
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-11549")
+    @Templates(value = "plain")
     public void testHeaderClass() {
         tabAttributes.set(TabAttributes.headerClass, "metamer-ftest-class");
 

@@ -181,6 +181,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testFinishClass() {
         testStyleClass(page.finish, BasicAttributes.finishClass);
     }
@@ -201,6 +202,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testInitialClass() {
         testStyleClass(page.init, BasicAttributes.initialClass);
     }
@@ -350,11 +352,13 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testProgressClass() {
         testStyleClass(page.progress, BasicAttributes.progressClass);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRemainingClass() {
         testStyleClass(page.remain, BasicAttributes.remainingClass);
     }
