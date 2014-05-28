@@ -43,7 +43,7 @@ public class TestTreeSelection extends AbstractTreeSelectionTest {
         @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     })
     public void testSubNodesSelectionAjax() {
-        testSubNodesSelection();
+        testSubNodesSelectionWithEvents();
     }
 
     @Test(groups = "Future")
@@ -54,7 +54,7 @@ public class TestTreeSelection extends AbstractTreeSelectionTest {
         @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     })
     public void testSubNodesSelectionAjaxInRegion() {
-        testSubNodesSelection();
+        testSubNodesSelectionWithEvents();
     }
 
     @Test(groups = { "Future" })
@@ -64,7 +64,7 @@ public class TestTreeSelection extends AbstractTreeSelectionTest {
         @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleRichFacesTreeNode" })
     })
     public void testSubNodesSelectionAjaxWithSimpleTreeNode() {
-        testSubNodesSelection();
+        testSubNodesSelectionWithEvents();
     }
 
     @Test
@@ -73,65 +73,6 @@ public class TestTreeSelection extends AbstractTreeSelectionTest {
         @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     })
     public void testSubNodesSelectionClient() {
-        testSubNodesSelection();
-    }
-
-    @Test
-    @Uses({
-        @UseWithField(field = "selectionType", valuesFrom = FROM_FIELD, value = "eventEnabledSelectionTypes"),
-        @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
-    })
-    public void testSubNodesSelectionEventsAjax() {
-        testSubNodesSelectionEvents();
-    }
-
-    @Test(groups = { "Future" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-11766")
-    @Uses({
-        @UseWithField(field = "selectionType", valuesFrom = FROM_FIELD, value = "eventEnabledSelectionTypes"),
-        @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleRichFacesTreeNode" })
-    })
-    public void testSubNodesSelectionEventsAjaxWithSimpleTreeNode() {
-        testSubNodesSelectionEvents();
-    }
-
-    @Test
-    @Templates(exclude = "a4jRegion")
-    @Uses({
-        @UseWithField(field = "selectionType", valuesFrom = FROM_FIELD, value = "selectionTypeAjax"),
-        @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
-    })
-    public void testTopLevelSelectionAjax() {
-        testTopLevelSelection();
-    }
-
-    @Test(groups = "Future")
-    @Templates(value = "a4jRegion")
-    @IssueTracking("https://issues.jboss.org/browse/RF-13322")
-    @Uses({
-        @UseWithField(field = "selectionType", valuesFrom = FROM_FIELD, value = "selectionTypeAjax"),
-        @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
-    })
-    public void testTopLevelSelectionAjaxInRegion() {
-        testTopLevelSelection();
-    }
-
-    @Test(groups = { "Future" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-11766")
-    @Uses({
-        @UseWithField(field = "selectionType", valuesFrom = FROM_FIELD, value = "selectionTypeAjax"),
-        @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleRichFacesTreeNode" })
-    })
-    public void testTopLevelSelectionAjaxWithSimpleTreeNode() {
-        testTopLevelSelection();
-    }
-
-    @Test(groups = "smoke")
-    @Uses({
-        @UseWithField(field = "selectionType", valuesFrom = FROM_FIELD, value = "selectionTypeClient"),
-        @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
-    })
-    public void testTopLevelSelectionClient() {
-        testTopLevelSelection();
+        testSubNodesSelectionWithEvents();
     }
 }
