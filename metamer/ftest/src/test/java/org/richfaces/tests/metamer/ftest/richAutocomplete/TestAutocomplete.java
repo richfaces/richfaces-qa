@@ -63,8 +63,12 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
 
     @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-11323")
-    public void testTypingPrefixAndThenConfirm() {
+    public void testTypePrefixDeleteAll_typePrefixConfirm() {
+        Graphene.guardAjax(autocomplete).type("ala");
+        autocomplete.advanced().clear(ClearType.BACKSPACE);
+        autocomplete.advanced().waitForSuggestionsToBeNotVisible().perform();
         assertTrue(autocomplete.advanced().getSuggestionsElements().isEmpty());
+
         SelectOrConfirm typed = Graphene.guardAjax(autocomplete).type("ala");
         assertFalse(autocomplete.advanced().getSuggestionsElements().isEmpty());
         Graphene.guardAjax(typed).confirm();
@@ -72,18 +76,6 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
         String expectedStateForPrefix = getExpectedStateForPrefix("ala", selectFirst);
         assertEquals(autocomplete.advanced().getInput().getStringValue(), expectedStateForPrefix);
         checkOutput(expectedStateForPrefix);
-    }
-
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11323")
-    public void testTypingPrefixAndThenDeleteAll() {
-        Graphene.guardAjax(autocomplete).type("ala");
-        autocomplete.advanced().clear(ClearType.DELETE);
-        autocomplete.advanced().waitForSuggestionsToBeNotVisible().perform();
-        assertTrue(autocomplete.advanced().getSuggestionsElements().isEmpty());
-        Graphene.guardAjax(autocomplete).type("ala");
-        autocomplete.advanced().waitForSuggestionsToBeVisible().perform();
-        assertFalse(autocomplete.advanced().getSuggestionsElements().isEmpty());
     }
 
     @Test
