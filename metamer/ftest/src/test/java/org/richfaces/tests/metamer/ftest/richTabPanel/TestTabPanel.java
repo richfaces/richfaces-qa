@@ -415,6 +415,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
 
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-9309")
+    @Templates(value = "plain")
     public void testTabActiveHeaderClass() {
         String headerClass = "metamer-ftest-class";
         tabPanelAttributes.set(TabPanelAttributes.tabActiveHeaderClass, headerClass);
@@ -433,6 +434,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testTabContentClass() {
         String contentClass = "metamer-ftest-class";
         tabPanelAttributes.set(TabPanelAttributes.tabContentClass, contentClass);
@@ -442,6 +444,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
 
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-9309")
+    @Templates(value = "plain")
     public void testTabDisabledHeaderClass() {
         String headerClass = "metamer-ftest-class";
         tabPanelAttributes.set(TabPanelAttributes.tabDisabledHeaderClass, headerClass);
@@ -461,6 +464,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
 
     @Test
     @IssueTracking({ "https://issues.jboss.org/browse/RF-9309", "https://issues.jboss.org/browse/RF-11549" })
+    @Templates(value = "plain")
     public void testTabHeaderClass() {
         String testString = "metamer-ftest-class";
         tabPanelAttributes.set(TabPanelAttributes.tabHeaderClass, testString);
@@ -480,6 +484,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
 
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-9309")
+    @Templates(value = "plain")
     public void testTabInactiveHeaderClass() {
         String testString = "metamer-ftest-class";
         tabPanelAttributes.set(TabPanelAttributes.tabInactiveHeaderClass, testString);
