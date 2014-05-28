@@ -37,6 +37,7 @@ import org.richfaces.fragment.calendar.PopupCalendar;
 import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
 import org.richfaces.fragment.calendar.DayPicker.CalendarDay.DayType;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.model.CalendarModel;
@@ -84,6 +85,7 @@ public class TestCalendarModel extends AbstractCalendarTest {
 
     @Test(groups = { "4.0.0.Final" })
     @RegressionTest("https://issues.jboss.org/browse/RFPL-1222")
+    @Templates(value = "plain")
     public void testClasses() {
         int sundays = 1;
         int tuesdays = 3;
