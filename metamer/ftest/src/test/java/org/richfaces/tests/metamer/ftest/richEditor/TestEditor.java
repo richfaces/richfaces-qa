@@ -69,6 +69,7 @@ public class TestEditor extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testHeight() {
         String height = "500px";
         editorAttributes.set(EditorAttributes.height, height);
@@ -183,6 +184,7 @@ public class TestEditor extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testWidth() {
 
         String STYLE_WIDTH = "400px";

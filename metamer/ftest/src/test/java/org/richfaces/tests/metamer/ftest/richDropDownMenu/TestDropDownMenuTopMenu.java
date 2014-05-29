@@ -111,6 +111,7 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testPopupWidth() {
         super.testPopupWidth();
     }

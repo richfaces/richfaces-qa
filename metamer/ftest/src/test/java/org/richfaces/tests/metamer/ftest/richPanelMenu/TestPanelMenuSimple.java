@@ -142,6 +142,7 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10302")
+    @Templates(value = "plain")
     public void testWidth() {
         panelMenuAttributes.set(PanelMenuAttributes.style, "");
         panelMenuAttributes.set(width, "300px");

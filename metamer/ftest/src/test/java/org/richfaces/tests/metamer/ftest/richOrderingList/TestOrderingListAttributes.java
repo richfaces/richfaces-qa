@@ -196,29 +196,34 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testListHeight() {
         checkHeightAttribute(OrderingListAttributes.listHeight, Boolean.FALSE);
         checkHeightAttribute(OrderingListAttributes.listHeight, Boolean.TRUE);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testMaxListHeight_withUnit() {
         checkHeightAttribute(OrderingListAttributes.maxListHeight, Boolean.TRUE);
     }
 
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-13346")
+    @Templates(value = "plain")
     public void testMaxListHeight_withoutUnit() {
         checkHeightAttribute(OrderingListAttributes.maxListHeight, Boolean.FALSE);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testMinListHeight_withUnit() {
         checkHeightAttribute(OrderingListAttributes.minListHeight, Boolean.TRUE);
     }
 
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-13346")
+    @Templates(value = "plain")
     public void testMinListHeight_withoutUnit() {
         checkHeightAttribute(OrderingListAttributes.minListHeight, Boolean.FALSE);
     }

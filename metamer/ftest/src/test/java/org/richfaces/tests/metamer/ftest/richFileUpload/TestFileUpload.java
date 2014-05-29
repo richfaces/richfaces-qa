@@ -207,6 +207,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testListHeight() {
         String height = "100px";
         fileUploadAttributes.set(FileUploadAttributes.listHeight, height);
