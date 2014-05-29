@@ -144,6 +144,7 @@ public class TestEditor extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testStyle() {
         final String style = "background-color: yellow; font-size: 1.5em;";
         editorAttributes.set(EditorAttributes.style, style);
@@ -151,6 +152,7 @@ public class TestEditor extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     public void testStyleClass() {
         WebElement textInput = getEditorTextArea();
         final String styleClassVal = "metamer-ftest-class";

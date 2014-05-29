@@ -266,11 +266,13 @@ public class TestListAttributes extends AbstractListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(list.getRoot());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(list.getRoot());
     }
