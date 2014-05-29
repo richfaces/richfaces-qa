@@ -241,51 +241,61 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistclick() {
         testFireEvent(attributes, OrderingListAttributes.onlistclick, new Actions(driver).click(orderingList.advanced().getItemsElements().get(0)).build());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistdblclick() {
         testFireEvent(Event.DBLCLICK, orderingList.advanced().getItemsElements().get(0), "listdblclick");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistkeydown() {
         testFireEvent(Event.KEYDOWN, orderingList.advanced().getItemsElements().get(0), "listkeydown");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistkeypress() {
         testFireEvent(Event.KEYPRESS, orderingList.advanced().getItemsElements().get(0), "listkeypress");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistkeyup() {
         testFireEvent(Event.KEYUP, orderingList.advanced().getItemsElements().get(0), "listkeyup");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistmousedown() {
         testFireEvent(Event.MOUSEDOWN, orderingList.advanced().getItemsElements().get(0), "listmousedown");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistmousemove() {
         testFireEvent(Event.MOUSEMOVE, orderingList.advanced().getItemsElements().get(0), "listmousemove");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistmouseout() {
         testFireEvent(Event.MOUSEOUT, orderingList.advanced().getItemsElements().get(0), "listmouseout");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistmouseover() {
         testFireEvent(Event.MOUSEOVER, orderingList.advanced().getItemsElements().get(0), "listmouseover");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistmouseup() {
         testFireEvent(Event.MOUSEUP, orderingList.advanced().getItemsElements().get(0), "listmouseup");
     }

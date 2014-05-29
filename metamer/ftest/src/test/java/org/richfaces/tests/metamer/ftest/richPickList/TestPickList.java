@@ -408,18 +408,21 @@ public class TestPickList extends AbstractWebDriverTest {
 
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
+    @Templates(value = "plain")
     public void testOnsourcekeydown() {
         testFireEvent(Event.KEYDOWN, pickList.advanced().getSourceListAreaElement(), "sourcekeydown");
     }
 
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
+    @Templates(value = "plain")
     public void testOnsourcekeypress() {
         testFireEvent(Event.KEYPRESS, pickList.advanced().getSourceListAreaElement(), "sourcekeypress");
     }
 
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
+    @Templates(value = "plain")
     public void testOnsourcekeyup() {
         testFireEvent(Event.KEYUP, pickList.advanced().getSourceListAreaElement(), "sourcekeyup");
     }
@@ -486,18 +489,21 @@ public class TestPickList extends AbstractWebDriverTest {
 
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
+    @Templates(value = "plain")
     public void testOntargetkeydown() {
         testFireEvent(Event.KEYDOWN, pickList.advanced().getTargetListAreaElement(), "targetkeydown");
     }
 
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
+    @Templates(value = "plain")
     public void testOntargetkeypress() {
         testFireEvent(Event.KEYPRESS, pickList.advanced().getTargetListAreaElement(), "targetkeypress");
     }
 
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
+    @Templates(value = "plain")
     public void testOntargetkeyup() {
         testFireEvent(Event.KEYUP, pickList.advanced().getTargetListAreaElement(), "targetkeyup");
     }
