@@ -71,6 +71,7 @@ public enum BasicAttributes implements AttributeEnum {
     leftIconClass,
     listClass,
     nodeClass,
+    popupClass,
     progressClass,
     remainingClass,
     rightIconClass,
