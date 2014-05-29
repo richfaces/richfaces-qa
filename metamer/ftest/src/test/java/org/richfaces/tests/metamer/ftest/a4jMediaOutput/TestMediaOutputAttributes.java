@@ -198,11 +198,13 @@ public class TestMediaOutputAttributes extends AbstractMediaOutputTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(mediaOutput);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(mediaOutput);
     }
