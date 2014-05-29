@@ -91,6 +91,7 @@ public class TestToolbar extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testHeight() {
         AttributeConditionFactory styleAttr = new WebElementConditionFactory(page.getToolbar()).attribute("style");
         assertTrue(styleAttr.isPresent().apply(driver),
@@ -270,6 +271,7 @@ public class TestToolbar extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testWidth() {
         String styleAttr = page.getToolbar().getAttribute("style");
         assertTrue(styleAttr.contains("width: 100%"),

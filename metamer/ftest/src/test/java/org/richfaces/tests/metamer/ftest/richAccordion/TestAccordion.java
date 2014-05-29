@@ -127,6 +127,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testHeight() {
         WebElement accordionRoot = page.getAccordionRootElement();
         // height = null

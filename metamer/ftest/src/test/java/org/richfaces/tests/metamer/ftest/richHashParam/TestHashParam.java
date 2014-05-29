@@ -34,6 +34,7 @@ import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.popupPanel.TextualRichFacesPopupPanel;
 import org.richfaces.fragment.popupPanel.PopupPanel.ResizerLocation;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -84,6 +85,7 @@ public class TestHashParam extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testPanelHeight() {
         openPopup();
         assertEquals(panel.advanced().getLocations().getHeight(), DEFAULT_HEIGHT, TOLERANCE, "Panel height.");
@@ -155,6 +157,7 @@ public class TestHashParam extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testPanelWidth() {
         openPopup();
         assertEquals(Utils.getLocations(panel.advanced().getRootElement()).getWidth(), DEFAULT_WIDTH, TOLERANCE, "Panel width.");
