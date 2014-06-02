@@ -211,6 +211,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
 
     @Test
     @RegressionTest("http://java.net/jira/browse/JAVASERVERFACES-1805")
+    @Templates(value = "plain")
     public void testInputWidth() {
         inplaceInputAttributes.set(InplaceInputAttributes.inputWidth, "300");
         String width = inplaceInput.advanced().getEditInputElement().getCssValue("width");

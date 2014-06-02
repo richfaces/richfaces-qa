@@ -251,6 +251,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testInputWidth() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.inputWidth, "300px");
         String width = select.advanced().getEditInputElement().getCssValue("width");

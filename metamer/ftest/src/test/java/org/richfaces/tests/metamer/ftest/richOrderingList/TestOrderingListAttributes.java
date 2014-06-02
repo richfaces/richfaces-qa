@@ -151,6 +151,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testListHeight() {
         int testedValue = 600;
         int tolerance = 10;
@@ -159,6 +160,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testListWidth() {
         int testedValue = 600;
         int tolerance = 10;
@@ -167,6 +169,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testMaxListHeight() {
         int testedValue = 600;
         int tolerance = 10;
@@ -176,6 +179,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testMinListHeight() {
         int testedValue = 600;
         int tolerance = 10;

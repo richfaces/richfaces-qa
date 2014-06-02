@@ -292,6 +292,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testPopupWidth() {
         updateShowAction();
         String minWidth = "333";
