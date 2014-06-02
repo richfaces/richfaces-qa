@@ -2,9 +2,10 @@ package org.richfaces.tests.metamer.bean.issues;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import org.richfaces.push.MessageException;
-import org.richfaces.push.TopicKey;
-import org.richfaces.push.TopicsContext;
+
+import org.richfaces.application.push.MessageException;
+import org.richfaces.application.push.TopicKey;
+import org.richfaces.application.push.TopicsContext;
 
 /**
  *

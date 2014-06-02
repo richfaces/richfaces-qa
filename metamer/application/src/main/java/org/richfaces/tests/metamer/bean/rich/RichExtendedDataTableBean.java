@@ -30,7 +30,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import org.richfaces.model.DataComponentState;
+import org.ajax4jsf.model.DataComponentState;
 import org.richfaces.component.UIExtendedDataTable;
 import org.richfaces.model.Filter;
 import org.richfaces.model.SortMode;

@@ -26,7 +26,7 @@ import static org.testng.Assert.assertEquals;
 
 import java.util.Collections;
 
-import org.richfaces.model.SortOrder;
+import org.richfaces.component.SortOrder;
 import org.richfaces.tests.metamer.bean.rich.RichColumnBean;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;

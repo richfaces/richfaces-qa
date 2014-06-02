@@ -27,10 +27,10 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import org.richfaces.application.ServiceTracker;
 import org.richfaces.component.UIFocus;
-import org.richfaces.services.ServiceTracker;
+import org.richfaces.focus.FocusManager;
 import org.richfaces.tests.metamer.Attributes;
-import org.richfaces.ui.misc.focus.FocusManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

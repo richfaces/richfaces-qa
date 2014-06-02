@@ -28,9 +28,9 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import org.richfaces.component.SortOrder;
 import org.richfaces.component.UIColumn;
 import org.richfaces.model.Filter;
-import org.richfaces.model.SortOrder;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.model.Capital;
 import org.slf4j.Logger;

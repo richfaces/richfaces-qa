@@ -27,7 +27,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import org.richfaces.component.html.HtmlNotifyMessage;
+import org.richfaces.component.UINotifyMessage;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.bean.abstractions.MessageTestingBean;
 import org.slf4j.Logger;
@@ -49,7 +49,7 @@ public class RichNotifyMessageBean extends MessageTestingBean implements Seriali
     @PostConstruct
     public void init() {
         LOGGER.debug("initializing bean " + getClass().getName());
-        attributes = Attributes.getComponentAttributesFromFacesConfig(HtmlNotifyMessage.class, getClass());
+        attributes = Attributes.getComponentAttributesFromFacesConfig(UINotifyMessage.class, getClass());
 
         attributes.setAttribute("ajaxRendered", true); // make sense for a4j:commandButton submit
         attributes.setAttribute("for", "simpleInput1");

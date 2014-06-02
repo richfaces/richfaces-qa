@@ -25,8 +25,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.TreeMap;
 
-import org.richfaces.model.SortOrder;
-import org.richfaces.component.UIDataTableBase;
+import org.richfaces.component.SortOrder;
 import org.richfaces.model.SortMode;
 
 public abstract class ColumnSortingMap extends TreeMap<String, ColumnSortingMap.ColumnSorting> {

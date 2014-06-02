@@ -102,11 +102,9 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
         logger.debug("creating attributes map for " + componentClass);
 
         if (!loadFromClass && richfacesAttributes == null) {
-            // load RF 4 components
-            loadRichFacesComponents("richfaces-components-rich", false);
-            // load RF 4 a4j
-            loadRichFacesComponents("richfaces-components-a4j", false);
-            // load RF 5 components (using regex from RF 5 Metamer), second param is true in order to use exact regex match
+            // load a4j components
+            loadRichFacesComponents("richfaces-a4j", false);
+            // load rich components (using regex), second param is true in order to use exact regex match
             loadRichFacesComponents(".*richfaces[^/]+jar.*", true);
         }
 
