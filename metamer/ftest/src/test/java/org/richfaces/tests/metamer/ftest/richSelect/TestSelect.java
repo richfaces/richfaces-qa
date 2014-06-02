@@ -209,6 +209,7 @@ public class TestSelect extends AbstractWebDriverTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-9737")
+    @Templates(value = "plain")
     public void testListHeight() {
         selectAttributes.set(SelectAttributes.listHeight, TESTSIZE);
         select.openSelect();
@@ -221,6 +222,7 @@ public class TestSelect extends AbstractWebDriverTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-9737")
+    @Templates(value = "plain")
     public void testListWidth() {
         selectAttributes.set(SelectAttributes.listWidth, TESTSIZE);
         select.openSelect();
@@ -232,6 +234,7 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testMaxListHeight() {
         selectAttributes.set(SelectAttributes.maxListHeight, TESTSIZE);
         select.openSelect();
@@ -243,6 +246,7 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testMinListHeight() {
         selectAttributes.set(SelectAttributes.minListHeight, TESTSIZE);
         select.openSelect();
