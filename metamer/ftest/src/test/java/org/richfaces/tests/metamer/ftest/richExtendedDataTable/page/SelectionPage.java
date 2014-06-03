@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source
- * Copyright 2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -28,7 +28,6 @@ import java.util.TreeSet;
 import org.apache.commons.lang.StringUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -40,7 +39,6 @@ import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SimpleED
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 
 /**
- *
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
 public class SelectionPage {
@@ -51,26 +49,33 @@ public class SelectionPage {
     @FindBy(css = "span.previousSelection")
     private WebElement previousSelection;
 
-    @FindByJQuery("span.rf-ds[id$=scroller2]")
+    @FindBy(css = "span.rf-ds[id$=scroller2]")
     protected RichFacesDataScroller dataScroller2;
 
-    @FindByJQuery("div.rf-edt[id$=richEDT]")
+    @FindBy(css = "div.rf-edt[id$=richEDT]")
     private SimpleEDT table;
 
     @Drone
     private WebDriver browser;
 
     private final Attributes<ExtendedDataTableAttributes> tableAttributes
-            = Attributes.<ExtendedDataTableAttributes>getAttributesFor(getFutureDriver());
+        = Attributes.<ExtendedDataTableAttributes>getAttributesFor(getFutureDriver());
 
     public void selectRow(int rowIndex, Keys... keys) {
-        dataScroller2.switchTo(getPageForIndex(rowIndex));
+        scrollToPage(rowIndex);
         Graphene.guardAjax(table).selectRow(getRowForIndex(rowIndex), keys);
     }
 
     public void deselectRow(int rowIndex, Keys... keys) {
-        dataScroller2.switchTo(getPageForIndex(rowIndex));
+        scrollToPage(rowIndex);
         Graphene.guardAjax(table).deselectRow(getRowForIndex(rowIndex), keys);
+    }
+
+    private void scrollToPage(int rowIndex) {
+        int page = getPageForIndex(rowIndex);
+        if (page != dataScroller2.getActivePageNumber()) {
+            Graphene.guardAjax(dataScroller2).switchTo(page);
+        }
     }
 
     public Collection<Integer> getActualCurrentSelection() {
@@ -92,13 +97,13 @@ public class SelectionPage {
 
     private int getPageForIndex(int index) {
         return (index / Integer.parseInt(tableAttributes.get(ExtendedDataTableAttributes.rows)))
-                + 1;
+            + 1;
     }
 
     private int getRowForIndex(int index) {
         return index
-                - ((dataScroller2.getActivePageNumber() - 1)
-                * Integer.parseInt(tableAttributes.get(ExtendedDataTableAttributes.rows)));
+            - ((dataScroller2.getActivePageNumber() - 1)
+            * Integer.parseInt(tableAttributes.get(ExtendedDataTableAttributes.rows)));
     }
 
     private AbstractWebDriverTest.FutureTarget<WebDriver> getFutureDriver() {
