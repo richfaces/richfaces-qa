@@ -1,27 +1,29 @@
-/**
- * *****************************************************************************
- * JBoss, Home of Professional Open Source Copyright 2010-2014, Red Hat, Inc.
- * and individual contributors by the @authors tag. See the copyright.txt in the
- * distribution for a full listing of individual contributors.
+/*
+ * JBoss, Home of Professional Open Source
+ * Copyright 2010-2014, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * This is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * This software is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this software; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
- * site: http://www.fsf.org.
- ******************************************************************************
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.openqa.selenium.Keys.CONTROL;
+import static org.openqa.selenium.Keys.SHIFT;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
@@ -32,27 +34,21 @@ import java.util.TreeSet;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.math.IntRange;
 import org.jboss.arquillian.graphene.page.Page;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.openqa.selenium.Keys.SHIFT;
-import static org.openqa.selenium.Keys.CONTROL;
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractDataTableTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.page.SelectionPage;
-import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 23051 $
+ * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
 public class TestExtendedDataTableSelection extends AbstractDataTableTest {
 
-    Collection<Integer> selected = new TreeSet<Integer>();
-
-    private final Attributes<ExtendedDataTableAttributes> tableAttributes = getAttributes();
+    private final Collection<Integer> selected = new TreeSet<Integer>();
 
     @Page
     private SelectionPage page;
