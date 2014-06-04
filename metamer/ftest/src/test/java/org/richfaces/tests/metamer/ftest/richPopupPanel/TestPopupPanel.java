@@ -175,16 +175,15 @@ public class TestPopupPanel extends AbstractWebDriverTest {
             "Panel's width should be the same as its minWidth, when its content is smaller.");
 
         popupPanelAttributes.set(PopupPanelAttributes.autosized, Boolean.TRUE);
-        // when @autosized=true, then @min/max-width/height attributes are ignored
+        popupPanelAttributes.set(PopupPanelAttributes.minWidth, 20);
+        popupPanelAttributes.set(PopupPanelAttributes.minHeight, 20);
+        popupPanelAttributes.set(PopupPanelAttributes.maxWidth, 1000);
+        popupPanelAttributes.set(PopupPanelAttributes.maxHeight, 1000);
         openPopupPanel();
         assertEquals(panel.advanced().getLocations().getWidth(),
             contentWidth + panelPadding,
             tolerance,
             "Panel's width should be autosized to content.");
-        assertTrue(panel.advanced().getLocations().getWidth() < Integer.valueOf(popupPanelAttributes.get(PopupPanelAttributes.minWidth)).intValue(),
-            "In this case panel's width should be lesser than its @minWidth when @autosized=true");
-        assertTrue(panel.advanced().getLocations().getHeight() > Integer.valueOf(popupPanelAttributes.get(PopupPanelAttributes.maxHeight)).intValue(),
-            "In this case panel's height should be greater than its @maxHeight when @autosized=true");
     }
 
     @Test
