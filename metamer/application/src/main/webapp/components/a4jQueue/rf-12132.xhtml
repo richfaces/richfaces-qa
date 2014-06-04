@@ -50,7 +50,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <li>Starting from now no further ajax requests are possible, because queue waits for previous submit results.</li>
             </ol>
             <a4j:queue />
-            <h:inputText value="#{a4jButtonBean.input}"/>
+            <h:inputText id="input" value="#{a4jButtonBean.input}" size="50"/>
             <br/>
             <h:outputLabel for="output" value="output (input after upperCasesAction): "/>
             <h:outputText id="output" value="#{a4jButtonBean.input2}"/>
