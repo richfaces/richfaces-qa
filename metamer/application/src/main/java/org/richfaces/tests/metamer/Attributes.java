@@ -64,11 +64,12 @@ import org.richfaces.tests.metamer.bean.RichBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Lists;
+
 /**
  * Representation of all attributes of a JSF component or behavior.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22596 $
  */
 public final class Attributes implements Map<String, Attribute>, Serializable {
 
@@ -102,10 +103,8 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
         logger.debug("creating attributes map for " + componentClass);
 
         if (!loadFromClass && richfacesAttributes == null) {
-            // load a4j components
-            loadRichFacesComponents("richfaces-a4j", false);
-            // load rich components (using regex), second param is true in order to use exact regex match
-            loadRichFacesComponents(".*richfaces[^/]+jar.*", true);
+            // load all components (using regex)
+            loadRichFacesComponents();
         }
 
         if (!loadFromClass && richfacesAttributes.containsKey(componentClass)) {
@@ -497,15 +496,15 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
         // if no select options for "actionListener" are defined in property file and it is an EL expression
         if (!hasSelectOptions("actionListener") && isStringEL(listener)) {
             method = getExpressionFactory().createMethodExpression(elContext, listener, void.class,
-                new Class[] { ActionEvent.class });
-            method.invoke(elContext, new Object[] { event });
+                new Class[]{ ActionEvent.class });
+            method.invoke(elContext, new Object[]{ event });
         }
 
         // if select options for "actionListener" are defined in property file
         if (hasSelectOptions("actionListener")) {
             method = getExpressionFactory().createMethodExpression(elContext, getMethodEL(listener), void.class,
-                new Class[] { ActionEvent.class });
-            method.invoke(elContext, new Object[] { event });
+                new Class[]{ ActionEvent.class });
+            method.invoke(elContext, new Object[]{ event });
         }
     }
 
@@ -533,15 +532,15 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
         // if no select options for "listener" are defined in property file and it is an EL expression
         if (!hasSelectOptions("listener") && isStringEL(listener)) {
             method = getExpressionFactory().createMethodExpression(elContext, listener, void.class,
-                new Class[] { AjaxBehaviorEvent.class });
-            method.invoke(elContext, new Object[] { event });
+                new Class[]{ AjaxBehaviorEvent.class });
+            method.invoke(elContext, new Object[]{ event });
         }
 
         // if select options for "listener" are defined in property file
         if (hasSelectOptions("listener")) {
             method = getExpressionFactory().createMethodExpression(elContext, getMethodEL(listener), void.class,
-                new Class[] { AjaxBehaviorEvent.class });
-            method.invoke(elContext, new Object[] { event });
+                new Class[]{ AjaxBehaviorEvent.class });
+            method.invoke(elContext, new Object[]{ event });
         }
     }
 
@@ -635,12 +634,9 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     }
 
     /**
-     * Method for loading RF 4 and RF 5 components based on the na of a file to search or a regex
-     *
-     * @param urlPathPartOrRegex String name of a jar file to be searched, can be a regex
-     * @param useRegexMatch Using true will result in a .matches(regex) whilst false will check for .contains()
+     * Method for loading RF 4.5 components
      */
-    private void loadRichFacesComponents(String urlPathPartOrRegex, Boolean useRegexMatch) {
+    private void loadRichFacesComponents() {
         if (richfacesAttributes == null) {
             richfacesAttributes = new HashMap<Class<?>, List<Attribute>>();
         }
@@ -648,69 +644,51 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
         try {
             ClassLoader cl = UIStatus.class.getClassLoader();
             Enumeration<URL> fileUrls = cl.getResources("META-INF/faces-config.xml");
-            URL configFile = null;
+            List<URL> configFiles = Lists.newArrayList();
 
             while (fileUrls.hasMoreElements()) {
                 URL url = fileUrls.nextElement();
-                if (useRegexMatch) {
-                    if (url.getPath().matches(urlPathPartOrRegex)) {
-                        configFile = url;
-                    }
-                } else {
-                    if (url.getPath().contains(urlPathPartOrRegex)) {
-                        configFile = url;
-                    }
+                if (url.getPath().matches(".*richfaces.*")) {
+                    configFiles.add(url);
                 }
-
             }
-
             JAXBContext context = JAXBContext.newInstance(FacesConfigHolder.class);
-            FacesConfigHolder facesConfigHolder = (FacesConfigHolder) context.createUnmarshaller().unmarshal(configFile);
-            List<Component> components = facesConfigHolder.getComponents();
-            List<Behavior> behaviors = facesConfigHolder.getBehaviors();
-
-            for (Component c : components) {
-                if (c.getAttributes() == null) {
-                    continue;
-                }
-
-                // remove hidden attributes
-                Iterator<Attribute> i = c.getAttributes().iterator();
-                while (i.hasNext()) {
-                    Attribute a = i.next();
-                    if (a.isHidden() || "id".equals(a.getName()) || "binding".equals(a.getName())) {
-                        i.remove();
+            FacesConfigHolder facesConfigHolder;
+            for (URL configFile : configFiles) {
+                facesConfigHolder = (FacesConfigHolder) context.createUnmarshaller().unmarshal(configFile);
+                for (Component c : facesConfigHolder.getComponents()) {
+                    if (c.getAttributes() == null) {
+                        continue;
                     }
+                    removeHiddenAttributes(c.getAttributes());
+                    richfacesAttributes.put(c.getComponentClass(), c.getAttributes());
+                    logger.debug("attributes for component " + c.getComponentClass().getName() + " loaded");
                 }
 
-                richfacesAttributes.put(c.getComponentClass(), c.getAttributes());
-                logger.debug("attributes for component " + c.getComponentClass().getName() + " loaded");
-            }
-
-            for (Behavior b : behaviors) {
-                if (b.getAttributes() == null) {
-                    continue;
-                }
-
-                // remove hidden attributes
-                Iterator<Attribute> i = b.getAttributes().iterator();
-                while (i.hasNext()) {
-                    Attribute a = i.next();
-                    if (a.isHidden() || "id".equals(a.getName()) || "binding".equals(a.getName())) {
-                        i.remove();
+                for (Behavior b : facesConfigHolder.getBehaviors()) {
+                    if (b.getAttributes() == null) {
+                        continue;
                     }
+                    removeHiddenAttributes(b.getAttributes());
+                    richfacesAttributes.put(b.getBehaviorClass(), b.getAttributes());
+                    logger.debug("attributes for behavior " + b.getBehaviorClass().getName() + " loaded");
                 }
-
-                richfacesAttributes.put(b.getBehaviorClass(), b.getAttributes());
-                logger.debug("attributes for behavior " + b.getBehaviorClass().getName() + " loaded");
             }
-
         } catch (IOException ex) {
             logger.error("Input/output error.", ex);
         } catch (JAXBException ex) {
             logger.error("XML reading error.", ex);
         }
+    }
 
+    private void removeHiddenAttributes(List<Attribute> list) {
+        Iterator<Attribute> i = list.iterator();
+        while (i.hasNext()) {
+            Attribute a = i.next();
+            if (a.isHidden() || "id".equals(a.getName()) || "binding".equals(a.getName())) {
+                i.remove();
+            }
+        }
     }
 
     @XmlRootElement(name = "faces-config", namespace = "http://java.sun.com/xml/ns/javaee")
