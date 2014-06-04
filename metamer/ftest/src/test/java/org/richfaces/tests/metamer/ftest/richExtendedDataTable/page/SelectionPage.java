@@ -63,12 +63,16 @@ public class SelectionPage {
 
     public void selectRow(int rowIndex, Keys... keys) {
         scrollToPage(rowIndex);
+        String currentSelectionBefore = currentSelection.getText();
         Graphene.guardAjax(table).selectRow(getRowForIndex(rowIndex), keys);
+        Graphene.waitAjax().until().element(currentSelection).text().not().equalTo(currentSelectionBefore);
     }
 
     public void deselectRow(int rowIndex, Keys... keys) {
         scrollToPage(rowIndex);
+        String currentSelectionBefore = currentSelection.getText();
         Graphene.guardAjax(table).deselectRow(getRowForIndex(rowIndex), keys);
+        Graphene.waitAjax().until().element(currentSelection).text().not().equalTo(currentSelectionBefore);
     }
 
     private void scrollToPage(int rowIndex) {
