@@ -648,7 +648,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
             while (fileUrls.hasMoreElements()) {
                 URL url = fileUrls.nextElement();
-                if (url.getPath().matches(".*richfaces.*")) {
+                if (url.getPath().matches(".*richfaces[^/]+jar.*")) {
                     configFiles.add(url);
                 }
             }
