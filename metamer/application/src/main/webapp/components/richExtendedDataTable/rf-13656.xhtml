@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich">
+    <f:view contentType="text/html">
+        <h:head>
+            <title>RF-13656</title>
+        </h:head>
+        <h:body>
+            <h:panelGrid>
+                <p>Reproducer for <a href="https://issues.jboss.org/browse/RF-13656">RF-13656 Table collapse after tab change</a>
+                <ul>
+                    <li>Tab panel contains two tabs with same EDT (each with 10 lines).</li>
+                    <li>Switch to second tab and the table is rendered wrong (no lines visible).</li>
+                    <li>Switch to first tab and then the second tab - table is rendered correctly.</li>
+                </ul>
+                </p>
+                <h:form>
+                    <rich:tabPanel>
+                        <rich:tab name="First">
+                            <rich:extendedDataTable id="edt1" value="#{model.capitals}" rows="10" var="capital">
+                                <rich:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Label" />
+                                    </f:facet>
+                                    <h:outputText value="#{capital.state}" />
+                                </rich:column>
+                            </rich:extendedDataTable>
+                        </rich:tab>
+                        <rich:tab name="Second">
+                            <rich:extendedDataTable id="edt2" value="#{model.capitals}" rows="10" var="capital">
+                                <rich:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Label" />
+                                    </f:facet>
+                                    <h:outputText value="#{capital.state}" />
+                                </rich:column>
+                            </rich:extendedDataTable>
+                        </rich:tab>
+                    </rich:tabPanel>
+                </h:form>
+            </h:panelGrid>
+        </h:body>
+    </f:view>
+</html>
