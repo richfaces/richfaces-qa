@@ -40,7 +40,7 @@ public class TestDataGridScrollerInTableFooter extends AbstractDataGridScrollerT
     private RichFacesDataScroller dataScroller2;
 
     @Override
-    public DataScroller getDataScroller() {
+    public RichFacesDataScroller getDataScroller() {
         return dataScroller2;
     }
 
