@@ -25,25 +25,20 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton.FIRST;
-import static org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton.LAST;
 
 import java.net.URL;
 
 import javax.xml.bind.JAXBException;
 
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.fragment.dataScroller.DataScroller;
+import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
 import org.richfaces.tests.metamer.ftest.richDataGrid.fragment.GridWithStates;
-import org.testng.annotations.BeforeMethod;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22499 $
  */
 public abstract class AbstractDataGridScrollerTest extends AbstractDataGridTest {
-
-    private Integer elements = 7;
 
     @FindBy(css = ".rf-dg[id$=richDataGrid]")
     private GridWithStates dataGrid;
@@ -55,22 +50,18 @@ public abstract class AbstractDataGridScrollerTest extends AbstractDataGridTest 
 
     private int[] testPages;
 
-    public abstract DataScroller getDataScroller();
+    public abstract RichFacesDataScroller getDataScroller();
 
     public AbstractDataGridScrollerTest() throws JAXBException {
         super();
     }
 
-    @BeforeMethod
     public void setupDataScroller() {
         if (getDataScroller().hasPages()) {
-            getDataScroller().switchTo(LAST);
-            initializeTestedPages(getDataScroller().getActivePageNumber());
-            getDataScroller().switchTo(FIRST);
+            initializeTestedPages(getDataScroller().advanced().getLastVisiblePageNumber());
         } else {
             initializeTestedPages(0);
         }
-
     }
 
     @Override
@@ -79,17 +70,33 @@ public abstract class AbstractDataGridScrollerTest extends AbstractDataGridTest 
     }
 
     public void testColumnsAttribute() {
+        dataGridAttributes.set(DataGridAttributes.elements, 7);
+        dataGridAttributes.set(DataGridAttributes.first, 0);
+        elements = 7;
+        first = 0;
+        setupDataScroller();
         testNumberedPages();
+        dataGridAttributes.set(DataGridAttributes.elements, 0);
     }
 
     public void testElementsAttribute() {
+        dataGridAttributes.set(DataGridAttributes.columns, 3);
+        dataGridAttributes.set(DataGridAttributes.first, 0);
+        first = 0;
+        columns = 3;
+        setupDataScroller();
         testNumberedPages();
     }
 
     public void testFirstAttributeDoesntInfluentScroller() {
         // the attribute for component was already set, now verify that this attribute doesn't influent rendering (it
         // means dataGrid with scroller ignores this attribute, it means it is always equal to zero)
+        dataGridAttributes.set(DataGridAttributes.columns, 3);
+        dataGridAttributes.set(DataGridAttributes.elements, 7);
         first = 0;
+        columns = 3;
+        elements = 7;
+        setupDataScroller();
         testNumberedPages();
     }
 
@@ -119,9 +126,10 @@ public abstract class AbstractDataGridScrollerTest extends AbstractDataGridTest 
     protected void verifyAfterScrolling() {
         if (getDataScroller().hasPages()) {
             page = getDataScroller().getActivePageNumber();
-            getDataScroller().switchTo(LAST);
-            lastPage = getDataScroller().getActivePageNumber();
-            getDataScroller().switchTo(page);
+            lastPage = getDataScroller().advanced().getLastVisiblePageNumber();
+        } else {
+            page = 1;
+            lastPage = 1;
         }
         verifyGrid();
     }

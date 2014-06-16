@@ -46,7 +46,7 @@ public class TestDataGridScrollerOutsideTable extends AbstractDataGridScrollerTe
     private RichFacesDataScroller dataScroller1;
 
     @Override
-    public DataScroller getDataScroller() {
+    public RichFacesDataScroller getDataScroller() {
         return dataScroller1;
     }
 
