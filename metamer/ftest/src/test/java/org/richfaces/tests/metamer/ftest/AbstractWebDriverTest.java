@@ -192,7 +192,9 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     @AfterMethod(alwaysRun = true)
     public void unconfigure() {
-        currentConfiguration.unconfigure();
+        if (currentConfiguration != null) {
+            currentConfiguration.unconfigure();
+        }
     }
 
     /**
