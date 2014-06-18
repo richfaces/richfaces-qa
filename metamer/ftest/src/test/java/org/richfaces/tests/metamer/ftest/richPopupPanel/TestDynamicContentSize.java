@@ -55,8 +55,8 @@ public class TestDynamicContentSize extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richPopupPanel/rf-13655.xhtml");
     }
 
-    @Test//(groups = "Future")
-    //@IssueTracking("https://issues.jboss.org/browse/RF-13655")
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13655")
     public void testAutosize() {
         callPopupButton.click();
         Graphene.waitGui().until().element(popup.advanced().getRootElement()).is().visible();
