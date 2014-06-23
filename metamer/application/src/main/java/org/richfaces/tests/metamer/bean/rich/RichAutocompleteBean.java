@@ -21,11 +21,9 @@
  */
 package org.richfaces.tests.metamer.bean.rich;
 
-import com.google.common.collect.Lists;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.LinkedHashSet;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -41,6 +39,7 @@ import org.richfaces.tests.metamer.model.Capital;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 /**
  * Managed bean for rich:autocomplete.
  * http://community.jboss.org/wiki/richfacesautocompletecomponentbehavior
@@ -55,7 +54,7 @@ public class RichAutocompleteBean extends StringInputValidationBeanImpl implemen
 
     private static final long serialVersionUID = -1L;
     private static final Logger logger = LoggerFactory.getLogger(RichAutocompleteBean.class);
-    private static final List<Capital> capitals = Model.unmarshallCapitals();
+    private static final Collection<Capital> capitals = new LinkedHashSet<Capital>(Model.unmarshallCapitals());
     private Attributes ajaxAttributes;
     private String randomString;
 
@@ -93,8 +92,8 @@ public class RichAutocompleteBean extends StringInputValidationBeanImpl implemen
         this.ajaxAttributes = ajaxAttributes;
     }
 
-    public List<String> autocomplete(String prefix) {
-        ArrayList<String> result = new ArrayList<String>();
+    public Collection<String> autocomplete(String prefix) {
+        Collection<String> result = new LinkedHashSet<String>();
         if (prefix == null || prefix.isEmpty()) {
             for (Capital capital : capitals) {
                 result.add(capital.getState());
@@ -119,12 +118,12 @@ public class RichAutocompleteBean extends StringInputValidationBeanImpl implemen
      * @param prefix
      * @return List<Capital> with matching prefix
      */
-    public List<Capital> autocompleteCapital(String prefix) {
-        ArrayList<Capital> result;
+    public Collection<Capital> autocompleteCapital(String prefix) {
+        Collection<Capital> result;
         if (prefix == null || prefix.isEmpty()) {
-            result = Lists.newArrayList(capitals);
+            result = new LinkedHashSet<Capital>(capitals);
         } else {
-            result = Lists.newArrayList();
+            result = new LinkedHashSet<Capital>();
             for (Capital capital : capitals) {
                 if (capital.getState() != null && capital.getState().toLowerCase().startsWith(prefix.toLowerCase())) {
                     result.add(capital);
@@ -135,7 +134,7 @@ public class RichAutocompleteBean extends StringInputValidationBeanImpl implemen
         return result;
     }
 
-    public List<Capital> getCapitals() {
+    public Collection<Capital> getCapitals() {
         return capitals;
     }
 

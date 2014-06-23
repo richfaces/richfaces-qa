@@ -22,9 +22,9 @@
 package org.richfaces.tests.metamer.bean.rich;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -55,8 +55,8 @@ public class RichCollapsibleSubTableBean implements Serializable {
     private static Logger logger;
     private Attributes attributes;
     @ManagedProperty("#{model.employees}")
-    private List<Employee> employees;
-    private List<List<Employee>> lists;
+    private Collection<Employee> employees;
+    private Collection<Collection<Employee>> lists;
     // true = model, false = empty table
     private boolean state;
     // facets
@@ -74,7 +74,7 @@ public class RichCollapsibleSubTableBean implements Serializable {
     // filtering
     private Map<String, Object> filtering = new HashMap<String, Object>();
     // expanded
-    private Map<List<Employee>, Boolean> expanded = new HashMap<List<Employee>, Boolean>();
+    private Map<Collection<Employee>, Boolean> expanded = new HashMap<Collection<Employee>, Boolean>();
 
     // expanded state for employee detail (for RF-11656)
     private Map<Employee, Boolean> expandedEmployee = new HashMap<Employee, Boolean>();
@@ -105,8 +105,8 @@ public class RichCollapsibleSubTableBean implements Serializable {
         attributes.remove("var");
         attributes.remove("value");
 
-        List<Employee> men = new ArrayList<Employee>();
-        List<Employee> women = new ArrayList<Employee>();
+        LinkedHashSet<Employee> men = new LinkedHashSet<Employee>();
+        LinkedHashSet<Employee> women = new LinkedHashSet<Employee>();
 
         for (Employee e : employees) {
             if (e.getSex() == Sex.MALE) {
@@ -116,7 +116,7 @@ public class RichCollapsibleSubTableBean implements Serializable {
             }
         }
 
-        lists = new ArrayList<List<Employee>>();
+        lists = new LinkedHashSet<Collection<Employee>>();
         lists.add(men);
         lists.add(women);
 
@@ -134,19 +134,19 @@ public class RichCollapsibleSubTableBean implements Serializable {
         this.attributes = attributes;
     }
 
-    public List<Employee> getEmployees() {
+    public Collection<Employee> getEmployees() {
         return employees;
     }
 
-    public void setEmployees(List<Employee> employees) {
+    public void setEmployees(Collection<Employee> employees) {
         this.employees = employees;
     }
 
-    public List<List<Employee>> getLists() {
+    public Collection<Collection<Employee>> getLists() {
         return lists;
     }
 
-    public void setLists(List<List<Employee>> lists) {
+    public void setLists(Collection<Collection<Employee>> lists) {
         this.lists = lists;
     }
 
@@ -170,7 +170,7 @@ public class RichCollapsibleSubTableBean implements Serializable {
         return filtering;
     }
 
-    public Map<List<Employee>, Boolean> getExpanded() {
+    public Map<Collection<Employee>, Boolean> getExpanded() {
         return expanded;
     }
 
@@ -180,5 +180,13 @@ public class RichCollapsibleSubTableBean implements Serializable {
 
     public void setExpandedEmployee(Map<Employee, Boolean> expandedEmployee) {
         this.expandedEmployee = expandedEmployee;
+    }
+
+    public boolean isMaleList(Collection<Employee> collection) {
+        return collection.toArray(new Employee[]{})[0].getSex().equals(Sex.MALE);
+    }
+
+    public boolean isMaleList(LinkedHashSet<Employee> collection) {
+        return collection.toArray(new Employee[]{})[0].getSex().equals(Sex.MALE);
     }
 }

@@ -24,7 +24,9 @@ package org.richfaces.tests.metamer.bean;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -54,8 +56,8 @@ import org.richfaces.tests.metamer.model.tree.CompactDiscXmlDescriptor;
 public class Model implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private List<Capital> capitalsList;
-    private List<Employee> employeesList;
+    private Collection<Capital> capitalsList;
+    private Collection<Employee> employeesList;
     private Set<String> jobTitles;
     private List<SelectItem> jobTitlesSelectItems;
     private List<CompactDiscXmlDescriptor> compactDiscList;
@@ -74,9 +76,9 @@ public class Model implements Serializable {
      *
      * @return list of US states and their capitals
      */
-    public synchronized List<Capital> getCapitals() {
+    public synchronized Collection<Capital> getCapitals() {
         if (capitalsList == null) {
-            capitalsList = unmarshallCapitals();
+            capitalsList = new LinkedHashSet<Capital>(unmarshallCapitals());
         }
 
         return capitalsList;
@@ -87,9 +89,9 @@ public class Model implements Serializable {
      *
      * @return list of employees
      */
-    public synchronized List<Employee> getEmployees() {
+    public synchronized Collection<Employee> getEmployees() {
         if (employeesList == null) {
-            employeesList = unmarshallEmployees();
+            employeesList = new LinkedHashSet<Employee>(unmarshallEmployees());
         }
 
         return employeesList;
@@ -150,6 +152,7 @@ public class Model implements Serializable {
     }
 
     private interface ListHolder<T> {
+
         List<T> getList();
 
         void setList(List<T> list);

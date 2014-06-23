@@ -68,7 +68,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                 <rich:column id="columnSubTable" colspan="3">
                     <rich:collapsibleSubTableToggler id="subTableTC" for="richSubTable"/>
-                    <h:outputText value="#{list[0].sex == 'MALE' ? 'Men' : 'Women'}" />
+                    <h:outputText value="#{richSubTableBean.isMaleList(list) ? 'Men' : 'Women'}" />
                 </rich:column>
 
                 <rich:collapsibleSubTable id="richSubTable"

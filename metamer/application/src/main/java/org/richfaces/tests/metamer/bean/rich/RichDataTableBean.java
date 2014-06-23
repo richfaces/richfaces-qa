@@ -22,10 +22,10 @@
 package org.richfaces.tests.metamer.bean.rich;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -184,7 +184,7 @@ public class RichDataTableBean implements Serializable {
     public Collection<Object> getEmptyModel() {
        setEmptyModelCalled(true);
        logger.info("empty model called");
-       return new ArrayList<Object>();
+       return new LinkedHashSet<Object>();
     }
 
     private class CustomColumnSortingMap extends ColumnSortingMap {

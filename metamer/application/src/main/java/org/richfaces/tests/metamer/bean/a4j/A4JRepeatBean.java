@@ -24,6 +24,8 @@ package org.richfaces.tests.metamer.bean.a4j;
 import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -49,9 +51,9 @@ public class A4JRepeatBean implements Serializable {
     private static final int MATRIX_DIMENSION = 4;
     private static Logger logger;
     private Attributes attributes;
-    private List<Data> dataList;
+    private Collection<Data> dataList;
     private Data selectedDataItem = null;
-    private List<MatrixRow> matrixRows;
+    private Collection<MatrixRow> matrixRows;
 
     public static final class MatrixCell implements Serializable {
 
@@ -111,6 +113,28 @@ public class A4JRepeatBean implements Serializable {
         public void setText(String text) {
             this.text = text;
         }
+
+        @Override
+        public int hashCode() {
+            int hash = 5;
+            hash = 97 * hash + (this.text != null ? this.text.hashCode() : 0);
+            return hash;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            final Data other = (Data) obj;
+            if ((this.text == null) ? (other.text != null) : !this.text.equals(other.text)) {
+                return false;
+            }
+            return true;
+        }
     }
 
     /**
@@ -122,7 +146,7 @@ public class A4JRepeatBean implements Serializable {
         logger.debug("initializing bean " + getClass().getName());
 
         // initialize model for page simple.xhtml
-        dataList = new ArrayList<Data>();
+        dataList = new LinkedHashSet<Data>();
         for (int i = 0; i < 20; i++) {
             Data data = new Data();
             data.setText(MessageFormat.format("Item {0}", i));
@@ -175,7 +199,7 @@ public class A4JRepeatBean implements Serializable {
     /**
      * @return the data
      */
-    public List<Data> getDataList() {
+    public Collection<Data> getDataList() {
         return dataList;
     }
 
@@ -193,7 +217,7 @@ public class A4JRepeatBean implements Serializable {
         this.selectedDataItem = selectedDataItem;
     }
 
-    public List<MatrixRow> getMatrixRows() {
+    public Collection<MatrixRow> getMatrixRows() {
         return matrixRows;
     }
 }

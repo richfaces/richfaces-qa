@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-
 package org.richfaces.tests.metamer.model;
 
 import java.awt.Color;
@@ -27,29 +26,25 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-/**
- * Java bean representing an employee.
- *
- * @author Exadel, <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 21299 $
- */
 @XmlRootElement(name = "employeee")
 public class Employee implements Serializable {
 
     public enum Sex {
+
         FEMALE, MALE
     }
 
     private static final long serialVersionUID = -1L;
-    private static String[] phoneNames = {"Cell phone", "Work phone", "Home phone"};
+    private static String[] phoneNames = { "Cell phone", "Work phone", "Home phone" };
     private String name;
     private String title;
-    private List <Company> companies;
+    private List<Company> companies;
     private List<String[]> phones = new ArrayList<String[]>();
     private Date birthdate;
     private Color favoriteColor;
@@ -89,7 +84,7 @@ public class Employee implements Serializable {
 
     @XmlElementWrapper(name = "companies")
     @XmlElement(name = "company")
-    public List <Company> getCompanies() {
+    public List<Company> getCompanies() {
         return companies;
     }
 
@@ -174,15 +169,22 @@ public class Employee implements Serializable {
         return name.equals(employee.getName())
             && title.equals(employee.getTitle())
             && (companies == null ? employee.getCompanies() == null : companies
-                .equals(employee.getCompanies()));
+            .equals(employee.getCompanies()));
     }
 
     @Override
     public int hashCode() {
-        int hash = 1;
-        hash = hash * 17 + name.hashCode();
-        hash = hash * 17 + title.hashCode();
-        hash = hash * 17 + (companies == null ? 0 : companies.hashCode());
+        int hash = 5;
+        hash = 17 * hash + (this.name != null ? this.name.hashCode() : 0);
+        hash = 17 * hash + (this.title != null ? this.title.hashCode() : 0);
+        hash = 17 * hash + (this.companies != null ? this.companies.hashCode() : 0);
+        hash = 17 * hash + (this.phones != null ? this.phones.hashCode() : 0);
+        hash = 17 * hash + (this.birthdate != null ? this.birthdate.hashCode() : 0);
+        hash = 17 * hash + (this.favoriteColor != null ? this.favoriteColor.hashCode() : 0);
+        hash = 17 * hash + this.numberOfKids;
+        hash = 17 * hash + (this.smoker ? 1 : 0);
+        hash = 17 * hash + (this.sex != null ? this.sex.hashCode() : 0);
+        hash = 17 * hash + (this.email != null ? this.email.hashCode() : 0);
         return hash;
     }
 

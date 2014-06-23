@@ -158,7 +158,7 @@ public class RichTreeBean implements Serializable {
         return richfacesTreeNodeRoot;
     }
 
-    public List<SwingTreeNode<Labeled>> getSwingTreeNodeRoot() {
+    public Collection<SwingTreeNode<Labeled>> getSwingTreeNodeRoot() {
         if (swingTreeNodeRoot == null) {
             List<SwingTreeNode<Labeled>> swingTreeNodeList = (List<SwingTreeNode<Labeled>>) (List<?>) buildTree(SwingTreeNode.createFactory());
             swingTreeNodeRoot = swingTreeNodeList;
@@ -216,8 +216,8 @@ public class RichTreeBean implements Serializable {
         }
     }
 
-    private List<TreeNodeWithContent<Labeled>> buildTree(TreeNodeWithContentFactory<TreeNodeWithContent<Labeled>> treeNodeFactory) {
-        List<TreeNodeWithContent<Labeled>> firstLevelNodes = new ArrayList<TreeNodeWithContent<Labeled>>();
+    private Collection<TreeNodeWithContent<Labeled>> buildTree(TreeNodeWithContentFactory<TreeNodeWithContent<Labeled>> treeNodeFactory) {
+        Collection<TreeNodeWithContent<Labeled>> firstLevelNodes = new ArrayList<TreeNodeWithContent<Labeled>>();
         for(State state : companiesCache.keySet()) {
             TreeNodeWithContent<Labeled> stateTreeNode = treeNodeFactory.createTreeNode(null, state);
             stateTreeNode.setType("country");
