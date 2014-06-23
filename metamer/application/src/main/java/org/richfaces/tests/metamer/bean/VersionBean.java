@@ -21,9 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.bean;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.ProjectStage;
 import javax.faces.bean.ApplicationScoped;
@@ -31,8 +35,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
-import org.richfaces.log.RichfacesLogger;
 import org.richfaces.log.Logger;
+import org.richfaces.log.RichfacesLogger;
 
 /**
  * Vendor and version information for project Metamer.
@@ -142,29 +146,15 @@ public class VersionBean {
     }
 
     public String getJsfVersion() {
-
         if (jsfVersion != null) {
             return jsfVersion;
         }
 
         FacesContext facesContext = FacesContext.getCurrentInstance();
-
         if (facesContext == null) {
             return UNKNOWN_JSF;
         }
-
-        jsfVersion = UNKNOWN_JSF;
-
-        Class<?> applicationClass = facesContext.getApplication().getClass();
-        Package pack = applicationClass.getPackage();
-
-        if (pack.getImplementationTitle() != null) {
-            jsfVersion = pack.getImplementationTitle();
-            if (pack.getImplementationVersion() != null) {
-                jsfVersion += " " + pack.getImplementationVersion();
-            }
-        }
-
+        jsfVersion = new JsfVersionFinder().getVersionString();
         return jsfVersion;
     }
 
@@ -173,7 +163,7 @@ public class VersionBean {
 
         if (request instanceof HttpServletRequest) {
             // small hack to get it working correctly in portal env
-            return ((HttpServletRequest)request).getHeader("user-agent");
+            return ((HttpServletRequest) request).getHeader("user-agent");
         }
 
         return "Unknown";
@@ -326,5 +316,56 @@ public class VersionBean {
     @Override
     public String toString() {
         return getFullVersion();
+    }
+
+    /**
+     * Modification of org.richfaces.application.JsfVersionInspector
+     */
+    private class JsfVersionFinder {
+
+        private String extractVersion(String string) {
+            Pattern pattern = Pattern.compile("([0-9][0-9\\.\\-a-z]*)");
+            Matcher matcher = pattern.matcher(string);
+            if (matcher.find()) {
+                return matcher.group();
+            } else {
+                return UNKNOWN_JSF;
+            }
+        }
+
+        private String getLogStringsImplementationVersion() {
+            Properties prop = new Properties();
+            InputStream in = getClass().getResourceAsStream("/com/sun/faces/LogStrings.properties");
+            try {
+                prop.load(in);
+                in.close();
+            } catch (IOException e) {
+                throw new RuntimeException("Unable to load LogStrings.properties file to determine the mojarra version", e);
+            }
+            String jbossImplString = prop.getProperty("jsf.config.listener.version");
+
+            return extractVersion(jbossImplString);
+        }
+
+        private String getPackageImplementationVersion() {
+            return FacesContext.getCurrentInstance().getClass().getPackage().getImplementationVersion();
+        }
+
+        public String getVersionString() {
+            if (isMojarra()) {
+                return "Mojarra " + getLogStringsImplementationVersion();
+            } else {
+                return "MyFaces " + getPackageImplementationVersion();
+            }
+        }
+
+        boolean isMojarra() {
+            try {
+                this.getClass().getClassLoader().loadClass("com.sun.faces.context.FacesContextImpl");
+            } catch (ClassNotFoundException e) {
+                return false;
+            }
+            return true;
+        }
     }
 }
