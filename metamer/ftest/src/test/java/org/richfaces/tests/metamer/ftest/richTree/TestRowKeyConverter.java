@@ -44,12 +44,14 @@ public class TestRowKeyConverter extends AbstractTreeTest {
     @FindBy(className = "rf-trn-hnd")
     private WebElement toggle;
 
+    private final String[] converterPages = new String[]{ "rowKeyConverterSwingTreeNode", "rowKeyConverterRichFacesTreeNode", "rowKeyConverterRichFacesTreeDataModel" };
+
     public int getNumberOfExpandedNodes() {
         return expanded.size();
     }
 
     @Test(groups = "smoke")
-    @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "richFacesTreeNodes")
+    @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "converterPages")
     public void testToggle() {
         toggle();
         Assert.assertEquals(getNumberOfExpandedNodes(), 1, "Number of expanded nodes after expanding one node doesn't match.");
