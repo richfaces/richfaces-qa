@@ -21,14 +21,12 @@
  */
 package org.richfaces.demo.push;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.TimeZone;
-
+import org.joda.time.DateTime;
 import org.richfaces.application.push.MessageException;
 import org.richfaces.application.push.TopicKey;
 import org.richfaces.application.push.TopicsContext;
 import org.richfaces.tests.metamer.Message;
+import org.richfaces.tests.metamer.bean.a4j.A4JPushBean;
 
 /**
  * Sends message to topic using TopicsContext.
@@ -51,12 +49,7 @@ public class TopicsContextMessageProducer implements MessageProducer {
         try {
             TopicKey topicKey = new TopicKey(PUSH_TOPICS_CONTEXT_TOPIC, "xxx");
             TopicsContext topicsContext = TopicsContext.lookup();
-
-            DateFormat dateFormat = DateFormat.getDateTimeInstance();
-            dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-            String dateMessage = dateFormat.format(new Date());
-
-            topicsContext.publish(topicKey, new Message(text, author, dateMessage));
+            topicsContext.publish(topicKey, new Message(text, author, new DateTime().toString(A4JPushBean.DATE_PATTERN)));
         } catch (MessageException e) {
             if (!e.getMessage().matches("^Topic .* not found$")) {
                 throw e;
