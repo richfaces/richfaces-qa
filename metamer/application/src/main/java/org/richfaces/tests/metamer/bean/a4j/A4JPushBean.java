@@ -24,7 +24,6 @@ package org.richfaces.tests.metamer.bean.a4j;
 import static org.richfaces.demo.push.TopicsContextMessageProducer.PUSH_TOPICS_CONTEXT_TOPIC;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -178,8 +177,8 @@ public class A4JPushBean implements Serializable {
 
     public void send() {
         try {
+            Message msg = new Message(message, username, new DateTime().toString(DATE_PATTERN));
             LOGGER.debug("sending message \"" + message + "\" by user " + username);
-            Message msg = new Message(message, username, new Date().toString());
             getTopicsContext().publish(new TopicKey(PUSH_TOPICS_CONTEXT_TOPIC, METAMER_SUBTOPIC), msg);
         } catch (MessageException messageException) {
             LOGGER.error("Could not send message \"" + message + "\" by user " + username + ".", messageException);
