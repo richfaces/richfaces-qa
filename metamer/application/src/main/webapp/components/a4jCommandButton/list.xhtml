@@ -1,50 +1,54 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
-<!--
-JBoss, Home of Professional Open Source
-Copyright 2010-2014, Red Hat, Inc. and individual contributors
-by the @authors tag. See the copyright.txt in the distribution for a
-full listing of individual contributors.
-
-This is free software; you can redistribute it and/or modify it
-under the terms of the GNU Lesser General Public License as
-published by the Free Software Foundation; either version 2.1 of
-the License, or (at your option) any later version.
-
-This software is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public
-License along with this software; if not, write to the Free
-Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    <!--
+    JBoss, Home of Professional Open Source
+    Copyright 2010-2014, Red Hat, Inc. and individual contributors
+    by the @authors tag. See the copyright.txt in the distribution for a
+    full listing of individual contributors.
+    
+    This is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as
+    published by the Free Software Foundation; either version 2.1 of
+    the License, or (at your option) any later version.
+    
+    This software is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    Lesser General Public License for more details.
+    
+    You should have received a copy of the GNU Lesser General Public
+    License along with this software; if not, write to the Free
+    Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+    02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-<ui:composition template="/templates/list.xhtml">
+    <ui:composition template="/templates/list.xhtml">
 
-    <ui:define name="pageTitle">A4J Command Button</ui:define>
+        <ui:define name="pageTitle">A4J Command Button</ui:define>
 
-    <ui:define name="links">
+        <ui:define name="links">
 
-        <metamer:testPageLink id="simple" outcome="simple" value="Simple">
+            <metamer:testPageLink id="simple" outcome="simple" value="Simple">
                 Simple page that contains <b>r:commandButton</b> and input boxes for all its attributes.
-        </metamer:testPageLink>
+            </metamer:testPageLink>
 
-        <metamer:testPageLink id="image" outcome="image" value="Image">
+            <metamer:testPageLink id="image" outcome="image" value="Image">
                 Simple page that contains <b>r:commandButton</b> with image and input boxes for all its attributes.
-        </metamer:testPageLink>
+            </metamer:testPageLink>
 
-        <metamer:testPageLink id="rf13018" outcome="rf13018" value="RF-13018 simulation">
-            Page simulating issue <a href="https://issues.jboss.org/browse/RF-13018">RF-13018</a>  
-        </metamer:testPageLink>
+            <metamer:testPageLink id="rf13018" outcome="rf13018" value="RF-13018 simulation">
+                Page simulating issue <a href="https://issues.jboss.org/browse/RF-13018">RF-13018</a>  
+            </metamer:testPageLink>
 
-    </ui:define>
+            <metamer:testPageLink id="rf-13647" outcome="rf-13647" value="RF-13647 simulation">
+                Page simulating issue <a href="https://issues.jboss.org/browse/RF-13647">RF-13647</a>  
+            </metamer:testPageLink>
 
-</ui:composition>
+        </ui:define>
+
+    </ui:composition>
 
 </html>
