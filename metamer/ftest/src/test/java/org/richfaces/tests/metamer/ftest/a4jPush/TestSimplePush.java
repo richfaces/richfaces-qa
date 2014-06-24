@@ -25,8 +25,6 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-import com.google.common.collect.Lists;
-
 import java.net.URL;
 import java.util.List;
 
@@ -36,8 +34,11 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.bean.a4j.A4JPushBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.Test;
+
+import com.google.common.collect.Lists;
 
 /**
  * Test for simple push example faces/components/a4jPush/simple.xhtml
@@ -49,7 +50,7 @@ public class TestSimplePush extends AbstractWebDriverTest {
     private static final int NUMBER_OF_VALUES = 5;
     private static final int TOLERANCE = 2;// s
     private static final int UPDATE_INTERVAL = 5;// s
-    private static final DateTimeFormatter TIME_PARSER = DateTimeFormat.forPattern("'['MMM d, yyyy HH:mm:ss a']'");
+    private static final DateTimeFormatter TIME_PARSER = DateTimeFormat.forPattern(A4JPushBean.DATE_PATTERN);
 
     @FindBy(css = "div[id$=messagePanel] span.timestamp")
     private WebElement timestamp;
@@ -66,7 +67,7 @@ public class TestSimplePush extends AbstractWebDriverTest {
         Graphene.waitModel().until().element(timestamp).is().present();
         for (int i = 0; i < NUMBER_OF_VALUES; ++i) {
             previousTimeStampText = timestamp.getText();
-            timeStampsString.add(previousTimeStampText);
+            timeStampsString.add(previousTimeStampText.replaceAll("[\\[|\\]]", ""));
             Graphene.waitModel().until().element(timestamp).text().not().equalTo(previousTimeStampText);
         }
 
