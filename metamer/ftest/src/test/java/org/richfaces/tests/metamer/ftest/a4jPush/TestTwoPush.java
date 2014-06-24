@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.a4jPush;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
@@ -44,6 +43,9 @@ import org.testng.annotations.Test;
 import com.google.common.base.Predicate;
 
 public class TestTwoPush extends AbstractWebDriverTest {
+
+    private static final boolean TIME_WILL_NOT_UPDATE = Boolean.FALSE;
+    private static final boolean TIME_WILL_UPDATE = Boolean.TRUE;
 
     private final Attributes<PushAttributes> pushAttributes = getAttributes();
 
@@ -73,20 +75,20 @@ public class TestTwoPush extends AbstractWebDriverTest {
 
     @Test(groups = "smoke")
     public void testBothPushes() {
-        verifyPushUpdate(3, false, page.push1Btn, page.output1);
-        verifyPushUpdate(3, false, page.push2Btn, page.output2);
-        verifyPushUpdate(1, true, page.push1Btn, page.output2);
-        verifyPushUpdate(1, true, page.push2Btn, page.output1);
+        verifyPushUpdate(3, TIME_WILL_UPDATE, page.push1Btn, page.output1);
+        verifyPushUpdate(3, TIME_WILL_UPDATE, page.push2Btn, page.output2);
+        verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.push1Btn, page.output2);
+        verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.push2Btn, page.output1);
         clickPushEnableCheckbox(true);//disable 1st push
-        verifyPushUpdate(3, false, page.push2Btn, page.output2);
-        verifyPushUpdate(3, true, page.push1Btn, page.output1);
-        verifyPushUpdate(1, true, page.push1Btn, page.output2);
-        verifyPushUpdate(1, true, page.push2Btn, page.output1);
+        verifyPushUpdate(3, TIME_WILL_UPDATE, page.push2Btn, page.output2);
+        verifyPushUpdate(3, TIME_WILL_NOT_UPDATE, page.push1Btn, page.output1);
+        verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.push1Btn, page.output2);
+        verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.push2Btn, page.output1);
         clickPushEnableCheckbox(true);//enable 1st push
-        verifyPushUpdate(3, false, page.push2Btn, page.output2);
-        verifyPushUpdate(3, false, page.push1Btn, page.output1);
-        verifyPushUpdate(1, true, page.push1Btn, page.output2);
-        verifyPushUpdate(1, true, page.push2Btn, page.output1);
+        verifyPushUpdate(3, TIME_WILL_UPDATE, page.push2Btn, page.output2);
+        verifyPushUpdate(3, TIME_WILL_UPDATE, page.push1Btn, page.output1);
+        verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.push1Btn, page.output2);
+        verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.push2Btn, page.output1);
     }
 
     @Test
@@ -117,31 +119,24 @@ public class TestTwoPush extends AbstractWebDriverTest {
     public void testPushEnable() {
         clickPushEnableCheckbox(false);// disable push updates
         clickPushEnableCheckbox(true);// enable push updates
-        verifyPushUpdate(5, false, page.push1Btn, page.output1);
+        verifyPushUpdate(5, TIME_WILL_UPDATE, page.push1Btn, page.output1);
     }
 
     @Test
     public void testSimplePushEventReceive() {
-        verifyPushUpdate(5, false, page.push1Btn, page.output1);
+        verifyPushUpdate(5, TIME_WILL_UPDATE, page.push1Btn, page.output1);
     }
 
     /**
      * Verifies, that push component receives or not receives updates after push
      * button is clicked.
      */
-    private void verifyPushUpdate(int numberOfChecks, boolean shouldNotReceiveUpdate, WebElement pushButton, WebElement outputWithTime) {
-        long waitTime = 1200L;
-        DateTime time1, time2;
+    private void verifyPushUpdate(int numberOfChecks, boolean timeWillUpdate, WebElement pushButton, WebElement outputWithTime) {
+        DateTime time1;
         for (int i = 0; i < numberOfChecks; ++i) {
             time1 = getTimeFromOutput(outputWithTime);
-            waiting(waitTime);//wait, so the seconds of output (received date) should increase after button clicked
             MetamerPage.requestTimeChangesWaiting(pushButton).click();
-            time2 = getTimeFromOutput(outputWithTime);
-            if (shouldNotReceiveUpdate) {
-                assertEquals(time2, time1, "Time in output should not change when the push is disabled.");
-            } else {
-                assertTrue(time2.isAfter(time1), "Time should be increasing.");
-            }
+            Graphene.waitAjax().until(new TimeChangePredicate(time1, outputWithTime, timeWillUpdate));
         }
     }
 
@@ -155,7 +150,7 @@ public class TestTwoPush extends AbstractWebDriverTest {
      * Because of https://issues.jboss.org/browse/RF-12096.
      */
     private void waitUntilPushReinits() {
-        new WebDriverWait(driver, 70, 2000)
+        new WebDriverWait(driver, 70, 1000)
             .withMessage("Waiting for push to reinitialize")
             .until(new Predicate<WebDriver>() {
 
@@ -167,5 +162,33 @@ public class TestTwoPush extends AbstractWebDriverTest {
                     return time2.isAfter(time1);
                 }
             });
+    }
+
+    private class TimeChangePredicate implements Predicate<WebDriver> {
+
+        private final WebElement outputWithTime;
+        private final DateTime timeBefore;
+        private final boolean timeWillChange;
+
+        public TimeChangePredicate(DateTime timeBefore, WebElement outputWithTime, boolean timeWillChange) {
+            this.timeBefore = timeBefore;
+            this.outputWithTime = outputWithTime;
+            this.timeWillChange = timeWillChange;
+        }
+
+        @Override
+        public boolean apply(WebDriver t) {
+            if (timeWillChange) {
+                return getTimeFromOutput(outputWithTime).isAfter(timeBefore);
+            }
+            waiting(1000);
+            return getTimeFromOutput(outputWithTime).isEqual(timeBefore);
+        }
+
+        @Override
+        public String toString() {
+            return "time to " + (timeWillChange ? "" : "not ") + "change";
+        }
+
     }
 }
