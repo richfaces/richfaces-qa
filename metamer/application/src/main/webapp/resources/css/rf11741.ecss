@@ -1,0 +1,5 @@
+.shadow{
+    -webkit-box-shadow: 4px 4px 5px '#{richSkin.additionalBackgroundColor}';
+    -moz-box-shadow: 4px 4px 5px '#{richSkin.additionalBackgroundColor}';
+    box-shadow: 4px 4px 5px '#{richSkin.additionalBackgroundColor}';
+}
