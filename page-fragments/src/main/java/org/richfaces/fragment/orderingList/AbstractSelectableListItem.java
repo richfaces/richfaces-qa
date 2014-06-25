@@ -22,7 +22,6 @@
 package org.richfaces.fragment.orderingList;
 
 import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
@@ -43,10 +42,7 @@ public abstract class AbstractSelectableListItem extends RichFacesListItem imple
 
     @Override
     public boolean isSelected() {
-        if (getRootElement().getAttribute("class").contains(getStyleClassForSelectedItem())) {
-            return TRUE;
-        }
-        return FALSE;
+        return getRootElement().getAttribute("class").contains(getStyleClassForSelectedItem());
     }
 
     protected abstract String getStyleClassForSelectedItem();
