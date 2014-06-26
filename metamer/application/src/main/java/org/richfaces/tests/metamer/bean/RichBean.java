@@ -132,6 +132,7 @@ public class RichBean implements Serializable {
         richComponents.put("richAccordionItem", "Rich Accordion Item");
         richComponents.put("richAutocomplete", "Rich Autocomplete");
         richComponents.put("richCalendar", "Rich Calendar");
+        richComponents.put("richChart", "Rich Chart");
         richComponents.put("richCollapsiblePanel", "Rich Collapsible Panel");
         richComponents.put("richCollapsibleSubTable", "Rich Collapsible Sub Table");
         richComponents.put("richCollapsibleSubTableToggler", "Rich Collapsible Sub Table Toggler");
