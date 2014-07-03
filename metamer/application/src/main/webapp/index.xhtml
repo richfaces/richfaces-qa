@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" 
-      xmlns:r="http://richfaces.org" xmlns:ui="http://java.sun.com/jsf/facelets">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:r="http://richfaces.org"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <!--
+<!--
 JBoss, Home of Professional Open Source
 Copyright 2010-2014, Red Hat, Inc. and individual contributors
 by the @authors tag. See the copyright.txt in the distribution for a
@@ -24,91 +24,47 @@ License along with this software; if not, write to the Free
 Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
+<h:head>
+    <title>Metamer: RichFaces Testing Application</title>
+    <meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8" />
+    <h:outputStylesheet library="css" name="common.ecss" />
+    <h:outputScript library="script" name="homepage-common.js" />
+</h:head>
 
-    <h:head>
-        <title>Metamer: RichFaces Testing Application</title>
-        <meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8" />
-        <h:outputStylesheet library="css" name="common.ecss" />
-    </h:head>
+<h:body onload="focusInput()">
+    <h1 style="float: left">Metamer: RichFaces Testing Application</h1>
 
-    <h:body>
-        <h1 style="float: left">Metamer: RichFaces Testing Application</h1>
+    <h:form id="invalidateSessionForm" style="float: right; ">
+        <h:panelGrid columns="1">
+            <h:commandButton id="invalidateSessionButton" action="#{richBean.invalidateSession}" value="Invalidate Session"
+                image="#{resource['images:cancel.png']}" title="Invalidate Session" style="width: 36px;" />
+        </h:panelGrid>
+    </h:form>
 
-        <h:form id="invalidateSessionForm" style="float: right; ">
-            <h:panelGrid columns="1">
-                <h:commandButton id="invalidateSessionButton" action="#{richBean.invalidateSession}"
-                                 value="Invalidate Session" image="#{resource['images:cancel.png']}" title="Invalidate Session"
-                                 style="width: 36px;" />
+    <h:form id="linksForm" style="padding-top: 130px;">
+        <h:panelGrid columns="2">
+            <h:outputLabel id="searchLabel" value="Component name:" />
+            <h:inputText id="componentSearch" value="#{richBean.selectedComponent}">
+                <r:ajax event="keyup" render="allComponentPanel" />
+            </h:inputText>
+        </h:panelGrid>
+        <r:panel id="allComponentPanel" name="RichFaces all components" header="RichFaces all components">
+            <h:panelGrid id="allComponents" columns="3" columnClasses="valign-top,valign-top,valign-top">
+                <r:list id="allComponentsList1" value="#{richBean.filteredComponentsList}" var="entry" rows="30"
+                    style="width: 350px">
+                    <h:link outcome="/components/#{entry}/list" value="#{richBean.filteredComponents[entry]}" styleClass="link" />
+                </r:list>
+                <r:list id="allComponentsList2" value="#{richBean.filteredComponentsList}" var="entry" first="30" rows="30"
+                    style="width: 350px">
+                    <h:link outcome="/components/#{entry}/list" value="#{richBean.filteredComponents[entry]}" styleClass="link" />
+                </r:list>
+                <r:list id="allComponentsList3" value="#{richBean.filteredComponentsList}" var="entry" first="60" rows="30"
+                    style="width: 350px">
+                    <h:link outcome="/components/#{entry}/list" value="#{richBean.filteredComponents[entry]}" styleClass="link" />
+                </r:list>
             </h:panelGrid>
-        </h:form>
-
-        <h:form id="linksForm" style="padding-top: 130px;">
-        
-            <r:tabPanel id="components" switchType="ajax" activeItem="#{richBean.activeTabOnIndex}">
-
-                <r:tab id="a4jComponentsTab" name="a4j" header="A4J">
-                    <h:panelGrid id="a4jComponents" columns="3" columnClasses="valign-top,valign-top,valign-top">
-
-                        <r:list id="a4jComponentsList1" value="#{richBean.a4jComponentsList}" 
-                                   var="entry" rows="30" style="width: 350px">
-                            <h:link outcome="/components/#{entry}/list" value="#{richBean.a4jComponents[entry]}" styleClass="link"/>
-                        </r:list>
-
-                        <r:list id="a4jComponentsList2" value="#{richBean.a4jComponentsList}" 
-                                   var="entry" first="30" rows="30" style="width: 350px">
-                            <h:link outcome="/components/#{entry}/list" value="#{richBean.a4jComponents[entry]}" styleClass="link"/>
-                        </r:list>
-
-                        <r:list id="a4jComponentsList3" value="#{richBean.a4jComponentsList}" 
-                                   var="entry" first="60" rows="30" style="width: 350px">
-                            <h:link outcome="/components/#{entry.key}/list" value="#{richBean.a4jComponents[entry]}" styleClass="link"/>
-                        </r:list>
-                    </h:panelGrid>
-                </r:tab>
-
-                <r:tab id="richComponentsTab" name="rich" header="Rich">
-                    <h:panelGrid id="richComponents" columns="3" columnClasses="valign-top,valign-top,valign-top">
-
-                        <r:list id="richComponentsList1" value="#{richBean.richComponentsList}" 
-                                   var="entry" rows="30" style="width: 350px">
-                            <h:link outcome="/components/#{entry}/list" value="#{richBean.richComponents[entry]}" styleClass="link"/>
-                        </r:list>
-
-                        <r:list id="richComponentsList2" value="#{richBean.richComponentsList}" 
-                                   var="entry" first="30" rows="30" style="width: 350px">
-                            <h:link outcome="/components/#{entry}/list" value="#{richBean.richComponents[entry]}" styleClass="link"/>
-                        </r:list>
-
-                        <r:list id="richComponentsList3" value="#{richBean.richComponentsList}" 
-                                   var="entry" first="60" rows="30" style="width: 350px">
-                            <h:link outcome="/components/#{entry}/list" value="#{richBean.richComponents[entry]}" styleClass="link"/>
-                        </r:list>
-                    </h:panelGrid>
-                </r:tab>
-
-                <r:tab id="otherComponentsTab" header="Other">
-                    <h:panelGrid id="otherComponents" columns="3" columnClasses="valign-top,valign-top,valign-top">
-
-                        <r:list id="otherComponentsList1" value="#{richBean.otherComponentsList}" 
-                                   var="entry" rows="30" style="width: 350px">
-                            <h:link outcome="/components/#{entry}/list" value="#{richBean.otherComponents[entry]}" styleClass="link"/>
-                        </r:list>
-
-                        <r:list id="otherComponentsList2" value="#{richBean.otherComponentsList}" 
-                                   var="entry" first="30" rows="30" style="width: 350px">
-                            <h:link outcome="/components/#{entry}/list" value="#{richBean.otherComponents[entry]}" styleClass="link"/>
-                        </r:list>
-
-                        <r:list id="otherComponentsList3" value="#{richBean.otherComponentsList}" 
-                                   var="entry" first="60" rows="30" style="width: 350px">
-                            <h:link outcome="/components/#{entry}/list" value="#{richBean.otherComponents[entry]}" styleClass="link"/>
-                        </r:list>
-                    </h:panelGrid>
-                </r:tab>
-
-            </r:tabPanel>
-
-            <ui:decorate template="/templates/footer.xhtml" />
-        </h:form>
-    </h:body>
+        </r:panel>
+        <ui:decorate template="/templates/footer.xhtml" />
+    </h:form>
+</h:body>
 </html>
