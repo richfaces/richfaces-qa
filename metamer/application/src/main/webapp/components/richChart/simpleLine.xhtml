@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-    xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+    xmlns:r="http://richfaces.org">
 
 <!--
 JBoss, Home of Professional Open Source
@@ -51,7 +51,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         //]]>
     </script>
         <h:form id='frm'>
-            <rich:chart id="chart" 
+            <r:chart id="chart" 
                         title="#{chartBean.attributes['title'].value}"
                         styleClass="#{chartBean.attributes['styleClass'].value}"
                         onplotclick="#{chartBean.attributes['onplotclick'].value}" 
@@ -60,17 +60,17 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         plotClickListener="#{chartBean.handler}"
                         zoom="#{chartBean.attributes['zoom'].value}"
                         rendered="#{chartBean.attributes['rendered'].value}">
-                <a4j:repeat value="#{chartBean.countries}" var="country">
-                    <rich:series label="#{country.name}" type="line">
-                        <a4j:repeat value="#{country.data}" var="record">
-                            <rich:point x="#{record.year}" y="#{record.tons}" />
-                        </a4j:repeat>
-                    </rich:series>
-                </a4j:repeat>
-                <a4j:ajax event="plotclick" render="msg" execute="msg" />
-                <rich:xaxis label="year" />
-                <rich:yaxis label="metric tons of CO2 per capita" />
-            </rich:chart>
+                <r:repeat value="#{chartBean.countries}" var="country">
+                    <r:series label="#{country.name}" type="line">
+                        <r:repeat value="#{country.data}" var="record">
+                            <r:point x="#{record.year}" y="#{record.tons}" />
+                        </r:repeat>
+                    </r:series>
+                </r:repeat>
+                <r:ajax event="plotclick" render="msg" execute="msg" />
+                <r:xaxis label="year" />
+                <r:yaxis label="metric tons of CO2 per capita" />
+            </r:chart>
             <h:outputText id="msg" value="#{chartBean.msg}" />
         </h:form>
         <span id='hoverInfo' />

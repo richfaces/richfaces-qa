@@ -27,11 +27,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import org.richfaces.component.UIChart;
-import org.richfaces.model.ChartDataModel.ChartType;
-import org.richfaces.model.PlotClickEvent;
-import org.richfaces.model.StringChartDataModel;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.ui.output.chart.ChartDataModel.ChartType;
+import org.richfaces.ui.output.chart.PlotClickEvent;
+import org.richfaces.ui.output.chart.StringChartDataModel;
+import org.richfaces.ui.output.chart.UIChart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

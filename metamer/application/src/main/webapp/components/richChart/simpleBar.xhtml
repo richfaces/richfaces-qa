@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-    xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+    xmlns:r="http://richfaces.org">
 
 <!--
 JBoss, Home of Professional Open Source
@@ -51,7 +51,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         //]]>
     </script>
         <h:form id="frm">
-            <rich:chart id="bar" 
+            <r:chart id="bar" 
                         title="#{chartBarBean.attributes['title'].value}"
                         styleClass="#{chartBarBean.attributes['styleClass'].value}"
                         onplotclick="#{chartBarBean.attributes['onplotclick'].value}" 
@@ -59,16 +59,16 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         onmouseout="#{chartBarBean.attributes['onmouseout'].value}"
                         plotClickListener="#{chartBarBean.handler}"
                         rendered="#{chartBarBean.attributes['rendered'].value}">
-                <rich:legend sorting="ascending" />
-                <a4j:repeat value="#{chartBarBean.gdp}" var="country">
-                    <rich:series label="#{country.state}" type="bar">
-                        <rich:point x="Agricultural" y="#{country.agricult}" />
-                        <rich:point x="Industrial" y="#{country.industry}" />
-                        <rich:point x="Service" y="#{country.service}" />
-                    </rich:series>
-                </a4j:repeat>
-                <a4j:ajax event="plotclick" render="msg" execute="msg" />
-            </rich:chart>
+                <r:legend sorting="ascending" />
+                <r:repeat value="#{chartBarBean.gdp}" var="country">
+                    <r:series label="#{country.state}" type="bar">
+                        <r:point x="Agricultural" y="#{country.agricult}" />
+                        <r:point x="Industrial" y="#{country.industry}" />
+                        <r:point x="Service" y="#{country.service}" />
+                    </r:series>
+                </r:repeat>
+                <r:ajax event="plotclick" render="msg" execute="msg" />
+            </r:chart>
             <h:outputText id="msg" value="#{chartBarBean.msg}" />
         </h:form>
         <span id='hoverInfo' />

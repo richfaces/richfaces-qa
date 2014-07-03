@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-    xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+    xmlns:r="http://richfaces.org">
 
 <!--
 JBoss, Home of Professional Open Source
@@ -51,14 +51,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         //]]>
     </script>
         <h:form id="frm">
-            <rich:chart id="pie" title="#{chartPieBean.attributes['title'].value}" styleClass="#{chartPieBean.attributes['styleClass'].value}"
+            <r:chart id="pie" title="#{chartPieBean.attributes['title'].value}" styleClass="#{chartPieBean.attributes['styleClass'].value}"
                 onplotclick="#{chartPieBean.attributes['onplotclick'].value}"
                 onplothover="#{chartPieBean.attributes['onplothover'].value}"
                 onmouseout="#{chartPieBean.attributes['onmouseout'].value}" plotClickListener="#{chartPieBean.handler}" rendered="#{chartPieBean.attributes['rendered'].value}">
-                <rich:legend sorting="ascending" />
-                <rich:series data="#{chartPieBean.pie}" type="pie" />
-                <a4j:ajax event="plotclick" render="msg" execute="msg" />
-            </rich:chart>
+                <r:legend sorting="ascending" />
+                <r:series data="#{chartPieBean.pie}" type="pie" />
+                <r:ajax event="plotclick" render="msg" execute="msg" />
+            </r:chart>
             <h:outputText id="msg" value="#{chartPieBean.msg}" />  
         </h:form>
         <span id='hoverInfo' />
