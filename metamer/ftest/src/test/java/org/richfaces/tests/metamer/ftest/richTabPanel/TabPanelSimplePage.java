@@ -29,7 +29,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 public class TabPanelSimplePage extends MetamerPage {
 
     @FindByJQuery("div[id*=tabPanel]")
-    private RichFacesTabPanel panelTab;
+    private RichFacesTabPanel tabPanel;
 
     @FindByJQuery("div[id*=tabPanel]")
     private WebElement panelTabAsWebElement;
@@ -48,8 +48,8 @@ public class TabPanelSimplePage extends MetamerPage {
         return createTabHButton;
     }
 
-    public RichFacesTabPanel getPanelTab() {
-        return panelTab;
+    public RichFacesTabPanel getTabPanel() {
+        return tabPanel;
     }
 
     /**

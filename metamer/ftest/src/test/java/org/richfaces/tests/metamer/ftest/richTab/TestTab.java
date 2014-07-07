@@ -31,6 +31,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+import java.util.List;
 
 import javax.faces.event.PhaseId;
 
@@ -38,6 +39,8 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.page.Page;
+import org.jboss.arquillian.graphene.request.RequestGuardException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -49,11 +52,15 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
+import static org.richfaces.fragment.switchable.SwitchType.CLIENT;
+import static org.testng.Assert.fail;
+
 /**
  * Test case for page /faces/components/richTab/simple.xhtml
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @author <a href="mailto:manovotn@redhat.com">Matej Novotny</a>
+ * @author <a href="mailto:manovotn@redhat.com">Juraj Huska</a>
  * @version $Revision: 22963 $
  */
 public class TestTab extends AbstractWebDriverTest {
@@ -75,18 +82,18 @@ public class TestTab extends AbstractWebDriverTest {
         return elem.getAttribute("class").contains(className);
     }
 
-    @Test(groups = { "Future" })
+    @Test(groups = {"Future"})
     @IssueTracking("https://issues.jboss.org/browse/RF-11427")
     public void testActionAndActionListener() {
-        MetamerPage.waitRequest(page.getTab(), WaitRequestType.XHR).switchTo(2);
+        MetamerPage.waitRequest(page.getTabPanel(), WaitRequestType.XHR).switchTo(2);
 
         page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
-            PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
+                PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
         page.assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: tab1 -> tab3");
 
-        MetamerPage.waitRequest(page.getTab(), WaitRequestType.XHR).switchTo(0);
+        MetamerPage.waitRequest(page.getTabPanel(), WaitRequestType.XHR).switchTo(0);
         page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
-            PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
+                PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
         page.assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: tab3 -> tab1");
         page.assertListener(PhaseId.INVOKE_APPLICATION, "action listener invoked");
         page.assertListener(PhaseId.INVOKE_APPLICATION, "action invoked");
@@ -94,17 +101,16 @@ public class TestTab extends AbstractWebDriverTest {
 
     @Test
     public void testInit() {
-        assertVisible(page.getTab().advanced().getRootElement(), "Tab panel is not present on the page.");
+        assertVisible(page.getTabPanel().advanced().getRootElement(), "Tab panel is not present on the page.");
 
-        assertVisible(page.getActiveHeaders().get(0), "Header of tab1 should be active.");
-        assertNotVisible(page.getInactiveHeaders().get(0), "Header of tab1 should not be inactive.");
-        assertVisible(page.getDisabledHeaders().get(3), "Header of tab4 should be disabled.");
+        assertVisible(page.getTabPanel().advanced().getActiveHeaderElement(), "Header of tab1 should be active.");
+        assertVisible(page.getDisabledHeaders().get(0), "Header of tab4 should be disabled.");
 
-        String text = page.getActiveHeaders().get(0).getText();
+        String text = page.getTabPanel().advanced().getActiveHeaderElement().getText();
         assertEquals(text, "tab1 header");
-        text = page.getInactiveHeaders().get(1).getText();
+        text = page.getInactiveHeaders().get(0).getText();
         assertEquals(text, "tab2 header");
-        text = page.getDisabledHeaders().get(3).getText();
+        text = page.getDisabledHeaders().get(0).getText();
         assertEquals(text, "tab4 header");
         text = page.getItemContents().get(0).getText();
         assertEquals(text, "content of tab 1");
@@ -126,36 +132,39 @@ public class TestTab extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testDisabled() {
-        // disable the first tab
-        tabAttributes.set(TabAttributes.disabled, Boolean.TRUE);
-
-        assertNotVisible(page.getActiveHeaders().get(0), "Header of tab1 should not be active.");
-        assertNotVisible(page.getInactiveHeaders().get(0), "Header of tab1 should not be inactive.");
-        assertVisible(page.getDisabledHeaders().get(0), "Header of tab1 should be disabled.");
-
-        String text = page.getDisabledHeaders().get(0).getText();
-        assertEquals(text, "tab1 header");
-
-        // enable the first tab
+        // enable the first tab, disabled is by default only 4th tab
         tabAttributes.set(TabAttributes.disabled, Boolean.FALSE);
 
-        assertNotVisible(page.getActiveHeaders().get(0), "Header of tab1 should not be active.");
-        assertVisible(page.getInactiveHeaders().get(0), "Header of tab1 should be inactive.");
-        assertNotVisible(page.getDisabledHeaders().get(0), "Header of tab1 should not be disabled.");
+        List<WebElement> disabledHeaders = page.getDisabledHeaders();
+        assertEquals(disabledHeaders.size(), 1);
+        assertEquals(disabledHeaders.get(0).getText(), "tab4 header");
 
-        text = page.getInactiveHeaders().get(0).getText();
-        assertEquals(text, "tab1 header");
+        // disable the first tab, now there should 2 disabled headers
+        tabAttributes.set(TabAttributes.disabled, Boolean.TRUE);
+        disabledHeaders = page.getDisabledHeaders();
+        assertEquals(disabledHeaders.size(), 2);
+        assertEquals(disabledHeaders.get(0).getText(), "tab1 header");
+
+        page.getTabPanel().advanced().setupSwitchType(CLIENT);
+        page.getTabPanel().switchTo("tab2 header");
+        try {
+            page.getTabPanel().switchTo("tab1 header");
+            fail("It should not be possible to switch to disabled tab");
+        } catch (TimeoutException ex) {
+            //OK
+        }
+        assertEquals(page.getTabPanel().advanced().getActiveHeaderElement().getText(), "tab2 header");
     }
 
     @Test
     @Templates(value = "plain")
     public void testHeader() {
         tabAttributes.set(TabAttributes.header, "new header");
-        assertEquals(page.getActiveHeaders().get(0).getText(), "new header", "Header of the first tab did not change.");
+        assertEquals(page.getTabPanel().advanced().getActiveHeaderElement().getText(), "new header", "Header of the first tab did not change.");
 
         tabAttributes.set(TabAttributes.header, "ľščťťžžôúňď ацущьмщфзщйцу");
-        assertEquals(page.getActiveHeaders().get(0).getText(), "ľščťťžžôúňď ацущьмщфзщйцу",
-            "Header of the first tab did not change.");
+        assertEquals(page.getTabPanel().advanced().getActiveHeaderElement().getText(), "ľščťťžžôúňď ацущьмщфзщйцу",
+                "Header of the first tab did not change.");
     }
 
     @Test
@@ -163,19 +172,16 @@ public class TestTab extends AbstractWebDriverTest {
     public void testHeaderActiveClass() {
         tabAttributes.set(TabAttributes.headerActiveClass, "metamer-ftest-class");
 
-        assertTrue(belongsClass(page.getActiveHeaders().get(0), "metamer-ftest-class"),
-            "headerActiveClass does not work");
+        assertTrue(belongsClass(page.getTabPanel().advanced().getActiveHeaderElement(), "metamer-ftest-class"),
+                "headerActiveClass does not work");
         assertFalse(belongsClass(page.getInactiveHeaders().get(0), "metamer-ftest-class"),
-            "headerActiveClass does not work");
-        assertFalse(belongsClass(page.getDisabledHeaders().get(0), "metamer-ftest-class"),
-            "headerActiveClass does not work");
-
-        assertFalse(belongsClass(page.getActiveHeaders().get(1), "metamer-ftest-class"),
-            "headerActiveClass does not work");
+                "headerActiveClass does not work");
         assertFalse(belongsClass(page.getInactiveHeaders().get(1), "metamer-ftest-class"),
-            "headerActiveClass does not work");
-        assertFalse(belongsClass(page.getDisabledHeaders().get(1), "metamer-ftest-class"),
-            "headerActiveClass does not work");
+                "headerActiveClass does not work");
+        assertFalse(belongsClass(page.getInactiveHeaders().get(2), "metamer-ftest-class"),
+                "headerActiveClass does not work");
+        assertFalse(belongsClass(page.getDisabledHeaders().get(0), "metamer-ftest-class"),
+                "headerActiveClass does not work");
     }
 
     @Test
@@ -183,58 +189,30 @@ public class TestTab extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testHeaderClass() {
         tabAttributes.set(TabAttributes.headerClass, "metamer-ftest-class");
-
-        assertTrue(belongsClass(page.getActiveHeaders().get(0), "metamer-ftest-class"), "tabHeaderClass does not work");
-        assertTrue(belongsClass(page.getInactiveHeaders().get(0), "metamer-ftest-class"),
-            "tabHeaderClass does not work");
-        assertTrue(belongsClass(page.getDisabledHeaders().get(0), "metamer-ftest-class"),
-            "tabHeaderClass does not work");
-
-        assertFalse(belongsClass(page.getActiveHeaders().get(1), "metamer-ftest-class"), "tabHeaderClass does not work");
-        assertFalse(belongsClass(page.getInactiveHeaders().get(1), "metamer-ftest-class"),
-            "tabHeaderClass does not work");
-        assertFalse(belongsClass(page.getDisabledHeaders().get(1), "metamer-ftest-class"),
-            "tabHeaderClass does not work");
+        assertTrue(belongsClass(page.getTabPanel().advanced().getActiveHeaderElement(), "metamer-ftest-class"), "tabHeaderClass does not work");
     }
 
     @Test
     @Templates(value = "plain")
     public void testHeaderDisabledClass() {
         tabAttributes.set(TabAttributes.headerDisabledClass, "metamer-ftest-class");
-
-        assertFalse(belongsClass(page.getActiveHeaders().get(0), "metamer-ftest-class"),
-            "headerDisabledClass does not work");
-        assertFalse(belongsClass(page.getInactiveHeaders().get(0), "metamer-ftest-class"),
-            "headerDisabledClass does not work");
+        assertFalse(belongsClass(page.getDisabledHeaders().get(0), "metamer-ftest-class"),
+                "headerDisabledClass does not work");
+        tabAttributes.set(TabAttributes.disabled, true);
         assertTrue(belongsClass(page.getDisabledHeaders().get(0), "metamer-ftest-class"),
-            "headerDisabledClass does not work");
-
-        assertFalse(belongsClass(page.getActiveHeaders().get(1), "metamer-ftest-class"),
-            "headerDisabledClass does not work");
-        assertFalse(belongsClass(page.getInactiveHeaders().get(1), "metamer-ftest-class"),
-            "headerDisabledClass does not work");
-        assertFalse(belongsClass(page.getDisabledHeaders().get(1), "metamer-ftest-class"),
-            "headerDisabledClass does not work");
+                "headerDisabledClass does not work");
     }
 
     @Test
     @Templates(value = "plain")
     public void testHeaderInactiveClass() {
         tabAttributes.set(TabAttributes.headerInactiveClass, "metamer-ftest-class");
-
-        assertFalse(belongsClass(page.getActiveHeaders().get(0), "metamer-ftest-class"),
-            "headerInactiveClass does not work");
+        assertFalse(belongsClass(page.getTabPanel().advanced().getAllVisibleHeadersElements()
+                .get(0), "metamer-ftest-class"),
+                "headerInactiveClass does not work");
+        page.getTabPanel().switchTo(1);
         assertTrue(belongsClass(page.getInactiveHeaders().get(0), "metamer-ftest-class"),
-            "headerInactiveClass does not work");
-        assertFalse(belongsClass(page.getDisabledHeaders().get(0), "metamer-ftest-class"),
-            "headerInactiveClass does not work");
-
-        assertFalse(belongsClass(page.getActiveHeaders().get(1), "metamer-ftest-class"),
-            "headerInactiveClass does not work");
-        assertFalse(belongsClass(page.getInactiveHeaders().get(1), "metamer-ftest-class"),
-            "headerInactiveClass does not work");
-        assertFalse(belongsClass(page.getDisabledHeaders().get(1), "metamer-ftest-class"),
-            "headerInactiveClass does not work");
+                "headerInactiveClass does not work");
     }
 
     @Test
@@ -242,7 +220,7 @@ public class TestTab extends AbstractWebDriverTest {
     public void testHeaderStyle() {
         final String value = "background-color: yellow; font-size: 1.5em;";
         tabAttributes.set(TabAttributes.headerStyle, value);
-        String styleAttr = page.getActiveHeaders().get(0).getAttribute("style");
+        String styleAttr = page.getTabPanel().advanced().getActiveHeaderElement().getAttribute("style");
         assertTrue(styleAttr.contains(value), "Attribute style should contain \"" + value + "\"");
     }
 
@@ -257,7 +235,7 @@ public class TestTab extends AbstractWebDriverTest {
     public void testName() {
         tabAttributes.set(TabAttributes.name, "metamer");
 
-        page.getTab().switchTo(4);
+        page.getTabPanel().switchTo(4);
         waitGui(driver).until().element(ByJQuery.selector("div[id$=tab5] > div.rf-tab-cnt:visible")).is().present();
 
         executeJS("RichFaces.component('" + page.getTabAsWebElement().getAttribute("id") + "').switchToItem('metamer')");
@@ -293,21 +271,21 @@ public class TestTab extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testOnheaderclick() {
-        Action action = new Actions(driver).click(page.getActiveHeaders().get(0)).build();
+        Action action = new Actions(driver).click(page.getTabPanel().advanced().getActiveHeaderElement()).build();
         testFireEvent(tabAttributes, TabAttributes.onheaderclick, action);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnheaderdblclick() {
-        Action action = new Actions(driver).doubleClick(page.getActiveHeaders().get(0)).build();
+        Action action = new Actions(driver).doubleClick(page.getTabPanel().advanced().getActiveHeaderElement()).build();
         testFireEvent(tabAttributes, TabAttributes.onheaderdblclick, action);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnheadermousedown() {
-        Action action = new Actions(driver).clickAndHold(page.getActiveHeaders().get(0)).build();
+        Action action = new Actions(driver).clickAndHold(page.getTabPanel().advanced().getActiveHeaderElement()).build();
         testFireEvent(tabAttributes, TabAttributes.onheadermousedown, action);
         new Actions(driver).release().build().perform();
     }
@@ -316,7 +294,7 @@ public class TestTab extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testOnheadermousemove() {
         Action action = new Actions(driver).moveToElement(page.getInactiveHeaders().get(2))
-            .moveToElement(page.getActiveHeaders().get(0)).build();
+                .moveToElement(page.getTabPanel().advanced().getActiveHeaderElement()).build();
         testFireEvent(tabAttributes, TabAttributes.onheadermousemove, action);
     }
 
@@ -324,7 +302,7 @@ public class TestTab extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testOnheadermouseup() {
         Action action = new Actions(driver).clickAndHold(page.getItemContents().get(0))
-            .moveToElement(page.getActiveHeaders().get(0)).release().build();
+                .moveToElement(page.getTabPanel().advanced().getActiveHeaderElement()).release().build();
         testFireEvent(tabAttributes, TabAttributes.onheadermouseup, action);
     }
 
@@ -347,7 +325,7 @@ public class TestTab extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testOnmousemove() {
         Action action = new Actions(driver).moveToElement(page.getInactiveHeaders().get(2))
-            .moveToElement(page.getItemContents().get(0)).build();
+                .moveToElement(page.getItemContents().get(0)).build();
         testFireEvent(tabAttributes, TabAttributes.onmousemove, action);
     }
 
@@ -355,7 +333,7 @@ public class TestTab extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testOnmouseout() {
         Action action = new Actions(driver).moveToElement(page.getItemContents().get(0))
-            .moveToElement(page.getInactiveHeaders().get(2)).build();
+                .moveToElement(page.getInactiveHeaders().get(2)).build();
         testFireEvent(tabAttributes, TabAttributes.onmouseout, action);
     }
 
@@ -398,11 +376,11 @@ public class TestTab extends AbstractWebDriverTest {
     public void testSwitchTypeNull() {
         guardAjax(page.getInactiveHeaders().get(1)).click();
         waitGui(driver).withMessage("Tab 2 is not displayed.").until().element(page.getItemContents().get(1)).is()
-            .visible();
+                .visible();
 
         guardAjax(page.getInactiveHeaders().get(0)).click();
         waitGui(driver).withMessage("Tab 1 is not displayed.").until().element(page.getItemContents().get(0)).is()
-            .visible();
+                .visible();
     }
 
     @Test(groups = "smoke")
@@ -418,11 +396,11 @@ public class TestTab extends AbstractWebDriverTest {
 
         guardAjax(page.getInactiveHeaders().get(1)).click();
         waitGui(driver).withMessage("Tab 2 is not displayed.").until().element(page.getItemContents().get(1)).is()
-            .visible();
+                .visible();
 
         guardNoRequest(page.getInactiveHeaders().get(0)).click();
         waitGui(driver).withMessage("Tab 1 is not displayed.").until().element(page.getItemContents().get(0)).is()
-            .visible();
+                .visible();
     }
 
     @Test
@@ -431,11 +409,11 @@ public class TestTab extends AbstractWebDriverTest {
 
         guardAjax(page.getInactiveHeaders().get(1)).click();
         waitGui(driver).withMessage("Tab 2 is not displayed.").until().element(page.getItemContents().get(1)).is()
-            .visible();
+                .visible();
 
         guardHttp(page.getInactiveHeaders().get(0)).click();
         waitGui(driver).withMessage("Tab 1 is not displayed.").until().element(page.getItemContents().get(0)).is()
-            .visible();
+                .visible();
     }
 
     @Test

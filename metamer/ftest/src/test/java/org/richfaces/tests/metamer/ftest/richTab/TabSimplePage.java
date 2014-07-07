@@ -10,7 +10,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 public class TabSimplePage extends MetamerPage {
 
     @FindByJQuery(value = "div[id$=tabPanel]")
-    private RichFacesTabPanel tab;
+    private RichFacesTabPanel tabPanel;
 
     @FindByJQuery(value="div[id$=tabPanel]")
     private WebElement tabAsWebElement;
@@ -18,36 +18,32 @@ public class TabSimplePage extends MetamerPage {
     @FindByJQuery(value = "div[id*=tab] > div.rf-tab-cnt")
     private List<WebElement> itemContents;
 
-    @FindByJQuery(value = "td[id*='tab'].[id$=':header:active']")
-    private List<WebElement> activeHeaders;
-
-    @FindByJQuery(value = "td[id*='tab'].[id$=':header:inactive']")
-    private List<WebElement> inactiveHeaders;
-
-    @FindByJQuery(value = "td[id*='tab'].[id$=':header:disabled']")
-    private List<WebElement> disabledHeaders;
+//    @FindByJQuery(value = "td[id*='tab'].[id$=':header:active']")
+//    private List<WebElement> activeHeaders;
+//
+//    @FindByJQuery(value = "td[id*='tab'].[id$=':header:inactive']")
+//    private List<WebElement> inactiveHeaders;
+//
+//    @FindByJQuery(value = "td[id*='tab'].[id$=':header:disabled']")
+//    private List<WebElement> disabledHeaders;
 
     @FindByJQuery(value = "div[id$=tab1]")
     private WebElement firstTabContentParentElement;
 
-    public RichFacesTabPanel getTab() {
-        return tab;
+    public RichFacesTabPanel getTabPanel() {
+        return tabPanel;
     }
 
     public List<WebElement> getItemContents() {
         return itemContents;
     }
 
-    public List<WebElement> getActiveHeaders() {
-        return activeHeaders;
-    }
-
     public List<WebElement> getInactiveHeaders() {
-        return inactiveHeaders;
+        return tabPanel.advanced().getAllInactiveHeadersElements();
     }
 
     public List<WebElement> getDisabledHeaders() {
-        return disabledHeaders;
+        return tabPanel.advanced().getAllDisabledHeadersElements();
     }
 
     public WebElement getFirstTabContentParentElement() {

@@ -29,15 +29,19 @@ import static org.testng.AssertJUnit.assertEquals;
 
 import java.net.URL;
 import java.util.List;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.switchable.SwitchType;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
+
+import static org.richfaces.fragment.switchable.SwitchType.SERVER;
 
 /**
  * Test case for page /faces/components/richTabPanel/addTab2.xhtml
@@ -53,8 +57,8 @@ public class TestTabPanelAddPanel1 extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richTabPanel/addTab2.xhtml");
     }
 
-    @FindBy(xpath = "//td[contains(@id, 'dynamic:') and contains(@id, 'tab:header:inactive')]/span[@class = 'rf-tab-lbl']/a")
-    private List<WebElement> dynamicHeaders;
+    @FindByJQuery("td[id*='dynamic'] a")
+    private List<WebElement> dynamicHeadersCloseHandler;
 
     @FindBy(xpath = "//div[contains(@id, 'tabPanel')]//*[@class='rf-tab-cnt']")
     private List<WebElement> activeContent;
@@ -79,7 +83,7 @@ public class TestTabPanelAddPanel1 extends AbstractWebDriverTest {
             } else {
                 guardHttp(buttonToClick).click();
             }
-            assertEquals(i + 1, dynamicHeaders.size());
+            assertEquals(i + 1, dynamicHeadersCloseHandler.size());
         }
 
     }
@@ -107,8 +111,8 @@ public class TestTabPanelAddPanel1 extends AbstractWebDriverTest {
     public void testRemoveTab() {
         createAndVerifyTab(page.getCreateTabButtonA4j());
         for (int i = 2; i >= 0; i--) {
-            guardAjax(dynamicHeaders.get(i)).click();
-            assertEquals(i, dynamicHeaders.size());
+            guardAjax(dynamicHeadersCloseHandler.get(i)).click();
+            assertEquals(i, dynamicHeadersCloseHandler.size());
         }
     }
 
@@ -117,13 +121,13 @@ public class TestTabPanelAddPanel1 extends AbstractWebDriverTest {
      */
     @Test(groups = "smoke")
     public void testContentOfDynamicTab() {
-        int basicTabCount = page.getPanelTab().getNumberOfTabs();
+        int basicTabCount = page.getTabPanel().getNumberOfTabs();
 
         createAndVerifyTab(page.getCreateTabButtonA4j());
-        assertEquals(8, page.getPanelTab().getNumberOfTabs());
+        assertEquals(8, page.getTabPanel().getNumberOfTabs());
 
         for (int i = 0; i < 3; i++) {
-            page.getPanelTab().switchTo(i + basicTabCount);
+            page.getTabPanel().switchTo(i + basicTabCount);
             assertEquals("Content of dynamicaly created tab" + (basicTabCount + i + 1), getActiveContent().getText());
         }
     }
@@ -133,18 +137,19 @@ public class TestTabPanelAddPanel1 extends AbstractWebDriverTest {
      * created tabs still works as in previous tabs (staticaly created) 3. verify a4j ajax btn to create new tabs
      */
     @Test
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-11081", "https://issues.jboss.org/browse/RF-12945" })
+    @RegressionTest({"https://issues.jboss.org/browse/RF-11081", "https://issues.jboss.org/browse/RF-12945"})
     public void testSwitchTypeNull() {
-        int basicTabCount = page.getPanelTab().getNumberOfTabs();
         createAndVerifyTab(page.getCreateTabButtonA4j());
-        for (int i = 0; i < 3; i++) {
-            guardAjax(page.getPanelTab().advanced().getAllInactiveHeadersElements().get(basicTabCount + i)).click();
-            assertEquals("Content of dynamicaly created tab" + (basicTabCount + i + 1), getActiveContent().getText());
+        for (int i = 4; i < 8; i++) {
+            page.getTabPanel().switchTo(i);
+            if (i != 4) {
+                assertEquals("Content of dynamicaly created tab" + (i + 1), getActiveContent().getText());
+            }
         }
     }
 
     @Test
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-11081", "https://issues.jboss.org/browse/RF-12945" })
+    @RegressionTest({"https://issues.jboss.org/browse/RF-11081", "https://issues.jboss.org/browse/RF-12945"})
     public void testSwitchTypeAjax() {
         tabPanelAttributes.set(TabPanelAttributes.switchType, "ajax");
         page.fullPageRefresh();
@@ -154,13 +159,16 @@ public class TestTabPanelAddPanel1 extends AbstractWebDriverTest {
     @Test
     public void testSwitchTypeClient() {
         tabPanelAttributes.set(TabPanelAttributes.switchType, "client");
-        int basicTabCount = page.getPanelTab().getNumberOfTabs();
+        page.getTabPanel().advanced().setupSwitchType(SwitchType.CLIENT);
+
         createAndVerifyTab(page.getCreateTabButtonA4j());
-        for (int i = 0; i < 3; i++) {
-            List<WebElement> elems = page.getPanelTab().advanced().getAllInactiveHeadersElements();
-            WebElement elem = elems.get(basicTabCount + i);
-            guardNoRequest(elem).click();
-            assertEquals("Content of dynamicaly created tab" + (basicTabCount + i + 1), getActiveContent().getText());
+        for (int i = 4; i < 8; i++) {
+            List<WebElement> elems = page.getTabPanel().advanced().getAllVisibleHeadersElements();
+            WebElement elem = elems.get(i);
+            page.getTabPanel().switchTo(i);
+            if (i != 4) {
+                assertEquals("Content of dynamicaly created tab" + (i + 1), getActiveContent().getText());
+            }
         }
     }
 
@@ -168,11 +176,14 @@ public class TestTabPanelAddPanel1 extends AbstractWebDriverTest {
     @IssueTracking("https://issues.jboss.org/browse/RF-11054")
     public void testSwitchTypeServer() {
         tabPanelAttributes.set(TabPanelAttributes.switchType, "server");
-        int basicTabCount = page.getPanelTab().getNumberOfTabs();
+        page.getTabPanel().advanced().setupSwitchType(SERVER);
+
         createAndVerifyTab(page.getCreateTabButtonA4j());
-        for (int i = 0; i < 3; i++) {
-            guardHttp(page.getPanelTab().advanced().getAllInactiveHeadersElements().get(basicTabCount + i)).click();
-            assertEquals("Content of dynamicaly created tab" + (basicTabCount + i + 1), getActiveContent().getText());
+        for (int i = 4; i < 8; i++) {
+            page.getTabPanel().switchTo(i);
+            if (i != 4) {
+                assertEquals("Content of dynamicaly created tab" + (i + 1), getActiveContent().getText());
+            }
         }
     }
 }

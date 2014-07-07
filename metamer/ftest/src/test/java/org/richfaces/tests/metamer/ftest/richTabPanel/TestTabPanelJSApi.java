@@ -62,49 +62,49 @@ public class TestTabPanelJSApi extends AbstractWebDriverTest {
 
     private String JsPrevItem() {
         return (String) executeJS("return RichFaces.component('" + page.getPanelTabAsWebElement().getAttribute("id")
-            + "').prevItem()");
+                + "').prevItem()");
     }
 
     private String JsNextItem() {
         return (String) executeJS("return RichFaces.component('" + page.getPanelTabAsWebElement().getAttribute("id")
-            + "').nextItem()");
+                + "').nextItem()");
     }
 
     @Test
-    @Templates(value = { "plain" })
+    @Templates(value = {"plain"})
     public void testJsSwitchTo() {
         // assert initial settings - 5 tabs, so 5 elements in list should be present
-        assertEquals(switchToButtons.size(), page.getPanelTab().getNumberOfTabs());
+        assertEquals(switchToButtons.size(), page.getTabPanel().getNumberOfTabs());
 
         // switch to certain panel and assert it's content is visible
         guardAjax(switchToButtons.get(4)).click();
-        assertVisible(page.getPanelTab().advanced().getAllTabContentsElements().get(4), "Content of the last tab should be visible");
+        assertVisible(page.getTabPanel().advanced().getAllTabContentsElements().get(4), "Content of the last tab should be visible");
 
         guardAjax(switchToButtons.get(0)).click();
-        assertVisible(page.getPanelTab().advanced().getAllTabContentsElements().get(0), "Content of the first tab should be visible");
+        assertVisible(page.getTabPanel().advanced().getAllTabContentsElements().get(0), "Content of the first tab should be visible");
 
         guardAjax(switchToButtons.get(2)).click();
-        assertVisible(page.getPanelTab().advanced().getAllTabContentsElements().get(2), "Content of the third tab should be visible");
+        assertVisible(page.getTabPanel().advanced().getAllTabContentsElements().get(2), "Content of the third tab should be visible");
 
         guardAjax(switchToButtons.get(1)).click();
-        assertVisible(page.getPanelTab().advanced().getAllTabContentsElements().get(1), "Content of the second tab should be visible");
+        assertVisible(page.getTabPanel().advanced().getAllTabContentsElements().get(1), "Content of the second tab should be visible");
 
         guardNoRequest(switchToButtons.get(3)).click();
-        assertNotVisible(page.getPanelTab().advanced().getAllTabContentsElements().get(3),
-            "Content of the fourth tab should not be visible");
+        assertNotVisible(page.getTabPanel().advanced().getAllTabContentsElements().get(3),
+                "Content of the fourth tab should not be visible");
     }
 
     @Test
-    @Templates(value = { "plain" })
+    @Templates(value = {"plain"})
     public void testJsGetItems() {
         // Using JS API get IDs and isSelected attributes and assert
         for (int i = 0; i < 5; i++) {
             String id = (String) executeJS("return RichFaces.component('" + page.getPanelTabAsWebElement().getAttribute("id")
-                + "').getItems()['" + i + "'].id");
+                    + "').getItems()['" + i + "'].id");
             Boolean selected = (Boolean) executeJS("return RichFaces.component('"
-                + page.getPanelTabAsWebElement().getAttribute("id") + "').getItems()['" + i + "'].isSelected()");
+                    + page.getPanelTabAsWebElement().getAttribute("id") + "').getItems()['" + i + "'].isSelected()");
 
-            assertTrue(page.getPanelTab().advanced().getAllActiveHeadersElements().get(i).getAttribute("id").contains(id));
+            assertTrue(page.getTabPanel().advanced().getAllVisibleHeadersElements().get(i).getAttribute("id").contains(id));
             if (i == 0) {
                 // first tab is selected
                 assertTrue(selected);
@@ -115,33 +115,35 @@ public class TestTabPanelJSApi extends AbstractWebDriverTest {
     }
 
     @Test
-    @Templates(value = { "plain" })
+    @Templates(value = {"plain"})
     public void testJsGetItemsNames() {
         @SuppressWarnings("unchecked")
         List<String> result = (ArrayList<String>) executeJS("return RichFaces.component('"
-            + page.getPanelTabAsWebElement().getAttribute("id") + "').getItemsNames()");
+                + page.getPanelTabAsWebElement().getAttribute("id") + "').getItemsNames()");
         assertTrue(result.size() == 5);
         assertEquals("tab1, tab2, tab3, tab4, tab5", result.toString().substring(1, result.toString().length() - 1));
     }
 
     @Test
-    @Templates(value = { "plain" })
+    @Templates(value = {"plain"})
     public void testJsFirstItem() {
         String result = (String) executeJS("return RichFaces.component('" + page.getPanelTabAsWebElement().getAttribute("id")
-            + "').firstItem()");
+                + "').firstItem()");
         assertEquals("tab1", result);
     }
 
     @Test
-    @Templates(value = { "plain" })
+    @Templates(value = {"plain"})
     public void testJsPrevItem() {
         // switch to first, use JS function and assert its null
-        page.getPanelTab().switchTo(0);
+        if (!page.getTabPanel().advanced().getActiveHeaderElement().getText().equals("tab1 header")) {
+            page.getTabPanel().switchTo(0);
+        }
         String result = JsPrevItem();
         assertNull(result);
 
         // move to second tab and assert tab1 is previous
-        page.getPanelTab().switchTo(1);
+        page.getTabPanel().switchTo(1);
         result = JsPrevItem();
         assertEquals("tab1", result);
 
@@ -149,23 +151,25 @@ public class TestTabPanelJSApi extends AbstractWebDriverTest {
         tabPanelAttributes.set(TabPanelAttributes.cycledSwitching, true);
 
         // assert with cycled switching
-        page.getPanelTab().switchTo(0);
+        page.getTabPanel().switchTo(0);
         result = JsPrevItem();
         assertEquals("tab5", result);
 
-        page.getPanelTab().switchTo(2);
+        page.getTabPanel().switchTo(2);
         result = JsPrevItem();
         assertEquals("tab2", result);
     }
 
     @Test
-    @Templates(value = { "plain" })
+    @Templates(value = {"plain"})
     public void testJsNextItem() {
-        page.getPanelTab().switchTo(0);
+        if (!page.getTabPanel().advanced().getActiveHeaderElement().getText().equals("tab1 header")) {
+            page.getTabPanel().switchTo(0);
+        }
         String result = JsNextItem();
         assertEquals("tab2", result);
 
-        page.getPanelTab().switchTo(4);
+        page.getTabPanel().switchTo(4);
         result = JsNextItem();
         assertNull(result);
 
@@ -175,16 +179,16 @@ public class TestTabPanelJSApi extends AbstractWebDriverTest {
         result = JsNextItem();
         assertEquals("tab1", result);
 
-        page.getPanelTab().switchTo(1);
+        page.getTabPanel().switchTo(1);
         result = JsNextItem();
         assertEquals("tab3", result);
     }
 
     @Test
-    @Templates(value = { "plain" })
+    @Templates(value = {"plain"})
     public void testJsLastItem() {
         String result = (String) executeJS("return RichFaces.component('" + page.getPanelTabAsWebElement().getAttribute("id")
-            + "').lastItem()");
+                + "').lastItem()");
         assertEquals("tab5", result);
     }
 }
