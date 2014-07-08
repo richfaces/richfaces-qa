@@ -11,7 +11,6 @@ http://www.fsf.org. -->
             xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 
     <engine>
-        <property name="maxTestClassesBeforeRestart">${arquillian.maxTestClassesBeforeRestart:10}</property>
         <property name="deploymentExportPath">target/</property>
     </engine>
 
