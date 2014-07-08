@@ -33,6 +33,7 @@ import javax.faces.context.FacesContext;
 import org.richfaces.component.UITab;
 import org.richfaces.component.UITabPanel;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.tests.metamer.bean.RichBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -218,7 +219,7 @@ public class RichTabPanelBean implements Serializable {
     }
 
     public List<String> getTestListA() {
-        logger.info("getTestListA");
+        RichBean.logToPage("getTestListA");
 
         List<String> listA = new ArrayList<String>(4);
         listA.add("Hyundai i30");
@@ -230,7 +231,7 @@ public class RichTabPanelBean implements Serializable {
     }
 
     public List<String> getTestListB() {
-        logger.info("getTestListB");
+        RichBean.logToPage("getTestListB");
 
         List<String> listB = new ArrayList<String>(4);
         listB.add("pineapple");
