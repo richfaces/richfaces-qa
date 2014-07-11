@@ -22,6 +22,14 @@
         </configuration>
     </container>
 
+    <container qualifier="wildfly-managed-8-1-https">
+        <configuration>
+            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
+            <property name="serverConfig">standalone.xml</property>
+            <property name="enableAssertions">false</property>
+        </configuration>
+    </container>
+
     <extension qualifier="selenium-server">
         <property name="port">8444</property>
         <property name="browserSessionReuse">true</property>
