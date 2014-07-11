@@ -36,6 +36,7 @@
         <property name="firefoxProfileTemplate">${firefoxProfileTemplate}</property>
         <property name="trustStore">${trustStore}</property>
         <property name="trustStorePassword">abc123</property>
+	<property name="trustAllSSLCertificates">true</property>
     </extension>
 
     <extension qualifier="graphene">
