@@ -135,16 +135,6 @@ public class TestEditor extends AbstractWebDriverTest {
     }
 
     @Test
-    public void testSkin() {
-        // WebElement elemWithClassAttribute = driver.findElement(ByJQuery.jquerySelector(".cke_skin_richfaces"));
-        WebElement elemWithClassAttribute = driver.findElement(By.cssSelector("span[id$='editor:inp']"));
-        verifySkin("kama", elemWithClassAttribute);
-        verifySkin("office2003", elemWithClassAttribute);
-        verifySkin("richfaces", elemWithClassAttribute);
-        verifySkin("v2", elemWithClassAttribute);
-    }
-
-    @Test
     @Templates("plain")
     public void testStyle() {
         final String style = "background-color: yellow; font-size: 1.5em;";
