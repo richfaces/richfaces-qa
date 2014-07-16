@@ -21,6 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jQueue;
 
+import static org.jboss.arquillian.graphene.Graphene.waitAjax;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 
@@ -28,6 +29,7 @@ import java.net.URL;
 import java.util.Random;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.TextInputComponentImpl;
@@ -35,6 +37,8 @@ import org.richfaces.fragment.log.Log.LogEntryLevel;
 import org.richfaces.fragment.log.RichFacesLog;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.Test;
+
+import com.google.common.base.Predicate;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -45,6 +49,8 @@ public class TestRF12132 extends AbstractWebDriverTest {
     private TextInputComponentImpl input;
     @FindBy(css = "[id$=log]")
     private RichFacesLog log;
+    @FindBy(css = "[id$=log]")
+    private WebElement logAsWebElement;
     @FindBy(css = "[id$=output]")
     private WebElement output;
     @FindBy(css = "[id$=action]")
@@ -75,8 +81,21 @@ public class TestRF12132 extends AbstractWebDriverTest {
         input.clear().sendKeys(text);
         Graphene.guardAjax(submitButton).click();
         if (submitButton == this.submitButtonWithNotExistingOncompleteFunction) {
-            assertEquals(log.getLogEntries().size(), 1);
-            assertEquals(log.getLogEntries().getItem(0).getContent(), "Error in method execution: notExistingFunction is not defined");
+            waitAjax(driver).until(new Predicate<WebDriver>() {
+
+                @Override
+                public boolean apply(WebDriver arg0) {
+                    return log.getLogEntries().size() == 1;
+                }
+            });
+            waitAjax(driver).until(new Predicate<WebDriver>() {
+
+                @Override
+                public boolean apply(WebDriver arg0) {
+                    return log.getLogEntries().getItem(0).getContent()
+                        .equalsIgnoreCase("Error in method execution: notExistingFunction is not defined");
+                }
+            });
             log.clear();
         }
         assertEquals(log.getLogEntries().size(), 0);
