@@ -29,7 +29,7 @@ import org.openqa.selenium.support.FindBy;
  */
 public class ICLTabPanelPage extends ICLPage {
 
-    @FindBy(css = "td[id$='tab2:header:inactive']")
+    @FindBy(css = "td[id$='tab2:header']")
     public WebElement panel;
 
     @Override
