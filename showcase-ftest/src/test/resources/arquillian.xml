@@ -107,27 +107,23 @@
     </extension>
 
     <extension qualifier="webdriver">
-        <property name="browserCapabilities">${browser.capabilities}</property>
+        <property name="browser">firefox</property>
         <property name="remoteAddress">http://localhost:4444/wd/hub/</property>
         <property name="javascriptEnabled">true</property>
     </extension>
-
-    <extension qualifier="android">
-        <property name="home">${android.sdk.home}</property>
-        <property name="serialId">${android.serial}</property>
-        <property name="abi">armeabi-v7a</property>
-        <property name="verbose">true</property>
-        <property name="force">true</property>
-        <property name="apiLevel">16</property>
-        <property name="avdName">showcase-webdriver-ftest</property>
-        <property name="emulatorBootupTimeoutInSeconds">180</property>
-        <property name="skip">${android.skip}</property>
+    
+    <extension qualifier="visual-testing">
+        <property name="firstRun">true</property>
     </extension>
-
-    <extension qualifier="android-drone">
-        <property name="androidServerApk">src/test/resources/android-server-${android.apk.version}.apk</property>
-        <property name="verbose">true</property>
-        <property name="webdriverPortHost">4444</property>
+    
+    <extension qualifier="screenshooter">
+        <property name="takeAfterTest">true</property>
+        <property name="takeBeforeTest">true</property>
+    </extension>
+    
+    <extension qualifier="rusheye">
+        <property name="output">target/suite.xml</property>
+        <property name="patternBase">target/screenshots/org.richfaces.tests.showcase.ajax.TestAjax/testEraseStringFromInputAndCheckTheOutput/</property>
     </extension>
 
 </arquillian>
