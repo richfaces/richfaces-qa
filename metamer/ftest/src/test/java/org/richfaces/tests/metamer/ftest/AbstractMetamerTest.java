@@ -24,10 +24,8 @@ package org.richfaces.tests.metamer.ftest;
 import java.io.File;
 import java.net.URL;
 import java.util.List;
-import org.eu.ingwar.tools.arquillian.extension.suite.annotations.ArquillianSuiteDeployment;
 
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.OverProtocol;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.arquillian.testng.Arquillian;
@@ -47,7 +45,6 @@ import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annota
  * @version $Revision: 22749 $
  */
 @RunAsClient
-@ArquillianSuiteDeployment
 public abstract class AbstractMetamerTest extends Arquillian {
 
     @ArquillianResource
@@ -76,7 +73,6 @@ public abstract class AbstractMetamerTest extends Arquillian {
     public abstract URL getTestUrl();
 
     @Deployment(testable = false)
-    @OverProtocol("Servlet 3.0")
     public static WebArchive createTestArchive() {
         WebArchive war;
         if(runInPortalEnv) {
