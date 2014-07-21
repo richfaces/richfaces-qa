@@ -157,6 +157,14 @@ http://www.fsf.org. -->
         </configuration>
     </container>
 
+    <container qualifier="tomcat-remote-7">
+        <configuration>
+            <property name="user">tomcat</property>
+            <property name="pass">tomcat</property>
+            <property name="enableAssertions">false</property>
+        </configuration>
+    </container>
+
     <extension qualifier="selenium-server">
         <property name="browserSessionReuse">true</property>
         <property name="port">8444</property>
