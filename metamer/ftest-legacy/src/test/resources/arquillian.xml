@@ -41,6 +41,14 @@ http://www.fsf.org. -->
         </protocol>
     </container>
 
+    <container qualifier="tomcat-remote-7">
+        <configuration>
+            <property name="user">tomcat</property>
+            <property name="pass">tomcat</property>
+            <property name="enableAssertions">false</property>
+        </configuration>
+    </container>
+
     <container qualifier="jbossas-managed-7-1" default="true">
         <configuration>
             <property name="jbossHome">target/jboss-as-7.1.1.Final</property>
