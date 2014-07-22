@@ -27,8 +27,8 @@ import static org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitc
 
 import java.util.Collection;
 import java.util.List;
-import org.richfaces.fragment.dataTable.AbstractTable;
 
+import org.richfaces.fragment.dataTable.AbstractTable;
 import org.richfaces.model.Filter;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.FilteringHeaderInterface;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.FilteringRowInterface;
@@ -58,14 +58,17 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
 
     public void testFilterSex() {
         getTable().getHeader().filterSex(Sex.MALE);
+        waiting(500);
         filterEmployee.sex = Sex.MALE;
         verifyFiltering();
 
         getTable().getHeader().filterSex(Sex.FEMALE);
+        waiting(500);
         filterEmployee.sex = Sex.FEMALE;
         verifyFiltering();
 
         getTable().getHeader().filterSex(null);
+        waiting(500);
         filterEmployee.sex = null;
         verifyFiltering();
     }
@@ -73,7 +76,9 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
     public void testFilterName() {
         for (String filterName : FILTER_NAMES) {
             getTable().getHeader().getFilterNameInput().clear();
+            waiting(500);
             getTable().getHeader().filterName(filterName);
+            waiting(500);
             filterEmployee.name = filterName;
             verifyFiltering();
         }
@@ -82,7 +87,11 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
     public void testFilterTitle() {
         for (String filterTitle : FILTER_TITLES) {
             getTable().getHeader().getFilterTitleInput().clear();
+            // Wait for complete Ajax request and display data
+            waiting(500);
             getTable().getHeader().filterTitle(filterTitle);
+            // Wait for complete Ajax request and display data
+            waiting(500);
             filterEmployee.title = filterTitle;
             verifyFiltering();
         }
@@ -169,7 +178,7 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
     public void verifyFiltering() {
         expectedEmployees = filter(EMPLOYEES, getFilter());
 
-        if(dataScroller2.advanced().getCountOfVisiblePages() > 1) {
+        if (dataScroller2.advanced().getCountOfVisiblePages() > 1) {
             dataScroller2.switchTo(1);
         }
         rows = getTable().advanced().getNumberOfVisibleRows();
