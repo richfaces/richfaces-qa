@@ -1,6 +1,6 @@
 = Release Process
 
-This guide provides a chronological steps which goes through release tagging, and publishing. Every RichFaces 5.x release is tested both automatically (i.e. Jenkins runs Selenium test suite) and manually in chosen web browsers. All release Jenkins jobs can be found in https://jenkins.mw.lab.eng.bos.redhat.com/hudson/view/RichFaces/view/Release/[Release] tab on Jenkins.
+This guide provides a chronological steps which goes through release tagging, and publishing. Every RichFaces 4.5.x release is tested both automatically (i.e. Jenkins runs Selenium test suite) and manually in chosen web browsers. All release Jenkins jobs can be found in https://jenkins.mw.lab.eng.bos.redhat.com/hudson/view/RichFaces/view/Release/[Release] tab on Jenkins.
 
 == Prerequisites
 
@@ -37,7 +37,7 @@ Use following template for a `release-settings.xml` and pass it to all Maven exe
 </settings>
 ----
 
-Using these settings you will use separated local repository which will be popullated only with artifacts from https://repository.jboss.org/nexus/content/repositories/staging/[JBoss Staging repository] and released artifacts. That way you can verify that the build is reproducible using JBoss Maven repositories.
+Using these settings you will use separated local repository which will be populated only with artifacts from https://repository.jboss.org/nexus/content/repositories/staging/[JBoss Staging repository] and released artifacts. That way you can verify that the build is reproducible using JBoss Maven repositories.
 
 === Nexus Information
 
@@ -45,7 +45,7 @@ Once the release is done and Nexus's Staging repository for given release is clo
 
 === First Steps
 
-QE team lead will create a JIRA task in project RFPL for testing release containing subtasks for each member of team. The parent task and its subtask need to have "QE" component set. The easiest way is to clone QE release task from latest release, e.g. https://issues.jboss.org/browse/RFPL-3008[RFPL-3008]. Fix version and task summary need to be changed manually in both parent task and all subtask. The umbrella JIRA task should be linked to this QE task. Sub tasks should be self-describing or should contain details about what needs to be tested.
+QE team lead will create a JIRA task in project RFPL for testing release containing subtasks for each member of team. The parent task and its subtask need to have "QE" component set. The easiest way is to clone QE release task from latest release, e.g. https://issues.jboss.org/browse/RFPL-3375[RFPL-3375]. Fix version and task summary need to be changed manually in both parent task and all subtasks. The umbrella JIRA task should be linked to this QE task. Sub tasks should be self-describing or should contain details about what needs to be tested.
 
 === Releasing Functional Test Suite
 
@@ -59,8 +59,8 @@ QE team lead will create a JIRA task in project RFPL for testing release contain
 .. Exceptionally, it is possible to add `-DignoreSnapshots=true` to the `CONF` variable in release.sh script.
 . Run release script.
 .. First, script will ask you if the specified version of RichFaces is correct.
-.. Then the release script will ask for tests release version. Use timestamp format, e.g. `4.3.4.20130919-Final`.
-.. Then the release script will ask for new development version, use next suitable snapshot, e.g. `4.3.5-SNAPSHOT`.
+.. Then the release script will ask for tests release version. Use timestamp format, e.g. `4.5.0.20140716-Alpha3 `.
+.. Then the release script will ask for new development version, use next suitable snapshot, e.g. `4.5.0-SNAPSHOT`.
 .. At the end the release script will ask for path to your settings.xml file, use path to the file prepared in step 2.1.
 . Follow the instructions (press ENTER) to go through all the steps: clean, dry run, clean, prepare, perform.
 . After prepare, the tag is created. You should see the tag on Github at this moment.
