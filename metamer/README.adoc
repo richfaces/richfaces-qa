@@ -1,0 +1,147 @@
+= Metamer
+
+Metamer is a testing application and test suite which covers all of RichFaces 4 components and it is able to display them in different templates (tables, accordion, uirepeat, ...)
+
+== Metamer Maven Structure 
+
+Metamer consists of root module and three submodules:
+
+* root - parent for application, ftest and ftest-legacy
+* application - Java-EE application
+* ftest-source - contains majority of tests
+* ftest-legacy - legacy test suite using Selenium 1
+
+== Metamer Application Structure
+
+Metamer is Maven based web application which can be deployed onto Wildfly 8 (and possibly any other Java EE container) and Tomcat 7 and 8.
+
+Source code is available at https://github.com/richfaces/richfaces-qa/tree/master/metamer[GitHub].
+
+=== JSF Page per Component/Feature
+
+* Templates
+** configurable nesting of templates using various container components:
+** root: +webapp/templates/template.xhtml+
+** templates:
+*** plain
+*** iteration - a4jRepeat, hDataTable, richDataTable...
+*** panels -  richPanel, richTabPanel, richTogglePanel, richAccordion...
+* Page Parts
+** template.xhtml - nesting mechanism (see above)
+** header.xhtml - contains general controls
+** footer.xhtml - contains output of VersionBean
+* Customization per component (ui:insert in template.xhtml):
+** outOfTemplateBefore - usually contains additional controls for advanced features of components which can’t be covered by customization of attribute values
+** content - contains component nested in all configured templates
+** outOfTemplateAfter - as for outOfTemplateBefore, usually contains attribute list
+* Attributes
+** attributes for each component are bound directly from page using following notation:
+*** +#{componentBean.attributes[‘attributeName’].value}+
+*** where +attributes+ stands for +class Attributes extends Map<String, Attribute>+
+*** attributes are loaded to map from richfaces’s faces-config.xml
+*** attributes can have predefined enumeration values using +ComponentBean.properties+ files
+* Separation
+** each component has own package (named like Bean for given component) for component samples
+** in each package there is:
+*** list.xhtml - the links to all samples
+*** simple.xhtml - default component usage (not compulsory)
+*** {feature}.xhtml - feature sample
+
+=== Managed Beans
+
+* per component (and some per component/feature)
+* bean.* packages
+* RichBean
+** serves common functionality for general tests (actions, action listeners)
+* TemplatesBean
+** serves list of templates for user session
+* PhasesBean
+** holds the list of phases which request goes through
+** phases provided by RichPhaseListener
+* VersionBean
+** provides set of runtime and browser versions
+** output on each Metamer page => can be copied to JIRA’s environment
+
+=== Model
+
+* provides models collections for iteration
+* loaded from XMLs using JAXB
+* model.* packages
+* exposed in bean Model
+
+=== Additional Resources
+
+* any other resources are located under +webapp/resources/*+
+
+== Building and running Metamer
+
+Metamer needs to be built in several profiles to satisfy compatibility with various runtimes and JSF implementations. To build the application, run bash script +build.sh+ in root directory of Metamer. This script generates several WAR archives with application in directory +application/target+ which can be used in various scenarios:
+
+* metamer-glassfish31.war - to deploy on GlassFish 3.1
+* metamer-jbas71.war - to deploy on Wildfly 8.x
+* metamer-tomcat7-mojarra.war - with bundled JSF Mojarra reference implementation to deploy on Tomcat 7
+* metamer-tomcat7-myfaces.war - with bundled JSF MyFaces to deploy on Tomcat 7
+* metamer-tomee15.war - to deploy on TomEE 1.5.x
+
+To build the application with one specific profile run +mvn clean install -DskipTests -P{profileName}+ where +profileName+ can be found in https://github.com/richfaces/richfaces-qa/blob/master/pom.xml[pom.xml] in root directory. Created WAR file will be located in +application/target+ folder.
+
+To deploy the application just copy the WAR file into server deployment folder. Optionally you can import the project into IDE (Eclipse, JBDS,...) and deploy directly from IDE.
+
+== Ftest Development
+
+=== Running a test
+* switch to metamer/ftest directory and run +mvn clean verify -DskipTests -PprofileName -Dtest=testName+
+** skipTests will skip all other tests except for those you state in -Dtest
+** profileName is a name of a container you want to use, see pom.xml in parent for their names
+*** e.g. +-Pwildfly-remote-8-1+
+** testName is a name of a specific test to run
+*** e.g. +-Dtest=TestEditor+ for all tests in TestEditor class or +-Dtest=TestEditor#testRendered+ to run just one method
+*** regular expression can be used, for instance +-Dtest=TestA*+ will run all test classes which name begins with 'TestA'
+* by default Firefox will be used as browser, to change this to e.g. Chrome please follow the instructions from Arquillian guide for remote-reusable browsers
+
+=== Creating new tests
+** create or modify .xhtml in the application/src/main/webapp/components, this is the facelet which will be loaded in the test
+** create .java test class in the package for the component, in the ftest/src/test/java/...
+** we are using Arquillian Graphene 2, tests have these specifics:
+*** tests can extend AbstractWebdriverTest, have a look at: method with @Deployment annotation, @Drone WebDriver browser injection point, @ArquillianResource contextRoot, @BeforeMethod loadPage
+*** we are using Page Object pattern, have a look at @Page annotation
+*** we are using Page Fragments pattern, have a look at @FindBy annotations, for more information see Graphene documentation
+ 
+== Creating issue reproducers in Metamer
+
+* when creating new facelet for the issue, create it under affected component with the name of issue number (e.g. rf-15422.xhtml)
+** the newly created issue should also contain a steps to reproduce the issue, e.g. +<r:panel header="steps to reproduce">1. blah blah <br /> 2. blah blah</r:panel>+
+** list the newly created facelet also in the list.xhtml, together with the issue description and reference
+* create also a test class with the same name (e.g. RF15422) under the package for the affected component
+* annotate test method with:
+
+** @Test(groups = "Future")
+
+** @IssueTracking(value = { "https://issues.jboss.org/browse/RF-15422" })
+
+* try to reuse existing backing beans, otherwise create new ones in the package: metamer / application / src / main / java / org / richfaces / tests / metamer / bean / issues
+* make a comment in the JIRA issue what facelet reproduce the issue, and also steps to reproduce it
+
+ 
+
+ 
+== Metamer RichFaces Bug Report Guidelines
+
+. Find if JIRA already exists (use filters to ease your work)
+. File new RF/RFPL project Bug. RF is for bugs related to RichFaces (e.g. malfunctioning component). RFPL is for Metamer related problems (e.g. create/fix tests, update app dependency etc.).
+** choose components (probably component-* for specific component bug)
+** choose affects versions
+** for Metamer:
+*** Environment - use Metamer’s footer with detailed runtime, browser and libs info
+*** Steps to Reproduce, e.g.:
+a. open http://localhost:8080/metamer/faces/components/richList/simple.xhtml
+b. set @first=5
+c. set @rows=10
+d. EXPECTED: to show 10 items
+e. ACTUAL: shows 15 items
+*** sometimes no need for Description
+*** screenshot may be needed
+** otherwise:
+*** Description with code sample (Bean + JSF)
+*** use {code} for formatting code samples and stack traces (see JIRA formating rules for more info on formating)
+*** eventually provide specific version control revision or WAR directly
