@@ -28,6 +28,7 @@ import java.net.URL;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -70,7 +71,8 @@ public class TestListWithScroller extends AbstractListTest {
         testNumberedPages(scrollerInTableFooter);
     }
 
-    @IssueTracking("https://issues.jboss.org/browse/RF-11787")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11787")
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat" })
     public void testScrollerWithRowsAttributeInIterationComponents() {
