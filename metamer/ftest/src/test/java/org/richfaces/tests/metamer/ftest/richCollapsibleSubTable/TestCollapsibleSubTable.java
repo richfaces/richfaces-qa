@@ -112,7 +112,6 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
         verifyFirst(Boolean.FALSE);
     }
 
-    @Test(groups = "Future")
     @RegressionTest("https://issues.jboss.org/browse/RF-12673")
     @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
     public void testFirstInSwitchablePanels() {
