@@ -70,6 +70,7 @@ public class TestListWithScroller extends AbstractListTest {
         testNumberedPages(scrollerInTableFooter);
     }
 
+    @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-11787")
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat" })
