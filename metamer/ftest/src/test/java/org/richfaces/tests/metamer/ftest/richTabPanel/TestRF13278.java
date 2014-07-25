@@ -11,8 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.tabPanel.RichFacesTabPanel;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.testng.annotations.Test;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 
 public class TestRF13278 extends AbstractWebDriverTest {
 
@@ -24,8 +23,7 @@ public class TestRF13278 extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richTabPanel/rf-13278.xhtml");
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-13278")
+    @RegressionTest("https://issues.jboss.org/browse/RF-13278")
     public void testTabHeaderIsUpdatedPerAjax() {
         assertSecondTabHeaderEquals("0 clicks");
 
