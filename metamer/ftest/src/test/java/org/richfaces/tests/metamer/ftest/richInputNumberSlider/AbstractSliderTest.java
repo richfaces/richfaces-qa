@@ -98,14 +98,17 @@ public abstract class AbstractSliderTest extends AbstractWebDriverTest {
 
     public void testMoveWithSlider() {
         moveWithSliderActionWithWaitRequest(0).perform();
+        Graphene.waitGui().until().element(output).text().equalTo("-10");
         assertEquals(slider.advanced().getInput().getStringValue(), "-10", "Input was not updated.");
         assertEquals(output.getText(), "-10", "Output was not updated.");
 
         moveWithSliderActionWithWaitRequest(35).perform();
+        Graphene.waitGui().until().element(output).text().equalTo("-7");
         assertEquals(slider.advanced().getInput().getStringValue(), "-7", "Input was not updated.");
         assertEquals(output.getText(), "-7", "Output was not updated.");
 
         moveWithSliderActionWithWaitRequest(slider.advanced().getWidth()).perform();
+        Graphene.waitGui().until().element(output).text().equalTo("10");
         assertEquals(slider.advanced().getInput().getStringValue(), "10", "Input was not updated.");
         assertEquals(output.getText(), "10", "Output was not updated.");
     }
