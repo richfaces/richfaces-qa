@@ -1,15 +1,18 @@
 package org.richfaces.tests.metamer.ftest.richTab;
 
+import static org.jboss.arquillian.graphene.Graphene.waitAjax;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
+
+import com.google.common.base.Predicate;
 
 public class TestRF12108 extends AbstractWebDriverTest{
 
@@ -24,13 +27,19 @@ public class TestRF12108 extends AbstractWebDriverTest{
         return buildUrl(contextPath, "faces/components/richTabPanel/rf-12108.xhtml");
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12108")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12108")
     public void testStatusIsClearedWhenRequestCompleted() {
-        String expectedOutput = "Should be rendered aside as well!";
+        final String expectedOutput = "Should be rendered aside as well!";
         inputNotHandledCorrectly.sendKeys(expectedOutput);
 
-        String actualOutput = outputGenerated.getText();
-        assertEquals(actualOutput, expectedOutput, "The AJAX update is corrupted, when triggered from the second tab!");
+        waitAjax(driver).until(new Predicate<WebDriver>() {
+
+            @Override
+            public boolean apply(WebDriver arg0) {
+                String actualOutput = outputGenerated.getText();
+                return expectedOutput.equals(actualOutput);
+            }
+        });
     }
 }
