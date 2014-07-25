@@ -55,7 +55,8 @@ public class TestListWithScroller extends AbstractListTest {
         testNumberedPages(scrollerOutsideTable);
     }
 
-    @IssueTracking("https://issues.jboss.org/browse/RF-11787")
+    @Test(groups = "Future")
+    @IssueTracking({"https://issues.jboss.org/browse/RF-11787","https://issues.jboss.org/browse/RF-13732"})
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
     public void testScrollerWithRowsAttributeOutIterationComponents() {
@@ -69,8 +70,7 @@ public class TestListWithScroller extends AbstractListTest {
         testNumberedPages(scrollerInTableFooter);
     }
 
-    @Test(groups = "Future")
-    @IssueTracking({"https://issues.jboss.org/browse/RF-11787","https://issues.jboss.org/browse/RF-13732"})
+    @IssueTracking("https://issues.jboss.org/browse/RF-11787")
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat" })
     public void testScrollerWithRowsAttributeInIterationComponents() {
