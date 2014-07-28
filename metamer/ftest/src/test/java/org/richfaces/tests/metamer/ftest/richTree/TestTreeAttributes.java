@@ -348,6 +348,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test(groups = "Future")
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates(value = "a4jRegion")
     @IssueTracking("https://issues.jboss.org/browse/RF-13322")
     public void testOnselectionchangeInRegion() {
