@@ -36,6 +36,7 @@ import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.tree.Tree.TreeNode;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.annotations.Test;
@@ -211,8 +212,8 @@ public class TestTreeAttributes extends AbstractTreeTest {
         testFireEvent(treeAttributes, TreeAttributes.onbeforenodetoggle, expandFirstNodeAjaxAction);
     }
 
-    @Test(groups = { "Future" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-11766")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11766")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = "simpleRichFacesTreeNode")
     public void testOnbeforenodetoggleRFTreeNode() {
         testOnbeforenodetoggle();
