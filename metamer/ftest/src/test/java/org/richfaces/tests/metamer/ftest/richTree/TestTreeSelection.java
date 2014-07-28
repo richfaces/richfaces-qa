@@ -37,23 +37,11 @@ import org.testng.annotations.Test;
 public class TestTreeSelection extends AbstractTreeSelectionTest {
 
     @Test(groups = "smoke")
-    @Templates(exclude = "a4jRegion")
     @Uses({
         @UseWithField(field = "selectionType", valuesFrom = FROM_FIELD, value = "selectionTypeAjax"),
         @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     })
     public void testSubNodesSelectionAjax() {
-        testSubNodesSelectionWithEvents();
-    }
-
-    @Test(groups = "Future")
-    @Templates(value = "a4jRegion")
-    @IssueTracking("https://issues.jboss.org/browse/RF-13322")
-    @Uses({
-        @UseWithField(field = "selectionType", valuesFrom = FROM_FIELD, value = "selectionTypeAjax"),
-        @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
-    })
-    public void testSubNodesSelectionAjaxInRegion() {
         testSubNodesSelectionWithEvents();
     }
 
