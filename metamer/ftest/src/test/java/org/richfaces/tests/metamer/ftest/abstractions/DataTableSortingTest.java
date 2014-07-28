@@ -22,10 +22,9 @@
 package org.richfaces.tests.metamer.ftest.abstractions;
 
 import static java.lang.String.format;
-import static org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes.sortMode;
 import static org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton.FIRST;
 import static org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton.LAST;
-
+import static org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes.sortMode;
 import static org.testng.Assert.assertEquals;
 
 import java.lang.reflect.Method;
@@ -241,23 +240,18 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
         }
 
         int pageRows = getTable().advanced().getNumberOfVisibleRows();
-        for (rowIndex = 0; rowIndex < pageRows; rowIndex++) {
-            verifyRow(rowIndex, rowIndex);
-        }
 
-        dataScroller2.switchTo(2);
-
-        for (rowIndex = 0; rowIndex < getTable().advanced().getNumberOfVisibleRows(); rowIndex++) {
-            modelIndex = pageRows + rowIndex;
-            verifyRow(rowIndex, modelIndex);
+        for (Integer row : getListWithTestPages(pageRows)) {
+            verifyRow(row, row);
         }
 
         dataScroller2.switchTo(LAST);
 
         pageRows = getTable().advanced().getNumberOfVisibleRows();
-        for (rowIndex = 0; rowIndex < getTable().advanced().getNumberOfVisibleRows(); rowIndex++) {
-            modelIndex = EMPLOYEES.size() - pageRows + rowIndex;
-            verifyRow(rowIndex, modelIndex);
+
+        for (Integer row : getListWithTestPages(pageRows)) {
+            modelIndex = EMPLOYEES.size() - pageRows + row;
+            verifyRow(row, modelIndex);
         }
     }
 
@@ -270,8 +264,8 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
         int numberOfKids = getTable().getRow(rowIndex).getNumberOfKids1ColumnValue();
 
         String message = format(
-                "model: {0}; row: {1}; employee: {2}; found: sex '{3}', name '{4}', title '{5}', numberOfKids '{6}'", modelIndex,
-                rowIndex, employee, sex, name, title, numberOfKids);
+            "model: {0}; row: {1}; employee: {2}; found: sex '{3}', name '{4}', title '{5}', numberOfKids '{6}'", modelIndex,
+            rowIndex, employee, sex, name, title, numberOfKids);
 
         assertEquals(sex, employee.getSex(), message);
         assertEquals(name, employee.getName(), message);
@@ -296,7 +290,7 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
 
                         if (String.class.equals(getter.getReturnType())) {
                             Method comparecompareToIgnoreCase = got1.getClass().getMethod("compareToIgnoreCase",
-                                    got2.getClass());
+                                got2.getClass());
                             result = (Integer) comparecompareToIgnoreCase.invoke(got1, got2);
                         } else if (got1 instanceof Comparable<?> && got1 instanceof Comparable<?>) {
                             result = ((Comparable) got1).compareTo(got2);
@@ -320,5 +314,22 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
                 return 0;
             }
         };
+    }
+
+    /**
+     * Created a list containing five number of rows to be tested. These number are relative to the amount of rows visible on
+     * page.
+     *
+     * @param visiblePageRows number of visible table rows on page
+     * @return List containing five numbers (int) of rows to test. These numbers are relative to number of rows on page.
+     */
+    private List<Integer> getListWithTestPages(int visiblePageRows) {
+        List<Integer> rowsToTest = new ArrayList<Integer>();
+        rowsToTest.add(0); // first item
+        rowsToTest.add((int) Math.round((visiblePageRows - 1) / 2 - 0.5 * (visiblePageRows - 1) / 2)); // item in first quarter
+        rowsToTest.add((int) Math.round((visiblePageRows - 1) / 2)); // item in half
+        rowsToTest.add((int) Math.round((visiblePageRows - 1) / 2 + 0.5 * (visiblePageRows - 1) / 2)); // item in third quarter
+        rowsToTest.add(visiblePageRows - 1); // last item
+        return Collections.unmodifiableList(rowsToTest);
     }
 }
