@@ -34,7 +34,6 @@ import java.util.List;
 import org.openqa.selenium.WebElement;
 import org.richfaces.fragment.common.Actions;
 import org.richfaces.fragment.common.Event;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
@@ -217,7 +216,7 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-10212")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10212")
     @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
     @Templates("plain")
     public void testRowClass() {
@@ -236,7 +235,7 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-10212")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10212")
     @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
     @Templates("plain")
     public void testRowClasses() {
@@ -261,7 +260,7 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
         verifyRows(Boolean.FALSE);
     }
 
-    @Test(groups = "Future")
+    @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-12673")
     @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
     public void testRowsInSwitchablePanels() {
