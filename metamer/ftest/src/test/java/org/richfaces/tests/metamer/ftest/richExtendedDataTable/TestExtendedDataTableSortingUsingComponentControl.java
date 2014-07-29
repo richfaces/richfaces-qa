@@ -24,18 +24,24 @@ package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
 
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SortingEDT;
 import org.testng.annotations.Test;
 
 /**
+ * Tests in richExtendedDataTable template do not pass because of bug in page fragment or graphene (EDT inside EDT)
+ * Tests in uiRepeat template fail due to RF-13690.
+ * All the tests are RegressionTests for RF-11359
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22872 $
  */
-@IssueTracking("https://issues.jboss.org/browse/RF-11359")
+@RegressionTest("https://issues.jboss.org/browse/RF-11359")
 public class TestExtendedDataTableSortingUsingComponentControl extends DataTableSortingTest {
 
     @Override
@@ -51,21 +57,63 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
         return table;
     }
 
-    @Test(groups = {"Future"})
+    @Test
+    @Templates(exclude = {"richExtendedDataTable", "uiRepeat"})
     @Override
     public void testSortModeSingle() {
         super.testSortModeSingle();
     }
 
     @Test(groups = {"Future"})
+    @Templates(value = "richExtendedDataTable")
+    public void testSortModeSingleInEDT() {
+        super.testSortModeSingle();
+    }
+
+    @Test(groups = {"Future"})
+    @Templates(value = "uiRepeat")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13690")
+    public void testSortModeSingleInUiRepeat() {
+        super.testSortModeSingle();
+    }
+
+    @Test
+    @Templates(exclude = {"richExtendedDataTable", "uiRepeat"})
     @Override
     public void testSortModeSingleReverse() {
         super.testSortModeSingleReverse();
     }
 
     @Test(groups = {"Future"})
+    @Templates(value = "richExtendedDataTable")
+    public void testSortModeSingleReverseInEDT() {
+        super.testSortModeSingleReverse();
+    }
+
+    @Test(groups = {"Future"})
+    @Templates(value = "uiRepeat")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13690")
+    public void testSortModeSingleReverseInUiRepeat() {
+        super.testSortModeSingleReverse();
+    }
+
+    @Test
+    @Templates(exclude = {"richExtendedDataTable", "uiRepeat"})
     @Override
     public void testSortModeSingleDoesntRememberOrder() {
+        super.testSortModeSingleDoesntRememberOrder();
+    }
+
+    @Test(groups = {"Future"})
+    @Templates(value = "richExtendedDataTable")
+    public void testSortModeSingleDoesntRememberOrderInEDT() {
+        super.testSortModeSingleDoesntRememberOrder();
+    }
+
+    @Test(groups = {"Future"})
+    @Templates(value = "uiRepeat")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13690")
+    public void testSortModeSingleDoesntRememberOrderInUiRepeat() {
         super.testSortModeSingleDoesntRememberOrder();
     }
 
@@ -77,27 +125,83 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
         super.testSortModeSingleRerenderAll();
     }
 
-    @Test(groups = {"Future"})
+    @Test
+    @Templates(exclude={"richExtendedDataTable", "uiRepeat"})
     @Override
     public void testSortModeSingleFullPageRefresh() {
         super.testSortModeSingleFullPageRefresh();
     }
 
     @Test(groups = {"Future"})
+    @Templates(value="richExtendedDataTable")
+    public void testSortModeSingleFullPageRefreshInEDT() {
+        super.testSortModeSingleFullPageRefresh();
+    }
+
+    @Test(groups = {"Future"})
+    @IssueTracking("https://issues.jboss.org/browse/RF-13690")
+    @Templates(value="uiRepeat")
+    public void testSortModeSingleFullPageRefreshInUiRepeat() {
+        super.testSortModeSingleFullPageRefresh();
+    }
+
+    @Test
+    @Templates(exclude={"richExtendedDataTable", "uiRepeat"})
     @Override
     public void testSortModeMulti() {
         super.testSortModeMulti();
     }
 
     @Test(groups = {"Future"})
+    @Templates(value="richExtendedDataTable")
+    public void testSortModeMultiInEDT() {
+        super.testSortModeMulti();
+    }
+
+    @Test(groups = {"Future"})
+    @IssueTracking("https://issues.jboss.org/browse/RF-13690")
+    @Templates(value="uiRepeat")
+    public void testSortModeMultiInUiRepeat() {
+        super.testSortModeMulti();
+    }
+
+    @Test
+    @Templates(exclude = {"richExtendedDataTable", "uiRepeat"})
     @Override
     public void testSortModeMultiReverse() {
         super.testSortModeMultiReverse();
     }
 
     @Test(groups = {"Future"})
+    @Templates(value = "richExtendedDataTable")
+    public void testSortModeMultiReverseInEDT() {
+        super.testSortModeMultiReverse();
+    }
+
+    @Test(groups = {"Future"})
+    @Templates(value = "uiRepeat")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13690")
+    public void testSortModeMultiReverseInUiRepeat() {
+        super.testSortModeMultiReverse();
+    }
+
+    @Test
+    @Templates(exclude = {"richExtendedDataTable", "uiRepeat"})
     @Override
     public void testSortModeMultiReplacingOldOccurences() {
+        super.testSortModeMultiReplacingOldOccurences();
+    }
+
+    @Test(groups = {"Future"})
+    @Templates(value = "richExtendedDataTable")
+    public void testSortModeMultiReplacingOldOccurencesInEDT() {
+        super.testSortModeMultiReplacingOldOccurences();
+    }
+
+    @Test(groups = {"Future"})
+    @Templates(value = "uiRepeat")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13690")
+    public void testSortModeMultiReplacingOldOccurencesInUiRepeat() {
         super.testSortModeMultiReplacingOldOccurences();
     }
 
@@ -109,9 +213,23 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
         super.testSortModeMultiRerenderAll();
     }
 
-    @Test(groups = {"Future"})
+    @Test
+    @Templates(exclude={"richExtendedDataTable", "uiRepeat"})
     @Override
     public void testSortModeMultiFullPageRefresh() {
+        super.testSortModeMultiFullPageRefresh();
+    }
+
+    @Test(groups = {"Future"})
+    @Templates(value = "richExtendedDataTable")
+    public void testSortModeMultiFullPageRefreshInEDT() {
+        super.testSortModeMultiFullPageRefresh();
+    }
+
+    @Test(groups = {"Future"})
+    @IssueTracking("https://issues.jboss.org/browse/RF-13690")
+    @Templates(value = "uiRepeat")
+    public void testSortModeMultiFullPageRefreshInUiRepeat() {
         super.testSortModeMultiFullPageRefresh();
     }
 }
