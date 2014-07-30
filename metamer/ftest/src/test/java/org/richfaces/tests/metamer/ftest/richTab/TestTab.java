@@ -26,9 +26,11 @@ import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.fragment.switchable.SwitchType.CLIENT;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
 import java.net.URL;
 import java.util.List;
@@ -39,21 +41,18 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.page.Page;
-import org.jboss.arquillian.graphene.request.RequestGuardException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
-
-import static org.richfaces.fragment.switchable.SwitchType.CLIENT;
-import static org.testng.Assert.fail;
 
 /**
  * Test case for page /faces/components/richTab/simple.xhtml
@@ -82,8 +81,9 @@ public class TestTab extends AbstractWebDriverTest {
         return elem.getAttribute("class").contains(className);
     }
 
-    @Test(groups = {"Future"})
-    @IssueTracking("https://issues.jboss.org/browse/RF-11427")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11427")
+    @Templates(exclude = "uiRepeat")
     public void testActionAndActionListener() {
         MetamerPage.waitRequest(page.getTabPanel(), WaitRequestType.XHR).switchTo(2);
 
@@ -97,6 +97,13 @@ public class TestTab extends AbstractWebDriverTest {
         page.assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: tab3 -> tab1");
         page.assertListener(PhaseId.INVOKE_APPLICATION, "action listener invoked");
         page.assertListener(PhaseId.INVOKE_APPLICATION, "action invoked");
+    }
+
+    @Test(groups = {"Future"})
+    @Templates(value = "uiRepeat")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13748")
+    public void testActionAndActionListenerInUiRepeat() {
+        testActionAndActionListener();
     }
 
     @Test
