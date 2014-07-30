@@ -175,7 +175,21 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     @IssueTracking("https://issues.jboss.org/browse/RF-13474")
     @Templates("a4jRegion")
     public void testMultiSelectionRemovingUsingCtrlRegion() {
-        testMultiSelectionRemovingUsingCtrl();
+        // select row on second page, then select row on first page with shift
+        IntRange range = new IntRange(3, 34);
+        page.selectRow(range.getMaximumInteger());
+        page.selectRow(range.getMinimumInteger(), SHIFT);
+        selected.addAll(selection(range));
+        verifySelected();
+
+        //remove one item from selection on first page
+        page.deselectRow(5, CONTROL);
+        selected.remove(5);
+        verifySelected();
+
+        // switch to page 2 without any selection and assert again
+        page.getDataScroller().switchTo(2);
+        verifySelected();
     }
 
     private Collection<Integer> order(int... selection) {

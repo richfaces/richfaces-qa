@@ -61,6 +61,10 @@ public class SelectionPage {
     private final Attributes<ExtendedDataTableAttributes> tableAttributes
         = Attributes.<ExtendedDataTableAttributes>getAttributesFor(getFutureDriver());
 
+    public RichFacesDataScroller getDataScroller() {
+        return dataScroller2;
+    }
+
     public void selectRow(int rowIndex, Keys... keys) {
         scrollToPage(rowIndex);
         String currentSelectionBefore = currentSelection.getText();
