@@ -75,7 +75,8 @@ Source code is available at https://github.com/richfaces/richfaces-qa/tree/maste
 
 == Building and running Metamer
 
-Metamer needs to be built in several profiles to satisfy compatibility with various runtimes and JSF implementations. To build the application, run bash script +build.sh+ in root directory of Metamer. This script generates several WAR archives with application in directory +application/target+ which can be used in various scenarios:
+=== Building Metamer
+Metamer can be built in several profiles to satisfy compatibility with various runtimes and JSF implementations. To build the application, run bash script +build.sh+ in root directory of Metamer. This script generates several WAR archives with application in directory +application/target+ which can be used in various scenarios:
 
 * metamer-glassfish31.war - to deploy on GlassFish 3.1
 * metamer-jbas71.war - to deploy on Wildfly 8.x
@@ -85,7 +86,13 @@ Metamer needs to be built in several profiles to satisfy compatibility with vari
 
 To build the application with one specific profile run +mvn clean install -DskipTests -P{profileName}+ where +profileName+ can be found in https://github.com/richfaces/richfaces-qa/blob/master/pom.xml[pom.xml] in root directory. Created WAR file will be located in +application/target+ folder.
 
-To deploy the application just copy the WAR file into server deployment folder. Optionally you can import the project into IDE (Eclipse, JBDS,...) and deploy directly from IDE.
+=== Deploying Metamer
+
+To deploy the application just copy the WAR file into server deployment folder. Optionally you can import the project into IDE (Eclipse, JBDS,...) and deploy directly from IDE. This is particularly useful when you need to do a lot of changes and re-deply often.
+
+=== Changing JSF implementation
+
+To change the JSF implementation you can build Metamer with either a script mentioned above or a pre-set profile named +war-tomcat7-myfaces+
 
 == Ftest Development
 
@@ -99,6 +106,10 @@ To deploy the application just copy the WAR file into server deployment folder. 
 *** regular expression can be used, for instance +-Dtest=TestA*+ will run all test classes which name begins with 'TestA'
 * by default Firefox will be used as browser, to change this to e.g. Chrome please follow the instructions from Arquillian guide for remote-reusable browsers
 
+=== Debugging a test
+* set a breakpoint in code
+* to run debugging from terminal simply add another switch +-Dmaven.surefire.debug test+
+
 === Creating new tests
 ** create or modify .xhtml in the application/src/main/webapp/components, this is the facelet which will be loaded in the test
 ** create .java test class in the package for the component, in the ftest/src/test/java/...
@@ -107,7 +118,7 @@ To deploy the application just copy the WAR file into server deployment folder. 
 *** we are using Page Object pattern, have a look at @Page annotation
 *** we are using Page Fragments pattern, have a look at @FindBy annotations, for more information see Graphene documentation
  
-== Creating issue reproducers in Metamer
+=== Creating issue reproducers in Metamer
 
 * when creating new facelet for the issue, create it under affected component with the name of issue number (e.g. rf-15422.xhtml)
 ** the newly created issue should also contain a steps to reproduce the issue, e.g. +<r:panel header="steps to reproduce">1. blah blah <br /> 2. blah blah</r:panel>+
@@ -122,8 +133,25 @@ To deploy the application just copy the WAR file into server deployment folder. 
 * try to reuse existing backing beans, otherwise create new ones in the package: metamer / application / src / main / java / org / richfaces / tests / metamer / bean / issues
 * make a comment in the JIRA issue what facelet reproduce the issue, and also steps to reproduce it
 
- 
+=== About annotations
+In tests there are several important annotations we use:
 
+* @Test(groups = "Future")
+** adding a test into future group means this test is currently failing and is expected to pass once the fix will be done
+** there is a separate Jenkins job running future tests only
+** once a test passing, change this to @Test only
+
+* @IssueTracking(value= {"https://issues.jboss.org/browse/RF-007"})
+** IssueTracking means the test is tracking an issue and is usually used along with future tests
+** this helps us to determine why the test marked as future fails, once the test is alright this annotation changes to @RegressionTest("")
+
+* @RegressionTest(value= {"https://issues.jboss.org/browse/RF-007"})
+** this indicates that the test was once tracking some issue and that issue was already resolved
+** if such test fails we know that it is a regression problem immediately
+
+* @Templates(value = {"templateName"}, exclude = {"anotherTemplateName"})
+** this indicates in which templates you want the test to execute
+** this will only work if you run the test with +-Dtemplates=value+, if you leave this out the test will be executed in plain template only
  
 == Metamer RichFaces Bug Report Guidelines
 
