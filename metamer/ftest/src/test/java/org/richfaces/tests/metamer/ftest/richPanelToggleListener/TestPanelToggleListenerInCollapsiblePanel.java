@@ -41,8 +41,15 @@ public class TestPanelToggleListenerInCollapsiblePanel extends AbstractPanelTogg
     }
 
     @Test(groups = "smoke")
-    @Templates(exclude = { "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "richCollapsiblePanel", "a4jRepeat" })
+    @Templates(exclude = { "uiRepeat", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "richCollapsiblePanel", "a4jRepeat" })
     public void testPTLAsAttribute() {
+        super.testPTLAsAttributeOfComponent(PTL_as_ComponentAttribute_PhaseName);
+    }
+
+    @Test(groups = "Future")
+    @Templates(value = { "uiRepeat"})
+    @IssueTracking(value = "https://issues.jboss.org/browse/RF-13690")
+    public void testPTLAsAttributeInUiRepeat() {
         super.testPTLAsAttributeOfComponent(PTL_as_ComponentAttribute_PhaseName);
     }
 
@@ -82,8 +89,15 @@ public class TestPanelToggleListenerInCollapsiblePanel extends AbstractPanelTogg
     }
 
     @Test
-    @Templates(exclude = { "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "richCollapsiblePanel", "a4jRepeat" })
+    @Templates(exclude = { "uiRepeat", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "richCollapsiblePanel", "a4jRepeat" })
     public void testPTLInsideComponentUsingType() {
+        super.testPTLInComponentWithListener(PTL_inComponent_usingType_PhaseName);
+    }
+
+    @Test(groups = "Future")
+    @Templates(value = "uiRepeat")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13690")
+    public void testPTLInsideComponentUsingTypeInUiRepeat() {
         super.testPTLInComponentWithListener(PTL_inComponent_usingType_PhaseName);
     }
 
