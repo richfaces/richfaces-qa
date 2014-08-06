@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" 
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      >
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html">
 
-    <!--
+<!--
     JBoss, Home of Professional Open Source
     Copyright 2010-2014, Red Hat, Inc. and individual contributors
     by the @authors tag. See the copyright.txt in the distribution for a
@@ -27,23 +25,26 @@
     02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-    <ui:composition template="placeholderTemplateNonJSF.xhtml">
-        <ui:define name="view">
-            <f:metadata>
-                <f:viewParam name="templates" value="#{templateBean.templates}">
-                    <f:converter converterId="templatesListConverter" />
-                </f:viewParam>
-            </f:metadata>
-        </ui:define>
-        <ui:define name="testedComponents">
-            <textarea id="input1" name="input1"/>        
-            <br/>
-            <br/>
-            <textarea id="input2" name="input2"/>
-            <br/>
-            <br/>
-            <textarea id="input3" name="input3"/>
-            <ui:include src="placeholder.xhtml"/>
-        </ui:define>
-    </ui:composition>
+<ui:composition template="placeholderTemplateNonJSF.xhtml">
+    <ui:define name="view">
+        <f:metadata>
+            <f:viewParam name="templates" value="#{templateBean.templates}">
+                <f:converter converterId="templatesListConverter" />
+            </f:viewParam>
+        </f:metadata>
+    </ui:define>
+    <ui:define name="testedComponents">
+        <h:panelGroup id="panelGroup">
+            <!--         Adding a panelGroup a is a workaround mentioned in RF-13739 -->
+            <textarea id="input1" name="input1" />
+            <br />
+            <br />
+            <textarea id="input2" name="input2" />
+            <br />
+            <br />
+            <textarea id="input3" name="input3" />
+            <ui:include src="placeholder.xhtml" />
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>
 </html>
