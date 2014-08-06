@@ -45,6 +45,7 @@ import org.richfaces.fragment.common.Locations;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.tooltip.TextualRichFacesTooltip;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -87,29 +88,20 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
         final int tolerance = 5;
         final LocationWrapper locations = new LocationWrapper();
         tooltip().show().hide();// acquire id of tooltip
-        new Actions(driver)
-            .moveToElement(page.getPanel())
-            .click()// show tooltip
+        new Actions(driver).moveToElement(page.getPanel()).click()// show tooltip
             .addAction(new Action() {
                 @Override
                 public void perform() {
                     tooltip().advanced().waitUntilTooltipIsVisible().perform();
                     locations.setLocations(Utils.getLocations(tooltip().advanced().getTooltipElement()));
                 }
-            })
-            .moveByOffset(-moveBy, 0)
-            .addAction(new Action() {
+            }).moveByOffset(-moveBy, 0).addAction(new Action() {
                 @Override
                 public void perform() {
-                    Utils.tolerantAssertLocationsEquals(
-                        tooltip().advanced().getTooltipElement(),
-                        tooltipWillMove
-                        ? locations.getLocations().moveAllBy(-moveBy, 0)
-                        : locations.getLocations(),
-                        tolerance, tolerance, "");
+                    Utils.tolerantAssertLocationsEquals(tooltip().advanced().getTooltipElement(), tooltipWillMove ? locations
+                        .getLocations().moveAllBy(-moveBy, 0) : locations.getLocations(), tolerance, tolerance, "");
                 }
-            })
-            .perform();
+            }).perform();
     }
 
     @Test
@@ -138,9 +130,27 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
         testDirection(new ShowElementAndReturnAction() {
             @Override
             public WebElement perform() {
-                return tooltip().show().advanced().getTooltipElement();
+                new Actions(driver).moveToElement(page.getPanel()).build().perform();
+                return tooltip().advanced().getTooltipElement();
             }
         });
+    }
+
+    @Test(groups = "Future")
+    @Templates("plain")
+    @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "")
+    @IssueTracking(value = "https://issues.jboss.org/browse/RF-13760")
+    public void testJointPoint() {
+        tooltip().show().hide();// workaround: first the tooltip will show on the corner of the panel, then always in the middle
+        tooltipAttributes.set(TooltipAttributes.followMouse, Boolean.FALSE);
+        testJointPoint(page.getPanel().getSize().getWidth(), page.getPanel().getSize().getHeight(),
+            (new ShowElementAndReturnAction() {
+                @Override
+                public WebElement perform() {
+                    new Actions(driver).moveToElement(page.getPanel()).build().perform();
+                    return tooltip().advanced().getTooltipElement();
+                }
+            }));
     }
 
     @Test(groups = "smoke")
@@ -175,7 +185,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testHideEvent() {
-        for (Event event : new Event[]{ Event.MOUSEOUT, Event.DBLCLICK }) {
+        for (Event event : new Event[] { Event.MOUSEOUT, Event.DBLCLICK }) {
             tooltipAttributes.set(TooltipAttributes.hideEvent, event.toString());
             tooltip().advanced().setupHideEvent(event);
             tooltip().show().hide();
@@ -230,9 +240,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     @UseWithField(field = "mode", valuesFrom = FROM_ENUM, value = "")
     public void testMode() {
         tooltipAttributes.set(TooltipAttributes.mode, mode);
-        (mode.equals(TooltipMode.ajax)
-            ? Graphene.guardAjax(tooltip())
-            : Graphene.guardNoRequest(tooltip())).show();
+        (mode.equals(TooltipMode.ajax) ? Graphene.guardAjax(tooltip()) : Graphene.guardNoRequest(tooltip())).show();
         Graphene.guardNoRequest(tooltip()).hide();
     }
 
@@ -342,7 +350,8 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
         testFireEvent("onmousemove", new Action() {
             @Override
             public void perform() {
-                new Actions(driver).triggerEventByWD(Event.MOUSEMOVE, tooltip().show().advanced().getTooltipElement()).perform();
+                new Actions(driver).triggerEventByWD(Event.MOUSEMOVE, tooltip().show().advanced().getTooltipElement())
+                    .perform();
             }
         });
     }
@@ -364,7 +373,8 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
         testFireEvent("onmouseover", new Action() {
             @Override
             public void perform() {
-                new Actions(driver).triggerEventByWD(Event.MOUSEOVER, tooltip().show().advanced().getTooltipElement()).perform();
+                new Actions(driver).triggerEventByWD(Event.MOUSEOVER, tooltip().show().advanced().getTooltipElement())
+                    .perform();
             }
         });
     }
@@ -444,7 +454,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testShowEvent() {
-        for (Event event : new Event[]{ Event.CLICK, Event.DBLCLICK }) {
+        for (Event event : new Event[] { Event.CLICK, Event.DBLCLICK }) {
             tooltipAttributes.set(TooltipAttributes.showEvent, event.toString());
             tooltip().advanced().setupShowEvent(event);
             tooltip().show().hide();
