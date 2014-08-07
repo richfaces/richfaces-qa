@@ -815,7 +815,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * @param attribute name of the attribute that will be set (e.g. style, headerStyle, itemContentStyle)
      */
     protected void testStyle(final WebElement element, BasicAttributes attribute) {
-        final String value = "background-color: yellow; font-size: 1.5em;";
+        final String value = "background-color: yellow;";
         testHTMLAttribute(element, getBasicAttributes(), attribute, value);
     }
 
