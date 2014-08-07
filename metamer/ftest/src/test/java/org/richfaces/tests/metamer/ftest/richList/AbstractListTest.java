@@ -23,9 +23,10 @@ package org.richfaces.tests.metamer.ftest.richList;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-
 import static org.testng.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.openqa.selenium.support.FindBy;
@@ -43,8 +44,7 @@ public abstract class AbstractListTest extends AbstractWebDriverTest {
 
     static final List<Employee> employees = Model.unmarshallEmployees();
     static final int ELEMENTS_TOTAL = employees.size();
-    static final Integer[] INTS = { -1, 0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL,
-        ELEMENTS_TOTAL + 1 };
+    static final Integer[] INTS = { -1, 0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL, ELEMENTS_TOTAL + 1 };
 
     @FindBy(css = "[id$=richList]")
     protected RichFacesList list;
@@ -124,9 +124,25 @@ public abstract class AbstractListTest extends AbstractWebDriverTest {
     private void verifyRows() {
         List<RichFacesListItem> items = list.getItems();
         int rowCount = items.size();
-        for (int position = 0; position < rowCount; position += 2) {
+        List<Integer> rowsToTest = getListWithTestPages(rowCount);
+        for (Integer position: rowsToTest) {
             Employee employee = expectedEmployees.get(position);
             assertEquals(items.get(position).getText(), employee.getName());
         }
+    }
+
+    /**
+     * Returns a list of integers which stand for number of rows which we are going to test.
+     * @param visiblePageRows number of visible rows on the current page
+     * @return List of integers representing a set of rows to test
+     */
+    private List<Integer> getListWithTestPages(int visiblePageRows) {
+        List<Integer> rowsToTest = new ArrayList<Integer>();
+        rowsToTest.add(0); // first item
+        rowsToTest.add((int) Math.round((visiblePageRows - 1) / 2 - 0.5 * (visiblePageRows - 1) / 2)); // item in first quarter
+        rowsToTest.add((int) Math.round((visiblePageRows - 1) / 2)); // item in half
+        rowsToTest.add((int) Math.round((visiblePageRows - 1) / 2 + 0.5 * (visiblePageRows - 1) / 2)); // item in third quarter
+        rowsToTest.add(visiblePageRows - 1); // last item
+        return Collections.unmodifiableList(rowsToTest);
     }
 }
