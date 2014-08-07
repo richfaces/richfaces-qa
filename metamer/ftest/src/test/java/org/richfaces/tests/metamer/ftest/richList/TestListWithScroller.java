@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richList;
 
+import static org.jboss.arquillian.graphene.Graphene.waitAjax;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
@@ -50,24 +51,30 @@ public class TestListWithScroller extends AbstractListTest {
     }
 
     @Test
-    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
+    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "richList",
+            "a4jRepeat", "hDataTable", "uiRepeat" })
     public void testScrollerWithRowsAttributeOut() {
         testNumberedPages(scrollerOutsideTable);
     }
 
     @Test(groups = "Future")
-    @IssueTracking({"https://issues.jboss.org/browse/RF-11787","https://issues.jboss.org/browse/RF-13732"})
-    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-11787", "https://issues.jboss.org/browse/RF-13732" })
+    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "richList",
+            "a4jRepeat", "hDataTable", "uiRepeat" })
     public void testScrollerWithRowsAttributeOutIterationComponents() {
         testNumberedPages(scrollerOutsideTable);
     }
 
     @Test
-    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat" })
+    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "richList",
+            "a4jRepeat", "uiRepeat" })
     public void testScrollerWithRowsAttributeIn() {
+        testNumberedPages(scrollerInTableFooter);
+    }
+
+    @Test(groups = "Future")
+    @Templates(value = "uiRepeat")
+    public void testScrollerWithRowsAttributeInWithUiRepeat() {
         testNumberedPages(scrollerInTableFooter);
     }
 
@@ -80,12 +87,14 @@ public class TestListWithScroller extends AbstractListTest {
     }
 
     private void testNumberedPages(RichFacesDataScroller dataScroller) {
-        final int[] testPages = new int[]{ 3, 10, 1, 9, 2 };
+        final int[] testPages = new int[] { 1, 10, 2 };
         rows = 20;
 
         for (int pageNumber : testPages) {
+            // switch and wait for this action to complete
             dataScroller.switchTo(pageNumber);
-            waiting(5000);
+            waitAjax(driver).until().element(dataScroller.advanced().getActivePageElement()).text()
+                .equalTo(Integer.toString(pageNumber));
             verifyList(dataScroller.getActivePageNumber(), rows);
         }
     }
