@@ -80,6 +80,7 @@ public class TestPopupPanelJSApi extends AbstractWebDriverTest {
     @Test
     public void testHide() {
         openPopupPanel();
+        panel.advanced().moveByOffset(0, 200);// move the panel so the button for hide will be visible
         hide.click();
         panel.advanced().waitUntilPopupIsNotVisible().perform();
     }
