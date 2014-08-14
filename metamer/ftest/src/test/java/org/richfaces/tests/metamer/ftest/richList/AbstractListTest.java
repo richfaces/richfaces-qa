@@ -23,6 +23,7 @@ package org.richfaces.tests.metamer.ftest.richList;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
+
 import static org.testng.Assert.assertEquals;
 
 import java.util.ArrayList;
@@ -124,10 +125,12 @@ public abstract class AbstractListTest extends AbstractWebDriverTest {
     private void verifyRows() {
         List<RichFacesListItem> items = list.getItems();
         int rowCount = items.size();
-        List<Integer> rowsToTest = getListWithTestPages(rowCount);
-        for (Integer position: rowsToTest) {
-            Employee employee = expectedEmployees.get(position);
-            assertEquals(items.get(position).getText(), employee.getName());
+        if (rowCount > 0) {
+            List<Integer> rowsToTest = getListWithTestPages(rowCount);
+            for (Integer position : rowsToTest) {
+                Employee employee = expectedEmployees.get(position);
+                assertEquals(items.get(position).getText(), employee.getName());
+            }
         }
     }
 
