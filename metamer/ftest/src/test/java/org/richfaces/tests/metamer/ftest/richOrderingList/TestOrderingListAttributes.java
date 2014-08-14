@@ -39,7 +39,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.fragment.common.Event;
-import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -154,7 +153,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     @Templates(value = "plain")
     public void testListHeight() {
         int testedValue = 600;
-        int tolerance = 10;
+        int tolerance = 20;
         attributes.set(OrderingListAttributes.listHeight, testedValue);
         assertEquals(Integer.valueOf(orderingList.advanced().getListAreaElement().getCssValue("height").replace("px", "")), testedValue, tolerance);
     }
@@ -163,7 +162,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     @Templates(value = "plain")
     public void testListWidth() {
         int testedValue = 600;
-        int tolerance = 10;
+        int tolerance = 20;
         attributes.set(OrderingListAttributes.listWidth, testedValue);
         assertEquals(Integer.valueOf(orderingList.advanced().getListAreaElement().getCssValue("width").replace("px", "")), testedValue, tolerance);
     }
@@ -193,11 +192,9 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
         testFireEvent(attributes, OrderingListAttributes.onblur, new Action() {
             @Override
             public void perform() {
-                //have to be this way or the blur will not be triggered
-                orderingList.advanced().getListAreaElement().click();
-                orderingList.advanced().getRootElement().click();
-                waiting(500);
-                Utils.triggerJQ(executor, "blur", orderingList.advanced().getItemsElements().get(0));
+                orderingList.select(0).putItAfter(0);
+                page.getRequestTimeElement().click();
+                waiting(1000);
             }
         });
     }

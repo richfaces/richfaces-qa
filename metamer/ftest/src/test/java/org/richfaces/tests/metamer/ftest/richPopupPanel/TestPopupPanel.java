@@ -42,8 +42,8 @@ import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Locations;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.panel.TextualFragmentPart;
-import org.richfaces.fragment.popupPanel.RichFacesPopupPanel;
 import org.richfaces.fragment.popupPanel.PopupPanel.ResizerLocation;
+import org.richfaces.fragment.popupPanel.RichFacesPopupPanel;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
@@ -346,6 +346,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
         openPopupPanel();
         // following is not working reliable, replacing with JS API function
 //        panel.resizeFromLocation(ResizerLocation.S, 0, +120);// resize panel to maximum
+        panel.advanced().moveByOffset(0, 400);// move the panel so the button for resize will be visible
         resize.click();// increases height and width by 10px
         resize.click();// increases height and width by 10px
         checkCssValueOfPanel("height", 400);

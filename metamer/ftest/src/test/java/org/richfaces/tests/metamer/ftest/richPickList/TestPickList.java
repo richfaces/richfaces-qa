@@ -249,7 +249,7 @@ public class TestPickList extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testListWidth() {
         int testedValue = 600;
-        int tolerance = 10;
+        int tolerance = 20;
         pickListAttributes.set(PickListAttributes.listWidth, testedValue);
         assertEquals(
             Integer.valueOf(pickList.advanced().getSourceListAreaElement().getCssValue("width").replace("px", "")),
