@@ -46,6 +46,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -225,10 +226,7 @@ public class TestTab extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testHeaderStyle() {
-        final String value = "background-color: yellow; font-size: 1.5em;";
-        tabAttributes.set(TabAttributes.headerStyle, value);
-        String styleAttr = page.getTabPanel().advanced().getActiveHeaderElement().getAttribute("style");
-        assertTrue(styleAttr.contains(value), "Attribute style should contain \"" + value + "\"");
+        testStyle(page.getTabPanel().advanced().getActiveHeaderElement(), BasicAttributes.headerStyle);
     }
 
     @Test
