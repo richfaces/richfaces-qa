@@ -25,11 +25,8 @@ import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
 import static org.jboss.arquillian.graphene.Graphene.waitAjax;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.richEditor.EditorAttributes.styleClass;
-import static org.richfaces.tests.metamer.ftest.richEditor.EditorAttributes.title;
 import static org.richfaces.tests.metamer.ftest.richEditor.EditorAttributes.toolbar;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
@@ -65,13 +62,6 @@ public class TestEditor extends AbstractWebDriverTest {
 
     private WebElement getEditorTextArea() {
         return driver.findElement(By.tagName(editorTextAreaTag));
-    }
-
-    private void verifySkin(String skinName, WebElement elemWithClassAttribute) {
-        editorAttributes.set(EditorAttributes.skin, skinName);
-        String editorClass = elemWithClassAttribute.getAttribute("class");
-        assertTrue(editorClass.contains("cke_skin_" + skinName), "Seems that skin '" + skinName
-            + "' didn't influence editor's @class attribute!");
     }
 
     @Test
@@ -137,34 +127,19 @@ public class TestEditor extends AbstractWebDriverTest {
     @Test
     @Templates("plain")
     public void testStyle() {
-        final String style = "background-color: yellow; font-size: 1.5em;";
-        editorAttributes.set(EditorAttributes.style, style);
-        assertTrue(getEditorTextArea().getAttribute("style").contains(style));
+        testStyle(getEditorTextArea());
     }
 
     @Test
     @Templates("plain")
     public void testStyleClass() {
-        WebElement textInput = getEditorTextArea();
-        final String styleClassVal = "metamer-ftest-class";
-        editorAttributes.set(styleClass, styleClassVal);
-        assertTrue(textInput.getAttribute("class").contains(styleClassVal));
+        testStyleClass(getEditorTextArea());
     }
 
     @Test
     @Templates("plain")
     public void testTitle() {
-
-        String titleVal = "RichFaces Test";
-
-        // title = null
-        assertFalse(titleVal.equalsIgnoreCase(getEditorTextArea().getAttribute("title")));
-
-        // set title
-        editorAttributes.set(title, titleVal);
-
-        // assert correct attribute value: title
-        assertEquals(getEditorTextArea().getAttribute("title"), titleVal);
+        testTitle(getEditorTextArea());
     }
 
     @Test
