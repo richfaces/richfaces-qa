@@ -224,13 +224,17 @@ public class TestSelect extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-9737")
     @Templates(value = "plain")
     public void testListWidth() {
+        int tolerance = 20;
+        int testedValue = 300;
+        int defaultValue = 200;
+
         selectAttributes.set(SelectAttributes.listWidth, TESTSIZE);
         select.openSelect();
-        assertEquals(listElement.getCssValue("width"), TESTSIZE, "Width of list did not change");
+        assertEquals(Integer.valueOf(listElement.getCssValue("width").replace("px", "")), testedValue, tolerance);
 
         selectAttributes.set(SelectAttributes.listWidth, "");
         select.openSelect();
-        assertEquals(listElement.getCssValue("width"), "200px", "Width of list did not change");
+        assertEquals(Integer.valueOf(listElement.getCssValue("width").replace("px", "")), defaultValue, tolerance);
     }
 
     @Test

@@ -21,6 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.abstractions.message;
 
+import java.util.Map;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.common.ClearType;
@@ -66,9 +68,15 @@ public abstract class AbstractMessageComponentCommonTest extends AbstractWebDriv
         basicAttributes.set(BasicAttributes.lang, testedValue);
         generateValidationMessagesWithWait();
         //get attribute lang of element
+        Object allAtts = executeJS("var items = {}; for (index = 0; index < arguments[0].attributes.length; ++index) {"
+            + " items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value; }; return items;",
+            getTestedElementRoot().getTarget());
+        @SuppressWarnings("unchecked")
+        Map<String, String> map = (Map<String, String>) allAtts;
         String lang1 = getTestedElementRoot().getTarget().getAttribute("xml:lang");
         String lang2 = getTestedElementRoot().getTarget().getAttribute("lang");
-        String attLang = (lang1 == null || lang1.isEmpty() ? lang2 : lang1);
+        String lang3 = map.get("xml:lang");
+        String attLang = (lang1 == null || lang1.isEmpty() ? (lang2 == null || lang2.isEmpty() ? lang3 : lang2) : lang1);
 
         Assert.assertEquals(attLang, testedValue, "Attribute xml:lang should be present.");
     }
@@ -114,7 +122,7 @@ public abstract class AbstractMessageComponentCommonTest extends AbstractWebDriv
     }
 
     public void checkStyle() {
-        final String value = "background-color: yellow; font-size: 1.5em;";
+        final String value = "background-color: yellow;";
         testHTMLAttribute(getTestedElementRoot(), basicAttributes, BasicAttributes.style, value, getGenerateMessagesAction());
     }
 

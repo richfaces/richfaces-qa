@@ -275,7 +275,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     @Templates("plain")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testStyle() {
-        testHTMLAttribute(getFirstNode().advanced().getNodeInfoElement(), firstNodeAttributes, TreeNodeAttributes.style, "background-color: yellow; font-size: 1.5em;");
+        testHTMLAttribute(getFirstNode().advanced().getNodeInfoElement(), firstNodeAttributes, TreeNodeAttributes.style, "background-color: yellow");
     }
 
     @Test
