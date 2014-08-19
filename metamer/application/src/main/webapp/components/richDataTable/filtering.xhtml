@@ -87,7 +87,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:outputText value="There is no data." style="color: red;"/>
                 </f:facet>
 
-                <rich:column id="columnSex" filter="#{richDataTableBean.filterSexImpl}">
+                <rich:column id="columnSex" filter="#{richDataTableBean.filterSexImpl}" filterType="custom">
                     <f:facet name="header">
                         <h:panelGroup>
                             <h:outputText id="columnHeaderSex" value="Sex"  />
@@ -111,7 +111,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </rich:column>
 
 
-                <rich:column id="columnName" filterExpression="#{fn:containsIgnoreCase(record.name, richDataTableBean.filtering['name'])}">
+                <rich:column id="columnName" filterExpression="#{fn:containsIgnoreCase(record.name, richDataTableBean.filtering['name'])}" filterType="custom">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderName" value="Name" />
                         <br/>
@@ -128,7 +128,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </f:facet>
                 </rich:column>
 
-                <rich:column id="columnTitle" filterExpression="#{richDataTableBean.filtering['title'] == null || richDataTableBean.filtering['title'] == '' || record.title == richDataTableBean.filtering['title']}">
+                <rich:column id="columnTitle" filterExpression="#{richDataTableBean.filtering['title'] == null || richDataTableBean.filtering['title'] == '' || record.title == richDataTableBean.filtering['title']}" filterType="custom">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderTitle" value="Title" />
                         <br/>
@@ -145,7 +145,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </f:facet>
                 </rich:column>
 
-                <rich:column id="columnNumberOfKids1" filterExpression="#{empty richDataTableBean.filtering['numberOfKids1'] || record.numberOfKids >= richDataTableBean.filtering['numberOfKids1']}">
+                <rich:column id="columnNumberOfKids1" filterExpression="#{empty richDataTableBean.filtering['numberOfKids1'] || record.numberOfKids >= richDataTableBean.filtering['numberOfKids1']}" filterType="custom">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderNumberOfKids" value="Number of Kids" />
                         <br/>
@@ -162,7 +162,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </f:facet>
                 </rich:column>
 
-                <rich:column id="columnNumberOfKids2">
+                <rich:column id="columnNumberOfKids2" filterType="custom">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderNumberOfKids2" value="Number of Kids" />
                         <br/>

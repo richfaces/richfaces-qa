@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+<!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2014, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+<ui:composition template="/templates/template.xhtml">
+    <ui:param name="componentId" value="richDataTable" />
+
+    <ui:define name="view">
+        <f:metadata>
+            <f:viewParam name="templates" value="#{templateBean.templates}">
+                <f:converter converterId="templatesListConverter" />
+            </f:viewParam>
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="head">
+        <h:outputStylesheet library="css" name="richDataTable.css" />
+    </ui:define>
+
+    <ui:define name="outOfTemplateBefore">
+        <br />
+        <h:outputText value="Show data in table: " />
+        <h:selectBooleanCheckbox id="noDataCheckbox" value="#{richDataTableBean.state}">
+            <a4j:ajax render="#{nestedComponentId} scroller1" />
+        </h:selectBooleanCheckbox>
+        <br />
+        <br />
+        <rich:dataScroller id="scroller1" for="richDataTable" page="#{richDataTableBean.page}" maxPages="7"
+            render="#{nestedComponentId}" />
+    </ui:define>
+
+    <ui:define name="component">
+        <rich:dataTable id="richDataTable" captionClass="#{richDataTableBean.attributes['captionClass'].value}"
+            columnClasses="#{richDataTableBean.attributes['columnClasses'].value}"
+            first="#{richDataTableBean.attributes['first'].value}"
+            footerClass="#{richDataTableBean.attributes['footerClass'].value}"
+            headerClass="#{richDataTableBean.attributes['headerClass'].value}"
+            keepSaved="#{richDataTableBean.attributes['keepSaved'].value}"
+            noDataLabel="#{richDataTableBean.attributes['noDataLabel'].value}"
+            onrowclick="#{richDataTableBean.attributes['onrowclick'].value}"
+            onrowdblclick="#{richDataTableBean.attributes['onrowdblclick'].value}"
+            onrowkeydown="#{richDataTableBean.attributes['onrowkeydown'].value}"
+            onrowkeypress="#{richDataTableBean.attributes['onrowkeypress'].value}"
+            onrowkeyup="#{richDataTableBean.attributes['onrowkeyup'].value}"
+            onrowmousedown="#{richDataTableBean.attributes['onrowmousedown'].value}"
+            onrowmousemove="#{richDataTableBean.attributes['onrowmousemove'].value}"
+            onrowmouseout="#{richDataTableBean.attributes['onrowmouseout'].value}"
+            onrowmouseover="#{richDataTableBean.attributes['onrowmouseover'].value}"
+            onrowmouseup="#{richDataTableBean.attributes['onrowmouseup'].value}"
+            rendered="#{richDataTableBean.attributes['rendered'].value}"
+            rowClass="#{richDataTableBean.attributes['rowClass'].value}"
+            rowClasses="#{richDataTableBean.attributes['rowClasses'].value}"
+            rows="#{richDataTableBean.attributes['rows'].value}" sortMode="#{richDataTableBean.attributes['sortMode'].value}"
+            sortPriority="#{richDataTableBean.attributes['sortPriority'].value}"
+            style="#{richDataTableBean.attributes['style'].value}"
+            styleClass="#{richDataTableBean.attributes['styleClass'].value}"
+            value="#{richDataTableBean.state ? model.employees : null}" var="record" filterVar="filterValue">
+
+            <f:facet name="noData">
+                <h:outputText value="There is no data." style="color: red;" />
+            </f:facet>
+
+            <rich:column id="columnSex">
+                <f:facet name="header">
+                    <h:outputText id="columnHeaderSex" value="Sex" />
+                </f:facet>
+                <h:graphicImage library="images" name="#{record.sex == 'MALE' ? 'male.png' : 'female.png'}" alt="#{record.sex}" />
+                <f:facet name="footer">
+                    <h:outputText id="columnFooterSex" value="Sex" />
+                </f:facet>
+            </rich:column>
+
+
+            <rich:column id="columnName" filterValue="#{richDataTableBean.filtering['name']}"
+                filterExpression="#{empty filterValue or fn:containsIgnoreCase(record.name, filterValue)}"
+                sortBy="#{record.name}">
+                <f:facet name="header">
+                    <h:outputText id="columnHeaderName" value="Name" />
+                    <br />
+                    <h:outputText id="columnHeaderNameFilterType" value="(expression contains ignore case - builtIn)" />
+                </f:facet>
+                <h:outputText value="#{record.name}" />
+                <f:facet name="footer">
+                    <h:outputText id="columnFooterState" value="Name" />
+                </f:facet>
+            </rich:column>
+
+            <rich:column id="columnTitle" filterValue="#{richDataTableBean.filtering['title']}"
+                filterExpression="#{empty filterValue or fn:containsIgnoreCase(record.title, filterValue)}"
+                sortBy="#{record.title}">
+                <f:facet name="header">
+                    <h:outputText id="columnHeaderTitle" value="Title" />
+                    <br />
+                    <h:outputText id="columnHeaderTitleFilterType" value="(expression contains ignore case)" />
+                </f:facet>
+
+                <h:outputText value="#{record.title}" />
+                <f:facet name="footer">
+                    <h:outputText id="columnFooterTitle" value="Title" />
+                </f:facet>
+            </rich:column>
+
+            <rich:column id="columnNumberOfKids1" filterValue="#{richDataTableBean.filtering['numberOfKids1']}"
+                filterExpression="#{empty filterValue or record.numberOfKids gt filterValue or record.numberOfKids eq filterValue}"
+                sortBy="#{record.numberOfKids}">
+                <f:facet name="header">
+                    <h:outputText id="columnHeaderNumberOfKids1" value="Number of Kids" />
+                    <br />
+                    <h:outputText id="columnHeaderNumberOfKids1FilterType" value="(Greater than or equal)" />
+                </f:facet>
+
+                <h:outputText value="#{record.numberOfKids}" />
+                <f:facet name="footer">
+                    <h:outputText id="columnFooterNumberOfKids1" value="Number of Kids" />
+                </f:facet>
+            </rich:column>
+            <rich:column id="columnNumberOfKids2" filterValue="#{richDataTableBean.filtering['numberOfKids2']}"
+                filterExpression="#{empty filterValue or record.numberOfKids lt filterValue or record.numberOfKids eq filterValue}"
+                sortBy="#{record.numberOfKids}">
+                <f:facet name="header">
+                    <h:outputText id="columnHeaderNumberOfKids2" value="Number of Kids" />
+                    <br />
+                    <h:outputText id="columnHeaderNumberOfKids2FilterType" value="(Lesser than or equal)" />
+                </f:facet>
+
+                <h:outputText value="#{record.numberOfKids}" />
+                <f:facet name="footer">
+                    <h:outputText id="columnFooterNumberOfKids2" value="Number of Kids" />
+                </f:facet>
+            </rich:column>
+            <f:facet name="footer">
+                <rich:dataScroller id="scroller2" for="richDataTable" page="#{richDataTableBean.page}" maxPages="7"
+                    render="richDataTable scroller1" />
+            </f:facet>
+        </rich:dataTable>
+    </ui:define>
+
+    <ui:define name="outOfTemplateAfter">
+        <metamer:attributes value="#{richDataTableBean.attributes}" id="attributes" />
+    </ui:define>
+
+</ui:composition>
+</html>
