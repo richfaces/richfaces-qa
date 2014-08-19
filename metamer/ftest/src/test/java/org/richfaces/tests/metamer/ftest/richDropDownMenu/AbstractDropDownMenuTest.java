@@ -131,7 +131,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         getCurrentMenu().advanced().setupShowEvent(Event.CONTEXTCLICK);
         getCurrentMenu().advanced().show(page.getTarget1());
 
-        dropDownMenuAttributes.set(DropDownMenuAttributes.showEvent, "hover");
+        dropDownMenuAttributes.set(DropDownMenuAttributes.showEvent, "mouseover");
         getCurrentMenu().advanced().setupShowEvent(Event.MOUSEOVER);
         getCurrentMenu().advanced().show(page.getTarget1());
 
