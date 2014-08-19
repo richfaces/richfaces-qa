@@ -498,8 +498,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
 
     @Test
     public void testShowEvent() {
-        updateShowAction();
-        contextMenuAttributes.set(ContextMenuAttributes.showEvent, "hover");
+        contextMenuAttributes.set(ContextMenuAttributes.showEvent, "mouseover");
         page.getContextMenu().advanced().setupShowEvent(Event.MOUSEOVER);
         page.getContextMenu().advanced().show(page.getTargetPanel1());
 
