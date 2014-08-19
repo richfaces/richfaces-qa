@@ -41,20 +41,19 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     <ui:define name="head">
         <style type="text/css">
                 .rf-edt[id$=richEDT] .rf-edt-c {
-                    height: 30px !important;
+                    height: 40px !important;
                     vertical-align: middle;
                 }
 
                 .rf-edt[id$=richEDT] {
-                    width: 820px !important;
+                    width: 704px !important;
                     height: 400px !important;
                 }
 
                 .rf-edt[id$=richEDT] .rf-edt-hdr-c  {
-                    height: 5.3em !important;
+                    height: 64px !important;
                 }
-
-                .rf-edt[id$=richEDT] .rf-edt-c-columnSex {
+                 .rf-edt[id$=richEDT] .rf-edt-c-columnSex {
                     width: 100px !important;
                     text-align: center;
                 }
@@ -67,14 +66,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     width: 150px !important;
                 }
 
-                .rf-edt[id$=richEDT] .rf-edt-c-columnNumberOfKids {
+                .rf-edt[id$=richEDT] .rf-edt-c-columnNumberOfKids1 {
                     text-align: center;
                     width: 150px !important;
                 }
 
                 .rf-edt[id$=richEDT] .rf-edt-c-columnNumberOfKids2 {
                     text-align: center;
-                    width: 250px !important;
+                    width: 150px !important;
                 }
             </style>
         </ui:define>
@@ -131,7 +130,6 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <rich:column id="columnSex">
                     <f:facet name="header">
                             <h:outputText id="columnHeaderSex" value="Sex"  />
-                            <br/>
                     </f:facet>
 
                     <h:graphicImage library="images" name="#{record.sex == 'MALE' ? 'male.png' : 'female.png'}" alt="#{record.sex}" />
@@ -178,7 +176,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 filterExpression="#{empty filterValue or record.numberOfKids gt filterValue or record.numberOfKids eq filterValue}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderNumberOfKids" value="Number of Kids" />
-                        <br/>
+                          <br/>
+                        <h:outputText id="columnHeaderNumberOfKidsType" value="(expression greater or equals)" />
                     </f:facet>
                     <h:outputText value="#{record.numberOfKids}" />
                     <f:facet name="footer">
@@ -187,11 +186,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </rich:column>
 
                 <rich:column id="columnNumberOfKids2" filterValue="#{richExtendedDataTableBean.filtering['numberOfKids2']}"
-                filterExpression="#{empty filterValue or record.numberOfKids gt filterValue or record.numberOfKids lt filterValue}">
+                filterExpression="#{empty filterValue or record.numberOfKids lt filterValue or record.numberOfKids eq filterValue}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderNumberOfKids2" value="Number of Kids" />
                         <br/>
-                        <h:outputText id="columnHeaderNumberOfKids2Type" value="(expression &lt;)" />
+                        <h:outputText id="columnHeaderNumberOfKids2Type" value="(expression lesser or equals)" />
                     </f:facet>
 
                     <h:outputText value="#{record.numberOfKids}" />
