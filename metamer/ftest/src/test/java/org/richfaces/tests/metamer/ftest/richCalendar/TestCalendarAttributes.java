@@ -53,14 +53,14 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.calendar.DayPicker;
-import org.richfaces.fragment.calendar.HeaderControls;
-import org.richfaces.fragment.calendar.TimeEditor;
 import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
-import org.richfaces.fragment.calendar.DayPicker.CalendarWeek;
 import org.richfaces.fragment.calendar.DayPicker.CalendarDay.DayType;
+import org.richfaces.fragment.calendar.DayPicker.CalendarWeek;
+import org.richfaces.fragment.calendar.HeaderControls;
 import org.richfaces.fragment.calendar.PopupCalendar.PopupFooterControls;
 import org.richfaces.fragment.calendar.PopupCalendar.PopupHeaderControls;
 import org.richfaces.fragment.calendar.RichFacesAdvancedPopupCalendar.OpenedBy;
+import org.richfaces.fragment.calendar.TimeEditor;
 import org.richfaces.fragment.calendar.TimeEditor.SetValueBy;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Locations;
@@ -810,7 +810,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @Templates(value = "plain")
     public void testPopupStyle() {
         testHTMLAttribute(popupCalendar.openPopup().getRoot(), calendarAttributes, CalendarAttributes.popupStyle,
-            "background-color: yellow; font-size: 1.5em;");
+            "background-color: yellow;");
     }
 
     @Test
