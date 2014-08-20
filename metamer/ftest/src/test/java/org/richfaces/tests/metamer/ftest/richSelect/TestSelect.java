@@ -511,6 +511,8 @@ public class TestSelect extends AbstractWebDriverTest {
         Graphene.guardAjax(select.openSelect()).select(0);
         select.openSelect();
         List<WebElement> suggestions = select.advanced().getSuggestionsElements();
+        // to assert selectItemClass we need to mouse over the element
+        new Actions(driver).moveToElement(suggestions.get(0)).build().perform();
         assertTrue(suggestions.get(0).getAttribute("class").contains("metamer-ftest-class"),
             "Selected item should contain set class");
         for (int i = 1; i < suggestions.size(); i++) {
