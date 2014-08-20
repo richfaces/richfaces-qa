@@ -31,7 +31,6 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttribute
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.ondblclick;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.onmousedown;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.onmousemove;
-import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.onmouseout;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.onmouseover;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.onmouseup;
 import static org.testng.Assert.assertFalse;
@@ -111,9 +110,7 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     @Test
     @Templates("plain")
     public void testOnmouseout() {
-        Action mouseout = new Actions(driver).moveToElement(page.getPanelMenu().advanced().getRootElement())
-            .moveByOffset(-5, -5).build();
-        testFireEvent(panelMenuAttributes, onmouseout, mouseout);
+        testFireEventWithJS(page.getPanelMenu().advanced().getRootElement(),panelMenuAttributes, PanelMenuAttributes.onmouseout);
     }
 
     @Test
