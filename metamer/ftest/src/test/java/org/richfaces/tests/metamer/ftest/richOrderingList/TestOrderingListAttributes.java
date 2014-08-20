@@ -192,7 +192,11 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
         testFireEvent(attributes, OrderingListAttributes.onblur, new Action() {
             @Override
             public void perform() {
-                orderingList.select(0).putItAfter(0);
+                if (driverType.equals(DriverType.Chrome)) {
+                    orderingList.select(0);
+                } else {
+                    orderingList.select(0).putItAfter(0);
+                }
                 page.getRequestTimeElement().click();
                 waiting(1000);
             }
