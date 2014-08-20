@@ -524,7 +524,6 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     @Test
     public void testStep() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
-        inputNumberSliderAttributes.set(InputNumberSliderAttributes.delay, 100);
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.step, 7);
 
         MetamerPage.waitRequest(slider, WaitRequestType.XHR).increase();

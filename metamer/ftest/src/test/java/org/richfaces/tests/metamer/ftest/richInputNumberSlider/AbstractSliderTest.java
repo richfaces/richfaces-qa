@@ -76,7 +76,6 @@ public abstract class AbstractSliderTest extends AbstractWebDriverTest {
         int startValue = slider.advanced().getInput().getIntValue();
         int clicks = 1;
 
-        inputNumberSliderAttributes.set(InputNumberSliderAttributes.delay, 500);
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
 
         MetamerPage.waitRequest(slider, WaitRequestType.XHR).decrease();
@@ -88,7 +87,6 @@ public abstract class AbstractSliderTest extends AbstractWebDriverTest {
         int startValue = slider.advanced().getInput().getIntValue();
         int clicks = 1;
 
-        inputNumberSliderAttributes.set(InputNumberSliderAttributes.delay, 500);
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
 
         MetamerPage.waitRequest(slider, WaitRequestType.XHR).increase();

@@ -68,6 +68,7 @@ public class RichInputNumberSliderBean extends NumberInputValidationBeanImpl imp
         attributes.setAttribute("showInput", true);
         attributes.setAttribute("step", 1);
         attributes.setAttribute("value", 2);
+        attributes.setAttribute("delay", 200);
 
         // will be tested in another way
         attributes.remove("valueChangeListener");
