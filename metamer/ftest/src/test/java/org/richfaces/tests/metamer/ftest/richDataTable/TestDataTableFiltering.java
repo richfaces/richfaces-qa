@@ -57,12 +57,12 @@ public class TestDataTableFiltering extends DataTableFilteringTest {
 
     @Test
     public void testFilterName() {
-        super.testFilterName();
+        super.testFilterName(false);
     }
 
     @Test
     public void testFilterTitle() {
-        super.testFilterTitle();
+        super.testFilterTitle(false);
     }
 
     @Test
@@ -72,18 +72,18 @@ public class TestDataTableFiltering extends DataTableFilteringTest {
 
     @Test
     public void testFilterCombinations() {
-        super.testFilterCombinations();
+        super.testFilterCombinations(false);
     }
 
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-9932 http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790")
     public void testRerenderAll() {
-        super.testRerenderAll();
+        super.testRerenderAll(false);
     }
 
     @Test
     public void testFullPageRefresh() {
-        super.testFullPageRefresh();
+        super.testFullPageRefresh(false);
     }
 
 

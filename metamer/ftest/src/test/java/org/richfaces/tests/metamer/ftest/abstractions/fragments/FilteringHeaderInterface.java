@@ -31,13 +31,27 @@ public interface FilteringHeaderInterface {
 
     void filterSex(Employee.Sex sex);
 
-    void filterName(String name);
+    void filterName(String name, boolean isBuiltIn);
 
-    void filterTitle(String title);
+    void filterNameBuiltIn(String name);
+
+    void filterTitle(String title, boolean isBuiltIn);
+
+    void filterTitleBuiltIn(String title);
+
+    void filterNumberOfKidsBuiltIn(int numberOfKids);
 
     void filterNumberOfKidsWithSpinner(int numberOfKids);
 
     WebElement getFilterNameInput();
 
     WebElement getFilterTitleInput();
+
+    WebElement getFilterNameBuiltInInput();
+
+    WebElement getFilterTitleBuiltInInput();
+
+    WebElement getFilterKidsGreaterBuiltInInput();
+
+    WebElement getFilterKidsLesserBuiltInInput();
 }

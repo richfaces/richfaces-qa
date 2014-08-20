@@ -22,9 +22,10 @@
 package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import static org.jboss.arquillian.graphene.Graphene.guardAjax;
-import org.jboss.arquillian.graphene.findby.ByJQuery;
 
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
+
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -50,6 +51,18 @@ public class FilteringDTHeader implements FilteringHeaderInterface {
     @FindByJQuery("[id$='spinnerFilter']")
     private RichFacesInputNumberSpinner numberOfKidsSpinner;
 
+    @FindByJQuery("[id$='columnName:flt']")
+    private WebElement nameInputBuiltIn;
+
+    @FindByJQuery("[id$='columnTitle:flt']")
+    private WebElement titleInputBuiltIn;
+
+    @FindByJQuery("[id$='columnNumberOfKids1:flt']")
+    private WebElement numberOfKids1BuiltInInput;
+
+    @FindByJQuery("[id$='columnNumberOfKids2:flt']")
+    private WebElement numberOfKids2BuiltInInput;
+
     @Drone
     private WebDriver browser;
 
@@ -60,17 +73,25 @@ public class FilteringDTHeader implements FilteringHeaderInterface {
     }
 
     @Override
-    public void filterName(String name) {
-        nameInput.click();
-        nameInput.sendKeys(name == null ? "" : name);
-        makeBlur();
+    public void filterName(String name, boolean isBuiltIn) {
+        if (isBuiltIn) {
+            filterNameBuiltIn(name);
+        } else {
+            nameInput.click();
+            nameInput.sendKeys(name == null ? "" : name);
+            makeBlur();
+        }
     }
 
     @Override
-    public void filterTitle(String title) {
-        titleInput.click();
-        titleInput.sendKeys(title == null ? "" : title);
-        makeBlur();
+    public void filterTitle(String title, boolean isBuiltIn) {
+        if (isBuiltIn) {
+            filterTitleBuiltIn(title);
+        } else {
+            titleInput.click();
+            titleInput.sendKeys(title == null ? "" : title);
+            makeBlur();
+        }
     }
 
     @Override
@@ -90,11 +111,52 @@ public class FilteringDTHeader implements FilteringHeaderInterface {
         return titleInput;
     }
 
+    @Override
+    public WebElement getFilterNameBuiltInInput() {
+        return nameInputBuiltIn;
+    }
+
+    @Override
+    public WebElement getFilterTitleBuiltInInput() {
+        return titleInputBuiltIn;
+    }
+
+    @Override
+    public WebElement getFilterKidsGreaterBuiltInInput() {
+        return numberOfKids1BuiltInInput;
+    }
+
+    @Override
+    public WebElement getFilterKidsLesserBuiltInInput() {
+        return numberOfKids2BuiltInInput;
+    }
+
     private void makeBlur() {
         try {
             guardAjax(browser.findElement(ByJQuery.selector("span[id$=requestTime]"))).click();
         } catch (Exception ex) {
             // if no ajax then it has been already done
         }
+    }
+
+    @Override
+    public void filterNameBuiltIn(String name) {
+        nameInputBuiltIn.click();
+        nameInputBuiltIn.sendKeys(name == null ? "" : name);
+        makeBlur();
+    }
+
+    @Override
+    public void filterTitleBuiltIn(String title) {
+        titleInputBuiltIn.click();
+        titleInputBuiltIn.sendKeys(title == null ? "" : title);
+        makeBlur();
+    }
+
+    @Override
+    public void filterNumberOfKidsBuiltIn(int numberOfKids) {
+        numberOfKids1BuiltInInput.click();
+        numberOfKids1BuiltInInput.sendKeys(Integer.toString(numberOfKids));
+        makeBlur();
     }
 }

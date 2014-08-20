@@ -111,12 +111,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </rich:column>
 
             <rich:column id="columnTitle" filterValue="#{richDataTableBean.filtering['title']}"
-                filterExpression="#{empty filterValue or fn:containsIgnoreCase(record.title, filterValue)}"
+                filterExpression="#{empty filterValue or record.title == richDataTableBean.filtering['title']}"
                 sortBy="#{record.title}">
                 <f:facet name="header">
                     <h:outputText id="columnHeaderTitle" value="Title" />
                     <br />
-                    <h:outputText id="columnHeaderTitleFilterType" value="(expression contains ignore case)" />
+                    <h:outputText id="columnHeaderTitleFilterType" value="(expression equals)" />
                 </f:facet>
 
                 <h:outputText value="#{record.title}" />

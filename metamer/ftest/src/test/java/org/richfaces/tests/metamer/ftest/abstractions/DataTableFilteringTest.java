@@ -73,23 +73,31 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
         verifyFiltering();
     }
 
-    public void testFilterName() {
+    public void testFilterName(boolean isBuiltIn) {
         for (String filterName : FILTER_NAMES) {
-            getTable().getHeader().getFilterNameInput().clear();
+            if (isBuiltIn) {
+                getTable().getHeader().getFilterNameBuiltInInput().clear();
+            } else {
+                getTable().getHeader().getFilterNameInput().clear();
+            }
             waiting(500);
-            getTable().getHeader().filterName(filterName);
+            getTable().getHeader().filterName(filterName, isBuiltIn);
             waiting(500);
             filterEmployee.name = filterName;
             verifyFiltering();
         }
     }
 
-    public void testFilterTitle() {
+    public void testFilterTitle(boolean isBuiltIn) {
         for (String filterTitle : FILTER_TITLES) {
-            getTable().getHeader().getFilterTitleInput().clear();
+            if (isBuiltIn) {
+                getTable().getHeader().getFilterTitleBuiltInInput().clear();
+            } else {
+                getTable().getHeader().getFilterTitleInput().clear();
+            }
             // Wait for complete Ajax request and display data
             waiting(500);
-            getTable().getHeader().filterTitle(filterTitle);
+            getTable().getHeader().filterTitle(filterTitle, isBuiltIn);
             // Wait for complete Ajax request and display data
             waiting(500);
             filterEmployee.title = filterTitle;
@@ -105,37 +113,47 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
         }
     }
 
-    public void testFilterCombinations() {
-        getTable().getHeader().filterTitle("Technology");
+    public void testFilterCombinations(Boolean isBuiltIn) {
+        getTable().getHeader().filterTitle("Technology", isBuiltIn);
         filterEmployee.title = "Technology";
         verifyFiltering();
 
-        getTable().getHeader().filterNumberOfKidsWithSpinner(1);
-        filterEmployee.numberOfKids1 = 1;
-        verifyFiltering();
-
-        getTable().getHeader().filterSex(Sex.MALE);
-        filterEmployee.sex = Sex.MALE;
-        verifyFiltering();
-
-        getTable().getHeader().filterName("9");
+        getTable().getHeader().filterName("9", isBuiltIn);
         filterEmployee.name = "9";
         verifyFiltering();
 
-        getTable().getHeader().filterNumberOfKidsWithSpinner(0);
-        filterEmployee.numberOfKids1 = 0;
-        verifyFiltering();
+        if (!isBuiltIn) {
+            getTable().getHeader().filterNumberOfKidsWithSpinner(1);
+            filterEmployee.numberOfKids1 = 1;
+            verifyFiltering();
 
-        getTable().getHeader().filterSex(Sex.FEMALE);
-        filterEmployee.sex = Sex.FEMALE;
-        verifyFiltering();
+            getTable().getHeader().filterSex(Sex.MALE);
+            filterEmployee.sex = Sex.MALE;
+            verifyFiltering();
+
+            getTable().getHeader().filterNumberOfKidsWithSpinner(0);
+            filterEmployee.numberOfKids1 = 0;
+            verifyFiltering();
+
+            getTable().getHeader().filterSex(Sex.FEMALE);
+            filterEmployee.sex = Sex.FEMALE;
+            verifyFiltering();
+        } else {
+            getTable().getHeader().filterNumberOfKidsBuiltIn(0);
+            filterEmployee.numberOfKids1 = 0;
+            verifyFiltering();
+
+            getTable().getHeader().filterNumberOfKidsBuiltIn(1);
+            filterEmployee.numberOfKids1 = 1;
+            verifyFiltering();
+        }
     }
 
-    public void testRerenderAll() {
+    public void testRerenderAll(boolean isBuiltIn) {
         dataScroller2.switchTo(1);
         rows = getTable().advanced().getNumberOfVisibleRows();
 
-        getTable().getHeader().filterName("an");
+        getTable().getHeader().filterName("an", isBuiltIn);
         filterEmployee.name = "an";
 
         expectedEmployees = filter(EMPLOYEES, getFilter());
@@ -153,11 +171,11 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
         verifyPageContent(1);
     }
 
-    public void testFullPageRefresh() {
+    public void testFullPageRefresh(boolean isBuiltIn) {
         dataScroller2.switchTo(1);
         rows = getTable().advanced().getNumberOfVisibleRows();
 
-        getTable().getHeader().filterName("an");
+        getTable().getHeader().filterName("an", isBuiltIn);
         filterEmployee.name = "an";
 
         expectedEmployees = filter(EMPLOYEES, getFilter());
@@ -173,6 +191,14 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
 
         dataScroller2.switchTo(1);
         verifyPageContent(1);
+    }
+
+    public void testFilterNumberOfKindsBuiltIn() {
+        for (Integer filterNumberOfKids : FILTER_NUMBER_OF_KIDS) {
+            getTable().getHeader().filterNumberOfKidsBuiltIn(filterNumberOfKids);
+            filterEmployee.numberOfKids1 = filterNumberOfKids;
+            verifyFiltering();
+        }
     }
 
     public void verifyFiltering() {
