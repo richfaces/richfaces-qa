@@ -28,7 +28,10 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.richfaces.fragment.calendar.TimeEditor;
 import org.richfaces.fragment.calendar.TimeEditor.SetValueBy;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -117,14 +120,25 @@ public class TestCalendarTimeEditor extends AbstractCalendarTest {
     }
 
     private void testTimeSet(int[] valuesToTest, Time time, SetValueBy interaction) {
+        DateTime changedTime, collectedTime;
+        TimeEditor openedTimeEditor;
+        DateTimeFormatter formatter = DateTimeFormat.forPattern(calendarAttributes.get(CalendarAttributes.datePattern));
+        boolean firstRun = true;
         for (int value : valuesToTest) {
-            MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
-            TimeEditor openedTimeEditor = popupCalendar.openPopup().getFooterControls().openTimeEditor();
-            DateTime changedTime = time.change(todayMidday, value);
-            openedTimeEditor.setTime(changedTime, interaction).confirmTime();
+            MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), (firstRun ? WaitRequestType.XHR : WaitRequestType.NONE)).setTodaysDate();
             openedTimeEditor = popupCalendar.openPopup().getFooterControls().openTimeEditor();
-            DateTime time1 = openedTimeEditor.getTime();
-            time.checkTimeChanged(changedTime, time1);
+            changedTime = time.change(todayMidday, value);
+            openedTimeEditor.setTime(changedTime, interaction).confirmTime();
+            // check time in time editor
+            openedTimeEditor = popupCalendar.openPopup().getFooterControls().openTimeEditor();
+            collectedTime = openedTimeEditor.getTime();
+            time.checkTimeChanged(changedTime, collectedTime);
+            openedTimeEditor.cancelTime();// close the timeditor popup
+            Graphene.guardAjax(popupCalendar.openPopup().getFooterControls()).applyDate();
+            // check time in calendar input
+            collectedTime = formatter.parseDateTime(popupCalendar.getInput().getStringValue());
+            time.checkTimeChanged(changedTime, collectedTime);
+            firstRun = false;
         }
     }
 

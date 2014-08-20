@@ -39,14 +39,14 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
 import org.richfaces.fragment.calendar.PopupCalendar;
+import org.richfaces.fragment.calendar.PopupCalendar.PopupFooterControls;
+import org.richfaces.fragment.calendar.PopupCalendar.PopupHeaderControls;
 import org.richfaces.fragment.calendar.RichFacesAdvancedInlineCalendar;
 import org.richfaces.fragment.calendar.RichFacesAdvancedPopupCalendar;
 import org.richfaces.fragment.calendar.RichFacesCalendar;
 import org.richfaces.fragment.calendar.YearAndMonthEditor;
-import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
-import org.richfaces.fragment.calendar.PopupCalendar.PopupFooterControls;
-import org.richfaces.fragment.calendar.PopupCalendar.PopupHeaderControls;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -124,6 +124,9 @@ public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
 
         YearAndMonthEditor yearAndMonthEditor = headerControls.openYearAndMonthEditor();
         assertTrue(yearAndMonthEditor.isVisible());
+        yearAndMonthEditor.cancelDate();// close the year and month editor popup
+        assertFalse(yearAndMonthEditor.isVisible());
+
         headerControls.closePopup();
         assertFalse(openedPopup.isVisible());
     }
