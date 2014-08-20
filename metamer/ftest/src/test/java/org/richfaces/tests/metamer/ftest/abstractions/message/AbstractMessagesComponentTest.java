@@ -25,10 +25,8 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
-import org.richfaces.fragment.common.ClearType;
 import org.richfaces.fragment.message.Message;
 import org.richfaces.fragment.message.Message.MessageType;
 import org.richfaces.fragment.messages.Messages;
@@ -172,7 +170,7 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
         Assert.assertFalse(getPage().getMessagesComponentWithFor().advanced().isVisible());
         Assert.assertFalse(getPage().getMessagesComponentWithGlobal().advanced().isVisible());
         //type bad value to first input
-        getPage().getSimpleInput1().advanced().clear(ClearType.JS).sendKeys("bad value");
+        getPage().getSimpleInput1().clear().sendKeys("bad value").advanced().trigger("blur");
         submitWithHBtn();
 
         Assert.assertTrue(getPage().getMessagesComponentWithFor().advanced().isVisible());
@@ -184,7 +182,7 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
         //hide all messages
         setCorrectValuesWithWaiting();
         //type bad value to second input
-        getPage().getSimpleInput2().advanced().clear(ClearType.JS).sendKeys("bad value");
+        getPage().getSimpleInput2().clear().sendKeys("bad value").advanced().trigger("blur");
         submitWithHBtn();
 
         Assert.assertFalse(getPage().getMessagesComponentWithFor().advanced().isVisible());

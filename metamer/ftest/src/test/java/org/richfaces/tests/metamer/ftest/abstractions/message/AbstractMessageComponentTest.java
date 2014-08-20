@@ -23,8 +23,8 @@ package org.richfaces.tests.metamer.ftest.abstractions.message;
 
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
+
 import org.openqa.selenium.interactions.Action;
-import org.richfaces.fragment.common.ClearType;
 import org.richfaces.fragment.message.Message;
 import org.richfaces.tests.metamer.ftest.richMessage.MessageAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -33,6 +33,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 
 /**
  * Base for testing of message components (rich:message, rich:notifyMessage)
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public abstract class AbstractMessageComponentTest extends AbstractMessageComponentCommonTest {
@@ -138,7 +139,7 @@ public abstract class AbstractMessageComponentTest extends AbstractMessageCompon
         assertFalse(getMessageComponentForSecondInput().advanced().isVisible(), "Message should not be visible.");
         assertFalse(getMessageComponentForSelectableInput().advanced().isVisible(), "Message should not be visible.");
         //type bad value to first input
-        getPage().getSimpleInput1().clear().sendKeys("bad value");
+        getPage().getSimpleInput1().clear().sendKeys("bad value").advanced().trigger("blur");
         submitWithA4jBtn();
         assertTrue(getMessageComponentForFirstInput().advanced().isVisible(), "Message should be visible.");
         assertFalse(getMessageComponentForSecondInput().advanced().isVisible(), "Message should not be visible.");
@@ -146,7 +147,7 @@ public abstract class AbstractMessageComponentTest extends AbstractMessageCompon
         //hide all messages
         setCorrectValuesWithWaiting();
         //type bad value to second input
-        getPage().getSimpleInput2().advanced().clear(ClearType.JS).sendKeys("bad value");
+        getPage().getSimpleInput2().clear().sendKeys("bad value").advanced().trigger("blur");
         submitWithA4jBtn();
         assertFalse(getMessageComponentForFirstInput().advanced().isVisible(), "Message should not be visible.");
         assertTrue(getMessageComponentForSecondInput().advanced().isVisible(), "Message should be visible.");
