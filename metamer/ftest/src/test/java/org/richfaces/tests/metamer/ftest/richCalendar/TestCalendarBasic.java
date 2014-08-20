@@ -36,8 +36,8 @@ import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactor
 import org.joda.time.DateTime;
 import org.openqa.selenium.Dimension;
 import org.richfaces.fragment.calendar.DayPicker;
-import org.richfaces.fragment.calendar.PopupCalendar;
 import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
+import org.richfaces.fragment.calendar.PopupCalendar;
 import org.richfaces.fragment.calendar.PopupCalendar.PopupHeaderControls;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
