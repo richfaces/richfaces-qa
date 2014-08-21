@@ -99,7 +99,6 @@ FSF site: http://www.fsf.org. -->
     <modules>
         <module>archetypes</module>
         <module>metamer</module>
-        <module>showcase-ftest</module>
         <module>showcase-webdriver-ftest</module>
         <module>testng-listeners</module>
         <module>common</module>
