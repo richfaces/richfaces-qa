@@ -134,6 +134,13 @@ public class TestEditor extends AbstractWebDriverTest {
         verifySkin("v2", elemWithClassAttribute);
     }
 
+    private void verifySkin(String skinName, WebElement elemWithClassAttribute) {
+        editorAttributes.set(EditorAttributes.skin, skinName);
+        String editorClass = elemWithClassAttribute.getAttribute("class");
+        assertTrue(editorClass.contains("cke_skin_" + skinName), "Seems that skin '" + skinName
+            + "' didn't influence editor's @class attribute!");
+    }
+
     @Test
     @Templates("plain")
     public void testStyle() {
