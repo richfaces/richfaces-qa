@@ -87,7 +87,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:outputText value="There is no data." style="color: red;"/>
                 </f:facet>
 
-                <rich:column id="columnSex" sortBy="#{record.sex}">
+                <rich:column id="columnSex" sortBy="#{record.sex}" sortType="custom">
                     <f:facet name="header">
                         <h:commandLink id="sortSexes" value="Sex">
                             <rich:componentControl event="click" target="richDataTable" operation="sort">
@@ -99,7 +99,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </rich:column>
 
 
-                <rich:column id="columnName" sortBy="#{record.name}">
+                <rich:column id="columnName" sortBy="#{record.name}" sortType="custom">
                     <f:facet name="header">
                         <h:commandLink id="sortByName" value="Name">
                             <rich:componentControl event="click" target="richDataTable" operation="sort">
@@ -110,7 +110,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:outputText value="#{record.name}" />
                 </rich:column>
 
-                <rich:column id="columnTitle" sortBy="#{record.title}">
+                <rich:column id="columnTitle" sortBy="#{record.title}" sortType="custom">
                     <f:facet name="header">
                         <h:commandLink id="sortByTitle" value="Title">
                             <rich:componentControl event="click" target="richDataTable" operation="sort">
@@ -121,7 +121,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:outputText value="#{record.title}" />
                 </rich:column>
 
-                <rich:column id="columnNumberOfKids" sortBy="#{record.numberOfKids}">
+                <rich:column id="columnNumberOfKids" sortBy="#{record.numberOfKids}" sortType="custom">
                     <f:facet name="header">
                         <h:commandLink id="sortByNumberOfKids" value="Number of Kids">
                             <rich:componentControl event="click" target="richDataTable" operation="sort">
