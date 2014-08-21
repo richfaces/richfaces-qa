@@ -29,6 +29,7 @@ import org.openqa.selenium.TimeoutException;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richNotify.TestNotifyAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -193,8 +194,8 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
         checkShowDetail();
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-13792")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-13792")
     public void testShowShadow() {
         notifyMessageAttributes.set(NotifyMessageAttributes.showShadow, Boolean.TRUE);
         generateValidationMessagesWithWait();

@@ -39,6 +39,7 @@ import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
 import org.richfaces.tests.metamer.bean.rich.RichNotifyBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.Assert;
@@ -200,8 +201,8 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
         Assert.fail("The notify message should not be closeable if there is no close button.");
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-13792")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-13792")
     public void testShowShadow() {
         notifyAttributes.set(NotifyAttributes.showShadow, Boolean.TRUE);
         assertVisible(message.advanced().getShadowElement(), "Shadow should be visible");
