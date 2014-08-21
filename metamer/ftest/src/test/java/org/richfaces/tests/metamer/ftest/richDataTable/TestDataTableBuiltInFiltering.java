@@ -41,7 +41,7 @@ public class TestDataTableBuiltInFiltering extends DataTableFilteringTest {
 
     @Override
     public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richDataTable/builtInFiltering.xhtml ");
+        return buildUrl(contextPath, "faces/components/richDataTable/builtInFiltering.xhtml");
     }
 
 }

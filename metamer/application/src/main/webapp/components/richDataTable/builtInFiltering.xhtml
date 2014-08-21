@@ -85,7 +85,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <h:outputText value="There is no data." style="color: red;" />
             </f:facet>
 
-            <rich:column id="columnSex">
+            <rich:column id="columnSex" sortBy="#{record.sex}">
                 <f:facet name="header">
                     <h:outputText id="columnHeaderSex" value="Sex" />
                 </f:facet>
@@ -102,7 +102,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <f:facet name="header">
                     <h:outputText id="columnHeaderName" value="Name" />
                     <br />
-                    <h:outputText id="columnHeaderNameFilterType" value="(expression contains ignore case - builtIn)" />
+                    <h:outputText id="columnHeaderNameFilterType" value="(expression contains ignore case)" />
                 </f:facet>
                 <h:outputText value="#{record.name}" />
                 <f:facet name="footer">

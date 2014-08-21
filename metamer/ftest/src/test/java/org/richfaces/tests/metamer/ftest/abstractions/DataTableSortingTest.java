@@ -51,6 +51,7 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
     int rowIndex;
     int modelIndex;
     List<Employee> sortedEmployees;
+    private boolean isBuiltIn = false;
 
     protected abstract AbstractTable<? extends SortingHeaderInterface, ? extends FilteringRowInterface, ?> getTable();
 
@@ -214,16 +215,16 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
     public void sortByColumn(int column) {
         switch (column) {
             case 0:
-                getTable().getHeader().sortBySex();
+                getTable().getHeader().sortBySex(isBuiltIn);
                 break;
             case 1:
-                getTable().getHeader().sortByName();
+                getTable().getHeader().sortByName(isBuiltIn);
                 break;
             case 2:
-                getTable().getHeader().sortByTitle();
+                getTable().getHeader().sortByTitle(isBuiltIn);
                 break;
             case 3:
-                getTable().getHeader().sortByNumberOfKids();
+                getTable().getHeader().sortByNumberOfKids(isBuiltIn);
                 break;
             default:
                 throw new IllegalArgumentException("Wrong number of column passed! Such does not exist!");
@@ -331,5 +332,9 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
         rowsToTest.add((int) Math.round((visiblePageRows - 1) / 2 + 0.5 * (visiblePageRows - 1) / 2)); // item in third quarter
         rowsToTest.add(visiblePageRows - 1); // last item
         return Collections.unmodifiableList(rowsToTest);
+    }
+
+    public void setBuiltIn(boolean isBuiltIn) {
+        this.isBuiltIn = isBuiltIn;
     }
 }

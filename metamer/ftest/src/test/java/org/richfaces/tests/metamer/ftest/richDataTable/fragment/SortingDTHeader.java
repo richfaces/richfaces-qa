@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SortingHeaderInterface;
@@ -43,24 +44,52 @@ public class SortingDTHeader implements SortingHeaderInterface {
     @FindBy(css = "th:nth-of-type(4) a")
     private WebElement numberOfKidsSortingAnchor;
 
+    @FindByJQuery("[data-columnid$='columnName']")
+    private WebElement nameSortingBuiltIn;
+
+    @FindByJQuery("[data-columnid$='columnTitle']")
+    private WebElement titleSortingBuiltIn;
+
+    @FindByJQuery("[data-columnid$='columnNumberOfKids1']")
+    private WebElement numberOfKidsSortingBuiltIn;
+
+    @FindByJQuery("[data-columnid$='columnSex']")
+    private WebElement sexSortingBuiltIn;
+
     @Override
-    public void sortBySex() {
-        sortByColumn(sexSortingAnchor);
+    public void sortBySex(boolean isBuiltIn) {
+        if (isBuiltIn) {
+            sortByColumn(sexSortingBuiltIn);
+        } else {
+            sortByColumn(sexSortingAnchor);
+        }
     }
 
     @Override
-    public void sortByName() {
-        sortByColumn(nameSortingAnchor);
+    public void sortByName(boolean isBuiltIn) {
+        if (isBuiltIn) {
+            sortByColumn(nameSortingBuiltIn);
+        } else {
+            sortByColumn(nameSortingAnchor);
+        }
     }
 
     @Override
-    public void sortByTitle() {
-        sortByColumn(titleSortingAnchor);
+    public void sortByTitle(boolean isBuiltIn) {
+        if (isBuiltIn) {
+            sortByColumn(titleSortingBuiltIn);
+        } else {
+            sortByColumn(titleSortingAnchor);
+        }
     }
 
     @Override
-    public void sortByNumberOfKids() {
-        sortByColumn(numberOfKidsSortingAnchor);
+    public void sortByNumberOfKids(boolean isBuiltIn) {
+        if (isBuiltIn) {
+            sortByColumn(numberOfKidsSortingBuiltIn);
+        } else {
+            sortByColumn(numberOfKidsSortingAnchor);
+        }
     }
 
     private void sortByColumn(WebElement sortingTrigger) {

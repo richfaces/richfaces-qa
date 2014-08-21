@@ -40,174 +40,174 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
     <ui:define name="head">
         <style type="text/css">
-                .rf-edt[id$=richEDT] .rf-edt-c {
-                    height: 40px !important;
-                    vertical-align: middle;
-                }
+.rf-edt[id$=richEDT] .rf-edt-c {
+    height: 40px !important;
+    vertical-align: middle;
+}
 
-                .rf-edt[id$=richEDT] {
-                    width: 704px !important;
-                    height: 400px !important;
-                }
+.rf-edt[id$=richEDT] {
+    width: 704px !important;
+    height: 400px !important;
+}
 
-                .rf-edt[id$=richEDT] .rf-edt-hdr-c  {
-                    height: 64px !important;
-                }
-                 .rf-edt[id$=richEDT] .rf-edt-c-columnSex {
-                    width: 100px !important;
-                    text-align: center;
-                }
+.rf-edt[id$=richEDT] .rf-edt-hdr-c {
+    height: 64px !important;
+}
 
-                .rf-edt[id$=richEDT] .rf-edt-c-columnName {
-                    width: 150px !important;
-                }
+.rf-edt[id$=richEDT] .rf-edt-c-columnSex {
+    width: 100px !important;
+    text-align: center;
+}
 
-                .rf-edt[id$=richEDT] .rf-edt-c-columnTitle {
-                    width: 150px !important;
-                }
+.rf-edt[id$=richEDT] .rf-edt-c-columnName {
+    width: 150px !important;
+}
 
-                .rf-edt[id$=richEDT] .rf-edt-c-columnNumberOfKids1 {
-                    text-align: center;
-                    width: 150px !important;
-                }
+.rf-edt[id$=richEDT] .rf-edt-c-columnTitle {
+    width: 150px !important;
+}
 
-                .rf-edt[id$=richEDT] .rf-edt-c-columnNumberOfKids2 {
-                    text-align: center;
-                    width: 150px !important;
-                }
-            </style>
-        </ui:define>
+.rf-edt[id$=richEDT] .rf-edt-c-columnNumberOfKids1 {
+    text-align: center;
+    width: 150px !important;
+}
 
-        <ui:define name="outOfTemplateBefore">
-            <br/>
-            <h:outputText value="Show data in table: " />
-            <h:selectBooleanCheckbox id="noDataCheckbox" value="#{richExtendedDataTableBean.state}">
-                <a4j:ajax render="#{nestedComponentId} scroller1"/>
-            </h:selectBooleanCheckbox>
-            <br/><br/>
-            <rich:dataScroller id="scroller1" for="richEDT" page="#{richExtendedDataTableBean.page}" maxPages="7" render="#{nestedComponentId}"/>
-        </ui:define>
+.rf-edt[id$=richEDT] .rf-edt-c-columnNumberOfKids2 {
+    text-align: center;
+    width: 150px !important;
+}
+</style>
+    </ui:define>
 
-        <ui:define name="component">
-            <rich:extendedDataTable id="richEDT"
-                                    columnClasses="#{richExtendedDataTableBean.attributes['columnClasses'].value}"
-                                    first="#{richExtendedDataTableBean.attributes['first'].value}"
-                                    footerClass="#{richExtendedDataTableBean.attributes['footerClass'].value}"
-                                    frozenColumns="#{richExtendedDataTableBean.attributes['frozenColumns'].value}"
-                                    headerClass="#{richExtendedDataTableBean.attributes['headerClass'].value}"
-                                    keepSaved="#{richExtendedDataTableBean.attributes['keepSaved'].value}"
-                                    noDataLabel="#{richExtendedDataTableBean.attributes['noDataLabel'].value}"
-                                    onbeforeselectionchange="#{richExtendedDataTableBean.attributes['onbeforeselectionchange'].value}"
-                                    onrowclick="#{richExtendedDataTableBean.attributes['onrowclick'].value}"
-                                    onrowdblclick="#{richExtendedDataTableBean.attributes['onrowdblclick'].value}"
-                                    onrowkeydown="#{richExtendedDataTableBean.attributes['onrowkeydown'].value}"
-                                    onrowkeypress="#{richExtendedDataTableBean.attributes['onrowkeypress'].value}"
-                                    onrowkeyup="#{richExtendedDataTableBean.attributes['onrowkeyup'].value}"
-                                    onrowmousedown="#{richExtendedDataTableBean.attributes['onrowmousedown'].value}"
-                                    onrowmousemove="#{richExtendedDataTableBean.attributes['onrowmousemove'].value}"
-                                    onrowmouseout="#{richExtendedDataTableBean.attributes['onrowmouseout'].value}"
-                                    onrowmouseover="#{richExtendedDataTableBean.attributes['onrowmouseover'].value}"
-                                    onrowmouseup="#{richExtendedDataTableBean.attributes['onrowmouseup'].value}"
-                                    onselectionchange="#{richExtendedDataTableBean.attributes['onselectionchange'].value}"
-                                    rendered="#{richExtendedDataTableBean.attributes['rendered'].value}"
-                                    rowClass="#{richExtendedDataTableBean.attributes['rowClass'].value}"
-                                    rowClasses="#{richExtendedDataTableBean.attributes['rowClasses'].value}"
-                                    rows="#{richExtendedDataTableBean.attributes['rows'].value}"
-                                    selection="#{richExtendedDataTableBean.attributes['selection'].value}"
-                                    selectionMode="#{richExtendedDataTableBean.attributes['selectionMode'].value}"
-                                    sortMode="#{richExtendedDataTableBean.attributes['sortMode'].value}"
-                                    sortPriority="#{richExtendedDataTableBean.attributes['sortPriority'].value}"
-                                    style="#{richExtendedDataTableBean.attributes['style'].value}"
-                                    styleClass="#{richExtendedDataTableBean.attributes['styleClass'].value}"
-                                    value="#{richExtendedDataTableBean.state ? model.employees : null}"
-                                    var="record" filterVar="filterValue"
-                                    >
+    <ui:define name="outOfTemplateBefore">
+        <br />
+        <h:outputText value="Show data in table: " />
+        <h:selectBooleanCheckbox id="noDataCheckbox" value="#{richExtendedDataTableBean.state}">
+            <a4j:ajax render="#{nestedComponentId} scroller1" />
+        </h:selectBooleanCheckbox>
+        <br />
+        <br />
+        <rich:dataScroller id="scroller1" for="richEDT" page="#{richExtendedDataTableBean.page}" maxPages="7"
+            render="#{nestedComponentId}" />
+    </ui:define>
 
-                <f:facet name="noData">
-                    <h:outputText value="There is no data." style="color: red;"/>
+    <ui:define name="component">
+        <rich:extendedDataTable id="richEDT" columnClasses="#{richExtendedDataTableBean.attributes['columnClasses'].value}"
+            first="#{richExtendedDataTableBean.attributes['first'].value}"
+            footerClass="#{richExtendedDataTableBean.attributes['footerClass'].value}"
+            frozenColumns="#{richExtendedDataTableBean.attributes['frozenColumns'].value}"
+            headerClass="#{richExtendedDataTableBean.attributes['headerClass'].value}"
+            keepSaved="#{richExtendedDataTableBean.attributes['keepSaved'].value}"
+            noDataLabel="#{richExtendedDataTableBean.attributes['noDataLabel'].value}"
+            onbeforeselectionchange="#{richExtendedDataTableBean.attributes['onbeforeselectionchange'].value}"
+            onrowclick="#{richExtendedDataTableBean.attributes['onrowclick'].value}"
+            onrowdblclick="#{richExtendedDataTableBean.attributes['onrowdblclick'].value}"
+            onrowkeydown="#{richExtendedDataTableBean.attributes['onrowkeydown'].value}"
+            onrowkeypress="#{richExtendedDataTableBean.attributes['onrowkeypress'].value}"
+            onrowkeyup="#{richExtendedDataTableBean.attributes['onrowkeyup'].value}"
+            onrowmousedown="#{richExtendedDataTableBean.attributes['onrowmousedown'].value}"
+            onrowmousemove="#{richExtendedDataTableBean.attributes['onrowmousemove'].value}"
+            onrowmouseout="#{richExtendedDataTableBean.attributes['onrowmouseout'].value}"
+            onrowmouseover="#{richExtendedDataTableBean.attributes['onrowmouseover'].value}"
+            onrowmouseup="#{richExtendedDataTableBean.attributes['onrowmouseup'].value}"
+            onselectionchange="#{richExtendedDataTableBean.attributes['onselectionchange'].value}"
+            rendered="#{richExtendedDataTableBean.attributes['rendered'].value}"
+            rowClass="#{richExtendedDataTableBean.attributes['rowClass'].value}"
+            rowClasses="#{richExtendedDataTableBean.attributes['rowClasses'].value}"
+            rows="#{richExtendedDataTableBean.attributes['rows'].value}"
+            selection="#{richExtendedDataTableBean.attributes['selection'].value}"
+            selectionMode="#{richExtendedDataTableBean.attributes['selectionMode'].value}"
+            sortMode="#{richExtendedDataTableBean.attributes['sortMode'].value}"
+            sortPriority="#{richExtendedDataTableBean.attributes['sortPriority'].value}"
+            style="#{richExtendedDataTableBean.attributes['style'].value}"
+            styleClass="#{richExtendedDataTableBean.attributes['styleClass'].value}"
+            value="#{richExtendedDataTableBean.state ? model.employees : null}" var="record" filterVar="filterValue">
+
+            <f:facet name="noData">
+                <h:outputText value="There is no data." style="color: red;" />
+            </f:facet>
+
+            <rich:column id="columnSex" sortBy="#{record.sex}">
+                <f:facet name="header">
+                    <h:outputText id="columnHeaderSex" value="Sex" />
                 </f:facet>
 
-                <rich:column id="columnSex">
-                    <f:facet name="header">
-                            <h:outputText id="columnHeaderSex" value="Sex"  />
-                    </f:facet>
-
-                    <h:graphicImage library="images" name="#{record.sex == 'MALE' ? 'male.png' : 'female.png'}" alt="#{record.sex}" />
-
-                    <f:facet name="footer">
-                        <h:outputText id="columnFooterSex" value="Sex" />
-                    </f:facet>
-                </rich:column>
-
-
-                <rich:column id="columnName" 
-                filterValue="#{richExtendedDataTableBean.filtering['name']}"
-                filterExpression="#{empty filterValue or fn:containsIgnoreCase(record.name, filterValue)}">
-                    <f:facet name="header">
-                        <h:outputText id="columnHeaderName" value="Name" />
-                        <br/>
-                        <h:outputText id="columnHeaderNameType" value="(expression contains ignore case)" />
-                    </f:facet>
-                    
-                    <h:outputText value="#{record.name}" />
-                    <f:facet name="footer">
-                        <h:outputText id="columnFooterState" value="Name" />
-                    </f:facet>
-                </rich:column>
-
-                <rich:column id="columnTitle"
-                filterValue="#{richExtendedDataTableBean.filtering['title']}"
-                filterExpression="#{empty filterValue or record.title == richExtendedDataTableBean.filtering['title']}"
-                            >
-                    <f:facet name="header">
-                        <h:outputText id="columnHeaderTitle" value="Title" />
-                        <br/>
-                        <h:outputText id="columnHeaderTitleType" value="(expression equals)" />
-                    </f:facet>
-
-                    <h:outputText value="#{record.title}" />
-                    <f:facet name="footer">
-                        <h:outputText id="columnFooterTitle" value="Title" />
-                    </f:facet>
-                </rich:column>
-
-                <rich:column id="columnNumberOfKids1"
-                filterValue="#{richExtendedDataTableBean.filtering['numberOfKids1']}"
-                filterExpression="#{empty filterValue or record.numberOfKids gt filterValue or record.numberOfKids eq filterValue}">
-                    <f:facet name="header">
-                        <h:outputText id="columnHeaderNumberOfKids" value="Number of Kids" />
-                          <br/>
-                        <h:outputText id="columnHeaderNumberOfKidsType" value="(expression greater or equals)" />
-                    </f:facet>
-                    <h:outputText value="#{record.numberOfKids}" />
-                    <f:facet name="footer">
-                        <h:outputText id="columnFooterNumberOfKids" value="Number of Kids" />
-                    </f:facet>
-                </rich:column>
-
-                <rich:column id="columnNumberOfKids2" filterValue="#{richExtendedDataTableBean.filtering['numberOfKids2']}"
-                filterExpression="#{empty filterValue or record.numberOfKids lt filterValue or record.numberOfKids eq filterValue}">
-                    <f:facet name="header">
-                        <h:outputText id="columnHeaderNumberOfKids2" value="Number of Kids" />
-                        <br/>
-                        <h:outputText id="columnHeaderNumberOfKids2Type" value="(expression lesser or equals)" />
-                    </f:facet>
-
-                    <h:outputText value="#{record.numberOfKids}" />
-                    <f:facet name="footer">
-                        <h:outputText id="columnFooterNumberOfKids2" value="Number of Kids" />
-                    </f:facet>
-                </rich:column>
+                <h:graphicImage library="images" name="#{record.sex == 'MALE' ? 'male.png' : 'female.png'}" alt="#{record.sex}" />
 
                 <f:facet name="footer">
-                    <rich:dataScroller id="scroller2" for="richEDT" page="#{richExtendedDataTableBean.page}" maxPages="7" render="richEDT scroller1" />
+                    <h:outputText id="columnFooterSex" value="Sex" />
                 </f:facet>
-            </rich:extendedDataTable>
-        </ui:define>
+            </rich:column>
 
-        <ui:define name="outOfTemplateAfter">
-            <metamer:attributes value="#{richExtendedDataTableBean.attributes}" id="attributes" />
-        </ui:define>
 
-    </ui:composition>
+            <rich:column id="columnName" filterValue="#{richExtendedDataTableBean.filtering['name']}"
+                filterExpression="#{empty filterValue or fn:containsIgnoreCase(record.name, filterValue)}"
+                sortBy="#{record.name}">
+                <f:facet name="header">
+                    <h:outputText id="columnHeaderName" value="Name" />
+                    <br />
+                    <h:outputText id="columnHeaderNameType" value="(expression contains ignore case)" />
+                </f:facet>
+
+                <h:outputText value="#{record.name}" />
+                <f:facet name="footer">
+                    <h:outputText id="columnFooterState" value="Name" />
+                </f:facet>
+            </rich:column>
+
+            <rich:column id="columnTitle" filterValue="#{richExtendedDataTableBean.filtering['title']}" sortBy="#{record.title}"
+                filterExpression="#{empty filterValue or record.title == richExtendedDataTableBean.filtering['title']}">
+                <f:facet name="header">
+                    <h:outputText id="columnHeaderTitle" value="Title" />
+                    <br />
+                    <h:outputText id="columnHeaderTitleType" value="(expression equals)" />
+                </f:facet>
+
+                <h:outputText value="#{record.title}" />
+                <f:facet name="footer">
+                    <h:outputText id="columnFooterTitle" value="Title" />
+                </f:facet>
+            </rich:column>
+
+            <rich:column id="columnNumberOfKids1" sortBy="#{record.numberOfKids}"
+                filterValue="#{richExtendedDataTableBean.filtering['numberOfKids1']}"
+                filterExpression="#{empty filterValue or record.numberOfKids gt filterValue or record.numberOfKids eq filterValue}">
+                <f:facet name="header">
+                    <h:outputText id="columnHeaderNumberOfKids" value="Number of Kids" />
+                    <br />
+                    <h:outputText id="columnHeaderNumberOfKidsType" value="(expression greater or equals)" />
+                </f:facet>
+                <h:outputText value="#{record.numberOfKids}" />
+                <f:facet name="footer">
+                    <h:outputText id="columnFooterNumberOfKids" value="Number of Kids" />
+                </f:facet>
+            </rich:column>
+
+            <rich:column id="columnNumberOfKids2" filterValue="#{richExtendedDataTableBean.filtering['numberOfKids2']}"
+                sortBy="#{record.numberOfKids}"
+                filterExpression="#{empty filterValue or record.numberOfKids lt filterValue or record.numberOfKids eq filterValue}">
+                <f:facet name="header">
+                    <h:outputText id="columnHeaderNumberOfKids2" value="Number of Kids" />
+                    <br />
+                    <h:outputText id="columnHeaderNumberOfKids2Type" value="(expression lesser or equals)" />
+                </f:facet>
+
+                <h:outputText value="#{record.numberOfKids}" />
+                <f:facet name="footer">
+                    <h:outputText id="columnFooterNumberOfKids2" value="Number of Kids" />
+                </f:facet>
+            </rich:column>
+
+            <f:facet name="footer">
+                <rich:dataScroller id="scroller2" for="richEDT" page="#{richExtendedDataTableBean.page}" maxPages="7"
+                    render="richEDT scroller1" />
+            </f:facet>
+        </rich:extendedDataTable>
+    </ui:define>
+
+    <ui:define name="outOfTemplateAfter">
+        <metamer:attributes value="#{richExtendedDataTableBean.attributes}" id="attributes" />
+    </ui:define>
+
+</ui:composition>
 </html>

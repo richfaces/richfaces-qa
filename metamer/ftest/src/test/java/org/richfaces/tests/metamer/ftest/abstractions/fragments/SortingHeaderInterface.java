@@ -27,11 +27,11 @@ package org.richfaces.tests.metamer.ftest.abstractions.fragments;
  */
 public interface SortingHeaderInterface {
 
-    void sortBySex();
+    void sortBySex(boolean isBuiltIn);
 
-    void sortByName();
+    void sortByName(boolean isBuiltIn);
 
-    void sortByTitle();
+    void sortByTitle(boolean isBuiltIn);
 
-    void sortByNumberOfKids();
+    void sortByNumberOfKids(boolean isBuiltIn);
 }
