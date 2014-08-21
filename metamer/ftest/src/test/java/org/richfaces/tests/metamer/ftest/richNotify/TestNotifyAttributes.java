@@ -200,7 +200,8 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
         Assert.fail("The notify message should not be closeable if there is no close button.");
     }
 
-    @Test
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13792")
     public void testShowShadow() {
         notifyAttributes.set(NotifyAttributes.showShadow, Boolean.TRUE);
         assertVisible(message.advanced().getShadowElement(), "Shadow should be visible");
