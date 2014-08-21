@@ -223,7 +223,8 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
         checkShowDetail();
     }
 
-    @Test
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13792")
     public void testShowShadow() {
         notifyMessagesAttributes.set(NotifyMessagesAttributes.showShadow, Boolean.TRUE);
         generateValidationMessagesWithWait();
