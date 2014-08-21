@@ -29,12 +29,6 @@
             <scope>test</scope>
             <type>pom</type>
         </dependency>
-        <!-- Android extension -->
-        <dependency>
-            <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-android-depchain</artifactId>
-            <type>pom</type>
-        </dependency>
         <!-- Arquillian TestNG support -->
         <dependency>
             <groupId>org.jboss.arquillian.testng</groupId>

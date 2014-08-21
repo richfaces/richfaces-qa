@@ -59,7 +59,6 @@ FSF site: http://www.fsf.org. -->
         <arquillian.graphene.version>2.1.0.Alpha1</arquillian.graphene.version>
         <arquillian.glassfish3-1.version>1.0.0.CR4</arquillian.glassfish3-1.version>
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
-        <arquillian.android.version>1.0.0.Alpha2</arquillian.android.version>
         <shrinkwrap.descriptors.version>2.0.0-alpha-5</shrinkwrap.descriptors.version>
 
         <version.selenium>2.42.0</version.selenium>
@@ -100,7 +99,6 @@ FSF site: http://www.fsf.org. -->
         <module>archetypes</module>
         <module>metamer</module>
         <module>showcase-ftest</module>
-        <module>showcase-webdriver-ftest</module>
         <module>testng-listeners</module>
         <module>common</module>
         <module>page-fragments</module>
@@ -391,13 +389,6 @@ FSF site: http://www.fsf.org. -->
                 <version>${arquillian.drone.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.arquillian.extension</groupId>
-                <artifactId>arquillian-android-depchain</artifactId>
-                <version>${arquillian.android.version}</version>
-                <type>pom</type>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.jboss.shrinkwrap.descriptors</groupId>
