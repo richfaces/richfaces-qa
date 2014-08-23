@@ -147,8 +147,8 @@
             <id>visual-testing</id>
             <dependencies>
                 <dependency>
-                    <groupId>org.jboss.arquillian.graphene</groupId>
-                    <artifactId>graphene-visual-testing</artifactId>
+                    <groupId>org.jboss.arquillian.extension</groupId>
+                    <artifactId>graphene-visual-testing-backend</artifactId>
                     <version>0.0.1-SNAPSHOT</version>
                 </dependency>
             </dependencies>
