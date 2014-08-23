@@ -50,7 +50,6 @@ public class TestAjax extends AbstractWebDriverTest {
             Graphene.guardAjax(page.getInput()).sendKeys(Character.toString(ch));
         }
 
-
         Graphene.waitAjax()
                 .until()
                 .element(page.getOutput())

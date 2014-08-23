@@ -144,7 +144,7 @@
 
     <profiles>
         <profile>
-            <id>take-screenshots</id>
+            <id>visual-testing</id>
             <dependencies>
                 <dependency>
                     <groupId>org.jboss.arquillian.graphene</groupId>
@@ -202,6 +202,39 @@
                             <environmentVariables>
                                 <JBOSS_HOME>${wildfly8-1Home}</JBOSS_HOME>
                             </environmentVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>wildfly-remote-8-1</id>
+            <properties>
+                <metamer.classifier>jbas71</metamer.classifier>
+                <showcase.classifier>jbas71</showcase.classifier>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.spec</groupId>
+                    <artifactId>jboss-javaee-6.0</artifactId>
+                    <version>3.0.2.Final</version>
+                    <type>pom</type>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.wildfly</groupId>
+                    <artifactId>wildfly-arquillian-container-remote</artifactId>
+                    <version>${version.wildfly8-1}</version>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <arquillian.launch>wildfly-remote-8-1</arquillian.launch>
+                            </systemProperties>
                         </configuration>
                     </plugin>
                 </plugins>

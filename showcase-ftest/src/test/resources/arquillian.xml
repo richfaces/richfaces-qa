@@ -33,12 +33,6 @@
         </configuration>
     </container>
 
-    <container qualifier="jbossas-remote-7" default="true">
-        <protocol type="jmx-as7">
-            <property name="executionType">REMOTE</property>
-        </protocol>
-    </container>
-    
     <container qualifier="jbosseap-managed-6-3">
         <configuration>
             <property name="serverConfig">standalone-full.xml</property>
@@ -58,6 +52,9 @@
             <property name="serverConfig">standalone-full.xml</property>
             <property name="enableAssertions">false</property>
         </configuration>
+    </container>
+    
+    <container qualifier="wildfly-remote-8-1" default="true">
     </container>
 
     <container qualifier="jbossas-remote-7-1">
@@ -112,8 +109,14 @@
         <property name="javascriptEnabled">true</property>
     </extension>
     
+    <extension qualifier="reporter">
+        <property name="report">html5</property>
+    </extension>
+    
     <extension qualifier="visual-testing">
-        <property name="firstRun">true</property>
+        <property name="firstRun">false</property>
+        <property name="screenshotsRepository">/tmp/visual-testing</property>
+        <property name="lastValidScreenshots">2014-08-17_10-59-44-704</property>
     </extension>
     
     <extension qualifier="screenshooter">
@@ -122,8 +125,7 @@
     </extension>
     
     <extension qualifier="rusheye">
-        <property name="output">target/suite.xml</property>
-        <property name="patternBase">target/screenshots/org.richfaces.tests.showcase.ajax.TestAjax/testEraseStringFromInputAndCheckTheOutput/</property>
+        <property name="maskBase">/home/jhuska/NetBeansProjects/org/richfaces/richfaces-qa/showcase-ftest/masks</property>
     </extension>
 
 </arquillian>
