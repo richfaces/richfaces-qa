@@ -23,12 +23,15 @@ package org.richfaces.tests.metamer.bean.rich;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
@@ -40,6 +43,9 @@ import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBean;
 import org.richfaces.tests.metamer.model.Capital;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
 
 /**
  * Managed bean for rich:select.
@@ -57,6 +63,8 @@ public class RichSelectBean extends SelectValidationBean implements Serializable
     private List<Capital> capitals;
     private List<SelectItem> capitalsOptions = null;
     private String validatorMessage;
+
+    private Capital capital;
 
     /**
      * Initializes the managed bean.
@@ -83,8 +91,13 @@ public class RichSelectBean extends SelectValidationBean implements Serializable
         attributes.remove("converterMessage");
         attributes.remove("validator");
         attributes.remove("validatorMessage");
-
         attributes.remove("valueChangeListener");
+
+        attributes.remove("var");
+        attributes.remove("itemLabel");
+        attributes.remove("itemValue");
+        attributes.remove("autocompleteMethod");
+        attributes.remove("autocompleteList");
     }
 
     public String getValidatorMessage() {
@@ -93,6 +106,10 @@ public class RichSelectBean extends SelectValidationBean implements Serializable
 
     public void setValidatorMessage(String validatorMessage) {
         this.validatorMessage = validatorMessage;
+    }
+
+    public List<Capital> getCapitals() {
+        return capitals;
     }
 
     public void setCapitals(List<Capital> capitals) {
@@ -105,6 +122,27 @@ public class RichSelectBean extends SelectValidationBean implements Serializable
 
     public void setCapitalsOptions(List<SelectItem> capitalsOptions) {
         this.capitalsOptions = capitalsOptions;
+    }
+
+    public Capital getCapital() {
+        return capital;
+    }
+
+    public void setCapital(Capital capital) {
+        this.capital = capital;
+    }
+
+    public Collection<Capital> suggest(FacesContext facesContext, UIComponent component, final String prefix) {
+        Collection<Capital> suggestions = Collections2.filter(capitals, new Predicate<Capital>() {
+            @Override
+            public boolean apply(Capital input) {
+                if (prefix == null) {
+                    return true;
+                }
+                return input.getState().toLowerCase().startsWith(prefix.toLowerCase());
+            }
+        });
+        return suggestions;
     }
 
     public void listener(ValueChangeEvent event) {

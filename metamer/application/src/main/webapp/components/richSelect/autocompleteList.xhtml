@@ -42,7 +42,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
             <r:select id="select"
+                      autocompleteList="${richSelectBean.capitals}"
                       clientFilterFunction="#{richSelectBean.attributes['clientFilterFunction'].value}"
+                      itemLabel="${capital.state}"
+                      itemValue="${capital}"
+                      minChars="#{richSelectBean.attributes['minChars'].value}"
+                      mode="#{richSelectBean.attributes['mode'].value}"
+                      value="#{richSelectBean.capital}"
+                      var="capital"
+
                       converterMessage="#{richSelectBean.attributes['converterMessage'].value}"
                       defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
                       disabled="#{richSelectBean.attributes['disabled'].value}"
@@ -53,9 +61,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                       listHeight="#{richSelectBean.attributes['listHeight'].value}"
                       listWidth="#{richSelectBean.attributes['listWidth'].value}"
                       maxListHeight="#{richSelectBean.attributes['maxListHeight'].value}"
-                      minChars="#{richSelectBean.attributes['minChars'].value}"
                       minListHeight="#{richSelectBean.attributes['minListHeight'].value}"
-                      mode="#{richSelectBean.attributes['mode'].value}"
                       onblur="#{richSelectBean.attributes['onblur'].value}"
                       onchange="#{richSelectBean.attributes['onchange'].value}"
                       onclick="#{richSelectBean.attributes['onclick'].value}"
@@ -91,35 +97,17 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                       style="#{richSelectBean.attributes['style'].value}"
                       styleClass="#{richSelectBean.attributes['styleClass'].value}"
                       title="#{richSelectBean.attributes['title'].value}"
-                      value="#{richSelectBean.attributes['value'].value}"
                       valueChangeListener="#{richSelectBean.listener}">
 
-                <f:selectItems value="#{richSelectBean.capitalsOptions}" />
-                <a4j:ajax event="change" render="output"/>
-
+                <f:ajax event="change" execute="@form" render="output"/>
+                <f:converter converterId="capitalConverterSelect" />
             </r:select>
 
-
             <br/>
             <br/>
-            output: <h:outputText id="output" value="#{richSelectBean.attributes['value'].value}"/>
+            output: <h:outputText id="output" value="#{richSelectBean.capital.state}"/>
             <br/>
             <br/>
-            <fieldset>
-                <legend>JavaScript API</legend>
-                Output value for all get methods: <h:inputText id="value"/>
-                <br/><br/>
-                On click:
-                <br/>
-                <input id="getValue" type="button" name="getValue" value="getValue()" onclick="$('[id$=value]').val(#{r:component('select')}.getValue())" />
-                <input id="setValue" type="button" name="setValue" value="setValue('Arizona')" onclick="#{r:component('select')}.setValue('Arizona')" />
-                <input id="getLabel" type="button" name="getLabel" value="getLabel()" onclick="$('[id$=value]').val(#{r:component('select')}.getLabel())" />
-                <br/>
-                On mouseover:
-                <br/>
-                <input id="showPopup" type="button" name="showPopup" value="showPopup()" onmouseover="#{r:component('select')}.showPopup()" />
-                <input id="hidePopup" type="button" name="hidePopup" value="hidePopup()" onmouseover="#{r:component('select')}.hidePopup()" />
-            </fieldset>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

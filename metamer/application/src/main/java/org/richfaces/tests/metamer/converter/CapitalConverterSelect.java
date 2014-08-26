@@ -19,75 +19,32 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richSelect;
+package org.richfaces.tests.metamer.converter;
 
-import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.FacesConverter;
+
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public enum SelectAttributes implements AttributeEnum {
+@FacesConverter(value = "capitalConverterSelect")
+public class CapitalConverterSelect extends CapitalConverter {
 
-    autocompleteList,
-    autocompleteMethod,
-    binding,
-    clientFilterFunction,
-    converter,
-    converterMessage,
-    defaultLabel,
-    disabled,
-    enableManualInput,
-    id,
-    immediate,
-    itemClass,
-    itemLabel,
-    itemValue,
-    listClass,
-    listHeight,
-    listWidth,
-    maxListHeight,
-    minChars,
-    minListHeight,
-    mode,
-    onblur,
-    onchange,
-    onclick,
-    ondblclick,
-    onfocus,
-    onkeydown,
-    onkeypress,
-    onkeyup,
-    onlistclick,
-    onlistdblclick,
-    onlisthide,
-    onlistkeydown,
-    onlistkeypress,
-    onlistkeyup,
-    onlistmousedown,
-    onlistmousemove,
-    onlistmouseout,
-    onlistmouseover,
-    onlistmouseup,
-    onlistshow,
-    onmousedown,
-    onmousemove,
-    onmouseout,
-    onmouseover,
-    onmouseup,
-    onselectitem,
-    rendered,
-    required,
-    requiredMessage,
-    selectFirst,
-    selectItemClass,
-    showButton,
-    style,
-    styleClass,
-    tabindex,
-    title,
-    validator,
-    validatorMessage,
-    value,
-    valueChangeListener,
-    var
+    @Override
+    public Object getAsObject(FacesContext context, UIComponent component, String value) {
+        if (value == null) {
+            return value;
+        }
+        return super.getAsObject(context, component, value);
+    }
+
+    @Override
+    public String getAsString(FacesContext context, UIComponent component, Object value) {
+        if (value == null) {
+            return "";
+        }
+        return super.getAsString(context, component, value);
+    }
 }
