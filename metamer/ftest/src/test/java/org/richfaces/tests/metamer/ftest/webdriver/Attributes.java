@@ -21,6 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.webdriver;
 
+import static org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.ActionWrapper;
+
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -29,6 +31,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.ui.Select;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Utils;
@@ -75,13 +78,13 @@ public class Attributes<T extends AttributeEnum> {
             if (valueToBeSet.equals(NULLSTRING)) {
                 if (new StringEqualsWrapper(attributeValue).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
                     if (!element.isSelected()) {
-                        MetamerPage.waitRequest(element, requestType).click();
+                        MetamerPage.waitRequest(buildJSActionWrapper("click", element), requestType).perform();
                     }
                     return;
                 }
             } else if (valueToBeSet.equals(attributeValue)) {
                 if (!element.isSelected()) {
-                    MetamerPage.waitRequest(element, requestType).click();
+                    MetamerPage.waitRequest(buildJSActionWrapper("click", element), requestType).perform();
                 }
                 return;
             } else if (attributeValue.contains(valueToBeSet)) {
@@ -118,6 +121,17 @@ public class Attributes<T extends AttributeEnum> {
             Utils.jQ((JavascriptExecutor) getBrowser(), "val(\"" + value + "\")", input);
             MetamerPage.waitRequest(input, requestType).submit();
         }
+    }
+
+    private ActionWrapper buildJSActionWrapper(String event, WebElement element){
+        final WebElement elementToJs = element;
+        Action jsAction = new Action() {
+            @Override
+            public void perform() {
+                Utils.triggerJQ("click", elementToJs);
+            }
+        };
+        return new ActionWrapper(jsAction);
     }
 
     /**
