@@ -92,7 +92,8 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         select.advanced().setupSaveOnSelect(Boolean.TRUE);
     }
 
-    @Test
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3439")
     @RegressionTest("https://issues.jboss.org/browse/RF-11227")
     @Templates(value = "plain")
     public void testActiveClass() {
@@ -113,7 +114,8 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
             "Select should not contain " + testedClass);
     }
 
-    @Test
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3439")
     @RegressionTest("https://issues.jboss.org/browse/RF-11227")
     @Templates(value = "plain")
     public void testChangedClass() {
@@ -128,7 +130,8 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
             .apply(driver), "Inplace select should have class metamer-ftest-class.");
     }
 
-    @Test(groups = "smoke")
+    @Test(groups = {"smoke", "Future"})
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3439")
     @RegressionTest("https://issues.jboss.org/browse/RF-11227")
     public void testClick() {
         select.advanced().switchToEditingState();
