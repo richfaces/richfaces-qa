@@ -60,7 +60,7 @@ FSF site: http://www.fsf.org. -->
         <arquillian.glassfish3-1.version>1.0.0.CR4</arquillian.glassfish3-1.version>
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
 
-        <shrinkwrap.descriptors.version>2.0.0-alpha-4</shrinkwrap.descriptors.version>
+        <shrinkwrap.descriptors.version>2.0.0-alpha-6</shrinkwrap.descriptors.version>
         <arquillian.eap.managed.version>7.1.3.Final</arquillian.eap.managed.version>
 
         <version.selenium>2.42.0</version.selenium>
@@ -91,7 +91,7 @@ FSF site: http://www.fsf.org. -->
         <openshift.ssh.user>54abf287bcf646319d0b1c8d35f15546</openshift.ssh.user>
         <openshift.identity.file />
 
-        <jodatime.version>2.3</jodatime.version>
+        <jodatime.version>2.4</jodatime.version>
         <commons-lang.version>2.6</commons-lang.version>
         <apache-commons-io.version>2.4</apache-commons-io.version>
         <google.json.version>1.1</google.json.version>
