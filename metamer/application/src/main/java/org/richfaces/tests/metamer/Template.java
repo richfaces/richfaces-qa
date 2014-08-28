@@ -21,29 +21,33 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Representation of a template. The name of the template can be used as
  * a view parameter.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22617 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public enum Template {
 
-    PLAIN(new String[]{ "plain", "no", "null" }, "Plain", ""),
+    PLAIN(new String[]{ "plain", "no", "none" }, "Plain", ""),
     REDDIV(new String[]{ "redDiv", "red" }, "Red div", ""),
     BLUEDIV(new String[]{ "blueDiv", "blue" }, "Blue div", ""),
     RICHACCORDION(new String[]{ "richAccordion", "accordion", "acc" }, "Rich Accordion", ""),
-    RICHCOLLAPSIBLEPANEL(new String[]{ "richCollapsiblePanel", "cp" }, "Rich Collapsible Panel", ""),
-    RICHCOLLAPSIBLESUBTABLE(new String[]{ "richCollapsibleSubTable", "cst" }, "Rich Collapsible Sub Table", "containerRichCollapsibleSubTable:0:richSubTable:2:"),
-    RICHDATATABLE(new String[]{ "richDataTable", "dt", "table" }, "Rich Data Table", "containerRichDataTable:2:"),
-    RICHDATAGRID(new String[]{ "richDataGrid", "grid", "dg" }, "Rich Data Grid", "containerRichDataGrid:3:"),
-    RICHEXTENDEDDATATABLE(new String[]{ "richExtendedDataTable", "edt", "eTable" }, "Rich Extended Data Table", "containerRichExtendedDataTable:2:"),
+    RICHCOLLAPSIBLEPANEL(new String[]{ "richCollapsiblePanel", "collapsiblePanel", "cPanel", "cp" }, "Rich Collapsible Panel", ""),
+    RICHCOLLAPSIBLESUBTABLE(new String[]{ "richCollapsibleSubTable", "collapsibleSubTable", "cst" }, "Rich Collapsible Sub Table", "containerRichCollapsibleSubTable:0:richSubTable:2:"),
+    RICHDATATABLE(new String[]{ "richDataTable", "dataTable", "dt", "table" }, "Rich Data Table", "containerRichDataTable:2:"),
+    RICHDATAGRID(new String[]{ "richDataGrid", "dataGrid", "grid", "dg" }, "Rich Data Grid", "containerRichDataGrid:3:"),
+    RICHEXTENDEDDATATABLE(new String[]{ "richExtendedDataTable", "extendedDataTable", "edt", "eTable" }, "Rich Extended Data Table", "containerRichExtendedDataTable:2:"),
     RICHLIST(new String[]{ "richList", "list", "l" }, "Rich List", "containerRichList:2:"),
     RICHPANEL(new String[]{ "richPanel", "panel", "p" }, "Rich Panel", ""),
-    RICHPOPUPPANEL(new String[]{ "richPopupPanel", "popup", "ppanel", "pp" }, "Rich Popup Panel", ""),
+    RICHPOPUPPANEL(new String[]{ "richPopupPanel", "popupPanel", "popup", "ppanel", "pp" }, "Rich Popup Panel", ""),
     RICHTABPANEL(new String[]{ "richTabPanel", "tabPanel", "tab" }, "Rich Tab Panel", ""),
-    RICHTOGGLEPANEL(new String[]{ "richTogglePanel", "toggle" }, "Rich Toggle Panel", ""),
+    RICHTOGGLEPANEL(new String[]{ "richTogglePanel", "togglePanel", "toggle" }, "Rich Toggle Panel", ""),
     HDATATABLE(new String[]{ "hDataTable", "hTable" }, "JSF Data Table", "containerHDataTable:2:"),
     HPANELGRID(new String[]{ "hPanelGrid", "hGrid" }, "JSF Panel Grid", ""),
     UIREPEAT(new String[]{ "uiRepeat", "uRepeat" }, "UI Repeat", "containerUiRepeat:1:"),
@@ -52,7 +56,8 @@ public enum Template {
     /**
      * identifier of a template
      */
-    private final String[] aliases;
+    private final String templateName;
+    private final Set<String> aliases;
     /**
      * human-readable name of the template
      */
@@ -73,13 +78,17 @@ public enum Template {
     }
 
     private Template(String[] names, String desc, String nestedComponentPrefix) {
-        this.aliases = names;
+        this.aliases = new HashSet<String>();
+        templateName = names[0];
+        for (String name : names) {
+            aliases.add(name.toLowerCase());
+        }
         this.desc = desc;
         this.nestedComponentPrefix = nestedComponentPrefix;
     }
 
-    private String[] getAliasses() {
-        return aliases;
+    private Set<String> getAliasses() {
+        return Collections.unmodifiableSet(aliases);
     }
 
     /**
@@ -87,7 +96,7 @@ public enum Template {
      * @return value of name field
      */
     public String getName() {
-        return aliases[0];
+        return templateName;
     }
 
     /**
@@ -116,10 +125,8 @@ public enum Template {
 
     public static Template valueFrom(String templateString) {
         for (Template t : values()) {
-            for (String alias : t.getAliasses()) {
-                if (alias.equalsIgnoreCase(templateString)) {
-                    return t;
-                }
+            if (t.getAliasses().contains(templateString.toLowerCase())) {
+                return t;
             }
         }
         throw new RuntimeException("No such template " + templateString);
