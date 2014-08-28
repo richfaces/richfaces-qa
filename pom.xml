@@ -96,6 +96,8 @@ FSF site: http://www.fsf.org. -->
         <apache-commons-io.version>2.4</apache-commons-io.version>
         <google.json.version>1.1</google.json.version>
         <version.mockito>1.8.5</version.mockito>
+
+        <profile.eap/>
     </properties>
 
     <modules>
@@ -876,6 +878,7 @@ FSF site: http://www.fsf.org. -->
             <properties>
                 <metamer.classifier>jbas71</metamer.classifier>
                 <showcase.classifier>jbas71</showcase.classifier>
+                <profile.eap>6.1</profile.eap>
             </properties>
             <dependencies>
                 <dependency>
@@ -911,6 +914,7 @@ FSF site: http://www.fsf.org. -->
             <properties>
                 <metamer.classifier>jbas71</metamer.classifier>
                 <showcase.classifier>jbas71</showcase.classifier>
+                <profile.eap>6.2</profile.eap>
             </properties>
             <dependencies>
                 <dependency>
@@ -951,6 +955,7 @@ FSF site: http://www.fsf.org. -->
             <properties>
                 <metamer.classifier>jbas71</metamer.classifier>
                 <showcase.classifier>jbas71</showcase.classifier>
+                <profile.eap>6.3</profile.eap>
             </properties>
             <dependencies>
                 <dependency>
@@ -1706,6 +1711,349 @@ FSF site: http://www.fsf.org. -->
                                 <openshift.namespace>${openshift.namespace}</openshift.namespace>
                                 <openshift.ssh.user>${openshift.ssh.user}</openshift.ssh.user>
                             </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!--
+         Works only in Jenkins environment. Works on Windows, Linux and Solaris.
+         
+         Tasks:
+           * kill containers (GlassFish, Tomcat, AS) and Drivers (IEDriver, ChromeDriver) processes before running tests
+           * set paths to EAP, drivers (IEDriver, ChromeDriver), browser binaries (Firefox)
+           * download + unpack EAP if some EAP profile activated
+           * fail the build before testing when misconfigured (e.g. when path does not exist)
+           * check used version of Firefox (version is specified by firefox.linux.opt, if not found use firefox.linux.min)
+         
+         Activate by setting property 'browser' to (case insensitive options):
+           a) for firefox: *firefox* or *ff*
+           b) for chrome: *chrome*, *cr*
+           c) for ie: *ie*, *explorer*, *internet*
+
+         e.g.: -Dbrowser=FF25, -Dbrowser=cr36, -Dbrowser=internetExplorer11
+        -->
+        <profile>
+            <id>browser</id>
+            <properties>
+                <hudson.firefox.linux>/qa/tools/opt</hudson.firefox.linux>
+                <hudson.firefox.windows>t:/opt/windows</hudson.firefox.windows>
+                <hudson.firefox.solaris10>/qa/tools/SunOS/${os.arch}</hudson.firefox.solaris10>
+                <hudson.firefox.solaris11>/qa/tools/OpenSolaris/${os.arch}</hudson.firefox.solaris11>
+                <firefox.version.min>24esr</firefox.version.min>
+                <firefox.version.opt>30</firefox.version.opt>
+                <firefox.linux.opt>${hudson.firefox}/firefox-${firefox.version.opt}/firefox</firefox.linux.opt>
+                <firefox.linux.min>${hudson.firefox}/firefox-${firefox.version.min}/firefox</firefox.linux.min>
+                <firefox.windows.opt>${firefox.linux.opt}.exe</firefox.windows.opt>
+                <firefox.windows.min>${firefox.linux.min}.exe</firefox.windows.min>
+
+                <!-- property 'eap.bin' will hold the path to the binary -->
+                <hudson.static.linux>/home/hudson/static_build_env</hudson.static.linux>
+                <hudson.static.windows>h:/hudson/static_build_env</hudson.static.windows>
+                <eap.6-2.dirname>6.2.4</eap.6-2.dirname>
+                <eap.6-2.zipname>6.2.4-patched</eap.6-2.zipname>
+                <eap.6-3.dirname>6.3.0</eap.6-3.dirname>
+                <eap.6-3.zipname>${eap.6-3.dirname}</eap.6-3.zipname>
+                <eap.bin>${hudson.static}/eap/${eap.dirname}/jboss-eap-${eap.zipname}.zip</eap.bin>
+
+                <!-- property 'webdriver.bin' will hold the path to the binary of webdriver's driver (chrome, ie) or browser (firefox) -->
+                <hudson.webdriver>${hudson.static}/webdriver</hudson.webdriver>
+                <webdriver.chrome.bin>${hudson.webdriver}/chromedriver/chrome36/win32/chromedriver.exe</webdriver.chrome.bin>
+                <webdriver.ie.bin>${hudson.webdriver}/iedriver/latest/${webdriver.ie.bin.arch}/IEDriverServer.exe</webdriver.ie.bin>
+            </properties>
+            <activation>
+                <property>
+                    <name>browser</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>initialize-properties</id>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target name="initialize.properties">
+                                        <condition property="hudson.static" value="${hudson.static.windows}" else="${hudson.static.linux}">
+                                            <os family="windows"/>
+                                        </condition>
+                                        <condition property="hudson.firefox" value="${hudson.firefox.solaris10}">
+                                            <os name="SunOS" version="5.10"/>
+                                        </condition>
+                                        <condition property="hudson.firefox" value="${hudson.firefox.solaris11}">
+                                            <os name="SunOS" version="5.11"/>
+                                        </condition>
+                                        <condition property="hudson.firefox" value="${hudson.firefox.windows}">
+                                            <os family="windows"/>
+                                        </condition>
+                                        <condition property="hudson.firefox" value="${hudson.firefox.linux}">
+                                            <not>
+                                                <and>
+                                                    <os name="SunOS"/>
+                                                    <os family="windows"/>
+                                                </and>
+                                            </not>
+                                        </condition>
+
+                                        <condition property="browser.chrome" value="true">
+                                            <or>
+                                                <contains string="${browser}" substring="chrome" casesensitive="false"/>
+                                                <contains string="${browser}" substring="cr" casesensitive="false"/>
+                                            </or>
+                                        </condition>
+                                        <condition property="webdriver.browser" value="chrome">
+                                            <isset property="browser.chrome"/>
+                                        </condition>
+
+                                        <condition property="browser.ie" value="true">
+                                            <or>
+                                                <contains string="${browser}" substring="ie" casesensitive="false"/>
+                                                <contains string="${browser}" substring="internet" casesensitive="false"/>
+                                                <contains string="${browser}" substring="explorer" casesensitive="false"/>
+                                            </or>
+                                        </condition>
+                                        <condition property="webdriver.browser" value="internetExplorer">
+                                            <isset property="browser.ie"/>
+                                        </condition>
+
+                                        <condition property="browser.firefox" value="true">
+                                            <or>
+                                                <contains string="${browser}" substring="ff" casesensitive="false"/>
+                                                <contains string="${browser}" substring="firefox" casesensitive="false"/>
+                                            </or>
+                                        </condition>
+                                        <condition property="webdriver.browser" value="firefox">
+                                            <isset property="browser.firefox"/>
+                                        </condition>
+
+                                        <fail message="No browser specified. Use e.g. -Dbrowser=firefox">
+                                            <condition>
+                                                <not>
+                                                    <isset property="webdriver.browser"/>
+                                                </not>
+                                            </condition>
+                                        </fail>
+                                        <echo>using browser: ${webdriver.browser}</echo>
+                                        <fail message="Cannot use InternetExplorer on linux!">
+                                            <condition>
+                                                <and>
+                                                    <isset property="browser.ie"/>
+                                                    <not>
+                                                        <os family="windows"/>
+                                                    </not>
+                                                </and>
+                                            </condition>
+                                        </fail>
+                                    </target>
+                                    <exportAntProperties>true</exportAntProperties>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>set-chromedriver-bin</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target name="set.chromedriver.bin" if="${browser.chrome}">
+                                        <condition property="webdriver.bin" value="${webdriver.chrome.bin}">
+                                            <available file="${webdriver.chrome.bin}"/>
+                                        </condition>
+                                        <fail message="The ChromeDriver binary was not found! Should be at: ${webdriver.chrome.bin}.">
+                                            <condition>
+                                                <not>
+                                                    <isset property="webdriver.bin"/>
+                                                </not>
+                                            </condition>
+                                        </fail>
+                                        <echo>ChromeDriver bin: ${webdriver.bin}</echo>
+                                    </target>   
+                                    <exportAntProperties>true</exportAntProperties>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>set-iedriver-bin</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target name="set.iedriver.bin" if="${browser.ie}">
+                                        <condition property="webdriver.ie.bin.arch" value="win64" else="win32">
+                                            <os arch="amd64"/>
+                                        </condition>
+                                        <condition property="webdriver.bin" value="${webdriver.ie.bin}">
+                                            <available file="${webdriver.ie.bin}"/>
+                                        </condition>
+                                        <fail message="The IEDriver binary was not found! Should be at: ${webdriver.ie.bin}.">
+                                            <condition>
+                                                <not>
+                                                    <isset property="webdriver.bin"/>
+                                                </not>
+                                            </condition>
+                                        </fail>
+                                        <echo>IEDriver bin: ${webdriver.bin}</echo>
+                                    </target>   
+                                    <exportAntProperties>true</exportAntProperties>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>set-firefox-bin</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target name="set.firefox.bin" if="${browser.firefox}">
+                                        <condition property="webdriver.bin" value="${firefox.windows.opt}">
+                                            <available file="${firefox.windows.opt}"/>
+                                        </condition>
+                                        <condition property="webdriver.bin" value="${firefox.windows.min}">
+                                            <available file="${firefox.windows.min}"/>
+                                        </condition>
+
+                                        <condition property="webdriver.bin" value="${firefox.linux.opt}">
+                                            <available file="${firefox.linux.opt}"/>
+                                        </condition>
+                                        <condition property="webdriver.bin" value="${firefox.linux.min}">
+                                            <available file="${firefox.linux.min}"/>
+                                        </condition>
+
+                                        <fail message="The firefox binary was not found!">
+                                            <condition>
+                                                <not>
+                                                    <isset property="webdriver.bin"/>
+                                                </not>
+                                            </condition>
+                                        </fail>
+                                        <echo>Using firefox binary: ${webdriver.bin}</echo>
+                                    </target>   
+                                    <exportAntProperties>true</exportAntProperties>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>check-if-eap-profile-activated</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target name="check.if.eap.profile.activated">
+                                        <condition property="eap.profile.activated" value="true" else="false">
+                                            <contains string="${profile.eap}" substring="6."/>
+                                        </condition>
+                                        <echo>EAP profile is activated = ${eap.profile.activated}</echo>
+                                    </target>
+                                    <exportAntProperties>true</exportAntProperties>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>get-eap</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target name="get.eap.bin.and.extract" if="${eap.profile.activated}">
+                                        <condition property="eap.dirname" value="${eap.6-3.dirname}">
+                                            <equals arg1="${profile.eap}" arg2="6.3"/>
+                                        </condition>
+                                        <condition property="eap.zipname" value="${eap.6-3.zipname}">
+                                            <equals arg1="${profile.eap}" arg2="6.3"/>
+                                        </condition>
+
+                                        <condition property="eap.dirname" value="${eap.6-2.dirname}">
+                                            <equals arg1="${profile.eap}" arg2="6.2"/>
+                                        </condition>
+                                        <condition property="eap.zipname" value="${eap.6-2.zipname}">
+                                            <equals arg1="${profile.eap}" arg2="6.2"/>
+                                        </condition>
+
+                                        <fail message="The eap 6.1 is not supported!">
+                                            <condition>
+                                                <equals arg1="${profile.eap}" arg2="6.1"/>
+                                            </condition>
+                                        </fail>
+
+                                        <fail message="The EAP zipname or dirname was not set!">
+                                            <condition>
+                                                <or>
+                                                    <not>
+                                                        <isset property="eap.dirname"/>
+                                                    </not>
+                                                    <not>
+                                                        <isset property="eap.zipname"/>
+                                                    </not>
+                                                </or>
+                                            </condition>
+                                        </fail>
+
+                                        <fail message="The EAP zip is not available! But should be at: '${eap.bin}'">
+                                            <condition>
+                                                <not>
+                                                    <available file="${eap.bin}"/>
+                                                </not>
+                                            </condition>
+                                        </fail>
+                                        <echo>using eap bin: ${eap.bin}</echo>
+                                        <copy file="${eap.bin}" tofile="${project.build.directory}/eap.zip"/>
+                                        <unzip src="${project.build.directory}/eap.zip" dest="${project.build.directory}" />
+                                    </target>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>kill-started-containers-processes</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target name="kill.started.containers.processes">
+                                        <echo>Killing started JBoss processes</echo>
+                                        <java classname="org.richfaces.tests.TaskKiller" failonerror="true" fork="true">
+                                            <classpath refid="maven.compile.classpath" />
+                                            <arg line="java org.jboss"/>
+                                        </java>
+                                        <echo>Killing started Tomcat processes</echo>
+                                        <java classname="org.richfaces.tests.TaskKiller" failonerror="true" fork="true">
+                                            <classpath refid="maven.compile.classpath" />
+                                            <arg line="java catalina.home"/>
+                                        </java>
+                                        <echo>Killing started GlassFish processes</echo>
+                                        <java classname="org.richfaces.tests.TaskKiller" failonerror="true" fork="true">
+                                            <classpath refid="maven.compile.classpath" />
+                                            <arg line="java felix.fileinstall"/>
+                                        </java>
+                                        <echo>Killing started IEDriver processes</echo>
+                                        <java classname="org.richfaces.tests.TaskKiller" failonerror="true" fork="true">
+                                            <classpath refid="maven.compile.classpath" />
+                                            <arg line="IEDriverServer"/>
+                                        </java>
+                                        <echo>Killing started ChromeDriver processes</echo>
+                                        <java classname="org.richfaces.tests.TaskKiller" failonerror="true" fork="true">
+                                            <classpath refid="maven.compile.classpath" />
+                                            <arg line="chromedriver"/>
+                                        </java>
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <webdriver.firefox.bin>${webdriver.bin}</webdriver.firefox.bin>
+                                <webdriver.ie.driver>${webdriver.bin}</webdriver.ie.driver>
+                                <webdriver.chrome.driver>${webdriver.bin}</webdriver.chrome.driver>
+                                <arq.extension.webdriver.browser>${webdriver.browser}</arq.extension.webdriver.browser>
+                            </systemProperties>
                         </configuration>
                     </plugin>
                 </plugins>
