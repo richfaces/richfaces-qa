@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.a4jLog;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.fragment.common.ClearType.DELETE;
 import static org.richfaces.fragment.log.Log.LogEntryLevel.INFO;
 import static org.richfaces.fragment.log.Log.LogEntryLevel.values;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
@@ -36,7 +35,6 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
-import org.richfaces.fragment.common.ClearType;
 import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.fragment.log.Log.LogEntryLevel;
 import org.richfaces.fragment.log.RichFacesLog;
@@ -82,7 +80,7 @@ public class TestLog extends AbstractWebDriverTest {
     private void checkForEachLevel() {
         for (LogEntryLevel levelToTrigger : values()) {
             log.clear();
-            input.advanced().clear(DELETE).sendKeys(levelToTrigger.toString());
+            input.clear().sendKeys(levelToTrigger.toString());
             triggerMessage(levelToTrigger);
             assertEquals(log.getLogEntries().size(), levelToTrigger.ordinal() >= levelToSet.ordinal() ? 1 : 0);
             if (!log.getLogEntries().isEmpty()) {
@@ -147,7 +145,7 @@ public class TestLog extends AbstractWebDriverTest {
 
     @Test
     public void testSubmit() {
-        input.advanced().clear(ClearType.DELETE).sendKeys("RichFaces 4");
+        input.clear().sendKeys("RichFaces 4");
         submit();
 
         Graphene.waitGui().until().element(output).text().equalTo("Hello RichFaces 4!");
@@ -158,7 +156,7 @@ public class TestLog extends AbstractWebDriverTest {
 
     @Test
     public void testSubmitUnicode() {
-        input.advanced().clear(DELETE).sendKeys("ľščťžýáíéôúäň");
+        input.clear().sendKeys("ľščťžýáíéôúäň");
         submit();
 
         Graphene.waitGui().until().element(output).text().equalTo("Hello ľščťžýáíéôúäň!");
