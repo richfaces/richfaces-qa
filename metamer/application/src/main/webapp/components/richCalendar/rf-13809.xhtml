@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:a4j="http://richfaces.org/a4j" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:rich="http://richfaces.org/rich">
+<ui:composition template="/templates/template.xhtml">
+
+    <ui:define name="view">
+        <f:metadata>
+            <f:viewParam name="templates" value="#{templateBean.templates}">
+                <f:converter converterId="templatesListConverter" />
+            </f:viewParam>
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="head">
+    </ui:define>
+
+    <ui:define name="component">
+        <div>
+        <p>This is reproducer for <a href="https://issues.jboss.org/browse/RF-13809">RF-13809</a></p>
+            <h4>Steps to reproduce</h4>
+            <ul>
+                <li>Click Now</li>
+                <li>See how both components are set</li>
+                <li>Refresh Page</li>
+                <li>Click Submit</li>
+                <li>See error messages because required was true</li>
+                <li>Click Now</li>
+                <li>See how the value is shown on the pop-up true but not on pop-up false</li>
+                <li>Submit</li>
+                <li>Verify no error messages which means that the value was set on both and see the value set on the pop-up
+                    false</li>
+            </ul>
+        </div>
+        <div>
+            <h4>Pop-up False. Content won't be set</h4>
+            <rich:calendar id="cal1" value="#{rf13809.date}" required="true" datePattern="MM/dd/yyyy hh:mm a"
+                enableManualInput="true" popup="false" />
+
+            <div class="buttons">
+                <h:message for="cal1" />
+            </div>
+        </div>
+        <div>
+            <h4>Pop-up True. Content will be set</h4>
+            <rich:calendar id="cal2" value="#{rf13809.date}" required="true" datePattern="MM/dd/yyyy hh:mm a"
+                enableManualInput="true" popup="true" />
+            <div class="buttons">
+                <h:message for="cal2" />
+            </div>
+        </div>
+        <div>
+            <h:commandButton value="Submit" action="#{rf13809.submitValue()}" />
+            <a4j:commandLink value="Now" render="@form" style="margin-left:5px" execute="@this">
+                <f:setPropertyActionListener target="#{rf13809.date}" value="#{currentDate}" />
+            </a4j:commandLink>
+        </div>
+    </ui:define>
+
+    <ui:define name="outOfTemplateAfter">
+    </ui:define>
+
+</ui:composition>
+</html>
