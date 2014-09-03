@@ -34,7 +34,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
 /**
@@ -91,8 +91,8 @@ public class TestDataScrollerFacets extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richDataScroller/facets.xhtml");
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-13081")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-13081")
     public void testFirstFacetDisabled() {
         // both facets are disabled
         assertTrue(page.getTopScroller().advanced().isButtonDisabled(DataScrollerSwitchButton.FIRST));
@@ -100,7 +100,8 @@ public class TestDataScrollerFacets extends AbstractWebDriverTest {
 
         // change title of first facet when disabled
         setStringToFacet(facetFirstDisabled, TEST_STRING_DISABLED);
-        assertEquals(page.getTopScroller().advanced().getButtonElement(DataScrollerSwitchButton.FIRST).getText(), TEST_STRING_DISABLED);
+        assertEquals(page.getTopScroller().advanced().getButtonElement(DataScrollerSwitchButton.FIRST).getText(),
+            TEST_STRING_DISABLED);
         assertEquals(page.getBottomScroller().advanced().getButtonElement(DataScrollerSwitchButton.FIRST).getText(),
             TEST_STRING_DISABLED);
     }
@@ -114,13 +115,14 @@ public class TestDataScrollerFacets extends AbstractWebDriverTest {
 
         // change text of first facet when enabled
         setStringToFacet(facetFirst, TEST_STRING_ENABLED);
-        assertEquals(page.getTopScroller().advanced().getButtonElement(DataScrollerSwitchButton.FIRST).getText(), TEST_STRING_ENABLED);
+        assertEquals(page.getTopScroller().advanced().getButtonElement(DataScrollerSwitchButton.FIRST).getText(),
+            TEST_STRING_ENABLED);
         assertEquals(page.getBottomScroller().advanced().getButtonElement(DataScrollerSwitchButton.FIRST).getText(),
             TEST_STRING_ENABLED);
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-13081")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-13081")
     public void testFastRewindFacetDisabled() {
         // both facets should be disabled
         assertTrue(page.getTopScroller().advanced().isButtonDisabled(DataScrollerSwitchButton.FAST_REWIND));
@@ -149,8 +151,8 @@ public class TestDataScrollerFacets extends AbstractWebDriverTest {
             TEST_STRING_ENABLED);
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-13081")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-13081")
     public void testPreviousFacetDisabled() {
         // both facets should be disabled initially
         assertTrue(page.getTopScroller().advanced().isButtonDisabled(DataScrollerSwitchButton.PREVIOUS));
@@ -187,13 +189,14 @@ public class TestDataScrollerFacets extends AbstractWebDriverTest {
 
         // change text when enabled
         setStringToFacet(facetNext, TEST_STRING_ENABLED);
-        assertEquals(page.getTopScroller().advanced().getButtonElement(DataScrollerSwitchButton.NEXT).getText(), TEST_STRING_ENABLED);
+        assertEquals(page.getTopScroller().advanced().getButtonElement(DataScrollerSwitchButton.NEXT).getText(),
+            TEST_STRING_ENABLED);
         assertEquals(page.getBottomScroller().advanced().getButtonElement(DataScrollerSwitchButton.NEXT).getText(),
             TEST_STRING_ENABLED);
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-13081")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-13081")
     public void testNextFacetDisabled() {
         // switch to another page
         page.getTopScroller().switchTo(DataScrollerSwitchButton.LAST);
@@ -202,7 +205,8 @@ public class TestDataScrollerFacets extends AbstractWebDriverTest {
 
         // change text when disabled
         setStringToFacet(facetNextDisabled, TEST_STRING_DISABLED);
-        assertEquals(page.getTopScroller().advanced().getButtonElement(DataScrollerSwitchButton.NEXT).getText(), TEST_STRING_DISABLED);
+        assertEquals(page.getTopScroller().advanced().getButtonElement(DataScrollerSwitchButton.NEXT).getText(),
+            TEST_STRING_DISABLED);
         assertEquals(page.getBottomScroller().advanced().getButtonElement(DataScrollerSwitchButton.NEXT).getText(),
             TEST_STRING_DISABLED);
     }
@@ -221,8 +225,8 @@ public class TestDataScrollerFacets extends AbstractWebDriverTest {
             TEST_STRING_ENABLED);
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-13081")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-13081")
     public void testfacetForwardFacetDisabled() {
         // switch to another page
         page.getTopScroller().switchTo(DataScrollerSwitchButton.LAST);
@@ -245,13 +249,14 @@ public class TestDataScrollerFacets extends AbstractWebDriverTest {
 
         // change text when enabled
         setStringToFacet(facetLast, TEST_STRING_ENABLED);
-        assertEquals(page.getTopScroller().advanced().getButtonElement(DataScrollerSwitchButton.LAST).getText(), TEST_STRING_ENABLED);
+        assertEquals(page.getTopScroller().advanced().getButtonElement(DataScrollerSwitchButton.LAST).getText(),
+            TEST_STRING_ENABLED);
         assertEquals(page.getBottomScroller().advanced().getButtonElement(DataScrollerSwitchButton.LAST).getText(),
             TEST_STRING_ENABLED);
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-13081")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-13081")
     public void testLastFacetDisabled() {
         // switch to another page
         page.getTopScroller().switchTo(DataScrollerSwitchButton.LAST);
@@ -260,7 +265,8 @@ public class TestDataScrollerFacets extends AbstractWebDriverTest {
 
         // change text when disabled
         setStringToFacet(facetLastDisabled, TEST_STRING_DISABLED);
-        assertEquals(page.getTopScroller().advanced().getButtonElement(DataScrollerSwitchButton.LAST).getText(), TEST_STRING_DISABLED);
+        assertEquals(page.getTopScroller().advanced().getButtonElement(DataScrollerSwitchButton.LAST).getText(),
+            TEST_STRING_DISABLED);
         assertEquals(page.getBottomScroller().advanced().getButtonElement(DataScrollerSwitchButton.LAST).getText(),
             TEST_STRING_DISABLED);
     }
