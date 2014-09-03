@@ -104,9 +104,14 @@ To change the JSF implementation you can build Metamer with either a script ment
 *** e.g. +-Dtest=TestEditor+ for all tests in TestEditor class or +-Dtest=TestEditor#testRendered+ to run just one method
 *** regular expression can be used, for instance +-Dtest=TestA*+ will run all test classes which name begins with 'TestA'
 ** omit +-Dtest+ if you want to run all tests
-** templateName is one of the templates such as plain, richPanel, a4jRepeat, uiRepeat
-*** default value is plain
-*** you can use +-Dtemplates=*+ to run tests in all templates
+** templateName is one or more of the templates such as plain, richPanel, a4jRepeat, uiRepeat
+*** list of all templates used in tests can be found in `AbstractMetamerTest` in the annotation `@Templates` over the field *template*  
+*** all templates are case insensitive and have aliases (can be found/edited in `org.richfaces.tests.metamer.Template`)
+*** to run tests in:
+**** all templates: use `*` or `all`
+**** no template (default value): use `plain`, `no`, `none` or do not use the *templates* property
+**** more templates concurrently: use `+` for separating the templates, e.g. `popup+accordion+edt` (ExtendedDataTable in Accordion in PopupPanel)
+**** more templates separately: use `,` for separating the templates, e.g. `accordion,popup,popup+edt`. Each test in test suite will be executed in each specified template(s) (if it can run in such template).
 * by default Firefox will be used as browser, to change this to e.g. Chrome please follow the instructions from Arquillian guide for remote-reusable browsers
 
 === Debugging a test
@@ -153,10 +158,22 @@ In tests there are several important annotations we use:
 ** if such a test fails we know that it is a regression problem immediately
 
 * +@Templates(value = {"templateName"}, exclude = {"anotherTemplateName"})+
-** this indicates in which templates you want the test to execute
-** this will only work if you run the test with +-Dtemplates=value+, if you leave this out, the test will be executed in plain template only
+** this indicates in which templates you want or you do not want the test to be execute
+** test will not run when it is not executed with correct template
 ** beware that it work only for templates listed in +@Templates+ annotation in +AbstractMetamerTest+
- 
+
+* +@UseForAllTests+
+** this indicates that the field will be used as injection point in all tests from the class where it is placed to all classes extending it
+** all test methods in this hierarchy can run multiple times each time with different value injected to the annotated field (values and how to get them is specified in annotation parameters, see the javadoc for more informations)
+
+* +@UseWithField+
+** this indicates that the test method will be used with a field to which the values specified in annotation attributes will be injected
+** uses the first field which will be found in class hierarchy from current class to the `Object` class
+** such marked test method can run multiple times each time with different value injected to the field which is using (field, values and how to get them is specified in annotation parameters, see the javadoc for more informations)
+
+* +@Uses+
+** this is helper annotation for using multiple `@UseWithField` annotations in a single test method
+
 == Metamer RichFaces Bug Report Guidelines
 
 . Find if JIRA already exists (use filters to ease your work)
