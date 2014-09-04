@@ -84,9 +84,9 @@ FSF site: http://www.fsf.org. -->
             <scope>test</scope>
         </dependency>
         <dependency>
-	    <groupId>org.jboss.arquillian.graphene</groupId>
-	    <artifactId>arquillian-browser-screenshooter</artifactId>
-	</dependency>
+            <groupId>org.jboss.arquillian.graphene</groupId>
+            <artifactId>arquillian-browser-screenshooter</artifactId>
+        </dependency>
 
         <!-- Resolution of JAR libraries into WAR archive -->
         <dependency>
@@ -145,7 +145,15 @@ FSF site: http://www.fsf.org. -->
             <artifactId>arquillian-suite-extension</artifactId>
             <version>1.1.1</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>dom4j</groupId>
+                    <artifactId>dom4j</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+        
+        
 
         <dependency>
             <groupId>org.testng</groupId>
