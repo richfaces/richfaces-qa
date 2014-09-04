@@ -70,10 +70,10 @@ FSF site: http://www.fsf.org. -->
             <version>${version.richfaces}</version>
             <scope>test</scope>
         </dependency>
-        <!--<dependency>
-            <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-screen-recorder</artifactId>
-        </dependency>-->
+        <dependency>
+	    <groupId>org.jboss.arquillian.graphene</groupId>
+	    <artifactId>arquillian-browser-screenshooter</artifactId>
+	</dependency>
 
         <!-- Resolution of JAR libraries into WAR archive -->
         <dependency>
