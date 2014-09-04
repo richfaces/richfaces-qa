@@ -286,12 +286,6 @@ FSF site: http://www.fsf.org. -->
             </build>
         </profile>
         <profile>
-            <id>screenshots</id>
-            <properties>
-                <testng.suite.xml>src/test/resources/testng/testng-screenshots.xml</testng.suite.xml>
-            </properties>
-        </profile>
-        <profile>
             <!-- only jbossas-managed-7-1 supported by now -->
             <id>ipv6</id>
             <activation>
