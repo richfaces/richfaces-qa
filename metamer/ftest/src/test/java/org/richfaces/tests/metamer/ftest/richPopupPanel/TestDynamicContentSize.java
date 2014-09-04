@@ -21,22 +21,21 @@
  */
 package org.richfaces.tests.metamer.ftest.richPopupPanel;
 
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.testng.Assert.assertTrue;
+
 import java.net.URL;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.Dimension;
-
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.NullFragment;
 import org.richfaces.fragment.extendedDataTable.RichFacesExtendedDataTable;
 import org.richfaces.fragment.popupPanel.RichFacesPopupPanel;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
-
-import static org.testng.Assert.assertTrue;
 
 /**
  *
@@ -55,19 +54,20 @@ public class TestDynamicContentSize extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richPopupPanel/rf-13655.xhtml");
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-13655")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-13655")
     public void testAutosize() {
         callPopupButton.click();
         Graphene.waitGui().until().element(popup.advanced().getRootElement()).is().visible();
 
         Dimension sizeBefore = popup.advanced().getRootElement().getSize();
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             popup.getBodyContent().addRow();
         }
         Dimension sizeAfter = popup.advanced().getRootElement().getSize();
 
-        assertTrue(sizeAfter.getHeight() > sizeBefore.getHeight(), "The popupPanel width and height should be autosized when content gets bigger!");
+        assertTrue(sizeAfter.getHeight() > sizeBefore.getHeight(),
+            "The popupPanel width and height should be autosized when content gets bigger!");
     }
 
     public static class TestedPopupPanel extends RichFacesPopupPanel<NullFragment, NullFragment, Body> {
@@ -92,6 +92,5 @@ public class TestDynamicContentSize extends AbstractWebDriverTest {
 
     public static class TableRow {
     }
-
 
 }
