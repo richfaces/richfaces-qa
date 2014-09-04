@@ -121,7 +121,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             sortPriority="#{richExtendedDataTableBean.attributes['sortPriority'].value}"
             style="#{richExtendedDataTableBean.attributes['style'].value}"
             styleClass="#{richExtendedDataTableBean.attributes['styleClass'].value}"
-            value="#{richExtendedDataTableBean.state ? model.employees : null}" var="record" filterVar="filterValue">
+            value="#{richExtendedDataTableBean.state ? model.employees : null}" var="record" filterVar="filterValue"
+            render="scroller1">
 
             <f:facet name="noData">
                 <h:outputText value="There is no data." style="color: red;" />
