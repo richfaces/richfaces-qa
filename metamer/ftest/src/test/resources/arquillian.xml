@@ -181,6 +181,20 @@ http://www.fsf.org. -->
         <property name="seleniumHost">localhost</property>
     </extension>
 
+    <!-- see https://github.com/arquillian/arquillian-recorder/wiki -->
+    <extension qualifier="reporter">
+	<property name="report">html5</property>
+	<property name="imageWidth">40</property>
+	<property name="imageHeight">40</property>
+    </extension>
+
+    <!-- see https://github.com/arquillian/arquillian-graphene/tree/master/extension/screenshooter -->
+    <extension qualifier="screenshooter">
+	<property name="takeBeforeTest">false</property>
+	<property name="takeAfterTest">false</property>
+	<property name="takeWhenTestFailed">true</property>
+    </extension>
+
     <extension qualifier="webdriver">
         <property name="browser">firefox</property>
     </extension>
