@@ -83,10 +83,6 @@ FSF site: http://www.fsf.org. -->
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.jboss.arquillian.graphene</groupId>
-            <artifactId>arquillian-browser-screenshooter</artifactId>
-        </dependency>
 
         <!-- Resolution of JAR libraries into WAR archive -->
         <dependency>
