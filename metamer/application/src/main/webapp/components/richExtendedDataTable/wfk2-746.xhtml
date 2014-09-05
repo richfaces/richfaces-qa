@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+<h:head></h:head>
+<h:body>
+    <h:form>
+        <rich:panel>
+            <rich:extendedDataTable style="height:140px;width:920px" rowClasses="even,odd" headerClass="col1 ot1"
+                columnClasses="colClasses" value="#{extended.arrList}" var="arrDeliveryDetailsList" id="arrDeliveryDetailsList"
+                clientRows="0" selection="#{extended.selection}" sortMode="single" rows="0">
+
+                <a4j:ajax event="selectionchange" listener="#{extended.selectionListener}" render="arrOrderDetailsList" />
+
+                <rich:column id="deliveryNo" width="90px" styleClass="col2" headerClass="col2 ot1">
+                    <f:facet name="header">
+                        <h:outputLabel value="Delivery No" title="" />
+                    </f:facet>
+                    <h:outputText id="arrDeliveryList_DeliveryNo" value="#{arrDeliveryDetailsList.strDeliveryNo}">
+                    </h:outputText>
+                </rich:column>
+
+                <rich:column id="LRNo" width="100px" styleClass="col2" headerClass="col2 ot1">
+                    <f:facet name="header">
+                        <h:outputLabel value="LR no" title="" />
+                    </f:facet>
+                    <h:outputText id="arrDeliveryList_LRNO" value="#{arrDeliveryDetailsList.strLRNo}">
+                    </h:outputText>
+                </rich:column>
+            </rich:extendedDataTable>
+
+            <rich:extendedDataTable style="height:140px; width:920px" rowClasses="even,odd" headerClass="col1 ot1"
+                columnClasses="colClasses" rows="0" value="#{extended.arrList1}" var="arrOrderDetailsList"
+                id="arrOrderDetailsList" clientRows="0" sortMode="single">
+
+                <rich:column id="invoiceNo" width="100px" styleClass="col2" headerClass="col2 ot1">
+                    <f:facet name="header">
+                        <h:outputLabel value="Invoice No" title="" />
+                    </f:facet>
+                    <h:outputText id="arrOrderList_InvoiceNo" value="#{arrOrderDetailsList.strInvoiceNo}">
+                    </h:outputText>
+                </rich:column>
+
+                <rich:column id="shiptoparty" width="100px" styleClass="col2" headerClass="col2 ot1">
+                    <f:facet name="header">
+                        <h:outputLabel value="Ship To Party" title="" />
+                    </f:facet>
+                    <h:outputText id="arrOrderList_shiptoparty" value="#{arrOrderDetailsList.strShipToPartyCode}">
+                    </h:outputText>
+                </rich:column>
+            </rich:extendedDataTable>
+
+            <a4j:commandButton value="cancel" render="sMP_DeliveryDetails,arrOrderDetailsList" id="cancel"
+                action="#{extended.cancel}" oncomplete="#{rich:component('sMP_DeliveryDetails')}.show();" />
+                
+            <a4j:commandButton value="cancel which works" render="sMP_DeliveryDetails,arrOrderDetailsList" id="cancelWhichWorks"
+                action="#{extended.cancelWhichWorks}" oncomplete="#{rich:component('sMP_DeliveryDetails')}.show();" />
+
+        </rich:panel>
+
+    </h:form>
+
+    <rich:popupPanel id="sMP_DeliveryDetails" autosized="true" headerClass="hc" trimOverlayedElements="false" resizeable="false"
+        moveable="true" style="border:transparent;" shadowDepth="0" domElementAttachment="form" shadowOpacity="0" show="true"
+        modal="true">
+
+        <h:form id="SearchModalPanelForm" prependId="false" style="margin:0px;">
+            <a4j:commandButton value="OK" action="#{extended.onLoad}" render="arrDeliveryDetailsList" id="ok"
+                oncomplete="#{rich:component('sMP_DeliveryDetails')}.hide()" />
+
+        </h:form>
+    </rich:popupPanel>
+    <!-- <a4j:outputPanel>
+            Hello : <h:outputText value="#{extended.retrievedValue}" id="out" />
+        </a4j:outputPanel> -->
+
+
+
+</h:body>
+</html>
