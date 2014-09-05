@@ -22,6 +22,7 @@
 package org.richfaces.tests.photoalbum.ftest.webdriver.pages;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.messages.RichFacesMessages;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.AddAlbumPanel;
@@ -59,7 +60,7 @@ public class PhotoalbumPage {
 
     @FindBy(css = ".rf-pp-cntr.login-panel")
     private LoginPanel loginPanel;
-    @FindBy(css = ".rf-pp-cntr[id*='errorPanel']")
+    @FindByJQuery(".rf-ntf-err")
     private ErrorPanel errorPanel;
     @FindBy(css = ".rf-pp-cntr[id*='slideShow']")
     private SlideShowPanel slideShowPanel;

@@ -30,6 +30,9 @@ import org.testng.annotations.Test;
 
 import com.google.common.collect.Lists;
 
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
+import static org.jboss.arquillian.graphene.Graphene.waitAjax;
+
 /**
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -38,28 +41,30 @@ public class TestAlbumView extends AbstractPhotoalbumTest {
 
     @Test
     public void testImageSizeSlider() {
-        page.getLeftPanel().openAlbumInPredefinedShelf("Animals", "Nature");
+        page.getLeftPanel().openAlbumInPredefinedGroup("Animals", "Nature");
         AlbumView albumView = page.getContentPanel().albumView();
-        albumView.checkSliderVisible();
+        waitAjax().until().element(albumView.getSlider()
+                .advanced().getRootElement()).is().visible();
         Graphene.guardAjax(albumView.getSlider()).slideToValue(1);
         List<AlbumView.PhotoInfo> photos = albumView.getPhotos();
         photos.get(0).checkAll(200, "1750979205_6e51b47ce9_o.jpg", "Dec 17, 2009");
-        photos.get(2).checkAll(200, "2090459727_f2888e5cbe_o.jpg", "Dec 17, 2009");
-        photos.get(5).checkAll(200, "2508246015_313952406c_o.jpg", "Dec 17, 2009");
+        photos.get(2).checkAll(200, "4845901485_62db3c5d62_o.jpg", "Dec 17, 2009");
+        photos.get(5).checkAll(200, "5395800621_c0bc80ca53_o.jpg", "Dec 17, 2009");
         Graphene.guardAjax(albumView.getSlider()).slideToValue(0);
         photos = albumView.getPhotos();
         photos.get(0).checkAll(80, "1750979205_6e51b47ce9_o.jpg", "Dec 17, 2009");
-        photos.get(2).checkAll(80, "2090459727_f2888e5cbe_o.jpg", "Dec 17, 2009");
-        photos.get(5).checkAll(80, "2508246015_313952406c_o.jpg", "Dec 17, 2009");
+        photos.get(2).checkAll(80, "4845901485_62db3c5d62_o.jpg", "Dec 17, 2009");
+        photos.get(5).checkAll(80, "5395800621_c0bc80ca53_o.jpg", "Dec 17, 2009");
     }
 
     @Test
     public void testSlideShow() {
-        page.getLeftPanel().openAlbumInPredefinedShelf("Monuments and just buildings", "Monuments");
+        page.getLeftPanel().openAlbumInPredefinedGroup("Monuments and just buildings", "Monuments");
         AlbumView albumView = page.getContentPanel().albumView();
+        waitAjax().until().element(albumView.getSlideShowLink()).is().visible();
         albumView.openSlideShow();
         SlideShowPanel slideShowPanel = page.getSlideShowPanel();
         slideShowPanel.advanced().waitUntilPopupIsVisible().perform();
-        slideShowPanel.checkImagesInfoFromTooltip("Monuments and just buildings", Lists.newArrayList("05[303x457].jpg", "07[303x457].jpg", "1805365000_ca64d20b10_o.jpg"));
+        slideShowPanel.checkImagesInfoFromTooltip("Monuments and just buildings", Lists.newArrayList("8561041065_43449e8697_o.jpg", "2523480499_e988ddf4c1_o.jpg", "4065627169_2e3cea3acf_o.jpg"));
     }
 }

@@ -53,7 +53,7 @@ public class TestHowItWorksPanels extends AbstractPhotoalbumTest {
 
     @Test
     public void testHowItWorksImagesScroller() {
-        page.getLeftPanel().openAlbumInPredefinedShelf("Animals", "Nature");
+        page.getLeftPanel().openAlbumInPredefinedGroup("Animals", "Nature");
         page.getContentPanel().albumView().getPhotos().get(0).open();
         PhotoView photoView = page.getContentPanel().photoView();
         Graphene.guardAjax(photoView.getImagesScroller().getImageScrollerHelp()).click();
@@ -63,7 +63,7 @@ public class TestHowItWorksPanels extends AbstractPhotoalbumTest {
 
     @Test
     public void testHowItWorksInputNumberSlider() {
-        page.getLeftPanel().openAlbumInPredefinedShelf("Animals", "Nature");
+        page.getLeftPanel().openAlbumInPredefinedGroup("Animals", "Nature");
         Graphene.guardAjax(page.getContentPanel().albumView().getSliderHelpLink()).click();
         howItWorksPanel.advanced().waitUntilPopupIsVisible().perform();
         howItWorksPanel.checkAll("Image Size Control with <rich:inputNumberSlider>");
@@ -71,7 +71,7 @@ public class TestHowItWorksPanels extends AbstractPhotoalbumTest {
 
     @Test
     public void testHowItWorksNavigationForPredefinedShelves() {
-        Graphene.guardAjax(page.getLeftPanel().getPreDefinedShelvesHelpLink()).click();
+        Graphene.guardAjax(page.getLeftPanel().getPreDefinedGroupsHelpLink()).click();
         howItWorksPanel.advanced().waitUntilPopupIsVisible().perform();
         howItWorksPanel.checkAll("Navigation tree with pre-defined shelves.");
     }
@@ -80,7 +80,7 @@ public class TestHowItWorksPanels extends AbstractPhotoalbumTest {
     public void testHowItWorksNavigationForOwnShelves() {
         login();
 
-        Graphene.guardAjax(page.getLeftPanel().getMyShelvesHelpLink()).click();
+        Graphene.guardAjax(page.getLeftPanel().getMyGroupsHelpLink()).click();
         howItWorksPanel.advanced().waitUntilPopupIsVisible().perform();
         howItWorksPanel.checkAll("Navigation tree for a registered user");
     }
@@ -94,7 +94,7 @@ public class TestHowItWorksPanels extends AbstractPhotoalbumTest {
     }
     @Test
     public void testHowItWorksSlideShow() {
-        page.getLeftPanel().openAlbumInPredefinedShelf("Animals", "Nature");
+        page.getLeftPanel().openAlbumInPredefinedGroup("Animals", "Nature");
         page.getContentPanel().albumView().getPhotos().get(0).open();
         PhotoView photoView = page.getContentPanel().photoView();
         Graphene.guardAjax(photoView.getSlideShowHelp()).click();

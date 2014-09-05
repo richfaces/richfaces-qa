@@ -33,6 +33,7 @@ import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.editor.RichFacesEditor;
 
 /**
  *
@@ -198,8 +199,8 @@ public class PhotoView {
         private WebElement panelName;
         @FindByJQuery("> div.comment")
         private List<Comment> comments;
-        @FindBy(css = ".rf-ed textarea")
-        private WebElement addCommentEditor;
+        @FindByJQuery(".rf-ed")
+        private RichFacesEditor addCommentEditor;
         @FindBy(css = ".photoalbumButton input")
         private WebElement addCommentButton;
 
@@ -208,7 +209,7 @@ public class PhotoView {
         }
 
         public void addComment(String comment) {
-            addCommentEditor.sendKeys(comment);
+            addCommentEditor.type(comment);
             Graphene.guardAjax(getAddCommentButton()).click();
         }
 

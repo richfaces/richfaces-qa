@@ -35,6 +35,8 @@ import org.richfaces.fragment.tooltip.TextualRichFacesTooltip;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.HowItWorksPopupPanel.Controls;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.SlideShowPanel.Body;
 
+import static org.testng.Assert.assertTrue;
+
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
@@ -50,7 +52,7 @@ public class SlideShowPanel extends RichFacesPopupPanel<TextualFragmentPart, Con
         String actImgSrc;
         for (int i = 0; i < photoNames.size(); i++) {
             actImgSrc = getBodyContent().getImage().getAttribute("src");
-            assertEquals(getBodyContent().getTooltipOnImage().show().getContent().getText(), String.format(template, albumName, photoNames.get(i)));
+            assertTrue(getBodyContent().getTooltipOnImage().show().getContent().getText().contains(photoNames.get(i)));
             getBodyContent().getTooltipOnImage().hide();
             if (i == (photoNames.size() - 1)) {
                 advanced().waitUntilPopupIsNotVisible().withTimeout(5, TimeUnit.SECONDS).perform();

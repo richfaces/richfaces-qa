@@ -36,8 +36,8 @@ import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.ErrorPanel;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.SearchPanel.SearchOptionsEnum;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.AlbumView;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.SearchView;
-import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.ShelfView;
-import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.ShelvesView;
+import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.GroupView;
+import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.AlbumGroupsView;
 import org.richfaces.tests.photoalbum.ftest.webdriver.utils.PhotoalbumUtils;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
@@ -50,13 +50,13 @@ import com.google.common.collect.Lists;
 public class TestSearch extends AbstractPhotoalbumTest {
 
     private static final List<String> TABNAMES = Lists.newArrayList(
-        "Shelf search result",
+        "Album Group search result",
         "Albums search result",
         "Images search result",
         "Users search result",
         "Tags search result");
     private static final List<String> ALL_CRITERIAS = Lists.newArrayList(
-        "Shelves", "Albums", "Images", "Users", "Tags");
+        "Album Groups", "Albums", "Images", "Users", "Tags");
 
     @FindBy(className = "rf-ulst")
     private RichFacesList list;
@@ -89,7 +89,7 @@ public class TestSearch extends AbstractPhotoalbumTest {
         List<AlbumView.PhotoInfo> users = albumView.getPhotos();
         assertEquals(users.size(), 3);
         users.get(0).checkAll(200, "Andrey Markhel", "Jan 7, 1985", "4 albums | 21 images", "/img/shell/avatar_default.png");
-        users.get(1).checkAll(200, "John Smith", "Jan 7, 1970", "2 albums | 9 images", "/img/shell/avatar_w_default.png");
+        users.get(1).checkAll(200, "John Smith", "Jan 7, 1970", "2 albums | 8 images", "/img/shell/avatar_w_default.png");
         users.get(2).checkAll(200, "John Smith", "Jan 7, 1970", "0 albums | 0 images", "/img/shell/avatar_w_default.png");
 
         // tags
@@ -107,9 +107,9 @@ public class TestSearch extends AbstractPhotoalbumTest {
     @Test
     public void testSearchOptions_searchInNowhere() {
         // set all options off
-        page.getSearchPanel().searchFor("a", EnumSet.noneOf(SearchOptionsEnum.class));
+        Graphene.guardAjax(page.getSearchPanel()).searchFor("a", EnumSet.noneOf(SearchOptionsEnum.class));
         ErrorPanel errorPanel = page.getErrorPanel();
-        errorPanel.advanced().waitUntilPopupIsVisible().perform();
+        errorPanel.advanced().waitUntilMessageIsVisible();
         errorPanel.checkAll("You must select at least one search option");
     }
 
@@ -122,17 +122,8 @@ public class TestSearch extends AbstractPhotoalbumTest {
         List<AlbumView.PhotoInfo> users = albumView.getPhotos();
         assertEquals(users.size(), 3);
         users.get(0).checkAll(200, "Andrey Markhel", "Jan 7, 1985", "4 albums | 21 images", "/img/shell/avatar_default.png");
-        users.get(1).checkAll(200, "John Smith", "Jan 7, 1970", "2 albums | 9 images", "/img/shell/avatar_w_default.png");
+        users.get(1).checkAll(200, "John Smith", "Jan 7, 1970", "2 albums | 8 images", "/img/shell/avatar_w_default.png");
         users.get(2).checkAll(200, "John Smith", "Jan 7, 1970", "0 albums | 0 images", "/img/shell/avatar_w_default.png");
-    }
-
-    @Test
-    public void testSearchOptions_searchWithoutOptions() {
-        ErrorPanel errorPanel = page.getErrorPanel();
-        // set all options off
-        page.getSearchPanel().searchFor("a", EnumSet.noneOf(SearchOptionsEnum.class));
-        errorPanel.advanced().waitUntilPopupIsVisible().perform();
-        errorPanel.checkAll("You must select at least one search option");
     }
 
     @Test
@@ -146,8 +137,8 @@ public class TestSearch extends AbstractPhotoalbumTest {
     public void testSearchWithAllResultsAlbums() {
         testSearchWithAllResults();
 
-        ShelfView content = searchView().getTabPanel().switchTo(TABNAMES.get(1)).getContent(ShelfView.class);
-        List<ShelfView.AlbumPreview> albumPreviews = content.getAlbumPreviews();
+        GroupView content = searchView().getTabPanel().switchTo(TABNAMES.get(1)).getContent(GroupView.class);
+        List<GroupView.AlbumPreview> albumPreviews = content.getAlbumPreviews();
         albumPreviews.get(0).checkAll("Animals", "Dec 17, 2009", "Andrey Markhel");
         albumPreviews.get(5).checkAll("Water", "Dec 17, 2009", "John Smith");
         assertEquals(albumPreviews.size(), 6);
@@ -160,29 +151,30 @@ public class TestSearch extends AbstractPhotoalbumTest {
         AlbumView albumView = searchView().getTabPanel().switchTo(TABNAMES.get(2)).getContent(AlbumView.class);
         albumView.checkSliderVisible();
         PhotoalbumUtils.checkNotVisible(albumView.getAlbumInfo(), albumView.getSlideShowLink(), albumView.getAlbumHeader().getRoot());
-        assertEquals(albumView.getDataScroller().advanced().getCountOfVisiblePages(), 5);
+        assertEquals(albumView.getDataScroller().advanced().getCountOfVisiblePages(), 4);
         assertEquals(albumView.getDataScroller().getActivePageNumber(), 1);
         List<AlbumView.PhotoInfo> photos = albumView.getPhotos();
         assertEquals(photos.size(), 8);
         photos.get(0).checkAll(120, "1750979205_6e51b47ce9_o.jpg", "Dec 17, 2009", "Andrey Markhel");
         photos.get(1).checkAll(120, "1906662004_655d0f6ccf_o.jpg", "Dec 17, 2009", "Andrey Markhel");
-        photos.get(2).checkAll(120, "2090459727_f2888e5cbe_o.jpg", "Dec 17, 2009", "Andrey Markhel");
+        photos.get(2).checkAll(120, "4845901485_62db3c5d62_o.jpg", "Dec 17, 2009", "Andrey Markhel");
 
         Graphene.guardAjax(albumView.getDataScroller()).switchTo(LAST);
-        assertEquals(albumView.getDataScroller().advanced().getCountOfVisiblePages(), 5);
-        assertEquals(albumView.getDataScroller().getActivePageNumber(), 5);
+        assertEquals(albumView.getDataScroller().advanced().getCountOfVisiblePages(), 4);
+        assertEquals(albumView.getDataScroller().getActivePageNumber(), 4);
         photos = albumView.getPhotos();
-        assertEquals(photos.size(), 1);
-        photos.get(0).checkAll(120, "3170219697_4d259ff802_o.jpg", "Dec 17, 2009", "John Smith");
+        assertEquals(photos.size(), 8);
+        photos.get(0).checkAll(120, "103193233_860c47c909_o.jpg", "Dec 17, 2009", "Andrey Markhel");
     }
 
     @Test
-    public void testSearchWithAllResultsShelves() {
+    public void testSearchWithAllResultsAlbumGroups() {
         testSearchWithAllResults();
 
-        ShelvesView shelvesView = searchView().getTabPanel().switchTo(TABNAMES.get(0)).getContent(ShelvesView.class);
-        List<ShelfView> shelves = shelvesView.getShelves();
-        ShelfView shelf = shelves.get(0);
+        AlbumGroupsView albumGroupsView = searchView().getTabPanel().switchTo(TABNAMES.get(0))
+                                          .getContent(AlbumGroupsView.class);
+        List<GroupView> groups = albumGroupsView.getGroups();
+        GroupView shelf = groups.get(0);
         shelf.checkAll("Nature", "Created 2009-12-18, contains 12 images into 2 albums", "Nature pictures", true);
 
     }
@@ -211,7 +203,7 @@ public class TestSearch extends AbstractPhotoalbumTest {
         List<AlbumView.PhotoInfo> users = albumView.getPhotos();
         assertEquals(users.size(), 3);
         users.get(0).checkAll(200, "Andrey Markhel", "Jan 7, 1985", "4 albums | 21 images", "/img/shell/avatar_default.png");
-        users.get(1).checkAll(200, "John Smith", "Jan 7, 1970", "2 albums | 9 images", "/img/shell/avatar_w_default.png");
+        users.get(1).checkAll(200, "John Smith", "Jan 7, 1970", "2 albums | 8 images", "/img/shell/avatar_w_default.png");
         users.get(2).checkAll(200, "John Smith", "Jan 7, 1970", "0 albums | 0 images", "/img/shell/avatar_w_default.png");
     }
 

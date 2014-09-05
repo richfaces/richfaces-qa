@@ -42,86 +42,86 @@ public class LeftPanel {
     public static final String SPORT_AND_CARS_PAGE = "Sport & Cars";
     public static final String WATER_PAGE = "Water";
 
-    @FindByJQuery("a:contains('Pre-defined shelves')")
-    private WebElement preDefinedShelvesLink;
+    @FindByJQuery("a:contains('Public album groups')")
+    private WebElement preDefinedGroupsLink;
     @FindBy(css = ".rf-tr[id$='PreDefinedTree']")
-    private CustomTree preDefinedShelvesTree;
-    @FindByJQuery("td:has(> a:contains('Pre-defined shelves')) + td > a")
-    private WebElement preDefinedShelvesHelpLink;
-    @FindByJQuery("a:contains('My shelves')")
-    private WebElement myShelvesLink;
+    private CustomTree preDefinedGroupsTree;
+    @FindByJQuery("td:has(> a:contains('Public album groups')) + td > span > a")
+    private WebElement preDefinedGroupsHelpLink;
+    @FindByJQuery("a:contains('My album groups')")
+    private WebElement myGroupsLink;
     @FindBy(css = ".rf-tr[id$='userTree']")
-    private CustomTree myShelvesTree;
-    @FindByJQuery("td:has(> a:contains('My shelves')) + td > a")
-    private WebElement myShelvesHelpLink;
+    private CustomTree myGroupsTree;
+    @FindByJQuery("td:has(> a:contains('My album groups')) + td > span > a")
+    private WebElement myGroupsHelpLink;
 
     public void checkIfUserLogged() {
         checkVisibleForAll();
-        PhotoalbumUtils.checkVisible(Lists.newArrayList(myShelvesHelpLink, myShelvesLink, myShelvesTree.advanced().getRootElement()));
+        PhotoalbumUtils.checkVisible(Lists.newArrayList(myGroupsHelpLink, myGroupsLink, myGroupsTree.advanced().getRootElement()));
     }
 
     public void checkIfUserNotLogged() {
         checkVisibleForAll();
-        PhotoalbumUtils.checkNotVisible(Lists.newArrayList(myShelvesHelpLink, myShelvesLink, myShelvesTree.advanced().getRootElement()));
+        PhotoalbumUtils.checkNotVisible(Lists.newArrayList(myGroupsHelpLink, myGroupsLink, myGroupsTree.advanced().getRootElement()));
     }
 
     private void checkVisibleForAll() {
-        PhotoalbumUtils.checkVisible(Lists.newArrayList(preDefinedShelvesHelpLink, preDefinedShelvesLink, preDefinedShelvesTree.advanced().getRootElement()));
+        PhotoalbumUtils.checkVisible(Lists.newArrayList(preDefinedGroupsHelpLink, preDefinedGroupsLink, preDefinedGroupsTree.advanced().getRootElement()));
     }
 
-    public WebElement getMyShelvesHelpLink() {
-        return myShelvesHelpLink;
+    public WebElement getMyGroupsHelpLink() {
+        return myGroupsHelpLink;
     }
 
-    public WebElement getMyShelvesLink() {
-        return myShelvesLink;
+    public WebElement getMyGroupsLink() {
+        return myGroupsLink;
     }
 
-    public RichFacesTree getMyShelvesTree() {
-        return myShelvesTree;
+    public RichFacesTree getMyGroupsTree() {
+        return myGroupsTree;
     }
 
-    public WebElement getPreDefinedShelvesHelpLink() {
-        return preDefinedShelvesHelpLink;
+    public WebElement getPreDefinedGroupsHelpLink() {
+        return preDefinedGroupsHelpLink;
     }
 
-    public WebElement getPreDefinedShelvesLink() {
-        return preDefinedShelvesLink;
+    public WebElement getPreDefinedGroupsLink() {
+        return preDefinedGroupsLink;
     }
 
-    public RichFacesTree getPreDefinedShelvesTree() {
-        return preDefinedShelvesTree;
+    public RichFacesTree getPreDefinedGroupsTree() {
+        return preDefinedGroupsTree;
     }
 
-    public void openAlbumInOwnShelf(String albumName, String shelfName) {
-        Graphene.guardAjax(Graphene.guardNoRequest(myShelvesTree).expandNode(ChoicePickerHelper.byVisibleText().contains(shelfName))).selectNode(ChoicePickerHelper.byVisibleText().contains(albumName));
+    public void openAlbumInOwnGroup(String albumName, String shelfName) {
+        Graphene.guardAjax(Graphene.guardNoRequest(myGroupsTree).expandNode(ChoicePickerHelper.byVisibleText().contains(shelfName))).selectNode(ChoicePickerHelper.byVisibleText().contains(albumName));
     }
 
-    public void openAlbumInPredefinedShelf(String albumName, String shelfName) {
-        Graphene.guardAjax(Graphene.guardNoRequest(preDefinedShelvesTree).expandNode(ChoicePickerHelper.byVisibleText().contains(shelfName))).selectNode(ChoicePickerHelper.byVisibleText().contains(albumName));
+    public void openAlbumInPredefinedGroup(String albumName, String shelfName) {
+        Graphene.guardAjax(Graphene.guardNoRequest(preDefinedGroupsTree).expandNode(ChoicePickerHelper.byVisibleText().contains(shelfName))).selectNode(ChoicePickerHelper.byVisibleText().contains(albumName));
     }
 
-    public void openOwnShelf(String name) {
-        Graphene.guardAjax(myShelvesTree).selectNode(ChoicePickerHelper.byVisibleText().contains(name));
+    public void openOwnGroup(String name) {
+        Graphene.guardAjax(myGroupsTree).selectNode(ChoicePickerHelper.byVisibleText().contains(name));
     }
 
-    public void openOwnShelf(int index) {
-        Graphene.guardAjax(myShelvesTree).selectNode(index);
+    public void openOwnGroup(int index) {
+        Graphene.guardAjax(myGroupsTree).selectNode(index);
     }
 
-    public void openOwnShelves() {
-        Graphene.guardAjax(myShelvesLink).click();
+    public void openOwnGroups() {
+        Graphene.guardAjax(myGroupsLink).click();
     }
 
-    public void openPredefinedShelf(String name) {
-        Graphene.guardAjax(preDefinedShelvesTree).selectNode(ChoicePickerHelper.byVisibleText().contains(name));
+    public void openPredefinedGroups(String name) {
+        Graphene.guardAjax(preDefinedGroupsTree).selectNode(ChoicePickerHelper.byVisibleText().contains(name));
     }
 
-    public void openPredefinedShelf(int index) {
-        Graphene.guardAjax(preDefinedShelvesTree).selectNode(index);
+    public void openPredefinedGroup(int index) {
+        Graphene.guardAjax(preDefinedGroupsTree).selectNode(index);
     }
 
-    public void openPredefinedShelves() {
-        Graphene.guardAjax(preDefinedShelvesLink).click();
+    public void openPredefinedGroup() {
+        Graphene.guardAjax(preDefinedGroupsLink).click();
     }
 }

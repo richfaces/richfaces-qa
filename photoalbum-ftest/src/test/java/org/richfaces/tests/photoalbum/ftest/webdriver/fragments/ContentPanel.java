@@ -30,8 +30,8 @@ import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.AllAlbumsVi
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.AllImagesView;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.PhotoView;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.SearchView;
-import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.ShelfView;
-import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.ShelvesView;
+import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.GroupView;
+import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.AlbumGroupsView;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -65,11 +65,11 @@ public class ContentPanel {
         return Graphene.createPageFragment(SearchView.class, root);
     }
 
-    public ShelfView shelfView() {
-        return Graphene.createPageFragment(ShelfView.class, root);
+    public GroupView groupView() {
+        return Graphene.createPageFragment(GroupView.class, root);
     }
 
-    public ShelvesView shelvesView() {
-        return Graphene.createPageFragment(ShelvesView.class, root);
+    public AlbumGroupsView groupsView() {
+        return Graphene.createPageFragment(AlbumGroupsView.class, root);
     }
 }

@@ -21,77 +21,65 @@
  *******************************************************************************/
 package org.richfaces.tests.photoalbum.ftest.webdriver.fragments;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
+
 import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.richfaces.fragment.panel.TextualFragmentPart;
-import org.richfaces.fragment.popupPanel.RichFacesPopupPanel;
-import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.ErrorPanel.Body;
-import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.HowItWorksPopupPanel.Controls;
+import org.richfaces.fragment.notify.RichFacesNotifyMessage;
 
 /**
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class ErrorPanel extends RichFacesPopupPanel<TextualFragmentPart, Controls, Body> {
+public class ErrorPanel extends RichFacesNotifyMessage {
+
+    @FindByJQuery(".rf-ntf-ico")
+    private WebElement icon;
+
+    @Drone
+    private WebDriver browser;
 
     public void checkAll(String contentStartsWith) {
-        checkHeader();
         checkContent(contentStartsWith);
-        checkContainsHelp();
         checkContainsWarning();
         checkCloseWithControls();
     }
 
     public void checkCloseWithControls() {
         Graphene.guardNoRequest(this).close();
-        advanced().waitUntilPopupIsNotVisible().perform();
-    }
-
-    public void checkContainsHelp() {
-        assertTrue(getBodyContent().getHelpLink().getAttribute("src").contains("img/icons/help_sign.png"));
+        advanced().waitUntilMessageIsNotVisible().perform();
     }
 
     public void checkContainsWarning() {
-        assertTrue(getBodyContent().getIcon().getAttribute("src").contains("img/modal/ico_warning.png"));
+        assertTrue(new WebElementConditionFactory(icon).isVisible().apply(browser));
     }
 
     public void checkContent(String contentContains) {
         assertTrue(getContentText().contains(contentContains));
     }
 
-    public void checkHeader() {
-        assertTrue(getHeaderText().contains("Error occurred"));
-    }
-
-    public void close() {
-        getHeaderControlsContent().close();
-        advanced().waitUntilPopupIsNotVisible().perform();
-    }
-
     public String getContentText() {
-        return getBodyContent().getText();
+        return advanced().getRootElement().getText();
     }
 
-    public String getHeaderText() {
-        return getHeaderContent().getText();
-    }
-
-    public static class Body extends TextualFragmentPart {
-
-        @FindByJQuery("img:eq(1)")
-        private WebElement helpLink;
-        @FindByJQuery("img:eq(0)")
-        private WebElement icon;
-
-        public WebElement getHelpLink() {
-            return helpLink;
-        }
-
-        public WebElement getIcon() {
-            return icon;
-        }
-    }
+//    public static class Body extends TextualFragmentPart {
+//
+//        @FindByJQuery("img:eq(1)")
+//        private WebElement helpLink;
+//        @FindByJQuery("img:eq(0)")
+//        private WebElement icon;
+//
+//        public WebElement getHelpLink() {
+//            return helpLink;
+//        }
+//
+//        public WebElement getIcon() {
+//            return icon;
+//        }
+//    }
 }

@@ -45,8 +45,8 @@ import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.AlbumView;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.AllAlbumsView;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.AllImagesView;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.PhotoView;
-import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.ShelfView;
-import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.ShelvesView;
+import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.GroupView;
+import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.AlbumGroupsView;
 import org.testng.annotations.Test;
 
 /**
@@ -76,7 +76,11 @@ public class TestLoggedUserFeatures extends AbstractPhotoalbumTest {
         DateTimeFormatter pattern = DateTimeFormat.forPattern("MMM d, YYYY");
 
         // open first photo in album 'Monuments and just buildings'
-        page.getLeftPanel().openAlbumInPredefinedShelf("Monuments and just buildings", "Monuments");
+        page.getLeftPanel().openAlbumInPredefinedGroup("Monuments and just buildings", "Monuments");
+        Graphene.waitAjax().until()
+                           .element(page.getContentPanel().albumView().getAlbumHeader().getNameElement())
+                           .text()
+                           .contains("Monuments");
         page.getContentPanel().albumView().getPhotos().get(0).open();
         PhotoView photoView = page.getContentPanel().photoView();
         PhotoView.CommentsPanel commentPanel = photoView.getCommentPanel();
@@ -85,7 +89,7 @@ public class TestLoggedUserFeatures extends AbstractPhotoalbumTest {
         List<PhotoView.CommentsPanel.Comment> comments = commentPanel.getComments();
         assertEquals(comments.size(), 3);
         comments.get(0).checkAll("Jan 7, 1985", "Superb Shot and so beautiful Colors !!!", "avatar_w_default.png", "Noname");
-        comments.get(1).checkAll("Jan 7, 1985", "really pretty. it looks like there is a lady in the _center_, blowing kisses!!", "avatar_default.png", "amarkhel");
+        comments.get(1).checkAll("Jan 7, 1985", "really pretty. it looks like there is a lady in the _center_, blowing kisses!!", "avatar_w_default.png", "Noname");
         comments.get(2).checkAll("Jan 7, 1985", "that is a beautiful flower with great colours", "avatar_default.png", "amarkhel");
 
         // add comment
@@ -96,7 +100,7 @@ public class TestLoggedUserFeatures extends AbstractPhotoalbumTest {
         comments = commentPanel.getComments();
         assertEquals(comments.size(), 4);
         comments.get(0).checkAll("Jan 7, 1985", "Superb Shot and so beautiful Colors !!!", "avatar_w_default.png", "Noname");
-        comments.get(1).checkAll("Jan 7, 1985", "really pretty. it looks like there is a lady in the _center_, blowing kisses!!", "avatar_default.png", "amarkhel");
+        comments.get(1).checkAll("Jan 7, 1985", "really pretty. it looks like there is a lady in the _center_, blowing kisses!!", "avatar_w_default.png", "Noname");
         comments.get(2).checkAll("Jan 7, 1985", "that is a beautiful flower with great colours", "avatar_default.png", "amarkhel");
         comments.get(3).checkAll(dt.toString(pattern), comment, "avatar_default.png", "amarkhel");
         comments.get(3).checkIfUsersComment();
@@ -109,7 +113,7 @@ public class TestLoggedUserFeatures extends AbstractPhotoalbumTest {
         comments = commentPanel.getComments();
         assertEquals(comments.size(), 4);
         comments.get(0).checkAll("Jan 7, 1985", "Superb Shot and so beautiful Colors !!!", "avatar_w_default.png", "Noname");
-        comments.get(1).checkAll("Jan 7, 1985", "really pretty. it looks like there is a lady in the _center_, blowing kisses!!", "avatar_default.png", "amarkhel");
+        comments.get(1).checkAll("Jan 7, 1985", "really pretty. it looks like there is a lady in the _center_, blowing kisses!!", "avatar_w_default.png", "Noname");
         comments.get(2).checkAll("Jan 7, 1985", "that is a beautiful flower with great colours", "avatar_default.png", "amarkhel");
         comments.get(3).checkAll(dt.toString(pattern), comment, "avatar_default.png", "amarkhel");
         comments.get(3).checkIfUsersComment();
@@ -121,7 +125,7 @@ public class TestLoggedUserFeatures extends AbstractPhotoalbumTest {
         comments = commentPanel.getComments();
         assertEquals(comments.size(), 3);
         comments.get(0).checkAll("Jan 7, 1985", "Superb Shot and so beautiful Colors !!!", "avatar_w_default.png", "Noname");
-        comments.get(1).checkAll("Jan 7, 1985", "really pretty. it looks like there is a lady in the _center_, blowing kisses!!", "avatar_default.png", "amarkhel");
+        comments.get(1).checkAll("Jan 7, 1985", "really pretty. it looks like there is a lady in the _center_, blowing kisses!!", "avatar_w_default.png", "Noname");
         comments.get(2).checkAll("Jan 7, 1985", "that is a beautiful flower with great colours", "avatar_default.png", "amarkhel");
 
     }
@@ -131,7 +135,7 @@ public class TestLoggedUserFeatures extends AbstractPhotoalbumTest {
         login();
 
         // switch to Animals album
-        page.getLeftPanel().openAlbumInOwnShelf("Animals", "Nature");
+        page.getLeftPanel().openAlbumInOwnGroup("Animals", "Nature");
 
         AlbumView.AlbumHeader albumHeader = page.getContentPanel().albumView().getAlbumHeader();
         assertEquals(albumHeader.getNameElement().getText().trim(), "Animals");
@@ -142,7 +146,7 @@ public class TestLoggedUserFeatures extends AbstractPhotoalbumTest {
         Graphene.guardAjax(input.type("Animals album")).confirm();
         // check the change in left panel (navigation tree) and on current content view
         assertEquals(albumHeader.getNameElement().getText().trim(), "Animals album");
-        assertEquals(page.getLeftPanel().getMyShelvesTree().advanced().getFirstNode() // animals are first album in first own shelf
+        assertEquals(page.getLeftPanel().getMyGroupsTree().advanced().getFirstNode() // animals are first album in first own shelf
             .advanced().getFirstNode().advanced().getLabelElement().getText().trim(), "Animals album");
         // check the change in the name of the link of inner photo
         page.getContentPanel().albumView().getPhotos().get(0).open();
@@ -156,7 +160,7 @@ public class TestLoggedUserFeatures extends AbstractPhotoalbumTest {
         login();
 
         // switch to Animals album
-        page.getLeftPanel().openAlbumInOwnShelf("Animals", "Nature");
+        page.getLeftPanel().openAlbumInOwnGroup("Animals", "Nature");
 
         // open first photo
         page.getContentPanel().albumView().getPhotos().get(0).open();
@@ -180,9 +184,9 @@ public class TestLoggedUserFeatures extends AbstractPhotoalbumTest {
         login();
 
         // switch to Nature shelf
-        page.getLeftPanel().openOwnShelf("Nature");
+        page.getLeftPanel().openOwnGroup("Nature");
 
-        ShelfView.ShelfHeader shelfHeader = page.getContentPanel().shelfView().getShelfHeader();
+        GroupView.GroupHeader shelfHeader = page.getContentPanel().groupView().getGroupHeader();
         assertEquals(shelfHeader.getNameElement().getText().trim(), "Nature");
         RichFacesInplaceInput input = shelfHeader.getInput();
         assertEquals(input.getTextInput().getStringValue(), "Nature");
@@ -191,11 +195,11 @@ public class TestLoggedUserFeatures extends AbstractPhotoalbumTest {
         Graphene.guardAjax(input.type("Nature shelf")).confirm();
         // check the change in left panel (navigation tree) and on current content view
         assertEquals(shelfHeader.getNameElement().getText().trim(), "Nature shelf");
-        assertEquals(page.getLeftPanel().getMyShelvesTree().advanced().getFirstNode()
+        assertEquals(page.getLeftPanel().getMyGroupsTree().advanced().getFirstNode()
             .advanced().getLabelElement().getText().trim(), "Nature shelf");
 
         // check the change in the name of the link of inner album
-        page.getContentPanel().shelfView().getAlbumPreviews().get(0).open();
+        page.getContentPanel().groupView().getAlbumPreviews().get(0).open();
         AlbumView albumView = page.getContentPanel().albumView();
         String albumLinkText = albumView.getAlbumHeader().getLinks().get(0).getText();
         assertEquals(albumLinkText.trim(), "Shelf: Nature shelf");
@@ -220,7 +224,7 @@ public class TestLoggedUserFeatures extends AbstractPhotoalbumTest {
         panel.cancel();
 
         // check initial state
-        RichFacesTree myShelvesTree = page.getLeftPanel().getMyShelvesTree();
+        RichFacesTree myShelvesTree = page.getLeftPanel().getMyGroupsTree();
         assertEquals(myShelvesTree.advanced().getNodes().size(), 2);
         Tree.TreeNode node = Graphene.guardNoRequest(myShelvesTree).expandNode(ChoicePickerHelper.byVisibleText().contains(shelfName));
         assertEquals(node.advanced().getNodes().size(), 2);
@@ -232,22 +236,22 @@ public class TestLoggedUserFeatures extends AbstractPhotoalbumTest {
         panel.addAlbum(shelfName, albumName);
 
         // check changed state in left panel
-        myShelvesTree = page.getLeftPanel().getMyShelvesTree();
+        myShelvesTree = page.getLeftPanel().getMyGroupsTree();
         assertEquals(myShelvesTree.advanced().getNodes().size(), 2);
         node = Graphene.guardNoRequest(myShelvesTree).expandNode(ChoicePickerHelper.byVisibleText().contains(shelfName));
         assertEquals(node.advanced().getNodes().size(), 3);
         // check changed state in shelves view
-        page.getLeftPanel().openOwnShelves();
-        ShelvesView shelvesView = page.getContentPanel().shelvesView();
+        page.getLeftPanel().openOwnGroups();
+        AlbumGroupsView shelvesView = page.getContentPanel().groupsView();
         shelvesView.checkHeader("My shelves (2)");
-        shelvesView.getShelves().get(0).checkShelfHeader(shelfName, "Created 2009-12-18, contains 12 images into 3 albums");
+        shelvesView.getGroups().get(0).checkGroupHeader(shelfName, "Created 2009-12-18, contains 12 images into 3 albums");
         // check state in shelf view
-        page.getLeftPanel().openOwnShelf(shelfName);
-        ShelfView shelfView = page.getContentPanel().shelfView();
-        shelfView.checkShelfHeader(shelfName, "Created 2009-12-18, contains 12 images into 3 albums");
+        page.getLeftPanel().openOwnGroup(shelfName);
+        GroupView shelfView = page.getContentPanel().groupView();
+        shelfView.checkGroupHeader(shelfName, "Created 2009-12-18, contains 12 images into 3 albums");
 
         // open album
-        page.getLeftPanel().openAlbumInOwnShelf(albumName, shelfName);
+        page.getLeftPanel().openAlbumInOwnGroup(albumName, shelfName);
         DateTime dt = new DateTime();
         AlbumView albumView = page.getContentPanel().albumView();
 
@@ -277,7 +281,7 @@ public class TestLoggedUserFeatures extends AbstractPhotoalbumTest {
         confirmationPanel.ok();
 
         // check
-        myShelvesTree = page.getLeftPanel().getMyShelvesTree();
+        myShelvesTree = page.getLeftPanel().getMyGroupsTree();
         assertEquals(myShelvesTree.advanced().getNodes().size(), 2);
         node = Graphene.guardNoRequest(myShelvesTree).expandNode(ChoicePickerHelper.byVisibleText().contains(shelfName));
         assertEquals(node.advanced().getNodes().size(), 2);
@@ -303,7 +307,7 @@ public class TestLoggedUserFeatures extends AbstractPhotoalbumTest {
         panel.cancel();
 
         // check initial state
-        RichFacesTree myShelvesTree = page.getLeftPanel().getMyShelvesTree();
+        RichFacesTree myShelvesTree = page.getLeftPanel().getMyGroupsTree();
         assertEquals(myShelvesTree.advanced().getNodes().size(), 2);
         assertEquals(myShelvesTree.advanced().getLeafNodes().size(), 0);
 
@@ -315,46 +319,46 @@ public class TestLoggedUserFeatures extends AbstractPhotoalbumTest {
         panel.addShelf(shelfName, false);
 
         // check changed state in left panel
-        myShelvesTree = page.getLeftPanel().getMyShelvesTree();
+        myShelvesTree = page.getLeftPanel().getMyGroupsTree();
         assertEquals(myShelvesTree.advanced().getNodes().size(), 3);
         assertEquals(myShelvesTree.advanced().getNodes().get(2).advanced().getNodes().size(), 0);
 
         // check changed state in shelves view
-        page.getLeftPanel().openOwnShelves();
-        ShelvesView shelvesView = page.getContentPanel().shelvesView();
+        page.getLeftPanel().openOwnGroups();
+        AlbumGroupsView shelvesView = page.getContentPanel().groupsView();
         shelvesView.checkHeader("My shelves (3)");
-        shelvesView.getShelves().get(2).checkAll(shelfName, "Created " + dt.toString(pattern) + ".*" + dt.getYear() + ", contains 0 images into 0 albums", "", true);
+        shelvesView.getGroups().get(2).checkAll(shelfName, "Created " + dt.toString(pattern) + ".*" + dt.getYear() + ", contains 0 images into 0 albums", "", true);
 
         // open shelf
-        page.getLeftPanel().openOwnShelf(shelfName);
-        ShelfView shelfView = page.getContentPanel().shelfView();
+        page.getLeftPanel().openOwnGroup(shelfName);
+        GroupView shelfView = page.getContentPanel().groupView();
 
         // check data
-        shelfView.checkShelfHeader(shelfName, "Created " + dt.toString(pattern) + ".*" + dt.getYear() + ", contains 0 images into 0 albums");
+        shelfView.checkGroupHeader(shelfName, "Created " + dt.toString(pattern) + ".*" + dt.getYear() + ", contains 0 images into 0 albums");
         assertEquals(shelfView.getAlbumPreviews().size(), 0);
-        shelfView.checkUserOwnsShelf(true);
+        shelfView.checkUserOwnsGroup(true);
 
         // cancel before delete
-        Graphene.guardAjax(shelfView.getShelfHeader().getDeleteShelfLink()).click();
+        Graphene.guardAjax(shelfView.getGroupHeader().getDeleteShelfLink()).click();
         ConfirmationPanel confirmationPanel = page.getConfirmationPanel();
         confirmationPanel.advanced().waitUntilPopupIsVisible().perform();
         confirmationPanel.check("Are You sure? All nested albums and images will also be dropped! Click OK to proceed, otherwise click Cancel.");
         confirmationPanel.cancel();
 
         // close before delete
-        Graphene.guardAjax(shelfView.getShelfHeader().getDeleteShelfLink()).click();
+        Graphene.guardAjax(shelfView.getGroupHeader().getDeleteShelfLink()).click();
         confirmationPanel = page.getConfirmationPanel();
         confirmationPanel.advanced().waitUntilPopupIsVisible().perform();
         confirmationPanel.close();
 
         // delete
-        Graphene.guardAjax(shelfView.getShelfHeader().getDeleteShelfLink()).click();
+        Graphene.guardAjax(shelfView.getGroupHeader().getDeleteShelfLink()).click();
         confirmationPanel = page.getConfirmationPanel();
         confirmationPanel.advanced().waitUntilPopupIsVisible().perform();
         confirmationPanel.ok();
 
         // check
-        myShelvesTree = page.getLeftPanel().getMyShelvesTree();
+        myShelvesTree = page.getLeftPanel().getMyGroupsTree();
         assertEquals(myShelvesTree.advanced().getNodes().size(), 2);
         assertEquals(myShelvesTree.advanced().getLeafNodes().size(), 0);
     }
@@ -364,11 +368,11 @@ public class TestLoggedUserFeatures extends AbstractPhotoalbumTest {
         login();
 
         Graphene.guardAjax(page.getHeaderPanel().getToolbar().getMyAlbumShelvesLink()).click();
-        ShelvesView shelvesView = page.getContentPanel().shelvesView();
+        AlbumGroupsView shelvesView = page.getContentPanel().groupsView();
         shelvesView.checkHeader("My shelves (2)");
-        assertEquals(shelvesView.getShelves().size(), 2);
-        shelvesView.getShelves().get(0).checkAll("Nature", "Created 2009-12-18, contains 12 images into 2 albums", "Nature pictures", true);
-        shelvesView.getShelves().get(1).checkAll("Sport & Cars", "Created 2009-12-18, contains 9 images into 2 albums", "Sport & Cars pictures", true);
+        assertEquals(shelvesView.getGroups().size(), 2);
+        shelvesView.getGroups().get(0).checkAll("Nature", "Created 2009-12-18, contains 12 images into 2 albums", "Nature pictures", true);
+        shelvesView.getGroups().get(1).checkAll("Sport & Cars", "Created 2009-12-18, contains 9 images into 2 albums", "Sport & Cars pictures", true);
     }
 
     @Test

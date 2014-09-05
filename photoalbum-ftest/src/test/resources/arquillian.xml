@@ -24,19 +24,25 @@ http://www.fsf.org. -->
         </protocol>
     </container>
     
+    <container qualifier="wildfly-managed-8-1">
+        <configuration>
+            <property name="javaVmArguments">${arquillian.container.wildfly.8-1.jvm.args}</property>
+            <property name="managementAddress">${arquillian.container.jbossas.7-1.node0}</property>
+            <property name="serverConfig">standalone.xml</property>
+            <property name="enableAssertions">false</property>
+        </configuration>
+    </container>
+    
+    <container qualifier="wildfly-remote-8-1" />
     <container qualifier="jbossas-remote-7-1"/>
     <container qualifier="jbosseap-managed-6-1"/>
 
     <extension qualifier="graphene">
-        <property name="browser">*firefox</property>
-        <property name="contextRoot">http://localhost:8080/</property>
-        <property name="seleniumTimeoutAjax">7000</property>
-        <property name="seleniumMaximize">true</property>
-        <property name="seleniumPort">8444</property>
-        <property name="seleniumHost">localhost</property>
+        <property name="waitGuardInterval">10</property>
+        <property name="waitAjaxInterval">10</property>
     </extension>
 
     <extension qualifier="webdriver">
-        <property name="browserCapabilities">firefox</property>
+        <property name="browser">firefox</property>
     </extension>
 </arquillian>

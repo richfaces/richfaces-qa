@@ -56,8 +56,6 @@ public class HeaderPanel {
     @FindByJQuery("div.header-content-div div[id$='logInOutMenu'] a:contains('Register')")
     private WebElement registerLink;
 
-    @FindByJQuery("div.header-content-div div.top-right-menu a:contains('GuideLine')")
-    private WebElement guideLineLink;
     @FindByJQuery("div.header-content-div div.top-right-menu a:contains('Wiki page')")
     private WebElement wikiPageLink;
     @FindByJQuery("div.header-content-div div.top-right-menu a:contains('Downloads')")
@@ -69,7 +67,7 @@ public class HeaderPanel {
     private Toolbar toolbar;
 
     private void checkAlwaysPresentElements() {
-        PhotoalbumUtils.checkVisible(Lists.newArrayList(imageIndexLink, loggedUserSpan, guideLineLink, wikiPageLink, downloadsLink, communityLink, getStatusHelpLink()));
+        PhotoalbumUtils.checkVisible(Lists.newArrayList(imageIndexLink, loggedUserSpan, wikiPageLink, downloadsLink, communityLink));
         WebElement image = imageIndexLink.findElement(By.tagName("img"));
         assertTrue(image.getAttribute("src").contains("img/shell/logo_top.gif"));
     }
@@ -99,10 +97,6 @@ public class HeaderPanel {
         return downloadsLink;
     }
 
-    public WebElement getGuideLineLink() {
-        return guideLineLink;
-    }
-
     public WebElement getImageIndexLink() {
         return imageIndexLink;
     }
@@ -125,10 +119,6 @@ public class HeaderPanel {
 
     public WebElement getRegisterLink() {
         return registerLink;
-    }
-
-    public WebElement getStatusHelpLink() {
-        return driver.findElement(ByJQuery.selector("a:last"));
     }
 
     public Toolbar getToolbar() {

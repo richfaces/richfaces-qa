@@ -46,22 +46,22 @@ import com.google.common.collect.Lists;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class ShelfView {
+public class GroupView {
 
     @FindBy(className = "shelf-header-table")
-    private ShelfHeader shelfHeader;
+    private GroupHeader groupHeader;
     @FindBy(tagName = "p")
-    private WebElement shelfDescription;
+    private WebElement groupDescription;
     @FindBy(css = "div.preview_box_album_120")
     private List<AlbumPreview> albumPreviews;
 
     public void checkAll(String headerInfo, String headerAdditionalInfo, String shelfInfo, boolean showShelfLinkVisible) {
-        checkShelfHeader(headerInfo, headerAdditionalInfo, showShelfLinkVisible);
-        checkShelfDescription(shelfInfo);
+        GroupView.this.checkGroupHeader(headerInfo, headerAdditionalInfo, showShelfLinkVisible);
+        checkGroupDescription(shelfInfo);
     }
 
-    public void checkUserOwnsShelf(boolean owns) {
-        ArrayList<WebElement> ownShelfLinks = Lists.newArrayList(shelfHeader.getDeleteShelfLink(), shelfHeader.getEditShelfPropertiesLink());
+    public void checkUserOwnsGroup(boolean owns) {
+        ArrayList<WebElement> ownShelfLinks = Lists.newArrayList(groupHeader.getDeleteShelfLink(), groupHeader.getEditGroupPropertiesLink());
         if (owns) {
             PhotoalbumUtils.checkVisible(ownShelfLinks);
         } else {
@@ -69,17 +69,17 @@ public class ShelfView {
         }
     }
 
-    public void checkShelfHeader(String headerInfo, String headerAdditionalInfo, boolean showShelfLinkVisible) {
-        shelfHeader.checkAll(headerInfo, headerAdditionalInfo, showShelfLinkVisible);
+    public void checkGroupHeader(String headerInfo, String headerAdditionalInfo, boolean showShelfLinkVisible) {
+        groupHeader.checkAll(headerInfo, headerAdditionalInfo, showShelfLinkVisible);
     }
 
-    public void checkShelfHeader(String headerInfo, String headerAdditionalInfo) {
-        shelfHeader.checkName(headerInfo);
-        shelfHeader.checkAdditionalInfo(headerAdditionalInfo);
+    public void checkGroupHeader(String headerInfo, String headerAdditionalInfo) {
+        groupHeader.checkName(headerInfo);
+        groupHeader.checkAdditionalInfo(headerAdditionalInfo);
     }
 
-    private void checkShelfDescription(String info) {
-        assertEquals(shelfDescription.getText().trim(), info);
+    private void checkGroupDescription(String info) {
+        assertEquals(groupDescription.getText().trim(), info);
     }
 
     public AlbumPreview getAlbumPreview(int index) {
@@ -90,15 +90,15 @@ public class ShelfView {
         return Collections.unmodifiableList(albumPreviews);
     }
 
-    public ShelfHeader getShelfHeader() {
-        return shelfHeader;
+    public GroupHeader getGroupHeader() {
+        return groupHeader;
     }
 
-    public WebElement getShelfInfo() {
-        return shelfDescription;
+    public WebElement getGroupInfo() {
+        return groupDescription;
     }
 
-    public static class ShelfHeader {
+    public static class GroupHeader {
 
         @FindBy(css = "td > h1")
         private WebElement name;
@@ -106,7 +106,7 @@ public class ShelfView {
         private RichFacesInplaceInput input;
         @FindByJQuery(".additional-info-text:not('a')")
         private WebElement additionalInfo;
-        @FindByJQuery(".shelf-header-table-col2 a:contains('View shelf')")
+        @FindByJQuery(".shelf-header-table-col2 a:contains('View album group')")
         private WebElement viewShelfLink;
         @FindByJQuery(".shelf-header-table-col2 a:contains('Edit shelf properties')")
         private WebElement editShelfPropertiesLink;
@@ -116,10 +116,10 @@ public class ShelfView {
         public void checkAll(String name, String additionalInfo, boolean visible) {
             checkAdditionalInfo(additionalInfo);
             checkName(name);
-            checkViewShelfLinkVisible(visible);
+            checkViewGroupLinkVisible(visible);
         }
 
-        public void checkViewShelfLinkVisible(boolean visible) {
+        public void checkViewGroupLinkVisible(boolean visible) {
             assertEquals(Utils.isVisible(viewShelfLink), visible);
         }
 
@@ -140,7 +140,7 @@ public class ShelfView {
             return deleteShelfLink;
         }
 
-        public WebElement getEditShelfPropertiesLink() {
+        public WebElement getEditGroupPropertiesLink() {
             return editShelfPropertiesLink;
         }
 
@@ -152,7 +152,7 @@ public class ShelfView {
             return name;
         }
 
-        public WebElement getViewShelfLink() {
+        public WebElement getViewGroupLink() {
             return viewShelfLink;
         }
     }

@@ -6,6 +6,7 @@
         <groupId>org.richfaces.tests</groupId>
         <artifactId>richfaces-qa-parent</artifactId>
         <version>4.5.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>photoalbum-ftest</artifactId>
@@ -15,6 +16,19 @@
     <properties>
         <testng.listeners>org.jboss.test.selenium.listener.ConsoleStatusTestListener,org.jboss.test.selenium.listener.FailureLoggingTestListener</testng.listeners>
         <testng.suite.xml>src/test/resources/testng.xml</testng.suite.xml>
+        
+        <jvm.args.ip>-Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=false</jvm.args.ip>
+        <!-- jvm args for all containers without setting prefered IP -->
+        <arquillian.container.all.jvm.args>-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -DstatelessViews=${statelessViews}</arquillian.container.all.jvm.args>
+        <arquillian.container.all.jvm.args.withIP>${arquillian.container.all.jvm.args} ${jvm.args.ip}</arquillian.container.all.jvm.args.withIP>
+        <!-- following will be set as system properties -->
+        <arquillian.container.jbossas.7-1.node0>127.0.0.1</arquillian.container.jbossas.7-1.node0>
+        <arquillian.container.jbossas.7-1.jvm.args>${arquillian.container.all.jvm.args.withIP}
+            -Djboss.bind.address=${arquillian.container.jbossas.7-1.node0}
+            -Djboss.bind.address.management=${arquillian.container.jbossas.7-1.node0}
+            -Djboss.bind.address.unsecure=${arquillian.container.jbossas.7-1.node0}</arquillian.container.jbossas.7-1.jvm.args>
+        <arquillian.container.wildfly.8-1.jvm.args>${arquillian.container.jbossas.7-1.jvm.args}
+            -Dorg.jboss.weld.nonPortableMode=true</arquillian.container.wildfly.8-1.jvm.args>
     </properties>
 
     <dependencies>
@@ -24,13 +38,6 @@
             <type>pom</type>
             <scope>test</scope>
         </dependency>
-        <!-- Support for WebDriver in Arquillian Drone -->
-        <dependency>
-            <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-drone-webdriver-depchain</artifactId>
-            <scope>test</scope>
-            <type>pom</type>
-        </dependency>
         <!-- Arquillian TestNG support -->
         <dependency>
             <groupId>org.jboss.arquillian.testng</groupId>
@@ -38,10 +45,9 @@
         </dependency>
         <!-- Page Fragments -->
         <dependency>
-            <groupId>org.richfaces.tests</groupId>
+            <groupId>org.richfaces</groupId>
             <artifactId>richfaces-page-fragments</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
+            <version>${version.richfaces}</version>
         </dependency>
         <!-- TestNG -->
         <dependency>
@@ -81,7 +87,7 @@
                                 <artifactItem>
                                     <groupId>org.richfaces.examples</groupId>
                                     <artifactId>richfaces-photoalbum</artifactId>
-                                    <version>${project.version}</version>
+                                    <version>${version.richfaces}</version>
                                     <type>war</type>
                                     <destFileName>photoalbum.war</destFileName>
                                 </artifactItem>
@@ -106,6 +112,15 @@
                             <value>${testng.listeners}</value>
                         </property>
                     </properties>
+                    <systemPropertyVariables>
+                        <arquillian.container.jbossas.7-1.node0>${arquillian.container.jbossas.7-1.node0}</arquillian.container.jbossas.7-1.node0>
+                        <arquillian.container.jbossas.7-1.jvm.args>${arquillian.container.jbossas.7-1.jvm.args}</arquillian.container.jbossas.7-1.jvm.args>
+                        <arquillian.container.all.jvm.args>${arquillian.container.all.jvm.args}</arquillian.container.all.jvm.args>
+                        <version.tomee1-1>${version.tomee1-1}</version.tomee1-1>
+                        <version.tomee1-5>${version.tomee1-5}</version.tomee1-5>
+                        <logging.props.dir>${project.basedir}/src/test/resources</logging.props.dir>
+                        <arquillian.container.wildfly.8-1.jvm.args>${arquillian.container.wildfly.8-1.jvm.args}</arquillian.container.wildfly.8-1.jvm.args>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
         </plugins>

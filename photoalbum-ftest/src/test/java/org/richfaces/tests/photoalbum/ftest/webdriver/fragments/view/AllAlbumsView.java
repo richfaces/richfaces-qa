@@ -28,7 +28,7 @@ import java.util.List;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.ShelfView.AlbumPreview;
+import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.GroupView.AlbumPreview;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
