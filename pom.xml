@@ -14,7 +14,7 @@ FSF site: http://www.fsf.org. -->
 
     <groupId>org.richfaces.tests</groupId>
     <artifactId>richfaces-qa-parent</artifactId>
-    <version>4.5.0-SNAPSHOT</version>
+    <version>4.5.0.20140905-Beta2</version>
     <packaging>pom</packaging>
 
     <name>RichFaces QA Parent</name>
@@ -94,7 +94,7 @@ FSF site: http://www.fsf.org. -->
         <google.json.version>1.1</google.json.version>
         <version.mockito>1.8.5</version.mockito>
 
-        <profile.eap/>
+        <profile.eap />
     </properties>
 
     <modules>
@@ -352,7 +352,7 @@ FSF site: http://www.fsf.org. -->
         <connection>scm:git:git://github.com/richfaces/qa.git</connection>
         <developerConnection>scm:git:git@github.com:richfaces/qa.git</developerConnection>
         <url>https://github.com/richfaces/qa</url>
-        <tag>HEAD</tag>
+        <tag>4.5.0.20140905-Beta2</tag>
     </scm>
 
     <dependencyManagement>
@@ -1785,61 +1785,61 @@ FSF site: http://www.fsf.org. -->
                                 <configuration>
                                     <target name="initialize.properties">
                                         <condition property="hudson.static" value="${hudson.static.windows}" else="${hudson.static.linux}">
-                                            <os family="windows"/>
+                                            <os family="windows" />
                                         </condition>
                                         <condition property="hudson.firefox" value="${hudson.firefox.solaris10}">
-                                            <os name="SunOS" version="5.10"/>
+                                            <os name="SunOS" version="5.10" />
                                         </condition>
                                         <condition property="hudson.firefox" value="${hudson.firefox.solaris11}">
-                                            <os name="SunOS" version="5.11"/>
+                                            <os name="SunOS" version="5.11" />
                                         </condition>
                                         <condition property="hudson.firefox" value="${hudson.firefox.windows}">
-                                            <os family="windows"/>
+                                            <os family="windows" />
                                         </condition>
                                         <condition property="hudson.firefox" value="${hudson.firefox.linux}">
                                             <not>
                                                 <and>
-                                                    <os name="SunOS"/>
-                                                    <os family="windows"/>
+                                                    <os name="SunOS" />
+                                                    <os family="windows" />
                                                 </and>
                                             </not>
                                         </condition>
 
                                         <condition property="browser.chrome" value="true">
                                             <or>
-                                                <contains string="${browser}" substring="chrome" casesensitive="false"/>
-                                                <contains string="${browser}" substring="cr" casesensitive="false"/>
+                                                <contains string="${browser}" substring="chrome" casesensitive="false" />
+                                                <contains string="${browser}" substring="cr" casesensitive="false" />
                                             </or>
                                         </condition>
                                         <condition property="webdriver.browser" value="chrome">
-                                            <isset property="browser.chrome"/>
+                                            <isset property="browser.chrome" />
                                         </condition>
 
                                         <condition property="browser.ie" value="true">
                                             <or>
-                                                <contains string="${browser}" substring="ie" casesensitive="false"/>
-                                                <contains string="${browser}" substring="internet" casesensitive="false"/>
-                                                <contains string="${browser}" substring="explorer" casesensitive="false"/>
+                                                <contains string="${browser}" substring="ie" casesensitive="false" />
+                                                <contains string="${browser}" substring="internet" casesensitive="false" />
+                                                <contains string="${browser}" substring="explorer" casesensitive="false" />
                                             </or>
                                         </condition>
                                         <condition property="webdriver.browser" value="internetExplorer">
-                                            <isset property="browser.ie"/>
+                                            <isset property="browser.ie" />
                                         </condition>
 
                                         <condition property="browser.firefox" value="true">
                                             <or>
-                                                <contains string="${browser}" substring="ff" casesensitive="false"/>
-                                                <contains string="${browser}" substring="firefox" casesensitive="false"/>
+                                                <contains string="${browser}" substring="ff" casesensitive="false" />
+                                                <contains string="${browser}" substring="firefox" casesensitive="false" />
                                             </or>
                                         </condition>
                                         <condition property="webdriver.browser" value="firefox">
-                                            <isset property="browser.firefox"/>
+                                            <isset property="browser.firefox" />
                                         </condition>
 
                                         <fail message="No browser specified. Use e.g. -Dbrowser=firefox">
                                             <condition>
                                                 <not>
-                                                    <isset property="webdriver.browser"/>
+                                                    <isset property="webdriver.browser" />
                                                 </not>
                                             </condition>
                                         </fail>
@@ -1847,9 +1847,9 @@ FSF site: http://www.fsf.org. -->
                                         <fail message="Cannot use InternetExplorer on linux!">
                                             <condition>
                                                 <and>
-                                                    <isset property="browser.ie"/>
+                                                    <isset property="browser.ie" />
                                                     <not>
-                                                        <os family="windows"/>
+                                                        <os family="windows" />
                                                     </not>
                                                 </and>
                                             </condition>
@@ -1867,12 +1867,12 @@ FSF site: http://www.fsf.org. -->
                                 <configuration>
                                     <target name="set.chromedriver.bin" if="${browser.chrome}">
                                         <condition property="webdriver.bin" value="${webdriver.chrome.bin}">
-                                            <available file="${webdriver.chrome.bin}"/>
+                                            <available file="${webdriver.chrome.bin}" />
                                         </condition>
                                         <fail message="The ChromeDriver binary was not found! Should be at: ${webdriver.chrome.bin}.">
                                             <condition>
                                                 <not>
-                                                    <isset property="webdriver.bin"/>
+                                                    <isset property="webdriver.bin" />
                                                 </not>
                                             </condition>
                                         </fail>
@@ -1890,15 +1890,15 @@ FSF site: http://www.fsf.org. -->
                                 <configuration>
                                     <target name="set.iedriver.bin" if="${browser.ie}">
                                         <condition property="webdriver.ie.bin.arch" value="win64" else="win32">
-                                            <os arch="amd64"/>
+                                            <os arch="amd64" />
                                         </condition>
                                         <condition property="webdriver.bin" value="${webdriver.ie.bin}">
-                                            <available file="${webdriver.ie.bin}"/>
+                                            <available file="${webdriver.ie.bin}" />
                                         </condition>
                                         <fail message="The IEDriver binary was not found! Should be at: ${webdriver.ie.bin}.">
                                             <condition>
                                                 <not>
-                                                    <isset property="webdriver.bin"/>
+                                                    <isset property="webdriver.bin" />
                                                 </not>
                                             </condition>
                                         </fail>
@@ -1916,23 +1916,23 @@ FSF site: http://www.fsf.org. -->
                                 <configuration>
                                     <target name="set.firefox.bin" if="${browser.firefox}">
                                         <condition property="webdriver.bin" value="${firefox.windows.opt}">
-                                            <available file="${firefox.windows.opt}"/>
+                                            <available file="${firefox.windows.opt}" />
                                         </condition>
                                         <condition property="webdriver.bin" value="${firefox.windows.min}">
-                                            <available file="${firefox.windows.min}"/>
+                                            <available file="${firefox.windows.min}" />
                                         </condition>
 
                                         <condition property="webdriver.bin" value="${firefox.linux.opt}">
-                                            <available file="${firefox.linux.opt}"/>
+                                            <available file="${firefox.linux.opt}" />
                                         </condition>
                                         <condition property="webdriver.bin" value="${firefox.linux.min}">
-                                            <available file="${firefox.linux.min}"/>
+                                            <available file="${firefox.linux.min}" />
                                         </condition>
 
                                         <fail message="The firefox binary was not found!">
                                             <condition>
                                                 <not>
-                                                    <isset property="webdriver.bin"/>
+                                                    <isset property="webdriver.bin" />
                                                 </not>
                                             </condition>
                                         </fail>
@@ -1950,7 +1950,7 @@ FSF site: http://www.fsf.org. -->
                                 <configuration>
                                     <target name="check.if.eap.profile.activated">
                                         <condition property="eap.profile.activated" value="true" else="false">
-                                            <contains string="${profile.eap}" substring="6."/>
+                                            <contains string="${profile.eap}" substring="6." />
                                         </condition>
                                         <echo>EAP profile is activated = ${eap.profile.activated}</echo>
                                     </target>
@@ -1966,22 +1966,22 @@ FSF site: http://www.fsf.org. -->
                                 <configuration>
                                     <target name="get.eap.bin.and.extract" if="${eap.profile.activated}">
                                         <condition property="eap.dirname" value="${eap.6-3.dirname}">
-                                            <equals arg1="${profile.eap}" arg2="6.3"/>
+                                            <equals arg1="${profile.eap}" arg2="6.3" />
                                         </condition>
                                         <condition property="eap.zipname" value="${eap.6-3.zipname}">
-                                            <equals arg1="${profile.eap}" arg2="6.3"/>
+                                            <equals arg1="${profile.eap}" arg2="6.3" />
                                         </condition>
 
                                         <condition property="eap.dirname" value="${eap.6-2.dirname}">
-                                            <equals arg1="${profile.eap}" arg2="6.2"/>
+                                            <equals arg1="${profile.eap}" arg2="6.2" />
                                         </condition>
                                         <condition property="eap.zipname" value="${eap.6-2.zipname}">
-                                            <equals arg1="${profile.eap}" arg2="6.2"/>
+                                            <equals arg1="${profile.eap}" arg2="6.2" />
                                         </condition>
 
                                         <fail message="The eap 6.1 is not supported!">
                                             <condition>
-                                                <equals arg1="${profile.eap}" arg2="6.1"/>
+                                                <equals arg1="${profile.eap}" arg2="6.1" />
                                             </condition>
                                         </fail>
 
@@ -1989,10 +1989,10 @@ FSF site: http://www.fsf.org. -->
                                             <condition>
                                                 <or>
                                                     <not>
-                                                        <isset property="eap.dirname"/>
+                                                        <isset property="eap.dirname" />
                                                     </not>
                                                     <not>
-                                                        <isset property="eap.zipname"/>
+                                                        <isset property="eap.zipname" />
                                                     </not>
                                                 </or>
                                             </condition>
@@ -2001,12 +2001,12 @@ FSF site: http://www.fsf.org. -->
                                         <fail message="The EAP zip is not available! But should be at: '${eap.bin}'">
                                             <condition>
                                                 <not>
-                                                    <available file="${eap.bin}"/>
+                                                    <available file="${eap.bin}" />
                                                 </not>
                                             </condition>
                                         </fail>
                                         <echo>using eap bin: ${eap.bin}</echo>
-                                        <copy file="${eap.bin}" tofile="${project.build.directory}/eap.zip"/>
+                                        <copy file="${eap.bin}" tofile="${project.build.directory}/eap.zip" />
                                         <unzip src="${project.build.directory}/eap.zip" dest="${project.build.directory}" />
                                     </target>
                                 </configuration>
@@ -2022,27 +2022,27 @@ FSF site: http://www.fsf.org. -->
                                         <echo>Killing started JBoss processes</echo>
                                         <java classname="org.richfaces.tests.TaskKiller" failonerror="true" fork="true">
                                             <classpath refid="maven.compile.classpath" />
-                                            <arg line="java org.jboss"/>
+                                            <arg line="java org.jboss" />
                                         </java>
                                         <echo>Killing started Tomcat processes</echo>
                                         <java classname="org.richfaces.tests.TaskKiller" failonerror="true" fork="true">
                                             <classpath refid="maven.compile.classpath" />
-                                            <arg line="java catalina.home"/>
+                                            <arg line="java catalina.home" />
                                         </java>
                                         <echo>Killing started GlassFish processes</echo>
                                         <java classname="org.richfaces.tests.TaskKiller" failonerror="true" fork="true">
                                             <classpath refid="maven.compile.classpath" />
-                                            <arg line="java felix.fileinstall"/>
+                                            <arg line="java felix.fileinstall" />
                                         </java>
                                         <echo>Killing started IEDriver processes</echo>
                                         <java classname="org.richfaces.tests.TaskKiller" failonerror="true" fork="true">
                                             <classpath refid="maven.compile.classpath" />
-                                            <arg line="IEDriverServer"/>
+                                            <arg line="IEDriverServer" />
                                         </java>
                                         <echo>Killing started ChromeDriver processes</echo>
                                         <java classname="org.richfaces.tests.TaskKiller" failonerror="true" fork="true">
                                             <classpath refid="maven.compile.classpath" />
-                                            <arg line="chromedriver"/>
+                                            <arg line="chromedriver" />
                                         </java>
                                     </target>
                                 </configuration>
