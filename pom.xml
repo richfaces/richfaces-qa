@@ -1718,7 +1718,18 @@ FSF site: http://www.fsf.org. -->
                 </plugins>
             </build>
         </profile>
-
+        
+        <profile>
+            <id>take-screenshots</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.arquillian.graphene</groupId>
+                    <artifactId>arquillian-browser-screenshooter</artifactId>
+                    <version>${screenshooter.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    
         <!--
          Works only in Jenkins environment. Works on Windows, Linux and Solaris.
          
