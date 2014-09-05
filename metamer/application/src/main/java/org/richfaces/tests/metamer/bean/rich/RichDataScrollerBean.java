@@ -22,12 +22,16 @@
 package org.richfaces.tests.metamer.bean.rich;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.model.SelectItem;
 
 import org.richfaces.component.UIDataScroller;
 import org.richfaces.tests.metamer.Attributes;
@@ -51,6 +55,9 @@ public class RichDataScrollerBean implements Serializable {
     private boolean state = true;
 
     private Map<String, String> facets;
+
+    @ManagedProperty(value = "#{model.capitals.size()}")
+    private int size; // used for customized page facet
 
     /**
      * Initializes the managed bean.
@@ -129,5 +136,40 @@ public class RichDataScrollerBean implements Serializable {
 
     public Map<String, String> getFacets() {
         return facets;
+    }
+
+    /**
+     * Used for customized page facet (customizedFacets.xhtml)
+     *
+     * @return List of items from which you can choose
+     */
+    public List<SelectItem> getPagesToScroll() {
+        List<SelectItem> list = new ArrayList<SelectItem>();
+        double rows = Integer.parseInt(getTableAttributes().get("rows").getValue().toString());
+        int page = Integer.parseInt(getAttributes().get("page").getValue().toString());
+        for (int i = 1; i <= Math.ceil(size / rows); i++) {
+            if (Math.abs(i - page) < 6) {
+                SelectItem item = new SelectItem(i);
+                list.add(item);
+            }
+        }
+        return list;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    /**
+     * Used for customized page facet (customizedFacets.xhtml)
+     * @return max number in spinner which is number of pages in table
+     */
+    public int getSpinnerMaxNumber() {
+        double rows = Integer.parseInt(getTableAttributes().get("rows").getValue().toString());
+        return (int) Math.ceil(size / rows);
     }
 }
