@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:rich="http://richfaces.org/rich" xmlns:h="http://java.sun.com/jsf/html">
+<ui:composition template="/templates/template.xhtml">
+
+    <ui:define name="view">
+        <f:metadata>
+            <f:viewParam name="templates" value="#{templateBean.templates}">
+                <f:converter converterId="templatesListConverter" />
+            </f:viewParam>
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="head">
+        <style type="text/css">
+.sample-panel {
+    border: 1px solid black;
+    background: white;
+}
+</style>
+    </ui:define>
+
+    <ui:define name="component">
+
+        <p>
+            This is reproducer for <a href="https://issues.jboss.org/browse/RF-13815">RF-13815</a>
+            <ul>
+                <li>Mouse over common h:selectOneMenu</li>
+                <li>Expand dropDown list</li>
+                <li>Mouse over expanded dropDown list. Tooltip is behind items and only part of them is visible.</li>
+            </ul>
+            <h:outputText value="There is another suspicion behaviour" />
+            <ul>
+                <li>Expand rich:select dropDown list</li>
+                <li>Mouse over h:selecOneMenu</li>
+                <li>Tooltip from h:selectOneMenu is hide by rich:select</li>
+                <li>It could be correct behaviour. Not sure about that</li>
+            </ul>
+        </p>
+        <rich:tooltip id="oneMenuSelectTooltip" target="oneMenuSelect">Some text for h:selectOnemenu</rich:tooltip>
+        <rich:tooltip id="selectBoxTooltip" target="select">Some text for rich:select</rich:tooltip>
+        <h:outputText value="RichFaces rich:select" />
+        <rbr />
+        <rich:select id="select">
+            <f:selectItem id="item1" itemLabel="News" itemValue="1" />
+            <f:selectItem id="item2" itemLabel="Sports" itemValue="2" />
+            <f:selectItem id="item3" itemLabel="Music" itemValue="3" />
+            <f:selectItem id="item4" itemLabel="Java" itemValue="4" />
+        </rich:select>
+        <br />
+        <h:outputText value="Common h:selectOneMenu" />
+        <br />
+        <h:selectOneMenu id="oneMenuSelect" value="Select component">
+            <f:selectItem id="item5" itemLabel="News" itemValue="1" />
+            <f:selectItem id="item6" itemLabel="Sports" itemValue="2" />
+            <f:selectItem id="item7" itemLabel="Music" itemValue="3" />
+            <f:selectItem id="item8" itemLabel="Java" itemValue="4" />
+        </h:selectOneMenu>
+    </ui:define>
+</ui:composition>
+</html>
