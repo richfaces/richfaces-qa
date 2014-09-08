@@ -27,7 +27,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import org.richfaces.component.UIInputNumberSlider;
+import org.richfaces.component.html.HtmlInputNumberSlider;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.bean.abstractions.NumberInputValidationBean;
 import org.richfaces.tests.metamer.bean.abstractions.NumberInputValidationBeanImpl;
@@ -54,7 +54,7 @@ public class RichInputNumberSliderBean extends NumberInputValidationBeanImpl imp
     public void init() {
         logger.debug("initializing bean " + getClass().getName());
 
-        attributes = Attributes.getComponentAttributesFromFacesConfig(UIInputNumberSlider.class, getClass());
+        attributes = Attributes.getComponentAttributesFromFacesConfig(HtmlInputNumberSlider.class, getClass());
 
         attributes.setAttribute("enableManualInput", true);
         attributes.setAttribute("inputSize", 3);
