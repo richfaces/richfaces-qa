@@ -77,18 +77,22 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testHandleClass() {
-        testHTMLAttribute(getFirstNode().advanced().getHandleElement(), firstNodeAttributes, TreeNodeAttributes.handleClass, "metamer-ftest-class");
+        testHTMLAttribute(getFirstNode().advanced().getHandleElement(), firstNodeAttributes, TreeNodeAttributes.handleClass,
+            "metamer-ftest-class");
         // check child node
-        assertFalse(getFirstNodesFirstChild().advanced().getHandleElement().getAttribute("class").contains("metamer-ftest-class"));
+        assertFalse(getFirstNodesFirstChild().advanced().getHandleElement().getAttribute("class")
+            .contains("metamer-ftest-class"));
     }
 
     @Test
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testIconClass() {
-        testHTMLAttribute(getFirstNode().advanced().getIconElement(), firstNodeAttributes, TreeNodeAttributes.iconClass, "metamer-ftest-class");
+        testHTMLAttribute(getFirstNode().advanced().getIconElement(), firstNodeAttributes, TreeNodeAttributes.iconClass,
+            "metamer-ftest-class");
         // check child node
-        assertFalse(getFirstNodesFirstChild().advanced().getHandleElement().getAttribute("class").contains("metamer-ftest-class"));
+        assertFalse(getFirstNodesFirstChild().advanced().getHandleElement().getAttribute("class")
+            .contains("metamer-ftest-class"));
     }
 
     @Test(groups = "smoke")
@@ -158,9 +162,11 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testLabelClass() {
-        testHTMLAttribute(getFirstNode().advanced().getLabelElement(), firstNodeAttributes, TreeNodeAttributes.labelClass, "metamer-ftest-class");
+        testHTMLAttribute(getFirstNode().advanced().getLabelElement(), firstNodeAttributes, TreeNodeAttributes.labelClass,
+            "metamer-ftest-class");
         // check child node
-        assertFalse(getFirstNodesFirstChild().advanced().getLabelElement().getAttribute("class").contains("metamer-ftest-class"));
+        assertFalse(getFirstNodesFirstChild().advanced().getLabelElement().getAttribute("class")
+            .contains("metamer-ftest-class"));
     }
 
     @Test
@@ -234,6 +240,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnmouseout() {
+        new Actions(driver).moveToElement(getFirstNode().advanced().getLabelElement()).build().perform();
         testFireEvent(firstNodeAttributes, TreeNodeAttributes.onmouseout,
             new Actions(driver).triggerEventByWD(Event.MOUSEOUT, getFirstNode().advanced().getLabelElement()).build());
     }
@@ -242,8 +249,13 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnmouseover() {
-        testFireEvent(firstNodeAttributes, TreeNodeAttributes.onmouseover,
-            new Actions(driver).triggerEventByWD(Event.MOUSEOVER, getFirstNode().advanced().getLabelElement()).build());
+        // the click on requestTimeElement is a workaround to make test pass automatically
+        // without this simpleRichFacesTreeDataModel test was failing (no event)
+        testFireEvent(
+            firstNodeAttributes,
+            TreeNodeAttributes.onmouseover,
+            new Actions(driver).moveToElement(page.getRequestTimeElement()).click()
+                .moveToElement(getFirstNode().advanced().getLabelElement()).build());
     }
 
     @Test
@@ -275,14 +287,16 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     @Templates("plain")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testStyle() {
-        testHTMLAttribute(getFirstNode().advanced().getNodeInfoElement(), firstNodeAttributes, TreeNodeAttributes.style, "background-color: yellow");
+        testHTMLAttribute(getFirstNode().advanced().getNodeInfoElement(), firstNodeAttributes, TreeNodeAttributes.style,
+            "background-color: yellow");
     }
 
     @Test
     @Templates("plain")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testStyleClass() {
-        testHTMLAttribute(getFirstNode().advanced().getNodeInfoElement(), firstNodeAttributes, TreeNodeAttributes.styleClass, "metamer-ftest-class");
+        testHTMLAttribute(getFirstNode().advanced().getNodeInfoElement(), firstNodeAttributes, TreeNodeAttributes.styleClass,
+            "metamer-ftest-class");
     }
 
     @Test
