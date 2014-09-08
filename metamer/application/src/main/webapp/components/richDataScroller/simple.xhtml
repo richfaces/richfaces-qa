@@ -141,13 +141,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             <h:commandButton id="buttonStpPrev1" value="« previous">
                 <rich:componentControl event="click" target="scroller1" operation="switchToPage">
-                    <f:param value="fastrewind" />
+                    <f:param value="fastRewind" />
                 </rich:componentControl>
             </h:commandButton>
 
             <h:commandButton id="buttonStpNext1" value="next »">
                 <rich:componentControl event="click" target="scroller1" operation="switchToPage">
-                    <f:param value="fastforward" />
+                    <f:param value="fastForward" />
                 </rich:componentControl>
             </h:commandButton>
 
@@ -190,14 +190,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <h:commandButton id="buttonStpPrev2" value="« previous">
                 <rich:componentControl event="click" target="#{templateBean.componentPrefix}richDataTable:scroller2"
                     operation="switchToPage">
-                    <f:param value="fastrewind" />
+                    <f:param value="fastRewind" />
                 </rich:componentControl>
             </h:commandButton>
 
             <h:commandButton id="buttonStpNext2" value="next »">
                 <rich:componentControl event="click" target="#{templateBean.componentPrefix}richDataTable:scroller2"
                     operation="switchToPage">
-                    <f:param value="fastforward" />
+                    <f:param value="fastForward" />
                 </rich:componentControl>
             </h:commandButton>
 
