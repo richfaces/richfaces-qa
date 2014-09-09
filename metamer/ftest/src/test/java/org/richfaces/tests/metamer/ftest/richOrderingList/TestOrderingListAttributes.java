@@ -188,6 +188,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnblur() {
         testFireEvent(attributes, OrderingListAttributes.onblur, new Action() {
             @Override
@@ -204,6 +205,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnchange() {
         testFireEvent(Event.CHANGE, orderingList.advanced().getListAreaElement());
     }
@@ -222,6 +224,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnfocus() {
         testFireEvent(attributes, OrderingListAttributes.onfocus,
             new Actions(driver).click(orderingList.advanced().getItemsElements().get(0)).build());
