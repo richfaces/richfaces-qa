@@ -21,6 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.richPlaceholder;
 
+import static org.richfaces.tests.metamer.ftest.richPlaceholder.AbstractPlaceholderJSFTest.DEFAULT_PLACEHOLDER_TEXT;
+import static org.testng.Assert.assertEquals;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.inplaceInput.RichFacesInplaceInput;
@@ -37,6 +40,8 @@ public class TestPlaceHolderWithInplaceInput extends AbstractPlaceholderJSFTest 
 
     @FindBy(css = INPUT1_ID + " [id$=Input]")
     private WebElement input1;
+    @FindBy(css = "span" + INPUT1_ID)
+    private WebElement spanElementWithStyleClass;
     @FindBy(css = INPUT2_ID + " [id$=Input]")
     private WebElement input2;
     @FindBy(css = INPUT1_ID)
@@ -141,10 +146,12 @@ public class TestPlaceHolderWithInplaceInput extends AbstractPlaceholderJSFTest 
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12623 https://issues.jboss.org/browse/RF-12651")
+    @RegressionTest({ "https://issues.jboss.org/browse/RF-12623", "https://issues.jboss.org/browse/RF-12651",
+        "https://issues.jboss.org/browse/RF-13783" })
     @Templates(value = "plain")
     public void testStyleClass() {
-        super.testStyleClass();
+        assertEquals(getInput1Value(), DEFAULT_PLACEHOLDER_TEXT, "Input 1 value");
+        testStyleClass(spanElementWithStyleClass);
     }
 
     @Test(groups = "Future")
