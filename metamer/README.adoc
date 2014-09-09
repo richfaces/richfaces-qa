@@ -97,7 +97,7 @@ To change the JSF implementation you can build Metamer with either a script ment
 == Functional Test Development
 
 === Running a test
-* switch to metamer/ftest directory and run +mvn clean verify -PprofileName -Dtest=testName -Dtemplates=templateName+
+* switch to metamer/ftest directory and run +mvn clean verify -PprofileName -Dtest=testName -Dtemplates=templateName [-Dbrowser=browserName]+ 
 ** profileName is a name of a container you want to use, see pom.xml in parent for their names
 *** e.g. +-Pwildfly-remote-8-1+
 ** testName is a name of a specific test to run
@@ -112,7 +112,13 @@ To change the JSF implementation you can build Metamer with either a script ment
 **** no template (default value): use `plain`, `no`, `none` or do not use the *templates* property
 **** more templates concurrently: use `+` for separating the templates, e.g. `popup+accordion+edt` (ExtendedDataTable in Accordion in PopupPanel)
 **** more templates separately: use `,` for separating the templates, e.g. `accordion,popup,popup+edt`. Each test in test suite will be executed in each specified template(s) (if it can run in such template).
-* by default Firefox will be used as browser, to change this to e.g. Chrome please follow the instructions from Arquillian guide for remote-reusable browsers
+** browser will set the used browser, download necessary driver binaries, download and extract the browser binary (linux, firefox and non-Jenkins environment only), download and extract EAP when some `jbosseap-managed` profile activated and will kill container's and driver's processes before testing. If the Jenkins environment is detected, then everything to download will be downloaded from the network drive. If the browser option is not specified, system's Firefox will be used for testing and none of the previous tasks will be done.
+*** browserName is case-insensitive name of the browser to be used. Supported browsers are Internet Explorer (`browserName` contains `ie`, `internetExplorer` or `explorer`), Chrome (`browserName` contains `cr` or `chrome`), Firefox (browserName contains `ff` or `firefox`). If the browser is Firefox, then the name can be followed by a number, which will be used to specify browser's version, which will be downloaded and used for testing (linux and non-Jenkins environment only).
+**** some examples:
+***** `-Dbrowser=ff` to run tests with system's Firefox browser.
+***** `-Dbrowser=cr` to run tests with system's Chrome browser.
+***** `-Dbrowser=ie9` to run tests with system's IE browser (the version `9` will be ignored) 
+***** `-Dbrowser=ff30` to run tests with downloaded Firefox 30.
 
 === Debugging a test
 * set a breakpoint in code

@@ -19,19 +19,16 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests;
+package org.richfaces.tests.qa.plugin.command.ensurer.taskkill;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TaskKiller {
 
-    private static final Logger LOG = Logger.getLogger(TaskKiller.class.getSimpleName());
-
-    public static void main(String[] args) {
+    public static void execute(String... args) {
         if (args.length > 0) {
             KillCommandBuilder kc = (System.getProperty("os.name").toLowerCase().contains("windows") ? new WindowsKillCommandBuilder() : new LinuxKillCommandBuilder());
             for (String string : args) {
@@ -40,18 +37,31 @@ public class TaskKiller {
             try {
                 kc.searchAndKill();
             } catch (IOException ex) {
-                LOG.warning(ex.toString());
+                System.err.println(ex);
             }
         } else {
-            LOG.info("no arguments specified, skipping");
+            System.out.println("no arguments specified, skipping");
         }
     }
 
-    private interface KillCommandBuilder {
+    public static void killChromeDriver() {
+        execute("chromedriver");
+    }
 
-        KillCommandBuilder addSearchArgument(String arg);
+    public static void killGlassFish() {
+        execute("java", "felix.fileinstall");
+    }
 
-        void searchAndKill() throws IOException;
+    public static void killIEDriver() {
+        execute("IEDriverServer");
+    }
+
+    public static void killJBossAS() {
+        execute("java", "org.jboss");
+    }
+
+    public static void killTomcat() {
+        execute("java", "catalina.home");
     }
 
     private static class LinuxKillCommandBuilder implements KillCommandBuilder {
@@ -77,7 +87,7 @@ public class TaskKiller {
                 "-c",
                 SEARCH_TEMPLATE_START + arg.trim() + SEARCH_TEMPLATE_END
             };
-            LOG.info(cmd[2]);
+            System.out.println(String.format("Executing command: <%s>", cmd[2]));
             Runtime.getRuntime().exec(cmd);
         }
     }
@@ -101,9 +111,15 @@ public class TaskKiller {
         @Override
         public void searchAndKill() throws IOException {
             String cmd = SEARCH_TEMPLATE_START + arg.trim() + SEARCH_TEMPLATE_END;
-            LOG.info(cmd);
+            System.out.println(String.format("Executing command: <%s>", cmd));
             Runtime.getRuntime().exec(cmd);
         }
     }
 
+    private interface KillCommandBuilder {
+
+        KillCommandBuilder addSearchArgument(String arg);
+
+        void searchAndKill() throws IOException;
+    }
 }
