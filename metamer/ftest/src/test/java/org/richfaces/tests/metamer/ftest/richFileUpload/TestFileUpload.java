@@ -68,7 +68,8 @@ public class TestFileUpload extends AbstractFileUploadTest {
         assertEquals(returnedString, testedAttribute.toString(), "Event " + e + " does not work.");
     }
 
-    @Test(groups = "smoke")
+    @Test(groups = {"smoke", "Future"})
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
     public void testAcceptedTypes() {
         String acceptable = "txt";
         fileUploadAttributes.set(FileUploadAttributes.acceptedTypes, acceptable);
@@ -86,13 +87,15 @@ public class TestFileUpload extends AbstractFileUploadTest {
         testLabelChanges(fileUpload.advanced().getAddButtonElement(), fileUploadAttributes, FileUploadAttributes.addLabel, null);
     }
 
-    @Test
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
     @Templates("plain")
     public void testClearAllLabel() {
         testLabelChanges(fileUpload.advanced().getClearAllButtonElement(), fileUploadAttributes, FileUploadAttributes.clearAllLabel, succesfulFileUploadAction);
     }
 
-    @Test
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
     @Templates("plain")
     public void testClearLabel() {
         testLabelChanges(new FutureTarget<WebElement>() {
@@ -103,7 +106,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
         }, fileUploadAttributes, FileUploadAttributes.clearLabel, succesfulFileUploadAction);
     }
 
-    @IssueTracking(value = "https://issues.jboss.org/browse/RF-12039")
+    @IssueTracking(value = {"https://issues.jboss.org/browse/RF-12039", "https://issues.jboss.org/browse/RFPL-3503"})
     @Test(groups = "Future")
     public void testData() {
         testData(succesfulFileUploadAction);
@@ -142,8 +145,9 @@ public class TestFileUpload extends AbstractFileUploadTest {
         assertNotVisible(fileUpload.advanced().getClearAllButtonElement(), "Clear all button should not be on the page.");
     }
 
-    @Test(groups = "smoke")
+    @Test(groups = {"smoke", "Future"})
     @Templates("plain")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
     @RegressionTest("https://issues.jboss.org/browse/RF-12122")
     public void testDoneLabel() {
         testLabelChanges(new FutureTarget<WebElement>() {
@@ -154,7 +158,8 @@ public class TestFileUpload extends AbstractFileUploadTest {
         }, fileUploadAttributes, FileUploadAttributes.doneLabel, succesfulFileUploadAction);
     }
 
-    @Test
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
     @RegressionTest("https://issues.jboss.org/browse/RF-12122")
     public void testExecute() {
         String cmd = "executeChecker";
@@ -163,7 +168,8 @@ public class TestFileUpload extends AbstractFileUploadTest {
         getMetamerPage().assertListener(PhaseId.UPDATE_MODEL_VALUES, "executeChecker");
     }
 
-    @Test(groups = "smoke")
+    @Test(groups = {"smoke", "Future"})
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
     public void testImmediateUpload() {
         fileUploadAttributes.set(FileUploadAttributes.immediateUpload, Boolean.TRUE);
         sendFileToInputWithWaiting(filenames[0], true);
@@ -188,7 +194,8 @@ public class TestFileUpload extends AbstractFileUploadTest {
         testLang(fileUpload.advanced().getRootElement());
     }
 
-    @Test
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
     @RegressionTest("https://issues.jboss.org/browse/RF-12122")
     public void testLimitRender() {
         //sendFile depends on requestTime and uploadedFilesPanel
@@ -215,7 +222,8 @@ public class TestFileUpload extends AbstractFileUploadTest {
         assertEquals(cssValue, height, "List height was not changed");
     }
 
-    @Test
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
     public void testMaxFilesQuantity() {
         final int maxFilesQuantity = 1;
         fileUploadAttributes.set(FileUploadAttributes.maxFilesQuantity, maxFilesQuantity);
@@ -299,7 +307,8 @@ public class TestFileUpload extends AbstractFileUploadTest {
         });
     }
 
-    @Test
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
     public void testOnfilesubmit() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onfilesubmit, succesfulFileUploadAction);
     }
@@ -364,7 +373,8 @@ public class TestFileUpload extends AbstractFileUploadTest {
         });
     }
 
-    @Test
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
     public void testOnuploadcomplete() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onuploadcomplete, succesfulFileUploadAction);
     }
@@ -382,7 +392,8 @@ public class TestFileUpload extends AbstractFileUploadTest {
         //TODO how to test it
     }
 
-    @Test
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
     @RegressionTest("https://issues.jboss.org/browse/RF-12122")
     public void testSingleFileUpload() {
         sendFileToInputWithWaiting(filenames[0], true);
@@ -402,7 +413,8 @@ public class TestFileUpload extends AbstractFileUploadTest {
             "Uploaded file does not appear in uploadedList.");
     }
 
-    @Test
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
     @Templates("plain")
     public void testSizeExceededLabel() {
         testLabelChanges(new FutureTarget<WebElement>() {
