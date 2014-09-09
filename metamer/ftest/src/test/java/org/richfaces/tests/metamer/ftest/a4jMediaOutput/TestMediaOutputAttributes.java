@@ -109,8 +109,9 @@ public class TestMediaOutputAttributes extends AbstractMediaOutputTest {
         testFireEvent(Event.BLUR, mediaOutput);
     }
 
-    @Test
+    @Test(groups = "Future")
     @Templates(value = "plain")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13826")
     public void testOnclick() {
         testFireEvent(Event.CLICK, mediaOutput);
     }
