@@ -123,25 +123,26 @@ public class TestJQueryAttributes extends AbstractWebDriverTest {
     public void testDefaultTiming() {
         setupDomReadyTypeAttributes();
         jQueryAttributes.reset(JQueryAttributes.timing);
-        Graphene.waitGui().until(new ColorEqualsWaiting(Color.RED));
+        Graphene.waitAjax().until(new ColorEqualsWaiting(Color.RED));
     }
 
     @Test
     public void testTimingDomReady() {
         setupDomReadyTypeAttributes();
-        Graphene.waitGui().until(new ColorEqualsWaiting(Color.RED));
+        Graphene.waitAjax().until(new ColorEqualsWaiting(Color.RED));
     }
 
     @Test
     public void testTimingImmediate() {
         setupImmediateTypeAttributes();
         button.click();
-        Graphene.waitGui().until(new ColorEqualsWaiting(Color.RED));
+        Graphene.waitAjax().until(new ColorEqualsWaiting(Color.RED));
     }
 
     private static class ListSizeEqualsWaiting implements Predicate<WebDriver> {
 
         private final int size;
+        private int sizeReturned;
         private final List<WebElement> list;
 
         public ListSizeEqualsWaiting(int size, List<WebElement> list) {
@@ -151,18 +152,19 @@ public class TestJQueryAttributes extends AbstractWebDriverTest {
 
         @Override
         public boolean apply(WebDriver input) {
-            return list.size() == size;
+            return (sizeReturned = list.size()) == size;
         }
 
         @Override
         public String toString() {
-            return "liste size to be equals waiting{" + "size=" + size + '}';
+            return String.format("list size to be equal to <%d>, got <%d>.", size, sizeReturned);
         }
     }
 
     private class ColorEqualsWaiting implements Predicate<WebDriver> {
 
         private final Color color;
+        private Color colorReturned;
 
         public ColorEqualsWaiting(Color color) {
             this.color = color;
@@ -170,12 +172,12 @@ public class TestJQueryAttributes extends AbstractWebDriverTest {
 
         @Override
         public boolean apply(WebDriver input) {
-            return getButtonColor().equals(color);
+            return (colorReturned = getButtonColor()).equals(color);
         }
 
         @Override
         public String toString() {
-            return "color to be equals waiting{" + "color=" + color + '}';
+            return String.format("color to be equal to <%s>, got <%s>.", color, colorReturned);
         }
     }
 }
