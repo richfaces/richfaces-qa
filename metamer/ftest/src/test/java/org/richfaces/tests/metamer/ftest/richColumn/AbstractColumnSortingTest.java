@@ -26,10 +26,10 @@ import static org.testng.Assert.assertEquals;
 
 import java.util.Collections;
 
+import org.openqa.selenium.By;
 import org.richfaces.component.SortOrder;
 import org.richfaces.tests.metamer.bean.rich.RichColumnBean;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.model.Capital;
 
 /**
@@ -42,17 +42,18 @@ public abstract class AbstractColumnSortingTest extends AbstractColumnTest {
     protected SortOrder sortOrder;
 
     public void checkSortingWithSortOrder() {
-        columnAttributes.setRequestType(WaitRequestType.XHR);
-        columnAttributes.set(ColumnAttributes.sortOrder, sortOrder);
 
         switch (sortOrder) {
             case ascending:
+                driver.findElement(By.id("beforeForm:sortOrderInput:0")).click();
                 Collections.sort(capitals, RichColumnBean.STATE_NAME_LENGTH_COMPARATOR);
                 break;
             case descending:
+                driver.findElement(By.id("beforeForm:sortOrderInput:1")).click();
                 Collections.sort(capitals, Collections.reverseOrder(RichColumnBean.STATE_NAME_LENGTH_COMPARATOR));
                 break;
             default:
+                driver.findElement(By.id("beforeForm:sortOrderInput:2")).click();
                 break;
         }
         Capital actualCapital, expectedCapital;
