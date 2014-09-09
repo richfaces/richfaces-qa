@@ -431,7 +431,8 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12879")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12879")
     public void testStatus() {
         testStatus(succesfulFileUploadAction);
     }
