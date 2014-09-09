@@ -59,10 +59,13 @@ public class TestTooltipTarget extends AbstractWebDriverTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11370")
     public void testTarget() {
-        tooltipAttributes.set(showEvent, "mouseover");
-        tooltipAttributes.set(hideEvent, "mouseout");
-        page.getTooltip().advanced().setupShowEvent(Event.MOUSEOVER);
-        page.getTooltip().advanced().setupHideEvent(Event.MOUSEOUT);
+        tooltipAttributes.set(showEvent, "click");
+        tooltipAttributes.set(hideEvent, "dblclick");
+        // set some offset so the tooltip will not block triggering the event on element
+        tooltipAttributes.set(TooltipAttributes.horizontalOffset, 100);
+        tooltipAttributes.set(TooltipAttributes.verticalOffset, 100);
+        page.getTooltip().advanced().setupShowEvent(Event.CLICK);
+        page.getTooltip().advanced().setupHideEvent(Event.DBLCLICK);
         for (WebElement panel : Lists.newArrayList(page.getPanel(), page.getPanelJSFDiv(), page.getPanelRegularDiv())) {
             tooltipAttributes.set(target, panel.getAttribute("id"));
             page.getTooltip().show(panel);
