@@ -103,20 +103,22 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                           styleClass="#{richSubTableBean.attributes['styleClass'].value}"
                                           value="#{richSubTableBean.state ? list : null}"
                                           var="item">
+                <rich:column id="columnName" sortBy="#{item.name}" sortOrder="#{richSubTableBean.sorting['columnName'].order}"
+                    sortType="custom">
+                    <h:outputText id="name" value="#{item.name}" />
+                </rich:column>
+                <rich:column id="columnTitle" sortBy="#{item.title}"
+                    sortOrder="#{richSubTableBean.sorting['columnTitle'].order}" sortType="custom">
+                    <h:outputText id="title" value="#{item.title}" />
+                </rich:column>
+                <rich:column id="columnBirthdate" sortBy="#{item.birthdate}"
+                    sortOrder="#{richSubTableBean.sorting['columnBirthdate'].order}" sortType="custom">
+                    <h:outputText id="birthdate" value="#{item.birthdate}">
+                        <f:convertDateTime pattern="d MMM yyyy" />
+                    </h:outputText>
+                </rich:column>
 
-                    <rich:column id="columnName" sortBy="#{item.name}" sortOrder="#{richSubTableBean.sorting['columnName'].order}">
-                        <h:outputText id="name" value="#{item.name}" />
-                    </rich:column>
-                    <rich:column id="columnTitle" sortBy="#{item.title}" sortOrder="#{richSubTableBean.sorting['columnTitle'].order}">
-                        <h:outputText id="title" value="#{item.title}" />
-                    </rich:column>
-                    <rich:column id="columnBirthdate" sortBy="#{item.birthdate}" sortOrder="#{richSubTableBean.sorting['columnBirthdate'].order}">
-                        <h:outputText id="birthdate" value="#{item.birthdate}">
-                            <f:convertDateTime pattern="d MMM yyyy"/>
-                        </h:outputText>
-                    </rich:column>
-
-                </rich:collapsibleSubTable>
+            </rich:collapsibleSubTable>
             </rich:dataTable>
 
         </ui:define>

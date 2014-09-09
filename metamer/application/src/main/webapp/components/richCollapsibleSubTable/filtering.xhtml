@@ -117,10 +117,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                 <rich:column id="columnName"
                     filterExpression="#{fn:containsIgnoreCase(item.name, filterVar)}"
-                    filterValue="#{richSubTableBean.filtering['name']}" >
+                    filterValue="#{richSubTableBean.filtering['name']}" filterType="custom">
                     <h:outputText id="name" value="#{item.name}" />
                 </rich:column>
-                <rich:column id="columnTitle"
+                <rich:column id="columnTitle" filterType="custom"
                     filterExpression="#{richSubTableBean.filtering['title'] == null || richSubTableBean.filtering['title'] == '' || item.title == richSubTableBean.filtering['title']}">
                     <h:outputText id="title" value="#{item.title}" />
                 </rich:column>
