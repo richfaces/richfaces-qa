@@ -32,9 +32,9 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.fragment.log.Log.LogEntryLevel;
 import org.richfaces.fragment.log.RichFacesLog;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
@@ -51,7 +51,8 @@ public class TestRF12566 extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richCalendar/rf-12566.xhtml");
     }
 
-    @Test(groups = "Future")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12566")
     public void testClickOnTheNextMonthAndJSErrorIsThrown() {
         page.getLog().changeLevel(ERROR);
         page.getShowCalendarButton().click();
