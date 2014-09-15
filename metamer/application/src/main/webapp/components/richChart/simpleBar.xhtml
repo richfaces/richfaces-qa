@@ -59,13 +59,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         onmouseout="#{chartBarBean.attributes['onmouseout'].value}"
                         plotClickListener="#{chartBarBean.handler}"
                         rendered="#{chartBarBean.attributes['rendered'].value}">
-                <rich:legend sorting="ascending" />
+                <rich:chartLegend sorting="ascending" />
                 <a4j:repeat value="#{chartBarBean.gdp}" var="country">
-                    <rich:series label="#{country.state}" type="bar">
-                        <rich:point x="Agricultural" y="#{country.agricult}" />
-                        <rich:point x="Industrial" y="#{country.industry}" />
-                        <rich:point x="Service" y="#{country.service}" />
-                    </rich:series>
+                    <rich:chartSeries label="#{country.state}" type="bar">
+                        <rich:chartPoint x="Agricultural" y="#{country.agricult}" />
+                        <rich:chartPoint x="Industrial" y="#{country.industry}" />
+                        <rich:chartPoint x="Service" y="#{country.service}" />
+                    </rich:chartSeries>
                 </a4j:repeat>
                 <a4j:ajax event="plotclick" render="msg" execute="msg" />
             </rich:chart>

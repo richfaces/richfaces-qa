@@ -55,8 +55,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 onplotclick="#{chartPieBean.attributes['onplotclick'].value}"
                 onplothover="#{chartPieBean.attributes['onplothover'].value}"
                 onmouseout="#{chartPieBean.attributes['onmouseout'].value}" plotClickListener="#{chartPieBean.handler}" rendered="#{chartPieBean.attributes['rendered'].value}">
-                <rich:legend sorting="ascending" />
-                <rich:series data="#{chartPieBean.pie}" type="pie" />
+                <rich:chartLegend sorting="ascending" />
+                <rich:chartSeries data="#{chartPieBean.pie}" type="pie" />
                 <a4j:ajax event="plotclick" render="msg" execute="msg" />
             </rich:chart>
             <h:outputText id="msg" value="#{chartPieBean.msg}" />  

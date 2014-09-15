@@ -61,15 +61,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         zoom="#{chartBean.attributes['zoom'].value}"
                         rendered="#{chartBean.attributes['rendered'].value}">
                 <a4j:repeat value="#{chartBean.countries}" var="country">
-                    <rich:series label="#{country.name}" type="line">
+                    <rich:chartSeries label="#{country.name}" type="line">
                         <a4j:repeat value="#{country.data}" var="record">
-                            <rich:point x="#{record.year}" y="#{record.tons}" />
+                            <rich:chartPoint x="#{record.year}" y="#{record.tons}" />
                         </a4j:repeat>
-                    </rich:series>
+                    </rich:chartSeries>
                 </a4j:repeat>
                 <a4j:ajax event="plotclick" render="msg" execute="msg" />
-                <rich:xaxis label="year" />
-                <rich:yaxis label="metric tons of CO2 per capita" />
+                <rich:chartXAxis label="year" />
+                <rich:chartYAxis label="metric tons of CO2 per capita" />
             </rich:chart>
             <h:outputText id="msg" value="#{chartBean.msg}" />
         </h:form>
