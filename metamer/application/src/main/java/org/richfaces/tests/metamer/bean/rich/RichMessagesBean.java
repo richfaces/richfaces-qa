@@ -27,7 +27,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import org.richfaces.component.UIRichMessages;
+import org.richfaces.component.html.HtmlMessages;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.bean.abstractions.MessageTestingBean;
 import org.slf4j.Logger;
@@ -49,7 +49,7 @@ public class RichMessagesBean extends MessageTestingBean implements Serializable
     @PostConstruct
     public void init() {
         LOGGER.debug("initializing bean " + getClass().getName());
-        attributes = Attributes.getComponentAttributesFromFacesConfig(UIRichMessages.class, getClass());
+        attributes = Attributes.getComponentAttributesFromFacesConfig(HtmlMessages.class, getClass());
 
         simpleInput1 = "10";
         simpleInput2 = "10";
