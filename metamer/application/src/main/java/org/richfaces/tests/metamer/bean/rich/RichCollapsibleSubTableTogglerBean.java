@@ -30,7 +30,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
-import org.richfaces.component.UICollapsibleSubTableToggler;
+import org.richfaces.component.UICollapsibleSubTableToggleControl;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.model.Employee;
 import org.richfaces.tests.metamer.model.Employee.Sex;
@@ -64,7 +64,7 @@ public class RichCollapsibleSubTableTogglerBean implements Serializable {
         logger = LoggerFactory.getLogger(getClass());
         logger.debug("initializing bean " + getClass().getName());
 
-        attributes = Attributes.getComponentAttributesFromFacesConfig(UICollapsibleSubTableToggler.class, getClass());
+        attributes = Attributes.getComponentAttributesFromFacesConfig(UICollapsibleSubTableToggleControl.class, getClass());
         attributes.setAttribute("event", "click");
         attributes.setAttribute("rendered", true);
         // TODO these attributes have to be tested in another way

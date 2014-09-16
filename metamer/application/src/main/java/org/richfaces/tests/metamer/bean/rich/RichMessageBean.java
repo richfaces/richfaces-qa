@@ -28,7 +28,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import org.richfaces.component.UIRichMessage;
+import org.richfaces.component.html.HtmlMessage;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.bean.abstractions.MessageTestingBean;
 import org.slf4j.Logger;
@@ -50,7 +50,7 @@ public class RichMessageBean extends MessageTestingBean implements Serializable 
     @PostConstruct
     public void init() {
         LOGGER.debug("initializing bean " + getClass().getName());
-        attributes = Attributes.getComponentAttributesFromFacesConfig(UIRichMessage.class, getClass());
+        attributes = Attributes.getComponentAttributesFromFacesConfig(HtmlMessage.class, getClass());
 
         // setting up incorrect values to fire-up validator
         simpleInput1 = "-5";
