@@ -31,6 +31,7 @@ import java.net.URL;
 
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -109,9 +110,9 @@ public class TestMediaOutputAttributes extends AbstractMediaOutputTest {
         testFireEvent(Event.BLUR, mediaOutput);
     }
 
-    @Test(groups = "Future")
+    @Test
     @Templates(value = "plain")
-    @IssueTracking("https://issues.jboss.org/browse/RF-13826")
+    @RegressionTest("https://issues.jboss.org/browse/RF-13826")
     public void testOnclick() {
         testFireEvent(Event.CLICK, mediaOutput);
     }
