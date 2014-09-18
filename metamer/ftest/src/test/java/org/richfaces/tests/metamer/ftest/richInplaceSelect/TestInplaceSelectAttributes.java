@@ -592,7 +592,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testRendered() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.rendered, Boolean.FALSE);
-        assertNotPresent(select.advanced().getRootElement(), "Component should not be rendered when rendered=false.");
+        assertNotVisible(select, "Component should not be rendered when rendered=false.");
     }
 
     @Test
