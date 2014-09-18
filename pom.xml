@@ -1854,7 +1854,7 @@ FSF site: http://www.fsf.org. -->
                 <hudson.firefox.solaris10>/qa/tools/SunOS/${os.arch}</hudson.firefox.solaris10>
                 <hudson.firefox.solaris11>/qa/tools/OpenSolaris/${os.arch}</hudson.firefox.solaris11>
                 <firefox.version.min>24esr</firefox.version.min>
-                <firefox.version.opt>30</firefox.version.opt>
+                <firefox.version.opt>31esr</firefox.version.opt>
                 <firefox.linux.opt>${hudson.firefox}/firefox-${firefox.version.opt}/firefox</firefox.linux.opt>
                 <firefox.linux.min>${hudson.firefox}/firefox-${firefox.version.min}/firefox</firefox.linux.min>
                 <firefox.windows.opt>${firefox.linux.opt}.exe</firefox.windows.opt>
