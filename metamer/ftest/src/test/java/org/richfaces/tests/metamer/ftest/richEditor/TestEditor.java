@@ -154,7 +154,7 @@ public class TestEditor extends AbstractWebDriverTest {
 
         // since config facet has been introduced...
         editorAttributes.set(toolbar, "custom");
-        assertTrue(page.getEditor().advanced().getToolbar().count() == 9);
+        assertTrue(page.getEditor().advanced().getToolbar().numberOfToolbarItems() == 9);
     }
 
     @Test
