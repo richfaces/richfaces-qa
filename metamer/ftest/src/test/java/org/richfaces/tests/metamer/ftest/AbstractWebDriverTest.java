@@ -57,6 +57,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.component.Positioning;
 import org.richfaces.component.SwitchType;
+import org.richfaces.fragment.common.AdvancedVisibleComponentIteractions;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Locations;
 import org.richfaces.fragment.common.TextInputComponentImpl;
@@ -264,6 +265,22 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     protected void assertNotVisible(WebElement element, String msg) {
         assertTrue(new WebElementConditionFactory(element).not().isVisible().apply(driver), msg);
+    }
+
+    protected void assertVisible(AdvancedVisibleComponentIteractions<?> o) {
+        assertTrue(o.advanced().isVisible());
+    }
+
+    protected void assertVisible(AdvancedVisibleComponentIteractions<?> o, String msg) {
+        assertTrue(o.advanced().isVisible(), msg);
+    }
+
+    protected void assertNotVisible(AdvancedVisibleComponentIteractions<?> o) {
+        assertFalse(o.advanced().isVisible());
+    }
+
+    protected void assertNotVisible(AdvancedVisibleComponentIteractions<?> o, String msg) {
+        assertFalse(o.advanced().isVisible(), msg);
     }
 
     protected void assertNotVisible(VisibleComponent component, String msg) {

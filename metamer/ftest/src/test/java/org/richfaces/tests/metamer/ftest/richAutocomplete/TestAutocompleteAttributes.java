@@ -130,7 +130,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     @IssueTracking("https://issues.jboss.org/browse/RF-12820")
     public void testLayout() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
-        String[] layouts = new String[]{ "div", "list", "table" };
+        String[] layouts = new String[] { "div", "list", "table" };
         for (String layout : layouts) {
             autocompleteAttributes.set(AutocompleteAttributes.layout, layout);
             autocomplete.clear();
@@ -574,7 +574,8 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     @Test
     @Templates(value = "plain")
     public void testTabindex() {
-        testHTMLAttribute(autocomplete.advanced().getInput().advanced().getInputElement(), autocompleteAttributes, AutocompleteAttributes.tabindex, "100");
+        testHTMLAttribute(autocomplete.advanced().getInput().advanced().getInputElement(), autocompleteAttributes,
+            AutocompleteAttributes.tabindex, "100");
     }
 
     @Test
@@ -617,10 +618,10 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     @Templates(value = "plain")
     public void testRendered() {
         autocompleteAttributes.set(AutocompleteAttributes.rendered, Boolean.FALSE);
-        assertNotVisible(autocomplete.advanced().getRootElement(), "Autocomplete should not be rendered.");
+        assertNotVisible(autocomplete, "Autocomplete should not be rendered.");
 
         autocompleteAttributes.set(AutocompleteAttributes.rendered, Boolean.TRUE);
-        assertVisible(autocomplete.advanced().getRootElement(), "Autocomplete should not be rendered.");
+        assertVisible(autocomplete, "Autocomplete should be rendered.");
     }
 
     @Test
