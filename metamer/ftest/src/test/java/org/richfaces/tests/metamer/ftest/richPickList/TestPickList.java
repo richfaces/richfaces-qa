@@ -576,7 +576,7 @@ public class TestPickList extends AbstractWebDriverTest {
         assertButtonDisabled(pickList.advanced().getTopButtonElement());
         assertButtonDisabled(pickList.advanced().getUpButtonElement());
         // move first item to last
-        OrderingList orderingTargetList = pickList.advanced().orderTargetList();
+        OrderingList orderingTargetList = pickList.advanced().getOrderTargetList();
         List<? extends ListItem> items = pickList.advanced().getTargetList().getItems();
         List<String> targetStrings = Lists.newArrayList(items.get(0).getText(), items.get(1).getText(), items.get(2)
             .getText());
