@@ -200,10 +200,8 @@ public class TestPanel extends AbstractWebDriverTest {
     public void testRendered() {
         panelAttributes.set(PanelAttributes.rendered, Boolean.FALSE);
 
-        assertNotPresent(panelWithHeader.advanced().getRootElement(),
-            "First panel should not be rendered when rendered=false.");
-        assertNotPresent(panelWithoutHeader.advanced().getRootElement(),
-            "Second panel should not be rendered when rendered=false.");
+        assertNotVisible(panelWithHeader, "First panel should not be rendered when rendered=false.");
+        assertNotVisible(panelWithoutHeader, "Second panel should not be rendered when rendered=false.");
     }
 
     @Test
