@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich"
+    xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+<!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2014, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+<ui:composition template="/templates/template.xhtml">
+
+    <ui:define name="component">
+
+        <a4j:jsFunction id="js1" name="save" execute="pg1,pg2" action="#{rf13842.save}" render="errors" />
+
+        <a4j:jsFunction id="js2" name="calcResult1" execute="value1Input" action="#{rf13842.calcResult1}" render="result1Input,errors" />
+
+        <fieldset>
+            <legend>Steps to reproduce</legend>
+            <ol>
+                <li>Type "1" into first input and click outside of input, result: 10 x input1 in calculated in second input</li>
+                <li>Clear first input and click save, result: error message is displayed because the field is required</li>
+                <li>Type "2" into first input and click outsie of input, result: ajax request is sent but second input is not updated (expected 20)</li>
+            </ol>
+        </fieldset>
+        <br/>
+
+        <h:panelGroup id="pgCtn" layout="block">
+           
+            <h:panelGrid id="pg1" columns="2">
+                <h:outputLabel value="value1" for="value1Input" />
+                <h:inputText id="value1Input" value="#{rf13842.value1}" onchange="calcResult1();" required="true" />
+                
+                <h:outputLabel value="10 x value1" for="result1Input" />
+                <h:inputText id="result1Input" value="#{rf13842.result1}" required="true" />
+            </h:panelGrid>
+            
+            <h:panelGrid id="pg2" columns="2">
+                <h:outputLabel value="value2" for="value2Input" />
+                <h:inputText id="value2Input" value="#{rf13842.value2}" required="true" />
+
+                <h:outputLabel value="10 x value2" for="result2Input" />
+                <h:panelGroup>
+                    <h:inputText id="result2Input" value="#{rf13842.result2}" required="true" />
+
+                    <a4j:commandLink id="calcResult2Link" value="Calculate Result 2" execute="value2Input" action="#{rf13842.calcResult2}"
+                        render="result2Input,errors" />
+                </h:panelGroup>
+
+            </h:panelGrid>
+            
+            <h:panelGroup id="pgButtons" layout="block" style="margin-top: 10px">
+
+                <h:commandButton id="saveButton" value="Save" type="button" onclick="save(); return false;" />
+
+            </h:panelGroup>
+            <rich:messages id="errors" ajaxRendered="false" showDetail="true" />
+        </h:panelGroup>
+
+    </ui:define>
+
+
+</ui:composition>
+
+</html>
