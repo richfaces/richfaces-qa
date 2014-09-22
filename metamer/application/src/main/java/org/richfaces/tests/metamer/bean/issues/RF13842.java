@@ -22,7 +22,7 @@ public class RF13842 {
             result1 = value1.multiply(BigDecimal.TEN);
         }
     }
-    
+
     public void calcResult2() {
         if (value2 == null) {
             result2 = null;
@@ -31,7 +31,7 @@ public class RF13842 {
             result2 = value2.multiply(BigDecimal.TEN);
         }
     }
-    
+
     public String save() {
         return null;
     }
@@ -44,7 +44,7 @@ public class RF13842 {
     public void setValue1(BigDecimal value1) {
         this.value1 = value1;
     }
-    
+
     public BigDecimal getValue2() {
         return value2;
     }
@@ -60,7 +60,7 @@ public class RF13842 {
     public void setResult1(BigDecimal result1) {
         this.result1 = result1;
     }
-    
+
     public BigDecimal getResult2() {
         return result2;
     }
