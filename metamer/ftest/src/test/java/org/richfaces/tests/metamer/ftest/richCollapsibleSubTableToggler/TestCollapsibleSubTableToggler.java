@@ -205,11 +205,11 @@ public class TestCollapsibleSubTableToggler extends AbstractCollapsibleSubTableT
                 subtable = getSubTable(i == 1);
 
                 toggler = subtable.advanced().getTableToggler();
-                toggler.setupToggleEvent(event);
+                toggler.setToggleEvent(event);
                 if (toggleByImage) {
-                    toggler.setupToggleByImage();
+                    toggler.setToggleByImage();
                 } else {
-                    toggler.setupToggleByLabel();
+                    toggler.setToggleByLabel();
                 }
                 assertTrue(subtable.advanced().isExpanded(), "Table should be expanded.");
 
