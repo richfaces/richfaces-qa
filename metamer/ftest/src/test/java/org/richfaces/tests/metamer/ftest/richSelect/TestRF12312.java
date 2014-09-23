@@ -72,7 +72,7 @@ public class TestRF12312 extends AbstractWebDriverTest {
     @BeforeMethod
     private void resetActualSelectedValue() {
         actualSelectedValue = NULL_STRING;
-        select.advanced().setupOpenByInputClick(false);
+        select.advanced().setOpenByInputClick(false);
     }
 
     @Test

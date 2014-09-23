@@ -86,7 +86,7 @@ public class TestSelect extends AbstractWebDriverTest {
     private final Action selectHawaiiWithKeyboardGuardedAction = new Action() {
         @Override
         public void perform() {
-            select.advanced().setupScrollingType(ScrollingType.BY_KEYS);
+            select.advanced().setScrollingType(ScrollingType.BY_KEYS);
             Graphene.guardAjax(select.openSelect()).select(10);
         }
     };
@@ -146,7 +146,7 @@ public class TestSelect extends AbstractWebDriverTest {
         String readonly = select.advanced().getInput().advanced().getInputElement().getAttribute("readonly");
         assertTrue("readonly".equals(readonly) || "true".equals(readonly), "Input should be read-only");
 
-        select.advanced().setupOpenByInputClick(true);
+        select.advanced().setOpenByInputClick(true);
         select.openSelect();
         select.advanced().waitUntilSuggestionsAreVisible().perform();
         selectHawaiiGuardedAction.perform();
@@ -552,7 +552,7 @@ public class TestSelect extends AbstractWebDriverTest {
     public void testShowButtonClick() {
         selectAttributes.set(SelectAttributes.showButton, Boolean.TRUE);
         assertVisible(select.advanced().getShowButtonElement(), "Show button should be visible.");
-        select.advanced().setupOpenByInputClick(false);
+        select.advanced().setOpenByInputClick(false);
         select.openSelect();
         List<WebElement> suggestions = select.advanced().getSuggestionsElements();
         assertEquals(suggestions.size(), 50, "There should be 50 options.");
