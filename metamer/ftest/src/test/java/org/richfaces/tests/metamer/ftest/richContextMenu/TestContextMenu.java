@@ -90,7 +90,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
 
     private void updateShowAction() {
         contextMenuAttributes.set(ContextMenuAttributes.showEvent, "click");
-        page.getContextMenu().advanced().setupShowEvent(Event.CLICK);
+        page.getContextMenu().advanced().setShowEvent(Event.CLICK);
     }
 
     @Test
@@ -99,8 +99,8 @@ public class TestContextMenu extends AbstractWebDriverTest {
     public void testHideDelay() {
         updateShowAction();
         contextMenuAttributes.set(ContextMenuAttributes.showDelay, 0);
-        page.getContextMenu().advanced().setupHideDelay(delay);
-        page.getContextMenu().advanced().setupTimeoutForPopupMenuToBeNotVisible(delay + 2000);
+        page.getContextMenu().advanced().setHideDelay(delay);
+        page.getContextMenu().advanced().setTimeoutForPopupMenuToBeNotVisible(delay + 2000);
         testDelay(new Action() {
             @Override
             public void perform() {
@@ -477,8 +477,8 @@ public class TestContextMenu extends AbstractWebDriverTest {
     public void testShowDelay() {
         updateShowAction();
         contextMenuAttributes.set(ContextMenuAttributes.hideDelay, 0);
-        page.getContextMenu().advanced().setupShowDelay(delay);
-        page.getContextMenu().advanced().setupTimeoutForPopupMenuToBeVisible(delay + 2000);
+        page.getContextMenu().advanced().setShowDelay(delay);
+        page.getContextMenu().advanced().setTimeoutForPopupMenuToBeVisible(delay + 2000);
         testDelay(new Action() {
             @Override
             public void perform() {
@@ -499,11 +499,11 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @Test
     public void testShowEvent() {
         contextMenuAttributes.set(ContextMenuAttributes.showEvent, "mouseover");
-        page.getContextMenu().advanced().setupShowEvent(Event.MOUSEOVER);
+        page.getContextMenu().advanced().setShowEvent(Event.MOUSEOVER);
         page.getContextMenu().advanced().show(page.getTargetPanel1());
 
         contextMenuAttributes.set(ContextMenuAttributes.showEvent, "click");
-        page.getContextMenu().advanced().setupShowEvent(Event.CLICK);
+        page.getContextMenu().advanced().setShowEvent(Event.CLICK);
         page.getContextMenu().advanced().show(page.getTargetPanel1());
     }
 

@@ -70,7 +70,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
     }
 
     private void updateDropDownMenuInvoker() {
-        getCurrentMenu().advanced().setupShowEvent(Event.MOUSEOVER);
+        getCurrentMenu().advanced().setShowEvent(Event.MOUSEOVER);
     }
 
     @Page
@@ -128,15 +128,15 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
 
     public void testShowEvent() {
         dropDownMenuAttributes.set(DropDownMenuAttributes.showEvent, "contextmenu");
-        getCurrentMenu().advanced().setupShowEvent(Event.CONTEXTCLICK);
+        getCurrentMenu().advanced().setShowEvent(Event.CONTEXTCLICK);
         getCurrentMenu().advanced().show(page.getTarget1());
 
         dropDownMenuAttributes.set(DropDownMenuAttributes.showEvent, "mouseover");
-        getCurrentMenu().advanced().setupShowEvent(Event.MOUSEOVER);
+        getCurrentMenu().advanced().setShowEvent(Event.MOUSEOVER);
         getCurrentMenu().advanced().show(page.getTarget1());
 
         dropDownMenuAttributes.set(DropDownMenuAttributes.showEvent, "click");
-        getCurrentMenu().advanced().setupShowEvent(Event.CLICK);
+        getCurrentMenu().advanced().setShowEvent(Event.CLICK);
         getCurrentMenu().advanced().show(page.getTarget1());
     }
 
@@ -237,7 +237,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
     public void testHideDelay(int delay) {
         dropDownMenuAttributes.set(DropDownMenuAttributes.showDelay, 0);
         updateDropDownMenuInvoker();
-        getCurrentMenu().advanced().setupHideDelay(delay);
+        getCurrentMenu().advanced().setHideDelay(delay);
 
         testDelay(new Action() {
             @Override
@@ -273,7 +273,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
     public void testShowDelay(int delay) {
         dropDownMenuAttributes.set(DropDownMenuAttributes.hideDelay, 0);
         updateDropDownMenuInvoker();
-        getCurrentMenu().advanced().setupShowDelay(delay);
+        getCurrentMenu().advanced().setShowDelay(delay);
 
         testDelay(new Action() {
             @Override

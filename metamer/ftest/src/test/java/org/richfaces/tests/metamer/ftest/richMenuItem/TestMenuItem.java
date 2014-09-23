@@ -381,6 +381,6 @@ public class TestMenuItem extends AbstractWebDriverTest {
 
     @BeforeMethod(groups = "smoke")
     private void updateDropDownMenuInvoker() {
-        fileDropDownMenu.advanced().setupShowEvent(Event.MOUSEOVER);
+        fileDropDownMenu.advanced().setShowEvent(Event.MOUSEOVER);
     }
 }

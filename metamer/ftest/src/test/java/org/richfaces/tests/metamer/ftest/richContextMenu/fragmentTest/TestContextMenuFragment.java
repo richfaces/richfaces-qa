@@ -28,7 +28,7 @@ public class TestContextMenuFragment extends AbstractWebDriverTest {
     @Test
     public void testSetupShowEventFromWidget() {
         contextMenuAttributes.set(ContextMenuAttributes.showEvent, "contextmenu");
-        page.getContextMenu().advanced().setupShowEventFromWidget();
+        page.getContextMenu().advanced().setShowEventFromWidget();
         page.getContextMenu().selectItem(0, page.getTargetPanel1());
         assertEquals(page.getOutput().getText(), "Open", "Menu action was not performed! ShowEvent was not correctly set from widget!.");
     }
@@ -36,9 +36,9 @@ public class TestContextMenuFragment extends AbstractWebDriverTest {
     @Test
     public void testSetupTargetFromWidget() {
         contextMenuAttributes.set(ContextMenuAttributes.showEvent, "click");
-        page.getContextMenu().advanced().setupShowEvent(Event.CLICK);
-        page.getContextMenu().advanced().setupTarget(page.getTargetPanel2());
-        page.getContextMenu().advanced().setupTargetFromWidget();
+        page.getContextMenu().advanced().setShowEvent(Event.CLICK);
+        page.getContextMenu().advanced().setTarget(page.getTargetPanel2());
+        page.getContextMenu().advanced().setTargetFromWidget();
         page.getContextMenu().selectItem(0);
         assertEquals(page.getOutput().getText(), "Open", "Menu action was not performed! Target was not correctly set from widget!.");
     }
