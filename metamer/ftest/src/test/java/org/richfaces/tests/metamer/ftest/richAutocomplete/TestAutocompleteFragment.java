@@ -62,7 +62,7 @@ public class TestAutocompleteFragment extends AbstractAutocompleteTest {
         checkOutput("Alaska, Illinois");
 
         autocompleteAttributes.set(AutocompleteAttributes.tokens, ";");
-        autocomplete.advanced().setupToken(";");
+        autocomplete.advanced().setToken(";");
         autocomplete.advanced().clear(ClearType.BACKSPACE).advanced().getInputElement().submit();
         Graphene.waitAjax().until().element(autocomplete.advanced().getInput().advanced().getInputElement()).text().equalTo("");
         autocomplete
