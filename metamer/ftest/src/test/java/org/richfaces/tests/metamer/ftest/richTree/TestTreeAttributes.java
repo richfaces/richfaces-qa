@@ -483,11 +483,11 @@ public class TestTreeAttributes extends AbstractTreeTest {
         treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax);
         List<Event> testedEvents = Lists.newArrayList(Event.CLICK, Event.CONTEXTCLICK, Event.DBLCLICK);
         for (boolean toggleByHandle : new boolean[]{ true, false }) {
-            tree.advanced().setupToggleByHandle(toggleByHandle);
+            tree.advanced().setToggleByHandle(toggleByHandle);
             for (Event event : testedEvents) {
                 treeAttributes.set(TreeAttributes.toggleNodeEvent, event.toString());
                 if (!toggleByHandle) {
-                    tree.advanced().setupToggleNodeEvent(event);
+                    tree.advanced().setToggleNodeEvent(event);
                 }
                 (tree.advanced().getFirstNode().advanced().isExpanded() ? collapseFirstNodeAjaxAction
                     : expandFirstNodeAjaxAction).perform();
