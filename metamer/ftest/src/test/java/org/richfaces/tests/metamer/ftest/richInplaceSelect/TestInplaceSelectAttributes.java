@@ -89,7 +89,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
     @BeforeMethod(groups = "smoke")
     public void initFragment() {
-        select.advanced().setupSaveOnSelect(Boolean.TRUE);
+        select.advanced().setSaveOnSelect(Boolean.TRUE);
     }
 
     @Test
@@ -159,7 +159,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     public void testClickCancelButton() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.showControls, Boolean.TRUE);
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
-        select.advanced().setupSaveOnSelect(Boolean.FALSE);
+        select.advanced().setSaveOnSelect(Boolean.FALSE);
 
         ConfirmOrCancel confirmOrCancel = Graphene.guardNoRequest(select).select(10);
         assertEquals(getOutputText(), "", "Output should be empty.");
@@ -224,7 +224,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         } catch (TimeoutException e) {// ok
         }
         assertNotVisible(globalPopup, "Popup should not be displayed.");
-        select.advanced().setupEditByEvent(Event.MOUSEUP);
+        select.advanced().setEditByEvent(Event.MOUSEUP);
         select.advanced().switchToEditingState();
         assertVisible(globalPopup, "Popup should be displayed.");
     }
@@ -600,7 +600,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     public void testSaveOnBlurSelectFalseFalse() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnBlur, Boolean.FALSE);
-        select.advanced().setupSaveOnSelect(Boolean.FALSE);
+        select.advanced().setSaveOnSelect(Boolean.FALSE);
         // select
         Graphene.guardNoRequest(select).select(10);
         assertEquals(getOutputText(), "", "Output should be empty.");
@@ -626,7 +626,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     @Test
     public void testSaveOnBlurSelectTrueFalse() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
-        select.advanced().setupSaveOnSelect(Boolean.FALSE);
+        select.advanced().setSaveOnSelect(Boolean.FALSE);
         // select
         Graphene.guardNoRequest(select).select(10);
         assertEquals(getOutputText(), "", "Output should be empty.");
