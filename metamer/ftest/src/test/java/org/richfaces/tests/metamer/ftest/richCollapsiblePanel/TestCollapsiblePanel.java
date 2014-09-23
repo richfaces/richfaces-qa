@@ -24,7 +24,6 @@ package org.richfaces.tests.metamer.ftest.richCollapsiblePanel;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.STRINGS;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
 
 import java.net.URL;
 
@@ -184,7 +183,7 @@ public class TestCollapsiblePanel extends TestFacets {
     @Templates(value = "plain")
     public void testRendered() {
         collapsiblePanelAttributes.set(CollapsiblePanelAttributes.rendered, Boolean.FALSE);
-        assertFalse(panel.advanced().getRootElement().isPresent(), "Panel should not be rendered when rendered=false.");
+        assertNotVisible(panel, "Panel should not be rendered when rendered=false.");
     }
 
     @Test
