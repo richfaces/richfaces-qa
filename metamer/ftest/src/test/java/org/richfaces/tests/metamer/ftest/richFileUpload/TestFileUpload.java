@@ -218,7 +218,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     public void testListHeight() {
         String height = "100px";
         fileUploadAttributes.set(FileUploadAttributes.listHeight, height);
-        String cssValue = fileUpload.advanced().getItems().getRoot().getCssValue("height");
+        String cssValue = fileUpload.advanced().getItems().getRootElement().getCssValue("height");
         assertEquals(cssValue, height, "List height was not changed");
     }
 

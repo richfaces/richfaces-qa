@@ -75,13 +75,13 @@ public class TestListAttributes extends AbstractListTest {
     @Templates(value = "plain")
     public void testRendered() {
         listAttributes.set(ListAttributes.rendered, Boolean.FALSE);
-        assertNotVisible(list.getRoot(), "List should not be visible");
+        assertNotVisible(list.getRootElement(), "List should not be visible");
     }
 
     @Test
     @Templates("plain")
     public void testDir() {
-        testDir(list.getRoot());
+        testDir(list.getRootElement());
     }
 
     @Test(groups = "smoke")
@@ -96,41 +96,41 @@ public class TestListAttributes extends AbstractListTest {
     @Test
     @Templates("plain")
     public void testLang() {
-        testLang(list.getRoot());
+        testLang(list.getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(listAttributes, ListAttributes.onclick,
-            new Actions(driver).click(list.getRoot()).build());
+            new Actions(driver).click(list.getRootElement()).build());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(listAttributes, ListAttributes.ondblclick,
-            new Actions(driver).doubleClick(list.getRoot()).build());
+            new Actions(driver).doubleClick(list.getRootElement()).build());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeydown() {
-        testFireEventWithJS(list.getRoot(), listAttributes,
+        testFireEventWithJS(list.getRootElement(), listAttributes,
             ListAttributes.onkeydown);
     }
 
     @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testOnkeypress() {
-        testFireEventWithJS(list.getRoot(), listAttributes,
+        testFireEventWithJS(list.getRootElement(), listAttributes,
             ListAttributes.onkeypress);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeyup() {
-        testFireEventWithJS(list.getRoot(), listAttributes,
+        testFireEventWithJS(list.getRootElement(), listAttributes,
             ListAttributes.onkeyup);
 
     }
@@ -138,14 +138,14 @@ public class TestListAttributes extends AbstractListTest {
     @Test
     @Templates(value = "plain")
     public void testOnmousedown() {
-        testFireEventWithJS(list.getRoot(), listAttributes,
+        testFireEventWithJS(list.getRootElement(), listAttributes,
             ListAttributes.onmousedown);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmousemove() {
-        testFireEventWithJS(list.getRoot(), listAttributes,
+        testFireEventWithJS(list.getRootElement(), listAttributes,
             ListAttributes.onmousemove);
 
     }
@@ -153,21 +153,21 @@ public class TestListAttributes extends AbstractListTest {
     @Test
     @Templates(value = "plain")
     public void testOnmouseout() {
-        testFireEventWithJS(list.getRoot(), listAttributes,
+        testFireEventWithJS(list.getRootElement(), listAttributes,
             ListAttributes.onmouseout);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseover() {
-        testFireEventWithJS(list.getRoot(), listAttributes,
+        testFireEventWithJS(list.getRootElement(), listAttributes,
             ListAttributes.onmouseover);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseup() {
-        testFireEventWithJS(list.getRoot(), listAttributes,
+        testFireEventWithJS(list.getRootElement(), listAttributes,
             ListAttributes.onmouseup);
     }
 
@@ -268,19 +268,19 @@ public class TestListAttributes extends AbstractListTest {
     @Test
     @Templates(value = "plain")
     public void testStyle() {
-        testStyle(list.getRoot());
+        testStyle(list.getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyleClass() {
-        testStyleClass(list.getRoot());
+        testStyleClass(list.getRootElement());
     }
 
     @Test
     @Templates("plain")
     public void testTitle() {
-        testTitle(list.getRoot());
+        testTitle(list.getRootElement());
     }
 
     @Test(groups = "smoke")
