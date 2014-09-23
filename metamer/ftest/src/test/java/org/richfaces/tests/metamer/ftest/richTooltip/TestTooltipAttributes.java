@@ -79,8 +79,8 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     public void setupAttributes() {
         tooltipAttributes.set(TooltipAttributes.hideEvent, "mouseout");
         tooltipAttributes.set(TooltipAttributes.showEvent, "click");
-        tooltip().advanced().setupHideEvent(Event.MOUSEOUT);
-        tooltip().advanced().setupShowEvent(Event.CLICK);
+        tooltip().advanced().setHideEvent(Event.MOUSEOUT);
+        tooltip().advanced().setShowEvent(Event.CLICK);
     }
 
     private void showAndMoveTooltip(final boolean tooltipWillMove) {
@@ -168,7 +168,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     @Templates("plain")
     public void testHideDelay() {
         tooltipAttributes.set(TooltipAttributes.showDelay, 0);
-        tooltip().advanced().setupTimoutForTooltipToBeNotVisible(delay + 2000);
+        tooltip().advanced().setTimoutForTooltipToBeNotVisible(delay + 2000);
         testDelay(new Action() {
             @Override
             public void perform() {
@@ -187,7 +187,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     public void testHideEvent() {
         for (Event event : new Event[] { Event.MOUSEOUT, Event.DBLCLICK }) {
             tooltipAttributes.set(TooltipAttributes.hideEvent, event.toString());
-            tooltip().advanced().setupHideEvent(event);
+            tooltip().advanced().setHideEvent(event);
             tooltip().show().hide();
         }
     }
@@ -437,7 +437,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     @Templates("plain")
     public void testShowDelay() {
         tooltipAttributes.set(TooltipAttributes.hideDelay, 0);
-        tooltip().advanced().setupTimeoutForTooltipToBeVisible(delay + 2000);
+        tooltip().advanced().setTimeoutForTooltipToBeVisible(delay + 2000);
         testDelay(new Action() {
             @Override
             public void perform() {
@@ -456,7 +456,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     public void testShowEvent() {
         for (Event event : new Event[] { Event.CLICK, Event.DBLCLICK }) {
             tooltipAttributes.set(TooltipAttributes.showEvent, event.toString());
-            tooltip().advanced().setupShowEvent(event);
+            tooltip().advanced().setShowEvent(event);
             tooltip().show().hide();
         }
     }

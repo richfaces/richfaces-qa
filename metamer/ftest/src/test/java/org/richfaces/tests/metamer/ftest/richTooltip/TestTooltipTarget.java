@@ -64,8 +64,8 @@ public class TestTooltipTarget extends AbstractWebDriverTest {
         // set some offset so the tooltip will not block triggering the event on element
         tooltipAttributes.set(TooltipAttributes.horizontalOffset, 100);
         tooltipAttributes.set(TooltipAttributes.verticalOffset, 100);
-        page.getTooltip().advanced().setupShowEvent(Event.CLICK);
-        page.getTooltip().advanced().setupHideEvent(Event.DBLCLICK);
+        page.getTooltip().advanced().setShowEvent(Event.CLICK);
+        page.getTooltip().advanced().setHideEvent(Event.DBLCLICK);
         for (WebElement panel : Lists.newArrayList(page.getPanel(), page.getPanelJSFDiv(), page.getPanelRegularDiv())) {
             tooltipAttributes.set(target, panel.getAttribute("id"));
             page.getTooltip().show(panel);
