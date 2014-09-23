@@ -55,27 +55,27 @@ public class TestCalendarFragment extends AbstractCalendarTest {
     @BeforeMethod
     private void manageWindow() {
         driver.manage().window().setSize(new Dimension(1024, 768));
-        calendar.advanced().setupDatePattern(calendarAttributes.get(CalendarAttributes.datePattern));
+        calendar.advanced().setDatePattern(calendarAttributes.get(CalendarAttributes.datePattern));
     }
 
     @Test
     public void testGetDateByJS() {
-        calendar.advanced().setupJavaScriptStrategy();
+        calendar.advanced().setJavaScriptStrategy();
         calendar.setDate(todayMidday);
         checkDateTime(calendar.getDate());
     }
 
     @Test
     public void testGetDateByWD() {
-        calendar.advanced().setupJavaScriptStrategy();
+        calendar.advanced().setJavaScriptStrategy();
         calendar.setDate(todayMidday);
-        calendar.advanced().setupInteractiveStrategy();
+        calendar.advanced().setInteractiveStrategy();
         checkDateTime(calendar.getDate());
     }
 
     @Test
     public void testSetDateByJS() {
-        calendar.advanced().setupJavaScriptStrategy();
+        calendar.advanced().setJavaScriptStrategy();
         calendar.setDate(todayMidday);
         checkDateTime(DateTimeFormat
             .forPattern(calendarAttributes.get(CalendarAttributes.datePattern))
@@ -84,7 +84,7 @@ public class TestCalendarFragment extends AbstractCalendarTest {
 
     @Test
     public void testSetDateByWD() {
-        calendar.advanced().setupInteractiveStrategy();
+        calendar.advanced().setInteractiveStrategy();
         calendar.setDate(todayMidday);
         checkDateTime(DateTimeFormat
             .forPattern(calendarAttributes.get(CalendarAttributes.datePattern))
