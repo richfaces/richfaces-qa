@@ -86,7 +86,7 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
 
     @Test
     public void testSimpleSelectionWithKeyboard() {
-        autocomplete.advanced().setupScrollingType(ScrollingType.BY_KEYS);
+        autocomplete.advanced().setScrollingType(ScrollingType.BY_KEYS);
         autocomplete.type("a").select(ChoicePickerHelper.byVisibleText().endsWith("na"));
         checkOutput("Arizona");
     }
