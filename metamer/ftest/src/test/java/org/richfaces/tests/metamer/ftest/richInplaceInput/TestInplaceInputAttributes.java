@@ -177,7 +177,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     public void testEditEvent() {
         inplaceInputAttributes.set(InplaceInputAttributes.editEvent, "dblclick");
 
-        inplaceInput.advanced().setupEditByEvent(Event.KEYPRESS);
+        inplaceInput.advanced().setEditByEvent(Event.KEYPRESS);
         try {
             inplaceInput.type(" ");
             fail("The test should throw an exception! The editEvent is wrongly set!");
@@ -185,7 +185,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
             assertTrue(ex.getMessage().contains("editBy"));
         }
 
-        inplaceInput.advanced().setupEditByEvent(Event.DBLCLICK);
+        inplaceInput.advanced().setEditByEvent(Event.DBLCLICK);
         inplaceInput.type(" ");
         assertTrue(inplaceInput.advanced().isInState(InplaceComponentState.ACTIVE));
     }
