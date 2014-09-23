@@ -87,7 +87,7 @@ public abstract class AbstractHotKeyTest extends AbstractWebDriverTest {
 
     @BeforeMethod(groups = "smoke")
     public void setHotKeyAndSelector() {
-        hotkey1.setupHotkey(KeysEnum.CTRL_X.toString());
-        hotkey2.setupHotkey("alt+x");
+        hotkey1.setHotkey(KeysEnum.CTRL_X.toString());
+        hotkey2.setHotkey("alt+x");
     }
 }

@@ -69,7 +69,7 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
         String originalWindow = driver.getWindowHandle();
         firstHotkeyAttributes.set(HotKeyAttributes.preventDefault, preventDefault);
         firstHotkeyAttributes.set(HotKeyAttributes.key, "ctrl+n");
-        hotkey1.setupHotkey("ctrl+n");
+        hotkey1.setHotkey("ctrl+n");
         hotkey1.invoke();
         try {
             if (!preventDefault) {
@@ -134,7 +134,7 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
     @UseWithField(field = "key", valuesFrom = FROM_ENUM, value = "")
     public void testKey() {
         firstHotkeyAttributes.set(HotKeyAttributes.key, key.keysString);
-        hotkey1.setupHotkey(key.toString());
+        hotkey1.setHotkey(key.toString());
         hotkey1.invoke();
         checkEvents(1, 0);
         clearHotKeyEvents();
@@ -170,7 +170,7 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
     @Test
     public void testSelector() {
         firstHotkeyAttributes.set(HotKeyAttributes.selector, "input.first-input");
-        hotkey1.setupSelector("input.first-input");
+        hotkey1.setSelector("input.first-input");
         hotkey1.invoke();// invoke on element found by selector
         checkEvents(1, 0);
         hotkey1.invoke(secondInput.advanced().getInputElement());

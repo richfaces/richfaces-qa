@@ -35,11 +35,11 @@ public class TestHotKeyFragment extends AbstractWebDriverTest {
     @Test
     public void testSetupSelectorFromWidget() {
         firstHotkeyAttributes.set(HotKeyAttributes.selector, ".first-input");
-        hotkey1.setupHotkey(KeysEnum.CTRL_X.toString());
+        hotkey1.setHotkey(KeysEnum.CTRL_X.toString());
         // wrong one
-        hotkey1.setupSelector(".second-input");
+        hotkey1.setSelector(".second-input");
         // this should correct it
-        hotkey1.advanced().setupSelectorFromWidget();
+        hotkey1.advanced().setSelectorFromWidget();
         hotkey1.invoke();
         List<? extends LogEntry> items = log.getLogEntries().getItems(
             ChoicePickerHelper.byVisibleText().contains("hotkey 1 : onkeydown"));
@@ -50,9 +50,9 @@ public class TestHotKeyFragment extends AbstractWebDriverTest {
     @Test
     public void testSetupHotKeyFromWidget() {
         // wrong one
-        hotkey1.setupHotkey(KeysEnum.ALT_CONTROL_X.toString());
+        hotkey1.setHotkey(KeysEnum.ALT_CONTROL_X.toString());
         // this should correct it
-        hotkey1.advanced().setupHotkeyFromWidget();
+        hotkey1.advanced().setHotkeyFromWidget();
         hotkey1.invoke();
         List<? extends LogEntry> items = log.getLogEntries().getItems(
             ChoicePickerHelper.byVisibleText().contains("hotkey 1 : onkeydown"));
