@@ -159,7 +159,7 @@ public class TestTabPanelAddPanel1 extends AbstractWebDriverTest {
     @Test
     public void testSwitchTypeClient() {
         tabPanelAttributes.set(TabPanelAttributes.switchType, "client");
-        page.getTabPanel().advanced().setupSwitchType(SwitchType.CLIENT);
+        page.getTabPanel().advanced().setSwitchType(SwitchType.CLIENT);
 
         createAndVerifyTab(page.getCreateTabButtonA4j());
         for (int i = 4; i < 8; i++) {
@@ -176,7 +176,7 @@ public class TestTabPanelAddPanel1 extends AbstractWebDriverTest {
     @IssueTracking("https://issues.jboss.org/browse/RF-11054")
     public void testSwitchTypeServer() {
         tabPanelAttributes.set(TabPanelAttributes.switchType, "server");
-        page.getTabPanel().advanced().setupSwitchType(SERVER);
+        page.getTabPanel().advanced().setSwitchType(SERVER);
 
         createAndVerifyTab(page.getCreateTabButtonA4j());
         for (int i = 4; i < 8; i++) {

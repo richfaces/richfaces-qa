@@ -338,7 +338,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-12532")
     public void testSwitchTypeClient() {
         accordionAttributes.set(AccordionAttributes.switchType, "client");
-        page.getAccordion().advanced().setupSwitchType(SwitchType.CLIENT);
+        page.getAccordion().advanced().setSwitchType(SwitchType.CLIENT);
         for (int i = 2; i >= 0; i--) {
             Graphene.guardNoRequest(page.getAccordion()).switchTo(i);
         }
@@ -348,7 +348,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     @RegressionTest({ "https://issues.jboss.org/browse/RF-10040", "https://issues.jboss.org/browse/RF-12532" })
     public void testSwitchTypeServer() {
         accordionAttributes.set(AccordionAttributes.switchType, "server");
-        page.getAccordion().advanced().setupSwitchType(SwitchType.SERVER);
+        page.getAccordion().advanced().setSwitchType(SwitchType.SERVER);
         for (int i = 2; i >= 0; i--) {
             Graphene.guardHttp(page.getAccordion()).switchTo(i);
         }

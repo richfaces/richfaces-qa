@@ -153,7 +153,7 @@ public class TestTab extends AbstractWebDriverTest {
         assertEquals(disabledHeaders.size(), 2);
         assertEquals(disabledHeaders.get(0).getText(), "tab1 header");
 
-        page.getTabPanel().advanced().setupSwitchType(CLIENT);
+        page.getTabPanel().advanced().setSwitchType(CLIENT);
         page.getTabPanel().switchTo("tab2 header");
         try {
             page.getTabPanel().switchTo("tab1 header");

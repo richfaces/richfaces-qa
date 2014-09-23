@@ -339,7 +339,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
     @Test
     public void testSwitchTypeClient() {
         tabPanelAttributes.set(TabPanelAttributes.switchType, "client");
-        page.getTabPanel().advanced().setupSwitchType(CLIENT);
+        page.getTabPanel().advanced().setSwitchType(CLIENT);
 
         for (int i = 2; i >= 0; i--) {
             page.getTabPanel().switchTo(i);
@@ -350,7 +350,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-10040")
     public void testSwitchTypeServer() {
         tabPanelAttributes.set(TabPanelAttributes.switchType, "server");
-        page.getTabPanel().advanced().setupSwitchType(SwitchType.SERVER);
+        page.getTabPanel().advanced().setSwitchType(SwitchType.SERVER);
 
         for (int i = 2; i >= 0; i--) {
             page.getTabPanel().switchTo(i);
