@@ -241,7 +241,7 @@ public class TestPickList extends AbstractWebDriverTest {
         int tolerance = 10;
         pickListAttributes.set(PickListAttributes.listHeight, testedValue);
         assertEquals(
-            Integer.valueOf(pickList.advanced().getSourceListAreaElement().getCssValue("height").replace("px", "")),
+            Integer.valueOf(pickList.advanced().getSourceListContentAreaElement().getCssValue("height").replace("px", "")),
             testedValue, tolerance);
     }
 
@@ -252,7 +252,7 @@ public class TestPickList extends AbstractWebDriverTest {
         int tolerance = 20;
         pickListAttributes.set(PickListAttributes.listWidth, testedValue);
         assertEquals(
-            Integer.valueOf(pickList.advanced().getSourceListAreaElement().getCssValue("width").replace("px", "")),
+            Integer.valueOf(pickList.advanced().getSourceListContentAreaElement().getCssValue("width").replace("px", "")),
             testedValue, tolerance);
     }
 
@@ -264,7 +264,7 @@ public class TestPickList extends AbstractWebDriverTest {
         pickListAttributes.set(PickListAttributes.maxListHeight, testedValue);
         pickListAttributes.set(PickListAttributes.listHeight, "");
         assertEquals(
-            Integer.valueOf(pickList.advanced().getSourceListAreaElement().getCssValue("max-height").replace("px", "")),
+            Integer.valueOf(pickList.advanced().getSourceListContentAreaElement().getCssValue("max-height").replace("px", "")),
             testedValue, tolerance);
     }
 
@@ -276,7 +276,7 @@ public class TestPickList extends AbstractWebDriverTest {
         pickListAttributes.set(PickListAttributes.listHeight, "");
         pickListAttributes.set(PickListAttributes.minListHeight, testedValue);
         assertEquals(
-            Integer.valueOf(pickList.advanced().getSourceListAreaElement().getCssValue("min-height").replace("px", "")),
+            Integer.valueOf(pickList.advanced().getSourceListContentAreaElement().getCssValue("min-height").replace("px", "")),
             testedValue, tolerance);
     }
 
@@ -394,71 +394,71 @@ public class TestPickList extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testOnsourceclick() {
         testFireEvent(pickListAttributes, PickListAttributes.onsourceclick,
-            new Actions(driver).click(pickList.advanced().getSourceListAreaElement()).build());
+            new Actions(driver).click(pickList.advanced().getSourceListContentAreaElement()).build());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnsourcedblclick() {
-        testFireEvent(Event.DBLCLICK, pickList.advanced().getSourceListAreaElement(), "sourcedblclick");
+        testFireEvent(Event.DBLCLICK, pickList.advanced().getSourceListContentAreaElement(), "sourcedblclick");
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11322")
     public void testOnsourcefocus() {
         testFireEvent(pickListAttributes, PickListAttributes.onsourcefocus,
-            new Actions(driver).click(pickList.advanced().getSourceListAreaElement()).build());
+            new Actions(driver).click(pickList.advanced().getSourceListContentAreaElement()).build());
     }
 
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     @Templates(value = "plain")
     public void testOnsourcekeydown() {
-        testFireEvent(Event.KEYDOWN, pickList.advanced().getSourceListAreaElement(), "sourcekeydown");
+        testFireEvent(Event.KEYDOWN, pickList.advanced().getSourceListContentAreaElement(), "sourcekeydown");
     }
 
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     @Templates(value = "plain")
     public void testOnsourcekeypress() {
-        testFireEvent(Event.KEYPRESS, pickList.advanced().getSourceListAreaElement(), "sourcekeypress");
+        testFireEvent(Event.KEYPRESS, pickList.advanced().getSourceListContentAreaElement(), "sourcekeypress");
     }
 
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     @Templates(value = "plain")
     public void testOnsourcekeyup() {
-        testFireEvent(Event.KEYUP, pickList.advanced().getSourceListAreaElement(), "sourcekeyup");
+        testFireEvent(Event.KEYUP, pickList.advanced().getSourceListContentAreaElement(), "sourcekeyup");
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnsourcemousedown() {
-        testFireEvent(Event.MOUSEDOWN, pickList.advanced().getSourceListAreaElement(), "sourcemousedown");
+        testFireEvent(Event.MOUSEDOWN, pickList.advanced().getSourceListContentAreaElement(), "sourcemousedown");
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnsourcemousemove() {
-        testFireEvent(Event.MOUSEMOVE, pickList.advanced().getSourceListAreaElement(), "sourcemousemove");
+        testFireEvent(Event.MOUSEMOVE, pickList.advanced().getSourceListContentAreaElement(), "sourcemousemove");
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnsourcemouseout() {
-        testFireEvent(Event.MOUSEOUT, pickList.advanced().getSourceListAreaElement(), "sourcemouseout");
+        testFireEvent(Event.MOUSEOUT, pickList.advanced().getSourceListContentAreaElement(), "sourcemouseout");
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnsourcemouseover() {
-        testFireEvent(Event.MOUSEOVER, pickList.advanced().getSourceListAreaElement(), "sourcemouseover");
+        testFireEvent(Event.MOUSEOVER, pickList.advanced().getSourceListContentAreaElement(), "sourcemouseover");
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnsourcemouseup() {
-        testFireEvent(Event.MOUSEUP, pickList.advanced().getSourceListAreaElement(), "sourcemouseup");
+        testFireEvent(Event.MOUSEUP, pickList.advanced().getSourceListContentAreaElement(), "sourcemouseup");
     }
 
     @Test
@@ -467,79 +467,79 @@ public class TestPickList extends AbstractWebDriverTest {
         testFireEvent(
             pickListAttributes,
             PickListAttributes.ontargetfocus,
-            new Actions(driver).click(pickList.advanced().getTargetListAreaElement())
-            .click(pickList.advanced().getSourceListAreaElement()).build());
+            new Actions(driver).click(pickList.advanced().getTargetListContentAreaElement())
+            .click(pickList.advanced().getSourceListContentAreaElement()).build());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOntargetclick() {
         testFireEvent(pickListAttributes, PickListAttributes.ontargetclick,
-            new Actions(driver).click(pickList.advanced().getTargetListAreaElement()).build());
+            new Actions(driver).click(pickList.advanced().getTargetListContentAreaElement()).build());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOntargetdblclick() {
-        testFireEvent(Event.DBLCLICK, pickList.advanced().getTargetListAreaElement(), "targetdblclick");
+        testFireEvent(Event.DBLCLICK, pickList.advanced().getTargetListContentAreaElement(), "targetdblclick");
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11322")
     public void testOntargetfocus() {
         testFireEvent(pickListAttributes, PickListAttributes.ontargetfocus,
-            new Actions(driver).click(pickList.advanced().getTargetListAreaElement()).build());
+            new Actions(driver).click(pickList.advanced().getTargetListContentAreaElement()).build());
     }
 
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     @Templates(value = "plain")
     public void testOntargetkeydown() {
-        testFireEvent(Event.KEYDOWN, pickList.advanced().getTargetListAreaElement(), "targetkeydown");
+        testFireEvent(Event.KEYDOWN, pickList.advanced().getTargetListContentAreaElement(), "targetkeydown");
     }
 
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     @Templates(value = "plain")
     public void testOntargetkeypress() {
-        testFireEvent(Event.KEYPRESS, pickList.advanced().getTargetListAreaElement(), "targetkeypress");
+        testFireEvent(Event.KEYPRESS, pickList.advanced().getTargetListContentAreaElement(), "targetkeypress");
     }
 
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     @Templates(value = "plain")
     public void testOntargetkeyup() {
-        testFireEvent(Event.KEYUP, pickList.advanced().getTargetListAreaElement(), "targetkeyup");
+        testFireEvent(Event.KEYUP, pickList.advanced().getTargetListContentAreaElement(), "targetkeyup");
     }
 
     @Test
     @Templates(value = "plain")
     public void testOntargetmousedown() {
-        testFireEvent(Event.MOUSEDOWN, pickList.advanced().getTargetListAreaElement(), "targetmousedown");
+        testFireEvent(Event.MOUSEDOWN, pickList.advanced().getTargetListContentAreaElement(), "targetmousedown");
     }
 
     @Test
     @Templates(value = "plain")
     public void testOntargetmousemove() {
-        testFireEvent(Event.MOUSEMOVE, pickList.advanced().getTargetListAreaElement(), "targetmousemove");
+        testFireEvent(Event.MOUSEMOVE, pickList.advanced().getTargetListContentAreaElement(), "targetmousemove");
     }
 
     @Test
     @Templates(value = "plain")
     public void testOntargetmouseout() {
-        testFireEvent(Event.MOUSEOUT, pickList.advanced().getTargetListAreaElement(), "targetmouseout");
+        testFireEvent(Event.MOUSEOUT, pickList.advanced().getTargetListContentAreaElement(), "targetmouseout");
     }
 
     @Test
     @Templates(value = "plain")
     public void testOntargetmouseover() {
-        testFireEvent(Event.MOUSEOVER, pickList.advanced().getTargetListAreaElement(), "targetmouseover");
+        testFireEvent(Event.MOUSEOVER, pickList.advanced().getTargetListContentAreaElement(), "targetmouseover");
     }
 
     @Test
     @Templates(value = "plain")
     public void testOntargetmouseup() {
-        testFireEvent(Event.MOUSEUP, pickList.advanced().getTargetListAreaElement(), "targetmouseup");
+        testFireEvent(Event.MOUSEUP, pickList.advanced().getTargetListContentAreaElement(), "targetmouseup");
     }
 
     @Test

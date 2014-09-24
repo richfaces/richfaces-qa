@@ -155,7 +155,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
         int testedValue = 600;
         int tolerance = 20;
         attributes.set(OrderingListAttributes.listHeight, testedValue);
-        assertEquals(Integer.valueOf(orderingList.advanced().getContentAreaElements().getCssValue("height").replace("px", "")), testedValue, tolerance);
+        assertEquals(Integer.valueOf(orderingList.advanced().getContentAreaElement().getCssValue("height").replace("px", "")), testedValue, tolerance);
     }
 
     @Test
@@ -164,7 +164,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
         int testedValue = 600;
         int tolerance = 20;
         attributes.set(OrderingListAttributes.listWidth, testedValue);
-        assertEquals(Integer.valueOf(orderingList.advanced().getContentAreaElements().getCssValue("width").replace("px", "")), testedValue, tolerance);
+        assertEquals(Integer.valueOf(orderingList.advanced().getContentAreaElement().getCssValue("width").replace("px", "")), testedValue, tolerance);
     }
 
     @Test
@@ -174,7 +174,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
         int tolerance = 10;
         attributes.set(OrderingListAttributes.maxListHeight, testedValue);
         attributes.set(OrderingListAttributes.listHeight, "");
-        assertEquals(Integer.valueOf(orderingList.advanced().getContentAreaElements().getCssValue("max-height").replace("px", "")), testedValue, tolerance);
+        assertEquals(Integer.valueOf(orderingList.advanced().getContentAreaElement().getCssValue("max-height").replace("px", "")), testedValue, tolerance);
     }
 
     @Test
@@ -184,7 +184,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
         int tolerance = 10;
         attributes.set(OrderingListAttributes.listHeight, "");
         attributes.set(OrderingListAttributes.minListHeight, testedValue);
-        assertEquals(Integer.valueOf(orderingList.advanced().getContentAreaElements().getCssValue("min-height").replace("px", "")), testedValue, tolerance);
+        assertEquals(Integer.valueOf(orderingList.advanced().getContentAreaElement().getCssValue("min-height").replace("px", "")), testedValue, tolerance);
     }
 
     @Test
@@ -207,20 +207,20 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     @Test
     @Templates(value = "plain")
     public void testOnchange() {
-        testFireEvent(Event.CHANGE, orderingList.advanced().getContentAreaElements());
+        testFireEvent(Event.CHANGE, orderingList.advanced().getContentAreaElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(attributes, OrderingListAttributes.onlistclick,
-            new Actions(driver).click(orderingList.advanced().getContentAreaElements()).build());
+            new Actions(driver).click(orderingList.advanced().getContentAreaElement()).build());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOndblclick() {
-        testFireEvent(Event.DBLCLICK, orderingList.advanced().getContentAreaElements());
+        testFireEvent(Event.DBLCLICK, orderingList.advanced().getContentAreaElement());
     }
 
     @Test
@@ -233,19 +233,19 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     @Test
     @Templates(value = "plain")
     public void testOnkeydown() {
-        testFireEvent(Event.KEYDOWN, orderingList.advanced().getContentAreaElements());
+        testFireEvent(Event.KEYDOWN, orderingList.advanced().getContentAreaElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeypress() {
-        testFireEvent(Event.KEYPRESS, orderingList.advanced().getContentAreaElements());
+        testFireEvent(Event.KEYPRESS, orderingList.advanced().getContentAreaElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeyup() {
-        testFireEvent(Event.KEYUP, orderingList.advanced().getContentAreaElements());
+        testFireEvent(Event.KEYUP, orderingList.advanced().getContentAreaElement());
     }
 
     @Test
@@ -311,31 +311,31 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     @Test
     @Templates(value = "plain")
     public void testOnmousedown() {
-        testFireEvent(Event.MOUSEDOWN, orderingList.advanced().getContentAreaElements());
+        testFireEvent(Event.MOUSEDOWN, orderingList.advanced().getContentAreaElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmousemove() {
-        testFireEvent(Event.MOUSEMOVE, orderingList.advanced().getContentAreaElements());
+        testFireEvent(Event.MOUSEMOVE, orderingList.advanced().getContentAreaElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseout() {
-        testFireEvent(Event.MOUSEOUT, orderingList.advanced().getContentAreaElements());
+        testFireEvent(Event.MOUSEOUT, orderingList.advanced().getContentAreaElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseover() {
-        testFireEvent(Event.MOUSEOVER, orderingList.advanced().getContentAreaElements());
+        testFireEvent(Event.MOUSEOVER, orderingList.advanced().getContentAreaElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseup() {
-        testFireEvent(Event.MOUSEUP, orderingList.advanced().getContentAreaElements());
+        testFireEvent(Event.MOUSEUP, orderingList.advanced().getContentAreaElement());
     }
 
     @Test
