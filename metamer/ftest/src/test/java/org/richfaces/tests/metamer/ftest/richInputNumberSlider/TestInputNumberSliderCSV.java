@@ -57,7 +57,7 @@ public class TestInputNumberSliderCSV extends AbstractNumberInputComponentValida
 
     @Test
     public void testMaxBySliding() {
-        tests.verifyMinBySliding(submitMethod, getWait());
+        tests.verifyMaxBySliding(submitMethod, getWait());
     }
 
     @Test
