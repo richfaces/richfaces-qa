@@ -29,13 +29,17 @@ import static org.testng.Assert.assertTrue;
 import java.net.URL;
 import java.util.List;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.inputNumberSpinner.RichFacesInputNumberSpinner;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 public class TestCustomizedPageFacets extends AbstractWebDriverTest {
@@ -61,7 +65,8 @@ public class TestCustomizedPageFacets extends AbstractWebDriverTest {
     public void testTopCustomizedPageFacet() {
         assertInitialState();
         // change page via customized page facet
-        new Actions(driver).moveToElement(listOfOptions.get(1)).click().build().perform();
+        Action selectPage2Action = new Actions(driver).moveToElement(listOfOptions.get(1)).click().build();
+        MetamerPage.waitRequest(selectPage2Action, WaitRequestType.XHR).perform();
 
         // assert that secondary custom facet was updated
         assertTrue(rfSpinner.getValue() == 2);
