@@ -62,7 +62,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </rich:column>
                 </f:facet>
 
-                <rich:column id="columnState" sortBy="#{fn:length(record.state)}" sortOrder="#{richColumnBean.sortOrder}">
+                <rich:column id="columnState" sortBy="#{fn:length(record.state)}" sortOrder="#{richColumnBean.sortOrder}" sortType="custom">
                     <f:facet name="header">State</f:facet>
                     <h:outputText id="state" value="#{record.state}" />
                 </rich:column>

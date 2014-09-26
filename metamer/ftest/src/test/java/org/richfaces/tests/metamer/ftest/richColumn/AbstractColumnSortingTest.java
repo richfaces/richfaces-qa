@@ -26,6 +26,7 @@ import static org.testng.Assert.assertEquals;
 
 import java.util.Collections;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
 import org.richfaces.component.SortOrder;
 import org.richfaces.tests.metamer.bean.rich.RichColumnBean;
@@ -45,19 +46,19 @@ public abstract class AbstractColumnSortingTest extends AbstractColumnTest {
 
         switch (sortOrder) {
             case ascending:
-                driver.findElement(By.id("beforeForm:sortOrderInput:0")).click();
+                Graphene.guardAjax(driver.findElement(By.id("beforeForm:sortOrderInput:0"))).click();
                 Collections.sort(capitals, RichColumnBean.STATE_NAME_LENGTH_COMPARATOR);
                 break;
             case descending:
-                driver.findElement(By.id("beforeForm:sortOrderInput:1")).click();
+                Graphene.guardAjax(driver.findElement(By.id("beforeForm:sortOrderInput:1"))).click();
                 Collections.sort(capitals, Collections.reverseOrder(RichColumnBean.STATE_NAME_LENGTH_COMPARATOR));
                 break;
             default:
-                driver.findElement(By.id("beforeForm:sortOrderInput:2")).click();
+                Graphene.guardAjax(driver.findElement(By.id("beforeForm:sortOrderInput:2"))).click();
                 break;
         }
         Capital actualCapital, expectedCapital;
-        for (int i = 0; i < capitals.size(); i++) {
+        for (int i = 0; i < 3; i++) {
             actualCapital = getTable().getRow(i);
             expectedCapital = capitals.get(i);
 
