@@ -97,26 +97,6 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
         super.testSortModeSingleReverse();
     }
 
-    @Test
-    @Templates(exclude = {"richExtendedDataTable", "uiRepeat"})
-    @Override
-    public void testSortModeSingleDoesntRememberOrder() {
-        super.testSortModeSingleDoesntRememberOrder();
-    }
-
-    @Test(groups = {"Future"})
-    @Templates(value = "richExtendedDataTable")
-    public void testSortModeSingleDoesntRememberOrderInEDT() {
-        super.testSortModeSingleDoesntRememberOrder();
-    }
-
-    @Test(groups = {"Future"})
-    @Templates(value = "uiRepeat")
-    @IssueTracking("https://issues.jboss.org/browse/RF-13690")
-    public void testSortModeSingleDoesntRememberOrderInUiRepeat() {
-        super.testSortModeSingleDoesntRememberOrder();
-    }
-
     @Test(groups = {"Future"})
     @Override
     @IssueTracking({"https://issues.jboss.org/browse/RF-9932",

@@ -66,11 +66,11 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
         sortByColumn(COLUMN_SEX);
         verifySortingByColumns("sex");
 
-        sortByColumn(COLUMN_NAME);
-        verifySortingByColumns("name");
-
         sortByColumn(COLUMN_NUMBER_OF_KIDS1);
         verifySortingByColumns("numberOfKids");
+
+        sortByColumn(COLUMN_TITLE);
+        verifySortingByColumns("title");
     }
 
     public void testSortModeSingleReverse() {
@@ -91,15 +91,6 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
         sortByColumn(COLUMN_NAME);
         sortByColumn(COLUMN_NAME);
         verifySortingByColumns("name-");
-    }
-
-    public void testSortModeSingleDoesntRememberOrder() {
-        dataTableAttributes.set(sortMode, SortMode.single);
-
-        sortByColumn(COLUMN_NAME);
-        sortByColumn(COLUMN_TITLE);
-        sortByColumn(COLUMN_NAME);
-        verifySortingByColumns("name");
     }
 
     public void testSortModeSingleRerenderAll() {
@@ -214,16 +205,16 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
 
     public void sortByColumn(int column) {
         switch (column) {
-            case 0:
+            case COLUMN_SEX:
                 getTable().getHeader().sortBySex(isBuiltIn);
                 break;
-            case 1:
+            case COLUMN_NAME:
                 getTable().getHeader().sortByName(isBuiltIn);
                 break;
-            case 2:
+            case COLUMN_TITLE:
                 getTable().getHeader().sortByTitle(isBuiltIn);
                 break;
-            case 3:
+            case COLUMN_NUMBER_OF_KIDS1:
                 getTable().getHeader().sortByNumberOfKids(isBuiltIn);
                 break;
             default:

@@ -58,19 +58,6 @@ public class TestExtendedDataTableSortingBuiltIn extends DataTableSortingTest {
         super.testSortModeSingleReverse();
     }
 
-    @Test
-    @Templates(exclude = "richExtendedDataTable")
-    @Override
-    public void testSortModeSingleDoesntRememberOrder() {
-        super.testSortModeSingleDoesntRememberOrder();
-    }
-
-    @Test(groups = "Future")
-    @Templates(value = "richExtendedDataTable")
-    public void testSortModeSingleDoesntRememberOrderInEDT() {
-        super.testSortModeSingleDoesntRememberOrder();
-    }
-
     @Test(groups = { "Future" })
     @Override
     @IssueTracking("https://issues.jboss.org/browse/RF-9932 http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790")

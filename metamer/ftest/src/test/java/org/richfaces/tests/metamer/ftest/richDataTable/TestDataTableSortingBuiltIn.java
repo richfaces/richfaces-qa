@@ -6,7 +6,6 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SortingDT;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -41,12 +40,6 @@ public class TestDataTableSortingBuiltIn extends DataTableSortingTest {
     @Override
     public void testSortModeSingleReverse() {
         super.testSortModeSingleReverse();
-    }
-
-    @Test
-    @Override
-    public void testSortModeSingleDoesntRememberOrder() {
-        super.testSortModeSingleDoesntRememberOrder();
     }
 
     @Test
