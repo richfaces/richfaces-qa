@@ -24,10 +24,11 @@ package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
 
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SortingEDT;
 import org.testng.annotations.Test;
 
@@ -64,9 +65,16 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
     }
 
     @Test(groups = {"Future"})
-    @Override
-    public void testSortModeSingleDoesntRememberOrder() {
-        super.testSortModeSingleDoesntRememberOrder();
+    @Templates(value = "richExtendedDataTable")
+    public void testSortModeSingleReverseInEDT() {
+        super.testSortModeSingleReverse();
+    }
+
+    @Test(groups = {"Future"})
+    @Templates(value = "uiRepeat")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13690")
+    public void testSortModeSingleReverseInUiRepeat() {
+        super.testSortModeSingleReverse();
     }
 
     @Test(groups = {"Future"})
