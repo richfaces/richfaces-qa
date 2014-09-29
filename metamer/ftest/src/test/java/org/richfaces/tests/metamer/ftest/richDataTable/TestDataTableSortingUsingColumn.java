@@ -63,12 +63,6 @@ public class TestDataTableSortingUsingColumn extends DataTableSortingTest {
         super.testSortModeSingleReverse();
     }
 
-    @Test
-    @Override
-    public void testSortModeSingleDoesntRememberOrder() {
-        super.testSortModeSingleDoesntRememberOrder();
-    }
-
     @Test(groups = {"Future"})
     @Override
     @IssueTracking({"https://issues.jboss.org/browse/RF-9932",
