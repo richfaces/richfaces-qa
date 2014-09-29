@@ -181,7 +181,7 @@ public class VersionBean {
         String result = null;
 
         try {
-            result = getJBossAS7VersionInfo();
+            result = getJBossVersionInfo();
         } catch (FailToRetrieveInfo e) {
             result = e.getMessage();
         }
@@ -245,13 +245,20 @@ public class VersionBean {
         return buffer.toString();
     }
 
-    public static String getJBossAS7VersionInfo() {
+    public static String getJBossVersionInfo() {
+        // check if it is one of JBoss-family servers (JBoss AS, WildFly, EAP)
         try {
             Class.forName("org.jboss.as.version.Version");
         } catch (ClassNotFoundException e) {
             return null;
         }
-        return "JBoss AS " + org.jboss.as.version.Version.AS_VERSION;
+
+        String serverVersion = org.jboss.as.version.Version.AS_VERSION;
+        if (serverVersion.startsWith("7")) {
+            return "JBoss AS " + serverVersion;
+        } else {
+            return "WildFly " + serverVersion;
+        }
     }
 
     private static class JBossAS6VersionInfoObtainer extends InfoObtainer {
