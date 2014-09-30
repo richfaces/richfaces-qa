@@ -35,7 +35,6 @@ import javax.faces.event.PhaseId;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
@@ -128,7 +127,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
             .apply(driver), "Inplace select should have class metamer-ftest-class.");
     }
 
-    @Test(groups = {"smoke"})
+    @Test(groups = { "smoke" })
     @RegressionTest("https://issues.jboss.org/browse/RF-11227")
     public void testClick() {
         select.advanced().switchToEditingState();
@@ -218,13 +217,13 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
     @Test
     public void testEditEvent() {
-        inplaceSelectAttributes.set(InplaceSelectAttributes.editEvent, "mouseup");
-        try {
-            select.advanced().switchToEditingState();
-        } catch (TimeoutException e) {// ok
-        }
+        inplaceSelectAttributes.set(InplaceSelectAttributes.editEvent, Event.MOUSEUP);
+        // trigger mouse down, move and then mouse up on different element, using page fragment results in click
+        new Actions(driver).clickAndHold(select.advanced().getRootElement())
+            .moveToElement(driver.findElement(By.id("showUiDebug"))).release().build().perform();
+
         assertNotVisible(globalPopup, "Popup should not be displayed.");
-        select.advanced().setEditByEvent(Event.MOUSEUP);
+        select.advanced().setEditByEvent(Event.CLICK);
         select.advanced().switchToEditingState();
         assertVisible(globalPopup, "Popup should be displayed.");
     }
