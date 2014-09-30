@@ -22,6 +22,7 @@ package org.richfaces.tests.metamer.ftest.richEditor;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
+import static org.jboss.arquillian.graphene.Graphene.waitAjax;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -177,6 +178,7 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
 
         page.getEditor().type("even more text!");
         guardAjax(page.getA4jButton()).click();
+        waitAjax(driver).until().element(page.getOutput()).text().contains("even more text!");
         assertFalse((Boolean) executeJS("return RichFaces.$('" + getEditorId() + "').isDirty()"));
     }
 
