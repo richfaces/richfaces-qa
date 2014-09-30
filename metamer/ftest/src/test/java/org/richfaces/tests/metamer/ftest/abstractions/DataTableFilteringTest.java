@@ -80,9 +80,9 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
             } else {
                 getTable().getHeader().getFilterNameInput().clear();
             }
-            waiting(500);
+            waiting(800);
             getTable().getHeader().filterName(filterName, isBuiltIn);
-            waiting(500);
+            waiting(800);
             filterEmployee.name = filterName;
             verifyFiltering();
         }
