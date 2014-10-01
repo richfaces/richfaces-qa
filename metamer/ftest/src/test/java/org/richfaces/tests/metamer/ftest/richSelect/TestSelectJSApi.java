@@ -32,7 +32,6 @@ import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.select.RichFacesSelect;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -55,8 +54,6 @@ public class TestSelectJSApi extends AbstractWebDriverTest {
     private TextInputComponentImpl value;
     @FindBy(css = "div[id$=select]")
     private RichFacesSelect select;
-    @FindBy(css = "span[id$=output]")
-    private WebElement output;
 
     @Override
     public URL getTestUrl() {
@@ -74,12 +71,10 @@ public class TestSelectJSApi extends AbstractWebDriverTest {
         Assert.assertEquals(getValue(), "Hawaii");
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-13863")
+    @Test
     public void testSetValue() {
         setValueButton.click();// sets value to Arizona
         Assert.assertEquals(select.advanced().getInput().getStringValue(), "Arizona");
-        Assert.assertEquals(output.getText(), "Arizona");
     }
 
     @Test
