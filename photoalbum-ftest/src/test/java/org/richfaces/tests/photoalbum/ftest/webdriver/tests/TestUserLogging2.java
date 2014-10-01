@@ -19,49 +19,27 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.photoalbum.ftest.webdriver.fragments;
+package org.richfaces.tests.photoalbum.ftest.webdriver.tests;
 
-import static org.testng.Assert.assertTrue;
-
-import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.richfaces.fragment.common.Utils;
-import org.richfaces.fragment.notify.RichFacesNotifyMessage;
+import org.testng.annotations.Test;
 
 /**
- *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class ErrorPanel extends RichFacesNotifyMessage {
+public class TestUserLogging2 extends AbstractPhotoalbumTest {
 
-    @FindByJQuery(".rf-ntf-ico")
-    private WebElement icon;
-
-    @Drone
-    private WebDriver browser;
-
-    public void checkAll(String contentStartsWith) {
-        checkContent(contentStartsWith);
-        checkContainsWarning();
-        checkCloseWithControls();
-    }
-
-    public void checkCloseWithControls() {
-        close();
-        advanced().waitUntilMessageIsNotVisible().perform();
-    }
-
-    public void checkContainsWarning() {
-        assertTrue(Utils.isVisible(icon));
-    }
-
-    public void checkContent(String contentContains) {
-        assertTrue(getContentText().contains(contentContains));
-    }
-
-    public String getContentText() {
-        return advanced().getRootElement().getText();
+    /**
+    * Removed from TestUserLogging, cannot get rid of G+ in cache
+    */
+    @Test
+    public void testLoginUser_loginWithSocials_logout() {
+        page.login("amarkhel", "12345");
+        page.checkUserLogged("amarkhel", true, false, false);
+        page.getHeaderPanel().loginToFB();
+        page.checkUserLogged("amarkhel", true, true, false);
+        page.getHeaderPanel().loginToGPlus();
+        page.checkUserLogged("amarkhel", true, true, true);
+        page.logout();
+        page.checkNotLogged();
     }
 }

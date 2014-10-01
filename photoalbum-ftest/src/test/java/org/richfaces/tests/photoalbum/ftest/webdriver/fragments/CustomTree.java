@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-
 package org.richfaces.tests.photoalbum.ftest.webdriver.fragments;
 
 import java.util.Collections;
@@ -34,16 +33,26 @@ import org.richfaces.fragment.tree.Tree.TreeNode;
 /**
  * Custom tree
  *
- * @author Jiri Stefek <jstefek@redhat.com>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class CustomTree extends RichFacesTree {
 
     @FindByJQuery("> .rf-tr-nd")
     private List<CustomNode> childNodes;
 
+    private final AdvancedOwnTreeInteractionsImpl interactions = new AdvancedOwnTreeInteractionsImpl();
+
     @Override
-    protected List<? extends TreeNode> getChildNodes() {
-        return Collections.unmodifiableList(childNodes);
+    public AdvancedTreeInteractionsImpl advanced() {
+        return interactions;
+    }
+
+    private class AdvancedOwnTreeInteractionsImpl extends AdvancedTreeInteractionsImpl {
+
+        @Override
+        protected List<? extends TreeNode> getChildNodes() {
+            return Collections.unmodifiableList(childNodes);
+        }
     }
 
     public static class CustomNode extends RichFacesTreeNode {
@@ -53,14 +62,24 @@ public class CustomTree extends RichFacesTree {
         @FindByJQuery("> .rf-tr-nd")
         private List<CustomNode> childNodes;
 
-        @Override
-        protected List<? extends TreeNode> getChildNodes() {
-            return Collections.unmodifiableList(childNodes);
-        }
+        private final AdvancedOwnNodeInteractions interactions = new AdvancedOwnNodeInteractions();
 
         @Override
-        protected WebElement getCorrectElementForInteraction() {
-            return elementForInteraction;
+        public AdvancedNodeInteractionsImpl advanced() {
+            return interactions;
+        }
+
+        private class AdvancedOwnNodeInteractions extends AdvancedNodeInteractionsImpl {
+
+            @Override
+            protected List<? extends TreeNode> getChildNodes() {
+                return Collections.unmodifiableList(childNodes);
+            }
+
+            @Override
+            protected WebElement getCorrectElementForInteraction() {
+                return elementForInteraction;
+            }
         }
     }
 }

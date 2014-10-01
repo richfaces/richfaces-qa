@@ -31,18 +31,18 @@ import org.richfaces.fragment.common.CheckboxInputComponentImpl;
 import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.fragment.panel.TextualFragmentPart;
 import org.richfaces.fragment.popupPanel.RichFacesPopupPanel;
-import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.AddShelfPanel.Body;
+import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.AddAlbumGroupPanel.Body;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.HowItWorksPopupPanel.Controls;
 
 /**
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class AddShelfPanel extends RichFacesPopupPanel<TextualFragmentPart, Controls, Body> {
+public class AddAlbumGroupPanel extends RichFacesPopupPanel<TextualFragmentPart, Controls, Body> {
 
-    public void addShelf(String shelfName, boolean shared) {
+    public void addGroup(String groupName, boolean shared) {
         Body bodyContent = getBodyContent();
-        bodyContent.getInput().clear().sendKeys(shelfName);
+        bodyContent.getInput().clear().sendKeys(groupName);
         if (shared) {
             bodyContent.getShared().check();
         } else {
@@ -60,7 +60,7 @@ public class AddShelfPanel extends RichFacesPopupPanel<TextualFragmentPart, Cont
     public void check() {
         assertEquals(getBodyContent().getNameText().getText(), "Name");
         assertEquals(getBodyContent().getSharedText().getText(), "Shared");
-        assertEquals(getHeaderContent().getText(), "Add shelf");
+        assertEquals(getHeaderContent().getText(), "Add group");
     }
 
     public void close() {
@@ -106,6 +106,5 @@ public class AddShelfPanel extends RichFacesPopupPanel<TextualFragmentPart, Cont
         public WebElement getSharedText() {
             return sharedText;
         }
-
     }
 }

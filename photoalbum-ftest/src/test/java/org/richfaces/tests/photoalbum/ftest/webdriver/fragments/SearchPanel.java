@@ -93,10 +93,9 @@ public class SearchPanel {
     }
 
     private void openSearchOptions() {
-        if (Utils.isVisible(searchOptionsLink)) {
-            searchOptionsLink.click();
-        }
-        Graphene.waitGui().until().element(searchOptionsLink).is().not().visible();
+        Graphene.waitAjax().until().element(searchOptionsLink).is().visible();
+        searchOptionsLink.click();
+        Graphene.waitAjax().until().element(searchOptionsLink).is().not().visible();
         Graphene.waitGui().until().element(searchHideOptionsLink).is().visible();
         Graphene.waitGui().until().element(searchOptions.getRoot()).is().visible();
     }
@@ -222,7 +221,7 @@ public class SearchPanel {
             PhotoalbumUtils.checkVisible(bgImage, searchINDiv, searchFORDiv);
             assertTrue(bgImage.getAttribute("src").contains("img/search/search_option_bg.png"));
             assertTrue(searchINDiv.getText().trim().contains("Shared"));
-            assertTrue(searchFORDiv.getText().trim().contains("Shelves"));
+            assertTrue(searchFORDiv.getText().trim().contains("Groups"));
             assertTrue(searchFORDiv.getText().trim().contains("Albums"));
             assertTrue(searchFORDiv.getText().trim().contains("Images"));
             assertTrue(searchFORDiv.getText().trim().contains("Users"));

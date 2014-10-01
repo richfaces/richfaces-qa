@@ -27,16 +27,19 @@ import static org.testng.Assert.assertTrue;
 import java.util.Collections;
 import java.util.List;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.fragment.Root;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.editor.RichFacesEditor;
+import org.richfaces.tests.photoalbum.ftest.webdriver.utils.PhotoalbumUtils;
 
 /**
- *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class PhotoView {
@@ -49,7 +52,7 @@ public class PhotoView {
     @FindBy(css = "a.slideshow-link")
     private WebElement slideShowLink;
 
-    @FindByJQuery("a:has(img[src='img/icons/help_sign.png']):eq(1)")
+    @FindByJQuery("a:contains(?):last")
     private WebElement slideShowLinkHelp;
     @FindBy(css = "div[id$='imagesTable']")
     private ImagesScroller imagesScroller;
@@ -110,7 +113,7 @@ public class PhotoView {
 
     public static class ImagesScroller {
 
-        @FindByJQuery("a:last")
+        @FindByJQuery("a:contains(?):last")
         private WebElement imageScrollerHelp;
         @FindBy(css = "span.image-scroller-left-arrow img")
         private WebElement scrollLeftImage;
@@ -199,8 +202,8 @@ public class PhotoView {
         private WebElement panelName;
         @FindByJQuery("> div.comment")
         private List<Comment> comments;
-        @FindByJQuery(".rf-ed")
-        private RichFacesEditor addCommentEditor;
+        @FindByJQuery(".rf-ed[id$='editor2']")
+        private CustomEditor addCommentEditor;
         @FindBy(css = ".photoalbumButton input")
         private WebElement addCommentButton;
 
@@ -208,8 +211,10 @@ public class PhotoView {
             assertEquals(panelName.getText(), "Comments");
         }
 
-        public void addComment(String comment) {
+        public void addComment(final String comment) {
             addCommentEditor.type(comment);
+            //the page gets broken without the scrolling
+            PhotoalbumUtils.scrollToElement(getAddCommentButton());
             Graphene.guardAjax(getAddCommentButton()).click();
         }
 
@@ -236,7 +241,7 @@ public class PhotoView {
             @FindByJQuery("div.comment-deleteLink > span.additional-info-text")
             private WebElement additionalInfo;
 
-            public void checkAll(String info, String commentText, String userImage, String userName) {
+            public void checkAll(Object info, String commentText, String userImage, String userName) throws AssertionError {
                 checkAdditionalInfo(info);
                 checkCommentText(commentText);
                 checkImageBackground();
@@ -244,32 +249,73 @@ public class PhotoView {
                 checkUserName(userName);
             }
 
-            private void checkAdditionalInfo(String info) {
-                assertEquals(this.additionalInfo.getText(), info);
+            private void checkAdditionalInfo(Object info) {
+                assertEquals(this.additionalInfo.getText(), info, "Additional info");
             }
 
             private void checkCommentText(String commentText) {
-                assertEquals(this.commentText.getText(), commentText);
+                assertEquals(this.commentText.getText(), commentText, "Comment text");
             }
 
             public void checkIfUsersComment() {
-                assertTrue(Utils.isVisible(deleteLink));
+                assertTrue(Utils.isVisible(deleteLink), "Delete link is not visible.");
             }
 
             private void checkImageBackground() {
-                assertTrue(imageBackground.getAttribute("src").contains("/img/shell/frame_photo_200.png"));
+                assertTrue(imageBackground.getAttribute("src").contains("/img/shell/frame_photo_200.png"), "Image bg");
             }
 
             private void checkUserImage(String userImage) {
-                assertTrue(this.userImage.getAttribute("src").contains(userImage));
+                assertTrue(this.userImage.getAttribute("src").contains(userImage), "User Image");
             }
 
             private void checkUserName(String userName) {
-                assertEquals(this.userName.getText(), userName);
+                assertEquals(this.userName.getText(), userName, "User name");
             }
 
             public void delete() {
+                //the page gets broken without the scrolling
+                PhotoalbumUtils.scrollToElement(deleteLink);
                 Graphene.guardAjax(deleteLink).click();
+            }
+
+            public WebElement getUserImage() {
+                return userImage;
+            }
+        }
+    }
+
+    public static class CustomEditor extends RichFacesEditor {
+
+        @Drone
+        private WebDriver browser;
+        @FindBy(tagName = "iframe")
+        private WebElement frame;
+
+        @Override
+        public String getText() {
+            try {
+                return switchToEditorActiveArea().getText();
+            } finally {
+                browser.switchTo().defaultContent();
+            }
+        }
+
+        private WebElement switchToEditorActiveArea() {
+            browser.switchTo().frame(frame);
+            WebElement activeArea = browser.findElement(By.tagName("body"));
+            activeArea.click();
+            return activeArea;
+        }
+
+        @Override
+        public void type(String text) {
+            try {
+                switchToEditorActiveArea().sendKeys("");
+                // needs to do both ways, various JS events then do not work otherwise
+                getExecutor().executeScript(String.format("document.body.textContent=document.body.textContent + '%s'", text));
+            } finally {
+                browser.switchTo().defaultContent();
             }
         }
     }

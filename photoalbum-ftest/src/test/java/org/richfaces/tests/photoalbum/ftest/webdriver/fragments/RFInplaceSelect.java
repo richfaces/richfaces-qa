@@ -105,7 +105,7 @@ public class RFInplaceSelect implements InplaceSelect {
         WebElement optionToBeSelected = picker.pick(advanced().getOptions());
         optionToBeSelected.click();
         if (isSaveOnSelect() && !isShowControlls()) {
-            textInput.advanced().trigger("blur");
+            textInput.advanced().trigger("selectitem");
             waitForPopupHide();
         }
         return new ConfirmOrCancelImpl();

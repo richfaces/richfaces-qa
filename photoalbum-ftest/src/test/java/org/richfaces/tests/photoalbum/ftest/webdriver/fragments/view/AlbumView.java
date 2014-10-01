@@ -51,9 +51,6 @@ import com.google.common.collect.Lists;
  */
 public class AlbumView {
 
-    @Root
-    private WebElement root;
-
     @FindBy(className = "album-header-table")
     private AlbumHeader albumHeader;
     @FindBy(css = ".album-header-table + div")
@@ -61,7 +58,7 @@ public class AlbumView {
 
     @FindBy(className = "rf-insl")
     private RichFacesInputNumberSlider slider;
-    @FindByJQuery("div a:has(img[src='img/icons/help_sign.png'])")
+    @FindByJQuery("a:contains(?):eq(0)")
     private WebElement sliderHelpLink;
 
     @FindBy(css = "a.slideshow-link")
@@ -118,7 +115,7 @@ public class AlbumView {
     }
 
     public List<PhotoInfo> getPhotos() {
-        return Collections.unmodifiableList(photos);
+        return photos;
     }
 
     public WebElement getSlideShowLink() {
@@ -159,9 +156,7 @@ public class AlbumView {
             checkName(info);
             checkAdditionalInfo(additionalInfo);
             assertEquals(getLinks().size(), linkText.length);
-            for (int i = 0; i < linkText.length; i++) {
-                assertEquals(getLinks().get(i).getText(), linkText[i]);
-            }
+            assertEquals(PhotoalbumUtils.getStringsFromElements(links), Lists.newArrayList(linkText));
         }
 
         public void checkName(String name) {
@@ -228,20 +223,20 @@ public class AlbumView {
             return photoView;
         }
 
-        public void checkAll(int photoSize, String name, String data) {
+        public void checkAll(int photoSize, String name, Object data) {
             checkAll(photoSize, name, data, NO_OWNER);
         }
 
-        public void checkAll(int photoSize, String name, String data, String secondData) {
+        public void checkAll(int photoSize, String name, Object data, Object secondData) {
             checkAll(photoSize, name, data, secondData, UNKNOWN_IMG_SRC);
         }
 
-        public void checkAll(int photoSize, String name, String data, String secondData, String imageSource) {
+        public void checkAll(int photoSize, String name, Object data, Object secondData, String imageSource) {
             checkBackgroundPhoto(photoSize);
             checkPhotoName(name);
             checkFirstData(data);
             if (!secondData.equals(NO_OWNER)) {
-                checkSecondaData(secondData);
+                checkSecondData(secondData);
             } else {
                 PhotoalbumUtils.checkNotVisible(this.secondData);
             }
@@ -250,7 +245,7 @@ public class AlbumView {
             }
         }
 
-        private void checkSecondaData(String authorName) {
+        private void checkSecondData(Object authorName) {
             assertEquals(secondData.getText(), authorName);
         }
 
@@ -262,7 +257,7 @@ public class AlbumView {
             assertTrue(photoImage.getAttribute("src").contains(photoSrc));
         }
 
-        private void checkFirstData(String data) {
+        private void checkFirstData(Object data) {
             assertEquals(firstData.getText(), data);
         }
 
@@ -272,7 +267,9 @@ public class AlbumView {
 
         public PhotoView open() {
             Graphene.guardAjax(link).click();
-            return getPhotoView();
+            PhotoView pw = getPhotoView();
+            Graphene.waitAjax().until().element(pw.getPhoto()).is().visible();
+            return pw;
         }
     }
 }

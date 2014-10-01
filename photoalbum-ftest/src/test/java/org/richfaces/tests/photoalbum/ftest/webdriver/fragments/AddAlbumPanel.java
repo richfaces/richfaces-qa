@@ -40,9 +40,9 @@ import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.HowItWorksPopupP
  */
 public class AddAlbumPanel extends RichFacesPopupPanel<TextualFragmentPart, Controls, Body> {
 
-    public void addAlbum(String shelf, String albumName) {
+    public void addAlbum(String group, String albumName) {
         Body bodyContent = getBodyContent();
-        bodyContent.getShelfSelect().select(shelf).confirm();
+        bodyContent.getGroupSelect().select(group).confirm();
         bodyContent.getAlbumNameInput().clear().sendKeys(albumName);
         Graphene.guardAjax(bodyContent.getSaveButton()).click();
         advanced().waitUntilPopupIsNotVisible().perform();
@@ -55,7 +55,7 @@ public class AddAlbumPanel extends RichFacesPopupPanel<TextualFragmentPart, Cont
 
     public void check() {
         assertEquals(getBodyContent().getNameText().getText(), "Name");
-        assertEquals(getBodyContent().getShelfNameText().getText(), "Shelf");
+        assertEquals(getBodyContent().getGroupNameText().getText(), "Group");
         assertEquals(getHeaderContent().getText(), "Add album");
     }
 
@@ -71,13 +71,13 @@ public class AddAlbumPanel extends RichFacesPopupPanel<TextualFragmentPart, Cont
         @FindByJQuery("div:contains('Cancel') + input:visible")
         private WebElement cancelButton;
         @FindByJQuery("td.name:eq(0)")
-        private WebElement shelfNameText;
+        private WebElement groupNameText;
         @FindByJQuery("td.name:eq(1)")
         private WebElement nameText;
         @FindBy(css = "input[id$='albumName']")
         private TextInputComponentImpl albumNameInput;
         @FindBy(css = ".rf-is")
-        private RFInplaceSelect shelfSelect;// FIXME: replace with RichFacesInplaceSelect after method saveOnSelect fixed.
+        private RFInplaceSelect groupSelect;
 
         public TextInputComponentImpl getAlbumNameInput() {
             return albumNameInput;
@@ -95,12 +95,12 @@ public class AddAlbumPanel extends RichFacesPopupPanel<TextualFragmentPart, Cont
             return saveButton;
         }
 
-        public WebElement getShelfNameText() {
-            return shelfNameText;
+        public WebElement getGroupNameText() {
+            return groupNameText;
         }
 
-        public InplaceSelect getShelfSelect() {
-            return shelfSelect;
+        public InplaceSelect getGroupSelect() {
+            return groupSelect;
         }
     }
 }

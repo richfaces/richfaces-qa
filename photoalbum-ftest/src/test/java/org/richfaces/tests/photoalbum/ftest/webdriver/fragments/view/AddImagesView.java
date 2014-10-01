@@ -21,11 +21,16 @@
  *******************************************************************************/
 package org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.fileUpload.RichFacesFileUpload;
 import org.richfaces.fragment.select.RichFacesSelect;
+import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.view.AlbumView.PhotoInfo;
 import org.richfaces.tests.photoalbum.ftest.webdriver.utils.PhotoalbumUtils;
 
 /**
@@ -35,17 +40,23 @@ public class AddImagesView {
 
     @FindBy(className = "rf-fu")
     private RichFacesFileUpload fileUpload;
-    @FindByJQuery("a:eq(1)")
+    @FindByJQuery("a:contains(?):eq(1)")
     private WebElement fileUploadHelpLink;
 
     @FindBy(className = "rf-sel")
     private RichFacesSelect select;
-    @FindByJQuery("a:eq(0)")
-    private WebElement selectHelpLink;
+    @FindByJQuery("a:contains(?):eq(0)")
+    private WebElement buttonHelpLink;
+    @FindBy(css = "[id$=filesPanel]")
+    private UploadedFilesPanel uploadedFilesPanel;
 
     public void checkAllVisible() {
         PhotoalbumUtils.checkVisible(fileUploadHelpLink, fileUpload.advanced().getRootElement(),
-            selectHelpLink, select.advanced().getRootElement());
+            buttonHelpLink, select.advanced().getRootElement());
+    }
+
+    public WebElement getButtonHelpLink() {
+        return buttonHelpLink;
     }
 
     public RichFacesFileUpload getFileUpload() {
@@ -60,7 +71,29 @@ public class AddImagesView {
         return select;
     }
 
-    public WebElement getSelectHelpLink() {
-        return selectHelpLink;
+    public UploadedFilesPanel getUploadedFilesPanel() {
+        return uploadedFilesPanel;
+    }
+
+    public static class UploadedFilesPanel {
+
+        @FindBy(css = "[id$=completeLabel]")
+        private WebElement completeLabel;
+        @FindBy(css = ".preview_box_photo_120")
+        private List<PhotoInfo> uploadedPhotos;
+        @FindByJQuery("span:contains('Successfully uploaded images:')")
+        private WebElement uploadedImagesLabel;
+
+        public WebElement getCompleteLabel() {
+            return completeLabel;
+        }
+
+        public List<PhotoInfo> getUploadedPhotos() {
+            return Collections.unmodifiableList(uploadedPhotos);
+        }
+
+        public boolean uploadedImagesLabelIsVisible() {
+            return Utils.isVisible(uploadedImagesLabel);
+        }
     }
 }

@@ -55,22 +55,22 @@ public class GroupView {
     @FindBy(css = "div.preview_box_album_120")
     private List<AlbumPreview> albumPreviews;
 
-    public void checkAll(String headerInfo, String headerAdditionalInfo, String shelfInfo, boolean showShelfLinkVisible) {
-        GroupView.this.checkGroupHeader(headerInfo, headerAdditionalInfo, showShelfLinkVisible);
-        checkGroupDescription(shelfInfo);
+    public void checkAll(String headerInfo, String headerAdditionalInfo, String groupInfo, boolean showGroupLinkVisible) {
+        GroupView.this.checkGroupHeader(headerInfo, headerAdditionalInfo, showGroupLinkVisible);
+        checkGroupDescription(groupInfo);
     }
 
     public void checkUserOwnsGroup(boolean owns) {
-        ArrayList<WebElement> ownShelfLinks = Lists.newArrayList(groupHeader.getDeleteShelfLink(), groupHeader.getEditGroupPropertiesLink());
+        ArrayList<WebElement> ownGroupLinks = Lists.newArrayList(groupHeader.getDeleteAlbumGroupLink(), groupHeader.getEditAlbumGroupPropertiesLink());
         if (owns) {
-            PhotoalbumUtils.checkVisible(ownShelfLinks);
+            PhotoalbumUtils.checkVisible(ownGroupLinks);
         } else {
-            PhotoalbumUtils.checkNotVisible(ownShelfLinks);
+            PhotoalbumUtils.checkNotVisible(ownGroupLinks);
         }
     }
 
-    public void checkGroupHeader(String headerInfo, String headerAdditionalInfo, boolean showShelfLinkVisible) {
-        groupHeader.checkAll(headerInfo, headerAdditionalInfo, showShelfLinkVisible);
+    public void checkGroupHeader(String headerInfo, String headerAdditionalInfo, boolean showGroupLinkVisible) {
+        groupHeader.checkAll(headerInfo, headerAdditionalInfo, showGroupLinkVisible);
     }
 
     public void checkGroupHeader(String headerInfo, String headerAdditionalInfo) {
@@ -100,18 +100,23 @@ public class GroupView {
 
     public static class GroupHeader {
 
-        @FindBy(css = "td > h1")
-        private WebElement name;
-        @FindBy(css = "td > h1 .rf-ii")
-        private RichFacesInplaceInput input;
         @FindByJQuery(".additional-info-text:not('a')")
         private WebElement additionalInfo;
-        @FindByJQuery(".shelf-header-table-col2 a:contains('View album group')")
-        private WebElement viewShelfLink;
-        @FindByJQuery(".shelf-header-table-col2 a:contains('Edit shelf properties')")
-        private WebElement editShelfPropertiesLink;
-        @FindByJQuery(".shelf-header-table-col2 a:contains('Delete shelf')")
-        private WebElement deleteShelfLink;
+        @FindByJQuery(".shelf-header-table-col2 a:contains('Delete album group')")
+        private WebElement deleteAlbumGroupLink;
+        @FindByJQuery(".shelf-header-table-col2 a:contains('Edit album group properties')")
+        private WebElement editAlbumGroupPropertiesLink;
+        @FindBy(css = "td > h1 .rf-ii")
+        private RichFacesInplaceInput input;
+        @FindBy(css = "td > h1")
+        private WebElement name;
+        @FindByJQuery(value = ".shelf-header-table-col2 a:contains('View album group')")
+        private WebElement viewGroupLink;
+
+        public void checkAdditionalInfo(String additionalInfo) {
+            String val = this.getAdditionalInfo().getText().trim();
+            assertTrue(val.matches(additionalInfo), String.format("Was <%s>, expected <%s%s", val, additionalInfo, '>'));
+        }
 
         public void checkAll(String name, String additionalInfo, boolean visible) {
             checkAdditionalInfo(additionalInfo);
@@ -119,29 +124,24 @@ public class GroupView {
             checkViewGroupLinkVisible(visible);
         }
 
-        public void checkViewGroupLinkVisible(boolean visible) {
-            assertEquals(Utils.isVisible(viewShelfLink), visible);
-        }
-
         public void checkName(String name) {
             assertEquals(this.name.getText().trim(), name);
         }
 
-        public void checkAdditionalInfo(String additionalInfo) {
-            assertTrue(this.getAdditionalInfo().getText().trim().matches(additionalInfo),
-                "Was " + this.getAdditionalInfo().getText().trim() + " , expected " + additionalInfo);
+        public void checkViewGroupLinkVisible(boolean visible) {
+            assertEquals(Utils.isVisible(viewGroupLink), visible);
         }
 
         public WebElement getAdditionalInfo() {
             return additionalInfo;
         }
 
-        public WebElement getDeleteShelfLink() {
-            return deleteShelfLink;
+        public WebElement getDeleteAlbumGroupLink() {
+            return deleteAlbumGroupLink;
         }
 
-        public WebElement getEditGroupPropertiesLink() {
-            return editShelfPropertiesLink;
+        public WebElement getEditAlbumGroupPropertiesLink() {
+            return editAlbumGroupPropertiesLink;
         }
 
         public RichFacesInplaceInput getInput() {
@@ -153,7 +153,7 @@ public class GroupView {
         }
 
         public WebElement getViewGroupLink() {
-            return viewShelfLink;
+            return viewGroupLink;
         }
     }
 
@@ -188,11 +188,11 @@ public class GroupView {
             return getAlbumView();
         }
 
-        public void checkAll(String albumName, String albumData) {
+        public void checkAll(String albumName, Object albumData) {
             checkAll(albumName, albumData, NO_OWNER);
         }
 
-        public void checkAll(String albumName, String albumData, String albumOwner) {
+        public void checkAll(String albumName, Object albumData, String albumOwner) {
             checkAlbumBackGroundImage();
             checkAlbumData(albumData);
             checkAlbumName(albumName);
@@ -203,13 +203,7 @@ public class GroupView {
             assertTrue(albumBackgroundImage.isDisplayed());
         }
 
-//        private void checkAlbumCoverImage(String imageSrc) {
-//            assertTrue(albumCoverImage.isDisplayed());
-//            if (!imageSrc.equals(UNKNOWN_IMG_SRC)) {
-//                assertTrue(albumCoverImage.getAttribute("src").contains(imageSrc));
-//            }
-//        }
-        private void checkAlbumData(String data) {
+        private void checkAlbumData(Object data) {
             assertEquals(albumData.getText(), data);
         }
 

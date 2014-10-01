@@ -19,49 +19,36 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.photoalbum.ftest.webdriver.fragments;
+package org.richfaces.tests.photoalbum.ftest.webdriver.pages;
 
-import static org.testng.Assert.assertTrue;
-
-import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.openqa.selenium.WebDriver;
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
-import org.richfaces.fragment.common.Utils;
-import org.richfaces.fragment.notify.RichFacesNotifyMessage;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.ClearType;
+import org.richfaces.fragment.common.TextInputComponentImpl;
 
 /**
- *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class ErrorPanel extends RichFacesNotifyMessage {
+public class GPlusLoginPage implements SocialLoginPage {
 
-    @FindByJQuery(".rf-ntf-ico")
-    private WebElement icon;
+    @FindBy(css = "input[id$=Email]")
+    private TextInputComponentImpl emailInput;
+    @FindBy(css = "input[id$=Passwd]")
+    private TextInputComponentImpl passwordInput;
+    @FindBy(css = "input[id$=signIn]")
+    private WebElement loginButton;
 
-    @Drone
-    private WebDriver browser;
-
-    public void checkAll(String contentStartsWith) {
-        checkContent(contentStartsWith);
-        checkContainsWarning();
-        checkCloseWithControls();
+    @Override
+    public void login(String email, String password) {
+        Graphene.waitModel().until().element(emailInput.advanced().getInputElement()).is().visible();
+        emailInput.advanced().clear(ClearType.DELETE).sendKeys(email);
+        passwordInput.advanced().clear(ClearType.DELETE).sendKeys(password);
+        loginButton.click();
     }
 
-    public void checkCloseWithControls() {
-        close();
-        advanced().waitUntilMessageIsNotVisible().perform();
-    }
-
-    public void checkContainsWarning() {
-        assertTrue(Utils.isVisible(icon));
-    }
-
-    public void checkContent(String contentContains) {
-        assertTrue(getContentText().contains(contentContains));
-    }
-
-    public String getContentText() {
-        return advanced().getRootElement().getText();
+    @Override
+    public void close() {
+        throw new UnsupportedOperationException();
     }
 }

@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.photoalbum.ftest.webdriver.fragments;
 
 import static org.testng.Assert.assertEquals;
@@ -30,6 +30,10 @@ import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.photoalbum.ftest.webdriver.pages.FBLoginPage;
+import org.richfaces.tests.photoalbum.ftest.webdriver.pages.GPlusLoginPage;
+import org.richfaces.tests.photoalbum.ftest.webdriver.pages.SocialLoginPage;
 import org.richfaces.tests.photoalbum.ftest.webdriver.utils.PhotoalbumUtils;
 
 import com.google.common.collect.Lists;
@@ -55,6 +59,16 @@ public class HeaderPanel {
     private WebElement logoutLink;
     @FindByJQuery("div.header-content-div div[id$='logInOutMenu'] a:contains('Register')")
     private WebElement registerLink;
+    @FindBy(css = "div.header-content-div div[id$='logInOutMenu'] a.FB-btn-small")
+    private WebElement loginToFBLink;
+    @FindBy(css = "div.header-content-div div[id$='logInOutMenu'] span.FB-btn-small")
+    private WebElement loggedInWithFB;
+    @FindByJQuery("div.header-content-div div[id$='logInOutMenu'] span.logged-user + a + img")
+    private WebElement fbLoggedUserImage;
+    @FindBy(css = "div.header-content-div div[id$='logInOutMenu'] a.G-btn-small")
+    private WebElement loginToGPlusLink;
+    @FindBy(css = "div.header-content-div div[id$='logInOutMenu'] span.G-btn-small")
+    private WebElement loggedInWithGPlus;
 
     @FindByJQuery("div.header-content-div div.top-right-menu a:contains('Wiki page')")
     private WebElement wikiPageLink;
@@ -72,19 +86,33 @@ public class HeaderPanel {
         assertTrue(image.getAttribute("src").contains("img/shell/logo_top.gif"));
     }
 
-    public void checkIfUserLogged(String user) {
+    public void checkUserLogged(String user, boolean hasOwnAlbums, boolean isLoggedWithFB, boolean isloggedWithGPlus) {
         checkAlwaysPresentElements();
         PhotoalbumUtils.checkVisible(Lists.newArrayList(loggedUserLink, logoutLink));
         PhotoalbumUtils.checkNotVisible(loginLink, registerLink);
         assertEquals(loggedUserSpan.getText(), "Welcome,");
         assertEquals(loggedUserLink.getText(), user);
-        getToolbar().checkIfUserLoggedToolbar();
+        if (isLoggedWithFB) {
+            PhotoalbumUtils.checkVisible(loggedInWithFB, fbLoggedUserImage);
+            PhotoalbumUtils.checkNotVisible(loginToFBLink);
+        } else {
+            PhotoalbumUtils.checkVisible(loginToFBLink);
+            PhotoalbumUtils.checkNotVisible(loggedInWithFB, fbLoggedUserImage);
+        }
+        if (isloggedWithGPlus) {
+            PhotoalbumUtils.checkVisible(loggedInWithGPlus);
+            PhotoalbumUtils.checkNotVisible(loginToGPlusLink);
+        } else {
+            PhotoalbumUtils.checkVisible(loginToGPlusLink);
+            PhotoalbumUtils.checkNotVisible(loggedInWithGPlus);
+        }
+        getToolbar().checkIfUserLoggedToolbar(hasOwnAlbums);
     }
 
     public void checkIfUserNotLogged() {
         checkAlwaysPresentElements();
         PhotoalbumUtils.checkVisible(Lists.newArrayList(loginLink, registerLink));
-        PhotoalbumUtils.checkNotVisible(loggedUserLink, logoutLink);
+        PhotoalbumUtils.checkNotVisible(loggedUserLink, logoutLink, loggedInWithFB, loggedInWithGPlus, loginToFBLink, loginToGPlusLink, fbLoggedUserImage);
         assertEquals(loggedUserSpan.getText().trim(), "Welcome, guest! If you want access to full version of application, please register or login.");
         getToolbar().checkIfUserNotLoggedToolbar();
     }
@@ -95,10 +123,6 @@ public class HeaderPanel {
 
     public WebElement getDownloadsLink() {
         return downloadsLink;
-    }
-
-    public WebElement getImageIndexLink() {
-        return imageIndexLink;
     }
 
     public WebElement getLoggedUserLink() {
@@ -121,6 +145,10 @@ public class HeaderPanel {
         return registerLink;
     }
 
+    public WebElement getStatusHelpLink() {
+        return driver.findElement(ByJQuery.selector("a:visible:last"));
+    }
+
     public Toolbar getToolbar() {
         return toolbar;
     }
@@ -129,27 +157,47 @@ public class HeaderPanel {
         return wikiPageLink;
     }
 
+    public void loginToFB() {
+        loginToSocial(FBLoginPage.class);
+    }
+
+    public void loginToGPlus() {
+        loginToSocial(GPlusLoginPage.class);
+    }
+
+    private void loginToSocial(Class<? extends SocialLoginPage> pageClass) {
+        PhotoalbumUtils.loginWithSocial(pageClass, driver, GPlusLoginPage.class.equals(pageClass) ? loginToGPlusLink : loginToFBLink);
+    }
+
     public static class Toolbar {
 
         @FindByJQuery(".rf-tb-cntr > td > * > div:eq(1)")
-        private WebElement myAlbumShelvesLink;
+        private WebElement myAlbumGroupsLink;
         @FindByJQuery(".rf-tb-cntr > td > * > div:eq(2)")
         private WebElement myAllAlbumsLink;
         @FindByJQuery(".rf-tb-cntr > td > * > div:eq(3)")
         private WebElement myAllImagesLink;
         @FindByJQuery(".rf-tb-cntr > td > * > div:eq(4) > a:eq(0)")
-        private WebElement addShelfLink;
+        private WebElement addAlbumGroupLink;
         @FindByJQuery(".rf-tb-cntr > td > * > div:eq(4) > a:eq(1)")
         private WebElement addAlbumLink;
+        @FindByJQuery(".rf-tb-cntr > td > * > div:eq(4) > span")
+        private WebElement addAlbumLinkSpan;
         @FindByJQuery(".rf-tb-cntr > td > * > div:eq(4) > a:eq(2)")
         private WebElement addImagesLink;
+        @FindByJQuery(".rf-tb-cntr > td > * > div:eq(4) > span")
+        private WebElement addImagesLinkSpan;
 
-        public void checkIfUserLoggedToolbar() {
-            PhotoalbumUtils.checkVisible(Lists.newArrayList(myAlbumShelvesLink, myAllAlbumsLink, myAllImagesLink, addShelfLink, addAlbumLink, addImagesLink));
+        public void checkIfUserLoggedToolbar(boolean hasOwnAlbums) {
+            PhotoalbumUtils.checkVisible(
+                hasOwnAlbums
+                    ? Lists.newArrayList(myAlbumGroupsLink, myAllAlbumsLink, myAllImagesLink, addAlbumGroupLink, addAlbumLink, addImagesLink)
+                    : Lists.newArrayList(myAlbumGroupsLink, myAllAlbumsLink, myAllImagesLink, addAlbumGroupLink, addAlbumLinkSpan, addImagesLinkSpan)
+            );
         }
 
         public void checkIfUserNotLoggedToolbar() {
-            PhotoalbumUtils.checkNotVisible(Lists.newArrayList(myAlbumShelvesLink, myAllAlbumsLink, myAllImagesLink, addShelfLink, addAlbumLink, addImagesLink));
+            PhotoalbumUtils.checkNotVisible(Lists.newArrayList(myAlbumGroupsLink, myAllAlbumsLink, myAllImagesLink, addAlbumGroupLink, addAlbumLink, addImagesLink, addAlbumLinkSpan, addImagesLinkSpan));
         }
 
         public WebElement getAddAlbumLink() {
@@ -160,12 +208,12 @@ public class HeaderPanel {
             return addImagesLink;
         }
 
-        public WebElement getAddShelfLink() {
-            return addShelfLink;
+        public WebElement getAddAlbumGroupLink() {
+            return addAlbumGroupLink;
         }
 
-        public WebElement getMyAlbumShelvesLink() {
-            return myAlbumShelvesLink;
+        public WebElement getMyAlbumGroupsLink() {
+            return myAlbumGroupsLink;
         }
 
         public WebElement getMyAllAlbumsLink() {

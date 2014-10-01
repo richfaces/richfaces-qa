@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.photoalbum.ftest.webdriver.fragments;
 
-import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -35,8 +35,6 @@ import org.richfaces.fragment.tooltip.TextualRichFacesTooltip;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.HowItWorksPopupPanel.Controls;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.SlideShowPanel.Body;
 
-import static org.testng.Assert.assertTrue;
-
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
@@ -48,7 +46,6 @@ public class SlideShowPanel extends RichFacesPopupPanel<TextualFragmentPart, Con
     }
 
     public void checkImagesInfoFromTooltip(String albumName, List<String> photoNames) {
-        String template = "%s - %s image";
         String actImgSrc;
         for (int i = 0; i < photoNames.size(); i++) {
             actImgSrc = getBodyContent().getImage().getAttribute("src");

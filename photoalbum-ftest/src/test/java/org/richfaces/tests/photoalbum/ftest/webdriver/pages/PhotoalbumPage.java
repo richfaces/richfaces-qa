@@ -22,11 +22,11 @@
 package org.richfaces.tests.photoalbum.ftest.webdriver.pages;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.messages.RichFacesMessages;
+import org.richfaces.fragment.notify.RichFacesNotifyMessage;
+import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.AddAlbumGroupPanel;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.AddAlbumPanel;
-import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.AddShelfPanel;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.ConfirmationPanel;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.ContentPanel;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.ErrorPanel;
@@ -47,6 +47,8 @@ public class PhotoalbumPage {
      */
     @FindBy(className = "rf-msgs")
     private RichFacesMessages messages;
+    @FindBy(css = ".rf-ntf.photoalbum-message")
+    private RichFacesNotifyMessage message;
     @FindBy(css = ".rf-p.header-panel")
     private HeaderPanel headerPanel;
     @FindBy(css = "div[id$='treePanel']")
@@ -60,20 +62,20 @@ public class PhotoalbumPage {
 
     @FindBy(css = ".rf-pp-cntr.login-panel")
     private LoginPanel loginPanel;
-    @FindByJQuery(".rf-ntf-err")
+    @FindBy(className = "rf-ntf-err")
     private ErrorPanel errorPanel;
     @FindBy(css = ".rf-pp-cntr[id*='slideShow']")
     private SlideShowPanel slideShowPanel;
     @FindBy(css = ".rf-pp-cntr[id*='shelfModalPanel']")
-    private AddShelfPanel addShelfPanel;
+    private AddAlbumGroupPanel addAlbumGroupPanel;
     @FindBy(css = ".rf-pp-cntr[id*='albumModalPanel']")
     private AddAlbumPanel addAlbumPanel;
     @FindBy(css = ".rf-pp-cntr[id*='confirmation']")
     private ConfirmationPanel confirmationPanel;
 
-    public void checkLogged(String user) {
-        headerPanel.checkIfUserLogged(user);
-        leftPanel.checkIfUserLogged();
+    public void checkUserLogged(String user, boolean hasOwnAlbums, boolean isLoggedInWithFB, boolean isLoggedInWithGPlus) {
+        headerPanel.checkUserLogged(user, hasOwnAlbums, isLoggedInWithFB, isLoggedInWithGPlus);
+        leftPanel.checkIfUserLogged(hasOwnAlbums, isLoggedInWithFB, isLoggedInWithGPlus);
         footerPanel.check();
     }
 
@@ -87,8 +89,8 @@ public class PhotoalbumPage {
         return addAlbumPanel;
     }
 
-    public AddShelfPanel getAddShelfPanel() {
-        return addShelfPanel;
+    public AddAlbumGroupPanel getAddAlbumGroupPanel() {
+        return addAlbumGroupPanel;
     }
 
     public ConfirmationPanel getConfirmationPanel() {
@@ -112,11 +114,15 @@ public class PhotoalbumPage {
     }
 
     public LeftPanel getLeftPanel() {
-        return leftPanel;
+        return leftPanel.setPage(this);
     }
 
     public LoginPanel getLoginPanel() {
         return loginPanel;
+    }
+
+    public RichFacesNotifyMessage getMessage() {
+        return message;
     }
 
     public RichFacesMessages getMessages() {
@@ -131,10 +137,15 @@ public class PhotoalbumPage {
         return slideShowPanel;
     }
 
-    public void login(String user, String pswd) {
+    public LoginPanel openLoginPanel() {
+        Graphene.waitAjax().until().element(headerPanel.getLoginLink()).is().visible();
         Graphene.guardAjax(headerPanel.getLoginLink()).click();
         loginPanel.advanced().waitUntilPopupIsVisible().perform();
-        loginPanel.login(user, pswd);
+        return loginPanel;
+    }
+
+    public void login(String user, String pswd) {
+        openLoginPanel().login(user, pswd);
     }
 
     public void logout() {

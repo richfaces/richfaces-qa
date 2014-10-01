@@ -21,35 +21,60 @@
  *******************************************************************************/
 package org.richfaces.tests.photoalbum.ftest.webdriver.fragments;
 
+import java.util.concurrent.TimeUnit;
+
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.fragment.messages.RichFacesMessages;
 import org.richfaces.fragment.panel.TextualFragmentPart;
 import org.richfaces.fragment.popupPanel.RichFacesPopupPanel;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.HowItWorksPopupPanel.Controls;
 import org.richfaces.tests.photoalbum.ftest.webdriver.fragments.LoginPanel.Body;
+import org.richfaces.tests.photoalbum.ftest.webdriver.pages.FBLoginPage;
+import org.richfaces.tests.photoalbum.ftest.webdriver.pages.GPlusLoginPage;
+import org.richfaces.tests.photoalbum.ftest.webdriver.pages.SocialLoginPage;
+import org.richfaces.tests.photoalbum.ftest.webdriver.utils.PhotoalbumUtils;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class LoginPanel extends RichFacesPopupPanel<TextualFragmentPart, Controls, Body> {
 
+    @Drone
+    private WebDriver browser;
+
+    public void close() {
+        getHeaderControlsContent().close();
+        advanced().waitUntilPopupIsNotVisible().perform();
+    }
+
     public void login(String user, String password) {
         loginWithoutWait(user, password);
         advanced().waitUntilPopupIsNotVisible().perform();
+    }
+
+    public void loginWithFB() {
+        loginWithSocial(FBLoginPage.class);
+    }
+
+    public void loginWithGPlus() {
+        loginWithSocial(GPlusLoginPage.class);
+    }
+
+    private void loginWithSocial(Class<? extends SocialLoginPage> pageClass) {
+        PhotoalbumUtils.loginWithSocial(pageClass, browser, (GPlusLoginPage.class.equals(pageClass) ? getBodyContent().getGplusLoginButton() : getBodyContent().getFbLoginButton()));
+        advanced().waitUntilPopupIsNotVisible().withTimeout(10, TimeUnit.SECONDS).perform();
     }
 
     public void loginWithoutWait(String user, String password) {
         getBodyContent().getLoginInput().sendKeys(user);
         getBodyContent().getPasswordInput().sendKeys(password);
         Graphene.guardAjax(getBodyContent().getLoginButton()).click();
-    }
-
-    public void close() {
-        getHeaderControlsContent().close();
-        advanced().waitUntilPopupIsNotVisible().perform();
     }
 
     public static class Body {
@@ -62,8 +87,20 @@ public class LoginPanel extends RichFacesPopupPanel<TextualFragmentPart, Control
         private WebElement loginButton;
         @FindByJQuery("div:contains('Register') + input")
         private WebElement registerButton;
-        @FindByJQuery(".rf-msgs")
+        @FindBy(className = "rf-msgs")
         private RichFacesMessages messages;
+        @FindBy(css = "a.FB-btn-medium")
+        private WebElement fbLoginButton;
+        @FindBy(css = "a.G-btn-medium")
+        private WebElement gplusLoginButton;
+
+        public WebElement getFbLoginButton() {
+            return fbLoginButton;
+        }
+
+        public WebElement getGplusLoginButton() {
+            return gplusLoginButton;
+        }
 
         public WebElement getLoginButton() {
             return loginButton;

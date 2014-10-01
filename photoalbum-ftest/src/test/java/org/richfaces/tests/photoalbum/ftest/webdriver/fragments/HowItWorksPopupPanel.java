@@ -23,7 +23,6 @@ package org.richfaces.tests.photoalbum.ftest.webdriver.fragments;
 
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -40,21 +39,21 @@ public class HowItWorksPopupPanel extends RichFacesPopupPanel<TextualFragmentPar
     public void checkAll(String contentStartsWith) {
         checkHeader();
         checkContent(contentStartsWith);
-        checkControls();
+        checkClose();
     }
 
     public void checkContent(String contentStartsWith) {
         assertTrue(getContentText().startsWith(contentStartsWith));
     }
 
-    public void checkControls() {
-        Graphene.guardNoRequest(this).close();
+    public void checkClose() {
+        close();
         advanced().waitUntilPopupIsNotVisible().perform();
     }
 
     public void checkHeader() {
         assertTrue(getHeaderText().contains("How it works?"));
-        assertTrue(getHeaderElement().findElement(By.tagName("img")).getAttribute("src").contains("/img/icons/help_sign.png"));
+        assertTrue(advanced().getHeaderElement().findElement(By.tagName("img")).getAttribute("src").contains("/img/icons/help_sign.png"));
     }
 
     public void close() {

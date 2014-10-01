@@ -32,15 +32,19 @@ import org.openqa.selenium.support.FindBy;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class AlbumGroupsView {
+public class GroupsView {
 
     @FindBy(className = "shelf-header-table")
-    private WebElement groupHeader;
+    private WebElement groupsHeader;
     @FindBy(css = "div[id$='shelfInfo']")
     private List<GroupView> groups;
 
     public void checkHeader(String headerInfo) {
-        assertEquals(groupHeader.getText(), headerInfo);
+        assertEquals(groupsHeader.getText(), headerInfo);
+    }
+
+    public WebElement getGroupsHeader() {
+        return groupsHeader;
     }
 
     public List<GroupView> getGroups() {

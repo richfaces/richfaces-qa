@@ -22,7 +22,9 @@
 package org.richfaces.tests.photoalbum.ftest.webdriver.tests;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.net.URL;
+import java.util.Arrays;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -34,6 +36,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.openqa.selenium.WebDriver;
 import org.richfaces.fragment.common.Utils;
+import org.richfaces.tests.photoalbum.ftest.webdriver.annotations.DoNotLogoutAfter;
 import org.richfaces.tests.photoalbum.ftest.webdriver.pages.PhotoalbumPage;
 import org.testng.ITestResult;
 import org.testng.SkipException;
@@ -46,8 +49,23 @@ import org.testng.annotations.BeforeMethod;
 @RunAsClient
 public abstract class AbstractPhotoalbumTest extends Arquillian {
 
-    public static final String UNKNOWN_IMG_SRC = "-1";
+    public static final String IMAGES_DEC_DATE1 = "Dec 17, 2009";
+    public static final String IMAGES_DEC_DATE2 = "Dec 18, 2009";
+
+    public static final String JAN_DATE1 = "Jan 7, 1985";
+    public static final String JAN_DATE2 = "Jan 8, 1985";
+
+    public static final PossibleStringOptions IMAGES_DEC_DATE = new PossibleStringOptions(IMAGES_DEC_DATE1, IMAGES_DEC_DATE2);
+    public static final PossibleStringOptions JAN_DATE_70 = new PossibleStringOptions("Jan 7, 1970", "Jan 8, 1970");
+    public static final PossibleStringOptions JAN_DATE_85 = new PossibleStringOptions(JAN_DATE1, JAN_DATE2);
+
     public static final String NO_OWNER = "-1";
+    public static final String UNKNOWN_IMG_SRC = "-1";
+
+    @Deployment(testable = false)
+    public static WebArchive createTestArchive() {
+        return ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/photoalbum.war"));
+    }
 
     @Drone
     protected WebDriver browser;
@@ -58,37 +76,28 @@ public abstract class AbstractPhotoalbumTest extends Arquillian {
     @Page
     protected PhotoalbumPage page;
 
-    @Deployment(testable = false)
-    public static WebArchive createTestArchive() {
-        return ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/photoalbum.war"));
-    }
-
-//    @BeforeMethod(alwaysRun = true)
-//    public void loadPage(Method m) {
-//        if (browser == null) {
-//            throw new SkipException("webDriver isn't initialized");
-//        }
-//        browser.manage().deleteAllCookies();
-//        browser.get(contextPath.toString() + "/index.jsf");
-//        // this method could also handle user logging
-//        // i.e by introducing an annotation @LoggedUser used for marking test methods
-//        // but https://issues.jboss.org/browse/ARQGRA-309
-//        // so the logging has to be done manually
-//    }
-    @BeforeMethod(alwaysRun = true)
-    public void loadPage() {
+    public void deleteCookies() {
         if (browser == null) {
             throw new SkipException("webDriver isn't initialized");
         }
         browser.manage().deleteAllCookies();
-        browser.get(contextPath.toString() + "/index.jsf");
     }
 
-    @AfterMethod(alwaysRun = true)
-    public void logoutAfter(ITestResult m) throws Exception {
-        if (Utils.isVisible(page.getHeaderPanel().getLogoutLink())) {
-            logout();
+    public void gPlusLogin() {
+        throw new UnsupportedOperationException("Not supported yet");
+    }
+
+    protected <T> T getView(Class<T> klass) {
+        for (Method m : page.getContentPanel().getClass().getMethods()) {
+            if (m.getReturnType().equals(klass)) {
+                try {
+                    return (T) m.invoke(page.getContentPanel());
+                } catch (Exception ex) {
+                    throw new RuntimeException("Cannot obtain view " + klass.getSimpleName());
+                }
+            }
         }
+        throw new UnsupportedOperationException("Not supported view " + klass.getSimpleName());
     }
 
     public void login() {
@@ -96,7 +105,7 @@ public abstract class AbstractPhotoalbumTest extends Arquillian {
     }
 
     public void login(String user) {
-        page.login(user, "12345");
+        login(user, "12345");
     }
 
     public void login(String user, String password) {
@@ -105,5 +114,72 @@ public abstract class AbstractPhotoalbumTest extends Arquillian {
 
     public void logout() {
         page.logout();
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void logoutAfter(ITestResult m) throws Exception {
+        if (!m.getMethod().getConstructorOrMethod().getMethod().isAnnotationPresent(DoNotLogoutAfter.class)) {
+            if (browser != null && page != null) {
+                if (Utils.isVisible(page.getHeaderPanel().getLogoutLink())) {
+                    logout();
+                    browser.manage().deleteAllCookies();
+                }
+            }
+        }
+    }
+
+    @BeforeMethod(alwaysRun = true)
+    public void prepare(Method m) {
+        if (browser == null) {
+            throw new SkipException("webDriver isn't initialized");
+        }
+        // the address needs to contain "localhost" instead of local loop IP, workaround for socials login
+        String replaced = contextPath.toString();
+        replaced = "localhost" + replaced.substring(replaced.indexOf(":8080"));
+        browser.get(replaced + "index.jsf");
+        // this method could also handle user logging
+        // i.e by introducing an annotation @LoggedUser used for marking test methods
+        // but it cannot be done because of https://issues.jboss.org/browse/ARQGRA-309
+        // so the logging needs to be done manually
+        /**
+         * E.g.:
+         *
+         * public void loadPage(Method m) {
+         *   if(m.isAnnotationPresent(LoggedUser.class)){
+         *     login(LoggedUser.getName(), LoggedUser.getPassword());
+         *   }
+         * }
+         */
+    }
+
+    public static class PossibleStringOptions {
+
+        private final String[] strings;
+
+        public PossibleStringOptions(String... strings) {
+            this.strings = strings;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            for (String string : strings) {
+                if (string.equals(o)) {
+                    return Boolean.TRUE;
+                }
+            }
+            return Boolean.FALSE;
+        }
+
+        @Override
+        public int hashCode() {
+            int hash = 3;
+            hash = 23 * hash + Arrays.deepHashCode(this.strings);
+            return hash;
+        }
+
+        @Override
+        public String toString() {
+            return Arrays.asList(strings).toString();
+        }
     }
 }

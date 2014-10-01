@@ -19,49 +19,14 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.photoalbum.ftest.webdriver.fragments;
-
-import static org.testng.Assert.assertTrue;
-
-import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.richfaces.fragment.common.Utils;
-import org.richfaces.fragment.notify.RichFacesNotifyMessage;
+package org.richfaces.tests.photoalbum.ftest.webdriver.pages;
 
 /**
- *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class ErrorPanel extends RichFacesNotifyMessage {
+public interface SocialLoginPage {
 
-    @FindByJQuery(".rf-ntf-ico")
-    private WebElement icon;
+    void login(String email, String password);
 
-    @Drone
-    private WebDriver browser;
-
-    public void checkAll(String contentStartsWith) {
-        checkContent(contentStartsWith);
-        checkContainsWarning();
-        checkCloseWithControls();
-    }
-
-    public void checkCloseWithControls() {
-        close();
-        advanced().waitUntilMessageIsNotVisible().perform();
-    }
-
-    public void checkContainsWarning() {
-        assertTrue(Utils.isVisible(icon));
-    }
-
-    public void checkContent(String contentContains) {
-        assertTrue(getContentText().contains(contentContains));
-    }
-
-    public String getContentText() {
-        return advanced().getRootElement().getText();
-    }
+    void close();
 }

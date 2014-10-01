@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2014, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -18,23 +18,19 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
-package org.richfaces.tests.photoalbum.ftest.webdriver.tests;
+ */
+package org.richfaces.tests.photoalbum.ftest.webdriver.annotations;
 
-import static org.testng.Assert.assertEquals;
-
-import org.openqa.selenium.By;
-import org.richfaces.fragment.common.Utils;
-import org.testng.annotations.Test;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestInitialPage extends AbstractPhotoalbumTest {
-
-    @Test
-    public void testTitle() {
-        assertEquals(Utils.getTextFromHiddenElement(browser.findElement(By.tagName("title"))), "RichFaces PhotoAlbum demo");
-    }
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface DoNotLogoutAfter {
 }
