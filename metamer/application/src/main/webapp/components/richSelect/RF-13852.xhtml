@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+</h:head>
+<body>
+<p>
+This is reproducer to <a href="https://issues.jboss.org/browse/RF-13852">https://issues.jboss.org/browse/RF-13852</a>
+Step to reproduce:
+<ul>
+    <li>Click sometimes on New row</li>
+    <li>In column two click on arrow to show drop down menu</li>
+    <li>Press key down or up to choose value.</li>
+    <li>You should switch between values not between rows.</li>
+</ul>
+</p>
+    <rich:panel style="width:877px;">
+        <f:facet name="header">
+        Rich Select Inside an ExtendedDataTable
+        </f:facet>
+
+        <h:form>
+            <h:commandButton id="newRowBtn" value="New Row">
+                <a4j:ajax event="click" listener="#{rf13852.newRowBtnAction}"
+                    render="extDataTable1" />
+            </h:commandButton>
+
+            <p />
+            <rich:extendedDataTable id="extDataTable1"
+                value="#{rf13852.rowFiller}" var="iter" rowKeyVar="rowKey"
+                selection="#{rf13852.selection}" selectionMode="single">
+                <a4j:ajax execute="@aLL" event="selectionchange"
+                    listener="#{rf13852.selectionListener}" render="extDataTable1" />
+
+                <rich:column id="rowNumberCol" width="40px">
+                    <f:facet name="header">Row</f:facet>
+                    <h:outputText value="#{rowKey + 1}" />
+                </rich:column>
+
+                <rich:column id="recNumberCol" width="40px">
+                    <f:facet name="header">Rec#</f:facet>
+                    <h:outputText value="#{iter.recordNumber}" />
+                </rich:column>
+
+                <rich:column id="col1" width="150px">
+                    <f:facet name="header">Column One</f:facet>
+                    <h:inputText value="#{iter.text1}"/>
+                </rich:column>
+
+                <rich:column id="col2" width="220px">
+                    <f:facet name="header">Column Two</f:facet>
+                    <rich:select value="#{iter.selectVal}" enableManualInput="true"
+                        id="col2_select">
+                        <a4j:ajax event="selectitem" render="#{rich:clientId('output3')}"
+                            listener="#{rf13852.valueChanged}" />
+                        <f:selectItems value="#{rf13852.selectLOV}" />
+                    </rich:select>
+                </rich:column>
+
+                <rich:column id="col3" width="400px">
+                    <f:facet name="header">Column Three</f:facet>
+                    <h:outputText id="output3" value="#{iter.text2}"
+                        style="Width:300px" />
+                </rich:column>
+
+            </rich:extendedDataTable>
+            <p />
+            <h:commandButton id="clearAllBtn" value="Clear All">
+                <a4j:ajax event="click" listener="#{rf13852.clearAllBtnAction}"
+                    render="extDataTable1" />
+            </h:commandButton>
+        </h:form>
+    </rich:panel>
+</body>
+</html>
