@@ -31,6 +31,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.tests.metamer.bean.rich.RichColumnBean;
+import org.richfaces.tests.metamer.ftest.richDataTable.fragment.ColumnGroupDT;
 import org.richfaces.tests.metamer.model.Capital;
 import org.testng.annotations.Test;
 
@@ -44,18 +45,21 @@ import com.google.common.collect.Lists;
  */
 public class TestColumnFiltering extends AbstractColumnTest {
 
+    @FindBy(css = ".rf-dt[id$=richDataTable]")
+    private ColumnGroupDT table;
+
     private static final String STATE_NAME = "Maryland";
     @FindBy(css = "input[id$=stateNameToFilter]")
     private TextInputComponentImpl stateNameFilterInput;
 
     @FindBy(css = ".rf-dt[id$=richDataTable1]")
-    private DataTable tableWithFilter;
+    private ColumnGroupDT tableWithFilter;
     @FindBy(css = ".rf-dt[id$=richDataTable2]")
-    private DataTable tableWithFilterExpression;
+    private ColumnGroupDT tableWithFilterExpression;
 
     private RichColumnBean richColumnBean = new RichColumnBean();
 
-    private DataTable actualTable;
+    private ColumnGroupDT actualTable;
 
     @Override
     public URL getTestUrl() {
@@ -95,5 +99,10 @@ public class TestColumnFiltering extends AbstractColumnTest {
                 assertEquals(actualCapitals.get(j).toString(), expectedCapitals.get(j).toString());
             }
         }
+    }
+
+    @Override
+    protected ColumnGroupDT getTable() {
+       return table;
     }
 }

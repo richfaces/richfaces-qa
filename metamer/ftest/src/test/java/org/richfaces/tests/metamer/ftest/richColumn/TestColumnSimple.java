@@ -33,8 +33,10 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.richDataTable.fragment.ColumnGroupDT;
 import org.testng.annotations.Test;
 
 /**
@@ -42,6 +44,9 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestColumnSimple extends AbstractColumnTest {
+
+    @FindBy(css = ".rf-dt[id$=richDataTable]")
+    private ColumnGroupDT table;
 
     private int bodyCount(int row) {
         return getTable().getRow(row).getRowElementsCount();
@@ -171,5 +176,10 @@ public class TestColumnSimple extends AbstractColumnTest {
         for (int i = 0; i < allRows.size(); i++) {
             testStyleClass(allRows.get(i).getStateElement());
         }
+    }
+
+    @Override
+    protected ColumnGroupDT getTable() {
+        return table;
     }
 }

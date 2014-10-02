@@ -27,10 +27,11 @@ import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.fragment.dataTable.RichFacesDataTable;
+import org.richfaces.fragment.dataTable.AbstractTable;
 import org.richfaces.tests.metamer.bean.Model;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.abstractions.fragments.ColumnGroupFooterInterface;
+import org.richfaces.tests.metamer.ftest.abstractions.fragments.ColumnGroupHeaderInterface;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.model.Capital;
 import org.testng.annotations.BeforeMethod;
@@ -41,64 +42,21 @@ import org.testng.annotations.BeforeMethod;
  */
 public abstract class AbstractColumnTest extends AbstractWebDriverTest {
 
-    @FindBy(css = ".rf-dt[id$=richDataTable]")
-    private DataTable table;
-
     protected List<Capital> capitals;
 
     protected Attributes<ColumnAttributes> columnAttributes = getAttributes();
 
-    public DataTable getTable() {
-        return table;
-    }
+    protected abstract AbstractTable<? extends ColumnGroupHeaderInterface, StateCapitalRow, ? extends ColumnGroupFooterInterface> getTable();
 
     @BeforeMethod
     public void prepareModel() {
         capitals = Model.unmarshallCapitals();
     }
 
-    public static class DataTable extends RichFacesDataTable<Header, StateCapitalRow, Footer> {
-
-        @FindBy(css = ".rf-dt-sftr>td")
-        private WebElement columnFooterElement;
-        @FindBy(css = ".rf-dt-shdr>th")
-        private WebElement columnHeaderElement;
-
-        public WebElement getColumnFooterElement() {
-            return columnFooterElement;
-        }
-
-        public WebElement getColumnHeaderElement() {
-            return columnHeaderElement;
-        }
-    }
-
-    public static class Header {
-
-        @Root
-        private WebElement rootElement;
-
-        @FindBy(className = "rf-dt-hdr")
-        private List<WebElement> rows;
-
-        public WebElement getCell(int row, int cell) {
-            return getRow(row).findElements(By.className("rf-dt-hdr-c")).get(cell);
-        }
-
-        public WebElement getRootElement() {
-            return rootElement;
-        }
-
-        public WebElement getRow(int row) {
-            return getRows().get(row);
-        }
-
-        public List<WebElement> getRows() {
-            return rows;
-        }
-    }
 
     public static class StateCapitalRow extends Capital {
+
+        private static final long serialVersionUID = 1L;
 
         @Root
         private WebElement rootElement;
@@ -138,37 +96,5 @@ public abstract class AbstractColumnTest extends AbstractWebDriverTest {
         public String toString() {
             return getName() + " (" + getState() + ")";
         }
-    }
-
-    public static class Footer {
-
-        @Root
-        private WebElement rootElement;
-
-        @FindBy(tagName = "td")
-        private WebElement footer;
-        @FindBy(className = "rf-dt-ftr")
-        private List<WebElement> rows;
-
-        public WebElement getCell(int row, int cell) {
-            return getRow(row).findElements(By.className("rf-dt-ftr-c")).get(cell);
-        }
-
-        public String getFooterClass() {
-            return footer.getAttribute("class");
-        }
-
-        public WebElement getRootElement() {
-            return rootElement;
-        }
-
-        public WebElement getRow(int row) {
-            return getRows().get(row);
-        }
-
-        public List<WebElement> getRows() {
-            return rows;
-        }
-
     }
 }

@@ -25,6 +25,8 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
 
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.richDataTable.fragment.ColumnGroupDT;
 import org.testng.annotations.Test;
 
 /**
@@ -32,6 +34,9 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestColumnComparator extends AbstractColumnSortingTest {
+
+    @FindBy(css = ".rf-dt[id$=richDataTable]")
+    private ColumnGroupDT table;
 
     @Override
     public URL getTestUrl() {
@@ -41,5 +46,10 @@ public class TestColumnComparator extends AbstractColumnSortingTest {
     @Test
     public void testSortingWithSortOrder() {
         checkSortingWithSortOrder();
+    }
+
+    @Override
+    protected ColumnGroupDT getTable() {
+        return table;
     }
 }
