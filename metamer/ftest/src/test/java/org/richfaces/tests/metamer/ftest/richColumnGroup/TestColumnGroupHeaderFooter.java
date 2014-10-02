@@ -21,26 +21,21 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richColumnGroup;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.richColumn.ColumnAttributes.rendered;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import java.net.URL;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.richfaces.fragment.common.Utils;
-import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richColumn.AbstractColumnTest;
-import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestColumnGroupHeaderFooter extends AbstractColumnTest {
+public abstract class TestColumnGroupHeaderFooter extends AbstractColumnTest {
 
     private WebElement footerCell(int row, int column) {
         return getTable().getFooter().getCell(row, column);
@@ -48,11 +43,6 @@ public class TestColumnGroupHeaderFooter extends AbstractColumnTest {
 
     private int footerCount(int row) {
         return getTable().getFooter().getRow(row).findElements(By.className("rf-dt-ftr-c")).size();
-    }
-
-    @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richColumnGroup/headerFooter.xhtml");
     }
 
     private WebElement headerCell(int row, int column) {
@@ -63,8 +53,6 @@ public class TestColumnGroupHeaderFooter extends AbstractColumnTest {
         return getTable().getHeader().getRow(row).findElements(By.className("rf-dt-hdr-c")).size();
     }
 
-    @Test
-    @Templates("plain")
     public void testRendered() {
         int bodyRowCount = getTable().advanced().getNumberOfVisibleRows();
 
