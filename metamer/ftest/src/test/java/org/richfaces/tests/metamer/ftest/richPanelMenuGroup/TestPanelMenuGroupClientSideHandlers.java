@@ -121,13 +121,15 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
         testRequestEventsAfter(clientExpansionEvents);
     }
 
-    @Test(groups = { "Future" }) //false negative, need to fix
+    @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10564")
     public void testClientSideCollapsionEventsOrderClient() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.client);
-        page.getMenu().collapseGroup(1);
-        testRequestEventsBefore(clientCollapsionEvents);
+        //first expand group 2 because you want to test collapse
         page.getMenu().expandGroup(1);
+        testRequestEventsBefore(clientCollapsionEvents);
+        //collapse and verify event order
+        page.getMenu().collapseGroup(1);
         testRequestEventsAfter(clientCollapsionEvents);
     }
 
