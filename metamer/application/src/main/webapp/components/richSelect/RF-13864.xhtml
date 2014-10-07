@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+</h:head>
+<h:body>
+    <p>
+        This is reproducer for <a href="https://issues.jboss.org/browse/RF-13864" >https://issues.jboss.org/browse/RF-13864</a> <br />
+        Step to reproduce:
+        <ul>
+        <li>Type one to input field and click on suggested item. In output field Result is text: Result is one. This is expected output.</li>
+        <li>Type two to input field and hit Tabulator, nothing will happen. Expected result is that in Result field is Result is two.</li>
+        <li>Type three to input field and hit enter. In output field is Result text: Result is three. This is expected output.</li>
+        </ul>
+    </p>
+	<rich:panel style="width:877px;">
+		<f:facet name="header">
+        Rich Select with User Input and press tab Key 
+        </f:facet>
+		<h:form>
+			<p />
+			 <h:panelGrid columns="2" >
+                <h:outputLabel for="Input" value="Input" />
+                <rich:select value="#{rf13864.selectVal}" enableManualInput="true"
+						id="col2_select">
+						<a4j:ajax event="selectitem" render="#{rich:clientId('output3')}"
+							listener="#{rf13864.valueChanged}" />
+						<f:selectItems value="#{rf13864.selectLOV}" var="iter" />
+					</rich:select>
+                <h:outputLabel for="result" value="Result : " />
+               <h:outputText id="output3" value="#{rf13864.result}"
+						style="Width:300px" />
+            </h:panelGrid>
+
+		</h:form>
+	</rich:panel>
+</h:body>
+</html>
