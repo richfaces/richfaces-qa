@@ -63,11 +63,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             }
         }
         function setValue(id, item) {
-            var input = 'Input]';
             var cssInput='[id$='+ id +'Input]';
             var cssItem='[id$=' + id + item + ']';
-            $(cssItem).click().click();
-            $(cssInput).click().blur();
+            RichFaces.component('form:' + id).setValue($(cssItem).text().trim());
+            $(cssInput).blur();
         }
     </script>
 </html>
