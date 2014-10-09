@@ -27,12 +27,9 @@ import static org.testng.Assert.assertTrue;
 import java.util.Collections;
 import java.util.List;
 
-import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.fragment.Root;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Utils;
@@ -202,8 +199,8 @@ public class PhotoView {
         private WebElement panelName;
         @FindByJQuery("> div.comment")
         private List<Comment> comments;
-        @FindByJQuery(".rf-ed[id$='editor2']")
-        private CustomEditor addCommentEditor;
+        @FindBy(css = ".rf-ed[id$='editor2']")
+        private RichFacesEditor addCommentEditor;
         @FindBy(css = ".photoalbumButton input")
         private WebElement addCommentButton;
 
@@ -281,41 +278,6 @@ public class PhotoView {
 
             public WebElement getUserImage() {
                 return userImage;
-            }
-        }
-    }
-
-    public static class CustomEditor extends RichFacesEditor {
-
-        @Drone
-        private WebDriver browser;
-        @FindBy(tagName = "iframe")
-        private WebElement frame;
-
-        @Override
-        public String getText() {
-            try {
-                return switchToEditorActiveArea().getText();
-            } finally {
-                browser.switchTo().defaultContent();
-            }
-        }
-
-        private WebElement switchToEditorActiveArea() {
-            browser.switchTo().frame(frame);
-            WebElement activeArea = browser.findElement(By.tagName("body"));
-            activeArea.click();
-            return activeArea;
-        }
-
-        @Override
-        public void type(String text) {
-            try {
-                switchToEditorActiveArea().sendKeys("");
-                // needs to do both ways, various JS events then do not work otherwise
-                getExecutor().executeScript(String.format("document.body.textContent=document.body.textContent + '%s'", text));
-            } finally {
-                browser.switchTo().defaultContent();
             }
         }
     }
