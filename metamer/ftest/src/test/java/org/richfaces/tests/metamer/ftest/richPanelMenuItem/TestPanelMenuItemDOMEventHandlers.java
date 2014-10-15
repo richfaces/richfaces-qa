@@ -102,13 +102,14 @@ public class TestPanelMenuItemDOMEventHandlers extends AbstractWebDriverTest {
         testFireEventWithJS(page.getItem().advanced().getRootElement(), Event.MOUSEOUT, panelMenuItemAttributes, PanelMenuItemAttributes.onmouseout);
     }
 
-    @Test(priority=1)
+    @Test
     @Templates(value = "plain")
     public void testOnmouseover() {
         //This test should be done first, because use static x and y variables
         panelMenuItemAttributes.set(mode, client);
-        Action mouseover = new Actions(driver).moveToElement(page.getItem().advanced().getRootElement(), 3, 3).build();
-        testFireEvent(panelMenuItemAttributes, onmouseover, mouseover);
+        Actions mouseover = new Actions(driver).moveToElement(page.getRequestTimeElement());
+        mouseover.moveToElement(page.getItem().advanced().getRootElement(), 3, 3);
+        testFireEvent(panelMenuItemAttributes, onmouseover, mouseover.build());
     }
 
     @Test
