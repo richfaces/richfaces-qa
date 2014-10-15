@@ -65,7 +65,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         function setValue(id, item) {
             var cssInput='[id$='+ id +'Input]';
             var cssItem='[id$=' + id + item + ']';
-            RichFaces.component('form:' + id).setValue($(cssItem).text().trim());
+            //Find component which ends by id
+            var component = $('[id$='+ id+']');
+            //get full component id
+            var componentId = component.prop('id');
+            //set value on component - this is used because some components has even change
+            RichFaces.component(componentId).setValue($(cssItem).text().trim());
+            //This is called because some component has event blur
             $(cssInput).blur();
         }
     </script>
