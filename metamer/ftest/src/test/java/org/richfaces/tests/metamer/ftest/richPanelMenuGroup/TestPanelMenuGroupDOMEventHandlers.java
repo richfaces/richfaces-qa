@@ -89,13 +89,14 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
         testFireEventWithJS(page.getTopGroup().advanced().getHeaderElement(), Event.MOUSEOUT, panelMenuGroupAttributes, PanelMenuGroupAttributes.onmouseout);
     }
 
-    @Test(priority=1)
+    @Test
     @Templates(value = "plain")
     public void testOnmouseover() {
         //This test should be done first, because use static x and y variables
         panelMenuGroupAttributes.set(mode, client);
-        Action mouseover = new Actions(driver).moveToElement(page.getTopGroup().advanced().getHeaderElement(), 3, 3).build();
-        testFireEvent(panelMenuGroupAttributes, onmouseover, mouseover);
+        Actions mouseover = new Actions(driver).moveToElement(page.getRequestTimeElement());
+        mouseover.moveToElement(page.getTopGroup().advanced().getHeaderElement(), 3, 3);
+        testFireEvent(panelMenuGroupAttributes, onmouseover, mouseover.build());
     }
 
     @Test
