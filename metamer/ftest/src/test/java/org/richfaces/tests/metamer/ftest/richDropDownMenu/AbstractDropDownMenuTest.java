@@ -73,7 +73,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         getCurrentMenu().advanced().setShowEvent(Event.MOUSEOVER);
     }
 
-    public void updateDropDownMenuInvokerToClick(){
+    private void updateDropDownMenuInvokerToClick(){
         getCurrentMenu().advanced().setShowEvent(Event.CLICK);
     }
 
@@ -199,18 +199,21 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
     }
 
     public void testMode() {
-        updateDropDownMenuInvoker();
+        updateDropDownMenuInvokerToClick();
         // ajax
         dropDownMenuAttributes.set(DropDownMenuAttributes.mode, "ajax");
-        getCurrentMenu().advanced().show(page.getTarget1());
-        guardAjax(getCurrentMenu().advanced().getItemsElements().get(0)).click();
+        getAttributes().set(DropDownMenuAttributes.hideDelay, 2000);
+        page.getTarget1().click();
+        guardAjax(new Actions(driver).click(getCurrentMenu().advanced().getItemsElements().get(0)).build())
+        .perform();
         assertEquals(page.getOutput().getText(), "New", "Menu action was not performed.");
 
         // server
         dropDownMenuAttributes.set(DropDownMenuAttributes.mode, "server");
-        getCurrentMenu().advanced().show(page.getTarget1());
-        guardHttp(getCurrentMenu().advanced().getItemsElements().get(8)).click();
-        assertEquals(page.getOutput().getText(), "Close", "Menu action was not performed.");
+        page.getTarget1().click();
+        guardHttp(new Actions(driver).click(getCurrentMenu().advanced().getItemsElements().get(1)).build())
+        .perform();
+        assertEquals(page.getOutput().getText(), "Open", "Menu action was not performed.");
 
         // client
         dropDownMenuAttributes.set(DropDownMenuAttributes.mode, "client");
@@ -220,8 +223,8 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         // null
         dropDownMenuAttributes.set(DropDownMenuAttributes.mode, "server");
         getCurrentMenu().advanced().show(page.getTarget1());
-        guardHttp(getCurrentMenu().advanced().getItemsElements().get(8)).click();
-        assertEquals(page.getOutput().getText(), "Close", "Menu action was not performed.");
+        guardHttp(getCurrentMenu().advanced().getItemsElements().get(1)).click();
+        assertEquals(page.getOutput().getText(), "Open", "Menu action was not performed.");
     }
 
     public void testDisabled() {
