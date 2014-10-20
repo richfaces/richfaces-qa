@@ -32,13 +32,14 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
 import org.richfaces.fragment.list.AbstractListComponent;
 import org.richfaces.fragment.list.RichFacesListItem;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestListWithScroller2 extends AbstractListTest {
+public class TestListWithScroller2 extends AbstractWebDriverTest {
 
     @FindBy(css = "span.rf-ds[id$=scroller2]")
     private RichFacesDataScroller scroller;
@@ -57,27 +58,24 @@ public class TestListWithScroller2 extends AbstractListTest {
         return buildUrl(contextPath, "faces/components/richList/scroller2.xhtml");
     }
 
-    @Test
-    public void testIterationStatusVar() {
-        TestedListItem li;
-        int maxIndex;
-        for (Integer page : pages) {
-            if (!page.equals(scroller.getActivePageNumber())) {
-                scroller.switchTo(page);
-            }
-            maxIndex = ROWS * (page - 1);
-            for (Integer item : items) {
-                li = list.getItems().get(item);
-                Assert.assertEquals(li.getIterationStatusVarText(),
-                    String.format(ITERATION_STATUS_TEMPLATE, maxIndex, maxIndex + ROWS - 1, item + maxIndex, item + 1, (item == 0), (item == 19), (item % 2 == 1)));
-            }
-        }
+    public void checkIterationStatusVar(TestedListItem li, int index, int item) {
+        Assert.assertEquals(li.getIterationStatusVarText(),
+            String.format(ITERATION_STATUS_TEMPLATE, index, index + ROWS - 1, item + index, item + 1, (item == 0), (item == 19), (item % 2 == 1)));
+    }
+
+    public void checkRowKeyVar(TestedListItem li, int index, int item) {
+        Assert.assertEquals(li.getRowKeyVarText(), String.valueOf(index + item));
+    }
+
+    public void checkStateVar(TestedListItem li, int index, int item) {
+        Assert.assertEquals(li.getFirstRowFromStateVarText(), String.valueOf(index));
+        Assert.assertEquals(li.getRowsFromStateVarText(), ROWS_STRING);
+        Assert.assertEquals(li.getRangeFromStateVarText(), String.format(RANGE_TEMPLATE, String.valueOf(index), ROWS));
     }
 
     @Test
-    public void testRowKeyVar() {
+    public void testIterationStatusVar_StateVar_RowKey() {
         TestedListItem li;
-        String indexString;
         int index;
         for (Integer page : pages) {
             if (!page.equals(scroller.getActivePageNumber())) {
@@ -85,27 +83,10 @@ public class TestListWithScroller2 extends AbstractListTest {
             }
             index = ROWS * (page - 1);
             for (Integer item : items) {
-                indexString = String.valueOf(index + item);
                 li = list.getItems().get(item);
-                Assert.assertEquals(li.getRowKeyVarText(), indexString);
-            }
-        }
-    }
-
-    @Test
-    public void testStateVar() {
-        TestedListItem li;
-        String startIndexString;
-        for (Integer page : pages) {
-            if (!page.equals(scroller.getActivePageNumber())) {
-                scroller.switchTo(page);
-            }
-            startIndexString = String.valueOf(ROWS * (page - 1));
-            for (Integer item : items) {
-                li = list.getItems().get(item);
-                Assert.assertEquals(li.getFirstRowFromStateVarText(), startIndexString);
-                Assert.assertEquals(li.getRowsFromStateVarText(), ROWS_STRING);
-                Assert.assertEquals(li.getRangeFromStateVarText(), String.format(RANGE_TEMPLATE, startIndexString, ROWS));
+                checkIterationStatusVar(li, index, item);
+                checkRowKeyVar(li, index, item);
+                checkStateVar(li, index, item);
             }
         }
     }
