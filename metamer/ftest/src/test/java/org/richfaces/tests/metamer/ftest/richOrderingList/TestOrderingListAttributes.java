@@ -36,7 +36,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
@@ -190,18 +189,8 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     @Test
     @Templates(value = "plain")
     public void testOnblur() {
-        testFireEvent(attributes, OrderingListAttributes.onblur, new Action() {
-            @Override
-            public void perform() {
-                if (driverType.equals(DriverType.Chrome)) {
-                    orderingList.select(0);
-                } else {
-                    orderingList.select(0).putItAfter(0);
-                }
-                page.getRequestTimeElement().click();
-                waiting(1000);
-            }
-        });
+        WebElement focusKeeper = driver.findElement(By.cssSelector(".rf-ord input[id$=FocusKeeper]"));
+        testFireEventWithJS(focusKeeper, attributes, OrderingListAttributes.onblur);
     }
 
     @Test

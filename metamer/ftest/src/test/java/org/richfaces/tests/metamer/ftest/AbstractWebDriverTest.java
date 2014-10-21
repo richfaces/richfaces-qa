@@ -643,13 +643,19 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * @param attributes attributes instance which will be used for setting attribute
      * @param testedAttribute attribute which will be tested
      */
-    protected <T extends AttributeEnum> void testFireEventWithJS(WebElement element, Attributes<T> attributes, T testedAttribute) {
+    protected <T extends AttributeEnum> void testFireEventWithJS(WebElement element, Attributes<T> attributes, final T testedAttribute) {
         attributes.set(testedAttribute, "metamerEvents += \"" + testedAttribute.toString() + " \"");
         executeJS("metamerEvents = \"\";");
         Event e = new Event(testedAttribute.toString().substring(2));// remove prefix "on"
         fireEvent(element, e);
-        String returnedString = expectedReturnJS("return metamerEvents", testedAttribute.toString());
-        assertEquals(returnedString, testedAttribute.toString(), "Event " + e + " does not work.");
+
+        Graphene.waitGui().withMessage("Event " + e + " does not work.").until(new Predicate<WebDriver>() {
+            @Override
+            public boolean apply(WebDriver wd) {
+                String metamerEvents = executor.executeScript("return metamerEvents").toString().trim();
+                return testedAttribute.toString().equals(metamerEvents);
+            }
+        });
     }
 
     /**
