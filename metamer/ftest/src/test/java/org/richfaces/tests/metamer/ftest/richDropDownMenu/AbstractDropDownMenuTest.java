@@ -332,13 +332,14 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
     }
 
     public void testOngrouphide() {
-        updateDropDownMenuInvoker();
+        updateDropDownMenuInvokerToClick();
+        getAttributes().set(DropDownMenuAttributes.hideDelay, 3000);
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.ongrouphide, new Action() {
             @Override
             public void perform() {
-                getCurrentMenu().advanced().show(page.getTarget1());
+                page.getTarget1().click();
                 new Actions(driver)
-                    .moveToElement(
+                    .click(
                         getCurrentMenu().advanced().getItemsElements().get(3)).build()
                     .perform();
                 waitGui().until().element(page.getGroupList()).is().visible();
@@ -351,13 +352,14 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
     }
 
     public void testOngroupshow() {
-        updateDropDownMenuInvoker();
+        updateDropDownMenuInvokerToClick();
+        getAttributes().set(DropDownMenuAttributes.hideDelay, 500);
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.ongroupshow, new Action() {
             @Override
             public void perform() {
-                getCurrentMenu().advanced().show(page.getTarget1());
+               page.getTarget1().click();
                 new Actions(driver)
-                    .moveToElement(
+                    .click(
                         getCurrentMenu().advanced().getItemsElements().get(3)).build()
                     .perform();
                 waitGui().until().element(page.getGroupList()).is().visible();
