@@ -505,6 +505,8 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         int cycles = 4;
         List<Long> delays = Lists.newArrayList();
         for (int i = 0; i < cycles; i++) {
+            //This is debug output, to determine in which cycle test falls.
+            System.out.println("Test delay: "+expectedDelayInMillis +" cycle: "+i);
             if (actionBefore != null) {
                 actionBefore.perform();
             }
