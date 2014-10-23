@@ -1,17 +1,24 @@
 #!/bin/bash
+# use sh getLatestGitRepository.sh ; to download repository from latest snapshots
+# use sh getLatestGitRepository.sh githubBranch; to download repository from latest snapshots and to switch to a specific branch/tag
+
+SCRIPT_DIR=`dirname $BASH_SOURCE`;
+SCRIPT_DIR=`readlink -f $SCRIPT_DIR`;
+
+source ${SCRIPT_DIR}/extract.sh
+source ${SCRIPT_DIR}/download.sh
 
 getLatestQAGitRepository(){
-  echo "downloading latest QA git repository"
-  wget http://jenkins.mw.lab.eng.bos.redhat.com/hudson/view/RichFaces/view/4.5/job/richfaces-4.5-metamer-repositories-packer/lastSuccessfulBuild/artifact/git-repository.zip --no-check-certificate -nv
-  echo "downloading of QA git repository completed"
+  URL_SNAPSHOTS=http://jenkins.mw.lab.eng.bos.redhat.com/hudson/view/RichFaces/view/4.5/job/richfaces-4.5-metamer-repositories-packer/lastSuccessfulBuild/artifact/git-repository.zip;
+
+  download ${URL_SNAPSHOTS}
 
   if [ $? -gt 0 ];then
-    return $?
+    echo "downloading was unsuccessful. Exiting."
+    exit 1;
   fi
 
-  echo "extracting git-repository.zip"
-  jar xf git-repository.zip
-  echo "extracting of git-repository.zip completed"
+  extract git-repository.zip
 
   cd qa
   checkoutToBranchAndUpdate $1
