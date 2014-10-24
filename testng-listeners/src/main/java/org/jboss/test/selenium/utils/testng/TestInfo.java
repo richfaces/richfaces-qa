@@ -70,7 +70,7 @@ public final class TestInfo {
     /**
      * Get package + class + method name from java.lang.reflect.Method
      *
-     * @param method
+     * @param method method instance
      * @return the package + class + method name in current context
      */
     public static String getPackageClassMethodName(Method method) {
@@ -91,7 +91,7 @@ public final class TestInfo {
     /**
      * Get class + method name from java.lang.reflect.Method
      *
-     * @param method
+     * @param method method instance
      * @return the class + method name in current context
      */
     public static String getClassMethodName(Method method) {
@@ -135,7 +135,7 @@ public final class TestInfo {
     /**
      * Get class name from java.lang.reflect.Method
      *
-     * @param method
+     * @param method method instance
      * @return the class name in current context
      */
     public static String getClassName(Method method) {
@@ -157,7 +157,7 @@ public final class TestInfo {
     /**
      * Get last containing package name from java.lang.reflect.Method
      *
-     * @param method
+     * @param method method instance
      * @return the package name in current context
      */
     public static String getContainingPackageName(Method method) {

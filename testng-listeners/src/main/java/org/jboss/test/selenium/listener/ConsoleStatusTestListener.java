@@ -28,8 +28,8 @@ import org.testng.TestListenerAdapter;
 /**
  * This class is used as ITestListener in testNG tests to put test's status to the console output
  *
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>, <a href="mailto:pjha@redhat.com">Prabhat Jha</a>, <a
- *         href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>, <a href="mailto:pjha@redhat.com">Prabhat Jha</a>,
+ *         <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision$
  */
 public class ConsoleStatusTestListener extends TestListenerAdapter {

@@ -44,7 +44,7 @@ import org.testng.TestListenerAdapter;
  * context of test failure.
  *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @authot <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @version $Revision$
  */
 public class FailureLoggingTestListener extends TestListenerAdapter {
