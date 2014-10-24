@@ -28,6 +28,7 @@ FSF site: http://www.fsf.org. -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
 
         <version.richfaces>4.5.0.Final</version.richfaces>
         <richfaces.checkstyle.version>5</richfaces.checkstyle.version>
