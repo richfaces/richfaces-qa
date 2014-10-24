@@ -16,7 +16,7 @@ FSF site: http://www.fsf.org. -->
     <parent>
         <groupId>org.richfaces.tests</groupId>
         <artifactId>metamer-root</artifactId>
-        <version>4.5.0-SNAPSHOT</version>
+        <version>4.5.0.20141026-Final</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
