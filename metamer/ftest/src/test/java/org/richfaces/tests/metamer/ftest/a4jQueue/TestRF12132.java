@@ -63,7 +63,7 @@ public class TestRF12132 extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/a4jQueue/rf-12132.xhtml");
     }
 
-    @Test
+    @Test(groups = "Future")
     public void testQueueIsClearedAfterJSErrorInOncompleteFunction() {
         typeRandomTextSubmitAndCheck(submitButton);
         typeRandomTextSubmitAndCheck(submitButtonWithNotExistingOncompleteFunction);
