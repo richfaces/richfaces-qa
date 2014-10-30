@@ -259,12 +259,12 @@ FSF site: http://www.fsf.org. -->
         <snapshotRepository>
             <id>jboss-qa-snapshots</id>
             <name>JBoss QA snapshot repository</name>
-            <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/snapshots</url>
+            <url>http://repository.engineering.redhat.com/nexus/content/repositories/jboss-qa-snapshots/</url>
         </snapshotRepository>
         <repository>
             <id>jboss-qa-releases</id>
             <name>JBoss QA selease repository</name>
-            <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/releases</url>
+            <url>http://repository.engineering.redhat.com/nexus/content/repositories/jboss-qa-releases</url>
         </repository>
     </distributionManagement>
 
@@ -299,7 +299,7 @@ FSF site: http://www.fsf.org. -->
     <repositories>
         <repository>
             <id>jboss-qa-releases</id>
-            <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/releases</url>
+            <url>http://repository.engineering.redhat.com/nexus/content/repositories/jboss-qa-releases</url>
             <releases>
                 <updatePolicy>never</updatePolicy>
                 <enabled>true</enabled>
@@ -310,7 +310,7 @@ FSF site: http://www.fsf.org. -->
         </repository>
         <repository>
             <id>jboss-qa-snapshots-repository</id>
-            <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/snapshots</url>
+            <url>http://repository.engineering.redhat.com/nexus/content/repositories/jboss-qa-snapshots</url>
             <releases>
                 <enabled>false</enabled>
             </releases>
@@ -346,7 +346,7 @@ FSF site: http://www.fsf.org. -->
     <pluginRepositories>
         <pluginRepository>
             <id>jboss-qa-releases</id>
-            <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/releases</url>
+            <url>http://repository.engineering.redhat.com/nexus/content/repositories/jboss-qa-releases</url>
             <releases>
                 <updatePolicy>never</updatePolicy>
                 <enabled>true</enabled>
@@ -357,7 +357,7 @@ FSF site: http://www.fsf.org. -->
         </pluginRepository>
         <pluginRepository>
             <id>jboss-qa-snapshots-repository</id>
-            <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/snapshots</url>
+            <url>http://repository.engineering.redhat.com/nexus/content/repositories/jboss-qa-snapshots</url>
             <releases>
                 <enabled>false</enabled>
             </releases>
