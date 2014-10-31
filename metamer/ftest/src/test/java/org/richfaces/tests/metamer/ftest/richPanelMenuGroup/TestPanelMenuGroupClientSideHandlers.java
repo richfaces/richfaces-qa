@@ -81,9 +81,10 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     }
 
     @Test
+    @IssueTracking("https://issues.jboss.org/browse/RF-13727")
     @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "ajaxExpansionEvents")
     @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
-        "richList" })
+        "richList","uiRepeat"})
     public void testClientSideExpansionEvent() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.ajax);
         guardAjax(page.getMenu()).collapseGroup(1);
