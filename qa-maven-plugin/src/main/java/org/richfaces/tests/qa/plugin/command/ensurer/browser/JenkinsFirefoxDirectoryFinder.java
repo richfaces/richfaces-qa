@@ -62,10 +62,11 @@ public class JenkinsFirefoxDirectoryFinder {
         return p.peek().getFile();
     }
 
-    public static File getSpecificVersion(File[] files, String version) {
+    public static File getSpecificVersion(File[] files, Version version) {
+        Version searchedFFVersion = version;
         for (File file : files) {
             if (isFileMatching(file)) {
-                if (VersionedFirefoxDirectory.parseVersion(file).equals(Version.parseFirefoxVersion(version))) {
+                if (VersionedFirefoxDirectory.parseVersion(file).equals(searchedFFVersion)) {
                     return file;
                 }
             }
@@ -73,7 +74,7 @@ public class JenkinsFirefoxDirectoryFinder {
         return null;
     }
 
-    public static File getSpecificVersionOrHighest(File[] files, String version) {
+    public static File getSpecificVersionOrHighest(File[] files, Version version) {
         File f = getSpecificVersion(files, version);
         if (f == null) {
             return getHighestVersion(files);
@@ -81,7 +82,7 @@ public class JenkinsFirefoxDirectoryFinder {
         return f;
     }
 
-    public static File getOptimalOrMinimalVersion(File[] files, String versionOptimal, String versionMinimal) {
+    public static File getOptimalOrMinimalVersion(File[] files, Version versionOptimal, Version versionMinimal) {
         File f = getSpecificVersion(files, versionOptimal);
         if (f == null) {
             return getSpecificVersion(files, versionMinimal);
@@ -89,7 +90,7 @@ public class JenkinsFirefoxDirectoryFinder {
         return f;
     }
 
-    public static File getHighestOrSpecificVersion(File[] files, String version) {
+    public static File getHighestOrSpecificVersion(File[] files, Version version) {
         File highestVersion = getHighestVersion(files);
         File specificVersion = getSpecificVersion(files, version);
         if (specificVersion == null) {
@@ -116,6 +117,7 @@ public class JenkinsFirefoxDirectoryFinder {
             return Version.parseFirefoxVersion(f.getName());
         }
 
+        @Override
         public int compareTo(VersionedFirefoxDirectory t) {
             return t.version.compareTo(this.version);
         }

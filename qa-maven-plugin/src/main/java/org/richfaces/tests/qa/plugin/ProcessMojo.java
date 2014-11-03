@@ -79,7 +79,6 @@ public class ProcessMojo extends AbstractMojo {
 
     @Parameter(defaultValue = "2.43.1")
     private String seleniumVersion;
-    private Version seleniumVersionV;
 
     private final Servant servant = new Servant(this);
 
@@ -90,7 +89,6 @@ public class ProcessMojo extends AbstractMojo {
     @Override
     public void execute() throws MojoExecutionException {
         eapProperties = createEAPProps(eapVersion);
-        seleniumVersionV = Version.parseVersion(seleniumVersion);
         servant.getCommands().performAll();
     }
 
@@ -138,12 +136,12 @@ public class ProcessMojo extends AbstractMojo {
         return ieDriverBinPropertyName;
     }
 
-    public String getJenkinsFirefoxVersionMinimal() {
-        return jenkinsFirefoxVersionMinimal;
+    public Version getJenkinsFirefoxVersionMinimal() {
+        return Version.parseVersion(jenkinsFirefoxVersionMinimal);
     }
 
-    public String getJenkinsFirefoxVersionOptimal() {
-        return jenkinsFirefoxVersionOptimal;
+    public Version getJenkinsFirefoxVersionOptimal() {
+        return Version.parseVersion(jenkinsFirefoxVersionOptimal);
     }
 
     public MavenProject getProject() {
@@ -155,6 +153,6 @@ public class ProcessMojo extends AbstractMojo {
     }
 
     public Version getSeleniumVersion() {
-        return seleniumVersionV;
+        return Version.parseVersion(seleniumVersion);
     }
 }

@@ -34,6 +34,8 @@ public class Version implements Comparable<Version> {
     private static final String eapPrefix = "jboss-eap-";
     private static final String ffPrefix = "firefox-";
 
+    public static final Version UNKNOWN_VERSION = new Version("unknown");
+
     private final String DIGITS = "[0-9]+";
     private final String NON_DIGITS = "[a-zA-Z\\-]";
     private final String DIGITS_FOLLOWED_BY_NON_DIGITS = DIGITS + NON_DIGITS + "+";
@@ -87,7 +89,10 @@ public class Version implements Comparable<Version> {
             }
             specifier = spec;
         } else {
-            throw new RuntimeException("Could not parse/determine the version.");
+            major = -1;
+            minor = 0;
+            micro = 0;
+            specifier = "";
         }
     }
 
@@ -96,7 +101,11 @@ public class Version implements Comparable<Version> {
     }
 
     public static Version parseVersion(String versionString) {
-        return new Version(versionString);
+        return parseVersion(versionString, null);
+    }
+
+    public static Version parseVersion(String versionString, String prefix) {
+        return new Version(versionString, prefix);
     }
 
     public static Version parseEapVersion(String versionString) {
@@ -107,6 +116,7 @@ public class Version implements Comparable<Version> {
         return new Version(versionString, ffPrefix);
     }
 
+    @Override
     public int compareTo(Version other) {
         int result = this.major - other.major;
         if (result == 0) {

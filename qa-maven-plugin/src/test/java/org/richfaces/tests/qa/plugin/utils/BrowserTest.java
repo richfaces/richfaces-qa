@@ -41,13 +41,6 @@ public class BrowserTest {
     }
 
     @Test
-    public void testParsingBadFormat_returnsUnknownBrowser() {
-        browser = Browser.parseFromString("firefox32-bad");
-        assertTrue(browser.isUnknown());
-        assertTrue(browser.isUnknownVersion());
-    }
-
-    @Test
     public void testParsingFirefox() {
         browser = Browser.parseFromString("firefox");
         assertEquals(BrowserName.firefox, browser.getName());
@@ -63,11 +56,27 @@ public class BrowserTest {
 
         browser = Browser.parseFromString("ff32");
         assertEquals(BrowserName.firefox, browser.getName());
-        assertEquals(Integer.valueOf(32), browser.getVersion());
+        assertEquals(Version.parseVersion("32"), browser.getVersion());
 
         browser = Browser.parseFromString("firefox29");
         assertEquals(BrowserName.firefox, browser.getName());
-        assertEquals(Integer.valueOf(29), browser.getVersion());
+        assertEquals(Version.parseVersion("29"), browser.getVersion());
+
+        browser = Browser.parseFromString("firefox29.1");
+        assertEquals(BrowserName.firefox, browser.getName());
+        assertEquals(Version.parseVersion("29.1"), browser.getVersion());
+
+        browser = Browser.parseFromString("firefox31.1.0esr");
+        assertEquals(BrowserName.firefox, browser.getName());
+        assertEquals(Version.parseVersion("31.1.0esr"), browser.getVersion());
+
+        browser = Browser.parseFromString("firefox-31.1.1esr");
+        assertEquals(BrowserName.firefox, browser.getName());
+        assertEquals(Version.parseVersion("31.1.1esr"), browser.getVersion());
+
+        browser = Browser.parseFromString("firefox31.1.0-esrXYZ");
+        assertEquals(BrowserName.firefox, browser.getName());
+        assertEquals(Version.parseVersion("31.1.0-esrXYZ"), browser.getVersion());
     }
 
     @Test
@@ -82,15 +91,19 @@ public class BrowserTest {
 
         browser = Browser.parseFromString("chrome36");
         assertEquals(BrowserName.chrome, browser.getName());
-        assertEquals(Integer.valueOf(36), browser.getVersion());
+        assertEquals(Version.parseVersion("36"), browser.getVersion());
 
         browser = Browser.parseFromString("cr33");
         assertEquals(BrowserName.chrome, browser.getName());
-        assertEquals(Integer.valueOf(33), browser.getVersion());
+        assertEquals(Version.parseVersion("33"), browser.getVersion());
+
+        browser = Browser.parseFromString("cr-31");
+        assertEquals(BrowserName.chrome, browser.getName());
+        assertEquals(Version.parseVersion("31"), browser.getVersion());
 
         browser = Browser.parseFromString("ChRoME32");
         assertEquals(BrowserName.chrome, browser.getName());
-        assertEquals(Integer.valueOf(32), browser.getVersion());
+        assertEquals(Version.parseVersion("32"), browser.getVersion());
 
     }
 
@@ -104,39 +117,43 @@ public class BrowserTest {
         assertEquals(BrowserName.internetExplorer, browser.getName());
         assertTrue(browser.isUnknownVersion());
 
+        browser = Browser.parseFromString("ie-9");
+        assertEquals(BrowserName.internetExplorer, browser.getName());
+        assertEquals(Version.parseVersion("9"), browser.getVersion());
+
         browser = Browser.parseFromString("explorer");
         assertEquals(BrowserName.internetExplorer, browser.getName());
         assertTrue(browser.isUnknownVersion());
 
         browser = Browser.parseFromString("internetExplorer11");
         assertEquals(BrowserName.internetExplorer, browser.getName());
-        assertEquals(Integer.valueOf(11), browser.getVersion());
+        assertEquals(Version.parseVersion("11.0.0"), browser.getVersion());
 
         browser = Browser.parseFromString("ie10");
         assertEquals(BrowserName.internetExplorer, browser.getName());
-        assertEquals(Integer.valueOf(10), browser.getVersion());
+        assertEquals(Version.parseVersion("10.0"), browser.getVersion());
 
         browser = Browser.parseFromString("explorer9");
         assertEquals(BrowserName.internetExplorer, browser.getName());
-        assertEquals(Integer.valueOf(9), browser.getVersion());
+        assertEquals(Version.parseVersion("9"), browser.getVersion());
 
         browser = Browser.parseFromString("ExPloreR9");
         assertEquals(BrowserName.internetExplorer, browser.getName());
-        assertEquals(Integer.valueOf(9), browser.getVersion());
+        assertEquals(Version.parseVersion("9"), browser.getVersion());
         browser = Browser.parseFromString("internetEXPLORER10");
         assertEquals(BrowserName.internetExplorer, browser.getName());
-        assertEquals(Integer.valueOf(10), browser.getVersion());
+        assertEquals(Version.parseVersion("10"), browser.getVersion());
     }
 
     @Test
     public void testParsingUnknown() {
         browser = Browser.parseFromString("ffirefox28");
         assertEquals(BrowserName.unknown, browser.getName());
-        assertEquals(Integer.valueOf(28), browser.getVersion());
+        assertEquals(Version.parseVersion("28"), browser.getVersion());
 
         browser = Browser.parseFromString("frajerFox22");
         assertEquals(BrowserName.unknown, browser.getName());
-        assertEquals(Integer.valueOf(22), browser.getVersion());
+        assertEquals(Version.parseVersion("22"), browser.getVersion());
 
         browser = Browser.parseFromString("unknown");
         assertEquals(BrowserName.unknown, browser.getName());
@@ -144,6 +161,10 @@ public class BrowserTest {
 
         browser = Browser.parseFromString("unknown33");
         assertEquals(BrowserName.unknown, browser.getName());
-        assertEquals(Integer.valueOf(33), browser.getVersion());
+        assertEquals(Version.parseVersion("33"), browser.getVersion());
+
+        browser = Browser.parseFromString("unknown33-super");
+        assertEquals(BrowserName.unknown, browser.getName());
+        assertEquals(Version.parseVersion("33-super"), browser.getVersion());
     }
 }

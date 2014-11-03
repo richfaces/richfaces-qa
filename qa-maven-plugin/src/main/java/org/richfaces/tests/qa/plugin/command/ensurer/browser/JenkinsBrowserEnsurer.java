@@ -108,7 +108,7 @@ public class JenkinsBrowserEnsurer implements Ensurer {
             firefoxDir = JenkinsFirefoxDirectoryFinder.getOptimalOrMinimalVersion(getFirefoxBinDirPath().listFiles(),
                 getProperty().getJenkinsFirefoxVersionOptimal(), getProperty().getJenkinsFirefoxVersionMinimal());
         } else {
-            firefoxDir = JenkinsFirefoxDirectoryFinder.getSpecificVersion(getFirefoxBinDirPath().listFiles(), browser.getVersion().toString());
+            firefoxDir = JenkinsFirefoxDirectoryFinder.getSpecificVersion(getFirefoxBinDirPath().listFiles(), browser.getVersion());
         }
         return new File(firefoxDir, servant.isOnWindows() ? "firefox.exe" : "firefox");
     }
