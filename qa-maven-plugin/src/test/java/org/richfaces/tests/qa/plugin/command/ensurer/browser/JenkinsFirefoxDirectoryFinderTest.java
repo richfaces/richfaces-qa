@@ -30,6 +30,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.richfaces.tests.qa.plugin.utils.Version;
 
 /**
  *
@@ -148,76 +149,76 @@ public class JenkinsFirefoxDirectoryFinderTest {
 
     @Test
     public void testSpecific_existing() {
-        assertEquals(FF36, JenkinsFirefoxDirectoryFinder.getSpecificVersion(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, "36"));
+        assertEquals(FF36, JenkinsFirefoxDirectoryFinder.getSpecificVersion(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, Version.parseVersion("36")));
     }
 
     @Test
     public void testSpecific_existing2() {
-        assertEquals(FF3501, JenkinsFirefoxDirectoryFinder.getSpecificVersion(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, "35.0.1"));
+        assertEquals(FF3501, JenkinsFirefoxDirectoryFinder.getSpecificVersion(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, Version.parseVersion("35.0.1")));
     }
 
     @Test
     public void testSpecific_existing3() {
-        assertEquals(FF3501, JenkinsFirefoxDirectoryFinder.getSpecificVersion(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, "35.0.1"));
+        assertEquals(FF3501, JenkinsFirefoxDirectoryFinder.getSpecificVersion(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, Version.parseVersion("35.0.1")));
     }
 
     @Test
     public void testSpecific_nonExisting_returnsNull() {
-        assertEquals(null, JenkinsFirefoxDirectoryFinder.getSpecificVersion(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, "66"));
+        assertEquals(null, JenkinsFirefoxDirectoryFinder.getSpecificVersion(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, Version.parseVersion("66")));
     }
 
     @Test
     public void testSpecific_fromNonMatching_returnsNull() {
-        assertEquals(null, JenkinsFirefoxDirectoryFinder.getSpecificVersion(new File[]{ BAD, BAD2, BAD3, BAD4 }, "123"));
+        assertEquals(null, JenkinsFirefoxDirectoryFinder.getSpecificVersion(new File[]{ BAD, BAD2, BAD3, BAD4 }, Version.parseVersion("123")));
     }
 
     @Test
     public void testSpecificOrHighest_nonExistingSpecific_returnsHighest() {
-        assertEquals(FF36, JenkinsFirefoxDirectoryFinder.getSpecificVersionOrHighest(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, "112"));
+        assertEquals(FF36, JenkinsFirefoxDirectoryFinder.getSpecificVersionOrHighest(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, Version.parseVersion("112")));
     }
 
     @Test
     public void testSpecificOrHighest_fromNonMatching_returnsNull() {
-        assertEquals(null, JenkinsFirefoxDirectoryFinder.getSpecificVersionOrHighest(new File[]{ BAD, BAD2, BAD3, BAD4 }, "123"));
+        assertEquals(null, JenkinsFirefoxDirectoryFinder.getSpecificVersionOrHighest(new File[]{ BAD, BAD2, BAD3, BAD4 }, Version.parseVersion("123")));
     }
 
     @Test
     public void testSpecificOrHighest_existing() {
-        assertEquals(FF351, JenkinsFirefoxDirectoryFinder.getSpecificVersionOrHighest(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, "35.1"));
+        assertEquals(FF351, JenkinsFirefoxDirectoryFinder.getSpecificVersionOrHighest(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, Version.parseVersion("35.1")));
     }
 
     @Test
     public void testHighestOrSpecific_nonExistingSpecific_returnsHighest() {
-        assertEquals(FF36, JenkinsFirefoxDirectoryFinder.getHighestOrSpecificVersion(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, "112"));
+        assertEquals(FF36, JenkinsFirefoxDirectoryFinder.getHighestOrSpecificVersion(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, Version.parseVersion("112")));
     }
 
     @Test
     public void testHighestOrSpecific_fromNonMatching_returnsNull() {
-        assertEquals(null, JenkinsFirefoxDirectoryFinder.getHighestOrSpecificVersion(new File[]{ BAD, BAD2, BAD3, BAD4 }, "123"));
+        assertEquals(null, JenkinsFirefoxDirectoryFinder.getHighestOrSpecificVersion(new File[]{ BAD, BAD2, BAD3, BAD4 }, Version.parseVersion("123")));
     }
 
     @Test
     public void testHighestOrSpecific_existing() {
-        assertEquals(FF36, JenkinsFirefoxDirectoryFinder.getHighestOrSpecificVersion(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, "35"));
+        assertEquals(FF36, JenkinsFirefoxDirectoryFinder.getHighestOrSpecificVersion(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, Version.parseVersion("35")));
     }
 
     @Test
     public void testOptimalOrMinimalVersion_optimalExists_returnsOptimal() {
-        assertEquals(FF351, JenkinsFirefoxDirectoryFinder.getOptimalOrMinimalVersion(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, "35.1", "10"));
+        assertEquals(FF351, JenkinsFirefoxDirectoryFinder.getOptimalOrMinimalVersion(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, Version.parseVersion("35.1"), Version.parseVersion("10")));
     }
 
     @Test
     public void testOptimalOrMinimalVersion_optimalExists_returnsOptimal2() {
-        assertEquals(FF24ESR, JenkinsFirefoxDirectoryFinder.getOptimalOrMinimalVersion(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, "24esr", "19"));
+        assertEquals(FF24ESR, JenkinsFirefoxDirectoryFinder.getOptimalOrMinimalVersion(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, Version.parseVersion("24esr"), Version.parseVersion("19")));
     }
 
     @Test
     public void testOptimalOrMinimalVersion_optimalNotExistsMinimalExists_returnsMinimal() {
-        assertEquals(FF10, JenkinsFirefoxDirectoryFinder.getOptimalOrMinimalVersion(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, "34", "10"));
+        assertEquals(FF10, JenkinsFirefoxDirectoryFinder.getOptimalOrMinimalVersion(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, Version.parseVersion("34"), Version.parseVersion("10")));
     }
 
     @Test
     public void testOptimalOrMinimalVersion_optimalNotExistsMinimalNotExists_returnsNull() {
-        assertEquals(null, JenkinsFirefoxDirectoryFinder.getOptimalOrMinimalVersion(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, "34", "11"));
+        assertEquals(null, JenkinsFirefoxDirectoryFinder.getOptimalOrMinimalVersion(new File[]{ FF19, FF36, FF351, FF35111, FF10, FF24ESR, FF3501, FF35, FF242ESR, FF242ESROLD, BAD, BAD2, BAD3, BAD4 }, Version.parseVersion("34"), Version.parseVersion("11")));
     }
 }

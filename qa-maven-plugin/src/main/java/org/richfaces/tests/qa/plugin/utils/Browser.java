@@ -30,41 +30,41 @@ import java.util.Set;
  */
 public class Browser {
 
-    private static final Integer UNKNOWN_VERSION = -1;
+    private static final String[] BROWSER_NAME_VERSION_SEPARATORS = { "-" };// plus no space
     private final BrowserName name;
-    private Integer version;
+    private Version version;
 
-    public Browser(String name, Integer version) {
-        this.name = BrowserName.getNameFor(name);
-        this.version = version;
-    }
-
-    public Browser(BrowserName name, Integer version) {
-        this.name = name;
-        this.version = version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
+    private static String createRegExpForPossibleCharactersStrings(String[] strings) {
+        StringBuilder sb = new StringBuilder("[");
+        for (String string : strings) {
+            sb.append(string);
+        }
+        return sb.append("]").toString();
     }
 
     public static Browser parseFromString(String name) {
-        if (!name.matches("([a-zA-Z])+(\\d{1})*")) {
-            return new Browser("unknown", UNKNOWN_VERSION);
-        }
-        String browser = name.split("\\d{1}")[0];
+        String browser = name.split(createRegExpForPossibleCharactersStrings(BROWSER_NAME_VERSION_SEPARATORS) + "?(\\d{1})")[0];
         String version = name.replace(browser, "");
-        if (version == null || version.isEmpty()) {
-            return new Browser(browser, UNKNOWN_VERSION);
+        String prefix = "";
+        for (String separator : BROWSER_NAME_VERSION_SEPARATORS) {
+            if (version.startsWith(separator)) {
+                prefix = separator;
+                break;
+            }
         }
-        return new Browser(browser, Integer.parseInt(version));
+        return new Browser(BrowserName.getNameFor(browser), Version.parseVersion(version, prefix));
+    }
+
+    public Browser(BrowserName name, Version version) {
+        this.name = name;
+        this.version = version;
     }
 
     public BrowserName getName() {
         return name;
     }
 
-    public Integer getVersion() {
+    public Version getVersion() {
         return version;
     }
 
@@ -89,7 +89,11 @@ public class Browser {
     }
 
     public boolean isUnknownVersion() {
-        return getVersion().equals(UNKNOWN_VERSION);
+        return getVersion().equals(Version.UNKNOWN_VERSION);
+    }
+
+    public void setVersion(Version version) {
+        this.version = version;
     }
 
     @Override
