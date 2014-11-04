@@ -63,10 +63,9 @@ public class JenkinsFirefoxDirectoryFinder {
     }
 
     public static File getSpecificVersion(File[] files, Version version) {
-        Version searchedFFVersion = version;
         for (File file : files) {
             if (isFileMatching(file)) {
-                if (VersionedFirefoxDirectory.parseVersion(file).equals(searchedFFVersion)) {
+                if (VersionedFirefoxDirectory.parseVersion(file).equals(version)) {
                     return file;
                 }
             }

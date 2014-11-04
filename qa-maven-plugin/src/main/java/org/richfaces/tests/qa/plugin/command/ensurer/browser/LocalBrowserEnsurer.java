@@ -24,11 +24,16 @@ package org.richfaces.tests.qa.plugin.command.ensurer.browser;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.EnumSet;
+import java.util.List;
 
 import org.richfaces.tests.qa.plugin.ProcessMojo;
 import org.richfaces.tests.qa.plugin.command.ensurer.Ensurer;
 import org.richfaces.tests.qa.plugin.utils.Browser;
 import org.richfaces.tests.qa.plugin.utils.Servant;
+import org.richfaces.tests.qa.plugin.utils.Version.Format;
+
+import com.google.common.collect.Lists;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -107,22 +112,33 @@ public class LocalBrowserEnsurer implements Ensurer {
             if (servant.isOnWindows()) {
                 throw new UnsupportedOperationException("Firefox binaries are not available for Windows.");
             }
-            String version = browser.getVersion().toString();
-            File currentFirefoxDir = new File(userBrowserDirectory, "firefox/" + version);
+            String versionFull = browser.getVersion().getFullFormat();
+            File currentFirefoxDir = new File(userBrowserDirectory, "firefox/" + versionFull);
             if (!currentFirefoxDir.exists()) {
                 currentFirefoxDir.mkdirs();
             }
-            try {
-                File currentFirefoxZip = new File(currentFirefoxDir, "firefox-" + version + ".0.tar.bz2");
-                servant.downloadFile(getBrowserBinURL(browser), currentFirefoxZip);
-                servant.extract(currentFirefoxDir, currentFirefoxZip);
-                File extractedFirefoxDir = new File(currentFirefoxDir, "firefox");
-                File firefoxBinary = new File(extractedFirefoxDir, "firefox");
-                firefoxBinary.setExecutable(true);
-                servant.setProjectProperty(getProperty().getFirefoxBinPropertyName(), firefoxBinary.getAbsolutePath());
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            List<String> possibleVersions = Lists.newArrayList();
+            possibleVersions.add(versionFull);
+            possibleVersions.add(browser.getVersion().getFormat(EnumSet.of(Format.major, Format.minor, Format.specifier)));
+            possibleVersions.add(browser.getVersion().getFormat(EnumSet.of(Format.major, Format.specifier)));
+            Exception caughtException = null;
+            for (String possibleVersion : possibleVersions) {
+                try {
+                    servant.getLog().info("Trying to find version " + possibleVersion);
+                    File currentFirefoxZip = new File(currentFirefoxDir, "firefox-" + possibleVersion + ".tar.bz2");
+                    servant.downloadFile(getFirefoxBinURL(possibleVersion), currentFirefoxZip);
+                    servant.extract(currentFirefoxDir, currentFirefoxZip);
+                    File extractedFirefoxDir = new File(currentFirefoxDir, "firefox");
+                    File firefoxBinary = new File(extractedFirefoxDir, "firefox");
+                    firefoxBinary.setExecutable(true);
+                    servant.setProjectProperty(getProperty().getFirefoxBinPropertyName(), firefoxBinary.getAbsolutePath());
+                    return;
+                } catch (Exception e) {
+                    servant.getLog().info("Version was not found");
+                    caughtException = e;
+                }
             }
+            throw new RuntimeException(caughtException);
         }
     }
 
@@ -147,8 +163,8 @@ public class LocalBrowserEnsurer implements Ensurer {
         }
     }
 
-    protected URL getBrowserBinURL(Browser browser) throws MalformedURLException {
-        return new URL(firefoxBaseUrl, getCorrectFirefoxVersionString(browser));
+    protected URL getFirefoxBinURL(String versionString) throws MalformedURLException {
+        return new URL(firefoxBaseUrl, getCorrectFirefoxVersionString(versionString));
     }
 
     protected URL getChromeDriverBinURL() throws MalformedURLException {
@@ -167,16 +183,16 @@ public class LocalBrowserEnsurer implements Ensurer {
         return String.format("%s/chromedriver_%s", getProperty().getChromeDriverVersion(), name);
     }
 
-    protected String getCorrectFirefoxVersionString(Browser browser) {
-        String name;
+    protected String getCorrectFirefoxVersionString(String versionString) {
+        String os;
         if (servant.isOnLinux()) {
-            name = servant.is64bitArch() ? "linux-x86_64" : "linux-i686";
+            os = servant.is64bitArch() ? "linux-x86_64" : "linux-i686";
         } else if (servant.isOnWindows()) {
-            name = "win32";
+            os = "win32";
         } else {
             throw new UnsupportedOperationException(String.format("OS arch <%s> not supported.", servant.getOsArch()));
         }
-        return String.format("%s.0/%s/en-US/firefox-%s.0.tar.bz2", browser.getVersion(), name, browser.getVersion());
+        return String.format("%s/%s/en-US/firefox-%s.tar.bz2", versionString, os, versionString);
     }
 
     protected URL getIEDriverBinURL() throws MalformedURLException {

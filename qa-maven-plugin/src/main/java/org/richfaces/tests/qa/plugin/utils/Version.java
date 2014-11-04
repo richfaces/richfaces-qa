@@ -23,6 +23,7 @@ package org.richfaces.tests.qa.plugin.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.List;
 
 /**
@@ -31,21 +32,37 @@ import java.util.List;
  */
 public class Version implements Comparable<Version> {
 
+    public static final Version UNKNOWN_VERSION = new Version("unknown");
+
     private static final String eapPrefix = "jboss-eap-";
     private static final String ffPrefix = "firefox-";
 
-    public static final Version UNKNOWN_VERSION = new Version("unknown");
-
     private final String DIGITS = "[0-9]+";
     private final String NON_DIGITS = "[a-zA-Z\\-]";
-    private final String DIGITS_FOLLOWED_BY_NON_DIGITS = DIGITS + NON_DIGITS + "+";
     private final String VERSION_SEPARATOR = "\\.";
+    private final String DIGITS_FOLLOWED_BY_NON_DIGITS = DIGITS + NON_DIGITS + "+";
 
     private final int major;
     private final int micro;
     private final int minor;
     private final String prefix;
     private final String specifier;
+
+    public static Version parseEapVersion(String versionString) {
+        return new Version(versionString, eapPrefix);
+    }
+
+    public static Version parseFirefoxVersion(String versionString) {
+        return new Version(versionString, ffPrefix);
+    }
+
+    public static Version parseVersion(String versionString) {
+        return parseVersion(versionString, null);
+    }
+
+    public static Version parseVersion(String versionString, String prefix) {
+        return new Version(versionString, prefix);
+    }
 
     public Version(String versionString, String prefix) {
         String tmp = versionString;
@@ -100,22 +117,6 @@ public class Version implements Comparable<Version> {
         this(versionString, null);
     }
 
-    public static Version parseVersion(String versionString) {
-        return parseVersion(versionString, null);
-    }
-
-    public static Version parseVersion(String versionString, String prefix) {
-        return new Version(versionString, prefix);
-    }
-
-    public static Version parseEapVersion(String versionString) {
-        return new Version(versionString, eapPrefix);
-    }
-
-    public static Version parseFirefoxVersion(String versionString) {
-        return new Version(versionString, ffPrefix);
-    }
-
     @Override
     public int compareTo(Version other) {
         int result = this.major - other.major;
@@ -156,8 +157,32 @@ public class Version implements Comparable<Version> {
         return true;
     }
 
+    public String getFormat(EnumSet<Format> formats) {
+        if ((formats.contains(Format.micro) || formats.contains(Format.minor)) && !(formats.contains(Format.major))) {
+            throw new UnsupportedOperationException("Unsupported format " + formats);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        if (formats.contains(Format.prefix) && getPrefix() != null && !getPrefix().isEmpty()) {
+            sb.append(getPrefix());
+        }
+        if (formats.contains(Format.major)) {
+            sb.append(getMajor());
+            if (formats.contains(Format.minor)) {
+                sb.append(".").append(getMinor());
+                if (formats.contains(Format.micro)) {
+                    sb.append(".").append(getMicro());
+                }
+            }
+        }
+        if (formats.contains(Format.specifier) && getSpecifier() != null && !getSpecifier().isEmpty()) {
+            sb.append(getSpecifier());
+        }
+        return sb.toString();
+    }
+
     public String getFullFormat() {
-        return String.format("%s%d.%d.%d%s", prefix, major, minor, micro, specifier);
+        return getFormat(EnumSet.allOf(Format.class));
     }
 
     public int getMajor() {
@@ -165,11 +190,11 @@ public class Version implements Comparable<Version> {
     }
 
     public String getMajorMinorFormat() {
-        return String.format("%d.%d", major, minor);
+        return getFormat(EnumSet.of(Format.major, Format.minor));
     }
 
     public String getMajorMinorMicroFormat() {
-        return String.format("%d.%d.%d", major, minor, micro);
+        return getFormat(EnumSet.of(Format.major, Format.minor, Format.micro));
     }
 
     public int getMicro() {
@@ -178,6 +203,10 @@ public class Version implements Comparable<Version> {
 
     public int getMinor() {
         return minor;
+    }
+
+    public String getPrefix() {
+        return prefix;
     }
 
     public String getSpecifier() {
@@ -196,6 +225,11 @@ public class Version implements Comparable<Version> {
 
     @Override
     public String toString() {
-        return "Version{" + "major=" + major + ", minor=" + minor + ", micro=" + micro + ", specifier=" + specifier + '}';
+        return getFormat(EnumSet.of(Format.major, Format.minor, Format.micro, Format.specifier));
+    }
+
+    public enum Format {
+
+        prefix, major, minor, micro, specifier;
     }
 }
