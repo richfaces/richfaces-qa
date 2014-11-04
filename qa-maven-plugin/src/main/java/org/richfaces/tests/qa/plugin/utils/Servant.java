@@ -76,7 +76,7 @@ public class Servant {
                     getLog().info(String.format("File <%s> exists, but the size of downloaded <%d B> and size from url <%d B> does not match. Deleting the downloaded file.", to.getName(), to.length(), fileSize));
                     to.delete();
                 }
-                getLog().info(String.format("Downloading from <%s> to <%s>.", from.toString(), to.getAbsolutePath()));
+                getLog().info(String.format("Trying to download from <%s> to <%s>.", from.toString(), to.getAbsolutePath()));
                 final ReadableByteChannel rbc = Channels.newChannel(from.openStream());
                 final FileOutputStream fos = new FileOutputStream(to);
                 DownloadProgressPrinter progressPrinter = new DownloadProgressPrinter(fos, fileSize);

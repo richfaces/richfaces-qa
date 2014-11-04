@@ -25,9 +25,11 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumSet;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.richfaces.tests.qa.plugin.utils.Version.Format;
 
 import com.google.common.collect.Lists;
 
@@ -231,5 +233,27 @@ public class VersionTest {
         assertEquals(3, v.getMinor());
         assertEquals(1, v.getMicro());
         assertEquals("-patched", v.getSpecifier());
+    }
+
+    @Test
+    public void testFormat() {
+        String versionSttring = "3.2.1abc";
+        v = Version.parseVersion(versionSttring);
+
+        assertEquals(versionSttring, v.getFullFormat());
+        assertEquals("3.2", v.getMajorMinorFormat());
+        assertEquals("3.2.1", v.getMajorMinorMicroFormat());
+        assertEquals("3.2.1abc", v.getFormat(EnumSet.of(Format.major, Format.minor, Format.micro, Format.specifier)));
+        assertEquals("abc", v.getFormat(EnumSet.of(Format.specifier)));
+        assertEquals("", v.getFormat(EnumSet.of(Format.prefix)));
+
+        versionSttring = "prefix-3.2.1abc";
+        v = Version.parseVersion(versionSttring, "prefix-");
+        assertEquals("3.2", v.getMajorMinorFormat());
+        assertEquals("3.2.1", v.getMajorMinorMicroFormat());
+        assertEquals(versionSttring, v.getFullFormat());
+        assertEquals("3.2.1abc", v.getFormat(EnumSet.of(Format.major, Format.minor, Format.micro, Format.specifier)));
+        assertEquals("abc", v.getFormat(EnumSet.of(Format.specifier)));
+        assertEquals("prefix-", v.getFormat(EnumSet.of(Format.prefix)));
     }
 }
