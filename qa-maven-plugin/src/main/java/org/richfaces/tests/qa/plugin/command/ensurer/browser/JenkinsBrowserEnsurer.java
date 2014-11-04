@@ -105,6 +105,7 @@ public class JenkinsBrowserEnsurer implements Ensurer {
         File firefoxDir;
         if (browser.isUnknownVersion()) {
             servant.getLog().info(String.format("Firefox version not specified. Using the optimal or minimal version specified with attributes <%s>, <%s>.", "firefoxJenkinsVersionOptimal", "firefoxJenkinsVersionMinimal"));
+            servant.getLog().info(String.format("Which are set to <%s> and <%s>.", servant.getMojo().getJenkinsFirefoxVersionOptimal(), servant.getMojo().getJenkinsFirefoxVersionMinimal()));
             firefoxDir = JenkinsFirefoxDirectoryFinder.getOptimalOrMinimalVersion(getFirefoxBinDirPath().listFiles(),
                 getProperty().getJenkinsFirefoxVersionOptimal(), getProperty().getJenkinsFirefoxVersionMinimal());
         } else {
