@@ -540,7 +540,7 @@ FSF site: http://www.fsf.org. -->
                                     <attachClasses>false</attachClasses>
                                 </configuration>
                             </execution>
-                            <execution>
+                            <!--<execution>
                                 <id>tomee15</id>
                                 <phase>package</phase>
                                 <goals>
@@ -563,7 +563,7 @@ FSF site: http://www.fsf.org. -->
                                     <packagingExcludes>${glassfish31.excluded.libraries}</packagingExcludes>
                                     <attachClasses>false</attachClasses>
                                 </configuration>
-                            </execution>
+                            </execution>-->
                         </executions>
                     </plugin>
                     <plugin>
