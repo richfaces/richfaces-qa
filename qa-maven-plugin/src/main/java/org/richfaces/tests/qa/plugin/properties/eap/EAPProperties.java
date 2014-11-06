@@ -23,46 +23,51 @@ package org.richfaces.tests.qa.plugin.properties.eap;
 
 import java.io.File;
 import java.net.URL;
+import java.util.EnumSet;
 
 import org.richfaces.tests.qa.plugin.utils.Servant;
 import org.richfaces.tests.qa.plugin.utils.Utils;
 import org.richfaces.tests.qa.plugin.utils.Version;
+import org.richfaces.tests.qa.plugin.utils.Version.Format;
 
 /**
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class EAPProperties {
+public class EAPProperties {
 
     private static final String hudsonStaticLinux = "/home/hudson/static_build_env/";
     private static final String hudsonStaticWin = "h:/hudson/static_build_env/";
+
+    private final boolean isInReleasedRepository;
     private File jenkinsEapZipFile;
     private final Servant servant;
+    private final String urlPart1Candidates = "http://download.englab.brq.redhat.com/devel/candidates/JBEAP";
+    private final String urlPart1Released = "http://download.englab.brq.redhat.com/released/JBEAP-6";
     private URL urlToEapZip;
     private final Version version;
 
-    public EAPProperties(Version v, Servant servant) {
-        this.version = v;
+    public EAPProperties(String versionString, Servant servant) {
+        this.version = Version.parseEapVersion(versionString);
         this.servant = servant;
+        isInReleasedRepository = version.getSpecifier().isEmpty();
     }
 
     public static EAPProperties getPropertiesForVersion(String versionString, Servant servant) {
-        Version v = Version.parseEapVersion(versionString);
-        if (v.equals(Version.parseVersion("6.3.0"))) {
-            return new EAP630Properties(servant);
-        } else if (v.equals(Version.parseVersion("6.2.4-patched"))) {
-            return new EAP624PatchedProperties(servant);
-        } else {
-            throw new UnsupportedOperationException(String.format("Unsupported EAP version %s", v.getFullFormat()));
-        }
+        return new EAPProperties(versionString, servant);
     }
 
     protected File _getJenkinsEapZipFile() {
-        return new File(String.format("%s/eap/%s/%s.zip", getServant().isOnLinux() ? hudsonStaticLinux : hudsonStaticWin, version.getMajorMinorMicroFormat(), version.getFullFormat()));
+        return new File(String.format("%s/eap/%s/%s.zip", getServant().isOnLinux() ? hudsonStaticLinux : hudsonStaticWin,
+            getVersion().getFormat(EnumSet.of(Format.major, Format.minor, Format.micro, Format.specifier)), getEAPZipName()));
     }
 
     protected URL _getUrlToEapZip() {
         return Utils.createURLSilently(String.format("%s/%s/%s.zip", getURLPart1(), getURLPart2(), getURLPart3()));
+    }
+
+    protected String getEAPZipName() {
+        return getVersion().getMicro() > 0 ? getVersion().getFullFormat() + "-full-build" : getVersion().getFullFormat();
     }
 
     public String getEapExtractedDirectoryName() {
@@ -81,15 +86,15 @@ public abstract class EAPProperties {
     }
 
     protected String getURLPart1() {
-        return "http://download.englab.brq.redhat.com/released/JBEAP-6";
+        return isInReleasedRepository ? urlPart1Released : urlPart1Candidates;
     }
 
     protected String getURLPart2() {
-        return version.getMajorMinorMicroFormat();
+        return isInReleasedRepository ? getVersion().getMajorMinorMicroFormat() : "JBEAP-" + getVersion().getFormat(EnumSet.of(Format.major, Format.minor, Format.micro, Format.specifier));
     }
 
     protected String getURLPart3() {
-        return version.getFullFormat();
+        return getEAPZipName();
     }
 
     public URL getUrlToEapZip() {

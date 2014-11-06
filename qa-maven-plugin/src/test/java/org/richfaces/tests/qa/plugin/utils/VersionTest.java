@@ -233,6 +233,18 @@ public class VersionTest {
         assertEquals(3, v.getMinor());
         assertEquals(1, v.getMicro());
         assertEquals("-patched", v.getSpecifier());
+
+        v = Version.parseEapVersion("6.3.1-DR1");
+        assertEquals(6, v.getMajor());
+        assertEquals(3, v.getMinor());
+        assertEquals(1, v.getMicro());
+        assertEquals("-DR1", v.getSpecifier());
+
+        v = Version.parseEapVersion("6.3.1.DR2");
+        assertEquals(6, v.getMajor());
+        assertEquals(3, v.getMinor());
+        assertEquals(1, v.getMicro());
+        assertEquals(".DR2", v.getSpecifier());
     }
 
     @Test

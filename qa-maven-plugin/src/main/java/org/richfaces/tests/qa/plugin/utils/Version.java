@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.qa.plugin.utils;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
@@ -37,10 +38,11 @@ public class Version implements Comparable<Version> {
     private static final String eapPrefix = "jboss-eap-";
     private static final String ffPrefix = "firefox-";
 
-    private final String DIGITS = "[0-9]+";
-    private final String NON_DIGITS = "[a-zA-Z\\-]";
+    private final String DIGITS = "\\d+";
+    private final String NON_DIGITS = "\\D";
+    private final String ANYTHING = ".";
     private final String VERSION_SEPARATOR = "\\.";
-    private final String DIGITS_FOLLOWED_BY_NON_DIGITS = DIGITS + NON_DIGITS + "+";
+    private final String DIGITS_FOLLOWED_BY_ANYTHING = MessageFormat.format("{0}{1}+{2}+", DIGITS, NON_DIGITS, ANYTHING);
 
     private final int major;
     private final int micro;
@@ -75,7 +77,7 @@ public class Version implements Comparable<Version> {
         String spec = "";
         while (!split.isEmpty() && v.size() != 3) {
             String remove = split.remove(0);
-            if (remove.matches(DIGITS_FOLLOWED_BY_NON_DIGITS)) {
+            if (remove.matches(DIGITS_FOLLOWED_BY_ANYTHING)) {
                 String replaceFirst = remove.replaceFirst(NON_DIGITS, "+");
                 v.add(Integer.valueOf(replaceFirst.substring(0, replaceFirst.indexOf("+"))));
                 replaceFirst = remove.replaceFirst(DIGITS, "+");

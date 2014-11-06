@@ -50,65 +50,99 @@ public class EAPPropertiesTest {
     @Mock
     private Servant servant_win;
 
+    private final String version630 = "6.3.0";
+    private final String version630dr1 = "6.3.0-dr1";
+    private final String version631 = "6.3.1";
+    private final String version631dr1 = "6.3.1-dr1";
+
     @Before
     public void setUp() {
         props = null;
         MockitoAnnotations.initMocks(this);
 
         when(servant_linux.isOnLinux()).thenReturn(Boolean.TRUE);
+        when(servant_win.isOnLinux()).thenReturn(Boolean.FALSE);
     }
 
     @Test
-    public void testEAP624PatchedURL_linux() throws IOException {
-        props = new EAP624PatchedProperties(servant_linux);
-        props.getUrlToEapZip();
-        assertEquals(new URL("http://download.englab.brq.redhat.com/released/JBEAP-6/6.2.4/jboss-eap-6.2.4-full-build.zip"), props.getUrlToEapZip());
-//        assertTrue(props.getUrlToEapZip().openConnection().getContentLengthLong() > 100000);
+    public void testNotReleasedEAPWithMinorVersionEqualToZeroURL() throws IOException {
+        props = new EAPProperties(version630dr1, servant_linux);
+        assertEquals(new URL("http://download.englab.brq.redhat.com/devel/candidates/JBEAP/JBEAP-6.3.0-dr1/jboss-eap-6.3.0-dr1.zip"), props.getUrlToEapZip());
     }
 
     @Test
-    public void testEAP624PatchedURL_win() throws IOException {
-        props = new EAP624PatchedProperties(servant_win);
-        props.getUrlToEapZip();
-        assertEquals(new URL("http://download.englab.brq.redhat.com/released/JBEAP-6/6.2.4/jboss-eap-6.2.4-full-build.zip"), props.getUrlToEapZip());
-//        assertTrue(props.getUrlToEapZip().openConnection().getContentLengthLong() > 100000);
+    public void testNotReleasedEAPWithMinorVersionEqualToZeroURLIsSameForLinuxAndWindows() throws IOException {
+        assertEquals(new EAPProperties(version630dr1, servant_linux).getUrlToEapZip(), new EAPProperties(version630dr1, servant_win).getUrlToEapZip());
     }
 
     @Test
-    public void testEAP624PatchedZIP_linux() {
-        props = new EAP624PatchedProperties(servant_linux);
-        assertEquals(new File(String.format("%s/eap/%s/jboss-eap-%s.zip", hudsonStaticLinux, "6.2.4", "6.2.4-patched")), props.getJenkinsEapZipFile());
+    public void testNotReleasedEAPWithMinorVersionEqualToZeroZIP_linux() {
+        props = new EAPProperties(version630dr1, servant_linux);
+        assertEquals(new File(String.format("%s/eap/%s/jboss-eap-%s.zip", hudsonStaticLinux, version630dr1, version630dr1)), props.getJenkinsEapZipFile());
     }
 
     @Test
-    public void testEAP624PatchedZIP_win() {
-        props = new EAP624PatchedProperties(servant_win);
-        assertEquals(new File(String.format("%s/eap/%s/jboss-eap-%s.zip", hudsonStaticWin, "6.2.4", "6.2.4-patched")), props.getJenkinsEapZipFile());
+    public void testNotReleasedEAPWithMinorVersionEqualToZeroZIP_win() {
+        props = new EAPProperties(version630dr1, servant_win);
+        assertEquals(new File(String.format("%s/eap/%s/jboss-eap-%s.zip", hudsonStaticWin, version630dr1, version630dr1)), props.getJenkinsEapZipFile());
     }
 
     @Test
-    public void testEAP630URL_linux() throws IOException {
-        props = new EAP630Properties(servant_linux);
+    public void testNotReleasedEAPWithMinorVersionGreaterThanZeroURL() throws IOException {
+        props = new EAPProperties(version631dr1, servant_linux);
+        assertEquals(new URL("http://download.englab.brq.redhat.com/devel/candidates/JBEAP/JBEAP-6.3.1-dr1/jboss-eap-6.3.1-dr1-full-build.zip"), props.getUrlToEapZip());
+    }
+
+    @Test
+    public void testNotReleasedEAPWithMinorVersionGreaterThanZeroZIP_linux() {
+        props = new EAPProperties(version631dr1, servant_linux);
+        assertEquals(new File(String.format("%s/eap/%s/jboss-eap-%s.zip", hudsonStaticLinux, version631dr1, version631dr1 + "-full-build")), props.getJenkinsEapZipFile());
+    }
+
+    @Test
+    public void testNotReleasedEAPWithMinorVersionGreaterThanZeroZIP_win() {
+        props = new EAPProperties(version631dr1, servant_win);
+        assertEquals(new File(String.format("%s/eap/%s/jboss-eap-%s.zip", hudsonStaticWin, version631dr1, version631dr1 + "-full-build")), props.getJenkinsEapZipFile());
+    }
+
+    @Test
+    public void testReleasedEAPWithMinorVersionEqualToZeroURL() throws IOException {
+        props = new EAPProperties(version630, servant_linux);
         assertEquals(new URL("http://download.englab.brq.redhat.com/released/JBEAP-6/6.3.0/jboss-eap-6.3.0.zip"), props.getUrlToEapZip());
-//        assertTrue(props.getUrlToEapZip().openConnection().getContentLengthLong() > 100000);
     }
 
     @Test
-    public void testEAP630URL_win() throws IOException {
-        props = new EAP630Properties(servant_win);
-        assertEquals(new URL("http://download.englab.brq.redhat.com/released/JBEAP-6/6.3.0/jboss-eap-6.3.0.zip"), props.getUrlToEapZip());
-//        assertTrue(props.getUrlToEapZip().openConnection().getContentLengthLong() > 100000);
+    public void testReleasedEAPWithMinorVersionEqualToZeroURLIsSameForLinuxAndWindows() throws IOException {
+        assertEquals(new EAPProperties(version630, servant_linux).getUrlToEapZip(), new EAPProperties(version630, servant_win).getUrlToEapZip());
     }
 
     @Test
-    public void testEAP630ZIP_linux() {
-        props = new EAP630Properties(servant_linux);
-        assertEquals(new File(String.format("%s/eap/%s/jboss-eap-%s.zip", hudsonStaticLinux, "6.3.0", "6.3.0")), props.getJenkinsEapZipFile());
+    public void testReleasedEAPWithMinorVersionEqualToZeroZIP_linux() {
+        props = new EAPProperties(version630, servant_linux);
+        assertEquals(new File(String.format("%s/eap/%s/jboss-eap-%s.zip", hudsonStaticLinux, version630, version630)), props.getJenkinsEapZipFile());
     }
 
     @Test
-    public void testEAP630ZIP_win() {
-        props = new EAP630Properties(servant_win);
-        assertEquals(new File(String.format("%s/eap/%s/jboss-eap-%s.zip", hudsonStaticWin, "6.3.0", "6.3.0")), props.getJenkinsEapZipFile());
+    public void testReleasedEAPWithMinorVersionEqualToZeroZIP_win() {
+        props = new EAPProperties(version630, servant_win);
+        assertEquals(new File(String.format("%s/eap/%s/jboss-eap-%s.zip", hudsonStaticWin, version630, version630)), props.getJenkinsEapZipFile());
+    }
+
+    @Test
+    public void testReleasedEAPWithMinorVersionGreaterThanZeroURL() throws IOException {
+        props = new EAPProperties(version631, servant_linux);
+        assertEquals(new URL("http://download.englab.brq.redhat.com/released/JBEAP-6/6.3.1/jboss-eap-6.3.1-full-build.zip"), props.getUrlToEapZip());
+    }
+
+    @Test
+    public void testReleasedEAPWithMinorVersionGreaterThanZeroZIP_linux() {
+        props = new EAPProperties(version631, servant_linux);
+        assertEquals(new File(String.format("%s/eap/%s/jboss-eap-%s.zip", hudsonStaticLinux, version631, version631 + "-full-build")), props.getJenkinsEapZipFile());
+    }
+
+    @Test
+    public void testReleasedEAPWithMinorVersionGreaterThanZeroZIP_win() {
+        props = new EAPProperties(version631, servant_win);
+        assertEquals(new File(String.format("%s/eap/%s/jboss-eap-%s.zip", hudsonStaticWin, version631, version631 + "-full-build")), props.getJenkinsEapZipFile());
     }
 }
