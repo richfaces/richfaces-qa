@@ -37,23 +37,21 @@ import org.richfaces.tests.qa.plugin.utils.Version;
 @Mojo(name = "process")
 public class ProcessMojo extends AbstractMojo {
 
+    @Component
+    private MavenProject project;
+
     @Parameter(defaultValue = "qa.webdriver.browser")
     private String browserPropertyName;
 
     @Parameter(defaultValue = "qa.chrome.driver.bin")
     private String chromeDriverBinPropertyName;
-    @Parameter(defaultValue = "2.10")
+    @Parameter(property = "chromeDriverVersion")
     private String chromeDriverVersion;
-
-    @Parameter(defaultValue = "firefox")
-    private String defaultBrowser;
 
     @Parameter(defaultValue = "qa.eap.home")
     private String eapHomePropertyName;
 
-    private EAPProperties eapProperties;
-
-    @Parameter(defaultValue = "jboss-eap-6.3.0")
+    @Parameter(property = "eapVersion")
     private String eapVersion;
 
     @Parameter(defaultValue = "qa.firefox.bin")
@@ -66,19 +64,18 @@ public class ProcessMojo extends AbstractMojo {
     @Parameter(defaultValue = "qa.ie.driver.bin")
     private String ieDriverBinPropertyName;
 
-    @Parameter(defaultValue = "24esr")
+    @Parameter(property = "jenkinsFirefoxVersionMinimal")
     private String jenkinsFirefoxVersionMinimal;
-    @Parameter(defaultValue = "31esr")
+    @Parameter(property = "jenkinsFirefoxVersionOptimal")
     private String jenkinsFirefoxVersionOptimal;
-
-    @Component
-    private MavenProject project;
 
     @Parameter(defaultValue = "${project.build.directory}")
     private String projectBuildDirectory;
 
-    @Parameter(defaultValue = "2.43.1")
+    @Parameter(property = "seleniumVersion")
     private String seleniumVersion;
+
+    private EAPProperties eapProperties;
 
     private final Servant servant = new Servant(this);
 
@@ -88,7 +85,9 @@ public class ProcessMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
-        eapProperties = createEAPProps(eapVersion);
+        if (eapVersion != null && !eapVersion.isEmpty()) {
+            eapProperties = createEAPProps(eapVersion);
+        }
         servant.getCommands().performAll();
     }
 
@@ -102,10 +101,6 @@ public class ProcessMojo extends AbstractMojo {
 
     public String getChromeDriverVersion() {
         return chromeDriverVersion;
-    }
-
-    public String getDefaultBrowser() {
-        return defaultBrowser;
     }
 
     public String getEapHomePropertyName() {
