@@ -29,8 +29,6 @@ import org.richfaces.tests.qa.plugin.command.ensurer.Ensurer;
 import org.richfaces.tests.qa.plugin.properties.eap.EAPProperties;
 import org.richfaces.tests.qa.plugin.utils.Servant;
 
-import com.google.common.io.Files;
-
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
@@ -59,7 +57,7 @@ public class JenkinsEAPEnsurer implements Ensurer {
             targetDir.mkdirs();
         }
         File currentEAPZip = new File(targetDir, "eap.zip");
-        Files.copy(getEAPProperties().getJenkinsEapZipFile(), currentEAPZip);
+        servant.copy(getEAPProperties().getJenkinsEapZipFile(), currentEAPZip);
         servant.extract(targetDir, currentEAPZip);
         File extractedEAPDir = new File(targetDir, "jboss-eap-" + getEAPProperties().getVersion().getMajorMinorFormat());
         servant.setProjectProperty(getProperty().getEapHomePropertyName(), extractedEAPDir.getAbsolutePath());

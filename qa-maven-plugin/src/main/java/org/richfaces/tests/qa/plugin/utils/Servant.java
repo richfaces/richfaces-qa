@@ -31,6 +31,7 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -64,6 +65,11 @@ public class Servant {
 
     public Servant(ProcessMojo m) {
         this.mojo = m;
+    }
+
+    public void copy(File from, File to) throws IOException {
+        getLog().info(MessageFormat.format("Copying <{0}> to <{1}>", from.getAbsolutePath(), to.getAbsolutePath()));
+        Files.copy(from, to);
     }
 
     public void downloadFile(URL from, File to) {

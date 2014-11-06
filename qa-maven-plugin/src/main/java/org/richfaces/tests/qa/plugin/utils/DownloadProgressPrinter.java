@@ -47,7 +47,9 @@ public class DownloadProgressPrinter extends Thread {
     @Override
     public void run() {
         long downloadedSize;
+        long prevDownloadedSize = 0;
         double progress;
+        double downloadSpeedKiBPerSec = 0;
         boolean notCompleted = true;
         while (fos.getChannel().isOpen() || notCompleted) {
             try {
@@ -57,7 +59,9 @@ public class DownloadProgressPrinter extends Thread {
                     downloadedSize = fileSize;
                 }
                 progress = (((downloadedSize * 1.0) / fileSize) * 100.0);
-                System.out.println(String.format("downloaded %s B of %s B [%.2f %%]", downloadedSize, fileSize, progress));
+                downloadSpeedKiBPerSec = (downloadedSize - prevDownloadedSize) / updateTimeInMillis;
+                System.out.println(String.format("downloaded %s B of %s B [%.2f %%], at %.1f KiB/s", downloadedSize, fileSize, progress, downloadSpeedKiBPerSec));
+                prevDownloadedSize = downloadedSize;
                 if (downloadedSize != fileSize) {
                     waitFor(updateTimeInMillis);
                 } else {
