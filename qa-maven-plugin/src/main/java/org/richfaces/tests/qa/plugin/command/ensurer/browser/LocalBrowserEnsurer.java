@@ -112,7 +112,7 @@ public class LocalBrowserEnsurer implements Ensurer {
             if (servant.isOnWindows()) {
                 throw new UnsupportedOperationException("Firefox binaries are not available for Windows.");
             }
-            String versionFull = browser.getVersion().getFullFormat();
+            String versionFull = browser.getVersion().getFormat(EnumSet.of(Format.major, Format.minor, Format.micro, Format.specifier));
             File currentFirefoxDir = new File(userBrowserDirectory, "firefox/" + versionFull);
             if (!currentFirefoxDir.exists()) {
                 currentFirefoxDir.mkdirs();

@@ -164,7 +164,7 @@ public class Servant {
         if (browserFromSystemProperty != null && !browserFromSystemProperty.isEmpty()) {
             return Browser.parseFromString(browserFromSystemProperty);
         }
-        return Browser.parseFromString(getMojo().getDefaultBrowser());
+        throw new IllegalStateException("No browser specified! You can use any of these: -Dbrowser=firefox , -Dbrowser=chrome , -Dbrowser=ie");
     }
 
     public Command getCommands() {

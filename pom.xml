@@ -1873,6 +1873,8 @@ FSF site: http://www.fsf.org. -->
            c) for ie: *ie*, *explorer*, *internetExplorer*
 
          e.g.: -Dbrowser=FF, -Dbrowser=cr, -Dbrowser=internetExplorer, -Dbrowser=ff30
+
+         All properties begging with prefix 'qa.' (e.g. 'qa.eap.home' ) are returned from the qa-maven-plugin.
         -->
         <profile>
             <id>browser</id>
@@ -1884,6 +1886,13 @@ FSF site: http://www.fsf.org. -->
             <properties>
                 <jbossEAP62Home>${qa.eap.home}</jbossEAP62Home>
                 <jbossEAP63Home>${qa.eap.home}</jbossEAP63Home>
+
+                <!-- following properties are used by the qa-maven-plugin -->
+                <eapVersion>${version.eap}</eapVersion>
+                <jenkinsFirefoxVersionMinimal>24esr</jenkinsFirefoxVersionMinimal>
+                <jenkinsFirefoxVersionOptimal>31esr</jenkinsFirefoxVersionOptimal>
+                <chromeDriverVersion>2.11</chromeDriverVersion>
+                <seleniumVersion>${version.selenium}</seleniumVersion>
             </properties>
             <build>
                 <plugins>
@@ -1891,9 +1900,6 @@ FSF site: http://www.fsf.org. -->
                         <groupId>org.richfaces.tests</groupId>
                         <artifactId>richfaces-qa-maven-plugin</artifactId>
                         <version>${project.version}</version>
-                        <configuration>
-                            <eapVersion>${version.eap}</eapVersion>
-                        </configuration>
                         <executions>
                             <execution>
                                 <phase>process-test-classes</phase>
