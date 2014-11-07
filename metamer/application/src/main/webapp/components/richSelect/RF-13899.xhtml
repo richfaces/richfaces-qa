@@ -43,7 +43,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="component">
         	<p>
         		This is reproducer for <a href="https://issues.jboss.org/browse/RF-13899" >https://issues.jboss.org/browse/RF-13899</a> <br />
-        		Step to reproduce with unique labels:
+        		Step to reproduce with unique labels and values:
         		<ul>
         			<li>Select "Colorado" in r:select</li>
         			<li>Click outside of r:select component to send value to server</li>
@@ -73,15 +73,20 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         			<li>Select first "label1" in r:select</li>
         			<li>Click outside of r:select component to send value to server</li>
         			<li>Verify that the output below r:select was changed to "value1"</li>
-        			<li>Click on button in r:select and verify that "label1" is highlighted</li>
-        			<li>Repeat with "label2" and second "label1"</li>
+        			<li>Click on button in r:select and verify that first "label1" is highlighted</li>
+        			<li>Select second "label1" in r:select</li>
+        			<li>Click outside of r:select component to send value to server</li>
+        			<li>Verify that the output below r:select was changed to "value3"</li>
+        			<li>Click on button in r:select and verify that second "label1" is highlighted</li>
         		</ul>
     		</p>
             <r:select id="select2"
                       value="#{richSelectBean.attributes['value'].value}"
                       valueChangeListener="#{richSelectBean.listener}">
-
-                <f:selectItems value="#{rf12312.options}" />
+				
+				<f:selectItem itemLabel="label1" itemValue="value1"/>
+				<f:selectItem itemLabel="label2" itemValue="value2"/>
+				<f:selectItem itemLabel="label1" itemValue="value3"/>
                 <a4j:ajax event="change" render="output2 select2"/>
 
             </r:select>
@@ -90,6 +95,37 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/>
             <br/>
             output: <h:outputText id="output2" value="#{richSelectBean.attributes['value'].value}"/>
+            <br/>
+            <br/>
+            
+            <p>
+        		Step to reproduce with duplicate values:
+        		<ul>
+        			<li>Select "label1" in r:select</li>
+        			<li>Click outside of r:select component to send value to server</li>
+        			<li>Verify that the output below r:select was changed to "value1"</li>
+        			<li>Click on button in r:select and verify that "label1" is highlighted and label1 is in r:select's input</li>
+        			<li>Select "label3" in r:select</li>
+        			<li>Click outside of r:select component to send value to server</li>
+        			<li>Verify that the output below r:select is still "value1"</li>
+        			<li>Click on button in r:select and verify that "label3" is highlighted and label3 is in r:select's input</li>
+        		</ul>
+    		</p>
+            <r:select id="select3"
+                      value="#{richSelectBean.attributes['value'].value}"
+                      valueChangeListener="#{richSelectBean.listener}">
+				
+				<f:selectItem itemLabel="label1" itemValue="value1"/>
+				<f:selectItem itemLabel="label2" itemValue="value2"/>
+				<f:selectItem itemLabel="label3" itemValue="value1"/>
+                <a4j:ajax event="change" render="output3 select3"/>
+
+            </r:select>
+
+
+            <br/>
+            <br/>
+            output: <h:outputText id="output3" value="#{richSelectBean.attributes['value'].value}"/>
             <br/>
             <br/>
             
