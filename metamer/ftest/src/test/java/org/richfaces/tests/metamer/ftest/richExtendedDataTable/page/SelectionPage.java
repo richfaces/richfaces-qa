@@ -37,6 +37,7 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.ExtendedDataTableAttributes;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SimpleEDT;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.richfaces.tests.metamer.ftest.webdriver.AttributesImpl;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -59,7 +60,7 @@ public class SelectionPage {
     private WebDriver browser;
 
     private final Attributes<ExtendedDataTableAttributes> tableAttributes
-        = Attributes.<ExtendedDataTableAttributes>getAttributesFor(getFutureDriver());
+        = AttributesImpl.<ExtendedDataTableAttributes>getAttributesFor(getFutureDriver());
 
     public RichFacesDataScroller getDataScroller() {
         return dataScroller2;

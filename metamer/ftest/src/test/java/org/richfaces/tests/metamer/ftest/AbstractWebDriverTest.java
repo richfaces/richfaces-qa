@@ -74,7 +74,9 @@ import org.richfaces.tests.metamer.ftest.extension.configurator.transformer.Data
 import org.richfaces.tests.metamer.ftest.extension.multipleEventFiring.MultipleEventFirerer;
 import org.richfaces.tests.metamer.ftest.extension.multipleEventFiring.MultipleEventFirererImpl;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.richfaces.tests.metamer.ftest.webdriver.AttributesImpl;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.UnsafeAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 import org.testng.IHookCallBack;
@@ -927,11 +929,11 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     protected <T extends AttributeEnum> Attributes<T> getAttributes(String attributesTableId) {
-        return Attributes.<T>getAttributesFor(getFutureDriver(), attributesTableId);
+        return AttributesImpl.<T>getAttributesFor(getFutureDriver(), attributesTableId);
     }
 
     protected UnsafeAttributes getUnsafeAttributes(String attributesTableId) {
-        return new UnsafeAttributes(getFutureDriver(), attributesTableId);
+        return new AttributesImpl<AttributeEnum>(getFutureDriver(), attributesTableId);
     }
 
     protected <T extends AttributeEnum> Attributes<T> getAttributes() {
@@ -1131,18 +1133,6 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         WebElement perform();
     }
 
-    protected class UnsafeAttributes<T extends AttributeEnum> extends Attributes<T> {
-
-        public UnsafeAttributes(FutureTarget<WebDriver> driver, String attributesID) {
-            super(driver, attributesID);
-        }
-
-        @Override
-        public void set(String attribute, Object value) {
-            super.set(attribute, value);
-        }
-    }
-
     public interface FutureTarget<T> {
 
         T getTarget();
@@ -1165,7 +1155,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         }
     }
 
-    protected static final class FutureWebElement {
+    public static final class FutureWebElement {
 
         private FutureWebElement() {
         }

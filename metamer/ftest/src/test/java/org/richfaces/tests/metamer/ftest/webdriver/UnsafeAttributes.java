@@ -21,34 +21,12 @@
  */
 package org.richfaces.tests.metamer.ftest.webdriver;
 
-import org.richfaces.fragment.common.Event;
-import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
-
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @param <T>
  */
-public interface Attributes<T extends AttributeEnum> {
+public interface UnsafeAttributes {
 
-    /**
-     * Retrieve current attribute value
-     *
-     * @param attribute
-     * @return current attribute value
-     */
-    String get(T attribute);
+    String get(String attribute);
 
-    void reset(T attribute);
-
-    void set(T attribute, Boolean bool);
-
-    void set(T attribute, Enum<?> item);
-
-    void set(T attribute, Event event);
-
-    void set(T attribute, Number no);
-
-    void set(T attribute, String string);
-
-    void setRequestType(MetamerPage.WaitRequestType requestType);
+    void set(String attribute, Object value);
 }
