@@ -26,6 +26,7 @@ import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annot
 
 import java.net.URL;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.Point;
@@ -37,8 +38,8 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.fragment.common.Locations;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.notify.NotifyMessage;
-import org.richfaces.fragment.notify.RichFacesNotify;
 import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
+import org.richfaces.fragment.notify.RichFacesNotify;
 import org.richfaces.fragment.notify.RichFacesNotify.NotifyMessageItemImpl;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -210,12 +211,7 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
         generateMessagesWithWait(3);
         Assert.assertEquals(notify.size(), 3, "There should be 3 messages.");
         MetamerPage.waitRequest(rerenderStackButton, WaitRequestType.XHR).click();
-        Graphene.waitAjax().until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver from) {
-                return notify.size() == 0;
-            }
-        });
+        notify.advanced().waitUntilMessagesAreNotVisible().withTimeout(3, TimeUnit.SECONDS).perform();
         Assert.assertEquals(notify.size(), 0, "There should be no messages visible after rerendering the stack.");
     }
 }
