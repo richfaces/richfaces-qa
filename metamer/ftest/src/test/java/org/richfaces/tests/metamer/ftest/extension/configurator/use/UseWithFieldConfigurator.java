@@ -111,7 +111,23 @@ public class UseWithFieldConfigurator implements ConfiguratorExtension {
     }
 
     protected List<Config> getConfigurationFromMethod(UseWithField methodUseAnnotation, Object testInstance) {
-        throw new UnsupportedOperationException("Not supported yet");
+        List<Config> result = Lists.newLinkedList();
+        Field fieldToInjectTo = ReflectionUtils.getFirstFieldWithName(methodUseAnnotation.field(), testInstance);
+        if (methodUseAnnotation.value()[0].isEmpty()) {
+            throw new IllegalArgumentException("Value attribute of the UseWithField annotation is empty.");
+        }
+        Method methodWithValues = ReflectionUtils.getFirstMethodWithName(methodUseAnnotation.value()[0], testInstance);
+        if (methodWithValues == null) {
+            throw new IllegalArgumentException("No method with name: " + methodUseAnnotation.value()[0] + " found.");
+        }
+        if (methodWithValues.getReturnType().isArray() && fieldToInjectTo.getType().isAssignableFrom(methodWithValues.getReturnType().getComponentType())) {
+            for (Object val : (Object[]) ReflectionUtils.getMethodValue(methodWithValues, testInstance)) {
+                result.add(new SimpleConfig(testInstance, fieldToInjectTo, val));
+            }
+        } else {
+            throw new IllegalArgumentException("Uncompatible types. Method returning values does not return an array. Field to inject to is not assignable from method with values.");
+        }
+        return result;
     }
 
     @Override

@@ -149,6 +149,36 @@ public class ReflectionUtils {
         return getFirstMethodAnnotatedWith(new Class[]{ annoClass }, instance);
     }
 
+    public static Method getFirstMethodWithName(String methodName, Object instance) {
+        Class<?> klass = instance.getClass();
+        while (!klass.equals(Object.class)) {
+            for (Method method : klass.getDeclaredMethods()) {
+                if (method.getName().equals(methodName)) {
+                    return method;
+                }
+            }
+            klass = klass.getSuperclass();
+        }
+        throw new IllegalArgumentException("No method with name " + methodName + " found.");
+    }
+
+    public static Object getMethodValue(Method method, Object instance) {
+        Object result;
+        boolean accessible = method.isAccessible();
+        if (!accessible) {
+            method.setAccessible(true);
+        }
+        try {
+            result = method.invoke(instance);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+        if (!accessible) {
+            method.setAccessible(false);
+        }
+        return result;
+    }
+
     private static boolean hasAllAnnotations(AccessibleObject o, Class<? extends Annotation>[] annoClasses) {
         for (Class<? extends Annotation> annoClass : annoClasses) {
             if (o.getAnnotation(annoClass) == null) {
