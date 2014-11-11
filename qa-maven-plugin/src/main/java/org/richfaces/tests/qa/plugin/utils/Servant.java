@@ -21,12 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.qa.plugin.utils;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.channels.Channels;
@@ -194,17 +192,7 @@ public class Servant {
     }
 
     public String getUserName() {
-        try {
-            Process exec = Runtime.getRuntime().exec("whoami");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(exec.getInputStream()));
-            String user = reader.readLine();
-            reader.close();
-            int indexOf = user.indexOf("\\");// on windows the output equals to computer-name\\username
-            return user.substring(indexOf > 0 ? indexOf : 0);
-        } catch (IOException ex) {
-            getLog().error(ex);
-            throw new RuntimeException(ex);
-        }
+        return System.getProperty("user.name");
     }
 
     public boolean is64bitArch() {
