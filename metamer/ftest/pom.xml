@@ -272,5 +272,16 @@ FSF site: http://www.fsf.org. -->
                 <arquillian.container.jbossas.7-1.node0>[::1]</arquillian.container.jbossas.7-1.node0>
             </properties>
         </profile>
+        <profile>
+            <id>smoke-tests</id>
+            <activation>
+                <property>
+                    <name>smoke</name>
+                </property>
+            </activation>
+            <properties>
+                <testng.suite.xml>src/test/resources/testng/testng-smoke.xml</testng.suite.xml>
+            </properties>
+        </profile>
     </profiles>
 </project>
