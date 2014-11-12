@@ -120,14 +120,15 @@ public class JenkinsBrowserEnsurer implements Ensurer {
         } else if (servant.isOnLinux()) {
             return hudsonFirefoxLinux;
         } else if (servant.isOnSolaris()) {
-            String osVersion = System.getProperty("os.version");
-            if (osVersion.equals("10")) {
+            String osVersion = servant.getOSVersion();
+            if (osVersion.endsWith("10")) {
                 return hudsonFirefoxSolaris10;
-            } else if (osVersion.equals("11")) {
+            } else if (osVersion.endsWith("11")) {
                 return hudsonFirefoxSolaris11;
             }
+            throw new UnsupportedOperationException(String.format("Not supported Solaris version <%s>.", osVersion));
         }
-        throw new UnsupportedOperationException(String.format("Not supported OS <%s>.", servant.getOsArch()));
+        throw new UnsupportedOperationException(String.format("Not supported OS <%s>.", servant.getOSName()));
     }
 
     private ProcessMojo getProperty() {
