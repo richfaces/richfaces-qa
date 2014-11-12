@@ -36,7 +36,7 @@ import org.richfaces.tests.qa.plugin.utils.Version.Format;
  */
 public class EAPProperties {
 
-    private static final String hudsonStaticLinux = "/home/hudson/static_build_env/";
+    private static final String hudsonStaticUnix = "/home/hudson/static_build_env/";
     private static final String hudsonStaticWin = "h:/hudson/static_build_env/";
 
     private final boolean isInReleasedRepository;
@@ -58,7 +58,7 @@ public class EAPProperties {
     }
 
     protected File _getJenkinsEapZipFile() {
-        return new File(String.format("%s/eap/%s/%s.zip", getServant().isOnLinux() ? hudsonStaticLinux : hudsonStaticWin,
+        return new File(String.format("%s/eap/%s/%s.zip", getServant().isOnWindows() ? hudsonStaticWin : hudsonStaticUnix,
             getVersion().getFormat(EnumSet.of(Format.major, Format.minor, Format.micro, Format.specifier)), getEAPZipName()));
     }
 

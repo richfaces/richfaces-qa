@@ -187,6 +187,10 @@ public class Servant {
         return System.getProperty("os.name");
     }
 
+    public String getOSVersion() {
+        return System.getProperty("os.version");
+    }
+
     public String getOsArch() {
         return System.getProperty("os.arch");
     }
