@@ -1,0 +1,41 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:head></h:head>
+    <f:view>
+        <h:body>
+
+            <p>
+                This is reproducer for: <a href="https://issues.jboss.org/browse/RF-13890">https://issues.jboss.org/browse/RF-13890</a>
+            </p>
+            <p>If this page is opened in ie 8 or 10 (with compatibility mode 8) with zoom more than 175 then after click on
+                call the popup is popup shown and start autoresize till nothing except close button is visible.</p>
+            <h:form id="simpleForm">
+
+                <rich:popupPanel id="popup" modal="true" resizeable="true">
+                    <f:facet name="header">
+                        <h:outputText value="Simple popup panel" />
+                    </f:facet>
+                    <f:facet name="controls">
+                        <h:outputLink value="#" onclick="#{rich:component('popup')}.hide(); return false;">
+                X
+            </h:outputLink>
+                    </f:facet>
+                    <p>There is some example text which should be displayed in popup panel.</p>
+
+                    <p>Clik to X button in header to close panel.</p>
+                </rich:popupPanel>
+
+                <h:commandButton id="openPanelButton" value="Call the popup">
+                    <rich:componentControl target="popup" operation="show" />
+                </h:commandButton>
+
+            </h:form>
+        </h:body>
+    </f:view>
+</ui:composition>
+
+
