@@ -56,7 +56,7 @@ public class TestRF12654 extends AbstractWebDriverTest {
         return buildUrl(contextPath, MessageFormat.format("faces/components/richColumn/{0}.xhtml", page));
     }
 
-    @Test
+    @Test(groups = "Future")
     @UseWithField(field = "page", valuesFrom = ValuesFrom.FROM_FIELD, value = "pages")
     public void testRF12654() {
         log.changeLevel(Log.LogEntryLevel.ERROR);
