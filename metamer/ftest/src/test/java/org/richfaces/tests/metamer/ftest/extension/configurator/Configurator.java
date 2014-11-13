@@ -24,7 +24,6 @@ package org.richfaces.tests.metamer.ftest.extension.configurator;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import org.richfaces.tests.metamer.ftest.extension.configurator.config.ConfiguratorExtension;
 import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.TemplatesConfigurator;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.UseForAllTestsConfigurator;
@@ -69,15 +68,11 @@ public class Configurator {
 
     private static class ConfigManager {
 
-        private final List<ConfiguratorExtension> extensions = Lists.newArrayList();
         private final List<List<Config>> configurations = Lists.newLinkedList();
+        private final List<ConfiguratorExtension> extensions = Lists.newArrayList();
 
         public void addExtension(ConfiguratorExtension extension) {
             extensions.add(extension);
-        }
-
-        public Config getNextConfigurationStep() {
-            return configurations.get(0).remove(0);
         }
 
         public int createAllConfigurations(Method m, Object testInstance) {
@@ -85,17 +80,20 @@ public class Configurator {
             configurations.clear();
             for (ConfiguratorExtension extension : extensions) {
                 currentConfigurations = extension.createConfigurations(m, testInstance);
-                if (currentConfigurations != null) {
-                    configurations.add(currentConfigurations);
-                }
-
                 // skip test method if configuration returns no configurations and its skipIfEmpty return true
-                if (extension.skipIfEmpty() && (currentConfigurations == null || currentConfigurations.isEmpty())) {
+                if (extension.skipTestIfNoConfiguration() && (currentConfigurations == null || currentConfigurations.isEmpty())) {
                     return 0;
+                }
+                if (currentConfigurations != null && !extension.ignoreConfigurations()) {
+                    configurations.add(currentConfigurations);
                 }
             }
             ConfiguratorUtils.mergeAllConfigsToOne(configurations);
             return configurations.get(0).size();
+        }
+
+        public Config getNextConfigurationStep() {
+            return configurations.get(0).remove(0);
         }
     }
 }

@@ -26,9 +26,9 @@ import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.List;
 
+import org.richfaces.tests.metamer.ftest.extension.configurator.ConfiguratorExtension;
 import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config;
-import org.richfaces.tests.metamer.ftest.extension.configurator.config.SimpleConfig;
-import org.richfaces.tests.metamer.ftest.extension.configurator.config.ConfiguratorExtension;
+import org.richfaces.tests.metamer.ftest.extension.configurator.config.FieldConfig;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.utils.ReflectionUtils;
 
@@ -73,7 +73,7 @@ public class UseWithFieldConfigurator implements ConfiguratorExtension {
             throw new IllegalArgumentException("Uncompatible types. Field should be of type: Enum.");
         }
         for (Object value : fieldToInjectTo.getType().getEnumConstants()) {
-            result.add(new SimpleConfig(testInstance, fieldToInjectTo, value));
+            result.add(new FieldConfig(testInstance, value, fieldToInjectTo));
         }
         return result;
     }
@@ -84,8 +84,8 @@ public class UseWithFieldConfigurator implements ConfiguratorExtension {
         if (!fieldToInjectTo.getType().equals(String.class)) {
             throw new IllegalArgumentException("Uncompatible types. Field should be of type: String.");
         }
-        for (String string : methodUseAnnotation.value()) {
-            result.add(new SimpleConfig(testInstance, fieldToInjectTo, string));
+        for (String value : methodUseAnnotation.value()) {
+            result.add(new FieldConfig(testInstance, value, fieldToInjectTo));
         }
         return result;
     }
@@ -101,8 +101,8 @@ public class UseWithFieldConfigurator implements ConfiguratorExtension {
             throw new IllegalArgumentException("No field with name: " + methodUseAnnotation.value()[0] + " found.");
         }
         if (fieldWithValues.getType().isArray() && fieldToInjectTo.getType().isAssignableFrom(fieldWithValues.getType().getComponentType())) {
-            for (Object val : (Object[]) ReflectionUtils.getFieldValue(fieldWithValues, testInstance)) {
-                result.add(new SimpleConfig(testInstance, fieldToInjectTo, val));
+            for (Object value : (Object[]) ReflectionUtils.getFieldValue(fieldWithValues, testInstance)) {
+                result.add(new FieldConfig(testInstance, value, fieldToInjectTo));
             }
         } else {
             throw new IllegalArgumentException("Uncompatible types. Field with values is not an array. Field to inject to is not assignable from field with values.");
@@ -121,8 +121,8 @@ public class UseWithFieldConfigurator implements ConfiguratorExtension {
             throw new IllegalArgumentException("No method with name: " + methodUseAnnotation.value()[0] + " found.");
         }
         if (methodWithValues.getReturnType().isArray() && fieldToInjectTo.getType().isAssignableFrom(methodWithValues.getReturnType().getComponentType())) {
-            for (Object val : (Object[]) ReflectionUtils.getMethodValue(methodWithValues, testInstance)) {
-                result.add(new SimpleConfig(testInstance, fieldToInjectTo, val));
+            for (Object value : (Object[]) ReflectionUtils.getMethodValue(methodWithValues, testInstance)) {
+                result.add(new FieldConfig(testInstance, value, fieldToInjectTo));
             }
         } else {
             throw new IllegalArgumentException("Uncompatible types. Method returning values does not return an array. Field to inject to is not assignable from method with values.");
@@ -131,7 +131,12 @@ public class UseWithFieldConfigurator implements ConfiguratorExtension {
     }
 
     @Override
-    public boolean skipIfEmpty() {
+    public boolean ignoreConfigurations() {
+        return Boolean.FALSE;
+    }
+
+    @Override
+    public boolean skipTestIfNoConfiguration() {
         return Boolean.FALSE;
     }
 }

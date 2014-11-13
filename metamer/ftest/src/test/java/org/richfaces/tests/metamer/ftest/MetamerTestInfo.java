@@ -31,7 +31,6 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.StringUtils;
 import org.jboss.test.selenium.utils.testng.TestInfo;
 import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config;
-import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config.FieldConfiguration;
 import org.richfaces.tests.metamer.ftest.extension.utils.ReflectionUtils;
 import org.testng.ITestResult;
 
@@ -57,9 +56,7 @@ public final class MetamerTestInfo {
 
         List<String> info = new LinkedList<String>();
         if (configuration != null) {
-            for (FieldConfiguration c : configuration.getConfigurations()) {
-                info.add(c.toString());
-            }
+            info.add(configuration.toString());
         }
         return StringUtils.join(info, "; ");
     }

@@ -19,25 +19,30 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.extension.configurator.config;
+package org.richfaces.tests.metamer.ftest.extension.configurator;
+
+import java.lang.reflect.Method;
+import java.util.List;
+
+import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface Config {
+public interface ConfiguratorExtension {
 
     /**
-     * Perform configuration step.
+     * Create and return list of possible configurations.
      */
-    void configure();
+    List<Config> createConfigurations(Method m, Object testInstance);
 
     /**
-     * Creates a copy of this configuration.
+     * If true, all of the returned configurations will be ignored.
      */
-    Config copy();
+    boolean ignoreConfigurations();
 
     /**
-     * Perform an unconfiguration step.
+     * If true, then the test method should not run when the list of returned configurations is empty(or null).
      */
-    void unconfigure();
+    boolean skipTestIfNoConfiguration();
 }
