@@ -25,9 +25,9 @@ import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.List;
 
+import org.richfaces.tests.metamer.ftest.extension.configurator.ConfiguratorExtension;
 import org.richfaces.tests.metamer.ftest.extension.configurator.ConfiguratorUtils;
 import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config;
-import org.richfaces.tests.metamer.ftest.extension.configurator.config.ConfiguratorExtension;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
 
@@ -62,7 +62,12 @@ public class UsesConfigurator implements ConfiguratorExtension {
     }
 
     @Override
-    public boolean skipIfEmpty() {
+    public boolean ignoreConfigurations() {
+        return Boolean.FALSE;
+    }
+
+    @Override
+    public boolean skipTestIfNoConfiguration() {
         return Boolean.FALSE;
     }
 }

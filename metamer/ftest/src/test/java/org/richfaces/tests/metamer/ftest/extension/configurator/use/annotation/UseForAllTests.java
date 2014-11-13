@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation;
 
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

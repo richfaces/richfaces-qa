@@ -23,15 +23,20 @@ package org.richfaces.tests.metamer.ftest.extension.configurator;
 
 import java.util.List;
 
+import org.richfaces.tests.metamer.ftest.extension.configurator.config.CompositeConfigImpl;
 import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config;
-import org.richfaces.tests.metamer.ftest.extension.configurator.config.SimpleConfig;
 
 import com.google.common.collect.Lists;
 
 /**
+ * Utilities for Configurator.
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class ConfiguratorUtils {
+public final class ConfiguratorUtils {
+
+    private ConfiguratorUtils() {
+    }
 
     public static List<List<Config>> mergeAllConfigsToOne(List<List<Config>> configs) {
         while (configs.size() > 1) {
@@ -58,8 +63,6 @@ public class ConfiguratorUtils {
     }
 
     public static Config mergeTwoConfigs(Config config1, Config config2) {
-        SimpleConfig config = new SimpleConfig(config1);
-        config.getConfigurations().addAll(config2.getConfigurations());
-        return config;
+        return new CompositeConfigImpl(config1, config2);
     }
 }

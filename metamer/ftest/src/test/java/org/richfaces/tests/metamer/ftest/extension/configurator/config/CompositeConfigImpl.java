@@ -21,62 +21,54 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.extension.configurator.config;
 
-import java.lang.reflect.Field;
 import java.util.List;
-
-import org.richfaces.tests.metamer.ftest.extension.utils.ReflectionUtils;
 
 import com.google.common.collect.Lists;
 
 /**
+ * Composite configuration.
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class SimpleConfig implements Config {
+public class CompositeConfigImpl implements CompositeConfig {
 
-    private final List<FieldConfiguration> initialConfigurations = Lists.newArrayList();
-    private final List<FieldConfiguration> injectionsConfigurations;
+    private final List<Config> configurations;
 
-    public SimpleConfig(Object testInstance, Field f, Object value) {
-        injectionsConfigurations = Lists.newLinkedList();
-        add(testInstance, f, value);
+    public CompositeConfigImpl(Config config1, Config config2) {
+        this.configurations = Lists.newLinkedList();
+        this.configurations.add(config1.copy());
+        this.configurations.add(config2.copy());
     }
 
-    public SimpleConfig(List<FieldConfiguration> config) {
-        this.injectionsConfigurations = Lists.newLinkedList(config);
+    public CompositeConfigImpl(Config config) {
+        this.configurations = Lists.newLinkedList();
+        this.configurations.add(config.copy());
     }
 
-    public SimpleConfig(Config config) {
-        this(config.getConfigurations());
-    }
-
-    public final void add(Object testInstance, Field f, Object value) {
-        getConfigurations().add(new FieldConfiguration(testInstance, value, f));
+    public CompositeConfigImpl(List<? extends Config> config) {
+        this.configurations = Lists.newLinkedList(config);
     }
 
     @Override
     public void configure() {
-        initialConfigurations.clear();
-        Field f;
-        Object testInstance;
-        for (FieldConfiguration c : getConfigurations()) {
-            f = c.getField();
-            testInstance = c.getTestInstance();
-            // store field configuration for unconfiguration method
-            initialConfigurations.add(new FieldConfiguration(testInstance, ReflectionUtils.getFieldValue(f, testInstance), f));
-
-            // proceed with injection
-            c.injectValueToField();
+        for (Config c : getConfigurations()) {
+            c.configure();
         }
     }
 
     @Override
-    public SimpleConfig copy() {
-        return new SimpleConfig(injectionsConfigurations);
+    public CompositeConfigImpl copy() {
+        return new CompositeConfigImpl(getConfigurations());
     }
 
     @Override
-    public List<FieldConfiguration> getConfigurations() {
-        return injectionsConfigurations;
+    public List<Config> getConfigurations() {
+        return configurations;
+    }
+
+    @Override
+    public Config merge(Config otherConfig) {
+        return new CompositeConfigImpl(this, otherConfig);
     }
 
     @Override
@@ -86,9 +78,8 @@ public class SimpleConfig implements Config {
 
     @Override
     public void unconfigure() {
-        for (FieldConfiguration c : initialConfigurations) {
-            c.injectValueToField();
+        for (Config c : getConfigurations()) {
+            c.unconfigure();
         }
-        initialConfigurations.clear();
     }
 }

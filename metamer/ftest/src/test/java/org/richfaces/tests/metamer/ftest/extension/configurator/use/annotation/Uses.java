@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation;
 
 import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.TYPE;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -31,8 +30,9 @@ import java.lang.annotation.Target;
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  */
-@Target({ TYPE, METHOD })
+@Target({ METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Uses {
+
     UseWithField[] value();
 }

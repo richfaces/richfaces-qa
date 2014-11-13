@@ -21,21 +21,22 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.extension.configurator.config;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
 /**
+ * Interface for configurations which can store multiple configurations.
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface ConfiguratorExtension {
+public interface CompositeConfig extends Config {
 
     /**
-     * Create and return list of possible configurations.
+     * Gets all configurations.
      */
-    List<Config> createConfigurations(Method m, Object testInstance);
+    List<Config> getConfigurations();
 
     /**
-     * If true, the the test method should not run when the list of returned configurations is empty(or null).
+     * Merges two configurations together.
      */
-    boolean skipIfEmpty();
+    Config merge(Config otherConfig);
 }

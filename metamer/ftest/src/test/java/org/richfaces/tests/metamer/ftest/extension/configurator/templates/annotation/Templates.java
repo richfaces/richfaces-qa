@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.extension.configurator.templates.annot
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.ElementType.TYPE;
 
 import java.lang.annotation.Retention;
@@ -34,9 +33,11 @@ import java.lang.annotation.Target;
  * @author <a href="mailto:ppitonak@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22407 $
  */
-@Target({ TYPE, FIELD, METHOD, PARAMETER })
+@Target({ FIELD, METHOD, TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Templates {
-    String[] value() default {};
+
     String[] exclude() default {};
+
+    String[] value() default {};
 }
