@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2014, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.-->
+
+    <h:head></h:head>
+        <f:view>
+        <h:body>
+
+        <rich:panel header="Issue description">
+            <p>RF-13828 - a4j jsFunction does not work inside a form with enctype="multipart/form-data"</p>
+            <p>
+                <a href="https://issues.jboss.org/browse/RF-13828">link</a>
+            </p>
+            <p>Steps to reproduce:</p>
+            <ul>
+                <li>Verify that is no text in field Dummy value is: </li>
+                <li>Click on trigger jsFunction</li>
+                <li>Verify that in field Dummy value is:true</li>
+            </ul>
+        </rich:panel>
+
+        <h:form id="myForm" enctype="multipart/form-data">
+            <h:panelGrid columns="1">
+                <a4j:jsFunction name="changeDummyValue" render="tutu" oncomplete="alert('done')">
+                    <a4j:param name="param1" assignTo="#{rf13828.value}" />
+                </a4j:jsFunction>
+                <h:outputText id="tutu" value="Dummy value is: #{rf13828.value}" />
+                <input type="button" onclick="changeDummyValue(true)" value="Trigger jsFunction" />
+            </h:panelGrid>
+        </h:form>
+    </h:body>
+ </f:view>
+</html>
