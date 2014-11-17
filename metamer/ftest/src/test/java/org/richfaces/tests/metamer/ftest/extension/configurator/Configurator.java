@@ -25,6 +25,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config;
+import org.richfaces.tests.metamer.ftest.extension.configurator.repeater.RepeaterConfigurator;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.TemplatesConfigurator;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.UseForAllTestsConfigurator;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.UseWithFieldConfigurator;
@@ -44,6 +45,7 @@ public class Configurator {
         manager.addExtension(new UseForAllTestsConfigurator());
         manager.addExtension(new UseWithFieldConfigurator());
         manager.addExtension(new UsesConfigurator());
+        manager.addExtension(new RepeaterConfigurator());
     }
 
     /**
