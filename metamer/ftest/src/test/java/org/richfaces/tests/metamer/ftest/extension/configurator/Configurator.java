@@ -26,6 +26,7 @@ import java.util.List;
 
 import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config;
 import org.richfaces.tests.metamer.ftest.extension.configurator.repeater.RepeaterConfigurator;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.SkipConfigurator;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.TemplatesConfigurator;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.UseForAllTestsConfigurator;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.UseWithFieldConfigurator;
@@ -41,6 +42,8 @@ public class Configurator {
     private final ConfigManager manager = new ConfigManager();
 
     public Configurator() {
+        // FIFO queue
+        manager.addExtension(new SkipConfigurator());// should be first
         manager.addExtension(new TemplatesConfigurator());
         manager.addExtension(new UseForAllTestsConfigurator());
         manager.addExtension(new UseWithFieldConfigurator());
