@@ -27,6 +27,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.event.PhaseId;
@@ -152,6 +153,38 @@ public class TestSelect extends AbstractWebDriverTest {
         selectHawaiiGuardedAction.perform();
         assertTrue(item10.getAttribute("class").contains("rf-sel-sel"));
         assertEquals(output.getText(), "Hawaii");
+    }
+
+    @Test
+    @Templates(value = "plain")
+    public void testEnableManualInputListContent() {
+        selectAttributes.set(SelectAttributes.enableManualInput, Boolean.TRUE);
+        //These list will be test add more records, if you wanted tests another selection
+        List<SelectSettings> valuesToSelect = new ArrayList<TestSelect.SelectSettings>();
+        valuesToSelect.add(new SelectSettings(3, 3, 4, "a", "Arkansas"));
+        valuesToSelect.add(new SelectSettings(1, 5, 3, "c", "Colorado"));
+        valuesToSelect.add(new SelectSettings(0, 9, 1, "g", "Georgia"));
+        Graphene.guardAjax(select.openSelect());
+        //count number of row which are suggested in the beginning
+        int numberOfSuggestionInTheBegining = select.advanced().getSuggestionsElements().size();
+        for(SelectSettings value:valuesToSelect){
+            //Filter list
+            select.type(value.getFirstChar());
+            //Count number of suggestion after first char
+            List<WebElement> suggestions = select.advanced().getSuggestionsElements();
+            assertEquals(suggestions.size(), value.numberOfSuggestionAfterFirstChar, "Count of filtered options ('"+value.getFirstChar()+"')");
+            //Choose value
+            Graphene.guardAjax(select.openSelect()).select(value.getPossitionInFilteredList());
+            assertEquals(output.getText(), value.getName());
+            Graphene.guardAjax(select.openSelect());
+            //Count number of suggested element after select
+            int numberOfSuggestionAfterSelect = select.advanced().getSuggestionsElements().size();
+            //it should match with number of elements before suggestion
+            assertEquals(numberOfSuggestionAfterSelect, numberOfSuggestionInTheBegining);
+            //Verify if selected elements in properly tagged by css class
+            assertTrue(suggestions.get(value.getPosstionInFullList()).getAttribute("class").contains("rf-sel-sel"),
+                "The "+value.getPosstionInFullList()+" item should contain class for selected");
+        }
     }
 
     @Test(groups = "smoke")
@@ -589,4 +622,43 @@ public class TestSelect extends AbstractWebDriverTest {
         selectAttributes.set(SelectAttributes.value, "North Carolina");
         assertEquals(select.advanced().getInput().getStringValue(), "North Carolina", "Input should contain selected value.");
     }
+
+    class SelectSettings {
+        private int possitionInFilteredList;
+        private int posstionInFullList;
+        private int numberOfSuggestionAfterFirstChar;
+        private String firstChar;
+        private String name;
+
+        public SelectSettings(int possitionInFilteredList, int posstionInFullList, int numberOfSuggestionAfterFirstChar,
+            String firstChar, String name) {
+            this.possitionInFilteredList = possitionInFilteredList;
+            this.posstionInFullList = posstionInFullList;
+            this.numberOfSuggestionAfterFirstChar = numberOfSuggestionAfterFirstChar;
+            this.firstChar = firstChar;
+            this.name = name;
+        }
+
+        public int getPossitionInFilteredList() {
+            return possitionInFilteredList;
+        }
+
+        public int getPosstionInFullList() {
+            return posstionInFullList;
+        }
+
+        public int getNumberOfSuggestionAfterFirstChar() {
+            return numberOfSuggestionAfterFirstChar;
+        }
+
+        public String getFirstChar() {
+            return firstChar;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+    }
+
 }
