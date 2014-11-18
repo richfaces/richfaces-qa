@@ -28,6 +28,7 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SortingEDT;
 import org.testng.annotations.Test;
@@ -63,7 +64,8 @@ public class TestExtendedDataTableSortingUsingColumn extends DataTableSortingTes
         super.testSortModeSingle();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
     @Templates(value = "richExtendedDataTable")
     public void testSortModeSingleInEDT() {
         super.testSortModeSingle();
@@ -76,7 +78,8 @@ public class TestExtendedDataTableSortingUsingColumn extends DataTableSortingTes
         super.testSortModeSingleReverse();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
     @Templates(value = "richExtendedDataTable")
     public void testSortModeSingleReverseInEDT() {
         super.testSortModeSingleReverse();
@@ -96,7 +99,8 @@ public class TestExtendedDataTableSortingUsingColumn extends DataTableSortingTes
         super.testSortModeSingleFullPageRefresh();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
     @Templates(value = "richExtendedDataTable")
     public void testSortModeSingleFullPageRefreshInEDT() {
         super.testSortModeSingleFullPageRefresh();
@@ -109,7 +113,8 @@ public class TestExtendedDataTableSortingUsingColumn extends DataTableSortingTes
         super.testSortModeMulti();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
     @Templates(value="richExtendedDataTable")
     public void testSortModeMultiInEDT() {
         super.testSortModeMulti();
@@ -122,7 +127,8 @@ public class TestExtendedDataTableSortingUsingColumn extends DataTableSortingTes
         super.testSortModeMultiReverse();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
     @Templates(value = "richExtendedDataTable")
     public void testSortModeMultiReverseInEDT() {
         super.testSortModeMultiReverse();
@@ -135,7 +141,8 @@ public class TestExtendedDataTableSortingUsingColumn extends DataTableSortingTes
         super.testSortModeMultiReplacingOldOccurences();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
     @Templates(value = "richExtendedDataTable")
     public void testSortModeMultiReplacingOldOccurencesInEDT() {
         super.testSortModeMultiReplacingOldOccurences();
@@ -155,7 +162,8 @@ public class TestExtendedDataTableSortingUsingColumn extends DataTableSortingTes
         super.testSortModeMultiFullPageRefresh();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
     @Templates(value = "richExtendedDataTable")
     public void testSortModeMultiFullPageRefreshInEDT() {
         super.testSortModeMultiFullPageRefresh();
