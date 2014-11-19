@@ -1916,7 +1916,7 @@ FSF site: http://www.fsf.org. -->
                                 <webdriver.firefox.bin>${qa.firefox.bin}</webdriver.firefox.bin>
                                 <webdriver.chrome.driver>${qa.chrome.driver.bin}</webdriver.chrome.driver>
                                 <webdriver.ie.driver>${qa.ie.driver.bin}</webdriver.ie.driver>
-                                <arquillian.webdriver.browser>${qa.webdriver.browser}</arquillian.webdriver.browser>
+                                <arq.extension.webdriver.browser>${qa.webdriver.browser}</arq.extension.webdriver.browser>
                             </systemProperties>
                         </configuration>
                     </plugin>
