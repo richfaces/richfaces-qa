@@ -32,21 +32,60 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 public class DragIndicatorSimplePage extends MetamerPage {
 
     @FindBy(css = "div.rf-ind-drag[id$=indicatorClone]")
-    public WebElement indicator;
+    private WebElement indicatorElement;
 
-    @FindBy( css = "[id$=draggable1]")
-    public WebElement drag1;
+    @FindBy(css = "[id$=draggable1]")
+    private WebElement drag1Element;
+    @FindBy(css = "[id$=draggable2]")
+    private WebElement drag2Element;
+    @FindBy(css = "[id$=draggable3]")
+    private WebElement drag3Element;
 
-    @FindBy( css = "[id$=draggable2]")
-    public WebElement drag2;
+    @FindBy(css = "[id$=droppable1]")
+    private WebElement drop1Element;
+    @FindBy(css = "[id$=droppable2]")
+    private WebElement drop2Element;
 
-    @FindBy( css = "[id$=draggable3]")
-    public WebElement drag3;
+    /**
+     * @return the drag1Element
+     */
+    public WebElement getDrag1Element() {
+        return drag1Element;
+    }
 
-    @FindBy( css = "[id$=droppable1]")
-    public WebElement drop1;
+    /**
+     * @return the drag2Element
+     */
+    public WebElement getDrag2Element() {
+        return drag2Element;
+    }
 
-    @FindBy( css = "[id$=droppable2]")
-    public WebElement drop2;
+    /**
+     * @return the drag3Element
+     */
+    public WebElement getDrag3Element() {
+        return drag3Element;
+    }
+
+    /**
+     * @return the drop1Element
+     */
+    public WebElement getDrop1Element() {
+        return drop1Element;
+    }
+
+    /**
+     * @return the drop2Element
+     */
+    public WebElement getDrop2Element() {
+        return drop2Element;
+    }
+
+    /**
+     * @return the indicatorElement
+     */
+    public WebElement getIndicatorElement() {
+        return indicatorElement;
+    }
 
 }

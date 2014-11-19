@@ -32,31 +32,27 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
  */
 public class DropTargetSimplePage extends MetamerPage {
 
-    @FindBy( css = "span[id$=clientId]")
+    @FindBy(css = "span[id$=clientId]")
     private WebElement clientId;
 
-    @FindBy( css = "span[id$=dragValue]")
+    @FindBy(css = "span[id$=dragValue]")
     private WebElement dragValue;
-
-    @FindBy( css = "span[id$=dropValue]")
+    @FindBy(css = "span[id$=dropValue]")
     private WebElement dropValue;
 
-    @FindBy( css = "div.rf-ind[id$=indicatorClone]" )
+    @FindBy(css = "div.rf-ind[id$=indicatorClone]")
     private GrapheneElement indicator;
 
-    @FindBy( css = "[id$=draggable1]" )
+    @FindBy(css = "[id$=draggable1]")
     private WebElement drg1;
-
-    @FindBy( css = "[id$=draggable2]" )
+    @FindBy(css = "[id$=draggable2]")
     private WebElement drg2;
-
-    @FindBy( css = "[id$=draggable3]" )
+    @FindBy(css = "[id$=draggable3]")
     private WebElement drg3;
 
-    @FindBy( css = "[id$=droppable1]" )
+    @FindBy(css = "[id$=droppable1]")
     private WebElement drop1;
-
-    @FindBy( css = "[id$=droppable2]" )
+    @FindBy(css = "[id$=droppable2]")
     private WebElement drop2;
 
     /**

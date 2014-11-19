@@ -33,7 +33,6 @@ import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
-import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -61,8 +60,6 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
 
     private final Attributes<InplaceInputAttributes> inplaceInputAttributes = getAttributes();
 
-    @Page
-    private MetamerPage page;
     @FindBy(css = "span[id$=output]")
     private WebElement output;
     @FindBy(css = "span[id$=inplaceInput]")
@@ -120,8 +117,8 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
             "Input should contain class indicating a change.");
         assertEquals(inplaceInput.advanced().getLabelValue(), testedValue, "Input should contain typed text.");
 
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: RichFaces 4 -> " + testedValue);
-        page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: RichFaces 4 -> " + testedValue);
+        getMetamerPage().assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
             PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
     }
 
@@ -196,8 +193,8 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
         String value = "new value";
         MetamerPage.waitRequest(inplaceInput.type(value), WaitRequestType.XHR).confirm();
 
-        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: RichFaces 4 -> " + value);
-        page.assertPhases(PhaseId.ANY_PHASE);
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: RichFaces 4 -> " + value);
+        getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
     }
 
     @Test

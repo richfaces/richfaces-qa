@@ -37,14 +37,12 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.StringUtils;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.tree.RichFacesTree;
 import org.richfaces.fragment.tree.RichFacesTreeNode;
 import org.richfaces.fragment.tree.Tree.TreeNode;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 /**
@@ -52,8 +50,6 @@ import org.testng.annotations.Test;
  */
 public class TestTreeModelAdaptorLazyLoading extends AbstractWebDriverTest {
 
-    @Page
-    private MetamerPage page;
     @FindBy(css = "div[id$=richTree]")
     private RichFacesTree tree;
     @FindBy(css = "span[id$=lazyInitialized]")
@@ -63,7 +59,7 @@ public class TestTreeModelAdaptorLazyLoading extends AbstractWebDriverTest {
 
     private TreeNode treeNode;
 
-    private Integer[][] paths = new Integer[][]{ { 1, 1, 1, 8, 1 }, { 4, 4, 11, 4 } };
+    private final Integer[][] paths = new Integer[][]{ { 1, 1, 1, 8, 1 }, { 4, 4, 11, 4 } };
 
     @Override
     public URL getTestUrl() {

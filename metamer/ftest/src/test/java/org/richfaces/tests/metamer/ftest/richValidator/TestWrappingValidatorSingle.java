@@ -50,15 +50,15 @@ public class TestWrappingValidatorSingle extends AbstractValidatorsTest {
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11576")
     public void testIntegerMin() {
-        page.getSetCorrectBtn().click();
+        getPage().getSetCorrectBtn().click();
 
         // integer input min
-        page.getInputMin().clear();
-        page.getInputMin().sendKeys("1");
+        getPage().getInputMin().clear();
+        getPage().getInputMin().sendKeys("1");
 
-        Graphene.guardNoRequest(page.getA4jCommandBtn()).click();
+        Graphene.guardNoRequest(getPage().getA4jCommandBtn()).click();
 
-        Graphene.waitGui().until().element(page.getMsgMin()).text().equalTo(messages.get(ID.min));
+        Graphene.waitGui().until().element(getPage().getMsgMin()).text().equalTo(messages.get(ID.min));
     }
 
     /**
@@ -67,15 +67,15 @@ public class TestWrappingValidatorSingle extends AbstractValidatorsTest {
      */
     @Test(groups = "smoke")
     public void testValidateOnBlur() {
-        page.getSetCorrectBtn().click();
+        getPage().getSetCorrectBtn().click();
 
         // integer input min
-        page.getInputMin().clear();
-        page.getInputMin().sendKeys("1");
+        getPage().getInputMin().clear();
+        getPage().getInputMin().sendKeys("1");
 
         // no request (HTTP neither XHR) should be sent if validation fails
-        fireEvent(Graphene.guardNoRequest(page.getInputMin()), Event.BLUR);
+        fireEvent(Graphene.guardNoRequest(getPage().getInputMin()), Event.BLUR);
 
-        Graphene.waitGui().until().element(page.getMsgMin()).text().equalTo(messages.get(ID.min));
+        Graphene.waitGui().until().element(getPage().getMsgMin()).text().equalTo(messages.get(ID.min));
     }
 }

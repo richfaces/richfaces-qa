@@ -87,16 +87,4 @@ public class TooltipPage extends MetamerPage {
     public TextualRichFacesTooltip getTooltip() {
         return tooltipOnPanel;
     }
-//
-//    public TextualRichFacesTooltip getTooltipOnPanel1() {
-//        return tooltipOnPanel1;
-//    }
-//
-//    public TextualRichFacesTooltip getTooltipOnPanel2() {
-//        return tooltipOnPanel2;
-//    }
-//
-//    public TextualRichFacesTooltip getTooltipOnPanel3() {
-//        return tooltipOnPanel3;
-//    }
 }

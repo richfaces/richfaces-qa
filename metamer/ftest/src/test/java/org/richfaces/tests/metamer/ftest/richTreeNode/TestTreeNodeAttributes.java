@@ -151,11 +151,11 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
 
         firstNodeAttributes.set(TreeNodeAttributes.immediate, Boolean.FALSE);
         expandFirstNodeAjaxAction.perform();
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "node toggle listener invoked");
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "node toggle listener invoked");
 
         firstNodeAttributes.set(TreeNodeAttributes.immediate, Boolean.TRUE);
         collapseFirstNodeAjaxAction.perform();
-        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "node toggle listener invoked");
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "node toggle listener invoked");
     }
 
     @Test
@@ -254,8 +254,8 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
         testFireEvent(
             firstNodeAttributes,
             TreeNodeAttributes.onmouseover,
-            new Actions(driver).moveToElement(page.getRequestTimeElement()).click()
-                .moveToElement(getFirstNode().advanced().getLabelElement()).build());
+            new Actions(driver).moveToElement(getMetamerPage().getRequestTimeElement()).click()
+            .moveToElement(getFirstNode().advanced().getLabelElement()).build());
     }
 
     @Test
@@ -311,8 +311,8 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     public void testToggleListener() {
         treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax);
         expandFirstNodeAjaxAction.perform();
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "node toggle listener invoked");
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "node toggle listener invoked");
         Graphene.guardAjax(tree.advanced().getNodes().get(0)).expandNode(0);
-        page.assertNoListener("node toggle listener invoked");
+        getMetamerPage().assertNoListener("node toggle listener invoked");
     }
 }

@@ -26,7 +26,6 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.openqa.selenium.support.ui.Select;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
@@ -66,7 +65,7 @@ public class TestHSelectOneListbox extends AbstractAjaxTest {
 
     @Override
     public void performAction(String input) {
-        Graphene.guardAjax(new Select(page.selectOneListbox)).selectByValue(input);
+        Graphene.guardAjax(page.getSelectOneListbox()).selectByValue(input);
     }
 
     @Test
@@ -82,7 +81,7 @@ public class TestHSelectOneListbox extends AbstractAjaxTest {
     @Test
     public void testDisabled() {
         ajaxAttributes.set(AjaxAttributes.disabled, true);
-        Graphene.guardNoRequest(new Select(page.selectOneListbox)).selectByValue("Audi");
+        Graphene.guardNoRequest(page.getSelectOneListbox()).selectByValue("Audi");
     }
 
     @Test

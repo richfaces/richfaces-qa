@@ -57,78 +57,113 @@ public class TestParam extends AbstractWebDriverTest {
 
     @Test(groups = "smoke")
     public void testParameter() {
-        MetamerPage.waitRequest(page.button1, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getButton1Element(), WaitRequestType.XHR).click();
 
         String screenWidth = ((JavascriptExecutor) driver).executeScript("return screen.width").toString();
 
-        assertEquals(page.output1.getText(), screenWidth, "Output 1 after clicking on first button.");
-        assertEquals(page.output2.getText(), screenWidth, "Output 2 after clicking on first button.");
+        assertEquals(page.getOutput1Element().getText(), screenWidth, "Output 1 after clicking on first button.");
+        assertEquals(page.getOutput2Element().getText(), screenWidth, "Output 2 after clicking on first button.");
 
-        MetamerPage.waitRequest(page.resetButton, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getResetButtonElement(), WaitRequestType.XHR).click();
 
-        assertEquals(page.output1.getText(), "", "Output 1 after clicking on reset button.");
-        assertEquals(page.output2.getText(), "", "Output 2 after clicking on reset button.");
+        assertEquals(page.getOutput1Element().getText(), "", "Output 1 after clicking on reset button.");
+        assertEquals(page.getOutput2Element().getText(), "", "Output 2 after clicking on reset button.");
 
-        MetamerPage.waitRequest(page.button2, WaitRequestType.HTTP).click();
+        MetamerPage.waitRequest(page.getButton2Element(), WaitRequestType.HTTP).click();
 
-        assertEquals(page.output1.getText(), "screen.width", "Output 1 after clicking on second button.");
-        assertEquals(page.output2.getText(), "screen.width", "Output 2 after clicking on second button.");
+        assertEquals(page.getOutput1Element().getText(), "screen.width", "Output 1 after clicking on second button.");
+        assertEquals(page.getOutput2Element().getText(), "screen.width", "Output 2 after clicking on second button.");
     }
 
     @Test
     public void testName() {
         paramAttributes.set(ParamAttributes.name, "metamer");
 
-        MetamerPage.waitRequest(page.button1, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getButton1Element(), WaitRequestType.XHR).click();
 
         String screenWidth = ((JavascriptExecutor) driver).executeScript("return screen.width").toString();
 
-        assertEquals(page.output1.getText(), screenWidth, "Output 1 after clicking on first button.");
-        assertEquals(page.output2.getText(), screenWidth, "Output 2 after clicking on first button.");
+        assertEquals(page.getOutput1Element().getText(), screenWidth, "Output 1 after clicking on first button.");
+        assertEquals(page.getOutput2Element().getText(), screenWidth, "Output 2 after clicking on first button.");
     }
 
     @Test
     public void testNoEscape() {
         paramAttributes.set(ParamAttributes.noEscape, false);
 
-        MetamerPage.waitRequest(page.button1, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getButton1Element(), WaitRequestType.XHR).click();
 
-        assertEquals(page.output1.getText(), "screen.width", "Output 1 after clicking on first button.");
-        assertEquals(page.output2.getText(), "screen.width", "Output 2 after clicking on first button.");
+        assertEquals(page.getOutput1Element().getText(), "screen.width", "Output 1 after clicking on first button.");
+        assertEquals(page.getOutput2Element().getText(), "screen.width", "Output 2 after clicking on first button.");
     }
 
     @Test
     public void testValue() {
         paramAttributes.set(ParamAttributes.value, "4+5");
 
-        MetamerPage.waitRequest(page.button1, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getButton1Element(), WaitRequestType.XHR).click();
 
-        assertEquals(page.output1.getText(), "9", "Output 1 after clicking on first button.");
-        assertEquals(page.output2.getText(), "9", "Output 2 after clicking on first button.");
+        assertEquals(page.getOutput1Element().getText(), "9", "Output 1 after clicking on first button.");
+        assertEquals(page.getOutput2Element().getText(), "9", "Output 2 after clicking on first button.");
 
-        MetamerPage.waitRequest(page.resetButton, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getResetButtonElement(), WaitRequestType.XHR).click();
 
-        assertEquals(page.output1.getText(), "", "Output 1 after clicking on reset button.");
-        assertEquals(page.output2.getText(), "", "Output 2 after clicking on reset button.");
+        assertEquals(page.getOutput1Element().getText(), "", "Output 1 after clicking on reset button.");
+        assertEquals(page.getOutput2Element().getText(), "", "Output 2 after clicking on reset button.");
 
-        MetamerPage.waitRequest(page.button2, WaitRequestType.HTTP).click();
+        MetamerPage.waitRequest(page.getButton2Element(), WaitRequestType.HTTP).click();
 
-        assertEquals(page.output1.getText(), "4+5", "Output 1 after clicking on second button.");
-        assertEquals(page.output2.getText(), "4+5", "Output 2 after clicking on second button.");
+        assertEquals(page.getOutput1Element().getText(), "4+5", "Output 1 after clicking on second button.");
+        assertEquals(page.getOutput2Element().getText(), "4+5", "Output 2 after clicking on second button.");
     }
 
     public class SimpleParamPage extends MetamerPage {
 
         @FindBy(css = "input[id$=button1]")
-        public WebElement button1;
+        private WebElement button1Element;
         @FindBy(css = "input[id$=button2]")
-        public WebElement button2;
+        private WebElement button2Element;
         @FindBy(css = "input[id$=resetButton]")
-        public WebElement resetButton;
+        private WebElement resetButtonElement;
         @FindBy(css = "span[id$=output1]")
-        public WebElement output1;
+        private WebElement output1Element;
         @FindBy(css = "span[id$=output2]")
-        public WebElement output2;
+        private WebElement output2Element;
+
+        /**
+         * @return the button1Element
+         */
+        public WebElement getButton1Element() {
+            return button1Element;
+        }
+
+        /**
+         * @return the button2Element
+         */
+        public WebElement getButton2Element() {
+            return button2Element;
+        }
+
+        /**
+         * @return the output1Element
+         */
+        public WebElement getOutput1Element() {
+            return output1Element;
+        }
+
+        /**
+         * @return the output2Element
+         */
+        public WebElement getOutput2Element() {
+            return output2Element;
+        }
+
+        /**
+         * @return the resetButtonElement
+         */
+        public WebElement getResetButtonElement() {
+            return resetButtonElement;
+        }
 
     }
 }

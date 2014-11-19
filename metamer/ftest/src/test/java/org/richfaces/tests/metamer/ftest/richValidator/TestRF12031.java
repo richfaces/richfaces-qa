@@ -40,7 +40,7 @@ import org.testng.annotations.Test;
 public class TestRF12031 extends AbstractWebDriverTest {
 
     @Page
-    ValidatorSimplePage page;
+    private ValidatorSimplePage page;
 
     @Override
     public URL getTestUrl() {

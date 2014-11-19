@@ -128,7 +128,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
     @Test
     public void testBypassUpdates() {
         commandLinkAttributes.set(CommandLinkAttributes.bypassUpdates, true);
-        MetamerPage.waitRequest(page.link, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getLinkElement(), WaitRequestType.XHR).click();
         page.verifyOutput1Text("");
         page.verifyOutput2Text("");
         page.verifyOutput3Text("");
@@ -140,13 +140,13 @@ public class TestCommandLink extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testCharset() {
-        testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.charset, "utf-8");
+        testHTMLAttribute(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.charset, "utf-8");
     }
 
     @Test
     @Templates(value = "plain")
     public void testCoords() {
-        testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.coords, "circle: 150, 60, 60");
+        testHTMLAttribute(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.coords, "circle: 150, 60, 60");
     }
 
     @Test
@@ -166,8 +166,8 @@ public class TestCommandLink extends AbstractWebDriverTest {
     public void testDisabled() {
         commandLinkAttributes.set(CommandLinkAttributes.disabled, true);
 
-        Graphene.waitModel().until("Link should not be on page.").element(page.link).is().not().present();
-        assertTrue(page.disabledLink.isDisplayed(), "Link should be disabled.");
+        Graphene.waitModel().until("Link should not be on page.").element(page.getLinkElement()).is().not().present();
+        assertTrue(page.getDisabledLinkElement().isDisplayed(), "Link should be disabled.");
     }
 
     @Test
@@ -182,7 +182,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testHreflang() {
-        testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.hreflang, "sk");
+        testHTMLAttribute(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.hreflang, "sk");
     }
 
     @Test
@@ -266,67 +266,67 @@ public class TestCommandLink extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testOnclick() {
-        testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onclick);
+        testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onclick);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOndblclick() {
-        testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.ondblclick);
+        testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.ondblclick);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeydown() {
-        testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onkeydown);
+        testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onkeydown);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeypress() {
-        testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onkeypress);
+        testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onkeypress);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOneyup() {
-        testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onkeyup);
+        testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onkeyup);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmousedown() {
-        testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onmousedown);
+        testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onmousedown);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmousemove() {
-        testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onmousemove);
+        testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onmousemove);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseout() {
-        testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onmouseout);
+        testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onmouseout);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseover() {
-        testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onmouseover);
+        testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onmouseover);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseup() {
-        testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onmouseup);
+        testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onmouseup);
     }
 
     @Test
     @Templates(value = "plain")
     public void testRel() {
-        testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.rel, "metamer");
+        testHTMLAttribute(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.rel, "metamer");
     }
 
     @Test
@@ -361,50 +361,50 @@ public class TestCommandLink extends AbstractWebDriverTest {
     public void testRendered() {
         commandLinkAttributes.set(CommandLinkAttributes.rendered, false);
 
-        Graphene.waitModel().until("Link should not be on page.").element(page.link).is().not().present();
+        Graphene.waitModel().until("Link should not be on page.").element(page.getLinkElement()).is().not().present();
     }
 
     @Test
     @Templates(value = "plain")
     public void testRev() {
-        testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.rev, "metamer");
+        testHTMLAttribute(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.rev, "metamer");
     }
 
     @Test
     @Templates(value = "plain")
     public void testShape() {
-        testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.shape, "default");
+        testHTMLAttribute(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.shape, "default");
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyle() {
-        testStyle(page.link);
+        testStyle(page.getLinkElement());
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-9307")
     @Templates(value = "plain")
     public void testStyleClass() {
-        testStyleClass(page.link);
+        testStyleClass(page.getLinkElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testTitle() {
-        testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.title, "metamer");
+        testHTMLAttribute(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.title, "metamer");
     }
 
     @Test
     @Templates(value = "plain")
     public void testType() {
-        testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.type, "default");
+        testHTMLAttribute(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.type, "default");
     }
 
     @Test
     @Templates("plain")
     public void testValue() {
         commandLinkAttributes.set(CommandLinkAttributes.value, "new label");
-        assertEquals(page.link.getText(), "new label", "Value of the button did not change");
+        assertEquals(page.getLinkElement().getText(), "new label", "Value of the button did not change");
     }
 }

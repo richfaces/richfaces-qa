@@ -32,7 +32,6 @@ import java.util.List;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -79,8 +78,6 @@ public class TestPickList extends AbstractWebDriverTest {
     private RichFacesPickList pickList;
     @FindBy(css = "[id$=msg]")
     private RichFacesMessage message;
-    @Page
-    private MetamerPage page;
 
     @Override
     public URL getTestUrl() {
@@ -193,14 +190,14 @@ public class TestPickList extends AbstractWebDriverTest {
         pickListAttributes.set(PickListAttributes.immediate, Boolean.FALSE);
         pickList.add(0);
         submitAjax();
-        page.assertPhases(PhaseId.ANY_PHASE);
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: [] -> [Alabama]");
+        getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: [] -> [Alabama]");
 
         pickListAttributes.set(PickListAttributes.immediate, Boolean.TRUE);
         pickList.add(0);
         submitAjax();
-        page.assertPhases(PhaseId.ANY_PHASE);
-        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: [Alabama] -> [Alabama, Alaska]");
+        getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: [Alabama] -> [Alabama, Alaska]");
     }
 
     @Test
@@ -294,7 +291,7 @@ public class TestPickList extends AbstractWebDriverTest {
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     public void testOnblur() {
         testFireEvent(pickListAttributes, PickListAttributes.onblur,
-            new Actions(driver).click(pickList.advanced().getRootElement()).click(page.getRequestTimeElement()).build());
+            new Actions(driver).click(pickList.advanced().getRootElement()).click(getMetamerPage().getRequestTimeElement()).build());
     }
 
     @Test
@@ -776,11 +773,11 @@ public class TestPickList extends AbstractWebDriverTest {
     public void testValueChangeListener() {
         pickList.add(0);
         submitAjax();
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: [] -> [Alabama]");
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: [] -> [Alabama]");
 
         pickList.add(0);
         submitAjax();
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: [Alabama] -> [Alabama, Alaska]");
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: [Alabama] -> [Alabama, Alaska]");
     }
 
     private void assertButtonDisabled(WebElement e) {

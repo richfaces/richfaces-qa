@@ -69,35 +69,35 @@ public class TestDragIndicator extends AbstractWebDriverTest {
         dragIndicatorAttributes.set(rendered, true);
 
         // before any mouse move, no indicator appears on page
-        assertFalse(new WebElementConditionFactory(page.indicator).isPresent().apply(driver));
+        assertFalse(new WebElementConditionFactory(page.getIndicatorElement()).isPresent().apply(driver));
 
         Actions actionQueue = new Actions(driver);
 
         // firstly just drag and don't move. Indicator no displayed
-        Action dragging = actionQueue.clickAndHold(page.drag1).build();
+        Action dragging = actionQueue.clickAndHold(page.getDrag1Element()).build();
         dragging.perform();
-        Graphene.waitModel().until().element(page.indicator).is().not().present();
+        Graphene.waitModel().until().element(page.getIndicatorElement()).is().not().present();
 
         // just small move to display indicator
         dragging = actionQueue.moveByOffset(1, 1).build();
         dragging.perform();
-        assertTrue(page.indicator.isDisplayed());
-        assertTrue(page.indicator.getAttribute("class").contains(DRAGGING_CLASS));
+        assertTrue(page.getIndicatorElement().isDisplayed());
+        assertTrue(page.getIndicatorElement().getAttribute("class").contains(DRAGGING_CLASS));
 
         // simulate drop
         dragging = actionQueue.release().build();
-        Graphene.waitModel().until().element(page.indicator).is().present();
+        Graphene.waitModel().until().element(page.getIndicatorElement()).is().present();
         dragging.perform();
-        Graphene.waitModel().until().element(page.indicator).is().not().present();
+        Graphene.waitModel().until().element(page.getIndicatorElement()).is().not().present();
 
         // and now the same with indicator not rendered
         dragIndicatorAttributes.set(rendered, false);
-        assertFalse(new WebElementConditionFactory(page.indicator).isPresent().apply(driver));
+        assertFalse(new WebElementConditionFactory(page.getIndicatorElement()).isPresent().apply(driver));
 
         // just small move to attempt display indicator
-        dragging = actionQueue.clickAndHold(page.drag1).moveByOffset(1, 1).build();
+        dragging = actionQueue.clickAndHold(page.getDrag1Element()).moveByOffset(1, 1).build();
         dragging.perform();
-        Graphene.waitModel().until().element(page.indicator).is().not().present();
+        Graphene.waitModel().until().element(page.getIndicatorElement()).is().not().present();
         actionQueue.release().perform();
     }
 
@@ -109,29 +109,29 @@ public class TestDragIndicator extends AbstractWebDriverTest {
         Actions actionQueue = new Actions(driver);
 
         // before any mouse move, no indicator appears on page
-        assertFalse(new WebElementConditionFactory(page.indicator).isPresent().apply(driver));
+        assertFalse(new WebElementConditionFactory(page.getIndicatorElement()).isPresent().apply(driver));
 
         // firstly just drag and don't move. Indicator no displayed
-        Action dragging = actionQueue.clickAndHold(page.drag1).build();
+        Action dragging = actionQueue.clickAndHold(page.getDrag1Element()).build();
         dragging.perform();
-        Graphene.waitModel().until().element(page.indicator).is().not().present();
+        Graphene.waitModel().until().element(page.getIndicatorElement()).is().not().present();
 
         // just small move to display indicator
         dragging = actionQueue.moveByOffset(1, 1).build();
         dragging.perform();
-        assertTrue(page.indicator.isDisplayed());
-        assertTrue(page.indicator.getAttribute("class").contains(DRAGGING_CLASS));
+        assertTrue(page.getIndicatorElement().isDisplayed());
+        assertTrue(page.getIndicatorElement().getAttribute("class").contains(DRAGGING_CLASS));
 
         // then move out of drag area (but not over drop area)
         dragging = actionQueue.moveByOffset(550, 10).build();
         dragging.perform();
-        assertTrue(page.indicator.isDisplayed());
-        assertTrue(page.indicator.getAttribute("class").contains(DRAGGING_CLASS));
+        assertTrue(page.getIndicatorElement().isDisplayed());
+        assertTrue(page.getIndicatorElement().getAttribute("class").contains(DRAGGING_CLASS));
 
         // this one as well
         dragging = actionQueue.release().build();
         dragging.perform();
-        Graphene.waitModel().until().element(page.indicator).is().not().present();
+        Graphene.waitModel().until().element(page.getIndicatorElement()).is().not().present();
     }
 
     @Test
@@ -141,27 +141,27 @@ public class TestDragIndicator extends AbstractWebDriverTest {
 
         Actions actionQueue = new Actions(driver);
 
-        Action dragging = actionQueue.clickAndHold(page.drag1).build();
+        Action dragging = actionQueue.clickAndHold(page.getDrag1Element()).build();
         dragging.perform();
-        Graphene.waitModel().until().element(page.indicator).is().not().present();
+        Graphene.waitModel().until().element(page.getIndicatorElement()).is().not().present();
 
         // just small move to display indicator
         dragging = actionQueue.moveByOffset(1, 1).build();
         dragging.perform();
-        assertTrue(page.indicator.isDisplayed());
-        assertTrue(page.indicator.getAttribute("class").contains(DRAGGING_CLASS));
+        assertTrue(page.getIndicatorElement().isDisplayed());
+        assertTrue(page.getIndicatorElement().getAttribute("class").contains(DRAGGING_CLASS));
 
-        dragging = actionQueue.moveToElement(page.drop1).build();
+        dragging = actionQueue.moveToElement(page.getDrop1Element()).build();
         dragging.perform();
-        assertTrue(page.indicator.isDisplayed());
-        assertTrue(page.indicator.getAttribute("class").contains(ACCEPT_CLASS));
+        assertTrue(page.getIndicatorElement().isDisplayed());
+        assertTrue(page.getIndicatorElement().getAttribute("class").contains(ACCEPT_CLASS));
 
         // then release
         dragging = actionQueue.release().build();
-        String drop1Content = page.drop1.getText();
+        String drop1Content = page.getDrop1Element().getText();
         dragging.perform();
-        Graphene.waitModel().until().element(page.indicator).is().not().present();
-        Graphene.waitModel().until().element(page.drop1).text().not().equalTo(drop1Content);
+        Graphene.waitModel().until().element(page.getIndicatorElement()).is().not().present();
+        Graphene.waitModel().until().element(page.getDrop1Element()).text().not().equalTo(drop1Content);
     }
 
     @Test
@@ -171,25 +171,25 @@ public class TestDragIndicator extends AbstractWebDriverTest {
 
         Actions actionQueue = new Actions(driver);
 
-        Action dragging = actionQueue.clickAndHold(page.drag1).build();
+        Action dragging = actionQueue.clickAndHold(page.getDrag1Element()).build();
         dragging.perform();
-        Graphene.waitModel().until().element(page.indicator).is().not().present();
+        Graphene.waitModel().until().element(page.getIndicatorElement()).is().not().present();
 
         // just small move to display indicator
         dragging = actionQueue.moveByOffset(1, 1).build();
         dragging.perform();
-        assertTrue(page.indicator.isDisplayed());
-        assertTrue(page.indicator.getAttribute("class").contains(DRAGGING_CLASS));
+        assertTrue(page.getIndicatorElement().isDisplayed());
+        assertTrue(page.getIndicatorElement().getAttribute("class").contains(DRAGGING_CLASS));
 
-        dragging = actionQueue.moveToElement(page.drop2).build();
+        dragging = actionQueue.moveToElement(page.getDrop2Element()).build();
         dragging.perform();
-        assertTrue(page.indicator.isDisplayed());
-        assertTrue(page.indicator.getAttribute("class").contains(REJECT_CLASS));
+        assertTrue(page.getIndicatorElement().isDisplayed());
+        assertTrue(page.getIndicatorElement().getAttribute("class").contains(REJECT_CLASS));
 
         // then release
         dragging = actionQueue.release().build();
         dragging.perform();
-        Graphene.waitModel().until().element(page.indicator).is().not().present();
+        Graphene.waitModel().until().element(page.getIndicatorElement()).is().not().present();
     }
 
     @Test
@@ -201,36 +201,36 @@ public class TestDragIndicator extends AbstractWebDriverTest {
         for (int i = 0; i <= 20; ++i) {
             Actions actionQueue = new Actions(driver);
 
-            Action dragging = actionQueue.clickAndHold(page.drag1).build();
+            Action dragging = actionQueue.clickAndHold(page.getDrag1Element()).build();
             dragging.perform();
-            Graphene.waitModel().until().element(page.indicator).is().not().present();
+            Graphene.waitModel().until().element(page.getIndicatorElement()).is().not().present();
 
             // just small move to display indicator
             dragging = actionQueue.moveByOffset(1, 1).build();
             dragging.perform();
-            assertTrue(page.indicator.isDisplayed());
-            assertTrue(page.indicator.getAttribute("class").contains(DRAGGING_CLASS));
+            assertTrue(page.getIndicatorElement().isDisplayed());
+            assertTrue(page.getIndicatorElement().getAttribute("class").contains(DRAGGING_CLASS));
 
             // then move out of drag area (but not over drop area)
             dragging = actionQueue.moveByOffset(550, 10).build();
             dragging.perform();
-            assertTrue(page.indicator.isDisplayed());
-            assertTrue(page.indicator.getAttribute("class").contains(DRAGGING_CLASS));
+            assertTrue(page.getIndicatorElement().isDisplayed());
+            assertTrue(page.getIndicatorElement().getAttribute("class").contains(DRAGGING_CLASS));
 
-            dragging = actionQueue.moveToElement(page.drop1).build();
+            dragging = actionQueue.moveToElement(page.getDrop1Element()).build();
             dragging.perform();
-            assertTrue(page.indicator.isDisplayed());
-            assertTrue(page.indicator.getAttribute("class").contains(ACCEPT_CLASS));
+            assertTrue(page.getIndicatorElement().isDisplayed());
+            assertTrue(page.getIndicatorElement().getAttribute("class").contains(ACCEPT_CLASS));
 
-            dragging = actionQueue.moveToElement(page.drop2).build();
+            dragging = actionQueue.moveToElement(page.getDrop2Element()).build();
             dragging.perform();
-            assertTrue(page.indicator.isDisplayed());
-            assertTrue(page.indicator.getAttribute("class").contains(REJECT_CLASS));
+            assertTrue(page.getIndicatorElement().isDisplayed());
+            assertTrue(page.getIndicatorElement().getAttribute("class").contains(REJECT_CLASS));
 
             // then release
             dragging = actionQueue.release().build();
             dragging.perform();
-            Graphene.waitModel().until().element(page.indicator).is().not().present();
+            Graphene.waitModel().until().element(page.getIndicatorElement()).is().not().present();
         }
     }
 }

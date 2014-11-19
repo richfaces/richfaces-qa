@@ -443,8 +443,8 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     public void testImmediate() {
         calendarAttributes.set(CalendarAttributes.immediate, Boolean.TRUE);
         setCurrentDateWithCalendarsTodayButtonAction.perform();
-        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: null -> " + popupCalendar.getInput().getStringValue());
-        page.assertPhases(PhaseId.ANY_PHASE);
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: null -> " + popupCalendar.getInput().getStringValue());
+        getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
     }
 
     @Test
@@ -659,7 +659,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
             calendarAttributes,
             CalendarAttributes.onhide,
             new Actions(driver).click(popupCalendar.getInput().advanced().getInputElement())
-                .click(popupCalendar.getInput().advanced().getInputElement()).build());
+            .click(popupCalendar.getInput().advanced().getInputElement()).build());
     }
 
     @Test
@@ -668,7 +668,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         // testFireEventWithJS(calendar.getInput(), Event.BLUR, calendarAttributes, CalendarAttributes.oninputblur);
         testFireEvent(calendarAttributes, CalendarAttributes.oninputblur,
             new Actions(driver).click(popupCalendar.getInput().advanced().getInputElement())
-                .click(page.getRequestTimeElement()).build());
+            .click(getMetamerPage().getRequestTimeElement()).build());
     }
 
     @Test
@@ -748,14 +748,14 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
             calendarAttributes,
             CalendarAttributes.oninputmouseout,
             new Actions(driver).click(popupCalendar.getInput().advanced().getInputElement())
-                .moveToElement(page.getRequestTimeElement()).build());
+            .moveToElement(getMetamerPage().getRequestTimeElement()).build());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOninputmouseover() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseover,
-            new Actions(driver).moveToElement(page.getRequestTimeElement()).moveToElement(popupCalendar.getInput().advanced().getInputElement()).build());
+            new Actions(driver).moveToElement(getMetamerPage().getRequestTimeElement()).moveToElement(popupCalendar.getInput().advanced().getInputElement()).build());
     }
 
     @Test
@@ -1022,7 +1022,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @Test
     public void testValueChangeListener() {
         setCurrentDateWithCalendarsTodayButtonAction.perform();
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> " + popupCalendar.getInput().getStringValue());
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> " + popupCalendar.getInput().getStringValue());
     }
 
     @Test

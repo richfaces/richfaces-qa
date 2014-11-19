@@ -57,7 +57,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     final Action collapseFirstGroupAction = new Action() {
         @Override
         public void perform() {
-            Graphene.guardAjax(page.getMenu()).collapseGroup(1);
+            Graphene.guardAjax(getPage().getMenu()).collapseGroup(1);
         }
     };
 
@@ -68,24 +68,24 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
 
     @Test
     public void testDisabled() {
-        assertFalse(page.getTopGroup().advanced().isDisabled());
+        assertFalse(getPage().getTopGroup().advanced().isDisabled());
 
         panelMenuGroupAttributes.set(disabled, true);
 
-        assertFalse(page.getTopGroup().advanced().isSelected());
-        assertTrue(page.getTopGroup().advanced().isDisabled());
+        assertFalse(getPage().getTopGroup().advanced().isSelected());
+        assertTrue(getPage().getTopGroup().advanced().isDisabled());
 
-        Graphene.guardNoRequest(page.getTopGroup().advanced().getHeaderElement()).click();
+        Graphene.guardNoRequest(getPage().getTopGroup().advanced().getHeaderElement()).click();
 
-        assertFalse(page.getTopGroup().advanced().isSelected());
-        assertTrue(page.getTopGroup().advanced().isDisabled());
+        assertFalse(getPage().getTopGroup().advanced().isSelected());
+        assertTrue(getPage().getTopGroup().advanced().isDisabled());
     }
 
     @Test
     @Templates(value = "plain")
     public void testDisabledClass() {
         panelMenuGroupAttributes.set(disabled, true);
-        testStyleClass(page.getTopGroup().advanced().getRootElement(), disabledClass);
+        testStyleClass(getPage().getTopGroup().advanced().getRootElement(), disabledClass);
     }
 
     @Test
@@ -93,29 +93,29 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     public void testLeftDisabledIcon() {
         panelMenuGroupAttributes.set(disabled, true);
 
-        verifyStandardIcons(leftDisabledIcon, page.getTopGroup().advanced().getLeftIconElement(), page.getTopGroup().advanced().getLeftIconElement(), "");
+        verifyStandardIcons(leftDisabledIcon, getPage().getTopGroup().advanced().getLeftIconElement(), getPage().getTopGroup().advanced().getLeftIconElement(), "");
     }
 
     @Test
     @Templates(value = "plain")
     public void testLeftCollapsedIcon() {
-        Graphene.guardAjax(page.getMenu()).collapseGroup(1);
+        Graphene.guardAjax(getPage().getMenu()).collapseGroup(1);
 
-        verifyStandardIcons(leftCollapsedIcon, page.getTopGroup().advanced().getLeftIconElement(), page.getTopGroup().advanced().getLeftIconElement(), "");
+        verifyStandardIcons(leftCollapsedIcon, getPage().getTopGroup().advanced().getLeftIconElement(), getPage().getTopGroup().advanced().getLeftIconElement(), "");
 
         panelMenuGroupAttributes.set(disabled, true);
         // both icon should be "transparent" - invisible
-        assertTrue(page.getTopGroup().advanced().isTransparent(page.getTopGroup().advanced().getLeftIconElement()));
+        assertTrue(getPage().getTopGroup().advanced().isTransparent(getPage().getTopGroup().advanced().getLeftIconElement()));
     }
 
     @Test
     @Templates(value = "plain")
     public void testLeftExpandedIcon() {
 
-        verifyStandardIcons(leftExpandedIcon, page.getTopGroup().advanced().getLeftIconElement(), page.getTopGroup().advanced().getLeftIconElement(), "");
+        verifyStandardIcons(leftExpandedIcon, getPage().getTopGroup().advanced().getLeftIconElement(), getPage().getTopGroup().advanced().getLeftIconElement(), "");
 
         panelMenuGroupAttributes.set(disabled, true);
-        assertTrue(page.getTopGroup().advanced().isTransparent(page.getTopGroup().advanced().getRightIconElement()));
+        assertTrue(getPage().getTopGroup().advanced().isTransparent(getPage().getTopGroup().advanced().getRightIconElement()));
     }
 
     @Test
@@ -126,11 +126,11 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     @Test
     @Templates(value = "plain")
     public void testRendered() {
-        assertTrue(new WebElementConditionFactory(page.getTopGroup().advanced().getRootElement()).isVisible().apply(driver));
+        assertTrue(new WebElementConditionFactory(getPage().getTopGroup().advanced().getRootElement()).isVisible().apply(driver));
 
         panelMenuGroupAttributes.set(rendered, false);
 
-        assertFalse(new WebElementConditionFactory(page.getTopGroup().advanced().getRootElement()).isVisible().apply(driver));
+        assertFalse(new WebElementConditionFactory(getPage().getTopGroup().advanced().getRootElement()).isVisible().apply(driver));
     }
 
     @Test
@@ -138,38 +138,38 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     public void testRightDisabledIcon() {
         panelMenuGroupAttributes.set(disabled, true);
 
-        verifyStandardIcons(rightDisabledIcon, page.getTopGroup().advanced().getRightIconElement(), page.getTopGroup().advanced().getRightIconElement(), "");
+        verifyStandardIcons(rightDisabledIcon, getPage().getTopGroup().advanced().getRightIconElement(), getPage().getTopGroup().advanced().getRightIconElement(), "");
     }
 
     @Test
     @Templates(value = "plain")
     public void testRightExpandedIcon() {
-        verifyStandardIcons(rightExpandedIcon, page.getTopGroup().advanced().getRightIconElement(), page.getTopGroup().advanced().getRightIconElement(), "");
+        verifyStandardIcons(rightExpandedIcon, getPage().getTopGroup().advanced().getRightIconElement(), getPage().getTopGroup().advanced().getRightIconElement(), "");
 
         panelMenuGroupAttributes.set(disabled, true);
-        assertTrue(page.getTopGroup().advanced().isTransparent(page.getTopGroup().advanced().getRightIconElement()));
+        assertTrue(getPage().getTopGroup().advanced().isTransparent(getPage().getTopGroup().advanced().getRightIconElement()));
     }
 
     @Test
     @Templates(value = "plain")
     public void testRightCollapsedIcon() {
-        Graphene.guardAjax(page.getMenu()).collapseGroup(1);
+        Graphene.guardAjax(getPage().getMenu()).collapseGroup(1);
 
-        verifyStandardIcons(rightCollapsedIcon, page.getTopGroup().advanced().getRightIconElement(), page.getTopGroup().advanced().getRightIconElement(), "");
+        verifyStandardIcons(rightCollapsedIcon, getPage().getTopGroup().advanced().getRightIconElement(), getPage().getTopGroup().advanced().getRightIconElement(), "");
 
         panelMenuGroupAttributes.set(disabled, true);
-        assertTrue(page.getTopGroup().advanced().isTransparent(page.getTopGroup().advanced().getRightIconElement()));
+        assertTrue(getPage().getTopGroup().advanced().isTransparent(getPage().getTopGroup().advanced().getRightIconElement()));
     }
 
     @Test
     public void testSelectable() {
         panelMenuGroupAttributes.set(selectable, false);
-        guardAjax(page.getMenu()).collapseGroup(1);
-        assertFalse(page.getTopGroup().advanced().isSelected());
+        guardAjax(getPage().getMenu()).collapseGroup(1);
+        assertFalse(getPage().getTopGroup().advanced().isSelected());
 
         panelMenuGroupAttributes.set(selectable, true);
-        guardAjax(page.getMenu()).expandGroup(1);
-        assertTrue(page.getTopGroup().advanced().isSelected());
+        guardAjax(getPage().getMenu()).expandGroup(1);
+        assertTrue(getPage().getTopGroup().advanced().isSelected());
     }
 
     @Test
@@ -180,14 +180,14 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     @Test
     @Templates(value = "plain")
     public void testStyle() {
-        testStyle(page.getTopGroup().advanced().getRootElement());
+        testStyle(getPage().getTopGroup().advanced().getRootElement());
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10485")
     @Templates(value = "plain")
     public void testStyleClass() {
-        testStyleClass(page.getTopGroup().advanced().getRootElement());
+        testStyleClass(getPage().getTopGroup().advanced().getRootElement());
     }
 
     private void verifyStandardIcons(PanelMenuGroupAttributes attribute, WebElement icon, WebElement imgIcon, String classSuffix) {

@@ -37,12 +37,12 @@ import org.openqa.selenium.support.FindBy;
  */
 public class SimplePage {
 
-    Map<Integer, String> texts = new HashMap<Integer, String>();
+    private Map<Integer, String> texts = new HashMap<Integer, String>();
 
     @FindBy(css = "#list li")
-    public List<WebElement> rows;
+    private List<WebElement> rowsElements;
     @FindBy(css = "span.statuses")
-    public List<WebElement> statuses;
+    private List<WebElement> statusesElements;
 
     public int getBegin(int position) {
         return Integer.valueOf(getValue("begin", position));
@@ -58,6 +58,27 @@ public class SimplePage {
 
     public int getCount(int position) {
         return Integer.valueOf(getValue("count", position));
+    }
+
+    /**
+     * @return the rowsElements
+     */
+    public List<WebElement> getRowsElements() {
+        return rowsElements;
+    }
+
+    /**
+     * @return the statusesElements
+     */
+    public List<WebElement> getStatusesElements() {
+        return statusesElements;
+    }
+
+    /**
+     * @return the texts
+     */
+    public Map<Integer, String> getTexts() {
+        return texts;
     }
 
     public boolean isFirst(int position) {
@@ -78,11 +99,11 @@ public class SimplePage {
 
     private String getValue(String name, int position) {
         String obtained;
-        if (texts.containsKey(position)) {
-            obtained = texts.get(position);
+        if (getTexts().containsKey(position)) {
+            obtained = getTexts().get(position);
         } else {
-            obtained = statuses.get(position).getText();
-            texts.put(position, obtained);
+            obtained = getStatusesElements().get(position).getText();
+            getTexts().put(position, obtained);
         }
         return parseValue(name, obtained);
     }

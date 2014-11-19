@@ -31,13 +31,11 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
-import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.test.selenium.support.color.ColorUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 
 /**
  *
@@ -63,9 +61,6 @@ public abstract class AbstractPlaceholderNonJSFTest extends AbstractWebDriverTes
     private WebElement input2;
     @FindBy(css = INPUT3_ID)
     private WebElement input3;
-
-    @Page
-    private MetamerPage page;
 
     public AbstractPlaceholderNonJSFTest(String componentName) {
         this.componentName = componentName;
@@ -144,7 +139,7 @@ public abstract class AbstractPlaceholderNonJSFTest extends AbstractWebDriverTes
         assertEquals(getInputTextColor(input3), Color.black, "Input 3 text color");
 
         clearInput(input1);
-        page.getRequestTimeElement().click();
+        getMetamerPage().getRequestTimeElement().click();
         Graphene.waitGui().until().element(input1).attribute("value").equalTo(DEFAULT_PLACEHOLDER_TEXT);
 
         assertEquals(getInputValue(input1), DEFAULT_PLACEHOLDER_TEXT, "Input 1 value");

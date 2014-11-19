@@ -28,12 +28,10 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
-import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 /**
@@ -42,8 +40,6 @@ import org.testng.annotations.Test;
  */
 public class TestPlaceholderCSV extends AbstractWebDriverTest {
 
-    @Page
-    private MetamerPage page;
     @FindBy(css = "[id$=input]")
     private WebElement input;
     @FindBy(css = "[id$=msg]")
@@ -55,7 +51,7 @@ public class TestPlaceholderCSV extends AbstractWebDriverTest {
     }
 
     private void blur() {
-        page.getRequestTimeElement().click();
+        getMetamerPage().getRequestTimeElement().click();
     }
 
     private void typeTextAndBlur(String text) {

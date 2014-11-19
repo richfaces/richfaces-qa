@@ -46,45 +46,94 @@ public class CommandButtonLinkPage extends MetamerPage {
     public static final String STRING_UNICODE3 = "ĽŠČŤŽÝÁÍÉŇÔ";
 
     @FindBy(css = "input[id$=input]")
-    public WebElement input;
+    private WebElement inputElement;
     @FindBy(css = "input[id$=a4jCommandButton]")
-    public WebElement button;
+    private WebElement buttonElement;
     @FindBy(css = "a[id$=a4jCommandLink]")
-    public WebElement link;
+    private WebElement linkElement;
     @FindBy(css = "span[id$=a4jCommandLink]")
-    public WebElement disabledLink;
+    private WebElement disabledLinkElement;
     @FindBy(css = "span[id$=output1]")
-    public WebElement output1;
+    private WebElement output1Element;
     @FindBy(css = "span[id$=output2]")
-    public WebElement output2;
+    private WebElement output2Element;
     @FindBy(css = "span[id$=output3]")
-    public WebElement output3;
+    private WebElement output3Element;
+
+    /**
+     * @return the buttonElement
+     */
+    public WebElement getButtonElement() {
+        return buttonElement;
+    }
+
+    /**
+     * @return the disabledLinkElement
+     */
+    public WebElement getDisabledLinkElement() {
+        return disabledLinkElement;
+    }
+
+    /**
+     * @return the inputElement
+     */
+    public WebElement getInputElement() {
+        return inputElement;
+    }
+
+    /**
+     * @return the linkElement
+     */
+    public WebElement getLinkElement() {
+        return linkElement;
+    }
+
+    /**
+     * @return the output1Element
+     */
+    public WebElement getOutput1Element() {
+        return output1Element;
+    }
+
+    /**
+     * @return the output2Element
+     */
+    public WebElement getOutput2Element() {
+        return output2Element;
+    }
+
+    /**
+     * @return the output3Element
+     */
+    public WebElement getOutput3Element() {
+        return output3Element;
+    }
 
     public void typeToInput(String s) {
-        input.clear();
-        input.sendKeys(s);
+        getInputElement().clear();
+        getInputElement().sendKeys(s);
     }
 
     public void submitByButton() {
-        Graphene.guardAjax(button).click();
+        Graphene.guardAjax(getButtonElement()).click();
     }
 
     public void submitByLink() {
-        Graphene.guardAjax(link).click();
+        Graphene.guardAjax(getLinkElement()).click();
     }
 
     public void waitUntilOutput1Changes(String expectedText) {
-        Graphene.waitAjax().until().element(output1).text().equalTo(expectedText);
+        Graphene.waitAjax().until().element(getOutput1Element()).text().equalTo(expectedText);
     }
 
     public void waitUntilOutput2ChangesToText(String expectedText) {
-        Graphene.waitModel().until().element(output2).text().equalTo(expectedText);
+        Graphene.waitModel().until().element(getOutput2Element()).text().equalTo(expectedText);
     }
 
     public void typeToInputAndSubmitWithoutRequest(String s) {
-        input.clear();
-        input.sendKeys(s);
-        Graphene.guardNoRequest(button).click();
+        getInputElement().clear();
+        getInputElement().sendKeys(s);
+        Graphene.guardNoRequest(getButtonElement()).click();
     }
 
     public void verifyOutput1Text() {
@@ -100,15 +149,15 @@ public class CommandButtonLinkPage extends MetamerPage {
     }
 
     public void verifyOutput1Text(String s) {
-        verifyOutputText(output1, s);
+        verifyOutputText(getOutput1Element(), s);
     }
 
     public void verifyOutput2Text(String s) {
-        verifyOutputText(output2, s);
+        verifyOutputText(getOutput2Element(), s);
     }
 
     public void verifyOutput3Text(String s) {
-        verifyOutputText(output3, s);
+        verifyOutputText(getOutput3Element(), s);
     }
 
     private void verifyOutputText(WebElement elem, String text) {

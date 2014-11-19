@@ -62,7 +62,7 @@ public class TestHInputTextarea extends AbstractAjaxTest {
 
     @Override
     public void performAction(String input) {
-        page.input.clear();
+        page.getInputElement().clear();
         typeKeys(input);
     }
 

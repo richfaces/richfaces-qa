@@ -35,7 +35,6 @@ import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 /**
@@ -52,16 +51,16 @@ public class TestPanelMenuItemClientSideHandlers extends AbstractWebDriverTest {
     private PanelMenuItemPage page;
 
     private String event;
-    private String[] ajaxEvents = new String[]{ "beforeselect", "begin", "beforedomupdate", "select", "complete" };
-    private String[] clientEvents = new String[]{ "beforeselect", "select" };
-    private String[] serverEvents = new String[]{ "select" };
+    private final String[] ajaxEvents = new String[]{ "beforeselect", "begin", "beforedomupdate", "select", "complete" };
+    private final String[] clientEvents = new String[]{ "beforeselect", "select" };
+    private final String[] serverEvents = new String[]{ "select" };
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richPanelMenuItem/simple.xhtml");
     }
 
-    public MetamerPage getPage() {
+    public PanelMenuItemPage getPage() {
         return page;
     }
 
@@ -70,7 +69,7 @@ public class TestPanelMenuItemClientSideHandlers extends AbstractWebDriverTest {
     public void testClientSideEvent() {
         panelMenuItemAttributes.set(PanelMenuItemAttributes.mode, Mode.ajax);
         testRequestEventsBefore(event);
-        guardAjax(page.getItem()).select();
+        guardAjax(getPage().getItem()).select();
         testRequestEventsAfter(event);
     }
 
@@ -78,7 +77,7 @@ public class TestPanelMenuItemClientSideHandlers extends AbstractWebDriverTest {
     public void testClientSideEventsOrderClient() {
         panelMenuItemAttributes.set(PanelMenuItemAttributes.mode, Mode.client);
         testRequestEventsBefore(clientEvents);
-        page.getItem().select();
+        getPage().getItem().select();
         testRequestEventsAfter(clientEvents);
     }
 
@@ -87,7 +86,7 @@ public class TestPanelMenuItemClientSideHandlers extends AbstractWebDriverTest {
     public void testClientSideEventsOrderAjax() {
         panelMenuItemAttributes.set(PanelMenuItemAttributes.mode, Mode.ajax);
         testRequestEventsBefore(ajaxEvents);
-        guardAjax(page.getItem()).select();
+        guardAjax(getPage().getItem()).select();
         testRequestEventsAfter(ajaxEvents);
     }
 
@@ -96,7 +95,7 @@ public class TestPanelMenuItemClientSideHandlers extends AbstractWebDriverTest {
     public void testClientSideEventsOrderServer() {
         panelMenuItemAttributes.set(PanelMenuItemAttributes.mode, Mode.server);
         testRequestEventsBefore(serverEvents);
-        guardHttp(page.getItem()).select();
+        guardHttp(getPage().getItem()).select();
         testRequestEventsAfter(serverEvents);
     }
 

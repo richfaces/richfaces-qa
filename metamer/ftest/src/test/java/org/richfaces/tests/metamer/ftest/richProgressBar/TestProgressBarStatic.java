@@ -57,26 +57,26 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
 
     @Test
     public void testInitialFacet() {
-        assertPresent(page.progressBar, "Progress bar is not present on the page.");
-        assertVisible(page.progressBar, "Progress bar should be visible on the page.");
-        assertVisible(page.initialOutput, "Initial output should be visible on the page.");
-        assertNotVisible(page.finishOutput, "Finish output should not be visible on the page.");
-        assertEquals(page.initialOutput.getText(), "Initial", "Content of initial facet.");
+        assertPresent(page.getProgressBarElement(), "Progress bar is not present on the page.");
+        assertVisible(page.getProgressBarElement(), "Progress bar should be visible on the page.");
+        assertVisible(page.getInitialOutputElement(), "Initial output should be visible on the page.");
+        assertNotVisible(page.getFinishOutputElement(), "Finish output should not be visible on the page.");
+        assertEquals(page.getInitialOutputElement().getText(), "Initial", "Content of initial facet.");
 
-        assertNotVisible(page.remain, "Progress bar should not show progress.");
-        assertNotVisible(page.progress, "Progress bar should not show progress.");
-        assertNotVisible(page.label, "Progress bar should not show progress.");
+        assertNotVisible(page.getRemainElement(), "Progress bar should not show progress.");
+        assertNotVisible(page.getProgressElement(), "Progress bar should not show progress.");
+        assertNotVisible(page.getLabelElement(), "Progress bar should not show progress.");
 
-        MetamerPage.waitRequest(page.initialFacetRenderedCheckbox, WaitRequestType.HTTP).click();
+        MetamerPage.waitRequest(page.getInitialFacetRenderedCheckboxElement(), WaitRequestType.HTTP).click();
 
-        assertPresent(page.progressBar, "Progress bar is not present on the page.");
-        assertVisible(page.progressBar, "Progress bar should be visible on the page.");
-        assertNotPresent(page.initialOutput, "Initial output should not be present on the page.");
-        assertNotVisible(page.finishOutput, "Finish output should not be visible on the page.");
+        assertPresent(page.getProgressBarElement(), "Progress bar is not present on the page.");
+        assertVisible(page.getProgressBarElement(), "Progress bar should be visible on the page.");
+        assertNotPresent(page.getInitialOutputElement(), "Initial output should not be present on the page.");
+        assertNotVisible(page.getFinishOutputElement(), "Finish output should not be visible on the page.");
 
-        assertPresent(page.remain, "Progress bar should show progress.");
-        assertPresent(page.progress, "Progress bar should show progress.");
-        assertPresent(page.label, "Progress bar should show progress.");
+        assertPresent(page.getRemainElement(), "Progress bar should show progress.");
+        assertPresent(page.getProgressElement(), "Progress bar should show progress.");
+        assertPresent(page.getLabelElement(), "Progress bar should show progress.");
     }
 
     @Test(groups = "smoke")
@@ -84,52 +84,52 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
         progressBarAttributes.set(ProgressBarAttributes.maxValue, 100);
         progressBarAttributes.set(ProgressBarAttributes.value, 100);
 
-        assertPresent(page.progressBar, "Progress bar is not present on the page.");
-        assertVisible(page.progressBar, "Progress bar should be visible on the page.");
-        assertNotVisible(page.initialOutput, "Initial output should not be visible on the page.");
-        assertVisible(page.finishOutput, "Finish output should be visible on the page.");
-        assertEquals(page.finishOutput.getText(), "Finish", "Content of finish facet.");
+        assertPresent(page.getProgressBarElement(), "Progress bar is not present on the page.");
+        assertVisible(page.getProgressBarElement(), "Progress bar should be visible on the page.");
+        assertNotVisible(page.getInitialOutputElement(), "Initial output should not be visible on the page.");
+        assertVisible(page.getFinishOutputElement(), "Finish output should be visible on the page.");
+        assertEquals(page.getFinishOutputElement().getText(), "Finish", "Content of finish facet.");
 
-        assertNotVisible(page.remain, "Progress bar should not show progress.");
-        assertNotVisible(page.progress, "Progress bar should not show progress.");
-        assertNotVisible(page.label, "Progress bar should not show progress.");
+        assertNotVisible(page.getRemainElement(), "Progress bar should not show progress.");
+        assertNotVisible(page.getProgressElement(), "Progress bar should not show progress.");
+        assertNotVisible(page.getLabelElement(), "Progress bar should not show progress.");
 
-        MetamerPage.waitRequest(page.finishFacetRenderedCheckbox, WaitRequestType.HTTP).click();
+        MetamerPage.waitRequest(page.getFinishFacetRenderedCheckboxElement(), WaitRequestType.HTTP).click();
 
-        assertPresent(page.progressBar, "Progress bar is not present on the page.");
-        assertVisible(page.progressBar, "Progress bar should be visible on the page.");
-        assertNotVisible(page.initialOutput, "Initial output should not be visible on the page.");
-        assertNotPresent(page.finishOutput, "Finish output should not be present on the page.");
+        assertPresent(page.getProgressBarElement(), "Progress bar is not present on the page.");
+        assertVisible(page.getProgressBarElement(), "Progress bar should be visible on the page.");
+        assertNotVisible(page.getInitialOutputElement(), "Initial output should not be visible on the page.");
+        assertNotPresent(page.getFinishOutputElement(), "Finish output should not be present on the page.");
 
-        assertVisible(page.remain, "Progress bar should show progress.");
-        assertVisible(page.progress, "Progress bar should show progress.");
-        assertNotVisible(page.label, "Progress bar should not show label.");
+        assertVisible(page.getRemainElement(), "Progress bar should show progress.");
+        assertVisible(page.getProgressElement(), "Progress bar should show progress.");
+        assertNotVisible(page.getLabelElement(), "Progress bar should not show label.");
     }
 
     @Test
     @Templates(value = "plain")
     public void testFinishClass() {
-        testStyleClass(page.finish, BasicAttributes.finishClass);
+        testStyleClass(page.getFinishElement(), BasicAttributes.finishClass);
     }
 
     @Test
     @Templates(value = "plain")
     public void testInitialClass() {
-        testStyleClass(page.init, BasicAttributes.initialClass);
+        testStyleClass(page.getInitElement(), BasicAttributes.initialClass);
     }
 
     @Test
     @Templates("plain")
     public void testLabel() {
-        MetamerPage.waitRequest(page.initialFacetRenderedCheckbox, WaitRequestType.HTTP).click();
+        MetamerPage.waitRequest(page.getInitialFacetRenderedCheckboxElement(), WaitRequestType.HTTP).click();
 
-        assertEquals(page.label.getText(), "", "Label when not set.");
+        assertEquals(page.getLabelElement().getText(), "", "Label when not set.");
 
         progressBarAttributes.set(ProgressBarAttributes.label, "metamer");
-        assertEquals(page.label.getText(), "metamer", "Label when set to metamer.");
+        assertEquals(page.getLabelElement().getText(), "metamer", "Label when set to metamer.");
 
-        MetamerPage.waitRequest(page.childrenRenderedCheckbox, WaitRequestType.HTTP).click();
-        assertEquals(page.label.getText(), "child + metamer",
+        MetamerPage.waitRequest(page.getChildrenRenderedCheckboxElement(), WaitRequestType.HTTP).click();
+        assertEquals(page.getLabelElement().getText(), "child + metamer",
             "Label when set to metamer and children are rendered too.");
     }
 
@@ -153,25 +153,25 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testProgressClass() {
-        testStyleClass(page.progress, BasicAttributes.progressClass);
+        testStyleClass(page.getProgressElement(), BasicAttributes.progressClass);
     }
 
     @Test
     @Templates(value = "plain")
     public void testRemainingClass() {
-        testStyleClass(page.remain, BasicAttributes.remainingClass);
+        testStyleClass(page.getRemainElement(), BasicAttributes.remainingClass);
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyle() {
-        testStyle(page.progressBar);
+        testStyle(page.getProgressBarElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyleClass() {
-        testStyleClass(page.progressBar);
+        testStyleClass(page.getProgressBarElement());
     }
 
     @Test
@@ -189,20 +189,20 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
 
         progressBarAttributes.set(ProgressBarAttributes.value, -345);
         assertEquals(getProgress(), 0, "Progress when value=-345.");
-        assertTrue(page.initialOutput.isDisplayed(), "Initial output should be visible on the page.");
-        assertFalse(page.finishOutput.isDisplayed(), "Finish output should not be visible on the page.");
+        assertTrue(page.getInitialOutputElement().isDisplayed(), "Initial output should be visible on the page.");
+        assertFalse(page.getFinishOutputElement().isDisplayed(), "Finish output should not be visible on the page.");
 
         progressBarAttributes.set(ProgressBarAttributes.value, 456);
         assertEquals(getProgress(), 100, "Progress when value=456.");
-        assertFalse(page.initialOutput.isDisplayed(), "Initial output should not be visible on the page.");
-        assertTrue(page.finishOutput.isDisplayed(), "Finish output should be visible on the page.");
+        assertFalse(page.getInitialOutputElement().isDisplayed(), "Initial output should not be visible on the page.");
+        assertTrue(page.getFinishOutputElement().isDisplayed(), "Finish output should be visible on the page.");
     }
 
     /**
      * @return progress size in %
      */
     private int getProgress() {
-        String width = page.progress.getCssValue("width");
+        String width = page.getProgressElement().getCssValue("width");
         if (width.contains("%")) {
             return Integer.parseInt(width.replace("%", ""));
         } else {

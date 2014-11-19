@@ -38,12 +38,19 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 public abstract class AbstractItemChangeListenerTest<P extends ICLPage> extends AbstractWebDriverTest {
 
     @Page
-    protected P page;
+    private P page;
 
     private final String testedComponent;
 
     public AbstractItemChangeListenerTest(String testedComponent) {
         this.testedComponent = testedComponent;
+    }
+
+    /**
+     * @return the page
+     */
+    public P getPage() {
+        return page;
     }
 
     @Override
@@ -52,8 +59,8 @@ public abstract class AbstractItemChangeListenerTest<P extends ICLPage> extends 
     }
 
     private void testICL(final String expectedText) {
-        MetamerPage.waitRequest(page.getInactivePanel(), WaitRequestType.XHR).click();
-        page.assertListener(PhaseId.UPDATE_MODEL_VALUES, expectedText);
+        MetamerPage.waitRequest(getPage().getInactivePanel(), WaitRequestType.XHR).click();
+        getPage().assertListener(PhaseId.UPDATE_MODEL_VALUES, expectedText);
     }
 
     public void testICLAsAttributeOfComponent(String expectedMSG) {

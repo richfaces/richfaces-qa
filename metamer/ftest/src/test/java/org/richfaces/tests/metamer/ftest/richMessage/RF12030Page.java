@@ -31,9 +31,31 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 public class RF12030Page extends MetamerPage {
 
     @FindBy(css = "tr.rf-dt-r.rf-dt-fst-r > td")
-    WebElement firstTableRow;
+    private WebElement firstTableRowElement;
     @FindBy(css = "table.rf-cp-gr")
-    WebElement collapsePanel;
+    private WebElement collapsePanelElement;
     @FindBy(css = "a.rf-ds-btn.rf-ds-btn-next")
-    WebElement nextButton;
+    private WebElement nextButtonElement;
+
+    /**
+     * @return the collapsePanelElement
+     */
+    public WebElement getCollapsePanelElement() {
+        return collapsePanelElement;
+    }
+
+    /**
+     * @return the firstTableRowElement
+     */
+    public WebElement getFirstTableRowElement() {
+        return firstTableRowElement;
+    }
+
+    /**
+     * @return the nextButtonElement
+     */
+    public WebElement getNextButtonElement() {
+        return nextButtonElement;
+    }
+
 }

@@ -39,7 +39,6 @@ import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -68,10 +67,7 @@ public class TestTab extends AbstractWebDriverTest {
     private final Attributes<TabAttributes> tabAttributes = getAttributes();
 
     @Page
-    TabSimplePage page;
-
-    @FindByJQuery(value = "div[id$=phasesPanel] span")
-    private WebElement requestTime;
+    private TabSimplePage page;
 
     @Override
     public URL getTestUrl() {
@@ -89,18 +85,18 @@ public class TestTab extends AbstractWebDriverTest {
         MetamerPage.waitRequest(page.getTabPanel(), WaitRequestType.XHR).switchTo(2);
 
         page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
-                PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
+            PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
         page.assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: tab1 -> tab3");
 
         MetamerPage.waitRequest(page.getTabPanel(), WaitRequestType.XHR).switchTo(0);
         page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
-                PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
+            PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
         page.assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: tab3 -> tab1");
         page.assertListener(PhaseId.INVOKE_APPLICATION, "action listener invoked");
         page.assertListener(PhaseId.INVOKE_APPLICATION, "action invoked");
     }
 
-    @Test(groups = {"Future"})
+    @Test(groups = { "Future" })
     @Templates(value = "uiRepeat")
     @IssueTracking("https://issues.jboss.org/browse/RF-13748")
     public void testActionAndActionListenerInUiRepeat() {
@@ -172,7 +168,7 @@ public class TestTab extends AbstractWebDriverTest {
 
         tabAttributes.set(TabAttributes.header, "ľščťťžžôúňď ацущьмщфзщйцу");
         assertEquals(page.getTabPanel().advanced().getActiveHeaderElement().getText(), "ľščťťžžôúňď ацущьмщфзщйцу",
-                "Header of the first tab did not change.");
+            "Header of the first tab did not change.");
     }
 
     @Test
@@ -181,15 +177,15 @@ public class TestTab extends AbstractWebDriverTest {
         tabAttributes.set(TabAttributes.headerActiveClass, "metamer-ftest-class");
 
         assertTrue(belongsClass(page.getTabPanel().advanced().getActiveHeaderElement(), "metamer-ftest-class"),
-                "headerActiveClass does not work");
+            "headerActiveClass does not work");
         assertFalse(belongsClass(page.getInactiveHeaders().get(0), "metamer-ftest-class"),
-                "headerActiveClass does not work");
+            "headerActiveClass does not work");
         assertFalse(belongsClass(page.getInactiveHeaders().get(1), "metamer-ftest-class"),
-                "headerActiveClass does not work");
+            "headerActiveClass does not work");
         assertFalse(belongsClass(page.getInactiveHeaders().get(2), "metamer-ftest-class"),
-                "headerActiveClass does not work");
+            "headerActiveClass does not work");
         assertFalse(belongsClass(page.getDisabledHeaders().get(0), "metamer-ftest-class"),
-                "headerActiveClass does not work");
+            "headerActiveClass does not work");
     }
 
     @Test
@@ -205,10 +201,10 @@ public class TestTab extends AbstractWebDriverTest {
     public void testHeaderDisabledClass() {
         tabAttributes.set(TabAttributes.headerDisabledClass, "metamer-ftest-class");
         assertFalse(belongsClass(page.getDisabledHeaders().get(0), "metamer-ftest-class"),
-                "headerDisabledClass does not work");
+            "headerDisabledClass does not work");
         tabAttributes.set(TabAttributes.disabled, true);
         assertTrue(belongsClass(page.getDisabledHeaders().get(0), "metamer-ftest-class"),
-                "headerDisabledClass does not work");
+            "headerDisabledClass does not work");
     }
 
     @Test
@@ -216,11 +212,11 @@ public class TestTab extends AbstractWebDriverTest {
     public void testHeaderInactiveClass() {
         tabAttributes.set(TabAttributes.headerInactiveClass, "metamer-ftest-class");
         assertFalse(belongsClass(page.getTabPanel().advanced().getAllVisibleHeadersElements()
-                .get(0), "metamer-ftest-class"),
-                "headerInactiveClass does not work");
+            .get(0), "metamer-ftest-class"),
+            "headerInactiveClass does not work");
         page.getTabPanel().switchTo(1);
         assertTrue(belongsClass(page.getInactiveHeaders().get(0), "metamer-ftest-class"),
-                "headerInactiveClass does not work");
+            "headerInactiveClass does not work");
     }
 
     @Test
@@ -299,7 +295,7 @@ public class TestTab extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testOnheadermousemove() {
         Action action = new Actions(driver).moveToElement(page.getInactiveHeaders().get(2))
-                .moveToElement(page.getTabPanel().advanced().getActiveHeaderElement()).build();
+            .moveToElement(page.getTabPanel().advanced().getActiveHeaderElement()).build();
         testFireEvent(tabAttributes, TabAttributes.onheadermousemove, action);
     }
 
@@ -307,7 +303,7 @@ public class TestTab extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testOnheadermouseup() {
         Action action = new Actions(driver).clickAndHold(page.getItemContents().get(0))
-                .moveToElement(page.getTabPanel().advanced().getActiveHeaderElement()).release().build();
+            .moveToElement(page.getTabPanel().advanced().getActiveHeaderElement()).release().build();
         testFireEvent(tabAttributes, TabAttributes.onheadermouseup, action);
     }
 
@@ -330,7 +326,7 @@ public class TestTab extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testOnmousemove() {
         Action action = new Actions(driver).moveToElement(page.getInactiveHeaders().get(2))
-                .moveToElement(page.getItemContents().get(0)).build();
+            .moveToElement(page.getItemContents().get(0)).build();
         testFireEvent(tabAttributes, TabAttributes.onmousemove, action);
     }
 
@@ -338,7 +334,7 @@ public class TestTab extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testOnmouseout() {
         Action action = new Actions(driver).moveToElement(page.getItemContents().get(0))
-                .moveToElement(page.getInactiveHeaders().get(2)).build();
+            .moveToElement(page.getInactiveHeaders().get(2)).build();
         testFireEvent(tabAttributes, TabAttributes.onmouseout, action);
     }
 
@@ -381,11 +377,11 @@ public class TestTab extends AbstractWebDriverTest {
     public void testSwitchTypeNull() {
         guardAjax(page.getInactiveHeaders().get(1)).click();
         waitGui(driver).withMessage("Tab 2 is not displayed.").until().element(page.getItemContents().get(1)).is()
-                .visible();
+            .visible();
 
         guardAjax(page.getInactiveHeaders().get(0)).click();
         waitGui(driver).withMessage("Tab 1 is not displayed.").until().element(page.getItemContents().get(0)).is()
-                .visible();
+            .visible();
     }
 
     @Test(groups = "smoke")
@@ -401,11 +397,11 @@ public class TestTab extends AbstractWebDriverTest {
 
         guardAjax(page.getInactiveHeaders().get(1)).click();
         waitGui(driver).withMessage("Tab 2 is not displayed.").until().element(page.getItemContents().get(1)).is()
-                .visible();
+            .visible();
 
         guardNoRequest(page.getInactiveHeaders().get(0)).click();
         waitGui(driver).withMessage("Tab 1 is not displayed.").until().element(page.getItemContents().get(0)).is()
-                .visible();
+            .visible();
     }
 
     @Test
@@ -414,11 +410,11 @@ public class TestTab extends AbstractWebDriverTest {
 
         guardAjax(page.getInactiveHeaders().get(1)).click();
         waitGui(driver).withMessage("Tab 2 is not displayed.").until().element(page.getItemContents().get(1)).is()
-                .visible();
+            .visible();
 
         guardHttp(page.getInactiveHeaders().get(0)).click();
         waitGui(driver).withMessage("Tab 1 is not displayed.").until().element(page.getItemContents().get(0)).is()
-                .visible();
+            .visible();
     }
 
     @Test

@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richTreeSelectionChangeListener;
 
 import java.util.List;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -33,9 +34,16 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 public class TSCLPage extends MetamerPage {
 
     @FindBy(css = "span.rf-trn-lbl")
-    public List<WebElement> nodes;
+    private List<WebElement> nodesElements;
 
     public WebElement getItem(int index) {
-        return nodes.get(index);
+        return getNodesElements().get(index);
+    }
+
+    /**
+     * @return the nodesElements
+     */
+    public List<WebElement> getNodesElements() {
+        return nodesElements;
     }
 }

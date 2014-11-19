@@ -66,7 +66,7 @@ public class MetamerPage {
     protected static final int MINOR_WAIT_TIME = 50;// ms
     protected static final int TRIES = 20;// for guardListSize and expectedReturnJS
     @FindBy(css = "div[id$=phasesPanel] li")
-    public List<WebElement> phases;
+    private List<WebElement> phases;
     @FindBy(css = "span[id$=requestTime]")
     private WebElement requestTime;
     @FindBy(css = "span[id$=statusCheckerOutput]")
@@ -431,7 +431,7 @@ public class MetamerPage {
     public void assertBypassUpdatesPhasesCycle() {
         initialize();
         assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
-                PhaseId.RENDER_RESPONSE);
+            PhaseId.RENDER_RESPONSE);
     }
 
     private void initialize() {

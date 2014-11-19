@@ -34,7 +34,7 @@ import org.richfaces.tests.metamer.ftest.abstractions.message.AbstractMessageCom
 public abstract class AbstractNotifyMessageTest extends AbstractMessageComponentTest {
 
     @Page
-    protected NotifyMessagePage page;
+    private NotifyMessagePage page;
 
     @Override
     public void checkNoShowDetailNoShowSummary() {
@@ -46,7 +46,7 @@ public abstract class AbstractNotifyMessageTest extends AbstractMessageComponent
         return new FutureTarget<WebElement>() {
             @Override
             public WebElement getTarget() {
-                return page.getMessageComponentForFirstInput().advanced().getRootElement();
+                return getPage().getMessageComponentForFirstInput().advanced().getRootElement();
             }
         };
     }

@@ -58,6 +58,7 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
 
     @UseForAllTests(valuesFrom = FROM_ENUM, value = "")
     private ScrollerPosition scroller;
+
     @Page
     private SimplePage page;
 

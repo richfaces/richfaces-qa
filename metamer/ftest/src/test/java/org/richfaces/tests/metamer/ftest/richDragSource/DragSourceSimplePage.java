@@ -33,27 +33,78 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 public class DragSourceSimplePage extends MetamerPage {
 
     @FindBy(css = "div.rf-ind[id$=indicator]")
-    public GrapheneElement indicator;
-
+    private GrapheneElement indicatorElement;
     @FindBy(css = "div.rf-ind[id$=indicator2Clone]")
-    public GrapheneElement indicator2;
-
+    private GrapheneElement indicator2Element;
     @FindBy(css = "body > div.ui-draggable")
-    public GrapheneElement defaultIndicator;
+    private GrapheneElement defaultIndicatorElement;
 
     @FindBy(css = "[id$=draggable1]")
-    public WebElement drag1;
-
+    private WebElement drag1Element;
     @FindBy(css = "[id$=draggable2]")
-    public WebElement drag2;
-
+    private WebElement drag2Element;
     @FindBy(css = "[id$=draggable3]")
-    public WebElement drag3;
+    private WebElement drag3Element;
 
     @FindBy(css = "[id$=droppable1]")
-    public WebElement drop1;
-
+    private WebElement drop1Element;
     @FindBy(css = "[id$=droppable2]")
-    public WebElement drop2;
+    private WebElement drop2Element;
+
+    /**
+     * @return the defaultIndicatorElement
+     */
+    public GrapheneElement getDefaultIndicatorElement() {
+        return defaultIndicatorElement;
+    }
+
+    /**
+     * @return the drag1Element
+     */
+    public WebElement getDrag1Element() {
+        return drag1Element;
+    }
+
+    /**
+     * @return the drag2Element
+     */
+    public WebElement getDrag2Element() {
+        return drag2Element;
+    }
+
+    /**
+     * @return the drag3Element
+     */
+    public WebElement getDrag3Element() {
+        return drag3Element;
+    }
+
+    /**
+     * @return the drop1Element
+     */
+    public WebElement getDrop1Element() {
+        return drop1Element;
+    }
+
+    /**
+     * @return the drop2Element
+     */
+    public WebElement getDrop2Element() {
+        return drop2Element;
+    }
+
+    /**
+     * @return the indicator2Element
+     */
+    public GrapheneElement getIndicator2Element() {
+        return indicator2Element;
+    }
+
+    /**
+     * @return the indicatorElement
+     */
+    public GrapheneElement getIndicatorElement() {
+        return indicatorElement;
+    }
 
 }

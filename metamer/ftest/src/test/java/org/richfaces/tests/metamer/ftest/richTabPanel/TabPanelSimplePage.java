@@ -30,13 +30,10 @@ public class TabPanelSimplePage extends MetamerPage {
 
     @FindByJQuery("div[id*=tabPanel]")
     private RichFacesTabPanel tabPanel;
-
     @FindByJQuery("div[id*=tabPanel]")
     private WebElement panelTabAsWebElement;
-
     @FindByJQuery("input[id$=hCreateTabButton]")
     private WebElement createTabHButton;
-
     @FindByJQuery("input[id$=a4jCreateTabButton]")
     private WebElement createTabA4jButton;
 

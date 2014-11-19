@@ -33,7 +33,6 @@ import java.util.List;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -49,7 +48,6 @@ import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -76,8 +74,6 @@ public class TestSelect extends AbstractWebDriverTest {
 
     private final Attributes<SelectAttributes> selectAttributes = getAttributes();
 
-    @Page
-    private MetamerPage page;
     private final Action selectHawaiiGuardedAction = new Action() {
         @Override
         public void perform() {
@@ -167,12 +163,12 @@ public class TestSelect extends AbstractWebDriverTest {
         Graphene.guardAjax(select.openSelect());
         //count number of row which are suggested in the beginning
         int numberOfSuggestionInTheBegining = select.advanced().getSuggestionsElements().size();
-        for(SelectSettings value:valuesToSelect){
+        for (SelectSettings value : valuesToSelect) {
             //Filter list
             select.type(value.getFirstChar());
             //Count number of suggestion after first char
             List<WebElement> suggestions = select.advanced().getSuggestionsElements();
-            assertEquals(suggestions.size(), value.numberOfSuggestionAfterFirstChar, "Count of filtered options ('"+value.getFirstChar()+"')");
+            assertEquals(suggestions.size(), value.numberOfSuggestionAfterFirstChar, "Count of filtered options ('" + value.getFirstChar() + "')");
             //Choose value
             Graphene.guardAjax(select.openSelect()).select(value.getPossitionInFilteredList());
             assertEquals(output.getText(), value.getName());
@@ -183,7 +179,7 @@ public class TestSelect extends AbstractWebDriverTest {
             assertEquals(numberOfSuggestionAfterSelect, numberOfSuggestionInTheBegining);
             //Verify if selected elements in properly tagged by css class
             assertTrue(suggestions.get(value.getPosstionInFullList()).getAttribute("class").contains("rf-sel-sel"),
-                "The "+value.getPosstionInFullList()+" item should contain class for selected");
+                "The " + value.getPosstionInFullList() + " item should contain class for selected");
         }
     }
 
@@ -199,16 +195,16 @@ public class TestSelect extends AbstractWebDriverTest {
         }
         Graphene.guardAjax(select.openSelect()).select(3);
         assertEquals(output.getText(), "Arkansas");
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Arkansas");
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Arkansas");
     }
 
     @Test
     public void testImmediate() {
         selectAttributes.set(SelectAttributes.immediate, Boolean.TRUE);
         selectHawaiiGuardedAction.perform();
-        page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
+        getMetamerPage().assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
             PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
-        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: -> Hawaii");
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: -> Hawaii");
     }
 
     @Test
@@ -369,7 +365,7 @@ public class TestSelect extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 select.openSelect();
-                page.getRequestTimeElement().click();
+                getMetamerPage().getRequestTimeElement().click();
                 select.advanced().waitUntilSuggestionsAreNotVisible().perform();
             }
         });
@@ -451,7 +447,7 @@ public class TestSelect extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 select.openSelect();
-                new Actions(driver).moveToElement(listElement).moveToElement(page.getRequestTimeElement()).perform();
+                new Actions(driver).moveToElement(listElement).moveToElement(getMetamerPage().getRequestTimeElement()).perform();
             }
         });
     }
@@ -530,9 +526,9 @@ public class TestSelect extends AbstractWebDriverTest {
             "First item should contain class for selected item.");
         new Actions(driver).sendKeys(Keys.RETURN).perform();
 
-        String previousTime = page.getRequestTimeElement().getText();
+        String previousTime = getMetamerPage().getRequestTimeElement().getText();
         Utils.triggerJQ(executor, "blur", select.advanced().getInput().advanced().getInputElement());
-        Graphene.waitModel().until().element(page.getRequestTimeElement()).text().not().equalTo(previousTime);
+        Graphene.waitModel().until().element(getMetamerPage().getRequestTimeElement()).text().not().equalTo(previousTime);
         assertEquals(output.getText(), "Alabama", "Output should be Alabama");
     }
 
@@ -560,7 +556,7 @@ public class TestSelect extends AbstractWebDriverTest {
         assertTrue(item10.getAttribute("class").contains("rf-sel-sel"),
             "Selected item should contain class for selected option.");
         assertEquals(output.getText(), "Hawaii");
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Hawaii");
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Hawaii");
     }
 
     @Test
@@ -569,7 +565,7 @@ public class TestSelect extends AbstractWebDriverTest {
         assertTrue(item10.getAttribute("class").contains("rf-sel-sel"),
             "Selected item should contain class for selected option.");
         assertEquals(output.getText(), "Hawaii");
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Hawaii");
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Hawaii");
     }
 
     @Test
@@ -624,11 +620,12 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     class SelectSettings {
-        private int possitionInFilteredList;
-        private int posstionInFullList;
+
+        private final int possitionInFilteredList;
+        private final int posstionInFullList;
         private int numberOfSuggestionAfterFirstChar;
-        private String firstChar;
-        private String name;
+        private final String firstChar;
+        private final String name;
 
         public SelectSettings(int possitionInFilteredList, int posstionInFullList, int numberOfSuggestionAfterFirstChar,
             String firstChar, String name) {
@@ -658,7 +655,5 @@ public class TestSelect extends AbstractWebDriverTest {
         public String getName() {
             return name;
         }
-
     }
-
 }

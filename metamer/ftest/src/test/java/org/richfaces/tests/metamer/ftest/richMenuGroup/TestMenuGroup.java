@@ -30,7 +30,6 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
@@ -44,7 +43,6 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -80,10 +78,8 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     private WebElement emptyIcon;
     @FindBy(css = "div[id$=menuItem41]")
     private WebElement menuItem41;
-    @Page
-    private MetamerPage page;
 
-    private int tolerance = 4;
+    private final int tolerance = 4;
 
     @Override
     public URL getTestUrl() {
@@ -257,7 +253,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 openMenuAndSubMenu();
-                new Actions(driver).moveToElement(page.getRequestTimeElement()).perform();
+                new Actions(driver).moveToElement(getMetamerPage().getRequestTimeElement()).perform();
                 Graphene.waitGui().until().element(groupList).is().not().visible();
             }
         });

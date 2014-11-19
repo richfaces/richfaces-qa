@@ -36,7 +36,14 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 public class AbstractPanelMenuTest extends AbstractWebDriverTest {
 
     @Page
-    protected PanelMenuPage page;
+    private PanelMenuPage page;
+
+    /**
+     * @return the page
+     */
+    public PanelMenuPage getPage() {
+        return page;
+    }
 
     @Override
     public URL getTestUrl() {

@@ -40,11 +40,18 @@ public abstract class AbstractTestToggleControl extends AbstractWebDriverTest {
     private final Attributes<ToggleControlAttributes> toggleControlAttributes = getAttributes();
 
     @Page
-    ToggleControlPage page;
+    private ToggleControlPage page;
 
     private WebElement[] firstPanelBtns;
 
     private WebElement[] secondPanelBtns;
+
+    /**
+     * @return the page
+     */
+    public ToggleControlPage getPage() {
+        return page;
+    }
 
     public void testSwitchFirstPanel(WebElement[] items) {
         testSwitching(getFirstPanelButtons(), items);
@@ -57,12 +64,12 @@ public abstract class AbstractTestToggleControl extends AbstractWebDriverTest {
     public void testTargetItem(WebElement[] items) {
         toggleControlAttributes.set(ToggleControlAttributes.targetItem, "item2");
 
-        Graphene.guardAjax(page.getTcPanel1Item3()).click();
+        Graphene.guardAjax(getPage().getTcPanel1Item3()).click();
         Graphene.waitGui().until().element(items[2]).is().visible();
         assertFalse(items[0].isDisplayed(), "Item 1 should not be visible.");
         assertFalse(items[1].isDisplayed(), "Item 2 should not be visible.");
 
-        Graphene.guardAjax(page.getTcCustom()).click();
+        Graphene.guardAjax(getPage().getTcCustom()).click();
         Graphene.waitGui().until().element(items[1]).is().visible();
         assertFalse(items[0].isDisplayed(), "Item 1 should not be visible.");
         assertFalse(items[2].isDisplayed(), "Item 3 should not be visible.");
@@ -71,12 +78,12 @@ public abstract class AbstractTestToggleControl extends AbstractWebDriverTest {
     public void testTargetPanel(WebElement[] items) {
         toggleControlAttributes.set(ToggleControlAttributes.targetPanel, "panel2");
 
-        Graphene.guardAjax(page.getTcPanel2Item3()).click();
+        Graphene.guardAjax(getPage().getTcPanel2Item3()).click();
         Graphene.waitGui().until().element(items[2]).is().visible();
         assertFalse(items[0].isDisplayed(), "Item 1 should not be visible.");
         assertFalse(items[1].isDisplayed(), "Item 2 should not be visible.");
 
-        Graphene.guardAjax(page.getTcCustom()).click();
+        Graphene.guardAjax(getPage().getTcCustom()).click();
         // waitGui.failWith("Item 1 is not displayed.").until(elementVisible.locator(items[0]));
         Graphene.waitGui().until().element(items[0]).is().visible();
         assertFalse(items[1].isDisplayed(), "Item 2 should not be visible.");
@@ -102,14 +109,14 @@ public abstract class AbstractTestToggleControl extends AbstractWebDriverTest {
 
     public WebElement[] getFirstPanelButtons() {
         if (firstPanelBtns == null) {
-            firstPanelBtns = new WebElement[]{ page.getTcPanel1Item1(), page.getTcPanel1Item2(), page.getTcPanel1Item3() };
+            firstPanelBtns = new WebElement[]{ getPage().getTcPanel1Item1(), getPage().getTcPanel1Item2(), getPage().getTcPanel1Item3() };
         }
         return firstPanelBtns;
     }
 
     public WebElement[] getSecondPanelButtons() {
         if (secondPanelBtns == null) {
-            secondPanelBtns = new WebElement[]{ page.getTcPanel2Item1(), page.getTcPanel2Item2(), page.getTcPanel2Item3() };
+            secondPanelBtns = new WebElement[]{ getPage().getTcPanel2Item1(), getPage().getTcPanel2Item2(), getPage().getTcPanel2Item3() };
         }
         return secondPanelBtns;
     }

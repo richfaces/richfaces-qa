@@ -44,8 +44,8 @@ public class TestNotifyMessageCSV extends AbstractNotifyMessageTest {
 
     @Override
     protected void waitingForValidationMessagesToShow() {
-        page.getMessageComponentForFirstInput().advanced().waitUntilMessageIsVisible().perform();
-        page.getMessageComponentForSecondInput().advanced().waitUntilMessageIsVisible().perform();
-        page.getMessageComponentForSelectableInput().advanced().waitUntilMessageIsVisible().perform();
+        getPage().getMessageComponentForFirstInput().advanced().waitUntilMessageIsVisible().perform();
+        getPage().getMessageComponentForSecondInput().advanced().waitUntilMessageIsVisible().perform();
+        getPage().getMessageComponentForSelectableInput().advanced().waitUntilMessageIsVisible().perform();
     }
 }

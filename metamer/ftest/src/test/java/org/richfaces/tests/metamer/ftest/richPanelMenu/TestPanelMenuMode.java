@@ -68,62 +68,62 @@ public class TestPanelMenuMode extends AbstractPanelMenuTest {
     private void checkGroupMode(Mode mode) {
         panelMenuAttributes.set(PanelMenuAttributes.groupMode, mode);
 
-        assertFalse(page.getGroup1().advanced().isExpanded());
+        assertFalse(getPage().getGroup1().advanced().isExpanded());
         switch (mode) {
             case ajax:
-                guardAjax(page.getPanelMenu()).expandGroup("Group 1");
+                guardAjax(getPage().getPanelMenu()).expandGroup("Group 1");
                 break;
             case server:
-                guardHttp(page.getPanelMenu()).expandGroup("Group 1");
+                guardHttp(getPage().getPanelMenu()).expandGroup("Group 1");
                 break;
             case client:
-                page.getPanelMenu().expandGroup("Group 1");
+                getPage().getPanelMenu().expandGroup("Group 1");
                 break;
         }
-        assertTrue(page.getGroup1().advanced().isExpanded());
+        assertTrue(getPage().getGroup1().advanced().isExpanded());
 
         if (mode != Mode.client) {
-            page.assertPhases(expectedPhases);
+            getPage().assertPhases(expectedPhases);
         }
 
         switch (mode) {
             case ajax:
-                guardAjax(page.getPanelMenu()).collapseGroup("Group 1");
+                guardAjax(getPage().getPanelMenu()).collapseGroup("Group 1");
                 break;
             case server:
-                guardHttp(page.getPanelMenu()).collapseGroup("Group 1");
+                guardHttp(getPage().getPanelMenu()).collapseGroup("Group 1");
                 break;
             case client:
-                page.getPanelMenu().collapseGroup("Group 1");
+                getPage().getPanelMenu().collapseGroup("Group 1");
                 break;
         }
-        assertFalse(page.getGroup1().advanced().isExpanded());
+        assertFalse(getPage().getGroup1().advanced().isExpanded());
 
         if (mode != Mode.client) {
-            page.assertPhases(expectedPhases);
+            getPage().assertPhases(expectedPhases);
         }
     }
 
     private void checkItemMode(Mode mode) {
         panelMenuAttributes.set(PanelMenuAttributes.itemMode, mode);
 
-        assertFalse(page.getItem3().advanced().isSelected());
+        assertFalse(getPage().getItem3().advanced().isSelected());
         switch (mode) {
             case ajax:
-                guardAjax(page.getItem3()).select();
+                guardAjax(getPage().getItem3()).select();
                 break;
             case server:
-                guardHttp(page.getItem3()).select();
+                guardHttp(getPage().getItem3()).select();
                 break;
             case client:
-                page.getItem3().select();
+                getPage().getItem3().select();
                 break;
         }
-        assertTrue(page.getItem3().advanced().isSelected());
+        assertTrue(getPage().getItem3().advanced().isSelected());
 
         if (mode != Mode.client) {
-            page.assertPhases(expectedPhases);
-            page.assertListener(UPDATE_MODEL_VALUES, "item changed");
+            getPage().assertPhases(expectedPhases);
+            getPage().assertListener(UPDATE_MODEL_VALUES, "item changed");
         }
     }
 }

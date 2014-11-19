@@ -35,7 +35,7 @@ import org.richfaces.tests.metamer.ftest.abstractions.message.MessageComponentTe
 public abstract class AbstractMessageTest extends AbstractMessageComponentTest {
 
     @Page
-    protected MessagePage page;
+    private MessagePage page;
 
     @Override
     protected MessageComponentTestPage getPage() {
@@ -47,7 +47,7 @@ public abstract class AbstractMessageTest extends AbstractMessageComponentTest {
         return new FutureTarget<WebElement>() {
             @Override
             public WebElement getTarget() {
-                return page.getMessageComponentForFirstInput().advanced().getRootElement();
+                return getPage().getMessageComponentForFirstInput().advanced().getRootElement();
             }
         };
     }

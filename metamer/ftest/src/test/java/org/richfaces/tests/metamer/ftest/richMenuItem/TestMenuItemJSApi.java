@@ -27,7 +27,6 @@ import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
-import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -42,8 +41,6 @@ import org.testng.annotations.Test;
  */
 public class TestMenuItemJSApi extends AbstractWebDriverTest {
 
-    @Page
-    private MetamerPage page;
     @FindBy(id = "activate")
     private WebElement activateButton;
 
@@ -55,8 +52,8 @@ public class TestMenuItemJSApi extends AbstractWebDriverTest {
     @Test
     public void testActivate() {
         MetamerPage.waitRequest(activateButton, WaitRequestType.XHR).click();
-        page.assertPhases(PhaseId.ANY_PHASE);
-        page.assertListener(PhaseId.INVOKE_APPLICATION, "action invoked");
-        page.assertListener(PhaseId.INVOKE_APPLICATION, "action listener invoked");
+        getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
+        getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "action invoked");
+        getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "action listener invoked");
     }
 }

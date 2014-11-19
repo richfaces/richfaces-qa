@@ -34,96 +34,72 @@ public class ValidatorSimplePage extends MetamerPage {
 
     @FindByJQuery("input[id$=a4jButton]")
     private WebElement a4jCommandBtn;
-
     @FindByJQuery("input[id$=hButton]")
     private WebElement hCommandBtn;
+
     @FindByJQuery(value = "input[id$=assertFalse]")
     private WebElement inputAssertFalse;
-
     @FindByJQuery("input[id$=assertTrue]")
     private WebElement inputAssertTrue;
-
     @FindByJQuery("input[id$=custom]")
     private WebElement inputCustom;
-
     @FindByJQuery("input[id$=decimalMinMax]")
     private WebElement inputDecimalMinMax;
-
     @FindByJQuery("input[id$=digits]")
     private WebElement inputDigits;
     @FindByJQuery(value = "input[id$=future]")
     private WebElement inputFuture;
-
     @FindByJQuery("input[id$=max]")
     private WebElement inputMax;
-
     @FindByJQuery("input[id$=min]")
     private WebElement inputMin;
-
     @FindByJQuery("input[id$=minMax]")
     private WebElement inputMinMax;
-
     @FindByJQuery("input[id$=notEmpty]")
     private WebElement inputNotEmpty;
-
     @FindByJQuery("input[id$=notNull]")
     private WebElement inputNotNull;
     @FindByJQuery(value = "input[id$=past]")
     private WebElement inputPast;
-
     @FindByJQuery("input[id$=pattern]")
     private WebElement inputPattern;
-
     @FindByJQuery("input[id$=regexp]")
     private WebElement inputRegexp;
-
     @FindByJQuery("input[id$=size]")
     private WebElement inputSize;
-
     @FindByJQuery("input[id$=stringSize]")
     private WebElement inputStringSize;
+
     @FindByJQuery("span[id$=assertFalseMsg] span.rf-msg-det")
     private WebElement msgAssertFalse;
-
     @FindByJQuery("span[id$=assertTrueMsg] span.rf-msg-det")
     private WebElement msgAssertTrue;
-
     @FindByJQuery("span[id$=customMsg] span.rf-msg-det")
     private WebElement msgCustom;
-
     @FindByJQuery("span[id$=decimalMinMaxMsg] span.rf-msg-det")
     private WebElement msgDecimalMinMax;
-
     @FindByJQuery("span[id$=digitsMsg] span.rf-msg-det")
     private WebElement msgDigits;
     @FindByJQuery(value = "span[id$=futureMsg] span.rf-msg-det")
     private WebElement msgFuture;
-
     @FindByJQuery("span[id$=maxMsg] span.rf-msg-det")
     private WebElement msgMax;
-
     @FindByJQuery("span[id$=minMsg] span.rf-msg-det")
     private WebElement msgMin;
-
     @FindByJQuery("span[id$=minMaxMsg] span.rf-msg-det")
     private WebElement msgMinMax;
-
     @FindByJQuery("span[id$=notEmptyMsg] span.rf-msg-det")
     private WebElement msgNotEmpty;
-
     @FindByJQuery("span[id$=notNullMsg] span.rf-msg-det")
     private WebElement msgNotNull;
     @FindByJQuery(value = "span[id$=pastMsg] span.rf-msg-det")
     private WebElement msgPast;
-
     @FindByJQuery("span[id$=patternMsg] span.rf-msg-det")
     private WebElement msgPattern;
-
     @FindByJQuery("span[id$=regexpMsg] span.rf-msg-det")
     private WebElement msgRegexp;
     @FindByJQuery(value = "span[id$=sizeMsg] span.rf-msg-det")
     private WebElement msgSize;
-
     @FindByJQuery("span[id$=stringSizeMsg] span.rf-msg-det")
     private WebElement msgStringSize;
 

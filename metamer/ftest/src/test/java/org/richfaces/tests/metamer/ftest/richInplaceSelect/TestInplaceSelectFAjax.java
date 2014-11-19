@@ -32,7 +32,6 @@ import java.util.List;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.inplaceInput.InplaceComponentState;
@@ -41,7 +40,6 @@ import org.richfaces.tests.metamer.bean.Model;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.model.Capital;
 import org.testng.annotations.Test;
 
@@ -55,8 +53,6 @@ public class TestInplaceSelectFAjax extends AbstractWebDriverTest {
 
     private final Attributes<InplaceSelectAttributes> inplaceSelectAttributes = getAttributes();
 
-    @Page
-    private MetamerPage page;
     @FindBy(css = "[id$=inplaceSelect]")
     private RichFacesInplaceSelect select;
     @FindBy(css = "[id$=output]")
@@ -99,6 +95,6 @@ public class TestInplaceSelectFAjax extends AbstractWebDriverTest {
         assertTrue(select.advanced().isInState(InplaceComponentState.CHANGED), "Select should have changed value.");
         assertFalse(select.advanced().isInState(InplaceComponentState.ACTIVE), "Select should not be active.");
 
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: -> Hawaii");
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: -> Hawaii");
     }
 }

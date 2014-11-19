@@ -52,7 +52,7 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     public void testOnclick() {
         panelMenuGroupAttributes.set(mode, client);
 
-        Action click = new Actions(driver).click(page.getTopGroup().advanced().getHeaderElement()).build();
+        Action click = new Actions(driver).click(getPage().getTopGroup().advanced().getHeaderElement()).build();
         testFireEvent(panelMenuGroupAttributes, onclick, click);
     }
 
@@ -60,7 +60,7 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     @Templates(value = "plain")
     public void testOndblclick() {
         panelMenuGroupAttributes.set(mode, client);
-        Action dblClick = new Actions(driver).doubleClick(page.getTopGroup().advanced().getHeaderElement()).build();
+        Action dblClick = new Actions(driver).doubleClick(getPage().getTopGroup().advanced().getHeaderElement()).build();
         testFireEvent(panelMenuGroupAttributes, ondblclick, dblClick);
     }
 
@@ -68,16 +68,16 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     @Templates(value = "plain")
     public void testOnmousedown() {
         panelMenuGroupAttributes.set(mode, client);
-        Action mousedown = new Actions(driver).clickAndHold(page.getTopGroup().advanced().getHeaderElement()).build();
+        Action mousedown = new Actions(driver).clickAndHold(getPage().getTopGroup().advanced().getHeaderElement()).build();
         testFireEvent(panelMenuGroupAttributes, onmousedown, mousedown);
-        new Actions(driver).release(page.getTopGroup().advanced().getHeaderElement()).perform();
+        new Actions(driver).release(getPage().getTopGroup().advanced().getHeaderElement()).perform();
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmousemove() {
         panelMenuGroupAttributes.set(mode, client);
-        Action mousemove = new Actions(driver).moveToElement(page.getTopGroup().advanced().getHeaderElement(), 3, 3).build();
+        Action mousemove = new Actions(driver).moveToElement(getPage().getTopGroup().advanced().getHeaderElement(), 3, 3).build();
         testFireEvent(panelMenuGroupAttributes, onmousemove, mousemove);
     }
 
@@ -86,7 +86,7 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     public void testOnmouseout() {
         panelMenuGroupAttributes.set(mode, client);
         // TODO JJa 2013-02-13: Rewrite using webdriver api when fixed (not working now)
-        testFireEventWithJS(page.getTopGroup().advanced().getHeaderElement(), Event.MOUSEOUT, panelMenuGroupAttributes, PanelMenuGroupAttributes.onmouseout);
+        testFireEventWithJS(getPage().getTopGroup().advanced().getHeaderElement(), Event.MOUSEOUT, panelMenuGroupAttributes, PanelMenuGroupAttributes.onmouseout);
     }
 
     @Test
@@ -94,8 +94,8 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     public void testOnmouseover() {
         //This test should be done first, because use static x and y variables
         panelMenuGroupAttributes.set(mode, client);
-        Actions mouseover = new Actions(driver).moveToElement(page.getRequestTimeElement());
-        mouseover.moveToElement(page.getTopGroup().advanced().getHeaderElement(), 3, 3);
+        Actions mouseover = new Actions(driver).moveToElement(getPage().getRequestTimeElement());
+        mouseover.moveToElement(getPage().getTopGroup().advanced().getHeaderElement(), 3, 3);
         testFireEvent(panelMenuGroupAttributes, onmouseover, mouseover.build());
     }
 
@@ -103,7 +103,7 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     @Templates(value = "plain")
     public void testOnmouseup() {
         panelMenuGroupAttributes.set(mode, client);
-        Action mouseup = new Actions(driver).clickAndHold(page.getTopGroup().advanced().getHeaderElement()).release().build();
+        Action mouseup = new Actions(driver).clickAndHold(getPage().getTopGroup().advanced().getHeaderElement()).release().build();
         testFireEvent(panelMenuGroupAttributes, onmouseup, mouseup);
     }
 

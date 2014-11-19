@@ -48,8 +48,8 @@ public class TestTreeLoadingFacet extends AbstractTreeTest {
     }
 
     private void setResponseDelay(int milis) {
-        page.getResponseDelayElement().sendKeys(String.valueOf(milis));
-        page.getResponseDelayElement().submit();
+        getMetamerPage().getResponseDelayElement().sendKeys(String.valueOf(milis));
+        getMetamerPage().getResponseDelayElement().submit();
     }
 
     @Test(groups = "smoke")

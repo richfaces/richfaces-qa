@@ -132,7 +132,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
     @Test
     public void testBypassUpdates() {
         commandButtonAttributes.set(CommandButtonAttributes.bypassUpdates, true);
-        MetamerPage.waitRequest(page.button, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getButtonElement(), WaitRequestType.XHR).click();
         page.verifyOutput1Text("");
         page.verifyOutput2Text("");
         page.verifyOutput3Text("");
@@ -157,7 +157,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
     @Test
     public void testDisabled() {
         commandButtonAttributes.set(CommandButtonAttributes.disabled, true);
-        assertTrue(page.button.getAttribute("disabled").equalsIgnoreCase("true"));
+        assertTrue(page.getButtonElement().getAttribute("disabled").equalsIgnoreCase("true"));
     }
 
     @Test
@@ -172,7 +172,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
     @Test
     public void testImmediate() {
         commandButtonAttributes.set(CommandButtonAttributes.immediate, true);
-        MetamerPage.waitRequest(page.button, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getButtonElement(), WaitRequestType.XHR).click();
         page.verifyOutput1Text("");
         page.verifyOutput2Text("");
         page.verifyOutput3Text("");
@@ -201,7 +201,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
         commandButtonAttributes.set(CommandButtonAttributes.oncomplete, "metamerEvents += \"complete \"");
 
         ((JavascriptExecutor) driver).executeScript("metamerEvents = \"\"");
-        MetamerPage.waitRequest(page.button, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getButtonElement(), WaitRequestType.XHR).click();
 
         String[] events = ((JavascriptExecutor) driver).executeScript("return metamerEvents").toString().split(" ");
 
@@ -216,7 +216,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
         testFireEvent(commandButtonAttributes, CommandButtonAttributes.onbegin, new Action() {
             @Override
             public void perform() {
-                page.button.click();
+                page.getButtonElement().click();
             }
         });
     }
@@ -226,7 +226,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
         testFireEvent(commandButtonAttributes, CommandButtonAttributes.onbeforedomupdate, new Action() {
             @Override
             public void perform() {
-                page.button.click();
+                page.getButtonElement().click();
             }
         });
     }
@@ -236,7 +236,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
         testFireEvent(commandButtonAttributes, CommandButtonAttributes.oncomplete, new Action() {
             @Override
             public void perform() {
-                page.button.click();
+                page.getButtonElement().click();
             }
         });
     }
@@ -244,61 +244,61 @@ public class TestCommandButton extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testOnclick() {
-        testFireEventWithJS(page.button, commandButtonAttributes, CommandButtonAttributes.onclick);
+        testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onclick);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOndblclick() {
-        testFireEventWithJS(page.button, commandButtonAttributes, CommandButtonAttributes.ondblclick);
+        testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.ondblclick);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeydown() {
-        testFireEventWithJS(page.button, commandButtonAttributes, CommandButtonAttributes.onkeydown);
+        testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onkeydown);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeypress() {
-        testFireEventWithJS(page.button, commandButtonAttributes, CommandButtonAttributes.onkeypress);
+        testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onkeypress);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOneyup() {
-        testFireEventWithJS(page.button, commandButtonAttributes, CommandButtonAttributes.onkeyup);
+        testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onkeyup);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmousedown() {
-        testFireEventWithJS(page.button, commandButtonAttributes, CommandButtonAttributes.onmousedown);
+        testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onmousedown);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmousemove() {
-        testFireEventWithJS(page.button, commandButtonAttributes, CommandButtonAttributes.onmousemove);
+        testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onmousemove);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseout() {
-        testFireEventWithJS(page.button, commandButtonAttributes, CommandButtonAttributes.onmouseout);
+        testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onmouseout);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseover() {
-        testFireEventWithJS(page.button, commandButtonAttributes, CommandButtonAttributes.onmouseover);
+        testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onmouseover);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseup() {
-        testFireEventWithJS(page.button, commandButtonAttributes, CommandButtonAttributes.onmouseup);
+        testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onmouseup);
     }
 
     @Test
@@ -332,44 +332,44 @@ public class TestCommandButton extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testRendered() {
         commandButtonAttributes.set(CommandButtonAttributes.rendered, false);
-        assertFalse(new WebElementConditionFactory(page.button).isPresent().apply(driver), "Button should not be on page.");
+        assertFalse(new WebElementConditionFactory(page.getButtonElement()).isPresent().apply(driver), "Button should not be on page.");
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyle() {
-        testStyle(page.button);
+        testStyle(page.getButtonElement());
     }
 
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-9307")
     @Templates(value = "plain")
     public void testStyleClass() {
-        testStyleClass(page.button);
+        testStyleClass(page.getButtonElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testTitle() {
-        testTitle(page.button);
+        testTitle(page.getButtonElement());
     }
 
     @Test
     @UseWithField(field = "type", valuesFrom = STRINGS, value = { "image", "reset", "submit", "button" })
     public void testType() {
-        testHTMLAttribute(page.button, commandButtonAttributes, CommandButtonAttributes.type, type);
+        testHTMLAttribute(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.type, type);
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10115")
     public void testTypeNull() {
-        testHTMLAttribute(page.button, commandButtonAttributes, CommandButtonAttributes.type, "null", "submit");
+        testHTMLAttribute(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.type, "null", "submit");
     }
 
     @Test
     @Templates("plain")
     public void testValue() {
         commandButtonAttributes.set(CommandButtonAttributes.value, CommandButtonLinkPage.STRING_RF1);
-        assertEquals(page.button.getAttribute("value"), CommandButtonLinkPage.STRING_RF1, "Button's value did not change");
+        assertEquals(page.getButtonElement().getAttribute("value"), CommandButtonLinkPage.STRING_RF1, "Button's value did not change");
     }
 }

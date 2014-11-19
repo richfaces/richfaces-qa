@@ -75,7 +75,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     public void testExecute() {
         treeAttributes.set(TreeAttributes.execute, "executeChecker @this");
         selectFirstNodeAjaxAction.perform();
-        page.assertListener(PhaseId.UPDATE_MODEL_VALUES, "executeChecker");
+        getMetamerPage().assertListener(PhaseId.UPDATE_MODEL_VALUES, "executeChecker");
     }
 
     @Test(groups = { "Future" })
@@ -148,11 +148,11 @@ public class TestTreeAttributes extends AbstractTreeTest {
     public void testImmediate() {
         treeAttributes.set(TreeAttributes.immediate, Boolean.FALSE);
         expandFirstNodeAjaxAction.perform();
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "tree toggle listener invoked");
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "tree toggle listener invoked");
 
         treeAttributes.set(TreeAttributes.immediate, Boolean.TRUE);
         collapseFirstNodeAjaxAction.perform();
-        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "tree toggle listener invoked");
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "tree toggle listener invoked");
     }
 
     @Test
@@ -174,9 +174,9 @@ public class TestTreeAttributes extends AbstractTreeTest {
     public void testLimitRender() {
         treeAttributes.set(TreeAttributes.limitRender, true);
         treeAttributes.set(TreeAttributes.render, "@this renderChecker");
-        String renderCheckerText = page.getRenderCheckerOutputElement().getText();
+        String renderCheckerText = getMetamerPage().getRenderCheckerOutputElement().getText();
         selectFirstNodeAjaxAction.perform();
-        Graphene.waitAjax().until().element(page.getRenderCheckerOutputElement()).text().not().equalTo(renderCheckerText);
+        Graphene.waitAjax().until().element(getMetamerPage().getRenderCheckerOutputElement()).text().not().equalTo(renderCheckerText);
     }
 
     @Test(groups = { "Future" })
@@ -322,7 +322,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnmouseover() {
-        new Actions(driver).moveToElement(page.getRequestTimeElement()).perform();
+        new Actions(driver).moveToElement(getMetamerPage().getRequestTimeElement()).perform();
         testFireEvent(treeAttributes, TreeAttributes.onmouseover,
             new Actions(driver).triggerEventByWD(Event.MOUSEOVER, tree.advanced().getRootElement()).build());
     }
@@ -367,9 +367,9 @@ public class TestTreeAttributes extends AbstractTreeTest {
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testRender() {
         treeAttributes.set(TreeAttributes.render, "renderChecker");
-        String renderCheckerText = page.getRenderCheckerOutputElement().getText();
+        String renderCheckerText = getMetamerPage().getRenderCheckerOutputElement().getText();
         selectFirstNodeAjaxAction.perform();
-        Graphene.waitAjax().until().element(page.getRenderCheckerOutputElement()).text().not().equalTo(renderCheckerText);
+        Graphene.waitAjax().until().element(getMetamerPage().getRenderCheckerOutputElement()).text().not().equalTo(renderCheckerText);
     }
 
     @Test(groups = { "Future" })
@@ -512,7 +512,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testTreeSelectionChangeListener() {
         selectFirstNodeAjaxAction.perform();
-        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "selection change listener invoked");
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "selection change listener invoked");
     }
 
     @Test(groups = { "Future" })
@@ -526,6 +526,6 @@ public class TestTreeAttributes extends AbstractTreeTest {
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testTreeToggleListener() {
         expandFirstNodeAjaxAction.perform();
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "tree toggle listener invoked");
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "tree toggle listener invoked");
     }
 }

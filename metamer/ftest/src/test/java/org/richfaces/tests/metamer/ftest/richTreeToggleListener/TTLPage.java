@@ -32,15 +32,29 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 public class TTLPage extends MetamerPage {
 
     @FindBy(css = "span.rf-trn-hnd-exp.rf-trn-hnd")
-    public WebElement collapseButton;
+    private WebElement collapseButtonElement;
     @FindBy(css = "span.rf-trn-hnd-colps.rf-trn-hnd")
-    public WebElement expandButton;
+    private WebElement expandButtonElement;
 
     public WebElement getCollapseButton() {
-        return collapseButton;
+        return getCollapseButtonElement();
+    }
+
+    /**
+     * @return the collapseButtonElement
+     */
+    public WebElement getCollapseButtonElement() {
+        return collapseButtonElement;
     }
 
     public WebElement getExpandButton() {
-        return expandButton;
+        return getExpandButtonElement();
+    }
+
+    /**
+     * @return the expandButtonElement
+     */
+    public WebElement getExpandButtonElement() {
+        return expandButtonElement;
     }
 }

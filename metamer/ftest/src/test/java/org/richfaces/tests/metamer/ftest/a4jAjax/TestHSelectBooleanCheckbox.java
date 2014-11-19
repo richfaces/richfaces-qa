@@ -60,12 +60,12 @@ public class TestHSelectBooleanCheckbox extends AbstractAjaxTest {
 
     @Override
     public void performAction() {
-        Graphene.guardAjax(page.selectBooleanCheckbox).click();
+        Graphene.guardAjax(page.getSelectBooleanCheckboxElement()).click();
     }
 
     @Override
     public void performAction(String input) {
-        Graphene.guardAjax(page.selectBooleanCheckbox).click();
+        Graphene.guardAjax(page.getSelectBooleanCheckboxElement()).click();
     }
 
     @Test
@@ -81,7 +81,7 @@ public class TestHSelectBooleanCheckbox extends AbstractAjaxTest {
     @Test
     public void testDisabled() {
         ajaxAttributes.set(AjaxAttributes.disabled, true);
-        Graphene.guardNoRequest(page.selectBooleanCheckbox).click();
+        Graphene.guardNoRequest(page.getSelectBooleanCheckboxElement()).click();
     }
 
     @Test

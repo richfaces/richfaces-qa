@@ -38,13 +38,12 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.javascript.JavaScript;
-import org.jboss.arquillian.graphene.page.Page;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -57,9 +56,6 @@ public class TestPollSimple extends AbstractWebDriverTest {
 
     private final Attributes<PollAttributes> pollAttributes = getAttributes();
 
-    @Page
-    private MetamerPage metamerPage;
-
     private Integer interval;
     private Integer[] ints = { 1500, 2500 };
 
@@ -71,10 +67,14 @@ public class TestPollSimple extends AbstractWebDriverTest {
 
         @Override
         public void perform() {
-            Graphene.waitModel().until().element(metamerPage.getRequestTimeElement()).text().not().equalTo(value);
-            value = metamerPage.getRequestTimeElement().getText();
+            Graphene.waitModel().until().element(getRequestTimeElement()).text().not().equalTo(value);
+            value = getRequestTimeElement().getText();
         }
     };
+
+    private WebElement getRequestTimeElement() {
+        return getMetamerPage().getRequestTimeElement();
+    }
 
     @Override
     public URL getTestUrl() {
@@ -90,23 +90,23 @@ public class TestPollSimple extends AbstractWebDriverTest {
     @Test
     public void testAction() {
         waitForNSubsequentRequests(2);
-        metamerPage.assertListener(INVOKE_APPLICATION, "action invoked");
-        metamerPage.assertPhases(ANY_PHASE);
+        getMetamerPage().assertListener(INVOKE_APPLICATION, "action invoked");
+        getMetamerPage().assertPhases(ANY_PHASE);
     }
 
     @Test
     public void testActionListener() {
         waitForNSubsequentRequests(2);
-        metamerPage.assertListener(INVOKE_APPLICATION, "action listener invoked");
-        metamerPage.assertPhases(ANY_PHASE);
+        getMetamerPage().assertListener(INVOKE_APPLICATION, "action listener invoked");
+        getMetamerPage().assertPhases(ANY_PHASE);
     }
 
     @Test
     public void testBypassUpdates() {
         pollAttributes.set(PollAttributes.bypassUpdates, true);
         waitForNSubsequentRequests(2);
-        metamerPage.assertListener(PROCESS_VALIDATIONS, "action listener");
-        metamerPage.assertPhases(RESTORE_VIEW, APPLY_REQUEST_VALUES, PROCESS_VALIDATIONS, RENDER_RESPONSE);
+        getMetamerPage().assertListener(PROCESS_VALIDATIONS, "action listener");
+        getMetamerPage().assertPhases(RESTORE_VIEW, APPLY_REQUEST_VALUES, PROCESS_VALIDATIONS, RENDER_RESPONSE);
     }
 
     @Test
@@ -141,9 +141,9 @@ public class TestPollSimple extends AbstractWebDriverTest {
     public void testEnabled() {
         pollAttributes.set(PollAttributes.enabled, false);
 
-        String time = metamerPage.getRequestTimeElement().getText();
+        String time = getRequestTimeElement().getText();
         waiting(2 * INTERVAL);
-        assertTrue(time.equals(metamerPage.getRequestTimeElement().getText()));
+        assertTrue(time.equals(getRequestTimeElement().getText()));
 
         pollAttributes.set(PollAttributes.enabled, true);
         waitForNSubsequentRequests(2);
@@ -155,15 +155,15 @@ public class TestPollSimple extends AbstractWebDriverTest {
 
         waitForNSubsequentRequests(2);
 
-        metamerPage.assertListener(UPDATE_MODEL_VALUES, "executeChecker");
+        getMetamerPage().assertListener(UPDATE_MODEL_VALUES, "executeChecker");
     }
 
     @Test
     public void testImmediate() {
         pollAttributes.set(PollAttributes.immediate, true);
         waitForNSubsequentRequests(2);
-        metamerPage.assertListener(APPLY_REQUEST_VALUES, "action invoked");
-        metamerPage.assertPhases(RESTORE_VIEW, APPLY_REQUEST_VALUES, RENDER_RESPONSE);
+        getMetamerPage().assertListener(APPLY_REQUEST_VALUES, "action invoked");
+        getMetamerPage().assertPhases(RESTORE_VIEW, APPLY_REQUEST_VALUES, RENDER_RESPONSE);
     }
 
     @Test
@@ -182,26 +182,26 @@ public class TestPollSimple extends AbstractWebDriverTest {
     public void testLimitRender() {
         pollAttributes.set(PollAttributes.limitRender, true);
         pollAttributes.set(PollAttributes.render, "renderChecker");
-        String render = metamerPage.getRenderCheckerOutputElement().getText();
-        String time = metamerPage.getRequestTimeElement().getText();
+        String render = getMetamerPage().getRenderCheckerOutputElement().getText();
+        String time = getRequestTimeElement().getText();
         Graphene.waitModel()
             .until()
-            .element(metamerPage.getRenderCheckerOutputElement())
+            .element(getMetamerPage().getRenderCheckerOutputElement())
             .text().not().equalTo(render);
-        assertTrue(time.equals(metamerPage.getRequestTimeElement().getText()));
+        assertTrue(time.equals(getRequestTimeElement().getText()));
     }
 
     @Test
     public void testRender() {
         pollAttributes.set(PollAttributes.render, "renderChecker");
-        String render = metamerPage.getRenderCheckerOutputElement().getText();
-        String time = metamerPage.getRequestTimeElement().getText();
+        String render = getMetamerPage().getRenderCheckerOutputElement().getText();
+        String time = getRequestTimeElement().getText();
 
         Graphene.waitModel()
             .until()
-            .element(metamerPage.getRenderCheckerOutputElement())
+            .element(getMetamerPage().getRenderCheckerOutputElement())
             .text().not().equalTo(render);
-        assertFalse(time.equals(metamerPage.getRequestTimeElement().getText()));
+        assertFalse(time.equals(getRequestTimeElement().getText()));
     }
 
     @Test
@@ -210,9 +210,9 @@ public class TestPollSimple extends AbstractWebDriverTest {
         pollAttributes.set(PollAttributes.enabled, true);
         pollAttributes.set(PollAttributes.rendered, false);
 
-        String time = metamerPage.getRequestTimeElement().getText();
+        String time = getRequestTimeElement().getText();
         waiting(2 * INTERVAL);
-        assertTrue(time.equals(metamerPage.getRequestTimeElement().getText()));
+        assertTrue(time.equals(getRequestTimeElement().getText()));
 
         pollAttributes.set(PollAttributes.rendered, true);
         waitForNSubsequentRequests(2);
@@ -225,10 +225,10 @@ public class TestPollSimple extends AbstractWebDriverTest {
 
     private void waitForNSubsequentRequests(int n) {
         for (int i = 0; i < n; i++) {
-            String time = metamerPage.getRequestTimeElement().getText();
+            String time = getRequestTimeElement().getText();
             Graphene.waitModel()
                 .until()
-                .element(metamerPage.getRequestTimeElement())
+                .element(getRequestTimeElement())
                 .text().not().equalTo(time);
         }
     }

@@ -60,7 +60,7 @@ public class TestActionListener extends AbstractWebDriverTest {
     Predicate<WebDriver> messageIsVisible = new Predicate<WebDriver>() {
         @Override
         public boolean apply(WebDriver arg0) {
-            return !page.messages.isEmpty();
+            return !page.getMessagesElements().isEmpty();
         }
     };
 
@@ -70,20 +70,19 @@ public class TestActionListener extends AbstractWebDriverTest {
         final String msg = "Implementation of ActionListener created and called: "
             + "org.richfaces.tests.metamer.bean.a4j.A4JActionListenerBean$ActionListenerImpl";
 
-        Graphene.guardAjax(page.invokeButtonType).click();
+        Graphene.guardAjax(page.getInvokeButtonTypeElement()).click();
         Graphene.waitGui().until(messageIsVisible);
 
-        assertEquals(page.messages.size(), 1, "Only one message should be displayed on the page.");
-        final String output1 = page.messages.get(0).getText();
+        assertEquals(page.getMessagesElements().size(), 1, "Only one message should be displayed on the page.");
+        final String output1 = page.getMessagesElements().get(0).getText();
         assertEquals(output1.replaceAll(hashCodeRegExp, ""), msg, "Message after first invocation of listener by type.");
 
         // do the same once again
+        MetamerPage.waitRequest(page.getInvokeButtonTypeElement(), WaitRequestType.XHR).click();
 
-        MetamerPage.waitRequest(page.invokeButtonType, WaitRequestType.XHR).click();
-
-        assertFalse(page.messages.get(0).getText().equals(output1), "Message should change");
-        assertEquals(page.messages.size(), 1, "Only one message should be displayed on the page.");
-        final String output2 = page.messages.get(0).getText();
+        assertFalse(page.getMessagesElements().get(0).getText().equals(output1), "Message should change");
+        assertEquals(page.getMessagesElements().size(), 1, "Only one message should be displayed on the page.");
+        final String output2 = page.getMessagesElements().get(0).getText();
         assertEquals(output2.replaceAll(hashCodeRegExp, ""), msg, "Message after first invocation of listener by type.");
     }
 
@@ -91,12 +90,12 @@ public class TestActionListener extends AbstractWebDriverTest {
     public void testInvokeListenerByBinding() {
         final String msg = "Bound listener called";
 
-        Graphene.guardAjax(page.invokeButtonBinding).click();
+        Graphene.guardAjax(page.getInvokeButtonBindingElement()).click();
         Graphene.waitGui().until(messageIsVisible);
 
-        assertEquals(page.messages.size(), 1, "Only one message should be displayed on the page.");
+        assertEquals(page.getMessagesElements().size(), 1, "Only one message should be displayed on the page.");
 
-        String output = page.messages.get(0).getText();
+        String output = page.getMessagesElements().get(0).getText();
         assertEquals(output, msg, "Message after first invocation of listener by binding.");
     }
 
@@ -104,12 +103,12 @@ public class TestActionListener extends AbstractWebDriverTest {
     public void testInvokeListenerMethod() {
         final String msg = "Method expression listener called";
 
-        Graphene.guardAjax(page.invokeButtonMethod).click();
+        Graphene.guardAjax(page.getInvokeButtonMethodElement()).click();
         Graphene.waitGui().until(messageIsVisible);
 
-        assertEquals(page.messages.size(), 1, "Only one message should be displayed on the page.");
+        assertEquals(page.getMessagesElements().size(), 1, "Only one message should be displayed on the page.");
 
-        String output = page.messages.get(0).getText();
+        String output = page.getMessagesElements().get(0).getText();
         assertEquals(output, msg, "Message after first invocation of listener method.");
     }
 
@@ -118,12 +117,12 @@ public class TestActionListener extends AbstractWebDriverTest {
     public void testInvokeListenerMethodCC() {
         final String msg = "Method expression listener called from composite component";
 
-        Graphene.guardAjax(page.invokeButtonCC).click();
+        Graphene.guardAjax(page.getInvokeButtonCCElement()).click();
         Graphene.waitGui().until(messageIsVisible);
 
-        assertEquals(page.messages.size(), 1, "Only one message should be displayed on the page.");
+        assertEquals(page.getMessagesElements().size(), 1, "Only one message should be displayed on the page.");
 
-        String output = page.messages.get(0).getText();
+        String output = page.getMessagesElements().get(0).getText();
         assertEquals(output, msg, "Message after first invocation of listener method from composite component.");
     }
 }

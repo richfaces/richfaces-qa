@@ -46,16 +46,16 @@ public class TestPanelMenuSelection extends AbstractPanelMenuTest {
 
         assertEquals(getSelectedItems(), 0);
         assertEquals(getSelectedGroups(), 0);
-        page.getPanelMenu().expandGroup("Group 2");
+        getPage().getPanelMenu().expandGroup("Group 2");
         assertEquals(getSelectedItems(), 0);
         assertEquals(getSelectedGroups(), 0);
-        guardAjax(page.getItem22()).select();
+        guardAjax(getPage().getItem22()).select();
         assertEquals(getSelectedItems(), 1);
         assertEquals(getSelectedGroups(), bubbledGroups(1));
-        page.getPanelMenu().expandGroup("Group 2.4");
+        getPage().getPanelMenu().expandGroup("Group 2.4");
         assertEquals(getSelectedItems(), 1);
         assertEquals(getSelectedGroups(), bubbledGroups(1));
-        guardAjax(page.getPanelMenu()).selectItem("Item 2.4.2");
+        guardAjax(getPage().getPanelMenu()).selectItem("Item 2.4.2");
         assertEquals(getSelectedItems(), 1);
         assertEquals(getSelectedGroups(), bubbledGroups(2));
     }
@@ -65,10 +65,10 @@ public class TestPanelMenuSelection extends AbstractPanelMenuTest {
     }
 
     private int getSelectedItems() {
-        return page.getPanelMenu().advanced().getAllSelectedItems().size();
+        return getPage().getPanelMenu().advanced().getAllSelectedItems().size();
     }
 
     private int getSelectedGroups() {
-        return page.getPanelMenu().advanced().getAllSelectedGroups().size();
+        return getPage().getPanelMenu().advanced().getAllSelectedGroups().size();
     }
 }
