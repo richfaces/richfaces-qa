@@ -61,36 +61,36 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
 
     @Test
     public void testSimpleClick() {
-        String time1Value = page.time1.getText();
-        String time2Value = page.time2.getText();
-        String yearValue = page.year.getText();
-        String ajaxRenderedTimeValue = page.ajaxRenderedTime.getText();
+        String time1Value = page.getTime1Element().getText();
+        String time2Value = page.getTime2Element().getText();
+        String yearValue = page.getYearElement().getText();
+        String ajaxRenderedTimeValue = page.getAjaxRenderedTimeElement().getText();
 
-        Graphene.guardAjax(page.link).click();
+        Graphene.guardAjax(page.getLinkElement()).click();
 
-        Graphene.waitAjax().withMessage("Time1 did not change.").until().element(page.time1).text().not()
+        Graphene.waitAjax().withMessage("Time1 did not change.").until().element(page.getTime1Element()).text().not()
             .equalTo(time1Value);
-        assertNotSame(page.time2.getText(), time2Value, "Time2 did not change");
-        assertEquals(page.year.getText(), yearValue, "Year should not change");
-        assertNotSame(page.ajaxRenderedTime.getText(), ajaxRenderedTimeValue, "Ajax rendered time did not change");
+        assertNotSame(page.getTime2Element().getText(), time2Value, "Time2 did not change");
+        assertEquals(page.getYearElement().getText(), yearValue, "Year should not change");
+        assertNotSame(page.getAjaxRenderedTimeElement().getText(), ajaxRenderedTimeValue, "Ajax rendered time did not change");
     }
 
     @Test(groups = "smoke")
     public void testAction() {
         jsFunctionAttributes.set(JSFunctionAttributes.action, "increaseYearAction");
 
-        int yearValue = Integer.parseInt(page.year.getText());
-        String time1Value = page.time1.getText();
+        int yearValue = Integer.parseInt(page.getYearElement().getText());
+        String time1Value = page.getTime1Element().getText();
 
-        Graphene.guardAjax(page.link).click();
-        Graphene.waitAjax().withMessage("Time1 did not change.").until().element(page.time1).text().not()
+        Graphene.guardAjax(page.getLinkElement()).click();
+        Graphene.waitAjax().withMessage("Time1 did not change.").until().element(page.getTime1Element()).text().not()
             .equalTo(time1Value);
-        assertEquals(Integer.parseInt(page.year.getText()), yearValue + 1, "Action was not invoked in first request.");
+        assertEquals(Integer.parseInt(page.getYearElement().getText()), yearValue + 1, "Action was not invoked in first request.");
 
-        Graphene.guardAjax(page.link).click();
-        Graphene.waitAjax().withMessage("Time1 did not change.").until().element(page.time1).text().not()
+        Graphene.guardAjax(page.getLinkElement()).click();
+        Graphene.waitAjax().withMessage("Time1 did not change.").until().element(page.getTime1Element()).text().not()
             .equalTo(time1Value);
-        assertEquals(Integer.parseInt(page.year.getText()), yearValue + 2, "Action was not invoked in second request.");
+        assertEquals(Integer.parseInt(page.getYearElement().getText()), yearValue + 2, "Action was not invoked in second request.");
 
         page.assertListener(PhaseId.INVOKE_APPLICATION, MetamerPage.STRING_ACTION_MSG);
     }
@@ -99,19 +99,19 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
     public void testActionListener() {
         jsFunctionAttributes.set(JSFunctionAttributes.actionListener, "increaseYearActionListener");
 
-        int yearValue = Integer.parseInt(page.year.getText());
-        String time1Value = page.time1.getText();
+        int yearValue = Integer.parseInt(page.getYearElement().getText());
+        String time1Value = page.getTime1Element().getText();
 
-        Graphene.guardAjax(page.link).click();
-        Graphene.waitAjax().withMessage("Time1 did not change.").until().element(page.time1).text().not()
+        Graphene.guardAjax(page.getLinkElement()).click();
+        Graphene.waitAjax().withMessage("Time1 did not change.").until().element(page.getTime1Element()).text().not()
             .equalTo(time1Value);
-        assertEquals(Integer.parseInt(page.year.getText()), yearValue + 1,
+        assertEquals(Integer.parseInt(page.getYearElement().getText()), yearValue + 1,
             "Action listener was not invoked in first request.");
 
-        Graphene.guardAjax(page.link).click();
-        Graphene.waitAjax().withMessage("Time1 did not change.").until().element(page.time1).text().not()
+        Graphene.guardAjax(page.getLinkElement()).click();
+        Graphene.waitAjax().withMessage("Time1 did not change.").until().element(page.getTime1Element()).text().not()
             .equalTo(time1Value);
-        assertEquals(Integer.parseInt(page.year.getText()), yearValue + 2,
+        assertEquals(Integer.parseInt(page.getYearElement().getText()), yearValue + 2,
             "Action listener was not invoked in second request.");
 
         page.assertListener(PhaseId.INVOKE_APPLICATION, MetamerPage.STRING_ACTIONLISTENER_MSG);
@@ -122,9 +122,9 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
         jsFunctionAttributes.set(JSFunctionAttributes.action, "decreaseYearAction");
         jsFunctionAttributes.set(JSFunctionAttributes.bypassUpdates, true);
 
-        String time1Value = page.time1.getText();
-        Graphene.guardAjax(page.link).click();
-        Graphene.waitAjax().withMessage("Time1 did not change.").until().element(page.time1).text().not()
+        String time1Value = page.getTime1Element().getText();
+        Graphene.guardAjax(page.getLinkElement()).click();
+        Graphene.waitAjax().withMessage("Time1 did not change.").until().element(page.getTime1Element()).text().not()
             .equalTo(time1Value);
 
         page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
@@ -137,7 +137,7 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
         testData(new Action() {
             @Override
             public void perform() {
-                MetamerPage.waitRequest(page.link, WaitRequestType.XHR).click();
+                MetamerPage.waitRequest(page.getLinkElement(), WaitRequestType.XHR).click();
             }
         });
     }
@@ -146,7 +146,7 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
     public void testExecute() {
         jsFunctionAttributes.set(JSFunctionAttributes.execute, "input executeChecker");
 
-        MetamerPage.waitRequest(page.link, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getLinkElement(), WaitRequestType.XHR).click();
 
         page.assertListener(PhaseId.UPDATE_MODEL_VALUES, MetamerPage.STRING_EXECUTE_CHECKER_MSG);
     }
@@ -156,7 +156,7 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
         jsFunctionAttributes.set(JSFunctionAttributes.actionListener, "decreaseYearActionListener");
         jsFunctionAttributes.set(JSFunctionAttributes.immediate, true);
 
-        MetamerPage.waitRequest(page.link, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getLinkElement(), WaitRequestType.XHR).click();
 
         page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.RENDER_RESPONSE);
         page.assertListener(PhaseId.APPLY_REQUEST_VALUES, MetamerPage.STRING_ACTIONLISTENER_MSG);
@@ -167,18 +167,18 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
     public void testLimitRender() {
         jsFunctionAttributes.set(JSFunctionAttributes.limitRender, true);
 
-        String time1Value = page.time1.getText();
-        String time2Value = page.time2.getText();
-        String yearValue = page.year.getText();
-        String ajaxRenderedTimeValue = page.ajaxRenderedTime.getText();
+        String time1Value = page.getTime1Element().getText();
+        String time2Value = page.getTime2Element().getText();
+        String yearValue = page.getYearElement().getText();
+        String ajaxRenderedTimeValue = page.getAjaxRenderedTimeElement().getText();
 
-        Graphene.guardAjax(page.link).click();
+        Graphene.guardAjax(page.getLinkElement()).click();
 
-        Graphene.waitAjax().withMessage("Time1 did not change.").until().element(page.time1).text().not()
+        Graphene.waitAjax().withMessage("Time1 did not change.").until().element(page.getTime1Element()).text().not()
             .equalTo(time1Value);
-        assertNotSame(page.time2.getText(), time2Value, "Time2 did not change");
-        assertEquals(page.year.getText(), yearValue, "Year should not change");
-        assertEquals(page.ajaxRenderedTime.getText(), ajaxRenderedTimeValue, "Ajax rendered time should not change");
+        assertNotSame(page.getTime2Element().getText(), time2Value, "Time2 did not change");
+        assertEquals(page.getYearElement().getText(), yearValue, "Year should not change");
+        assertEquals(page.getAjaxRenderedTimeElement().getText(), ajaxRenderedTimeValue, "Ajax rendered time should not change");
     }
 
     @Test
@@ -195,7 +195,7 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
         jsFunctionAttributes.set(JSFunctionAttributes.oncomplete, "metamerEvents += \"complete \"");
 
         ((JavascriptExecutor) driver).executeScript("metamerEvents = \"\"");
-        MetamerPage.waitRequest(page.link, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getLinkElement(), WaitRequestType.XHR).click();
 
         String[] events = ((JavascriptExecutor) driver).executeScript("return metamerEvents").toString().split(" ");
 
@@ -209,17 +209,17 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
     public void testRender() {
         jsFunctionAttributes.set(JSFunctionAttributes.render, "time1");
 
-        String time1Value = page.time1.getText();
-        String time2Value = page.time2.getText();
-        String yearValue = page.year.getText();
-        String ajaxRenderedTimeValue = page.ajaxRenderedTime.getText();
+        String time1Value = page.getTime1Element().getText();
+        String time2Value = page.getTime2Element().getText();
+        String yearValue = page.getYearElement().getText();
+        String ajaxRenderedTimeValue = page.getAjaxRenderedTimeElement().getText();
 
-        MetamerPage.waitRequest(page.link, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getLinkElement(), WaitRequestType.XHR).click();
 
-        assertNotSame(page.time1.getText(), time1Value, "Time1 should not change");
-        assertEquals(page.time2.getText(), time2Value, "Time2 did not change");
-        assertEquals(page.year.getText(), yearValue, "Year should not change");
-        assertNotSame(page.ajaxRenderedTime.getText(), ajaxRenderedTimeValue, "Ajax rendered time should change");
+        assertNotSame(page.getTime1Element().getText(), time1Value, "Time1 should not change");
+        assertEquals(page.getTime2Element().getText(), time2Value, "Time2 did not change");
+        assertEquals(page.getYearElement().getText(), yearValue, "Year should not change");
+        assertNotSame(page.getAjaxRenderedTimeElement().getText(), ajaxRenderedTimeValue, "Ajax rendered time should change");
     }
 
     @Test
@@ -227,11 +227,11 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
     public void testRendered() {
         jsFunctionAttributes.set(JSFunctionAttributes.rendered, false);
 
-        String time1Value = page.time1.getText();
+        String time1Value = page.getTime1Element().getText();
 
-        MetamerPage.waitRequest(page.link, WaitRequestType.NONE).click();
+        MetamerPage.waitRequest(page.getLinkElement(), WaitRequestType.NONE).click();
 
-        assertEquals(page.time1.getText(), time1Value, "Time1 should not change");
+        assertEquals(page.getTime1Element().getText(), time1Value, "Time1 should not change");
     }
 
     @Test
@@ -240,7 +240,7 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
 
         String statusCheckerTime = page.getStatusCheckerOutputElement().getText();
 
-        MetamerPage.waitRequest(page.link, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getLinkElement(), WaitRequestType.XHR).click();
 
         assertNotSame(page.getStatusCheckerOutputElement().getText(), statusCheckerTime, "Attribute status doesn't work");
     }

@@ -21,12 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.abstractions.validations;
 
-import com.google.common.collect.Sets;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBean;
+
+import com.google.common.collect.Sets;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -41,7 +41,7 @@ public class StringInputValidationPage extends InputValidationPage {
     public static final String MESSAGE_REQUIRED_NAME = "messageRequired";
     static final String[] ALL_MESSAGE_CASES = { MESSAGE_CUSTOM_NAME,
         MESSAGE_STRING_NAME, MESSAGE_REG_EXP_PATTERN_NAME, MESSAGE_NOT_EMPTY_NAME, MESSAGE_REQUIRED_NAME };
-    //
+
     @FindBy(css = "span[id$=customMsg]")
     private RichFacesMessage messageCustomString;
     @FindBy(css = "span[id$=notEmptyMsg]")
@@ -52,7 +52,7 @@ public class StringInputValidationPage extends InputValidationPage {
     private RichFacesMessage messageStringSize;
     @FindBy(css = "span[id$=requiredMsg]")
     private RichFacesMessage messageRequired;
-    //
+
     @FindBy(css = "input[id$=notEmptyCorrect]")
     private WebElement setNotEmptyCorrectButton;
     @FindBy(css = "input[id$=notEmptyWrong]")
@@ -73,7 +73,7 @@ public class StringInputValidationPage extends InputValidationPage {
     private WebElement setRequiredCorrectButton;
     @FindBy(css = "input[id$=requiredWrong]")
     private WebElement setRequiredWrongButton;
-    //
+
     @FindBy(css = "span[id$=notEmptyOutput]")
     private WebElement notEmptyOutput;
     @FindBy(css = "span[id$=patternOutput]")
@@ -89,30 +89,30 @@ public class StringInputValidationPage extends InputValidationPage {
     public void initCustomMessages() {
         messageCases.put(MESSAGE_CUSTOM_NAME,
             new ValidationMessageCase(MESSAGE_CUSTOM_NAME, messageCustomString,
-            setCustomCorrectButton, setCustomWrongButton,
-            customOutput, "richfaces", StringInputValidationBean.CUSTOM_VALUE_DEFAULT,
-            Sets.newHashSet(StringInputValidationBean.CUSTOM_VALIDATION_MSG)));
+                setCustomCorrectButton, setCustomWrongButton,
+                customOutput, "richfaces", StringInputValidationBean.CUSTOM_VALUE_DEFAULT,
+                Sets.newHashSet(StringInputValidationBean.CUSTOM_VALIDATION_MSG)));
         messageCases.put(MESSAGE_STRING_NAME,
             new ValidationMessageCase(MESSAGE_STRING_NAME, messageStringSize,
-            setSizeCorrectButton, setSizeWrongButton,
-            sizeOutput, "123", StringInputValidationBean.SIZE_VALUE_DEFAULT,
-            Sets.newHashSet(StringInputValidationBean.STRING_SIZE_VALIDATION_MSG)));
+                setSizeCorrectButton, setSizeWrongButton,
+                sizeOutput, "123", StringInputValidationBean.SIZE_VALUE_DEFAULT,
+                Sets.newHashSet(StringInputValidationBean.STRING_SIZE_VALIDATION_MSG)));
         messageCases.put(MESSAGE_REG_EXP_PATTERN_NAME,
             new ValidationMessageCase(MESSAGE_REG_EXP_PATTERN_NAME, messageRegExpPattern,
-            setPatternCorrectButton, setPatternWrongButton,
-            patternOutput, "abcd", StringInputValidationBean.PATTERN_VALUE_DEFAULT,
-            Sets.newHashSet(StringInputValidationBean.REGEXP_VALIDATION_MSG)));
+                setPatternCorrectButton, setPatternWrongButton,
+                patternOutput, "abcd", StringInputValidationBean.PATTERN_VALUE_DEFAULT,
+                Sets.newHashSet(StringInputValidationBean.REGEXP_VALIDATION_MSG)));
         messageCases.put(MESSAGE_NOT_EMPTY_NAME,
             new ValidationMessageCase(MESSAGE_NOT_EMPTY_NAME, messageNotEmpty,
-            setNotEmptyCorrectButton, setNotEmptyWrongButton,
-            notEmptyOutput, "not empty", StringInputValidationBean.NOTEMPTY_VALUE_DEFAULT,
-            Sets.newHashSet(StringInputValidationBean.NOT_EMPTY_VALIDATION_MSG,
-            StringInputValidationBean.NOT_EMPTY_VALIDATION_MSG2,
-            StringInputValidationBean.NOT_EMPTY_VALIDATION_MSG3)));
+                setNotEmptyCorrectButton, setNotEmptyWrongButton,
+                notEmptyOutput, "not empty", StringInputValidationBean.NOTEMPTY_VALUE_DEFAULT,
+                Sets.newHashSet(StringInputValidationBean.NOT_EMPTY_VALIDATION_MSG,
+                    StringInputValidationBean.NOT_EMPTY_VALIDATION_MSG2,
+                    StringInputValidationBean.NOT_EMPTY_VALIDATION_MSG3)));
         messageCases.put(MESSAGE_REQUIRED_NAME,
             new ValidationMessageCase(MESSAGE_REQUIRED_NAME, messageRequired,
-            setRequiredCorrectButton, setRequiredWrongButton,
-            requiredOutput, "required 2", StringInputValidationBean.REQUIRED_VALUE_DEFAULT,
-            Sets.newHashSet(StringInputValidationBean.REQUIRED_VALIDATION_MSG)));
+                setRequiredCorrectButton, setRequiredWrongButton,
+                requiredOutput, "required 2", StringInputValidationBean.REQUIRED_VALUE_DEFAULT,
+                Sets.newHashSet(StringInputValidationBean.REQUIRED_VALIDATION_MSG)));
     }
 }

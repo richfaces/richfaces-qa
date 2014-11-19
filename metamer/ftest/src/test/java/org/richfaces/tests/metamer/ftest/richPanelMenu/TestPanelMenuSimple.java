@@ -57,13 +57,13 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
         panelMenuAttributes.set(disabled, false);
 
-        assertEquals(page.getPanelMenu().advanced().getAllDisabledGroups().size(), 2);
-        assertEquals(page.getPanelMenu().advanced().getAllDisabledItems().size(), 3);
+        assertEquals(getPage().getPanelMenu().advanced().getAllDisabledGroups().size(), 2);
+        assertEquals(getPage().getPanelMenu().advanced().getAllDisabledItems().size(), 3);
 
         panelMenuAttributes.set(disabled, true);
 
-        assertEquals(page.getPanelMenu().advanced().getAllDisabledGroups().size(), 6);
-        assertEquals(page.getPanelMenu().advanced().getAllDisabledItems().size(), 24);
+        assertEquals(getPage().getPanelMenu().advanced().getAllDisabledGroups().size(), 6);
+        assertEquals(getPage().getPanelMenu().advanced().getAllDisabledItems().size(), 24);
     }
 
     @Test
@@ -72,10 +72,10 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     public void testExpandSingle() {
         panelMenuAttributes.set(PanelMenuAttributes.expandSingle, expandSingle);
 
-        page.getPanelMenu().expandGroup("Group 2");
+        getPage().getPanelMenu().expandGroup("Group 2");
         assertEquals(getExpandedGroupsCount(), expanded(1));
 
-        page.getPanelMenu().expandGroup("Group 1");
+        getPage().getPanelMenu().expandGroup("Group 1");
         assertEquals(getExpandedGroupsCount(), expanded(2));
     }
 
@@ -83,61 +83,61 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     @Templates(value = "plain")
     public void testGroupClass() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
-        testStyleClass(page.getGroup24().advanced().getRootElement(), BasicAttributes.groupClass);
+        testStyleClass(getPage().getGroup24().advanced().getRootElement(), BasicAttributes.groupClass);
     }
 
     @Test
     @Templates(value = "plain")
     public void testGroupDisabledClass() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
-        super.testStyleClass(page.getGroup26().advanced().getRootElement(), BasicAttributes.groupDisabledClass);
+        super.testStyleClass(getPage().getGroup26().advanced().getRootElement(), BasicAttributes.groupDisabledClass);
     }
 
     @Test
     @Templates(value = "plain")
     public void testItemClass() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
-        super.testStyleClass(page.getItem22().advanced().getRootElement(), BasicAttributes.itemClass);
+        super.testStyleClass(getPage().getItem22().advanced().getRootElement(), BasicAttributes.itemClass);
     }
 
     @Test
     @Templates(value = "plain")
     public void testItemDisabledClass() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
-        super.testStyleClass(page.getItem25().advanced().getRootElement(), BasicAttributes.itemDisabledClass);
+        super.testStyleClass(getPage().getItem25().advanced().getRootElement(), BasicAttributes.itemDisabledClass);
     }
 
     @Test
     @Templates(value = "plain")
     public void testRendered() {
         panelMenuAttributes.set(rendered, false);
-        assertFalse(new WebElementConditionFactory(page.getPanelMenu().advanced().getRootElement()).isPresent().apply(driver));
+        assertFalse(new WebElementConditionFactory(getPage().getPanelMenu().advanced().getRootElement()).isPresent().apply(driver));
         panelMenuAttributes.set(rendered, true);
-        assertTrue(new WebElementConditionFactory(page.getPanelMenu().advanced().getRootElement()).isPresent().apply(driver));
+        assertTrue(new WebElementConditionFactory(getPage().getPanelMenu().advanced().getRootElement()).isPresent().apply(driver));
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyle() {
-        testStyle(page.getPanelMenu().advanced().getRootElement());
+        testStyle(getPage().getPanelMenu().advanced().getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyleClass() {
-        testStyleClass(page.getPanelMenu().advanced().getRootElement());
+        testStyleClass(getPage().getPanelMenu().advanced().getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testTopGroupClass() {
-        testStyleClass(page.getGroup1().advanced().getRootElement(), BasicAttributes.topGroupClass);
+        testStyleClass(getPage().getGroup1().advanced().getRootElement(), BasicAttributes.topGroupClass);
     }
 
     @Test
     @Templates(value = "plain")
     public void testTopItemClass() {
-        testStyleClass(page.getItem3().advanced().getRootElement(), BasicAttributes.topItemClass);
+        testStyleClass(getPage().getItem3().advanced().getRootElement(), BasicAttributes.topItemClass);
     }
 
     @Test
@@ -146,7 +146,7 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     public void testWidth() {
         panelMenuAttributes.set(PanelMenuAttributes.style, "");
         panelMenuAttributes.set(width, "300px");
-        assertTrue(page.getPanelMenu().advanced().getRootElement().getCssValue("width").contains("300px"));
+        assertTrue(getPage().getPanelMenu().advanced().getRootElement().getCssValue("width").contains("300px"));
     }
 
     @Test(groups = { "Future" })
@@ -155,9 +155,9 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
         panelMenuAttributes.set(itemMode, PanelMenuMode.client);
 
-        page.getExpandAll().click();
+        getPage().getExpandAll().click();
 
-        assertEquals(page.getPanelMenu().advanced().getAllExpandedGroups().size(), 4);
+        assertEquals(getPage().getPanelMenu().advanced().getAllExpandedGroups().size(), 4);
     }
 
     @Test(groups = { "Future" })
@@ -166,9 +166,9 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
         panelMenuAttributes.set(itemMode, PanelMenuMode.client);
 
-        page.getExpandAllBtn1().click();
+        getPage().getExpandAllBtn1().click();
 
-        assertEquals(page.getPanelMenu().advanced().getAllExpandedGroups().size(), 4);
+        assertEquals(getPage().getPanelMenu().advanced().getAllExpandedGroups().size(), 4);
     }
 
     @Test(groups = { "Future" })
@@ -178,13 +178,13 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
         panelMenuAttributes.set(itemMode, PanelMenuMode.client);
 
         // expand all group manually
-        page.getPanelMenu().expandGroup("Group 1");
-        page.getPanelMenu().expandGroup("Group 2");
-        page.getPanelMenu().expandGroup("Group 2.4");
-        page.getPanelMenu().expandGroup("Group 3");
-        page.getCollapseAll().click();
+        getPage().getPanelMenu().expandGroup("Group 1");
+        getPage().getPanelMenu().expandGroup("Group 2");
+        getPage().getPanelMenu().expandGroup("Group 2.4");
+        getPage().getPanelMenu().expandGroup("Group 3");
+        getPage().getCollapseAll().click();
 
-        assertEquals(page.getPanelMenu().advanced().getAllExpandedGroups().size(), 0);
+        assertEquals(getPage().getPanelMenu().advanced().getAllExpandedGroups().size(), 0);
     }
 
     @Test(groups = { "Future" })
@@ -194,13 +194,13 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
         panelMenuAttributes.set(itemMode, PanelMenuMode.client);
 
         // expand all group manually
-        page.getPanelMenu().expandGroup("Group 1");
-        page.getPanelMenu().expandGroup("Group 2");
-        page.getPanelMenu().expandGroup("Group 2.4");
-        page.getPanelMenu().expandGroup("Group 3");
-        page.getCollapseAllBtn1().click();
+        getPage().getPanelMenu().expandGroup("Group 1");
+        getPage().getPanelMenu().expandGroup("Group 2");
+        getPage().getPanelMenu().expandGroup("Group 2.4");
+        getPage().getPanelMenu().expandGroup("Group 3");
+        getPage().getCollapseAllBtn1().click();
 
-        assertEquals(page.getPanelMenu().advanced().getAllExpandedGroups().size(), 0);
+        assertEquals(getPage().getPanelMenu().advanced().getAllExpandedGroups().size(), 0);
     }
 
     @Test(groups = { "Future" })
@@ -209,9 +209,9 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
         panelMenuAttributes.set(itemMode, PanelMenuMode.client);
 
-        page.getSelecItem().click();
+        getPage().getSelecItem().click();
 
-        assertEquals(page.getSelectedItem().getText(), "item23");
+        assertEquals(getPage().getSelectedItem().getText(), "item23");
     }
 
     @Test(groups = { "Future" })
@@ -220,13 +220,13 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
         panelMenuAttributes.set(itemMode, PanelMenuMode.client);
 
-        page.getSelectItemBtn1().click();
+        getPage().getSelectItemBtn1().click();
 
-        assertEquals(page.getSelectedItem().getText(), "item23");
+        assertEquals(getPage().getSelectedItem().getText(), "item23");
     }
 
     private int getExpandedGroupsCount() {
-        return page.getPanelMenu().advanced().getAllExpandedGroups().size();
+        return getPage().getPanelMenu().advanced().getAllExpandedGroups().size();
     }
 
     private int expanded(int expanded) {

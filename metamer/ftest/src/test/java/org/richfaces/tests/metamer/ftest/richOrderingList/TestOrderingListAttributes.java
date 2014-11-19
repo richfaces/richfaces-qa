@@ -30,10 +30,7 @@ import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
-import org.jboss.arquillian.graphene.page.Page;
-import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -41,7 +38,6 @@ import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 /**
@@ -50,12 +46,6 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestOrderingListAttributes extends AbstractOrderingListTest {
-
-    @Page
-    private MetamerPage page;
-
-    @ArquillianResource
-    private JavascriptExecutor executor;
 
     @Override
     public URL getTestUrl() {
@@ -128,14 +118,14 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
         attributes.set(OrderingListAttributes.immediate, Boolean.FALSE);
         orderingList.select(1).putItBefore(0);
         submit();
-        page.assertPhases(PhaseId.ANY_PHASE);
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed");
+        getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed");
 
         attributes.set(OrderingListAttributes.immediate, Boolean.TRUE);
         orderingList.select(1).putItBefore(0);
         submit();
-        page.assertPhases(PhaseId.ANY_PHASE);
-        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed");
+        getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed");
     }
 
     @Test
@@ -374,6 +364,6 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     public void testValueChangeListener() {
         orderingList.select(0).putItAfter(ChoicePickerHelper.byIndex().last());
         submit();
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed");
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed");
     }
 }

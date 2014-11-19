@@ -35,7 +35,6 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 /**
@@ -67,16 +66,12 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
         return buildUrl(contextPath, "faces/components/richPanelMenuGroup/simple.xhtml");
     }
 
-    public MetamerPage getPage() {
-        return page;
-    }
-
     @Test
     @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "ajaxCollapsionEvents")
     public void testClientSideCollapsionEvent() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.ajax);
         testRequestEventsBefore(event);
-        guardAjax(page.getMenu()).collapseGroup(1);
+        guardAjax(getPage().getMenu()).collapseGroup(1);
         testRequestEventsAfter(event);
     }
 
@@ -84,12 +79,12 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     @IssueTracking("https://issues.jboss.org/browse/RF-13727")
     @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "ajaxExpansionEvents")
     @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
-        "richList","uiRepeat"})
+        "richList", "uiRepeat" })
     public void testClientSideExpansionEvent() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.ajax);
-        guardAjax(page.getMenu()).collapseGroup(1);
+        guardAjax(getPage().getMenu()).collapseGroup(1);
         testRequestEventsBefore(event);
-        guardAjax(page.getMenu()).expandGroup(1);
+        guardAjax(getPage().getMenu()).expandGroup(1);
         testRequestEventsAfter(event);
     }
 
@@ -115,10 +110,10 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     public void testClientSideExpansionEventsOrderClient() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.client);
         testRequestEventsBefore(clientExpansionEvents);
-        page.getMenu().collapseGroup(1);
-        page.getMenu().expandGroup(0);
+        getPage().getMenu().collapseGroup(1);
+        getPage().getMenu().expandGroup(0);
         cleanMetamerEventsVariable();
-        page.getMenu().expandGroup(1);
+        getPage().getMenu().expandGroup(1);
         testRequestEventsAfter(clientExpansionEvents);
     }
 
@@ -127,10 +122,10 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     public void testClientSideCollapsionEventsOrderClient() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.client);
         //first expand group 2 because you want to test collapse
-        page.getMenu().expandGroup(1);
+        getPage().getMenu().expandGroup(1);
         testRequestEventsBefore(clientCollapsionEvents);
         //collapse and verify event order
-        page.getMenu().collapseGroup(1);
+        getPage().getMenu().collapseGroup(1);
         testRequestEventsAfter(clientCollapsionEvents);
     }
 
@@ -140,10 +135,10 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
         "richList" })
     public void testClientSideExpansionEventsOrderAjax() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.ajax);
-        guardAjax(page.getMenu()).collapseGroup(1);
+        guardAjax(getPage().getMenu()).collapseGroup(1);
         testRequestEventsBefore(ajaxExpansionEvents);
         cleanMetamerEventsVariable();
-        guardAjax(page.getMenu()).expandGroup(1);
+        guardAjax(getPage().getMenu()).expandGroup(1);
         testRequestEventsAfter(ajaxExpansionEvents);
     }
 
@@ -160,7 +155,7 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     public void testClientSideCollapsionEventsOrderAjax() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.ajax);
         testRequestEventsBefore(ajaxCollapsionEvents);
-        guardAjax(page.getMenu()).collapseGroup(1);
+        guardAjax(getPage().getMenu()).collapseGroup(1);
         testRequestEventsAfter(ajaxCollapsionEvents);
     }
 
@@ -168,10 +163,10 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "serverExpansionEvents1")
     public void testClientSideExpansionEventsServerBeforeSwitch() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.server);
-        guardHttp(page.getMenu()).collapseGroup(1);
+        guardHttp(getPage().getMenu()).collapseGroup(1);
         // testRequestEventsBeforeByAlert(event);
         testRequestEventsBefore(event);
-        guardHttp(page.getMenu()).expandGroup(1);
+        guardHttp(getPage().getMenu()).expandGroup(1);
         // testRequestEventsAfterByAlert(event);
         testRequestEventsAfter(event);
     }
@@ -183,10 +178,10 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
         "richList" })
     public void testClientSideExpansionEventsServerBeforeExpand() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.server);
-        guardHttp(page.getMenu()).collapseGroup(1);
+        guardHttp(getPage().getMenu()).collapseGroup(1);
         // testRequestEventsBeforeByAlert(event);
         testRequestEventsBefore(event);
-        guardHttp(page.getMenu()).expandGroup(1);
+        guardHttp(getPage().getMenu()).expandGroup(1);
         // testRequestEventsAfterByAlert(event);
         testRequestEventsAfter(event);
     }
@@ -206,7 +201,7 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.server);
         // testRequestEventsBeforeByAlert(event);
         testRequestEventsBefore(event);
-        guardHttp(page.getMenu()).collapseGroup(1);
+        guardHttp(getPage().getMenu()).collapseGroup(1);
         // testRequestEventsAfterByAlert(event);
         testRequestEventsAfter(event);
     }

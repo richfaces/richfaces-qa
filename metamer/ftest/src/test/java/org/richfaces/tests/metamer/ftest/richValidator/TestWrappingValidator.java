@@ -134,20 +134,20 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
         // set disabled to false
         validatorAttributes.set(ValidatorAttributes.disabled, Boolean.FALSE);
         // put in an invalid value
-        page.getInputMax().clear();
-        Graphene.guardNoRequest(page.getInputMax()).sendKeys(invalidValue);
+        getPage().getInputMax().clear();
+        Graphene.guardNoRequest(getPage().getInputMax()).sendKeys(invalidValue);
         submitAjax();
         // check error message from validator
-        assertPresent(page.getMsgMax(), "Element page.msgMax should be present!");
+        assertPresent(getPage().getMsgMax(), "Element page.msgMax should be present!");
 
         // set disabled to true
         validatorAttributes.set(ValidatorAttributes.disabled, Boolean.TRUE);
         // put in an invalid value
-        Graphene.guardNoRequest(page.getInputMax()).sendKeys(invalidValue);
+        Graphene.guardNoRequest(getPage().getInputMax()).sendKeys(invalidValue);
         submitAjax();
         // check error message from validator
         // there will be a message from jsr-303 bean validation, because the ajax submit
-        assertPresent(page.getMsgMax(), "Element page.msgMax should be present!");
+        assertPresent(getPage().getMsgMax(), "Element page.msgMax should be present!");
     }
 
     @Test(groups = { "Future" })

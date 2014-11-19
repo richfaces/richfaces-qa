@@ -36,10 +36,14 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 public abstract class AbstractPanelMenuGroupTest extends AbstractWebDriverTest {
 
     @Page
-    protected PanelMenuGroupPage page;
+    private PanelMenuGroupPage page;
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richPanelMenuGroup/simple.xhtml");
+    }
+
+    public PanelMenuGroupPage getPage() {
+        return page;
     }
 }

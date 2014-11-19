@@ -21,10 +21,14 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jRegion;
 
+import static org.testng.Assert.assertTrue;
+
 import org.apache.commons.lang.WordUtils;
 import org.jboss.arquillian.drone.api.annotation.Default;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.enricher.WebElementUtils;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.proxy.GrapheneContextualHandler;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxy;
 import org.openqa.selenium.By;
@@ -32,11 +36,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
-
-import static org.testng.Assert.assertTrue;
-
-import org.jboss.arquillian.graphene.context.GrapheneContext;
-import org.jboss.arquillian.graphene.findby.ByJQuery;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -48,10 +47,10 @@ public class NestedRegionModel {
         @Override
         protected Integer initialValue() {
             return 0;
-        };
+        }
     };
 
-    @FindBy(css="select[id$=defaultsSelect]")
+    @FindBy(css = "select[id$=defaultsSelect]")
     private Select selectDefaults;
 
     public void setDefaultExecute(Execute execute) {
@@ -78,6 +77,7 @@ public class NestedRegionModel {
     }
 
     public enum Component {
+
         OUTER("Outer"), REGION("Region"), NESTED("Nested region"), DECORATION("Decoration"), INSERTION("Insertion");
 
         private final Select select;
@@ -93,12 +93,12 @@ public class NestedRegionModel {
             this.select = GrapheneProxy.getProxyForHandler(GrapheneContextualHandler.forFuture(context, new GrapheneProxy.FutureTarget() {
                 @Override
                 public Object getTarget() {
-                    return new Select(browser.findElement(By.cssSelector("select[id$="+id+"Select]")));
+                    return new Select(browser.findElement(By.cssSelector("select[id$=" + id + "Select]")));
                 }
             }), Select.class);
-            this.output = WebElementUtils.findElementLazily(By.cssSelector("span[id$="+id+"ValueOutput]"), browser);
-            this.input = WebElementUtils.findElementLazily(ByJQuery.selector("input:text[id$="+id+"ValueInput]"), browser);
-            this.link = WebElementUtils.findElementLazily(ByJQuery.selector("input:submit[id$="+id+"ValueButton]"), browser);
+            this.output = WebElementUtils.findElementLazily(By.cssSelector("span[id$=" + id + "ValueOutput]"), browser);
+            this.input = WebElementUtils.findElementLazily(ByJQuery.selector("input:text[id$=" + id + "ValueInput]"), browser);
+            this.link = WebElementUtils.findElementLazily(ByJQuery.selector("input:submit[id$=" + id + "ValueButton]"), browser);
             this.executeOption = name;
         }
 
@@ -114,9 +114,10 @@ public class NestedRegionModel {
     }
 
     public enum Execute {
+
         DEFAULT("default"), ALL("@all"), REGION("@region"), FORM("@form"), THIS("@this"), COMPONENT_OUTER(
             Component.OUTER), COMPONENT_REGION(Component.REGION), COMPONENT_NESTED(Component.NESTED), COMPONENT_DECORATION(
-            Component.DECORATION), COMPONENT_INSERTION(Component.INSERTION);
+                Component.DECORATION), COMPONENT_INSERTION(Component.INSERTION);
 
         private final String option;
         private final Component componentBase;

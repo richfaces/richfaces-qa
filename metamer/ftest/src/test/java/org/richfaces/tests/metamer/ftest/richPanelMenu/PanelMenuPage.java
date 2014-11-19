@@ -36,58 +36,40 @@ public class PanelMenuPage extends MetamerPage {
 
     @FindBy(css = "div.rf-pm[id$=panelMenu]")
     private RichFacesPanelMenu panelMenu;
-
     @FindBy(css = "div[id$=item3]")
     private RichFacesPanelMenuItem item3;
-
     @FindBy(css = "div[id$=item4]")
     private RichFacesPanelMenuItem item4;
-
     @FindBy(css = "div[id$=group1]")
     private RichFacesPanelMenuGroup group1;
-
     @FindBy(css = "div[id$=group2]")
     private RichFacesPanelMenuGroup group2;
-
     @FindBy(css = "div[id$=group3]")
     private RichFacesPanelMenuGroup group3;
-
     @FindBy(css = "div[id$=item22]")
     private RichFacesPanelMenuItem item22;
-
     @FindBy(css = "div[id$=item25]")
     private RichFacesPanelMenuItem item25;
-
     @FindBy(css = "div[id$=group24]")
     private RichFacesPanelMenuGroup group24;
-
     @FindBy(css = "div[id$=group26]")
     private RichFacesPanelMenuGroup group26;
-
     @FindBy(css = "div[id$=item242]")
     private RichFacesPanelMenuItem item242;
-
     @FindBy(css = "div[id$=group4]")
     private RichFacesPanelMenuGroup group4;
-
     @FindBy(css = "input[id$=expandAll]")
     private WebElement expandAll;
-
     @FindBy(css = "input[id$=expandAllBtn1]")
     private WebElement expandAllBtn1;
-
     @FindBy(css = "input[id$=collapseAll]")
     private WebElement collapseAll;
-
     @FindBy(css = "input[id$=collapseAllBtn1]")
     private WebElement collapseAllBtn1;
-
     @FindBy(css = "input[id$=selectItem]")
     private WebElement selecItem;
-
     @FindBy(css = "input[id$=selectItemBtn1]")
     private WebElement selectItemBtn1;
-
     @FindBy(css = "span[id$=current]")
     private WebElement selectedItem;
 

@@ -59,6 +59,8 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
     private final Attributes<DropDownMenuAttributes> dropDownMenuAttributes = getAttributes();
     protected Integer delay;
     protected Integer[] delays = { 1000, 1500, 1900 };
+    @Page
+    private DropDownMenuPage page;
 
     private RichFacesDropDownMenu getCurrentMenu() {
         return page.getFileDropDownMenu(driver.getCurrentUrl());
@@ -77,9 +79,6 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
     private void updateDropDownMenuInvokerToClick() {
         getCurrentMenu().advanced().setShowEvent(Event.CLICK);
     }
-
-    @Page
-    private DropDownMenuPage page;
 
     public void testInit() {
         page.fullPageRefresh();

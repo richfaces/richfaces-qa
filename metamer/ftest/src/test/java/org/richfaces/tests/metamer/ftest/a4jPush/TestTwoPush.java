@@ -55,7 +55,7 @@ public class TestTwoPush extends AbstractWebDriverTest {
     private void clickPushEnableCheckbox(boolean waitForReinitialization) {
         // Graphene.guardAjax doesn't work here
         String requestTime = page.getRequestTimeElement().getText();
-        page.pushEnabledChckBox.click();
+        page.getPushEnabledChckBoxElement().click();
         waiting(1000);// https://issues.jboss.org/browse/RFPL-3692 , remove if needed after RF-13949 solved
         Graphene.waitModel().until().element(page.getRequestTimeElement()).text().not().equalTo(requestTime);
         if (waitForReinitialization) {
@@ -76,20 +76,20 @@ public class TestTwoPush extends AbstractWebDriverTest {
 
     @Test(groups = "smoke")
     public void testBothPushes() {
-        verifyPushUpdate(3, TIME_WILL_UPDATE, page.push1Btn, page.output1);
-        verifyPushUpdate(3, TIME_WILL_UPDATE, page.push2Btn, page.output2);
-        verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.push1Btn, page.output2);
-        verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.push2Btn, page.output1);
+        verifyPushUpdate(3, TIME_WILL_UPDATE, page.getPush1BtnElement(), page.getOutput1Element());
+        verifyPushUpdate(3, TIME_WILL_UPDATE, page.getPush2BtnElement(), page.getOutput2Element());
+        verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.getPush1BtnElement(), page.getOutput2Element());
+        verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.getPush2BtnElement(), page.getOutput1Element());
         clickPushEnableCheckbox(true);//disable 1st push
-        verifyPushUpdate(3, TIME_WILL_UPDATE, page.push2Btn, page.output2);
-        verifyPushUpdate(3, TIME_WILL_NOT_UPDATE, page.push1Btn, page.output1);
-        verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.push1Btn, page.output2);
-        verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.push2Btn, page.output1);
+        verifyPushUpdate(3, TIME_WILL_UPDATE, page.getPush2BtnElement(), page.getOutput2Element());
+        verifyPushUpdate(3, TIME_WILL_NOT_UPDATE, page.getPush1BtnElement(), page.getOutput1Element());
+        verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.getPush1BtnElement(), page.getOutput2Element());
+        verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.getPush2BtnElement(), page.getOutput1Element());
         clickPushEnableCheckbox(true);//enable 1st push
-        verifyPushUpdate(3, TIME_WILL_UPDATE, page.push2Btn, page.output2);
-        verifyPushUpdate(3, TIME_WILL_UPDATE, page.push1Btn, page.output1);
-        verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.push1Btn, page.output2);
-        verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.push2Btn, page.output1);
+        verifyPushUpdate(3, TIME_WILL_UPDATE, page.getPush2BtnElement(), page.getOutput2Element());
+        verifyPushUpdate(3, TIME_WILL_UPDATE, page.getPush1BtnElement(), page.getOutput1Element());
+        verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.getPush1BtnElement(), page.getOutput2Element());
+        verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.getPush2BtnElement(), page.getOutput1Element());
     }
 
     @Test
@@ -120,12 +120,12 @@ public class TestTwoPush extends AbstractWebDriverTest {
     public void testPushEnable() {
         clickPushEnableCheckbox(false);// disable push updates
         clickPushEnableCheckbox(true);// enable push updates
-        verifyPushUpdate(5, TIME_WILL_UPDATE, page.push1Btn, page.output1);
+        verifyPushUpdate(5, TIME_WILL_UPDATE, page.getPush1BtnElement(), page.getOutput1Element());
     }
 
     @Test
     public void testSimplePushEventReceive() {
-        verifyPushUpdate(5, TIME_WILL_UPDATE, page.push1Btn, page.output1);
+        verifyPushUpdate(5, TIME_WILL_UPDATE, page.getPush1BtnElement(), page.getOutput1Element());
     }
 
     /**
@@ -157,9 +157,9 @@ public class TestTwoPush extends AbstractWebDriverTest {
 
                 @Override
                 public boolean apply(WebDriver input) {
-                    DateTime time1 = getTimeFromOutput(page.output2);
-                    MetamerPage.requestTimeChangesWaiting(page.push2Btn).click();
-                    DateTime time2 = getTimeFromOutput(page.output2);
+                    DateTime time1 = getTimeFromOutput(page.getOutput2Element());
+                    MetamerPage.requestTimeChangesWaiting(page.getPush2BtnElement()).click();
+                    DateTime time2 = getTimeFromOutput(page.getOutput2Element());
                     return time2.isAfter(time1);
                 }
             });

@@ -26,7 +26,6 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.component.SwitchType;
@@ -34,15 +33,12 @@ import org.richfaces.fragment.tree.RichFacesTree;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public abstract class AbstractTreeTest extends AbstractWebDriverTest {
 
-    @Page
-    protected MetamerPage page;
     @FindBy(css = "div[id$=richTree]")
     protected RichFacesTree tree;
 

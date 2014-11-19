@@ -21,12 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.abstractions.validations;
 
-import com.google.common.collect.Sets;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.bean.abstractions.NumberInputValidationBean;
+
+import com.google.common.collect.Sets;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -40,7 +40,7 @@ public class NumberInputValidationPage extends InputValidationPage {
     public static final String MESSAGE_REQUIRED_NAME = "messageRequired";
     static final String[] ALL_MESSAGE_CASES = { MESSAGE_CUSTOM_NAME,
         MESSAGE_MAX_NAME, MESSAGE_MIN_NAME, MESSAGE_REQUIRED_NAME };
-    //
+
     @FindBy(css = "span[id$=customMsg]")
     private RichFacesMessage messageCustom;
     @FindBy(css = "span[id$=maxMsg] ")
@@ -49,7 +49,7 @@ public class NumberInputValidationPage extends InputValidationPage {
     private RichFacesMessage messageMin;
     @FindBy(css = "span[id$=requiredMsg]")
     private RichFacesMessage messageRequired;
-    //
+
     @FindBy(css = "input[id$=customCorrect]")
     private WebElement setCustomCorrectButton;
     @FindBy(css = "input[id$=customWrong]")
@@ -66,7 +66,7 @@ public class NumberInputValidationPage extends InputValidationPage {
     private WebElement setRequiredCorrectButton;
     @FindBy(css = "input[id$=requiredWrong]")
     private WebElement setRequiredWrongButton;
-    //
+
     @FindBy(css = "span[id$=customOutput]")
     private WebElement customOutput;
     @FindBy(css = "span[id$=maxOutput]")
@@ -80,23 +80,23 @@ public class NumberInputValidationPage extends InputValidationPage {
     public void initCustomMessages() {
         messageCases.put(MESSAGE_CUSTOM_NAME,
             new ValidationMessageCase(MESSAGE_CUSTOM_NAME, messageCustom,
-            setCustomCorrectButton, setCustomWrongButton,
-            customOutput, "2", String.valueOf(NumberInputValidationBean.CUSTOM_VALUE_DEFAULT),
-            Sets.newHashSet(NumberInputValidationBean.CUSTOM_VALIDATION_MSG)));
+                setCustomCorrectButton, setCustomWrongButton,
+                customOutput, "2", String.valueOf(NumberInputValidationBean.CUSTOM_VALUE_DEFAULT),
+                Sets.newHashSet(NumberInputValidationBean.CUSTOM_VALIDATION_MSG)));
         messageCases.put(MESSAGE_MAX_NAME,
             new ValidationMessageCase(MESSAGE_MAX_NAME, messageMax,
-            setMaxCorrectButton, setMaxWrongButton,
-            maxOutput, "2", String.valueOf(NumberInputValidationBean.MAX_VALUE_DEFAULT),
-            Sets.newHashSet(NumberInputValidationBean.MAX_VALIDATION_MSG)));
+                setMaxCorrectButton, setMaxWrongButton,
+                maxOutput, "2", String.valueOf(NumberInputValidationBean.MAX_VALUE_DEFAULT),
+                Sets.newHashSet(NumberInputValidationBean.MAX_VALIDATION_MSG)));
         messageCases.put(MESSAGE_MIN_NAME,
             new ValidationMessageCase(MESSAGE_MIN_NAME, messageMin,
-            setMinCorrectButton, setMinWrongButton,
-            minOutput, "2", String.valueOf(NumberInputValidationBean.MIN_VALUE_DEFAULT),
-            Sets.newHashSet(NumberInputValidationBean.MIN_VALIDATION_MSG)));
+                setMinCorrectButton, setMinWrongButton,
+                minOutput, "2", String.valueOf(NumberInputValidationBean.MIN_VALUE_DEFAULT),
+                Sets.newHashSet(NumberInputValidationBean.MIN_VALIDATION_MSG)));
         messageCases.put(MESSAGE_REQUIRED_NAME,
             new ValidationMessageCase(MESSAGE_REQUIRED_NAME, messageRequired,
-            setRequiredCorrectButton, setRequiredWrongButton,
-            requiredOutput, "2", String.valueOf(NumberInputValidationBean.REQUIRED_VALUE_DEFAULT),
-            Sets.newHashSet(NumberInputValidationBean.REQUIRED_VALIDATION_MSG)));
+                setRequiredCorrectButton, setRequiredWrongButton,
+                requiredOutput, "2", String.valueOf(NumberInputValidationBean.REQUIRED_VALUE_DEFAULT),
+                Sets.newHashSet(NumberInputValidationBean.REQUIRED_VALIDATION_MSG)));
     }
 }

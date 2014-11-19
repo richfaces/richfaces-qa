@@ -32,14 +32,49 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 public class JSFunctionPage extends MetamerPage {
 
     @FindBy(css = "a[id$=callFunctionLink]")
-    public WebElement link;
+    private WebElement linkElement;
     @FindBy(css = "span[id$=time1]")
-    public WebElement time1;
+    private WebElement time1Element;
     @FindBy(css = "span[id$=time2]")
-    public WebElement time2;
+    private WebElement time2Element;
     @FindBy(css = "span[id$=year]")
-    public WebElement year;
+    private WebElement yearElement;
     @FindBy(css = "span[id$=autoTime]")
-    public WebElement ajaxRenderedTime;
+    private WebElement ajaxRenderedTimeElement;
+
+    /**
+     * @return the ajaxRenderedTimeElement
+     */
+    public WebElement getAjaxRenderedTimeElement() {
+        return ajaxRenderedTimeElement;
+    }
+
+    /**
+     * @return the linkElement
+     */
+    public WebElement getLinkElement() {
+        return linkElement;
+    }
+
+    /**
+     * @return the time1Element
+     */
+    public WebElement getTime1Element() {
+        return time1Element;
+    }
+
+    /**
+     * @return the time2Element
+     */
+    public WebElement getTime2Element() {
+        return time2Element;
+    }
+
+    /**
+     * @return the yearElement
+     */
+    public WebElement getYearElement() {
+        return yearElement;
+    }
 
 }

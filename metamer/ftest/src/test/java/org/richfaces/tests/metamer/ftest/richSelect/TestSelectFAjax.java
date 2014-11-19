@@ -30,13 +30,11 @@ import java.net.URL;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.ScrollingType;
 import org.richfaces.fragment.select.RichFacesSelect;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 /**
@@ -53,8 +51,6 @@ public class TestSelectFAjax extends AbstractWebDriverTest {
     private WebElement output;
     @FindBy(css = "div[id$=selectItem10]")
     private WebElement item10;
-    @Page
-    private MetamerPage page;
 
     @Override
     public URL getTestUrl() {
@@ -67,7 +63,7 @@ public class TestSelectFAjax extends AbstractWebDriverTest {
         Graphene.guardAjax(select.openSelect()).select(10);
         assertTrue(item10.getAttribute("class").contains("rf-sel-sel"), "Selected item should contain class for selected option.");
         assertEquals(output.getText(), "Hawaii");
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Hawaii");
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Hawaii");
     }
 
     @Test
@@ -76,6 +72,6 @@ public class TestSelectFAjax extends AbstractWebDriverTest {
         Graphene.guardAjax(select.openSelect()).select(10);
         assertTrue(item10.getAttribute("class").contains("rf-sel-sel"), "Selected item should contain class for selected option.");
         assertEquals(output.getText(), "Hawaii");
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Hawaii");
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Hawaii");
     }
 }

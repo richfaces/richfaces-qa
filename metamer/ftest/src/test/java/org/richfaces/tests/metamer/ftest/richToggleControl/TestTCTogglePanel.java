@@ -66,14 +66,14 @@ public class TestTCTogglePanel extends AbstractTestToggleControl {
 
     private WebElement[] getItems1() {
         if (items1 == null) {
-            items1 = new WebElement[]{ page.getPanel1Item1(), page.getPanel1Item2(), page.getPanel1Item3() };
+            items1 = new WebElement[]{ getPage().getPanel1Item1(), getPage().getPanel1Item2(), getPage().getPanel1Item3() };
         }
         return items1;
     }
 
     private WebElement[] getItems2() {
         if (items2 == null) {
-            items2 = new WebElement[]{ page.getPanel2Item1(), page.getPanel2Item2(), page.getPanel2Item3() };
+            items2 = new WebElement[]{ getPage().getPanel2Item1(), getPage().getPanel2Item2(), getPage().getPanel2Item3() };
         }
         return items2;
     }

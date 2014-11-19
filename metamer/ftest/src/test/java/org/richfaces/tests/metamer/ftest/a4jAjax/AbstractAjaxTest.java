@@ -61,7 +61,7 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
     }
 
     public void assertOutput1Equals(String value) {
-        assertEquals(page.output1.getText(), value, "Output1");
+        assertEquals(page.getOutput1Element().getText(), value, "Output1");
     }
 
     public void assertOutput1NotChanged() {
@@ -73,7 +73,7 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
     }
 
     public void assertOutput2Equals(String value) {
-        assertEquals(page.output2.getText(), value, "Output2");
+        assertEquals(page.getOutput2Element().getText(), value, "Output2");
     }
 
     public void assertOutput2NotChanged() {
@@ -201,7 +201,7 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
         for (int i = 1; i <= text.length(); i++) {
             ((JavascriptExecutor) driver).executeScript("$(\"[id$=input]\").val('" + text.substring(0, i) + "');");
             ((JavascriptExecutor) driver).executeScript("$(\"[id$=input]\").trigger('keyup');");
-            Graphene.waitModel().until("Page was not updated").element(page.output1).text().equalTo(text.substring(0, i));
+            Graphene.waitModel().until("Page was not updated").element(page.getOutput1Element()).text().equalTo(text.substring(0, i));
         }
 
         String[] events = ((JavascriptExecutor) driver).executeScript("return metamerEvents").toString().split(" ");
@@ -275,7 +275,7 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
 
         String reqTime = page.getRequestTimeElement().getText();
         performAction();
-        Graphene.waitModel().until("Page was not updated").element(page.output1).text().equalTo(expectedOutput);
+        Graphene.waitModel().until("Page was not updated").element(page.getOutput1Element()).text().equalTo(expectedOutput);
 
         assertEquals(page.getRequestTimeElement().getText(), reqTime, "Ajax-rendered a4j:outputPanel shouldn't change");
     }
@@ -323,14 +323,14 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
         typeKeys("ľščťžýáíéúôň фывацукйешгщь");
         Graphene.waitModel().until("Page was not updated").element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
 
-        assertEquals(page.output1.getText(), "ľščťžýáíéúôň фывацукйешгщь", "Output1 should change");
-        assertEquals(page.output2.getText(), "ľščťžýáíéúôň фывацукйешгщь", "Output2 should change");
+        assertEquals(page.getOutput1Element().getText(), "ľščťžýáíéúôň фывацукйешгщь", "Output1 should change");
+        assertEquals(page.getOutput2Element().getText(), "ľščťžýáíéúôň фывацукйешгщь", "Output2 should change");
     }
 
     protected void typeKeys(String text) {
         for (int i = 1; i <= text.length(); i++) {
-            Utils.jQ(executor, "val('" + text.subSequence(0, i) + "')", page.input);
-            Utils.jQ(executor, "trigger('keyup')", page.input);
+            Utils.jQ(executor, "val('" + text.subSequence(0, i) + "')", page.getInputElement());
+            Utils.jQ(executor, "trigger('keyup')", page.getInputElement());
             waiting(200);
         }
     }
@@ -351,8 +351,8 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
 
         @Override
         public void verifyResponse(String inputValue) {
-            assertEquals(page.output1.getText(), inputValue, "Wrong output1");
-            assertEquals(page.output2.getText(), inputValue, "Wrong output2");
+            assertEquals(page.getOutput1Element().getText(), inputValue, "Wrong output1");
+            assertEquals(page.getOutput2Element().getText(), inputValue, "Wrong output2");
         }
 
         @Override

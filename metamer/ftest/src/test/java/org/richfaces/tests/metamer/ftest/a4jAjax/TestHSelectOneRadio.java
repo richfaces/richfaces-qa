@@ -60,7 +60,7 @@ public class TestHSelectOneRadio extends AbstractAjaxTest {
 
     @Override
     public void performAction() {
-        Graphene.guardAjax(page.selectOneRadio).click();
+        Graphene.guardAjax(page.getSelectOneRadioElement()).click();
     }
 
     @Override
@@ -81,7 +81,7 @@ public class TestHSelectOneRadio extends AbstractAjaxTest {
     @Test
     public void testDisabled() {
         ajaxAttributes.set(AjaxAttributes.disabled, true);
-        Graphene.guardNoRequest(page.selectOneRadio).click();
+        Graphene.guardNoRequest(page.getSelectOneRadioElement()).click();
     }
 
     @Test

@@ -29,7 +29,6 @@ import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
-import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.inplaceInput.InplaceComponentState;
 import org.richfaces.fragment.inplaceInput.RichFacesInplaceInput;
@@ -45,9 +44,6 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestInplaceInputFAjax extends AbstractWebDriverTest {
-
-    @Page
-    private MetamerPage page;
 
     @FindBy(css = "span[id$=inplaceInput]")
     private RichFacesInplaceInput inplaceInput;
@@ -71,7 +67,7 @@ public class TestInplaceInputFAjax extends AbstractWebDriverTest {
         assertEquals(inplaceInput.getTextInput().getStringValue(), testedValue, "Input should contain typed text.");
         assertEquals(inplaceInput.advanced().getLabelValue(), testedValue, "Label should contain typed text.");
 
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: RichFaces 4 -> " + testedValue);
-        page.assertPhases(PhaseId.ANY_PHASE);
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: RichFaces 4 -> " + testedValue);
+        getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
     }
 }

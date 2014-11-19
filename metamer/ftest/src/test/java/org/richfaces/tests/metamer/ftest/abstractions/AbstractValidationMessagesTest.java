@@ -82,9 +82,9 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
      */
     public void testJSR303MessagesJSF() {
         page.setWrongValuesAndSubmitJSF();
-        assertEquals(page.jsr303InAttMsg.getText(), MSG_ATT);
-        assertEquals(page.jsr303InBeanMsg.getText(), MSG_BEAN);
-        assertEquals(page.jsr303InBundleMsg.getText(), MSG_BUNDLE_JSR);
+        assertEquals(page.getJsr303InAttMsgElement().getText(), MSG_ATT);
+        assertEquals(page.getJsr303InBeanMsgElement().getText(), MSG_BEAN);
+        assertEquals(page.getJsr303InBundleMsgElement().getText(), MSG_BUNDLE_JSR);
     }
 
     /**
@@ -94,9 +94,9 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
      */
     public void testJSR303MessagesRF() {
         page.setWrongValuesAndSubmitRF();
-        assertEquals(page.jsr303InAttMsg.getText(), MSG_ATT);
-        assertEquals(page.jsr303InBeanMsg.getText(), MSG_BEAN);
-        assertEquals(page.jsr303InBundleMsg.getText(), MSG_BUNDLE_JSR);
+        assertEquals(page.getJsr303InAttMsgElement().getText(), MSG_ATT);
+        assertEquals(page.getJsr303InBeanMsgElement().getText(), MSG_BEAN);
+        assertEquals(page.getJsr303InBundleMsgElement().getText(), MSG_BUNDLE_JSR);
     }
 
     /**
@@ -106,9 +106,9 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
      */
     public void testCSVMessagesJSF() {
         page.setWrongValuesAndSubmitJSF();
-        assertEquals(page.csvInAttMsg.getText(), MSG_ATT);
-        assertEquals(page.csvInBeanMsg.getText(), MSG_BEAN);
-        assertEquals(page.csvInBundleMsg.getText(), MSG_BUNDLE_JSR);
+        assertEquals(page.getCsvInAttMsgElement().getText(), MSG_ATT);
+        assertEquals(page.getCsvInBeanMsgElement().getText(), MSG_BEAN);
+        assertEquals(page.getCsvInBundleMsgElement().getText(), MSG_BUNDLE_JSR);
     }
 
     /**
@@ -118,9 +118,9 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
      */
     public void testCSVMessagesRF() {
         page.setWrongValuesAndSubmitRF();
-        assertEquals(page.csvInAttMsg.getText(), MSG_ATT);
-        assertEquals(page.csvInBeanMsg.getText(), MSG_BEAN);
-        assertEquals(page.csvInBundleMsg.getText(), MSG_BUNDLE_JSR);
+        assertEquals(page.getCsvInAttMsgElement().getText(), MSG_ATT);
+        assertEquals(page.getCsvInBeanMsgElement().getText(), MSG_BEAN);
+        assertEquals(page.getCsvInBundleMsgElement().getText(), MSG_BUNDLE_JSR);
     }
 
     /**
@@ -130,12 +130,12 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
      */
     public void testJSFMessagesJSF() {
         page.setWrongValuesAndSubmitJSF();
-        assertEquals(page.jsfInAttMsg.getText(), MSG_ATT);
-        assertTrue(page.jsfInBundleMsg.getText().endsWith(MSG_BUNDLE_JSF_DEFAULT));
+        assertEquals(page.getJsfInAttMsgElement().getText(), MSG_ATT);
+        assertTrue(page.getJsfInBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSF_DEFAULT));
         page.activateCustomMessages();
         page.setWrongValuesAndSubmitJSF();
-        assertEquals(page.jsfInAttMsg.getText(), MSG_ATT);
-        assertEquals(page.jsfInBundleMsg.getText(), MSG_BUNDLE_JSF_CUSTOM);
+        assertEquals(page.getJsfInAttMsgElement().getText(), MSG_ATT);
+        assertEquals(page.getJsfInBundleMsgElement().getText(), MSG_BUNDLE_JSF_CUSTOM);
     }
 
     /**
@@ -145,11 +145,11 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
      */
     public void testJSFMessagesRF() {
         page.setWrongValuesAndSubmitRF();
-        assertEquals(page.jsfInAttMsg.getText(), MSG_ATT);
-        assertTrue(page.jsfInBundleMsg.getText().endsWith(MSG_BUNDLE_JSF_DEFAULT));
+        assertEquals(page.getJsfInAttMsgElement().getText(), MSG_ATT);
+        assertTrue(page.getJsfInBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSF_DEFAULT));
         page.activateCustomMessages();
         page.setWrongValuesAndSubmitRF();
-        assertEquals(page.jsfInAttMsg.getText(), MSG_ATT);
-        assertEquals(page.jsfInBundleMsg.getText(), MSG_BUNDLE_JSF_CUSTOM);
+        assertEquals(page.getJsfInAttMsgElement().getText(), MSG_ATT);
+        assertEquals(page.getJsfInBundleMsgElement().getText(), MSG_BUNDLE_JSF_CUSTOM);
     }
 }

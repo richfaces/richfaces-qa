@@ -66,14 +66,14 @@ public class TestTCAccordion extends AbstractTestToggleControl {
 
     private WebElement[] getItems1() {
         if (items1 == null) {
-            items1 = new WebElement[]{ page.getPanel1Item1Content(), page.getPanel1Item2Content(), page.getPanel1Item3Content() };
+            items1 = new WebElement[]{ getPage().getPanel1Item1Content(), getPage().getPanel1Item2Content(), getPage().getPanel1Item3Content() };
         }
         return items1;
     }
 
     private WebElement[] getItems2() {
         if (items2 == null) {
-            items2 = new WebElement[]{ page.getPanel2Item1Content(), page.getPanel2Item2Content(), page.getPanel2Item3Content() };
+            items2 = new WebElement[]{ getPage().getPanel2Item1Content(), getPage().getPanel2Item2Content(), getPage().getPanel2Item3Content() };
         }
         return items2;
     }

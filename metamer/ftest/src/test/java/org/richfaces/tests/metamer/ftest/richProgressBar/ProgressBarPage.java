@@ -32,43 +32,183 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 public class ProgressBarPage extends MetamerPage {
 
     @FindBy(id = "progress")
-    WebElement actualProgress;
+    private WebElement actualProgressElement;
     @FindBy(id = "isEnabled")
-    WebElement isEnabled;
+    private WebElement isEnabledElement;
     @FindBy(css = "div[id$=completeOutput]")
-    WebElement completeOutput;
+    private WebElement completeOutputElement;
     @FindBy(css = "div[id$=progressBar]")
-    WebElement progressBar;
+    private WebElement progressBarElement;
     @FindBy(css = "div.rf-pb-init")
-    WebElement init;
+    private WebElement initElement;
     @FindBy(css = "div.rf-pb-init > span")
-    WebElement initialOutput;
+    private WebElement initialOutputElement;
     @FindBy(css = "div.rf-pb-fin")
-    WebElement finish;
+    private WebElement finishElement;
     @FindBy(css = "div.rf-pb-fin > span")
-    WebElement finishOutput;
+    private WebElement finishOutputElement;
     @FindBy(css = "div.rf-pb-rmng")
-    WebElement remain;
+    private WebElement remainElement;
     @FindBy(css = "div.rf-pb-prgs")
-    WebElement progress;
+    private WebElement progressElement;
     @FindBy(css = "div[id$=complete]")
-    WebElement complete;
+    private WebElement completeElement;
     @FindBy(css = "div.rf-pb-lbl")
-    WebElement label;
+    private WebElement labelElement;
     @FindBy(css = "input[id$=childrenRendered]")
-    WebElement childrenRenderedCheckbox;
+    private WebElement childrenRenderedCheckboxElement;
     @FindBy(css = "input[id$=initialFacetRendered]")
-    WebElement initialFacetRenderedCheckbox;
+    private WebElement initialFacetRenderedCheckboxElement;
     @FindBy(css = "input[id$=finishFacetRendered]")
-    WebElement finishFacetRenderedCheckbox;
+    private WebElement finishFacetRenderedCheckboxElement;
     @FindBy(css = "div.rf-pb-init > input")
-    WebElement startButton;
+    private WebElement startButtonElement;
     @FindBy(css = "input[id$=startButton]")
-    WebElement startButtonClient;
+    private WebElement startButtonClientElement;
     @FindBy(css = "div.rf-pb-fin > input")
-    WebElement restartButton;
+    private WebElement restartButtonElement;
     @FindBy(css = "input[id$=pauseButton]")
-    WebElement pauseButton;
+    private WebElement pauseButtonElement;
     @FindBy(css = "input[id$='stopPolling']")
-    WebElement stopPollingButton;
+    private WebElement stopPollingButtonElement;
+
+    /**
+     * @return the actualProgressElement
+     */
+    public WebElement getActualProgressElement() {
+        return actualProgressElement;
+    }
+
+    /**
+     * @return the childrenRenderedCheckboxElement
+     */
+    public WebElement getChildrenRenderedCheckboxElement() {
+        return childrenRenderedCheckboxElement;
+    }
+
+    /**
+     * @return the completeElement
+     */
+    public WebElement getCompleteElement() {
+        return completeElement;
+    }
+
+    /**
+     * @return the completeOutputElement
+     */
+    public WebElement getCompleteOutputElement() {
+        return completeOutputElement;
+    }
+
+    /**
+     * @return the finishElement
+     */
+    public WebElement getFinishElement() {
+        return finishElement;
+    }
+
+    /**
+     * @return the finishFacetRenderedCheckboxElement
+     */
+    public WebElement getFinishFacetRenderedCheckboxElement() {
+        return finishFacetRenderedCheckboxElement;
+    }
+
+    /**
+     * @return the finishOutputElement
+     */
+    public WebElement getFinishOutputElement() {
+        return finishOutputElement;
+    }
+
+    /**
+     * @return the initElement
+     */
+    public WebElement getInitElement() {
+        return initElement;
+    }
+
+    /**
+     * @return the initialFacetRenderedCheckboxElement
+     */
+    public WebElement getInitialFacetRenderedCheckboxElement() {
+        return initialFacetRenderedCheckboxElement;
+    }
+
+    /**
+     * @return the initialOutputElement
+     */
+    public WebElement getInitialOutputElement() {
+        return initialOutputElement;
+    }
+
+    /**
+     * @return the isEnabledElement
+     */
+    public WebElement getIsEnabledElement() {
+        return isEnabledElement;
+    }
+
+    /**
+     * @return the labelElement
+     */
+    public WebElement getLabelElement() {
+        return labelElement;
+    }
+
+    /**
+     * @return the pauseButtonElement
+     */
+    public WebElement getPauseButtonElement() {
+        return pauseButtonElement;
+    }
+
+    /**
+     * @return the progressBarElement
+     */
+    public WebElement getProgressBarElement() {
+        return progressBarElement;
+    }
+
+    /**
+     * @return the progressElement
+     */
+    public WebElement getProgressElement() {
+        return progressElement;
+    }
+
+    /**
+     * @return the remainElement
+     */
+    public WebElement getRemainElement() {
+        return remainElement;
+    }
+
+    /**
+     * @return the restartButtonElement
+     */
+    public WebElement getRestartButtonElement() {
+        return restartButtonElement;
+    }
+
+    /**
+     * @return the startButtonClientElement
+     */
+    public WebElement getStartButtonClientElement() {
+        return startButtonClientElement;
+    }
+
+    /**
+     * @return the startButtonElement
+     */
+    public WebElement getStartButtonElement() {
+        return startButtonElement;
+    }
+
+    /**
+     * @return the stopPollingButtonElement
+     */
+    public WebElement getStopPollingButtonElement() {
+        return stopPollingButtonElement;
+    }
 }

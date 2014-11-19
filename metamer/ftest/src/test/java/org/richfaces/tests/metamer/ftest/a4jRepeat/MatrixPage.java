@@ -48,53 +48,74 @@ public class MatrixPage extends MetamerPage {
     public static final By BY_CLEARLINK = By.cssSelector("a[id$=clearLink]");
 
     @FindBy(css = "div[id$=matrixInput] > table > tbody > tr")
-    public List<WebElement> inputRows;
+    private List<WebElement> inputRowsElements;
     @FindBy(css = "div[id$=matrixOutput] > table > tbody > tr")
-    public List<WebElement> outputRows;
+    private List<WebElement> outputRowsElements;
 
     private Vector<Vector<Integer>> matrix;
 
-    public void incrementValue(int row, int column) {
-        Graphene.guardAjax(inputRows.get(row).findElements(BY_CELL).get(column).findElement(BY_INCREMENTLINK)).click();
+    /**
+     * @return the inputRowsElements
+     */
+    public List<WebElement> getInputRowsElements() {
+        return inputRowsElements;
+    }
 
-        Integer oldValue = matrix.get(row).get(column);
-        matrix.get(row).set(column, oldValue + 1);
+    /**
+     * @return the matrix
+     */
+    public Vector<Vector<Integer>> getMatrix() {
+        return matrix;
+    }
+
+    /**
+     * @return the outputRowsElements
+     */
+    public List<WebElement> getOutputRowsElements() {
+        return outputRowsElements;
+    }
+
+    public void incrementValue(int row, int column) {
+        Graphene.guardAjax(getInputRowsElements().get(row).findElements(BY_CELL).get(column).findElement(BY_INCREMENTLINK)).click();
+
+        Integer oldValue = getMatrix().get(row).get(column);
+        getMatrix().get(row).set(column, oldValue + 1);
     }
 
     public void decrementValue(int row, int column) {
-        Graphene.guardAjax(inputRows.get(row).findElements(BY_CELL).get(column).findElement(BY_DECREMENTLINK)).click();
+        Graphene.guardAjax(getInputRowsElements().get(row).findElements(BY_CELL).get(column).findElement(BY_DECREMENTLINK)).click();
 
-        Integer oldValue = matrix.get(row).get(column);
-        matrix.get(row).set(column, oldValue - 1);
+        Integer oldValue = getMatrix().get(row).get(column);
+        getMatrix().get(row).set(column, oldValue - 1);
     }
 
     public void changeValue(int row, int column, int newValue) {
-        WebElement inputElement = inputRows.get(row).findElements(BY_CELL).get(column).findElement(BY_INPUT);
+        WebElement inputElement = getInputRowsElements().get(row).findElements(BY_CELL).get(column).findElement(BY_INPUT);
         inputElement.clear();
         Graphene.guardAjax(inputElement).sendKeys(Integer.toString(newValue), Keys.RETURN);
 
-        matrix.get(row).set(column, newValue);
+        getMatrix().get(row).set(column, newValue);
     }
 
     public void clearValue(int row, int column) {
-        Graphene.guardAjax(inputRows.get(row).findElements(BY_CELL).get(column).findElement(BY_CLEARLINK)).click();
+        Graphene.guardAjax(getInputRowsElements().get(row).findElements(BY_CELL).get(column).findElement(BY_CLEARLINK)).click();
 
-        matrix.get(row).set(column, 0);
+        getMatrix().get(row).set(column, 0);
     }
 
     public Integer obtainOutputValue(int row, int column) {
-        return Integer.valueOf(outputRows.get(row).findElements(BY_CELL).get(column).getText());
+        return Integer.valueOf(getOutputRowsElements().get(row).findElements(BY_CELL).get(column).getText());
     }
 
     public Integer obtainInputValue(int row, int column) {
-        return Integer.valueOf(inputRows.get(row).findElements(BY_CELL).get(column).findElement(BY_INPUT)
+        return Integer.valueOf(getInputRowsElements().get(row).findElements(BY_CELL).get(column).findElement(BY_INPUT)
             .getAttribute("value"));
     }
 
     public void checkMatrix() {
         for (int row = 0; row < ROWS_COUNT; row++) {
             for (int column = 0; column < COLUMNS_COUNT; column++) {
-                Integer expectedValue = matrix.get(row).get(column);
+                Integer expectedValue = getMatrix().get(row).get(column);
                 assertEquals(obtainInputValue(row, column), expectedValue,
                     String.format("The input value on coordinates row: %s, column: %s does not match: ", row, column));
                 assertEquals(obtainOutputValue(row, column), expectedValue,
@@ -106,9 +127,9 @@ public class MatrixPage extends MetamerPage {
     public void initializeMatrix() {
         matrix = new Vector<Vector<Integer>>(COLUMNS_COUNT);
         for (int x = 0; x < COLUMNS_COUNT; x++) {
-            matrix.add(x, new Vector<Integer>(ROWS_COUNT));
+            getMatrix().add(x, new Vector<Integer>(ROWS_COUNT));
             for (int y = 0; y < ROWS_COUNT; y++) {
-                matrix.get(x).add(y, 0);
+                getMatrix().get(x).add(y, 0);
             }
         }
     }

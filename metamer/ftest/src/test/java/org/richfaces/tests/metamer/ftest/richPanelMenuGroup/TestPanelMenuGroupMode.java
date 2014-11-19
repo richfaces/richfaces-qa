@@ -74,28 +74,28 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
 
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.execute, "@this executeChecker");
 
-        assertTrue(page.getTopGroup().advanced().isExpanded());
+        assertTrue(getPage().getTopGroup().advanced().isExpanded());
         switch (mode) {
             case ajax:
-                guardAjax(page.getMenu()).collapseGroup(1);
+                guardAjax(getPage().getMenu()).collapseGroup(1);
                 break;
             case server:
-                guardHttp(page.getMenu()).collapseGroup(1);
+                guardHttp(getPage().getMenu()).collapseGroup(1);
                 break;
             case client:
-                page.getMenu().collapseGroup(1);
+                getPage().getMenu().collapseGroup(1);
         }
-        assertFalse(page.getTopGroup().advanced().isExpanded());
+        assertFalse(getPage().getTopGroup().advanced().isExpanded());
 
         if (mode != Mode.client) {
             if ("phases".equals(listener)) {
-                page.assertPhases(getExpectedPhases());
+                getPage().assertPhases(getExpectedPhases());
             } else {
                 PhaseId listenerInvocationPhase = getListenerInvocationPhase();
                 if (listenerInvocationPhase == null) {
-                    page.assertNoListener(listener);
+                    getPage().assertNoListener(listener);
                 } else {
-                    page.assertListener(listenerInvocationPhase, listener);
+                    getPage().assertListener(listenerInvocationPhase, listener);
                 }
             }
         }
@@ -105,9 +105,9 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
     public void testClientMode() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.client);
 
-        assertTrue(page.getTopGroup().advanced().isExpanded());
-        page.getMenu().collapseGroup(1);
-        assertFalse(page.getTopGroup().advanced().isExpanded());
+        assertTrue(getPage().getTopGroup().advanced().isExpanded());
+        getPage().getMenu().collapseGroup(1);
+        assertFalse(getPage().getTopGroup().advanced().isExpanded());
     }
 
     private PhaseId[] getExpectedPhases() {

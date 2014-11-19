@@ -30,7 +30,6 @@ import java.awt.Color;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
-import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.test.selenium.support.color.ColorUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -64,9 +63,6 @@ public abstract class AbstractPlaceholderTest extends AbstractWebDriverTest {
     private WebElement output1;
     @FindBy(css = "[id$=output2]")
     private WebElement output2;
-
-    @Page
-    private MetamerPage page;
 
     public AbstractPlaceholderTest(String componentName) {
         this.componentName = componentName;

@@ -31,7 +31,6 @@ import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
@@ -75,8 +74,6 @@ public class TestMenuItem extends AbstractWebDriverTest {
     private WebElement menuItem1;
     @FindBy(css = "span[id$=status] > span")
     private WebElement statusText;
-    @Page
-    private MetamerPage page;
 
     @Override
     public URL getTestUrl() {
@@ -101,23 +98,23 @@ public class TestMenuItem extends AbstractWebDriverTest {
     public void testAction() {
         openMenu();
         MetamerPage.waitRequest(menuItem1, WaitRequestType.XHR).click();
-        page.assertListener(PhaseId.INVOKE_APPLICATION, "action invoked");
+        getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "action invoked");
     }
 
     @Test(groups = "smoke")
     public void testActionListener() {
         openMenu();
         MetamerPage.waitRequest(menuItem1, WaitRequestType.XHR).click();
-        page.assertListener(PhaseId.INVOKE_APPLICATION, "action listener invoked");
+        getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "action listener invoked");
     }
 
     @Test
     public void testBypassUpdates() {
         menuItemAttributes.set(MenuItemAttributes.bypassUpdates, Boolean.TRUE);
         openMenuAndClickOnTheItem();
-        page.assertBypassUpdatesPhasesCycle();
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "action invoked");
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "action listener invoked");
+        getMetamerPage().assertBypassUpdatesPhasesCycle();
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "action invoked");
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "action listener invoked");
     }
 
     @Test
@@ -150,7 +147,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     public void testExecute() {
         menuItemAttributes.set(MenuItemAttributes.execute, "@this executeChecker");
         openMenuAndClickOnTheItem();
-        page.assertListener(PhaseId.UPDATE_MODEL_VALUES, "executeChecker");
+        getMetamerPage().assertListener(PhaseId.UPDATE_MODEL_VALUES, "executeChecker");
     }
 
     @Test
@@ -192,9 +189,9 @@ public class TestMenuItem extends AbstractWebDriverTest {
     public void testImmediate() {
         menuItemAttributes.set(MenuItemAttributes.immediate, Boolean.TRUE);
         openMenuAndClickOnTheItem(WaitRequestType.XHR);
-        page.assertImmediatePhasesCycle();
-        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "action invoked");
-        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "action listener invoked");
+        getMetamerPage().assertImmediatePhasesCycle();
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "action invoked");
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "action listener invoked");
     }
 
     @Test(groups = "smoke")
@@ -243,15 +240,15 @@ public class TestMenuItem extends AbstractWebDriverTest {
     public void testMode() {
         menuItemAttributes.set(MenuItemAttributes.mode, "ajax");
         openMenuAndClickOnTheItem(WaitRequestType.XHR);
-        page.assertPhases(PhaseId.ANY_PHASE);
-        page.assertListener(PhaseId.INVOKE_APPLICATION, "action invoked");
-        page.assertListener(PhaseId.INVOKE_APPLICATION, "action listener invoked");
+        getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
+        getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "action invoked");
+        getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "action listener invoked");
 
         menuItemAttributes.set(MenuItemAttributes.mode, "server");
         openMenuAndClickOnTheItem(WaitRequestType.HTTP);
-        page.assertPhases(PhaseId.ANY_PHASE);
-        page.assertListener(PhaseId.INVOKE_APPLICATION, "action invoked");
-        page.assertListener(PhaseId.INVOKE_APPLICATION, "action listener invoked");
+        getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
+        getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "action invoked");
+        getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "action listener invoked");
     }
 
     @Test

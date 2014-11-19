@@ -35,13 +35,10 @@ public class PanelMenuGroupPage extends MetamerPage {
 
     @FindBy(css = "div.rf-pm[id$=panelMenu]")
     private RichFacesPanelMenu menu;
-
     @FindBy(css = "div[id$=group2]")
     private RichFacesPanelMenuGroup topGroup;
-
     @FindBy(css = "div[id$=group1]")
     private RichFacesPanelMenuGroup group1;
-
     @FindBy(css = "div[id$=group23]")
     private RichFacesPanelMenuGroup subGroup;
 

@@ -120,11 +120,11 @@ public class TestNestedRegion extends AbstractWebDriverTest {
         StringBuilder message = new StringBuilder(String.format("Component: %s, Execute: %s; ", component, execute));
 
         if (!missing.isEmpty()) {
-            message.append("Expected to change: " + missing + "; ");
+            message.append("Expected to change: ").append(missing).append("; ");
         }
 
         if (!redundant.isEmpty()) {
-            message.append("Expected to not change: " + redundant + "; ");
+            message.append("Expected to not change: ").append(redundant).append("; ");
         }
 
         assertEquals(actualChanges, expectedChanges, message.toString());

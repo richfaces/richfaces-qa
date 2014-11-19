@@ -57,9 +57,9 @@ public class TestToolbar extends AbstractWebDriverTest {
     private ToolbarPage page;
 
     private WebElement[] items;
-    private String[] separators = { "disc", "grid", "line", "square" };
+    private final String[] separators = { "disc", "grid", "line", "square" };
 
-    private By[] itemsBy = new By[]{ By.cssSelector("td[id$=createDocument_itm]"), By.cssSelector("td[id$=createFolder_itm]"),
+    private final By[] itemsBy = new By[]{ By.cssSelector("td[id$=createDocument_itm]"), By.cssSelector("td[id$=createFolder_itm]"),
         By.cssSelector("td[id$=copy_itm]"), By.cssSelector("td[id$=save_itm]"), By.cssSelector("td[id$=saveAs_itm]"),
         By.cssSelector("td[id$=saveAll_itm]"), By.cssSelector("td[id$=input_itm]"), By.cssSelector("td[id$=button_itm]") };
 

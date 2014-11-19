@@ -50,7 +50,7 @@ public class SelectionPage {
     private WebElement previousSelection;
 
     @FindBy(css = "span.rf-ds[id$=scroller2]")
-    protected RichFacesDataScroller dataScroller2;
+    private RichFacesDataScroller dataScroller2;
 
     @FindBy(css = "div.rf-edt[id$=richEDT]")
     private SimpleEDT table;

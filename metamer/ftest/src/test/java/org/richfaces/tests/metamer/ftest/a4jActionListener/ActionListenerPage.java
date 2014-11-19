@@ -34,14 +34,49 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 public class ActionListenerPage extends MetamerPage {
 
     @FindBy(css = "input[id$=invokeByTypeButton]")
-    WebElement invokeButtonType;
+    private WebElement invokeButtonTypeElement;
     @FindBy(css = "input[id$=invokeByBindingButton]")
-    WebElement invokeButtonBinding;
+    private WebElement invokeButtonBindingElement;
     @FindBy(css = "input[id$=invokeMethodButton]")
-    WebElement invokeButtonMethod;
+    private WebElement invokeButtonMethodElement;
     @FindBy(css = "input[id$=button]")
-    WebElement invokeButtonCC;
+    private WebElement invokeButtonCCElement;
     @FindBy(css = "ul[id$=messages] li")
-    List<WebElement> messages;
+    private List<WebElement> messagesElements;
+
+    /**
+     * @return the invokeButtonBindingElement
+     */
+    public WebElement getInvokeButtonBindingElement() {
+        return invokeButtonBindingElement;
+    }
+
+    /**
+     * @return the invokeButtonCCElement
+     */
+    public WebElement getInvokeButtonCCElement() {
+        return invokeButtonCCElement;
+    }
+
+    /**
+     * @return the invokeButtonMethodElement
+     */
+    public WebElement getInvokeButtonMethodElement() {
+        return invokeButtonMethodElement;
+    }
+
+    /**
+     * @return the invokeButtonTypeElement
+     */
+    public WebElement getInvokeButtonTypeElement() {
+        return invokeButtonTypeElement;
+    }
+
+    /**
+     * @return the messagesElements
+     */
+    public List<WebElement> getMessagesElements() {
+        return messagesElements;
+    }
 
 }

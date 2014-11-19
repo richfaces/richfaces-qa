@@ -32,9 +32,9 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 public class PTLCollapsiblePanelPage extends MetamerPage {
 
     @FindBy(css = "div.rf-cp-ico-exp.rf-ico-chevron-down-hdr")
-    public WebElement collapseButton;
+    private WebElement collapseButton;
     @FindBy(css = "div.rf-cp-ico-colps.rf-ico-chevron-up-hdr")
-    public WebElement expandButton;
+    private WebElement expandButton;
 
     public WebElement getCollapseButton() {
         return collapseButton;

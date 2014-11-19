@@ -38,7 +38,7 @@ public abstract class AbstractChartTest extends AbstractWebDriverTest {
     private final Attributes<ChartAttributes> chartAttributes = getAttributes();
 
     @Page
-    ChartSimplePage page;
+    private ChartSimplePage page;
 
     public void testRendered() {
         assertPresent(page.getChartElement(), "Chart should be rendered.");

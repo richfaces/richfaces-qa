@@ -40,7 +40,7 @@ import org.testng.annotations.Test;
 public class TestScrollerOutsideTable extends AbstractScrollerTest {
 
     @Page
-    SimplePage page;
+    private SimplePage page;
 
     public TestScrollerOutsideTable() throws JAXBException {
     }

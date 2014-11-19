@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.richInputNumberSpinner;
 
 import static org.testng.Assert.assertEquals;
 
-import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.ClearType;
@@ -41,8 +40,6 @@ public abstract class AbstractInputNumberSpinnerTest extends AbstractWebDriverTe
 
     private final Attributes<InputNumberSpinnerAttributes> inputNumberSpinnerAttributes = getAttributes();
 
-    @Page
-    private MetamerPage page;
     @FindBy(css = "span[id$=output]")
     private WebElement output;
     @FindBy(css = "span[id$=spinner]")

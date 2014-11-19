@@ -28,7 +28,6 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.findby.ByJQuery;
-import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
@@ -42,9 +41,6 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:manovotn@redhat.com">Matej Novotny</a>
  */
 public class TestAccordionItemKVS extends AbstractWebDriverTest {
-
-    @Page
-    private AccordionItemPage page;
 
     @Override
     public URL getTestUrl() {
@@ -110,7 +106,7 @@ public class TestAccordionItemKVS extends AbstractWebDriverTest {
 
         @Override
         public String[] getInputValues() {
-            return new String[]{ "1", "2", "3" };
+            return new String[] { "1", "2", "3" };
         }
     }
 }

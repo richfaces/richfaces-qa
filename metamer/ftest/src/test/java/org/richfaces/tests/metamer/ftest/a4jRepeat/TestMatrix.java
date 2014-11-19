@@ -54,17 +54,17 @@ public class TestMatrix extends AbstractWebDriverTest {
 
     @Test
     public void testInitialStateOfMatrix() {
-        assertEquals(page.inputRows.size(), MatrixPage.ROWS_COUNT, "number of rows in input matrix");
-        assertEquals(page.outputRows.size(), MatrixPage.ROWS_COUNT, "number of rows in output matrix");
+        assertEquals(page.getInputRowsElements().size(), MatrixPage.ROWS_COUNT, "number of rows in input matrix");
+        assertEquals(page.getOutputRowsElements().size(), MatrixPage.ROWS_COUNT, "number of rows in output matrix");
 
-        assertEquals(page.inputRows.get(1).findElements(MatrixPage.BY_CELL).size(), MatrixPage.COLUMNS_COUNT,
+        assertEquals(page.getInputRowsElements().get(1).findElements(MatrixPage.BY_CELL).size(), MatrixPage.COLUMNS_COUNT,
                 "number of columns in the second row of input matrix");
-        assertEquals(page.inputRows.get(3).findElements(MatrixPage.BY_CELL).size(), MatrixPage.COLUMNS_COUNT,
+        assertEquals(page.getInputRowsElements().get(3).findElements(MatrixPage.BY_CELL).size(), MatrixPage.COLUMNS_COUNT,
                 "number of columns in the fourth row of input matrix");
 
-        assertEquals(page.outputRows.get(1).findElements(MatrixPage.BY_CELL).size(), MatrixPage.COLUMNS_COUNT,
+        assertEquals(page.getOutputRowsElements().get(1).findElements(MatrixPage.BY_CELL).size(), MatrixPage.COLUMNS_COUNT,
                 "number of columns in the second row of output matrix");
-        assertEquals(page.outputRows.get(3).findElements(MatrixPage.BY_CELL).size(), MatrixPage.COLUMNS_COUNT,
+        assertEquals(page.getOutputRowsElements().get(3).findElements(MatrixPage.BY_CELL).size(), MatrixPage.COLUMNS_COUNT,
                 "number of columns in the fourth row of output matrix");
     }
 

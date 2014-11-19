@@ -33,7 +33,6 @@ import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
-import org.jboss.arquillian.graphene.page.Page;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -61,9 +60,6 @@ import com.google.common.collect.Lists;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
-
-    @Page
-    protected MetamerPage page;
 
     protected static final DateTime firstOfJanuary2012 = new DateTime(2012, 1, 1, 12, 0);
     protected DateTime todayMidday = new DateTime().withHourOfDay(12).withMinuteOfHour(0).withSecondOfMinute(0);
@@ -180,6 +176,6 @@ public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
         assertEquals(setTime.getMonthOfYear(), today.getMonthOfYear());
         assertEquals(setTime.getYear(), today.getYear());
 
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> " + dateSetInCalendar);
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> " + dateSetInCalendar);
     }
 }

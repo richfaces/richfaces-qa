@@ -21,15 +21,14 @@
  */
 package org.richfaces.tests.metamer.ftest.richToggleControl;
 
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
- *
  */
 public class ToggleControlPage {
+
     @FindBy(css = "input[id$=tc11]")
     private WebElement tcPanel1Item1;
     @FindBy(css = "input[id$=tc12]")

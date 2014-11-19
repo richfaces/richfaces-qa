@@ -53,28 +53,28 @@ public abstract class AbstractDragSourceTest extends AbstractWebDriverTest {
 
     public void testDefaultIndicator() {
 
-        indicator = new Indicator(page.defaultIndicator);
+        indicator = new Indicator(page.getDefaultIndicatorElement());
         indicator.setDefaultIndicator(true);
         dragSourceAttributes.set(dragIndicator, "");
         Actions actionQueue = new Actions(driver);
 
-        actionQueue.clickAndHold(page.drag1).perform();
-        assertFalse(page.defaultIndicator.isPresent());
+        actionQueue.clickAndHold(page.getDrag1Element()).perform();
+        assertFalse(page.getDefaultIndicatorElement().isPresent());
 
         actionQueue.moveByOffset(1, 1).perform();
-        assertTrue(page.defaultIndicator.isPresent());
+        assertTrue(page.getDefaultIndicatorElement().isPresent());
 
         testMovingOverDifferentStates();
 
-        actionQueue.release(page.drop1).perform();
+        actionQueue.release(page.getDrop1Element()).perform();
     }
 
     public void testCustomIndicator() {
 
         dragSourceAttributes.set(dragIndicator, "indicator2");
-        indicator = new Indicator(page.indicator2);
+        indicator = new Indicator(page.getIndicator2Element());
 
-        new Actions(driver).clickAndHold(page.drag1).perform();
+        new Actions(driver).clickAndHold(page.getDrag1Element()).perform();
         testMovingOverDifferentStates();
         new Actions(driver).release().perform();
     }
@@ -85,53 +85,53 @@ public abstract class AbstractDragSourceTest extends AbstractWebDriverTest {
         dragSourceAttributes.set(rendered, true);
 
         // before any mouse move, no indicator appears on page
-        assertFalse(page.indicator2.isPresent());
+        assertFalse(page.getIndicator2Element().isPresent());
 
         // indicator = new IndicatorWD(indicatorLoc);
-        indicator = new Indicator(page.indicator2);
+        indicator = new Indicator(page.getIndicator2Element());
         Actions actionQueue = new Actions(driver);
 
         // firstly just drag and don't move. Indicator no displayed
-        Action dragging = actionQueue.clickAndHold(page.drag1).build();
+        Action dragging = actionQueue.clickAndHold(page.getDrag1Element()).build();
         dragging.perform();
-        assertFalse(page.indicator2.isPresent());
+        assertFalse(page.getIndicator2Element().isPresent());
 
         // just small move to display indicator
         dragging = actionQueue.moveByOffset(1, 1).build();
         dragging.perform();
-        assertTrue(page.indicator2.isPresent());
+        assertTrue(page.getIndicator2Element().isPresent());
 
         dragging = actionQueue.release().build();
-        assertTrue(page.indicator2.isPresent());
+        assertTrue(page.getIndicator2Element().isPresent());
         dragging.perform();
-        assertFalse(page.indicator2.isPresent());
+        assertFalse(page.getIndicator2Element().isPresent());
 
     }
 
     public void testType() {
         dragSourceAttributes.set(type, "drg3");
 
-        indicator = new Indicator(page.indicator);
+        indicator = new Indicator(page.getIndicatorElement());
 
-        new Actions(driver).clickAndHold(page.drag1).perform();
+        new Actions(driver).clickAndHold(page.getDrag1Element()).perform();
 
-        enterAndVerify(page.drop2, IndicatorState.ACCEPTING);
-        enterAndVerify(page.drag2, IndicatorState.DRAGGING);
-        enterAndVerify(page.drop1, IndicatorState.REJECTING);
+        enterAndVerify(page.getDrop2Element(), IndicatorState.ACCEPTING);
+        enterAndVerify(page.getDrag2Element(), IndicatorState.DRAGGING);
+        enterAndVerify(page.getDrop1Element(), IndicatorState.REJECTING);
 
         new Actions(driver).release().perform();
     }
 
     protected void testMovingOverDifferentStates() {
-        enterAndVerify(page.drop2, REJECTING);
-        enterAndVerify(page.drop1, ACCEPTING);
-        enterAndVerify(page.drag1, DRAGGING);
-        enterAndVerify(page.drop1, ACCEPTING);
-        enterAndVerify(page.drag2, DRAGGING);
-        enterAndVerify(page.drop2, REJECTING);
-        enterAndVerify(page.drag2, DRAGGING);
-        enterAndVerify(page.drop1, ACCEPTING);
-        enterAndVerify(page.drop2, REJECTING);
+        enterAndVerify(page.getDrop2Element(), REJECTING);
+        enterAndVerify(page.getDrop1Element(), ACCEPTING);
+        enterAndVerify(page.getDrag1Element(), DRAGGING);
+        enterAndVerify(page.getDrop1Element(), ACCEPTING);
+        enterAndVerify(page.getDrag2Element(), DRAGGING);
+        enterAndVerify(page.getDrop2Element(), REJECTING);
+        enterAndVerify(page.getDrag2Element(), DRAGGING);
+        enterAndVerify(page.getDrop1Element(), ACCEPTING);
+        enterAndVerify(page.getDrop2Element(), REJECTING);
     }
 
     protected void enterAndVerify(WebElement target, IndicatorState state) {
@@ -145,7 +145,7 @@ public abstract class AbstractDragSourceTest extends AbstractWebDriverTest {
         indicator.verifyState(state);
         // since dragSource is the same for all iteration, it is not required drop.
         // but keep droping to simulate real behavior
-        new Actions(driver).moveToElement(page.drag1).perform();
+        new Actions(driver).moveToElement(page.getDrag1Element()).perform();
         // new Actions(driver).moveToElement(page.drag1).release().build().perform();
     }
 

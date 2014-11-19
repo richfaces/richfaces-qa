@@ -26,25 +26,54 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 
 /**
- *  WebDriver
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision$
  */
-public class TwoPushPage extends MetamerPage{
+public class TwoPushPage extends MetamerPage {
 
-    @FindBy(css="input[id$=performPushEvent1]")
-    public WebElement push1Btn;
+    @FindBy(css = "span[id$=outputDate]")
+    private WebElement output1Element;
+    @FindBy(css = "span[id$=outputDate2]")
+    private WebElement output2Element;
 
-    @FindBy(css="input[id$=performPushEvent2]")
-    public WebElement push2Btn;
+    @FindBy(css = "input[id$=performPushEvent1]")
+    private WebElement push1BtnElement;
+    @FindBy(css = "input[id$=performPushEvent2]")
+    private WebElement push2BtnElement;
+    @FindBy(css = "input[type=checkbox][id$=enablePush1]")
+    private WebElement pushEnabledChckBoxElement;
 
-    @FindBy(css="input[type=checkbox][id$=enablePush1]")
-    public WebElement pushEnabledChckBox;
+    /**
+     * @return the output1Element
+     */
+    public WebElement getOutput1Element() {
+        return output1Element;
+    }
 
-    @FindBy(css="span[id$=outputDate]")
-    public WebElement output1;
+    /**
+     * @return the output2Element
+     */
+    public WebElement getOutput2Element() {
+        return output2Element;
+    }
 
-    @FindBy(css="span[id$=outputDate2]")
-    public WebElement output2;
+    /**
+     * @return the push1BtnElement
+     */
+    public WebElement getPush1BtnElement() {
+        return push1BtnElement;
+    }
 
+    /**
+     * @return the push2BtnElement
+     */
+    public WebElement getPush2BtnElement() {
+        return push2BtnElement;
+    }
+
+    /**
+     * @return the pushEnabledChckBoxElement
+     */
+    public WebElement getPushEnabledChckBoxElement() {
+        return pushEnabledChckBoxElement;
+    }
 }

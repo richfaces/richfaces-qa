@@ -40,7 +40,7 @@ public abstract class AbstractMessagesTest extends AbstractMessagesComponentTest
     private final Attributes<MessagesAttributes> messagesAttributes = getAttributes();
 
     @Page
-    protected MessagesPage page;
+    private MessagesPage page;
 
     @Override
     protected MessagesComponentTestPage getPage() {
@@ -53,27 +53,27 @@ public abstract class AbstractMessagesTest extends AbstractMessagesComponentTest
         generateValidationMessagesWithoutWait();
         submitWithHBtn();
 
-        Assert.assertFalse(page.getMessagesComponentWithFor().advanced().isVisible());
+        Assert.assertFalse(getPage().getMessagesComponentWithFor().advanced().isVisible());
 
         // now set @for attribute to "simpleInput1"
         messagesAttributes.set(MessagesAttributes.FOR, "simpleInput1");
         generateValidationMessagesWithoutWait();
         submitWithHBtn();
 
-        Assert.assertTrue(page.getMessagesComponentWithFor().advanced().isVisible());
-        Assert.assertEquals(page.getMessagesComponentWithFor().size(), expectedMessages);
-        Assert.assertEquals(page.getMessagesComponentWithFor().getItems(ChoicePickerHelper.byWebElement().attribute("id").contains(getSimpleInput1ID())).size(), expectedMessages, expectedMessages + " messages for input 1 were expected.");
-        Assert.assertEquals(page.getMessagesComponentWithFor().getItems(ChoicePickerHelper.byWebElement().attribute("id").contains(getSimpleInput2ID())).size(), 0, "No messages for input 2 were expected.");
+        Assert.assertTrue(getPage().getMessagesComponentWithFor().advanced().isVisible());
+        Assert.assertEquals(getPage().getMessagesComponentWithFor().size(), expectedMessages);
+        Assert.assertEquals(getPage().getMessagesComponentWithFor().getItems(ChoicePickerHelper.byWebElement().attribute("id").contains(getSimpleInput1ID())).size(), expectedMessages, expectedMessages + " messages for input 1 were expected.");
+        Assert.assertEquals(getPage().getMessagesComponentWithFor().getItems(ChoicePickerHelper.byWebElement().attribute("id").contains(getSimpleInput2ID())).size(), 0, "No messages for input 2 were expected.");
 
         // now set @for attribute to "simpleInput2"
         messagesAttributes.set(MessagesAttributes.FOR, "simpleInput2");
         generateValidationMessagesWithoutWait();
         submitWithHBtn();
 
-        Assert.assertTrue(page.getMessagesComponentWithFor().advanced().isVisible());
-        Assert.assertEquals(page.getMessagesComponentWithFor().size(), expectedMessages);
-        Assert.assertEquals(page.getMessagesComponentWithFor().getItems(ChoicePickerHelper.byWebElement().attribute("id").contains(getSimpleInput1ID())).size(), 0, "No messages for input 1 were expected.");
-        Assert.assertEquals(page.getMessagesComponentWithFor().getItems(ChoicePickerHelper.byWebElement().attribute("id").contains(getSimpleInput2ID())).size(), expectedMessages, expectedMessages + " messages for input 2 were expected.");
+        Assert.assertTrue(getPage().getMessagesComponentWithFor().advanced().isVisible());
+        Assert.assertEquals(getPage().getMessagesComponentWithFor().size(), expectedMessages);
+        Assert.assertEquals(getPage().getMessagesComponentWithFor().getItems(ChoicePickerHelper.byWebElement().attribute("id").contains(getSimpleInput1ID())).size(), 0, "No messages for input 1 were expected.");
+        Assert.assertEquals(getPage().getMessagesComponentWithFor().getItems(ChoicePickerHelper.byWebElement().attribute("id").contains(getSimpleInput2ID())).size(), expectedMessages, expectedMessages + " messages for input 2 were expected.");
     }
 
     @Override
@@ -81,16 +81,16 @@ public abstract class AbstractMessagesTest extends AbstractMessagesComponentTest
         messagesAttributes.set(MessagesAttributes.globalOnly, Boolean.FALSE);
         generateValidationMessagesWithWait();
         //messages for both inputs should appear
-        Assert.assertTrue(page.getMessagesComponentWithGlobal().advanced().isVisible());
-        Assert.assertEquals(page.getMessagesComponentWithGlobal().size(), expectedMessagesPerInput * 2);//for both inputs
-        Assert.assertEquals(page.getMessagesComponentWithGlobal().getItems(ChoicePickerHelper.byWebElement().attribute("id").contains(getSimpleInput1ID())).size(), expectedMessagesPerInput, expectedMessagesPerInput + " messages for input 1 were expected.");
-        Assert.assertEquals(page.getMessagesComponentWithGlobal().getItems(ChoicePickerHelper.byWebElement().attribute("id").contains(getSimpleInput2ID())).size(), expectedMessagesPerInput, expectedMessagesPerInput + " messages for input 2 were expected.");
+        Assert.assertTrue(getPage().getMessagesComponentWithGlobal().advanced().isVisible());
+        Assert.assertEquals(getPage().getMessagesComponentWithGlobal().size(), expectedMessagesPerInput * 2);//for both inputs
+        Assert.assertEquals(getPage().getMessagesComponentWithGlobal().getItems(ChoicePickerHelper.byWebElement().attribute("id").contains(getSimpleInput1ID())).size(), expectedMessagesPerInput, expectedMessagesPerInput + " messages for input 1 were expected.");
+        Assert.assertEquals(getPage().getMessagesComponentWithGlobal().getItems(ChoicePickerHelper.byWebElement().attribute("id").contains(getSimpleInput2ID())).size(), expectedMessagesPerInput, expectedMessagesPerInput + " messages for input 2 were expected.");
 
         messagesAttributes.set(MessagesAttributes.globalOnly, Boolean.TRUE);
         generateValidationMessagesWithoutWait();
         submitWithA4jBtn();
         //no messages should appear, because validation messages are bound to inputs not to 'null'
-        Assert.assertFalse(page.getMessagesComponentWithGlobal().advanced().isVisible());
+        Assert.assertFalse(getPage().getMessagesComponentWithGlobal().advanced().isVisible());
     }
 
     @Override
@@ -98,7 +98,7 @@ public abstract class AbstractMessagesTest extends AbstractMessagesComponentTest
         return new FutureTarget<WebElement>() {
             @Override
             public WebElement getTarget() {
-                return page.getMessagesComponentWithGlobal().getRootElement();
+                return getPage().getMessagesComponentWithGlobal().getRootElement();
             }
         };
     }

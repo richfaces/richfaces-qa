@@ -60,10 +60,10 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "events")
     public void testExpandEvent() {
         panelMenuAttributes.set(expandEvent, event.getEventName());
-        assertFalse(page.getGroup2().advanced().isExpanded());
+        assertFalse(getPage().getGroup2().advanced().isExpanded());
 
-        fireEvent(page.getGroup2().advanced().getLabelElement(), event);
-        page.getGroup2().advanced().waitUntilMenuGroupExpanded(page.getGroup2().advanced().getHeaderElement());
+        fireEvent(getPage().getGroup2().advanced().getLabelElement(), event);
+        getPage().getGroup2().advanced().waitUntilMenuGroupExpanded(getPage().getGroup2().advanced().getHeaderElement());
     }
 
     @Test
@@ -71,31 +71,31 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     public void testCollapseEvent() {
         panelMenuAttributes.set(collapseEvent, event.getEventName());
 
-        page.getPanelMenu().expandGroup(1);
-        assertTrue(page.getGroup2().advanced().isExpanded());
+        getPage().getPanelMenu().expandGroup(1);
+        assertTrue(getPage().getGroup2().advanced().isExpanded());
 
-        fireEvent(page.getGroup2().advanced().getLabelElement(), event);
-        page.getGroup2().advanced().waitUntilMenuGroupExpanded(page.getGroup2().advanced().getHeaderElement());
+        fireEvent(getPage().getGroup2().advanced().getLabelElement(), event);
+        getPage().getGroup2().advanced().waitUntilMenuGroupExpanded(getPage().getGroup2().advanced().getHeaderElement());
     }
 
     @Test
     @Templates("plain")
     public void testOnclick() {
-        Action click = new Actions(driver).click(page.getPanelMenu().advanced().getRootElement()).build();
+        Action click = new Actions(driver).click(getPage().getPanelMenu().advanced().getRootElement()).build();
         testFireEvent(panelMenuAttributes, onclick, click);
     }
 
     @Test
     @Templates("plain")
     public void testOndblclick() {
-        Action dblClick = new Actions(driver).doubleClick(page.getPanelMenu().advanced().getRootElement()).build();
+        Action dblClick = new Actions(driver).doubleClick(getPage().getPanelMenu().advanced().getRootElement()).build();
         testFireEvent(panelMenuAttributes, ondblclick, dblClick);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmousedown() {
-        Action mousedown = new Actions(driver).clickAndHold(page.getPanelMenu().advanced().getRootElement()).build();
+        Action mousedown = new Actions(driver).clickAndHold(getPage().getPanelMenu().advanced().getRootElement()).build();
         testFireEvent(panelMenuAttributes, onmousedown, mousedown);
         new Actions(driver).release().perform();
     }
@@ -103,29 +103,29 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     @Test
     @Templates("plain")
     public void testOnmousemove() {
-        Action mousemove = new Actions(driver).moveToElement(page.getPanelMenu().advanced().getRootElement(), 3, 3).build();
+        Action mousemove = new Actions(driver).moveToElement(getPage().getPanelMenu().advanced().getRootElement(), 3, 3).build();
         testFireEvent(panelMenuAttributes, onmousemove, mousemove);
     }
 
     @Test
     @Templates("plain")
     public void testOnmouseout() {
-        testFireEventWithJS(page.getPanelMenu().advanced().getRootElement(),panelMenuAttributes, PanelMenuAttributes.onmouseout);
+        testFireEventWithJS(getPage().getPanelMenu().advanced().getRootElement(),panelMenuAttributes, PanelMenuAttributes.onmouseout);
     }
 
     @Test
     @Templates("plain")
     public void testOnmouseover() {
         //This test should be done first, because use static x and y variables
-        Actions mouseover = new Actions(driver).moveToElement(page.getRequestTimeElement());
-        mouseover.moveToElement(page.getPanelMenu().advanced().getRootElement(), 3, 3);
+        Actions mouseover = new Actions(driver).moveToElement(getPage().getRequestTimeElement());
+        mouseover.moveToElement(getPage().getPanelMenu().advanced().getRootElement(), 3, 3);
         testFireEvent(panelMenuAttributes, onmouseover, mouseover.build());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseup() {
-        Action mouseup = new Actions(driver).click(page.getPanelMenu().advanced().getRootElement()).build();
+        Action mouseup = new Actions(driver).click(getPage().getPanelMenu().advanced().getRootElement()).build();
         testFireEvent(panelMenuAttributes, onmouseup, mouseup);
     }
 }

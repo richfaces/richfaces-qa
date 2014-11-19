@@ -54,6 +54,13 @@ import org.testng.annotations.BeforeMethod;
  */
 public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
+    /**
+     * @return the page
+     */
+    public ValidatorSimplePage getPage() {
+        return page;
+    }
+
     protected enum ID {
 
         /**
@@ -122,10 +129,10 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         size
     }
     protected Map<ID, String> messages = new EnumMap<AbstractValidatorsTest.ID, String>(AbstractValidatorsTest.ID.class);
-    private Map<ID, Object> wrongValue = new EnumMap<AbstractValidatorsTest.ID, Object>(AbstractValidatorsTest.ID.class);
+    private final Map<ID, Object> wrongValue = new EnumMap<AbstractValidatorsTest.ID, Object>(AbstractValidatorsTest.ID.class);
 
     @Page
-    protected ValidatorSimplePage page;
+    private ValidatorSimplePage page;
 
     private String future;
     private String past;
@@ -167,13 +174,13 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
     }
 
     private void clickCorrectButton() {
-        page.getSetCorrectBtn().click();
-        if (new WebElementConditionFactory(page.getInputFuture()).isPresent().apply(driver)
-            && new WebElementConditionFactory(page.getInputPast()).isPresent().apply(driver)) {
-            page.getInputPast().clear();
-            page.getInputPast().sendKeys(past);
-            page.getInputFuture().clear();
-            page.getInputFuture().sendKeys(future);
+        getPage().getSetCorrectBtn().click();
+        if (new WebElementConditionFactory(getPage().getInputFuture()).isPresent().apply(driver)
+            && new WebElementConditionFactory(getPage().getInputPast()).isPresent().apply(driver)) {
+            getPage().getInputPast().clear();
+            getPage().getInputPast().sendKeys(past);
+            getPage().getInputFuture().clear();
+            getPage().getInputFuture().sendKeys(future);
         }
     }
 
@@ -183,10 +190,10 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
     @BeforeMethod(alwaysRun = true)
     public void setDates() {
         if (firstRun) {
-            if (new WebElementConditionFactory(page.getInputFuture()).isPresent().apply(driver)
-                && new WebElementConditionFactory(page.getInputPast()).isPresent().apply(driver)) {
-                past = page.getInputPast().getAttribute("value"); // sendKeys(past);
-                future = page.getInputFuture().getAttribute("value"); // sendKeys(future);
+            if (new WebElementConditionFactory(getPage().getInputFuture()).isPresent().apply(driver)
+                && new WebElementConditionFactory(getPage().getInputPast()).isPresent().apply(driver)) {
+                past = getPage().getInputPast().getAttribute("value"); // sendKeys(past);
+                future = getPage().getInputFuture().getAttribute("value"); // sendKeys(future);
 
                 wrongValue.put(AbstractValidatorsTest.ID.past, future);
                 wrongValue.put(AbstractValidatorsTest.ID.future, past);
@@ -196,13 +203,13 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
     }
 
     private void clickWrongButton() {
-        page.getSetWrongBtn().click();
-        if (new WebElementConditionFactory(page.getInputFuture()).isPresent().apply(driver)
-            && new WebElementConditionFactory(page.getInputPast()).isPresent().apply(driver)) {
-            page.getInputPast().clear();
-            page.getInputPast().sendKeys(future);
-            page.getInputFuture().clear();
-            page.getInputFuture().sendKeys(past);
+        getPage().getSetWrongBtn().click();
+        if (new WebElementConditionFactory(getPage().getInputFuture()).isPresent().apply(driver)
+            && new WebElementConditionFactory(getPage().getInputPast()).isPresent().apply(driver)) {
+            getPage().getInputPast().clear();
+            getPage().getInputPast().sendKeys(future);
+            getPage().getInputFuture().clear();
+            getPage().getInputFuture().sendKeys(past);
         }
     }
 
@@ -211,57 +218,57 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
         submitAjax();
 
-        Graphene.waitGui().until().element(page.getMsgAssertTrue()).text().equalTo(messages.get(ID.assertTrue));
-        Graphene.waitGui().until().element(page.getMsgAssertFalse()).text().equalTo(messages.get(ID.assertFalse));
-        Graphene.waitGui().until().element(page.getMsgDecimalMinMax()).text().equalTo(messages.get(ID.decimalMinMax));
-        Graphene.waitGui().until().element(page.getMsgDigits()).text().equalTo(messages.get(ID.digits));
-        Graphene.waitGui().until().element(page.getMsgMax()).text().equalTo(messages.get(ID.max));
-        Graphene.waitGui().until().element(page.getMsgMin()).text().equalTo(messages.get(ID.min));
-        Graphene.waitGui().until().element(page.getMsgMinMax()).text().equalTo(messages.get(ID.minMax));
-        Graphene.waitGui().until().element(page.getMsgNotEmpty()).text().equalTo(messages.get(ID.notEmpty));
-        Graphene.waitGui().until().element(page.getMsgNotNull()).text().equalTo(messages.get(ID.notNull));
-        Graphene.waitGui().until().element(page.getMsgPattern()).text().equalTo(messages.get(ID.pattern));
-        Graphene.waitGui().until().element(page.getMsgCustom()).text().equalTo(messages.get(ID.custom));
+        Graphene.waitGui().until().element(getPage().getMsgAssertTrue()).text().equalTo(messages.get(ID.assertTrue));
+        Graphene.waitGui().until().element(getPage().getMsgAssertFalse()).text().equalTo(messages.get(ID.assertFalse));
+        Graphene.waitGui().until().element(getPage().getMsgDecimalMinMax()).text().equalTo(messages.get(ID.decimalMinMax));
+        Graphene.waitGui().until().element(getPage().getMsgDigits()).text().equalTo(messages.get(ID.digits));
+        Graphene.waitGui().until().element(getPage().getMsgMax()).text().equalTo(messages.get(ID.max));
+        Graphene.waitGui().until().element(getPage().getMsgMin()).text().equalTo(messages.get(ID.min));
+        Graphene.waitGui().until().element(getPage().getMsgMinMax()).text().equalTo(messages.get(ID.minMax));
+        Graphene.waitGui().until().element(getPage().getMsgNotEmpty()).text().equalTo(messages.get(ID.notEmpty));
+        Graphene.waitGui().until().element(getPage().getMsgNotNull()).text().equalTo(messages.get(ID.notNull));
+        Graphene.waitGui().until().element(getPage().getMsgPattern()).text().equalTo(messages.get(ID.pattern));
+        Graphene.waitGui().until().element(getPage().getMsgCustom()).text().equalTo(messages.get(ID.custom));
 
-        if (new WebElementConditionFactory(page.getInputRegexp()).isPresent().apply(driver)) {
+        if (new WebElementConditionFactory(getPage().getInputRegexp()).isPresent().apply(driver)) {
             // regExp validator isn't present in JSR303 validation
-            Graphene.waitGui().until().element(page.getMsgRegexp()).text().equalTo(messages.get(ID.regexp));
+            Graphene.waitGui().until().element(getPage().getMsgRegexp()).text().equalTo(messages.get(ID.regexp));
         }
-        Graphene.waitGui().until().element(page.getMsgPast()).text().equalTo(messages.get(ID.past));
-        Graphene.waitGui().until().element(page.getMsgFuture()).text().equalTo(messages.get(ID.future));
-        Graphene.waitGui().until().element(page.getMsgStringSize()).text().equalTo(messages.get(ID.stringSize));
-        Graphene.waitGui().until().element(page.getMsgSize()).text().equalTo(messages.get(ID.size));
+        Graphene.waitGui().until().element(getPage().getMsgPast()).text().equalTo(messages.get(ID.past));
+        Graphene.waitGui().until().element(getPage().getMsgFuture()).text().equalTo(messages.get(ID.future));
+        Graphene.waitGui().until().element(getPage().getMsgStringSize()).text().equalTo(messages.get(ID.stringSize));
+        Graphene.waitGui().until().element(getPage().getMsgSize()).text().equalTo(messages.get(ID.size));
     }
 
     protected void submitAjax() {
-        Graphene.guardAjax(page.getA4jCommandBtn()).click();
+        Graphene.guardAjax(getPage().getA4jCommandBtn()).click();
     }
 
     public void verifyAllWrongWithJSFSubmit() {
         clickWrongButton();
 
-        page.gethCommandBtn().click();
+        getPage().gethCommandBtn().click();
 
-        Graphene.waitGui().until().element(page.getMsgAssertTrue()).text().equalTo(messages.get(ID.assertTrue));
-        Graphene.waitGui().until().element(page.getMsgAssertFalse()).text().equalTo(messages.get(ID.assertFalse));
-        Graphene.waitGui().until().element(page.getMsgDecimalMinMax()).text().equalTo(messages.get(ID.decimalMinMax));
-        Graphene.waitGui().until().element(page.getMsgDigits()).text().equalTo(messages.get(ID.digits));
-        Graphene.waitGui().until().element(page.getMsgMax()).text().equalTo(messages.get(ID.max));
-        Graphene.waitGui().until().element(page.getMsgMin()).text().equalTo(messages.get(ID.min));
-        Graphene.waitGui().until().element(page.getMsgMinMax()).text().equalTo(messages.get(ID.minMax));
-        Graphene.waitGui().until().element(page.getMsgNotEmpty()).text().equalTo(messages.get(ID.notEmpty));
-        Graphene.waitGui().until().element(page.getMsgNotNull()).text().equalTo(messages.get(ID.notNull));
-        Graphene.waitGui().until().element(page.getMsgPattern()).text().equalTo(messages.get(ID.pattern));
-        Graphene.waitGui().until().element(page.getMsgCustom()).text().equalTo(messages.get(ID.custom));
+        Graphene.waitGui().until().element(getPage().getMsgAssertTrue()).text().equalTo(messages.get(ID.assertTrue));
+        Graphene.waitGui().until().element(getPage().getMsgAssertFalse()).text().equalTo(messages.get(ID.assertFalse));
+        Graphene.waitGui().until().element(getPage().getMsgDecimalMinMax()).text().equalTo(messages.get(ID.decimalMinMax));
+        Graphene.waitGui().until().element(getPage().getMsgDigits()).text().equalTo(messages.get(ID.digits));
+        Graphene.waitGui().until().element(getPage().getMsgMax()).text().equalTo(messages.get(ID.max));
+        Graphene.waitGui().until().element(getPage().getMsgMin()).text().equalTo(messages.get(ID.min));
+        Graphene.waitGui().until().element(getPage().getMsgMinMax()).text().equalTo(messages.get(ID.minMax));
+        Graphene.waitGui().until().element(getPage().getMsgNotEmpty()).text().equalTo(messages.get(ID.notEmpty));
+        Graphene.waitGui().until().element(getPage().getMsgNotNull()).text().equalTo(messages.get(ID.notNull));
+        Graphene.waitGui().until().element(getPage().getMsgPattern()).text().equalTo(messages.get(ID.pattern));
+        Graphene.waitGui().until().element(getPage().getMsgCustom()).text().equalTo(messages.get(ID.custom));
 
-        if (new WebElementConditionFactory(page.getInputRegexp()).isPresent().apply(driver)) {
+        if (new WebElementConditionFactory(getPage().getInputRegexp()).isPresent().apply(driver)) {
             // regExp validator isn't present in JSR303 validation
-            Graphene.waitGui().until().element(page.getMsgRegexp()).text().equalTo(messages.get(ID.regexp));
+            Graphene.waitGui().until().element(getPage().getMsgRegexp()).text().equalTo(messages.get(ID.regexp));
         }
-        Graphene.waitGui().until().element(page.getMsgPast()).text().equalTo(messages.get(ID.past));
-        Graphene.waitGui().until().element(page.getMsgFuture()).text().equalTo(messages.get(ID.future));
-        Graphene.waitGui().until().element(page.getMsgStringSize()).text().equalTo(messages.get(ID.stringSize));
-        Graphene.waitGui().until().element(page.getMsgSize()).text().equalTo(messages.get(ID.size));
+        Graphene.waitGui().until().element(getPage().getMsgPast()).text().equalTo(messages.get(ID.past));
+        Graphene.waitGui().until().element(getPage().getMsgFuture()).text().equalTo(messages.get(ID.future));
+        Graphene.waitGui().until().element(getPage().getMsgStringSize()).text().equalTo(messages.get(ID.stringSize));
+        Graphene.waitGui().until().element(getPage().getMsgSize()).text().equalTo(messages.get(ID.size));
     }
 
     /**
@@ -272,10 +279,10 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         clickCorrectButton();
 
         // checkBoolean to true
-        page.getInputAssertTrue().click();
+        getPage().getInputAssertTrue().click();
         submitAjax();
 
-        Graphene.waitGui().until().element(page.getMsgAssertTrue()).text().equalTo(messages.get(ID.assertTrue));
+        Graphene.waitGui().until().element(getPage().getMsgAssertTrue()).text().equalTo(messages.get(ID.assertTrue));
     }
 
     /**
@@ -286,10 +293,10 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         clickCorrectButton();
 
         // checkBoolean to false
-        page.getInputAssertFalse().click();
+        getPage().getInputAssertFalse().click();
         submitAjax();
 
-        Graphene.waitGui().until().element(page.getMsgAssertFalse()).text().equalTo(messages.get(ID.assertFalse));
+        Graphene.waitGui().until().element(getPage().getMsgAssertFalse()).text().equalTo(messages.get(ID.assertFalse));
     }
 
     /**
@@ -300,11 +307,11 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         clickCorrectButton();
 
         // Decimal input
-        page.getInputDecimalMinMax().clear();
-        page.getInputDecimalMinMax().sendKeys(wrongValue.get(ID.decimalMinMax).toString());
+        getPage().getInputDecimalMinMax().clear();
+        getPage().getInputDecimalMinMax().sendKeys(wrongValue.get(ID.decimalMinMax).toString());
         submitAjax();
 
-        Graphene.waitGui().until().element(page.getMsgDecimalMinMax()).text().equalTo(messages.get(ID.decimalMinMax));
+        Graphene.waitGui().until().element(getPage().getMsgDecimalMinMax()).text().equalTo(messages.get(ID.decimalMinMax));
     }
 
     /**
@@ -315,11 +322,11 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         clickCorrectButton();
 
         // decimal input digits
-        page.getInputDigits().clear();
-        page.getInputDigits().sendKeys(wrongValue.get(ID.digits).toString());
+        getPage().getInputDigits().clear();
+        getPage().getInputDigits().sendKeys(wrongValue.get(ID.digits).toString());
         submitAjax();
 
-        Graphene.waitGui().until().element(page.getMsgDigits()).text().equalTo(messages.get(ID.digits));
+        Graphene.waitGui().until().element(getPage().getMsgDigits()).text().equalTo(messages.get(ID.digits));
     }
 
     /**
@@ -330,11 +337,11 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         clickCorrectButton();
 
         // integer input max
-        page.getInputMax().clear();
-        page.getInputMax().sendKeys(wrongValue.get(ID.max).toString());
+        getPage().getInputMax().clear();
+        getPage().getInputMax().sendKeys(wrongValue.get(ID.max).toString());
         submitAjax();
 
-        Graphene.waitGui().until().element(page.getMsgMax()).text().equalTo(messages.get(ID.max));
+        Graphene.waitGui().until().element(getPage().getMsgMax()).text().equalTo(messages.get(ID.max));
     }
 
     /**
@@ -346,11 +353,11 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
         // integer input min
         // selenium.type(inputFormat.format(ID.min), wrongValue.get(ID.min).toString());
-        page.getInputMin().clear();
-        page.getInputMin().sendKeys(wrongValue.get(ID.min).toString());
+        getPage().getInputMin().clear();
+        getPage().getInputMin().sendKeys(wrongValue.get(ID.min).toString());
         submitAjax();
 
-        Graphene.waitGui().until().element(page.getMsgMin()).text().equalTo(messages.get(ID.min));
+        Graphene.waitGui().until().element(getPage().getMsgMin()).text().equalTo(messages.get(ID.min));
     }
 
     /**
@@ -362,11 +369,11 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
         // integer input min and max
         // selenium.type(inputFormat.format(ID.minMax), wrongValue.get(ID.minMax).toString());
-        page.getInputMinMax().clear();
-        page.getInputMinMax().sendKeys(wrongValue.get(ID.minMax).toString());
+        getPage().getInputMinMax().clear();
+        getPage().getInputMinMax().sendKeys(wrongValue.get(ID.minMax).toString());
         submitAjax();
 
-        Graphene.waitGui().until().element(page.getMsgMinMax()).text().equalTo(messages.get(ID.minMax));
+        Graphene.waitGui().until().element(getPage().getMsgMinMax()).text().equalTo(messages.get(ID.minMax));
     }
 
     /**
@@ -378,11 +385,11 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
         // string input not empty
         // selenium.type(inputFormat.format(ID.notEmpty), wrongValue.get(ID.notEmpty).toString());
-        page.getInputNotEmpty().clear();
-        page.getInputNotEmpty().sendKeys(wrongValue.get(ID.notEmpty).toString());
+        getPage().getInputNotEmpty().clear();
+        getPage().getInputNotEmpty().sendKeys(wrongValue.get(ID.notEmpty).toString());
         submitAjax();
 
-        Graphene.waitGui().until().element(page.getMsgNotEmpty()).text().equalTo(messages.get(ID.notEmpty));
+        Graphene.waitGui().until().element(getPage().getMsgNotEmpty()).text().equalTo(messages.get(ID.notEmpty));
     }
 
     /**
@@ -393,11 +400,11 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         clickCorrectButton();
 
         // string input not null
-        page.getInputNotNull().clear();
-        page.getInputNotNull().sendKeys("");
+        getPage().getInputNotNull().clear();
+        getPage().getInputNotNull().sendKeys("");
         submitAjax();
 
-        Graphene.waitGui().until().element(page.getMsgNotNull()).text().equalTo(messages.get(ID.notNull));
+        Graphene.waitGui().until().element(getPage().getMsgNotNull()).text().equalTo(messages.get(ID.notNull));
     }
 
     /**
@@ -408,11 +415,11 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         clickCorrectButton();
 
         // string input custom pattern
-        page.getInputPattern().clear();
-        page.getInputPattern().sendKeys(wrongValue.get(ID.pattern).toString());
+        getPage().getInputPattern().clear();
+        getPage().getInputPattern().sendKeys(wrongValue.get(ID.pattern).toString());
         submitAjax();
 
-        Graphene.waitGui().until().element(page.getMsgPattern()).text().equalTo(messages.get(ID.pattern));
+        Graphene.waitGui().until().element(getPage().getMsgPattern()).text().equalTo(messages.get(ID.pattern));
     }
 
     /**
@@ -423,11 +430,11 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         clickCorrectButton();
 
         // string input custom string
-        page.getInputCustom().clear();
-        page.getInputCustom().sendKeys(wrongValue.get(ID.custom).toString());
+        getPage().getInputCustom().clear();
+        getPage().getInputCustom().sendKeys(wrongValue.get(ID.custom).toString());
         submitAjax();
 
-        Graphene.waitGui().until().element(page.getMsgCustom()).text().equalTo(messages.get(ID.custom));
+        Graphene.waitGui().until().element(getPage().getMsgCustom()).text().equalTo(messages.get(ID.custom));
     }
 
     /**
@@ -438,11 +445,11 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         clickCorrectButton();
 
         // string input regExp pattern
-        page.getInputRegexp().clear();
-        page.getInputRegexp().sendKeys(wrongValue.get(ID.regexp).toString());
+        getPage().getInputRegexp().clear();
+        getPage().getInputRegexp().sendKeys(wrongValue.get(ID.regexp).toString());
         submitAjax();
 
-        Graphene.waitGui().until().element(page.getMsgRegexp()).text().equalTo(messages.get(ID.regexp));
+        Graphene.waitGui().until().element(getPage().getMsgRegexp()).text().equalTo(messages.get(ID.regexp));
     }
 
     /**
@@ -453,11 +460,11 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         clickCorrectButton();
 
         // date input past
-        page.getInputPast().clear();
-        page.getInputPast().sendKeys(wrongValue.get(ID.past).toString());
-        Graphene.guardAjax(page.getA4jCommandBtn()).click();
+        getPage().getInputPast().clear();
+        getPage().getInputPast().sendKeys(wrongValue.get(ID.past).toString());
+        Graphene.guardAjax(getPage().getA4jCommandBtn()).click();
 
-        Graphene.waitGui().until().element(page.getMsgPast()).text().equalTo(messages.get(ID.past));
+        Graphene.waitGui().until().element(getPage().getMsgPast()).text().equalTo(messages.get(ID.past));
     }
 
     /**
@@ -468,10 +475,10 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         clickCorrectButton();
 
         // date input future
-        page.getInputFuture().clear();
-        page.getInputFuture().sendKeys(wrongValue.get(ID.future).toString());
+        getPage().getInputFuture().clear();
+        getPage().getInputFuture().sendKeys(wrongValue.get(ID.future).toString());
         submitAjax();
-        Graphene.waitGui().until().element(page.getMsgFuture()).text().equalTo(messages.get(ID.future));
+        Graphene.waitGui().until().element(getPage().getMsgFuture()).text().equalTo(messages.get(ID.future));
     }
 
     /**
@@ -482,11 +489,11 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         clickCorrectButton();
 
         // string input string size
-        page.getInputStringSize().clear();
-        page.getInputStringSize().sendKeys(wrongValue.get(ID.stringSize).toString());
+        getPage().getInputStringSize().clear();
+        getPage().getInputStringSize().sendKeys(wrongValue.get(ID.stringSize).toString());
         submitAjax();
 
-        Graphene.waitGui().until().element(page.getMsgStringSize()).text().equalTo(messages.get(ID.stringSize));
+        Graphene.waitGui().until().element(getPage().getMsgStringSize()).text().equalTo(messages.get(ID.stringSize));
     }
 
     /**
@@ -498,9 +505,9 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         clickWrongButton();
 
         // many checkBox input selection size
-        page.getSelectionItemByLabel(wrongValue.get(ID.size).toString()).click();
+        getPage().getSelectionItemByLabel(wrongValue.get(ID.size).toString()).click();
         submitAjax();
 
-        Graphene.waitGui().until().element(page.getMsgSize()).text().equalTo(messages.get(ID.size));
+        Graphene.waitGui().until().element(getPage().getMsgSize()).text().equalTo(messages.get(ID.size));
     }
 }

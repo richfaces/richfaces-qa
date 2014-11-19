@@ -23,14 +23,14 @@ package org.richfaces.tests.metamer.ftest.richTabPanel;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
-import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.fragment.switchable.SwitchType.SERVER;
 import static org.testng.AssertJUnit.assertEquals;
 
 import java.net.URL;
 import java.util.List;
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
 
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -41,8 +41,6 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
-import static org.richfaces.fragment.switchable.SwitchType.SERVER;
-
 /**
  * Test case for page /faces/components/richTabPanel/addTab2.xhtml
  *
@@ -51,20 +49,18 @@ import static org.richfaces.fragment.switchable.SwitchType.SERVER;
 public class TestTabPanelAddPanel1 extends AbstractWebDriverTest {
 
     private final Attributes<TabPanelAttributes> tabPanelAttributes = getAttributes();
-
-    @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richTabPanel/addTab2.xhtml");
-    }
-
     @FindByJQuery("td[id*='dynamic'] a")
     private List<WebElement> dynamicHeadersCloseHandler;
-
     @FindBy(xpath = "//div[contains(@id, 'tabPanel')]//*[@class='rf-tab-cnt']")
     private List<WebElement> activeContent;
 
     @Page
     private TabPanelSimplePage page;
+
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richTabPanel/addTab2.xhtml");
+    }
 
     private WebElement getActiveContent() {
         for (WebElement e : activeContent) {
@@ -137,7 +133,7 @@ public class TestTabPanelAddPanel1 extends AbstractWebDriverTest {
      * created tabs still works as in previous tabs (staticaly created) 3. verify a4j ajax btn to create new tabs
      */
     @Test
-    @RegressionTest({"https://issues.jboss.org/browse/RF-11081", "https://issues.jboss.org/browse/RF-12945"})
+    @RegressionTest({ "https://issues.jboss.org/browse/RF-11081", "https://issues.jboss.org/browse/RF-12945" })
     public void testSwitchTypeNull() {
         createAndVerifyTab(page.getCreateTabButtonA4j());
         for (int i = 4; i < 8; i++) {
@@ -149,7 +145,7 @@ public class TestTabPanelAddPanel1 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest({"https://issues.jboss.org/browse/RF-11081", "https://issues.jboss.org/browse/RF-12945"})
+    @RegressionTest({ "https://issues.jboss.org/browse/RF-11081", "https://issues.jboss.org/browse/RF-12945" })
     public void testSwitchTypeAjax() {
         tabPanelAttributes.set(TabPanelAttributes.switchType, "ajax");
         page.fullPageRefresh();

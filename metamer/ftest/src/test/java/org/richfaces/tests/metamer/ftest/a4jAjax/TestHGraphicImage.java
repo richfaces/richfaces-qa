@@ -69,9 +69,9 @@ public class TestHGraphicImage extends AbstractAjaxTest {
 
     @Override
     public void performAction(String input) {
-        page.input.clear();
-        page.input.sendKeys(input);
-        Graphene.guardAjax(page.image).click();
+        page.getInputElement().clear();
+        page.getInputElement().sendKeys(input);
+        Graphene.guardAjax(page.getImageElement()).click();
     }
 
     @Test
@@ -87,7 +87,7 @@ public class TestHGraphicImage extends AbstractAjaxTest {
     @Test
     public void testDisabled() {
         ajaxAttributes.set(AjaxAttributes.disabled, true);
-        Graphene.guardNoRequest(page.image).click();
+        Graphene.guardNoRequest(page.getImageElement()).click();
     }
 
     @Test
@@ -128,8 +128,8 @@ public class TestHGraphicImage extends AbstractAjaxTest {
 
     @Test
     public void testSimpleClick() {
-        page.input.sendKeys("RichFaces 4");
-        MetamerPage.waitRequest(page.image, WaitRequestType.XHR).click();
+        page.getInputElement().sendKeys("RichFaces 4");
+        MetamerPage.waitRequest(page.getImageElement(), WaitRequestType.XHR).click();
 
         assertOutput1Changed();
         assertOutput2Changed();
@@ -138,11 +138,11 @@ public class TestHGraphicImage extends AbstractAjaxTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-9665")
     public void testSimpleClickUnicode() {
-        page.input.sendKeys("ľščťžýáíéúôň фывацукйешгщь");
-        MetamerPage.waitRequest(page.image, WaitRequestType.XHR).click();
+        page.getInputElement().sendKeys("ľščťžýáíéúôň фывацукйешгщь");
+        MetamerPage.waitRequest(page.getImageElement(), WaitRequestType.XHR).click();
 
-        assertEquals(page.output1.getText(), "ľščťžýáíéúôň фывацукйешгщь", "Output2 should change");
-        assertEquals(page.output2.getText(), "ľščťžýáíéúôň фывацукйешгщь", "Output2 should change");
+        assertEquals(page.getOutput1Element().getText(), "ľščťžýáíéúôň фывацукйешгщь", "Output2 should change");
+        assertEquals(page.getOutput2Element().getText(), "ľščťžýáíéúôň фывацукйешгщь", "Output2 should change");
     }
 
     @Test

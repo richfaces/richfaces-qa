@@ -21,8 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.abstractions.validations;
 
-import com.google.common.collect.Sets;
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
@@ -31,6 +29,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.bean.abstractions.DateInputValidationBean;
+
+import com.google.common.collect.Sets;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -85,24 +85,24 @@ public class DateInputValidationPage extends InputValidationPage {
         DateTimeFormatter dtf = DateTimeFormat.forPattern("MMM d, yyyy HH:mm");
         messageCases.put(MESSAGE_PAST_NAME,
             new ValidationMessageCase(MESSAGE_PAST_NAME, messagePast,
-            setPastCorrectButton, setPastWrongButton,
-            pastOutput, "Jan 2, 1980 12:00", DateInputValidationBean.PAST_VALUE_DEFAULT.toString(dtf),
-            Sets.newHashSet(DateInputValidationBean.PAST_VALIDATION_MSG)));
+                setPastCorrectButton, setPastWrongButton,
+                pastOutput, "Jan 2, 1980 12:00", DateInputValidationBean.PAST_VALUE_DEFAULT.toString(dtf),
+                Sets.newHashSet(DateInputValidationBean.PAST_VALIDATION_MSG)));
         messageCases.put(MESSAGE_FUTURE_NAME,
             new ValidationMessageCase(MESSAGE_FUTURE_NAME, messageFuture,
-            setFutureCorrectButton, setFutureWrongButton,
-            futureOutput, "Jan 2, 3000 12:00", DateInputValidationBean.FUTURE_VALUE_DEFAULT.toString(dtf),
-            Sets.newHashSet(DateInputValidationBean.FUTURE_VALIDATION_MSG)));
+                setFutureCorrectButton, setFutureWrongButton,
+                futureOutput, "Jan 2, 3000 12:00", DateInputValidationBean.FUTURE_VALUE_DEFAULT.toString(dtf),
+                Sets.newHashSet(DateInputValidationBean.FUTURE_VALIDATION_MSG)));
         DateTime lastYear = new DateTime(DateTimeZone.UTC).minusYears(1).withMonthOfYear(1).withDayOfMonth(2).withHourOfDay(12).withMinuteOfHour(0).withSecondOfMinute(0);
         messageCases.put(MESSAGE_LAST_YEAR_NAME,
             new ValidationMessageCase(MESSAGE_LAST_YEAR_NAME, messageLastYear,
-            setLastYearCorrectButton, setLastYearWrongButton,
-            lastYearOutput, lastYear.toString(dtf), DateInputValidationBean.LAST_YEAR_VALUE_DEFAULT.toString(dtf),
-            Sets.newHashSet(DateInputValidationBean.LAST_YEAR_VALIDATION_MSG)));
+                setLastYearCorrectButton, setLastYearWrongButton,
+                lastYearOutput, lastYear.toString(dtf), DateInputValidationBean.LAST_YEAR_VALUE_DEFAULT.toString(dtf),
+                Sets.newHashSet(DateInputValidationBean.LAST_YEAR_VALIDATION_MSG)));
         messageCases.put(MESSAGE_REQUIRED_NAME,
             new ValidationMessageCase(MESSAGE_REQUIRED_NAME, messageRequired,
-            setRequiredCorrectButton, setRequiredWrongButton,
-            requiredOutput, "Jan 2, 1980 12:00", DateInputValidationBean.REQUIRED_VALUE_DEFAULT.toString(dtf),
-            Sets.newHashSet(DateInputValidationBean.REQUIRED_VALIDATION_MSG)));
+                setRequiredCorrectButton, setRequiredWrongButton,
+                requiredOutput, "Jan 2, 1980 12:00", DateInputValidationBean.REQUIRED_VALUE_DEFAULT.toString(dtf),
+                Sets.newHashSet(DateInputValidationBean.REQUIRED_VALIDATION_MSG)));
     }
 }

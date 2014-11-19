@@ -60,8 +60,8 @@ public class TestRepeat extends AbstractWebDriverTest {
     int displayedRows;
     int expectedEnd;
 
-    private Integer[] intsFirst = { -1, 0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL, ELEMENTS_TOTAL + 1 };
-    private Integer[] intsRows = { -2, -1, 0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL, ELEMENTS_TOTAL + 1 };
+    private final Integer[] intsFirst = { -1, 0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL, ELEMENTS_TOTAL + 1 };
+    private final Integer[] intsRows = { -2, -1, 0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL, ELEMENTS_TOTAL + 1 };
 
     @Override
     public URL getTestUrl() {
@@ -72,7 +72,7 @@ public class TestRepeat extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testRendered() {
         repeatAttributes.set(RepeatAttributes.rendered, "false");
-        assertEquals(page.rows.size(), 0);
+        assertEquals(page.getRowsElements().size(), 0);
     }
 
     @Test
@@ -98,14 +98,14 @@ public class TestRepeat extends AbstractWebDriverTest {
     }
 
     private void verifyCounts() {
-        assertEquals(page.rows.size(), displayedRows);
+        assertEquals(page.getRowsElements().size(), displayedRows);
         if (displayedRows > 0) {
             assertEquals(page.getIndex(0), expectedBegin);
         }
     }
 
     private void verifyRows() {
-        int rowCount = page.rows.size();
+        int rowCount = page.getRowsElements().size();
         for (int position = 0; position < rowCount; position++) {
             assertEquals(page.getBegin(position), expectedBegin, "begin");
             assertEquals(page.getEnd(position), expectedEnd, "end");

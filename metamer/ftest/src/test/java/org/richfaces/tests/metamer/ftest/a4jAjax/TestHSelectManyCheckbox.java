@@ -60,12 +60,12 @@ public class TestHSelectManyCheckbox extends AbstractAjaxTest {
 
     @Override
     public void performAction() {
-        Graphene.guardAjax(page.selectManyCheckbox).click();
+        Graphene.guardAjax(page.getSelectManyCheckboxElement()).click();
     }
 
     @Override
     public void performAction(String input) {
-        Graphene.guardAjax(page.selectManyCheckbox).click();
+        Graphene.guardAjax(page.getSelectManyCheckboxElement()).click();
     }
 
     @Test
@@ -81,7 +81,7 @@ public class TestHSelectManyCheckbox extends AbstractAjaxTest {
     @Test
     public void testDisabled() {
         ajaxAttributes.set(AjaxAttributes.disabled, true);
-        Graphene.guardNoRequest(page.selectManyCheckbox).click();
+        Graphene.guardNoRequest(page.getSelectManyCheckboxElement()).click();
     }
 
     @Test

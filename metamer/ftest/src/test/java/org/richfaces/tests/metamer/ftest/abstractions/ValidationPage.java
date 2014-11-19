@@ -35,44 +35,155 @@ public class ValidationPage extends MetamerPage {
 
     public static final String JS_COMPLETED_STATE_STRING = "completed";
     public static final String JS_STATE_VARIABLE = "document.valuesSettingState";
-    //
+
     @FindBy(id = "setCorrectValuesButton")
-    WebElement setCorrectValuesButton;
+    private WebElement setCorrectValuesButtonElement;
     @FindBy(id = "setWrongValuesButton")
-    WebElement setWrongValuesButton;
+    private WebElement setWrongValuesButtonElement;
+
     @FindBy(css = "span[id$='jsr-303-inBean-msg'] span[class='rf-msg-det']")
-    WebElement jsr303InBeanMsg;
+    private WebElement jsr303InBeanMsgElement;
     @FindBy(css = "span[id$='jsr-303-inAtt-msg'] span[class='rf-msg-det']")
-    WebElement jsr303InAttMsg;
+    private WebElement jsr303InAttMsgElement;
     @FindBy(css = "span[id$='jsr-303-inBundle-msg'] span[class='rf-msg-det']")
-    WebElement jsr303InBundleMsg;
+    private WebElement jsr303InBundleMsgElement;
+
     @FindBy(css = "span[id$='csv-inBean-msg'] span[class='rf-msg-det']")
-    WebElement csvInBeanMsg;
+    private WebElement csvInBeanMsgElement;
     @FindBy(css = "span[id$='csv-inAtt-msg'] span[class='rf-msg-det']")
-    WebElement csvInAttMsg;
+    private WebElement csvInAttMsgElement;
     @FindBy(css = "span[id$='csv-inBundle-msg'] span[class='rf-msg-det']")
-    WebElement csvInBundleMsg;
+    private WebElement csvInBundleMsgElement;
+
     @FindBy(css = "span[id$='jsf-inAtt-msg'] span[class='rf-msg-det']")
-    WebElement jsfInAttMsg;
+    private WebElement jsfInAttMsgElement;
     @FindBy(css = "span[id$='jsf-inBundle-msg'] span[class='rf-msg-det']")
-    WebElement jsfInBundleMsg;
+    private WebElement jsfInBundleMsgElement;
     @FindBy(css = "input[id$=hButton]")
-    WebElement jsfSubmitBtn;
+
+    private WebElement jsfSubmitBtnElement;
     @FindBy(css = "input[id$=a4jButton]")
-    WebElement rfSubmitBtn;
+    private WebElement rfSubmitBtnElement;
+
     @FindBy(css = "input[id$=activateButton]")
-    WebElement activateButton;
+    private WebElement activateButtonElement;
     @FindBy(css = "input[id$=deactivateButton]")
-    WebElement deactivateButton;
+    private WebElement deactivateButtonElement;
+
     @FindBy(css = "span[id$=currRB]")
-    WebElement currentRB;
+    private WebElement currentRBElement;
+
+    /**
+     * @return the activateButtonElement
+     */
+    public WebElement getActivateButtonElement() {
+        return activateButtonElement;
+    }
+
+    /**
+     * @return the csvInAttMsgElement
+     */
+    public WebElement getCsvInAttMsgElement() {
+        return csvInAttMsgElement;
+    }
+
+    /**
+     * @return the csvInBeanMsgElement
+     */
+    public WebElement getCsvInBeanMsgElement() {
+        return csvInBeanMsgElement;
+    }
+
+    /**
+     * @return the csvInBundleMsgElement
+     */
+    public WebElement getCsvInBundleMsgElement() {
+        return csvInBundleMsgElement;
+    }
+
+    /**
+     * @return the currentRBElement
+     */
+    public WebElement getCurrentRBElement() {
+        return currentRBElement;
+    }
+
+    /**
+     * @return the deactivateButtonElement
+     */
+    public WebElement getDeactivateButtonElement() {
+        return deactivateButtonElement;
+    }
 
     /**
      * @return text of validation message for component jsf-inAtt (component
      * using jsf validator with message set in attribute of component)
      */
     public String getJSFInAttMSG() {
-        return this.jsfInAttMsg.getText();
+        return this.getJsfInAttMsgElement().getText();
+    }
+
+    /**
+     * @return the jsfInAttMsgElement
+     */
+    public WebElement getJsfInAttMsgElement() {
+        return jsfInAttMsgElement;
+    }
+
+    /**
+     * @return the jsfInBundleMsgElement
+     */
+    public WebElement getJsfInBundleMsgElement() {
+        return jsfInBundleMsgElement;
+    }
+
+    /**
+     * @return the jsfSubmitBtnElement
+     */
+    public WebElement getJsfSubmitBtnElement() {
+        return jsfSubmitBtnElement;
+    }
+
+    /**
+     * @return the jsr303InAttMsgElement
+     */
+    public WebElement getJsr303InAttMsgElement() {
+        return jsr303InAttMsgElement;
+    }
+
+    /**
+     * @return the jsr303InBeanMsgElement
+     */
+    public WebElement getJsr303InBeanMsgElement() {
+        return jsr303InBeanMsgElement;
+    }
+
+    /**
+     * @return the jsr303InBundleMsgElement
+     */
+    public WebElement getJsr303InBundleMsgElement() {
+        return jsr303InBundleMsgElement;
+    }
+
+    /**
+     * @return the rfSubmitBtnElement
+     */
+    public WebElement getRfSubmitBtnElement() {
+        return rfSubmitBtnElement;
+    }
+
+    /**
+     * @return the setCorrectValuesButtonElement
+     */
+    public WebElement getSetCorrectValuesButtonElement() {
+        return setCorrectValuesButtonElement;
+    }
+
+    /**
+     * @return the setWrongValuesButtonElement
+     */
+    public WebElement getSetWrongValuesButtonElement() {
+        return setWrongValuesButtonElement;
     }
 
     /**
@@ -80,7 +191,7 @@ public class ValidationPage extends MetamerPage {
      * are set and submits a form with h:commandButton.
      */
     public void setCorrectValuesAndSubmitJSF() {
-        setCorrectValuesButton.click();
+        getSetCorrectValuesButtonElement().click();
         waitForSetting();
         submitHTTP();
     }
@@ -90,7 +201,7 @@ public class ValidationPage extends MetamerPage {
      * are set and submits a form with a4j:commandButton.
      */
     public void setCorrectValuesAndSubmitRF() {
-        setCorrectValuesButton.click();
+        getSetCorrectValuesButtonElement().click();
         waitForSetting();
         submitAjax();
     }
@@ -100,7 +211,7 @@ public class ValidationPage extends MetamerPage {
      * are set and submits a form with h:commandButton.
      */
     public void setWrongValuesAndSubmitJSF() {
-        setWrongValuesButton.click();
+        getSetWrongValuesButtonElement().click();
         waitForSetting();
         submitHTTP();
     }
@@ -110,17 +221,17 @@ public class ValidationPage extends MetamerPage {
      * are set and submits a form with a4j:commandButton.
      */
     public void setWrongValuesAndSubmitRF() {
-        setWrongValuesButton.click();
+        getSetWrongValuesButtonElement().click();
         waitForSetting();
         submitAjax();
     }
 
     private void submitAjax() {
-        waitRequest(rfSubmitBtn, WaitRequestType.XHR).click();
+        waitRequest(getRfSubmitBtnElement(), WaitRequestType.XHR).click();
     }
 
     private void submitHTTP() {
-        waitRequest(jsfSubmitBtn, WaitRequestType.HTTP).click();
+        waitRequest(getJsfSubmitBtnElement(), WaitRequestType.HTTP).click();
     }
 
     /**
@@ -136,7 +247,7 @@ public class ValidationPage extends MetamerPage {
      * button.
      */
     public void setWrongValues() {
-        setWrongValuesButton.click();
+        getSetWrongValuesButtonElement().click();
     }
 
     /**
@@ -145,17 +256,14 @@ public class ValidationPage extends MetamerPage {
      * @return false if some error message is there, else true
      */
     public boolean noErrorMessagesDisplayed() {
-        if (new WebElementConditionFactory(csvInAttMsg).isVisible().apply(driver)
-                || new WebElementConditionFactory(csvInBeanMsg).isVisible().apply(driver)
-                || new WebElementConditionFactory(csvInBundleMsg).isVisible().apply(driver)
-                || new WebElementConditionFactory(jsfInAttMsg).isVisible().apply(driver)
-                || new WebElementConditionFactory(jsfInBundleMsg).isVisible().apply(driver)
-                || new WebElementConditionFactory(jsr303InAttMsg).isVisible().apply(driver)
-                || new WebElementConditionFactory(jsr303InBeanMsg).isVisible().apply(driver)
-                || new WebElementConditionFactory(jsr303InBundleMsg).isVisible().apply(driver)) {
-            return false;
-        }
-        return true;
+        return !(new WebElementConditionFactory(csvInAttMsgElement).isVisible().apply(driver)
+            || new WebElementConditionFactory(csvInBeanMsgElement).isVisible().apply(driver)
+            || new WebElementConditionFactory(csvInBundleMsgElement).isVisible().apply(driver)
+            || new WebElementConditionFactory(jsfInAttMsgElement).isVisible().apply(driver)
+            || new WebElementConditionFactory(jsfInBundleMsgElement).isVisible().apply(driver)
+            || new WebElementConditionFactory(jsr303InAttMsgElement).isVisible().apply(driver)
+            || new WebElementConditionFactory(jsr303InBeanMsgElement).isVisible().apply(driver)
+            || new WebElementConditionFactory(jsr303InBundleMsgElement).isVisible().apply(driver));
     }
 
     /**
@@ -164,8 +272,8 @@ public class ValidationPage extends MetamerPage {
     public void activateCustomMessages() {
         submitHTTP();
         setCorrectValuesAndSubmitJSF();
-        waitRequest(activateButton, WaitRequestType.XHR).click();
-        Graphene.waitAjax().until().element(currentRB).text().equalTo("Current message resource bundle: CustomErrorMessages.");
+        waitRequest(getActivateButtonElement(), WaitRequestType.XHR).click();
+        Graphene.waitAjax().until().element(getCurrentRBElement()).text().equalTo("Current message resource bundle: CustomErrorMessages.");
     }
 
     /**
@@ -174,7 +282,7 @@ public class ValidationPage extends MetamerPage {
     public void deactivateCustomMessages() {
         submitHTTP();
         setCorrectValuesAndSubmitJSF();
-        waitRequest(deactivateButton, WaitRequestType.XHR).click();
-        Graphene.waitAjax().until().element(currentRB).text().equalTo("Current message resource bundle: DefaultErrorMessages.");
+        waitRequest(getDeactivateButtonElement(), WaitRequestType.XHR).click();
+        Graphene.waitAjax().until().element(getCurrentRBElement()).text().equalTo("Current message resource bundle: DefaultErrorMessages.");
     }
 }

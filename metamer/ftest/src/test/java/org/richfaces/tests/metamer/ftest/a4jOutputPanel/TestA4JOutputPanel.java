@@ -41,7 +41,6 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneElement;
-import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
@@ -52,7 +51,6 @@ import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annota
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 /**
@@ -77,8 +75,9 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
     @FindBy(css = "span[id$=outputPanel]")
     private GrapheneElement outputSpan;
 
-    @Page
-    private MetamerPage metamerPage;
+    private WebElement getRequestTimeElement() {
+        return getMetamerPage().getRequestTimeElement();
+    }
 
     @Override
     public URL getTestUrl() {
@@ -123,7 +122,7 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
         String output = outputDiv.getText();
         assertEquals(output, "0", "Output after two clicks when ajaxRendered is set to false.");
 
-        metamerPage.rerenderAll();
+        getMetamerPage().rerenderAll();
         Graphene.waitGui().until().element(outputDiv).text().equalTo("2");
     }
 
@@ -166,13 +165,13 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
         outputPanelAttributes.set(OutputPanelAttributes.rendered, false);
         assertFalse(outputDiv.isPresent(), "Panel should not be rendered.");
 
-        String timeValue = metamerPage.getRequestTimeElement().getText();
+        String timeValue = getRequestTimeElement().getText();
         Graphene.guardAjax(increaseCounterButton).click();
-        Graphene.waitGui().withMessage("Page was not updated").until().element(metamerPage.getRequestTimeElement()).text()
+        Graphene.waitGui().withMessage("Page was not updated").until().element(getRequestTimeElement()).text()
             .not().equalTo(timeValue);
-        timeValue = metamerPage.getRequestTimeElement().getText();
+        timeValue = getRequestTimeElement().getText();
         Graphene.guardAjax(increaseCounterButton).click();
-        Graphene.waitGui().withMessage("Page was not updated").until().element(metamerPage.getRequestTimeElement()).text()
+        Graphene.waitGui().withMessage("Page was not updated").until().element(getRequestTimeElement()).text()
             .not().equalTo(timeValue);
 
         outputPanelAttributes.set(OutputPanelAttributes.rendered, true);

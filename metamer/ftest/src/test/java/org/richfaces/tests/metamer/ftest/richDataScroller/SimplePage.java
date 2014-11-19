@@ -22,8 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richDataScroller;
 
 import org.jboss.arquillian.graphene.GrapheneElement;
-import org.jboss.arquillian.graphene.fragment.Root;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -34,11 +32,10 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 public class SimplePage extends MetamerPage {
 
     public enum ScrollerPosition {
+
         DATA_SCROLLER_OUTSIDE_TABLE, DATA_SCROLLER_IN_TABLE_FOOTER;
     }
 
-    @Root
-    private WebElement root;
     @FindBy(css = "span.rf-ds[id$=scroller1]")
     private RichFacesDataScroller scrollerOutsideTable;
     @FindBy(css = "span.rf-ds[id$=scroller2]")
