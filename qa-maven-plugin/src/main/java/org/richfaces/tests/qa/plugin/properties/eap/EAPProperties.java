@@ -67,7 +67,8 @@ public class EAPProperties {
     }
 
     protected String getEAPZipName() {
-        return getVersion().getMicro() > 0 ? getVersion().getFullFormat() + "-full-build" : getVersion().getFullFormat();
+        // version 6.x.y, if x > 1 && y > 0  => *-full-build.zip
+        return getVersion().getMinor() > 1 && getVersion().getMicro() > 0 ? getVersion().getFullFormat() + "-full-build" : getVersion().getFullFormat();
     }
 
     public String getEapExtractedDirectoryName() {
