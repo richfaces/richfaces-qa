@@ -199,6 +199,10 @@ public class Version implements Comparable<Version> {
         return getFormat(EnumSet.of(Format.major, Format.minor, Format.micro));
     }
 
+    public String getMajorMinorMicroSpecifierFormat() {
+        return getFormat(EnumSet.of(Format.major, Format.minor, Format.micro, Format.specifier));
+    }
+
     public int getMicro() {
         return micro;
     }
@@ -227,7 +231,7 @@ public class Version implements Comparable<Version> {
 
     @Override
     public String toString() {
-        return getFormat(EnumSet.of(Format.major, Format.minor, Format.micro, Format.specifier));
+        return getMajorMinorMicroSpecifierFormat();
     }
 
     public enum Format {

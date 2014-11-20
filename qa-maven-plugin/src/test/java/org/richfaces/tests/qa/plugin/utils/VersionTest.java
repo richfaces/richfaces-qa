@@ -255,7 +255,7 @@ public class VersionTest {
         assertEquals(versionSttring, v.getFullFormat());
         assertEquals("3.2", v.getMajorMinorFormat());
         assertEquals("3.2.1", v.getMajorMinorMicroFormat());
-        assertEquals("3.2.1abc", v.getFormat(EnumSet.of(Format.major, Format.minor, Format.micro, Format.specifier)));
+        assertEquals("3.2.1abc", v.getMajorMinorMicroSpecifierFormat());
         assertEquals("abc", v.getFormat(EnumSet.of(Format.specifier)));
         assertEquals("", v.getFormat(EnumSet.of(Format.prefix)));
 
@@ -264,7 +264,7 @@ public class VersionTest {
         assertEquals("3.2", v.getMajorMinorFormat());
         assertEquals("3.2.1", v.getMajorMinorMicroFormat());
         assertEquals(versionSttring, v.getFullFormat());
-        assertEquals("3.2.1abc", v.getFormat(EnumSet.of(Format.major, Format.minor, Format.micro, Format.specifier)));
+        assertEquals("3.2.1abc", v.getMajorMinorMicroSpecifierFormat());
         assertEquals("abc", v.getFormat(EnumSet.of(Format.specifier)));
         assertEquals("prefix-", v.getFormat(EnumSet.of(Format.prefix)));
     }

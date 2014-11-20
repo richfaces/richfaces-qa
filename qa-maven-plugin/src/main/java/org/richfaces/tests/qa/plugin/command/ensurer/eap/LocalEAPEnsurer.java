@@ -55,7 +55,7 @@ public class LocalEAPEnsurer implements Ensurer {
     }
 
     protected void ensureEAP() throws IOException {
-        File currentEAPDir = new File(userEapDirectory, getEapProperties().getVersion().getMajorMinorMicroFormat());
+        File currentEAPDir = new File(userEapDirectory, getEapProperties().getVersion().getMajorMinorMicroSpecifierFormat());
         if (!currentEAPDir.exists()) {
             currentEAPDir.mkdirs();
         }
