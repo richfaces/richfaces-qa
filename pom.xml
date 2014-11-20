@@ -1883,6 +1883,7 @@ FSF site: http://www.fsf.org. -->
                 </property>
             </activation>
             <properties>
+                <jbossEAP61Home>${qa.eap.home}</jbossEAP61Home>
                 <jbossEAP62Home>${qa.eap.home}</jbossEAP62Home>
                 <jbossEAP63Home>${qa.eap.home}</jbossEAP63Home>
 
