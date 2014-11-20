@@ -98,7 +98,6 @@ FSF site: http://www.fsf.org. -->
         <google.json.version>1.1</google.json.version>
         <version.mockito>1.8.5</version.mockito>
 
-        <profile.eap />
     </properties>
 
     <modules>
@@ -909,7 +908,7 @@ FSF site: http://www.fsf.org. -->
             <properties>
                 <metamer.classifier>jbas71</metamer.classifier>
                 <showcase.classifier>jbas71</showcase.classifier>
-                <profile.eap>6.1</profile.eap>
+                <version.eap>6.1.2</version.eap>
             </properties>
             <dependencies>
                 <dependency>
