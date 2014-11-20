@@ -34,9 +34,7 @@ import org.richfaces.tests.qa.plugin.utils.Servant;
 public class JenkinsBrowserEnsurer implements Ensurer {
 
     private final File hudsonChromeDriverWin;
-    private final File hudsonFirefoxLinux;
-    private final File hudsonFirefoxSolaris10;
-    private final File hudsonFirefoxSolaris11;
+    private final File hudsonFirefoxUnix;
     private final File hudsonFirefoxWindows;
     private final File hudsonIEDriverWin;
     private final String hudsonStaticWin;
@@ -46,9 +44,7 @@ public class JenkinsBrowserEnsurer implements Ensurer {
     public JenkinsBrowserEnsurer(Servant servant) {
         this.servant = servant;
 
-        hudsonFirefoxLinux = new File("/qa/tools/opt");
-        hudsonFirefoxSolaris10 = new File("/qa/tools/SunOS/" + servant.getOsArch());
-        hudsonFirefoxSolaris11 = new File("/qa/tools/OpenSolaris/" + servant.getOsArch());
+        hudsonFirefoxUnix = new File("/qa/tools/opt");
         hudsonFirefoxWindows = new File("t:/opt/windows");
 
         hudsonStaticWin = "h:/hudson/static_build_env/";
@@ -118,13 +114,24 @@ public class JenkinsBrowserEnsurer implements Ensurer {
         if (servant.isOnWindows()) {
             return hudsonFirefoxWindows;
         } else if (servant.isOnLinux()) {
-            return hudsonFirefoxLinux;
+            return hudsonFirefoxUnix;
         } else if (servant.isOnSolaris()) {
             String osVersion = servant.getOSVersion();
+            String osArch = servant.getOsArch();
             if (osVersion.endsWith("10")) {
-                return hudsonFirefoxSolaris10;
+                if (osArch.contains("sparc")) {
+                    return new File(hudsonFirefoxUnix, "solaris10_sparc");
+                } else if (osArch.contains("64")) {
+                    return new File(hudsonFirefoxUnix, "solaris10_x86_64");
+                }
+                return new File(hudsonFirefoxUnix, "solaris10_x86");
             } else if (osVersion.endsWith("11")) {
-                return hudsonFirefoxSolaris11;
+                if (osArch.contains("sparc")) {
+                    return new File(hudsonFirefoxUnix, "solaris11_sparc");
+                } else if (osArch.contains("64")) {
+                    return new File(hudsonFirefoxUnix, "solaris11_x86_64");
+                }
+                return new File(hudsonFirefoxUnix, "solaris11_x86");
             }
             throw new UnsupportedOperationException(String.format("Not supported Solaris version <%s>.", osVersion));
         }
