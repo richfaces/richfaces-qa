@@ -23,12 +23,10 @@ package org.richfaces.tests.qa.plugin.properties.eap;
 
 import java.io.File;
 import java.net.URL;
-import java.util.EnumSet;
 
 import org.richfaces.tests.qa.plugin.utils.Servant;
 import org.richfaces.tests.qa.plugin.utils.Utils;
 import org.richfaces.tests.qa.plugin.utils.Version;
-import org.richfaces.tests.qa.plugin.utils.Version.Format;
 
 /**
  *
@@ -59,7 +57,7 @@ public class EAPProperties {
 
     protected File _getJenkinsEapZipFile() {
         return new File(String.format("%s/eap/%s/%s.zip", getServant().isOnWindows() ? hudsonStaticWin : hudsonStaticUnix,
-            getVersion().getFormat(EnumSet.of(Format.major, Format.minor, Format.micro, Format.specifier)), getEAPZipName()));
+            getVersion().getMajorMinorMicroSpecifierFormat(), getEAPZipName()));
     }
 
     protected URL _getUrlToEapZip() {
@@ -91,7 +89,7 @@ public class EAPProperties {
     }
 
     protected String getURLPart2() {
-        return isInReleasedRepository ? getVersion().getMajorMinorMicroFormat() : "JBEAP-" + getVersion().getFormat(EnumSet.of(Format.major, Format.minor, Format.micro, Format.specifier));
+        return isInReleasedRepository ? getVersion().getMajorMinorMicroFormat() : "JBEAP-" + getVersion().getMajorMinorMicroSpecifierFormat();
     }
 
     protected String getURLPart3() {
