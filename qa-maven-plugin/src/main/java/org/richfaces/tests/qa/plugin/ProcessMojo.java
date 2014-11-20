@@ -85,7 +85,11 @@ public class ProcessMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
-        if (eapVersion != null && !eapVersion.isEmpty()) {
+        if (servant.isEAPProfileActivated()) {
+            if ((eapVersion == null || eapVersion.isEmpty())) {
+                throw new RuntimeException("The eap profile is activated, but the version of EAP is not specified. Set it by "
+                    + "system property 'eapVersion' or 'version.eap' (from qa pom.xml)");
+            }
             eapProperties = createEAPProps(eapVersion);
         }
         servant.getCommands().performAll();
