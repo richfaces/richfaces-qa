@@ -39,6 +39,7 @@ import static org.testng.Assert.assertFalse;
 
 import java.net.URL;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.page.Page;
@@ -89,7 +90,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     private void verifyStandardIcons(AccordionItemAttributes attribute, WebElement icon, By image, String classSuffix) {
-        IconsCheckerWebdriver checker = new IconsCheckerWebdriver<AccordionItemAttributes>(driver, accordionItemAttributes,
+        IconsCheckerWebdriver<AccordionItemAttributes> checker = new IconsCheckerWebdriver<AccordionItemAttributes>(driver, accordionItemAttributes,
             "rf-ico-", "-hdr");
         checker.checkCssImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
         checker.checkCssNoImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
@@ -259,8 +260,12 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     @Test
     @Templates("plain")
     public void testOnclick() {
-        Action action = new Actions(driver).click(page.getItemHeaders().get(0)).build();
-        testFireEvent(accordionItemAttributes, AccordionItemAttributes.onclick, action);
+        testFireEvent(accordionItemAttributes, AccordionItemAttributes.onclick, new Action() {
+            @Override
+            public void perform() {
+                Graphene.guardAjax(page.getItemHeaders().get(0)).click();
+            }
+        });
     }
 
     @Test
@@ -272,15 +277,23 @@ public class TestAccordionItem extends AbstractWebDriverTest {
 
     @Test
     public void testOnenter() {
-        Action action = new Actions(driver).click(page.getItemHeaders().get(0)).build();
-        testFireEvent(accordionItemAttributes, AccordionItemAttributes.onenter, action);
+        testFireEvent(accordionItemAttributes, AccordionItemAttributes.onenter, new Action() {
+            @Override
+            public void perform() {
+                Graphene.guardAjax(page.getItemHeaders().get(0)).click();
+            }
+        });
     }
 
     @Test
     @Templates("plain")
     public void testOnheaderclick() {
-        Action action = new Actions(driver).click(page.getItemHeaders().get(0)).build();
-        testFireEvent(accordionItemAttributes, AccordionItemAttributes.onheaderclick, action);
+        testFireEvent(accordionItemAttributes, AccordionItemAttributes.onheaderclick, new Action() {
+            @Override
+            public void perform() {
+                Graphene.guardAjax(page.getItemHeaders().get(0)).click();
+            }
+        });
     }
 
     @Test
@@ -317,8 +330,13 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-9821 https://issues.jboss.org/browse/RF-10488")
     public void testOnleave() {
-        Action action = new Actions(driver).click(page.getItemHeaders().get(0)).click(page.getItemHeaders().get(2)).build();
-        testFireEvent(accordionItemAttributes, AccordionItemAttributes.onleave, action);
+        testFireEvent(accordionItemAttributes, AccordionItemAttributes.onleave, new Action() {
+            @Override
+            public void perform() {
+                Graphene.guardAjax(page.getItemHeaders().get(0)).click();
+                Graphene.guardAjax(page.getItemHeaders().get(2)).click();
+            }
+        });
     }
 
     @Test
