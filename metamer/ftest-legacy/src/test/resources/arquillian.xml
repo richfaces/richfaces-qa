@@ -104,6 +104,15 @@ http://www.fsf.org. -->
         </configuration>
     </container>
 
+    <container qualifier="wildfly-managed-8-2">
+        <configuration>
+            <property name="javaVmArguments">${arquillian.container.jbossas.7-1.jvm.args}</property>
+            <property name="managementAddress">${arquillian.container.jbossas.7-1.node0}</property>
+            <property name="serverConfig">standalone-full.xml</property>
+            <property name="enableAssertions">false</property>
+        </configuration>
+    </container>
+
     <container qualifier="jbossas-remote-7">
         <protocol type="jmx-as7">
             <property name="executionType">REMOTE</property>
@@ -117,6 +126,9 @@ http://www.fsf.org. -->
     </container>
 
     <container qualifier="wildfly-remote-8-1">
+    </container>
+
+    <container qualifier="wildfly-remote-8-2">
     </container>
 
     <container qualifier="tomcat-managed-6">
