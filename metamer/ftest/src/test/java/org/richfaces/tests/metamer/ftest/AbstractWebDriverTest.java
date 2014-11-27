@@ -35,10 +35,12 @@ import static org.testng.Assert.fail;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,6 +50,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.test.api.ArquillianResource;
+import org.jboss.util.Strings;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -1202,6 +1205,93 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
                     return context.findElement(by);
                 }
             };
+        }
+    }
+
+    /**
+     * Helper class for testing of popup menu's hide/show delays. Executes the measuring in browser using JavaScript, JS API
+     * of the component and attributes 'onhide' and 'onshow' of the component.
+     */
+    protected class MenuDelayTester {
+
+        public MenuDelayTester() {
+        }
+
+        private static final String ATTRIBUTE_TIME_NAME = "delayTime";
+        private static final String ATTRIBUTE_TRIGGERED_NAME = "delayAttributeTriggered";
+        private static final String HIDE_DELAY = "hideDelay";
+        private static final String ON_HIDE = "onhide";
+        private static final String ON_SHOW = "onshow";
+        private static final String SHOW_DELAY = "showDelay";
+        private final String GET_TIME_SCRIPT = format("return window.{0};", ATTRIBUTE_TIME_NAME);
+        private final String MEASURING_SCRIPT_TEMPLATE = String.format("window.%s=false;RichFaces.component(\"{0}\").{1}();"
+            + "window.%s = new Date().getTime();jQuery(arguments[0]).trigger(\"{2}\");", ATTRIBUTE_TRIGGERED_NAME,
+            ATTRIBUTE_TIME_NAME);
+        private final String PREPARATION_SCRIPT = format("window.{0}=new Date().getTime() - window.{0}; window.{1}=true;",
+            ATTRIBUTE_TIME_NAME, ATTRIBUTE_TRIGGERED_NAME);
+
+        private String getMeasuringScript(String id, boolean isHideDelay, Event triggerEvent) {
+            return format(MEASURING_SCRIPT_TEMPLATE, id, isHideDelay ? "show" : "hide", triggerEvent);
+        }
+
+        private void testDelay(boolean isHideDelay, final WebElement menuRootElement, final long expectedDelayInMillis,
+            Event triggerEvent, WebElement triggerEventOnElement) {
+            final String id = menuRootElement.getAttribute("id");
+            double tolerance = expectedDelayInMillis == 0 ? 500 : expectedDelayInMillis * 0.5;
+            int cycles = 4;
+            getUnsafeAttributes(Strings.EMPTY).set(HIDE_DELAY, isHideDelay ? expectedDelayInMillis : 0);
+            getUnsafeAttributes(Strings.EMPTY).set(isHideDelay ? ON_HIDE : ON_SHOW, PREPARATION_SCRIPT);
+            List<Long> delays = new ArrayList<Long>(cycles);
+            String measuringScript = getMeasuringScript(id, isHideDelay, triggerEvent);
+            for (int i = 1; i <= cycles; i++) {
+                //This is debug output, to determine in which cycle test could fall.
+                System.out.println(format("Test delay: {0} cycle: {1}", expectedDelayInMillis, i));
+                executor.executeScript(measuringScript, triggerEventOnElement);
+                Graphene.waitGui().withTimeout(expectedDelayInMillis * 2, TimeUnit.MILLISECONDS).until(
+                    new WaitUntilEventTriggeredPredicate(ATTRIBUTE_TRIGGERED_NAME));
+                delays.add(Long.valueOf(executor.executeScript(GET_TIME_SCRIPT).toString()));
+            }
+            Number median = countMedian(delays);
+            assertEquals(median.doubleValue(), expectedDelayInMillis, tolerance, "The delay is not in tolerance. Median of"
+                + " delays was " + median);
+        }
+
+        public void testHideDelay(final WebElement menuRootElement, final long expectedDelayInMillis, Event triggerEvent,
+            WebElement triggerEventOnElement) {
+            testDelay(Boolean.TRUE, menuRootElement, expectedDelayInMillis, triggerEvent, triggerEventOnElement);
+        }
+
+        public void testShowDelay(final WebElement menuRootElement, final long expectedDelayInMillis, Event triggerEvent,
+            WebElement triggerEventOnElement) {
+            testDelay(Boolean.FALSE, menuRootElement, expectedDelayInMillis, triggerEvent, triggerEventOnElement);
+        }
+
+        private class WaitUntilEventTriggeredPredicate implements Predicate<WebDriver> {
+
+            private final String eventName;
+            private String lastReturnedString;
+            private final String valueToEqualTo;
+
+            protected WaitUntilEventTriggeredPredicate(String eventName) {
+                this(eventName, "true");
+            }
+
+            protected WaitUntilEventTriggeredPredicate(String eventName, String valueToEqualTo) {
+                this.eventName = eventName;
+                this.valueToEqualTo = valueToEqualTo.toLowerCase();
+            }
+
+            @Override
+            public boolean apply(WebDriver t) {
+                lastReturnedString = executor.executeScript(format("return window.{0};", eventName)).toString().toLowerCase();
+                return lastReturnedString.equals(valueToEqualTo);
+            }
+
+            @Override
+            public String toString() {
+                return format("<{0}> to be equal to <{1}>, last returned value was <{2}>.", eventName, valueToEqualTo,
+                    lastReturnedString);
+            }
         }
     }
 }
