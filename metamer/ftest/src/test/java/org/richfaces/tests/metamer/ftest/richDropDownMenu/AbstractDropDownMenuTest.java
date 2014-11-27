@@ -31,6 +31,7 @@ import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 import org.jboss.arquillian.graphene.page.Page;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -73,7 +74,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         getCurrentMenu().advanced().setShowEvent(Event.MOUSEOVER);
     }
 
-    private void updateDropDownMenuInvokerToClick(){
+    private void updateDropDownMenuInvokerToClick() {
         getCurrentMenu().advanced().setShowEvent(Event.CLICK);
     }
 
@@ -205,14 +206,14 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         getAttributes().set(DropDownMenuAttributes.hideDelay, 2000);
         page.getTarget1().click();
         guardAjax(new Actions(driver).click(getCurrentMenu().advanced().getItemsElements().get(0)).build())
-        .perform();
+            .perform();
         assertEquals(page.getOutput().getText(), "New", "Menu action was not performed.");
 
         // server
         dropDownMenuAttributes.set(DropDownMenuAttributes.mode, "server");
         page.getTarget1().click();
         guardHttp(new Actions(driver).click(getCurrentMenu().advanced().getItemsElements().get(1)).build())
-        .perform();
+            .perform();
         assertEquals(page.getOutput().getText(), "Open", "Menu action was not performed.");
 
         // client
@@ -242,21 +243,8 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
     }
 
     public void testHideDelay(int delay) {
-        dropDownMenuAttributes.set(DropDownMenuAttributes.showDelay, 0);
-        updateDropDownMenuInvoker();
-        getCurrentMenu().advanced().setHideDelay(delay);
-
-        testDelay(new Action() {
-            @Override
-            public void perform() {
-                getCurrentMenu().advanced().show(page.getTarget1());
-            }
-        }, new Action() {
-            @Override
-            public void perform() {
-                getCurrentMenu().advanced().hide();
-            }
-        }, "hideDelay", delay);
+        WebElement menuRoot = driver.findElement(By.cssSelector("[id$='menu1']"));
+        new MenuDelayTester().testHideDelay(menuRoot, delay, Event.MOUSEOUT, menuRoot);
     }
 
     public void testPopupWidth() {
@@ -278,24 +266,8 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
     }
 
     public void testShowDelay(int delay) {
-        dropDownMenuAttributes.set(DropDownMenuAttributes.hideDelay, 0);
-        updateDropDownMenuInvoker();
-        getCurrentMenu().advanced().setShowDelay(delay);
-
-        testDelay(new Action() {
-            @Override
-            public void perform() {
-                try {
-                    getCurrentMenu().advanced().hide();
-                } catch (IllegalStateException ignored) {
-                }
-            }
-        }, new Action() {
-            @Override
-            public void perform() {
-                getCurrentMenu().advanced().show(page.getTarget1());
-            }
-        }, "showDelay", delay);
+        WebElement menuRoot = driver.findElement(By.cssSelector("[id$='menu1']"));
+        new MenuDelayTester().testShowDelay(menuRoot, delay, Event.MOUSEOVER, menuRoot.findElement(By.tagName("div")));
     }
 
     public void testTitle() {
@@ -357,7 +329,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.ongroupshow, new Action() {
             @Override
             public void perform() {
-               page.getTarget1().click();
+                page.getTarget1().click();
                 new Actions(driver)
                     .click(
                         getCurrentMenu().advanced().getItemsElements().get(3)).build()

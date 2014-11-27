@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.ftest.richTooltip;
 import static javax.faces.event.PhaseId.APPLY_REQUEST_VALUES;
 import static javax.faces.event.PhaseId.RENDER_RESPONSE;
 import static javax.faces.event.PhaseId.RESTORE_VIEW;
+
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
@@ -34,6 +35,7 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
+import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -68,7 +70,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     private TooltipMode mode;
 
     private Integer delay;
-    private final Integer[] delays = { 0, 1000, 1900 };
+    private final Integer[] delays = { 500, 1200, 1900 };
 
     @Override
     public URL getTestUrl() {
@@ -99,7 +101,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
                 @Override
                 public void perform() {
                     Utils.tolerantAssertLocationsEquals(tooltip().advanced().getTooltipElement(), tooltipWillMove ? locations
-                        .getLocations().moveAllBy(-moveBy, 0) : locations.getLocations(), tolerance, tolerance, "");
+                            .getLocations().moveAllBy(-moveBy, 0) : locations.getLocations(), tolerance, tolerance, "");
                 }
             }).perform();
     }
@@ -167,19 +169,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
     @Templates("plain")
     public void testHideDelay() {
-        tooltipAttributes.set(TooltipAttributes.showDelay, 0);
-        tooltip().advanced().setTimoutForTooltipToBeNotVisible(delay + 2000);
-        testDelay(new Action() {
-            @Override
-            public void perform() {
-                tooltip().show();
-            }
-        }, new Action() {
-            @Override
-            public void perform() {
-                tooltip().hide();
-            }
-        }, "hideDelay", delay);
+        new MenuDelayTester().testHideDelay(driver.findElement(By.cssSelector("[id$='tooltip']")), delay, Event.MOUSEOUT, page.getPanel());
     }
 
     @Test
@@ -436,19 +426,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
     @Templates("plain")
     public void testShowDelay() {
-        tooltipAttributes.set(TooltipAttributes.hideDelay, 0);
-        tooltip().advanced().setTimeoutForTooltipToBeVisible(delay + 2000);
-        testDelay(new Action() {
-            @Override
-            public void perform() {
-                tooltip().hide();
-            }
-        }, new Action() {
-            @Override
-            public void perform() {
-                tooltip().show();
-            }
-        }, "showDelay", delay);
+        new MenuDelayTester().testShowDelay(driver.findElement(By.cssSelector("[id$='tooltip']")), delay, Event.CLICK, page.getPanel());
     }
 
     @Test
