@@ -81,7 +81,15 @@ import org.richfaces.tests.metamer.ftest.extension.multipleEventFiring.MultipleE
 import org.richfaces.tests.metamer.ftest.extension.tester.attributes.AttributeNotSetException;
 import org.richfaces.tests.metamer.ftest.extension.tester.attributes.AttributesHandler;
 import org.richfaces.tests.metamer.ftest.extension.tester.attributes.MultipleAttributesSetter;
+import org.richfaces.tests.metamer.ftest.extension.tester.basic.BasicTestChain;
+import org.richfaces.tests.metamer.ftest.extension.tester.basic.BasicTestChainImpl;
 import org.richfaces.tests.metamer.ftest.extension.tester.basic.TestResourcesProvider;
+import org.richfaces.tests.metamer.ftest.extension.tester.events.EventsOrderTestChain;
+import org.richfaces.tests.metamer.ftest.extension.tester.events.EventsOrderTestChainImpl;
+import org.richfaces.tests.metamer.ftest.extension.tester.events.TriggerSingleEventTestChain;
+import org.richfaces.tests.metamer.ftest.extension.tester.events.TriggerSingleEventTestChainImpl;
+import org.richfaces.tests.metamer.ftest.extension.tester.html.HTMLAttributeTestChain;
+import org.richfaces.tests.metamer.ftest.extension.tester.html.HTMLAttributeTestChainImpl;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.AttributesImpl;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -1439,5 +1447,21 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     public interface JSErrorStorage {
 
         List<String> getMessages();
+    }
+
+    public BasicTestChain tester() {
+        return new BasicTestChainImpl(testResourcesProvider);
+    }
+
+    public TriggerSingleEventTestChain eventTester() {
+        return new TriggerSingleEventTestChainImpl(testResourcesProvider);
+    }
+
+    public EventsOrderTestChain eventsOrderTester() {
+        return new EventsOrderTestChainImpl(testResourcesProvider);
+    }
+
+    public HTMLAttributeTestChain htmlAttributeTester() {
+        return new HTMLAttributeTestChainImpl(testResourcesProvider);
     }
 }
