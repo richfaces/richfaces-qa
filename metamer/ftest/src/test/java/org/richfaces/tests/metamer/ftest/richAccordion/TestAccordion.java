@@ -33,8 +33,8 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
 import org.richfaces.fragment.accordion.RichFacesAccordionItem;
+import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.switchable.SwitchType;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -60,6 +60,13 @@ public class TestAccordion extends AbstractWebDriverTest {
     public String getComponentTestPagePath() {
         return "richAccordion/simple.xhtml";
     }
+
+    private final Action switchToFirstItemAction = new Action() {
+        @Override
+        public void perform() {
+            page.getAccordion().switchTo(1);
+        }
+    };
 
     @Test
     public void testInit() {
@@ -199,15 +206,8 @@ public class TestAccordion extends AbstractWebDriverTest {
     @Test
     @CoversAttributes({ "onbeforeitemchange", "onitemchange" })
     public void testItemchangeEvents() {
-        accordionAttributes.set(AccordionAttributes.onbeforeitemchange, "metamerEvents += \"beforeitemchange \"");
-        accordionAttributes.set(AccordionAttributes.onitemchange, "metamerEvents += \"itemchange \"");
-
-        executeJS("metamerEvents = \"\";");
-        Graphene.guardAjax(page.getAccordion()).switchTo(2);
-        String[] events = ((String) executeJS("return metamerEvents;")).split(" ");
-
-        assertEquals(events[0], "beforeitemchange", "Attribute onbeforeitemchange doesn't work");
-        assertEquals(events[1], "itemchange", "Attribute onbeforeitemchange doesn't work");
+        eventsOrderTester().testOrderOfEvents("onbeforeitemchange", "onitemchange").triggeredByAction(switchToFirstItemAction)
+            .test();
     }
 
     @Test
@@ -231,81 +231,62 @@ public class TestAccordion extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("onbeforeitemchange")
     public void testOnbeforeitemchange() {
-        Action action = new Action() {
-            @Override
-            public void perform() {
-                page.getAccordion().switchTo(1);
-            }
-        };
-        testFireEvent(accordionAttributes, AccordionAttributes.onbeforeitemchange, action);
+        eventTester().testEvent("beforeitemchange").withCustomAction(switchToFirstItemAction).test();
     }
 
     @Test
     @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
-        Action action = new Actions(driver).click(page.getAccordionRootElement()).build();
-        testFireEvent(accordionAttributes, AccordionAttributes.onclick, action);
+        eventTester().testEvent(Event.CLICK).onElement(page.getAccordionRootElement()).test();
     }
 
     @Test
     @CoversAttributes("ondblclick")
     @Templates(value = "plain")
     public void testOndblclick() {
-        Action action = new Actions(driver).doubleClick(page.getAccordionRootElement()).build();
-        testFireEvent(accordionAttributes, AccordionAttributes.ondblclick, action);
+        eventTester().testEvent(Event.DBLCLICK).onElement(page.getAccordionRootElement()).test();
     }
 
     @Test
     @CoversAttributes("onitemchange")
     public void testOnitemchange() {
-        Action action = new Action() {
-            @Override
-            public void perform() {
-                page.getAccordion().switchTo(1);
-            }
-        };
-        testFireEvent(accordionAttributes, AccordionAttributes.onitemchange, action);
+        eventTester().testEvent("itemchange").withCustomAction(switchToFirstItemAction).test();
     }
 
     @Test
     @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
-        Action action = new Actions(driver).clickAndHold(page.getAccordionRootElement()).build();
-        testFireEvent(accordionAttributes, AccordionAttributes.onmousedown, action);
+        eventTester().testEvent(Event.MOUSEDOWN).onElement(page.getAccordionRootElement()).test();
     }
 
     @Test
     @CoversAttributes("onmousemove")
     @Templates(value = "plain")
     public void testOnmousemove() {
-        Action action = new Actions(driver).moveToElement(page.getAccordionRootElement()).build();
-        testFireEvent(accordionAttributes, AccordionAttributes.onmousemove, action);
+        eventTester().testEvent(Event.MOUSEMOVE).onElement(page.getAccordionRootElement()).test();
     }
 
     @Test
     @CoversAttributes("onmouseout")
     @Templates(value = "plain")
     public void testOnmouseout() {
-        testFireEventWithJS(page.getAccordionRootElement(), accordionAttributes, AccordionAttributes.onmouseout);
+        eventTester().testEvent(Event.MOUSEOUT).onElement(page.getAccordionRootElement()).test();
     }
 
     @Test
     @CoversAttributes("onmouseover")
     @Templates(value = "plain")
     public void testOnmouseover() {
-        new Actions(driver).moveToElement(page.getRequestTimeElement()).perform();
-        Action action = new Actions(driver).moveToElement(page.getAccordionRootElement()).build();
-        testFireEvent(accordionAttributes, AccordionAttributes.onmouseover, action);
+        eventTester().testEvent(Event.MOUSEOVER).onElement(page.getAccordionRootElement()).test();
     }
 
     @Test
     @CoversAttributes("onmouseup")
     @Templates(value = "plain")
     public void testOnmouseup() {
-        Action action = new Actions(driver).click(page.getAccordionRootElement()).build();
-        testFireEvent(accordionAttributes, AccordionAttributes.onmouseup, action);
+        eventTester().testEvent(Event.MOUSEUP).onElement(page.getAccordionRootElement()).test();
     }
 
     @Test
