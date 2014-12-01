@@ -26,14 +26,14 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @since 4.3.1
  */
-public abstract class AbstractPanelMenuGroupTest extends AbstractPanelMenuCommonTest {
+public abstract class AbstractPanelMenuGroupTest extends AbstractWebDriverTest {
 
     @Page
     protected PanelMenuGroupPage page;
@@ -41,10 +41,5 @@ public abstract class AbstractPanelMenuGroupTest extends AbstractPanelMenuCommon
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richPanelMenuGroup/simple.xhtml");
-    }
-
-    @Override
-    public MetamerPage getPage() {
-        return page;
     }
 }

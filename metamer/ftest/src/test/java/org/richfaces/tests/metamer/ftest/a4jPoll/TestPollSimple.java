@@ -117,9 +117,9 @@ public class TestPollSimple extends AbstractWebDriverTest {
 
     private void testClientSideEventHandlers(String... events) {
         pollAttributes.set(PollAttributes.enabled, false);
-        super.testRequestEventsBefore(events);
+        testRequestEventsBefore(events);
         pollAttributes.set(PollAttributes.enabled, true);
-        super.testRequestEventsAfter(events);
+        testRequestEventsAfter(events);
     }
 
     @Test
