@@ -62,9 +62,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <f:facet name="pages">
                 <h:panelGroup>
                     <h:outputText value="Page " />
-                    <h:selectOneMenu value="#{richDataScrollerBean.attributes['page'].value}"
-                        onchange="RichFaces.component('beforeForm:scroller1').switchToPage(this.value)"
-                        id ="selectOneMenu">
+                    <h:selectOneMenu id ="selectOneMenu"
+                                     value="#{richDataScrollerBean.attributes['page'].value}"
+                                     onchange="#{r:component('scroller1')}.switchToPage(this.value)">
                         <f:selectItems value="#{richDataScrollerBean.pagesToScroll}" />
                     </h:selectOneMenu>
                 </h:panelGroup>
@@ -121,10 +121,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <f:facet name="last_disabled">#{richDataScrollerBean.facets['last_disabled']}</f:facet>
                     <f:facet name="pages">
                         <h:panelGroup>
-                            <r:inputNumberSpinner value="#{richDataScrollerBean.attributes['page'].value}"
-                                onchange="RichFaces.component('form:richDataTable:scroller2').switchToPage(RichFaces.component('form:richDataTable:numberSpinner').value)"
-                                maxValue="#{richDataScrollerBean.spinnerMaxNumber}" minValue="1" id="numberSpinner">
-                            </r:inputNumberSpinner>
+                            <r:inputNumberSpinner id="numberSpinner"
+                                                  value="#{richDataScrollerBean.attributes['page'].value}"
+                                                  onchange="#{r:component('scroller2')}.switchToPage(#{r:component('numberSpinner')}.getValue())"
+                                                  minValue="1"
+                                                  maxValue="#{richDataScrollerBean.spinnerMaxNumber}"/>
                         </h:panelGroup>
                     </f:facet>
                 </r:dataScroller>

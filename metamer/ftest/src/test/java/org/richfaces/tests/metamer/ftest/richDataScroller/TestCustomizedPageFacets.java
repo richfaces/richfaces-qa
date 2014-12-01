@@ -29,7 +29,6 @@ import static org.testng.Assert.assertTrue;
 import java.net.URL;
 import java.util.List;
 
-import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -56,10 +55,10 @@ public class TestCustomizedPageFacets extends AbstractWebDriverTest {
     private RichFacesInputNumberSpinner rfSpinner;
 
     @FindByJQuery(".rf-ds:eq(0) select option")
-    List<WebElement> listOfOptions;
+    private List<WebElement> listOfOptions;
 
     @FindByJQuery(".rf-dt-r:eq(0)")
-    WebElement firstRowOfTable;
+    private WebElement firstRowOfTable;
 
     @Test
     public void testTopCustomizedPageFacet() {
@@ -69,7 +68,7 @@ public class TestCustomizedPageFacets extends AbstractWebDriverTest {
         MetamerPage.waitRequest(selectPage2Action, WaitRequestType.XHR).perform();
 
         // assert that secondary custom facet was updated
-        assertTrue(rfSpinner.getValue() == 2);
+        assertTrue(rfSpinner.getValue() == 2, "The bottom datascroller was not updated.");
 
         // assert that table data are correct
         // since we already test scrollers, it is enough to assert one row
@@ -82,7 +81,7 @@ public class TestCustomizedPageFacets extends AbstractWebDriverTest {
         // change page via customized page facet
         rfSpinner.advanced().getArrowIncreaseElement().click();
         // assert that secondary custom facet was updated
-        waitAjax(driver).until().element(selectOptionElement).attribute("value").equals("2");
+        waitAjax(driver).withMessage("The top datascroller was not updated.").until().element(selectOptionElement).attribute("value").equalTo("2");
         // assert that table data are correct
         // since we already test scrollers, it is enough to assert one row
         assertAfterSwitchToSecondPage();
@@ -90,11 +89,11 @@ public class TestCustomizedPageFacets extends AbstractWebDriverTest {
 
     private boolean assertInitialState() {
         List<WebElement> stateAndCapital = firstRowOfTable.findElements(By.tagName("td"));
-        return stateAndCapital.get(0).equals("Alabama") && stateAndCapital.get(1).equals("Montgomery");
+        return stateAndCapital.get(0).getText().equals("Alabama") && stateAndCapital.get(1).getText().equals("Montgomery");
     }
 
     private boolean assertAfterSwitchToSecondPage() {
         List<WebElement> stateAndCapital = firstRowOfTable.findElements(By.tagName("td"));
-        return stateAndCapital.get(0).equals("Georgia") && stateAndCapital.get(1).equals("Atlanta");
+        return stateAndCapital.get(0).getText().equals("Georgia") && stateAndCapital.get(1).getText().equals("Atlanta");
     }
 }
