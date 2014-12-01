@@ -30,10 +30,10 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.component.Mode;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
-import org.richfaces.tests.metamer.ftest.richPanelMenuGroup.AbstractPanelMenuCommonTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
@@ -44,7 +44,7 @@ import org.testng.annotations.Test;
  * @since 4.3.1
  */
 @RegressionTest("https://issues.jboss.org/browse/RF-10486")
-public class TestPanelMenuItemClientSideHandlers extends AbstractPanelMenuCommonTest {
+public class TestPanelMenuItemClientSideHandlers extends AbstractWebDriverTest {
 
     private final Attributes<PanelMenuItemAttributes> panelMenuItemAttributes = getAttributes();
 

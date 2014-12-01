@@ -24,6 +24,8 @@
  */
 package org.richfaces.tests.metamer.ftest;
 
+import static java.text.MessageFormat.format;
+
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -36,6 +38,7 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
@@ -69,7 +72,6 @@ import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config;
 import org.richfaces.tests.metamer.ftest.extension.configurator.transformer.DataProviderTestTransformer;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 import org.testng.SkipException;
@@ -331,6 +333,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
                     return result;
                 }
             }
+            waiting(100);
         }
         return result;
     }
@@ -506,7 +509,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         List<Long> delays = Lists.newArrayList();
         for (int i = 0; i < cycles; i++) {
             //This is debug output, to determine in which cycle test falls.
-            System.out.println("Test delay: "+expectedDelayInMillis +" cycle: "+i);
+            System.out.println(format("Tested delay: {0}, cycle: {1}", expectedDelayInMillis, i));
             if (actionBefore != null) {
                 actionBefore.perform();
             }
@@ -957,41 +960,38 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     public void testRequestEventsBefore(String... events) {
-        testRequestEventsBefore(metamerPage.getAttributesTableElement(), events);
-    }
-
-    public void testRequestEventsBefore(WebElement attributesTable, String... events) {
+        String testedEventTrueName;
         for (String event : events) {
-            String inputExp = String.format("input[id$=on%sInput]", event);
-            WebElement input = attributesTable.findElement(By.cssSelector(inputExp));
-            // Note: To avoid lost metamerEvents variable when @mode=server, use sessionStorage
-            String inputVal = String.format("metamerEvents += \"%s \"", event);
-            String inputValFull = "sessionStorage.setItem('metamerEvents', " + inputVal + ")";
-            // even there would be some events (in params) twice, don't expect handle routine to be executed twice
-            input.clear();
-            waiting(1000);
-            input = attributesTable.findElement(By.cssSelector(inputExp));
-            input.sendKeys(inputValFull);
-            // sendKeys triggers page reload automatically
-            waiting(300);
-            Graphene.waitAjax().until().element(attributesTable).is().present();
-            input = attributesTable.findElement(By.cssSelector(inputExp));
-            MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();
+            testedEventTrueName = event;
+            if (!testedEventTrueName.startsWith("on")) {
+                testedEventTrueName = format("on{0}", testedEventTrueName);
+            }
+            getUnsafeAttributes("").set(testedEventTrueName,
+                format("sessionStorage.setItem(\"metamerEvents\", sessionStorage.getItem(\"metamerEvents\") + \"{0} \")", event));
         }
         cleanMetamerEventsVariable();
     }
 
-    public void testRequestEventsAfter(String... events) {
-
-        final String[] expectedEvents = events;
+    public void testRequestEventsAfter(final String... events) {
         Graphene.waitModel().until(new Predicate<WebDriver>() {
+            private String actualEvents;
+            private int lastNumberOfEvents;
+
             @Override
             public boolean apply(WebDriver arg0) {
-                String actualEvents = ((String) executeJS("return sessionStorage.getItem('metamerEvents')"));
-                return actualEvents != null && actualEvents.split(" ").length == expectedEvents.length;
+                actualEvents = ((String) executeJS("return sessionStorage.getItem(\"metamerEvents\")"));
+                lastNumberOfEvents = (StringUtils.isBlank(actualEvents) ? 0 : actualEvents.split(" ").length);
+                return lastNumberOfEvents == events.length;
             }
+
+            @Override
+            public String toString() {
+                return format("number of events is equal to {0}, found {1}. Actual events: {2}", events.length,
+                    lastNumberOfEvents, actualEvents);
+            }
+
         });
-        String[] actualEvents = ((String) executeJS("return sessionStorage.getItem('metamerEvents')")).split(" ");
+        String[] actualEvents = ((String) executeJS("return sessionStorage.getItem(\"metamerEvents\")")).split(" ");
         assertEquals(
             actualEvents,
             events,
@@ -1002,7 +1002,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     public void cleanMetamerEventsVariable() {
         // since metamerEvents variable stored on session too, make sure that cleaned both of them
         executeJS("window.metamerEvents = \"\";");
-        executeJS("sessionStorage.removeItem('metamerEvents')");
+        executeJS("sessionStorage.setItem('metamerEvents',\"\")");
     }
 
     private static <T extends Number & Comparable<T>> Number countMedian(List<T> values) {
