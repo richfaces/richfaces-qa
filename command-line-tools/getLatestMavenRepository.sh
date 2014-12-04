@@ -12,7 +12,7 @@ SCRIPT_DIR=$( cd "$( dirname "$0" )" && pwd );
 getLatestMavenRepository(){
   URL_SNAPSHOTS=http://jenkins.mw.lab.eng.bos.redhat.com/hudson/view/RichFaces/view/4.5/job/richfaces-4.5-metamer-repositories-packer/lastSuccessfulBuild/artifact/maven-repository.zip;
   URL_RELEASE=http://jenkins.mw.lab.eng.bos.redhat.com/hudson/view/RichFaces/view/Release/job/richfaces-4.5-release-metamer-repositories-packer/lastSuccessfulBuild/artifact/maven-repository.zip;
-  URL_WFK=http://jenkins.mw.lab.eng.bos.redhat.com/hudson/view/RichFaces/view/RF-Prod/job/richfaces-wfk-2.7-tests/lastSuccessfulBuild/artifact/tests-repository.zip;
+  URL_WFK=http://jenkins.mw.lab.eng.bos.redhat.com/hudson/view/RichFaces/view/RF-Prod/job/richfaces-wfk-2.7-tests/lastSuccessfulBuild/artifact/maven-repository.zip;
 
   if [ "$1" == "release" ] ;then
      URL=${URL_RELEASE};
