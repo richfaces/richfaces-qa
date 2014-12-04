@@ -111,13 +111,16 @@ public class JenkinsBrowserEnsurer implements Ensurer {
     }
 
     private File getFirefoxBinDirPath() {
+        String osVersion = servant.getOSVersion();
+        String osArch = servant.getOsArch();
         if (servant.isOnWindows()) {
             return hudsonFirefoxWindows;
         } else if (servant.isOnLinux()) {
+            if (osArch.contains("64")) {
+                return new File(hudsonFirefoxUnix, "x86_64");
+            }
             return hudsonFirefoxUnix;
         } else if (servant.isOnSolaris()) {
-            String osVersion = servant.getOSVersion();
-            String osArch = servant.getOsArch();
             if (osVersion.endsWith("10")) {
                 if (osArch.contains("sparc")) {
                     return new File(hudsonFirefoxUnix, "solaris10_sparc");
