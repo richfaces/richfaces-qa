@@ -2,11 +2,12 @@
 # use sh getLatestGitRepository.sh ; to download repository from latest snapshots
 # use sh getLatestGitRepository.sh githubBranch; to download repository from latest snapshots and to switch to a specific branch/tag
 
-SCRIPT_DIR=`dirname $BASH_SOURCE`;
-SCRIPT_DIR=`readlink -f $SCRIPT_DIR`;
+SCRIPT_DIR=$( cd "$( dirname "$0" )" && pwd );
 
-source ${SCRIPT_DIR}/extract.sh
-source ${SCRIPT_DIR}/download.sh
+# add additional functions
+# 'source' is not working on Solaris, using '.' instead.
+. ${SCRIPT_DIR}/extract.sh;
+. ${SCRIPT_DIR}/download.sh;
 
 getLatestQAGitRepository(){
   URL_SNAPSHOTS=http://jenkins.mw.lab.eng.bos.redhat.com/hudson/view/RichFaces/view/4.5/job/richfaces-4.5-metamer-repositories-packer/lastSuccessfulBuild/artifact/git-repository.zip;
