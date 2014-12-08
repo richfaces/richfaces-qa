@@ -32,11 +32,15 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
@@ -137,6 +141,28 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
                 }
             }
             throw new IllegalArgumentException("Unknown Driver");
+        }
+    }
+
+    static {
+        // Hack to disable native events on Firefox and Windows.
+        // It is not possible to disable it with Drone properties, see https://issues.jboss.org/browse/ARQ-1775 .
+        // This static block should run before Drone instantiates the WebDriver.
+        // This hack should help to stabilize test suite on Windows.
+        // With native events enabled:
+        //   * modifier keys (e.g. ctrl,shift) do not work properly,
+        //   * some browser events are not triggered correctly (e.g. mousemove, mouseover).
+        try {
+            // disable the default native events on Firefox by changing the value of static final field
+            Field field = FirefoxDriver.class.getField("DEFAULT_ENABLE_NATIVE_EVENTS");
+            field.setAccessible(true);
+            Field modifiersField = Field.class.getDeclaredField("modifiers");
+            modifiersField.setAccessible(true);
+            modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+            field.setBoolean(null, false);
+            field.setAccessible(false);
+        } catch (Throwable ex) {
+            Logger.getLogger(AbstractMetamerTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
