@@ -49,41 +49,59 @@ public class TestAutocompleteFragment extends AbstractAutocompleteTest {
         return buildUrl(contextPath, "faces/components/richAutocomplete/autocomplete.xhtml");
     }
 
-    @Test(expectedExceptions = RuntimeException.class)
-    public void testSelectingUnknownValue() {
-        autocomplete.type("ala").select(ChoicePickerHelper.byVisibleText().endsWith("baster"));
-    }
-
     @Test
     public void testSelectingMultipleValues() {
-        autocomplete
-            .type("ala").select(ChoicePickerHelper.byIndex().last())
-            .type("i").select(1);
+        Graphene.guardAjax(
+            Graphene.guardAjax(
+                Graphene.guardAjax(
+                    Graphene.guardAjax(autocomplete).type("ala")
+                ).select(ChoicePickerHelper.byIndex().last()))
+            .type("i")
+        ).select(1);
         checkOutput("Alaska, Illinois");
 
         autocompleteAttributes.set(AutocompleteAttributes.tokens, ";");
         autocomplete.advanced().setToken(";");
-        autocomplete.advanced().clear(ClearType.BACKSPACE).advanced().getInputElement().submit();
+        autocomplete.advanced().clear(ClearType.DEFAULT_CLEAR_TYPE);
         Graphene.waitAjax().until().element(autocomplete.advanced().getInput().advanced().getInputElement()).text().equalTo("");
-        autocomplete
-            .type("m").select(ChoicePickerHelper.byVisibleText().contains("ss"))// selects the first one containing 'ss'
-            .type("w").select(ChoicePickerHelper.byIndex().index(2))
-            .type("k").select();// selects the first one
+        Graphene.guardAjax(
+            Graphene.guardAjax(
+                Graphene.guardAjax(
+                    Graphene.guardAjax(
+                        Graphene.guardAjax(
+                            Graphene.guardAjax(autocomplete).type("m")
+                        ).select(ChoicePickerHelper.byVisibleText().contains("ss"))// selects the first one containing 'ss'
+                    ).type("w")
+                ).select(ChoicePickerHelper.byIndex().index(2))
+            ).type("k")
+        ).select();// selects the first one
         checkOutput("Massachusetts; Wisconsin; Kansas");
     }
 
     @Test
     public void testSelectingMultipleValuesWithSomeNotListed() {
-        Graphene.guardAjax(autocomplete)
-            .type("notInListValue").confirm()
-            .type("alabama").confirm()
-            .type("i").select(1);
+        Graphene.guardAjax(
+            Graphene.guardAjax(
+                Graphene.guardAjax(
+                    Graphene.guardAjax(
+                        Graphene.guardAjax(
+                            Graphene.guardAjax(autocomplete).type("notInListValue")
+                        ).confirm()
+                    ).type("alabama")
+                ).confirm()
+            ).type("i")
+        ).select(1);
         checkOutput("notInListValue, alabama, Illinois");
+    }
+
+    @Test(expectedExceptions = RuntimeException.class)
+    public void testSelectingUnknownValue() {
+        Graphene.guardAjax(Graphene.guardAjax(autocomplete).type("ala")).select(ChoicePickerHelper.byVisibleText().endsWith("baster"));
     }
 
     @Test
     public void testTypingPrefixAndThenSelectChoiceThatContainsAndEndsWith() {
-        autocomplete.type("a").select(ChoicePickerHelper.byVisibleText().contains("b").endsWith("ama"));
+        Graphene.guardAjax(Graphene.guardAjax(autocomplete).type("a")).select(ChoicePickerHelper.byVisibleText().contains("b").endsWith("ama"));
         checkOutput("Alabama");
     }
 

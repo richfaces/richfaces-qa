@@ -41,12 +41,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.autocomplete.Autocomplete;
+import org.richfaces.fragment.autocomplete.SelectOrConfirm;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
@@ -59,51 +62,64 @@ import org.testng.annotations.Test;
  */
 public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
 
-    @Page
-    private SimplePage page;
-
     private static final String FIRST_LISTENER_MSG_FORMAT = "1 value changed: %s -> %s";
     private static final String SECOND_LISTENER_MSG = "2 value changed";
     private static final String THIRD_LISTENER_MSG = "action listener invoked";
 
     @FindBy(css = "span[class$=btn-arrow]")
     private WebElement button;
+    @Page
+    private SimplePage page;
     @FindBy(css = ".rf-au-lst-dcrtn")
     private WebElement popup;
+
+    final Action typeHToAutocompleteInputAction = new Action() {
+        @Override
+        public void perform() {
+            typeHIntoAutocompleteInputGuarded();
+        }
+    };
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richAutocomplete/autocomplete.xhtml");
     }
 
+    private Autocomplete selectHawaii() {
+        return Graphene.guardAjax(typeHIntoAutocompleteInputGuarded()).select("Hawaii");
+    }
+
+    @Test(enabled = false)// tested in TestAutocomplete
+    public void testAutofill() {
+        autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
+        autocomplete.type("haw");
+        autocomplete.advanced().waitForSuggestionsToBeVisible();
+        new Actions(driver).sendKeys(Keys.ARROW_DOWN).build().perform();
+        assertEquals(autocomplete.advanced().getInput().getStringValue(), "haw");
+
+        autocomplete.clear();
+
+        autocompleteAttributes.set(AutocompleteAttributes.autofill, Boolean.TRUE);
+        autocomplete.type("haw");
+        autocomplete.advanced().waitForSuggestionsToBeVisible();
+        new Actions(driver).moveToElement(autocomplete.advanced().getSuggestionsElements().get(0)).build().perform();
+        assertEquals(autocomplete.advanced().getInput().getStringValue(), "hawaii");
+    }
+
     @Test
-    public void testValueChangeListener() {
-        Graphene.guardAjax(autocomplete).type("h").select("Hawaii");
+    public void testDisabled() {
+        // defaultly autocomplete is enabled
+        selectHawaii();
         checkOutput("Hawaii");
 
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, String.format(FIRST_LISTENER_MSG_FORMAT, "null", "Hawaii"));
-        page.assertListener(PhaseId.INVOKE_APPLICATION, THIRD_LISTENER_MSG);
-
-        Graphene.guardAjax(page).blur();
-        page.assertListener(PhaseId.INVOKE_APPLICATION, SECOND_LISTENER_MSG);
-
-        autocomplete.clear();
-        Graphene.guardAjax(autocomplete).type("ka").select("Kansas");
-        checkOutput("Kansas");
-
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, String.format(FIRST_LISTENER_MSG_FORMAT, "Hawaii", "Kansas"));
-        page.assertListener(PhaseId.INVOKE_APPLICATION, THIRD_LISTENER_MSG);
-
-        Graphene.guardAjax(page).blur();
-        page.assertListener(PhaseId.INVOKE_APPLICATION, SECOND_LISTENER_MSG);
-
-        autocomplete.clear();
-        Graphene.guardAjax(autocomplete).type("nonexisting");
-        Graphene.guardAjax(page).blur();
-        checkOutput("nonexisting");
-
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, String.format(FIRST_LISTENER_MSG_FORMAT, "Kansas", "nonexisting"));
-        page.assertListener(PhaseId.INVOKE_APPLICATION, SECOND_LISTENER_MSG);
+        // disable
+        autocompleteAttributes.set(AutocompleteAttributes.disabled, Boolean.TRUE);
+        try {
+            selectHawaii();
+            Assert.fail("The autocomplete should be disabled.");
+        } catch (Exception e) {
+            // OK exception should be thrown since typing is disabled
+        }
     }
 
     @Test
@@ -111,7 +127,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
         autocompleteAttributes.set(AutocompleteAttributes.immediate, Boolean.TRUE);
 
-        Graphene.guardAjax(autocomplete).type("h").select("Hawaii");
+        selectHawaii();
         checkOutput("Hawaii");
         try {
             page.assertListener(PhaseId.APPLY_REQUEST_VALUES, THIRD_LISTENER_MSG);
@@ -130,41 +146,71 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     @IssueTracking("https://issues.jboss.org/browse/RF-12820")
     public void testLayout() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
-        String[] layouts = new String[] { "div", "list", "table" };
+        String[] layouts = new String[]{ "div", "list", "table" };
         for (String layout : layouts) {
             autocompleteAttributes.set(AutocompleteAttributes.layout, layout);
             autocomplete.clear();
-
-            Graphene.guardAjax(autocomplete).type("ala").select(ChoicePickerHelper.byVisibleText().contains("Alaska"));
-            // code before refactoring
-            // Graphene.guardAjax(autocomplete).autocompleteWithSuggestion(expected, ScrollingType.BY_MOUSE);
-
-            waiting(500);
-            assertEquals(autocomplete.advanced().getInput().getStringValue(), "Alaska",
-                "The input value doesn't match when layout is set to '" + layout + "'.");
+            Graphene.guardAjax(Graphene.guardAjax(autocomplete).type("ala")).select(ChoicePickerHelper.byVisibleText().contains("Alaska"));
+            checkOutput("Alaska");
         }
+    }
+
+    @Test
+    public void testMinChars() {
+        autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
+        autocompleteAttributes.set(AutocompleteAttributes.minChars, 3);
+        // no request is sent until min number of chars is provided
+        guardNoRequest(autocomplete.type("ha"));
+        autocomplete.clear();
+
+        guardAjax(autocomplete.type("haw"));
+        autocomplete.advanced().waitForSuggestionsToBeVisible();
+    }
+
+    @Test
+    public void testMode() {
+        // default state, should be ajax
+        autocompleteAttributes.set(AutocompleteAttributes.mode, "null");
+        guardAjax(autocomplete.type("a"));
+        autocomplete.clear();
+
+        // set ajax mode
+        autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
+        typeHIntoAutocompleteInputGuarded();
+        autocomplete.clear();
+
+        // set cached ajax mode, triggering the same query twice should not trigger ajax request
+        autocompleteAttributes.set(AutocompleteAttributes.mode, "cachedAjax");
+        guardAjax(autocomplete.type("w"));
+        autocomplete.clear();
+        guardNoRequest(autocomplete.type("w"));
+        autocomplete.clear();
+
+        // set client mode
+        autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
+        guardNoRequest(autocomplete.type("f"));
     }
 
     @Test
     public void testOnbeforedomupdate() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
-        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onbeforedomupdate, new Action() {
-            @Override
-            public void perform() {
-                autocomplete.type("h");
-            }
-        });
+        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onbeforedomupdate, typeHToAutocompleteInputAction);
     }
 
     @Test(groups = "Future")
     @IssueTracking(value = "https://issues.jboss.org/browse/RF-13537")
     public void testOnbegin() {
-        // requires ajax mode since it happens before sending ajax request
         autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
-        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onbegin, new Action() {
+        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onbegin, typeHToAutocompleteInputAction);
+    }
+
+    @Test
+    public void testOnblur() {
+        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onblur, new Action() {
             @Override
             public void perform() {
-                autocomplete.type("h");
+                autocomplete.advanced().getInput().advanced().focus();
+                page.blur();
             }
         });
     }
@@ -175,140 +221,8 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onchange, new Action() {
             @Override
             public void perform() {
-                autocomplete.type("h");
-                autocomplete.advanced().waitForSuggestionsToBeVisible();
-                // lose focus to trigger handler
-                driver.findElement(By.cssSelector("input[id$=autocompleteListInput]")).click();
-            }
-        });
-    }
-
-    @Test
-    public void testOncomplete() {
-        // requires ajax mode since it reacts on DOM changes
-        autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
-        testFireEvent(autocompleteAttributes, AutocompleteAttributes.oncomplete, new Action() {
-            @Override
-            public void perform() {
-                autocomplete.type("h");
-            }
-        });
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testOnkeydown() {
-        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onkeydown, new Action() {
-            @Override
-            public void perform() {
-                new Actions(driver).keyDown(autocomplete.advanced().getInput().advanced().getInputElement(), Keys.CONTROL)
-                    .build().perform();
-            }
-        });
-        new Actions(driver).keyUp(Keys.CONTROL).build().perform();
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testOnkeyup() {
-        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onkeyup, new Action() {
-            @Override
-            public void perform() {
-                new Actions(driver).keyDown(autocomplete.advanced().getInput().advanced().getInputElement(), Keys.CONTROL)
-                    .build().perform();
-                new Actions(driver).keyUp(Keys.CONTROL).build().perform();
-            }
-        });
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testOnlistmousedown() {
-        autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
-        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onlistmousedown, new Action() {
-            @Override
-            public void perform() {
-                autocomplete.type("h");
-                autocomplete.advanced().waitForSuggestionsToBeVisible();
-                new Actions(driver).clickAndHold(autocomplete.advanced().getSuggestionsElements().get(0)).build().perform();
-            }
-        });
-        new Actions(driver).release().build().perform();
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testOnlistmouseout() {
-        autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
-        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onlistmouseout, new Action() {
-            @Override
-            public void perform() {
-                autocomplete.type("h");
-                autocomplete.advanced().waitForSuggestionsToBeVisible();
-                new Actions(driver).moveToElement(autocomplete.advanced().getSuggestionsElements().get(0))
-                    .moveToElement(page.getOutput()).build().perform();
-            }
-        });
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testOnlistmouseup() {
-        autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
-        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onlistmouseup, new Action() {
-            @Override
-            public void perform() {
-                autocomplete.type("h");
-                autocomplete.advanced().waitForSuggestionsToBeVisible();
-                new Actions(driver).click(autocomplete.advanced().getSuggestionsElements().get(0)).build().perform();
-            }
-        });
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testOnmousemove() {
-        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onmousemove, new Action() {
-            @Override
-            public void perform() {
-                new Actions(driver).moveToElement(autocomplete.advanced().getRootElement()).build().perform();
-            }
-        });
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testOnmouseover() {
-        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onmouseover, new Action() {
-            @Override
-            public void perform() {
-                new Actions(driver).moveToElement(driver.findElement(By.cssSelector("span[id$=autocomplete]"))).build()
-                    .perform();
-            }
-        });
-    }
-
-    @Test
-    public void testOnselectitem() {
-        autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
-        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onselectitem, new Action() {
-            @Override
-            public void perform() {
-                autocomplete.type("h");
-                autocomplete.advanced().waitForSuggestionsToBeVisible();
-                new Actions(driver).click(autocomplete.advanced().getSuggestionsElements().get(0)).build().perform();
-            }
-        });
-    }
-
-    @Test
-    public void testOnblur() {
-        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onblur, new Action() {
-            @Override
-            public void perform() {
-                // page.getAutocompleteAsWebElement().click();
-                autocomplete.advanced().getInput().advanced().focus();
-                page.blur();
+                selectHawaii();
+                Graphene.guardAjax(page).blur();
             }
         });
     }
@@ -316,24 +230,22 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     @Test
     @Templates(value = "plain")
     public void testOnclick() {
-        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onclick, new Action() {
-            @Override
-            public void perform() {
-                autocomplete.advanced().getInput().advanced().getInputElement().click();
-            }
-        });
+        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onclick, new Actions(driver).click(autocomplete.advanced()
+            .getInput().advanced().getInputElement()).build());
+    }
+
+    @Test
+    public void testOncomplete() {
+        // requires ajax mode since it reacts on DOM changes
+        autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
+        testFireEvent(autocompleteAttributes, AutocompleteAttributes.oncomplete, typeHToAutocompleteInputAction);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOndblclick() {
-        testFireEvent(autocompleteAttributes, AutocompleteAttributes.ondblclick, new Action() {
-            @Override
-            public void perform() {
-                new Actions(driver).doubleClick(autocomplete.advanced().getInput().advanced().getInputElement()).build()
-                    .perform();
-            }
-        });
+        testFireEvent(autocompleteAttributes, AutocompleteAttributes.ondblclick, new Actions(driver).doubleClick(autocomplete
+            .advanced().getInput().advanced().getInputElement()).build());
     }
 
     @Test
@@ -348,13 +260,23 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
 
     @Test
     @Templates(value = "plain")
+    public void testOnkeydown() {
+        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onkeydown, new Actions(driver).keyDown(autocomplete
+            .advanced().getInput().advanced().getInputElement(), Keys.CONTROL).build());
+        new Actions(driver).keyUp(Keys.CONTROL).build().perform();
+    }
+
+    @Test
+    @Templates(value = "plain")
     public void testOnkeypress() {
-        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onkeypress, new Action() {
-            @Override
-            public void perform() {
-                autocomplete.type("h");
-            }
-        });
+        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onkeypress, typeHToAutocompleteInputAction);
+    }
+
+    @Test
+    @Templates(value = "plain")
+    public void testOnkeyup() {
+        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onkeyup, new Actions(driver).keyDown(autocomplete
+            .advanced().getInput().advanced().getInputElement(), Keys.CONTROL).keyUp(Keys.CONTROL).build());
     }
 
     @Test
@@ -429,9 +351,39 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
 
     @Test
     @Templates(value = "plain")
+    public void testOnlistmousedown() {
+        autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
+        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onlistmousedown, new Action() {
+            @Override
+            public void perform() {
+                autocomplete.type("h");
+                autocomplete.advanced().waitForSuggestionsToBeVisible();
+                new Actions(driver).clickAndHold(autocomplete.advanced().getSuggestionsElements().get(0)).build().perform();
+            }
+        });
+        new Actions(driver).release().build().perform();
+    }
+
+    @Test
+    @Templates(value = "plain")
     public void testOnlistmousemove() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onlistmousemove, new Action() {
+            @Override
+            public void perform() {
+                autocomplete.type("h");
+                autocomplete.advanced().waitForSuggestionsToBeVisible();
+                new Actions(driver).moveToElement(autocomplete.advanced().getSuggestionsElements().get(0))
+                    .moveToElement(page.getOutput()).build().perform();
+            }
+        });
+    }
+
+    @Test
+    @Templates(value = "plain")
+    public void testOnlistmouseout() {
+        autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
+        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onlistmouseout, new Action() {
             @Override
             public void perform() {
                 autocomplete.type("h");
@@ -458,154 +410,63 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
 
     @Test
     @Templates(value = "plain")
-    public void testOnmousedown() {
-        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onmousedown, new Action() {
+    public void testOnlistmouseup() {
+        autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
+        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onlistmouseup, new Action() {
             @Override
             public void perform() {
-                new Actions(driver).clickAndHold(page.getAutocompleteAsWebElement()).build().perform();
+                autocomplete.type("h");
+                autocomplete.advanced().waitForSuggestionsToBeVisible();
+                new Actions(driver).click(autocomplete.advanced().getSuggestionsElements().get(0)).build().perform();
             }
         });
+    }
+
+    @Test
+    @Templates(value = "plain")
+    public void testOnmousedown() {
+        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onmousedown, new Actions(driver).clickAndHold(page
+            .getAutocompleteAsWebElement()).build());
         new Actions(driver).release().build().perform();
     }
 
     @Test
     @Templates(value = "plain")
+    public void testOnmousemove() {
+        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onmousemove, new Actions(driver).moveToElement(autocomplete
+            .advanced().getRootElement()).build());
+    }
+
+    @Test
+    @Templates(value = "plain")
     public void testOnmouseout() {
-        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onmouseout, new Action() {
-            @Override
-            public void perform() {
-                new Actions(driver).moveToElement(page.getAutocompleteAsWebElement()).moveToElement(page.getOutput()).build()
-                    .perform();
-            }
-        });
+        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onmouseout, new Actions(driver).moveToElement(page
+            .getAutocompleteAsWebElement()).moveToElement(page.getOutput()).build());
+    }
+
+    @Test
+    @Templates(value = "plain")
+    public void testOnmouseover() {
+        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onmouseover, new Actions(driver).moveToElement(driver
+            .findElement(By.cssSelector("span[id$=autocomplete]"))).build());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseup() {
-        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onmouseup, new Action() {
+        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onmouseup, new Actions(driver).clickAndHold(page
+            .getAutocompleteAsWebElement()).release().build());
+    }
+
+    @Test
+    public void testOnselectitem() {
+        autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
+        testFireEvent(autocompleteAttributes, AutocompleteAttributes.onselectitem, new Action() {
             @Override
             public void perform() {
-                new Actions(driver).clickAndHold(page.getAutocompleteAsWebElement()).release().build().perform();
+                Graphene.guardAjax(autocomplete.type("h")).select(ChoicePickerHelper.byIndex().first());
             }
         });
-    }
-
-    @Test
-    public void testMode() {
-        // default state, should be ajax
-        autocompleteAttributes.set(AutocompleteAttributes.mode, "null");
-        guardAjax(autocomplete.type("a"));
-        autocomplete.clear();
-
-        // set ajax mode
-        autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
-        guardAjax(autocomplete.type("h"));
-        autocomplete.clear();
-
-        // set cached ajax mode, triggering the same query twice should not trigger ajax request
-        autocompleteAttributes.set(AutocompleteAttributes.mode, "cachedAjax");
-        guardAjax(autocomplete.type("w"));
-        autocomplete.clear();
-        guardNoRequest(autocomplete.type("w"));
-        autocomplete.clear();
-
-        // set client mode
-        autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
-        guardNoRequest(autocomplete.type("f"));
-    }
-
-    @Test
-    public void testMinChars() {
-        autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
-        autocompleteAttributes.set(AutocompleteAttributes.minChars, 3);
-        // no request is sent until min number of chars is provided
-        guardNoRequest(autocomplete.type("ha"));
-        autocomplete.clear();
-
-        guardAjax(autocomplete.type("haw"));
-        autocomplete.advanced().waitForSuggestionsToBeVisible();
-    }
-
-    @Test
-    public void testDisabled() {
-        // defaultly autocomplete is enabled
-        autocomplete.type("h").select("Hawaii");
-        checkOutput("Hawaii");
-
-        // disable
-        autocompleteAttributes.set(AutocompleteAttributes.disabled, Boolean.TRUE);
-        try {
-            autocomplete.type("w").select("Washington");
-        } catch (Exception e) {
-            // OK exception should be thrown since typing is disabled
-        }
-    }
-
-    @Test
-    public void testAutofill() {
-        autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
-        autocomplete.type("haw");
-        autocomplete.advanced().waitForSuggestionsToBeVisible();
-        new Actions(driver).sendKeys(Keys.ARROW_DOWN).build().perform();
-        assertEquals(autocomplete.advanced().getInput().getStringValue(), "haw");
-
-        autocomplete.clear();
-
-        autocompleteAttributes.set(AutocompleteAttributes.autofill, Boolean.TRUE);
-        autocomplete.type("haw");
-        autocomplete.advanced().waitForSuggestionsToBeVisible();
-        new Actions(driver).moveToElement(autocomplete.advanced().getSuggestionsElements().get(0)).build().perform();
-        assertEquals(autocomplete.advanced().getInput().getStringValue(), "hawaii");
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testStyle() {
-        testStyle(autocomplete.advanced().getRootElement());
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testStyleClass() {
-        testStyleClass(autocomplete.advanced().getRootElement());
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testTabindex() {
-        testHTMLAttribute(autocomplete.advanced().getInput().advanced().getInputElement(), autocompleteAttributes,
-            AutocompleteAttributes.tabindex, "100");
-    }
-
-    @Test
-    public void testTokens() {
-        autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
-        // default token is ', '
-        autocomplete.type("Hawaii, w");
-        autocomplete.advanced().waitForSuggestionsToBeVisible();
-        autocomplete.advanced().getSuggestionsElements().get(0).click();
-        checkOutput("Hawaii, Washington");
-
-        // clear value
-        autocompleteAttributes.set(AutocompleteAttributes.value, "");
-
-        // change token and assert then after writing it, it shows suggestions for new input
-        autocompleteAttributes.set(AutocompleteAttributes.tokens, "- ");
-        autocomplete.type("Hawaii- w");
-        autocomplete.advanced().waitForSuggestionsToBeVisible();
-        autocomplete.advanced().getSuggestionsElements().get(0).click();
-        checkOutput("Hawaii- Washington");
-    }
-
-    @Test
-    @Templates("plain")
-    public void testValue() {
-        autocompleteAttributes.set(AutocompleteAttributes.value, "Johny Derp speaking!");
-        checkOutput("Johny Derp speaking!");
-
-        autocompleteAttributes.set(AutocompleteAttributes.value, "Area 51");
-        checkOutput("Area 51");
     }
 
     @Test
@@ -624,7 +485,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
         assertVisible(autocomplete, "Autocomplete should be rendered.");
     }
 
-    @Test
+    @Test(enabled = false)// tested in TestAutocomplete
     public void testSelectFirst() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
         autocompleteAttributes.set(AutocompleteAttributes.selectFirst, Boolean.TRUE);
@@ -640,7 +501,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     public void testSelectedItemClass() {
         String testedClass = "metamer-ftest-class";
         autocompleteAttributes.set(AutocompleteAttributes.selectedItemClass, testedClass);
-        Graphene.guardAjax(autocomplete).type("a");
+        typeHIntoAutocompleteInputGuarded();
         autocomplete.advanced().waitForSuggestionsToBeVisible();
         List<WebElement> suggestionsElements = autocomplete.advanced().getSuggestionsElements();
         Utils.triggerJQ("mouseover", suggestionsElements.get(0));
@@ -663,5 +524,84 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
         // hide again and assert
         autocompleteAttributes.set(AutocompleteAttributes.showButton, Boolean.FALSE);
         assertNotPresent(button, "Button should not be present on the page!");
+    }
+
+    @Test
+    @Templates(value = "plain")
+    public void testStyle() {
+        testStyle(autocomplete.advanced().getRootElement());
+    }
+
+    @Test
+    @Templates("plain")
+    public void testStyleClass() {
+        testStyleClass(autocomplete.advanced().getRootElement());
+    }
+
+    @Test
+    @Templates(value = "plain")
+    public void testTabindex() {
+        testHTMLAttribute(autocomplete.advanced().getInput().advanced().getInputElement(), autocompleteAttributes,
+            AutocompleteAttributes.tabindex, "100");
+    }
+
+    @Test
+    public void testTokens() {
+        autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
+        // default token is ', '
+        Graphene.guardAjax(autocomplete.type("Hawaii, w")).select(ChoicePickerHelper.byIndex().first());
+        checkOutput("Hawaii, Washington");
+
+        // clear value
+        autocompleteAttributes.set(AutocompleteAttributes.value, "");
+
+        // change token and assert then after writing it, it shows suggestions for new input
+        autocompleteAttributes.set(AutocompleteAttributes.tokens, "- ");
+        Graphene.guardAjax(autocomplete.type("Hawaii- w")).select(ChoicePickerHelper.byIndex().first());
+        checkOutput("Hawaii- Washington");
+    }
+
+    @Test
+    @Templates("plain")
+    public void testValue() {
+        autocompleteAttributes.set(AutocompleteAttributes.value, "Johny Derp speaking!");
+        checkOutput("Johny Derp speaking!");
+
+        autocompleteAttributes.set(AutocompleteAttributes.value, "Area 51");
+        checkOutput("Area 51");
+    }
+
+    @Test
+    public void testValueChangeListener() {
+        selectHawaii();
+        checkOutput("Hawaii");
+
+        page.assertListener(PhaseId.PROCESS_VALIDATIONS, String.format(FIRST_LISTENER_MSG_FORMAT, "null", "Hawaii"));
+        page.assertListener(PhaseId.INVOKE_APPLICATION, THIRD_LISTENER_MSG);
+
+        Graphene.guardAjax(page).blur();
+        page.assertListener(PhaseId.INVOKE_APPLICATION, SECOND_LISTENER_MSG);
+
+        autocomplete.clear();
+        Graphene.guardAjax(Graphene.guardAjax(autocomplete).type("ka")).select("Kansas");
+        checkOutput("Kansas");
+
+        page.assertListener(PhaseId.PROCESS_VALIDATIONS, String.format(FIRST_LISTENER_MSG_FORMAT, "Hawaii", "Kansas"));
+        page.assertListener(PhaseId.INVOKE_APPLICATION, THIRD_LISTENER_MSG);
+
+        Graphene.guardAjax(page).blur();
+        page.assertListener(PhaseId.INVOKE_APPLICATION, SECOND_LISTENER_MSG);
+
+        autocomplete.clear();
+        Graphene.guardAjax(autocomplete).type("nonexisting");
+        Graphene.guardAjax(page).blur();
+        checkOutput("nonexisting");
+
+        page.assertListener(PhaseId.PROCESS_VALIDATIONS, String.format(FIRST_LISTENER_MSG_FORMAT, "Kansas", "nonexisting"));
+        page.assertListener(PhaseId.INVOKE_APPLICATION, SECOND_LISTENER_MSG);
+    }
+
+    private SelectOrConfirm typeHIntoAutocompleteInputGuarded() {
+        return Graphene.guardAjax(autocomplete).type("h");
     }
 }
