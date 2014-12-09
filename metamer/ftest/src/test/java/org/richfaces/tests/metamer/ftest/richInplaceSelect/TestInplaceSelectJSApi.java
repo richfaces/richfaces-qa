@@ -28,6 +28,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
@@ -36,8 +37,6 @@ import org.richfaces.fragment.inplaceSelect.RichFacesInplaceSelect;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -47,20 +46,8 @@ import org.testng.annotations.Test;
  */
 public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
 
+    private static final String HAWAII = "Hawaii";
     private final Attributes<InplaceSelectAttributes> inplaceSelectAttributes = getAttributes();
-
-    @FindBy(css = "span[id$=inplaceSelect]")
-    private RichFacesInplaceSelect inplaceSelect;
-
-    @FindBy(css = "[id$=inplaceSelect] span.rf-is-lst-cord")
-    private WebElement popup;
-    @FindBy(css = "body > span.rf-is-lst-cord")
-    private WebElement globalPopup;
-
-    @FindBy(css = "input[id$=':value']")
-    private WebElement output;
-    @FindBy(css = "input[id$=a4jButton]")
-    private WebElement a4jButton;
 
     @FindBy(id = "cancel")
     private WebElement cancelButton;
@@ -70,12 +57,20 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
     private WebElement getLabelButton;
     @FindBy(id = "getValue")
     private WebElement getValueButton;
+    @FindBy(css = "body > span.rf-is-lst-cord")
+    private WebElement globalPopup;
     @FindBy(id = "hidePopup")
     private WebElement hidePopup;
+    @FindBy(css = "span[id$=inplaceSelect]")
+    private RichFacesInplaceSelect inplaceSelect;
     @FindBy(id = "isEditState")
     private WebElement isEditStateButton;
     @FindBy(id = "isValueChanged")
     private WebElement isValueChangedButton;
+    @FindBy(css = "input[id$=':value']")
+    private WebElement output;
+    @FindBy(css = "[id$=inplaceSelect] span.rf-is-lst-cord")
+    private WebElement popup;
     @FindBy(id = "save")
     private WebElement saveButton;
     @FindBy(id = "setLabel")
@@ -85,20 +80,13 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
     @FindBy(id = "showPopup")
     private WebElement showPopup;
 
-    private static final String SOME_VALUE = "Hawaii";
-
-    @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richInplaceSelect/simple.xhtml");
-    }
-
     @Test
     public void cancel() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnBlur, Boolean.FALSE);
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
         String defaultText = inplaceSelect.advanced().getLabelValue();
-        inplaceSelect.select(SOME_VALUE);
-        cancelButton.click();
+        inplaceSelect.select(HAWAII);
+        Graphene.guardNoRequest(cancelButton).click();
         assertEquals(inplaceSelect.advanced().getLabelValue(), defaultText);
         assertFalse(inplaceSelect.advanced().isInState(InplaceComponentState.CHANGED));
     }
@@ -108,7 +96,7 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
         // the button has onclick action, it selects the input and clicks on it
         // so the state of inplace input is set to active
         getInputButton.click();
-        waiting(100);
+        inplaceSelect.advanced().waitForPopupToShow().perform();
         inplaceSelect.advanced().isInState(InplaceComponentState.ACTIVE);
     }
 
@@ -118,11 +106,18 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
         assertEquals(getValueFromOutput(), inplaceSelect.advanced().getLabelValue(), "Default value.");
     }
 
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richInplaceSelect/simple.xhtml");
+    }
+
     @Test
     public void getValue() {
+        inplaceSelect.advanced().setSaveOnSelect(Boolean.TRUE);
+
         getValueButton.click();
         assertEquals(getValueFromOutput(), inplaceSelect.getTextInput().getStringValue(), "Default value.");
-        inplaceSelect.select(SOME_VALUE);
+        Graphene.guardAjax(inplaceSelect).select(HAWAII);
         getValueButton.click();
         assertEquals(getValueFromOutput(), inplaceSelect.getTextInput().getStringValue());
     }
@@ -154,9 +149,11 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
 
     @Test
     public void isValueChangedButton() {
+        inplaceSelect.advanced().setSaveOnSelect(Boolean.TRUE);
+
         isValueChangedButton.click();
         assertEquals(getValueFromOutput(), "false");
-        inplaceSelect.select(SOME_VALUE);
+        Graphene.guardAjax(inplaceSelect).select(HAWAII);
         isValueChangedButton.click();
         assertEquals(getValueFromOutput(), "true");
     }
@@ -165,26 +162,25 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
     public void save() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnBlur, Boolean.FALSE);
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
-        inplaceSelect.select(SOME_VALUE);
-        inplaceSelect.advanced().waitForPopupToHide();
-        MetamerPage.waitRequest(saveButton, WaitRequestType.XHR).click();
-        assertEquals(inplaceSelect.advanced().getLabelValue(), SOME_VALUE);
+        inplaceSelect.select(HAWAII);
+        inplaceSelect.advanced().waitForPopupToHide().perform();
+        Graphene.guardAjax(saveButton).click();
+        assertEquals(inplaceSelect.advanced().getLabelValue(), HAWAII);
         assertTrue(inplaceSelect.advanced().isInState(InplaceComponentState.CHANGED));
     }
 
     @Test
     public void setLabel() {
         String expected = "Completely different label";
-        MetamerPage.waitRequest(setLabelButton, WaitRequestType.NONE).click();
+        Graphene.guardNoRequest(setLabelButton).click();
         assertEquals(inplaceSelect.advanced().getLabelValue(), expected);
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-12853")
     public void setValue() {
-        String expected = SOME_VALUE;
-        MetamerPage.waitRequest(setValueButton, WaitRequestType.XHR).click();
-        assertEquals(inplaceSelect.advanced().getLabelValue(), expected);
+        Graphene.guardAjax(setValueButton).click();
+        assertEquals(inplaceSelect.advanced().getLabelValue(), HAWAII);
     }
 
     @Test
