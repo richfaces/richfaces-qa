@@ -80,14 +80,14 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
 
     @Test
     public void testSimpleSelectionWithMouse() {
-        autocomplete.type("a").select(ChoicePickerHelper.byVisibleText().endsWith("na"));
+        SelectOrConfirm typed = Graphene.guardAjax(autocomplete).type("a");
+        Graphene.guardAjax(typed).select(ChoicePickerHelper.byVisibleText().endsWith("na"));
         checkOutput("Arizona");
     }
 
     @Test
     public void testSimpleSelectionWithKeyboard() {
         autocomplete.advanced().setScrollingType(ScrollingType.BY_KEYS);
-        autocomplete.type("a").select(ChoicePickerHelper.byVisibleText().endsWith("na"));
-        checkOutput("Arizona");
+        testSimpleSelectionWithMouse();
     }
 }
