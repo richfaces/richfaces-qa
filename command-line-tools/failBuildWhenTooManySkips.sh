@@ -19,7 +19,7 @@ failWhenTooManySkips(){
 
   MAX_SKIPS_FOR_SUCCESS=2;
 
-  SKIPS=`head -2 ${XML_FILE} | tail -1 | sed -n 's/.* skipped="\([^"]\).*/\1/p'`;
+  SKIPS=`head -2 ${XML_FILE} | tail -1 | sed -n 's/.* skipped=\"\([0-9]*\)\".*/\1/p'`;
   echo "Found: ${SKIPS} skips";
   if [ ${SKIPS} -gt ${MAX_SKIPS_FOR_SUCCESS} ] ;then
      echo "Too many skips, FAILING the build";
