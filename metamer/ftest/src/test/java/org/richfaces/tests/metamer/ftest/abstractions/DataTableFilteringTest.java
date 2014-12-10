@@ -21,20 +21,23 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.abstractions;
 
+import static org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton.LAST;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-import static org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton.LAST;
 
 import java.util.Collection;
 import java.util.List;
 
 import org.richfaces.fragment.dataTable.AbstractTable;
-import org.richfaces.model.Filter;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.FilteringHeaderInterface;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.FilteringRowInterface;
 import org.richfaces.tests.metamer.model.Employee;
 import org.richfaces.tests.metamer.model.Employee.Sex;
 import org.testng.annotations.BeforeMethod;
+
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -44,14 +47,36 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
     private static final String[] FILTER_NAMES = new String[] { "ivan", "Гог", null, "Š" };
     private static final String[] FILTER_TITLES = new String[] { "Director", null, "CEO" };
     private static final Integer[] FILTER_NUMBER_OF_KIDS = new Integer[] { 2, 100, 0, 5 };
+    private static final int MAX_VISIBLE_ROWS = 5;
 
     private ExpectedEmployee filterEmployee;
     private List<Employee> expectedEmployees;
-    private int rows;
+    private int numberOfVisibleRows;
+
+    final Predicate<Employee> filter = new Predicate<Employee>() {
+        @Override
+        public boolean apply(Employee employee) {
+            boolean result = true;
+            if (filterEmployee.sex != null) {
+                result &= employee.getSex() == filterEmployee.sex;
+            }
+            if (filterEmployee.name != null) {
+                result &= employee.getName().toLowerCase().contains(filterEmployee.name.toLowerCase());
+            }
+            if (filterEmployee.title != null) {
+                result &= employee.getTitle().equals(filterEmployee.title);
+            }
+            if (filterEmployee.numberOfKids1 != null) {
+                result &= employee.getNumberOfKids() >= filterEmployee.numberOfKids1;
+            }
+            return result;
+        }
+    };
 
     @BeforeMethod
     public void setup() {
         filterEmployee = new ExpectedEmployee();
+        getUnsafeAttributes("").set("rows", MAX_VISIBLE_ROWS);// speedup testing
     }
 
     protected abstract AbstractTable<? extends FilteringHeaderInterface, ? extends FilteringRowInterface, ?> getTable();
@@ -151,7 +176,6 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
 
     public void testRerenderAll(boolean isBuiltIn) {
         dataScroller2.switchTo(1);
-        rows = getTable().advanced().getNumberOfVisibleRows();
 
         getTable().getHeader().filterName("an", isBuiltIn);
         filterEmployee.name = "an";
@@ -173,7 +197,6 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
 
     public void testFullPageRefresh(boolean isBuiltIn) {
         dataScroller2.switchTo(1);
-        rows = getTable().advanced().getNumberOfVisibleRows();
 
         getTable().getHeader().filterName("an", isBuiltIn);
         filterEmployee.name = "an";
@@ -202,104 +225,62 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
     }
 
     public void verifyFiltering() {
+        // prepare expected employees
         expectedEmployees = filter(EMPLOYEES, getFilter());
+        verifyPageContent(1); // verify first page
 
         if (dataScroller2.advanced().getCountOfVisiblePages() > 1) {
-            dataScroller2.switchTo(1);
-        }
-        rows = getTable().advanced().getNumberOfVisibleRows();
-        verifyPageContent(1);
-
-        if (dataScroller2.advanced().getCountOfVisiblePages() > 1) {
-            int lastVisiblePageNumber = dataScroller2.advanced().getLastVisiblePageNumber();
             dataScroller2.switchTo(LAST);
             int lastPage = dataScroller2.getActivePageNumber();
-            verifyPageContent(lastPage);
-
-            if (lastVisiblePageNumber > 2) {
-                dataScroller2.switchTo(3);
-                verifyPageContent(3);
+            verifyPageContent(lastPage); // verify last page
+            if (lastPage > 2) {
+                verifyPageContent(lastPage - 1);// verify a page before last page
             }
-
-            if (lastVisiblePageNumber > 3) {
-                dataScroller2.switchTo(lastPage - 1);
-                verifyPageContent(lastPage - 1);
+            if (lastPage > 3) {
+                verifyPageContent(lastPage / 2);// verify some page in the middle
             }
         }
-
     }
 
     public void verifyPageContent(int page) {
-        if (expectedEmployees.size() == 0) {
+        if (dataScroller2.advanced().getCountOfVisiblePages() > 0) {
+            dataScroller2.switchTo(page);
+        }
+        numberOfVisibleRows = getTable().advanced().getNumberOfVisibleRows();
+        if (expectedEmployees.isEmpty()) {
             assertEquals(getTable().advanced().getNumberOfVisibleRows(), 0);
             assertTrue(getTable().advanced().isNoData());
         } else {
-            for (int row = 0; row < getTable().advanced().getNumberOfVisibleRows(); row++) {
-                int index = (page - 1) * rows + row;
-                Employee expectedEmployee = expectedEmployees.get(index);
-                verifyRow(expectedEmployee, row);
+            // check all visible rows
+            for (int rowNumber = 0; rowNumber < numberOfVisibleRows; rowNumber++) {
+                verifyRow(expectedEmployees.get((page - 1) * MAX_VISIBLE_ROWS + rowNumber), rowNumber);
             }
         }
     }
 
-    public void verifyRow(Employee expectedEmployee, int row) {
-        verifySex(expectedEmployee.getSex(), row);
-        FilteringRowInterface actualRow = getTable().getRow(row);
+    public void verifyRow(Employee expectedEmployee, int rowNumber) {
+        FilteringRowInterface actualRow = getTable().getRow(rowNumber);
+        assertEquals(actualRow.getSexColumnValue(), expectedEmployee.getSex());
         assertEquals(actualRow.getNameColumnValue(), expectedEmployee.getName());
         assertEquals(actualRow.getTitleColumnValue(), expectedEmployee.getTitle());
         assertEquals(actualRow.getNumberOfKids1ColumnValue(), expectedEmployee.getNumberOfKids());
         assertEquals(actualRow.getNumberOfKids2ColumnValue(), expectedEmployee.getNumberOfKids());
     }
 
-    public void verifySex(Employee.Sex expectedSex, int row) {
-        Employee.Sex actualSex = getTable().getRow(row).getSexColumnValue();
-        assertEquals(actualSex, expectedSex);
+    private Predicate<Employee> getFilter() {
+        return filter;
     }
 
     private class ExpectedEmployee {
+
         Sex sex;
         String name;
         String title;
         Integer numberOfKids1;
     }
 
-    private Filter<Employee> getFilter() {
-        return new Filter<Employee>() {
-            @Override
-            public boolean accept(Employee employee) {
-                boolean result = true;
-                if (filterEmployee.sex != null) {
-                    result &= employee.getSex() == filterEmployee.sex;
-                }
-                if (filterEmployee.name != null) {
-                    result &= employee.getName().toLowerCase().contains(filterEmployee.name.toLowerCase());
-                }
-                if (filterEmployee.title != null) {
-                    result &= employee.getTitle().equals(filterEmployee.title);
-                }
-                if (filterEmployee.numberOfKids1 != null) {
-                    result &= employee.getNumberOfKids() >= filterEmployee.numberOfKids1;
-                }
-                return result;
-            }
-        };
-    }
-
     @SuppressWarnings("unchecked")
-    private <E, T extends Collection<E>> T filter(T collection, Filter<E> filter) {
-        T filteredCollection;
-        try {
-            filteredCollection = (T) collection.getClass().newInstance();
-
-            for (E element : collection) {
-                if (filter.accept(element)) {
-                    filteredCollection.add(element);
-                }
-            }
-
-            return (T) filteredCollection;
-        } catch (Exception e) {
-            throw new IllegalStateException("Cannot construct new collection", e);
-        }
+    private <E, T extends Collection<E>> T filter(T collection, Predicate<E> filter) {
+        return (T) Lists.newArrayList(Iterables.filter(collection, filter));
     }
 }
