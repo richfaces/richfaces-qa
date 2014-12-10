@@ -50,7 +50,6 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.test.api.ArquillianResource;
-import org.jboss.util.Strings;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -1239,8 +1238,9 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             final String id = menuRootElement.getAttribute("id");
             double tolerance = expectedDelayInMillis == 0 ? 500 : expectedDelayInMillis * 0.5;
             int cycles = 4;
-            getUnsafeAttributes(Strings.EMPTY).set(HIDE_DELAY, isHideDelay ? expectedDelayInMillis : 0);
-            getUnsafeAttributes(Strings.EMPTY).set(isHideDelay ? ON_HIDE : ON_SHOW, PREPARATION_SCRIPT);
+            getUnsafeAttributes("").set(isHideDelay ? HIDE_DELAY : SHOW_DELAY, expectedDelayInMillis);// set tested attribute
+            getUnsafeAttributes("").set(isHideDelay ? SHOW_DELAY : HIDE_DELAY, 0);// reset not tested attribute
+            getUnsafeAttributes("").set(isHideDelay ? ON_HIDE : ON_SHOW, PREPARATION_SCRIPT);
             List<Long> delays = new ArrayList<Long>(cycles);
             String measuringScript = getMeasuringScript(id, isHideDelay, triggerEvent);
             for (int i = 1; i <= cycles; i++) {
