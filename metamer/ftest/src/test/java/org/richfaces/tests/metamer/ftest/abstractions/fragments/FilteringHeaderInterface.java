@@ -21,7 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.abstractions.fragments;
 
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+import org.richfaces.fragment.common.TextInputComponentImpl;
+import org.richfaces.fragment.inputNumberSpinner.RichFacesInputNumberSpinner;
 import org.richfaces.tests.metamer.model.Employee;
 
 /**
@@ -29,29 +31,35 @@ import org.richfaces.tests.metamer.model.Employee;
  */
 public interface FilteringHeaderInterface {
 
-    void filterSex(Employee.Sex sex);
-
     void filterName(String name, boolean isBuiltIn);
 
+    void filterName(String name);
+
     void filterNameBuiltIn(String name);
-
-    void filterTitle(String title, boolean isBuiltIn);
-
-    void filterTitleBuiltIn(String title);
 
     void filterNumberOfKidsBuiltIn(int numberOfKids);
 
     void filterNumberOfKidsWithSpinner(int numberOfKids);
 
-    WebElement getFilterNameInput();
+    void filterSex(Employee.Sex sex);
 
-    WebElement getFilterTitleInput();
+    void filterTitle(String title);
 
-    WebElement getFilterNameBuiltInInput();
+    void filterTitle(String title, boolean isBuiltIn);
 
-    WebElement getFilterTitleBuiltInInput();
+    void filterTitleBuiltIn(String title);
 
-    WebElement getFilterKidsGreaterBuiltInInput();
+    TextInputComponentImpl getNameBuiltInInput();
 
-    WebElement getFilterKidsLesserBuiltInInput();
+    TextInputComponentImpl getNameInput();
+
+    TextInputComponentImpl getNumberOfKidsInput();
+
+    RichFacesInputNumberSpinner getNumberOfKidsSpinner();
+
+    Select getSexSelect();
+
+    TextInputComponentImpl getTitleBuildInInput();
+
+    TextInputComponentImpl getTitleInput();
 }
