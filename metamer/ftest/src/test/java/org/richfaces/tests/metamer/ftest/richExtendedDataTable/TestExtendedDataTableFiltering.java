@@ -24,13 +24,12 @@ package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
 
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFilteringTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.FilteringEDT;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -42,18 +41,18 @@ public class TestExtendedDataTableFiltering extends DataTableFilteringTest {
     private FilteringEDT table;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richExtendedDataTable/filtering.xhtml");
-    }
-
-    @Override
     protected FilteringEDT getTable() {
         return table;
     }
 
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richExtendedDataTable/filtering.xhtml");
+    }
+
     @Test
-    public void testFilterSex() {
-        super.testFilterSex();
+    public void testFilterCombinations() {
+        super.testFilterCombinations(false);
     }
 
     @Test
@@ -62,28 +61,28 @@ public class TestExtendedDataTableFiltering extends DataTableFilteringTest {
     }
 
     @Test
+    public void testFilterNumberOfKidsWithSpinner() {
+        super.testFilterNumberOfKidsWithSpinner();
+    }
+
+    @Test
+    public void testFilterSex() {
+        super.testFilterSex();
+    }
+
+    @Test
     public void testFilterTitle() {
         super.testFilterTitle(false);
     }
 
     @Test
-    public void testFilterNumberOfKids1() {
-        super.testFilterNumberOfKidsWithSpinner();
-    }
-
-    @Test
-    public void testFilterCombinations() {
-        super.testFilterCombinations(false);
+    public void testFullPageRefresh() {
+        super.testFullPageRefresh(false);
     }
 
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-9932 http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790")
     public void testRerenderAll() {
         super.testRerenderAll(false);
-    }
-
-    @Test
-    public void testFullPageRefresh() {
-        super.testFullPageRefresh(false);
     }
 }
