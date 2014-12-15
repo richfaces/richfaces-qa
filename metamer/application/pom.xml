@@ -319,15 +319,6 @@ FSF site: http://www.fsf.org. -->
                     </plugin>
                 </plugins>
             </build>
-            <dependencies>
-                <!-- workaround for RF-13730/RFPL-3242 -->
-                <dependency>
-                    <groupId>org.glassfish</groupId>
-                    <artifactId>javax.faces</artifactId>
-                    <version>2.2.7</version>
-                    <scope>compile</scope>
-                </dependency>
-            </dependencies>
         </profile>
         <profile>
             <id>war-tomcat7-myfaces</id>
@@ -481,14 +472,6 @@ FSF site: http://www.fsf.org. -->
         <profile>
             <id>release</id>
             <dependencies>
-                <!-- workaround for RF-13730/RFPL-3242 -->
-                <dependency>
-                    <groupId>org.glassfish</groupId>
-                    <artifactId>javax.faces</artifactId>
-                    <version>2.2.7</version>
-                    <scope>compile</scope>
-                </dependency>
-
                 <dependency>
                     <groupId>org.apache.myfaces.core</groupId>
                     <artifactId>myfaces-api</artifactId>
