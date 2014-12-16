@@ -26,13 +26,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.application.Application;
+import javax.faces.component.html.HtmlOutputText;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.richfaces.component.UITab;
 import org.richfaces.component.UITabPanel;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.tests.metamer.bean.ComponentBindingsProducers;
 import org.richfaces.tests.metamer.bean.RichBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +47,7 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 23062 $
  */
-@ManagedBean(name = "richTabPanelBean")
+@Named("richTabPanelBean")
 @SessionScoped
 public class RichTabPanelBean implements Serializable {
 
@@ -54,7 +58,8 @@ public class RichTabPanelBean implements Serializable {
     private List<TabBean> tabBeans = new ArrayList<TabBean>();
     // there are 5 tabs by default, so this is base for new tabs
     private int tabIdLast = 5;
-    private UITabPanel tabPanel;
+    @Inject
+    private ComponentBindingsProducers bindings;
 
     /**
      * Initializes the managed bean.
@@ -92,12 +97,18 @@ public class RichTabPanelBean implements Serializable {
 
     public void attachNewTabProgramatically() {
 
-        UITab tab = (UITab)FacesContext.getCurrentInstance().getApplication().createComponent(UITab.COMPONENT_TYPE);
+        Application app = FacesContext.getCurrentInstance().getApplication();
+        UITabPanel tabPanel = bindings.getTabPanel();
+        UITab tab = (UITab) app.createComponent(UITab.COMPONENT_TYPE);
+        HtmlOutputText outputText = (HtmlOutputText) app.createComponent(HtmlOutputText.COMPONENT_TYPE);
         int index = tabPanel.getChildren().size() + 1;
 
         tab.setHeader("tab" + index + " header");
         tab.setId("tab" + index);
         tab.setName("tab" + index);
+
+        outputText.setValue("content of tab " + index);
+        tab.getChildren().add(outputText);
 
         tabPanel.getChildren().add(tab);
     }
@@ -109,7 +120,7 @@ public class RichTabPanelBean implements Serializable {
 
     public void removeTab() throws Exception {
         String tabIdToRemove = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
-                .get("removeTabId");
+            .get("removeTabId");
 
         TabBean currentTab = getTabById(tabIdToRemove);
 
@@ -242,11 +253,4 @@ public class RichTabPanelBean implements Serializable {
         return listB;
     }
 
-    public UITabPanel getTabPanel() {
-        return tabPanel;
-    }
-
-    public void setTabPanel(UITabPanel tabPanel) {
-        this.tabPanel = tabPanel;
-    }
 }
