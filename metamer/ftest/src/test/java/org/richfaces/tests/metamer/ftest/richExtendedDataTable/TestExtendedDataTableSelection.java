@@ -192,6 +192,37 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
         verifySelected();
     }
 
+    @Test
+    @Templates(exclude = {"uiRepeat"})
+    public void testSelectSomeRowAndThenSelectAllWithKeyShortcut() {
+        page.selectRow(2);
+        page.selectAllWithCrtlAndA();
+        selected.addAll(selection(new IntRange(0, 49)));
+        verifySelected();
+    }
+
+    @Test
+    @Templates(exclude = {"uiRepeat"})
+    public void testSelectAllWithKeyShortcut() {
+        page.selectAllWithCrtlAndA();
+        selected.addAll(selection(new IntRange(0, 49)));
+        verifySelected();
+    }
+
+    @Test(groups = "Future")
+    @Templates("uiRepeat")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13941")
+    public void testSelectAllWithKeyShortcutInUiRepeat() {
+        testSelectAllWithKeyShortcut();
+    }
+
+    @Test(groups = "Future")
+    @Templates("uiRepeat")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13941")
+    public void testSelectSomeRowAndThenSelectAllWithKeyShortcutInUiRepeat() {
+        testSelectSomeRowAndThenSelectAllWithKeyShortcut();
+    }
+
     private Collection<Integer> order(int... selection) {
         return Arrays.asList(ArrayUtils.toObject(selection));
     }
