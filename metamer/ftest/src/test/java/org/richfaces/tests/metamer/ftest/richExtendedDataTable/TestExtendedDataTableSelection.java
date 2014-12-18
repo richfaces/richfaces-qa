@@ -201,7 +201,8 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
         verifySelected();
     }
 
-    @Test
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13941")
     @Templates(exclude = {"uiRepeat"})
     public void testSelectAllWithKeyShortcut() {
         page.selectAllWithCrtlAndA();
