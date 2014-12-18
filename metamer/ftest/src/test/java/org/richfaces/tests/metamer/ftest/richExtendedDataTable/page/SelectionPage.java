@@ -79,6 +79,12 @@ public class SelectionPage {
         Graphene.waitAjax().until().element(currentSelection).text().not().equalTo(currentSelectionBefore);
     }
 
+    public void selectAllWithCrtlAndA() {
+        String currentSelectionBefore = currentSelection.getText();
+        Graphene.guardAjax(table).selectAllRowsWithKeyShortcut();
+        Graphene.waitAjax().until().element(currentSelection).text().not().equalTo(currentSelectionBefore);
+    }
+
     private void scrollToPage(int rowIndex) {
         int page = getPageForIndex(rowIndex);
         if (page != dataScroller2.getActivePageNumber()) {
