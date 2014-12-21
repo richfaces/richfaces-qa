@@ -19,46 +19,38 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 */
-package org.richfaces.tests.qa.plugin.utils;
+package org.richfaces.tests.qa.plugin.utils.files;
 
-import java.util.Collection;
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.text.MessageFormat;
 
-import com.google.common.collect.ForwardingList;
-import com.google.common.collect.Lists;
+import org.apache.maven.plugin.logging.Log;
+
+import com.google.common.io.Files;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TolerantContainsList extends ForwardingList<String> {
+@Singleton
+public class SimpleCopier implements Copier {
 
-    private final List<String> delegate;
+    private final Log log;
 
-    public TolerantContainsList(List<String> delegate) {
-        this.delegate = delegate;
-    }
-
-    public TolerantContainsList(Collection<String> delegate) {
-        this.delegate = Lists.newArrayList(delegate);
-    }
-
-    public TolerantContainsList(String... values) {
-        this.delegate = Lists.newArrayList(values);
+    @Inject
+    public SimpleCopier(Log log) {
+        this.log = log;
     }
 
     @Override
-    public boolean contains(Object o) {
-        String toFind = o.toString().toLowerCase();
-        for (String string : this) {
-            if (string.toLowerCase().contains(toFind)) {
-                return true;
-            }
-        }
-        return false;
+    public void copy(File from, File to) throws IOException {
+        getLog().info(MessageFormat.format("Copying <{0}> to <{1}>", from.getAbsolutePath(), to.getAbsolutePath()));
+        Files.copy(from, to);
     }
 
-    @Override
-    protected List<String> delegate() {
-        return delegate;
+    public Log getLog() {
+        return log;
     }
 }

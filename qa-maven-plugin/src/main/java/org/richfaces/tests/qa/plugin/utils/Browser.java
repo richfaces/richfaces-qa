@@ -1,6 +1,6 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2014, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+*/
 package org.richfaces.tests.qa.plugin.utils;
 
 import java.util.Collections;
@@ -33,6 +33,11 @@ public class Browser {
     private static final String[] BROWSER_NAME_VERSION_SEPARATORS = { "-" };// plus no space
     private final BrowserName name;
     private Version version;
+
+    public Browser(BrowserName name, Version version) {
+        this.name = name;
+        this.version = version;
+    }
 
     private static String createRegExpForPossibleCharactersStrings(String[] strings) {
         StringBuilder sb = new StringBuilder("[");
@@ -53,11 +58,6 @@ public class Browser {
             }
         }
         return new Browser(BrowserName.getNameFor(browser), Version.parseVersion(version, prefix));
-    }
-
-    public Browser(BrowserName name, Version version) {
-        this.name = name;
-        this.version = version;
     }
 
     public BrowserName getName() {

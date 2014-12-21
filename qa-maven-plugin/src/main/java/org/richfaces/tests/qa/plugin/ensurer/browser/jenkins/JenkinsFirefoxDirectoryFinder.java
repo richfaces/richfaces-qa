@@ -18,47 +18,26 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-*/
-package org.richfaces.tests.qa.plugin.utils;
+ */
+package org.richfaces.tests.qa.plugin.ensurer.browser.jenkins;
 
-import java.util.Collection;
-import java.util.List;
+import java.io.File;
 
-import com.google.common.collect.ForwardingList;
-import com.google.common.collect.Lists;
+import org.richfaces.tests.qa.plugin.utils.Version;
 
 /**
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TolerantContainsList extends ForwardingList<String> {
+public interface JenkinsFirefoxDirectoryFinder {
 
-    private final List<String> delegate;
+    File getHighestOrSpecificVersion(File[] files, Version version);
 
-    public TolerantContainsList(List<String> delegate) {
-        this.delegate = delegate;
-    }
+    File getHighestVersion(File[] files);
 
-    public TolerantContainsList(Collection<String> delegate) {
-        this.delegate = Lists.newArrayList(delegate);
-    }
+    File getOptimalOrMinimalVersion(File[] files, Version versionOptimal, Version versionMinimal);
 
-    public TolerantContainsList(String... values) {
-        this.delegate = Lists.newArrayList(values);
-    }
+    File getSpecificVersion(File[] files, Version version);
 
-    @Override
-    public boolean contains(Object o) {
-        String toFind = o.toString().toLowerCase();
-        for (String string : this) {
-            if (string.toLowerCase().contains(toFind)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    protected List<String> delegate() {
-        return delegate;
-    }
+    File getSpecificVersionOrHighest(File[] files, Version version);
 }

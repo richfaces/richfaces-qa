@@ -1,6 +1,6 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2014, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+*/
 package org.richfaces.tests.qa.plugin.utils;
 
 import static org.junit.Assert.assertEquals;
@@ -102,60 +102,57 @@ public class VersionTest {
     }
 
     @Test
-    public void testParseVersion() {
-        v = new Version("35");
-        assertEquals(35, v.getMajor());
-        assertEquals(0, v.getMinor());
-        assertEquals(0, v.getMicro());
-        assertEquals("", v.getSpecifier());
+    public void testFormat() {
+        String versionSttring = "3.2.1abc";
+        v = Version.parseVersion(versionSttring);
 
-        v = new Version("35.1esr");
-        assertEquals(35, v.getMajor());
-        assertEquals(1, v.getMinor());
-        assertEquals(0, v.getMicro());
-        assertEquals("esr", v.getSpecifier());
+        assertEquals(versionSttring, v.getFullFormat());
+        assertEquals("3.2", v.getMajorMinorFormat());
+        assertEquals("3.2.1", v.getMajorMinorMicroFormat());
+        assertEquals("3.2.1abc", v.getMajorMinorMicroSpecifierFormat());
+        assertEquals("abc", v.getFormat(EnumSet.of(Format.specifier)));
+        assertEquals("", v.getFormat(EnumSet.of(Format.prefix)));
 
-        v = new Version("35.1.2esr");
-        assertEquals(35, v.getMajor());
-        assertEquals(1, v.getMinor());
-        assertEquals(2, v.getMicro());
-        assertEquals("esr", v.getSpecifier());
+        versionSttring = "prefix-3.2.1abc";
+        v = Version.parseVersion(versionSttring, "prefix-");
+        assertEquals("3.2", v.getMajorMinorFormat());
+        assertEquals("3.2.1", v.getMajorMinorMicroFormat());
+        assertEquals(versionSttring, v.getFullFormat());
+        assertEquals("3.2.1abc", v.getMajorMinorMicroSpecifierFormat());
+        assertEquals("abc", v.getFormat(EnumSet.of(Format.specifier)));
+        assertEquals("prefix-", v.getFormat(EnumSet.of(Format.prefix)));
+    }
 
-        v = new Version("35.12esr.old");
-        assertEquals(35, v.getMajor());
-        assertEquals(12, v.getMinor());
-        assertEquals(0, v.getMicro());
-        assertEquals("esr.old", v.getSpecifier());
-
-        v = new Version("24.2esr.old.2");
-        assertEquals(24, v.getMajor());
-        assertEquals(2, v.getMinor());
-        assertEquals(0, v.getMicro());
-        assertEquals("esr.old.2", v.getSpecifier());
-
-        v = new Version("24.2.1.1.esr");
-        assertEquals(24, v.getMajor());
-        assertEquals(2, v.getMinor());
-        assertEquals(1, v.getMicro());
-        assertEquals(".1.esr", v.getSpecifier());
-
-        v = new Version("24esr");
-        assertEquals(24, v.getMajor());
-        assertEquals(0, v.getMinor());
-        assertEquals(0, v.getMicro());
-        assertEquals("esr", v.getSpecifier());
-
-        v = new Version("24esr.1");
-        assertEquals(24, v.getMajor());
-        assertEquals(0, v.getMinor());
-        assertEquals(0, v.getMicro());
-        assertEquals("esr.1", v.getSpecifier());
-
-        v = new Version("6.2.4-patched");
+    @Test
+    public void testParseEAPVersion() {
+        v = Version.parseEapVersion("jboss-eap-6.3.1");
         assertEquals(6, v.getMajor());
-        assertEquals(2, v.getMinor());
-        assertEquals(4, v.getMicro());
+        assertEquals(3, v.getMinor());
+        assertEquals(1, v.getMicro());
+
+        v = Version.parseEapVersion("jboss-eap-6.3.1-patched");
+        assertEquals(6, v.getMajor());
+        assertEquals(3, v.getMinor());
+        assertEquals(1, v.getMicro());
         assertEquals("-patched", v.getSpecifier());
+
+        v = Version.parseEapVersion("6.3.1-patched");
+        assertEquals(6, v.getMajor());
+        assertEquals(3, v.getMinor());
+        assertEquals(1, v.getMicro());
+        assertEquals("-patched", v.getSpecifier());
+
+        v = Version.parseEapVersion("6.3.1-DR1");
+        assertEquals(6, v.getMajor());
+        assertEquals(3, v.getMinor());
+        assertEquals(1, v.getMicro());
+        assertEquals("-DR1", v.getSpecifier());
+
+        v = Version.parseEapVersion("6.3.1.DR2");
+        assertEquals(6, v.getMajor());
+        assertEquals(3, v.getMinor());
+        assertEquals(1, v.getMicro());
+        assertEquals(".DR2", v.getSpecifier());
     }
 
     @Test
@@ -216,56 +213,59 @@ public class VersionTest {
     }
 
     @Test
-    public void testParseEAPVersion() {
-        v = Version.parseEapVersion("jboss-eap-6.3.1");
-        assertEquals(6, v.getMajor());
-        assertEquals(3, v.getMinor());
-        assertEquals(1, v.getMicro());
+    public void testParseVersion() {
+        v = new Version("35");
+        assertEquals(35, v.getMajor());
+        assertEquals(0, v.getMinor());
+        assertEquals(0, v.getMicro());
+        assertEquals("", v.getSpecifier());
 
-        v = Version.parseEapVersion("jboss-eap-6.3.1-patched");
-        assertEquals(6, v.getMajor());
-        assertEquals(3, v.getMinor());
+        v = new Version("35.1esr");
+        assertEquals(35, v.getMajor());
+        assertEquals(1, v.getMinor());
+        assertEquals(0, v.getMicro());
+        assertEquals("esr", v.getSpecifier());
+
+        v = new Version("35.1.2esr");
+        assertEquals(35, v.getMajor());
+        assertEquals(1, v.getMinor());
+        assertEquals(2, v.getMicro());
+        assertEquals("esr", v.getSpecifier());
+
+        v = new Version("35.12esr.old");
+        assertEquals(35, v.getMajor());
+        assertEquals(12, v.getMinor());
+        assertEquals(0, v.getMicro());
+        assertEquals("esr.old", v.getSpecifier());
+
+        v = new Version("24.2esr.old.2");
+        assertEquals(24, v.getMajor());
+        assertEquals(2, v.getMinor());
+        assertEquals(0, v.getMicro());
+        assertEquals("esr.old.2", v.getSpecifier());
+
+        v = new Version("24.2.1.1.esr");
+        assertEquals(24, v.getMajor());
+        assertEquals(2, v.getMinor());
         assertEquals(1, v.getMicro());
+        assertEquals(".1.esr", v.getSpecifier());
+
+        v = new Version("24esr");
+        assertEquals(24, v.getMajor());
+        assertEquals(0, v.getMinor());
+        assertEquals(0, v.getMicro());
+        assertEquals("esr", v.getSpecifier());
+
+        v = new Version("24esr.1");
+        assertEquals(24, v.getMajor());
+        assertEquals(0, v.getMinor());
+        assertEquals(0, v.getMicro());
+        assertEquals("esr.1", v.getSpecifier());
+
+        v = new Version("6.2.4-patched");
+        assertEquals(6, v.getMajor());
+        assertEquals(2, v.getMinor());
+        assertEquals(4, v.getMicro());
         assertEquals("-patched", v.getSpecifier());
-
-        v = Version.parseEapVersion("6.3.1-patched");
-        assertEquals(6, v.getMajor());
-        assertEquals(3, v.getMinor());
-        assertEquals(1, v.getMicro());
-        assertEquals("-patched", v.getSpecifier());
-
-        v = Version.parseEapVersion("6.3.1-DR1");
-        assertEquals(6, v.getMajor());
-        assertEquals(3, v.getMinor());
-        assertEquals(1, v.getMicro());
-        assertEquals("-DR1", v.getSpecifier());
-
-        v = Version.parseEapVersion("6.3.1.DR2");
-        assertEquals(6, v.getMajor());
-        assertEquals(3, v.getMinor());
-        assertEquals(1, v.getMicro());
-        assertEquals(".DR2", v.getSpecifier());
-    }
-
-    @Test
-    public void testFormat() {
-        String versionSttring = "3.2.1abc";
-        v = Version.parseVersion(versionSttring);
-
-        assertEquals(versionSttring, v.getFullFormat());
-        assertEquals("3.2", v.getMajorMinorFormat());
-        assertEquals("3.2.1", v.getMajorMinorMicroFormat());
-        assertEquals("3.2.1abc", v.getMajorMinorMicroSpecifierFormat());
-        assertEquals("abc", v.getFormat(EnumSet.of(Format.specifier)));
-        assertEquals("", v.getFormat(EnumSet.of(Format.prefix)));
-
-        versionSttring = "prefix-3.2.1abc";
-        v = Version.parseVersion(versionSttring, "prefix-");
-        assertEquals("3.2", v.getMajorMinorFormat());
-        assertEquals("3.2.1", v.getMajorMinorMicroFormat());
-        assertEquals(versionSttring, v.getFullFormat());
-        assertEquals("3.2.1abc", v.getMajorMinorMicroSpecifierFormat());
-        assertEquals("abc", v.getFormat(EnumSet.of(Format.specifier)));
-        assertEquals("prefix-", v.getFormat(EnumSet.of(Format.prefix)));
     }
 }

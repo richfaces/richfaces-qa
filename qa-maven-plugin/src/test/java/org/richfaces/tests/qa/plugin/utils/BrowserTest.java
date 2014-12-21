@@ -1,6 +1,6 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2014, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+*/
 package org.richfaces.tests.qa.plugin.utils;
 
 import static org.junit.Assert.assertEquals;
@@ -38,6 +38,34 @@ public class BrowserTest {
     @Before
     public void setUp() {
         browser = null;
+    }
+
+    @Test
+    public void testParsingChrome() {
+        browser = Browser.parseFromString("cr");
+        assertEquals(BrowserName.chrome, browser.getName());
+        assertTrue(browser.isUnknownVersion());
+
+        browser = Browser.parseFromString("chrome");
+        assertEquals(BrowserName.chrome, browser.getName());
+        assertTrue(browser.isUnknownVersion());
+
+        browser = Browser.parseFromString("chrome36");
+        assertEquals(BrowserName.chrome, browser.getName());
+        assertEquals(Version.parseVersion("36"), browser.getVersion());
+
+        browser = Browser.parseFromString("cr33");
+        assertEquals(BrowserName.chrome, browser.getName());
+        assertEquals(Version.parseVersion("33"), browser.getVersion());
+
+        browser = Browser.parseFromString("cr-31");
+        assertEquals(BrowserName.chrome, browser.getName());
+        assertEquals(Version.parseVersion("31"), browser.getVersion());
+
+        browser = Browser.parseFromString("ChRoME32");
+        assertEquals(BrowserName.chrome, browser.getName());
+        assertEquals(Version.parseVersion("32"), browser.getVersion());
+
     }
 
     @Test
@@ -77,34 +105,6 @@ public class BrowserTest {
         browser = Browser.parseFromString("firefox31.1.0-esrXYZ");
         assertEquals(BrowserName.firefox, browser.getName());
         assertEquals(Version.parseVersion("31.1.0-esrXYZ"), browser.getVersion());
-    }
-
-    @Test
-    public void testParsingChrome() {
-        browser = Browser.parseFromString("cr");
-        assertEquals(BrowserName.chrome, browser.getName());
-        assertTrue(browser.isUnknownVersion());
-
-        browser = Browser.parseFromString("chrome");
-        assertEquals(BrowserName.chrome, browser.getName());
-        assertTrue(browser.isUnknownVersion());
-
-        browser = Browser.parseFromString("chrome36");
-        assertEquals(BrowserName.chrome, browser.getName());
-        assertEquals(Version.parseVersion("36"), browser.getVersion());
-
-        browser = Browser.parseFromString("cr33");
-        assertEquals(BrowserName.chrome, browser.getName());
-        assertEquals(Version.parseVersion("33"), browser.getVersion());
-
-        browser = Browser.parseFromString("cr-31");
-        assertEquals(BrowserName.chrome, browser.getName());
-        assertEquals(Version.parseVersion("31"), browser.getVersion());
-
-        browser = Browser.parseFromString("ChRoME32");
-        assertEquals(BrowserName.chrome, browser.getName());
-        assertEquals(Version.parseVersion("32"), browser.getVersion());
-
     }
 
     @Test

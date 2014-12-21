@@ -19,46 +19,16 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 */
-package org.richfaces.tests.qa.plugin.utils;
+package org.richfaces.tests.qa.plugin.ensurer;
 
 import java.util.Collection;
-import java.util.List;
 
-import com.google.common.collect.ForwardingList;
-import com.google.common.collect.Lists;
+import com.google.inject.Provider;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TolerantContainsList extends ForwardingList<String> {
+public interface EnsurersProvider extends Provider<Collection<Ensurer>> {
 
-    private final List<String> delegate;
-
-    public TolerantContainsList(List<String> delegate) {
-        this.delegate = delegate;
-    }
-
-    public TolerantContainsList(Collection<String> delegate) {
-        this.delegate = Lists.newArrayList(delegate);
-    }
-
-    public TolerantContainsList(String... values) {
-        this.delegate = Lists.newArrayList(values);
-    }
-
-    @Override
-    public boolean contains(Object o) {
-        String toFind = o.toString().toLowerCase();
-        for (String string : this) {
-            if (string.toLowerCase().contains(toFind)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    protected List<String> delegate() {
-        return delegate;
-    }
+    Collection<Ensurer> get();
 }
