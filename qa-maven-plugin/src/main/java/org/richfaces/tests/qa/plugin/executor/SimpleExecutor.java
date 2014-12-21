@@ -19,46 +19,31 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 */
-package org.richfaces.tests.qa.plugin.utils;
+package org.richfaces.tests.qa.plugin.executor;
 
-import java.util.Collection;
-import java.util.List;
+import org.richfaces.tests.qa.plugin.ensurer.Ensurer;
+import org.richfaces.tests.qa.plugin.ensurer.EnsurersProvider;
 
-import com.google.common.collect.ForwardingList;
-import com.google.common.collect.Lists;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TolerantContainsList extends ForwardingList<String> {
+@Singleton
+public class SimpleExecutor implements Executor {
 
-    private final List<String> delegate;
+    private final EnsurersProvider ensurersProvider;
 
-    public TolerantContainsList(List<String> delegate) {
-        this.delegate = delegate;
-    }
-
-    public TolerantContainsList(Collection<String> delegate) {
-        this.delegate = Lists.newArrayList(delegate);
-    }
-
-    public TolerantContainsList(String... values) {
-        this.delegate = Lists.newArrayList(values);
+    @Inject
+    public SimpleExecutor(EnsurersProvider ensurersProvider) {
+        this.ensurersProvider = ensurersProvider;
     }
 
     @Override
-    public boolean contains(Object o) {
-        String toFind = o.toString().toLowerCase();
-        for (String string : this) {
-            if (string.toLowerCase().contains(toFind)) {
-                return true;
-            }
+    public void execute() {
+        for (Ensurer ensurer : ensurersProvider.get()) {
+            ensurer.ensure();
         }
-        return false;
-    }
-
-    @Override
-    protected List<String> delegate() {
-        return delegate;
     }
 }

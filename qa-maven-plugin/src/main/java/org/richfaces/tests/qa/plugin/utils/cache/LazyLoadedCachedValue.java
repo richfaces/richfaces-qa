@@ -19,46 +19,23 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 */
-package org.richfaces.tests.qa.plugin.utils;
-
-import java.util.Collection;
-import java.util.List;
-
-import com.google.common.collect.ForwardingList;
-import com.google.common.collect.Lists;
+package org.richfaces.tests.qa.plugin.utils.cache;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @param <T>
  */
-public class TolerantContainsList extends ForwardingList<String> {
+public abstract class LazyLoadedCachedValue<T> {
 
-    private final List<String> delegate;
+    private T value;
 
-    public TolerantContainsList(List<String> delegate) {
-        this.delegate = delegate;
-    }
-
-    public TolerantContainsList(Collection<String> delegate) {
-        this.delegate = Lists.newArrayList(delegate);
-    }
-
-    public TolerantContainsList(String... values) {
-        this.delegate = Lists.newArrayList(values);
-    }
-
-    @Override
-    public boolean contains(Object o) {
-        String toFind = o.toString().toLowerCase();
-        for (String string : this) {
-            if (string.toLowerCase().contains(toFind)) {
-                return true;
-            }
+    public T getValue() {
+        if (value == null) {
+            value = initValue();
         }
-        return false;
+        return value;
     }
 
-    @Override
-    protected List<String> delegate() {
-        return delegate;
-    }
+    protected abstract T initValue();
+
 }

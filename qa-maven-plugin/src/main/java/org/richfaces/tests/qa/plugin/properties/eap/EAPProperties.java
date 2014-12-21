@@ -1,6 +1,6 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2014, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,92 +18,24 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+*/
 package org.richfaces.tests.qa.plugin.properties.eap;
 
 import java.io.File;
 import java.net.URL;
 
-import org.richfaces.tests.qa.plugin.utils.Servant;
-import org.richfaces.tests.qa.plugin.utils.Utils;
 import org.richfaces.tests.qa.plugin.utils.Version;
 
 /**
- *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class EAPProperties {
+public interface EAPProperties {
 
-    private static final String hudsonStaticUnix = "/home/hudson/static_build_env/";
-    private static final String hudsonStaticWin = "h:/hudson/static_build_env/";
+    String getEapExtractedDirectoryName();
 
-    private final boolean isInReleasedRepository;
-    private File jenkinsEapZipFile;
-    private final Servant servant;
-    private final String urlPart1Candidates = "http://download.englab.brq.redhat.com/devel/candidates/JBEAP";
-    private final String urlPart1Released = "http://download.englab.brq.redhat.com/released/JBEAP-6";
-    private URL urlToEapZip;
-    private final Version version;
+    File getJenkinsEapZipFile();
 
-    public EAPProperties(String versionString, Servant servant) {
-        this.version = Version.parseEapVersion(versionString);
-        this.servant = servant;
-        isInReleasedRepository = version.getSpecifier().isEmpty();
-    }
+    URL getUrlToEapZip();
 
-    public static EAPProperties getPropertiesForVersion(String versionString, Servant servant) {
-        return new EAPProperties(versionString, servant);
-    }
-
-    protected File _getJenkinsEapZipFile() {
-        return new File(String.format("%s/eap/%s/%s.zip", getServant().isOnWindows() ? hudsonStaticWin : hudsonStaticUnix,
-            getVersion().getMajorMinorMicroSpecifierFormat(), getEAPZipName()));
-    }
-
-    protected URL _getUrlToEapZip() {
-        return Utils.createURLSilently(String.format("%s/%s/%s.zip", getURLPart1(), getURLPart2(), getURLPart3()));
-    }
-
-    protected String getEAPZipName() {
-        // version 6.x.y, if x > 1 && y > 0  => *-full-build.zip
-        return getVersion().getMinor() > 1 && getVersion().getMicro() > 0 ? getVersion().getFullFormat() + "-full-build" : getVersion().getFullFormat();
-    }
-
-    public String getEapExtractedDirectoryName() {
-        return "jboss-eap-" + getVersion().getMajorMinorFormat();
-    }
-
-    public File getJenkinsEapZipFile() {
-        if (jenkinsEapZipFile == null) {
-            jenkinsEapZipFile = _getJenkinsEapZipFile();
-        }
-        return jenkinsEapZipFile;
-    }
-
-    public Servant getServant() {
-        return servant;
-    }
-
-    protected String getURLPart1() {
-        return isInReleasedRepository ? urlPart1Released : urlPart1Candidates;
-    }
-
-    protected String getURLPart2() {
-        return isInReleasedRepository ? getVersion().getMajorMinorMicroFormat() : "JBEAP-" + getVersion().getMajorMinorMicroSpecifierFormat();
-    }
-
-    protected String getURLPart3() {
-        return getEAPZipName();
-    }
-
-    public URL getUrlToEapZip() {
-        if (urlToEapZip == null) {
-            urlToEapZip = _getUrlToEapZip();
-        }
-        return urlToEapZip;
-    }
-
-    public Version getVersion() {
-        return version;
-    }
+    Version getVersion();
 }

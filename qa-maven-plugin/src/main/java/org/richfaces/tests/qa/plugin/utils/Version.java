@@ -1,6 +1,6 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2014, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+*/
 package org.richfaces.tests.qa.plugin.utils;
 
 import java.text.MessageFormat;
@@ -28,7 +28,6 @@ import java.util.EnumSet;
 import java.util.List;
 
 /**
- *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class Version implements Comparable<Version> {
@@ -37,10 +36,10 @@ public class Version implements Comparable<Version> {
 
     private static final String eapPrefix = "jboss-eap-";
     private static final String ffPrefix = "firefox-";
+    private final String ANYTHING = ".";
 
     private final String DIGITS = "\\d+";
     private final String NON_DIGITS = "\\D";
-    private final String ANYTHING = ".";
     private final String VERSION_SEPARATOR = "\\.";
     private final String DIGITS_FOLLOWED_BY_ANYTHING = MessageFormat.format("{0}{1}+{2}+", DIGITS, NON_DIGITS, ANYTHING);
 
@@ -50,22 +49,6 @@ public class Version implements Comparable<Version> {
     private final String prefix;
     private final String specifier;
 
-    public static Version parseEapVersion(String versionString) {
-        return new Version(versionString, eapPrefix);
-    }
-
-    public static Version parseFirefoxVersion(String versionString) {
-        return new Version(versionString, ffPrefix);
-    }
-
-    public static Version parseVersion(String versionString) {
-        return parseVersion(versionString, null);
-    }
-
-    public static Version parseVersion(String versionString, String prefix) {
-        return new Version(versionString, prefix);
-    }
-
     public Version(String versionString, String prefix) {
         String tmp = versionString;
         this.prefix = prefix;
@@ -73,15 +56,15 @@ public class Version implements Comparable<Version> {
             tmp = tmp.substring(tmp.indexOf(prefix) + prefix.length());
         }
         List<String> split = new ArrayList<String>(Arrays.asList(tmp.split(VERSION_SEPARATOR)));
-        List<Integer> v = new ArrayList<Integer>();
+        List<Integer> v = new ArrayList<Integer>(3);
         String spec = "";
         while (!split.isEmpty() && v.size() != 3) {
             String remove = split.remove(0);
             if (remove.matches(DIGITS_FOLLOWED_BY_ANYTHING)) {
                 String replaceFirst = remove.replaceFirst(NON_DIGITS, "+");
-                v.add(Integer.valueOf(replaceFirst.substring(0, replaceFirst.indexOf("+"))));
+                v.add(Integer.valueOf(replaceFirst.substring(0, replaceFirst.indexOf('+'))));
                 replaceFirst = remove.replaceFirst(DIGITS, "+");
-                spec = replaceFirst.substring(replaceFirst.indexOf("+") + 1);
+                spec = replaceFirst.substring(replaceFirst.indexOf('+') + 1);
                 break;
             } else if (remove.matches(DIGITS)) {
                 v.add(Integer.valueOf(remove));
@@ -117,6 +100,22 @@ public class Version implements Comparable<Version> {
 
     public Version(String versionString) {
         this(versionString, null);
+    }
+
+    public static Version parseEapVersion(String versionString) {
+        return new Version(versionString, eapPrefix);
+    }
+
+    public static Version parseFirefoxVersion(String versionString) {
+        return new Version(versionString, ffPrefix);
+    }
+
+    public static Version parseVersion(String versionString) {
+        return parseVersion(versionString, null);
+    }
+
+    public static Version parseVersion(String versionString, String prefix) {
+        return new Version(versionString, prefix);
     }
 
     @Override
