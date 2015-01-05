@@ -56,6 +56,7 @@ public class TestTwoPush extends AbstractWebDriverTest {
         // Graphene.guardAjax doesn't work here
         String requestTime = page.getRequestTimeElement().getText();
         page.pushEnabledChckBox.click();
+        waiting(1000);// https://issues.jboss.org/browse/RFPL-3692 , remove if needed after RF-13949 solved
         Graphene.waitModel().until().element(page.getRequestTimeElement()).text().not().equalTo(requestTime);
         if (waitForReinitialization) {
             waitUntilPushReinits();
