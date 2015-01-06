@@ -22,12 +22,13 @@
 package org.richfaces.tests.metamer.ftest.a4jAjax;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
 import org.testng.annotations.Test;
 
 /**
@@ -40,19 +41,29 @@ import org.testng.annotations.Test;
 public class TestHInputSecret extends AbstractAjaxTest {
 
     @Override
+    public String getDefaultOutput() {
+        return "";
+    }
+
+    @Override
+    public String getExpectedOutput() {
+        return "RichFaces 4";
+    }
+
+    @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jAjax/hInputSecret.xhtml");
     }
 
-    @Test
-    public void testSimpleType() {
-        super.testType();
+    @Override
+    public void performAction() {
+        performAction("RichFaces 4");
     }
 
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-9665")
-    public void testSimpleTypeUnicode() {
-        super.testTypeUnicode();
+    @Override
+    public void performAction(String input) {
+        page.input.clear();
+        typeKeys(input);
     }
 
     @Test
@@ -68,6 +79,11 @@ public class TestHInputSecret extends AbstractAjaxTest {
     @Test
     public void testDisabled() {
         super.testDisabledForTextInputs();
+    }
+
+    @Test
+    public void testEvents() {
+        super.testEventsForTextInputs();
     }
 
     @Test
@@ -91,8 +107,9 @@ public class TestHInputSecret extends AbstractAjaxTest {
     }
 
     @Test
-    public void testEvents() {
-        super.testEventsForTextInputs();
+    @UseWithField(field = "listener", valuesFrom = ValuesFrom.FROM_ENUM, value = "")
+    public void testListener() {
+        testListener(getActionMapForListeners());
     }
 
     @Test
@@ -101,33 +118,18 @@ public class TestHInputSecret extends AbstractAjaxTest {
     }
 
     @Test
+    public void testSimpleType() {
+        super.testType();
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-9665")
+    public void testSimpleTypeUnicode() {
+        super.testTypeUnicode();
+    }
+
+    @Test
     public void testStatus() {
         super.testStatus();
-    }
-
-    @Override
-    public void performAction() {
-        final String text = "RichFaces 4";
-        typeKeys(text);
-    }
-
-    @Override
-    public void assertOutput1Changed() {
-        assertEquals(page.output1.getText(), "RichFaces 4", "Output1 should change");
-    }
-
-    @Override
-    public void assertOutput1NotChanged() {
-        assertEquals(page.output1.getText(), "", "Output1 should not change");
-    }
-
-    @Override
-    public void assertOutput2Changed() {
-        assertEquals(page.output2.getText(), "RichFaces 4", "Output2 should change");
-    }
-
-    @Override
-    public void assertOutput2NotChanged() {
-        assertEquals(page.output2.getText(), "", "Output2 should not change");
     }
 }

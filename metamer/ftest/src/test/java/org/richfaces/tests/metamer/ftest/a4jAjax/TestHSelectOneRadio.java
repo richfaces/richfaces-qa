@@ -22,12 +22,13 @@
 package org.richfaces.tests.metamer.ftest.a4jAjax;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -43,13 +44,28 @@ public class TestHSelectOneRadio extends AbstractAjaxTest {
     private final Attributes<AjaxAttributes> ajaxAttributes = getAttributes();
 
     @Override
+    public String getDefaultOutput() {
+        return "Ferrari";
+    }
+
+    @Override
+    public String getExpectedOutput() {
+        return "Audi";
+    }
+
+    @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jAjax/hSelectOneRadio.xhtml");
     }
 
-    @Test(groups = { "screenshot" })
-    public void testSimpleClick() {
-        super.testClick();
+    @Override
+    public void performAction() {
+        Graphene.guardAjax(page.selectOneRadio).click();
+    }
+
+    @Override
+    public void performAction(String input) {
+        performAction();
     }
 
     @Test
@@ -66,6 +82,11 @@ public class TestHSelectOneRadio extends AbstractAjaxTest {
     public void testDisabled() {
         ajaxAttributes.set(AjaxAttributes.disabled, true);
         Graphene.guardNoRequest(page.selectOneRadio).click();
+    }
+
+    @Test
+    public void testEvents() {
+        super.testEvents();
     }
 
     @Test
@@ -89,8 +110,9 @@ public class TestHSelectOneRadio extends AbstractAjaxTest {
     }
 
     @Test
-    public void testEvents() {
-        super.testEvents();
+    @UseWithField(field = "listener", valuesFrom = ValuesFrom.FROM_ENUM, value = "")
+    public void testListener() {
+        testListener(getActionMapForListeners());
     }
 
     @Test
@@ -98,33 +120,13 @@ public class TestHSelectOneRadio extends AbstractAjaxTest {
         super.testRender();
     }
 
+    @Test(groups = { "screenshot" })
+    public void testSimpleClick() {
+        super.testClick();
+    }
+
     @Test
     public void testStatus() {
         super.testStatus();
-    }
-
-    @Override
-    public void performAction() {
-        Graphene.guardAjax(page.selectOneRadio).click();
-    }
-
-    @Override
-    public void assertOutput1Changed() {
-        assertEquals(page.output1.getText(), "Audi", "Output1 should change");
-    }
-
-    @Override
-    public void assertOutput1NotChanged() {
-        assertEquals(page.output1.getText(), "Ferrari", "Output1 should not change");
-    }
-
-    @Override
-    public void assertOutput2Changed() {
-        assertEquals(page.output2.getText(), "Audi", "Output2 should change");
-    }
-
-    @Override
-    public void assertOutput2NotChanged() {
-        assertEquals(page.output2.getText(), "Ferrari", "Output2 should not change");
     }
 }

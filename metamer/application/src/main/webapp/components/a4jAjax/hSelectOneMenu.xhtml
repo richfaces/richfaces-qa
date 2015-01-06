@@ -65,14 +65,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             <br/>
 
-            Your selection:
-            <a4j:outputPanel id="output1">
-                #{a4jAjaxBean.car}
+            <a4j:outputPanel id="output1" layout="block">
+                <h:outputText value="#{a4jAjaxBean.getOutput('car')}"/>
             </a4j:outputPanel>
-            <br/>
-            Your selection:
-            <a4j:outputPanel id="output2">
-                #{a4jAjaxBean.car}
+            <a4j:outputPanel id="output2" layout="block">
+                <h:outputText value="#{a4jAjaxBean.getOutput('car')}"/>
             </a4j:outputPanel>
 
         </ui:define>

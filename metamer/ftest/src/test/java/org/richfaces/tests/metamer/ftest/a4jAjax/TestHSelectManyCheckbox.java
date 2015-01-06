@@ -22,12 +22,13 @@
 package org.richfaces.tests.metamer.ftest.a4jAjax;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -43,13 +44,28 @@ public class TestHSelectManyCheckbox extends AbstractAjaxTest {
     private final Attributes<AjaxAttributes> ajaxAttributes = getAttributes();
 
     @Override
+    public String getDefaultOutput() {
+        return "[Ferrari, Lexus]";
+    }
+
+    @Override
+    public String getExpectedOutput() {
+        return "[Audi, Ferrari, Lexus]";
+    }
+
+    @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jAjax/hSelectManyCheckbox.xhtml");
     }
 
-    @Test
-    public void testSimpleClick() {
-        super.testClick();
+    @Override
+    public void performAction() {
+        Graphene.guardAjax(page.selectManyCheckbox).click();
+    }
+
+    @Override
+    public void performAction(String input) {
+        Graphene.guardAjax(page.selectManyCheckbox).click();
     }
 
     @Test
@@ -66,6 +82,11 @@ public class TestHSelectManyCheckbox extends AbstractAjaxTest {
     public void testDisabled() {
         ajaxAttributes.set(AjaxAttributes.disabled, true);
         Graphene.guardNoRequest(page.selectManyCheckbox).click();
+    }
+
+    @Test
+    public void testEvents() {
+        super.testEvents();
     }
 
     @Test
@@ -89,8 +110,9 @@ public class TestHSelectManyCheckbox extends AbstractAjaxTest {
     }
 
     @Test
-    public void testEvents() {
-        super.testEvents();
+    @UseWithField(field = "listener", valuesFrom = ValuesFrom.FROM_ENUM, value = "")
+    public void testListener() {
+        testListener(getActionMapForListeners());
     }
 
     @Test
@@ -99,32 +121,12 @@ public class TestHSelectManyCheckbox extends AbstractAjaxTest {
     }
 
     @Test
+    public void testSimpleClick() {
+        super.testClick();
+    }
+
+    @Test
     public void testStatus() {
         super.testStatus();
-    }
-
-    @Override
-    public void performAction() {
-        Graphene.guardAjax(page.selectManyCheckbox).click();
-    }
-
-    @Override
-    public void assertOutput1Changed() {
-        assertEquals(page.output1.getText(), "[Audi, Ferrari, Lexus]", "Output1 should change");
-    }
-
-    @Override
-    public void assertOutput1NotChanged() {
-        assertEquals(page.output1.getText(), "[Ferrari, Lexus]", "Output1 should not change");
-    }
-
-    @Override
-    public void assertOutput2Changed() {
-        assertEquals(page.output2.getText(), "[Audi, Ferrari, Lexus]", "Output2 should change");
-    }
-
-    @Override
-    public void assertOutput2NotChanged() {
-        assertEquals(page.output2.getText(), "[Ferrari, Lexus]", "Output2 should not change");
     }
 }

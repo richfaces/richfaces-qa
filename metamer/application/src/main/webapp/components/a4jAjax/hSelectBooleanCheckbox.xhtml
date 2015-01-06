@@ -37,7 +37,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <h:selectBooleanCheckbox id="selectBooleanCheckbox" value="#{a4jAjaxBean.boolVal}">
+            <h:selectBooleanCheckbox id="selectBooleanCheckbox" value="#{a4jAjaxBean.bool}">
                 <a4j:ajax bypassUpdates="#{a4jAjaxBean.attributes['bypassUpdates'].value}"
                           data="#{a4jAjaxBean.attributes['data'].value}"
                           disabled="#{a4jAjaxBean.attributes['disabled'].value}"
@@ -58,14 +58,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             <br/>
 
-            Your selection:
             <a4j:outputPanel id="output1" layout="block">
-                #{a4jAjaxBean.boolVal}
+                <h:outputText value="#{a4jAjaxBean.getOutput('bool')}"/>
             </a4j:outputPanel>
-            <br/>
-            Your selection:
             <a4j:outputPanel id="output2" layout="block">
-                #{a4jAjaxBean.boolVal}
+                <h:outputText value="#{a4jAjaxBean.getOutput('bool')}"/>
             </a4j:outputPanel>
 
         </ui:define>
