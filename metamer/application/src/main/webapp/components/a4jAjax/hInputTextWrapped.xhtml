@@ -55,16 +55,16 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                       render="#{a4jAjaxBean.attributes['render'].value}"
                       status="#{a4jAjaxBean.attributes['status'].value}"
                       >
-                <h:inputText id="input1" value="#{a4jAjaxBean.input}"/><br/>
-                <h:inputText id="input2" value="#{a4jAjaxBean.input}"/><br/>
-                <h:inputText id="input3" value="#{a4jAjaxBean.input}"/><br/>
+                <h:inputText id="input1" value="#{a4jAjaxBean.text}"/><br/>
+                <h:inputText id="input2" value="#{a4jAjaxBean.text}"/><br/>
+                <h:inputText id="input3" value="#{a4jAjaxBean.text}"/><br/>
             </a4j:ajax>
 
             <a4j:outputPanel id="output1" layout="block">
-                <h:outputText value="#{a4jAjaxBean.input}"/>
+                <h:outputText value="#{a4jAjaxBean.getOutput('text')}"/>
             </a4j:outputPanel>
             <a4j:outputPanel id="output2" layout="block">
-                <h:outputText value="#{a4jAjaxBean.input}"/>
+                <h:outputText value="#{a4jAjaxBean.getOutput('text')}"/>
             </a4j:outputPanel>
 
         </ui:define>

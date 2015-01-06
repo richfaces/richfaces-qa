@@ -29,6 +29,8 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -47,27 +49,30 @@ public class TestHCommandLink extends AbstractAjaxTest {
     private final Attributes<AjaxAttributes> ajaxAttributes = getAttributes();
 
     @Override
+    public String getDefaultOutput() {
+        return "";
+    }
+
+    @Override
+    public String getExpectedOutput() {
+        return "RichFaces 4";
+    }
+
+    @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jAjax/hCommandLink.xhtml");
     }
 
-    @Test
-    public void testSimpleClick() {
-        page.input.sendKeys("RichFaces 4");
-        MetamerPage.waitRequest(page.link, WaitRequestType.XHR).click();
-
-        assertOutput1Changed();
-        assertOutput2Changed();
+    @Override
+    public void performAction(String input) {
+        page.input.clear();
+        page.input.sendKeys(input);
+        Graphene.guardAjax(page.link).click();
     }
 
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-9665")
-    public void testSimpleClickUnicode() {
-        page.input.sendKeys("ľščťžýáíéúôň фывацукйешгщь");
-        MetamerPage.waitRequest(page.link, WaitRequestType.XHR).click();
-
-        assertEquals(page.output1.getText(), "ľščťžýáíéúôň фывацукйешгщь", "Output2 should change");
-        assertEquals(page.output2.getText(), "ľščťžýáíéúôň фывацукйешгщь", "Output2 should change");
+    @Override
+    public void performAction() {
+        performAction("RichFaces 4");
     }
 
     @Test
@@ -92,6 +97,11 @@ public class TestHCommandLink extends AbstractAjaxTest {
     }
 
     @Test
+    public void testEvents() {
+        super.testEvents();
+    }
+
+    @Test
     public void testExecute() {
         super.testExecute();
     }
@@ -112,8 +122,9 @@ public class TestHCommandLink extends AbstractAjaxTest {
     }
 
     @Test
-    public void testEvents() {
-        super.testEvents();
+    @UseWithField(field = "listener", valuesFrom = ValuesFrom.FROM_ENUM, value = "")
+    public void testListener() {
+        testListener(getActionMapForListeners());
     }
 
     @Test
@@ -122,33 +133,26 @@ public class TestHCommandLink extends AbstractAjaxTest {
     }
 
     @Test
+    public void testSimpleClick() {
+        page.input.sendKeys("RichFaces 4");
+        MetamerPage.waitRequest(page.link, WaitRequestType.XHR).click();
+
+        assertOutput1Changed();
+        assertOutput2Changed();
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-9665")
+    public void testSimpleClickUnicode() {
+        page.input.sendKeys("ľščťžýáíéúôň фывацукйешгщь");
+        MetamerPage.waitRequest(page.link, WaitRequestType.XHR).click();
+
+        assertEquals(page.output1.getText(), "ľščťžýáíéúôň фывацукйешгщь", "Output2 should change");
+        assertEquals(page.output2.getText(), "ľščťžýáíéúôň фывацукйешгщь", "Output2 should change");
+    }
+
+    @Test
     public void testStatus() {
         super.testStatus();
-    }
-
-    @Override
-    public void performAction() {
-        page.input.sendKeys("RichFaces 4");
-        Graphene.guardAjax(page.link).click();
-    }
-
-    @Override
-    public void assertOutput1Changed() {
-        assertEquals(page.output1.getText(), "RichFaces 4", "Output1 should change");
-    }
-
-    @Override
-    public void assertOutput1NotChanged() {
-        assertEquals(page.output1.getText(), "", "Output1 should not change");
-    }
-
-    @Override
-    public void assertOutput2Changed() {
-        assertEquals(page.output2.getText(), "RichFaces 4", "Output2 should change");
-    }
-
-    @Override
-    public void assertOutput2NotChanged() {
-        assertEquals(page.output2.getText(), "", "Output2 should not change");
     }
 }

@@ -37,7 +37,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <h:inputText id="input" value="#{a4jAjaxBean.input}"/>
+            <h:inputText id="input" value="#{a4jAjaxBean.text}"/>
             <h:commandButton id="commandButton" value="Submit" >
                 <a4j:ajax bypassUpdates="#{a4jAjaxBean.attributes['bypassUpdates'].value}"
                           data="#{a4jAjaxBean.attributes['data'].value}"
@@ -59,10 +59,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </h:commandButton>
 
             <a4j:outputPanel id="output1" layout="block">
-                <h:outputText value="#{a4jAjaxBean.input}"/>
+                <h:outputText value="#{a4jAjaxBean.getOutput('text')}"/>
             </a4j:outputPanel>
             <a4j:outputPanel id="output2" layout="block">
-                <h:outputText value="#{a4jAjaxBean.input}"/>
+                <h:outputText value="#{a4jAjaxBean.getOutput('text')}"/>
             </a4j:outputPanel>
 
         </ui:define>
