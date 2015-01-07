@@ -30,7 +30,7 @@ FSF site: http://www.fsf.org. -->
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
 
-        <version.richfaces>4.5.2.Final</version.richfaces>
+        <version.richfaces>4.5.2-SNAPSHOT</version.richfaces>
         <richfaces.checkstyle.version>5</richfaces.checkstyle.version>
 
         <!-- version of JBoss containers to use and download -->
