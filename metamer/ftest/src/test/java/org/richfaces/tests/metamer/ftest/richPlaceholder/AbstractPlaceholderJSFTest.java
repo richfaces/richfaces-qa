@@ -73,6 +73,10 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richPlaceholder/" + componentName + ".xhtml");
     }
 
+    protected String getTestedValue() {
+        return "abcd";
+    }
+
     Color getDefaultInputColor() {
         return Color.BLACK;
     }
@@ -162,8 +166,8 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
         assertTrue(getInput1StyleClass().contains(DEFAULT_PLACEHOLDER_CLASS), "Input 1 styleClass");
 
         clearInput1();
-        sendKeysToInput1("abcd");
-        assertEquals(getInput1EditValue(), "abcd", "Input 1 value");
+        sendKeysToInput1(getTestedValue());
+        assertEquals(getInput1EditValue(), getTestedValue(), "Input 1 value");
         assertFalse(getInput1StyleClass().contains(DEFAULT_PLACEHOLDER_CLASS), "Input 1 styleClass");
         assertEquals(getInput1Color(), getDefaultInputColor(), "Input 1 text color");
 
@@ -210,9 +214,9 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
         assertEquals(getInput1Color(), Color.blue);
 
         clearInput1();
-        sendKeysToInput1("abcd");
+        sendKeysToInput1(getTestedValue());
 
-        assertEquals(getInput1EditValue(), "abcd", "Input 1 value");
+        assertEquals(getInput1EditValue(), getTestedValue(), "Input 1 value");
         assertFalse(getInput1StyleClass().contains(DEFAULT_PLACEHOLDER_CLASS), "Input 1 styleClass");
         assertEquals(getInput1Color(), getDefaultInputColor());
     }

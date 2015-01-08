@@ -21,8 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richPlaceholder;
 
-import java.awt.Color;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
@@ -46,11 +44,6 @@ public class TestPlaceHolderWithSelect extends AbstractPlaceholderJSFTest {
     }
 
     @Override
-    Color getDefaultInputColor() {
-        return new Color(255, 0, 0);
-    }
-
-    @Override
     WebElement getInput1() {
         return input1;
     }
@@ -63,6 +56,11 @@ public class TestPlaceHolderWithSelect extends AbstractPlaceholderJSFTest {
     @Override
     protected void clearInput1() {
         input1.clear();
+    }
+
+    @Override
+    protected String getTestedValue() {
+        return "Alabama";
     }
 
     @Override
