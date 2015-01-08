@@ -123,13 +123,13 @@ public class TestTreeAttributes extends AbstractTreeTest {
     @Templates("plain")
     public void testIconExpanded() {
         treeAttributes.set(TreeAttributes.iconExpanded, IMAGE_URL);
-        TreeNode node = getGuarded(tree, SwitchType.ajax).expandNode(0);
+        TreeNode node = Graphene.guardAjax(tree).expandNode(0);
         assertTrue(node.advanced().getIconElement().getAttribute("src").endsWith(IMAGE_URL));
         String attribute = Optional.fromNullable(
             getGuarded(node.advanced(), SwitchType.ajax).collapse().advanced().getIconElement().getAttribute("src")).or("");
         assertFalse(attribute.endsWith(IMAGE_URL));
-        assertTrue(getGuarded(node.advanced(), SwitchType.ajax).expand().expandNode(0).advanced().getIconElement()
-            .getAttribute("src").endsWith(IMAGE_URL));
+        node = Graphene.guardAjax(Graphene.guardAjax(node.advanced()).expand()).expandNode(0);
+        assertTrue(node.advanced().getIconElement().getAttribute("src").endsWith(IMAGE_URL));
     }
 
     @Test
@@ -393,7 +393,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates(exclude = "a4jRegion")
     public void testSelectionClientSideEventsOrder() {
-        String[] events = new String[]{ "beforeselectionchange", "begin", "beforedomupdate", "complete", "selectionchange" };
+        String[] events = new String[] { "beforeselectionchange", "begin", "beforedomupdate", "complete", "selectionchange" };
         testRequestEventsBefore(events);
         selectFirstNodeAjaxAction.perform();
         testRequestEventsAfter(events);
@@ -471,7 +471,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testToggleClientSideEventsOrder() {
         treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax.toString().toLowerCase());
-        String[] events = new String[]{ "beforenodetoggle", "begin", "beforedomupdate", "complete", "nodetoggle" };
+        String[] events = new String[] { "beforenodetoggle", "begin", "beforedomupdate", "complete", "nodetoggle" };
         testRequestEventsBefore(events);
         expandFirstNodeAjaxAction.perform();
         testRequestEventsAfter(events);
@@ -482,7 +482,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     public void testToggleNodeEvent() {
         treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax);
         List<Event> testedEvents = Lists.newArrayList(Event.CLICK, Event.CONTEXTCLICK, Event.DBLCLICK);
-        for (boolean toggleByHandle : new boolean[]{ true, false }) {
+        for (boolean toggleByHandle : new boolean[] { true, false }) {
             tree.advanced().setToggleByHandle(toggleByHandle);
             for (Event event : testedEvents) {
                 treeAttributes.set(TreeAttributes.toggleNodeEvent, event.toString());
