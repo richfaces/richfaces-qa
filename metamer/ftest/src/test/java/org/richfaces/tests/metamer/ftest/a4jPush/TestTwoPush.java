@@ -38,6 +38,7 @@ import org.richfaces.tests.metamer.bean.a4j.A4JPushBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.google.common.base.Predicate;
@@ -59,7 +60,7 @@ public class TestTwoPush extends AbstractWebDriverTest {
         waiting(1000);// https://issues.jboss.org/browse/RFPL-3692 , remove if needed after RF-13949 solved
         Graphene.waitModel().until().element(page.getRequestTimeElement()).text().not().equalTo(requestTime);
         if (waitForReinitialization) {
-            waitUntilPushReinits();
+            waitUntilPushInitializes();
         }
     }
 
@@ -142,15 +143,14 @@ public class TestTwoPush extends AbstractWebDriverTest {
     }
 
     /**
-     * When push component on page is disabled/re-enabled the same and even
-     * other
-     * push components don't receive updates for some time. This method should
-     * wait until push receives updates. It continously clicks the second push
-     * button (second push is always enabled) and checks if it received an
-     * update.
-     * Because of https://issues.jboss.org/browse/RF-12096.
+     * When push component on page is disabled/re-enabled the same and even other push components don't receive updates for some
+     * time. This method should wait until push receives updates. It continously clicks the second push button (second push is
+     * always enabled) and checks if it received an update. Because of https://issues.jboss.org/browse/RF-12096.
+     *
+     * Sometimes the push is not initialized on page load, this will initialize push before each test.
      */
-    private void waitUntilPushReinits() {
+    @BeforeMethod(alwaysRun = true, dependsOnMethods = "loadPage")
+    public void waitUntilPushInitializes() {
         new WebDriverWait(driver, 70, 1000)
             .withMessage("Waiting for push to reinitialize")
             .until(new Predicate<WebDriver>() {
