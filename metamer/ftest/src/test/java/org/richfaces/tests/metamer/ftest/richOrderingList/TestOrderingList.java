@@ -74,17 +74,17 @@ public class TestOrderingList extends AbstractOrderingListTest {
     @Test(groups = "smoke")
     public void testSubmit() {
         String firstBefore = orderingList.advanced().getItemsElements().get(0).getText();
-        String secondBefore = orderingList.advanced().getItemsElements().get(1).getText();
-        orderingList.select(1).putItBefore(0);
-        submit();
+        String thirdBefore = orderingList.advanced().getItemsElements().get(2).getText();
+        orderingList.select(2).putItBefore(0);
+        submitAndCheckElementsOrderPersists();
         String firstAfter = orderingList.advanced().getItemsElements().get(0).getText();
         String secondAfter = orderingList.advanced().getItemsElements().get(1).getText();
-        assertEquals(firstAfter, secondBefore, "After submitting the ordering list doesn't preserve the chosen order.");
+        assertEquals(firstAfter, thirdBefore, "After submitting the ordering list doesn't preserve the chosen order.");
         assertEquals(firstBefore, secondAfter, "After submitting the ordering list doesn't preserve the chosen order.");
-        submit();
+        submitAndCheckElementsOrderPersists();
         firstAfter = orderingList.advanced().getItemsElements().get(0).getText();
         secondAfter = orderingList.advanced().getItemsElements().get(1).getText();
-        assertEquals(firstAfter, secondBefore, "After submitting the ordering list doesn't preserve the chosen order.");
+        assertEquals(firstAfter, thirdBefore, "After submitting the ordering list doesn't preserve the chosen order.");
         assertEquals(firstBefore, secondAfter, "After submitting the ordering list doesn't preserve the chosen order.");
     }
 }
