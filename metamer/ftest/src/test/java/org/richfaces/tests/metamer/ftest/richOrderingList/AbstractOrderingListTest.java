@@ -37,8 +37,6 @@ import org.richfaces.fragment.list.RichFacesListItem;
 import org.richfaces.fragment.orderingList.RichFacesOrderingList;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 
 /**
  * Abstract test case for pages faces/components/richOrderingList/
@@ -52,6 +50,8 @@ public abstract class AbstractOrderingListTest extends AbstractWebDriverTest {
     protected RichFacesOrderingList orderingList;
     @FindBy(css = "input[id$=submitButton]")
     protected WebElement submitButton;
+    @FindBy(css = "[id$='output']")
+    protected WebElement output;
 
     protected final Attributes<OrderingListAttributes> attributes = getAttributes();
 
@@ -186,7 +186,24 @@ public abstract class AbstractOrderingListTest extends AbstractWebDriverTest {
     }
 
     protected void submit() {
-        MetamerPage.waitRequest(submitButton, WaitRequestType.HTTP).click();
+        Graphene.guardHttp(submitButton).click();
+    }
+
+    protected void submitAndCheckElementsOrderPersists() {
+        String listElementsBefore = orderingList.advanced().getContentAreaElement().getText();
+        submit();
+        String listElemenstAfter = orderingList.advanced().getContentAreaElement().getText();
+        String outputAfter = output.getText();
+
+        // remove header from elements
+        int beginIndex = "State Name ".length();
+        listElementsBefore = listElementsBefore.substring(beginIndex);
+        listElemenstAfter = listElemenstAfter.substring(beginIndex);
+        // get rid of comma between state and capital in output
+        outputAfter = outputAfter.replace(",", "");
+
+        assertEquals(listElemenstAfter, listElementsBefore, "After submitting the ordering list doesn't preserve the chosen order.");
+        assertEquals(outputAfter, listElementsBefore, "After submitting the ordering list doesn't preserve the chosen order.");
     }
 
     public static class TwoColumnListItem extends RichFacesListItem {

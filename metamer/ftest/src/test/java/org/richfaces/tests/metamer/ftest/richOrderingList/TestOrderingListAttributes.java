@@ -117,13 +117,13 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     public void testImmediate() {
         attributes.set(OrderingListAttributes.immediate, Boolean.FALSE);
         orderingList.select(1).putItBefore(0);
-        submit();
+        submitAndCheckElementsOrderPersists();
         getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
         getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed");
 
         attributes.set(OrderingListAttributes.immediate, Boolean.TRUE);
         orderingList.select(1).putItBefore(0);
-        submit();
+        submitAndCheckElementsOrderPersists();
         getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
         getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed");
     }
@@ -363,7 +363,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     @Test
     public void testValueChangeListener() {
         orderingList.select(0).putItAfter(ChoicePickerHelper.byIndex().last());
-        submit();
+        submitAndCheckElementsOrderPersists();
         getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed");
     }
 }
