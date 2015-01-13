@@ -49,7 +49,7 @@ public class TestAccordionItemKVS extends AbstractWebDriverTest {
 
     @Test(groups = { "keepVisualStateTesting" })
     @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
-        "richList" })
+        "richList", "uiRepeat" })
     public void testRefreshFullPage() {
         new AccordionReloadTester().testFullPageRefresh();
     }
@@ -59,6 +59,13 @@ public class TestAccordionItemKVS extends AbstractWebDriverTest {
         "richList" })
     @RegressionTest("https://issues.jboss.org/browse/RF-12131")
     public void testRefreshFullPageInIterationComponents() {
+        testRefreshFullPage();
+    }
+
+    @Test(groups = { "Future", "keepVisualStateTesting" })
+    @Templates(value = { "uiRepeat" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-13727")
+    public void testRefreshFullPageInUiRepeat() {
         testRefreshFullPage();
     }
 
