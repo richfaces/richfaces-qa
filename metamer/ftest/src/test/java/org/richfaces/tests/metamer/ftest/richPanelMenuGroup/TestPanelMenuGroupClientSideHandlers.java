@@ -132,7 +132,7 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-12549")
     @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
-        "richList" })
+        "richList", "uiRepeat" })
     public void testClientSideExpansionEventsOrderAjax() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.ajax);
         guardAjax(getPage().getMenu()).collapseGroup(1);
@@ -147,6 +147,13 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
         "richList" })
     public void testClientSideExpansionEventsOrderAjaxInIterationComponents() {
+        testClientSideExpansionEventsOrderAjax();
+    }
+
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13727")
+    @Templates(value = { "uiRepeat" })
+    public void testClientSideExpansionEventsOrderAjaxInUiRepeat() {
         testClientSideExpansionEventsOrderAjax();
     }
 

@@ -15,6 +15,8 @@ import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.fragment.panelMenu.RichFacesPanelMenu;
 import org.richfaces.fragment.panelMenu.RichFacesPanelMenuItem;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -35,6 +37,7 @@ public class TestPanelMenuFragmentShowcase extends AbstractWebDriverTest {
     private RichFacesPanelMenuItem item22;
 
     @Test
+    @Templates(exclude = "uiRepeat")
     public void testFragment() {
         guardAjax(menu.expandGroup("Group 1")).selectItem(ChoicePickerHelper.byVisibleText().match("Item 1.2"));
         assertEquals(selectedItem.getText(), "item12");
@@ -67,5 +70,12 @@ public class TestPanelMenuFragmentShowcase extends AbstractWebDriverTest {
 
         guardAjax(menu).selectItem("Item 2.1");
         assertEquals(selectedItem.getText(), "item21");
+    }
+
+    @Test (groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13727")
+    @Templates (value = "uiRepeat")
+    public void testFragmentInUiRepeat(){
+        testFragment();
     }
 }
