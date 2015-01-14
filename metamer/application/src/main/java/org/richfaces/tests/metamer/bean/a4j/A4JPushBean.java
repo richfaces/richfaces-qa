@@ -75,20 +75,20 @@ public class A4JPushBean implements Serializable {
     @Push(topic = CDI_ADDRESS_2)
     private Event<String> messageProducerForAddress2;
 
-    public String getCDIAdress1() {
+    public String getCDIAddress1() {
         return CDI_ADDRESS_1;
     }
 
-    public String getCDIAdress2() {
+    public String getCDIAddress2() {
         return CDI_ADDRESS_2;
     }
 
-    public String getTopicsContextAdress1() {
+    public String getTopicsContextAddress1() {
         return PUSH_TOPICS_CONTEXT_ADDRESS_1;
 
     }
 
-    public String getTopicsContextAdress2() {
+    public String getTopicsContextAddress2() {
         return PUSH_TOPICS_CONTEXT_ADDRESS_2;
     }
 
@@ -132,7 +132,7 @@ public class A4JPushBean implements Serializable {
      * @throws MessageException
      */
     public void pushWithTopicsContext1() throws MessageException {
-        TopicKey topicKey = new TopicKey(getTopicsContextAdress1());
+        TopicKey topicKey = new TopicKey(getTopicsContextAddress1());
         getTopicsContext().publish(topicKey, new DateTime().toString(DATE_PATTERN));
         LOGGER.debug("push event 1");
     }
@@ -142,7 +142,7 @@ public class A4JPushBean implements Serializable {
      * @throws MessageException
      */
     public void pushWithTopicsContext2() throws MessageException {
-        TopicKey topicKey = new TopicKey(getTopicsContextAdress2());
+        TopicKey topicKey = new TopicKey(getTopicsContextAddress2());
         getTopicsContext().publish(topicKey, new DateTime().toString(DATE_PATTERN));
         LOGGER.debug("push event 2");
     }
