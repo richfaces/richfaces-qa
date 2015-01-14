@@ -40,7 +40,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-        
+
             <p>
                 <a href="https://issues.jboss.org/browse/RF-12095">RF-12095</a><br/>
                 <a href="https://issues.jboss.org/browse/RF-12096">RF-12096</a><br/>
@@ -48,12 +48,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 even for other push components on the page, which are not conditionally rendered.<br/>
             </p>
 
-            <a:commandButton id="performPushEvent1" value="Push 1!" action="#{a4jPushBean.pushCDI1}" />
+            <a:commandButton id="performPushEvent1" value="Push 1!" action="#{a4jPushBean.pushWithCDI1}" />
             <!--  PUSH 1 -->
             <a:outputPanel id="pushPanel">
                 <a:push id="push"
                         rendered="#{a4jPushBean.attributes['rendered'].value}"
-                        address="cdiSampleAddress1"
+                        address="#{a4jPushBean.CDIAdress1}"
                         ondataavailable="$('[id$=outputDate]').text(event.rf.data)"
                         onsubscribed="#{a4jPushBean.attributes['onsubscribed'].value}" />
             </a:outputPanel>
@@ -74,9 +74,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br />
 
             <!--  PUSH 2 -->
-            <a:commandButton id="performPushEvent2" value="Push 2!" action="#{a4jPushBean.pushCDI2}" />
+            <a:commandButton id="performPushEvent2" value="Push 2!" action="#{a4jPushBean.pushWithCDI2}" />
             <a:push id="push2"
-                    address="cdiSampleAddress2"
+                    address="#{a4jPushBean.CDIAdress2}"
                     ondataavailable="$('[id$=outputDate2]').text(event.rf.data)"
                     onsubscribed="#{a4jPushBean.attributes['onsubscribed'].value}" />
 

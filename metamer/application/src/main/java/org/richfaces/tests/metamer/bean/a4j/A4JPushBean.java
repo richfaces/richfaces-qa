@@ -52,7 +52,8 @@ import org.slf4j.LoggerFactory;
 @SessionScoped
 public class A4JPushBean implements Serializable {
 
-    private static final long serialVersionUID = 4810889475400649809L;
+    private static final long serialVersionUID = 1L;
+
     public static final String DATE_PATTERN = "'day:' d', month:' M', time:' HH:mm:ss.SSS";
     public static final String METAMER_SUBTOPIC = "xxx";
     public static final String METAMER_TOPIC_CDI = "topic2";
@@ -62,12 +63,34 @@ public class A4JPushBean implements Serializable {
     private String username;
     private String message;
 
+    private static final String CDI_ADDRESS_1 = "cdiSampleAddress1";
+    private static final String CDI_ADDRESS_2 = "cdiSampleAddress2";
+    private static final String PUSH_TOPICS_CONTEXT_ADDRESS_1 = "tcSampleAddress1";
+    private static final String PUSH_TOPICS_CONTEXT_ADDRESS_2 = "tcSampleAddress2";
+
     @Inject
-    @Push(topic = "cdiSampleAddress1")
+    @Push(topic = CDI_ADDRESS_1)
     private Event<String> messageProducerForAddress1;
     @Inject
-    @Push(topic = "cdiSampleAddress2")
+    @Push(topic = CDI_ADDRESS_2)
     private Event<String> messageProducerForAddress2;
+
+    public String getCDIAdress1() {
+        return CDI_ADDRESS_1;
+    }
+
+    public String getCDIAdress2() {
+        return CDI_ADDRESS_2;
+    }
+
+    public String getTopicsContextAdress1() {
+        return PUSH_TOPICS_CONTEXT_ADDRESS_1;
+
+    }
+
+    public String getTopicsContextAdress2() {
+        return PUSH_TOPICS_CONTEXT_ADDRESS_2;
+    }
 
     /**
      * Initializes the managed bean.
@@ -94,12 +117,12 @@ public class A4JPushBean implements Serializable {
         return new DateTime().toString(DATE_PATTERN);
     }
 
-    public void pushCDI1() {
+    public void pushWithCDI1() {
         messageProducerForAddress1.fire(new DateTime().toString(DATE_PATTERN));
         LOGGER.debug("cdi push event 1");
     }
 
-    public void pushCDI2() {
+    public void pushWithCDI2() {
         messageProducerForAddress2.fire(new DateTime().toString(DATE_PATTERN));
         LOGGER.debug("cdi push event 2");
     }
@@ -108,11 +131,9 @@ public class A4JPushBean implements Serializable {
      * Trigger to start push topic
      * @throws MessageException
      */
-    public void pushJMS1() throws MessageException {
-        TopicKey topicKey = new TopicKey("jmsSampleAddress1");
-        TopicsContext topicsContext = TopicsContext.lookup();
-
-        topicsContext.publish(topicKey, new DateTime().toString(DATE_PATTERN));
+    public void pushWithTopicsContext1() throws MessageException {
+        TopicKey topicKey = new TopicKey(getTopicsContextAdress1());
+        getTopicsContext().publish(topicKey, new DateTime().toString(DATE_PATTERN));
         LOGGER.debug("push event 1");
     }
 
@@ -120,12 +141,9 @@ public class A4JPushBean implements Serializable {
      * Trigger to start push with another topic
      * @throws MessageException
      */
-    public void pushJMS2() throws MessageException {
-        TopicKey topicKey = new TopicKey("jmsSampleAddress2");
-        TopicsContext topicsContext = TopicsContext.lookup();
-
-        topicsContext.publish(topicKey, new DateTime().toString(DATE_PATTERN));
-
+    public void pushWithTopicsContext2() throws MessageException {
+        TopicKey topicKey = new TopicKey(getTopicsContextAdress2());
+        getTopicsContext().publish(topicKey, new DateTime().toString(DATE_PATTERN));
         LOGGER.debug("push event 2");
     }
 
