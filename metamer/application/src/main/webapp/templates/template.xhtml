@@ -66,7 +66,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                             <h:form id="beforeForm">
                                 <div style="margin-bottom: 20px;"><ui:insert name="outOfTemplateBefore" /></div>
                             </h:form>
-                            <h:form id="form">
+                            <h:form id="form" enctype="#{richBean.componentFormEnctype}">
                                 <ui:decorate template="/templates/#{templateBean.firstTemplate}.xhtml" />
                             </h:form>
                             <h:form id="afterForm">

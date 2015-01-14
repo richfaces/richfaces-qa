@@ -121,6 +121,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                     <h:outputLabel id="metamerStatelessViewLabel" value="Stateless view (JSF 2.2+): " for="metamerStatelessViewInput" />
                     <h:selectBooleanCheckbox id="metamerStatelessViewInput" value="#{richBean.stateless}" onchange="submit();"/>
+
+                    <h:outputLabel id="metamerComponentFormEnctype" value="Component's form enctype: " for="metamerComponentFormEnctypeInput" />
+                    <h:selectOneRadio id="metamerComponentFormEnctypeInput" value="#{richBean.componentFormEnctype}" onchange="submit();">
+                        <f:selectItems value="#{richBean.componentFormEnctypes}"/>
+                    </h:selectOneRadio>
                 </h:panelGrid>
             </h:form>
 
