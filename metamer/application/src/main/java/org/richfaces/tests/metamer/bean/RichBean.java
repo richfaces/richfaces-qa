@@ -1,6 +1,6 @@
-/*******************************************************************************
+/**
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2014, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.metamer.bean;
 
 import java.io.Serializable;
@@ -46,6 +46,8 @@ import javax.servlet.http.HttpSession;
 import org.richfaces.event.ItemChangeEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.Lists;
 
 /**
  * Managed bean storing glogal setting for the application, e.g. skin.
@@ -76,6 +78,8 @@ public class RichBean implements Serializable {
     private String activeTabOnIndex = "a4j";
     private int delay;
     private boolean stateless;
+    private String componentFormEnctype;
+    private List<SelectItem> componentFormEnctypes;
 
     public enum Skinning {
 
@@ -100,6 +104,10 @@ public class RichBean implements Serializable {
         reComponent = true;
         this.stateless = Boolean.valueOf(System.getProperty("statelessViews", "false"));
         this.delay = 0;
+        componentFormEnctypes = Lists.newArrayList(
+            new SelectItem("application/x-www-form-urlencoded", "default"),
+            new SelectItem("multipart/form-data", "multipart"));
+        componentFormEnctype = componentFormEnctypes.get(0).getValue().toString();
     }
 
     private void createComponentsMap() {
@@ -212,14 +220,13 @@ public class RichBean implements Serializable {
         skins.add("plain");
     }
 
-    private void filterComponents(){
+    private void filterComponents() {
         //reset all displayed components
         this.filteredComponents.clear();
         //If filter is not set up then put all components in it.
-        if(selectedComponent == null || selectedComponent.trim().length() == 0){
-           filteredComponents.putAll(allComponentsPermanentList);
-        }
-        else{
+        if (selectedComponent == null || selectedComponent.trim().length() == 0) {
+            filteredComponents.putAll(allComponentsPermanentList);
+        } else {
             String valueToFind = selectedComponent.toLowerCase();
             filteredComponents.putAll(findRelevantComponents(valueToFind, allComponentsPermanentList));
         }
@@ -348,6 +355,18 @@ public class RichBean implements Serializable {
 
     public String getComponent() {
         return component;
+    }
+
+    public String getComponentFormEnctype() {
+        return componentFormEnctype;
+    }
+
+    public void setComponentFormEnctype(String componentFormEnctype) {
+        this.componentFormEnctype = componentFormEnctype;
+    }
+
+    public List<SelectItem> getComponentFormEnctypes() {
+        return componentFormEnctypes;
     }
 
     public String getContainer() {
