@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <!--
+    JBoss, Home of Professional Open Source
+    Copyright 2010-2015, Red Hat, Inc. and individual contributors
+    by the @authors tag. See the copyright.txt in the distribution for a
+    full listing of individual contributors.
+    
+    This is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as
+    published by the Free Software Foundation; either version 2.1 of
+    the License, or (at your option) any later version.
+    
+    This software is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    Lesser General Public License for more details.
+    
+    You should have received a copy of the GNU Lesser General Public
+    License along with this software; if not, write to the Free
+    Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+    02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="component">  
+            <p>
+                Reproducer for <a href="https://issues.jboss.org/browse/RF-13929">RF-13929: a4j:push does not work with subtopics</a>. Automatized.
+            </p>
+            <!--  PUSH 1 -->
+            <a4j:commandButton id="performPushEvent1" value="Push 1!" action="#{rf13929.pushWithTopicsContext1()}" />
+            <a4j:push id="push1"
+                      address="#{rf13929.topicsContextAddress1}"
+                      ondataavailable="$('*[id$=output1]').text(event.rf.data)" />
+            <br />
+            <a4j:outputPanel id="output1">
+                #{rf13929.defaultData}
+            </a4j:outputPanel>
+            <br />
+            <br />
+            <!--  PUSH 2 -->
+            <a4j:commandButton id="performPushEvent2" value="Push 2!" action="#{rf13929.pushWithTopicsContext2()}" />
+            <a4j:push id="push2"
+                      address="#{rf13929.topicsContextAddress2}"
+                      ondataavailable="$('*[id$=output2]').text(event.rf.data)"/>
+            <br />
+            <a4j:outputPanel id="output2">
+                #{rf13929.defaultData}
+            </a4j:outputPanel>
+            <br />
+            <br />
+            <!--  PUSH 3 -->
+            <a4j:commandButton id="performPushEvent3" value="Push 3!" action="#{rf13929.pushWithTopicsContext3()}" />
+            <a4j:push id="push3"
+                      address="#{rf13929.topicsContextAddress3}"
+                      ondataavailable="$('*[id$=output3]').text(event.rf.data)"/>
+            <br />
+            <a4j:outputPanel id="output3">
+                #{rf13929.defaultData}
+            </a4j:outputPanel>
+        </ui:define>
+        <ui:define name="outOfTemplateAfter">
+        </ui:define>
+    </ui:composition>
+</html>
