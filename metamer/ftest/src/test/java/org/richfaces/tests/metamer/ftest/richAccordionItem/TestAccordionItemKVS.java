@@ -62,7 +62,7 @@ public class TestAccordionItemKVS extends AbstractWebDriverTest {
         testRefreshFullPage();
     }
 
-    @Test(groups = { "Future", "keepVisualStateTesting" })
+    @Test(groups = { "Future", "keepVisualStateTesting", "uiRepeat" }) // fails with JSF 2.2
     @Templates(value = { "uiRepeat" })
     @IssueTracking("https://issues.jboss.org/browse/RF-13727")
     public void testRefreshFullPageInUiRepeat() {

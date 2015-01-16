@@ -70,7 +70,7 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
         super.testSortModeSingle();
     }
 
-    @Test(groups = {"Future"})
+    @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
     @Templates(value = "uiRepeat")
     @IssueTracking("https://issues.jboss.org/browse/RF-13690")
     public void testSortModeSingleInUiRepeat() {
@@ -91,7 +91,7 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
         super.testSortModeSingleReverse();
     }
 
-    @Test(groups = {"Future"})
+    @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
     @Templates(value = "uiRepeat")
     @IssueTracking("https://issues.jboss.org/browse/RF-13690")
     public void testSortModeSingleReverseInUiRepeat() {
@@ -120,7 +120,7 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
         super.testSortModeSingleFullPageRefresh();
     }
 
-    @Test(groups = {"Future"})
+    @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
     @IssueTracking("https://issues.jboss.org/browse/RF-13690")
     @Templates(value="uiRepeat")
     public void testSortModeSingleFullPageRefreshInUiRepeat() {
@@ -141,7 +141,7 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
         super.testSortModeMulti();
     }
 
-    @Test(groups = {"Future"})
+    @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
     @IssueTracking("https://issues.jboss.org/browse/RF-13690")
     @Templates(value="uiRepeat")
     public void testSortModeMultiInUiRepeat() {
@@ -162,7 +162,7 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
         super.testSortModeMultiReverse();
     }
 
-    @Test(groups = {"Future"})
+    @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
     @Templates(value = "uiRepeat")
     @IssueTracking("https://issues.jboss.org/browse/RF-13690")
     public void testSortModeMultiReverseInUiRepeat() {
@@ -183,7 +183,7 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
         super.testSortModeMultiReplacingOldOccurences();
     }
 
-    @Test(groups = {"Future"})
+    @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
     @Templates(value = "uiRepeat")
     @IssueTracking("https://issues.jboss.org/browse/RF-13690")
     public void testSortModeMultiReplacingOldOccurencesInUiRepeat() {
@@ -212,7 +212,7 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
         super.testSortModeMultiFullPageRefresh();
     }
 
-    @Test(groups = {"Future"})
+    @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
     @IssueTracking("https://issues.jboss.org/browse/RF-13690")
     @Templates(value = "uiRepeat")
     public void testSortModeMultiFullPageRefreshInUiRepeat() {

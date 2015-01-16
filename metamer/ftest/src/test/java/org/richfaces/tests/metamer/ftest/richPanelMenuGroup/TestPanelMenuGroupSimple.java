@@ -174,7 +174,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
         assertTrue(getPage().getTopGroup().advanced().isSelected());
     }
 
-    @Test(groups = "Future")
+    @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
     @Templates(value = "uiRepeat")
     @IssueTracking("https://issues.jboss.org/browse/RF-13727")
     public void testSelectableInUirepeat() {

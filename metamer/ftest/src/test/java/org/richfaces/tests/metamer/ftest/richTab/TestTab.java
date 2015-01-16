@@ -96,7 +96,7 @@ public class TestTab extends AbstractWebDriverTest {
         page.assertListener(PhaseId.INVOKE_APPLICATION, "action invoked");
     }
 
-    @Test(groups = { "Future" })
+    @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
     @Templates(value = "uiRepeat")
     @IssueTracking("https://issues.jboss.org/browse/RF-13748")
     public void testActionAndActionListenerInUiRepeat() {

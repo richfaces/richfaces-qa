@@ -72,7 +72,7 @@ public class TestPanelMenuFragmentShowcase extends AbstractWebDriverTest {
         assertEquals(selectedItem.getText(), "item21");
     }
 
-    @Test (groups = "Future")
+    @Test (groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
     @IssueTracking("https://issues.jboss.org/browse/RF-13727")
     @Templates (value = "uiRepeat")
     public void testFragmentInUiRepeat(){
