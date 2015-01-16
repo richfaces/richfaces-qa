@@ -76,7 +76,6 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-13727")
     @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "ajaxExpansionEvents")
     @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
         "richList", "uiRepeat" })
@@ -94,6 +93,15 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
         "richList" })
     public void testClientSideExpansionEventInIterationComponents() {
+        testClientSideExpansionEvent();
+    }
+
+    @Test(groups = { "Future", "uiRepeat"}) // fails with JSF 2.2
+    @IssueTracking("https://issues.jboss.org/browse/RF-13727")
+    @UseWithField(field = "event", valuesFrom = STRINGS, value = { "beforeselect", "beforeswitch", "begin", "beforedomupdate", "select", "switch",
+        "complete" })
+    @Templates(value = { "uiRepeat" })
+    public void testClientSideExpansionEventInUiRepeat() {
         testClientSideExpansionEvent();
     }
 
@@ -150,7 +158,7 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
         testClientSideExpansionEventsOrderAjax();
     }
 
-    @Test(groups = "Future")
+    @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
     @IssueTracking("https://issues.jboss.org/browse/RF-13727")
     @Templates(value = { "uiRepeat" })
     public void testClientSideExpansionEventsOrderAjaxInUiRepeat() {

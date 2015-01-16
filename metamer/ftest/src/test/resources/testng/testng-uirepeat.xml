@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Tests in uiRepeat group suite">
+
+    <test name="All Components to Be Fixed in Future, failing in ui:repeat" preserve-order="true">
+        <groups>
+            <run>
+                <include name="arquillian" />
+                <include name="uiRepeat" />
+            </run>
+        </groups>
+
+        <packages>
+            <package name="org.richfaces.tests.metamer.ftest.*" />
+        </packages>
+    </test>
+</suite>

@@ -46,7 +46,7 @@ public class TestPanelToggleListenerInCollapsiblePanel extends AbstractPanelTogg
         super.testPTLAsAttributeOfComponent(PTL_as_ComponentAttribute_PhaseName);
     }
 
-    @Test(groups = "Future")
+    @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
     @Templates(value = { "uiRepeat"})
     @IssueTracking(value = "https://issues.jboss.org/browse/RF-13690")
     public void testPTLAsAttributeInUiRepeat() {
@@ -94,7 +94,7 @@ public class TestPanelToggleListenerInCollapsiblePanel extends AbstractPanelTogg
         super.testPTLInComponentWithListener(PTL_inComponent_usingType_PhaseName);
     }
 
-    @Test(groups = "Future")
+    @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
     @Templates(value = "uiRepeat")
     @IssueTracking("https://issues.jboss.org/browse/RF-13690")
     public void testPTLInsideComponentUsingTypeInUiRepeat() {
