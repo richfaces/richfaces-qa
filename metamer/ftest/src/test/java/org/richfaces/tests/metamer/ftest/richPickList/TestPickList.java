@@ -464,8 +464,15 @@ public class TestPickList extends AbstractWebDriverTest {
         testFireEvent(
             pickListAttributes,
             PickListAttributes.ontargetfocus,
-            new Actions(driver).click(pickList.advanced().getTargetListContentAreaElement())
-            .click(pickList.advanced().getSourceListContentAreaElement()).build());
+            new Action() {
+                @Override
+                public void perform() {
+                    pickList.add(0);
+                    pickList.advanced().getTargetListItemsElements().get(0).click();
+                    pickList.advanced().getSourceListItemsElements().get(0).click();// >>> blur
+                }
+            }
+        );
     }
 
     @Test
@@ -485,7 +492,14 @@ public class TestPickList extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-11322")
     public void testOntargetfocus() {
         testFireEvent(pickListAttributes, PickListAttributes.ontargetfocus,
-            new Actions(driver).click(pickList.advanced().getTargetListContentAreaElement()).build());
+            new Action() {
+                @Override
+                public void perform() {
+                    pickList.add(0);
+                    pickList.advanced().getTargetListItemsElements().get(0).click();// >>> focus
+                }
+            }
+        );
     }
 
     @Test
