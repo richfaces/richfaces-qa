@@ -63,7 +63,6 @@ public final class TestInfo {
      * @return the package + class + method name in current context
      */
     public static String getPackageClassMethodName(ITestResult result) {
-        String s2 = result.getTestClass().getRealClass().getName();
         return getContainingPackageName(result) + "." + getClassMethodName(result);
     }
 
