@@ -75,6 +75,7 @@ public class TestRF13928 extends AbstractWebDriverTest {
 
         // enable push
         attributes.set(PushAttributes.rendered, Boolean.TRUE);
+        waiting(1000);// https://issues.jboss.org/browse/RFPL-3692 , remove if needed after RF-13949 solved
         for (int i = 1; i <= NUMBER_OF_TESTED_UPDATES; ++i) {
             getWait().until().element(dataOutput).text().not().equalTo(previousDataOutputText);
             previousDataOutputText = dataOutput.getText();
@@ -85,9 +86,11 @@ public class TestRF13928 extends AbstractWebDriverTest {
         // test second subscription
         // disable push
         attributes.set(PushAttributes.rendered, Boolean.FALSE);
+        waiting(1000);// https://issues.jboss.org/browse/RFPL-3692 , remove if needed after RF-13949 solved
         previousDataOutputText = dataOutput.getText();
         // enable push
         attributes.set(PushAttributes.rendered, Boolean.TRUE);
+        waiting(1000);// https://issues.jboss.org/browse/RFPL-3692 , remove if needed after RF-13949 solved
         for (int i = NUMBER_OF_TESTED_UPDATES + 1; i <= 2 * NUMBER_OF_TESTED_UPDATES; ++i) {
             getWait().until().element(dataOutput).text().not().equalTo(previousDataOutputText);
             previousDataOutputText = dataOutput.getText();
