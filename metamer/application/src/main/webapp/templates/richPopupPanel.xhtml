@@ -33,7 +33,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <rich:popupPanel id="containerPopupPanel" domElementAttachment="parent" header="Popup panel"
                          minHeight="400" minWidth="700" moveable="true" resizeable="true" show="true" zindex="1">
             <f:facet name="controls">
-                <h:outputLink value="#" onclick="#{rich:component('containerPopupPanel')}.hide(); return false;">X</h:outputLink>
+                <h:outputLink value="#" tabindex="-1" onclick="#{rich:component('containerPopupPanel')}.hide(); return false;">X</h:outputLink>
             </f:facet>
 
             <ui:decorate template="#{templateBean.nextTemplate}.xhtml" />

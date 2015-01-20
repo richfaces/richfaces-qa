@@ -30,7 +30,7 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -59,8 +59,8 @@ public class TestDelayed extends AbstractWebDriverTest {
         assertEquals(actual, AbstractFocusPage.EXPECTED_STRING, "The name input should be focused!");
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12823")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12823")
     @Templates(value = "richPopupPanel")
     public void testDelayedInPopup() {
         testDelayed();
