@@ -21,11 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.webdriver;
 
-import static org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.ActionWrapper;
-
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.request.RequestGuardException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -35,6 +34,7 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.ui.Select;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Utils;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.ActionWrapper;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.FutureTarget;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -123,12 +123,12 @@ public class Attributes<T extends AttributeEnum> {
         }
     }
 
-    private ActionWrapper buildJSActionWrapper(String event, WebElement element){
+    private ActionWrapper buildJSActionWrapper(final String event, WebElement element) {
         final WebElement elementToJs = element;
         Action jsAction = new Action() {
             @Override
             public void perform() {
-                Utils.triggerJQ("click", elementToJs);
+                Utils.triggerJQ(event, elementToJs);
             }
         };
         return new ActionWrapper(jsAction);
@@ -258,12 +258,14 @@ public class Attributes<T extends AttributeEnum> {
     }
 
     protected void set(String attribute, Object value) {
-        StaleElementReferenceException ex = null;
+        RuntimeException ex = null;
         for (int i = 0; i < TRIES; i++) {
             try {
                 setProperty(attribute, value);
                 return;
             } catch (StaleElementReferenceException e) {
+                ex = e;
+            } catch (RequestGuardException e) {
                 ex = e;
             }
         }
