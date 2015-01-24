@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-*/
+ */
 package org.richfaces.tests.qa.plugin.ensurer.browser.jenkins;
 
 import java.io.File;
@@ -139,7 +139,7 @@ public class JenkinsFirefoxEnsurer implements BrowserEnsurer {
             pp.getLog().info(MessageFormat.format("Firefox version specified <{0}>.", pp.getBrowser().getVersion().getMajorMinorMicroSpecifierFormat()));
             firefoxDir = finder.getSpecificVersion(getFirefoxBaseDirectory(servant).listFiles(), pp.getBrowser().getVersion());
         }
-        return new File(firefoxDir, pp.isOnWindows() ? FIREFOX_EXE : pp.isOnLinux() ? FIREFOX : MAC_FIREFOX_SUBDIR);
+        return new File(firefoxDir, pp.isOnWindows() ? FIREFOX_EXE : pp.isOnLinux() || pp.isOnSolaris() ? FIREFOX : MAC_FIREFOX_SUBDIR);
     }
 
     protected File handleSpecificConfiguration(JenkinsFirefoxConfiguration config, Servant servant) {
