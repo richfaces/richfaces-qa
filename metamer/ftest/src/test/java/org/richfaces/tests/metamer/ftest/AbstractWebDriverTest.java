@@ -1033,7 +1033,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         executeJS("sessionStorage.setItem('metamerEvents',\"\")");
     }
 
-    private static <T extends Number & Comparable<T>> Number countMedian(List<T> values) {
+    public static <T extends Number & Comparable<T>> Number countMedian(List<T> values) {
         assertTrue(values.size() > 0);
         if (values.size() == 1) {
             return values.get(0);
