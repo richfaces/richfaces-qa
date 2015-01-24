@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-*/
+ */
 package org.richfaces.tests.qa.plugin.ensurer.browser.local;
 
 import java.io.File;
@@ -61,8 +61,9 @@ public class LocalChromeEnsurer implements BrowserEnsurer {
         try {
             File currentChromeDriverZip = new File(currentChromeDriverDir, DRIVER_ZIP);
             servant.downloadFile(getChromeDriverBinURL(), currentChromeDriverZip);
-            servant.extract(currentChromeDriverDir, currentChromeDriverZip);
-            File extractedChromeDriverBin = new File(currentChromeDriverDir, CHROMEDRIVER + (pp.isOnWindows() ? ".exe" : ""));
+            File outputDir = new File(pp.getProjectBuildDirectory());
+            servant.extract(outputDir, currentChromeDriverZip);
+            File extractedChromeDriverBin = new File(outputDir, CHROMEDRIVER + (pp.isOnWindows() ? ".exe" : ""));
             extractedChromeDriverBin.setExecutable(true);
             servant.setProjectProperty(pp.getChromeDriverBinPropertyName(), extractedChromeDriverBin.getAbsolutePath());
         } catch (Throwable e) {
