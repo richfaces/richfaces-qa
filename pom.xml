@@ -1980,7 +1980,7 @@ FSF site: http://www.fsf.org. -->
                 <eapVersion>${version.eap}</eapVersion>
                 <jenkinsFirefoxVersionMinimal>24esr</jenkinsFirefoxVersionMinimal>
                 <jenkinsFirefoxVersionOptimal>31esr</jenkinsFirefoxVersionOptimal>
-                <chromeDriverVersion>2.11</chromeDriverVersion>
+                <chromeDriverVersion>2.13</chromeDriverVersion>
                 <seleniumVersion>${version.selenium}</seleniumVersion>
 
                 <!-- following properties can disable some parts of the plugin -->
