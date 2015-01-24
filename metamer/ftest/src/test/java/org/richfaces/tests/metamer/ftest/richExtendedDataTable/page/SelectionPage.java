@@ -80,10 +80,9 @@ public class SelectionPage {
     }
 
     public void selectAllWithCrtlAndA() {
-        throw new UnsupportedOperationException("Not supported in current version of page fragments");
-//        String currentSelectionBefore = currentSelection.getText();
-//        Graphene.guardAjax(table).selectAllRowsWithKeyShortcut();
-//        Graphene.waitAjax().until().element(currentSelection).text().not().equalTo(currentSelectionBefore);
+        String currentSelectionBefore = currentSelection.getText();
+        Graphene.guardAjax(table).selectAllRowsWithKeyShortcut();
+        Graphene.waitAjax().until().element(currentSelection).text().not().equalTo(currentSelectionBefore);
     }
 
     private void scrollToPage(int rowIndex) {
