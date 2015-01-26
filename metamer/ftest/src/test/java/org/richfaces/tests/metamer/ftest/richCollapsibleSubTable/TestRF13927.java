@@ -49,11 +49,11 @@ public class TestRF13927 extends AbstractWebDriverTest {
     protected static final boolean COLLAPSES = true;
     protected static final boolean EXPANDS = false;
 
-    @FindBy(xpath = "//span[contains(@id,'level1Toggler')]//ancestor::td")
+    @FindBy(xpath = "//span[contains(@id,'level1Toggler')]//ancestor::td[1]")
     private List<RichFacesCollapsibleSubTableToggler> level1togglers;
-    @FindBy(xpath = "//span[contains(@id,'level2Toggler')]//ancestor::td")
+    @FindBy(xpath = "//span[contains(@id,'level2Toggler')]//ancestor::td[1]")
     private List<RichFacesCollapsibleSubTableToggler> level2togglers;
-    @FindBy(xpath = "//span[contains(@id,'level3Toggler')]//ancestor::td")
+    @FindBy(xpath = "//span[contains(@id,'level3Toggler')]//ancestor::td[1]")
     private List<RichFacesCollapsibleSubTableToggler> level3togglers;
 
     @FindByJQuery(value = ".data-1:visible")
