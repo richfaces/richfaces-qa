@@ -910,7 +910,7 @@ FSF site: http://www.fsf.org. -->
             <properties>
                 <metamer.classifier>jbas71</metamer.classifier>
                 <showcase.classifier>jbas71</showcase.classifier>
-                <version.eap>6.1.2</version.eap>
+                <version.eap>6.1.3</version.eap>
             </properties>
             <dependencies>
                 <dependency>
