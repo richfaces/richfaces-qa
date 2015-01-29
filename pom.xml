@@ -65,6 +65,8 @@ FSF site: http://www.fsf.org. -->
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
         <shrinkwrap.descriptors.version>2.0.0-alpha-6</shrinkwrap.descriptors.version>
 
+        <jboss.javaee6.spec.version>3.0.2.Final</jboss.javaee6.spec.version>
+
         <version.selenium>2.44.0</version.selenium>
         <version.testng>6.8.13</version.testng>
 
@@ -552,7 +554,7 @@ FSF site: http://www.fsf.org. -->
             <dependency>
                 <groupId>org.jboss.spec</groupId>
                 <artifactId>jboss-javaee-all-6.0</artifactId>
-                <version>3.0.2.Final</version>
+                <version>${jboss.javaee6.spec.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -1468,7 +1470,7 @@ FSF site: http://www.fsf.org. -->
                 <dependency>
                     <groupId>org.jboss.spec</groupId>
                     <artifactId>jboss-javaee-6.0</artifactId>
-                    <version>3.0.2.Final</version>
+                    <version>${jboss.javaee6.spec.version}</version>
                     <type>pom</type>
                     <scope>provided</scope>
                 </dependency>
@@ -1501,7 +1503,7 @@ FSF site: http://www.fsf.org. -->
                 <dependency>
                     <groupId>org.jboss.spec</groupId>
                     <artifactId>jboss-javaee-6.0</artifactId>
-                    <version>3.0.2.Final</version>
+                    <version>${jboss.javaee6.spec.version}</version>
                     <type>pom</type>
                     <scope>provided</scope>
                 </dependency>
@@ -1534,7 +1536,7 @@ FSF site: http://www.fsf.org. -->
                 <dependency>
                     <groupId>org.jboss.spec</groupId>
                     <artifactId>jboss-javaee-6.0</artifactId>
-                    <version>3.0.2.Final</version>
+                    <version>${jboss.javaee6.spec.version}</version>
                     <type>pom</type>
                     <scope>provided</scope>
                 </dependency>
@@ -1567,7 +1569,7 @@ FSF site: http://www.fsf.org. -->
                 <dependency>
                     <groupId>org.jboss.spec</groupId>
                     <artifactId>jboss-javaee-6.0</artifactId>
-                    <version>3.0.2.Final</version>
+                    <version>${jboss.javaee6.spec.version}</version>
                     <type>pom</type>
                     <scope>provided</scope>
                 </dependency>
@@ -1600,7 +1602,7 @@ FSF site: http://www.fsf.org. -->
                 <dependency>
                     <groupId>org.jboss.spec</groupId>
                     <artifactId>jboss-javaee-6.0</artifactId>
-                    <version>3.0.2.Final</version>
+                    <version>${jboss.javaee6.spec.version}</version>
                     <type>pom</type>
                     <scope>provided</scope>
                 </dependency>
@@ -1633,7 +1635,7 @@ FSF site: http://www.fsf.org. -->
                 <dependency>
                     <groupId>org.jboss.spec</groupId>
                     <artifactId>jboss-javaee-6.0</artifactId>
-                    <version>3.0.2.Final</version>
+                    <version>${jboss.javaee6.spec.version}</version>
                     <type>pom</type>
                     <scope>provided</scope>
                 </dependency>
