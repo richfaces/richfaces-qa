@@ -65,6 +65,8 @@ FSF site: http://www.fsf.org. -->
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
         <shrinkwrap.descriptors.version>2.0.0-alpha-6</shrinkwrap.descriptors.version>
 
+        <jboss.javaee6.spec.version>3.0.2.Final</jboss.javaee6.spec.version>
+
         <version.selenium>2.44.0</version.selenium>
         <version.testng>6.8.13</version.testng>
 
@@ -552,7 +554,7 @@ FSF site: http://www.fsf.org. -->
             <dependency>
                 <groupId>org.jboss.spec</groupId>
                 <artifactId>jboss-javaee-all-6.0</artifactId>
-                <version>3.0.2.Final</version>
+                <version>${jboss.javaee6.spec.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -1473,7 +1475,7 @@ FSF site: http://www.fsf.org. -->
                 <dependency>
                     <groupId>org.jboss.spec</groupId>
                     <artifactId>jboss-javaee-6.0</artifactId>
-                    <version>3.0.2.Final</version>
+                    <version>${jboss.javaee6.spec.version}</version>
                     <type>pom</type>
                     <scope>provided</scope>
                 </dependency>
@@ -1506,7 +1508,7 @@ FSF site: http://www.fsf.org. -->
                 <dependency>
                     <groupId>org.jboss.spec</groupId>
                     <artifactId>jboss-javaee-6.0</artifactId>
-                    <version>3.0.2.Final</version>
+                    <version>${jboss.javaee6.spec.version}</version>
                     <type>pom</type>
                     <scope>provided</scope>
                 </dependency>
@@ -1539,7 +1541,7 @@ FSF site: http://www.fsf.org. -->
                 <dependency>
                     <groupId>org.jboss.spec</groupId>
                     <artifactId>jboss-javaee-6.0</artifactId>
-                    <version>3.0.2.Final</version>
+                    <version>${jboss.javaee6.spec.version}</version>
                     <type>pom</type>
                     <scope>provided</scope>
                 </dependency>
@@ -1572,7 +1574,7 @@ FSF site: http://www.fsf.org. -->
                 <dependency>
                     <groupId>org.jboss.spec</groupId>
                     <artifactId>jboss-javaee-6.0</artifactId>
-                    <version>3.0.2.Final</version>
+                    <version>${jboss.javaee6.spec.version}</version>
                     <type>pom</type>
                     <scope>provided</scope>
                 </dependency>
@@ -1580,6 +1582,39 @@ FSF site: http://www.fsf.org. -->
                     <groupId>org.wildfly</groupId>
                     <artifactId>wildfly-arquillian-container-remote</artifactId>
                     <version>${version.wildfly8-1}</version>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <arquillian.launch>wildfly-remote-8-1</arquillian.launch>
+                            </systemProperties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>wildfly-remote-8-2</id>
+            <properties>
+                <metamer.classifier>jbas71</metamer.classifier>
+                <showcase.classifier>jbas71</showcase.classifier>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.spec</groupId>
+                    <artifactId>jboss-javaee-6.0</artifactId>
+                    <version>${jboss.javaee6.spec.version}</version>
+                    <type>pom</type>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.wildfly</groupId>
+                    <artifactId>wildfly-arquillian-container-remote</artifactId>
+                    <version>${version.wildfly8-2}</version>
                 </dependency>
             </dependencies>
             <build>
@@ -1605,7 +1640,7 @@ FSF site: http://www.fsf.org. -->
                 <dependency>
                     <groupId>org.jboss.spec</groupId>
                     <artifactId>jboss-javaee-6.0</artifactId>
-                    <version>3.0.2.Final</version>
+                    <version>${jboss.javaee6.spec.version}</version>
                     <type>pom</type>
                     <scope>provided</scope>
                 </dependency>
