@@ -107,7 +107,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
 
     @Test
     @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat" })
+        "richList", "a4jRepeat", "uiRepeat" })
     public void testMultiSelectionUsingShiftBetweenPagesInReversedOrder() {
         IntRange range = new IntRange(12, 35);
 
@@ -123,6 +123,13 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat" })
     public void testMultiSelectionUsingShiftBetweenPagesInReversedOrderIterationComponents() {
+        testMultiSelectionUsingShiftBetweenPagesInReversedOrder();
+    }
+
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13973")
+    @Templates(value = "uiRepeat")
+    public void testMultiSelectionUsingShiftBetweenPagesInReversedOrderInUiRepeat() {
         testMultiSelectionUsingShiftBetweenPagesInReversedOrder();
     }
 
