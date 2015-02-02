@@ -72,7 +72,8 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
-    @Templates(exclude = {"richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "a4jRepeat"})
+    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richList", "a4jRepeat" })
     public void testMultiSelectionUsingControl() {
         Collection<Integer> forSelection = order(2, 5, 29, 16, 13, 21);
 
@@ -87,8 +88,8 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10256")
-    @Templates(value = {"richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat"})
+    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richList", "a4jRepeat" })
     public void testMultiSelectionUsingControlIterationComponents() {
         testMultiSelectionUsingControl();
     }
@@ -105,7 +106,8 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
-    @Templates(exclude = {"richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "a4jRepeat"})
+    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richList", "a4jRepeat" })
     public void testMultiSelectionUsingShiftBetweenPagesInReversedOrder() {
         IntRange range = new IntRange(12, 35);
 
@@ -118,8 +120,8 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10256")
-    @Templates(value = {"richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat"})
+    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richList", "a4jRepeat" })
     public void testMultiSelectionUsingShiftBetweenPagesInReversedOrderIterationComponents() {
         testMultiSelectionUsingShiftBetweenPagesInReversedOrder();
     }
@@ -145,7 +147,8 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
-    @Templates(exclude = {"richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "a4jRegion", "a4jRepeat"})
+    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richList", "a4jRepeat", "a4jRegion" })
     public void testMultiSelectionRemovingUsingCtrl() {
         IntRange range1 = new IntRange(2, 14);
 
@@ -165,8 +168,8 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10256")
-    @Templates(value = {"richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat"})
+    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richList", "a4jRepeat" })
     public void testMultiSelectionRemovingUsingCtrlIterationComponents() {
         testMultiSelectionRemovingUsingCtrl();
     }
