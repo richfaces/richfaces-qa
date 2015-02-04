@@ -53,8 +53,8 @@ public class MetamerFailureLoggingTestListener extends FailureLoggingTestListene
     }
 
     @Override
-    public void onFailure(ITestResult result) {
-        super.onFailure(result);
+    public void saveScreenshotAndPageSource(ITestResult result) {
+        super.saveScreenshotAndPageSource(result);
 
         List<String> issueList = new LinkedList<String>();
         IssueTracking issueTracking = result.getMethod().getConstructorOrMethod().getMethod()
