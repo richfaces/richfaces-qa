@@ -67,25 +67,39 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
 
     @Override
     public void onConfigurationFailure(ITestResult result) {
-        onFailure(result);
+        saveStackTrace(result);
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
-        onFailure(result);
+        saveStackTrace(result);
+        saveScreenshotAndPageSource(result);
     }
 
-    public void onFailure(ITestResult result) {
-        if (getWebDriver() == null) {
-            System.out.println("Can't take a screenshot and save HTML, because there is no driver available.");
-            return;
-        }
-
+    private void saveStackTrace(ITestResult result) {
         Throwable throwable = result.getThrowable();
         String stacktrace = null;
 
         if (throwable != null) {
             stacktrace = ExceptionUtils.getStackTrace(throwable);
+        }
+
+        String filenameIdentification = getFilenameIdentification(result);
+        File outputFile = new File(failuresOutputDir, filenameIdentification + "/stacktrace.txt");
+        File directory = outputFile.getParentFile();
+        try {
+            FileUtils.forceMkdir(directory);
+            FileUtils.writeStringToFile(outputFile, stacktrace);
+        } catch (IOException e) {
+            System.err.println("Can't create directory or save file with stack trace: " + e.getMessage());
+            e.printStackTrace(System.err);
+        }
+    }
+
+    public void saveScreenshotAndPageSource(ITestResult result) {
+        if (getWebDriver() == null) {
+            System.out.println("Can't take a screenshot and save HTML, because there is no driver available.");
+            return;
         }
 
         String filenameIdentification = getFilenameIdentification(result);
@@ -106,7 +120,6 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
 
             String htmlSource = getWebDriver().getPageSource();
 
-            File stacktraceOutputFile = new File(failuresOutputDir, filenameIdentification + "/stacktrace.txt");
             File imageOutputFile = new File(failuresOutputDir, filenameIdentification + "/screenshot.png");
             // File trafficOutputFile = new File(failuresOutputDir, filenameIdentification + "/network-traffic.txt");
             // File logOutputFile = new File(failuresOutputDir, filenameIdentification + "/selenium-log.txt");
@@ -115,7 +128,6 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
             File directory = imageOutputFile.getParentFile();
             FileUtils.forceMkdir(directory);
 
-            FileUtils.writeStringToFile(stacktraceOutputFile, stacktrace);
             if (!HtmlUnitDriver.class.isInstance(getWebDriver())) {
                 FileUtils.copyFile(screenshot, imageOutputFile);
             }
@@ -123,7 +135,8 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
             // FileUtils.writeStringToFile(trafficOutputFile, traffic);
             // FileUtils.writeLines(logOutputFile, methodLog);
             FileUtils.writeStringToFile(htmlSourceOutputFile, htmlSource);
-        } catch (Exception e) {
+
+        } catch (IOException e) {
             System.err.println("Can't take a screenshot/save HTML source: " + e.getMessage());
             e.printStackTrace(System.err);
             // LOGGER.log(Level.WARNING, "Can't take a screenshot/save HTML source.", e);
