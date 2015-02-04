@@ -30,9 +30,12 @@ import java.util.List;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.ClearType;
+import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.fragment.select.RichFacesSelect;
 import org.richfaces.fragment.select.SelectSuggestions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -92,6 +95,26 @@ public class TestSelectAutocompleteMethod extends AbstractWebDriverTest {
 
         Graphene.guardAjax(Graphene.guardAjax(select).type("alas")).select(0);
         waitUntilOutputEqualsTo("Alaska");
+    }
+
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13965")
+    public void testPopupWillShowAfterWholeInputClearedAtOnce() {
+        attributes.set(SelectAttributes.mode, Mode.ajax);
+        // fill in some value
+        Graphene.guardAjax(Graphene.guardAjax(select).type("a")).select(1);
+        waitUntilOutputEqualsTo("Alaska");
+        // clear the whole input at once with JS
+        TextInputComponentImpl input = select.advanced().getInput();
+        input.advanced().clear(ClearType.JS);
+        // type 'a' >>> popup will show
+        Graphene.guardAjax(input).sendKeys("a");
+        select.advanced().waitUntilSuggestionsAreVisible();
+        select.advanced().getSuggestionsElements().get(3).click();
+        select.advanced().waitUntilSuggestionsAreNotVisible();
+        // blur >>> trigger onchange event
+        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();
+        waitUntilOutputEqualsTo("Arkansas");
     }
 
     @Test
