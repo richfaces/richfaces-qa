@@ -52,7 +52,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="component">
             <p>
                 This page demonstrates issue <a href="https://issues.jboss.org/browse/RF-10971">rf-10971</a>.
-                Tooltip does not work when placed in EDT.
+                Tooltip does not work when placed in EDT. Automatized.
 
                 <ol>
                     <li>Move mouse over some column in table.</li>
@@ -65,29 +65,44 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                     var="record" 
                                     >
                 <rich:column id="columnState" sortBy="#{record.state}">
-                    #{record.state} with tooltip
-                    <rich:tooltip>
-                        <h:outputText value="THIS IS TOOLTIP" />
+                    <f:facet name="header">
+                        State
+                    </f:facet>
+                    #{record.state}
+                    <rich:tooltip id="stateTooltip"
+                                  hideEvent="#{richTooltipBean.attributes['hideEvent'].value}"
+                                  horizontalOffset="#{richTooltipBean.attributes['horizontalOffset'].value}"
+                                  showEvent="#{richTooltipBean.attributes['showEvent'].value}"
+                                  verticalOffset="#{richTooltipBean.attributes['verticalOffset'].value}" >
+                        Tooltip of #{record.state}
                     </rich:tooltip>
                 </rich:column>
 
                 <rich:column id="columnCapital" sortBy="#{record.name}">
-                    #{record.name} with tooltip
-                    <rich:tooltip>
-                        #{record.name}
-                    </rich:tooltip>
-                </rich:column>
-
-                <rich:column id="columnCapital2" sortBy="#{record.name}">
-                    #{record.name} with tooltip
-                    <rich:tooltip>
-                        THIS IS TOOLTIP
+                    <f:facet name="header">
+                        Capital
+                    </f:facet>
+                    #{record.name}
+                    <rich:tooltip id="capitalTooltip"
+                                  hideEvent="#{richTooltipBean.attributes['hideEvent'].value}"
+                                  horizontalOffset="#{richTooltipBean.attributes['horizontalOffset'].value}"
+                                  showEvent="#{richTooltipBean.attributes['showEvent'].value}"
+                                  verticalOffset="#{richTooltipBean.attributes['verticalOffset'].value}" >
+                        Tooltip of #{record.name}
                     </rich:tooltip>
                 </rich:column>
             </rich:extendedDataTable>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
+            hideEvent: <h:inputText id="hideEventInput" value="#{richTooltipBean.attributes['hideEvent'].value}" onchange="submit()"/>
+            <br/>
+            horizontalOffset: <h:inputText id="horizontalOffsetInput" value="#{richTooltipBean.attributes['horizontalOffset'].value}" onchange="submit()"/>
+            <br/>
+            showEvent: <h:inputText id="showEventInput" value="#{richTooltipBean.attributes['showEvent'].value}" onchange="submit()"/>
+            <br/>
+            verticalOffset: <h:inputText id="verticalOffsetInput" value="#{richTooltipBean.attributes['verticalOffset'].value}" onchange="submit()"/>
+            <br/>
         </ui:define>
 
     </ui:composition>
