@@ -32,20 +32,20 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRF13927 extends AbstractNestedCollapsibleSubTablesTest {
+public class TestRF13958 extends AbstractNestedCollapsibleSubTablesTest {
 
     @Override
     public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richCollapsibleSubTable/rf-13927.xhtml");
+        return buildUrl(contextPath, "faces/components/richCollapsibleSubTable/rf-13927.xhtml");// reused sample
     }
 
     @Test
-    public void testTopLevelCollapsionCollapsesAllSubTables() {
-        // collapse the top level of the first subtable
-        toggle(getToggler1a());
+    public void testParentTableCollapsionAndExpansionLeavesExpandedTableExpanded() {
+        // collapse the 2nd level of the first subtable
+        toggle(getToggler2a());
         // check the first subtable
         assertTrue(getToggler1a().isVisible());
-        assertFalse(getToggler2a().isVisible());
+        assertTrue(getToggler2a().isVisible());
         assertFalse(getToggler3a().isVisible());
         assertFirstTableDataNotVisible();
         // the second subtable remains the same
@@ -57,8 +57,8 @@ public class TestRF13927 extends AbstractNestedCollapsibleSubTablesTest {
         assertSecondTableDataVisible();
         assertThirdTableDataVisible();
 
-        // expand the top level of the first subtable
-        toggle(getToggler1a());
+        // expand the 2nd level of the first subtable
+        toggle(getToggler2a());
         // check the first subtable
         assertTrue(getToggler1a().isVisible());
         assertTrue(getToggler2a().isVisible());
@@ -73,8 +73,8 @@ public class TestRF13927 extends AbstractNestedCollapsibleSubTablesTest {
         assertSecondTableDataVisible();
         assertThirdTableDataVisible();
 
-        // collapse the top level of the second subtable
-        toggle(getToggler1b());
+        // collapse the 2nd level of the second subtable
+        toggle(getToggler2b1());
         // the first subtable remains the same
         assertTrue(getToggler1b().isVisible());
         assertTrue(getToggler2a().isVisible());
@@ -82,15 +82,15 @@ public class TestRF13927 extends AbstractNestedCollapsibleSubTablesTest {
         assertFirstTableDataVisible();
         // check the second subtable
         assertTrue(getToggler1b().isVisible());
-        assertFalse(getToggler2b1().isVisible());
+        assertTrue(getToggler2b1().isVisible());
         assertFalse(getToggler3b1().isVisible());
-        assertFalse(getToggler2b2().isVisible());
-        assertFalse(getToggler3b2().isVisible());
+        assertTrue(getToggler2b2().isVisible());
+        assertTrue(getToggler3b2().isVisible());
         assertSecondTableDataNotVisible();
-        assertThirdTableDataNotVisible();
+        assertThirdTableDataVisible();
 
-        // expand the top level of the second subtable
-        toggle(getToggler1b());
+        // expand the 2nd level of the second subtable
+        toggle(getToggler2b1());
         // the first subtable remains the same
         assertTrue(getToggler1a().isVisible());
         assertTrue(getToggler2a().isVisible());
