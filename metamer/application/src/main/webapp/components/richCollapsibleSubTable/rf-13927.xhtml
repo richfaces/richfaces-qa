@@ -40,7 +40,9 @@
 
         <ui:define name="component">  
             <p>
-                Reproducer for <a href="https://issues.jboss.org/browse/RF-13927">RF-13927: Nested collapsibleSubTable not collapse All Sub Level SubTable</a>. Automatized.
+                Reproducer for <a href="https://issues.jboss.org/browse/RF-13927">RF-13927: Nested collapsibleSubTable not collapse All Sub Level SubTable</a>
+                and for <a href="https://issues.jboss.org/browse/RF-13958">RF-13958: collapsibleSubTable: the most nested CST remains collapsed after parent CST re-expands</a>.
+                Automatized.
             </p>
             <r:dataTable id="table" value="#{rf13927.level0}" var="level1" iterationStatusVar="i">
                 <r:column>
