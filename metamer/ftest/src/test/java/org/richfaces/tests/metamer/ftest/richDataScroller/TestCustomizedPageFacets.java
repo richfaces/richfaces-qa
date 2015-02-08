@@ -36,6 +36,11 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.inputNumberSpinner.RichFacesInputNumberSpinner;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.AndExpression;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
@@ -60,6 +65,7 @@ public class TestCustomizedPageFacets extends AbstractWebDriverTest {
     private WebElement firstRowOfTable;
 
     @Test
+    @Templates(exclude = "uiRepeat")
     public void testTopCustomizedPageFacet() {
         assertInitialState();
         // change page via customized page facet
@@ -72,6 +78,17 @@ public class TestCustomizedPageFacets extends AbstractWebDriverTest {
         // assert that table data are correct
         // since we already test scrollers, it is enough to assert one row
         assertAfterSwitchToSecondPage();
+    }
+
+    @Test
+    @IssueTracking("https://issues.jboss.org/browse/RF-13974")
+    @Templates("uiRepeat")
+    @Skip(expressions = {
+        @AndExpression(On.Container.EAP624.class),
+        @AndExpression(On.Container.EAP633.class)
+    })
+    public void testTopCustomizedPageFacetInUiRepeat() {
+        testTopCustomizedPageFacet();
     }
 
     @Test
