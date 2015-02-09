@@ -29,7 +29,8 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
 /**
@@ -38,47 +39,41 @@ import org.testng.annotations.Test;
  * This uses a reproducer page where there are two a4j:status(es) one of which is referenced
  *
  * @author <a href="mailto:manovotn@redhat.com">Matej Novotny</a>
- *
  */
-public class TestRF13711 extends AbstractStatusTest {
+public class TestRF13711 extends AbstractWebDriverTest {
+
+    private static final String EXPECTED_TEXT = "Success!";
+
+    @FindByJQuery(value = "span[id$='outputTextOnStart2']")
+    private WebElement notReferencedOnStart;
+    @FindByJQuery(value = "span[id$='outputTextOnStop2']")
+    private WebElement notReferencedOnStop;
+    @FindByJQuery(value = "input[id$='buttonWithoutStatusAjax']")
+    private WebElement notReferencedStatusButton;
+    @FindByJQuery(value = "span[id$='outputTextOnStart1']")
+    private WebElement referencedOnStart;
+    @FindByJQuery(value = "span[id$='outputTextOnStop1']")
+    private WebElement referencedOnStop;
+    @FindByJQuery(value = "input[id$='buttonWithStatusAjax']")
+    private WebElement referencedStatusButton;
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jStatus/rf-13711.xhtml");
     }
 
-    private final String expected = "Success!";
-
-    @FindByJQuery(value = "input[id$='buttonWithoutStatusAjax']")
-    WebElement notReferencedStatusButton;
-
-    @FindByJQuery(value = "input[id$='buttonWithStatusAjax']")
-    WebElement referencedStatusButton;
-
-    @FindByJQuery(value = "span[id$='outputTextOnStart2']")
-    WebElement notReferencedOnStart;
-
-    @FindByJQuery(value = "span[id$='outputTextOnStop2']")
-    WebElement notReferencedOnStop;
-
-    @FindByJQuery(value = "span[id$='outputTextOnStart']")
-    WebElement referencedOnStart;
-
-    @FindByJQuery(value = "span[id$='outputTextOnStop']")
-    WebElement referencedOnStop;
-
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-13711")
+    @Test
+    @RegressionTest(value = "https://issues.jboss.org/browse/RF-13711")
     public void testBothOptions() {
         // click the button without referenced status and assert changes
         guardAjax(notReferencedStatusButton).click();
-        assertEquals(expected, notReferencedOnStart.getText());
-        assertEquals(expected, notReferencedOnStop.getText());
+        assertEquals(EXPECTED_TEXT, notReferencedOnStart.getText());
+        assertEquals(EXPECTED_TEXT, notReferencedOnStop.getText());
 
         // click the button which has reference to status
         // this was the problematic part in RF-13711
         guardAjax(referencedStatusButton).click();
-        assertEquals(expected, referencedOnStart.getText());
-        assertEquals(expected, referencedOnStop.getText());
+        assertEquals(EXPECTED_TEXT, referencedOnStart.getText());
+        assertEquals(EXPECTED_TEXT, referencedOnStop.getText());
     }
 }
