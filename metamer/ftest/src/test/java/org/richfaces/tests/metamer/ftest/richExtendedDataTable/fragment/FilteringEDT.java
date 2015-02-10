@@ -23,10 +23,11 @@ package org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment;
 
 import org.richfaces.fragment.common.NullFragment;
 import org.richfaces.fragment.extendedDataTable.RichFacesExtendedDataTable;
+import org.richfaces.tests.metamer.ftest.richDataTable.fragment.FilteringDTRow;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class FilteringEDT extends RichFacesExtendedDataTable<FilteringEDTHeader, FilteringEDTRow, NullFragment> {
+public class FilteringEDT extends RichFacesExtendedDataTable<FilteringEDTHeader, FilteringDTRow, NullFragment> {
 
 }

@@ -31,43 +31,66 @@ import org.richfaces.tests.metamer.model.Employee;
  */
 public class FilteringDTRow implements FilteringRowInterface {
 
-    @FindBy(css = "td:nth-of-type(1) img")
-    private WebElement sexColumnElement;
-
     @FindBy(css = "td:nth-of-type(2)")
     private WebElement nameColumnElement;
-
+    @FindBy(css = "td:nth-of-type(4)")
+    private WebElement numberOfKids1ColumnElement;
+    @FindBy(css = "td:nth-of-type(5)")
+    private WebElement numberOfKids2ColumnElement;
+    @FindBy(css = "td:nth-of-type(1)")
+    private WebElement sexColumnElement;
+    @FindBy(css = "td:nth-of-type(1) img")
+    private WebElement sexColumnImageElement;
     @FindBy(css = "td:nth-of-type(3)")
     private WebElement titleColumnElement;
 
-    @FindBy(css = "td:nth-of-type(4)")
-    private WebElement numberOfKids1ColumnElement;
-
-    @FindBy(css = "td:nth-of-type(5)")
-    private WebElement numberOfKids2ColumnElement;
-
     @Override
-    public Employee.Sex getSexColumnValue() {
-        return Employee.Sex.valueOf(sexColumnElement.getAttribute("alt"));
+    public WebElement getNameColumnElement() {
+        return nameColumnElement;
     }
 
     @Override
     public String getNameColumnValue() {
-        return nameColumnElement.getText();
+        return getNameColumnElement().getText();
     }
 
     @Override
-    public String getTitleColumnValue() {
-        return titleColumnElement.getText();
+    public WebElement getNumberOfKids1ColumnElement() {
+        return numberOfKids1ColumnElement;
     }
 
     @Override
     public int getNumberOfKids1ColumnValue() {
-        return Integer.parseInt(numberOfKids1ColumnElement.getText());
+        return Integer.parseInt(getNumberOfKids1ColumnElement().getText());
+    }
+
+    @Override
+    public WebElement getNumberOfKids2ColumnElement() {
+        return numberOfKids2ColumnElement;
     }
 
     @Override
     public int getNumberOfKids2ColumnValue() {
-        return Integer.parseInt(numberOfKids2ColumnElement.getText());
+        return Integer.parseInt(getNumberOfKids2ColumnElement().getText());
+    }
+
+    @Override
+    public WebElement getSexColumnElement() {
+        return sexColumnElement;
+    }
+
+    @Override
+    public Employee.Sex getSexColumnValue() {
+        return Employee.Sex.valueOf(sexColumnImageElement.getAttribute("alt"));
+    }
+
+    @Override
+    public WebElement getTitleColumnElement() {
+        return titleColumnElement;
+    }
+
+    @Override
+    public String getTitleColumnValue() {
+        return getTitleColumnElement().getText();
     }
 }

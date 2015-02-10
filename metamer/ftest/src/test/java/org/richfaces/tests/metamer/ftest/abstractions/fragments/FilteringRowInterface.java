@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.abstractions.fragments;
 
+import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.model.Employee;
 
 /**
@@ -28,13 +29,23 @@ import org.richfaces.tests.metamer.model.Employee;
  */
 public interface FilteringRowInterface {
 
-    Employee.Sex getSexColumnValue();
+    WebElement getNameColumnElement();
 
     String getNameColumnValue();
 
-    String getTitleColumnValue();
+    WebElement getNumberOfKids1ColumnElement();
 
     int getNumberOfKids1ColumnValue();
 
+    WebElement getNumberOfKids2ColumnElement();
+
     int getNumberOfKids2ColumnValue();
+
+    WebElement getSexColumnElement();
+
+    Employee.Sex getSexColumnValue();
+
+    WebElement getTitleColumnElement();
+
+    String getTitleColumnValue();
 }

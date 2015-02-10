@@ -1,6 +1,6 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2014, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,16 +18,24 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment;
-
-import org.richfaces.fragment.common.NullFragment;
-import org.richfaces.fragment.extendedDataTable.RichFacesExtendedDataTable;
-import org.richfaces.tests.metamer.ftest.richDataTable.fragment.FilteringDTRow;
+ */
+package org.richfaces.tests.metamer.ftest.webdriver.utils;
 
 /**
- * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @param <T>
  */
-public class SortingEDT extends RichFacesExtendedDataTable<SortingEDTHeader, FilteringDTRow, NullFragment> {
+public abstract class LazyLoadedCachedValue<T> {
+
+    private T value;
+
+    public T getValue() {
+        if (value == null) {
+            value = initValue();
+        }
+        return value;
+    }
+
+    protected abstract T initValue();
 
 }
