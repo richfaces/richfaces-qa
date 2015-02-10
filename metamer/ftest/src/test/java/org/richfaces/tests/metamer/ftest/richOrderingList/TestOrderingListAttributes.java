@@ -60,18 +60,6 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
-    @Templates(value = "plain")
-    public void testColumnClasses() {
-        String testedClass = "metamer-ftest-class";
-        attributes.set(OrderingListAttributes.columnClasses, testedClass);
-        for (WebElement li : orderingList.advanced().getItemsElements()) {
-            for (WebElement e : li.findElements(By.tagName("td"))) {
-                assertTrue(e.getAttribute("class").contains(testedClass), "Item @class should contain " + testedClass);
-            }
-        }
-    }
-
-    @Test
     public void testDisabled() {
         attributes.set(OrderingListAttributes.disabled, Boolean.TRUE);
         for (WebElement li : orderingList.advanced().getItemsElements()) {

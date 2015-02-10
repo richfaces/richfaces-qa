@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richDataTable;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
@@ -33,7 +32,6 @@ import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFacetsTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SimpleDT;
-import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SimpleDTRow;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -74,18 +72,6 @@ public class TestDataTableFacets extends DataTableFacetsTest {
     @Templates("plain")
     public void testCaptionClass() {
         testStyleClass(tableRoot.findElement(By.tagName("caption")), BasicAttributes.captionClass);
-    }
-
-    @Test
-    @Templates("plain")
-    public void testColumnClasses() {
-        attributes.set(DataTableAttributes.columnClasses, "col1,col2");
-        SimpleDTRow entry;
-        for (int i = 0; i < table.advanced().getNumberOfVisibleRows(); i += 2) {
-            entry = table.getRow(i);
-            assertTrue(entry.getStateColumn().getAttribute("class").contains("col1"));
-            assertTrue(entry.getCapitalColumn().getAttribute("class").contains("col2"));
-        }
     }
 
     @Test
