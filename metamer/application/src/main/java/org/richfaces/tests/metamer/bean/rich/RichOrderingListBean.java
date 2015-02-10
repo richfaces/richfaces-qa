@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.bean.rich;
 
-import com.google.common.collect.Lists;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,8 +34,11 @@ import javax.faces.bean.SessionScoped;
 import org.richfaces.component.UIOrderingList;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.model.Capital;
+import org.richfaces.tests.metamer.model.Employee;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.Lists;
 
 /**
  * Simple bean for rich:orderingList component example.
@@ -47,14 +49,41 @@ import org.slf4j.LoggerFactory;
 @SessionScoped
 public class RichOrderingListBean implements Serializable {
 
-    private static final long serialVersionUID = 5868941019675985273L;
     private static final Logger LOGGER = LoggerFactory.getLogger(RichOrderingListBean.class);
+    private static final long serialVersionUID = 5868941019675985273L;
+
+    private Attributes attributes;
     @ManagedProperty("#{model.capitals}")
     private List<Capital> capitals;
+    @ManagedProperty("#{model.employees}")
+    private List<Employee> employees;
     private List<Capital> emptyCapitals = Lists.newArrayList();
-    private Attributes attributes;
     private Collection<String> hiddenAttributes = new ArrayList<String>();
     private String validatorMessage;
+
+    public Attributes getAttributes() {
+        return attributes;
+    }
+
+    public List<Capital> getCapitals() {
+        return capitals;
+    }
+
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public List<Capital> getEmptyCapitals() {
+        return emptyCapitals;
+    }
+
+    public Collection<String> getHiddenAttributes() {
+        return hiddenAttributes;
+    }
+
+    public String getValidatorMessage() {
+        return validatorMessage;
+    }
 
     @PostConstruct
     public void init() {
@@ -70,33 +99,15 @@ public class RichOrderingListBean implements Serializable {
         attributes.setAttribute("upTopText", "Top");
         attributes.setAttribute("required", false);
 
+        employees = employees.subList(0, 10);
+
         // TODO has to be tested in another way
-        String[] attrsToHide = new String[]{"collectionType", "itemLabel", "itemValue", "value", "var",
-            "converter", "converterMessage", "validator", "validatorMessage", "valueChangeListener"};
+        String[] attrsToHide = new String[] { "collectionType", "itemLabel", "itemValue", "value", "var",
+            "converter", "converterMessage", "validator", "validatorMessage", "valueChangeListener" };
         for (String attribute : attrsToHide) {
             hiddenAttributes.add(attribute);
             attributes.remove(attribute);
         }
-    }
-
-    public Attributes getAttributes() {
-        return attributes;
-    }
-
-    public List<Capital> getCapitals() {
-        return capitals;
-    }
-
-    public List<Capital> getEmptyCapitals() {
-        return emptyCapitals;
-    }
-
-    public Collection<String> getHiddenAttributes() {
-        return hiddenAttributes;
-    }
-
-    public String getValidatorMessage() {
-        return validatorMessage;
     }
 
     public void setAttributes(Attributes attributes) {
@@ -105,6 +116,10 @@ public class RichOrderingListBean implements Serializable {
 
     public void setCapitals(List<Capital> capitals) {
         this.capitals = capitals;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
     }
 
     public void setEmptyCapitals(List<Capital> emptyCapitals) {
@@ -118,4 +133,5 @@ public class RichOrderingListBean implements Serializable {
     public void setValidatorMessage(String validatorMessage) {
         this.validatorMessage = validatorMessage;
     }
+
 }
