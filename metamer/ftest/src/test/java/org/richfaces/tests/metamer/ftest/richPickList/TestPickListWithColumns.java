@@ -22,19 +22,13 @@
 package org.richfaces.tests.metamer.ftest.richPickList;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.fragment.orderingList.SelectableListItem;
 import org.richfaces.fragment.pickList.RichFacesPickList;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
-import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
-import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -43,26 +37,12 @@ import org.testng.annotations.Test;
  */
 public class TestPickListWithColumns extends AbstractWebDriverTest {
 
-    private final Attributes<PickListAttributes> pickListAttributes = getAttributes();
-
     @FindBy(css = "[id$=pickList]")
     private RichFacesPickList picklist;
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richPickList/columnLayout.xhtml");
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testColumnClasses() {
-        String testedClass = "metamer-ftest-class";
-        pickListAttributes.set(PickListAttributes.columnClasses, testedClass);
-        for (SelectableListItem li : picklist.advanced().getSourceList().getItems()) {
-            for (WebElement e : li.getRootElement().findElements(By.tagName("td"))) {
-                assertTrue(e.getAttribute("class").contains(testedClass), "Item @class should contain " + testedClass);
-            }
-        }
     }
 
     @Test

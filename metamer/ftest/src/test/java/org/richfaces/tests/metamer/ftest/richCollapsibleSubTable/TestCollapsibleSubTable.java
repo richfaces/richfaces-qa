@@ -56,21 +56,6 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
     }
 
     @Test
-    @Templates("plain")
-    @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
-    public void testColumnClasses() {
-        attributes.set(CollapsibleSubTableAttributes.columnClasses, "col1,col2,col3");
-        CollapsibleSubTableWithEmployees subtable = getSubTable(isMale);
-        EmployeeRecord entry;
-        for (int i = 0; i < subtable.advanced().getNumberOfVisibleRows(); i += 2) {
-            entry = subtable.getRow(i);
-            assertTrue(entry.getNameElement().getAttribute("class").contains("col1"));
-            assertTrue(entry.getTitleElement().getAttribute("class").contains("col2"));
-            assertTrue(entry.getBirthdateElement().getAttribute("class").contains("col3"));
-        }
-    }
-
-    @Test
     @UseWithField(field = "expandMode", valuesFrom = FROM_ENUM, value = "")
     public void testExpandMode() {
         attributes.set(CollapsibleSubTableAttributes.expandMode, expandMode);
