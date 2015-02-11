@@ -26,7 +26,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 
 public class ChartSimplePage extends MetamerPage {
 
-    @FindByJQuery(value = "span[id$='frm:msg']")
+    @FindByJQuery(value = "span[id$='msg']")
     private WebElement serverSideMessage;
 
     @FindByJQuery(value = "span[id$='clickInfo']")
@@ -35,10 +35,10 @@ public class ChartSimplePage extends MetamerPage {
     @FindByJQuery(value = "span[id$='hoverInfo']")
     private WebElement plotHoverMessage;
 
-    @FindByJQuery(value = "div[id$='frm:chart']")
+    @FindByJQuery(value = "div[id$='chart']")
     private WebElement chartElement;
 
-    @FindByJQuery(value = "div[id$='frm:chart'] div.chart-title")
+    @FindByJQuery(value = "div[id$='chart'] div.chart-title")
     private WebElement chartTitleElement;
 
     public WebElement getChartTitleElement() {

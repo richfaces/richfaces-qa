@@ -25,6 +25,7 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
 
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
 public class TestPieChart extends AbstractChartTest {
@@ -35,22 +36,26 @@ public class TestPieChart extends AbstractChartTest {
     }
 
     @Test
+    @Templates("plain")
+    public void testOnmouseout() {
+        super.testOnmouseout();
+    }
+
+    @Test
+    @Templates("plain")
     public void testRendered() {
         super.testRendered();
     }
 
     @Test
-    public void testTitle() {
-        super.testTitle();
-    }
-
-    @Test
+    @Templates("plain")
     public void testStyleClass() {
         super.testStyleClass();
     }
 
     @Test
-    public void testOnmouseout() {
-        super.testOnmouseout();
+    @Templates("plain")
+    public void testTitle() {
+        super.testTitle();
     }
 }
