@@ -18,29 +18,29 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-*/
+ */
 package org.richfaces.tests.qa.plugin.utils.files;
 
 import static org.richfaces.tests.qa.plugin.utils.Utils.waitFor;
 
-import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 class DownloadProgressPrinter extends Thread {
 
+    private final FileChannel fc;
     private final long fileSize;
-    private final FileOutputStream fos;
     private final long updateTimeInMillis;
 
-    DownloadProgressPrinter(FileOutputStream fos, long fileSize, long updateTimeInMillis) {
-        this.fos = fos;
+    DownloadProgressPrinter(FileChannel fc, long fileSize, long updateTimeInMillis) {
+        this.fc = fc;
         this.fileSize = fileSize;
         this.updateTimeInMillis = updateTimeInMillis;
     }
 
-    DownloadProgressPrinter(FileOutputStream fos, long fileSize) {
+    DownloadProgressPrinter(FileChannel fos, long fileSize) {
         this(fos, fileSize, 1500);
     }
 
@@ -51,10 +51,10 @@ class DownloadProgressPrinter extends Thread {
         double progress;
         double downloadSpeedKiBPerSec;
         boolean notCompleted = true;
-        while (fos.getChannel().isOpen() || notCompleted) {
+        while (fc.isOpen() || notCompleted) {
             try {
-                if (fos.getChannel().isOpen()) {
-                    downloadedSize = fos.getChannel().size();
+                if (fc.isOpen()) {
+                    downloadedSize = fc.size();
                 } else {
                     downloadedSize = fileSize;
                 }
