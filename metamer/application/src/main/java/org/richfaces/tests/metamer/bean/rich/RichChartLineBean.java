@@ -62,7 +62,7 @@ public class RichChartLineBean implements Serializable {
         logger.debug("initializing bean " + getClass().getName());
 
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIChart.class, getClass());
-        attributes.setAttribute("title", "Countries by carbon dioxide emissions per capita");
+        attributes.setAttribute("title", "Countries by carbon dioxide emissions per capital");
         attributes.setAttribute("styleClass", "graf");
         attributes.setAttribute("onplotclick", "log(event)");
         attributes.setAttribute("onplothover", "hover(event)");
@@ -153,9 +153,10 @@ public class RichChartLineBean implements Serializable {
         this.attributes = attributes;
     }
 
-    public class Country {
+    public static class Country {
+
         private final String name;
-        // CO2 production year-> metric tons per capita
+        // CO2 production year-> metric tons per capital
         private final List<Record> data;
 
         public Country(String name) {
@@ -164,7 +165,7 @@ public class RichChartLineBean implements Serializable {
         }
 
         public void put(int year, double tons) {
-            this.data.add(new Record(year, tons));
+            getData().add(new Record(year, tons));
         }
 
         public List<Record> getData() {
@@ -174,24 +175,24 @@ public class RichChartLineBean implements Serializable {
         public String getName() {
             return name;
         }
+    }
 
-        public class Record {
-            private final int year;
-            private final double tons;
+    public static class Record {
 
-            public Record(int year, double tons) {
-                this.year = year;
-                this.tons = tons;
-            }
+        private final int year;
+        private final double tons;
 
-            public double getTons() {
-                return tons;
-            }
+        public Record(int year, double tons) {
+            this.year = year;
+            this.tons = tons;
+        }
 
-            public int getYear() {
-                return year;
-            }
+        public double getTons() {
+            return tons;
+        }
 
+        public int getYear() {
+            return year;
         }
     }
 }

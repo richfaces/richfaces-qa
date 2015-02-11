@@ -1,0 +1,14 @@
+<script type="text/javascript">
+    function log(e) {
+        $('#clickInfo').text("Point with index " + e.data.dataIndex + " within series " + e.data.seriesIndex
+                + " was clicked. Point coordinates: [" + e.data.x + "," + e.data.y + "]. (client-side)");
+    }
+    function hover(e) {
+        if (e.data.item != undefined) {
+            $("#hoverInfo").text(e.data.item.series.label + ' [' + e.data.x + ',' + e.data.y + ']');
+        }
+    }
+    function clear() {
+        $("#hoverInfo").text("");
+    }
+</script>

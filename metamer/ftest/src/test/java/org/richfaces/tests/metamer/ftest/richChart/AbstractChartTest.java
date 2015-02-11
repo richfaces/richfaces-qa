@@ -21,14 +21,12 @@
 package org.richfaces.tests.metamer.ftest.richChart;
 
 import static org.jboss.arquillian.graphene.Graphene.waitAjax;
-import static org.testng.AssertJUnit.assertTrue;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.testng.annotations.Test;
 
 /**
  * Abstract class for chart tests. Allows to keep common tests altogether while like chart can have extra tests for zooming etc.
@@ -40,29 +38,6 @@ public abstract class AbstractChartTest extends AbstractWebDriverTest {
     @Page
     private ChartSimplePage page;
 
-    public void testRendered() {
-        assertPresent(page.getChartElement(), "Chart should be rendered.");
-        chartAttributes.set(ChartAttributes.rendered, false);
-        assertNotPresent(page.getChartElement(), "Chart should not be rendered.");
-    }
-
-    public void testTitle() {
-        // assert title is present
-        assertPresent(page.getChartTitleElement(), "Title should be rendered");
-
-        // change title and assert
-        final String newTitle = "SomeNewAwesomeAndSlightlyLongTitle";
-        chartAttributes.set(ChartAttributes.title, newTitle);
-        waitAjax(driver).until().element(page.getChartTitleElement()).text().equalTo(newTitle);
-    }
-
-    public void testStyleClass() {
-        final String newStyleClass = "newStyleClass";
-        chartAttributes.set(ChartAttributes.styleClass, newStyleClass);
-        assertTrue(page.getChartElement().getAttribute("class").contains(newStyleClass));
-    }
-
-    @Test
     public void testOnmouseout() {
         testFireEvent(chartAttributes, ChartAttributes.onmouseout, new Action() {
             @Override
@@ -73,5 +48,25 @@ public abstract class AbstractChartTest extends AbstractWebDriverTest {
                 new Actions(driver).moveToElement(page.getPlotClickMessage()).build().perform();
             }
         });
+    }
+
+    public void testRendered() {
+        assertPresent(page.getChartElement(), "Chart should be rendered.");
+        chartAttributes.set(ChartAttributes.rendered, false);
+        assertNotPresent(page.getChartElement(), "Chart should not be rendered.");
+    }
+
+    public void testStyleClass() {
+        testStyleClass(page.getChartElement());
+    }
+
+    public void testTitle() {
+        // assert title is present
+        assertPresent(page.getChartTitleElement(), "Title should be rendered");
+
+        // change title and assert
+        final String newTitle = "SomeNewAwesomeAndSlightlyLongTitle";
+        chartAttributes.set(ChartAttributes.title, newTitle);
+        waitAjax(driver).until().element(page.getChartTitleElement()).text().equalTo(newTitle);
     }
 }
