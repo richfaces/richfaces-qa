@@ -18,18 +18,23 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-*/
+ */
 package org.richfaces.tests.qa.plugin.utils.files;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.text.MessageFormat;
 
 import org.apache.maven.plugin.logging.Log;
 
+import com.google.common.io.Files;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -48,8 +53,10 @@ public class SimpleDownloader implements Downloader {
 
     @Override
     public void downloadFile(URL from, File to) {
+        File partiallyDownloadedFile = null;
         try {
             final long fileSize = from.openConnection().getContentLengthLong();
+            URLConnection openedConnection = from.openConnection();
             if (to.exists() && to.length() == fileSize) {
                 getLog().info(MessageFormat.format("File <{0}> is already downloaded and it has the right size.", to.getName()));
             } else if (fileSize == -1) {// fileSize==-1 => URL is not accessible, work offline
@@ -59,21 +66,44 @@ public class SimpleDownloader implements Downloader {
                     throw new RuntimeException(MessageFormat.format("The URL <{0}> is not accessible!", from));
                 }
             } else {
-                if (to.exists()) {
-                    getLog().info(MessageFormat.format("File <{0}> exists, but the size of downloaded <{1} B> and size from url <{2} B> does not match. Deleting the downloaded file.", to.getAbsolutePath(), to.length(), fileSize));
-                    to.delete();
+                partiallyDownloadedFile = new File(to.getAbsolutePath() + ".part");
+                FileChannel toChannel;
+                if (partiallyDownloadedFile.exists()) {
+                    getLog().info(MessageFormat.format("Found previous attempt to download file <{0}> at <{1}>. Will try to download the remaining <{2} B>.", to.getName(), partiallyDownloadedFile.getAbsolutePath(), (fileSize - partiallyDownloadedFile.length())));
+                    toChannel = new FileOutputStream(partiallyDownloadedFile, true).getChannel();
+                } else {
+                    Files.createParentDirs(partiallyDownloadedFile);
+                    toChannel = new FileOutputStream(partiallyDownloadedFile).getChannel();
                 }
-                getLog().info(MessageFormat.format("Trying to download from <{0}> to <{1}>.", from.toString(), to.getAbsolutePath()));
-                final ReadableByteChannel rbc = Channels.newChannel(from.openStream());
-                final FileOutputStream fos = new FileOutputStream(to);
-                DownloadProgressPrinter progressPrinter = new DownloadProgressPrinter(fos, fileSize);
+                getLog().info(MessageFormat.format("Trying to download from <{0}> to <{1}>.", from.toString(), partiallyDownloadedFile.getAbsolutePath()));
+
+                // to skip downloading of already downloaded bits
+                openedConnection.setRequestProperty("Range", "Bytes=" + toChannel.position() + "-");
+                final ReadableByteChannel fromChannel = Channels.newChannel(openedConnection.getInputStream());
+
+                DownloadProgressPrinter progressPrinter = new DownloadProgressPrinter(toChannel, fileSize);
                 progressPrinter.start();
-                fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-                fos.close();
-                rbc.close();
+
+                toChannel.transferFrom(fromChannel, toChannel.position(), Long.MAX_VALUE);
+
+                toChannel.close();
+                fromChannel.close();
                 progressPrinter.join();
+
+                getLog().info(MessageFormat.format("Download was successfull. Renaming the file from <{0}> to <{1}>.", partiallyDownloadedFile.getName(), to.getName()));
+                Files.copy(partiallyDownloadedFile, to);
+                partiallyDownloadedFile.delete();
             }
-        } catch (Throwable ex) {
+        } catch (FileNotFoundException ex) {
+            if (partiallyDownloadedFile != null && partiallyDownloadedFile.exists()) {
+                partiallyDownloadedFile.delete();
+            }
+            throw new RuntimeException(ex);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        } catch (InterruptedException ex) {
+            throw new RuntimeException(ex);
+        } catch (RuntimeException ex) {
             throw new RuntimeException(ex);
         }
     }
