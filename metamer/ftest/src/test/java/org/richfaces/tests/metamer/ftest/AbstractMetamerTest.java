@@ -22,7 +22,9 @@
 package org.richfaces.tests.metamer.ftest;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.text.MessageFormat;
 import java.util.List;
 
 import org.eu.ingwar.tools.arquillian.extension.suite.annotations.ArquillianSuiteDeployment;
@@ -33,12 +35,16 @@ import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.importer.ArchiveImportException;
+import org.jboss.shrinkwrap.api.importer.ZipImporter;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.descriptor.api.Descriptors;
 import org.jboss.shrinkwrap.descriptor.api.javaee6.ParamValueType;
 import org.jboss.shrinkwrap.descriptor.api.webapp30.WebAppDescriptor;
 import org.richfaces.tests.metamer.TemplatesList;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+
+import com.google.common.io.Files;
 
 /**
  * Abstract test case used as a basis for majority of test cases.
@@ -50,62 +56,60 @@ import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annota
 @ArquillianSuiteDeployment
 public abstract class AbstractMetamerTest extends Arquillian {
 
-    @ArquillianResource
-    protected URL contextPath;
-    protected static Boolean runInPortalEnv = Boolean.getBoolean("runInPortalEnv");
-    /**
-     * The path to the metamer application.
-     */
-    public static final String WEBAPP_SRC = "../application/src/main/webapp";
-    /** Key to manage resourceMapping enabling context-param in web.xml */
-    public static final String RESOURCE_MAPPING_ENABLED = "org.richfaces.resourceMapping.enabled";
+    private static final String PARAM_ALL = "All";
+    private static final String PARAM_NONE = "None";
     /** Key to manage compressedStages context-param in web.xml */
     public static final String RESOURCE_MAPPING_COMPRESSED_STAGES = "org.richfaces.resourceMapping.compressedStages";
+    /** Key to manage resourceMapping enabling context-param in web.xml */
+    public static final String RESOURCE_MAPPING_ENABLED = "org.richfaces.resourceMapping.enabled";
     /** Key to manage packedStages context-param in web.xml */
     public static final String RESOURCE_MAPPING_PACKED_STAGES = "org.richfaces.resourceMapping.packedStages";
+
+    protected static Boolean runInPortalEnv = Boolean.getBoolean("runInPortalEnv");
+
+    @ArquillianResource
+    protected URL contextPath;
 
     @Templates({ "plain", "richAccordion", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richCollapsiblePanel", "richTabPanel", "richPopupPanel", "a4jRegion", "a4jRepeat", "uiRepeat" })
     protected TemplatesList template;
 
-    /**
-     * Returns the url to test page to be opened by Selenium
-     *
-     * @return absolute url to the test page to be opened by Selenium
-     */
-    public abstract URL getTestUrl();
-
     @Deployment(testable = false)
     @OverProtocol("Servlet 3.0")
-    public static WebArchive createTestArchive() {
-        WebArchive war;
-        if (runInPortalEnv) {
-            war = ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/metamer-portlet.war"));
-        } else {
-            war = ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/metamer.war"));
-        }
+    public static WebArchive createTestArchive() throws IOException {
+        WebArchive war = createWarFromZipFile();
         /*
          * If value on system property "org.richfaces.resourceMapping.enabled" is set to true, modify context-params in web.xml.
          * For more info see https://issues.jboss.org/browse/RFPL-1682
          */
-        // Note that following code verify value of system property with given key
         if (Boolean.getBoolean(RESOURCE_MAPPING_ENABLED)) {
-            System.out.println(RESOURCE_MAPPING_ENABLED + "=true");
-            Boolean compressedStages = Boolean.getBoolean(RESOURCE_MAPPING_COMPRESSED_STAGES);
-            Boolean packedStages = Boolean.getBoolean(RESOURCE_MAPPING_PACKED_STAGES);
-            war = updateArchiveWebXml(war, compressedStages, packedStages);
+            enableResourceMapping(war);
         }
         return war;
+    }
+
+    private static WebArchive createWarFromZipFile() throws IOException, IllegalArgumentException, ArchiveImportException {
+        File tmpFile = new File("target/metamer-orig.war");
+        File originalWar = runInPortalEnv ? new File("target/metamer-portlet.war") : new File("target/metamer.war");
+        Files.move(originalWar, tmpFile);// rename the original war file to metamer*-orig.war
+        return ShrinkWrap.create(ZipImporter.class, originalWar.getName()).importFrom(tmpFile).as(WebArchive.class);
     }
 
     /*
      * Update contex-param values in web.xml Call this function cause set org.richfaces.resourceMapping.enabled to true, and
      * remain 2 context-params according to function params values
      */
-    private static WebArchive updateArchiveWebXml(WebArchive defaultWar, Boolean compressedStages, Boolean packedStages) {
+    private static void enableResourceMapping(WebArchive war) {
+        System.out.println("### Enabling resource mapping ###");
+
+        Boolean compressedStages = Boolean.getBoolean(RESOURCE_MAPPING_COMPRESSED_STAGES);
+        Boolean packedStages = Boolean.getBoolean(RESOURCE_MAPPING_PACKED_STAGES);
+        System.out.println(MessageFormat.format("    compressedStages  = {0}", compressedStages));
+        System.out.println(MessageFormat.format("    packedStages  = {0}", compressedStages));
+
         // 1. load existing web.xml from metamer.war
         WebAppDescriptor webXmlDefault = Descriptors.importAs(WebAppDescriptor.class).fromStream(
-            defaultWar.get("WEB-INF/web.xml").getAsset().openStream());
+            war.get("WEB-INF/web.xml").getAsset().openStream());
         List<ParamValueType<WebAppDescriptor>> allContextParams = webXmlDefault.getAllContextParam();
         // 2. Iterate over all context params and alter the particular ones
         for (ParamValueType<WebAppDescriptor> param : allContextParams) {
@@ -113,46 +117,19 @@ public abstract class AbstractMetamerTest extends Arquillian {
             if (paramName.equals(RESOURCE_MAPPING_ENABLED)) {
                 param.paramValue("true");
             } else if (paramName.equals(RESOURCE_MAPPING_COMPRESSED_STAGES)) {
-                param.paramValue("All");
+                param.paramValue(compressedStages ? PARAM_ALL : PARAM_NONE);
             } else if (paramName.equals(RESOURCE_MAPPING_PACKED_STAGES)) {
-                param.paramValue("All");
+                param.paramValue(packedStages ? PARAM_ALL : PARAM_NONE);
             }
         }
-        // 3. create second archive (war). Set here modified web.xml
-        WebArchive modifiedWar = ShrinkWrap.create(WebArchive.class);
-        modifiedWar.setWebXML(new StringAsset(webXmlDefault.exportAsString()));
-        // 4. merge newly created war with metamer.war (this is way how to change descriptor within archive)
-        // war.merge(tempWar); -- this way doesn't work
-        modifiedWar.merge(defaultWar);
-        // 5. return modified archive
-        return modifiedWar;
+        // 3. save the params to web.xml
+        war.setWebXML(new StringAsset(webXmlDefault.exportAsString()));
     }
 
     /**
-     * This method should be called in each test class from the method with annotation @Deployment, to ensure that deployed war
-     * will contain all environment specific files. In other words when war is deployed on Tomcat or other containers needs to
-     * have some specific files, the same apply for testing with different JSF implementations.
+     * Returns the url to test page to be opened by Selenium
      *
-     * @param war to be altered
-     * @return war which is altered according to the test environment
+     * @return absolute url to the test page to be opened by Selenium
      */
-    protected static WebArchive alterWarAccordingToTestEnvironment(WebArchive war) {
-        String tomcat = System.getProperty("TOMCAT");
-        if (tomcat != null && tomcat.equals("true")) {
-            war = alterAccordingToTomcat(war);
-        }
-        // TODO
-        return (WebArchive) war;
-    }
-
-    /**
-     * Alter the war according to the Tomcat specifics
-     *
-     * @param war to be altered
-     * @return war to be altered
-     */
-    private static WebArchive alterAccordingToTomcat(WebArchive war) {
-        // TODO
-        return war;
-    }
+    public abstract URL getTestUrl();
 }
