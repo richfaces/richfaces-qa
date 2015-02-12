@@ -27,6 +27,7 @@ import static org.jboss.test.selenium.utils.testng.TestInfo.getPackageClassMetho
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 import java.util.logging.Level;
@@ -53,6 +54,7 @@ public class BrowserConsoleLogSaverListener extends TestListenerAdapter {
 
     private static final boolean APPEND = true;
     private static final File BUILD_DIRECTORY = new File(System.getProperty("maven.project.build.directory", "./target/"));
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
     private static final Set<Level> LOOK_FOR_MESSAGES_LEVEL = Sets.newHashSet(Level.INFO, Level.WARNING, Level.SEVERE);
     private static final String NEW_LINE = "\n";
     private static final File OUTPUT_FILE = new File(BUILD_DIRECTORY, "browserConsole.log");
@@ -71,10 +73,10 @@ public class BrowserConsoleLogSaverListener extends TestListenerAdapter {
     @Override
     public void onFinish(ITestContext testContext) {
         if (errorsCount > 0) {
-            System.out.println("");
+            System.out.println();
             System.out.println(format("Encountered <{0}> {1} in browser console during testing. You can check the log at <{2}>.",
                 errorsCount, errorsCount > 1 ? "errors" : "error", OUTPUT_FILE.getAbsolutePath()));
-            System.out.println("");
+            System.out.println();
         }
     }
 
@@ -103,7 +105,7 @@ public class BrowserConsoleLogSaverListener extends TestListenerAdapter {
             FileUtils.forceMkdir(OUTPUT_FILE.getParentFile());
             for (LogEntry entry : logEntries) {
                 if (LOOK_FOR_MESSAGES_LEVEL.contains(entry.getLevel())) {
-                    msg = format("{0} method: {1}, level: {2}, message: {3}", new Date(entry.getTimestamp()),
+                    msg = format("{0} method: {1}, level: {2}, message: {3}", DATE_FORMAT.format(new Date(entry.getTimestamp())),
                         getPackageClassMethodName(result), entry.getLevel(), entry.getMessage());
                     for (String error : POSSIBLE_CONSOLE_ERRORS) {
                         if (msg.toLowerCase().contains(error)) {
