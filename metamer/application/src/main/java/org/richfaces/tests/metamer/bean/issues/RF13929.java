@@ -82,9 +82,6 @@ public class RF13929 implements Serializable {
         update1 = 0;
         update2 = 0;
         update3 = 0;
-        // initialize topic, so subtopics will also work
-        // without this, the push would not work as expected
-        getTopicsContext().getOrCreateTopic(new TopicKey(getTopicsContextAddress3()));
     }
 
     public void pushWithTopicsContext1() throws MessageException {
