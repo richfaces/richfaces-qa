@@ -47,20 +47,20 @@
                       address="#{rf13929.topicsContextAddress1}"
                       ondataavailable="$('*[id$=output1]').text(event.rf.data)" />
             <br />
-            <a4j:outputPanel id="output1">
+            <div id="output1">
                 #{rf13929.defaultData}
-            </a4j:outputPanel>
+            </div>
             <br />
-            <br />
+            <br />  
             <!--  PUSH 2 -->
             <a4j:commandButton id="performPushEvent2" value="Push 2!" action="#{rf13929.pushWithTopicsContext2()}" />
             <a4j:push id="push2"
                       address="#{rf13929.topicsContextAddress2}"
                       ondataavailable="$('*[id$=output2]').text(event.rf.data)"/>
             <br />
-            <a4j:outputPanel id="output2">
+            <div id="output2">
                 #{rf13929.defaultData}
-            </a4j:outputPanel>
+            </div>
             <br />
             <br />
             <!--  PUSH 3 -->
@@ -69,9 +69,9 @@
                       address="#{rf13929.topicsContextAddress3}"
                       ondataavailable="$('*[id$=output3]').text(event.rf.data)"/>
             <br />
-            <a4j:outputPanel id="output3">
+            <div id="output3">
                 #{rf13929.defaultData}
-            </a4j:outputPanel>
+            </div>
         </ui:define>
         <ui:define name="outOfTemplateAfter">
         </ui:define>
