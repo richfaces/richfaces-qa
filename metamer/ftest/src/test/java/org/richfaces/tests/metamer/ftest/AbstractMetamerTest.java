@@ -23,6 +23,7 @@ package org.richfaces.tests.metamer.ftest;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.List;
@@ -33,6 +34,10 @@ import org.jboss.arquillian.container.test.api.OverProtocol;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.arquillian.testng.Arquillian;
+import org.jboss.as.cli.CliInitializationException;
+import org.jboss.as.cli.CommandContext;
+import org.jboss.as.cli.CommandContextFactory;
+import org.jboss.as.cli.CommandLineException;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.importer.ArchiveImportException;
@@ -64,8 +69,8 @@ public abstract class AbstractMetamerTest extends Arquillian {
     public static final String RESOURCE_MAPPING_ENABLED = "org.richfaces.resourceMapping.enabled";
     /** Key to manage packedStages context-param in web.xml */
     public static final String RESOURCE_MAPPING_PACKED_STAGES = "org.richfaces.resourceMapping.packedStages";
-
-    protected static Boolean runInPortalEnv = Boolean.getBoolean("runInPortalEnv");
+    private static final String activatedMavenProfiles = System.getProperty("activated.maven.profiles", "");
+    protected static final Boolean runInPortalEnv = Boolean.getBoolean("runInPortalEnv");
 
     @ArquillianResource
     protected URL contextPath;
@@ -76,7 +81,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
 
     @Deployment(testable = false)
     @OverProtocol("Servlet 3.0")
-    public static WebArchive createTestArchive() throws IOException {
+    public static WebArchive createTestArchive() throws IOException, URISyntaxException {
         WebArchive war = createWarFromZipFile();
         /*
          * If value on system property "org.richfaces.resourceMapping.enabled" is set to true, modify context-params in web.xml.
@@ -84,6 +89,13 @@ public abstract class AbstractMetamerTest extends Arquillian {
          */
         if (Boolean.getBoolean(RESOURCE_MAPPING_ENABLED)) {
             enableResourceMapping(war);
+        }
+        if (isUsingEAP63()) {
+            workaroundCLIVersionInEAP63();
+        }
+        // undeploy all metamer WARs if using a JBoss container
+        if (isUsingJBossContainer()) {
+            runCLICommand("undeploy *metamer*");
         }
         return war;
     }
@@ -124,6 +136,56 @@ public abstract class AbstractMetamerTest extends Arquillian {
         }
         // 3. save the params to web.xml
         war.setWebXML(new StringAsset(webXmlDefault.exportAsString()));
+    }
+
+    private static boolean isUsingEAP() {
+        return activatedMavenProfiles.contains("jbosseap");
+    }
+
+    private static boolean isUsingEAP63() {
+        return isUsingEAP() && activatedMavenProfiles.contains("-6-3");
+    }
+
+    private static boolean isUsingJBossContainer() {
+        return isUsingEAP() || isUsingWildFly();
+    }
+
+    private static boolean isUsingWildFly() {
+        return activatedMavenProfiles.contains("wildfly");
+    }
+
+    private static void runCLICommand(String... commands) throws IllegalStateException {
+        final CommandContext ctx;
+        try {
+            ctx = CommandContextFactory.getInstance().newCommandContext();
+        } catch (CliInitializationException e) {
+            throw new IllegalStateException("Failed to initialize CLI context", e);
+        }
+        try {
+            // connect to the server controller
+            ctx.connectController();
+            // execute commands and operations
+            for (String cmd : commands) {
+                ctx.handle(cmd);
+            }
+        } catch (CommandLineException e) {
+            System.err.println(e);
+            // the operation or the command has failed
+        } finally {
+            // terminate the session and
+            // close the connection to the controller
+            ctx.terminateSession();
+        }
+    }
+
+    /**
+     * Workaround the exception during parsing the jboss-cli.xml. Change the urn:jboss:cli:1.3 to *1.2
+     */
+    private static void workaroundCLIVersionInEAP63() throws URISyntaxException, IOException {
+        File jbossCliFile = new File(System.getProperty("project.build.directory"), "jboss-eap-6.3" + File.separator + "bin" + File.separator + "jboss-cli.xml");
+        File workaroundedJBossCliFile = new File(AbstractMetamerTest.class.getResource("eap/jboss-cli.xml").toURI());
+        jbossCliFile.delete();
+        Files.copy(workaroundedJBossCliFile, jbossCliFile);
     }
 
     /**
