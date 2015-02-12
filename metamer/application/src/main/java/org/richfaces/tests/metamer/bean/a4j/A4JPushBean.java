@@ -21,8 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.bean.a4j;
 
-import static org.richfaces.demo.push.TopicsContextMessageProducer.PUSH_TOPICS_CONTEXT_TOPIC;
-
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
@@ -37,6 +35,7 @@ import org.richfaces.application.push.TopicKey;
 import org.richfaces.application.push.TopicsContext;
 import org.richfaces.cdi.push.Push;
 import org.richfaces.component.UIPush;
+import org.richfaces.demo.push.TopicsContextMessageProducer;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.Message;
 import org.slf4j.Logger;
@@ -55,8 +54,6 @@ public class A4JPushBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public static final String DATE_PATTERN = "'day:' d', month:' M', time:' HH:mm:ss.SSS";
-    public static final String METAMER_SUBTOPIC = "xxx";
-    public static final String METAMER_TOPIC_CDI = "topic2";
     private static final Logger LOGGER = LoggerFactory.getLogger(A4JPushBean.class);
     private transient TopicsContext topicsContext;
     private Attributes attributes;
@@ -147,6 +144,10 @@ public class A4JPushBean implements Serializable {
         LOGGER.debug("push event 2");
     }
 
+    public String getApplicationPushTopicContextAddress() {
+        return TopicsContextMessageProducer.PUSH_TOPICS_CONTEXT_ADDRESS;
+    }
+
     /**
      * Getter for attributes.
      *
@@ -197,7 +198,7 @@ public class A4JPushBean implements Serializable {
         try {
             Message msg = new Message(message, username, new DateTime().toString(DATE_PATTERN));
             LOGGER.debug("sending message \"" + message + "\" by user " + username);
-            getTopicsContext().publish(new TopicKey(PUSH_TOPICS_CONTEXT_TOPIC, METAMER_SUBTOPIC), msg);
+            getTopicsContext().publish(TopicsContextMessageProducer.PUSH_APPLICATION_TOPICKEY, msg);
         } catch (MessageException messageException) {
             LOGGER.error("Could not send message \"" + message + "\" by user " + username + ".", messageException);
         }

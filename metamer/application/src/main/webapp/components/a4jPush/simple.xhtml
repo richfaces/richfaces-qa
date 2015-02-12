@@ -36,14 +36,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </f:viewParam>
             </f:metadata>
         </ui:define>
-        
+
         <ui:define name="head">
             <h:outputScript library="script" name="pushHelper.js"/>
         </ui:define>
 
         <ui:define name="component">
-        
-            <a4j:push address="xxx@pushTopicsContext" 
+
+            <a4j:push address="#{a4jPushBean.applicationPushTopicContextAddress}" 
                       onerror="#{a4jPushBean.attributes['onerror'].value}"
                       onsubscribed="#{a4jPushBean.attributes['onsubscribed'].value}"
                       ondataavailable="updateMessage(#{rich:element('messagePanel')}, event.rf.data);" >
@@ -52,7 +52,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <p>To send your own message to Topics Context, open page
                 <h:commandLink value="Message Producer" action="messageProducer" /> 
             </p>
-            
+
             <h:panelGrid columns="2">
                 <h:outputLabel value="Last message:" />
                 <a4j:outputPanel id="messagePanel" layout="block">
@@ -61,7 +61,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </div>
                 </a4j:outputPanel>                    
             </h:panelGrid>
-            
+
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
