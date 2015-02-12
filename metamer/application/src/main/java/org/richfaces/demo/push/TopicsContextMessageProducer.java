@@ -35,7 +35,8 @@ import org.richfaces.tests.metamer.bean.a4j.A4JPushBean;
  */
 public class TopicsContextMessageProducer implements MessageProducer {
 
-    public static final String PUSH_TOPICS_CONTEXT_TOPIC = "pushTopicsContext";
+    public static final String PUSH_TOPICS_CONTEXT_ADDRESS = "xxx@pushTopicsContext";
+    public static final TopicKey PUSH_APPLICATION_TOPICKEY = new TopicKey(PUSH_TOPICS_CONTEXT_ADDRESS);
 
     private String text = "Hello, still alive!";
     private String author = "Push Bot";
@@ -47,9 +48,8 @@ public class TopicsContextMessageProducer implements MessageProducer {
      */
     public void sendMessage() throws Exception {
         try {
-            TopicKey topicKey = new TopicKey(PUSH_TOPICS_CONTEXT_TOPIC, "xxx");
             TopicsContext topicsContext = TopicsContext.lookup();
-            topicsContext.publish(topicKey, new Message(text, author, new DateTime().toString(A4JPushBean.DATE_PATTERN)));
+            topicsContext.publish(PUSH_APPLICATION_TOPICKEY, new Message(text, author, new DateTime().toString(A4JPushBean.DATE_PATTERN)));
         } catch (MessageException e) {
             if (!e.getMessage().matches("^Topic .* not found$")) {
                 throw e;
@@ -71,6 +71,7 @@ public class TopicsContextMessageProducer implements MessageProducer {
      *
      * @see org.richfaces.demo.push.MessageProducer#finalizeProducer()
      */
+    @Override
     public void finalizeProducer() {
     }
 

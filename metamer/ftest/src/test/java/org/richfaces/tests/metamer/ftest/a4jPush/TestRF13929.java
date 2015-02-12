@@ -86,7 +86,7 @@ public class TestRF13929 extends AbstractWebDriverTest {
         if (storage.getPushWithSubtopic2Msgs() < 1) {
             expectedOutput2 = RF13929.DEFAULT_DATA;
         }
-        if (storage.getPushWithoutSubtopicMsgs() < 1 && storage.getPushWithSubtopic1Msgs() < 1 && storage.getPushWithSubtopic2Msgs() < 1) {
+        if (storage.getPushWithoutSubtopicMsgs() + storage.getPushWithSubtopic1Msgs() + storage.getPushWithSubtopic2Msgs() < 1) {
             expectedOutput3 = RF13929.DEFAULT_DATA;
         }
         Graphene.waitAjax().until().element(output1).text().equalTo(expectedOutput1);

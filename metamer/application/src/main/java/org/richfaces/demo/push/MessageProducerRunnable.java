@@ -35,7 +35,7 @@ public class MessageProducerRunnable implements Runnable {
     private static final Logger LOGGER = Logger.getLogger(MessageProducerRunnable.class.getName());
 
     private AtomicBoolean runFlag = new AtomicBoolean(true);
-    private MessageProducer messageProducer;
+    private final MessageProducer messageProducer;
 
     /**
      * Creates runnable with associated message producer.
@@ -51,6 +51,7 @@ public class MessageProducerRunnable implements Runnable {
      *
      * @see java.lang.Runnable#run()
      */
+    @Override
     public void run() {
         while (runFlag.get()) {
             try {
@@ -73,5 +74,6 @@ public class MessageProducerRunnable implements Runnable {
      */
     public void stop() {
         runFlag.set(false);
+        messageProducer.finalizeProducer();
     }
 }

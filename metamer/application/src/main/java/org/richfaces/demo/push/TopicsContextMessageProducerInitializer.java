@@ -38,16 +38,16 @@ import javax.servlet.ServletContextListener;
  */
 public class TopicsContextMessageProducerInitializer implements SystemEventListener, ServletContextListener {
 
-    private Thread messageProducerThread;
-    private MessageProducer messageProducer;
-    private MessageProducerRunnable messageProducerRunnable;
     private boolean correctlyInitialized = false;
+    private MessageProducerRunnable messageProducerRunnable;
+    private Thread messageProducerThread;
 
     /*
      * (non-Javadoc)
      *
      * @see javax.faces.event.SystemEventListener#processEvent(javax.faces.event. SystemEvent)
      */
+    @Override
     public void processEvent(SystemEvent event) throws AbortProcessingException {
         if (isCapabilityEnabled()) {
             if (event instanceof PostConstructApplicationEvent) {
@@ -72,6 +72,7 @@ public class TopicsContextMessageProducerInitializer implements SystemEventListe
         }
     }
 
+    @Override
     public void contextInitialized(ServletContextEvent sce) {
         try {
             initializeCapability();
@@ -81,6 +82,7 @@ public class TopicsContextMessageProducerInitializer implements SystemEventListe
         }
     }
 
+    @Override
     public void contextDestroyed(ServletContextEvent sce) {
         try {
             finalizeCapability();
@@ -103,6 +105,7 @@ public class TopicsContextMessageProducerInitializer implements SystemEventListe
      *
      * @see javax.faces.event.SystemEventListener#isListenerForSource(java.lang.Object )
      */
+    @Override
     public boolean isListenerForSource(Object source) {
         return true;
     }
@@ -122,8 +125,7 @@ public class TopicsContextMessageProducerInitializer implements SystemEventListe
      * @throws Exception
      */
     public void initializeCapability() throws Exception {
-        messageProducer = createMessageProducer();
-        messageProducerRunnable = new MessageProducerRunnable(messageProducer);
+        messageProducerRunnable = new MessageProducerRunnable(createMessageProducer());
         messageProducerThread = new Thread(messageProducerRunnable, "MessageProducerThread");
         messageProducerThread.setDaemon(false);
         messageProducerThread.start();
@@ -135,9 +137,6 @@ public class TopicsContextMessageProducerInitializer implements SystemEventListe
      * @throws Exception
      */
     public void finalizeCapability() throws Exception {
-        if (messageProducer != null) {
-            messageProducer.finalizeProducer();
-        }
         if (messageProducerRunnable != null) {
             messageProducerRunnable.stop();
         }
