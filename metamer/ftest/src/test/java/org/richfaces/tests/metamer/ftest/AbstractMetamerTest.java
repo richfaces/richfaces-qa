@@ -38,6 +38,7 @@ import org.jboss.as.cli.CliInitializationException;
 import org.jboss.as.cli.CommandContext;
 import org.jboss.as.cli.CommandContextFactory;
 import org.jboss.as.cli.CommandLineException;
+import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.importer.ArchiveImportException;
@@ -61,6 +62,8 @@ import com.google.common.io.Files;
 @ArquillianSuiteDeployment
 public abstract class AbstractMetamerTest extends Arquillian {
 
+    // Key to enable WS on EAP
+    public static final String EAP_WS_ENABLED = "eap.ws.enabled";
     private static final String PARAM_ALL = "All";
     private static final String PARAM_NONE = "None";
     /** Key to manage compressedStages context-param in web.xml */
@@ -90,12 +93,27 @@ public abstract class AbstractMetamerTest extends Arquillian {
         if (Boolean.getBoolean(RESOURCE_MAPPING_ENABLED)) {
             enableResourceMapping(war);
         }
+
         if (isUsingEAP63()) {
             workaroundCLIVersionInEAP63();
         }
+
         // undeploy all metamer WARs if using a JBoss container
         if (isUsingJBossContainer()) {
             runCLICommand("undeploy *metamer*");
+        }
+
+        if (isUsingEAP63()) {
+            if (Boolean.getBoolean(EAP_WS_ENABLED)) {
+                try {
+                    System.out.println("### Enabling WebSockets in EAP ###");
+                    enableWebSocketsInEAP63(war);
+                    System.out.println("### Enabling of WebSockets in EAP was successful ###");
+                } catch (Throwable t) {
+                    t.printStackTrace(System.err);
+                    System.out.println("### Enabling of WebSockets in EAP was NOT successful ###");
+                }
+            }
         }
         return war;
     }
@@ -138,6 +156,17 @@ public abstract class AbstractMetamerTest extends Arquillian {
         war.setWebXML(new StringAsset(webXmlDefault.exportAsString()));
     }
 
+    private static void enableWSInJBossCLI() throws IllegalStateException {
+        runCLICommand(
+            "/subsystem=web/connector=http/:write-attribute(name=protocol,value=org.apache.coyote.http11.Http11NioProtocol)",
+            ":reload");
+    }
+
+    private static void enableWebSocketsInEAP63(WebArchive war) {
+        modifyJBossWebXMLToUseWS(war);
+        enableWSInJBossCLI();
+    }
+
     private static boolean isUsingEAP() {
         return activatedMavenProfiles.contains("jbosseap");
     }
@@ -152,6 +181,16 @@ public abstract class AbstractMetamerTest extends Arquillian {
 
     private static boolean isUsingWildFly() {
         return activatedMavenProfiles.contains("wildfly");
+    }
+
+    private static void modifyJBossWebXMLToUseWS(WebArchive war) throws IllegalArgumentException {
+        File file = null;
+        try {
+            file = new File(AbstractMetamerTest.class.getResource("eap/jboss-web.xml").toURI());
+        } catch (URISyntaxException ex) {
+        }
+        war.delete(ArchivePaths.create("WEB-INF/jboss-web.xml"));
+        war.addAsWebInfResource(file);
     }
 
     private static void runCLICommand(String... commands) throws IllegalStateException {
