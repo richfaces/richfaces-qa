@@ -42,6 +42,8 @@ FSF site: http://www.fsf.org. -->
         <testng.suite.xml>src/test/resources/testng/testng-all.xml</testng.suite.xml>
         <metamer-portlet.version>3.2.1.Final</metamer-portlet.version>
         <jboss-portal.version>7.1.3.Final</jboss-portal.version>
+        <!-- enable WS on EAP -->
+        <eap.ws.enabled>true</eap.ws.enabled>
     </properties>
 
     <dependencies>
@@ -183,6 +185,7 @@ FSF site: http://www.fsf.org. -->
                         <logging.props.dir>${project.basedir}/src/test/resources</logging.props.dir>
                         <project.build.directory>${project.build.directory}</project.build.directory>
                         <activated.maven.profiles>${qa.activated.profiles}</activated.maven.profiles>
+                        <eap.ws.enabled>${eap.ws.enabled}</eap.ws.enabled>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
