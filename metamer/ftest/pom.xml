@@ -137,6 +137,19 @@ FSF site: http://www.fsf.org. -->
 
     <build>
         <plugins>
+            <!-- saves all activated maven profiles to project property qa.activated.profiles --> 
+            <plugin>
+                <groupId>org.richfaces.tests</groupId>
+                <artifactId>richfaces-qa-maven-plugin</artifactId>
+                <version>${project.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>profiles</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
@@ -161,6 +174,7 @@ FSF site: http://www.fsf.org. -->
                         <version.tomee1-5>${version.tomee1-5}</version.tomee1-5>
                         <logging.props.dir>${project.basedir}/src/test/resources</logging.props.dir>
                         <project.build.directory>${project.build.directory}</project.build.directory>
+                        <activated.maven.profiles>${qa.activated.profiles}</activated.maven.profiles>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
