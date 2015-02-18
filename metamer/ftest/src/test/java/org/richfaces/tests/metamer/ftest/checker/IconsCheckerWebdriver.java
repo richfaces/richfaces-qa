@@ -91,18 +91,20 @@ public class IconsCheckerWebdriver<A extends AttributeEnum> {
         cssImageIcons.put("chevron", "chevron");
         cssImageIcons.put("chevronDown", "chevron-down");
         cssImageIcons.put("chevronUp", "chevron-up");
+        cssImageIcons.put("chevronLeft", "chevron-left");
         cssImageIcons.put("disc", "disc");
         cssImageIcons.put("grid", "grid");
         cssImageIcons.put("triangle", "triangle");
         cssImageIcons.put("triangleDown", "triangle-down");
         cssImageIcons.put("triangleUp", "triangle-up");
+        cssImageIcons.put("triangleLeft", "triangle-left");
         for (String cssIcon : cssImageIcons.keySet()) {
             if (!setAttributeSilently(attribute, cssIcon)) {
                 continue;
             }
             assertTrue(
                 icon.findElement().getAttribute("class")
-                    .contains(iconPrefix + cssImageIcons.get(cssIcon) + iconSuffix + classSuffix),
+                .contains(iconPrefix + cssImageIcons.get(cssIcon) + iconSuffix + classSuffix),
                 "Div should have set class " + iconPrefix + cssImageIcons.get(cssIcon) + iconSuffix + classSuffix + ".");
             assertTrue(icon.findElement().getCssValue("background-image").contains(cssIcon + imageNameSuffix),
                 "Icon should contain a " + cssIcon + ".");
@@ -172,7 +174,7 @@ public class IconsCheckerWebdriver<A extends AttributeEnum> {
                 "Icon's image should be rendered (" + image + ") when icon=" + imageIcon + ".");
             assertTrue(driver.findElement(image).getAttribute("src").contains(imageIcons.get(imageIcon)),
                 "Icon's src attribute (" + image + ") should contain " + imageIcons.get(imageIcon) + " when icon="
-                    + imageIcon + ".");
+                + imageIcon + ".");
         }
     }
 
@@ -236,6 +238,7 @@ public class IconsCheckerWebdriver<A extends AttributeEnum> {
     }
 
     public static class ByElementLocator implements ElementLocator {
+
         private final WebDriver driver;
         private final By by;
 
@@ -257,6 +260,7 @@ public class IconsCheckerWebdriver<A extends AttributeEnum> {
     }
 
     public static class WebElementLocator implements ElementLocator {
+
         private final WebElement element;
 
         public WebElementLocator(WebElement element) {
