@@ -37,6 +37,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     </ui:define>
 
     <ui:define name="component">
+    This reproducer shows that (according to documentation) to make inputs inside popup panel work, one hast to set domElementAttachment to 'form'.
+    <br /><br />
             domElementAttachment:
             <h:selectOneRadio id="attachmentInput" value="#{richPopupPanelBean.attributes['domElementAttachment'].value}">
             <f:selectItem itemValue="" itemLabel="null" />
@@ -73,7 +75,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </h:panelGrid>
 
             <a4j:commandButton action="#{richPopupPanelBean.save}" value="Save" render="output1 output2 output3"
-                execute="input1 input2 input3" />
+                execute="input1 input2 input3" oncomplete="#{rich:component('popupPanel')}.hide(); return false;"/>
         </rich:popupPanel>
 
         <h:panelGrid id="outputs" columns="2">
