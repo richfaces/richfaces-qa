@@ -109,7 +109,6 @@ FSF site: http://www.fsf.org. -->
         <module>metamer</module>
         <module>testng-listeners</module>
         <module>common</module>
-        <!--<module>photoalbum-ftest</module>-->
         <module>qa-maven-plugin</module>
     </modules>
 
