@@ -6,7 +6,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
       xmlns:rich="http://richfaces.org/rich"
-      >
+      xmlns:a4j="http://richfaces.org/a4j">
 
     <!--
     JBoss, Home of Professional Open Source
@@ -44,7 +44,7 @@
             </p>
             <p>
 
-                There is a table with an unrendered column which contains another table. This inner table should not be visited. To mark the visit, the getter used in this inner table logs a message to phases panel "* getter from unrendered table invoked".
+                There is a table with an unrendered column which contains another table. This inner table should not be visited during ajax request. To mark the visit, the getter used in this inner table logs a message to phases panel "* getter from unrendered table invoked".
                 Automatized. 
             </p>
             <br/>
@@ -60,6 +60,7 @@
                     <h:outputText value="row #{row.number}"/>
                 </rich:column>
             </rich:dataTable>
+            <a4j:commandButton id="ajaxSubmit" value="ajax submit"/>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

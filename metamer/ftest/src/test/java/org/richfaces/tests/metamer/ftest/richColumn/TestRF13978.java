@@ -24,8 +24,10 @@ package org.richfaces.tests.metamer.ftest.richColumn;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
-import java.text.MessageFormat;
 
+import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.bean.issues.RF13978;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
@@ -38,16 +40,18 @@ public class TestRF13978 extends AbstractWebDriverTest {
 
     private static final String UNEXPECTED_MESSAGE = RF13978.MESSAGE.substring(2);
 
-    private String page;
+    @FindBy(css = "[id$='ajaxSubmit']")
+    private WebElement ajaxSubmit;
 
     @Override
     public URL getTestUrl() {
-        return buildUrl(contextPath, MessageFormat.format("faces/components/richColumn/rf-13978.xhtml", page));
+        return buildUrl(contextPath, "faces/components/richColumn/rf-13978.xhtml");
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-13978")
     public void testUnrenderedDataTableIsNotVisited() {
+        Graphene.guardAjax(ajaxSubmit).click();
         getMetamerPage().assertNoListener(UNEXPECTED_MESSAGE);
     }
 }
