@@ -28,5 +28,5 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  */
 public enum MetamerAttributes implements AttributeEnum {
 
-    metamerComponentFormEnctype, metamerResponseDelay, metamerStatelessView
+    metamerComponentFormEnctype, metamerResponseDelay, metamerStatelessView, metamerUIDebugEnabled
 }
