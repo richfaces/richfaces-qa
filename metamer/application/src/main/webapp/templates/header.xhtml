@@ -97,9 +97,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </h:outputText>
                 </a4j:outputPanel>
 
-                <h:outputLabel id="showUiDebugLabel" value="Show ui:debug" for="showUiDebug"/>
+                <h:outputLabel id="showUiDebugLabel" value="Show ui:debug (must be enabled)" for="showUiDebug"/>
                 <h:outputText id="showUiDebug" value="Ctrl+Shift+L"/>
-                <ui:debug hotkey="L"/>
+                <ui:debug hotkey="L" rendered="#{richBean.uiDebugEnabled}"/>
 
                 <a4j:jsFunction name="functionChecker" render="jsFunctionChecker"/>
             </h:panelGrid>
@@ -125,6 +125,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:outputLabel id="metamerComponentFormEnctype" value="Component's form enctype: " for="metamerComponentFormEnctypeInput" />
                     <h:selectOneRadio id="metamerComponentFormEnctypeInput" value="#{richBean.componentFormEnctype}" onchange="submit();">
                         <f:selectItems value="#{richBean.componentFormEnctypes}"/>
+                    </h:selectOneRadio>
+
+                    <h:outputLabel id="metamerUIDebugEnabledLabel" value="Enable ui:debug" for="metamerUIDebugEnabledInput"/>
+                    <h:selectOneRadio id="metamerUIDebugEnabledInput" value="#{richBean.uiDebugEnabled}" onchange="submit();">
+                        <f:selectItem itemValue="true" itemLabel="true"/>
+                        <f:selectItem itemValue="false" itemLabel="false"/>
                     </h:selectOneRadio>
                 </h:panelGrid>
             </h:form>

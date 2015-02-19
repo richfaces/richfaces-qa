@@ -80,6 +80,7 @@ public class RichBean implements Serializable {
     private boolean stateless;
     private String componentFormEnctype;
     private List<SelectItem> componentFormEnctypes;
+    private boolean uiDebugEnabled;
 
     public enum Skinning {
 
@@ -102,6 +103,8 @@ public class RichBean implements Serializable {
         skinning = Skinning.SKINNING;
         reTests = false;
         reComponent = true;
+        uiDebugEnabled = false;
+
         this.stateless = Boolean.valueOf(System.getProperty("statelessViews", "false"));
         this.delay = 0;
         componentFormEnctypes = Lists.newArrayList(
@@ -268,6 +271,14 @@ public class RichBean implements Serializable {
 
     public void setStateless(boolean stateless) {
         this.stateless = stateless;
+    }
+
+    public boolean isUiDebugEnabled() {
+        return uiDebugEnabled;
+    }
+
+    public void setUiDebugEnabled(boolean uiDebugEnabled) {
+        this.uiDebugEnabled = uiDebugEnabled;
     }
 
     /**
