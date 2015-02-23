@@ -61,7 +61,7 @@ FSF site: http://www.fsf.org. -->
         <jboss.javaee6.spec.version>3.0.2.Final</jboss.javaee6.spec.version>
 
         <version.selenium>2.44.0</version.selenium>
-        <version.testng>6.8.13</version.testng>
+        <version.testng>6.8.21</version.testng>
 
         <!-- these are set as Environmental variables to let Arquillian know where distribution of managed containers are -->
         <tomcat7.home>${project.build.directory}/apache-tomcat-${version.tomcat7}</tomcat7.home>
