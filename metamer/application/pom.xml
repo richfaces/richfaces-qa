@@ -140,19 +140,11 @@ FSF site: http://www.fsf.org. -->
             <version>4.2.0.Final</version>
         </dependency>
 
-        <!-- JBoss AS7 management -->
+        <!-- for getting EAP/WildFly version -->
         <dependency>
             <groupId>org.jboss.as</groupId>
             <artifactId>jboss-as-process-controller</artifactId>
-            <version>${version.jbossas7}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- JBoss AS7 management -->
-        <dependency>
-            <groupId>org.jboss.as</groupId>
-            <artifactId>jboss-as-controller-client</artifactId>
-            <version>${version.jbossas7}</version>
+            <version>7.2.0.Final</version>
             <scope>provided</scope>
         </dependency>
 
