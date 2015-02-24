@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
     <display-name>metamer</display-name>
 
-    <!-- disabled because of a bug in Mojarra 2.1 showing an error message on every page
+    <!--     
+    Disabled because of a bug in Mojarra 2.1 showing a warning message on every page:
+    "The form component needs to have a UIForm in its ancestry. Suggestion: enclose the necessary components within <h:form>"
+    -->
+    <!--
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
-    </context-param>--> 
+    </context-param>
+    -->
 
     <context-param>
         <param-name>com.sun.faces.allowTextChildren</param-name>
@@ -29,24 +34,26 @@
     <context-param>
         <param-name>org.richfaces.fileUpload.maxRequestSize</param-name>
         <param-value>20000</param-value>
-    </context-param>
+    </context-param>    
     <context-param>
         <param-name>org.richfaces.push.initializeOnStartup</param-name>
         <param-value>true</param-value>
     </context-param>
-    <!-- resource mapping enable/disable/configure -->
+    <!-- resource optimization(mapping) enable/disable/configure -->
     <context-param>
-        <param-name>org.richfaces.resourceMapping.compressedStages</param-name>
-        <param-value>None</param-value>
-    </context-param>
-    <context-param>
-        <param-name>org.richfaces.resourceMapping.packedStages</param-name>
-        <param-value>None</param-value>
-    </context-param>
-    <context-param>
-        <param-name>org.richfaces.resourceMapping.enabled</param-name>
+        <param-name>org.richfaces.resourceOptimization.enabled</param-name>
         <param-value>false</param-value>
     </context-param>
+    <context-param>
+        <param-name>org.richfaces.resourceOptimization.compressionStages</param-name>
+        <param-value>None</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.richfaces.resourceOptimization.packagingStages</param-name>
+        <param-value>None</param-value>
+    </context-param>
+
+
     <context-param>
         <param-name>org.richfaces.skin</param-name>
         <param-value>#{richBean.skin}</param-value>

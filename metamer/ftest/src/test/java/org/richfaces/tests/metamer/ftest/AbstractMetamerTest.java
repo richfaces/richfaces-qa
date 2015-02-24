@@ -21,6 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest;
 
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -42,7 +45,6 @@ import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.importer.ArchiveImportException;
-import org.jboss.shrinkwrap.api.importer.ZipImporter;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.descriptor.api.Descriptors;
 import org.jboss.shrinkwrap.descriptor.api.javaee6.ParamValueType;
@@ -64,34 +66,39 @@ public abstract class AbstractMetamerTest extends Arquillian {
 
     // Key to enable WS on EAP
     public static final String EAP_WS_ENABLED = "eap.ws.enabled";
-    private static final String PARAM_ALL = "All";
-    private static final String PARAM_NONE = "None";
-    /** Key to manage compressedStages context-param in web.xml */
-    public static final String RESOURCE_MAPPING_COMPRESSED_STAGES = "org.richfaces.resourceMapping.compressedStages";
-    /** Key to manage resourceMapping enabling context-param in web.xml */
-    public static final String RESOURCE_MAPPING_ENABLED = "org.richfaces.resourceMapping.enabled";
-    /** Key to manage packedStages context-param in web.xml */
-    public static final String RESOURCE_MAPPING_PACKED_STAGES = "org.richfaces.resourceMapping.packedStages";
+    /** Keys to manage resources optimization (in previous releases named mapping), compression and packaging, used in web.xml */
+    public static final String RESOURCE_OPTIMIZATION_COMPRESSION_STAGES = "org.richfaces.resourceOptimization.compressionStages";
+    public static final String RESOURCE_OPTIMIZATION_ENABLED = "org.richfaces.resourceOptimization.enabled";
+    public static final String RESOURCE_OPTIMIZATION_PACKAGING_STAGES = "org.richfaces.resourceOptimization.packagingStages";
+    public static final String RESOURCE_OPTIMIZATION_PARAM_ALL = "All";
+    public static final String RESOURCE_OPTIMIZATION_PARAM_NONE = "None";
+
     private static final String activatedMavenProfiles = System.getProperty("activated.maven.profiles", "");
     protected static final Boolean runInPortalEnv = Boolean.getBoolean("runInPortalEnv");
 
     @ArquillianResource
     protected URL contextPath;
-
-    @Templates({ "plain", "richAccordion", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+    @Templates(value = { "plain", "richAccordion", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richCollapsiblePanel", "richTabPanel", "richPopupPanel", "a4jRegion", "a4jRepeat", "uiRepeat" })
     protected TemplatesList template;
 
-    @Deployment(testable = false)
+    private static void checkValueIsValidForResourceOptimizationParam(String value) {
+        assertNotNull(value, "The parameter for resource optimization can only be <None> or <All>, not null!");
+        assertTrue(value.equals(RESOURCE_OPTIMIZATION_PARAM_NONE) || value.equals(RESOURCE_OPTIMIZATION_PARAM_ALL),
+            MessageFormat.format("The parameter for resource optimization can only be <{0}> or <{1}>. Now it is set to <{2}>.",
+                RESOURCE_OPTIMIZATION_PARAM_ALL, RESOURCE_OPTIMIZATION_PARAM_NONE, value));
+    }
+
+    @Deployment(testable = false, name = "updated")
     @OverProtocol("Servlet 3.0")
     public static WebArchive createTestArchive() throws IOException, URISyntaxException {
         WebArchive war = createWarFromZipFile();
         /*
-         * If value on system property "org.richfaces.resourceMapping.enabled" is set to true, modify context-params in web.xml.
+         * If value on system property "org.richfaces.resourceOptimization.enabled" is set to true, modify context-params in web.xml.
          * For more info see https://issues.jboss.org/browse/RFPL-1682
          */
-        if (Boolean.getBoolean(RESOURCE_MAPPING_ENABLED)) {
-            enableResourceMapping(war);
+        if (Boolean.getBoolean(RESOURCE_OPTIMIZATION_ENABLED)) {
+            enableResourceOptimization(war);
         }
 
         if (isUsingEAP63()) {
@@ -119,23 +126,23 @@ public abstract class AbstractMetamerTest extends Arquillian {
     }
 
     private static WebArchive createWarFromZipFile() throws IOException, IllegalArgumentException, ArchiveImportException {
-        File tmpFile = new File("target/metamer-orig.war");
-        File originalWar = runInPortalEnv ? new File("target/metamer-portlet.war") : new File("target/metamer.war");
-        Files.move(originalWar, tmpFile);// rename the original war file to metamer*-orig.war
-        return ShrinkWrap.create(ZipImporter.class, originalWar.getName()).importFrom(tmpFile).as(WebArchive.class);
+        return ShrinkWrap.createFromZipFile(WebArchive.class, runInPortalEnv ? new File("target/metamer-portlet.war")
+            : new File("target/metamer.war"));
     }
 
     /*
-     * Update contex-param values in web.xml Call this function cause set org.richfaces.resourceMapping.enabled to true, and
-     * remain 2 context-params according to function params values
+     * This will update web.xml with resource optimization values.
      */
-    private static void enableResourceMapping(WebArchive war) {
-        System.out.println("### Enabling resource mapping ###");
+    private static void enableResourceOptimization(WebArchive war) {
+        System.out.println("### Enabling resource optimization ###");
 
-        Boolean compressedStages = Boolean.getBoolean(RESOURCE_MAPPING_COMPRESSED_STAGES);
-        Boolean packedStages = Boolean.getBoolean(RESOURCE_MAPPING_PACKED_STAGES);
-        System.out.println(MessageFormat.format("    compressedStages  = {0}", compressedStages));
-        System.out.println(MessageFormat.format("    packedStages  = {0}", compressedStages));
+        String compressedParam = System.getProperty(RESOURCE_OPTIMIZATION_COMPRESSION_STAGES, RESOURCE_OPTIMIZATION_PARAM_NONE);
+        checkValueIsValidForResourceOptimizationParam(compressedParam);
+        String packedParam = System.getProperty(RESOURCE_OPTIMIZATION_PACKAGING_STAGES, RESOURCE_OPTIMIZATION_PARAM_NONE);
+        checkValueIsValidForResourceOptimizationParam(packedParam);
+
+        System.out.println(MessageFormat.format("    {0}  = {1}", RESOURCE_OPTIMIZATION_COMPRESSION_STAGES, compressedParam));
+        System.out.println(MessageFormat.format("    {0}  = {1}", RESOURCE_OPTIMIZATION_PACKAGING_STAGES, packedParam));
 
         // 1. load existing web.xml from metamer.war
         WebAppDescriptor webXmlDefault = Descriptors.importAs(WebAppDescriptor.class).fromStream(
@@ -144,12 +151,12 @@ public abstract class AbstractMetamerTest extends Arquillian {
         // 2. Iterate over all context params and alter the particular ones
         for (ParamValueType<WebAppDescriptor> param : allContextParams) {
             String paramName = param.getParamName();
-            if (paramName.equals(RESOURCE_MAPPING_ENABLED)) {
+            if (paramName.equals(RESOURCE_OPTIMIZATION_ENABLED)) {
                 param.paramValue("true");
-            } else if (paramName.equals(RESOURCE_MAPPING_COMPRESSED_STAGES)) {
-                param.paramValue(compressedStages ? PARAM_ALL : PARAM_NONE);
-            } else if (paramName.equals(RESOURCE_MAPPING_PACKED_STAGES)) {
-                param.paramValue(packedStages ? PARAM_ALL : PARAM_NONE);
+            } else if (paramName.equals(RESOURCE_OPTIMIZATION_COMPRESSION_STAGES)) {
+                param.paramValue(compressedParam);
+            } else if (paramName.equals(RESOURCE_OPTIMIZATION_PACKAGING_STAGES)) {
+                param.paramValue(packedParam);
             }
         }
         // 3. save the params to web.xml
