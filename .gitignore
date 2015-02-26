@@ -10,6 +10,7 @@ test-output
 archetypes/richfaces-kitchensink-ftest/kitchensink-webdriver-ftest/
 .checkstyle
 metamer/application/bin
+metamer/application/.tern-project
 metamer/ftest/bin
 metamer/ftest/src/main/java/rebel.xml
 faces-config.NavData
