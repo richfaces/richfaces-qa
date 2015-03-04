@@ -28,7 +28,6 @@ FSF site: http://www.fsf.org. -->
         <jetty.port>8080</jetty.port>
         <version.hornetq>2.2.13.Final</version.hornetq>
         <version.jstlapi>1.2-rev-1</version.jstlapi>
-        <glassfish31.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*,WEB-INF/lib/jboss-as-controller-client*,WEB-INF/lib/jstl-api-*</glassfish31.excluded.libraries>
         <jbas71.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*,WEB-INF/lib/jboss-as-controller-client*,WEB-INF/lib/jstl-api-*</jbas71.excluded.libraries>
         <tomee15.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*</tomee15.excluded.libraries>
         <tomcat7-mojarra.excluded.libraries>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/jboss-as-controller-client*</tomcat7-mojarra.excluded.libraries>
@@ -353,32 +352,6 @@ FSF site: http://www.fsf.org. -->
             </dependencies>
         </profile>
         <profile>
-            <id>war-glassfish31</id>
-            <properties>
-                <prepareExplodedWar.filesToDelete>${glassfish31.excluded.libraries}</prepareExplodedWar.filesToDelete>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-war-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>glassfish31</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>war</goal>
-                                </goals>
-                                <configuration>
-                                    <classifier>glassfish31</classifier>
-                                    <packagingExcludes>${glassfish31.excluded.libraries}</packagingExcludes>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
             <id>prepareExplodedWar</id>
             <activation>
                 <property>
@@ -524,18 +497,6 @@ FSF site: http://www.fsf.org. -->
                                 <configuration>
                                     <classifier>tomee15</classifier>
                                     <packagingExcludes>${tomee15.excluded.libraries}</packagingExcludes>
-                                    <attachClasses>false</attachClasses>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>glassfish31</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>war</goal>
-                                </goals>
-                                <configuration>
-                                    <classifier>glassfish31</classifier>
-                                    <packagingExcludes>${glassfish31.excluded.libraries}</packagingExcludes>
                                     <attachClasses>false</attachClasses>
                                 </configuration>
                             </execution>-->

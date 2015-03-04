@@ -15,32 +15,6 @@ http://www.fsf.org. -->
         <property name="deploymentExportPath">target/</property>
     </engine>
 
-    <container qualifier="glassfish-managed-3-1">
-        <configuration>
-            <property name="javaVmArguments">${arquillian.container.all.jvm.args}</property>
-            <property name="enableAssertions">false</property>
-        </configuration>
-    </container>
-
-    <container qualifier="glassfish-remote-3-1">
-        <configuration>
-            <property name="javaVmArguments">${arquillian.container.all.jvm.args}</property>
-        </configuration>
-    </container>
-
-    <container qualifier="jbossas-managed-7">
-        <configuration>
-            <!-- must use jboss.bind.address because AS7MessagingProviderManagement for jboss7 have problems with "localhost" [ipv6]-->
-            <property name="javaVmArguments">${arquillian.container.all.jvm.args} -Djboss.bind.address=127.0.0.1</property>
-            <property name="serverConfig">standalone-preview.xml</property>
-            <property name="outputToConsole">false</property>
-            <property name="enableAssertions">false</property>
-        </configuration>
-        <protocol type="jmx-as7">
-            <property name="executionType">REMOTE</property>
-        </protocol>
-    </container>
-
     <container qualifier="tomcat-remote-7">
         <configuration>
             <property name="user">tomcat</property>
@@ -49,15 +23,6 @@ http://www.fsf.org. -->
         </configuration>
     </container>
 
-    <container qualifier="jbossas-managed-7-1" default="true">
-        <configuration>
-            <property name="jbossHome">target/jboss-as-7.1.1.Final</property>
-            <property name="javaVmArguments">${arquillian.container.jbossas.7-1.jvm.args}</property>
-            <property name="managementAddress">${arquillian.container.jbossas.7-1.node0}</property>
-            <property name="serverConfig">standalone-full.xml</property>
-            <property name="enableAssertions">false</property>
-        </configuration>
-    </container>
 
     <container qualifier="jbosseap-managed-6-1">
         <configuration>
@@ -86,15 +51,6 @@ http://www.fsf.org. -->
         </configuration>
     </container>
 
-    <container qualifier="wildfly-managed-8-0">
-        <configuration>
-            <property name="javaVmArguments">${arquillian.container.jbossas.7-1.jvm.args}</property>
-            <property name="managementAddress">${arquillian.container.jbossas.7-1.node0}</property>
-            <property name="serverConfig">standalone-full.xml</property>
-            <property name="enableAssertions">false</property>
-        </configuration>
-    </container>
-
     <container qualifier="wildfly-managed-8-1">
         <configuration>
             <property name="javaVmArguments">${arquillian.container.jbossas.7-1.jvm.args}</property>
@@ -111,18 +67,6 @@ http://www.fsf.org. -->
             <property name="serverConfig">standalone-full.xml</property>
             <property name="enableAssertions">false</property>
         </configuration>
-    </container>
-
-    <container qualifier="jbossas-remote-7">
-        <protocol type="jmx-as7">
-            <property name="executionType">REMOTE</property>
-        </protocol>
-    </container>
-
-    <container qualifier="jbossas-remote-7-1">
-    </container>
-
-    <container qualifier="wildfly-remote-8-0">
     </container>
 
     <container qualifier="wildfly-remote-8-1">
@@ -154,18 +98,6 @@ http://www.fsf.org. -->
         </configuration>
     </container>
     
-    <container qualifier="tomee-remote-1-6">
-        <configuration>
-            <property name="conf">src/test/resources/tomEE</property>
-            <property name="httpPort">8080</property>
-            <property name="stopPort">9005</property>
-            <property name="openejbVersion">${version.tomee1-6}</property>
-            <property name="dir">target/apache-tomee-webprofile-${version.tomee1-6}</property>
-            <property name="appWorkingDir">target/arquillian-test-working-dir</property>
-            <property name="enableAssertions">false</property>
-        </configuration>
-    </container>
-
     <container qualifier="tomcat-managed-7">
         <configuration>
             <property name="javaVmArguments">
