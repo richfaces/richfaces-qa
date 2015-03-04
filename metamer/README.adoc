@@ -78,7 +78,6 @@ Source code is available at https://github.com/richfaces/richfaces-qa/tree/maste
 === Building Metamer
 Metamer can be built in several profiles to satisfy compatibility with various runtimes and JSF implementations. To build the application, run bash script +build.sh+ in root directory of Metamer. This script generates several WAR archives with application in directory +application/target+ which can be used in various scenarios:
 
-* metamer-glassfish31.war - to deploy on GlassFish 3.1
 * metamer-jbas71.war - to deploy on Wildfly 8
 * metamer-tomcat7-mojarra.war - with bundled JSF Mojarra reference implementation to deploy on Tomcat 7
 * metamer-tomcat7-myfaces.war - with bundled JSF MyFaces to deploy on Tomcat 7
