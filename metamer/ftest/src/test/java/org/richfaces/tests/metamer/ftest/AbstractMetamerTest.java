@@ -25,6 +25,7 @@ import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -101,8 +102,8 @@ public abstract class AbstractMetamerTest extends Arquillian {
             enableResourceOptimization(war);
         }
 
-        if (isUsingEAP63()) {
-            workaroundCLIVersionInEAP63();
+        if (isUsingEAP()) {
+            workaroundCLIVersionInEAP63And64();
         }
 
         // undeploy all metamer WARs if using a JBoss container
@@ -227,11 +228,20 @@ public abstract class AbstractMetamerTest extends Arquillian {
     /**
      * Workaround the exception during parsing the jboss-cli.xml. Change the urn:jboss:cli:1.3 to *1.2
      */
-    private static void workaroundCLIVersionInEAP63() throws URISyntaxException, IOException {
-        File jbossCliFile = new File(System.getProperty("project.build.directory"), "jboss-eap-6.3" + File.separator + "bin" + File.separator + "jboss-cli.xml");
-        File workaroundedJBossCliFile = new File(AbstractMetamerTest.class.getResource("eap/jboss-cli.xml").toURI());
-        jbossCliFile.delete();
-        Files.copy(workaroundedJBossCliFile, jbossCliFile);
+    private static void workaroundCLIVersionInEAP63And64() throws URISyntaxException, IOException {
+        File[] jbossContainersDirs = new File(System.getProperty("project.build.directory")).listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File file) {
+                String lowerCaseFileName = file.getName().toLowerCase();
+                return file.isDirectory() && (lowerCaseFileName.startsWith("jboss-eap-6.3") || lowerCaseFileName.startsWith("jboss-eap-6.4"));
+            }
+        });
+        for (File containerDir : jbossContainersDirs) {
+            File jbossCliFile = new File(containerDir, "bin/jboss-cli.xml");
+            File workaroundedJBossCliFile = new File(AbstractMetamerTest.class.getResource("eap/jboss-cli.xml").toURI());
+            jbossCliFile.delete();
+            Files.copy(workaroundedJBossCliFile, jbossCliFile);
+        }
     }
 
     /**
