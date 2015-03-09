@@ -47,12 +47,12 @@
             </p>
             <ul>
                 <li>Collapse the panel.</li>
-                <li>Write something to first input.</li>
+                <li>Write something to the input.</li>
                 <li>RF-13780: No error in the a4j:log is present</li>
-                <li>RF-13988: Output and second input will be updated.</li>
+                <li>RF-13988: Output will be updated.</li>
             </ul>
-            <r:inplaceInput id="input1" value="#{rf13780.data}">
-                <a4j:ajax event="change" render="output,input2"/>
+            <r:inplaceInput id="input" value="#{rf13780.data}">
+                <a4j:ajax event="change" render="output"/>
             </r:inplaceInput>
             <br/>
             <r:collapsiblePanel id="panel" switchType="ajax">
@@ -60,10 +60,6 @@
                 <br/>
                 <r:messages id="messages"/>
             </r:collapsiblePanel>
-            <br/>
-            <r:inplaceInput id="input2" value="#{rf13780.data}">
-                <a4j:ajax event="change" render="output,input1"/>
-            </r:inplaceInput>
             <br/>
             <br/>
             output:

@@ -35,11 +35,11 @@ import javax.validation.constraints.NotNull;
 @SessionScoped
 public class RF13780 implements Serializable {
 
+    public static final String DEFAULT_VALUE = "some data";
     private static final long serialVersionUID = 1L;
 
     @NotNull
     private String data;
-    private boolean expanded;
 
     public String getData() {
         return data;
@@ -47,10 +47,11 @@ public class RF13780 implements Serializable {
 
     @PostConstruct
     public void init() {
-        data = "some data";
+        setData(DEFAULT_VALUE);
     }
 
     public void setData(String data) {
         this.data = data;
     }
+
 }
