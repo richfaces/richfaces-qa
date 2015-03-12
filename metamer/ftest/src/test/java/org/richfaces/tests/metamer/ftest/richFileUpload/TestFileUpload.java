@@ -68,7 +68,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
         assertEquals(returnedString, testedAttribute.toString(), "Event " + e + " does not work.");
     }
 
-    @Test(groups = {"smoke", "Future"})
+    @Test(groups = { "smoke", "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
     public void testAcceptedTypes() {
         String acceptable = "txt";
@@ -106,7 +106,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
         }, fileUploadAttributes, FileUploadAttributes.clearLabel, succesfulFileUploadAction);
     }
 
-    @IssueTracking(value = {"https://issues.jboss.org/browse/RF-12039", "https://issues.jboss.org/browse/RFPL-3503"})
+    @IssueTracking(value = { "https://issues.jboss.org/browse/RF-12039", "https://issues.jboss.org/browse/RFPL-3503" })
     @Test(groups = "Future")
     public void testData() {
         testData(succesfulFileUploadAction);
@@ -145,7 +145,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
         assertNotVisible(fileUpload.advanced().getClearAllButtonElement(), "Clear all button should not be on the page.");
     }
 
-    @Test(groups = {"smoke", "Future"})
+    @Test(groups = { "smoke", "Future" })
     @Templates("plain")
     @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
     @RegressionTest("https://issues.jboss.org/browse/RF-12122")
@@ -168,7 +168,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
         getMetamerPage().assertListener(PhaseId.UPDATE_MODEL_VALUES, "executeChecker");
     }
 
-    @Test(groups = {"smoke", "Future"})
+    @Test(groups = { "smoke", "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
     public void testImmediateUpload() {
         fileUploadAttributes.set(FileUploadAttributes.immediateUpload, Boolean.TRUE);
@@ -432,7 +432,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
     @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12879")
+    @RegressionTest(value = { "https://issues.jboss.org/browse/RF-12879", "https://issues.jboss.org/browse/RF-13994" })
     public void testStatus() {
         testStatus(succesfulFileUploadAction);
     }
