@@ -39,7 +39,7 @@ public abstract class FocusRetriever {
      * Returns active (focused) element - if no element is focused (it means body element is active), null is returned
      */
     public static WebElement retrieveActiveElement(WebDriver browser) {
-        GrapheneContext context = ((GrapheneProxyInstance) browser).getContext();
+        GrapheneContext context = ((GrapheneProxyInstance) browser).getGrapheneContext();
         WebElement element = JSInterfaceFactory.create(context, FocusRetriever.class).getActiveElement();
         if ("body".equals(element.getTagName())) {
             return null;

@@ -52,7 +52,7 @@ public class Indicator {
 
     public Indicator(GrapheneElement indicator) {
         this.indicator = indicator;
-        this.driver = ((GrapheneProxyInstance) indicator).getContext().getWebDriver();
+        this.driver = ((GrapheneProxyInstance) indicator).getGrapheneContext().getWebDriver();
     }
 
     public void setDefaultIndicator(boolean defaultIndicator) {
