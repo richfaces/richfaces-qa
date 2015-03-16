@@ -29,6 +29,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -48,7 +49,8 @@ public class TestFileUploadProgressFacet extends AbstractFileUploadTest {
     }
 
     @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
+    @RegressionTest("https://issues.jboss.org/browse/RFPL-3503")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-2263")
     public void testCustomProgressBarPresenceBeforeFinishedUpload() {
         assertPresent(customPB, "No custom progress bar is present on page.");
         assertNotVisible(customPB, "Custom progress bar should not be displayed now.");
@@ -64,8 +66,8 @@ public class TestFileUploadProgressFacet extends AbstractFileUploadTest {
             .is().visible();
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RFPL-3503")
     public void testCustomProgressBarPresenceAfterFinishedUpload() {
         // send file to server
         sendFileWithWaiting(acceptableFile, true, true);
