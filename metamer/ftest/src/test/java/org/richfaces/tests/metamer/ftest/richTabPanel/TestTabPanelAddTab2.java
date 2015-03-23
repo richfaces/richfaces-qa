@@ -46,7 +46,7 @@ import org.testng.annotations.Test;
  *
  * @author <a href="mailto:manovotn@redhat.com">Matej Novotny</a>
  */
-public class TestTabPanelAddPanel1 extends AbstractWebDriverTest {
+public class TestTabPanelAddTab2 extends AbstractWebDriverTest {
 
     private final Attributes<TabPanelAttributes> tabPanelAttributes = getAttributes();
     @FindByJQuery("td[id*='dynamic'] a")
