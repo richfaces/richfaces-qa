@@ -62,9 +62,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br />
             <h:inputText id="inputTextSimple" required="false" />
             <br />
-            <a4j:commandButton value="Send and focus to autocomplete" actionListener="#{rf13251.focusToAutoComplete}"
+            <a4j:commandButton id="buttonAutocomplete" value="Send and focus to autocomplete" actionListener="#{rf13251.focusToAutoComplete}"
                 render="output"></a4j:commandButton>
-            <a4j:commandButton value="Send and focus to input text" actionListener="#{rf13251.focusToInputText}" render="output"></a4j:commandButton>
+            <a4j:commandButton id="buttonInputText" value="Send and focus to input text" actionListener="#{rf13251.focusToInputText}" render="output"></a4j:commandButton>
             <br />
             <br />
              Action result: <h:outputText id="output" value="#{rf13251.actionResult}" />
