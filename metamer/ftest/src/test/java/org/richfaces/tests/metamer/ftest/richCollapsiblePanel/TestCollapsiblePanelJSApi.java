@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richCollapsiblePanel;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.testng.AssertJUnit.assertEquals;
 
 import java.net.URL;
 
@@ -30,6 +31,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class TestCollapsiblePanelJSApi extends AbstractWebDriverTest {
@@ -45,6 +47,12 @@ public class TestCollapsiblePanelJSApi extends AbstractWebDriverTest {
     @FindBy(css = "[id$=switch]")
     private WebElement switchPanelButton;
 
+    @FindBy(css = "[id$=collapse]")
+    private WebElement collapseButton;
+
+    @FindBy(css = "[id$=expand]")
+    private WebElement expandButton;
+
     @Test(groups = "smoke")
     @Templates(value = { "plain" })
     public void testSwitchPanel() {
@@ -55,5 +63,53 @@ public class TestCollapsiblePanelJSApi extends AbstractWebDriverTest {
 
         Graphene.guardAjax(switchPanelButton).click();
         assertVisible(collapsiblePanelContent, "Content of collapsible panel should be visible again!");
+    }
+
+    @Test
+    @Templates(value = { "plain" })
+    public void testCollapseExpand() {
+        assertVisible(collapsiblePanelContent, "Content of collapsible panel should be visible!");
+
+        Graphene.guardAjax(collapseButton).click();
+        assertNotVisible(collapsiblePanelContent, "Content of collapsible panel should NOT be visible!");
+
+        Graphene.guardAjax(expandButton).click();
+        assertVisible(collapsiblePanelContent, "Content of collapsible panel should be visible again!");
+    }
+
+    @Test
+    @Templates(value = { "plain" })
+    public void testCollapseSwitchPanel() {
+        assertVisible(collapsiblePanelContent, "Content of collapsible panel should be visible!");
+
+        Graphene.guardAjax(collapseButton).click();
+        assertNotVisible(collapsiblePanelContent, "Content of collapsible panel should NOT be visible!");
+
+        Graphene.guardAjax(switchPanelButton).click();
+        assertVisible(collapsiblePanelContent, "Content of collapsible panel should be visible again!");
+    }
+
+    @Test
+    @Templates(value = { "plain" })
+    public void testSwitchPanelExpand() {
+        assertVisible(collapsiblePanelContent, "Content of collapsible panel should be visible!");
+
+        Graphene.guardAjax(switchPanelButton).click();
+        assertNotVisible(collapsiblePanelContent, "Content of collapsible panel should NOT be visible!");
+
+        Graphene.guardAjax(expandButton).click();
+        assertVisible(collapsiblePanelContent, "Content of collapsible panel should be visible again!");
+    }
+
+    @Test
+    @Templates(value = { "plain" })
+    public void testIsExpanded() {
+        Boolean expanded = (Boolean) executeJS("return RichFaces.component('form:collapsiblePanel').isExpanded()");
+        Assert.assertTrue(expanded, "value of isExpanded() when panel is expanded");
+
+        Graphene.guardAjax(switchPanelButton).click();
+
+        expanded = (Boolean) executeJS("return RichFaces.component('form:collapsiblePanel').isExpanded()");
+        Assert.assertFalse(expanded, "value of isExpanded() when panel is collapsed");
     }
 }
