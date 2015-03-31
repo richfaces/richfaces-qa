@@ -1,6 +1,6 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2014, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.metamer.ftest.richMenuGroup;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
@@ -28,6 +28,7 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.Test;
 
@@ -40,14 +41,20 @@ public class TestMenuGroupJSApi extends AbstractWebDriverTest {
 
     @FindBy(css = "div[id$=menuGroup4_list]")
     private WebElement groupList;
-    @FindBy(css = "div[id$=menu1_list]")
-    private WebElement menuList;
+    @FindBy(id = "hide")
+    private WebElement hideButton;
     @FindBy(css = "div[id$=menuItem41]")
     private WebElement menuItem41;
     @FindBy(id = "show")
     private WebElement showButton;
-    @FindBy(id = "hide")
-    private WebElement hideButton;
+
+    private void clickButton(WebElement btn) {
+        // cannot use: btn.click()
+        // manually it works, but with Selenium it triggers unwanted events on menu
+        // e.g. clicking 'hide', then 'show' will cause menu to hide after a little delay
+        // workaround: trigger the click with jQuery
+        Utils.triggerJQ("click", btn);
+    }
 
     @Override
     public URL getTestUrl() {
@@ -56,22 +63,19 @@ public class TestMenuGroupJSApi extends AbstractWebDriverTest {
 
     @Test
     public void testHide() {
-        hideButton.click();
-        Graphene.waitGui().until().element(menuItem41).is().not().visible();
-        assertNotVisible(menuItem41, "Save button should not be visible.");
-        assertNotVisible(groupList, "Group list should not be visible.");
-        testShow();//show the group
-        hideButton.click();
-        Graphene.waitGui().until().element(menuItem41).is().not().visible();
-        assertNotVisible(menuItem41, "Save button should not be visible.");
-        assertNotVisible(groupList, "Group list should not be visible.");
+        clickButton(hideButton);
+        Graphene.waitGui().withMessage("Save button should not be visible.").until().element(menuItem41).is().not().visible();
+        Graphene.waitGui().withMessage("Group list should not be visible.").until().element(groupList).is().not().visible();
+        testShow();// show the group
+        clickButton(hideButton);
+        Graphene.waitGui().withMessage("Save button should not be visible.").until().element(menuItem41).is().not().visible();
+        Graphene.waitGui().withMessage("Group list should not be visible.").until().element(groupList).is().not().visible();
     }
 
     @Test
     public void testShow() {
-        showButton.click();
-        Graphene.waitGui().until().element(menuItem41).is().visible();
-        assertVisible(menuItem41, "Save button is not visible.");
-        assertVisible(groupList, "Group list is not visible.");
+        clickButton(showButton);
+        Graphene.waitGui().withMessage("Save button should be visible.").until().element(menuItem41).is().visible();
+        Graphene.waitGui().withMessage("Group list should be visible.").until().element(groupList).is().visible();
     }
 }
