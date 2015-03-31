@@ -1,7 +1,23 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * JBoss, Home of Professional Open Source
+ * Copyright 2010-2015, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.richfaces.tests.metamer.ftest.richTabPanel;
 
@@ -15,24 +31,17 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
 /**
- *
- * @author manovotn
+ * @author <a href="mailto:manovotn@redhat.com">Matej Novotny</a>
  */
 public class TestTabPanelAddTab3 extends AbstractWebDriverTest {
 
-    private final Attributes<TabPanelAttributes> tabPanelAttributes = getAttributes();
-
     @Page
     private TabPanelSimplePage page;
-
-    @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richTabPanel/addTab3.xhtml");
-    }
 
     private void createAndVerifyTab(WebElement buttonToClick) {
         // create 3 pages
@@ -51,13 +60,34 @@ public class TestTabPanelAddTab3 extends AbstractWebDriverTest {
         }
     }
 
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richTabPanel/addTab3.xhtml");
+    }
+
     @Test
+    @Templates(exclude = { "extendedDataTable", "collapsibleSubTable", "dataGrid", "a4jRepeat", "uiRepeat" })
     public void testAddWithA4j() {
         createAndVerifyTab(page.getCreateTabButtonA4j());
     }
 
+    @Test(groups = "Future")
+    @Templates(value = { "extendedDataTable", "collapsibleSubTable", "dataGrid", "a4jRepeat", "uiRepeat" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-14006")
+    public void testAddWithA4j_RF14006() {
+        testAddWithA4j();
+    }
+
     @Test
+    @Templates(exclude = { "extendedDataTable", "collapsibleSubTable", "dataGrid", "a4jRepeat", "uiRepeat" })
     public void testAddWithH() {
         createAndVerifyTab(page.getCreateTabButtonHButton());
+    }
+
+    @Test(groups = "Future")
+    @Templates(value = { "extendedDataTable", "collapsibleSubTable", "dataGrid", "a4jRepeat", "uiRepeat" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-14006")
+    public void testAddWithH_RF14006() {
+        testAddWithH();
     }
 }
