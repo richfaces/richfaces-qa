@@ -1,6 +1,6 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2014, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,15 +18,18 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.metamer.ftest.richValidator;
 
+import java.text.MessageFormat;
 import java.util.EnumMap;
 import java.util.Map;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.page.Page;
+import org.openqa.selenium.WebDriver;
+import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.validation.AssertFalseBean;
 import org.richfaces.tests.metamer.validation.AssertTrueBean;
@@ -46,6 +49,8 @@ import org.richfaces.tests.metamer.validator.StringRichFacesValidator;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
+import com.google.common.base.Predicate;
+
 /**
  * Abstract class with selenium test for validators
  *
@@ -54,6 +59,100 @@ import org.testng.annotations.BeforeMethod;
  */
 public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
+    private boolean firstRun = true;
+    private String future;
+    protected Map<ID, String[]> messages = new EnumMap<AbstractValidatorsTest.ID, String[]>(AbstractValidatorsTest.ID.class);
+
+    @Page
+    private ValidatorSimplePage page;
+
+    private String past;
+    private final Map<ID, Object> wrongValue = new EnumMap<AbstractValidatorsTest.ID, Object>(AbstractValidatorsTest.ID.class);
+
+    private void checkAllErrorMessagesAreVisibleAndCorrect() {
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.assertFalse);
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.assertTrue);
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.custom);
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.decimalMinMax);
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.digits);
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.future);
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.max);
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.min);
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.minMax);
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.notEmpty);
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.notNull);
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.past);
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.pattern);
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.size);
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.stringSize);
+
+        if (new WebElementConditionFactory(getPage().getInputRegexp()).isPresent().apply(driver)) {
+            // regExp validator isn't present in JSR303 validation
+            waitUtilMessageWithIDIsVisibleAndCorrect(ID.regexp);
+        }
+    }
+
+    private void clickCorrectButton() {
+        getPage().getSetCorrectBtn().click();
+        if (new WebElementConditionFactory(getPage().getInputFuture()).isPresent().apply(driver)
+            && new WebElementConditionFactory(getPage().getInputPast()).isPresent().apply(driver)) {
+            getPage().getInputPast().clear();
+            getPage().getInputPast().sendKeys(past);
+            getPage().getInputFuture().clear();
+            getPage().getInputFuture().sendKeys(future);
+        }
+    }
+
+    private void clickWrongButton() {
+        getPage().getSetWrongBtn().click();
+        if (new WebElementConditionFactory(getPage().getInputFuture()).isPresent().apply(driver)
+            && new WebElementConditionFactory(getPage().getInputPast()).isPresent().apply(driver)) {
+            getPage().getInputPast().clear();
+            getPage().getInputPast().sendKeys(future);
+            getPage().getInputFuture().clear();
+            getPage().getInputFuture().sendKeys(past);
+        }
+    }
+
+    protected RichFacesMessage getMessageForID(ID id) {
+        switch (id) {
+            case assertFalse:
+                return getPage().getMsgAssertFalse();
+            case assertTrue:
+                return getPage().getMsgAssertTrue();
+            case custom:
+                return getPage().getMsgCustom();
+            case decimalMinMax:
+                return getPage().getMsgDecimalMinMax();
+            case digits:
+                return getPage().getMsgDigits();
+            case future:
+                return getPage().getMsgFuture();
+            case max:
+                return getPage().getMsgMax();
+            case min:
+                return getPage().getMsgMin();
+            case minMax:
+                return getPage().getMsgMinMax();
+            case notEmpty:
+                return getPage().getMsgNotEmpty();
+            case notNull:
+                return getPage().getMsgNotNull();
+            case past:
+                return getPage().getMsgPast();
+            case pattern:
+                return getPage().getMsgPattern();
+            case regexp:
+                return getPage().getMsgRegexp();
+            case size:
+                return getPage().getMsgSize();
+            case stringSize:
+                return getPage().getMsgStringSize();
+            default:
+                throw new UnsupportedOperationException("Unsupported id " + id);
+        }
+    }
+
     /**
      * @return the page
      */
@@ -61,101 +160,24 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         return page;
     }
 
-    protected enum ID {
-
-        /**
-         * Boolean, true
-         */
-        assertTrue,
-        /**
-         * Boolean false
-         */
-        assertFalse,
-        /**
-         * Decimal from 2.5 to 9.688
-         */
-        decimalMinMax,
-        /**
-         * Decimal 3 digits and 4 fract
-         */
-        digits,
-        /**
-         * Integer max 10
-         */
-        max,
-        /**
-         * Integer min 2
-         */
-        min,
-        /**
-         * Integer from 2 to 10
-         */
-        minMax,
-        /**
-         * Text, not empty
-         */
-        notEmpty,
-        /**
-         * Text, not null
-         */
-        notNull,
-        /**
-         * Text, pattern '[a-z].*'
-         */
-        pattern,
-        /**
-         * custom validator
-         */
-        custom,
-        /**
-         * custom regExp validator
-         */
-        regexp,
-        /**
-         * date past
-         */
-        past,
-        /**
-         * date future
-         */
-        future,
-        /**
-         * String size from 2 to 4
-         */
-        stringSize,
-        /**
-         * Selection size
-         */
-        size
-    }
-    protected Map<ID, String> messages = new EnumMap<AbstractValidatorsTest.ID, String>(AbstractValidatorsTest.ID.class);
-    private final Map<ID, Object> wrongValue = new EnumMap<AbstractValidatorsTest.ID, Object>(AbstractValidatorsTest.ID.class);
-
-    @Page
-    private ValidatorSimplePage page;
-
-    private String future;
-    private String past;
-    private boolean firstRun = true;
-
     @BeforeClass(groups = "smoke")
     public void init() {
-        messages.put(ID.assertTrue, AssertTrueBean.VALIDATION_MSG);
-        messages.put(ID.assertFalse, AssertFalseBean.VALIDATION_MSG);
-        messages.put(ID.decimalMinMax, DecimalMinMaxBean.VALIDATION_MSG);
-        messages.put(ID.digits, DigitsBean.VALIDATION_MSG);
-        messages.put(ID.max, MaxBean.VALIDATION_MSG);
-        messages.put(ID.min, MinBean.VALIDATION_MSG);
-        messages.put(ID.minMax, MinMaxBean.VALIDATION_MSG);
-        messages.put(ID.notEmpty, NotEmptyBean.VALIDATION_MSG);
-        messages.put(ID.notNull, NotNullBean.VALIDATION_MSG);
-        messages.put(ID.pattern, PatternBean.VALIDATION_MSG);
-        messages.put(ID.custom, StringRichFacesValidator.VALIDATION_ERROR_MSG);
-        messages.put(ID.regexp, "Regex pattern of '\\d{3}' not matched");
-        messages.put(ID.past, PastBean.VALIDATION_MSG);
-        messages.put(ID.future, FutureBean.VALIDATION_MSG);
-        messages.put(ID.stringSize, StringSizeBean.VALIDATION_MSG);
-        messages.put(ID.size, SizeBean.VALIDATION_MSG); // RF-11035
+        messages.put(ID.assertTrue, new String[] { AssertTrueBean.VALIDATION_MSG });
+        messages.put(ID.assertFalse, new String[] { AssertFalseBean.VALIDATION_MSG });
+        messages.put(ID.decimalMinMax, new String[] { DecimalMinMaxBean.VALIDATION_MSG });
+        messages.put(ID.digits, new String[] { DigitsBean.VALIDATION_MSG });
+        messages.put(ID.max, new String[] { MaxBean.VALIDATION_MSG });
+        messages.put(ID.min, new String[] { MinBean.VALIDATION_MSG });
+        messages.put(ID.minMax, new String[] { MinMaxBean.VALIDATION_MSG });
+        messages.put(ID.notEmpty, new String[] { NotEmptyBean.VALIDATION_MSG });
+        messages.put(ID.notNull, new String[] { NotNullBean.VALIDATION_MSG });
+        messages.put(ID.pattern, new String[] { PatternBean.VALIDATION_MSG });
+        messages.put(ID.custom, new String[] { StringRichFacesValidator.VALIDATION_ERROR_MSG });
+        messages.put(ID.regexp, new String[] { "Regex pattern of '\\d{3}' not matched", "Validation Error: Value not according to pattern '\\d{3}'" });
+        messages.put(ID.past, new String[] { PastBean.VALIDATION_MSG });
+        messages.put(ID.future, new String[] { FutureBean.VALIDATION_MSG });
+        messages.put(ID.stringSize, new String[] { StringSizeBean.VALIDATION_MSG });
+        messages.put(ID.size, new String[] { SizeBean.VALIDATION_MSG }); // RF-11035
 
         wrongValue.put(ID.assertTrue, Boolean.FALSE);
         wrongValue.put(ID.assertFalse, Boolean.TRUE);
@@ -170,18 +192,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         wrongValue.put(ID.custom, "@@@");
         wrongValue.put(ID.regexp, "@@@");
         wrongValue.put(ID.stringSize, "JSF 2");
-        wrongValue.put(ID.size, "F"); // RF-11035
-    }
-
-    private void clickCorrectButton() {
-        getPage().getSetCorrectBtn().click();
-        if (new WebElementConditionFactory(getPage().getInputFuture()).isPresent().apply(driver)
-            && new WebElementConditionFactory(getPage().getInputPast()).isPresent().apply(driver)) {
-            getPage().getInputPast().clear();
-            getPage().getInputPast().sendKeys(past);
-            getPage().getInputFuture().clear();
-            getPage().getInputFuture().sendKeys(future);
-        }
+        wrongValue.put(ID.size, "B"); // RF-11035
     }
 
     /**
@@ -202,123 +213,93 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         }
     }
 
-    private void clickWrongButton() {
-        getPage().getSetWrongBtn().click();
-        if (new WebElementConditionFactory(getPage().getInputFuture()).isPresent().apply(driver)
-            && new WebElementConditionFactory(getPage().getInputPast()).isPresent().apply(driver)) {
-            getPage().getInputPast().clear();
-            getPage().getInputPast().sendKeys(future);
-            getPage().getInputFuture().clear();
-            getPage().getInputFuture().sendKeys(past);
-        }
-    }
-
-    public void verifyAllWrongWithAjaxSubmit() {
-        clickWrongButton();
-
-        submitAjax();
-
-        Graphene.waitGui().until().element(getPage().getMsgAssertTrue()).text().equalTo(messages.get(ID.assertTrue));
-        Graphene.waitGui().until().element(getPage().getMsgAssertFalse()).text().equalTo(messages.get(ID.assertFalse));
-        Graphene.waitGui().until().element(getPage().getMsgDecimalMinMax()).text().equalTo(messages.get(ID.decimalMinMax));
-        Graphene.waitGui().until().element(getPage().getMsgDigits()).text().equalTo(messages.get(ID.digits));
-        Graphene.waitGui().until().element(getPage().getMsgMax()).text().equalTo(messages.get(ID.max));
-        Graphene.waitGui().until().element(getPage().getMsgMin()).text().equalTo(messages.get(ID.min));
-        Graphene.waitGui().until().element(getPage().getMsgMinMax()).text().equalTo(messages.get(ID.minMax));
-        Graphene.waitGui().until().element(getPage().getMsgNotEmpty()).text().equalTo(messages.get(ID.notEmpty));
-        Graphene.waitGui().until().element(getPage().getMsgNotNull()).text().equalTo(messages.get(ID.notNull));
-        Graphene.waitGui().until().element(getPage().getMsgPattern()).text().equalTo(messages.get(ID.pattern));
-        Graphene.waitGui().until().element(getPage().getMsgCustom()).text().equalTo(messages.get(ID.custom));
-
-        if (new WebElementConditionFactory(getPage().getInputRegexp()).isPresent().apply(driver)) {
-            // regExp validator isn't present in JSR303 validation
-            Graphene.waitGui().until().element(getPage().getMsgRegexp()).text().equalTo(messages.get(ID.regexp));
-        }
-        Graphene.waitGui().until().element(getPage().getMsgPast()).text().equalTo(messages.get(ID.past));
-        Graphene.waitGui().until().element(getPage().getMsgFuture()).text().equalTo(messages.get(ID.future));
-        Graphene.waitGui().until().element(getPage().getMsgStringSize()).text().equalTo(messages.get(ID.stringSize));
-        Graphene.waitGui().until().element(getPage().getMsgSize()).text().equalTo(messages.get(ID.size));
-    }
-
     protected void submitAjax() {
         Graphene.guardAjax(getPage().getA4jCommandBtn()).click();
     }
 
-    public void verifyAllWrongWithJSFSubmit() {
+    public void verifyAllWrongWithAjaxSubmit() {
         clickWrongButton();
-
-        getPage().gethCommandBtn().click();
-
-        Graphene.waitGui().until().element(getPage().getMsgAssertTrue()).text().equalTo(messages.get(ID.assertTrue));
-        Graphene.waitGui().until().element(getPage().getMsgAssertFalse()).text().equalTo(messages.get(ID.assertFalse));
-        Graphene.waitGui().until().element(getPage().getMsgDecimalMinMax()).text().equalTo(messages.get(ID.decimalMinMax));
-        Graphene.waitGui().until().element(getPage().getMsgDigits()).text().equalTo(messages.get(ID.digits));
-        Graphene.waitGui().until().element(getPage().getMsgMax()).text().equalTo(messages.get(ID.max));
-        Graphene.waitGui().until().element(getPage().getMsgMin()).text().equalTo(messages.get(ID.min));
-        Graphene.waitGui().until().element(getPage().getMsgMinMax()).text().equalTo(messages.get(ID.minMax));
-        Graphene.waitGui().until().element(getPage().getMsgNotEmpty()).text().equalTo(messages.get(ID.notEmpty));
-        Graphene.waitGui().until().element(getPage().getMsgNotNull()).text().equalTo(messages.get(ID.notNull));
-        Graphene.waitGui().until().element(getPage().getMsgPattern()).text().equalTo(messages.get(ID.pattern));
-        Graphene.waitGui().until().element(getPage().getMsgCustom()).text().equalTo(messages.get(ID.custom));
-
-        if (new WebElementConditionFactory(getPage().getInputRegexp()).isPresent().apply(driver)) {
-            // regExp validator isn't present in JSR303 validation
-            Graphene.waitGui().until().element(getPage().getMsgRegexp()).text().equalTo(messages.get(ID.regexp));
-        }
-        Graphene.waitGui().until().element(getPage().getMsgPast()).text().equalTo(messages.get(ID.past));
-        Graphene.waitGui().until().element(getPage().getMsgFuture()).text().equalTo(messages.get(ID.future));
-        Graphene.waitGui().until().element(getPage().getMsgStringSize()).text().equalTo(messages.get(ID.stringSize));
-        Graphene.waitGui().until().element(getPage().getMsgSize()).text().equalTo(messages.get(ID.size));
+        submitAjax();
+        checkAllErrorMessagesAreVisibleAndCorrect();
     }
 
-    /**
-     * Boolean input, verify true
-     */
-    public void verifyBooleanTrue() {
-
-        clickCorrectButton();
-
-        // checkBoolean to true
-        getPage().getInputAssertTrue().click();
-        submitAjax();
-
-        Graphene.waitGui().until().element(getPage().getMsgAssertTrue()).text().equalTo(messages.get(ID.assertTrue));
+    public void verifyAllWrongWithJSFSubmit() {
+        clickWrongButton();
+        getPage().gethCommandBtn().click();
+        checkAllErrorMessagesAreVisibleAndCorrect();
     }
 
     /**
      * Boolean input, verify false
      */
     public void verifyBooleanFalse() {
-
         clickCorrectButton();
 
         // checkBoolean to false
         getPage().getInputAssertFalse().click();
         submitAjax();
 
-        Graphene.waitGui().until().element(getPage().getMsgAssertFalse()).text().equalTo(messages.get(ID.assertFalse));
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.assertFalse);
     }
 
     /**
-     * Decimal input, verify from 2.5 to 9.688
+     * Boolean input, verify true
      */
-    protected void verifyDecimalMinMax() {
-
+    public void verifyBooleanTrue() {
         clickCorrectButton();
 
-        // Decimal input
-        getPage().getInputDecimalMinMax().clear();
-        getPage().getInputDecimalMinMax().sendKeys(wrongValue.get(ID.decimalMinMax).toString());
+        // checkBoolean to true
+        getPage().getInputAssertTrue().click();
         submitAjax();
 
-        Graphene.waitGui().until().element(getPage().getMsgDecimalMinMax()).text().equalTo(messages.get(ID.decimalMinMax));
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.assertTrue);
+    }
+
+    /**
+     * Integer input, verify custom string
+     */
+    protected void verifyCustom() {
+        clickCorrectButton();
+
+        // string input custom string
+        getPage().getInputCustom().clear();
+        getPage().getInputCustom().sendKeys(wrongValue.get(ID.custom).toString());
+        submitAjax();
+
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.custom);
+    }
+
+    /**
+     * Integer input, verify date in future
+     */
+    protected void verifyDateFuture() {
+        clickCorrectButton();
+
+        // date input future
+        getPage().getInputFuture().clear();
+        getPage().getInputFuture().sendKeys(wrongValue.get(ID.future).toString());
+        submitAjax();
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.future);
+    }
+
+    /**
+     * Integer input, verify date in past
+     */
+    protected void verifyDatePast() {
+        clickCorrectButton();
+
+        // date input past
+        getPage().getInputPast().clear();
+        getPage().getInputPast().sendKeys(wrongValue.get(ID.past).toString());
+        Graphene.guardAjax(getPage().getA4jCommandBtn()).click();
+
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.past);
     }
 
     /**
      * Decimal input, verify digits
      */
     protected void verifyDecimalDigits() {
-
         clickCorrectButton();
 
         // decimal input digits
@@ -326,14 +307,27 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         getPage().getInputDigits().sendKeys(wrongValue.get(ID.digits).toString());
         submitAjax();
 
-        Graphene.waitGui().until().element(getPage().getMsgDigits()).text().equalTo(messages.get(ID.digits));
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.digits);
+    }
+
+    /**
+     * Decimal input, verify from 2.5 to 9.688
+     */
+    protected void verifyDecimalMinMax() {
+        clickCorrectButton();
+
+        // Decimal input
+        getPage().getInputDecimalMinMax().clear();
+        getPage().getInputDecimalMinMax().sendKeys(wrongValue.get(ID.decimalMinMax).toString());
+        submitAjax();
+
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.decimalMinMax);
     }
 
     /**
      * Integer input, verify max
      */
     protected void verifyMax() {
-
         clickCorrectButton();
 
         // integer input max
@@ -341,14 +335,13 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         getPage().getInputMax().sendKeys(wrongValue.get(ID.max).toString());
         submitAjax();
 
-        Graphene.waitGui().until().element(getPage().getMsgMax()).text().equalTo(messages.get(ID.max));
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.max);
     }
 
     /**
      * Integer input, verify min
      */
     protected void verifyMin() {
-
         clickCorrectButton();
 
         // integer input min
@@ -357,14 +350,13 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         getPage().getInputMin().sendKeys(wrongValue.get(ID.min).toString());
         submitAjax();
 
-        Graphene.waitGui().until().element(getPage().getMsgMin()).text().equalTo(messages.get(ID.min));
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.min);
     }
 
     /**
      * Integer input, verify min max
      */
     protected void verifyMinMax() {
-
         clickCorrectButton();
 
         // integer input min and max
@@ -373,14 +365,13 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         getPage().getInputMinMax().sendKeys(wrongValue.get(ID.minMax).toString());
         submitAjax();
 
-        Graphene.waitGui().until().element(getPage().getMsgMinMax()).text().equalTo(messages.get(ID.minMax));
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.minMax);
     }
 
     /**
      * Integer input, verify not empty
      */
     protected void verifyNotEmpty() {
-
         clickCorrectButton();
 
         // string input not empty
@@ -389,14 +380,13 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         getPage().getInputNotEmpty().sendKeys(wrongValue.get(ID.notEmpty).toString());
         submitAjax();
 
-        Graphene.waitGui().until().element(getPage().getMsgNotEmpty()).text().equalTo(messages.get(ID.notEmpty));
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.notEmpty);
     }
 
     /**
      * Integer input, verify not null
      */
     protected void verifyNotNull() {
-
         clickCorrectButton();
 
         // string input not null
@@ -404,14 +394,13 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         getPage().getInputNotNull().sendKeys("");
         submitAjax();
 
-        Graphene.waitGui().until().element(getPage().getMsgNotNull()).text().equalTo(messages.get(ID.notNull));
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.notNull);
     }
 
     /**
      * Integer input, verify string pattern
      */
     protected void verifyPattern() {
-
         clickCorrectButton();
 
         // string input custom pattern
@@ -419,29 +408,13 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         getPage().getInputPattern().sendKeys(wrongValue.get(ID.pattern).toString());
         submitAjax();
 
-        Graphene.waitGui().until().element(getPage().getMsgPattern()).text().equalTo(messages.get(ID.pattern));
-    }
-
-    /**
-     * Integer input, verify custom string
-     */
-    protected void verifyCustom() {
-
-        clickCorrectButton();
-
-        // string input custom string
-        getPage().getInputCustom().clear();
-        getPage().getInputCustom().sendKeys(wrongValue.get(ID.custom).toString());
-        submitAjax();
-
-        Graphene.waitGui().until().element(getPage().getMsgCustom()).text().equalTo(messages.get(ID.custom));
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.pattern);
     }
 
     /**
      * Integer input, verify regExp
      */
     protected void verifyRegExp() {
-
         clickCorrectButton();
 
         // string input regExp pattern
@@ -449,43 +422,26 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         getPage().getInputRegexp().sendKeys(wrongValue.get(ID.regexp).toString());
         submitAjax();
 
-        Graphene.waitGui().until().element(getPage().getMsgRegexp()).text().equalTo(messages.get(ID.regexp));
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.regexp);
     }
 
     /**
-     * Integer input, verify date in past
+     * Integer input, verify selection size
      */
-    protected void verifyDatePast() {
-
+    protected void verifySelectionSize() {
         clickCorrectButton();
 
-        // date input past
-        getPage().getInputPast().clear();
-        getPage().getInputPast().sendKeys(wrongValue.get(ID.past).toString());
-        Graphene.guardAjax(getPage().getA4jCommandBtn()).click();
-
-        Graphene.waitGui().until().element(getPage().getMsgPast()).text().equalTo(messages.get(ID.past));
-    }
-
-    /**
-     * Integer input, verify date in future
-     */
-    protected void verifyDateFuture() {
-
-        clickCorrectButton();
-
-        // date input future
-        getPage().getInputFuture().clear();
-        getPage().getInputFuture().sendKeys(wrongValue.get(ID.future).toString());
+        // many checkBox input selection size
+        getPage().getSelectionItemByLabel(wrongValue.get(ID.size).toString()).click();
         submitAjax();
-        Graphene.waitGui().until().element(getPage().getMsgFuture()).text().equalTo(messages.get(ID.future));
+
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.size);
     }
 
     /**
      * Integer input, verify string size
      */
     protected void verifyStringSize() {
-
         clickCorrectButton();
 
         // string input string size
@@ -493,21 +449,81 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         getPage().getInputStringSize().sendKeys(wrongValue.get(ID.stringSize).toString());
         submitAjax();
 
-        Graphene.waitGui().until().element(getPage().getMsgStringSize()).text().equalTo(messages.get(ID.stringSize));
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.stringSize);
     }
 
-    /**
-     * Integer input, verify selection size
-     */
-    protected void verifySelectionSize() {
+    protected void waitUtilMessageWithIDIsVisibleAndCorrect(final ID id) {
+        Graphene
+            .waitGui()
+            .until(new Predicate<WebDriver>() {
+                @Override
+                public boolean apply(WebDriver t) {
+                    // 'endsWith' because of MyFaces is inserting the input's label before the message
+                    for (String expectedMsg : messages.get(id)) {
+                        if (getMessageForID(id).getDetail().endsWith(expectedMsg)) {
+                            return Boolean.TRUE;
+                        }
+                    }
+                    return Boolean.FALSE;
+                }
 
-        clickCorrectButton();
-        clickWrongButton();
+                @Override
+                public String toString() {
+                    return MessageFormat.format("message with ID: {0}, to be visible and contain expected text: {1}. Actual text: {2}", id, messages.get(id), getMessageForID(id).getDetail());
+                }
+            });
+    }
 
-        // many checkBox input selection size
-        getPage().getSelectionItemByLabel(wrongValue.get(ID.size).toString()).click();
-        submitAjax();
+    protected enum ID {
 
-        Graphene.waitGui().until().element(getPage().getMsgSize()).text().equalTo(messages.get(ID.size));
+        /**
+         * Boolean, true
+         */
+        assertTrue, /**
+         * Boolean false
+         */
+        assertFalse, /**
+         * Decimal from 2.5 to 9.688
+         */
+        decimalMinMax, /**
+         * Decimal 3 digits and 4 fract
+         */
+        digits, /**
+         * Integer max 10
+         */
+        max, /**
+         * Integer min 2
+         */
+        min, /**
+         * Integer from 2 to 10
+         */
+        minMax, /**
+         * Text, not empty
+         */
+        notEmpty, /**
+         * Text, not null
+         */
+        notNull, /**
+         * Text, pattern '[a-z].*'
+         */
+        pattern, /**
+         * custom validator
+         */
+        custom, /**
+         * custom regExp validator
+         */
+        regexp, /**
+         * date past
+         */
+        past, /**
+         * date future
+         */
+        future, /**
+         * String size from 2 to 4
+         */
+        stringSize, /**
+         * Selection size
+         */
+        size
     }
 }

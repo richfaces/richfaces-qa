@@ -63,12 +63,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     $('input[id$=past]').val('1 Jan 2013');
                     $('input[id$=future]').val('1 Jan 3013')
                     $('input[id$=stringSize]').val('JSF');
-                    $('input[value=A]')[0].checked=true
-                    $('input[value=B]')[0].checked=true
-                    $('input[value=C]')[0].checked=false
-                    $('input[value=D]')[0].checked=false
-                    $('input[value=E]')[0].checked=false
-                    $('input[value=F]')[0].checked=false
+                    $('input[value=A]')[0].checked = true;
+                    $('input[value=B]')[0].checked = true;
+                    $('input[value=C]')[0].checked = false;
+                    $('input[value=D]')[0].checked = false;
+                    $('input[value=E]')[0].checked = false;
+                    $('input[value=F]')[0].checked = false;
                 }
 
                 function setWrongValues() {
@@ -87,12 +87,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     $('input[id$=past]').val('1 Jan 3013');
                     $('input[id$=future]').val('1 Jan 2013');
                     $('input[id$=stringSize]').val('JSF 2');
-                    $('input[value=A]')[0].checked=false
-                    $('input[value=B]')[0].checked=false
-                    $('input[value=C]')[0].checked=false
-                    $('input[value=D]')[0].checked=false
-                    $('input[value=E]')[0].checked=false
-                    $('input[value=F]')[0].checked=true
+                    $('input[value=A]')[0].checked = true;
+                    $('input[value=B]')[0].checked = false;
+                    $('input[value=C]')[0].checked = false;
+                    $('input[value=D]')[0].checked = false;
+                    $('input[value=E]')[0].checked = false;
+                    $('input[value=F]')[0].checked = false;
                 }
             </script>
 
@@ -114,11 +114,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                 >
 
                     <h:outputLabel for="assertTrue" value="#{assertTrueBean.description}" />
-                    <h:selectBooleanCheckbox id="assertTrue" value="#{assertTrueBean.value}" label="#{assertTrueBean.label}" />	     
+                    <h:selectBooleanCheckbox id="assertTrue" value="#{assertTrueBean.value}" label="#{assertTrueBean.label}" />
                     <rich:message id="assertTrueMsg" for="assertTrue" />
 
                     <h:outputLabel for="assertFalse" value="#{assertFalseBean.description}" />
-                    <h:selectBooleanCheckbox id="assertFalse" value="#{assertFalseBean.value}" label="#{assertFalseBean.label}" />	     
+                    <h:selectBooleanCheckbox id="assertFalse" value="#{assertFalseBean.value}" label="#{assertFalseBean.label}" />
                     <rich:message id="assertFalseMsg" for="assertFalse" />
 
                     <h:outputLabel for="decimalMinMax" value="#{decimalMinMaxBean.description}" />
@@ -155,7 +155,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                     <h:outputLabel for="custom" value="custom validator, RichFaces" />
                     <h:inputText id="custom" value="#{richValidatorBean.stringValue}" label="custom">
-                        <f:validator validatorId="org.richfaces.StringRichFacesValidator"/>	     
+                        <f:validator validatorId="org.richfaces.StringRichFacesValidator"/>
                     </h:inputText>
                     <rich:message id="customMsg" for="custom" />
 

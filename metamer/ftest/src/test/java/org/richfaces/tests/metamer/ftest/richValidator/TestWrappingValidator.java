@@ -1,6 +1,6 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2014, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.metamer.ftest.richValidator;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
@@ -26,7 +26,6 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -52,8 +51,8 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
         verifyAllWrongWithAjaxSubmit();
     }
 
-    @Test(groups = { "Future" })
-    @IssueTracking(value = "https://issues.jboss.org/browse/RF-11035")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11035")
     public void testAllWrongJSF() {
         verifyAllWrongWithJSFSubmit();
     }
@@ -138,7 +137,7 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
         Graphene.guardNoRequest(getPage().getInputMax()).sendKeys(invalidValue);
         submitAjax();
         // check error message from validator
-        assertPresent(getPage().getMsgMax(), "Element page.msgMax should be present!");
+        getPage().getMsgMax().advanced().waitUntilMessageIsVisible().perform();
 
         // set disabled to true
         validatorAttributes.set(ValidatorAttributes.disabled, Boolean.TRUE);
@@ -147,11 +146,11 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
         submitAjax();
         // check error message from validator
         // there will be a message from jsr-303 bean validation, because the ajax submit
-        assertPresent(getPage().getMsgMax(), "Element page.msgMax should be present!");
+        getPage().getMsgMax().advanced().waitUntilMessageIsVisible().perform();
     }
 
-    @Test(groups = { "Future" })
-    @IssueTracking(value = "https://issues.jboss.org/browse/RF-11035")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11035")
     public void testSelectionSize() {
         verifySelectionSize();
     }
