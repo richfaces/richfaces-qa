@@ -63,6 +63,10 @@ public class RichPanelMenuBean implements Serializable {
         attributes.setAttribute("rendered", true);
         attributes.setAttribute("style", "width: 200px;");
 
+        // set default values for group and item mode, needed for MyFaces -- https://issues.jboss.org/browse/RF-10608
+        attributes.setAttribute("itemMode", "ajax");
+        attributes.setAttribute("groupMode", "client");
+
         // will be tested in another way
         attributes.remove("itemChangeListener");
         attributes.remove("converter");
