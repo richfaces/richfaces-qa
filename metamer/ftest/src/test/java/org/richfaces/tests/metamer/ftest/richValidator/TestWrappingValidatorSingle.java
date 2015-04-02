@@ -1,6 +1,6 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2014, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.metamer.ftest.richValidator;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
@@ -56,9 +56,9 @@ public class TestWrappingValidatorSingle extends AbstractValidatorsTest {
         getPage().getInputMin().clear();
         getPage().getInputMin().sendKeys("1");
 
-        Graphene.guardNoRequest(getPage().getA4jCommandBtn()).click();
+        Graphene.guardAjax(getPage().getA4jCommandBtn()).click();
 
-        Graphene.waitGui().until().element(getPage().getMsgMin()).text().equalTo(messages.get(ID.min));
+        getPage().getMsgMin().advanced().waitUntilMessageIsVisible().perform();
     }
 
     /**
@@ -76,6 +76,6 @@ public class TestWrappingValidatorSingle extends AbstractValidatorsTest {
         // no request (HTTP neither XHR) should be sent if validation fails
         fireEvent(Graphene.guardNoRequest(getPage().getInputMin()), Event.BLUR);
 
-        Graphene.waitGui().until().element(getPage().getMsgMin()).text().equalTo(messages.get(ID.min));
+        waitUtilMessageWithIDIsVisibleAndCorrect(ID.min);
     }
 }

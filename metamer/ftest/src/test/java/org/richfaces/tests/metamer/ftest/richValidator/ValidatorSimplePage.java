@@ -1,6 +1,6 @@
-/**
+/*
  * JBoss, Home of Professional Open Source
- * Copyright 2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -25,6 +25,7 @@ import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 
 /**
@@ -70,38 +71,38 @@ public class ValidatorSimplePage extends MetamerPage {
     @FindByJQuery("input[id$=stringSize]")
     private WebElement inputStringSize;
 
-    @FindByJQuery("span[id$=assertFalseMsg] span.rf-msg-det")
-    private WebElement msgAssertFalse;
-    @FindByJQuery("span[id$=assertTrueMsg] span.rf-msg-det")
-    private WebElement msgAssertTrue;
-    @FindByJQuery("span[id$=customMsg] span.rf-msg-det")
-    private WebElement msgCustom;
-    @FindByJQuery("span[id$=decimalMinMaxMsg] span.rf-msg-det")
-    private WebElement msgDecimalMinMax;
-    @FindByJQuery("span[id$=digitsMsg] span.rf-msg-det")
-    private WebElement msgDigits;
-    @FindByJQuery(value = "span[id$=futureMsg] span.rf-msg-det")
-    private WebElement msgFuture;
-    @FindByJQuery("span[id$=maxMsg] span.rf-msg-det")
-    private WebElement msgMax;
-    @FindByJQuery("span[id$=minMsg] span.rf-msg-det")
-    private WebElement msgMin;
-    @FindByJQuery("span[id$=minMaxMsg] span.rf-msg-det")
-    private WebElement msgMinMax;
-    @FindByJQuery("span[id$=notEmptyMsg] span.rf-msg-det")
-    private WebElement msgNotEmpty;
-    @FindByJQuery("span[id$=notNullMsg] span.rf-msg-det")
-    private WebElement msgNotNull;
-    @FindByJQuery(value = "span[id$=pastMsg] span.rf-msg-det")
-    private WebElement msgPast;
-    @FindByJQuery("span[id$=patternMsg] span.rf-msg-det")
-    private WebElement msgPattern;
-    @FindByJQuery("span[id$=regexpMsg] span.rf-msg-det")
-    private WebElement msgRegexp;
-    @FindByJQuery(value = "span[id$=sizeMsg] span.rf-msg-det")
-    private WebElement msgSize;
-    @FindByJQuery("span[id$=stringSizeMsg] span.rf-msg-det")
-    private WebElement msgStringSize;
+    @FindByJQuery("span[id$=assertFalseMsg]")
+    private RichFacesMessage msgAssertFalse;
+    @FindByJQuery("span[id$=assertTrueMsg]")
+    private RichFacesMessage msgAssertTrue;
+    @FindByJQuery("span[id$=customMsg]")
+    private RichFacesMessage msgCustom;
+    @FindByJQuery("span[id$=decimalMinMaxMsg]")
+    private RichFacesMessage msgDecimalMinMax;
+    @FindByJQuery("span[id$=digitsMsg]")
+    private RichFacesMessage msgDigits;
+    @FindByJQuery(value = "span[id$=futureMsg]")
+    private RichFacesMessage msgFuture;
+    @FindByJQuery("span[id$=maxMsg]")
+    private RichFacesMessage msgMax;
+    @FindByJQuery("span[id$=minMsg]")
+    private RichFacesMessage msgMin;
+    @FindByJQuery("span[id$=minMaxMsg]")
+    private RichFacesMessage msgMinMax;
+    @FindByJQuery("span[id$=notEmptyMsg]")
+    private RichFacesMessage msgNotEmpty;
+    @FindByJQuery("span[id$=notNullMsg]")
+    private RichFacesMessage msgNotNull;
+    @FindByJQuery(value = "span[id$=pastMsg]")
+    private RichFacesMessage msgPast;
+    @FindByJQuery("span[id$=patternMsg]")
+    private RichFacesMessage msgPattern;
+    @FindByJQuery("span[id$=regexpMsg]")
+    private RichFacesMessage msgRegexp;
+    @FindByJQuery(value = "span[id$=sizeMsg]")
+    private RichFacesMessage msgSize;
+    @FindByJQuery("span[id$=stringSizeMsg]")
+    private RichFacesMessage msgStringSize;
 
     @FindByJQuery("input[id$=setCorrectValuesButton]")
     private WebElement setCorrectBtn;
@@ -236,112 +237,112 @@ public class ValidatorSimplePage extends MetamerPage {
     /**
      * @return the msgAssertFalse
      */
-    public WebElement getMsgAssertFalse() {
+    public RichFacesMessage getMsgAssertFalse() {
         return msgAssertFalse;
     }
 
     /**
      * @return the msgAssertTrue
      */
-    public WebElement getMsgAssertTrue() {
+    public RichFacesMessage getMsgAssertTrue() {
         return msgAssertTrue;
     }
 
     /**
      * @return the msgCustom
      */
-    public WebElement getMsgCustom() {
+    public RichFacesMessage getMsgCustom() {
         return msgCustom;
     }
 
     /**
      * @return the msgDecimalMinMax
      */
-    public WebElement getMsgDecimalMinMax() {
+    public RichFacesMessage getMsgDecimalMinMax() {
         return msgDecimalMinMax;
     }
 
     /**
      * @return the msgDigits
      */
-    public WebElement getMsgDigits() {
+    public RichFacesMessage getMsgDigits() {
         return msgDigits;
     }
 
     /**
      * @return the msgFuture
      */
-    public WebElement getMsgFuture() {
+    public RichFacesMessage getMsgFuture() {
         return msgFuture;
     }
 
     /**
      * @return the msgMax
      */
-    public WebElement getMsgMax() {
+    public RichFacesMessage getMsgMax() {
         return msgMax;
     }
 
     /**
      * @return the msgMin
      */
-    public WebElement getMsgMin() {
+    public RichFacesMessage getMsgMin() {
         return msgMin;
     }
 
     /**
      * @return the msgMinMax
      */
-    public WebElement getMsgMinMax() {
+    public RichFacesMessage getMsgMinMax() {
         return msgMinMax;
     }
 
     /**
      * @return the msgNotEmpty
      */
-    public WebElement getMsgNotEmpty() {
+    public RichFacesMessage getMsgNotEmpty() {
         return msgNotEmpty;
     }
 
     /**
      * @return the msgNotNull
      */
-    public WebElement getMsgNotNull() {
+    public RichFacesMessage getMsgNotNull() {
         return msgNotNull;
     }
 
     /**
      * @return the msgPast
      */
-    public WebElement getMsgPast() {
+    public RichFacesMessage getMsgPast() {
         return msgPast;
     }
 
     /**
      * @return the msgPattern
      */
-    public WebElement getMsgPattern() {
+    public RichFacesMessage getMsgPattern() {
         return msgPattern;
     }
 
     /**
      * @return the msgRegexp
      */
-    public WebElement getMsgRegexp() {
+    public RichFacesMessage getMsgRegexp() {
         return msgRegexp;
     }
 
     /**
      * @return the msgSize
      */
-    public WebElement getMsgSize() {
+    public RichFacesMessage getMsgSize() {
         return msgSize;
     }
 
     /**
      * @return the msgStringSize
      */
-    public WebElement getMsgStringSize() {
+    public RichFacesMessage getMsgStringSize() {
         return msgStringSize;
     }
 

@@ -61,12 +61,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     $('input[id$=past]').val('1 Jan 2013');
                     $('input[id$=future]').val('1 Jan 3013');
                     $('input[id$=stringSize]').val('JSF');
-                    $('input[value=A]')[0].checked=true
-                    $('input[value=B]')[0].checked=true
-                    $('input[value=C]')[0].checked=false
-                    $('input[value=D]')[0].checked=false
-                    $('input[value=E]')[0].checked=false
-                    $('input[value=F]')[0].checked=false
+                    $('input[value=A]')[0].checked = true;
+                    $('input[value=B]')[0].checked = true;
+                    $('input[value=C]')[0].checked = false;
+                    $('input[value=D]')[0].checked = false;
+                    $('input[value=E]')[0].checked = false;
+                    $('input[value=F]')[0].checked = false;
                 }
 
                 function setWrongValues() {
@@ -84,12 +84,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     $('input[id$=past]').val('1 Jan 3013');
                     $('input[id$=future]').val('1 Jan 2013');
                     $('input[id$=stringSize]').val('JSF 2');
-                    $('input[value=A]')[0].checked=false
-                    $('input[value=B]')[0].checked=false
-                    $('input[value=C]')[0].checked=false
-                    $('input[value=D]')[0].checked=false
-                    $('input[value=E]')[0].checked=false
-                    $('input[value=F]')[0].checked=true
+                    $('input[value=A]')[0].checked = true;
+                    $('input[value=B]')[0].checked = false;
+                    $('input[value=C]')[0].checked = false;
+                    $('input[value=D]')[0].checked = false;
+                    $('input[value=E]')[0].checked = false;
+                    $('input[value=F]')[0].checked = false;
                 }
             </script>
 
@@ -111,7 +111,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <rich:message id="assertFalseMsg" for="assertFalse" />
 
                 <h:outputLabel for="decimalMinMax" value="#{decimalMinMaxBean.description}" />
-                <h:inputText id="decimalMinMax" value="#{decimalMinMaxBean.value}" label="#{decimalMinMaxBean.label}" 
+                <h:inputText id="decimalMinMax" value="#{decimalMinMaxBean.value}" label="#{decimalMinMaxBean.label}"
                              converter="#{decimalMinMaxBean.converter}">
                     <rich:validator />
                 </h:inputText>
@@ -144,7 +144,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <h:outputLabel for="notEmpty" value="#{notEmptyBean.description} Xš" />
                 <h:inputText id="notEmpty" value="#{notEmptyBean.value}" label="#{notEmptyBean.label}" >
                     <rich:validator />
-                </h:inputText>             
+                </h:inputText>
                 <rich:message id="notEmptyMsg" for="notEmpty" />
 
                 <h:outputLabel for="notNull" value="#{notNullBean.description}" />

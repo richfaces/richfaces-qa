@@ -28,7 +28,6 @@ import java.net.URL;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
-
 /**
  * Selenium tests for page faces/components/richValidator/csv.xhtml
  *
@@ -48,7 +47,7 @@ public class TestValidatorsCSV extends AbstractValidatorsTest {
     }
 
     @Test
-    @RegressionTest(value = "https://issues.jboss.org/browse/RF-11035")
+    @RegressionTest("https://issues.jboss.org/browse/RF-11035")
     public void testAllWrongJSF() {
         verifyAllWrongWithJSFSubmit();
     }
@@ -124,7 +123,7 @@ public class TestValidatorsCSV extends AbstractValidatorsTest {
     }
 
     @Test
-    @RegressionTest(value = "https://issues.jboss.org/browse/RF-11035")
+    @RegressionTest("https://issues.jboss.org/browse/RF-11035")
     public void testSelectionSize() {
         verifySelectionSize();
     }
