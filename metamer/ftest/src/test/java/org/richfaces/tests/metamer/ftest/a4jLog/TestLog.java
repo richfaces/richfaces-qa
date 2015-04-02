@@ -1,6 +1,6 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2014, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.metamer.ftest.a4jLog;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
@@ -30,12 +30,15 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+import java.util.Set;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 import org.richfaces.fragment.common.TextInputComponentImpl;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.hotkey.RichFacesHotkey;
 import org.richfaces.fragment.log.Log.LogEntryLevel;
 import org.richfaces.fragment.log.RichFacesLog;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -53,29 +56,30 @@ import org.testng.annotations.Test;
  */
 public class TestLog extends AbstractWebDriverTest {
 
-    @FindBy(css = "input[id$=nameInput]")
-    private TextInputComponentImpl input;
-    @FindBy(css = "input[id$=submitButton]")
-    private WebElement submitButton;
-    @FindBy(css = "span[id$=out]")
-    private WebElement output;
-    @FindBy(css = "input[id$=debugButton]")
-    private WebElement debugButton;
-    @FindBy(css = "input[id$=infoButton]")
-    private WebElement infoButton;
-    @FindBy(css = "input[id$=warnButton]")
-    private WebElement warnButton;
-    @FindBy(css = "input[id$=errorButton]")
-    private WebElement errorButton;
-    @FindBy(css = "div.rf-log select")
-    private Select levelSelect;
-    @FindBy(css = "div.rf-log")
-    private RichFacesLog log;
-
     private final Attributes<LogAttributes> attributes = getAttributes();
 
+    @FindBy(css = "input[id$=debugButton]")
+    private WebElement debugButton;
+    @FindBy(css = "input[id$=errorButton]")
+    private WebElement errorButton;
+    @FindBy
+    private RichFacesHotkey hotkey;
+    @FindBy(css = "input[id$=infoButton]")
+    private WebElement infoButton;
+    @FindBy(css = "input[id$=nameInput]")
+    private TextInputComponentImpl input;
+    @FindBy(css = "div.rf-log select")
+    private Select levelSelect;
     private LogEntryLevel levelToSet;
+    @FindBy(css = "div.rf-log")
+    private RichFacesLog log;
+    @FindBy(css = "span[id$=out]")
+    private WebElement output;
     private Boolean setLevelByAttribute;
+    @FindBy(css = "input[id$=submitButton]")
+    private WebElement submitButton;
+    @FindBy(css = "input[id$=warnButton]")
+    private WebElement warnButton;
 
     private void checkForEachLevel() {
         for (LogEntryLevel levelToTrigger : values()) {
@@ -88,6 +92,12 @@ public class TestLog extends AbstractWebDriverTest {
                 assertEquals(log.getLogEntries().getItem(0).getContent(), levelToTrigger.toString(), "Message content.");
             }
         }
+    }
+
+    private String getSecondWindowHandle(String originalWindow) {
+        Set<String> windowHandles = driver.getWindowHandles();
+        windowHandles.remove(originalWindow);
+        return windowHandles.iterator().next();
     }
 
     @Override
@@ -105,6 +115,51 @@ public class TestLog extends AbstractWebDriverTest {
         testSubmit();
         log.clear();
         assertTrue(log.getLogEntries().isEmpty(), "There should be no messages in log after clear button was clicked.");
+    }
+
+    @Test
+    @Templates("plain")
+    @UseWithField(field = "levelToSet", valuesFrom = FROM_ENUM, value = "")
+    public void testHotkeyAndPopupMode() {
+        String originalWindow = driver.getWindowHandle();
+        try {
+            attributes.set(LogAttributes.level, levelToSet.toString().toLowerCase());
+            attributes.set(LogAttributes.mode, "popup");
+            attributes.set(LogAttributes.hotkey, "d");
+            hotkey.setHotkey("ctrl+shift+d");
+            assertEquals(driver.getWindowHandles().size(), 1, "There should be only 1 browser window.");
+            hotkey.invoke();
+            assertEquals(driver.getWindowHandles().size(), 2, "There should be 2 browser windows.");
+            String logWindowHandle = getSecondWindowHandle(originalWindow);
+            for (LogEntryLevel levelToTrigger : values()) {
+                driver.switchTo().window(logWindowHandle);
+                RichFacesLog logInsidePopup = Graphene.createPageFragment(RichFacesLog.class, driver.findElement(Utils.BY_BODY));
+                logInsidePopup.clear();
+                driver.switchTo().window(originalWindow);
+                input.clear().sendKeys(levelToTrigger.toString());
+                triggerMessage(levelToTrigger);
+                driver.switchTo().window(logWindowHandle);
+                assertEquals(logInsidePopup.getLogEntries().size(), levelToTrigger.ordinal() >= levelToSet.ordinal() ? 1 : 0);
+                if (!logInsidePopup.getLogEntries().isEmpty()) {
+                    assertEquals(logInsidePopup.getLogEntries().getItem(0).getLevel(), levelToTrigger, "Message type in log.");
+                    assertEquals(logInsidePopup.getLogEntries().getItem(0).getContent(), levelToTrigger.toString(), "Message content.");
+                }
+            }
+        } finally {
+            // close generated window with a4j:log
+            if (driver.getWindowHandles().size() > 1) {
+                Set<String> windowHandles = driver.getWindowHandles();
+                for (String windowHandle : windowHandles) {
+                    if (windowHandle.equals(originalWindow)) {
+                        continue;
+                    }
+                    driver.switchTo().window(windowHandle);
+                    driver.close();
+                }
+                driver.switchTo().window(originalWindow);
+                assertEquals(driver.getWindowHandles().size(), 1, "There should be only 1 browser window.");
+            }
+        }
     }
 
     @Test(groups = "smoke")
