@@ -66,11 +66,13 @@ public class ValidationMessageCase {
 
     public void assertMessageDetailIsCorrect() {
         for (String string : possibleValidationMessages) {
-            if (string.equals(message.getDetail())) {
+            // 'endsWith' because of MyFaces is inserting the input's label before the message
+            if (message.getDetail().endsWith(string)) {
                 return;
             }
         }
-        throw new AssertionError("The message detail is invalid. Have: '" + message.getDetail() + "'. Expected some of " + possibleValidationMessages);
+        throw new AssertionError("The message detail is invalid. Have: '" + message.getDetail()
+            + "'. Expected message ending with some of " + possibleValidationMessages);
     }
 
     public void assertMessageIsDisplayed() {
