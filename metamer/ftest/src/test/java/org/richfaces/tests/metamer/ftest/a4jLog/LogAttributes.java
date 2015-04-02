@@ -29,6 +29,7 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 public enum LogAttributes implements AttributeEnum {
 
     binding,
+    hotkey,
     id,
     level,
     mode,
