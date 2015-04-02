@@ -113,7 +113,7 @@ public class RichFacesTreeNode<Content extends Labeled> implements TreeNode, Tre
                 treeNode.setContent(content);
                 if (parent != null) {
                     RichFacesTreeNode<Labeled> castedParent = (RichFacesTreeNode<Labeled>) parent;
-                    castedParent.addChild(treeNode.getContent(), treeNode);
+                    castedParent.addChild(treeNode.getContent().getLabel(), treeNode);
                 }
                 return treeNode;
             }

@@ -151,7 +151,7 @@ public class RichTreeBean implements Serializable {
             richfacesTreeNodeRoot = new RichFacesTreeNode<Labeled>();
             int i=0;
             for (RichFacesTreeNode<?> node : richfacesTreeNodeList) {
-                richfacesTreeNodeRoot.addChild(i, node);
+                richfacesTreeNodeRoot.addChild(i + "", node);
                 i++;
             }
         }
