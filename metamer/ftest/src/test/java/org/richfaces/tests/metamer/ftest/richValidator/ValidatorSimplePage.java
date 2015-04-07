@@ -24,7 +24,6 @@ package org.richfaces.tests.metamer.ftest.richValidator;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 
@@ -108,12 +107,6 @@ public class ValidatorSimplePage extends MetamerPage {
     private WebElement setCorrectBtn;
     @FindByJQuery(value = "input[id$=setWrongValuesButton]")
     private WebElement setWrongBtn;
-    @FindBy(className = "rf-msg-det")
-    private WebElement simpleErrorMessage;
-    @FindByJQuery(value = "input[type=text]")
-    private WebElement simpleInput;
-    @FindByJQuery(value = "input[type=submit]")
-    private WebElement toggleButton;
 
     /**
      * @return the a4jCommandBtn
@@ -362,27 +355,6 @@ public class ValidatorSimplePage extends MetamerPage {
      */
     public WebElement getSetWrongBtn() {
         return setWrongBtn;
-    }
-
-    /**
-     * @return the simpleErrorMessage
-     */
-    public WebElement getSimpleErrorMessage() {
-        return simpleErrorMessage;
-    }
-
-    /**
-     * @return the simpleInput
-     */
-    public WebElement getSimpleInput() {
-        return simpleInput;
-    }
-
-    /**
-     * @return the toggleButton
-     */
-    public WebElement getToggleButton() {
-        return toggleButton;
     }
 
     /**
