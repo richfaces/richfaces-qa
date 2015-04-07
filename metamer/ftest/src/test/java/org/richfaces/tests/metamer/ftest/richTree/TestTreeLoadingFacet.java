@@ -1,6 +1,6 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2014, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.metamer.ftest.richTree;
 
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
@@ -30,12 +30,19 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.tree.RichFacesTreeNode;
 import org.richfaces.fragment.tree.Tree.TreeNode;
+import org.richfaces.tests.metamer.ftest.MetamerAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 public class TestTreeLoadingFacet extends AbstractTreeTest {
+
+    private static final int[] INDEXES = new int[] { 0, 1 };
+
+    private final Attributes<MetamerAttributes> metamerAttributes = getAttributes();
 
     @FindBy(css = "input[id$=loadingFacet]")
     private WebElement loadingFacet;
@@ -47,30 +54,23 @@ public class TestTreeLoadingFacet extends AbstractTreeTest {
         }
     }
 
-    private void setResponseDelay(int milis) {
-        getMetamerPage().getResponseDelayElement().sendKeys(String.valueOf(milis));
-        getMetamerPage().getResponseDelayElement().submit();
-    }
-
     @Test(groups = "smoke")
     @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "simpleSwingTreeNode")
     @RegressionTest("https://issues.jboss.org/browse/RF-12696")
     public void testLoadingFacet() {
         int sufficientTimeToCheckHandles = 1500;// ms
         setLoadingFacet(true);
-        setResponseDelay(sufficientTimeToCheckHandles);
+        metamerAttributes.set(MetamerAttributes.metamerResponseDelay, sufficientTimeToCheckHandles);
         TreeNode treeNode = null;
-        for (int index : new int[]{ 0, 1 }) {
-            treeNode = (index == 0) ? tree.advanced().getNodes().get(index) : treeNode.advanced().getNodes().get(index);
-
-            assertFalse(Utils.isVisible(treeNode.advanced().getHandleLoadingElement()));
-            assertTrue(treeNode.advanced().getHandleElement().getAttribute("class").contains("rf-trn-hnd-colps"));
-            assertFalse(treeNode.advanced().getHandleElement().getAttribute("class").contains("rf-trn-hnd-exp"));
+        WebElement handleLoadingElement;
+        for (int index : INDEXES) {
+            treeNode = treeNode == null ? Graphene.createPageFragment(RichFacesTreeNode.class, driver.findElement(By.cssSelector("div[id$=richTree] > .rf-tr-nd"))) : treeNode.advanced().getNodes().get(index);
+            handleLoadingElement = treeNode.advanced().getHandleLoadingElement();
+            assertFalse(Utils.isVisible(handleLoadingElement));
             // trigger expand node without waiting for expanding
             treeNode.advanced().getHandleElement().click();
-            assertTrue(Utils.isVisible(treeNode.advanced().getHandleLoadingElement()));
-            assertTrue(treeNode.advanced().getHandleLoadingElement().findElement(By.tagName("img")).getAttribute("src").endsWith(IMAGE_URL));
-
+            assertTrue(Utils.isVisible(handleLoadingElement));
+            assertTrue(handleLoadingElement.findElement(By.tagName("img")).getAttribute("src").endsWith(IMAGE_URL));
             treeNode.advanced().waitUntilNodeIsExpanded().perform();
         }
     }
