@@ -1,4 +1,4 @@
-package org.richfaces.tests.metamer.validator;
+package org.richfaces.tests.metamer.bean.issues;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -10,9 +10,9 @@ import javax.validation.constraints.Size;
  * @author jhuska
  *
  */
-@ManagedBean
+@ManagedBean(name = "rf12031")
 @SessionScoped
-public class ProfileBean {
+public class RF12031 {
 
     private boolean mustRenderThePanel = false;
 

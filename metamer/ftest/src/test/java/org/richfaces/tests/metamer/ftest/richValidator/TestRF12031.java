@@ -26,8 +26,11 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.page.Page;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
@@ -39,24 +42,27 @@ import org.testng.annotations.Test;
  */
 public class TestRF12031 extends AbstractWebDriverTest {
 
-    @Page
-    private ValidatorSimplePage page;
+    @FindBy(css = "input[id$='inputRF12031']")
+    private WebElement inputRF12031;
+    @FindBy(css = "span[id$='msgRF12031']")
+    private RichFacesMessage msgRF12031;
+    @FindByJQuery(value = "input[id$='toggleButton']")
+    private WebElement toggleButton;
 
     @Override
     public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richValidator/RF-12031.xhtml");
+        return buildUrl(contextPath, "faces/components/richValidator/rf-12031.xhtml");
     }
 
     @Test(groups = { "Future" })
     @IssueTracking({ "https://issues.jboss.org/browse/RF-12031", "https://issues.jboss.org/browse/RF-12536" })
     public void testCSVOnConditionallyRenderedInput() {
+        toggleButton.click();
+        Graphene.waitGui().until().element(inputRF12031).is().present();
 
-        page.getToggleButton().click();
-        Graphene.waitGui().until().element(page.getSimpleInput()).is().present();
+        inputRF12031.sendKeys("RichFaces 4");
+        fireEvent(inputRF12031, Event.BLUR);
 
-        page.getSimpleInput().sendKeys("RichFaces 4");
-        fireEvent(page.getSimpleInput(), Event.BLUR);
-
-        Graphene.waitModel().until().element(page.getSimpleErrorMessage()).is().present();
+        msgRF12031.advanced().waitUntilMessageIsVisible();
     }
 }

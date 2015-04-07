@@ -1,80 +1,79 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
-<!--
-JBoss, Home of Professional Open Source
-Copyright 2010-2014, Red Hat, Inc. and individual contributors
-by the @authors tag. See the copyright.txt in the distribution for a
-full listing of individual contributors.
+    <!--
+    JBoss, Home of Professional Open Source
+    Copyright 2010-2014, Red Hat, Inc. and individual contributors
+    by the @authors tag. See the copyright.txt in the distribution for a
+    full listing of individual contributors.
 
-This is free software; you can redistribute it and/or modify it
-under the terms of the GNU Lesser General Public License as
-published by the Free Software Foundation; either version 2.1 of
-the License, or (at your option) any later version.
+    This is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as
+    published by the Free Software Foundation; either version 2.1 of
+    the License, or (at your option) any later version.
 
-This software is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-Lesser General Public License for more details.
+    This software is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    Lesser General Public License for more details.
 
-You should have received a copy of the GNU Lesser General Public
-License along with this software; if not, write to the Free
-Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    You should have received a copy of the GNU Lesser General Public
+    License along with this software; if not, write to the Free
+    Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+    02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-<ui:composition template="/templates/list.xhtml">
+    <ui:composition template="/templates/list.xhtml">
 
-	<ui:define name="pageTitle">Rich Validator</ui:define>
+        <ui:define name="pageTitle">Rich Validator</ui:define>
 
-	<ui:define name="links">
+        <ui:define name="links">
 
-		<metamer:testPageLink id="csv" outcome="csv"
-			value="Client Side Validation">
+            <metamer:testPageLink id="csv" outcome="csv"
+                                  value="Client Side Validation">
                 Simple page that contains <b>rich:validator</b> testing the support for JSR-303 and input boxes for all validator's attributes.
             </metamer:testPageLink>
 
-		<metamer:testPageLink id="jsr303" outcome="jsr303"
-			value="JSR-303 Bean Validation">
+            <metamer:testPageLink id="jsr303" outcome="jsr303"
+                                  value="JSR-303 Bean Validation">
                 Page containing input with various JSR-303 validators.
             </metamer:testPageLink>
 
-		<metamer:testPageLink id="wrapping" outcome="wrapping"
-			value="Client side validation for many inputs wrapped by rich:validator">
+            <metamer:testPageLink id="wrapping" outcome="wrapping"
+                                  value="Client side validation for many inputs wrapped by rich:validator">
                 Simple page that contains many inputs within <b>rich:validator</b>
-		</metamer:testPageLink>
+            </metamer:testPageLink>
 
-		<metamer:testPageLink id="single" outcome="single"
-			value="Client side validation for only one input component wrapped by rich:validator">
+            <metamer:testPageLink id="single" outcome="single"
+                                  value="Client side validation for only one input component wrapped by rich:validator">
                 Simple page that contains simple inputs within <b>rich:validator</b>
-		</metamer:testPageLink>
+            </metamer:testPageLink>
 
-                <metamer:testPageLink id="customMessages" outcome="customMessages"
-                                      value="Client Side Validation With Custom Validator Messages">
-                    Page demonstrating issue <a href="https://issues.jboss.org/browse/RF-12511">RF-12511</a>.
-                    <br /><b>Automated in:</b> org.richfaces.tests.metamer.ftest.richValidator.TestCustomMessages
-                </metamer:testPageLink>
+            <metamer:testPageLink id="customMessages" outcome="customMessages"
+                                  value="Client Side Validation With Custom Validator Messages">
+                Page demonstrating issue <a href="https://issues.jboss.org/browse/RF-12511">RF-12511</a>.
+                <br /><b>Automated in:</b> org.richfaces.tests.metamer.ftest.richValidator.TestCustomMessages
+            </metamer:testPageLink>
 
-		<metamer:testPageLink id="RF-12031" outcome="RF-12031"
-			value="RF-12031">
+            <metamer:testPageLink id="rf-12031" outcome="rf-12031" value="RF-12031">
                 Page demonstrating issue <a
-				href="https://issues.jboss.org/browse/RF-12031">RF-12031</a>.
+                    href="https://issues.jboss.org/browse/RF-12031">RF-12031</a>.
                 <br />Client side validation does not work when triggered on conditionally rendered input.
                 <br /><b>Automated in:</b> org.richfaces.tests.metamer.ftest.richValidator.TestRF12031.testCSVOnConditionallyRenderedInput
             </metamer:testPageLink>
-            
-        <metamer:testPageLink id="rf-13595" outcome="rf-13595"
-            value="RF-13595">
+
+            <metamer:testPageLink id="rf-13595" outcome="rf-13595"
+                                  value="RF-13595">
                 Page reproducing <a
-                href="https://issues.jboss.org/browse/RF-12031">RF-13595</a>.
+                    href="https://issues.jboss.org/browse/RF-12031">RF-13595</a>.
                 <br />This is a more complex toggled example of validation.
             </metamer:testPageLink>
 
-	</ui:define>
+        </ui:define>
 
-</ui:composition>
+    </ui:composition>
 
 </html>
