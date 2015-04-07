@@ -53,8 +53,8 @@ import org.openqa.selenium.interactions.Action;
 import org.richfaces.PanelMenuMode;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.BeforeMethod;
@@ -79,7 +79,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richPanelMenuItem/simple.xhtml");
     }
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setupMode() {
         panelMenuItemAttributes.set(mode, PanelMenuMode.ajax);
     }
