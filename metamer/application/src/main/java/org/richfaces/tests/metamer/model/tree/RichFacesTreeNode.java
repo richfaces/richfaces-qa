@@ -1,6 +1,6 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2014, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.metamer.model.tree;
 
 import java.io.Serializable;
@@ -37,20 +37,30 @@ import org.richfaces.tests.metamer.model.Labeled;
 public class RichFacesTreeNode<Content extends Labeled> implements TreeNode, TreeNodeWithContent<Content>, Serializable {
 
     private static final long serialVersionUID = 1L;
-    private Map<Object, TreeNode> children = new HashMap<Object, TreeNode>();
-    private List<Object> keys = new ArrayList<Object>();
+    private final Map<Object, TreeNode> children = new HashMap<Object, TreeNode>();
     private Content content;
+    private final List<Object> keys = new ArrayList<Object>();
     private String type;
+
+    public static TreeNodeWithContentFactory<TreeNodeWithContent<Labeled>> createFactory() {
+        return new TreeNodeWithContentFactory<TreeNodeWithContent<Labeled>>() {
+            @Override
+            public RichFacesTreeNode<Labeled> createTreeNode(TreeNodeWithContent<Labeled> parent, Labeled content) {
+                RichFacesTreeNode<Labeled> treeNode = new RichFacesTreeNode<Labeled>();
+                treeNode.setContent(content);
+                if (parent != null) {
+                    RichFacesTreeNode<Labeled> castedParent = (RichFacesTreeNode<Labeled>) parent;
+                    castedParent.addChild(String.valueOf(castedParent.getNumberOfChildren()), treeNode);
+                }
+                return treeNode;
+            }
+        };
+    }
 
     @Override
     public void addChild(Object key, TreeNode child) {
         children.put(key, child);
         keys.add(key);
-    }
-
-    @Override
-    public Content getContent() {
-        return content;
     }
 
     @Override
@@ -61,6 +71,20 @@ public class RichFacesTreeNode<Content extends Labeled> implements TreeNode, Tre
     @Override
     public Iterator<Object> getChildrenKeysIterator() {
         return keys.iterator();
+    }
+
+    @Override
+    public Content getContent() {
+        return content;
+    }
+
+    public int getNumberOfChildren() {
+        return keys.size();
+    }
+
+    @Override
+    public String getType() {
+        return type;
     }
 
     @Override
@@ -91,11 +115,6 @@ public class RichFacesTreeNode<Content extends Labeled> implements TreeNode, Tre
     }
 
     @Override
-    public String getType() {
-        return type;
-    }
-
-    @Override
     public void setType(String type) {
         this.type = type;
     }
@@ -103,20 +122,5 @@ public class RichFacesTreeNode<Content extends Labeled> implements TreeNode, Tre
     @Override
     public String toString() {
         return content == null ? super.toString() : content.toString();
-    }
-
-    public static TreeNodeWithContentFactory<TreeNodeWithContent<Labeled>> createFactory() {
-        return new TreeNodeWithContentFactory<TreeNodeWithContent<Labeled>>() {
-            @Override
-            public RichFacesTreeNode<Labeled> createTreeNode(TreeNodeWithContent<Labeled> parent, Labeled content) {
-                RichFacesTreeNode<Labeled> treeNode = new RichFacesTreeNode<Labeled>();
-                treeNode.setContent(content);
-                if (parent != null) {
-                    RichFacesTreeNode<Labeled> castedParent = (RichFacesTreeNode<Labeled>) parent;
-                    castedParent.addChild(treeNode.getContent().getLabel(), treeNode);
-                }
-                return treeNode;
-            }
-        };
     }
 }

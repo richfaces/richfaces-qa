@@ -1,6 +1,6 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2014, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.metamer.bean.rich;
 
 import java.io.Serializable;
@@ -149,10 +149,8 @@ public class RichTreeBean implements Serializable {
         if (richfacesTreeNodeRoot == null) {
             List<RichFacesTreeNode<Labeled>> richfacesTreeNodeList = (List<RichFacesTreeNode<Labeled>>) (List<?>) buildTree(RichFacesTreeNode.createFactory());
             richfacesTreeNodeRoot = new RichFacesTreeNode<Labeled>();
-            int i=0;
             for (RichFacesTreeNode<?> node : richfacesTreeNodeList) {
-                richfacesTreeNodeRoot.addChild(i + "", node);
-                i++;
+                richfacesTreeNodeRoot.addChild(String.valueOf(richfacesTreeNodeRoot.getNumberOfChildren()), node);
             }
         }
         return richfacesTreeNodeRoot;
@@ -218,10 +216,10 @@ public class RichTreeBean implements Serializable {
 
     private List<TreeNodeWithContent<Labeled>> buildTree(TreeNodeWithContentFactory<TreeNodeWithContent<Labeled>> treeNodeFactory) {
         List<TreeNodeWithContent<Labeled>> firstLevelNodes = new ArrayList<TreeNodeWithContent<Labeled>>();
-        for(State state : companiesCache.keySet()) {
+        for (State state : companiesCache.keySet()) {
             TreeNodeWithContent<Labeled> stateTreeNode = treeNodeFactory.createTreeNode(null, state);
             stateTreeNode.setType("country");
-            for(Company company : companiesCache.get(state)) {
+            for (Company company : companiesCache.get(state)) {
                 TreeNodeWithContent<Labeled> companyTreeNode = treeNodeFactory.createTreeNode(stateTreeNode, company);
                 companyTreeNode.setType("company");
                 for (CompactDisc cd : cdCache.get(company)) {

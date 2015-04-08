@@ -4,6 +4,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+
 import org.richfaces.convert.SequenceRowKeyConverter;
 import org.richfaces.tests.metamer.model.CompactDisc;
 import org.richfaces.tests.metamer.model.Company;
@@ -52,6 +53,8 @@ public class TreeRowKeyConverter extends SequenceRowKeyConverter {
                 return "[converted] state: " + ((Labeled) value).getLabel();
             } else if (value instanceof CompactDisc) {
                 return "[converted] cd: " + ((Labeled) value).getLabel();
+            } else if (value instanceof String) {
+                return (String) value;
             } else {
                 throw new UnsupportedOperationException("Can't convert " + value + " of type " + value.getClass().getName());
             }
