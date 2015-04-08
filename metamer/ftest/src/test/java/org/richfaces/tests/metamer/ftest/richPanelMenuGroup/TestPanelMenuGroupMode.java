@@ -51,64 +51,12 @@ import org.testng.annotations.Test;
  */
 public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
 
-    private final Attributes<PanelMenuGroupAttributes> panelMenuGroupAttributes = getAttributes();
-
-    private Boolean immediate;
     private Boolean bypassUpdates;
+    private Boolean immediate;
+    private final String[] listeners = new String[] { "phases", "action invoked", "action listener invoked", "executeChecker", "item changed" };
     private Mode mode;
-    private Mode[] requestModes = new Mode[]{ Mode.ajax, Mode.server };
-    private String listener;
-    private String[] listeners = new String[]{ "phases", "action invoked", "action listener invoked", "executeChecker", "item changed" };
-
-    @Test(groups = "smoke")
-    @Uses({
-        @UseWithField(field = "immediate", valuesFrom = FROM_FIELD, value = "booleans"),
-        @UseWithField(field = "bypassUpdates", valuesFrom = FROM_FIELD, value = "booleans"),
-        @UseWithField(field = "listener", valuesFrom = FROM_FIELD, value = "listeners"),
-        @UseWithField(field = "mode", valuesFrom = FROM_FIELD, value = "requestModes")
-    })
-    public void testRequestMode() {
-        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.immediate, immediate);
-        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.bypassUpdates, bypassUpdates);
-        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, mode);
-
-        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.execute, "@this executeChecker");
-
-        assertTrue(getPage().getTopGroup().advanced().isExpanded());
-        switch (mode) {
-            case ajax:
-                guardAjax(getPage().getMenu()).collapseGroup(1);
-                break;
-            case server:
-                guardHttp(getPage().getMenu()).collapseGroup(1);
-                break;
-            case client:
-                getPage().getMenu().collapseGroup(1);
-        }
-        assertFalse(getPage().getTopGroup().advanced().isExpanded());
-
-        if (mode != Mode.client) {
-            if ("phases".equals(listener)) {
-                getPage().assertPhases(getExpectedPhases());
-            } else {
-                PhaseId listenerInvocationPhase = getListenerInvocationPhase();
-                if (listenerInvocationPhase == null) {
-                    getPage().assertNoListener(listener);
-                } else {
-                    getPage().assertListener(listenerInvocationPhase, listener);
-                }
-            }
-        }
-    }
-
-    @Test(groups = "smoke")
-    public void testClientMode() {
-        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.client);
-
-        assertTrue(getPage().getTopGroup().advanced().isExpanded());
-        getPage().getMenu().collapseGroup(1);
-        assertFalse(getPage().getTopGroup().advanced().isExpanded());
-    }
+    private final Attributes<PanelMenuGroupAttributes> panelMenuGroupAttributes = getAttributes();
+    private final Mode[] requestModes = new Mode[] { Mode.ajax, Mode.server };
 
     private PhaseId[] getExpectedPhases() {
         LinkedList<PhaseId> list = new LinkedList<PhaseId>();
@@ -125,10 +73,9 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
         return list.toArray(new PhaseId[list.size()]);
     }
 
-    private PhaseId getListenerInvocationPhase() {
+    private PhaseId getListenerInvocationPhase(String listener) {
         PhaseId[] phases = getExpectedPhases();
         PhaseId phase = phases[phases.length - 2];
-
         if ("executeChecker".equals(listener)) {
             if (phase.compareTo(UPDATE_MODEL_VALUES) < 0 || mode == Mode.server) {
                 return null;
@@ -136,13 +83,59 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
                 return UPDATE_MODEL_VALUES;
             }
         }
-
         if ("item changed".equals(listener)) {
             if (phases.length == 6) {
                 return UPDATE_MODEL_VALUES;
             }
         }
-
         return phase;
+    }
+
+    @Test(groups = "smoke")
+    @Uses({
+        @UseWithField(field = "immediate", valuesFrom = FROM_FIELD, value = "booleans"),
+        @UseWithField(field = "bypassUpdates", valuesFrom = FROM_FIELD, value = "booleans"),
+        @UseWithField(field = "mode", valuesFrom = FROM_FIELD, value = "requestModes")
+    })
+    public void testAjaxAndServerMode() {
+        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.immediate, immediate);
+        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.bypassUpdates, bypassUpdates);
+        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, mode);
+        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.execute, "@this executeChecker");
+
+        assertTrue(getPage().getTopGroup().advanced().isExpanded());
+        switch (mode) {
+            case ajax:
+                guardAjax(getPage().getMenu()).collapseGroup(1);
+                break;
+            case server:
+                guardHttp(getPage().getMenu()).collapseGroup(1);
+                break;
+            case client:
+                getPage().getMenu().collapseGroup(1);
+        }
+        assertFalse(getPage().getTopGroup().advanced().isExpanded());
+
+        for (String listener : listeners) {
+            if ("phases".equals(listener)) {
+                getPage().assertPhases(getExpectedPhases());
+            } else {
+                PhaseId listenerInvocationPhase = getListenerInvocationPhase(listener);
+                if (listenerInvocationPhase == null) {
+                    getPage().assertNoListener(listener);
+                } else {
+                    getPage().assertListener(listenerInvocationPhase, listener);
+                }
+            }
+        }
+    }
+
+    @Test(groups = "smoke")
+    public void testClientMode() {
+        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.client);
+
+        assertTrue(getPage().getTopGroup().advanced().isExpanded());
+        getPage().getMenu().collapseGroup(1);
+        assertFalse(getPage().getTopGroup().advanced().isExpanded());
     }
 }
