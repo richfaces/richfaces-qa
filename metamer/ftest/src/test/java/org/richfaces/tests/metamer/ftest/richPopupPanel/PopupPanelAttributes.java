@@ -37,7 +37,6 @@ public enum PopupPanelAttributes implements AttributeEnum {
     headerClass,
     height,
     id,
-    keepVisualState,
     left,
     maxHeight,
     maxWidth,
@@ -69,7 +68,6 @@ public enum PopupPanelAttributes implements AttributeEnum {
     styleClass,
     top,
     trimOverlayedElements,
-    visualOptions,
     width,
     zindex
 }
