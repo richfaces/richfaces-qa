@@ -23,9 +23,6 @@ package org.richfaces.tests.metamer.ftest.a4jPush;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- */
 public enum PushAttributes implements AttributeEnum {
 
     address,
@@ -35,5 +32,4 @@ public enum PushAttributes implements AttributeEnum {
     onerror,
     onsubscribed,
     rendered
-
 }

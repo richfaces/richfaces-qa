@@ -23,13 +23,11 @@ package org.richfaces.tests.metamer.ftest.a4jParam;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- */
 public enum ParamAttributes implements AttributeEnum {
 
     assignTo,
     binding,
+    converter,
     id,
     name,
     noEscape,

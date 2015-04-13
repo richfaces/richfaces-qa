@@ -23,19 +23,21 @@ package org.richfaces.tests.metamer.ftest.richValidator;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- */
 public enum ValidatorAttributes implements AttributeEnum {
 
     data,
     disabled,
+    event,
     immediate,
+    listener,
     onbeforedomupdate,
     onbeforesubmit,
     onbegin,
     oncomplete,
     onerror,
+    oninvalid,
+    onvalid,
     queueId,
+    resetValues,
     status
 }

@@ -1,36 +1,35 @@
-/**
- * *****************************************************************************
- * JBoss, Home of Professional Open Source Copyright 2010-2015, Red Hat, Inc.
- * and individual contributors by the @authors tag. See the copyright.txt in the
- * distribution for a full listing of individual contributors.
+/*
+ * JBoss, Home of Professional Open Source
+ * Copyright 2010-2015, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * This is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * This software is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this software; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
- * site: http://www.fsf.org.
- ******************************************************************************
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- */
 public enum ExtendedDataTableAttributes implements AttributeEnum {
 
     binding,
+    clientRows,
     columnClasses,
+    columnsOrder,
+    data,
     filterVar,
     first,
     footerClass,
@@ -39,8 +38,12 @@ public enum ExtendedDataTableAttributes implements AttributeEnum {
     id,
     iterationStatusVar,
     keepSaved,
+    limitRender,
     noDataLabel,
+    onbeforedomupdate,
     onbeforeselectionchange,
+    oncomplete,
+    onready,
     onrowclick,
     onrowdblclick,
     onrowkeydown,
@@ -52,7 +55,9 @@ public enum ExtendedDataTableAttributes implements AttributeEnum {
     onrowmouseover,
     onrowmouseup,
     onselectionchange,
+    render,
     rendered,
+    resetValues,
     rowClass,
     rowClasses,
     rowKeyConverter,
@@ -65,6 +70,7 @@ public enum ExtendedDataTableAttributes implements AttributeEnum {
     stateVar,
     style,
     styleClass,
+    tableState,
     value,
     var
 }

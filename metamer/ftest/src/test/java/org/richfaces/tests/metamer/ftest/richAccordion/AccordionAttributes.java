@@ -61,5 +61,4 @@ public enum AccordionAttributes implements AttributeEnum {
     switchType,
     title,
     width
-
 }

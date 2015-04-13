@@ -23,20 +23,28 @@ package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22685 $
- */
 public enum CollapsibleSubTableAttributes implements AttributeEnum {
 
+    binding,
+    cellClass,
     columnClasses,
+    columnFooterCellClass,
+    columnFooterClass,
+    columnHeaderCellClass,
+    columnHeaderClass,
+    columnHeaderFirstClass,
     expandMode,
     expanded,
     filterVar,
     first,
+    firstColumnFooterClass,
+    firstRowClass,
+    footerCellClass,
     footerClass,
+    footerFirstClass,
+    headerCellClass,
     headerClass,
+    headerFirstClass,
     id,
     iterationStatusVar,
     keepSaved,

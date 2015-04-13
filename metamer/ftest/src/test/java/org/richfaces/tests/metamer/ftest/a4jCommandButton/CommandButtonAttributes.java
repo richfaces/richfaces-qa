@@ -23,11 +23,9 @@ package org.richfaces.tests.metamer.ftest.a4jCommandButton;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- */
 public enum CommandButtonAttributes implements AttributeEnum {
 
+    accesskey,
     action,
     actionListener,
     binding,
@@ -54,11 +52,12 @@ public enum CommandButtonAttributes implements AttributeEnum {
     onmouseup,
     render,
     rendered,
+    resetValues,
     status,
     style,
     styleClass,
+    tabindex,
     title,
     type,
     value
-
 }

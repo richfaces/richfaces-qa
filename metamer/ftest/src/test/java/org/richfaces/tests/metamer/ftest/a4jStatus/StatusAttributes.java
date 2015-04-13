@@ -23,10 +23,6 @@ package org.richfaces.tests.metamer.ftest.a4jStatus;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- */
 public enum StatusAttributes implements AttributeEnum {
 
     binding,

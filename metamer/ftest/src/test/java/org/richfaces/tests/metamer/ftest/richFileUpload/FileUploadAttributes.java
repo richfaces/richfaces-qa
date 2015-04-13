@@ -1,4 +1,4 @@
-/**
+/*
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -23,14 +23,11 @@ package org.richfaces.tests.metamer.ftest.richFileUpload;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- */
 public enum FileUploadAttributes implements AttributeEnum {
 
     acceptedTypes,
     addLabel,
-    binding,//no testing
+    binding,
     clearAllLabel,
     clearLabel,
     data,
@@ -39,8 +36,8 @@ public enum FileUploadAttributes implements AttributeEnum {
     disabled,
     doneLabel,
     execute,
-    fileUploadListener,//no testing
-    id,//no testing
+    fileUploadListener,
+    id,
     immediateUpload,
     lang,
     limitRender,
@@ -65,9 +62,10 @@ public enum FileUploadAttributes implements AttributeEnum {
     onmouseup,
     ontyperejected,
     onuploadcomplete,
-    render,//no testing
+    render,
     rendered,
-    serverErrorLabel,//not tested
+    resetValues,
+    serverErrorLabel,
     sizeExceededLabel,
     status,
     style,

@@ -23,10 +23,6 @@ package org.richfaces.tests.metamer.ftest.richColumn;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- */
 public enum ColumnAttributes implements AttributeEnum {
 
     binding,
@@ -49,5 +45,4 @@ public enum ColumnAttributes implements AttributeEnum {
     style,
     styleClass,
     width
-
 }

@@ -23,9 +23,6 @@ package org.richfaces.tests.metamer.ftest.richPanel;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- */
 public enum PanelAttributes implements AttributeEnum {
 
     binding,
