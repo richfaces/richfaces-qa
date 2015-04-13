@@ -308,32 +308,33 @@ public class TestPopupPanel extends AbstractWebDriverTest {
         assertTrue(panel.getBodyContent().getContentString().endsWith("hide this panel"), "Panel's content should end with 'hide this panel'.");
     }
 
-    @Test(groups = "Future")
-    @CoversAttributes("keepVisualState")
-    @IssueTracking("https://issues.jboss.org/browse/RF-10697")
-    public void testKeepVisualState() {
-        int tolerance = 10;
-        int moveBy = 150;
-        // we need to do this to get the submit button working
-        popupPanelAttributes.set(PopupPanelAttributes.domElementAttachment, "form");
-
-        popupPanelAttributes.set(PopupPanelAttributes.keepVisualState, Boolean.FALSE);
-        openPopupPanel();
-        Locations locationsBefore = panel.advanced().getLocations();
-        panel.advanced().moveByOffset(moveBy, moveBy);
-        panel.getBodyContent().submit();
-        openPopupPanel();
-        Utils.tolerantAssertLocationsEquals(panel.advanced().getLocations(), locationsBefore, tolerance, tolerance, "Panel's position should be the same as before");
-
-        popupPanelAttributes.set(PopupPanelAttributes.keepVisualState, Boolean.TRUE);
-        openPopupPanel();
-        locationsBefore = panel.advanced().getLocations();
-        panel.advanced().moveByOffset(moveBy, moveBy);
-        panel.getBodyContent().submit();
-        openPopupPanel();
-        Utils.tolerantAssertLocationsEquals(panel.advanced().getLocations(), locationsBefore.moveAllBy(moveBy, moveBy), tolerance, tolerance, "Panel's position should the moved as before submit.");
-    }
-
+//    Attribute is hidden after https://issues.jboss.org/browse/RF-13140
+//
+//    @Test(groups = "Future")
+//    @CoversAttributes("keepVisualState")
+//    @IssueTracking("https://issues.jboss.org/browse/RF-10697")
+//    public void testKeepVisualState() {
+//        int tolerance = 10;
+//        int moveBy = 150;
+//        // we need to do this to get the submit button working
+//        popupPanelAttributes.set(PopupPanelAttributes.domElementAttachment, "form");
+//
+//        popupPanelAttributes.set(PopupPanelAttributes.keepVisualState, Boolean.FALSE);
+//        openPopupPanel();
+//        Locations locationsBefore = panel.advanced().getLocations();
+//        panel.advanced().moveByOffset(moveBy, moveBy);
+//        panel.getBodyContent().submit();
+//        openPopupPanel();
+//        Utils.tolerantAssertLocationsEquals(panel.advanced().getLocations(), locationsBefore, tolerance, tolerance, "Panel's position should be the same as before");
+//
+//        popupPanelAttributes.set(PopupPanelAttributes.keepVisualState, Boolean.TRUE);
+//        openPopupPanel();
+//        locationsBefore = panel.advanced().getLocations();
+//        panel.advanced().moveByOffset(moveBy, moveBy);
+//        panel.getBodyContent().submit();
+//        openPopupPanel();
+//        Utils.tolerantAssertLocationsEquals(panel.advanced().getLocations(), locationsBefore.moveAllBy(moveBy, moveBy), tolerance, tolerance, "Panel's position should the moved as before submit.");
+//    }
     @Test
     @CoversAttributes("left")
     public void testLeft() {
