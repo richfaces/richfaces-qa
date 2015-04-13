@@ -23,9 +23,6 @@ package org.richfaces.tests.metamer.ftest.richTab;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- */
 public enum TabAttributes implements AttributeEnum {
 
     action,
@@ -67,10 +64,10 @@ public enum TabAttributes implements AttributeEnum {
     onmouseup,
     render,
     rendered,
+    resetValues,
     status,
     style,
     styleClass,
     switchType,
-    title,
-    value
+    title
 }

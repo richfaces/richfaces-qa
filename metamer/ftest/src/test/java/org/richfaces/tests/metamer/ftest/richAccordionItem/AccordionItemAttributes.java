@@ -23,7 +23,7 @@ package org.richfaces.tests.metamer.ftest.richAccordionItem;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-public enum AccordionItemAttributes implements AttributeEnum{
+public enum AccordionItemAttributes implements AttributeEnum {
 
     binding,
     contentClass,
@@ -63,7 +63,5 @@ public enum AccordionItemAttributes implements AttributeEnum{
     style,
     styleClass,
     switchType,
-    title,
-    value
-
+    title
 }

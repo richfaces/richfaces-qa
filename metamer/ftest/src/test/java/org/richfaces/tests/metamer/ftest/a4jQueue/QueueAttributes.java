@@ -23,25 +23,19 @@ package org.richfaces.tests.metamer.ftest.a4jQueue;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22680 $
- */
 public enum QueueAttributes implements AttributeEnum {
 
-    binding, //not tested
-    id, //not tested
-    ignoreDupResponses, //tested
-    name, //not tested
-    onbeforedomupdate, //do not work -> should be also added here? https://issues.jboss.org/browse/RF-11711
-    oncomplete, //not tested, to be deleted https://issues.jboss.org/browse/RF-11711
-    onerror, //do not work, -> should be also added here? https://issues.jboss.org/browse/RF-11711
-    onevent, //not tested, to be deleted https://issues.jboss.org/browse/RF-11711
-    onrequestdequeue, //tested
-    onrequestqueue, //tested
-    onsubmit, //not tested, to be deleted https://issues.jboss.org/browse/RF-11711
-    rendered, //tested
-    requestDelay, //tested
-    timeout //tested
+    binding,
+    id,
+    ignoreDupResponses,
+    name,
+    onbeforedomupdate,
+    oncomplete,
+    onerror,
+    onrequestdequeue,
+    onrequestqueue,
+    onsubmit,
+    rendered,
+    requestDelay,
+    status
 }

@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -18,19 +18,20 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.metamer.ftest.richFocus;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
- */
 public enum FocusAttributes implements AttributeEnum {
 
     ajaxRendered,
-    validationAware,
+    binding,
+    converter,
+    delayed,
+    id,
     preserve,
-    delayed
-
+    rendered,
+    validationAware,
+    value
 }

@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -18,21 +18,17 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.metamer.ftest.richPickList;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * Rich Pick List component attributes
- * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- */
 public enum PickListAttributes implements AttributeEnum {
 
     addAllText,
     addText,
     binding,
+    caption,
     collectionType,
     columnClasses,
     converter,

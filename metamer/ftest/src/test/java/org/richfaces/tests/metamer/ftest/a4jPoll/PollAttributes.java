@@ -23,13 +23,6 @@ package org.richfaces.tests.metamer.ftest.a4jPoll;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * Tests the a4j:poll component.
- *
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22681 $
- */
 public enum PollAttributes implements AttributeEnum {
 
     action,
@@ -49,6 +42,7 @@ public enum PollAttributes implements AttributeEnum {
     ontimer,
     render,
     rendered,
+    resetValues,
     status,
     value
 }

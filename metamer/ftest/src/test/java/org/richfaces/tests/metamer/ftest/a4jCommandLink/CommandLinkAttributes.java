@@ -23,11 +23,9 @@ package org.richfaces.tests.metamer.ftest.a4jCommandLink;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- */
 public enum CommandLinkAttributes implements AttributeEnum {
 
+    accesskey,
     action,
     actionListener,
     binding,
@@ -57,13 +55,14 @@ public enum CommandLinkAttributes implements AttributeEnum {
     rel,
     render,
     rendered,
+    resetValues,
     rev,
     shape,
     status,
     style,
     styleClass,
+    tabindex,
     title,
     type,
     value
-
 }

@@ -19,63 +19,14 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.metamer.ftest.a4jMediaOutput;
+package org.richfaces.tests.metamer.ftest.richPanelToggleListener;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-public enum MediaOutputAttributes implements AttributeEnum {
+public enum PanelToggleListenerAttributes implements AttributeEnum {
 
-    accesskey,
-    align,
-    archive,
     binding,
-    border,
-    cacheable,
-    charset,
-    classid,
-    codebase,
-    codetype,
-    converter,
-    coords,
-    createContent,
-    declare,
-    dir,
-    disabled,
-    element,
-    expires,
-    fileName,
-    hreflang,
-    hspace,
-    id,
-    ismap,
-    lang,
-    lastModified,
-    mimeType,
-    onblur,
-    onclick,
-    ondblclick,
-    onfocus,
-    onkeydown,
-    onkeypress,
-    onkeyup,
-    onmousedown,
-    onmousemove,
-    onmouseout,
-    onmouseover,
-    onmouseup,
-    rel,
-    rendered,
-    rev,
-    shape,
-    standby,
-    style,
-    styleClass,
-    tabindex,
-    target,
-    title,
-    type,
-    uriAttribute,
-    usemap,
-    value,
-    vspace
+    FOR,
+    listener,
+    type
 }

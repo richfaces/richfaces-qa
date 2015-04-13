@@ -23,11 +23,6 @@ package org.richfaces.tests.metamer.ftest.richComponentControl;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @since 4.3.6.Final
- */
 public enum ComponentControlAttributes implements AttributeEnum {
 
     event,
@@ -35,5 +30,4 @@ public enum ComponentControlAttributes implements AttributeEnum {
     operation,
     selector,
     target
-
 }

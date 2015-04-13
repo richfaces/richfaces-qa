@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -18,17 +18,11 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.metamer.ftest.richMenuItem;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * Attributes for rich:menuItem component
- * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision$
- */
 public enum MenuItemAttributes implements AttributeEnum {
 
     action,
@@ -62,6 +56,7 @@ public enum MenuItemAttributes implements AttributeEnum {
     onmouseup,
     render,
     rendered,
+    resetValues,
     status,
     style,
     styleClass,

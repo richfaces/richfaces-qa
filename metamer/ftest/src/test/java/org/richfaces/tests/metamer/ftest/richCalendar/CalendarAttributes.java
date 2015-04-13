@@ -23,12 +23,6 @@ package org.richfaces.tests.metamer.ftest.richCalendar;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * rich:calendar component attributes
- *
- * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- */
 public enum CalendarAttributes implements AttributeEnum {
 
     binding,
@@ -94,6 +88,7 @@ public enum CalendarAttributes implements AttributeEnum {
     popupStyle,
     preloadDateRangeBegin,
     preloadDateRangeEnd,
+    readonly,
     rendered,
     required,
     requiredMessage,
@@ -116,5 +111,5 @@ public enum CalendarAttributes implements AttributeEnum {
     verticalOffset,
     weekDayLabels,
     weekDayLabelsShort,
-    zindex;
+    zindex
 }

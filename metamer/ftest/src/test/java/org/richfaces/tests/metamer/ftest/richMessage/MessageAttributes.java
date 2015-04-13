@@ -1,4 +1,4 @@
-/**
+/*
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -23,13 +23,6 @@ package org.richfaces.tests.metamer.ftest.richMessage;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * Component attributes for rich:message
- *
- * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22748 $
- */
 public enum MessageAttributes implements AttributeEnum {
 
     ajaxRendered,

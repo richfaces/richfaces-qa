@@ -23,20 +23,15 @@ package org.richfaces.tests.metamer.ftest.a4jAttachQueue;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22679 $
- */
 public enum AttachQueueAttributes implements AttributeEnum {
 
-    binding, //not tested
-    id, //not tested
-    ignoreDupResponses, //tested
-    name, //tested
-    onrequestdequeue, //tested
-    onrequestqueue, //tested
-    rendered, //tested
-    requestDelay,//tested
-    requestGroupingId //tested
+    binding,
+    id,
+    ignoreDupResponses,
+    name,
+    onrequestdequeue,
+    onrequestqueue,
+    rendered,
+    requestDelay,
+    requestGroupingId
 }

@@ -23,9 +23,6 @@ package org.richfaces.tests.metamer.ftest.richCollapsiblePanel;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- */
 public enum CollapsiblePanelAttributes implements AttributeEnum {
 
     binding,
@@ -58,5 +55,4 @@ public enum CollapsiblePanelAttributes implements AttributeEnum {
     title,
     toggleListener,
     value
-
 }

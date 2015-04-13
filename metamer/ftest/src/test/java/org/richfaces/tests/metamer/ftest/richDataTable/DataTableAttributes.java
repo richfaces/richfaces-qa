@@ -23,23 +23,35 @@ package org.richfaces.tests.metamer.ftest.richDataTable;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- */
 public enum DataTableAttributes implements AttributeEnum {
 
     binding,
     captionClass,
+    cellClass,
     columnClasses,
+    columnFooterCellClass,
+    columnFooterClass,
+    columnHeaderCellClass,
+    columnHeaderClass,
+    columnHeaderFirstClass,
+    data,
     filterVar,
     first,
+    firstColumnFooterClass,
+    firstRowClass,
+    footerCellClass,
     footerClass,
+    footerFirstClass,
+    headerCellClass,
     headerClass,
+    headerFirstClass,
     id,
     iterationStatusVar,
     keepSaved,
+    limitRender,
     noDataLabel,
+    onbeforedomupdate,
+    oncomplete,
     onrowclick,
     onrowdblclick,
     onrowkeydown,
@@ -50,7 +62,9 @@ public enum DataTableAttributes implements AttributeEnum {
     onrowmouseout,
     onrowmouseover,
     onrowmouseup,
+    render,
     rendered,
+    resetValues,
     rowClass,
     rowClasses,
     rowKeyConverter,
@@ -63,5 +77,4 @@ public enum DataTableAttributes implements AttributeEnum {
     styleClass,
     value,
     var
-
 }

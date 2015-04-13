@@ -23,11 +23,6 @@ package org.richfaces.tests.metamer.ftest.richDataScroller;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22977 $
- */
 public enum DataScrollerAttributes implements AttributeEnum {
 
     binding,
@@ -48,6 +43,8 @@ public enum DataScrollerAttributes implements AttributeEnum {
     render,
     renderIfSinglePage,
     rendered,
+    resetValues,
+    scrollListener,
     status,
     stepControls,
     style,

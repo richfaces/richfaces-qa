@@ -23,9 +23,6 @@ package org.richfaces.tests.metamer.ftest.a4jLog;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- */
 public enum LogAttributes implements AttributeEnum {
 
     binding,
@@ -35,6 +32,5 @@ public enum LogAttributes implements AttributeEnum {
     mode,
     rendered,
     style,
-    styleClass,
-
+    styleClass
 }

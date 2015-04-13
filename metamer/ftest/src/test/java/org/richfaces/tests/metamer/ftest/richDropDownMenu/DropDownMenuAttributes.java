@@ -23,9 +23,6 @@ package org.richfaces.tests.metamer.ftest.richDropDownMenu;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
-/**
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- */
 public enum DropDownMenuAttributes implements AttributeEnum {
 
     binding,
