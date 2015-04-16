@@ -19,23 +19,56 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations;
+package org.richfaces.tests.metamer.ftest.extension.attributes.coverage.result;
 
-import static java.lang.annotation.ElementType.METHOD;
+import java.util.EnumSet;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import org.apache.commons.lang.math.Fraction;
 
 /**
- * Used for marking of all tested attributes in test method.
- * Used for collecting RF's component's attribute coverage in {@link org.richfaces.tests.metamer.ftest.extension.attributes.coverage.CoverageCollector CoverageCollector} *
+ * Representation of attributes coverage result.
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-@Target({ METHOD })
-@Retention(RetentionPolicy.RUNTIME)
-public @interface CoversAttributes {
+public interface CoverageResult {
 
-    String[] value();
+    /**
+     * Returns EnumSet of all covered attributes.
+     */
+    EnumSet<?> getCovered();
+
+    /**
+     * Fraction of (covered attributes)/(all attributes).
+     */
+    Fraction getCoveredFraction();
+
+    /**
+     * Returns EnumSet of all ignored attributes.
+     */
+    EnumSet<?> getIgnored();
+
+    /**
+     * Fraction of (ignored attributes)/(all attributes).
+     */
+    Fraction getIgnoredFraction();
+
+    /**
+     * Returns EnumSet of all not covered attributes.
+     */
+    EnumSet<?> getNotCovered();
+
+    /**
+     * Fraction of (not covered attributes)/(all attributes).
+     */
+    Fraction getNotCoveredFraction();
+
+    /**
+     * Return name of the component. E.g. ActionListener, Tree.
+     */
+    String getComponentName();
+
+    /**
+     * Returns printable report.
+     */
+    String getReport();
 }
