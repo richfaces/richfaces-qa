@@ -19,23 +19,32 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations;
+package org.richfaces.tests.metamer.ftest.extension.attributes.coverage.saver;
 
-import static java.lang.annotation.ElementType.METHOD;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.text.MessageFormat;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.result.CoverageResult;
 
-/**
- * Used for marking of all tested attributes in test method.
- * Used for collecting RF's component's attribute coverage in {@link org.richfaces.tests.metamer.ftest.extension.attributes.coverage.CoverageCollector CoverageCollector} *
- *
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- */
-@Target({ METHOD })
-@Retention(RetentionPolicy.RUNTIME)
-public @interface CoversAttributes {
+public class NotCoveredResultsSaver extends AbstractResultsSaver {
 
-    String[] value();
+    private String getMessageForResult(CoverageResult cr) {
+        return MessageFormat.format("{0} attributes:\n * not covered: {1} ({2})\n", cr.getComponentName(), cr.getNotCovered().toString(),
+            cr.getNotCoveredFraction().toString());
+    }
+
+    @Override
+    protected void write(BufferedWriter bw) throws IOException {
+        try {
+            for (CoverageResult result : getResults()) {
+                bw.append(getMessageForResult(result));
+                bw.flush();
+            }
+        } finally {
+            if (bw != null) {
+                bw.close();
+            }
+        }
+    }
 }

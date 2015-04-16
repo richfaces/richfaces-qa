@@ -19,23 +19,21 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations;
+package org.richfaces.tests.metamer.ftest.extension.attributes.coverage.collect;
 
-import static java.lang.annotation.ElementType.METHOD;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.util.EnumSet;
+import java.util.Map;
 
 /**
- * Used for marking of all tested attributes in test method.
- * Used for collecting RF's component's attribute coverage in {@link org.richfaces.tests.metamer.ftest.extension.attributes.coverage.CoverageCollector CoverageCollector} *
- *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-@Target({ METHOD })
-@Retention(RetentionPolicy.RUNTIME)
-public @interface CoversAttributes {
+public interface AttributesCoverageCollector {
 
-    String[] value();
+    /**
+     * Collects a map of all covered attributes.
+     * Key: Class of attributes enum (e.g. {@link org.richfaces.tests.metamer.ftest.a4jActionListener.ActionListenerAttributes ActionListenerAttributes}).
+     * Value: EnumSet of all covered attributes.
+     */
+    Map<Class<? extends Enum>, EnumSet> collect(String pkg);
+
 }

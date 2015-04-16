@@ -19,23 +19,35 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations;
+package org.richfaces.tests.metamer.ftest.extension.attributes.coverage.saver;
 
-import static java.lang.annotation.ElementType.METHOD;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.result.CoverageResult;
 
 /**
- * Used for marking of all tested attributes in test method.
- * Used for collecting RF's component's attribute coverage in {@link org.richfaces.tests.metamer.ftest.extension.attributes.coverage.CoverageCollector CoverageCollector} *
- *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-@Target({ METHOD })
-@Retention(RetentionPolicy.RUNTIME)
-public @interface CoversAttributes {
+public interface ResultsSaver {
 
-    String[] value();
+    /**
+     * Set results to save.
+     */
+    SaveTo save(List<? extends CoverageResult> results);
+
+    public interface SaveTo {
+
+        /**
+         * Saves results to OutputStream.
+         */
+        void to(OutputStream stream) throws IOException;
+
+        /**
+         * Saves results to File.
+         */
+        void to(File outputFile) throws IOException;
+    }
 }
