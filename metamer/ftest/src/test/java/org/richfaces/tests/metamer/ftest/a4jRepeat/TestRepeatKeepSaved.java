@@ -21,7 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jRepeat;
 
+import org.richfaces.tests.metamer.ftest.a4jRegion.RegionAttributes;
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractKeepSavedTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.Test;
 
 /**
@@ -35,11 +37,13 @@ public class TestRepeatKeepSaved extends AbstractKeepSavedTest {
     }
 
     @Test
+    @CoversAttributes("keepSaved")
     public void testKeepSavedFalse() {
         checkKeepSavedFalse();
     }
 
     @Test
+    @CoversAttributes("keepSaved")
     public void testKeepSavedTrue() {
         checkKeepSavedTrue();
     }

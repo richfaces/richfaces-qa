@@ -35,6 +35,7 @@ import org.openqa.selenium.WebElement;
 import org.richfaces.fragment.common.Actions;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.model.Employee;
@@ -56,6 +57,7 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
     }
 
     @Test
+    @CoversAttributes("expandMode")
     @UseWithField(field = "expandMode", valuesFrom = FROM_ENUM, value = "")
     public void testExpandMode() {
         attributes.set(CollapsibleSubTableAttributes.expandMode, expandMode);
@@ -90,6 +92,7 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
     }
 
     @Test
+    @CoversAttributes("first")
     @Templates(exclude = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
     public void testFirst() {
         verifyFirst(Boolean.TRUE);
@@ -97,25 +100,15 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
     }
 
     @Test
+    @CoversAttributes("first")
     @RegressionTest("https://issues.jboss.org/browse/RF-12673")
     @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
     public void testFirstInSwitchablePanels() {
         testFirst();
     }
 
-    private void verifyFirst(boolean isMaleTable) {
-        attributes.set(CollapsibleSubTableAttributes.first, 2);
-        CollapsibleSubTableWithEmployees subTable = getSubTable(isMaleTable);
-
-        List<Employee> visibleEmployees = getEmployees(isMaleTable).subList(2, subTable.advanced().getNumberOfVisibleRows() + 2);
-
-        for (int i = 0; i < visibleEmployees.size(); i++) {
-            assertEquals(subTable.getRow(i).getName(), visibleEmployees.get(i).getName());
-            assertEquals(subTable.getRow(i).getTitle(), visibleEmployees.get(i).getTitle());
-        }
-    }
-
     @Test
+    @CoversAttributes("noDataLabel")
     @Templates("plain")
     public void testNoDataLabel() {
         final String label = "new no data label";
@@ -126,66 +119,77 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
     }
 
     @Test
+    @CoversAttributes("onrowclick")
     @Templates("plain")
     public void testOnrowclick() {
         testFireEvent("onrowclick", new Actions(driver).click(getTestedRow()).build());
     }
 
     @Test
+    @CoversAttributes("onrowdblclick")
     @Templates("plain")
     public void testOnrowdblclick() {
         testFireEvent("onrowdblclick", new Actions(driver).doubleClick(getTestedRow()).build());
     }
 
     @Test
+    @CoversAttributes("onrowkeydown")
     @Templates("plain")
     public void testOnrowkeydown() {
         testFireEvent("onrowkeydown", new Actions(driver).triggerEventByJS(Event.KEYDOWN, getTestedRow()).build());
     }
 
     @Test
+    @CoversAttributes("onrowkeypress")
     @Templates("plain")
     public void testOnrowkeypress() {
         testFireEvent("onrowkeypress", new Actions(driver).triggerEventByJS(Event.KEYPRESS, getTestedRow()).build());
     }
 
     @Test
+    @CoversAttributes("onrowkeyup")
     @Templates("plain")
     public void testOnrowkeyup() {
         testFireEvent("onrowkeyup", new Actions(driver).triggerEventByJS(Event.KEYUP, getTestedRow()).build());
     }
 
     @Test
+    @CoversAttributes("onrowmousedown")
     @Templates("plain")
     public void testOnrowmousedown() {
         testFireEvent("onrowmousedown", new Actions(driver).triggerEventByJS(Event.MOUSEDOWN, getTestedRow()).build());
     }
 
     @Test
+    @CoversAttributes("onrowmousemove")
     @Templates("plain")
     public void testOnrowmousemove() {
         testFireEvent("onrowmousemove", new Actions(driver).triggerEventByJS(Event.MOUSEMOVE, getTestedRow()).build());
     }
 
     @Test
+    @CoversAttributes("onrowmouseout")
     @Templates("plain")
     public void testOnrowmouseout() {
         testFireEvent("onrowmouseout", new Actions(driver).triggerEventByJS(Event.MOUSEOUT, getTestedRow()).build());
     }
 
     @Test
+    @CoversAttributes("onrowmouseover")
     @Templates("plain")
     public void testOnrowmouseover() {
         testFireEvent("onrowmouseover", new Actions(driver).triggerEventByJS(Event.MOUSEOVER, getTestedRow()).build());
     }
 
     @Test
+    @CoversAttributes("onrowmouseup")
     @Templates("plain")
     public void testOnrowmouseup() {
         testFireEvent("onrowmouseup", new Actions(driver).triggerEventByJS(Event.MOUSEUP, getTestedRow()).build());
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates("plain")
     public void testRendered() {
         attributes.set(CollapsibleSubTableAttributes.rendered, false);
@@ -201,6 +205,7 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
     }
 
     @Test
+    @CoversAttributes("rowClass")
     @RegressionTest("https://issues.jboss.org/browse/RF-10212")
     @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
     @Templates("plain")
@@ -220,6 +225,7 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
     }
 
     @Test
+    @CoversAttributes("rowClasses")
     @RegressionTest("https://issues.jboss.org/browse/RF-10212")
     @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
     @Templates("plain")
@@ -239,6 +245,7 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
     }
 
     @Test
+    @CoversAttributes("rows")
     @Templates(exclude = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
     public void testRows() {
         verifyRows(Boolean.TRUE);
@@ -246,10 +253,31 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
     }
 
     @Test
+    @CoversAttributes("rows")
     @RegressionTest("https://issues.jboss.org/browse/RF-12673")
     @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
     public void testRowsInSwitchablePanels() {
         testRows();
+    }
+
+    @Test
+    @CoversAttributes("style")
+    @Templates("plain")
+    public void testStyle() {
+        testStyle(getSubTable(isMale).advanced().getTableRootElement());
+        testStyle(getSubTable(!isMale).advanced().getTableRootElement());
+    }
+
+    private void verifyFirst(boolean isMaleTable) {
+        attributes.set(CollapsibleSubTableAttributes.first, 2);
+        CollapsibleSubTableWithEmployees subTable = getSubTable(isMaleTable);
+
+        List<Employee> visibleEmployees = getEmployees(isMaleTable).subList(2, subTable.advanced().getNumberOfVisibleRows() + 2);
+
+        for (int i = 0; i < visibleEmployees.size(); i++) {
+            assertEquals(subTable.getRow(i).getName(), visibleEmployees.get(i).getName());
+            assertEquals(subTable.getRow(i).getTitle(), visibleEmployees.get(i).getTitle());
+        }
     }
 
     private void verifyRows(boolean isMaleTable) {
@@ -262,12 +290,5 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
             assertEquals(getSubTable(isMaleTable).getRow(i).getName(), visibleEmployees.get(i).getName());
             assertEquals(getSubTable(isMaleTable).getRow(i).getTitle(), visibleEmployees.get(i).getTitle());
         }
-    }
-
-    @Test
-    @Templates("plain")
-    public void testStyle() {
-        testStyle(getSubTable(isMale).advanced().getTableRootElement());
-        testStyle(getSubTable(!isMale).advanced().getTableRootElement());
     }
 }

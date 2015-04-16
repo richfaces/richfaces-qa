@@ -34,6 +34,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -45,24 +46,18 @@ import com.google.common.base.Predicate;
  */
 public class TestJQueryAttributes extends AbstractWebDriverTest {
 
-    private final Attributes<JQueryAttributes> jQueryAttributes = getAttributes();
-
-    @FindBy(css = "#jQueryTestButton")
-    private WebElement button;
-    @FindBy(css = "#rebindOneClickButton")
-    private WebElement rebind;
     @FindBy(css = "input[id$=addComponentButton]")
     private WebElement addLiveComponent;
+    @FindBy(css = "#jQueryTestButton")
+    private WebElement button;
+    private final Attributes<JQueryAttributes> jQueryAttributes = getAttributes();
     @FindBy(css = "div.liveTestComponent")
     private List<WebElement> liveTestComponent;
+    @FindBy(css = "#rebindOneClickButton")
+    private WebElement rebind;
 
     private Color getButtonColor() {
         return ColorUtils.convertToAWTColor(button.getCssValue("color"));
-    }
-
-    @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richJQuery/simple.xhtml");
     }
 
     private void setupDomReadyTypeAttributes() {
@@ -77,6 +72,11 @@ public class TestJQueryAttributes extends AbstractWebDriverTest {
         jQueryAttributes.set(JQueryAttributes.query, "$(this).css('color', 'red')");
         jQueryAttributes.set(JQueryAttributes.selector, "#jQueryTestButton");
         jQueryAttributes.set(JQueryAttributes.timing, "immediate");
+    }
+
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richJQuery/simple.xhtml");
     }
 
     @Test
@@ -98,6 +98,7 @@ public class TestJQueryAttributes extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes({ "event", "query", "selector", "timing" })
     public void testAttachTypeOne() {
         setupImmediateTypeAttributes();
         jQueryAttributes.set(JQueryAttributes.attachType, "one");
@@ -120,6 +121,7 @@ public class TestJQueryAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "event", "query", "selector", "timing" })
     public void testDefaultTiming() {
         setupDomReadyTypeAttributes();
         jQueryAttributes.reset(JQueryAttributes.timing);
@@ -127,12 +129,14 @@ public class TestJQueryAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "event", "query", "selector", "timing" })
     public void testTimingDomReady() {
         setupDomReadyTypeAttributes();
         Graphene.waitAjax().until(new ColorEqualsWaiting(Color.RED));
     }
 
     @Test
+    @CoversAttributes({ "event", "query", "selector", "timing" })
     public void testTimingImmediate() {
         setupImmediateTypeAttributes();
         button.click();
@@ -141,9 +145,9 @@ public class TestJQueryAttributes extends AbstractWebDriverTest {
 
     private static class ListSizeEqualsWaiting implements Predicate<WebDriver> {
 
+        private final List<WebElement> list;
         private final int size;
         private int sizeReturned;
-        private final List<WebElement> list;
 
         public ListSizeEqualsWaiting(int size, List<WebElement> list) {
             this.size = size;

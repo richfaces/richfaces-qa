@@ -25,6 +25,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.ClearType;
 import org.richfaces.fragment.inputNumberSpinner.RichFacesInputNumberSpinner;
 import org.richfaces.tests.metamer.ftest.abstractions.converter.AbstractConverterTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.Test;
 
 /**
@@ -32,10 +33,10 @@ import org.testng.annotations.Test;
  */
 public class TestInputNumberSpinnerConverter extends AbstractConverterTest {
 
+    private static final String DEFAULT_OUTPUT = "0";
+    private static final String VALUE = "10";
     @FindBy(css = "[id$=convertableInput]")
     private RichFacesInputNumberSpinner input;
-    private static final String VALUE = "10";
-    private static final String DEFAULT_OUTPUT = "0";
 
     @Override
     protected String badValue() {
@@ -48,21 +49,23 @@ public class TestInputNumberSpinnerConverter extends AbstractConverterTest {
     }
 
     @Override
-    public String getComponentName() {
-        return "richInputNumberSpinner";
-    }
-
-    @Override
     protected void setBadValue() {
         input.advanced().getInput().advanced().clear(ClearType.JS).sendKeys(VALUE);
     }
 
+    @Override
+    public String getComponentName() {
+        return "richInputNumberSpinner";
+    }
+
     @Test
+    @CoversAttributes("converter")
     public void testConverter() {
         checkConverter();
     }
 
     @Test
+    @CoversAttributes("converterMessage")
     public void testConverterMessage() {
         checkConverterMessage();
     }

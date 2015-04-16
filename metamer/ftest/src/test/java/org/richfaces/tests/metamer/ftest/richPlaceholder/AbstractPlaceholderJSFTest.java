@@ -34,6 +34,7 @@ import org.jboss.test.selenium.support.color.ColorUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -44,81 +45,28 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
  */
 public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
 
-    private final Attributes<PlaceholderAttributes> placeholderAttributes = getAttributes();
+    public static final String DEFAULT_PLACEHOLDER_CLASS = "rf-plhdr";
+    public static final String DEFAULT_PLACEHOLDER_TEXT = "Watermark text";
 
     public static final String INPUT1_ID = "[id$=input1]";
     public static final String INPUT2_ID = "[id$=input2]";
-    public static final String DEFAULT_PLACEHOLDER_TEXT = "Watermark text";
-    public static final String DEFAULT_PLACEHOLDER_CLASS = "rf-plhdr";
+    @FindBy(css = "[id$=a4jButton]")
+    private WebElement a4jSubmitBtn;
 
     private final String componentName;
 
-    @FindBy(css = "[id$=placeholder]")
-    private WebElement placeholder;
-    @FindBy(css = "[id$=a4jButton]")
-    private WebElement a4jSubmitBtn;
     @FindBy(css = "[id$=hButton]")
     private WebElement hSubmitBtn;
     @FindBy(css = "[id$=output1]")
     private WebElement output1;
     @FindBy(css = "[id$=output2]")
     private WebElement output2;
+    @FindBy(css = "[id$=placeholder]")
+    private WebElement placeholder;
+    private final Attributes<PlaceholderAttributes> placeholderAttributes = getAttributes();
 
     public AbstractPlaceholderJSFTest(String componentName) {
         this.componentName = componentName;
-    }
-
-    @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richPlaceholder/" + componentName + ".xhtml");
-    }
-
-    protected String getTestedValue() {
-        return "abcd";
-    }
-
-    Color getDefaultInputColor() {
-        return Color.BLACK;
-    }
-
-    abstract WebElement getInput1();
-
-    abstract WebElement getInput2();
-
-    protected String getOutput1Value() {
-        return output1.getText();
-    }
-
-    protected String getOutput2Value() {
-        return output2.getText();
-    }
-
-    protected String getInput1Value() {
-        return getInput1().getAttribute("value");
-    }
-
-    /**
-     * Because of inplace input components
-     * @return
-     */
-    protected String getInput1EditValue() {
-        return getInput1Value();
-    }
-
-    protected String getInput2Value() {
-        return getInput2().getAttribute("value");
-    }
-
-    protected String getInput1StyleClass() {
-        return getInput1().getAttribute("class");
-    }
-
-    protected String getInput2StyleClass() {
-        return getInput2().getAttribute("class");
-    }
-
-    protected void sendKeysToInput1(String keys) {
-        getInput1().sendKeys(keys);
     }
 
     protected void clearInput1() {
@@ -133,8 +81,61 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
         getInput2().click();
     }
 
+    Color getDefaultInputColor() {
+        return Color.BLACK;
+    }
+
+    abstract WebElement getInput1();
+
     protected Color getInput1Color() {
         return ColorUtils.convertToAWTColor(getInput1().getCssValue("color"));
+    }
+
+    /**
+     * Because of inplace input components
+     * @return
+     */
+    protected String getInput1EditValue() {
+        return getInput1Value();
+    }
+
+    protected String getInput1StyleClass() {
+        return getInput1().getAttribute("class");
+    }
+
+    protected String getInput1Value() {
+        return getInput1().getAttribute("value");
+    }
+
+    abstract WebElement getInput2();
+
+    protected String getInput2StyleClass() {
+        return getInput2().getAttribute("class");
+    }
+
+    protected String getInput2Value() {
+        return getInput2().getAttribute("value");
+    }
+
+    protected String getOutput1Value() {
+        return output1.getText();
+    }
+
+    protected String getOutput2Value() {
+        return output2.getText();
+    }
+
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richPlaceholder/" + componentName + ".xhtml");
+    }
+
+    protected String getTestedValue() {
+        return "abcd";
+    }
+
+    protected void sendKeysToInput1(String keys) {
+        getInput1().sendKeys(keys);
     }
 
     public void testAjaxSubmit() {
@@ -143,14 +144,6 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
         MetamerPage.waitRequest(a4jSubmitBtn, WaitRequestType.XHR).click();
         assertEquals(getInput1Value(), DEFAULT_PLACEHOLDER_TEXT, "Input 1 value");
         assertEquals(getInput2Value(), "", "Input 2 value");
-        assertEquals(getOutput1Value(), "", "Output 1 value");
-        assertEquals(getOutput2Value(), "", "Output 2 value");
-    }
-
-    public void testHTTPSubmit() {
-        assertEquals(getInput1Value(), DEFAULT_PLACEHOLDER_TEXT, "Input 1 value");
-        assertEquals(getInput2Value(), "", "Input 2 value");
-        MetamerPage.waitRequest(hSubmitBtn, WaitRequestType.HTTP).click();
         assertEquals(getOutput1Value(), "", "Output 1 value");
         assertEquals(getOutput2Value(), "", "Output 2 value");
     }
@@ -179,6 +172,15 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
         assertEquals(getInput1Color(), Color.blue, "Input 1 text color");
     }
 
+    public void testHTTPSubmit() {
+        assertEquals(getInput1Value(), DEFAULT_PLACEHOLDER_TEXT, "Input 1 value");
+        assertEquals(getInput2Value(), "", "Input 2 value");
+        MetamerPage.waitRequest(hSubmitBtn, WaitRequestType.HTTP).click();
+        assertEquals(getOutput1Value(), "", "Output 1 value");
+        assertEquals(getOutput2Value(), "", "Output 2 value");
+    }
+
+    @CoversAttributes("rendered")
     public void testRendered() {
         placeholderAttributes.set(PlaceholderAttributes.rendered, Boolean.FALSE);
 
@@ -187,6 +189,7 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
         assertEquals(getInput1Value(), "", "Input 1 value");
     }
 
+    @CoversAttributes("selector")
     public void testSelector() {
         //default selector = input1
         assertEquals(getInput1Value(), DEFAULT_PLACEHOLDER_TEXT, "Input 1 value");
@@ -196,6 +199,7 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
         assertEquals(getInput2Value(), DEFAULT_PLACEHOLDER_TEXT, "Input 2 value");
     }
 
+    @CoversAttributes("selector")
     public void testSelectorEmpty() {
         //Placeholder is in first component, without selector, it should work for the first input
         placeholderAttributes.set(PlaceholderAttributes.selector, "");
@@ -203,11 +207,13 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
         assertEquals(getInput2Value(), "", "Input 2 value");
     }
 
+    @CoversAttributes("styleClass")
     public void testStyleClass() {
         assertEquals(getInput1Value(), DEFAULT_PLACEHOLDER_TEXT, "Input 1 value");
         testStyleClass(getInput1());
     }
 
+    @CoversAttributes("value")
     public void testTypeToInputWithPlaceholder() {
         assertEquals(getInput1Value(), DEFAULT_PLACEHOLDER_TEXT, "Input 1 value");
         assertTrue(getInput1StyleClass().contains(DEFAULT_PLACEHOLDER_CLASS), "Input 1 styleClass");

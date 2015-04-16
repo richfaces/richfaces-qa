@@ -31,6 +31,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.tests.metamer.bean.rich.RichColumnBean;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.ColumnGroupDT;
 import org.richfaces.tests.metamer.model.Capital;
 import org.testng.annotations.Test;
@@ -67,12 +68,14 @@ public class TestColumnFiltering extends AbstractColumnTest {
     }
 
     @Test
+    @CoversAttributes("filter")
     public void testFilterAttribute() {
         actualTable = tableWithFilter;
         testFiltering();
     }
 
     @Test
+    @CoversAttributes("filterExpression")
     public void testFilterExpressionAttribute() {
         actualTable = tableWithFilterExpression;
         testFiltering();
@@ -103,6 +106,6 @@ public class TestColumnFiltering extends AbstractColumnTest {
 
     @Override
     protected ColumnGroupDT getTable() {
-       return table;
+        return table;
     }
 }

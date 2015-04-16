@@ -38,6 +38,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -66,6 +67,7 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("frozenColumns")
     public void testInit() {
         Boolean present = new WebElementConditionFactory(page.getFrozenColumnsTdElement()).isPresent().apply(driver);
         assertFalse(present, "No frozen columns should be in page.");
@@ -76,6 +78,7 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
      * there after switching to another data page.
      */
     @Test
+    @CoversAttributes("frozenColumns")
     @Templates(exclude = { "richExtendedDataTable" })
     @UseWithField(field = "numberOfColumns", valuesFrom = FROM_FIELD, value = "ints")
     public void testFrozenColumnsShow() {
@@ -97,6 +100,7 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("frozenColumns")
     @UseWithField(field = "numberOfColumns", valuesFrom = FROM_FIELD, value = "ints")
     @Templates(value = "richExtendedDataTable")
     @RegressionTest("https://issues.jboss.org/browse/RF-13046")
@@ -119,6 +123,7 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
      * if scroller is still there after switching to another data page.
      */
     @Test
+    @CoversAttributes("frozenColumns")
     @UseWithField(field = "numberOfColumns", valuesFrom = FROM_FIELD, value = "ints2")
     @Templates(exclude = { "richExtendedDataTable" })
     // TODO https://issues.jboss.org/browse/RF-12236 , when numberOfColumns=4
@@ -148,6 +153,7 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
      * if scroller is still there after switching to another data page.
      */
     @Test
+    @CoversAttributes("frozenColumns")
     @UseWithField(field = "numberOfColumns", valuesFrom = FROM_FIELD, value = "ints2")
     @Templates(value = "richExtendedDataTable")
     @RegressionTest("https://issues.jboss.org/browse/RF-12278")

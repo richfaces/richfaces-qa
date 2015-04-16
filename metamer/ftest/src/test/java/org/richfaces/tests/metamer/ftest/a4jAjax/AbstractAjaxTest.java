@@ -35,6 +35,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 
 /**
@@ -124,6 +125,7 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
 
     public abstract void performAction();
 
+    @CoversAttributes({ "bypassUpdates", "listener" })
     public void testBypassUpdates() {
         ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
         ajaxAttributes.set(AjaxAttributes.bypassUpdates, true);
@@ -151,6 +153,7 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
         assertOutput2Changed();
     }
 
+    @CoversAttributes("data")
     public void testData() {
         testData(new Action() {
             @Override
@@ -160,6 +163,7 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
         });
     }
 
+    @CoversAttributes("disabled")
     public void testDisabledForTextInputs() {
         ajaxAttributes.set(AjaxAttributes.disabled, true);
 
@@ -169,6 +173,7 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
         assertOutput2NotChanged();
     }
 
+    @CoversAttributes({ "onbeforesubmit", "onbegin", "onbeforedomupdate", "oncomplete" })
     public void testEvents() {
         ajaxAttributes.set(AjaxAttributes.onbeforesubmit, "metamerEvents += \"beforesubmit \"");
         ajaxAttributes.set(AjaxAttributes.onbegin, "metamerEvents += \"begin \"");
@@ -213,6 +218,7 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
         assertEquals(events[3], "complete", "Attribute oncomplete doesn't work");
     }
 
+    @CoversAttributes("execute")
     public void testExecute() {
         ajaxAttributes.set(AjaxAttributes.execute, "[input, executeChecker]");
 
@@ -234,6 +240,7 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
 
     }
 
+    @CoversAttributes("immediate")
     public void testImmediate() {
         ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
         ajaxAttributes.set(AjaxAttributes.immediate, true);
@@ -252,6 +259,7 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
         page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "listener invoked");
     }
 
+    @CoversAttributes({ "immediate", "bypassUpdates", "listener" })
     public void testImmediateBypassUpdates() {
         ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
         ajaxAttributes.set(AjaxAttributes.bypassUpdates, true);
@@ -270,6 +278,7 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
         page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "listener invoked");
     }
 
+    @CoversAttributes("limitRender")
     public void testLimitRender(String expectedOutput) {
         ajaxAttributes.set(AjaxAttributes.limitRender, true);
 
@@ -280,11 +289,18 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
         assertEquals(page.getRequestTimeElement().getText(), reqTime, "Ajax-rendered a4j:outputPanel shouldn't change");
     }
 
+    @CoversAttributes("listener")
     public void testListener(EnumMap<Listener, Action> changeValueAndCheckActionsMap) {
         ajaxAttributes.set(AjaxAttributes.listener, listener);
         changeValueAndCheckActionsMap.get(listener).perform();
     }
 
+    @CoversAttributes("listener")
+    public void testListener() {
+        testListener(getActionMapForListeners());
+    }
+
+    @CoversAttributes("render")
     public void testRender() {
         ajaxAttributes.set(AjaxAttributes.render, "[output1]");
 
@@ -301,6 +317,7 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
         new LocalReloadTester().testRerenderAll();
     }
 
+    @CoversAttributes("status")
     public void testStatus() {
         ajaxAttributes.set(AjaxAttributes.status, "statusChecker");
 

@@ -52,6 +52,7 @@ import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -69,16 +70,10 @@ public class TestContextMenu extends AbstractWebDriverTest {
 
     private final Attributes<ContextMenuAttributes> contextMenuAttributes = getAttributes();
 
-    @Page
-    private ContextMenuSimplePage page;
-
     private Integer delay;
     private Integer[] delays = { 1500, 2000, 2500 };
-
-    @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richContextMenu/simple.xhtml");
-    }
+    @Page
+    private ContextMenuSimplePage page;
 
     public Locations getContextMenuLocationsWhenPosition(Positioning positioning) {
         contextMenuAttributes.set(ContextMenuAttributes.direction, positioning);
@@ -88,49 +83,13 @@ public class TestContextMenu extends AbstractWebDriverTest {
         return contextMenuLocations;
     }
 
-    private void updateShowAction() {
-        contextMenuAttributes.set(ContextMenuAttributes.showEvent, "click");
-        page.getContextMenu().advanced().setShowEvent(Event.CLICK);
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richContextMenu/simple.xhtml");
     }
 
     @Test
-    @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
-    @Templates("plain")
-    public void testHideDelay() {
-        new MenuDelayTester().testHideDelay(page.getContextMenuRoot(), delay, Event.MOUSEOUT, page.getContextMenuRoot());
-    }
-
-    @Test(groups = "smoke")
-    public void testOnhide() {
-        updateShowAction();
-        final String VALUE = "hide";
-        // set onhide
-        contextMenuAttributes.set(ContextMenuAttributes.onhide, "metamerEvents += \"" + VALUE + "\"");
-        // show context menu
-        page.clickOnFirstPanel(driverType);
-        // check whether the context menu is displayed
-        page.waitUntilContextMenuAppears();
-        // lose focus >>> menu will disappear
-        page.clickOnSecondPanel(driverType);
-        // check whether the context menu isn't displayed
-        page.waitUntilContextMenuHides();
-        assertEquals(expectedReturnJS("return metamerEvents", VALUE), VALUE);
-    }
-
-    @Test
-    @Templates("plain")
-    public void testVerticalOffset() {
-        updateShowAction();
-        testVerticalOffset(new ShowElementAndReturnAction() {
-            @Override
-            public WebElement perform() {
-                page.getContextMenu().advanced().show(page.getTargetPanel1());
-                return page.getContextMenu().advanced().getMenuPopup();
-            }
-        });
-    }
-
-    @Test
+    @CoversAttributes("dir")
     @Templates("plain")
     public void testDir() {
         updateShowAction();
@@ -143,6 +102,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("direction")
     @Templates("plain")
     @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "")
     public void testDirection() {
@@ -157,6 +117,46 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("disabled")
+    public void testDisabled() {
+        updateShowAction();
+        page.getContextMenu().advanced().show(page.getTargetPanel1());
+        assertTrue(page.getContextMenuContent().isDisplayed());
+
+        contextMenuAttributes.set(ContextMenuAttributes.disabled, true);
+
+        try {
+            page.getContextMenu().advanced().show(page.getTargetPanel1());
+            fail("The context menu should not be showd when disabled!");
+        } catch (TimeoutException ex) {
+            // OK
+        }
+    }
+
+    @Test
+    @CoversAttributes("hideDelay")
+    @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
+    @Templates("plain")
+    public void testHideDelay() {
+        new MenuDelayTester().testHideDelay(page.getContextMenuRoot(), delay, Event.MOUSEOUT, page.getContextMenuRoot());
+    }
+
+    @Test
+    @CoversAttributes("horizontalOffset")
+    @Templates("plain")
+    public void testHorizontalOffset() {
+        updateShowAction();
+        testHorizontalOffset(new ShowElementAndReturnAction() {
+            @Override
+            public WebElement perform() {
+                page.getContextMenu().advanced().show(page.getTargetPanel1());
+                return page.getContextMenu().advanced().getMenuPopup();
+            }
+        });
+    }
+
+    @Test
+    @CoversAttributes("lang")
     @Templates("plain")
     public void testLang() {
         updateShowAction();
@@ -168,6 +168,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("mode")
     public void testMode() {
         updateShowAction();
         // ajax
@@ -189,112 +190,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
-    public void testDisabled() {
-        updateShowAction();
-        page.getContextMenu().advanced().show(page.getTargetPanel1());
-        assertTrue(page.getContextMenuContent().isDisplayed());
-
-        contextMenuAttributes.set(ContextMenuAttributes.disabled, true);
-
-        try {
-            page.getContextMenu().advanced().show(page.getTargetPanel1());
-            fail("The context menu should not be showd when disabled!");
-        } catch (TimeoutException ex) {
-            // OK
-        }
-    }
-
-    @Test
-    @Templates("plain")
-    public void testHorizontalOffset() {
-        updateShowAction();
-        testHorizontalOffset(new ShowElementAndReturnAction() {
-            @Override
-            public WebElement perform() {
-                page.getContextMenu().advanced().show(page.getTargetPanel1());
-                return page.getContextMenu().advanced().getMenuPopup();
-            }
-        });
-    }
-
-    @Test
-    @Templates("plain")
-    public void testStyle() {
-        updateShowAction();
-        String color = "yellow";
-        String styleVal = "background-color: " + color + ";";
-        contextMenuAttributes.set(ContextMenuAttributes.style, styleVal);
-        page.getContextMenu().advanced().show(page.getTargetPanel1());
-        String backgroundColor = page.getContextMenuRoot().getCssValue("background-color");
-        // webdriver retrieves the color in rgba format
-        assertEquals(ContextMenuSimplePage.trimTheRGBAColor(backgroundColor), "rgba(255,255,0,1)",
-            "The style was not applied correctly!");
-    }
-
-    @Test
-    @Templates("plain")
-    public void testStyleClass() {
-        updateShowAction();
-        String styleClassVal = "test-style-class";
-        contextMenuAttributes.set(ContextMenuAttributes.styleClass, styleClassVal);
-        String styleClass = page.getContextMenuRoot().getAttribute("class");
-        assertTrue(styleClass.contains(styleClassVal));
-    }
-
-    @Test
-    public void testTarget() {
-        updateShowAction();
-        // contextMenu element is present always. Check if is displayed
-        contextMenuAttributes.set(ContextMenuAttributes.target, "targetPanel2");
-        assertFalse(page.getContextMenuContent().isDisplayed());
-        page.getContextMenu().advanced().show(page.getTargetPanel2());
-
-        contextMenuAttributes.set(ContextMenuAttributes.target, "targetPanel1");
-        assertFalse(page.getContextMenuContent().isDisplayed());
-        page.getContextMenu().advanced().show(page.getTargetPanel1());
-    }
-
-    @Test
-    @Templates("plain")
-    public void testTitle() {
-        updateShowAction();
-        String titleVal = "test title";
-        contextMenuAttributes.set(ContextMenuAttributes.title, titleVal);
-        assertEquals(page.getContextMenuRoot().getAttribute("title"), titleVal);
-    }
-
-    @Test
-    @Templates("plain")
-    public void testRendered() {
-        updateShowAction();
-        contextMenuAttributes.set(ContextMenuAttributes.rendered, Boolean.FALSE);
-        try {
-            page.getContextMenu().advanced().show(page.getTargetPanel1());
-            fail("The context menu should not be invoked when rendered == false!");
-        } catch (TimeoutException ex) {
-            // OK
-        }
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testPopupWidth() {
-        updateShowAction();
-        String minWidth = "333";
-        contextMenuAttributes.set(ContextMenuAttributes.popupWidth, minWidth);
-        page.getContextMenu().advanced().show(page.getTargetPanel1());
-        String style = page.getContextMenuContent().getCssValue("min-width");
-        assertEquals(style, minWidth + "px");
-    }
-
-    @Test(groups = "smoke")
-    public void testOnshow() {
-        updateShowAction();
-        testFireEvent(contextMenuAttributes, ContextMenuAttributes.onshow, new Actions(driver).click(page.getTargetPanel1())
-            .build());
-    }
-
-    @Test
+    @CoversAttributes("onclick")
     @Templates("plain")
     public void testOnclick() {
         updateShowAction();
@@ -308,6 +204,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates("plain")
     public void testOndblclick() {
         updateShowAction();
@@ -321,6 +218,55 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("ongrouphide")
+    public void testOngrouphide() {
+        updateShowAction();
+        testFireEvent(contextMenuAttributes, ContextMenuAttributes.ongrouphide, new Action() {
+            @Override
+            public void perform() {
+                page.getContextMenu().advanced().show(page.getTargetPanel1());
+                new Actions(driver).moveToElement(page.getContextMenu().advanced().getItemsElements().get(2)).build().perform();
+                waitGui().until().element(page.getGroupList()).is().visible();
+                new Actions(driver).click(page.getContextMenu().advanced().getItemsElements().get(1)).build().perform();
+                waitGui().until().element(page.getGroupList()).is().not().visible();
+            }
+        });
+    }
+
+    @Test
+    @CoversAttributes("ongroupshow")
+    public void testOngroupshow() {
+        updateShowAction();
+        testFireEvent(contextMenuAttributes, ContextMenuAttributes.ongroupshow, new Action() {
+            @Override
+            public void perform() {
+                page.getContextMenu().advanced().show(page.getTargetPanel1());
+                new Actions(driver).moveToElement(page.getContextMenu().advanced().getItemsElements().get(2)).build().perform();
+                waitGui().until().element(page.getGroupList()).is().visible();
+            }
+        });
+    }
+
+    @Test(groups = "smoke")
+    @CoversAttributes("onhide")
+    public void testOnhide() {
+        updateShowAction();
+        final String VALUE = "hide";
+        // set onhide
+        contextMenuAttributes.set(ContextMenuAttributes.onhide, "metamerEvents += \"" + VALUE + "\"");
+        // show context menu
+        page.clickOnFirstPanel(driverType);
+        // check whether the context menu is displayed
+        page.waitUntilContextMenuAppears();
+        // lose focus >>> menu will disappear
+        page.clickOnSecondPanel(driverType);
+        // check whether the context menu isn't displayed
+        page.waitUntilContextMenuHides();
+        assertEquals(expectedReturnJS("return metamerEvents", VALUE), VALUE);
+    }
+
+    @Test
+    @CoversAttributes("onitemclick")
     @Templates(value = "plain")
     public void testOnitemclick() {
         updateShowAction();
@@ -328,6 +274,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onkeydown")
     @RegressionTest("https://issues.jboss.org/browse/RF-12792")
     @Templates(value = "plain")
     public void testOnkeydown() {
@@ -338,15 +285,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
-    @Templates(value = "plain")
-    public void testOnkeyup() {
-        updateShowAction();
-        page.getContextMenu().advanced().show(page.getTargetPanel1());
-        testFireEventWithJS(page.getContextMenu().advanced().getItemsElements().get(1), Event.KEYUP, contextMenuAttributes,
-            ContextMenuAttributes.onkeyup);
-    }
-
-    @Test
+    @CoversAttributes("onkeypress")
     @Templates("plain")
     public void testOnkeypress() {
         updateShowAction();
@@ -360,6 +299,17 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onkeyup")
+    @Templates(value = "plain")
+    public void testOnkeyup() {
+        updateShowAction();
+        page.getContextMenu().advanced().show(page.getTargetPanel1());
+        testFireEventWithJS(page.getContextMenu().advanced().getItemsElements().get(1), Event.KEYUP, contextMenuAttributes,
+            ContextMenuAttributes.onkeyup);
+    }
+
+    @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
         updateShowAction();
@@ -376,22 +326,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
-    @Templates(value = "plain")
-    public void testOnmouseup() {
-        updateShowAction();
-        testFireEvent(contextMenuAttributes, ContextMenuAttributes.onmouseup, new Action() {
-            @Override
-            public void perform() {
-                page.getContextMenu().advanced().show(page.getTargetPanel1());
-                Mouse mouse = ((HasInputDevices) driver).getMouse();
-                Coordinates coords = ((Locatable) page.getContextMenu().advanced().getItemsElements().get(1)).getCoordinates();
-                mouse.mouseDown(coords);
-                mouse.mouseUp(coords);
-            }
-        });
-    }
-
-    @Test
+    @CoversAttributes("onmousemove")
     @Templates("plain")
     public void testOnmousemove() {
         updateShowAction();
@@ -405,6 +340,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test(groups = "Future")
+    @CoversAttributes("onmouseout")
     @IssueTracking("https://issues.jboss.org/browse/RF-12854")
     @Templates(value = "plain")
     public void testOnmouseout() {
@@ -422,6 +358,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
     public void testOnmouseover() {
         updateShowAction();
@@ -429,34 +366,58 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
-    public void testOngroupshow() {
+    @CoversAttributes("onmouseup")
+    @Templates(value = "plain")
+    public void testOnmouseup() {
         updateShowAction();
-        testFireEvent(contextMenuAttributes, ContextMenuAttributes.ongroupshow, new Action() {
+        testFireEvent(contextMenuAttributes, ContextMenuAttributes.onmouseup, new Action() {
             @Override
             public void perform() {
                 page.getContextMenu().advanced().show(page.getTargetPanel1());
-                new Actions(driver).moveToElement(page.getContextMenu().advanced().getItemsElements().get(2)).build().perform();
-                waitGui().until().element(page.getGroupList()).is().visible();
+                Mouse mouse = ((HasInputDevices) driver).getMouse();
+                Coordinates coords = ((Locatable) page.getContextMenu().advanced().getItemsElements().get(1)).getCoordinates();
+                mouse.mouseDown(coords);
+                mouse.mouseUp(coords);
             }
         });
     }
 
-    @Test
-    public void testOngrouphide() {
+    @Test(groups = "smoke")
+    @CoversAttributes("onshow")
+    public void testOnshow() {
         updateShowAction();
-        testFireEvent(contextMenuAttributes, ContextMenuAttributes.ongrouphide, new Action() {
-            @Override
-            public void perform() {
-                page.getContextMenu().advanced().show(page.getTargetPanel1());
-                new Actions(driver).moveToElement(page.getContextMenu().advanced().getItemsElements().get(2)).build().perform();
-                waitGui().until().element(page.getGroupList()).is().visible();
-                new Actions(driver).click(page.getContextMenu().advanced().getItemsElements().get(1)).build().perform();
-                waitGui().until().element(page.getGroupList()).is().not().visible();
-            }
-        });
+        testFireEvent(contextMenuAttributes, ContextMenuAttributes.onshow, new Actions(driver).click(page.getTargetPanel1())
+            .build());
     }
 
     @Test
+    @CoversAttributes("popupWidth")
+    @Templates(value = "plain")
+    public void testPopupWidth() {
+        updateShowAction();
+        String minWidth = "333";
+        contextMenuAttributes.set(ContextMenuAttributes.popupWidth, minWidth);
+        page.getContextMenu().advanced().show(page.getTargetPanel1());
+        String style = page.getContextMenuContent().getCssValue("min-width");
+        assertEquals(style, minWidth + "px");
+    }
+
+    @Test
+    @CoversAttributes("rendered")
+    @Templates("plain")
+    public void testRendered() {
+        updateShowAction();
+        contextMenuAttributes.set(ContextMenuAttributes.rendered, Boolean.FALSE);
+        try {
+            page.getContextMenu().advanced().show(page.getTargetPanel1());
+            fail("The context menu should not be invoked when rendered == false!");
+        } catch (TimeoutException ex) {
+            // OK
+        }
+    }
+
+    @Test
+    @CoversAttributes("showDelay")
     @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
     @Templates("plain")
     public void testShowDelay() {
@@ -465,6 +426,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("showEvent")
     public void testShowEvent() {
         contextMenuAttributes.set(ContextMenuAttributes.showEvent, "mouseover");
         page.getContextMenu().advanced().setShowEvent(Event.MOUSEOVER);
@@ -476,11 +438,81 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("style")
+    @Templates("plain")
+    public void testStyle() {
+        updateShowAction();
+        String color = "yellow";
+        String styleVal = "background-color: " + color + ";";
+        contextMenuAttributes.set(ContextMenuAttributes.style, styleVal);
+        page.getContextMenu().advanced().show(page.getTargetPanel1());
+        String backgroundColor = page.getContextMenuRoot().getCssValue("background-color");
+        // webdriver retrieves the color in rgba format
+        assertEquals(ContextMenuSimplePage.trimTheRGBAColor(backgroundColor), "rgba(255,255,0,1)",
+            "The style was not applied correctly!");
+    }
+
+    @Test
+    @CoversAttributes("styleClass")
+    @Templates("plain")
+    public void testStyleClass() {
+        updateShowAction();
+        String styleClassVal = "test-style-class";
+        contextMenuAttributes.set(ContextMenuAttributes.styleClass, styleClassVal);
+        String styleClass = page.getContextMenuRoot().getAttribute("class");
+        assertTrue(styleClass.contains(styleClassVal));
+    }
+
+    @Test
+    @CoversAttributes("target")
+    public void testTarget() {
+        updateShowAction();
+        // contextMenu element is present always. Check if is displayed
+        contextMenuAttributes.set(ContextMenuAttributes.target, "targetPanel2");
+        assertFalse(page.getContextMenuContent().isDisplayed());
+        page.getContextMenu().advanced().show(page.getTargetPanel2());
+
+        contextMenuAttributes.set(ContextMenuAttributes.target, "targetPanel1");
+        assertFalse(page.getContextMenuContent().isDisplayed());
+        page.getContextMenu().advanced().show(page.getTargetPanel1());
+    }
+
+    @Test
+    @CoversAttributes("targetSelector")
     public void testTargetSelector() {
         updateShowAction();
         contextMenuAttributes.set(ContextMenuAttributes.targetSelector, "div[id*=targetPanel]");
 
         page.getContextMenu().advanced().show(page.getTargetPanel1());
         page.getContextMenu().advanced().hide();
+    }
+
+    @Test
+    @CoversAttributes("title")
+    @Templates("plain")
+    public void testTitle() {
+        updateShowAction();
+        String titleVal = "test title";
+        contextMenuAttributes.set(ContextMenuAttributes.title, titleVal);
+        assertEquals(page.getContextMenuRoot().getAttribute("title"), titleVal);
+    }
+
+    @Test
+    @CoversAttributes("verticalOffset")
+    @Templates("plain")
+    public void testVerticalOffset() {
+        updateShowAction();
+        testVerticalOffset(new ShowElementAndReturnAction() {
+            @Override
+            public WebElement perform() {
+                page.getContextMenu().advanced().show(page.getTargetPanel1());
+                return page.getContextMenu().advanced().getMenuPopup();
+            }
+        });
+    }
+
+    private void updateShowAction() {
+        contextMenuAttributes.set(ContextMenuAttributes.showEvent, "click");
+        page.getContextMenu().advanced().setShowEvent(Event.CLICK);
     }
 }

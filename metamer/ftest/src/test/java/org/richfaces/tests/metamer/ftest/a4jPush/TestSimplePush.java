@@ -36,6 +36,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.bean.a4j.A4JPushBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.Lists;
@@ -61,6 +62,7 @@ public class TestSimplePush extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "address", "ondataavailable" })
     public void testPushComponentExists() {
         List<String> timeStampsString = Lists.newArrayList();
         String previousTimeStampText;

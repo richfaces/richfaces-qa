@@ -28,6 +28,7 @@ import java.util.Set;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebDriver;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.annotations.Test;
@@ -119,6 +120,7 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
     }
 
     @Test
+    @CoversAttributes("enabledInInput")
     public void enabledInInput() {
         // true
         hotkey1.invoke(firstInput.advanced().getInputElement());
@@ -131,6 +133,7 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
     }
 
     @Test
+    @CoversAttributes("key")
     @UseWithField(field = "key", valuesFrom = FROM_ENUM, value = "")
     public void testKey() {
         firstHotkeyAttributes.set(HotKeyAttributes.key, key.keysString);
@@ -141,6 +144,7 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
     }
 
     @Test
+    @CoversAttributes({ "onkeydown", "onkeyup" })
     public void testOnkeydownOnkeyup() {
         // these events are already binded, they add message to a4j:log on the page
         hotkey1.invoke();
@@ -150,16 +154,19 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
     }
 
     @Test
+    @CoversAttributes("preventDefault")
     public void testPreventDefaultFalse() {
         checkPreventDefault(false);
     }
 
     @Test
+    @CoversAttributes("preventDefault")
     public void testPreventDefaultTrue() {
         checkPreventDefault(true);
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         firstHotkeyAttributes.set(HotKeyAttributes.rendered, false);
@@ -168,6 +175,7 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
     }
 
     @Test
+    @CoversAttributes("selector")
     public void testSelector() {
         firstHotkeyAttributes.set(HotKeyAttributes.selector, "input.first-input");
         hotkey1.setSelector("input.first-input");

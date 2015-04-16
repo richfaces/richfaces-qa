@@ -28,6 +28,8 @@ import java.net.URL;
 
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.Test;
 
 /**
@@ -42,6 +44,7 @@ public class TestInstantAttributes extends AbstractStatusTest {
     }
 
     @Test(groups = { "Future" })
+    @CoversAttributes("onerror")
     @IssueTracking({ "https://issues.jboss.org/browse/RF-9118",
         "http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-1024" })
     public void testOnError() {
@@ -56,7 +59,8 @@ public class TestInstantAttributes extends AbstractStatusTest {
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RFPL-1516")
+    @CoversAttributes("onstart")
+    @RegressionTest("https://issues.jboss.org/browse/RFPL-1516")
     public void testOnStart() {
         for (int i = 0; i < 2; i++) {
             testFireEvent(getStatusAttributes(), StatusAttributes.onstart, new Action() {
@@ -69,6 +73,7 @@ public class TestInstantAttributes extends AbstractStatusTest {
     }
 
     @Test
+    @CoversAttributes("onstop")
     public void testOnStop() {
         for (int i = 0; i < 2; i++) {
             testFireEvent(getStatusAttributes(), StatusAttributes.onstop, new Action() {
@@ -81,6 +86,7 @@ public class TestInstantAttributes extends AbstractStatusTest {
     }
 
     @Test
+    @CoversAttributes("onsuccess")
     public void testOnSuccess() {
         for (int i = 0; i < 2; i++) {
             testFireEvent(getStatusAttributes(), StatusAttributes.onsuccess, new Action() {

@@ -30,6 +30,7 @@ import java.util.List;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -53,6 +54,7 @@ public class TestMenuSeparator extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         assertEquals(separators.size(), 2, "There should be two separators on the page -- after 'Open Recent' and after 'Close'.");

@@ -28,8 +28,8 @@ import java.net.URL;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for page /faces/components/a4jMediaOutput/elementLink.xhtml
@@ -38,7 +38,7 @@ import org.testng.annotations.Test;
  */
 public class TestMediaOutputElementLink extends AbstractMediaOutputTest {
 
-    @FindBy(css="*#mediaOutputMarked")
+    @FindBy(css = "*#mediaOutputMarked")
     private WebElement markedText;
 
     @Override
@@ -47,9 +47,9 @@ public class TestMediaOutputElementLink extends AbstractMediaOutputTest {
     }
 
     @Test
+    @CoversAttributes({ "element", "mimeType", "rel", "type", "uriAttribute" })
     public void init() {
         assertEquals(markedText.getCssValue("color"), "rgba(255, 0, 0, 1)", "The marked text should be red.");
     }
-
 
 }

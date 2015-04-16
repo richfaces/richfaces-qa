@@ -30,6 +30,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -49,6 +50,7 @@ public class TestQueueAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("status")
     @RegressionTest("https://issues.jboss.org/browse/RF-13203")
     public void testStatus() {
         attributes.set(QueueAttributes.requestDelay, 0);

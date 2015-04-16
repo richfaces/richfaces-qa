@@ -35,6 +35,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -58,13 +59,32 @@ public class TestEditorWithTyping extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richEditor/anotherSimple.xhtml");
     }
 
+    /**
+     * Method for retrieve text from editor. Editor lives within iFrame, so there are need some additional steps to reach
+     * element containing editor text
+     *
+     * @return
+     */
+    private String getTextFromEditor() {
+        try {
+            // driver.switchTo().frame(page.editorFrame);
+            driver.switchTo().frame(0);// must be this way
+            WebElement activeArea = driver.findElement(By.tagName("body"));
+            return activeArea.getText();
+        } finally {
+            driver.switchTo().defaultContent();
+        }
+    }
+
     @Test(groups = "smoke")
+    @CoversAttributes("immediate")
     public void testImmediate() {
         editorAttributes.set(EditorAttributes.immediate, Boolean.TRUE);
         verifyValueChangeListener(page.getHButton(), page.getValueChangeListenerAfterImmediate());
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("ondirty")
     public void testOnDirty() {
         String testedValue = "dirty";
         editorAttributes.set(EditorAttributes.ondirty, "metamerEvents += \"" + testedValue + " \"");
@@ -82,6 +102,7 @@ public class TestEditorWithTyping extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("value")
     @Templates("plain")
     public void testValue() {
         // write some value in editor and submit by normal way
@@ -95,30 +116,15 @@ public class TestEditorWithTyping extends AbstractWebDriverTest {
     }
 
     @Test
-    public void testValueChangeListenerWithHButton() {
-        verifyValueChangeListener(page.getHButton(), page.getValueChangeListener());
-    }
-
-    @Test
+    @CoversAttributes("valueChangeListener")
     public void testValueChangeListenerWithA4jButton() {
         verifyValueChangeListener(page.getA4jButton(), page.getValueChangeListener());
     }
 
-    /**
-     * Method for retrieve text from editor. Editor lives within iFrame, so there are need some additional steps to reach
-     * element containing editor text
-     *
-     * @return
-     */
-    private String getTextFromEditor() {
-        try {
-            // driver.switchTo().frame(page.editorFrame);
-            driver.switchTo().frame(0);// must be this way
-            WebElement activeArea = driver.findElement(By.tagName("body"));
-            return activeArea.getText();
-        } finally {
-            driver.switchTo().defaultContent();
-        }
+    @Test
+    @CoversAttributes("valueChangeListener")
+    public void testValueChangeListenerWithHButton() {
+        verifyValueChangeListener(page.getHButton(), page.getValueChangeListener());
     }
 
     /**

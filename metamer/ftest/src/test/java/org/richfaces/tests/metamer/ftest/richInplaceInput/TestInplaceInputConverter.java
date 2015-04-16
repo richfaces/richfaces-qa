@@ -25,6 +25,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.inplaceInput.RichFacesInplaceInput;
 import org.richfaces.tests.metamer.bean.ConverterBean;
 import org.richfaces.tests.metamer.ftest.abstractions.converter.AbstractConverterTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.Test;
 
 /**
@@ -57,11 +58,13 @@ public class TestInplaceInputConverter extends AbstractConverterTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("converter")
     public void testConverter() {
         checkConverter();
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("converterMessage")
     public void testConverterMessage() {
         checkConverterMessage();
     }

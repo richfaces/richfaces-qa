@@ -42,6 +42,7 @@ import javax.faces.event.PhaseId;
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -53,61 +54,21 @@ import org.testng.annotations.Test;
  */
 public class TestPanelMenuItemMode extends AbstractWebDriverTest {
 
-    private final Attributes<PanelMenuItemAttributes> panelMenuItemAttributes = getAttributes();
-
-    @Page
-    private PanelMenuItemPage page;
+    @UseForAllTests(valuesFrom = FROM_FIELD, value = "booleans")
+    private Boolean bypassUpdates;
 
     @UseForAllTests(valuesFrom = FROM_FIELD, value = "booleans")
     private Boolean immediate;
-    @UseForAllTests(valuesFrom = FROM_FIELD, value = "booleans")
-    private Boolean bypassUpdates;
-    @UseForAllTests(valuesFrom = FROM_ENUM, value = "")
-    private Mode mode;
     @UseForAllTests(valuesFrom = FROM_FIELD, value = "listeners")
     private String listener;
 
-    private final String[] listeners = new String[]{ "phases", "action invoked", "action listener invoked", "executeChecker",
+    private final String[] listeners = new String[] { "phases", "action invoked", "action listener invoked", "executeChecker",
         "item changed" };
-
-    @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richPanelMenuItem/simple.xhtml");
-    }
-
-    @Test
-    public void testMode() {
-        panelMenuItemAttributes.set(PanelMenuItemAttributes.immediate, immediate);
-        panelMenuItemAttributes.set(PanelMenuItemAttributes.bypassUpdates, bypassUpdates);
-        panelMenuItemAttributes.set(PanelMenuItemAttributes.mode, mode);
-
-        panelMenuItemAttributes.set(PanelMenuItemAttributes.execute, "@this executeChecker");
-
-        switch (mode) {
-            case ajax:
-                guardAjax(page.getItem()).select();
-                break;
-            case server:
-                guardHttp(page.getItem()).select();
-                break;
-            case client:
-                page.getItem().select();
-                break;
-        }
-
-        if (mode != Mode.client) {
-            if ("phases".equals(listener)) {
-                page.assertPhases(getExpectedPhases());
-            } else {
-                PhaseId listenerInvocationPhase = getListenerInvocationPhase();
-                if (listenerInvocationPhase == null) {
-                    page.assertNoListener(listener);
-                } else {
-                    page.assertListener(listenerInvocationPhase, listener);
-                }
-            }
-        }
-    }
+    @UseForAllTests(valuesFrom = FROM_ENUM, value = "")
+    private Mode mode;
+    @Page
+    private PanelMenuItemPage page;
+    private final Attributes<PanelMenuItemAttributes> panelMenuItemAttributes = getAttributes();
 
     private PhaseId[] getExpectedPhases() {
         LinkedList<PhaseId> list = new LinkedList<PhaseId>();
@@ -143,5 +104,45 @@ public class TestPanelMenuItemMode extends AbstractWebDriverTest {
         }
 
         return phase;
+    }
+
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richPanelMenuItem/simple.xhtml");
+    }
+
+    @Test
+    @CoversAttributes({ "bypassUpdates", "execute", "immediate", "mode" })
+    public void testMode() {
+        panelMenuItemAttributes.set(PanelMenuItemAttributes.immediate, immediate);
+        panelMenuItemAttributes.set(PanelMenuItemAttributes.bypassUpdates, bypassUpdates);
+        panelMenuItemAttributes.set(PanelMenuItemAttributes.mode, mode);
+
+        panelMenuItemAttributes.set(PanelMenuItemAttributes.execute, "@this executeChecker");
+
+        switch (mode) {
+            case ajax:
+                guardAjax(page.getItem()).select();
+                break;
+            case server:
+                guardHttp(page.getItem()).select();
+                break;
+            case client:
+                page.getItem().select();
+                break;
+        }
+
+        if (mode != Mode.client) {
+            if ("phases".equals(listener)) {
+                page.assertPhases(getExpectedPhases());
+            } else {
+                PhaseId listenerInvocationPhase = getListenerInvocationPhase();
+                if (listenerInvocationPhase == null) {
+                    page.assertNoListener(listener);
+                } else {
+                    page.assertListener(listenerInvocationPhase, listener);
+                }
+            }
+        }
     }
 }

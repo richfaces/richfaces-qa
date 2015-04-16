@@ -22,9 +22,10 @@
 package org.richfaces.tests.metamer.ftest.richDataGrid;
 
 import javax.xml.bind.JAXBException;
+
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.richfaces.fragment.dataScroller.DataScroller;
 import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
@@ -39,33 +40,36 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22407 $
  */
-@Templates(exclude = {"a4jRepeat", "hDataTable", "richDataTable", "uiRepeat"})
+@Templates(exclude = { "a4jRepeat", "hDataTable", "richDataTable", "uiRepeat" })
 public class TestDataGridScrollerOutsideTable extends AbstractDataGridScrollerTest {
 
     @FindByJQuery("span.rf-ds[id$=scroller1]")
     private RichFacesDataScroller dataScroller1;
+
+    public TestDataGridScrollerOutsideTable() throws JAXBException {
+    }
 
     @Override
     public RichFacesDataScroller getDataScroller() {
         return dataScroller1;
     }
 
-    public TestDataGridScrollerOutsideTable() throws JAXBException {
-    }
-
     @Test
+    @CoversAttributes("columns")
     @UseWithField(field = "columns", valuesFrom = ValuesFrom.FROM_FIELD, value = "COUNTS1")
     public void testColumnsAttribute() {
         super.testColumnsAttribute();
     }
 
     @Test
+    @CoversAttributes("elements")
     @UseWithField(field = "elements", valuesFrom = ValuesFrom.FROM_FIELD, value = "COUNTS2")
     public void testElementsAttribute() {
         super.testElementsAttribute();
     }
 
     @Test
+    @CoversAttributes("first")
     @UseWithField(field = "first", valuesFrom = ValuesFrom.FROM_FIELD, value = "COUNTS2")
     public void testFirstAttributeDoesntInfluentScroller() {
         super.testFirstAttributeDoesntInfluentScroller();

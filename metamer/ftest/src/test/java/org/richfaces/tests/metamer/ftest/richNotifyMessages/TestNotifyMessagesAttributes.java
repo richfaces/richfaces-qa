@@ -30,6 +30,7 @@ import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richNotify.TestNotifyAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -49,23 +50,27 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("ajaxRendered")
     public void testAjaxRendered() {
         checkAjaxRendered();
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12923")
     @Test(groups = "Future")
+    @CoversAttributes("dir")
     @Templates("plain")
     public void testDir() {
         checkDir();
     }
 
     @Test
+    @CoversAttributes("escape")
     public void testEscape() {
         checkEscape();
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("FOR")
     @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
     public void testFor() {
@@ -73,6 +78,7 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("FOR")
     @IssueTracking("https://issues.jboss.org/browse/RF-11298")
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
@@ -81,12 +87,14 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("globalOnly")
     @Templates(exclude = { "richAccordion", "richCollapsiblePanel" })
     public void testGlobalOnly() {
         checkGlobalOnly(2);//2 messages
     }
 
     @Test
+    @CoversAttributes("globalOnly")
     @Templates(value = { "richAccordion", "richCollapsiblePanel" })
     @RegressionTest("https://issues.jboss.org/browse/RF-11415")
     public void testGlobalOnlyInAccordionCollapsiblePanel() {
@@ -95,6 +103,7 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12923")
     @Test(groups = "Future")
+    @CoversAttributes("lang")
     @Templates("plain")
     public void testLang() {
         checkLang();
@@ -108,11 +117,13 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12925")
     @Test(groups = "Future")
+    @CoversAttributes({ "showDetail", "showSummary" })
     public void testNoShowDetailNoShowSummary() {
         checkNoShowDetailNoShowSummary();
     }
 
     @Test
+    @CoversAttributes("nonblocking")
     public void testNonblocking() {
         notifyMessagesAttributes.set(NotifyMessagesAttributes.nonblocking, Boolean.TRUE);
         notifyMessagesAttributes.set(NotifyMessagesAttributes.nonblockingOpacity, 0);
@@ -124,6 +135,7 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
     }
 
     @Test
+    @CoversAttributes("nonblockingOpacity")
     public void testNonblockingOpacity() {
         notifyMessagesAttributes.set(NotifyMessagesAttributes.nonblocking, Boolean.TRUE);
         notifyMessagesAttributes.set(NotifyMessagesAttributes.nonblockingOpacity, 0.5);
@@ -135,72 +147,84 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
     }
 
     @Test
+    @CoversAttributes("onclick")
     @Templates(value = "plain")
-    public void testOnClick() {
-        checkOnClick();
+    public void testOnclick() {
+        checkOnclick();
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates(value = "plain")
-    public void testOnDblClick() {
-        checkOnDblClick();
+    public void testOndblclick() {
+        checkOndblclick();
     }
 
     @Test
+    @CoversAttributes("onkeydown")
     @Templates(value = "plain")
-    public void testOnKeyDown() {
-        checkOnKeyDown();
+    public void testOnkeydown() {
+        checkOnkeydown();
     }
 
     @Test
+    @CoversAttributes("onkeypress")
     @Templates(value = "plain")
-    public void testOnKeyPress() {
-        checkOnKeyPress();
+    public void testOnkeypress() {
+        checkOnkeypress();
     }
 
     @Test
+    @CoversAttributes("onkeyup")
     @Templates(value = "plain")
-    public void testOnKeyUp() {
-        checkOnKeyUp();
+    public void testOnkeyup() {
+        checkOnkeyup();
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
-    public void testOnMouseDown() {
-        checkOnMouseDown();
+    public void testOnmousedown() {
+        checkOnmousedown();
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates(value = "plain")
-    public void testOnMouseMove() {
-        checkOnMouseMove();
+    public void testOnmousemove() {
+        checkOnmousemove();
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates(value = "plain")
-    public void testOnMouseOut() {
-        checkOnMouseOut();
+    public void testOnmouseout() {
+        checkOnmouseout();
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
-    public void testOnMouseOver() {
-        checkOnMouseOver();
+    public void testOnmouseover() {
+        checkOnmouseover();
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates(value = "plain")
-    public void testOnMouseUp() {
-        checkOnMouseUp();
+    public void testOnmouseup() {
+        checkOnmouseup();
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         checkRendered();
     }
 
     @Test
+    @CoversAttributes("showCloseButton")
     public void testShowCloseButton() {
         notifyMessagesAttributes.set(NotifyMessagesAttributes.showCloseButton, Boolean.TRUE);
         generateValidationMessagesWithWait();
@@ -219,11 +243,13 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
     }
 
     @Test
+    @CoversAttributes("showDetail")
     public void testShowDetail() {
         checkShowDetail();
     }
 
     @Test
+    @CoversAttributes("showShadow")
     @RegressionTest("https://issues.jboss.org/browse/RF-13792")
     public void testShowShadow() {
         notifyMessagesAttributes.set(NotifyMessagesAttributes.showShadow, Boolean.TRUE);
@@ -236,11 +262,13 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
     }
 
     @Test
+    @CoversAttributes("showSummary")
     public void testShowSummary() {
         checkShowSummary();
     }
 
     @Test
+    @CoversAttributes("stack")
     public void testStack() {
         String[] stacks = { "topLeftStack", "bottomRightStack", "notRenderedStack" };
         //default position is top right
@@ -263,6 +291,7 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
     }
 
     @Test
+    @CoversAttributes("stayTime")
     public void testStayTime() {
         notifyMessagesAttributes.set(NotifyMessagesAttributes.stayTime, 1000);
         notifyMessagesAttributes.set(NotifyMessagesAttributes.sticky, Boolean.FALSE);
@@ -273,6 +302,7 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
     }
 
     @Test
+    @CoversAttributes("sticky")
     public void testSticky() {
         notifyMessagesAttributes.set(NotifyMessagesAttributes.stayTime, 1000);
         notifyMessagesAttributes.set(NotifyMessagesAttributes.sticky, Boolean.TRUE);
@@ -284,11 +314,13 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12923")
     @Test(groups = "Future")
+    @CoversAttributes("style")
     public void testStyle() {
         checkStyle();
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates(value = "plain")
     public void testStyleClass() {
         checkStyleClass();
@@ -296,6 +328,7 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12923")
     @Test(groups = "Future")
+    @CoversAttributes("title")
     @Templates("plain")
     public void testTitle() {
         checkTitle();

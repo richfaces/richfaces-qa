@@ -70,14 +70,10 @@ public class TestDynamicContentSize extends AbstractWebDriverTest {
             "The popupPanel width and height should be autosized when content gets bigger!");
     }
 
-    public static class TestedPopupPanel extends RichFacesPopupPanel<NullFragment, NullFragment, Body> {
-    }
-
     public static class Body {
 
         @FindBy(css = "input[type=submit]")
         private WebElement addRowButton;
-
         @FindBy
         private TableInPopup table;
 
@@ -87,10 +83,13 @@ public class TestDynamicContentSize extends AbstractWebDriverTest {
     }
 
     public static class TableInPopup extends RichFacesExtendedDataTable<NullFragment, TableRow, NullFragment> {
-
     }
 
     public static class TableRow {
+
+    }
+
+    public static class TestedPopupPanel extends RichFacesPopupPanel<NullFragment, NullFragment, Body> {
     }
 
 }

@@ -48,6 +48,7 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -69,16 +70,17 @@ public class TestTab extends AbstractWebDriverTest {
     @Page
     private TabSimplePage page;
 
+    private boolean belongsClass(WebElement elem, String className) {
+        return elem.getAttribute("class").contains(className);
+    }
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richTab/simple.xhtml");
     }
 
-    private boolean belongsClass(WebElement elem, String className) {
-        return elem.getAttribute("class").contains(className);
-    }
-
     @Test
+    @CoversAttributes("actionListener")
     @RegressionTest("https://issues.jboss.org/browse/RF-11427")
     @Templates(exclude = "uiRepeat")
     public void testActionAndActionListener() {
@@ -97,6 +99,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
+    @CoversAttributes("actionListener")
     @Templates(value = "uiRepeat")
     @IssueTracking("https://issues.jboss.org/browse/RF-13748")
     public void testActionAndActionListenerInUiRepeat() {
@@ -104,23 +107,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
-    public void testInit() {
-        assertVisible(page.getTabPanel().advanced().getRootElement(), "Tab panel is not present on the page.");
-
-        assertVisible(page.getTabPanel().advanced().getActiveHeaderElement(), "Header of tab1 should be active.");
-        assertVisible(page.getDisabledHeaders().get(0), "Header of tab4 should be disabled.");
-
-        String text = page.getTabPanel().advanced().getActiveHeaderElement().getText();
-        assertEquals(text, "tab1 header");
-        text = page.getInactiveHeaders().get(0).getText();
-        assertEquals(text, "tab2 header");
-        text = page.getDisabledHeaders().get(0).getText();
-        assertEquals(text, "tab4 header");
-        text = page.getItemContents().get(0).getText();
-        assertEquals(text, "content of tab 1");
-    }
-
-    @Test
+    @CoversAttributes("contentClass")
     @Templates(value = "plain")
     public void testContentClass() {
         tabAttributes.set(TabAttributes.contentClass, "metamer-ftest-class");
@@ -128,12 +115,14 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("dir")
     @Templates(value = "plain")
     public void testDir() {
         testDir(page.getFirstTabContentParentElement());
     }
 
     @Test
+    @CoversAttributes("disabled")
     @Templates(value = "plain")
     public void testDisabled() {
         // enable the first tab, disabled is by default only 4th tab
@@ -161,6 +150,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("header")
     @Templates(value = "plain")
     public void testHeader() {
         tabAttributes.set(TabAttributes.header, "new header");
@@ -172,6 +162,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("headerActiveClass")
     @Templates(value = "plain")
     public void testHeaderActiveClass() {
         tabAttributes.set(TabAttributes.headerActiveClass, "metamer-ftest-class");
@@ -189,6 +180,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("headerClass")
     @IssueTracking("https://issues.jboss.org/browse/RF-11549")
     @Templates(value = "plain")
     public void testHeaderClass() {
@@ -197,6 +189,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("headerDisabledClass")
     @Templates(value = "plain")
     public void testHeaderDisabledClass() {
         tabAttributes.set(TabAttributes.headerDisabledClass, "metamer-ftest-class");
@@ -208,6 +201,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("headerInactiveClass")
     @Templates(value = "plain")
     public void testHeaderInactiveClass() {
         tabAttributes.set(TabAttributes.headerInactiveClass, "metamer-ftest-class");
@@ -220,18 +214,38 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("headerStyle")
     @Templates(value = "plain")
     public void testHeaderStyle() {
         testStyle(page.getTabPanel().advanced().getActiveHeaderElement(), BasicAttributes.headerStyle);
     }
 
     @Test
+    public void testInit() {
+        assertVisible(page.getTabPanel().advanced().getRootElement(), "Tab panel is not present on the page.");
+
+        assertVisible(page.getTabPanel().advanced().getActiveHeaderElement(), "Header of tab1 should be active.");
+        assertVisible(page.getDisabledHeaders().get(0), "Header of tab4 should be disabled.");
+
+        String text = page.getTabPanel().advanced().getActiveHeaderElement().getText();
+        assertEquals(text, "tab1 header");
+        text = page.getInactiveHeaders().get(0).getText();
+        assertEquals(text, "tab2 header");
+        text = page.getDisabledHeaders().get(0).getText();
+        assertEquals(text, "tab4 header");
+        text = page.getItemContents().get(0).getText();
+        assertEquals(text, "content of tab 1");
+    }
+
+    @Test
+    @CoversAttributes("lang")
     @Templates(value = "plain")
     public void testLang() {
         testLang(page.getFirstTabContentParentElement());
     }
 
     @Test
+    @CoversAttributes("name")
     @IssueTracking("https://issues.jboss.org/browse/RF-10488")
     public void testName() {
         tabAttributes.set(TabAttributes.name, "metamer");
@@ -244,6 +258,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
         Action action = new Actions(driver).click(page.getItemContents().get(0)).build();
@@ -251,6 +266,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates(value = "plain")
     public void testOndblclick() {
         Action action = new Actions(driver).doubleClick(page.getItemContents().get(0)).build();
@@ -258,6 +274,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("onenter")
     @IssueTracking("https://issues.jboss.org/browse/RF-9537 https://issues.jboss.org/browse/RF-10488")
     public void testOnenter() {
         testFireEvent(tabAttributes, TabAttributes.onenter, new Action() {
@@ -270,6 +287,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onheaderclick")
     @Templates(value = "plain")
     public void testOnheaderclick() {
         Action action = new Actions(driver).click(page.getTabPanel().advanced().getActiveHeaderElement()).build();
@@ -277,6 +295,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onheaderdblclick")
     @Templates(value = "plain")
     public void testOnheaderdblclick() {
         Action action = new Actions(driver).doubleClick(page.getTabPanel().advanced().getActiveHeaderElement()).build();
@@ -284,6 +303,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onheadermousedown")
     @Templates(value = "plain")
     public void testOnheadermousedown() {
         Action action = new Actions(driver).clickAndHold(page.getTabPanel().advanced().getActiveHeaderElement()).build();
@@ -292,6 +312,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onheadermousemove")
     @Templates(value = "plain")
     public void testOnheadermousemove() {
         Action action = new Actions(driver).moveToElement(page.getInactiveHeaders().get(2))
@@ -300,6 +321,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onheadermouseup")
     @Templates(value = "plain")
     public void testOnheadermouseup() {
         Action action = new Actions(driver).clickAndHold(page.getItemContents().get(0))
@@ -308,6 +330,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onleave")
     @IssueTracking("https://issues.jboss.org/browse/RF-9537")
     public void testOnleave() {
         Action action = new Actions(driver).click(page.getInactiveHeaders().get(2)).build();
@@ -315,6 +338,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
         Action action = new Actions(driver).clickAndHold(page.getItemContents().get(0)).build();
@@ -323,6 +347,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates(value = "plain")
     public void testOnmousemove() {
         Action action = new Actions(driver).moveToElement(page.getInactiveHeaders().get(2))
@@ -331,6 +356,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates(value = "plain")
     public void testOnmouseout() {
         Action action = new Actions(driver).moveToElement(page.getItemContents().get(0))
@@ -339,6 +365,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
     public void testOnmouseover() {
         Action action = new Actions(driver).moveToElement(page.getItemContents().get(0)).build();
@@ -346,6 +373,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates(value = "plain")
     public void testOnmouseup() {
         new Actions(driver).clickAndHold(page.getItemContents().get(0)).perform();
@@ -354,6 +382,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         tabAttributes.set(TabAttributes.rendered, Boolean.FALSE);
@@ -361,30 +390,21 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         testStyle(page.getFirstTabContentParentElement());
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(page.getFirstTabContentParentElement());
     }
 
-    @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-10488")
-    public void testSwitchTypeNull() {
-        guardAjax(page.getInactiveHeaders().get(1)).click();
-        waitGui(driver).withMessage("Tab 2 is not displayed.").until().element(page.getItemContents().get(1)).is()
-            .visible();
-
-        guardAjax(page.getInactiveHeaders().get(0)).click();
-        waitGui(driver).withMessage("Tab 1 is not displayed.").until().element(page.getItemContents().get(0)).is()
-            .visible();
-    }
-
     @Test(groups = "smoke")
+    @CoversAttributes("switchType")
     @Templates(value = "plain")
     public void testSwitchTypeAjax() {
         tabAttributes.set(TabAttributes.switchType, "ajax");
@@ -392,6 +412,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("switchType")
     public void testSwitchTypeClient() {
         tabAttributes.set(TabAttributes.switchType, "client");
 
@@ -405,6 +426,20 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("switchType")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10488")
+    public void testSwitchTypeNull() {
+        guardAjax(page.getInactiveHeaders().get(1)).click();
+        waitGui(driver).withMessage("Tab 2 is not displayed.").until().element(page.getItemContents().get(1)).is()
+            .visible();
+
+        guardAjax(page.getInactiveHeaders().get(0)).click();
+        waitGui(driver).withMessage("Tab 1 is not displayed.").until().element(page.getItemContents().get(0)).is()
+            .visible();
+    }
+
+    @Test
+    @CoversAttributes("switchType")
     public void testSwitchTypeServer() {
         tabAttributes.set(TabAttributes.switchType, "server");
 
@@ -418,6 +453,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
         testTitle(page.getFirstTabContentParentElement());

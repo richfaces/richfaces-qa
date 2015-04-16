@@ -36,6 +36,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -50,22 +51,23 @@ public class TestEditor extends AbstractWebDriverTest {
 
     private final Attributes<EditorAttributes> editorAttributes = getAttributes();
 
-    @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richEditor/simple.xhtml");
-    }
+    private final String editorTextAreaTag = "textarea";
 
     @Page
     private EditorSimplePage page;
-
-    private final String editorTextAreaTag = "textarea";
 
     private WebElement getEditorTextArea() {
         return driver.findElement(By.tagName(editorTextAreaTag));
     }
 
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richEditor/simple.xhtml");
+    }
+
     @Test
-    @Templates(value = "plain")
+    @CoversAttributes("height")
+    @Templates("plain")
     public void testHeight() {
         String height = "500px";
         editorAttributes.set(EditorAttributes.height, height);
@@ -74,14 +76,65 @@ public class TestEditor extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("lang")
     @Templates("plain")
-    public void testLanguage() {
+    public void testLang() {
         String language = "testLanguage";
         editorAttributes.set(EditorAttributes.lang, language);
-        assertEquals(getEditorTextArea().getAttribute("lang").toString(), language);
+        assertEquals(getEditorTextArea().getAttribute("lang"), language);
     }
 
     @Test
+    @CoversAttributes("onblur")
+    public void testOnBlur() {
+        testFireEvent(editorAttributes, EditorAttributes.onblur, new Action() {
+            @Override
+            public void perform() {
+                guardNoRequest(page.getEditor()).type("some text");
+                // click on some different component to lose focus
+                driver.findElement(By.xpath("//input[contains(@name, 'a4jButton')]")).click();
+            }
+        });
+    }
+
+    @Test
+    @CoversAttributes("onchange")
+    public void testOnChange() {
+        testFireEvent(editorAttributes, EditorAttributes.onchange, new Action() {
+            @Override
+            public void perform() {
+                guardNoRequest(page.getEditor()).type("some text");
+                // click on some different component to lose focus
+                driver.findElement(By.xpath("//input[contains(@name, 'a4jButton')]")).click();
+            }
+        });
+    }
+
+    @Test
+    @CoversAttributes("onfocus")
+    public void testOnFocus() {
+        testFireEvent(editorAttributes, EditorAttributes.onfocus, new Action() {
+            @Override
+            public void perform() {
+                guardNoRequest(page.getEditor()).type("some text");
+            }
+        });
+    }
+
+    @Test
+    @CoversAttributes("oninit")
+    public void testOnInit() {
+        testFireEvent(editorAttributes, EditorAttributes.oninit, new Action() {
+            @Override
+            public void perform() {
+                // should react immediately after rendering
+                page.fullPageRefresh();
+            }
+        });
+    }
+
+    @Test
+    @CoversAttributes("readonly")
     public void testReadonly() {
         // set readable only
         editorAttributes.set(EditorAttributes.readonly, Boolean.TRUE);
@@ -89,15 +142,16 @@ public class TestEditor extends AbstractWebDriverTest {
     }
 
     @Test
-    @Templates(value = "plain")
+    @CoversAttributes("rendered")
+    @Templates("plain")
     public void testRendered() {
         editorAttributes.set(EditorAttributes.rendered, Boolean.FALSE);
         assertNotPresent(page.getEditorFrame(), "Editor should not be rendered.");
     }
 
     @Test
+    @CoversAttributes("required")
     public void testRequired() {
-
         editorAttributes.set(EditorAttributes.required, Boolean.TRUE);
         page.getHButton().click();
         waitGui().until().element(page.getErrorMsg()).is().present();
@@ -109,6 +163,7 @@ public class TestEditor extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("requiredMessage")
     public void testRequiredMessage() {
         String testMessage1 = "Click hButton";
         String testMessage2 = "Click a4jButton";
@@ -125,24 +180,28 @@ public class TestEditor extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates("plain")
     public void testStyle() {
         testStyle(getEditorTextArea());
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates("plain")
     public void testStyleClass() {
         testStyleClass(getEditorTextArea());
     }
 
     @Test
+    @CoversAttributes("title")
     @Templates("plain")
     public void testTitle() {
         testTitle(getEditorTextArea());
     }
 
     @Test
+    @CoversAttributes("toolbar")
     public void testToolbar() {
 
         editorAttributes.set(toolbar, "basic");
@@ -158,56 +217,11 @@ public class TestEditor extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("width")
     @Templates(value = "plain")
     public void testWidth() {
-
         String STYLE_WIDTH = "400px";
         editorAttributes.set(EditorAttributes.width, STYLE_WIDTH);
         assertTrue(getEditorTextArea().getAttribute("style").contains("width: " + STYLE_WIDTH));
-    }
-
-    @Test
-    public void testOnBlur() {
-        testFireEvent(editorAttributes, EditorAttributes.onblur, new Action() {
-            @Override
-            public void perform() {
-                guardNoRequest(page.getEditor()).type("some text");
-                // click on some different component to lose focus
-                driver.findElement(By.xpath("//input[contains(@name, 'a4jButton')]")).click();
-            }
-        });
-    }
-
-    @Test
-    public void testOnChange() {
-        testFireEvent(editorAttributes, EditorAttributes.onchange, new Action() {
-            @Override
-            public void perform() {
-                guardNoRequest(page.getEditor()).type("some text");
-                // click on some different component to lose focus
-                driver.findElement(By.xpath("//input[contains(@name, 'a4jButton')]")).click();
-            }
-        });
-    }
-
-    @Test
-    public void testOnFocus() {
-        testFireEvent(editorAttributes, EditorAttributes.onfocus, new Action() {
-            @Override
-            public void perform() {
-                guardNoRequest(page.getEditor()).type("some text");
-            }
-        });
-    }
-
-    @Test
-    public void testOnInit() {
-        testFireEvent(editorAttributes, EditorAttributes.oninit, new Action() {
-            @Override
-            public void perform() {
-                // should react immediately after rendering
-                page.fullPageRefresh();
-            }
-        });
     }
 }

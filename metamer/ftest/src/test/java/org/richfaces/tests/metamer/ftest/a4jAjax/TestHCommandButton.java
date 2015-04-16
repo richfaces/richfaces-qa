@@ -29,6 +29,7 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -84,6 +85,7 @@ public class TestHCommandButton extends AbstractAjaxTest {
     }
 
     @Test
+    @CoversAttributes("disabled")
     public void testDisabled() {
         ajaxAttributes.set(AjaxAttributes.disabled, true);
 

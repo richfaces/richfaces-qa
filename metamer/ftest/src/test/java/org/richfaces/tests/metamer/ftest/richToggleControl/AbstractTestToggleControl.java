@@ -27,6 +27,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 
 /**
@@ -43,8 +44,14 @@ public abstract class AbstractTestToggleControl extends AbstractWebDriverTest {
     private ToggleControlPage page;
 
     private WebElement[] firstPanelBtns;
-
     private WebElement[] secondPanelBtns;
+
+    public WebElement[] getFirstPanelButtons() {
+        if (firstPanelBtns == null) {
+            firstPanelBtns = new WebElement[] { getPage().getTcPanel1Item1(), getPage().getTcPanel1Item2(), getPage().getTcPanel1Item3() };
+        }
+        return firstPanelBtns;
+    }
 
     /**
      * @return the page
@@ -53,41 +60,21 @@ public abstract class AbstractTestToggleControl extends AbstractWebDriverTest {
         return page;
     }
 
+    public WebElement[] getSecondPanelButtons() {
+        if (secondPanelBtns == null) {
+            secondPanelBtns = new WebElement[] { getPage().getTcPanel2Item1(), getPage().getTcPanel2Item2(), getPage().getTcPanel2Item3() };
+        }
+        return secondPanelBtns;
+    }
+
+    @CoversAttributes("event")
     public void testSwitchFirstPanel(WebElement[] items) {
         testSwitching(getFirstPanelButtons(), items);
     }
 
+    @CoversAttributes("event")
     public void testSwitchSecondPanel(WebElement[] items) {
         testSwitching(getSecondPanelButtons(), items);
-    }
-
-    public void testTargetItem(WebElement[] items) {
-        toggleControlAttributes.set(ToggleControlAttributes.targetItem, "item2");
-
-        Graphene.guardAjax(getPage().getTcPanel1Item3()).click();
-        Graphene.waitGui().until().element(items[2]).is().visible();
-        assertFalse(items[0].isDisplayed(), "Item 1 should not be visible.");
-        assertFalse(items[1].isDisplayed(), "Item 2 should not be visible.");
-
-        Graphene.guardAjax(getPage().getTcCustom()).click();
-        Graphene.waitGui().until().element(items[1]).is().visible();
-        assertFalse(items[0].isDisplayed(), "Item 1 should not be visible.");
-        assertFalse(items[2].isDisplayed(), "Item 3 should not be visible.");
-    }
-
-    public void testTargetPanel(WebElement[] items) {
-        toggleControlAttributes.set(ToggleControlAttributes.targetPanel, "panel2");
-
-        Graphene.guardAjax(getPage().getTcPanel2Item3()).click();
-        Graphene.waitGui().until().element(items[2]).is().visible();
-        assertFalse(items[0].isDisplayed(), "Item 1 should not be visible.");
-        assertFalse(items[1].isDisplayed(), "Item 2 should not be visible.");
-
-        Graphene.guardAjax(getPage().getTcCustom()).click();
-        // waitGui.failWith("Item 1 is not displayed.").until(elementVisible.locator(items[0]));
-        Graphene.waitGui().until().element(items[0]).is().visible();
-        assertFalse(items[1].isDisplayed(), "Item 2 should not be visible.");
-        assertFalse(items[2].isDisplayed(), "Item 3 should not be visible.");
     }
 
     private void testSwitching(WebElement[] buttons, WebElement[] items) {
@@ -107,17 +94,34 @@ public abstract class AbstractTestToggleControl extends AbstractWebDriverTest {
         assertFalse(items[2].isDisplayed(), "Item 3 should not be visible.");
     }
 
-    public WebElement[] getFirstPanelButtons() {
-        if (firstPanelBtns == null) {
-            firstPanelBtns = new WebElement[]{ getPage().getTcPanel1Item1(), getPage().getTcPanel1Item2(), getPage().getTcPanel1Item3() };
-        }
-        return firstPanelBtns;
+    @CoversAttributes("targetItem")
+    public void testTargetItem(WebElement[] items) {
+        toggleControlAttributes.set(ToggleControlAttributes.targetItem, "item2");
+
+        Graphene.guardAjax(getPage().getTcPanel1Item3()).click();
+        Graphene.waitGui().until().element(items[2]).is().visible();
+        assertFalse(items[0].isDisplayed(), "Item 1 should not be visible.");
+        assertFalse(items[1].isDisplayed(), "Item 2 should not be visible.");
+
+        Graphene.guardAjax(getPage().getTcCustom()).click();
+        Graphene.waitGui().until().element(items[1]).is().visible();
+        assertFalse(items[0].isDisplayed(), "Item 1 should not be visible.");
+        assertFalse(items[2].isDisplayed(), "Item 3 should not be visible.");
     }
 
-    public WebElement[] getSecondPanelButtons() {
-        if (secondPanelBtns == null) {
-            secondPanelBtns = new WebElement[]{ getPage().getTcPanel2Item1(), getPage().getTcPanel2Item2(), getPage().getTcPanel2Item3() };
-        }
-        return secondPanelBtns;
+    @CoversAttributes("targetPanel")
+    public void testTargetPanel(WebElement[] items) {
+        toggleControlAttributes.set(ToggleControlAttributes.targetPanel, "panel2");
+
+        Graphene.guardAjax(getPage().getTcPanel2Item3()).click();
+        Graphene.waitGui().until().element(items[2]).is().visible();
+        assertFalse(items[0].isDisplayed(), "Item 1 should not be visible.");
+        assertFalse(items[1].isDisplayed(), "Item 2 should not be visible.");
+
+        Graphene.guardAjax(getPage().getTcCustom()).click();
+        // waitGui.failWith("Item 1 is not displayed.").until(elementVisible.locator(items[0]));
+        Graphene.waitGui().until().element(items[0]).is().visible();
+        assertFalse(items[1].isDisplayed(), "Item 2 should not be visible.");
+        assertFalse(items[2].isDisplayed(), "Item 3 should not be visible.");
     }
 }

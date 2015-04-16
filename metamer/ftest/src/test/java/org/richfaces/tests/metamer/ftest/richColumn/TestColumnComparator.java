@@ -26,6 +26,7 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.ColumnGroupDT;
 import org.testng.annotations.Test;
 
@@ -44,6 +45,7 @@ public class TestColumnComparator extends AbstractColumnSortingTest {
     }
 
     @Test
+    @CoversAttributes("comparator")
     public void testSortingWithSortOrder() {
         checkSortingWithSortOrder();
     }

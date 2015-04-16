@@ -48,6 +48,7 @@ import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.tooltip.TextualRichFacesTooltip;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -62,15 +63,14 @@ import org.testng.annotations.Test;
  */
 public class TestTooltipAttributes extends AbstractWebDriverTest {
 
+    private final Integer[] delays = { 500, 1200, 1900 };
     private final Attributes<TooltipAttributes> tooltipAttributes = getAttributes();
+
+    private Integer delay;
+    private TooltipMode mode;
 
     @Page
     private TooltipPage page;
-
-    private TooltipMode mode;
-
-    private Integer delay;
-    private final Integer[] delays = { 500, 1200, 1900 };
 
     @Override
     public URL getTestUrl() {
@@ -107,6 +107,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("data")
     public void testData() {
         tooltipAttributes.set(TooltipAttributes.mode, TooltipMode.ajax);
         testData(new Action() {
@@ -118,12 +119,14 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("dir")
     @Templates(value = "plain")
     public void testDir() {
         testDir(tooltip().show().advanced().getTooltipElement());
     }
 
     @Test
+    @CoversAttributes("direction")
     @Templates("plain")
     @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "")
     public void testDirection() {
@@ -138,7 +141,51 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
         });
     }
 
+    @Test(groups = "smoke")
+    @CoversAttributes("followMouse")
+    @Templates(value = "plain")
+    public void testFollowMouse() {
+        tooltipAttributes.set(TooltipAttributes.followMouse, Boolean.FALSE);
+        showAndMoveTooltip(Boolean.FALSE);
+
+        tooltipAttributes.set(TooltipAttributes.followMouse, Boolean.TRUE);
+        showAndMoveTooltip(Boolean.TRUE);
+    }
+
+    @Test
+    @CoversAttributes("hideDelay")
+    @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
+    @Templates("plain")
+    public void testHideDelay() {
+        new MenuDelayTester().testHideDelay(driver.findElement(By.cssSelector("[id$='tooltip']")), delay, Event.MOUSEOUT, page.getPanel());
+    }
+
+    @Test
+    @CoversAttributes("hideEvent")
+    @Templates(value = "plain")
+    public void testHideEvent() {
+        for (Event event : new Event[] { Event.MOUSEOUT, Event.DBLCLICK }) {
+            tooltipAttributes.set(TooltipAttributes.hideEvent, event.toString());
+            tooltip().advanced().setHideEvent(event);
+            tooltip().show().hide();
+        }
+    }
+
+    @Test
+    @CoversAttributes("horizontalOffset")
+    @Templates(value = "plain")
+    public void testHorizontalOffset() {
+        tooltip().show().hide();// workaround: first the tooltip will show on the corner of the panel, then always in the middle
+        testHorizontalOffset(new ShowElementAndReturnAction() {
+            @Override
+            public WebElement perform() {
+                return tooltip().show().advanced().getTooltipElement();
+            }
+        });
+    }
+
     @Test(groups = "Future")
+    @CoversAttributes("jointPoint")
     @Templates("plain")
     @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "")
     @IssueTracking(value = "https://issues.jboss.org/browse/RF-13760")
@@ -155,52 +202,15 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
             }));
     }
 
-    @Test(groups = "smoke")
-    @Templates(value = "plain")
-    public void testFollowMouse() {
-        tooltipAttributes.set(TooltipAttributes.followMouse, Boolean.FALSE);
-        showAndMoveTooltip(Boolean.FALSE);
-
-        tooltipAttributes.set(TooltipAttributes.followMouse, Boolean.TRUE);
-        showAndMoveTooltip(Boolean.TRUE);
-    }
-
     @Test
-    @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
-    @Templates("plain")
-    public void testHideDelay() {
-        new MenuDelayTester().testHideDelay(driver.findElement(By.cssSelector("[id$='tooltip']")), delay, Event.MOUSEOUT, page.getPanel());
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testHideEvent() {
-        for (Event event : new Event[] { Event.MOUSEOUT, Event.DBLCLICK }) {
-            tooltipAttributes.set(TooltipAttributes.hideEvent, event.toString());
-            tooltip().advanced().setHideEvent(event);
-            tooltip().show().hide();
-        }
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testHorizontalOffset() {
-        tooltip().show().hide();// workaround: first the tooltip will show on the corner of the panel, then always in the middle
-        testHorizontalOffset(new ShowElementAndReturnAction() {
-            @Override
-            public WebElement perform() {
-                return tooltip().show().advanced().getTooltipElement();
-            }
-        });
-    }
-
-    @Test
+    @CoversAttributes("lang")
     @Templates(value = "plain")
     public void testLang() {
         testLang(tooltip().show().advanced().getTooltipElement());
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("layout")
     @Templates(value = "plain")
     public void testLayout() {
         tooltipAttributes.set(TooltipAttributes.layout, "inline");
@@ -217,6 +227,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("limitRender")
     public void testLimitRender() {
         testLimitRender(new Action() {
             @Override
@@ -227,6 +238,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("mode")
     @UseWithField(field = "mode", valuesFrom = FROM_ENUM, value = "")
     public void testMode() {
         tooltipAttributes.set(TooltipAttributes.mode, mode);
@@ -235,6 +247,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onbeforedomupdate")
     public void testOnbeforedomupdate() {
         tooltipAttributes.set(TooltipAttributes.mode, SwitchType.ajax);
         testFireEvent("onbeforedomupdate", new Action() {
@@ -246,6 +259,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onbeforehide")
     public void testOnbeforehide() {
         testFireEvent("onbeforehide", new Action() {
             @Override
@@ -256,6 +270,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onbeforeshow")
     public void testOnbeforeshow() {
         testFireEvent("onbeforeshow", new Action() {
             @Override
@@ -266,6 +281,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onbegin")
     public void testOnbegin() {
         tooltipAttributes.set(TooltipAttributes.mode, SwitchType.ajax);
         testFireEvent("onbegin", new Action() {
@@ -277,6 +293,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
         tooltipAttributes.set(TooltipAttributes.hideEvent, Event.KEYPRESS.getEventName());
@@ -289,6 +306,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("oncomplete")
     public void testOncomplete() {
         tooltipAttributes.set(TooltipAttributes.mode, SwitchType.ajax);
         testFireEvent("oncomplete", new Action() {
@@ -300,6 +318,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates(value = "plain")
     public void testOndblclick() {
         tooltipAttributes.set(TooltipAttributes.hideEvent, Event.KEYPRESS.getEventName());
@@ -312,6 +331,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onhide")
     public void testOnhide() {
         testFireEvent("onhide", new Action() {
             @Override
@@ -322,6 +342,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
         tooltipAttributes.set(TooltipAttributes.hideEvent, Event.KEYPRESS.getEventName());
@@ -334,6 +355,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates(value = "plain")
     public void testOnmousemove() {
         tooltipAttributes.set(TooltipAttributes.hideEvent, Event.KEYPRESS.getEventName());
@@ -347,6 +369,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEvent("onmouseout", new Action() {
@@ -358,6 +381,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEvent("onmouseover", new Action() {
@@ -370,6 +394,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates(value = "plain")
     public void testOnmouseup() {
         tooltipAttributes.set(TooltipAttributes.hideEvent, Event.KEYPRESS.getEventName());
@@ -382,6 +407,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onshow")
     public void testOnshow() {
         testFireEvent("onshow", new Action() {
             @Override
@@ -392,6 +418,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("render")
     @Templates(value = "plain")
     public void testRender() {
         tooltipAttributes.set(TooltipAttributes.mode, SwitchType.ajax);
@@ -404,6 +431,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         tooltipAttributes.set(TooltipAttributes.rendered, false);
@@ -415,6 +443,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "onbegin", "onbeforedomupdate", "oncomplete" })
     public void testRequestEventHandlers() {
         tooltipAttributes.set(TooltipAttributes.mode, TooltipMode.ajax);
         testRequestEventsBefore("begin", "beforedomupdate", "complete");
@@ -423,6 +452,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("showDelay")
     @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
     @Templates("plain")
     public void testShowDelay() {
@@ -430,6 +460,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("showEvent")
     @Templates(value = "plain")
     public void testShowEvent() {
         for (Event event : new Event[] { Event.CLICK, Event.DBLCLICK }) {
@@ -440,6 +471,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("status")
     public void testStatus() {
         tooltipAttributes.set(TooltipAttributes.mode, SwitchType.ajax);
         testStatus(new Action() {
@@ -451,24 +483,28 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         super.testStyle(tooltip().show().advanced().getTooltipElement());
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates(value = "plain")
     public void testStyleClass() {
         super.testStyleClass(tooltip().show().advanced().getTooltipElement());
     }
 
     @Test
+    @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
         super.testTitle(tooltip().show().advanced().getTooltipElement());
     }
 
     @Test
+    @CoversAttributes("verticalOffset")
     @Templates(value = "plain")
     public void testVerticalOffset() {
         tooltip().show().hide();// workaround: first the tooltip will show on the corner of the panel, then always in the middle
@@ -481,6 +517,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("zindex")
     @Templates(value = "plain")
     public void testZindex() {
         tooltipAttributes.set(TooltipAttributes.zindex, 10);

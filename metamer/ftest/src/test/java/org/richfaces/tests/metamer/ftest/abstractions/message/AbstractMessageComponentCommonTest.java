@@ -81,43 +81,43 @@ public abstract class AbstractMessageComponentCommonTest extends AbstractWebDriv
         Assert.assertEquals(attLang, testedValue, "Attribute xml:lang should be present.");
     }
 
-    public void checkOnClick() {
+    public void checkOnclick() {
         testFireEvent(Event.CLICK, getTestedElementRoot(), getGenerateMessagesAction());
     }
 
-    public void checkOnDblClick() {
+    public void checkOndblclick() {
         testFireEvent(Event.DBLCLICK, getTestedElementRoot(), getGenerateMessagesAction());
     }
 
-    public void checkOnKeyDown() {
+    public void checkOnkeydown() {
         testFireEvent(Event.KEYDOWN, getTestedElementRoot(), getGenerateMessagesAction());
     }
 
-    public void checkOnKeyPress() {
+    public void checkOnkeypress() {
         testFireEvent(Event.KEYPRESS, getTestedElementRoot(), getGenerateMessagesAction());
     }
 
-    public void checkOnKeyUp() {
+    public void checkOnkeyup() {
         testFireEvent(Event.KEYUP, getTestedElementRoot(), getGenerateMessagesAction());
     }
 
-    public void checkOnMouseDown() {
+    public void checkOnmousedown() {
         testFireEvent(Event.MOUSEDOWN, getTestedElementRoot(), getGenerateMessagesAction());
     }
 
-    public void checkOnMouseMove() {
+    public void checkOnmousemove() {
         testFireEvent(Event.MOUSEMOVE, getTestedElementRoot(), getGenerateMessagesAction());
     }
 
-    public void checkOnMouseOut() {
+    public void checkOnmouseout() {
         testFireEvent(Event.MOUSEOUT, getTestedElementRoot(), getGenerateMessagesAction());
     }
 
-    public void checkOnMouseOver() {
+    public void checkOnmouseover() {
         testFireEvent(Event.MOUSEOVER, getTestedElementRoot(), getGenerateMessagesAction());
     }
 
-    public void checkOnMouseUp() {
+    public void checkOnmouseup() {
         testFireEvent(Event.MOUSEUP, getTestedElementRoot(), getGenerateMessagesAction());
     }
 

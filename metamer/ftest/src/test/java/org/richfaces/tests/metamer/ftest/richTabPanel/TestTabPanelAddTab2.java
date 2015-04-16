@@ -38,6 +38,7 @@ import org.richfaces.fragment.switchable.SwitchType;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -49,27 +50,14 @@ import org.testng.annotations.Test;
 public class TestTabPanelAddTab2 extends AbstractWebDriverTest {
 
     private final Attributes<TabPanelAttributes> tabPanelAttributes = getAttributes();
-    @FindByJQuery("td[id*='dynamic'] a")
-    private List<WebElement> dynamicHeadersCloseHandler;
+
     @FindBy(xpath = "//div[contains(@id, 'tabPanel')]//*[@class='rf-tab-cnt']")
     private List<WebElement> activeContent;
+    @FindByJQuery("td[id*='dynamic'] a")
+    private List<WebElement> dynamicHeadersCloseHandler;
 
     @Page
     private TabPanelSimplePage page;
-
-    @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richTabPanel/addTab2.xhtml");
-    }
-
-    private WebElement getActiveContent() {
-        for (WebElement e : activeContent) {
-            if (e.isDisplayed()) {
-                return e;
-            }
-        }
-        return null;
-    }
 
     private void createAndVerifyTab(WebElement buttonToClick) {
         // create 3 pages
@@ -84,32 +72,18 @@ public class TestTabPanelAddTab2 extends AbstractWebDriverTest {
 
     }
 
-    /**
-     * Create new tab by clicking on h:commandButton
-     */
-    @Test
-    public void testCreateTabJSF() {
-        createAndVerifyTab(page.getCreateTabButtonHButton());
-    }
-
-    /**
-     * Create new tab by clicking on a4j:commandButton
-     */
-    @Test(groups = "smoke")
-    public void testCreateTabAjax() {
-        createAndVerifyTab(page.getCreateTabButtonA4j());
-    }
-
-    /**
-     * Delete newly created tabs
-     */
-    @Test(groups = "smoke")
-    public void testRemoveTab() {
-        createAndVerifyTab(page.getCreateTabButtonA4j());
-        for (int i = 2; i >= 0; i--) {
-            guardAjax(dynamicHeadersCloseHandler.get(i)).click();
-            assertEquals(i, dynamicHeadersCloseHandler.size());
+    private WebElement getActiveContent() {
+        for (WebElement e : activeContent) {
+            if (e.isDisplayed()) {
+                return e;
+            }
         }
+        return null;
+    }
+
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richTabPanel/addTab2.xhtml");
     }
 
     /**
@@ -129,22 +103,35 @@ public class TestTabPanelAddTab2 extends AbstractWebDriverTest {
     }
 
     /**
-     * Test plan: 1. click on 'create tab' btn 3 time and verify that new tabs appeared 2. verify that switch between newly
-     * created tabs still works as in previous tabs (staticaly created) 3. verify a4j ajax btn to create new tabs
+     * Create new tab by clicking on a4j:commandButton
+     */
+    @Test(groups = "smoke")
+    public void testCreateTabAjax() {
+        createAndVerifyTab(page.getCreateTabButtonA4j());
+    }
+
+    /**
+     * Create new tab by clicking on h:commandButton
      */
     @Test
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-11081", "https://issues.jboss.org/browse/RF-12945" })
-    public void testSwitchTypeNull() {
+    public void testCreateTabJSF() {
+        createAndVerifyTab(page.getCreateTabButtonHButton());
+    }
+
+    /**
+     * Delete newly created tabs
+     */
+    @Test(groups = "smoke")
+    public void testRemoveTab() {
         createAndVerifyTab(page.getCreateTabButtonA4j());
-        for (int i = 4; i < 8; i++) {
-            page.getTabPanel().switchTo(i);
-            if (i != 4) {
-                assertEquals("Content of dynamicaly created tab" + (i + 1), getActiveContent().getText());
-            }
+        for (int i = 2; i >= 0; i--) {
+            guardAjax(dynamicHeadersCloseHandler.get(i)).click();
+            assertEquals(i, dynamicHeadersCloseHandler.size());
         }
     }
 
     @Test
+    @CoversAttributes("switchType")
     @RegressionTest({ "https://issues.jboss.org/browse/RF-11081", "https://issues.jboss.org/browse/RF-12945" })
     public void testSwitchTypeAjax() {
         tabPanelAttributes.set(TabPanelAttributes.switchType, "ajax");
@@ -153,6 +140,7 @@ public class TestTabPanelAddTab2 extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("switchType")
     public void testSwitchTypeClient() {
         tabPanelAttributes.set(TabPanelAttributes.switchType, "client");
         page.getTabPanel().advanced().setSwitchType(SwitchType.CLIENT);
@@ -168,7 +156,25 @@ public class TestTabPanelAddTab2 extends AbstractWebDriverTest {
         }
     }
 
+    /**
+     * Test plan: 1. click on 'create tab' btn 3 time and verify that new tabs appeared 2. verify that switch between newly
+     * created tabs still works as in previous tabs (staticaly created) 3. verify a4j ajax btn to create new tabs
+     */
     @Test
+    @CoversAttributes("switchType")
+    @RegressionTest({ "https://issues.jboss.org/browse/RF-11081", "https://issues.jboss.org/browse/RF-12945" })
+    public void testSwitchTypeNull() {
+        createAndVerifyTab(page.getCreateTabButtonA4j());
+        for (int i = 4; i < 8; i++) {
+            page.getTabPanel().switchTo(i);
+            if (i != 4) {
+                assertEquals("Content of dynamicaly created tab" + (i + 1), getActiveContent().getText());
+            }
+        }
+    }
+
+    @Test
+    @CoversAttributes("switchType")
     @IssueTracking("https://issues.jboss.org/browse/RF-11054")
     public void testSwitchTypeServer() {
         tabPanelAttributes.set(TabPanelAttributes.switchType, "server");

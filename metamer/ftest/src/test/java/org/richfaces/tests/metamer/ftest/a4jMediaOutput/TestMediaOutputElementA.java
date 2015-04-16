@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.richfaces.tests.metamer.bean.a4j.A4JMediaOutputBean;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -52,6 +53,7 @@ public class TestMediaOutputElementA extends AbstractMediaOutputTest {
     }
 
     @Test
+    @CoversAttributes({ "element", "mimeType", "uriAttribute" })
     public void init() throws IOException {
         assertEquals(mediaOutput.getText(), "This is a link", "The link text doesn't match.");
         assertTrue(
@@ -61,12 +63,14 @@ public class TestMediaOutputElementA extends AbstractMediaOutputTest {
     }
 
     @Test
+    @CoversAttributes("accesskey")
     @Templates("plain")
     public void testLang() {
         testLang(mediaOutput);
     }
 
     @Test
+    @CoversAttributes("type")
     @UseWithField(field = "typeValue", valuesFrom = STRINGS, value = { "text/html", "image/png", "image/gif", "video/mpeg", "text/css", "audio/basic" })
     public void testType() {
         testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.type, typeValue);

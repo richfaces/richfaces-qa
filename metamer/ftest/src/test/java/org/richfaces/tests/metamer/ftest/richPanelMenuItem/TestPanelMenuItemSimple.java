@@ -54,6 +54,7 @@ import org.richfaces.PanelMenuMode;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -69,10 +70,9 @@ import com.google.common.base.Predicate;
  */
 public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
 
-    private final Attributes<PanelMenuItemAttributes> panelMenuItemAttributes = getAttributes();
-
     @Page
     private PanelMenuItemPage page;
+    private final Attributes<PanelMenuItemAttributes> panelMenuItemAttributes = getAttributes();
 
     @Override
     public URL getTestUrl() {
@@ -85,6 +85,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("data")
     public void testData() {
         testData(new Action() {
             @Override
@@ -95,6 +96,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("disabled")
     public void testDisabled() {
         assertFalse(page.getItem().advanced().isDisabled());
 
@@ -110,6 +112,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("disabledClass")
     @Templates(value = "plain")
     public void testDisabledClass() {
         panelMenuItemAttributes.set(disabled, true);
@@ -117,6 +120,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("leftDisabledIcon")
     @Templates(value = "plain")
     public void testLeftDisabledIcon() {
         panelMenuItemAttributes.set(disabled, true);
@@ -125,6 +129,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("leftIcon")
     @Templates(value = "plain")
     public void testLeftIcon() {
         verifyStandardIcons(leftIcon, page.getItem().advanced().getLeftIconElement(), page.getItem().advanced().getLeftIconImgElement(), "");
@@ -134,12 +139,14 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("leftIconClass")
     @Templates(value = "plain")
     public void testLeftIconClass() {
         testStyleClass(page.getItem().advanced().getLeftIconElement(), leftIconClass);
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("limitRender")
     public void testLimitRender() {
         panelMenuItemAttributes.set(render, "renderChecker");
         panelMenuItemAttributes.set(limitRender, true);
@@ -151,6 +158,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         assertTrue(new WebElementConditionFactory(page.getItem().advanced().getRootElement()).isVisible().apply(driver));
@@ -161,6 +169,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rightDisabledIcon")
     @Templates(value = "plain")
     public void testRightDisabledIcon() {
         panelMenuItemAttributes.set(disabled, true);
@@ -169,6 +178,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rightIcon")
     @RegressionTest("https://issues.jboss.org/browse/RF-10519")
     @Templates(value = "plain")
     public void testRightIcon() {
@@ -180,6 +190,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rightIconClass")
     @RegressionTest("https://issues.jboss.org/browse/RF-10519")
     @Templates(value = "plain")
     public void testRightIconClass() {
@@ -187,6 +198,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("selectable")
     public void testSelectable() {
         panelMenuItemAttributes.set(selectable, false);
         page.getItem().select();
@@ -204,6 +216,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("status")
     public void testStatus() {
         panelMenuItemAttributes.set(status, "statusChecker");
 
@@ -214,12 +227,14 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         testStyle(page.getItem().advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(page.getItem().advanced().getRootElement());

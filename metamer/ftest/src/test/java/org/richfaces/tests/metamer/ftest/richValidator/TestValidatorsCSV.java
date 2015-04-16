@@ -53,13 +53,23 @@ public class TestValidatorsCSV extends AbstractValidatorsTest {
     }
 
     @Test
+    public void testBooleanFalse() {
+        verifyBooleanFalse();
+    }
+
+    @Test
     public void testBooleanTrue() {
         verifyBooleanTrue();
     }
 
     @Test
-    public void testBooleanFalse() {
-        verifyBooleanFalse();
+    public void testDateFuture() {
+        verifyDateFuture();
+    }
+
+    @Test
+    public void testDatePast() {
+        verifyDatePast();
     }
 
     @Test
@@ -83,6 +93,22 @@ public class TestValidatorsCSV extends AbstractValidatorsTest {
     }
 
     @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11035")
+    public void testSelectionSize() {
+        verifySelectionSize();
+    }
+
+    @Test
+    public void testStringSize() {
+        verifyStringSize();
+    }
+
+    @Test
+    public void testTextCustomPattern() {
+        verifyCustom();
+    }
+
+    @Test
     public void testTextNotEmpty() {
         verifyNotEmpty();
     }
@@ -98,34 +124,7 @@ public class TestValidatorsCSV extends AbstractValidatorsTest {
     }
 
     @Test
-    public void testTextCustomPattern() {
-        verifyCustom();
-    }
-
-    @Test
     public void testTextRegExp() {
         verifyRegExp();
     }
-
-    @Test
-    public void testDatePast() {
-        verifyDatePast();
-    }
-
-    @Test
-    public void testDateFuture() {
-        verifyDateFuture();
-    }
-
-    @Test
-    public void testStringSize() {
-        verifyStringSize();
-    }
-
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11035")
-    public void testSelectionSize() {
-        verifySelectionSize();
-    }
-
 }

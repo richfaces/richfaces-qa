@@ -36,8 +36,8 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -88,6 +88,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("action")
     public void testAction() {
         commandButtonAttributes.set(CommandButtonAttributes.action, "doubleStringAction");
         page.typeToInput(CommandButtonLinkPage.STRING_RF1);
@@ -109,6 +110,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("actionListener")
     public void testActionListener() {
         commandButtonAttributes.set(CommandButtonAttributes.actionListener, "doubleStringActionListener");
         page.typeToInput(CommandButtonLinkPage.STRING_RF1);
@@ -130,6 +132,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("bypassUpdates")
     public void testBypassUpdates() {
         commandButtonAttributes.set(CommandButtonAttributes.bypassUpdates, true);
         MetamerPage.waitRequest(page.getButtonElement(), WaitRequestType.XHR).click();
@@ -142,6 +145,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("data")
     public void testData() {
         testData(new Action() {
             @Override
@@ -155,12 +159,14 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("disabled")
     public void testDisabled() {
         commandButtonAttributes.set(CommandButtonAttributes.disabled, true);
         assertTrue(page.getButtonElement().getAttribute("disabled").equalsIgnoreCase("true"));
     }
 
     @Test
+    @CoversAttributes("execute")
     public void testExecute() {
         commandButtonAttributes.set(CommandButtonAttributes.execute, "input executeChecker");
         page.typeToInput(CommandButtonLinkPage.STRING_RF1);
@@ -170,6 +176,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("immediate")
     public void testImmediate() {
         commandButtonAttributes.set(CommandButtonAttributes.immediate, true);
         MetamerPage.waitRequest(page.getButtonElement(), WaitRequestType.XHR).click();
@@ -183,6 +190,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("limitRender")
     public void testLimitRender() {
         commandButtonAttributes.set(CommandButtonAttributes.limitRender, true);
         commandButtonAttributes.set(CommandButtonAttributes.render, "output1 requestTime");
@@ -195,6 +203,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "onbegin", "onbeforedomupdate", "oncomplete" })
     public void testEvents() {
         commandButtonAttributes.set(CommandButtonAttributes.onbegin, "metamerEvents += \"begin \"");
         commandButtonAttributes.set(CommandButtonAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
@@ -212,6 +221,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onbegin")
     public void testOnbegin() {
         testFireEvent(commandButtonAttributes, CommandButtonAttributes.onbegin, new Action() {
             @Override
@@ -222,6 +232,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onbeforedomupdate")
     public void testOnbeforedomupdate() {
         testFireEvent(commandButtonAttributes, CommandButtonAttributes.onbeforedomupdate, new Action() {
             @Override
@@ -232,6 +243,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("oncomplete")
     public void testOncomplete() {
         testFireEvent(commandButtonAttributes, CommandButtonAttributes.oncomplete, new Action() {
             @Override
@@ -242,66 +254,77 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
         testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onclick);
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates(value = "plain")
     public void testOndblclick() {
         testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.ondblclick);
     }
 
     @Test
+    @CoversAttributes("onkeydown")
     @Templates(value = "plain")
     public void testOnkeydown() {
         testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onkeydown);
     }
 
     @Test
+    @CoversAttributes("onkeypress")
     @Templates(value = "plain")
     public void testOnkeypress() {
         testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onkeypress);
     }
 
     @Test
+    @CoversAttributes("onkeyup")
     @Templates(value = "plain")
     public void testOneyup() {
         testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onkeyup);
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onmousedown);
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onmousemove);
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onmouseout);
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onmouseover);
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onmouseup);
     }
 
     @Test
+    @CoversAttributes("render")
     @RegressionTest("https://issues.jboss.org/browse/RF-10555")
     public void testRender() {
         commandButtonAttributes.set(CommandButtonAttributes.action, "doubleStringAction");
@@ -329,6 +352,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         commandButtonAttributes.set(CommandButtonAttributes.rendered, false);
@@ -336,37 +360,43 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         testStyle(page.getButtonElement());
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-9307")
+    @CoversAttributes("styleClass")
+    @RegressionTest("https://issues.jboss.org/browse/RF-9307")
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(page.getButtonElement());
     }
 
     @Test
+    @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
         testTitle(page.getButtonElement());
     }
 
     @Test
+    @CoversAttributes("type")
     @UseWithField(field = "type", valuesFrom = STRINGS, value = { "image", "reset", "submit", "button" })
     public void testType() {
         testHTMLAttribute(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.type, type);
     }
 
     @Test
+    @CoversAttributes("type")
     @RegressionTest("https://issues.jboss.org/browse/RF-10115")
     public void testTypeNull() {
         testHTMLAttribute(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.type, "null", "submit");
     }
 
     @Test
+    @CoversAttributes("value")
     @Templates("plain")
     public void testValue() {
         commandButtonAttributes.set(CommandButtonAttributes.value, CommandButtonLinkPage.STRING_RF1);

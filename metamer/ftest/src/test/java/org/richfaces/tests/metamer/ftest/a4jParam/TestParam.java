@@ -31,6 +31,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -75,6 +76,7 @@ public class TestParam extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("name")
     public void testName() {
         paramAttributes.set(ParamAttributes.name, "metamer");
 
@@ -87,6 +89,7 @@ public class TestParam extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("noEscape")
     public void testNoEscape() {
         paramAttributes.set(ParamAttributes.noEscape, false);
 
@@ -97,6 +100,7 @@ public class TestParam extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("value")
     public void testValue() {
         paramAttributes.set(ParamAttributes.value, "4+5");
 

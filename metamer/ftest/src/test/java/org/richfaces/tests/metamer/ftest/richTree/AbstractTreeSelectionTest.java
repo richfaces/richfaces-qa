@@ -37,6 +37,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.component.SwitchType;
 import org.richfaces.fragment.tree.Tree.TreeNode;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -60,12 +61,12 @@ public abstract class AbstractTreeSelectionTest extends AbstractTreeTest {
 
     private SwitchType selectionType;
 
-    private static final SwitchType[] selectionTypes = new SwitchType[]{ SwitchType.ajax, SwitchType.client };
-    private static final SwitchType[] selectionTypeAjax = new SwitchType[]{ SwitchType.ajax };
-    private static final SwitchType[] selectionTypeClient = new SwitchType[]{ SwitchType.client };
-    private static final SwitchType[] eventEnabledSelectionTypes = new SwitchType[]{ SwitchType.ajax };
+    private static final SwitchType[] selectionTypes = new SwitchType[] { SwitchType.ajax, SwitchType.client };
+    private static final SwitchType[] selectionTypeAjax = new SwitchType[] { SwitchType.ajax };
+    private static final SwitchType[] selectionTypeClient = new SwitchType[] { SwitchType.client };
+    private static final SwitchType[] eventEnabledSelectionTypes = new SwitchType[] { SwitchType.ajax };
 
-    protected Integer[][] selectionPaths = new Integer[][]{ { 3, 2 }, { 1, 0, 0 }, { 1 }, { 3, 9, 2 } };
+    protected Integer[][] selectionPaths = new Integer[][] { { 3, 2 }, { 1, 0, 0 }, { 1 }, { 3, 9, 2 } };
 
     protected TreeNode treeNode;
 
@@ -119,6 +120,7 @@ public abstract class AbstractTreeSelectionTest extends AbstractTreeTest {
         treeAttributes.set(TreeAttributes.toggleType, selectionType);
     }
 
+    @CoversAttributes("selectionType")
     protected void testSubNodesSelectionWithEvents() {
         expandAll();
         assertEquals(allSelectedItems.size(), 0);

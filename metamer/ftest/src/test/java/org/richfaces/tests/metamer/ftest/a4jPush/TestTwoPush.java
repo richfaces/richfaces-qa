@@ -36,6 +36,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.metamer.bean.a4j.A4JPushBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.BeforeMethod;
@@ -76,6 +77,7 @@ public class TestTwoPush extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes({ "address", "ondataavailable" })
     public void testBothPushes() {
         verifyPushUpdate(3, TIME_WILL_UPDATE, page.getPush1BtnElement(), page.getOutput1Element());
         verifyPushUpdate(3, TIME_WILL_UPDATE, page.getPush2BtnElement(), page.getOutput2Element());
@@ -94,6 +96,7 @@ public class TestTwoPush extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "address", "ondataavailable", "onsubscribed", "rendered" })
     public void testOnSubscribed() {
         pushAttributes.set(PushAttributes.onsubscribed, "sessionStorage.setItem('metamerEvents', metamerEvents += 'onsubscribed ')");
         final String expected1 = "onsubscribed onsubscribed";
@@ -118,6 +121,7 @@ public class TestTwoPush extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "address", "ondataavailable", "rendered" })
     public void testPushEnable() {
         clickPushEnableCheckbox(false);// disable push updates
         clickPushEnableCheckbox(true);// enable push updates
@@ -125,6 +129,7 @@ public class TestTwoPush extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "address", "ondataavailable" })
     public void testSimplePushEventReceive() {
         verifyPushUpdate(5, TIME_WILL_UPDATE, page.getPush1BtnElement(), page.getOutput1Element());
     }

@@ -33,6 +33,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.openqa.selenium.By;
 import org.richfaces.fragment.autocomplete.SelectOrConfirm;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
@@ -73,6 +74,7 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
      * This should test combination of @var and @fetchValue attributes of autocomplete
      */
     @Test
+    @CoversAttributes({ "fetchValue", "layout", "var" })
     @Uses({
         @UseWithField(field = "autofill", valuesFrom = FROM_FIELD, value = "booleans"),
         @UseWithField(field = "selectFirst", valuesFrom = FROM_FIELD, value = "booleans")
@@ -91,6 +93,7 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("layout")
     public void testLayout() {
         Graphene.guardAjax(autocomplete).type("Co");
 

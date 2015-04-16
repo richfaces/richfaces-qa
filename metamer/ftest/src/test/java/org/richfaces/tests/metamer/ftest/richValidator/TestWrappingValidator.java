@@ -27,6 +27,7 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -57,59 +58,14 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
         verifyAllWrongWithJSFSubmit();
     }
 
-    @Test(groups = "smoke")
-    public void testBooleanTrue() {
-        verifyBooleanTrue();
-    }
-
     @Test
     public void testBooleanFalse() {
         verifyBooleanFalse();
     }
 
-    @Test
-    public void testDecimalMinMax() {
-        verifyDecimalMinMax();
-    }
-
-    @Test
-    public void testIntegerMax() {
-        verifyMax();
-    }
-
-    @Test
-    public void testIntegerMin() {
-        verifyMin();
-    }
-
-    @Test
-    public void testIntegerMinMax() {
-        verifyMinMax();
-    }
-
-    @Test
-    public void testTextNotEmpty() {
-        verifyNotEmpty();
-    }
-
-    @Test
-    public void testTextNotNull() {
-        verifyNotNull();
-    }
-
-    @Test
-    public void testTextPattern() {
-        verifyPattern();
-    }
-
-    @Test
-    public void testTextCustomPattern() {
-        verifyCustom();
-    }
-
-    @Test
-    public void testDatePast() {
-        verifyDatePast();
+    @Test(groups = "smoke")
+    public void testBooleanTrue() {
+        verifyBooleanTrue();
     }
 
     @Test
@@ -118,14 +74,20 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
     }
 
     @Test
-    public void testStringSize() {
-        verifyStringSize();
+    public void testDatePast() {
+        verifyDatePast();
+    }
+
+    @Test
+    public void testDecimalMinMax() {
+        verifyDecimalMinMax();
     }
 
     /**
      * Test of attribute @disabled. Testing of client side validation on one input field.
      */
     @Test
+    @CoversAttributes("disabled")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-12154")
     @Templates(exclude = { "richPopupPanel" })
     public void testDisabled() {
@@ -150,8 +112,48 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
     }
 
     @Test
+    public void testIntegerMax() {
+        verifyMax();
+    }
+
+    @Test
+    public void testIntegerMin() {
+        verifyMin();
+    }
+
+    @Test
+    public void testIntegerMinMax() {
+        verifyMinMax();
+    }
+
+    @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11035")
     public void testSelectionSize() {
         verifySelectionSize();
+    }
+
+    @Test
+    public void testStringSize() {
+        verifyStringSize();
+    }
+
+    @Test
+    public void testTextCustomPattern() {
+        verifyCustom();
+    }
+
+    @Test
+    public void testTextNotEmpty() {
+        verifyNotEmpty();
+    }
+
+    @Test
+    public void testTextNotNull() {
+        verifyNotNull();
+    }
+
+    @Test
+    public void testTextPattern() {
+        verifyPattern();
     }
 }

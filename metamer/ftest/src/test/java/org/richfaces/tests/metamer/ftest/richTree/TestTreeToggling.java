@@ -28,6 +28,7 @@ import static org.testng.Assert.assertTrue;
 
 import org.richfaces.component.SwitchType;
 import org.richfaces.fragment.tree.Tree.TreeNode;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
@@ -41,7 +42,7 @@ public class TestTreeToggling extends AbstractTreeTest {
 
     private static final int TOP_LEVEL_NODES = 4;
 
-    protected Integer[][] paths = new Integer[][]{ { 0, 1, 0 }, { 3, 3, 0 } };
+    protected Integer[][] paths = new Integer[][] { { 0, 1, 0 }, { 3, 3, 0 } };
 
     @UseForAllTests(valuesFrom = FROM_ENUM, value = "")
     private SwitchType toggleType = SwitchType.client;
@@ -60,6 +61,7 @@ public class TestTreeToggling extends AbstractTreeTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("toggleType")
     @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "simpleSwingTreeNode")
     public void testDeepExpansionAndCollapsion() {
         checkInitialState();
@@ -91,12 +93,14 @@ public class TestTreeToggling extends AbstractTreeTest {
     }
 
     @Test(groups = "extended")
+    @CoversAttributes("toggleType")
     @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "richFacesTreeNodes")
     public void testDeepExpansionAndCollapsionInRFTreeNodes() {
         testDeepExpansionAndCollapsion();
     }
 
     @Test
+    @CoversAttributes("toggleType")
     @Templates("plain")
     @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "simpleSwingTreeNode")
     public void testTopLevelNodesExpansionAndCollapsion() {
@@ -118,6 +122,7 @@ public class TestTreeToggling extends AbstractTreeTest {
     }
 
     @Test(groups = "extended")
+    @CoversAttributes("toggleType")
     @Templates("plain")
     @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "richFacesTreeNodes")
     public void testTopLevelNodesExpansionAndCollapsionInRFTreeNodes() {

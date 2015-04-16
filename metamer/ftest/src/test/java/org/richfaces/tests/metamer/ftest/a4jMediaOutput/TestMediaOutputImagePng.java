@@ -32,8 +32,8 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for page /faces/components/a4jMediaOutput/imagePng.xhtml
@@ -49,6 +49,7 @@ public class TestMediaOutputImagePng extends AbstractMediaOutputTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes({ "element", "mimeType", "uriAttribute" })
     public void init() {
         URL imageURL = buildUrl(contextPath, mediaOutput.getAttribute("src"));
 
@@ -87,6 +88,5 @@ public class TestMediaOutputImagePng extends AbstractMediaOutputTest {
             }
         }
     }
-
 
 }

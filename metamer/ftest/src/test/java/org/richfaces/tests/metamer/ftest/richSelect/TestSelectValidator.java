@@ -30,6 +30,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.fragment.select.RichFacesSelect;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.validator.CaliforniaFirstValidator;
 import org.testng.Assert;
@@ -55,6 +56,7 @@ public class TestSelectValidator extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "validator", "validatorMessage" })
     public void testValidatorMessage() {
         String customMessage = "Custom message!";
         Graphene.guardAjax(select.openSelect()).select(10);

@@ -33,6 +33,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.select.RichFacesSelect;
 import org.richfaces.fragment.select.SelectSuggestions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.richSelect.TestSelectAutocompleteMethod.Mode;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -57,6 +58,7 @@ public class TestSelectAutocompleteList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "autocompleteList", "clientFilterFunction" })
     public void testAutocompleteFunctionalityWithClientFiltering() {
         attributes.set(SelectAttributes.mode, Mode.client);
         attributes.set(SelectAttributes.clientFilterFunction, "filterValuesByContains");

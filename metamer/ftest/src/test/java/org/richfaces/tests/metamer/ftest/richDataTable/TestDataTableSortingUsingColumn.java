@@ -24,12 +24,11 @@ package org.richfaces.tests.metamer.ftest.richDataTable;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
 
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.richDataTable.fragment.FilteringDTRow;
-import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SortingDTHeader;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SortingDT;
 import org.testng.annotations.Test;
 
@@ -42,71 +41,80 @@ public class TestDataTableSortingUsingColumn extends DataTableSortingTest {
     private SortingDT table;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richDataTable/sorting-using-column.xhtml");
-    }
-
-    @Override
     public SortingDT getTable() {
         return table;
     }
 
-    @Test
     @Override
-    public void testSortModeSingle() {
-        super.testSortModeSingle();
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richDataTable/sorting-using-column.xhtml");
     }
 
     @Test
-    @Override
-    public void testSortModeSingleReverse() {
-        super.testSortModeSingleReverse();
-    }
-
-    @Test(groups = {"Future"})
-    @Override
-    @IssueTracking({"https://issues.jboss.org/browse/RF-9932",
-        "http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790"})
-    public void testSortModeSingleRerenderAll() {
-        super.testSortModeSingleRerenderAll();
-    }
-
-    @Test
-    @Override
-    public void testSortModeSingleFullPageRefresh() {
-        super.testSortModeSingleFullPageRefresh();
-    }
-
-    @Test
+    @CoversAttributes("sortMode")
     @Override
     public void testSortModeMulti() {
         super.testSortModeMulti();
     }
 
     @Test
+    @CoversAttributes("sortMode")
+    @Override
+    public void testSortModeMultiFullPageRefresh() {
+        super.testSortModeMultiFullPageRefresh();
+    }
+
+    @Test
+    @CoversAttributes("sortMode")
+    @Override
+    public void testSortModeMultiReplacingOldOccurences() {
+        super.testSortModeMultiReplacingOldOccurences();
+    }
+
+    @Test(groups = { "Future" })
+    @CoversAttributes("sortMode")
+    @Override
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-9932",
+        "http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790" })
+    public void testSortModeMultiRerenderAll() {
+        super.testSortModeMultiRerenderAll();
+    }
+
+    @Test
+    @CoversAttributes("sortMode")
     @Override
     public void testSortModeMultiReverse() {
         super.testSortModeMultiReverse();
     }
 
     @Test
+    @CoversAttributes("sortMode")
     @Override
-    public void testSortModeMultiReplacingOldOccurences() {
-        super.testSortModeMultiReplacingOldOccurences();
-    }
-
-    @Test(groups = {"Future"})
-    @Override
-    @IssueTracking({"https://issues.jboss.org/browse/RF-9932",
-        "http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790"})
-    public void testSortModeMultiRerenderAll() {
-        super.testSortModeMultiRerenderAll();
+    public void testSortModeSingle() {
+        super.testSortModeSingle();
     }
 
     @Test
+    @CoversAttributes("sortMode")
     @Override
-    public void testSortModeMultiFullPageRefresh() {
-        super.testSortModeMultiFullPageRefresh();
+    public void testSortModeSingleFullPageRefresh() {
+        super.testSortModeSingleFullPageRefresh();
+    }
+
+    @Test(groups = { "Future" })
+    @CoversAttributes("sortMode")
+    @Override
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-9932",
+        "http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790" })
+    public void testSortModeSingleRerenderAll() {
+        super.testSortModeSingleRerenderAll();
+    }
+
+    @Test
+    @CoversAttributes("sortMode")
+    @Override
+    public void testSortModeSingleReverse() {
+        super.testSortModeSingleReverse();
     }
 
 }

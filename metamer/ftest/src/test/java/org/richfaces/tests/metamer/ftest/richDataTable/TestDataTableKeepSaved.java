@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richDataTable;
 
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractKeepSavedTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.Test;
 
 /**
@@ -34,11 +35,13 @@ public class TestDataTableKeepSaved extends AbstractKeepSavedTest {
     }
 
     @Test
+    @CoversAttributes("keepSaved")
     public void testKeepSavedFalse() {
         checkKeepSavedFalse();
     }
 
     @Test
+    @CoversAttributes("keepSaved")
     public void testKeepSavedTrue() {
         checkKeepSavedTrue();
     }

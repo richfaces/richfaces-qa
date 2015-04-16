@@ -30,6 +30,7 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -51,12 +52,14 @@ public class TestPreserve extends AbstractWebDriverTest {
     }
 
     @Test(groups = "Future")
+    @CoversAttributes("preserve")
     // false negative - should be fixed
     public void testPreserveTrueValidationAwareTrue() {
         testPreserveTrue();
     }
 
     @Test(groups = "Future")
+    @CoversAttributes("preserve")
     // false negative - should be fixed
     public void testPreserveTrueValidationAwareFalse() {
         focusAttributes.set(FocusAttributes.validationAware, false);

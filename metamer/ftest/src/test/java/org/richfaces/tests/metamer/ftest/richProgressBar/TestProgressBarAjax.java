@@ -45,6 +45,7 @@ import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.bean.rich.RichProgressBarBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -61,20 +62,13 @@ import org.testng.annotations.Test;
  */
 public class TestProgressBarAjax extends AbstractWebDriverTest {
 
-    private final Attributes<ProgressBarAttributes> progressBarAttributes = getAttributes();
-
     private static final DateTimeFormatter FORMATTER = DateTimeFormat.forPattern("HH:mm:ss.SSS");
     private final Integer[] ints = { 1200, 1600, 2200 };
 
-    private Integer testInterval;
-
     @Page
     private ProgressBarPage page;
-
-    @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richProgressBar/ajaxMode.xhtml");
-    }
+    private final Attributes<ProgressBarAttributes> progressBarAttributes = getAttributes();
+    private Integer testInterval;
 
     private long countAverage(List<DateTime> times) {
         long total = 0;
@@ -117,7 +111,13 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         return (int) result;
     }
 
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richProgressBar/ajaxMode.xhtml");
+    }
+
     @Test
+    @CoversAttributes("data")
     public void testData() {
         testData(new Action() {
             @Override
@@ -132,6 +132,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("enabled")
     public void testEnabled() {
         progressBarAttributes.set(ProgressBarAttributes.maxValue, 100);//longer progress
         int timeout = Integer.parseInt(progressBarAttributes.get(ProgressBarAttributes.interval)) + 300;
@@ -154,6 +155,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "maxValue", "onbegin", "onbeforedomupdate", "oncomplete" })
     public void testEvents() {
         progressBarAttributes.set(ProgressBarAttributes.maxValue, 5);//the test will be quicker
         progressBarAttributes.set(ProgressBarAttributes.onbegin, "metamerEvents += \"begin \"");
@@ -182,6 +184,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("finishClass")
     @Templates(value = "plain")
     public void testFinishClass() {
         testStyleClass(page.getFinishElement(), BasicAttributes.finishClass);
@@ -203,18 +206,21 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("initialClass")
     @Templates(value = "plain")
     public void testInitialClass() {
         testStyleClass(page.getInitElement(), BasicAttributes.initialClass);
     }
 
     @Test
+    @CoversAttributes("interval")
     @UseWithField(field = "testInterval", valuesFrom = FROM_FIELD, value = "ints")
     public void testInterval() {
         testOneRunOfProgressBar(page.getStartButtonElement(), testInterval);
     }
 
     @Test
+    @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(progressBarAttributes, ProgressBarAttributes.onclick, new Actions(driver).click(page.getProgressBarElement())
@@ -222,6 +228,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(progressBarAttributes, ProgressBarAttributes.ondblclick,
@@ -294,6 +301,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "maxValue", "onfinish" })
     public void testOnfinish() {
         progressBarAttributes.set(ProgressBarAttributes.maxValue, 5);//the test will be quicker
         progressBarAttributes.set(ProgressBarAttributes.onfinish, "metamerEvents += \"finish \"");
@@ -316,6 +324,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEvent(progressBarAttributes, ProgressBarAttributes.onmousedown,
@@ -325,6 +334,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEvent(progressBarAttributes, ProgressBarAttributes.onmousemove,
@@ -332,12 +342,14 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEventWithJS(page.getProgressBarElement(), progressBarAttributes, ProgressBarAttributes.onmouseout);
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
     public void testOnmouseover() {
         new Actions(driver).moveToElement(page.getRequestTimeElement()).perform();
@@ -347,6 +359,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEvent(progressBarAttributes, ProgressBarAttributes.onmouseup,
@@ -360,18 +373,21 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("progressClass")
     @Templates(value = "plain")
     public void testProgressClass() {
         testStyleClass(page.getProgressElement(), BasicAttributes.progressClass);
     }
 
     @Test
+    @CoversAttributes("remainingClass")
     @Templates(value = "plain")
     public void testRemainingClass() {
         testStyleClass(page.getRemainElement(), BasicAttributes.remainingClass);
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         progressBarAttributes.set(ProgressBarAttributes.rendered, Boolean.FALSE);
@@ -397,12 +413,14 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         testStyle(page.getProgressBarElement());
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(page.getProgressBarElement());

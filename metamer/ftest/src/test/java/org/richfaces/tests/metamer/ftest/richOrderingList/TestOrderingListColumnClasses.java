@@ -33,6 +33,7 @@ import org.richfaces.fragment.list.AbstractListComponent;
 import org.richfaces.fragment.orderingList.RichFacesOrderingList;
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractColumnClassesTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.LazyLoadedCachedValue;
 import org.testng.annotations.Test;
@@ -57,6 +58,7 @@ public class TestOrderingListColumnClasses extends AbstractColumnClassesTest {
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesEqualsToColumns_commaSeparated() {
@@ -64,6 +66,7 @@ public class TestOrderingListColumnClasses extends AbstractColumnClassesTest {
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesEqualsToColumns_spaceSeparated() {
@@ -71,6 +74,7 @@ public class TestOrderingListColumnClasses extends AbstractColumnClassesTest {
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesGreaterThanColumns_commaSeparated() {
@@ -78,6 +82,7 @@ public class TestOrderingListColumnClasses extends AbstractColumnClassesTest {
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesLesserThanColumns_commaSeparated() {
@@ -85,6 +90,7 @@ public class TestOrderingListColumnClasses extends AbstractColumnClassesTest {
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesLesserThanColumns_spaceSeparated() {
@@ -92,6 +98,7 @@ public class TestOrderingListColumnClasses extends AbstractColumnClassesTest {
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_oneColumnClass() {

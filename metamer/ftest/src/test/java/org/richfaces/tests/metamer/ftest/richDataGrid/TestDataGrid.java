@@ -32,6 +32,7 @@ import javax.xml.bind.JAXBException;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
@@ -44,15 +45,19 @@ import org.testng.annotations.Test;
  */
 public class TestDataGrid extends AbstractDataGridTest {
 
+    @FindBy(css = "table.rf-dg[id$=richDataGrid]")
+    private GridWithStates dataGrid;
+    @FindBy(css = "table.rf-dg[id$=richDataGrid]")
+    private WebElement dataGridRoot;
+
     public TestDataGrid() throws JAXBException {
         super();
     }
 
-    @FindBy(css = "table.rf-dg[id$=richDataGrid]")
-    private GridWithStates dataGrid;
-
-    @FindBy(css = "table.rf-dg[id$=richDataGrid]")
-    private WebElement dataGridRoot;
+    @Override
+    public GridWithStates getDataGrid() {
+        return dataGrid;
+    }
 
     @Override
     public URL getTestUrl() {
@@ -60,18 +65,21 @@ public class TestDataGrid extends AbstractDataGridTest {
     }
 
     @Test
+    @CoversAttributes("columns")
     @UseWithField(field = "columns", valuesFrom = ValuesFrom.FROM_FIELD, value = "COUNTS1")
     public void testColumnsAttribute() {
         verifyGrid();
     }
 
     @Test
+    @CoversAttributes("elements")
     @UseWithField(field = "elements", valuesFrom = ValuesFrom.FROM_FIELD, value = "COUNTS2")
     public void testElementsAttribute() {
         verifyGrid();
     }
 
     @Test
+    @CoversAttributes("first")
     @UseWithField(field = "first", valuesFrom = ValuesFrom.FROM_FIELD, value = "COUNTS2")
     public void testFirstAttribute() {
         verifyGrid();
@@ -87,6 +95,7 @@ public class TestDataGrid extends AbstractDataGridTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates("plain")
     public void testRendered() {
         dataGridAttributes.set(DataGridAttributes.rendered, false);
@@ -94,25 +103,23 @@ public class TestDataGrid extends AbstractDataGridTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates("plain")
     public void testStyle() {
         testStyle(dataGridRoot);
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates("plain")
     public void testStyleClass() {
         testStyleClass(dataGridRoot);
     }
 
     @Test
-    @Templates("plain")
+    @CoversAttributes("title")
+    @Templates(value = "plain")
     public void testTitle() {
         testTitle(dataGridRoot);
-    }
-
-    @Override
-    public GridWithStates getDataGrid() {
-        return dataGrid;
     }
 }

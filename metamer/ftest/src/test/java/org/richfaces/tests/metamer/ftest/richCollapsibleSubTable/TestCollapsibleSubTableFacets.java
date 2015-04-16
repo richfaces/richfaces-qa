@@ -35,6 +35,7 @@ import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -98,6 +99,7 @@ public class TestCollapsibleSubTableFacets extends AbstractCollapsibleSubTableTe
     }
 
     @Test
+    @CoversAttributes("footerClass")
     @Templates("plain")
     public void testFooterClass() {
         dataTableFacets.set(FacetsAttributes.footer, SAMPLE_STRING);
@@ -111,6 +113,7 @@ public class TestCollapsibleSubTableFacets extends AbstractCollapsibleSubTableTe
     }
 
     @Test
+    @CoversAttributes("headerClass")
     @Templates("plain")
     public void testHeaderClass() {
         dataTableFacets.set(FacetsAttributes.header, SAMPLE_STRING);

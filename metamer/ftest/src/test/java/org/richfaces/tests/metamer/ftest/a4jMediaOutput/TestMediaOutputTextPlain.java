@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.richfaces.tests.metamer.bean.a4j.A4JMediaOutputBean;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.Test;
 
 /**
@@ -41,6 +42,7 @@ public class TestMediaOutputTextPlain extends AbstractMediaOutputTest {
     }
 
     @Test
+    @CoversAttributes({ "element", "mimeType", "uriAttribute" })
     public void testInit() throws IOException {
         assertTrue(
             getTextContentByUrlAttribute(mediaOutput, "data").toString().contains(A4JMediaOutputBean.PLAIN_TEXT),

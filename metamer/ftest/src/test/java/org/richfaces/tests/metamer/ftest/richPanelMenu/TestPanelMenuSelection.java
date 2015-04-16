@@ -25,6 +25,7 @@ import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -40,7 +41,20 @@ public class TestPanelMenuSelection extends AbstractPanelMenuTest {
     @UseForAllTests(valuesFrom = FROM_FIELD, value = "booleans")
     private Boolean bubbleSelection;
 
+    private int bubbledGroups(int bubbledGroups) {
+        return bubbleSelection ? bubbledGroups : 0;
+    }
+
+    private int getSelectedGroups() {
+        return getPage().getPanelMenu().advanced().getAllSelectedGroups().size();
+    }
+
+    private int getSelectedItems() {
+        return getPage().getPanelMenu().advanced().getAllSelectedItems().size();
+    }
+
     @Test(groups = "smoke")
+    @CoversAttributes("bubbleSelection")
     public void testBubbleSelection() {
         panelMenuAttributes.set(PanelMenuAttributes.bubbleSelection, bubbleSelection);
 
@@ -58,17 +72,5 @@ public class TestPanelMenuSelection extends AbstractPanelMenuTest {
         guardAjax(getPage().getPanelMenu()).selectItem("Item 2.4.2");
         assertEquals(getSelectedItems(), 1);
         assertEquals(getSelectedGroups(), bubbledGroups(2));
-    }
-
-    private int bubbledGroups(int bubbledGroups) {
-        return bubbleSelection ? bubbledGroups : 0;
-    }
-
-    private int getSelectedItems() {
-        return getPage().getPanelMenu().advanced().getAllSelectedItems().size();
-    }
-
-    private int getSelectedGroups() {
-        return getPage().getPanelMenu().advanced().getAllSelectedGroups().size();
     }
 }

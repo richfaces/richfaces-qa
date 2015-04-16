@@ -40,17 +40,14 @@ import org.testng.annotations.Test;
  */
 public class TestFocusManagerWithAutocomplete extends AbstractWebDriverTest {
 
-    @FindBy(css = "[id$=buttonAutocomplete]")
-    WebElement buttonAutocomplete;
-
-    @FindBy(css = "[id$=buttonInputText]")
-    WebElement buttonInputText;
-
-    @FindBy(css = "[id$=inputTextSimple]")
-    WebElement inputText;
-
     @FindBy(css = "[id$=autocomplete]")
-    RichFacesAutocomplete autocomplete;
+    private RichFacesAutocomplete autocomplete;
+    @FindBy(css = "[id$=buttonAutocomplete]")
+    private WebElement buttonAutocomplete;
+    @FindBy(css = "[id$=buttonInputText]")
+    private WebElement buttonInputText;
+    @FindBy(css = "[id$=inputTextSimple]")
+    private WebElement inputText;
 
     @Override
     public URL getTestUrl() {

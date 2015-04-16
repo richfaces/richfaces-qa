@@ -40,6 +40,7 @@ import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.dropDownMenu.RichFacesDropDownMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -56,35 +57,28 @@ public class TestMenuGroup extends AbstractWebDriverTest {
 
     private final Attributes<MenuGroupAttributes> menuGroupAttributes = getAttributes();
 
+    @FindBy(css = "div[id$=menuGroup4] > span.rf-ddm-itm-ic > span.rf-ddm-emptyIcon")
+    private WebElement emptyIcon;
     @FindByJQuery(".rf-tb-itm:eq(0)")
     private RichFacesDropDownMenu fileDropDownMenu;
-    @FindByJQuery(".rf-ddm-lbl-dec:eq(0)")
-    private WebElement target1;
-    @FindBy(css = "div[id$=menu1] div.rf-ddm-lbl-dec")
-    private WebElement fileMenuLabel;
     @FindBy(css = "div[id$=menu1]")
     private WebElement fileMenu;
+    @FindBy(css = "div[id$=menu1] div.rf-ddm-lbl-dec")
+    private WebElement fileMenuLabel;
     @FindBy(css = "div[id$=menu1_list]")
     private WebElement fileMenuList;
     @FindBy(css = "div[id$=menuGroup4]")
     private WebElement group;
-    @FindBy(css = "div[id$=menuGroup4] > span.rf-ddm-itm-lbl ")
-    private WebElement label;
     @FindBy(css = "div[id$=menuGroup4_list]")
     private WebElement groupList;
     @FindBy(css = "div[id$=menuGroup4] > span.rf-ddm-itm-ic > img")
     private WebElement icon;
-    @FindBy(css = "div[id$=menuGroup4] > span.rf-ddm-itm-ic > span.rf-ddm-emptyIcon")
-    private WebElement emptyIcon;
+    @FindBy(css = "div[id$=menuGroup4] > span.rf-ddm-itm-lbl ")
+    private WebElement label;
     @FindBy(css = "div[id$=menuItem41]")
     private WebElement menuItem41;
-
-    private final int tolerance = 4;
-
-    @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richMenuGroup/simple.xhtml");
-    }
+    @FindByJQuery(value = ".rf-ddm-lbl-dec:eq(0)")
+    private WebElement target1;
 
     private void openMenu() {
         fileDropDownMenu.advanced().show(target1);
@@ -96,7 +90,18 @@ public class TestMenuGroup extends AbstractWebDriverTest {
         Graphene.waitGui().until().element(groupList).is().visible();
     }
 
+    @BeforeMethod(groups = "smoke")
+    private void updateDropDownMenuInvoker() {
+        fileDropDownMenu.advanced().setShowEvent(Event.MOUSEOVER);
+    }
+
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richMenuGroup/simple.xhtml");
+    }
+
     @Test
+    @CoversAttributes("dir")
     @Templates("plain")
     public void testDir() {
         testDir(group);
@@ -106,9 +111,10 @@ public class TestMenuGroup extends AbstractWebDriverTest {
      * RichAccordion template is disabled because of a reported bug: https://issues.jboss.org/browse/RF-13264
      */
     @Test
+    @CoversAttributes("dir")
     @Templates("plain")
     @RegressionTest("https://issues.jboss.org/browse/RF-10218")
-    @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "")
+    @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "direction")
     public void testDirection() {
         testDirection(new ShowElementAndReturnAction() {
             @Override
@@ -120,6 +126,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("disabled")
     public void testDisabled() {
         menuGroupAttributes.set(MenuGroupAttributes.disabled, Boolean.TRUE);
 
@@ -129,6 +136,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("horizontalOffset")
     @Templates("plain")
     @RegressionTest("https://issues.jboss.org/browse/RF-10216")
     public void testHorizontalOffset() {
@@ -142,6 +150,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("icon")
     @RegressionTest("https://issues.jboss.org/browse/RF-9989")
     @Templates(value = "plain")
     public void testIcon() {
@@ -157,6 +166,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("iconDisabled")
     @RegressionTest("https://issues.jboss.org/browse/RF-9989")
     @Templates(value = "plain")
     public void testIconDisabled() {
@@ -205,6 +215,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("jointPoint")
     @Templates("plain")
     @RegressionTest("https://issues.jboss.org/browse/RF-10218")
     @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "")
@@ -221,6 +232,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("label")
     @Templates("plain")
     public void testLabel() {
         String testedLabel = "new label";
@@ -230,24 +242,28 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     }
 
     @Test
-    @Templates("plain")
+    @CoversAttributes("lang")
+    @Templates(value = "plain")
     public void testLang() {
         testLang(group);
     }
 
     @Test
+    @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(Event.CLICK, group);
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(Event.DBLCLICK, group);
     }
 
     @Test
+    @CoversAttributes("onhide")
     public void testOnhide() {
         testFireEvent("hide", new Action() {
             @Override
@@ -260,54 +276,63 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onkeydown")
     @Templates(value = "plain")
     public void testOnkeydown() {
         testFireEvent(Event.KEYDOWN, group);
     }
 
     @Test
+    @CoversAttributes("onkeypress")
     @Templates(value = "plain")
     public void testOnkeypress() {
         testFireEvent(Event.KEYPRESS, group);
     }
 
     @Test
+    @CoversAttributes("onkeyup")
     @Templates(value = "plain")
     public void testOnkeyup() {
         testFireEvent(Event.KEYUP, group);
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEvent(Event.MOUSEDOWN, group);
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEvent(Event.MOUSEMOVE, group);
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEvent(Event.MOUSEOUT, group);
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEvent(Event.MOUSEOVER, group);
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEvent(Event.MOUSEUP, group);
     }
 
     @Test
+    @CoversAttributes("onshow")
     public void testOnshow() {
         testFireEvent("show", new Action() {
             @Override
@@ -318,6 +343,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         menuGroupAttributes.set(MenuGroupAttributes.rendered, false);
@@ -325,24 +351,28 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         testStyle(group);
     }
 
     @Test
-    @Templates(value = "plain")
+    @CoversAttributes("styleClass")
+    @Templates("plain")
     public void testStyleClass() {
         testStyleClass(group);
     }
 
     @Test
+    @CoversAttributes("title")
     @Templates("plain")
     public void testTitle() {
         testTitle(group);
     }
 
     @Test
+    @CoversAttributes("verticalOffset")
     @Templates("plain")
     @RegressionTest("https://issues.jboss.org/browse/RF-10216")
     public void testVerticalOffset() {
@@ -353,10 +383,5 @@ public class TestMenuGroup extends AbstractWebDriverTest {
                 return groupList;
             }
         });
-    }
-
-    @BeforeMethod(groups = "smoke")
-    private void updateDropDownMenuInvoker() {
-        fileDropDownMenu.advanced().setShowEvent(Event.MOUSEOVER);
     }
 }

@@ -29,6 +29,7 @@ import static org.testng.Assert.assertTrue;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.richfaces.fragment.common.Utils;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.richColumn.AbstractColumnTest;
 
 /**
@@ -53,6 +54,7 @@ public abstract class TestColumnGroupHeaderFooter extends AbstractColumnTest {
         return getTable().getHeader().getRow(row).findElements(By.className("rf-dt-hdr-c")).size();
     }
 
+    @CoversAttributes("rendered")
     public void testRendered() {
         int bodyRowCount = getTable().advanced().getNumberOfVisibleRows();
 

@@ -49,6 +49,7 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.model.Capital;
@@ -92,6 +93,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("activeClass")
     @RegressionTest("https://issues.jboss.org/browse/RF-11227")
     @Templates(value = "plain")
     public void testActiveClass() {
@@ -113,6 +115,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("changedClass")
     @RegressionTest("https://issues.jboss.org/browse/RF-11227")
     @Templates(value = "plain")
     public void testChangedClass() {
@@ -154,6 +157,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("showControls")
     @Templates(exclude = { "richAccordion", "richTabPanel" })
     public void testClickCancelButton() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.showControls, Boolean.TRUE);
@@ -169,6 +173,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("showControls")
     @Templates(exclude = { "richAccordion", "richTabPanel" })
     public void testClickOkButton() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.showControls, Boolean.TRUE);
@@ -180,6 +185,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("defaultLabel")
     @RegressionTest("https://issues.jboss.org/browse/RF-10739")
     @Templates("plain")
     public void testDefaultLabel() {
@@ -196,6 +202,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("disabled")
     public void testDisabled() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.disabled, Boolean.TRUE);
         inplaceSelectAttributes.set(InplaceSelectAttributes.value, "Hawaii");
@@ -209,6 +216,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("disabledClass")
     @Templates(value = "plain")
     public void testDisabledClass() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.disabled, Boolean.TRUE);
@@ -216,6 +224,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("editEvent")
     public void testEditEvent() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.editEvent, Event.MOUSEUP);
         // trigger mouse down, move and then mouse up on different element, using page fragment results in click
@@ -229,6 +238,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("immediate")
     @RegressionTest("https://issues.jboss.org/browse/RF-11227")
     public void testImmediate() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.immediate, Boolean.TRUE);
@@ -250,6 +260,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("inputWidth")
     @Templates(value = "plain")
     public void testInputWidth() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.inputWidth, "300px");
@@ -263,6 +274,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("itemClass")
     @Templates(value = "plain")
     public void testItemClass() {
         final String value = "metamer-ftest-class";
@@ -276,6 +288,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("listClass")
     @RegressionTest("https://issues.jboss.org/browse/RF-9845")
     @Templates(value = "plain")
     public void testListClass() {
@@ -283,6 +296,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("listHeight")
     @RegressionTest("https://issues.jboss.org/browse/RF-9647")
     @Templates(value = "plain")
     public void testListHeight() {
@@ -296,6 +310,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("listWidth")
     @RegressionTest("https://issues.jboss.org/browse/RF-9647")
     @Templates(value = "plain")
     public void testListWidth() {
@@ -310,6 +325,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onblur")
     @RegressionTest("https://issues.jboss.org/browse/RF-11227")
     public void testOnblur() {
         testFireEvent("blur", new Action() {
@@ -322,6 +338,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onchange")
     @RegressionTest("https://issues.jboss.org/browse/RF-11227")
     public void testOnchange() {
         testFireEvent("change", new Action() {
@@ -333,18 +350,21 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(Event.CLICK, select.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(Event.DBLCLICK, select.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onfocus")
     @IssueTracking("https://issues.jboss.org/browse/RF-9849")
     @Templates(value = "plain")
     public void testOnfocus() {
@@ -352,90 +372,105 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("oninputclick")
     @Templates(value = "plain")
     public void testOninputclick() {
         testFireEvent(Event.CLICK, select.advanced().getEditInputElement(), "inputclick");
     }
 
     @Test
+    @CoversAttributes("oninputdblclick")
     @Templates(value = "plain")
     public void testOninputdblclick() {
         testFireEvent(Event.DBLCLICK, select.advanced().getEditInputElement(), "inputdblclick");
     }
 
     @Test
+    @CoversAttributes("oninputkeydown")
     @Templates(value = "plain")
     public void testOninputkeydown() {
         testFireEvent(Event.KEYDOWN, select.advanced().getEditInputElement(), "inputkeydown");
     }
 
     @Test
+    @CoversAttributes("oninputkeypress")
     @Templates(value = "plain")
     public void testOninputkeypress() {
         testFireEvent(Event.KEYPRESS, select.advanced().getEditInputElement(), "inputkeypress");
     }
 
     @Test
+    @CoversAttributes("oninputkeyup")
     @Templates(value = "plain")
     public void testOninputkeyup() {
         testFireEvent(Event.KEYUP, select.advanced().getEditInputElement(), "inputkeyup");
     }
 
     @Test
+    @CoversAttributes("oninputmousedown")
     @Templates(value = "plain")
     public void testOninputmousedown() {
         testFireEvent(Event.MOUSEDOWN, select.advanced().getEditInputElement(), "inputmousedown");
     }
 
     @Test
+    @CoversAttributes("oninputmousemove")
     @Templates(value = "plain")
     public void testOninputmousemove() {
         testFireEvent(Event.MOUSEMOVE, select.advanced().getEditInputElement(), "inputmousemove");
     }
 
     @Test
+    @CoversAttributes("oninputmouseout")
     @Templates(value = "plain")
     public void testOninputmouseout() {
         testFireEvent(Event.MOUSEOUT, select.advanced().getEditInputElement(), "inputmouseout");
     }
 
     @Test
+    @CoversAttributes("oninputmouseover")
     @Templates(value = "plain")
     public void testOninputmouseover() {
         testFireEvent(Event.MOUSEOVER, select.advanced().getEditInputElement(), "inputmouseover");
     }
 
     @Test
+    @CoversAttributes("oninputmouseup")
     @Templates(value = "plain")
     public void testOninputmouseup() {
         testFireEvent(Event.MOUSEUP, select.advanced().getEditInputElement(), "inputmouseup");
     }
 
     @Test
+    @CoversAttributes("oninputselect")
     @Templates(value = "plain")
     public void testOninputselect() {
         testFireEvent(Event.SELECT, select.advanced().getEditInputElement(), "inputselect");
     }
 
     @Test
+    @CoversAttributes("onkeydown")
     @Templates(value = "plain")
     public void testOnkeydown() {
         testFireEvent(Event.KEYDOWN, select.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onkeypress")
     @Templates(value = "plain")
     public void testOnkeypress() {
         testFireEvent(Event.KEYPRESS, select.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onkeyup")
     @Templates(value = "plain")
     public void testOnkeyup() {
         testFireEvent(Event.KEYUP, select.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onlistclick")
     @Templates(value = "plain")
     public void testOnlistclick() {
         testFireEvent("listclick", new Action() {
@@ -448,6 +483,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onlistdblclick")
     @Templates(value = "plain")
     public void testOnlistdblclick() {
         testFireEvent("listdblclick", new Action() {
@@ -459,96 +495,8 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         });
     }
 
-    @Test
-    @Templates(value = "plain")
-    public void testOnlistkeydown() {
-        testFireEvent(Event.KEYDOWN, popup, "listkeydown");
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testOnlistkeypress() {
-        testFireEvent(Event.KEYPRESS, popup, "listkeypress");
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testOnlistkeyup() {
-        testFireEvent(Event.KEYUP, popup, "listkeyup");
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testOnlistmousedown() {
-        testFireEvent(Event.MOUSEDOWN, popup, "listmousedown");
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testOnlistmousemove() {
-        testFireEvent(Event.MOUSEMOVE, popup, "listmousemove");
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testOnlistmouseout() {
-        testFireEvent(Event.MOUSEOUT, popup, "listmouseout");
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testOnlistmouseover() {
-        testFireEvent(Event.MOUSEOVER, popup, "listmouseover");
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testOnlistmouseup() {
-        testFireEvent(Event.MOUSEUP, popup, "listmouseup");
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testOnmousedown() {
-        testFireEvent(Event.MOUSEDOWN, select.advanced().getRootElement());
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testOnmousemove() {
-        testFireEvent(Event.MOUSEMOVE, select.advanced().getRootElement());
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testOnmouseout() {
-        testFireEvent(Event.MOUSEOUT, select.advanced().getRootElement());
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testOnmouseover() {
-        testFireEvent(Event.MOUSEOVER, select.advanced().getRootElement());
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testOnmouseup() {
-        testFireEvent(Event.MOUSEUP, select.advanced().getRootElement());
-    }
-
-    @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-9849")
-    public void testOnselectitem() {
-        testFireEvent("selectitem", new Action() {
-            @Override
-            public void perform() {
-                guardAjax(select).select(5);
-            }
-        });
-    }
-
     @Test(groups = "Future")
+    @CoversAttributes("onlisthide")
     @IssueTracking("https://issues.jboss.org/browse/RF-11768")
     public void testOnlisthide() {
         testFireEvent(inplaceSelectAttributes, InplaceSelectAttributes.onlisthide, new Action() {
@@ -560,7 +508,64 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         });
     }
 
+    @Test
+    @CoversAttributes("onlistkeydown")
+    @Templates(value = "plain")
+    public void testOnlistkeydown() {
+        testFireEvent(Event.KEYDOWN, popup, "listkeydown");
+    }
+
+    @Test
+    @CoversAttributes("onlistkeypress")
+    @Templates(value = "plain")
+    public void testOnlistkeypress() {
+        testFireEvent(Event.KEYPRESS, popup, "listkeypress");
+    }
+
+    @Test
+    @CoversAttributes("onlistkeyup")
+    @Templates(value = "plain")
+    public void testOnlistkeyup() {
+        testFireEvent(Event.KEYUP, popup, "listkeyup");
+    }
+
+    @Test
+    @CoversAttributes("onlistmousedown")
+    @Templates(value = "plain")
+    public void testOnlistmousedown() {
+        testFireEvent(Event.MOUSEDOWN, popup, "listmousedown");
+    }
+
+    @Test
+    @CoversAttributes("onlistmousemove")
+    @Templates(value = "plain")
+    public void testOnlistmousemove() {
+        testFireEvent(Event.MOUSEMOVE, popup, "listmousemove");
+    }
+
+    @Test
+    @CoversAttributes("onlistmouseout")
+    @Templates(value = "plain")
+    public void testOnlistmouseout() {
+        testFireEvent(Event.MOUSEOUT, popup, "listmouseout");
+    }
+
+    @Test
+    @CoversAttributes("onlistmouseover")
+    @Templates(value = "plain")
+    public void testOnlistmouseover() {
+        testFireEvent(Event.MOUSEOVER, popup, "listmouseover");
+    }
+
+    @Test
+    @CoversAttributes("onlistmouseup")
+    @Templates(value = "plain")
+    public void testOnlistmouseup() {
+        testFireEvent(Event.MOUSEUP, popup, "listmouseup");
+    }
+
     @Test(groups = "Future")
+    @CoversAttributes("onlistshow")
     @IssueTracking("https://issues.jboss.org/browse/RF-11768")
     public void testOnlistshow() {
         testFireEvent(inplaceSelectAttributes, InplaceSelectAttributes.onlistshow, new Action() {
@@ -574,6 +579,54 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmousedown")
+    @Templates(value = "plain")
+    public void testOnmousedown() {
+        testFireEvent(Event.MOUSEDOWN, select.advanced().getRootElement());
+    }
+
+    @Test
+    @CoversAttributes("onmousemove")
+    @Templates(value = "plain")
+    public void testOnmousemove() {
+        testFireEvent(Event.MOUSEMOVE, select.advanced().getRootElement());
+    }
+
+    @Test
+    @CoversAttributes("onmouseout")
+    @Templates(value = "plain")
+    public void testOnmouseout() {
+        testFireEvent(Event.MOUSEOUT, select.advanced().getRootElement());
+    }
+
+    @Test
+    @CoversAttributes("onmouseover")
+    @Templates(value = "plain")
+    public void testOnmouseover() {
+        testFireEvent(Event.MOUSEOVER, select.advanced().getRootElement());
+    }
+
+    @Test
+    @CoversAttributes("onmouseup")
+    @Templates(value = "plain")
+    public void testOnmouseup() {
+        testFireEvent(Event.MOUSEUP, select.advanced().getRootElement());
+    }
+
+    @Test
+    @CoversAttributes("onselectitem")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9849")
+    public void testOnselectitem() {
+        testFireEvent("selectitem", new Action() {
+            @Override
+            public void perform() {
+                guardAjax(select).select(5);
+            }
+        });
+    }
+
+    @Test
+    @CoversAttributes("openOnEdit")
     public void testOpenOnEdit() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.openOnEdit, Boolean.FALSE);
 
@@ -588,6 +641,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.rendered, Boolean.FALSE);
@@ -595,6 +649,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "saveOnBlur", "saveOnSelect" })
     @RegressionTest("https://issues.jboss.org/browse/RF-10739")
     public void testSaveOnBlurSelectFalseFalse() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
@@ -615,6 +670,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "saveOnBlur", "saveOnSelect" })
     public void testSaveOnBlurSelectFalseTrue() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnBlur, Boolean.FALSE);
         // select
@@ -623,6 +679,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "saveOnBlur", "saveOnSelect" })
     public void testSaveOnBlurSelectTrueFalse() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
         select.advanced().setSaveOnSelect(Boolean.FALSE);
@@ -637,6 +694,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "saveOnBlur", "saveOnSelect" })
     public void testSaveOnBlurSelectTrueTrue() {
         // select
         guardAjax(select).select(10);
@@ -644,6 +702,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("selectItemClass")
     @RegressionTest("https://issues.jboss.org/browse/RF-9896")
     @Templates(value = "plain")
     public void testSelectItemClass() {
@@ -663,6 +722,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("showControls")
     public void testShowControls() {
         select.advanced().switchToEditingState();
         assertFalse(new WebElementConditionFactory(select.advanced().getConfirmButtonElement()).isVisible().apply(driver));
@@ -673,18 +733,21 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         testStyle(select.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates(value = "plain")
     public void testStyleclass() {
         testStyleClass(select.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("tabindex")
     @RegressionTest("https://issues.jboss.org/browse/RF-10980")
     @Templates(value = "plain")
     public void testTabindex() {
@@ -699,12 +762,14 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
         testTitle(select.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("value")
     @Templates("plain")
     public void testValue() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.value, "North Carolina");

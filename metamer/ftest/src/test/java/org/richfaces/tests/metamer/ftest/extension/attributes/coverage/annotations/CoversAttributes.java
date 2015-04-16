@@ -19,30 +19,22 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.metamer.ftest.richDataGrid;
+package org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations;
 
-import org.richfaces.tests.metamer.ftest.abstractions.AbstractKeepSavedTest;
-import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
-import org.testng.annotations.Test;
+import static java.lang.annotation.ElementType.METHOD;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
+ * Used for marking of all tested attributes in test method.
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestDataGridKeepSaved extends AbstractKeepSavedTest {
+@Target({ METHOD })
+@Retention(RetentionPolicy.RUNTIME)
+public @interface CoversAttributes {
 
-    public TestDataGridKeepSaved() {
-        super("richDataGrid");
-    }
-
-    @Test
-    @CoversAttributes("keepSaved")
-    public void testKeepSavedFalse() {
-        checkKeepSavedFalse();
-    }
-
-    @Test
-    @CoversAttributes("keepSaved")
-    public void testKeepSavedTrue() {
-        checkKeepSavedTrue();
-    }
+    String[] value();
 }

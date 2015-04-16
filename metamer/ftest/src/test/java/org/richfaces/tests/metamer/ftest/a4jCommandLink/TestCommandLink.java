@@ -36,6 +36,7 @@ import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.a4jCommandButton.CommandButtonLinkPage;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -84,6 +85,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("action")
     public void testAction() {
         commandLinkAttributes.set(CommandLinkAttributes.action, "doubleStringAction");
         page.typeToInput(CommandButtonLinkPage.STRING_RF1);
@@ -105,6 +107,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("actionListener")
     public void testActionListener() {
         commandLinkAttributes.set(CommandLinkAttributes.actionListener, "doubleStringActionListener");
         page.typeToInput(CommandButtonLinkPage.STRING_RF1);
@@ -126,6 +129,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("bypassUpdates")
     public void testBypassUpdates() {
         commandLinkAttributes.set(CommandLinkAttributes.bypassUpdates, true);
         MetamerPage.waitRequest(page.getLinkElement(), WaitRequestType.XHR).click();
@@ -138,18 +142,21 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("charset")
     @Templates(value = "plain")
     public void testCharset() {
         testHTMLAttribute(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.charset, "utf-8");
     }
 
     @Test
+    @CoversAttributes("coords")
     @Templates(value = "plain")
     public void testCoords() {
         testHTMLAttribute(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.coords, "circle: 150, 60, 60");
     }
 
     @Test
+    @CoversAttributes("data")
     public void testData() {
         testData(new Action() {
             @Override
@@ -163,6 +170,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("disabled")
     public void testDisabled() {
         commandLinkAttributes.set(CommandLinkAttributes.disabled, true);
 
@@ -171,6 +179,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("execute")
     public void testExecute() {
         commandLinkAttributes.set(CommandLinkAttributes.execute, "input executeChecker");
         page.typeToInput(CommandButtonLinkPage.STRING_RF1);
@@ -180,12 +189,14 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("hreflang")
     @Templates(value = "plain")
     public void testHreflang() {
         testHTMLAttribute(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.hreflang, "sk");
     }
 
     @Test
+    @CoversAttributes("immediate")
     public void testImmediate() {
         commandLinkAttributes.set(CommandLinkAttributes.immediate, true);
 
@@ -203,6 +214,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("limitRender")
     public void testLimitRender() {
         commandLinkAttributes.set(CommandLinkAttributes.limitRender, true);
         commandLinkAttributes.set(CommandLinkAttributes.render, "output1 requestTime");
@@ -215,6 +227,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "onbegin", "onbeforedomupdate", "oncomplete" })
     public void testEvents() {
         commandLinkAttributes.set(CommandLinkAttributes.onbegin, "metamerEvents += \"begin \"");
         commandLinkAttributes.set(CommandLinkAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
@@ -234,6 +247,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onbegin")
     public void testOnbegin() {
         testFireEvent(commandLinkAttributes, CommandLinkAttributes.onbegin, new Action() {
             @Override
@@ -244,6 +258,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onbeforedomupdate")
     public void testOnbeforedomupdate() {
         testFireEvent(commandLinkAttributes, CommandLinkAttributes.onbeforedomupdate, new Action() {
             @Override
@@ -254,6 +269,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("oncomplete")
     public void testOncomplete() {
         testFireEvent(commandLinkAttributes, CommandLinkAttributes.oncomplete, new Action() {
             @Override
@@ -264,72 +280,84 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
         testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onclick);
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates(value = "plain")
     public void testOndblclick() {
         testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.ondblclick);
     }
 
     @Test
+    @CoversAttributes("onkeydown")
     @Templates(value = "plain")
     public void testOnkeydown() {
         testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onkeydown);
     }
 
     @Test
+    @CoversAttributes("onkeypress")
     @Templates(value = "plain")
     public void testOnkeypress() {
         testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onkeypress);
     }
 
     @Test
+    @CoversAttributes("onkeyup")
     @Templates(value = "plain")
     public void testOneyup() {
         testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onkeyup);
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onmousedown);
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onmousemove);
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onmouseout);
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onmouseover);
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onmouseup);
     }
 
     @Test
+    @CoversAttributes("rel")
     @Templates(value = "plain")
     public void testRel() {
         testHTMLAttribute(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.rel, "metamer");
     }
 
     @Test
+    @CoversAttributes("render")
     @RegressionTest("https://issues.jboss.org/browse/RF-10555")
     public void testRender() {
         commandLinkAttributes.set(CommandLinkAttributes.action, "doubleStringAction");
@@ -357,6 +385,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         commandLinkAttributes.set(CommandLinkAttributes.rendered, false);
@@ -365,24 +394,28 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rev")
     @Templates(value = "plain")
     public void testRev() {
         testHTMLAttribute(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.rev, "metamer");
     }
 
     @Test
+    @CoversAttributes("shape")
     @Templates(value = "plain")
     public void testShape() {
         testHTMLAttribute(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.shape, "default");
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         testStyle(page.getLinkElement());
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @RegressionTest("https://issues.jboss.org/browse/RF-9307")
     @Templates(value = "plain")
     public void testStyleClass() {
@@ -390,18 +423,21 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
         testHTMLAttribute(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.title, "metamer");
     }
 
     @Test
+    @CoversAttributes("type")
     @Templates(value = "plain")
     public void testType() {
         testHTMLAttribute(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.type, "default");
     }
 
     @Test
+    @CoversAttributes("value")
     @Templates("plain")
     public void testValue() {
         commandLinkAttributes.set(CommandLinkAttributes.value, "new label");

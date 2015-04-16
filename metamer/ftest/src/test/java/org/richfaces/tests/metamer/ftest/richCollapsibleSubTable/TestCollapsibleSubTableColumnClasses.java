@@ -29,6 +29,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractColumnClassesTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richCollapsibleSubTable.AbstractCollapsibleSubTableTest.EmployeeRecord;
 import org.richfaces.tests.metamer.ftest.richCollapsibleSubTable.TestCollapsibleSubTableFiltering.DataTableWithCSTWithFilteringHeader;
@@ -55,6 +56,7 @@ public class TestCollapsibleSubTableColumnClasses extends AbstractColumnClassesT
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesEqualsToColumns_commaSeparated() {
@@ -62,6 +64,7 @@ public class TestCollapsibleSubTableColumnClasses extends AbstractColumnClassesT
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesEqualsToColumns_spaceSeparated() {
@@ -69,6 +72,7 @@ public class TestCollapsibleSubTableColumnClasses extends AbstractColumnClassesT
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesGreaterThanColumns_commaSeparated() {
@@ -76,6 +80,7 @@ public class TestCollapsibleSubTableColumnClasses extends AbstractColumnClassesT
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesLesserThanColumns_commaSeparated() {
@@ -83,6 +88,7 @@ public class TestCollapsibleSubTableColumnClasses extends AbstractColumnClassesT
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesLesserThanColumns_spaceSeparated() {
@@ -90,6 +96,7 @@ public class TestCollapsibleSubTableColumnClasses extends AbstractColumnClassesT
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_oneColumnClass() {

@@ -26,6 +26,7 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -49,18 +50,21 @@ public class TestStatusAttributes extends AbstractStatusTest {
     }
 
     @Test
+    @CoversAttributes("errorStyle")
     @Templates("plain")
     public void testErrorStyle() {
         testStyle(getStatus().advanced().getErrorElement(), BasicAttributes.errorStyle);
     }
 
     @Test
+    @CoversAttributes("errorStyleClass")
     @Templates("plain")
     public void testErrorStyleClass() {
         testStyleClass(getStatus().advanced().getErrorElement(), BasicAttributes.errorStyleClass);
     }
 
     @Test
+    @CoversAttributes({ "startText", "errorText" })
     @Templates("plain")
     public void testErrorText() {
         getStatusAttributes().set(StatusAttributes.startText, STARTTEXT);
@@ -70,6 +74,7 @@ public class TestStatusAttributes extends AbstractStatusTest {
     }
 
     @Test
+    @CoversAttributes({ "startText", "stopText" })
     @Templates("plain")
     public void testStartAndStopText() {
         getStatusAttributes().set(StatusAttributes.startText, STARTTEXT);
@@ -79,24 +84,28 @@ public class TestStatusAttributes extends AbstractStatusTest {
     }
 
     @Test
+    @CoversAttributes("startStyle")
     @Templates("plain")
     public void testStartStyle() {
         testStyle(getStatus().advanced().getStartElement(), BasicAttributes.startStyle);
     }
 
     @Test
+    @CoversAttributes("startStyleClass")
     @Templates("plain")
     public void testStartStyleClass() {
         testStyleClass(getStatus().advanced().getStartElement(), BasicAttributes.startStyleClass);
     }
 
     @Test
+    @CoversAttributes("stopStyle")
     @Templates("plain")
     public void testStopStyle() {
         testStyle(getStatus().advanced().getStopElement(), BasicAttributes.stopStyle);
     }
 
     @Test
+    @CoversAttributes("stopStyleClass")
     @Templates("plain")
     public void testStopStyleClass() {
         testStyleClass(getStatus().advanced().getStopElement(), BasicAttributes.stopStyleClass);

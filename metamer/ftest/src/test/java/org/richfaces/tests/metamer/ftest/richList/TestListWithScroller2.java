@@ -33,6 +33,7 @@ import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
 import org.richfaces.fragment.list.AbstractListComponent;
 import org.richfaces.fragment.list.RichFacesListItem;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -41,22 +42,17 @@ import org.testng.annotations.Test;
  */
 public class TestListWithScroller2 extends AbstractWebDriverTest {
 
-    @FindBy(css = "span.rf-ds[id$=scroller2]")
-    private RichFacesDataScroller scroller;
-    @FindBy(css = "[id$=richList]")
-    private TestedList list;
-
+    private static final String ITERATION_STATUS_TEMPLATE = "[ begin= %d, end= %d, index= %d, count= %d, first= %b, last= %b, even= %b, rowCount= 200 ]";
+    private static final String RANGE_TEMPLATE = "[ firstRow: %s, rows: %s ]";
     private static final int ROWS = 20;
     private static final String ROWS_STRING = "20";
-    private static final String RANGE_TEMPLATE = "[ firstRow: %s, rows: %s ]";
-    private static final String ITERATION_STATUS_TEMPLATE = "[ begin= %d, end= %d, index= %d, count= %d, first= %b, last= %b, even= %b, rowCount= 200 ]";
-    private static final List<Integer> pages = Arrays.asList(1, 2, 5, 8, 10);
     private static final List<Integer> items = Arrays.asList(0, 1, 10, 18, 19);
+    private static final List<Integer> pages = Arrays.asList(1, 2, 5, 8, 10);
 
-    @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richList/scroller2.xhtml");
-    }
+    @FindBy(css = "[id$=richList]")
+    private TestedList list;
+    @FindBy(css = "span.rf-ds[id$=scroller2]")
+    private RichFacesDataScroller scroller;
 
     public void checkIterationStatusVar(TestedListItem li, int index, int item) {
         Assert.assertEquals(li.getIterationStatusVarText(),
@@ -73,7 +69,13 @@ public class TestListWithScroller2 extends AbstractWebDriverTest {
         Assert.assertEquals(li.getRangeFromStateVarText(), String.format(RANGE_TEMPLATE, String.valueOf(index), ROWS));
     }
 
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richList/scroller2.xhtml");
+    }
+
     @Test
+    @CoversAttributes({ "iterationStatusVar", "stateVar", "rowKeyVar" })
     public void testIterationStatusVar_StateVar_RowKey() {
         TestedListItem li;
         int index;

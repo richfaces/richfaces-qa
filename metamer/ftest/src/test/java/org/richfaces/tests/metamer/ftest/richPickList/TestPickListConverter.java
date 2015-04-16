@@ -25,6 +25,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.pickList.RichFacesPickList;
 import org.richfaces.tests.metamer.bean.ConverterBean;
 import org.richfaces.tests.metamer.ftest.abstractions.converter.AbstractConverterTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.Test;
 
 /**
@@ -57,11 +58,13 @@ public class TestPickListConverter extends AbstractConverterTest {
     }
 
     @Test
+    @CoversAttributes("converter")
     public void testConverter() {
         checkConverter();
     }
 
     @Test
+    @CoversAttributes("converterMessage")
     public void testConverterMessage() {
         checkConverterMessage();
     }

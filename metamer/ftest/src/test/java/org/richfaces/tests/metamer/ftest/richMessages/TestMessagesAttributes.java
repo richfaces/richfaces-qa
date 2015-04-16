@@ -27,6 +27,7 @@ import java.net.URL;
 
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -42,22 +43,26 @@ public class TestMessagesAttributes extends AbstractMessagesTest {
     }
 
     @Test
+    @CoversAttributes("ajaxRendered")
     public void testAjaxRendered() {
         checkAjaxRendered();
     }
 
     @Test
+    @CoversAttributes("dir")
     @Templates(value = "plain")
     public void testDir() {
         checkDir();
     }
 
     @Test
+    @CoversAttributes("escape")
     public void testEscape() {
         checkEscape();
     }
 
     @Test
+    @CoversAttributes("FOR")
     @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
     public void testFor() {
@@ -65,6 +70,7 @@ public class TestMessagesAttributes extends AbstractMessagesTest {
     }
 
     @Test
+    @CoversAttributes("FOR")
     @IssueTracking("https://issues.jboss.org/browse/RF-11298")
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
@@ -73,12 +79,14 @@ public class TestMessagesAttributes extends AbstractMessagesTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("globalOnly")
     @Templates(exclude = { "richAccordion", "richCollapsiblePanel" })
     public void testGlobalOnly() {
         checkGlobalOnly(2);//2 messages
     }
 
     @Test
+    @CoversAttributes("globalOnly")
     @Templates(value = { "richAccordion", "richCollapsiblePanel" })
     @RegressionTest("https://issues.jboss.org/browse/RF-11415")
     public void testGlobalOnlyInAccordionCollapsiblePanel() {
@@ -86,6 +94,7 @@ public class TestMessagesAttributes extends AbstractMessagesTest {
     }
 
     @Test
+    @CoversAttributes("lang")
     @Templates(value = "plain")
     public void testLang() {
         checkLang();
@@ -97,99 +106,116 @@ public class TestMessagesAttributes extends AbstractMessagesTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes({ "showDetail", "showSummary" })
     public void testNoShowDetailNoShowSummary() {
         checkNoShowDetailNoShowSummary();
     }
 
     @Test
+    @CoversAttributes("onclick")
     @Templates(value = "plain")
-    public void testOnClick() {
-        checkOnClick();
+    public void testOnclick() {
+        checkOnclick();
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates(value = "plain")
-    public void testOnDblClick() {
-        checkOnDblClick();
+    public void testOndblclick() {
+        checkOndblclick();
     }
 
     @Test
+    @CoversAttributes("onkeydown")
     @Templates(value = "plain")
-    public void testOnKeyDown() {
-        checkOnKeyDown();
+    public void testOnkeydown() {
+        checkOnkeydown();
     }
 
     @Test
+    @CoversAttributes("onkeypress")
     @Templates(value = "plain")
-    public void testOnKeyPress() {
-        checkOnKeyPress();
+    public void testOnkeypress() {
+        checkOnkeypress();
     }
 
     @Test
+    @CoversAttributes("onkeyup")
     @Templates(value = "plain")
-    public void testOnKeyUp() {
-        checkOnKeyUp();
+    public void testOnkeyup() {
+        checkOnkeyup();
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
-    public void testOnMouseDown() {
-        checkOnMouseDown();
+    public void testOnmousedown() {
+        checkOnmousedown();
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates(value = "plain")
-    public void testOnMouseMove() {
-        checkOnMouseMove();
+    public void testOnmousemove() {
+        checkOnmousemove();
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates(value = "plain")
-    public void testOnMouseOut() {
-        checkOnMouseOut();
+    public void testOnmouseout() {
+        checkOnmouseout();
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
-    public void testOnMouseOver() {
-        checkOnMouseOver();
+    public void testOnmouseover() {
+        checkOnmouseover();
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates(value = "plain")
-    public void testOnMouseUp() {
-        checkOnMouseUp();
+    public void testOnmouseup() {
+        checkOnmouseup();
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         checkRendered();
     }
 
     @Test
+    @CoversAttributes("showDetail")
     public void testShowDetail() {
         checkShowDetail();
     }
 
     @Test
+    @CoversAttributes("showSummary")
     public void testShowSummary() {
         checkShowSummary();
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         checkStyle();
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates(value = "plain")
     public void testStyleClass() {
         checkStyleClass();
     }
 
     @Test
+    @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
         checkTitle();

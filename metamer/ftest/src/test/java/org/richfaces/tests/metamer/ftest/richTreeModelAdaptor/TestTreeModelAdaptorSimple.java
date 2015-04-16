@@ -31,6 +31,7 @@ import java.net.URL;
 import org.richfaces.component.SwitchType;
 import org.richfaces.fragment.tree.Tree.TreeNode;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richTree.AbstractTreeTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -52,6 +53,7 @@ public class TestTreeModelAdaptorSimple extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates("plain")
     public void testModelAdaptorRendered() {
         treeNode = getGuarded(tree, SwitchType.ajax).expandNode(1);
@@ -66,6 +68,7 @@ public class TestTreeModelAdaptorSimple extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates("plain")
     public void testRecursiveModelAdaptorRendered() {
         treeNode = getGuarded(tree, SwitchType.ajax).expandNode(1);

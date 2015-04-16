@@ -37,6 +37,7 @@ import static org.testng.Assert.assertTrue;
 import javax.faces.event.PhaseId;
 
 import org.richfaces.component.Mode;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -47,23 +48,12 @@ import org.testng.annotations.Test;
  */
 public class TestPanelMenuMode extends AbstractPanelMenuTest {
 
+    private final PhaseId[] expectedPhases = new PhaseId[] { RESTORE_VIEW, APPLY_REQUEST_VALUES, PROCESS_VALIDATIONS, UPDATE_MODEL_VALUES,
+        INVOKE_APPLICATION, RENDER_RESPONSE };
     private final Attributes<PanelMenuAttributes> panelMenuAttributes = getAttributes();
 
     @UseForAllTests(valuesFrom = FROM_ENUM, value = "")
     private Mode mode;
-
-    private PhaseId[] expectedPhases = new PhaseId[]{ RESTORE_VIEW, APPLY_REQUEST_VALUES, PROCESS_VALIDATIONS, UPDATE_MODEL_VALUES,
-        INVOKE_APPLICATION, RENDER_RESPONSE };
-
-    @Test
-    public void testGroupMode() {
-        checkGroupMode(mode);
-    }
-
-    @Test
-    public void testItemMode() {
-        checkItemMode(mode);
-    }
 
     private void checkGroupMode(Mode mode) {
         panelMenuAttributes.set(PanelMenuAttributes.groupMode, mode);
@@ -125,5 +115,17 @@ public class TestPanelMenuMode extends AbstractPanelMenuTest {
             getPage().assertPhases(expectedPhases);
             getPage().assertListener(UPDATE_MODEL_VALUES, "item changed");
         }
+    }
+
+    @Test
+    @CoversAttributes("groupMode")
+    public void testGroupMode() {
+        checkGroupMode(mode);
+    }
+
+    @Test
+    @CoversAttributes("itemMode")
+    public void testItemMode() {
+        checkItemMode(mode);
     }
 }

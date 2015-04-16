@@ -28,6 +28,7 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
 
@@ -36,15 +37,14 @@ import org.testng.annotations.BeforeMethod;
  */
 public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTest {
 
-    @Page
-    protected ValidationPage page;
-
     protected static final String MSG_ATT = "Custom validator error message from attribute of component.";
     private static final String MSG_BEAN = "Custom validator error message from bean.";
-    private static final String MSG_BUNDLE_JSR = "Custom validator error message from bundle (JSR-303).";
     private static final String MSG_BUNDLE_JSF_CUSTOM = "Custom validator error message from bundle (JSF).";
     private static final String MSG_BUNDLE_JSF_DEFAULT = "jsf-inBundle: Validation Error: Specified attribute is not between the expected values of 2 and 9.";
+    private static final String MSG_BUNDLE_JSR = "Custom validator error message from bundle (JSR-303).";
     private final String component;
+    @Page
+    protected ValidationPage page;
 
     public AbstractValidationMessagesTest(String component) {
         this.component = component;
@@ -55,18 +55,6 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
         return buildUrl(contextPath, "faces/components/" + component + "/validationMessages.xhtml");
     }
 
-    public void testInit() {
-        page.setCorrectValuesAndSubmitJSF();
-        assertTrue(page.noErrorMessagesDisplayed(), "No error messages should now be on page.");
-        page.setCorrectValuesAndSubmitRF();
-        assertTrue(page.noErrorMessagesDisplayed(), "No error messages should now be on page.");
-    }
-
-    @AfterClass(alwaysRun = true)
-    public void setDefault() {
-        page.deactivateCustomMessages();
-    }
-
     @BeforeMethod(alwaysRun = true)
     public void resetPage() {
         setDefault();
@@ -74,28 +62,9 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
         executeJS(ValidationPage.JS_STATE_VARIABLE + "=''");
     }
 
-    /**
-     * Tests correctness of JSR-303 validation messages using h:commandButton
-     * for submitting. Tests messages set in attribute of component, in
-     * annotations of bean and in message bundle.
-     */
-    public void testJSR303MessagesJSF() {
-        page.setWrongValuesAndSubmitJSF();
-        assertTrue(page.getJsr303InAttMsgElement().getText().endsWith(MSG_ATT));
-        assertTrue(page.getJsr303InBeanMsgElement().getText().endsWith(MSG_BEAN));
-        assertTrue(page.getJsr303InBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSR));
-    }
-
-    /**
-     * Tests correctness of JSR-303 validation messages using a4j:commandButton
-     * for submitting. Tests messages set in attribute of component, in
-     * annotations of bean and in message bundle.
-     */
-    public void testJSR303MessagesRF() {
-        page.setWrongValuesAndSubmitRF();
-        assertTrue(page.getJsr303InAttMsgElement().getText().endsWith(MSG_ATT));
-        assertTrue(page.getJsr303InBeanMsgElement().getText().endsWith(MSG_BEAN));
-        assertTrue(page.getJsr303InBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSR));
+    @AfterClass(alwaysRun = true)
+    public void setDefault() {
+        page.deactivateCustomMessages();
     }
 
     /**
@@ -103,6 +72,7 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
      * submitting. Tests messages set in attribute of component, in annotations
      * of bean and in message bundle.
      */
+    @CoversAttributes("validatorMessage")
     public void testCSVMessagesJSF() {
         page.setWrongValuesAndSubmitJSF();
         assertTrue(page.getCsvInAttMsgElement().getText().endsWith(MSG_ATT));
@@ -115,6 +85,7 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
      * submitting. Tests messages set in attribute of component, in annotations
      * of bean and in message bundle.
      */
+    @CoversAttributes("validatorMessage")
     public void testCSVMessagesRF() {
         page.setWrongValuesAndSubmitRF();
         assertTrue(page.getCsvInAttMsgElement().getText().endsWith(MSG_ATT));
@@ -122,11 +93,20 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
         assertTrue(page.getCsvInBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSR));
     }
 
+    @CoversAttributes("validatorMessage")
+    public void testInit() {
+        page.setCorrectValuesAndSubmitJSF();
+        assertTrue(page.noErrorMessagesDisplayed(), "No error messages should now be on page.");
+        page.setCorrectValuesAndSubmitRF();
+        assertTrue(page.noErrorMessagesDisplayed(), "No error messages should now be on page.");
+    }
+
     /**
      * Tests correctness of JSF validation messages using h:commandButton for
      * submitting. Tests messages set in attribute of component and in message
      * bundle.
      */
+    @CoversAttributes("validatorMessage")
     public void testJSFMessagesJSF() {
         page.setWrongValuesAndSubmitJSF();
         assertTrue(page.getJsfInAttMsgElement().getText().endsWith(MSG_ATT));
@@ -142,6 +122,7 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
      * submitting. Tests messages set in attribute of component and in message
      * bundle.
      */
+    @CoversAttributes("validatorMessage")
     public void testJSFMessagesRF() {
         page.setWrongValuesAndSubmitRF();
         assertTrue(page.getJsfInAttMsgElement().getText().endsWith(MSG_ATT));
@@ -150,5 +131,31 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
         page.setWrongValuesAndSubmitRF();
         assertTrue(page.getJsfInAttMsgElement().getText().endsWith(MSG_ATT));
         assertTrue(page.getJsfInBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSF_CUSTOM));
+    }
+
+    /**
+     * Tests correctness of JSR-303 validation messages using h:commandButton
+     * for submitting. Tests messages set in attribute of component, in
+     * annotations of bean and in message bundle.
+     */
+    @CoversAttributes("validatorMessage")
+    public void testJSR303MessagesJSF() {
+        page.setWrongValuesAndSubmitJSF();
+        assertTrue(page.getJsr303InAttMsgElement().getText().endsWith(MSG_ATT));
+        assertTrue(page.getJsr303InBeanMsgElement().getText().endsWith(MSG_BEAN));
+        assertTrue(page.getJsr303InBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSR));
+    }
+
+    /**
+     * Tests correctness of JSR-303 validation messages using a4j:commandButton
+     * for submitting. Tests messages set in attribute of component, in
+     * annotations of bean and in message bundle.
+     */
+    @CoversAttributes("validatorMessage")
+    public void testJSR303MessagesRF() {
+        page.setWrongValuesAndSubmitRF();
+        assertTrue(page.getJsr303InAttMsgElement().getText().endsWith(MSG_ATT));
+        assertTrue(page.getJsr303InBeanMsgElement().getText().endsWith(MSG_BEAN));
+        assertTrue(page.getJsr303InBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSR));
     }
 }

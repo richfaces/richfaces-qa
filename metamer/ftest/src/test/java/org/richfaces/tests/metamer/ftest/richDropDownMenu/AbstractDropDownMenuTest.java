@@ -46,6 +46,7 @@ import org.richfaces.fragment.common.Locations;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.dropDownMenu.RichFacesDropDownMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuSimplePage;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 
@@ -56,9 +57,11 @@ import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
  */
 public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
 
-    private final Attributes<DropDownMenuAttributes> dropDownMenuAttributes = getAttributes();
     protected Integer delay;
     protected Integer[] delays = { 1000, 1500, 1900 };
+
+    private final Attributes<DropDownMenuAttributes> dropDownMenuAttributes = getAttributes();
+
     @Page
     private DropDownMenuPage page;
 
@@ -72,12 +75,61 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         return page.getDropDownMenuContent().getCssValue("min-width");
     }
 
-    private void updateDropDownMenuInvoker() {
-        getCurrentMenu().advanced().setShowEvent(Event.MOUSEOVER);
+    @CoversAttributes("dir")
+    public void testDir() {
+        updateDropDownMenuInvoker();
+        String expected = "rtl";
+        dropDownMenuAttributes.set(DropDownMenuAttributes.dir, expected);
+
+        getCurrentMenu().advanced().show(page.getTarget1());
+        String directionCSS = getCurrentMenu().advanced().getItemsElements().get(0)
+            .getCssValue("direction");
+        assertEquals(directionCSS, expected, "The direction attribute was not applied correctly!");
     }
 
-    private void updateDropDownMenuInvokerToClick() {
-        getCurrentMenu().advanced().setShowEvent(Event.CLICK);
+    @CoversAttributes("direction")
+    public void testDirection() {
+        updateDropDownMenuInvoker();
+        testDirection(new ShowElementAndReturnAction() {
+            @Override
+            public WebElement perform() {
+                getCurrentMenu().advanced().show(page.getTarget1());
+                return getCurrentMenu().advanced().getMenuPopup();
+            }
+        });
+    }
+
+    @CoversAttributes("disabled")
+    public void testDisabled() {
+        updateDropDownMenuInvoker();
+        getCurrentMenu().advanced().show(page.getTarget1());
+
+        dropDownMenuAttributes.set(DropDownMenuAttributes.disabled, true);
+
+        try {
+            getCurrentMenu().advanced().show(page.getTarget1());
+            fail("The context menu should not be invoked when disabled!");
+        } catch (TimeoutException ex) {
+            // OK
+        }
+    }
+
+    @CoversAttributes("hideDelay")
+    public void testHideDelay(int delay) {
+        WebElement menuRoot = driver.findElement(By.cssSelector("[id$='menu1']"));
+        new MenuDelayTester().testHideDelay(menuRoot, delay, Event.MOUSEOUT, menuRoot);
+    }
+
+    @CoversAttributes("horizontalOffset")
+    public void testHorizontalOffset() {
+        updateDropDownMenuInvoker();
+        testHorizontalOffset(new ShowElementAndReturnAction() {
+            @Override
+            public WebElement perform() {
+                getCurrentMenu().advanced().show(page.getTarget1());
+                return getCurrentMenu().advanced().getMenuPopup();
+            }
+        });
     }
 
     public void testInit() {
@@ -117,6 +169,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         assertEquals(page.getFileMenuLabelOriginal().getText(), "File", "Label of the menu");
     }
 
+    @CoversAttributes("jointPoint")
     public void testJointPoint() {
         updateDropDownMenuInvoker();
         getCurrentMenu().advanced().show(page.getTarget1());
@@ -130,64 +183,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         });
     }
 
-    public void testShowEvent() {
-        dropDownMenuAttributes.set(DropDownMenuAttributes.showEvent, "contextmenu");
-        getCurrentMenu().advanced().setShowEvent(Event.CONTEXTCLICK);
-        getCurrentMenu().advanced().show(page.getTarget1());
-
-        dropDownMenuAttributes.set(DropDownMenuAttributes.showEvent, "mouseover");
-        getCurrentMenu().advanced().setShowEvent(Event.MOUSEOVER);
-        getCurrentMenu().advanced().show(page.getTarget1());
-
-        dropDownMenuAttributes.set(DropDownMenuAttributes.showEvent, "click");
-        getCurrentMenu().advanced().setShowEvent(Event.CLICK);
-        getCurrentMenu().advanced().show(page.getTarget1());
-    }
-
-    public void testStyle() {
-        updateDropDownMenuInvoker();
-        String color = "yellow";
-        String styleVal = "background-color: " + color + ";";
-        dropDownMenuAttributes.set(DropDownMenuAttributes.style, styleVal);
-        getCurrentMenu().advanced().show(page.getTarget1());
-        String backgroundColor = getCurrentMenu().advanced().getTopLevelElement()
-            .getCssValue("background-color");
-        // webdriver retrieves the color in rgba format
-        assertEquals(ContextMenuSimplePage.trimTheRGBAColor(backgroundColor), "rgba(255,255,0,1)",
-            "The style was not applied correctly!");
-    }
-
-    public void testStyleClass() {
-        updateDropDownMenuInvoker();
-        String styleClassVal = "test-style-class";
-        dropDownMenuAttributes.set(DropDownMenuAttributes.styleClass, styleClassVal);
-        String styleClass = getCurrentMenu().advanced().getTopLevelElement()
-            .getAttribute("class");
-        assertTrue(styleClass.contains(styleClassVal));
-    }
-
-    public void testDir() {
-        updateDropDownMenuInvoker();
-        String expected = "rtl";
-        dropDownMenuAttributes.set(DropDownMenuAttributes.dir, expected);
-
-        getCurrentMenu().advanced().show(page.getTarget1());
-        String directionCSS = getCurrentMenu().advanced().getItemsElements().get(0)
-            .getCssValue("direction");
-        assertEquals(directionCSS, expected, "The direction attribute was not applied correctly!");
-    }
-
-    public void testDirection() {
-        updateDropDownMenuInvoker();
-        testDirection(new ShowElementAndReturnAction() {
-            @Override
-            public WebElement perform() {
-                getCurrentMenu().advanced().show(page.getTarget1());
-                return getCurrentMenu().advanced().getMenuPopup();
-            }
-        });
-    }
-
+    @CoversAttributes("lang")
     public void testLang() {
         updateDropDownMenuInvoker();
         String langVal = "cs";
@@ -198,6 +194,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
             "The lang attribute was not set correctly!");
     }
 
+    @CoversAttributes("mode")
     public void testMode() {
         updateDropDownMenuInvokerToClick();
         // ajax
@@ -227,57 +224,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         assertEquals(page.getOutput().getText(), "Open", "Menu action was not performed.");
     }
 
-    public void testDisabled() {
-        updateDropDownMenuInvoker();
-        getCurrentMenu().advanced().show(page.getTarget1());
-
-        dropDownMenuAttributes.set(DropDownMenuAttributes.disabled, true);
-
-        try {
-            getCurrentMenu().advanced().show(page.getTarget1());
-            fail("The context menu should not be invoked when disabled!");
-        } catch (TimeoutException ex) {
-            // OK
-        }
-    }
-
-    public void testHideDelay(int delay) {
-        WebElement menuRoot = driver.findElement(By.cssSelector("[id$='menu1']"));
-        new MenuDelayTester().testHideDelay(menuRoot, delay, Event.MOUSEOUT, menuRoot);
-    }
-
-    public void testPopupWidth() {
-        updateDropDownMenuInvoker();
-        String minWidth = "333";
-        assertEquals(returnPopupWidth(minWidth, getCurrentMenu()), minWidth + "px");
-
-        minWidth = "250";
-        assertEquals(returnPopupWidth(minWidth, getCurrentMenu()), minWidth + "px");
-
-        minWidth = "250";
-        assertEquals(returnPopupWidth(minWidth, getCurrentMenu()), minWidth + "px");
-    }
-
-    public void testRendered() {
-        updateDropDownMenuInvoker();
-        dropDownMenuAttributes.set(DropDownMenuAttributes.rendered, Boolean.FALSE);
-        assertNotPresent(page.getFileMenuLabel(), "The drop down menu for file can not be rendered!");
-    }
-
-    public void testShowDelay(int delay) {
-        WebElement menuRoot = driver.findElement(By.cssSelector("[id$='menu1']"));
-        new MenuDelayTester().testShowDelay(menuRoot, delay, Event.MOUSEOVER, menuRoot.findElement(By.tagName("div")));
-    }
-
-    public void testTitle() {
-        updateDropDownMenuInvoker();
-        String titleVal = "test title";
-        dropDownMenuAttributes.set(DropDownMenuAttributes.title, titleVal);
-        assertEquals(
-            getCurrentMenu().advanced().getTopLevelElement().getAttribute("title"),
-            titleVal);
-    }
-
+    @CoversAttributes("onclick")
     public void testOnclick() {
         updateDropDownMenuInvoker();
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onclick, new Action() {
@@ -289,6 +236,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         });
     }
 
+    @CoversAttributes("ondblclick")
     public void testOndblclick() {
         updateDropDownMenuInvoker();
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.ondblclick, new Action() {
@@ -302,6 +250,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         });
     }
 
+    @CoversAttributes("ongrouphide")
     public void testOngrouphide() {
         updateDropDownMenuInvokerToClick();
         getAttributes().set(DropDownMenuAttributes.hideDelay, 3000);
@@ -322,6 +271,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         });
     }
 
+    @CoversAttributes("ongroupshow")
     public void testOngroupshow() {
         updateDropDownMenuInvokerToClick();
         getAttributes().set(DropDownMenuAttributes.hideDelay, 500);
@@ -338,6 +288,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         });
     }
 
+    @CoversAttributes("onhide")
     public void testOnhide() {
         updateDropDownMenuInvoker();
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onhide, new Action() {
@@ -349,11 +300,13 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         });
     }
 
+    @CoversAttributes("onitemclick")
     public void testOnitemclick() {
         updateDropDownMenuInvoker();
         testOnclick();
     }
 
+    @CoversAttributes("onkeydown")
     public void testOnkeydown() {
         updateDropDownMenuInvoker();
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onkeydown, new Action() {
@@ -369,6 +322,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         });
     }
 
+    @CoversAttributes("onkeypress")
     public void testOnkeypress() {
         updateDropDownMenuInvoker();
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onkeypress, new Action() {
@@ -380,11 +334,13 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         });
     }
 
+    @CoversAttributes("onkeyup")
     public void testOnkeyup() {
         testFireEventWithJS(getCurrentMenu().advanced().getMenuPopup(),
             dropDownMenuAttributes, DropDownMenuAttributes.onkeyup);
     }
 
+    @CoversAttributes("onmousedown")
     public void testOnmousedown() {
         updateDropDownMenuInvoker();
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onmousedown, new Action() {
@@ -399,11 +355,13 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         new Actions(driver).release().perform();
     }
 
+    @CoversAttributes("onmousemove")
     public void testOnmousemove() {
         testFireEventWithJS(getCurrentMenu().advanced().getMenuPopup(),
             dropDownMenuAttributes, DropDownMenuAttributes.onmousemove);
     }
 
+    @CoversAttributes("onmouseout")
     public void testOnmouseout() {
         updateDropDownMenuInvoker();
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onmouseout, new Action() {
@@ -421,11 +379,13 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         });
     }
 
+    @CoversAttributes("onmouseover")
     public void testOnmouseover() {
         testFireEventWithJS(getCurrentMenu().advanced().getMenuPopup(),
             dropDownMenuAttributes, DropDownMenuAttributes.onmouseover);
     }
 
+    @CoversAttributes("onmouseup")
     public void testOnmouseup() {
         updateDropDownMenuInvoker();
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onmouseup, new Action() {
@@ -441,6 +401,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         });
     }
 
+    @CoversAttributes("onshow")
     public void testOnshow() {
         updateDropDownMenuInvoker();
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onshow, new Action() {
@@ -453,17 +414,82 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         new Actions(driver).moveToElement(page.getRequestTimeElement()).perform();
     }
 
-    public void testHorizontalOffset() {
+    @CoversAttributes("popupWidth")
+    public void testPopupWidth() {
         updateDropDownMenuInvoker();
-        testHorizontalOffset(new ShowElementAndReturnAction() {
-            @Override
-            public WebElement perform() {
-                getCurrentMenu().advanced().show(page.getTarget1());
-                return getCurrentMenu().advanced().getMenuPopup();
-            }
-        });
+        String minWidth = "333";
+        assertEquals(returnPopupWidth(minWidth, getCurrentMenu()), minWidth + "px");
+
+        minWidth = "250";
+        assertEquals(returnPopupWidth(minWidth, getCurrentMenu()), minWidth + "px");
+
+        minWidth = "250";
+        assertEquals(returnPopupWidth(minWidth, getCurrentMenu()), minWidth + "px");
     }
 
+    @CoversAttributes("rendered")
+    public void testRendered() {
+        updateDropDownMenuInvoker();
+        dropDownMenuAttributes.set(DropDownMenuAttributes.rendered, Boolean.FALSE);
+        assertNotPresent(page.getFileMenuLabel(), "The drop down menu for file can not be rendered!");
+    }
+
+    @CoversAttributes("showDelay")
+    public void testShowDelay(int delay) {
+        WebElement menuRoot = driver.findElement(By.cssSelector("[id$='menu1']"));
+        new MenuDelayTester().testShowDelay(menuRoot, delay, Event.MOUSEOVER, menuRoot.findElement(By.tagName("div")));
+    }
+
+    @CoversAttributes("showEvent")
+    public void testShowEvent() {
+        dropDownMenuAttributes.set(DropDownMenuAttributes.showEvent, "contextmenu");
+        getCurrentMenu().advanced().setShowEvent(Event.CONTEXTCLICK);
+        getCurrentMenu().advanced().show(page.getTarget1());
+
+        dropDownMenuAttributes.set(DropDownMenuAttributes.showEvent, "mouseover");
+        getCurrentMenu().advanced().setShowEvent(Event.MOUSEOVER);
+        getCurrentMenu().advanced().show(page.getTarget1());
+
+        dropDownMenuAttributes.set(DropDownMenuAttributes.showEvent, "click");
+        getCurrentMenu().advanced().setShowEvent(Event.CLICK);
+        getCurrentMenu().advanced().show(page.getTarget1());
+    }
+
+    @CoversAttributes("style")
+    public void testStyle() {
+        updateDropDownMenuInvoker();
+        String color = "yellow";
+        String styleVal = "background-color: " + color + ";";
+        dropDownMenuAttributes.set(DropDownMenuAttributes.style, styleVal);
+        getCurrentMenu().advanced().show(page.getTarget1());
+        String backgroundColor = getCurrentMenu().advanced().getTopLevelElement()
+            .getCssValue("background-color");
+        // webdriver retrieves the color in rgba format
+        assertEquals(ContextMenuSimplePage.trimTheRGBAColor(backgroundColor), "rgba(255,255,0,1)",
+            "The style was not applied correctly!");
+    }
+
+    @CoversAttributes("styleClass")
+    public void testStyleClass() {
+        updateDropDownMenuInvoker();
+        String styleClassVal = "test-style-class";
+        dropDownMenuAttributes.set(DropDownMenuAttributes.styleClass, styleClassVal);
+        String styleClass = getCurrentMenu().advanced().getTopLevelElement()
+            .getAttribute("class");
+        assertTrue(styleClass.contains(styleClassVal));
+    }
+
+    @CoversAttributes("title")
+    public void testTitle() {
+        updateDropDownMenuInvoker();
+        String titleVal = "test title";
+        dropDownMenuAttributes.set(DropDownMenuAttributes.title, titleVal);
+        assertEquals(
+            getCurrentMenu().advanced().getTopLevelElement().getAttribute("title"),
+            titleVal);
+    }
+
+    @CoversAttributes("verticalOffset")
     public void testVerticalOffset() {
         updateDropDownMenuInvoker();
         testVerticalOffset(new ShowElementAndReturnAction() {
@@ -473,5 +499,13 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
                 return getCurrentMenu().advanced().getMenuPopup();
             }
         });
+    }
+
+    private void updateDropDownMenuInvoker() {
+        getCurrentMenu().advanced().setShowEvent(Event.MOUSEOVER);
+    }
+
+    private void updateDropDownMenuInvokerToClick() {
+        getCurrentMenu().advanced().setShowEvent(Event.CLICK);
     }
 }
