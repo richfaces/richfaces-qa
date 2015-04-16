@@ -31,6 +31,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.WebDriver;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -53,7 +54,13 @@ public class TestCalendarTimeZone extends AbstractCalendarTest {
         this.dtf = DateTimeFormat.forPattern(calendarAttributes.get(CalendarAttributes.datePattern));
     }
 
+    private void setTimeZone(String tz, DateTime startTime) {
+        executeJS("$('input[id$=timeZoneInput]').val('" + tz + "').change()");
+        waitForCalendarInputChange(startTime);
+    }
+
     @Test
+    @CoversAttributes("timeZone")
     public void testTimeZone() {
         popupCalendar.openPopup().getFooterControls().todayDate();
         final DateTime dtStart = dtf.parseDateTime(popupCalendar.getInput().getStringValue());
@@ -63,11 +70,6 @@ public class TestCalendarTimeZone extends AbstractCalendarTest {
         DateTime dtMinus2H = dtf.parseDateTime(popupCalendar.getInput().getStringValue());
         assertEquals(dtPlus1H.getHourOfDay(), dtStart.plusHours(1).getHourOfDay());
         assertEquals(dtMinus2H.getHourOfDay(), dtStart.minusHours(2).getHourOfDay());
-    }
-
-    private void setTimeZone(String tz, DateTime startTime) {
-        executeJS("$('input[id$=timeZoneInput]').val('" + tz + "').change()");
-        waitForCalendarInputChange(startTime);
     }
 
     private void waitForCalendarInputChange(final DateTime dtStart) {

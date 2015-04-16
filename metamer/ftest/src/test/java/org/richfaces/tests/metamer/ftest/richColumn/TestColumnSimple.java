@@ -35,6 +35,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.ColumnGroupDT;
 import org.testng.annotations.Test;
@@ -64,6 +65,11 @@ public class TestColumnSimple extends AbstractColumnTest {
     }
 
     @Override
+    protected ColumnGroupDT getTable() {
+        return table;
+    }
+
+    @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richColumn/simple.xhtml");
     }
@@ -77,6 +83,7 @@ public class TestColumnSimple extends AbstractColumnTest {
     }
 
     @Test
+    @CoversAttributes("breakRowBefore")
     @Templates("plain")
     public void testBreakRowBefore() {
         checkInitialState();
@@ -91,6 +98,7 @@ public class TestColumnSimple extends AbstractColumnTest {
     }
 
     @Test
+    @CoversAttributes("colspan")
     @Templates("plain")
     public void testColspan() {
         checkInitialState();
@@ -107,18 +115,21 @@ public class TestColumnSimple extends AbstractColumnTest {
     }
 
     @Test
+    @CoversAttributes("footerClass")
     @Templates("plain")
     public void testFooterClass() {
         testStyleClass(getTable().getColumnFooterElement(), BasicAttributes.footerClass);
     }
 
     @Test
+    @CoversAttributes("headerClass")
     @Templates("plain")
     public void testHeaderClass() {
         testStyleClass(getTable().getColumnHeaderElement(), BasicAttributes.headerClass);
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates("plain")
     public void testRendered() {
         checkInitialState();
@@ -136,6 +147,7 @@ public class TestColumnSimple extends AbstractColumnTest {
     }
 
     @Test
+    @CoversAttributes("rowspan")
     @Templates("plain")
     public void testRowspan() {
         checkInitialState();
@@ -161,6 +173,7 @@ public class TestColumnSimple extends AbstractColumnTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates("plain")
     public void testStyle() {
         List<StateCapitalRow> allRows = getTable().getAllRows();
@@ -170,16 +183,12 @@ public class TestColumnSimple extends AbstractColumnTest {
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates("plain")
     public void testStyleClass() {
         List<StateCapitalRow> allRows = getTable().getAllRows();
         for (int i = 0; i < allRows.size(); i++) {
             testStyleClass(allRows.get(i).getStateElement());
         }
-    }
-
-    @Override
-    protected ColumnGroupDT getTable() {
-        return table;
     }
 }

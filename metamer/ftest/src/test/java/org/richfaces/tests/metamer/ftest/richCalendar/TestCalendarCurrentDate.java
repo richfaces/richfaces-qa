@@ -29,6 +29,7 @@ import java.net.URL;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -53,6 +54,7 @@ public class TestCalendarCurrentDate extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("currentDate")
     @Templates("plain")
     public void testCurrentDateSet() {
         //set some future date
@@ -67,6 +69,7 @@ public class TestCalendarCurrentDate extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("currentDate")
     @Templates("plain")
     public void testCurrentDateGet() {
         //set date to today

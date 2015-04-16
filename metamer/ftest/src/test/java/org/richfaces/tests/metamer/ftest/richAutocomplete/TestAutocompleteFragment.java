@@ -33,6 +33,7 @@ import org.richfaces.fragment.autocomplete.RichFacesAutocomplete;
 import org.richfaces.fragment.autocomplete.SelectOrConfirm;
 import org.richfaces.fragment.common.ClearType;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.Test;
 
 /**
@@ -50,6 +51,7 @@ public class TestAutocompleteFragment extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("tokens")
     public void testSelectingMultipleValues() {
         Graphene.guardAjax(
             Graphene.guardAjax(

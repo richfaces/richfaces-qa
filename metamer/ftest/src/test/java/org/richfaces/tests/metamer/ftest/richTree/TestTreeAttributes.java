@@ -36,6 +36,7 @@ import org.richfaces.fragment.tree.Tree.TreeNode;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
@@ -52,12 +53,14 @@ import com.google.common.collect.Lists;
 public class TestTreeAttributes extends AbstractTreeTest {
 
     @Test
+    @CoversAttributes("data")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     public void testData() {
         testData(selectFirstNodeAjaxAction);
     }
 
     @Test
+    @CoversAttributes("dir")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates("plain")
     public void testDir() {
@@ -65,6 +68,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("execute")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     public void testExecute() {
         treeAttributes.set(TreeAttributes.execute, "executeChecker @this");
@@ -73,6 +77,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("handleClass")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates("plain")
     public void testHandleClass() {
@@ -83,6 +88,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("iconClass")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates("plain")
     public void testIconClass() {
@@ -92,6 +98,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("iconCollapsed")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates("plain")
     public void testIconCollapsed() {
@@ -106,6 +113,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("iconExpanded")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates("plain")
     public void testIconExpanded() {
@@ -120,6 +128,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("iconLeaf")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates("plain")
     public void testIconLeaf() {
@@ -131,6 +140,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("immediate")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     public void testImmediate() {
         treeAttributes.set(TreeAttributes.immediate, Boolean.FALSE);
@@ -143,6 +153,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("labelClass")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates("plain")
     public void testLabelClass() {
@@ -150,6 +161,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("lang")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates("plain")
     public void testLang() {
@@ -157,6 +169,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("limitRender")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     public void testLimitRender() {
         treeAttributes.set(TreeAttributes.limitRender, true);
@@ -167,6 +180,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("nodeClass")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates("plain")
     public void testNodeClass() {
@@ -174,30 +188,35 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("onbeforedomupdate")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     public void testOnbeforedomupdate() {
         testFireEvent(treeAttributes, TreeAttributes.onbeforedomupdate, selectFirstNodeAjaxAction);
     }
 
     @Test
+    @CoversAttributes("onbeforenodetoggle")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     public void testOnbeforenodetoggle() {
         testFireEvent(treeAttributes, TreeAttributes.onbeforenodetoggle, expandFirstNodeAjaxAction);
     }
 
     @Test
+    @CoversAttributes("onbeforeselectionchange")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     public void testOnbeforeselectionchange() {
         testFireEvent(treeAttributes, TreeAttributes.onbeforeselectionchange, selectFirstNodeAjaxAction);
     }
 
     @Test
+    @CoversAttributes("onbegin")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     public void testOnbegin() {
         testFireEvent(treeAttributes, TreeAttributes.onbegin, selectFirstNodeAjaxAction);
     }
 
     @Test
+    @CoversAttributes("onclick")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates("plain")
     public void testOnclick() {
@@ -205,12 +224,14 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("oncomplete")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     public void testOncomplete() {
         testFireEvent(treeAttributes, TreeAttributes.oncomplete, selectFirstNodeAjaxAction);
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates("plain")
     public void testOndblclick() {
@@ -219,6 +240,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("onkeydown")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates("plain")
     public void testOnkeydown() {
@@ -226,6 +248,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("onkeypress")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates("plain")
     public void testOnkeypress() {
@@ -233,6 +256,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("onkeyup")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates("plain")
     public void testOnkeyup() {
@@ -240,6 +264,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates("plain")
     public void testOnmousedown() {
@@ -248,6 +273,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates("plain")
     public void testOnmousemove() {
@@ -256,6 +282,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates("plain")
     public void testOnmouseout() {
@@ -264,6 +291,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates("plain")
     public void testOnmouseover() {
@@ -273,6 +301,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates("plain")
     public void testOnmouseup() {
@@ -281,12 +310,14 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("onnodetoggle")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     public void testOnnodetoggle() {
         testFireEvent(treeAttributes, TreeAttributes.onnodetoggle, expandFirstNodeAjaxAction);
     }
 
     @Test
+    @CoversAttributes("onselectionchange")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates(exclude = "a4jRegion")
     public void testOnselectionchange() {
@@ -294,14 +325,16 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test(groups = "Future")
+    @CoversAttributes("onselectionchange")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates(value = "a4jRegion")
     @IssueTracking("https://issues.jboss.org/browse/RF-13322")
     public void testOnselectionchangeInRegion() {
-        testFireEvent(treeAttributes, TreeAttributes.onselectionchange, selectFirstNodeAjaxAction);
+        testOnselectionchange();
     }
 
     @Test
+    @CoversAttributes("render")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     public void testRender() {
         treeAttributes.set(TreeAttributes.render, "renderChecker");
@@ -311,6 +344,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates("plain")
     public void testRendered() {
@@ -321,16 +355,18 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes({ "onbeforeselectionchange", "onbegin", "onbeforedomupdate", "oncomplete", "onselectionchange" })
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates(exclude = "a4jRegion")
     public void testSelectionClientSideEventsOrder() {
-        String[] events = new String[] { "beforeselectionchange", "begin", "beforedomupdate", "complete", "selectionchange" };
+        String[] events = new String[] { "onbeforeselectionchange", "onbegin", "onbeforedomupdate", "oncomplete", "onselectionchange" };
         testRequestEventsBefore(events);
         selectFirstNodeAjaxAction.perform();
         testRequestEventsAfter(events);
     }
 
     @Test(groups = { "Future" })
+    @CoversAttributes({ "onbeforeselectionchange", "onbegin", "onbeforedomupdate", "oncomplete", "onselectionchange" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11319")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates(value = "a4jRegion")
@@ -339,6 +375,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("selectionType")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     public void testSelectionType() {
         treeAttributes.set(TreeAttributes.selectionType, SwitchType.ajax);
@@ -349,12 +386,14 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("status")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     public void testStatus() {
         testStatus(selectFirstNodeAjaxAction);
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates("plain")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     public void testStyle() {
@@ -362,6 +401,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates("plain")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     public void testStyleClass() {
@@ -369,6 +409,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("title")
     @Templates("plain")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     public void testTitle() {
@@ -376,6 +417,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test(groups = "Future")
+    @CoversAttributes({ "onbeforenodetoggle", "onbegin", "onbeforedomupdate", "oncomplete", "onnodetoggle" })
     @IssueTracking("https://issues.jboss.org/browse/RF-10265")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     public void testToggleClientSideEventsOrder() {
@@ -387,6 +429,15 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("toggleListener")
+    @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
+    public void testToggleListener() {
+        expandFirstNodeAjaxAction.perform();
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "tree toggle listener invoked");
+    }
+
+    @Test
+    @CoversAttributes("toggleNodeEvent")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     public void testToggleNodeEvent() {
         treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax);
@@ -405,6 +456,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("toggleType")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     public void testToggleType() {
         treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax);
@@ -418,16 +470,11 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("selectionChangeListener")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
-    public void testTreeSelectionChangeListener() {
+    public void testSelectionChangeListener() {
         selectFirstNodeAjaxAction.perform();
         getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "selection change listener invoked");
     }
 
-    @Test
-    @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
-    public void testTreeToggleListener() {
-        expandFirstNodeAjaxAction.perform();
-        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "tree toggle listener invoked");
-    }
 }

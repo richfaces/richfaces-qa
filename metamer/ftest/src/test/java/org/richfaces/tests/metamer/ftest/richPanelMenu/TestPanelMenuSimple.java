@@ -36,6 +36,7 @@ import org.richfaces.PanelMenuMode;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -51,7 +52,16 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
 
     private Boolean expandSingle = true;
 
+    private int expanded(int expanded) {
+        return (expandSingle && expanded >= 1) ? 1 : expanded;
+    }
+
+    private int getExpandedGroupsCount() {
+        return getPage().getPanelMenu().advanced().getAllExpandedGroups().size();
+    }
+
     @Test
+    @CoversAttributes("disabled")
     @RegressionTest("https://issues.jboss.org/browse/RF-10158")
     public void testDisabled() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
@@ -67,6 +77,7 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("expandSingle")
     @UseWithField(field = "expandSingle", valuesFrom = FROM_FIELD, value = "booleans")
     @IssueTracking("https://issues.jboss.org/browse/RF-10626")
     public void testExpandSingle() {
@@ -80,6 +91,7 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("groupClass")
     @Templates(value = "plain")
     public void testGroupClass() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
@@ -87,6 +99,7 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("groupDisabledClass")
     @Templates(value = "plain")
     public void testGroupDisabledClass() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
@@ -94,6 +107,7 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("itemClass")
     @Templates(value = "plain")
     public void testItemClass() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
@@ -101,74 +115,11 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("itemDisabledClass")
     @Templates(value = "plain")
     public void testItemDisabledClass() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
         super.testStyleClass(getPage().getItem25().advanced().getRootElement(), BasicAttributes.itemDisabledClass);
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testRendered() {
-        panelMenuAttributes.set(rendered, false);
-        assertFalse(new WebElementConditionFactory(getPage().getPanelMenu().advanced().getRootElement()).isPresent().apply(driver));
-        panelMenuAttributes.set(rendered, true);
-        assertTrue(new WebElementConditionFactory(getPage().getPanelMenu().advanced().getRootElement()).isPresent().apply(driver));
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testStyle() {
-        testStyle(getPage().getPanelMenu().advanced().getRootElement());
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testStyleClass() {
-        testStyleClass(getPage().getPanelMenu().advanced().getRootElement());
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testTopGroupClass() {
-        testStyleClass(getPage().getGroup1().advanced().getRootElement(), BasicAttributes.topGroupClass);
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testTopItemClass() {
-        testStyleClass(getPage().getItem3().advanced().getRootElement(), BasicAttributes.topItemClass);
-    }
-
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-10302")
-    @Templates(value = "plain")
-    public void testWidth() {
-        panelMenuAttributes.set(PanelMenuAttributes.style, "");
-        panelMenuAttributes.set(width, "300px");
-        assertTrue(getPage().getPanelMenu().advanced().getRootElement().getCssValue("width").contains("300px"));
-    }
-
-    @Test(groups = { "Future" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-12778")
-    public void testJsApiExpandAll() {
-        panelMenuAttributes.set(groupMode, PanelMenuMode.client);
-        panelMenuAttributes.set(itemMode, PanelMenuMode.client);
-
-        getPage().getExpandAll().click();
-
-        assertEquals(getPage().getPanelMenu().advanced().getAllExpandedGroups().size(), 4);
-    }
-
-    @Test(groups = { "Future" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-12778")
-    public void testJsApiExpandAll1() {
-        panelMenuAttributes.set(groupMode, PanelMenuMode.client);
-        panelMenuAttributes.set(itemMode, PanelMenuMode.client);
-
-        getPage().getExpandAllBtn1().click();
-
-        assertEquals(getPage().getPanelMenu().advanced().getAllExpandedGroups().size(), 4);
     }
 
     @Test(groups = { "Future" })
@@ -205,6 +156,28 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
 
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-12778")
+    public void testJsApiExpandAll() {
+        panelMenuAttributes.set(groupMode, PanelMenuMode.client);
+        panelMenuAttributes.set(itemMode, PanelMenuMode.client);
+
+        getPage().getExpandAll().click();
+
+        assertEquals(getPage().getPanelMenu().advanced().getAllExpandedGroups().size(), 4);
+    }
+
+    @Test(groups = { "Future" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-12778")
+    public void testJsApiExpandAll1() {
+        panelMenuAttributes.set(groupMode, PanelMenuMode.client);
+        panelMenuAttributes.set(itemMode, PanelMenuMode.client);
+
+        getPage().getExpandAllBtn1().click();
+
+        assertEquals(getPage().getPanelMenu().advanced().getAllExpandedGroups().size(), 4);
+    }
+
+    @Test(groups = { "Future" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-12778")
     public void testJsApiSelectItem() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
         panelMenuAttributes.set(itemMode, PanelMenuMode.client);
@@ -225,11 +198,51 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
         assertEquals(getPage().getSelectedItem().getText(), "item23");
     }
 
-    private int getExpandedGroupsCount() {
-        return getPage().getPanelMenu().advanced().getAllExpandedGroups().size();
+    @Test
+    @CoversAttributes("rendered")
+    @Templates(value = "plain")
+    public void testRendered() {
+        panelMenuAttributes.set(rendered, false);
+        assertFalse(new WebElementConditionFactory(getPage().getPanelMenu().advanced().getRootElement()).isPresent().apply(driver));
+        panelMenuAttributes.set(rendered, true);
+        assertTrue(new WebElementConditionFactory(getPage().getPanelMenu().advanced().getRootElement()).isPresent().apply(driver));
     }
 
-    private int expanded(int expanded) {
-        return (expandSingle && expanded >= 1) ? 1 : expanded;
+    @Test
+    @CoversAttributes("style")
+    @Templates(value = "plain")
+    public void testStyle() {
+        testStyle(getPage().getPanelMenu().advanced().getRootElement());
+    }
+
+    @Test
+    @CoversAttributes("styleClass")
+    @Templates(value = "plain")
+    public void testStyleClass() {
+        testStyleClass(getPage().getPanelMenu().advanced().getRootElement());
+    }
+
+    @Test
+    @CoversAttributes("topGroupClass")
+    @Templates(value = "plain")
+    public void testTopGroupClass() {
+        testStyleClass(getPage().getGroup1().advanced().getRootElement(), BasicAttributes.topGroupClass);
+    }
+
+    @Test
+    @CoversAttributes("topItemClass")
+    @Templates(value = "plain")
+    public void testTopItemClass() {
+        testStyleClass(getPage().getItem3().advanced().getRootElement(), BasicAttributes.topItemClass);
+    }
+
+    @Test
+    @CoversAttributes("width")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10302")
+    @Templates(value = "plain")
+    public void testWidth() {
+        panelMenuAttributes.set(PanelMenuAttributes.style, "");
+        panelMenuAttributes.set(width, "300px");
+        assertTrue(getPage().getPanelMenu().advanced().getRootElement().getCssValue("width").contains("300px"));
     }
 }

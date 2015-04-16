@@ -30,6 +30,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFacetsTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SimpleDT;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -69,12 +70,14 @@ public class TestDataTableFacets extends DataTableFacetsTest {
     }
 
     @Test
+    @CoversAttributes("captionClass")
     @Templates("plain")
     public void testCaptionClass() {
         testStyleClass(tableRoot.findElement(By.tagName("caption")), BasicAttributes.captionClass);
     }
 
     @Test
+    @CoversAttributes("footerClass")
     @Templates("plain")
     public void testFooterClass() {
         testStyleClass(table.getFooter().getTableFooterElement(), BasicAttributes.footerClass);
@@ -82,6 +85,7 @@ public class TestDataTableFacets extends DataTableFacetsTest {
     }
 
     @Test
+    @CoversAttributes("headerClass")
     @Templates("plain")
     public void testHeaderClass() {
         testStyleClass(table.getHeader().getTableHeaderElement(), BasicAttributes.headerClass);

@@ -27,6 +27,7 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 
 /**
@@ -39,6 +40,7 @@ public abstract class AbstractChartTest extends AbstractWebDriverTest {
     @Page
     private ChartSimplePage page;
 
+    @CoversAttributes("onmouseout")
     public void testOnmouseout() {
         testFireEvent(chartAttributes, ChartAttributes.onmouseout, new Action() {
             @Override
@@ -51,16 +53,19 @@ public abstract class AbstractChartTest extends AbstractWebDriverTest {
         });
     }
 
+    @CoversAttributes("rendered")
     public void testRendered() {
         assertPresent(page.getChartElement(), "Chart should be rendered.");
         chartAttributes.set(ChartAttributes.rendered, false);
         assertNotPresent(page.getChartElement(), "Chart should not be rendered.");
     }
 
+    @CoversAttributes("styleClass")
     public void testStyleClass() {
         testStyleClass(page.getChartElement());
     }
 
+    @CoversAttributes("title")
     public void testTitle() {
         // assert title is present
         assertPresent(page.getChartTitleElement(), "Title should be rendered");

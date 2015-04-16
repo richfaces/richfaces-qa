@@ -25,6 +25,7 @@ import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annot
 
 import org.richfaces.tests.metamer.ftest.abstractions.validations.AbstractStringInputComponentValidationTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.annotations.Test;
 
@@ -41,6 +42,7 @@ public class TestAutocompleteCSV extends AbstractStringInputComponentValidationT
     }
 
     @Test
+    @CoversAttributes({ "required", "requiredMessage" })
     @UseWithField(field = "commonCase", valuesFrom = FROM_FIELD, value = "commonCases")
     @RegressionTest("https://issues.jboss.org/browse/RF-12669")
     public void testCommonCases() {

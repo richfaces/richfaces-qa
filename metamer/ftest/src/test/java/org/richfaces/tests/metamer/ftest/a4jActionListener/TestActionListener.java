@@ -32,6 +32,7 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebDriver;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -65,6 +66,7 @@ public class TestActionListener extends AbstractWebDriverTest {
     };
 
     @Test
+    @CoversAttributes("type")
     public void testInvokeListenerByType() {
         final String hashCodeRegExp = "@[0-9a-fA-F]{1,}$";
         final String msg = "Implementation of ActionListener created and called: "
@@ -87,6 +89,7 @@ public class TestActionListener extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("binding")
     public void testInvokeListenerByBinding() {
         final String msg = "Bound listener called";
 
@@ -100,6 +103,7 @@ public class TestActionListener extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("listener")
     public void testInvokeListenerMethod() {
         final String msg = "Method expression listener called";
 

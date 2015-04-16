@@ -33,10 +33,11 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.richfaces.fragment.calendar.DayPicker;
-import org.richfaces.fragment.calendar.PopupCalendar;
 import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
 import org.richfaces.fragment.calendar.DayPicker.CalendarDay.DayType;
+import org.richfaces.fragment.calendar.PopupCalendar;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -62,6 +63,7 @@ public class TestCalendarModel extends AbstractCalendarTest {
 
     @Override
     @Test
+    @CoversAttributes("dataModel")
     @RegressionTest("https://issues.jboss.org/browse/RFPL-1222")
     public void testApplyButton() {
         int wednesdays = 4;
@@ -84,6 +86,7 @@ public class TestCalendarModel extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("dataModel")
     @RegressionTest("https://issues.jboss.org/browse/RFPL-1222")
     @Templates(value = "plain")
     public void testClasses() {

@@ -38,6 +38,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.richfaces.tests.metamer.ftest.richDataScroller.SimplePage.ScrollerPosition;
@@ -54,13 +55,17 @@ import org.testng.annotations.Test;
 public class TestDataScrollerAttributes extends AbstractWebDriverTest {
 
     private final Attributes<DataScrollerAttributes> attributes = getAttributes("attributes");
-    private final Attributes<DataTableAttributes> tableAttributes = getAttributes("tableAttributes");
+    @Page
+    private SimplePage page;
 
     @UseForAllTests(valuesFrom = FROM_ENUM, value = "")
     private ScrollerPosition scroller;
 
-    @Page
-    private SimplePage page;
+    private final Attributes<DataTableAttributes> tableAttributes = getAttributes("tableAttributes");
+
+    private int getNumberOfRows() {
+        return driver.findElements(By.cssSelector("table[id$=richDataTable].rf-dt tbody tr.rf-dt-r")).size();
+    }
 
     @Override
     public URL getTestUrl() {
@@ -68,6 +73,7 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("boundaryControls")
     public void testBoundaryControls() {
         // init - show
         assertTrue(page.getScroller(scroller).advanced().isButtonPresent(DataScrollerSwitchButton.FIRST),
@@ -83,6 +89,7 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("data")
     public void testData() {
         testData(new Action() {
             @Override
@@ -93,6 +100,7 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "onbeforedomupdate", "onbegin", "oncomplete" })
     public void testEvents() throws InterruptedException {
         // set event attributes
         attributes.set(DataScrollerAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
@@ -115,6 +123,7 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("execute")
     public void testExecute() {
         // attributes
         attributes.set(DataScrollerAttributes.execute, "executeChecker");
@@ -131,6 +140,7 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("fastControls")
     public void testFastControls() {
         // init - show
         assertTrue(page.getScroller(scroller).advanced().isButtonPresent(DataScrollerSwitchButton.FAST_FORWARD),
@@ -146,6 +156,7 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("fastStep")
     public void testFastStep() {
         attributes.set(DataScrollerAttributes.fastStep, 3);
 
@@ -160,7 +171,24 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
             "After clicking on the fast rewind button, the current page doesn't match.");
     }
 
+    /**
+     * Test buttons with scroller JS API binding
+     */
     @Test
+    public void testJsApi() {
+        verifyJsApi();
+    }
+
+    /**
+     * Test buttons with scroller JS API binding, using switchToPage operation
+     */
+    @Test
+    public void testJsApiStp() {
+        verifyJsApiStp();
+    }
+
+    @Test
+    @CoversAttributes("lastPageMode")
     public void testLastPageMode() {
         MetamerPage.waitRequest(page.getScroller(scroller), WaitRequestType.XHR)
             .switchTo(DataScrollerSwitchButton.LAST);
@@ -175,6 +203,7 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("limitRender")
     public void testLimitRender() {
         attributes.set(DataScrollerAttributes.limitRender, false);
         MetamerPage.waitRequest(page.getScroller(scroller), WaitRequestType.XHR).switchTo(
@@ -193,6 +222,7 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("maxPages")
     public void testMaxPages() {
         // initial value is 10 which means that 6 pages (i.e. all) should be displayed
         assertEquals(page.getScroller(scroller).advanced().getCountOfVisiblePages(), 6 /* it means - all pages */,
@@ -204,19 +234,14 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("page")
     public void testPage() {
         attributes.set(DataScrollerAttributes.page, 4);
         assertEquals(page.getScroller(scroller).getActivePageNumber(), 4, "The number of current page doesn't match.");
     }
 
     @Test
-    @Templates(value = "plain")
-    public void testRendered() {
-        attributes.set(DataScrollerAttributes.rendered, false);
-        Graphene.waitGui().until().element(page.getScroller(scroller).advanced().getRootElement()).is().not().present();
-    }
-
-    @Test
+    @CoversAttributes("renderIfSinglePage")
     public void testRenderIfSinglePage() {
         // prepare table to display all data at once
         tableAttributes.set(DataTableAttributes.rows, 200);
@@ -233,6 +258,15 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
+    @Templates(value = "plain")
+    public void testRendered() {
+        attributes.set(DataScrollerAttributes.rendered, false);
+        Graphene.waitGui().until().element(page.getScroller(scroller).advanced().getRootElement()).is().not().present();
+    }
+
+    @Test
+    @CoversAttributes("status")
     public void testStatus() {
         attributes.set(DataScrollerAttributes.status, "statusChecker");
 
@@ -241,22 +275,6 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
             DataScrollerSwitchButton.FAST_FORWARD);
         Graphene.waitModel().until("Page was not updated").element(page.getStatusCheckerOutputElement()).text().not()
             .equalTo(statusCheckerTime);
-    }
-
-    @Test
-    public void testStepControls() {
-        // default value - show
-        assertTrue(page.getScroller(scroller).advanced().isButtonPresent(DataScrollerSwitchButton.NEXT),
-            "The next button should be present.");
-        assertTrue(page.getScroller(scroller).advanced().isButtonPresent(DataScrollerSwitchButton.PREVIOUS),
-            "The previous button should be present.");
-
-        // hide
-        attributes.set(DataScrollerAttributes.stepControls, "hide");
-        assertFalse(page.getScroller(scroller).advanced().isButtonPresent(DataScrollerSwitchButton.NEXT),
-            "The next button shouldn't be present.");
-        assertFalse(page.getScroller(scroller).advanced().isButtonPresent(DataScrollerSwitchButton.PREVIOUS),
-            "The previous button shouldn't be present.");
     }
 
     @Test
@@ -282,42 +300,42 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
             "After clicking on the previous button, the current page doesn't match.");
     }
 
-    /**
-     * Test buttons with scroller JS API binding
-     */
     @Test
-    public void testJsApi() {
-        verifyJsApi();
+    @CoversAttributes("stepControls")
+    public void testStepControls() {
+        // default value - show
+        assertTrue(page.getScroller(scroller).advanced().isButtonPresent(DataScrollerSwitchButton.NEXT),
+            "The next button should be present.");
+        assertTrue(page.getScroller(scroller).advanced().isButtonPresent(DataScrollerSwitchButton.PREVIOUS),
+            "The previous button should be present.");
+
+        // hide
+        attributes.set(DataScrollerAttributes.stepControls, "hide");
+        assertFalse(page.getScroller(scroller).advanced().isButtonPresent(DataScrollerSwitchButton.NEXT),
+            "The next button shouldn't be present.");
+        assertFalse(page.getScroller(scroller).advanced().isButtonPresent(DataScrollerSwitchButton.PREVIOUS),
+            "The previous button shouldn't be present.");
     }
 
-    /**
-     * Test buttons with scroller JS API binding, using switchToPage operation
-     */
     @Test
-    public void testJsApiStp() {
-        verifyJsApiStp();
-    }
-
-    @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         super.testStyle(page.getScroller(scroller).advanced().getRootElement());
     }
 
     @Test
-    @Templates(value = "plain")
+    @CoversAttributes("styleClass")
+    @Templates("plain")
     public void testStyleClass() {
         super.testStyleClass(page.getScroller(scroller).advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("title")
     @Templates("plain")
     public void testTitle() {
         super.testTitle(page.getScroller(scroller).advanced().getRootElement());
-    }
-
-    private int getNumberOfRows() {
-        return driver.findElements(By.cssSelector("table[id$=richDataTable].rf-dt tbody tr.rf-dt-r")).size();
     }
 
     private void verifyJsApi() {

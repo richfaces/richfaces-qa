@@ -33,6 +33,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
 import org.richfaces.fragment.calendar.DayPicker;
 import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.model.CalendarModel;
@@ -90,6 +91,7 @@ public class TestCalendarPreloadedDates extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes({ "preloadDateRangeBegin", "preloadDateRangeEnd" })
     @UseWithField(field = "date", valuesFrom = FROM_FIELD, value = "inBoundsDates")
     @Templates(value = "plain")
     public void testClassesInPreloadedBoundaries() {
@@ -98,6 +100,7 @@ public class TestCalendarPreloadedDates extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes({ "preloadDateRangeBegin", "preloadDateRangeEnd" })
     @UseWithField(field = "date", valuesFrom = FROM_FIELD, value = "outOfBounds")
     @Templates(value = "plain")
     public void testClassesOutOfPreloadedBoundaries() {

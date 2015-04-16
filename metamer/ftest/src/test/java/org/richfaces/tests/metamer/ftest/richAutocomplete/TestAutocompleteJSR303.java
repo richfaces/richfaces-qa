@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.ftest.richAutocomplete;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 
 import org.richfaces.tests.metamer.ftest.abstractions.validations.AbstractStringInputComponentValidationTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.annotations.Test;
 
@@ -39,6 +40,7 @@ public class TestAutocompleteJSR303 extends AbstractStringInputComponentValidati
     }
 
     @Test
+    @CoversAttributes({ "required", "requiredMessage" })
     @UseWithField(field = "commonCase", valuesFrom = FROM_FIELD, value = "commonCases")
     public void testCommonCases() {
         verifyCases();

@@ -37,6 +37,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -100,6 +101,7 @@ public class TestTogglePanel extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("activeItem")
     public void testActiveItem() {
         togglePanelAttributes.set(TogglePanelAttributes.activeItem, "item3");
         assertFalse(item1.isDisplayed(), "Item 1 should not be displayed");
@@ -113,6 +115,7 @@ public class TestTogglePanel extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("cycledSwitching")
     public void testCycledSwitching() {
         togglePanelAttributes.set(TogglePanelAttributes.cycledSwitching, Boolean.FALSE);
         assertTrue(item1.isDisplayed(), "Item 1 should be displayed");
@@ -131,12 +134,14 @@ public class TestTogglePanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("dir")
     @Templates(value = "plain")
     public void testDir() {
         super.testDir(panel);
     }
 
     @Test
+    @CoversAttributes("immediate")
     @RegressionTest("https://issues.jboss.org/browse/RF-10054")
     public void testImmediate() {
         togglePanelAttributes.set(TogglePanelAttributes.immediate, Boolean.TRUE);
@@ -161,6 +166,7 @@ public class TestTogglePanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("itemChangeListener")
     public void testItemChangeListener() {
         Graphene.guardAjax(tc3).click();
         assertTrue(item3.isDisplayed(), "Item 3 should be displayed");
@@ -180,12 +186,14 @@ public class TestTogglePanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("lang")
     @Templates(value = "plain")
     public void testLang() {
         testLang(panel);
     }
 
     @Test
+    @CoversAttributes({ "onbeforeitemchange", "onitemchange" })
     @Templates("plain")
     public void testOnbeforeitemchangeOnitemChange() {
         testRequestEventsBefore("beforeitemchange", "itemchange");
@@ -196,48 +204,56 @@ public class TestTogglePanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(Event.CLICK, panel);
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(Event.DBLCLICK, panel);
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEvent(Event.MOUSEDOWN, panel);
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEvent(Event.MOUSEMOVE, panel);
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEvent(Event.MOUSEOUT, panel);
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEvent(Event.MOUSEOVER, panel);
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEvent(Event.MOUSEUP, panel);
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         togglePanelAttributes.set(TogglePanelAttributes.rendered, Boolean.FALSE);
@@ -245,18 +261,21 @@ public class TestTogglePanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         testStyle(panel);
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(panel);
     }
 
     @Test
+    @CoversAttributes("switchType")
     @UseWithField(field = "switchType", valuesFrom = STRINGS, value = { "null", "ajax", "client", "server" })
     @RegressionTest("https://issues.jboss.org/browse/RF-10040")
     public void testSwitchType() {
@@ -283,6 +302,7 @@ public class TestTogglePanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
         testTitle(panel);

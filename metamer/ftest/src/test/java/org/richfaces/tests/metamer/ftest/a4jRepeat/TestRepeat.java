@@ -32,7 +32,9 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.a4jRegion.RegionAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -69,6 +71,7 @@ public class TestRepeat extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         repeatAttributes.set(RepeatAttributes.rendered, "false");
@@ -76,6 +79,7 @@ public class TestRepeat extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("first")
     @RegressionTest("https://issues.jboss.org/browse/RF-10589")
     @UseWithField(field = "first", valuesFrom = FROM_FIELD, value = "intsFirst")
     public void testFirst() {
@@ -84,6 +88,7 @@ public class TestRepeat extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rows")
     @RegressionTest("https://issues.jboss.org/browse/RF-10589")
     @UseWithField(field = "rows", valuesFrom = FROM_FIELD, value = "intsRows")
     public void testRowsAttribute() {

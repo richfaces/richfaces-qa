@@ -35,6 +35,7 @@ import org.richfaces.fragment.common.Icon;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.checker.IconsChecker;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.annotations.Test;
@@ -63,18 +64,21 @@ public class TestCollapsiblePanel extends TestFacets {
     }
 
     @Test
+    @CoversAttributes("bodyClass")
     @Templates(value = "plain")
     public void testBodyClass() {
         testStyleClass(panel.advanced().getBodyElement(), BasicAttributes.bodyClass);
     }
 
     @Test
+    @CoversAttributes("dir")
     @Templates(value = "plain")
     public void testDir() {
         testDir(panel.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("expanded")
     @RegressionTest("https://issues.jboss.org/browse/RF-10312")
     public void testExpanded() {
         collapsiblePanelAttributes.set(CollapsiblePanelAttributes.expanded, Boolean.TRUE);
@@ -84,6 +88,7 @@ public class TestCollapsiblePanel extends TestFacets {
     }
 
     @Test
+    @CoversAttributes("header")
     public void testHeader() {
         collapsiblePanelAttributes.set(CollapsiblePanelAttributes.header, "new header");
 
@@ -95,12 +100,14 @@ public class TestCollapsiblePanel extends TestFacets {
     }
 
     @Test
+    @CoversAttributes("headerClass")
     @Templates(value = "plain")
     public void testHeaderClass() {
         testStyleClass(panel.advanced().getHeaderElement(), BasicAttributes.headerClass);
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("immediate")
     @RegressionTest("https://issues.jboss.org/browse/RF-10054")
     public void testImmediate() {
         collapsiblePanelAttributes.set(CollapsiblePanelAttributes.immediate, Boolean.TRUE);
@@ -112,12 +119,14 @@ public class TestCollapsiblePanel extends TestFacets {
     }
 
     @Test
+    @CoversAttributes("lang")
     @Templates(value = "plain")
     public void testLang() {
         testLang(panel.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("leftCollapsedIcon")
     @Templates(value = "plain")
     public void testLeftCollapsedIcon() {
         Graphene.guardAjax(panel).collapse();
@@ -125,12 +134,14 @@ public class TestCollapsiblePanel extends TestFacets {
     }
 
     @Test
+    @CoversAttributes("leftExpandedIcon")
     @Templates(value = "plain")
     public void testLeftExpandedIcon() {
         verifyStandardIcons(panel.advanced().getLeftIcon(), CollapsiblePanelAttributes.leftExpandedIcon);
     }
 
     @Test
+    @CoversAttributes({ "onbeforeswitch", "onswitch" })
     public void testOnbeforeswitchOnswitch() {
         testRequestEventsBefore("beforeswitch", "switch");
         Graphene.guardAjax(panel).collapse();
@@ -138,48 +149,56 @@ public class TestCollapsiblePanel extends TestFacets {
     }
 
     @Test
+    @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(Event.CLICK, panel.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(Event.DBLCLICK, panel.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEvent(Event.MOUSEDOWN, panel.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEvent(Event.MOUSEMOVE, panel.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEvent(Event.MOUSEOUT, panel.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEvent(Event.MOUSEOVER, panel.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEvent(Event.MOUSEUP, panel.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         collapsiblePanelAttributes.set(CollapsiblePanelAttributes.rendered, Boolean.FALSE);
@@ -187,6 +206,7 @@ public class TestCollapsiblePanel extends TestFacets {
     }
 
     @Test
+    @CoversAttributes("rightCollapsedIcon")
     @Templates(value = "plain")
     public void testRightCollapsedIcon() {
         Graphene.guardAjax(panel).collapse();
@@ -194,24 +214,28 @@ public class TestCollapsiblePanel extends TestFacets {
     }
 
     @Test
+    @CoversAttributes("rightExpandedIcon")
     @Templates(value = "plain")
     public void testRightExpandedIcon() {
         verifyStandardIcons(panel.advanced().getRightIcon(), CollapsiblePanelAttributes.rightExpandedIcon);
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         testStyle(panel.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(panel.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("switchType")
     @Templates(value = "plain")
     @UseWithField(field = "switchType", valuesFrom = STRINGS, value = { "null", "ajax", "client", "server" })
     @RegressionTest("https://issues.jboss.org/browse/RF-10368")
@@ -220,28 +244,21 @@ public class TestCollapsiblePanel extends TestFacets {
     }
 
     @Test
+    @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
         testTitle(panel.advanced().getRootElement());
     }
 
     @Test
-    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "richList",
-        "a4jRepeat" })
+    @CoversAttributes("toggleListener")
+    @RegressionTest("https://issues.jboss.org/browse/RF-11568")
     public void testToggleListener() {
         Graphene.guardAjax(panel).collapse();
         getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "panel collapsed");
 
         Graphene.guardAjax(panel).expand();
         getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "panel expanded");
-    }
-
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11568")
-    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "richList",
-        "a4jRepeat" })
-    public void testToggleListenerInIterationComponents() {
-        testToggleListener();
     }
 
     private void verifyStandardIcons(Icon icon, CollapsiblePanelAttributes attribute) {

@@ -39,6 +39,7 @@ import java.util.LinkedList;
 import javax.faces.event.PhaseId;
 
 import org.richfaces.component.Mode;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -92,6 +93,7 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes({ "bypassUpdates", "execute", "immediate", "mode" })
     @Uses({
         @UseWithField(field = "immediate", valuesFrom = FROM_FIELD, value = "booleans"),
         @UseWithField(field = "bypassUpdates", valuesFrom = FROM_FIELD, value = "booleans"),
@@ -131,6 +133,7 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("mode")
     public void testClientMode() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.client);
 

@@ -29,6 +29,7 @@ import java.net.URL;
 
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.message.RichFacesMessage;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
@@ -52,6 +53,7 @@ public class TestOrderingListRequired extends AbstractOrderingListTest {
     }
 
     @Test
+    @CoversAttributes("required")
     public void testRequired() {
         attributes.set(OrderingListAttributes.required, Boolean.FALSE);
         submit();
@@ -64,6 +66,7 @@ public class TestOrderingListRequired extends AbstractOrderingListTest {
     }
 
     @Test
+    @CoversAttributes("requiredMessage")
     public void testRequiredMessage() {
         String requiredMessage = "Custom required message.";
         attributes.set(OrderingListAttributes.required, Boolean.TRUE);

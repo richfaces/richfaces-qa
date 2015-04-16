@@ -53,13 +53,23 @@ public class TestValidatorsJSR303 extends AbstractValidatorsTest {
     }
 
     @Test
+    public void testBooleanFalse() {
+        verifyBooleanFalse();
+    }
+
+    @Test
     public void testBooleanTrue() {
         verifyBooleanTrue();
     }
 
     @Test
-    public void testBooleanFalse() {
-        verifyBooleanFalse();
+    public void testDateFuture() {
+        verifyDateFuture();
+    }
+
+    @Test
+    public void testDatePast() {
+        verifyDatePast();
     }
 
     @Test
@@ -83,6 +93,22 @@ public class TestValidatorsJSR303 extends AbstractValidatorsTest {
     }
 
     @Test
+    @RegressionTest(value = "https://issues.jboss.org/browse/RF-11035")
+    public void testSelectionSize() {
+        verifySelectionSize();
+    }
+
+    @Test
+    public void testStringSize() {
+        verifyStringSize();
+    }
+
+    @Test
+    public void testTextCustomPattern() {
+        verifyCustom();
+    }
+
+    @Test
     public void testTextNotEmpty() {
         verifyNotEmpty();
     }
@@ -95,32 +121,6 @@ public class TestValidatorsJSR303 extends AbstractValidatorsTest {
     @Test
     public void testTextPattern() {
         verifyPattern();
-    }
-
-    @Test
-    public void testTextCustomPattern() {
-        verifyCustom();
-    }
-
-    @Test
-    public void testDatePast() {
-        verifyDatePast();
-    }
-
-    @Test
-    public void testDateFuture() {
-        verifyDateFuture();
-    }
-
-    @Test
-    public void testStringSize() {
-        verifyStringSize();
-    }
-
-    @Test
-    @RegressionTest(value = "https://issues.jboss.org/browse/RF-11035")
-    public void testSelectionSize() {
-        verifySelectionSize();
     }
 
 }

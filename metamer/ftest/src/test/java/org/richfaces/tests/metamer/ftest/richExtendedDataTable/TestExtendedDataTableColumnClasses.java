@@ -29,6 +29,7 @@ import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractColumnClassesTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.FilteringDTRow;
@@ -62,6 +63,7 @@ public class TestExtendedDataTableColumnClasses extends AbstractColumnClassesTes
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesEqualsToColumns_commaSeparated() {
@@ -69,6 +71,7 @@ public class TestExtendedDataTableColumnClasses extends AbstractColumnClassesTes
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesEqualsToColumns_spaceSeparated() {
@@ -76,6 +79,7 @@ public class TestExtendedDataTableColumnClasses extends AbstractColumnClassesTes
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesGreaterThanColumns_commaSeparated() {
@@ -83,6 +87,7 @@ public class TestExtendedDataTableColumnClasses extends AbstractColumnClassesTes
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesLesserThanColumns_commaSeparated() {
@@ -90,6 +95,7 @@ public class TestExtendedDataTableColumnClasses extends AbstractColumnClassesTes
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesLesserThanColumns_spaceSeparated() {
@@ -97,6 +103,7 @@ public class TestExtendedDataTableColumnClasses extends AbstractColumnClassesTes
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_oneColumnClass() {

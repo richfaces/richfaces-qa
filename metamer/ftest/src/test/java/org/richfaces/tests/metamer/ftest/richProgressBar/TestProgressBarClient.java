@@ -40,6 +40,7 @@ import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.bean.rich.RichProgressBarBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
@@ -65,7 +66,7 @@ public class TestProgressBarClient extends AbstractWebDriverTest {
     @Test
     public void testInit() {
         assertTrue(new WebElementConditionFactory(page.getProgressBarElement()).isPresent().apply(driver),
-                "Progress bar is not present on the page.");
+            "Progress bar is not present on the page.");
         assertTrue(page.getProgressBarElement().isDisplayed(), "Progress bar should be visible on the page.");
         assertTrue(page.getInitialOutputElement().isDisplayed(), "Initial output should be present on the page.");
         assertFalse(page.getFinishOutputElement().isDisplayed(), "Finish output should not be present on the page.");
@@ -98,7 +99,7 @@ public class TestProgressBarClient extends AbstractWebDriverTest {
         assertTrue(page.getRemainElement().isDisplayed(), "Progress bar should show progress.");
         assertTrue(page.getProgressElement().isDisplayed(), "Progress bar should show progress.");
         assertFalse(new WebElementConditionFactory(page.getCompleteOutputElement()).isVisible().apply(driver),
-                "Progress bar should not show progress.");
+            "Progress bar should not show progress.");
         assertEquals(page.getIsEnabledElement().getText(), "true");
     }
 
@@ -129,6 +130,7 @@ public class TestProgressBarClient extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onfinish")
     public void testOnfinish() {
         progressBarAttributes.set(ProgressBarAttributes.maxValue, 10);
         progressBarAttributes.set(ProgressBarAttributes.interval, 100);
@@ -137,8 +139,8 @@ public class TestProgressBarClient extends AbstractWebDriverTest {
             public void perform() {
                 page.getStartButtonClientElement().click();
                 Graphene.waitAjax().withTimeout(getExpectedRunTime(), TimeUnit.SECONDS)
-                        .withMessage("Progress bar should disappear after it finishes.")
-                        .until().element(page.getFinishElement()).is().visible();
+                    .withMessage("Progress bar should disappear after it finishes.")
+                    .until().element(page.getFinishElement()).is().visible();
             }
         });
     }
@@ -158,7 +160,7 @@ public class TestProgressBarClient extends AbstractWebDriverTest {
         int updates = (int) (maximumTime / interval) - 1; //-1 to be sure that no invalid values will be gathered
         if (updates < 2) {
             throw new RuntimeException("The measurement will not be possible. "
-                    + "Reduce the @interval or increase the @maxValue.");
+                + "Reduce the @interval or increase the @maxValue.");
         }
         return updates;
     }
@@ -197,8 +199,8 @@ public class TestProgressBarClient extends AbstractWebDriverTest {
         int progress = getProgress();
         for (int i = 0; i < expectedNumberOfUpdates; i++) {
             Graphene.waitGui().withTimeout(maxWaitTime, TimeUnit.MILLISECONDS)
-                    .withMessage("Progress was not updated")
-                    .until().element(page.getActualProgressElement()).text().not().equalTo(String.valueOf(progress));
+                .withMessage("Progress was not updated")
+                .until().element(page.getActualProgressElement()).text().not().equalTo(String.valueOf(progress));
             progress = getProgress();
             progressList.add(progress);
             timesList.add(new DateTime());
@@ -215,9 +217,9 @@ public class TestProgressBarClient extends AbstractWebDriverTest {
         }
 
         Graphene.waitGui()
-                .withTimeout(expectedRunTime, TimeUnit.SECONDS)
-                .withMessage("Progress bar should disappear after it finishes.")
-                .until().element(page.getFinishOutputElement()).is().visible();
+            .withTimeout(expectedRunTime, TimeUnit.SECONDS)
+            .withMessage("Progress bar should disappear after it finishes.")
+            .until().element(page.getFinishOutputElement()).is().visible();
         assertVisible(page.getProgressBarElement(), "Progress bar is not present on the page.");
         assertNotVisible(page.getInitialOutputElement(), "Initial output should not be present on the page.");
         assertVisible(page.getFinishOutputElement(), "Complete output should be present on the page.");

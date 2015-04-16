@@ -29,6 +29,7 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.GrapheneElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.Test;
 
 /**
@@ -38,7 +39,7 @@ import org.testng.annotations.Test;
  */
 public class TestMediaOutputElementScript extends AbstractMediaOutputTest {
 
-    @FindBy(css="*#mediaOutputJavascriptText")
+    @FindBy(css = "*#mediaOutputJavascriptText")
     private GrapheneElement javascriptText;
 
     @Override
@@ -47,10 +48,10 @@ public class TestMediaOutputElementScript extends AbstractMediaOutputTest {
     }
 
     @Test
+    @CoversAttributes({ "element", "mimeType", "type", "uriAttribute" })
     public void init() {
         assertTrue(javascriptText.isPresent(), "The javascript text is not present.");
         assertEquals(javascriptText.getText(), "JAVASCRIPT TEXT", "The javascript text doesn't match.");
     }
-
 
 }

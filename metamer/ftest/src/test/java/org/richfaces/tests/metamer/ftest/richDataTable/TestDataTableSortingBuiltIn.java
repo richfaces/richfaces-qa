@@ -6,6 +6,7 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SortingDT;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -16,13 +17,13 @@ public class TestDataTableSortingBuiltIn extends DataTableSortingTest {
     private SortingDT table;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richDataTable/builtInFiltering.xhtml");
+    public SortingDT getTable() {
+        return table;
     }
 
     @Override
-    public SortingDT getTable() {
-        return table;
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richDataTable/builtInFiltering.xhtml");
     }
 
     @BeforeTest
@@ -31,44 +32,51 @@ public class TestDataTableSortingBuiltIn extends DataTableSortingTest {
     }
 
     @Test
-    @Override
-    public void testSortModeSingle() {
-        super.testSortModeSingle();
-    }
-
-    @Test
-    @Override
-    public void testSortModeSingleReverse() {
-        super.testSortModeSingleReverse();
-    }
-
-    @Test
-    @Override
-    public void testSortModeSingleFullPageRefresh() {
-        super.testSortModeSingleFullPageRefresh();
-    }
-
-    @Test
+    @CoversAttributes("sortMode")
     @Override
     public void testSortModeMulti() {
         super.testSortModeMulti();
     }
 
     @Test
+    @CoversAttributes("sortMode")
     @Override
-    public void testSortModeMultiReverse() {
-        super.testSortModeMultiReverse();
+    public void testSortModeMultiFullPageRefresh() {
+        super.testSortModeMultiFullPageRefresh();
     }
 
     @Test
+    @CoversAttributes("sortMode")
     @Override
     public void testSortModeMultiReplacingOldOccurences() {
         super.testSortModeMultiReplacingOldOccurences();
     }
 
     @Test
+    @CoversAttributes("sortMode")
     @Override
-    public void testSortModeMultiFullPageRefresh() {
-        super.testSortModeMultiFullPageRefresh();
+    public void testSortModeMultiReverse() {
+        super.testSortModeMultiReverse();
+    }
+
+    @Test
+    @CoversAttributes("sortMode")
+    @Override
+    public void testSortModeSingle() {
+        super.testSortModeSingle();
+    }
+
+    @Test
+    @CoversAttributes("sortMode")
+    @Override
+    public void testSortModeSingleFullPageRefresh() {
+        super.testSortModeSingleFullPageRefresh();
+    }
+
+    @Test
+    @CoversAttributes("sortMode")
+    @Override
+    public void testSortModeSingleReverse() {
+        super.testSortModeSingleReverse();
     }
 }

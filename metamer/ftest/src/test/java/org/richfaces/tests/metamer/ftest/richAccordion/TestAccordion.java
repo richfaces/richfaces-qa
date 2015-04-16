@@ -42,6 +42,7 @@ import org.richfaces.fragment.switchable.SwitchType;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.Assert;
@@ -75,6 +76,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("activeItem")
     public void testActiveItem() {
         accordionAttributes.set(AccordionAttributes.activeItem, "item5");
 
@@ -103,6 +105,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("cycledSwitching")
     public void testCycledSwitching() {
         WebElement rootElement = page.getAccordion().advanced().getRootElement();
         // RichFaces.$('form:accordion').nextItem('item5') will be null
@@ -121,12 +124,14 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("dir")
     @Templates(value = "plain")
     public void testDir() {
         testDir(page.getAccordionRootElement());
     }
 
     @Test
+    @CoversAttributes("height")
     @Templates(value = "plain")
     public void testHeight() {
         WebElement accordionRoot = page.getAccordionRootElement();
@@ -139,6 +144,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("immediate")
     public void testImmediate() {
         accordionAttributes.set(AccordionAttributes.immediate, true);
 
@@ -149,6 +155,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("itemActiveHeaderClass")
     @Templates(value = "plain")
     public void testItemActiveHeaderClass() {
         testStyleClass(page.getAccordion().advanced().getActiveItem().advanced().getHeaderElement(),
@@ -156,12 +163,14 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("itemChangeListener")
     public void testItemChangeListener() {
         page.getAccordion().switchTo(2);
         page.assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: item1 -> item3");
     }
 
     @Test
+    @CoversAttributes("itemContentClass")
     @Templates(value = "plain")
     public void testItemContentClass() {
         for (RichFacesAccordionItem item : page.getAccordion().advanced().getAccordionItems()) {
@@ -170,6 +179,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("itemDisabledHeaderClass")
     @Templates(value = "plain")
     public void testItemDisabledHeaderClass() {
         for (RichFacesAccordionItem item : page.getAccordion().advanced().getAccordionItems()) {
@@ -180,6 +190,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("itemHeaderClass")
     @Templates(value = "plain")
     public void testItemHeaderClass() {
         for (RichFacesAccordionItem item : page.getAccordion().advanced().getAccordionItems()) {
@@ -188,6 +199,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "onbeforeitemchange", "onitemchange" })
     public void testItemchangeEvents() {
         accordionAttributes.set(AccordionAttributes.onbeforeitemchange, "metamerEvents += \"beforeitemchange \"");
         accordionAttributes.set(AccordionAttributes.onitemchange, "metamerEvents += \"itemchange \"");
@@ -201,6 +213,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("itemInactiveHeaderClass")
     @Templates(value = "plain")
     public void testItemInactiveHeaderClass() {
         for (RichFacesAccordionItem item : page.getAccordion().advanced().getAccordionItems()) {
@@ -211,12 +224,14 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("lang")
     @Templates(value = "plain")
     public void testLang() {
         testLang(page.getAccordionRootElement());
     }
 
     @Test
+    @CoversAttributes("onbeforeitemchange")
     public void testOnbeforeitemchange() {
         Action action = new Action() {
             @Override
@@ -228,6 +243,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
         Action action = new Actions(driver).click(page.getAccordionRootElement()).build();
@@ -235,6 +251,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates(value = "plain")
     public void testOndblclick() {
         Action action = new Actions(driver).doubleClick(page.getAccordionRootElement()).build();
@@ -242,6 +259,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onitemchange")
     public void testOnitemchange() {
         Action action = new Action() {
             @Override
@@ -253,6 +271,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
         Action action = new Actions(driver).clickAndHold(page.getAccordionRootElement()).build();
@@ -260,6 +279,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates(value = "plain")
     public void testOnmousemove() {
         Action action = new Actions(driver).moveToElement(page.getAccordionRootElement()).build();
@@ -267,12 +287,14 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEventWithJS(page.getAccordionRootElement(), accordionAttributes, AccordionAttributes.onmouseout);
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
     public void testOnmouseover() {
         new Actions(driver).moveToElement(page.getRequestTimeElement()).perform();
@@ -281,6 +303,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates(value = "plain")
     public void testOnmouseup() {
         Action action = new Actions(driver).click(page.getAccordionRootElement()).build();
@@ -288,6 +311,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         accordionAttributes.set(AccordionAttributes.rendered, false);
@@ -307,18 +331,21 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         testStyle(page.getAccordionRootElement());
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(page.getAccordionRootElement());
     }
 
     @Test
+    @CoversAttributes("switchType")
     @RegressionTest("https://issues.jboss.org/browse/RF-12532")
     public void testSwitchTypeNull() {
         for (int i = 2; i >= 0; i--) {
@@ -327,6 +354,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("switchType")
     @RegressionTest("https://issues.jboss.org/browse/RF-12532")
     @Templates(value = "plain")
     public void testSwitchTypeAjax() {
@@ -335,6 +363,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("switchType")
     @RegressionTest("https://issues.jboss.org/browse/RF-12532")
     public void testSwitchTypeClient() {
         accordionAttributes.set(AccordionAttributes.switchType, "client");
@@ -345,6 +374,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("switchType")
     @RegressionTest({ "https://issues.jboss.org/browse/RF-10040", "https://issues.jboss.org/browse/RF-12532" })
     public void testSwitchTypeServer() {
         accordionAttributes.set(AccordionAttributes.switchType, "server");

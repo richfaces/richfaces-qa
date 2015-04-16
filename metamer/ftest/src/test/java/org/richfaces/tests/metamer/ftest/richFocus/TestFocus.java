@@ -32,6 +32,7 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -52,15 +53,7 @@ public class TestFocus extends AbstractWebDriverTest {
     }
 
     @Test
-    public void testFocusOnFirstInputAfterLoad() {
-        page.typeStringAndDoNotCareAboutFocus();
-
-        String actual = page.getNameInput().getStringValue();
-        assertEquals(actual, AbstractFocusPage.EXPECTED_STRING,
-            "The first input (with label name) was not focused after page load!");
-    }
-
-    @Test
+    @CoversAttributes("ajaxRendered")
     public void testAjaxRenderedFalse() {
         focusAttributes.set(FocusAttributes.ajaxRendered, false);
 
@@ -73,21 +66,16 @@ public class TestFocus extends AbstractWebDriverTest {
     }
 
     @Test
-    public void testValidationAwareTrue() {
-        page.getNameInput().sendKeys("Robert");
-        page.getAgeInput().sendKeys("38");
-
-        page.ajaxValidateInputs();
-        waitModel().until(new ElementIsFocused(page.getAddressInput().advanced().getInputElement()));
-
+    public void testFocusOnFirstInputAfterLoad() {
         page.typeStringAndDoNotCareAboutFocus();
 
-        String actual = page.getAddressInput().getStringValue();
+        String actual = page.getNameInput().getStringValue();
         assertEquals(actual, AbstractFocusPage.EXPECTED_STRING,
-            "The address input should be focused! Since validationAware is true and that input is incorrect!");
+            "The first input (with label name) was not focused after page load!");
     }
 
     @Test
+    @CoversAttributes("validationAware")
     @Templates(exclude = { "richAccordion", "richCollapsiblePanel", "richTabPanel" })
     public void testValidationAwareFalse() {
         // richPopupPanel is disabled because in place where following attribute is to be set the popup
@@ -108,9 +96,26 @@ public class TestFocus extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("validationAware")
     @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel" })
     @RegressionTest("https://issues.jboss.org/browse/RF-13263")
     public void testValidationAwareFalseInSwitchablePanels() {
         testValidationAwareFalse();
+    }
+
+    @Test
+    @CoversAttributes("validationAware")
+    public void testValidationAwareTrue() {
+        page.getNameInput().sendKeys("Robert");
+        page.getAgeInput().sendKeys("38");
+
+        page.ajaxValidateInputs();
+        waitModel().until(new ElementIsFocused(page.getAddressInput().advanced().getInputElement()));
+
+        page.typeStringAndDoNotCareAboutFocus();
+
+        String actual = page.getAddressInput().getStringValue();
+        assertEquals(actual, AbstractFocusPage.EXPECTED_STRING,
+            "The address input should be focused! Since validationAware is true and that input is incorrect!");
     }
 }

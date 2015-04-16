@@ -39,6 +39,7 @@ import static org.testng.Assert.assertTrue;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.fragment.common.Event;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -50,23 +51,13 @@ import org.testng.annotations.Test;
  */
 public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
 
-    private final Attributes<PanelMenuAttributes> panelMenuAttributes = getAttributes();
-
     private Event event = DBLCLICK;
 
-    private final Event[] events = new Event[]{ CLICK, DBLCLICK, MOUSEOVER };
+    private final Event[] events = new Event[] { CLICK, DBLCLICK, MOUSEOVER };
+    private final Attributes<PanelMenuAttributes> panelMenuAttributes = getAttributes();
 
     @Test
-    @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "events")
-    public void testExpandEvent() {
-        panelMenuAttributes.set(expandEvent, event.getEventName());
-        assertFalse(getPage().getGroup2().advanced().isExpanded());
-
-        fireEvent(getPage().getGroup2().advanced().getLabelElement(), event);
-        getPage().getGroup2().advanced().waitUntilMenuGroupExpanded(getPage().getGroup2().advanced().getHeaderElement());
-    }
-
-    @Test
+    @CoversAttributes("collapseEvent")
     @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "events")
     public void testCollapseEvent() {
         panelMenuAttributes.set(collapseEvent, event.getEventName());
@@ -79,6 +70,18 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("expandEvent")
+    @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "events")
+    public void testExpandEvent() {
+        panelMenuAttributes.set(expandEvent, event.getEventName());
+        assertFalse(getPage().getGroup2().advanced().isExpanded());
+
+        fireEvent(getPage().getGroup2().advanced().getLabelElement(), event);
+        getPage().getGroup2().advanced().waitUntilMenuGroupExpanded(getPage().getGroup2().advanced().getHeaderElement());
+    }
+
+    @Test
+    @CoversAttributes("onclick")
     @Templates("plain")
     public void testOnclick() {
         Action click = new Actions(driver).click(getPage().getPanelMenu().advanced().getRootElement()).build();
@@ -86,6 +89,7 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates("plain")
     public void testOndblclick() {
         Action dblClick = new Actions(driver).doubleClick(getPage().getPanelMenu().advanced().getRootElement()).build();
@@ -93,6 +97,7 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
         Action mousedown = new Actions(driver).clickAndHold(getPage().getPanelMenu().advanced().getRootElement()).build();
@@ -101,6 +106,7 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates("plain")
     public void testOnmousemove() {
         Action mousemove = new Actions(driver).moveToElement(getPage().getPanelMenu().advanced().getRootElement(), 3, 3).build();
@@ -108,12 +114,15 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates("plain")
     public void testOnmouseout() {
-        testFireEventWithJS(getPage().getPanelMenu().advanced().getRootElement(),panelMenuAttributes, PanelMenuAttributes.onmouseout);
+        testFireEventWithJS(getPage().getPanelMenu().advanced().getRootElement(), panelMenuAttributes,
+            PanelMenuAttributes.onmouseout);
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates("plain")
     public void testOnmouseover() {
         //This test should be done first, because use static x and y variables
@@ -123,6 +132,7 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates(value = "plain")
     public void testOnmouseup() {
         Action mouseup = new Actions(driver).click(getPage().getPanelMenu().advanced().getRootElement()).build();

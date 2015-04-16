@@ -48,6 +48,7 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -68,13 +69,12 @@ public class TestPopupPanel extends AbstractWebDriverTest {
 
     @FindBy(css = "input[id$=openPanelButton]")
     private WebElement openButton;
-    @FindBy(css = "div.rf-pp-shade[id$=popupPanel_shade]")
-    private WebElement shade;
     @FindBy(css = "div.rf-pp-cntr[id$=popupPanel_container]")
     private TestedPopupPanel panel;
     @FindBy(css = "input[id$=resize]")
     private WebElement resize;
-
+    @FindBy(css = "div.rf-pp-shade[id$=popupPanel_shade]")
+    private WebElement shade;
     private ResizerLocation resizer;
 
     private void checkCssValueOf(String cssValue, double value, WebElement element) {
@@ -157,6 +157,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("autosized")
     public void testAutosized() {
         popupPanelAttributes.set(PopupPanelAttributes.height, -1);// set value to default (as if the attibute is not present)
         popupPanelAttributes.set(PopupPanelAttributes.width, -1);// set value to default (as if the attibute is not present)
@@ -187,12 +188,14 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("controlsClass")
     @Templates(value = "plain")
     public void testControlsClass() {
         testStyleClass(panel.advanced().getHeaderControlsElement(), BasicAttributes.controlsClass);
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("domElementAttachment")
     @RegressionTest("https://issues.jboss.org/browse/RF-10249")
     public void testDomElementAttachment() {
         popupPanelAttributes.set(PopupPanelAttributes.domElementAttachment, "");
@@ -213,6 +216,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("followByScroll")
     public void testFollowByScroll() {
         popupPanelAttributes.set(PopupPanelAttributes.followByScroll, Boolean.FALSE);
         openPopupPanel();
@@ -223,6 +227,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("header")
     @Templates(value = "plain")
     public void testHeader() {
         String value = "new header";
@@ -232,12 +237,14 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("headerClass")
     @Templates(value = "plain")
     public void testHeaderClass() {
         testStyleClass(panel.advanced().getHeaderElement(), BasicAttributes.headerClass);
     }
 
     @Test
+    @CoversAttributes("height")
     @Templates(value = "plain")
     public void testHeight() {
         openPopupPanel();
@@ -251,6 +258,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test(groups = "Future")
+    @CoversAttributes("height")
     @IssueTracking("https://issues.jboss.org/browse/RF-10251")
     @Templates(value = "plain")
     public void testHeightZero() {
@@ -301,6 +309,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test(groups = "Future")
+    @CoversAttributes("keepVisualState")
     @IssueTracking("https://issues.jboss.org/browse/RF-10697")
     public void testKeepVisualState() {
         int tolerance = 10;
@@ -326,6 +335,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("left")
     public void testLeft() {
         int defaultPanelWidth = 500;
         int width = Integer.valueOf(String.valueOf(executeJS("return window.innerWidth")));
@@ -338,6 +348,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("maxHeight")
     @Templates(value = "plain")
     public void testMaxheight() {
         popupPanelAttributes.set(PopupPanelAttributes.minHeight, 200);
@@ -353,6 +364,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("maxWidth")
     @Templates(value = "plain")
     public void testMaxwidth() {
         popupPanelAttributes.set(PopupPanelAttributes.minWidth, 200);
@@ -368,6 +380,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("minHeight")
     @Templates(value = "plain")
     public void testMinheight() {
         popupPanelAttributes.set(PopupPanelAttributes.minHeight, 200);
@@ -379,6 +392,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("minWidth")
     @Templates(value = "plain")
     public void testMinwidth() {
         popupPanelAttributes.set(PopupPanelAttributes.minWidth, 200);
@@ -390,6 +404,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("modal")
     @Templates(value = "plain")
     public void testModal() {
         popupPanelAttributes.set(PopupPanelAttributes.modal, Boolean.FALSE);
@@ -401,7 +416,8 @@ public class TestPopupPanel extends AbstractWebDriverTest {
         assertVisible(shade, "Shade should be visible.");
     }
 
-    @Test()
+    @Test
+    @CoversAttributes("moveable")
     public void testMovable() {
         popupPanelAttributes.set(PopupPanelAttributes.moveable, Boolean.FALSE);
         openPopupPanel();
@@ -428,6 +444,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onbeforehide")
     public void testOnbeforehide() {
         testFireEvent("beforehide", new Action() {
             @Override
@@ -439,6 +456,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onbeforeshow")
     public void testOnbeforeshow() {
         testFireEvent("beforeshow", new Action() {
             @Override
@@ -449,6 +467,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onhide")
     public void testOnhide() {
         testFireEvent("hide", new Action() {
             @Override
@@ -467,6 +486,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmaskclick")
     @Templates(value = "plain")
     public void testOnmaskclick() {
         popupPanelAttributes.set(PopupPanelAttributes.modal, Boolean.TRUE);
@@ -474,6 +494,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmaskcontextmenu")
     @Templates(value = "plain")
     public void testOnmaskcontextmenu() {
         popupPanelAttributes.set(PopupPanelAttributes.modal, Boolean.TRUE);
@@ -481,6 +502,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmaskdblclick")
     @Templates(value = "plain")
     public void testOnmaskdblclick() {
         popupPanelAttributes.set(PopupPanelAttributes.modal, Boolean.TRUE);
@@ -488,6 +510,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmaskmousedown")
     @Templates(value = "plain")
     public void testOnmaskmousedown() {
         popupPanelAttributes.set(PopupPanelAttributes.modal, Boolean.TRUE);
@@ -495,6 +518,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmaskmousemove")
     @Templates(value = "plain")
     public void testOnmaskmousemove() {
         popupPanelAttributes.set(PopupPanelAttributes.modal, Boolean.TRUE);
@@ -502,6 +526,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmaskmouseout")
     @Templates(value = "plain")
     public void testOnmaskmouseout() {
         popupPanelAttributes.set(PopupPanelAttributes.modal, Boolean.TRUE);
@@ -509,6 +534,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmaskmouseover")
     @Templates(value = "plain")
     public void testOnmaskmouseover() {
         popupPanelAttributes.set(PopupPanelAttributes.modal, Boolean.TRUE);
@@ -516,6 +542,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmaskmouseup")
     @Templates(value = "plain")
     public void testOnmaskmouseup() {
         popupPanelAttributes.set(PopupPanelAttributes.modal, Boolean.TRUE);
@@ -523,6 +550,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmove")
     public void testOnmove() {
         testFireEvent("move", new Action() {
             @Override
@@ -534,6 +562,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onresize")
     public void testOnresize() {
         testFireEvent("resize", new Action() {
             @Override
@@ -545,6 +574,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onshow")
     public void testOnshow() {
         testFireEvent("show", new Action() {
             @Override
@@ -555,6 +585,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         popupPanelAttributes.set(PopupPanelAttributes.rendered, Boolean.TRUE);
@@ -580,6 +611,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("resizeable")
     public void testResizeable() {
         popupPanelAttributes.set(PopupPanelAttributes.resizeable, Boolean.FALSE);
         for (ResizerLocation r : ResizerLocation.values()) {
@@ -588,6 +620,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("shadowDepth")
     @RegressionTest("https://issues.jboss.org/browse/RF-10504")
     public void testShadowDepth() {
         int tolerance = 5;
@@ -608,6 +641,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("shadowOpacity")
     @RegressionTest("https://issues.jboss.org/browse/RF-10504")
     public void testShadowOpacity() {
         openPopupPanel();
@@ -619,6 +653,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("show")
     public void testShow() {
         popupPanelAttributes.set(PopupPanelAttributes.show, Boolean.FALSE);
         assertNotVisible(panel.advanced().getRootElement(), "Panel should not be visible");
@@ -627,6 +662,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @RegressionTest("https://issues.jboss.org/browse/RF-10245")
     @Templates(value = "plain")
     public void testStyle() {
@@ -634,6 +670,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @RegressionTest("https://issues.jboss.org/browse/RF-10245")
     @Templates(value = "plain")
     public void testStyleClass() {
@@ -641,6 +678,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("top")
     public void testTop() {
         int defaultPanelHeight = 300;
         int height = Integer.valueOf(String.valueOf(executeJS("return window.innerHeight")));
@@ -654,6 +692,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("width")
     @Templates(value = "plain")
     public void testWidth() {
         openPopupPanel();
@@ -667,6 +706,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test(groups = "Future")
+    @CoversAttributes("width")
     @IssueTracking("https://issues.jboss.org/browse/RF-10251")
     @Templates(value = "plain")
     public void testWidthZero() {
@@ -679,6 +719,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("zindex")
     @Templates(value = "plain")
     public void testZindex() {
         openPopupPanel();
@@ -692,29 +733,10 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     public static class TestedPopupPanel extends RichFacesPopupPanel<TextualFragmentPart, TestedPopupPanelHeaderControls, TestedPopupPanelContent> {
     }
 
-    public static class TestedPopupPanelHeaderControls {
-
-        @Root
-        private WebElement root;
-
-        @FindBy(tagName = "a")
-        private WebElement hideLinkElement;
-
-        public WebElement getHideLinkElement() {
-            return hideLinkElement;
-        }
-
-        public void close() {
-            hideLinkElement.click();
-            Graphene.waitGui().until().element(root).is().not().visible();
-        }
-    }
-
     public static class TestedPopupPanelContent {
 
         @Root
         private WebElement root;
-
         @FindBy(tagName = "p")
         private WebElement paragraphElement;
         @FindBy(css = "input[id$='submitButton']")
@@ -746,5 +768,23 @@ public class TestPopupPanel extends AbstractWebDriverTest {
         public void submit() {
             MetamerPage.waitRequest(submitButton, WaitRequestType.HTTP).click();
         }
+    }
+
+    public static class TestedPopupPanelHeaderControls {
+
+        @Root
+        private WebElement root;
+        @FindBy(tagName = "a")
+        private WebElement hideLinkElement;
+
+        public WebElement getHideLinkElement() {
+            return hideLinkElement;
+        }
+
+        public void close() {
+            hideLinkElement.click();
+            Graphene.waitGui().until().element(root).is().not().visible();
+        }
+
     }
 }

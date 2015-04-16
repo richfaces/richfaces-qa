@@ -28,6 +28,7 @@ import java.net.URL;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFacetsTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SimpleEDT;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -66,12 +67,14 @@ public class TestExtendedDataTableFacets extends DataTableFacetsTest {
     }
 
     @Test
+    @CoversAttributes("footerClass")
     @Templates("plain")
     public void testFooterClass() {
         testStyleClass(table.getFooter().getTableFooterElement(), BasicAttributes.footerClass);
     }
 
     @Test
+    @CoversAttributes("headerClass")
     @Templates("plain")
     public void testHeaderClass() {
         testStyleClass(table.getHeader().getTableHeaderElement(), BasicAttributes.headerClass);

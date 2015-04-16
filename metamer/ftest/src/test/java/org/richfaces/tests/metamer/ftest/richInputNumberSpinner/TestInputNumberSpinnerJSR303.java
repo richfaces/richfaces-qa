@@ -26,6 +26,7 @@ import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annot
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.abstractions.validations.AbstractNumberInputComponentValidationTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.annotations.Test;
 
@@ -47,6 +48,7 @@ public class TestInputNumberSpinnerJSR303 extends AbstractNumberInputComponentVa
     }
 
     @Test
+    @CoversAttributes({ "required", "requiredMessage" })
     @UseWithField(field = "commonCase", valuesFrom = FROM_FIELD, value = "commonCases")
     public void testCommonCases() {
         verifyCases();

@@ -51,6 +51,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -110,18 +111,21 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("contentClass")
     @Templates("plain")
     public void testContentClass() {
         testStyleClass(page.getItemContents().get(0), contentClass);
     }
 
     @Test
+    @CoversAttributes("dir")
     @Templates("plain")
     public void testDir() {
         testDir(testElement);
     }
 
     @Test
+    @CoversAttributes("disabled")
     public void testDisabled() {
         accordionItemAttributes.set(AccordionItemAttributes.disabled, true);
         guardNoRequest(page.getItemHeaders().get(0)).click();
@@ -129,6 +133,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("header")
     public void testHeader() {
         accordionItemAttributes.set(AccordionItemAttributes.header, "new header");
         String headerText = page.getInactiveHeaders().get(0).getText();
@@ -136,6 +141,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("headerActiveClass")
     @Templates("plain")
     @RegressionTest("https://issues.jboss.org/browse/RF-10297")
     public void testHeaderActiveClass() {
@@ -149,6 +155,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("headerClass")
     @Templates("plain")
     public void testHeaderClass() {
         testStyleClass(page.getItemHeaders().get(0), headerClass);
@@ -161,6 +168,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("headerDisabledClass")
     @Templates("plain")
     @RegressionTest("https://issues.jboss.org/browse/RF-10297")
     public void testHeaderDisabledClass() {
@@ -170,6 +178,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("headerInactiveClass")
     @Templates("plain")
     @RegressionTest("https://issues.jboss.org/browse/RF-10297")
     public void testHeaderInactiveClass() {
@@ -183,18 +192,21 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("headerStyle")
     @Templates("plain")
     public void testHeaderStyle() {
         testStyle(page.getItemHeaders().get(0), headerStyle);
     }
 
     @Test
+    @CoversAttributes("lang")
     @Templates("plain")
     public void testLang() {
         testLang(testElement);
     }
 
     @Test
+    @CoversAttributes("leftActiveIcon")
     @Templates("plain")
     @RegressionTest("https://issues.jboss.org/browse/RF-10488")
     public void testLeftActiveIcon() {
@@ -214,6 +226,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("leftDisabledIcon")
     @Templates("plain")
     public void testLeftDisabledIcon() {
         By image = By.cssSelector(page.getLeftIconSelector() + " img");
@@ -233,6 +246,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("leftInactiveIcon")
     @Templates("plain")
     public void testLeftInactiveIcon() {
         By image = By.cssSelector(page.getLeftIconSelector() + " img");
@@ -250,6 +264,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("name")
     @RegressionTest("https://issues.jboss.org/browse/RF-10488")
     public void testName() {
         accordionItemAttributes.set(AccordionItemAttributes.name, "new name");
@@ -258,6 +273,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onclick")
     @Templates("plain")
     public void testOnclick() {
         testFireEvent(accordionItemAttributes, AccordionItemAttributes.onclick, new Action() {
@@ -269,6 +285,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates("plain")
     public void testOndblclick() {
         Action action = new Actions(driver).doubleClick(page.getItemHeaders().get(0)).build();
@@ -276,6 +293,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onenter")
     public void testOnenter() {
         testFireEvent(accordionItemAttributes, AccordionItemAttributes.onenter, new Action() {
             @Override
@@ -286,6 +304,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onheaderclick")
     @Templates("plain")
     public void testOnheaderclick() {
         testFireEvent(accordionItemAttributes, AccordionItemAttributes.onheaderclick, new Action() {
@@ -297,6 +316,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onheaderdblclick")
     @Templates("plain")
     public void testOnheaderdblclick() {
         Action action = new Actions(driver).doubleClick(page.getItemHeaders().get(0)).build();
@@ -304,6 +324,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onheadermousedown")
     @Templates("plain")
     public void testOnheadermousedown() {
         Action action = new Actions(driver).clickAndHold(page.getItemHeaders().get(0)).build();
@@ -312,6 +333,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onheadermousemove")
     @Templates("plain")
     public void testOnheadermousemove() {
         Action action = new Actions(driver).moveToElement(page.getItemHeaders().get(2))
@@ -320,6 +342,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onheadermouseup")
     @Templates("plain")
     public void testOnheadermouseup() {
         Action action = new Actions(driver).moveToElement(page.getItemHeaders().get(1)).clickAndHold()
@@ -328,6 +351,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("onleave")
     @RegressionTest("https://issues.jboss.org/browse/RF-9821 https://issues.jboss.org/browse/RF-10488")
     public void testOnleave() {
         testFireEvent(accordionItemAttributes, AccordionItemAttributes.onleave, new Action() {
@@ -340,6 +364,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates("plain")
     public void testOnmousedown() {
         Action action = new Actions(driver).clickAndHold(page.getItemHeaders().get(0)).build();
@@ -348,6 +373,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates("plain")
     public void testOnmousemove() {
         Action action = new Actions(driver).moveToElement(page.getItemHeaders().get(0)).build();
@@ -355,6 +381,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates("plain")
     public void testOnmouseout() {
         Action action = new Actions(driver).moveToElement(page.getItemHeaders().get(0))
@@ -363,6 +390,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
     public void testOnmouseover() {
         Action action = new Actions(driver).moveToElement(page.getRequestTimeElement()).moveToElement(page.getItemHeaders().get(0)).build();
@@ -370,6 +398,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates("plain")
     public void testOnmouseup() {
         Action action = new Actions(driver).clickAndHold(page.getItemHeaders().get(2))
@@ -378,6 +407,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates("plain")
     public void testRendered() {
         accordionItemAttributes.set(AccordionItemAttributes.rendered, false);
@@ -385,6 +415,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rightActiveIcon")
     @Templates("plain")
     public void testRightActiveIcon() {
         By image = By.cssSelector(page.getRightIconSelector() + " img");
@@ -403,6 +434,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rightDisabledIcon")
     @Templates("plain")
     public void testRightDisabledIcon() {
         By image = By.cssSelector(page.getRightIconSelector() + " img");
@@ -422,6 +454,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rightInactiveIcon")
     @Templates("plain")
     public void testRightInactiveIcon() {
         By image = By.cssSelector(page.getRightIconSelector() + " img");
@@ -439,24 +472,28 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates("plain")
     public void testStyle() {
         testStyle(testElement);
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates("plain")
     public void testStyleClass() {
         testStyleClass(testElement);
     }
 
     @Test
+    @CoversAttributes("switchType")
     public void testSwitchTypeNull() {
         guardAjax(page.getItemHeaders().get(0)).click();
         waitAjax(driver).until().element(page.getItemContents().get(0)).is().visible();
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("switchType")
     @Templates("plain")
     public void testSwitchTypeAjax() {
         accordionItemAttributes.set(AccordionItemAttributes.switchType, "ajax");
@@ -465,6 +502,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("switchType")
     public void testSwitchTypeClient() {
         accordionItemAttributes.set(AccordionItemAttributes.switchType, "client");
 
@@ -473,6 +511,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("switchType")
     public void testSwitchTypeServer() {
         accordionItemAttributes.set(AccordionItemAttributes.switchType, "server");
 
@@ -481,6 +520,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("title")
     @Templates("plain")
     public void testTitle() {
         testTitle(testElement);

@@ -25,6 +25,7 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
 
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -42,6 +43,7 @@ public class TestGraphValidatorSummary extends AbstractGraphValidatorTest {
     }
 
     @Test
+    @CoversAttributes("summary")
     public void testSummary() {
         String msg = "My own validation message!";
         graphValidatorAttributes.set(GraphValidatorAttributes.summary, msg);

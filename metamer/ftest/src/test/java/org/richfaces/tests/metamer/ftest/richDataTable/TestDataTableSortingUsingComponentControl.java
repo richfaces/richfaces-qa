@@ -24,10 +24,11 @@ package org.richfaces.tests.metamer.ftest.richDataTable;
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
 
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SortingDT;
 import org.testng.annotations.Test;
 
@@ -40,61 +41,70 @@ public class TestDataTableSortingUsingComponentControl extends DataTableSortingT
     private SortingDT table;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richDataTable/sorting-using-component-control.xhtml");
-    }
-
-    @Override
     public SortingDT getTable() {
         return table;
     }
 
-    @Test
-    public void testSortModeSingle() {
-        super.testSortModeSingle();
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richDataTable/sorting-using-component-control.xhtml");
     }
 
     @Test
-    public void testSortModeSingleReverse() {
-        super.testSortModeSingleReverse();
-    }
-
-    @Test(groups = {"Future"})
-    @IssueTracking({"https://issues.jboss.org/browse/RF-9932",
-        "http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790"})
-    public void testSortModeSingleRerenderAll() {
-        super.testSortModeSingleRerenderAll();
-    }
-
-    @Test
-    public void testSortModeSingleFullPageRefresh() {
-        super.testSortModeSingleFullPageRefresh();
-    }
-
-    @Test
+    @CoversAttributes("sortMode")
     public void testSortModeMulti() {
         super.testSortModeMulti();
     }
 
     @Test
-    public void testSortModeMultiReverse() {
-        super.testSortModeMultiReverse();
+    @CoversAttributes("sortMode")
+    public void testSortModeMultiFullPageRefresh() {
+        super.testSortModeMultiFullPageRefresh();
     }
 
     @Test
+    @CoversAttributes("sortMode")
     public void testSortModeMultiReplacingOldOccurences() {
         super.testSortModeMultiReplacingOldOccurences();
     }
 
-    @Test(groups = {"Future"})
-    @IssueTracking({"https://issues.jboss.org/browse/RF-9932",
-        "http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790"})
+    @Test(groups = { "Future" })
+    @CoversAttributes("sortMode")
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-9932",
+        "http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790" })
     public void testSortModeMultiRerenderAll() {
         super.testSortModeMultiRerenderAll();
     }
 
     @Test
-    public void testSortModeMultiFullPageRefresh() {
-        super.testSortModeMultiFullPageRefresh();
+    @CoversAttributes("sortMode")
+    public void testSortModeMultiReverse() {
+        super.testSortModeMultiReverse();
+    }
+
+    @Test
+    @CoversAttributes("sortMode")
+    public void testSortModeSingle() {
+        super.testSortModeSingle();
+    }
+
+    @Test
+    @CoversAttributes("sortMode")
+    public void testSortModeSingleFullPageRefresh() {
+        super.testSortModeSingleFullPageRefresh();
+    }
+
+    @Test(groups = { "Future" })
+    @CoversAttributes("sortMode")
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-9932",
+        "http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790" })
+    public void testSortModeSingleRerenderAll() {
+        super.testSortModeSingleRerenderAll();
+    }
+
+    @Test
+    @CoversAttributes("sortMode")
+    public void testSortModeSingleReverse() {
+        super.testSortModeSingleReverse();
     }
 }

@@ -35,6 +35,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -46,13 +47,38 @@ public abstract class AbstractDragSourceTest extends AbstractWebDriverTest {
 
     private final Attributes<DragSourceAttributes> dragSourceAttributes = getAttributes();
 
+    protected Indicator indicator;
     @Page
     private DragSourceSimplePage page;
 
-    protected Indicator indicator;
+    protected void enterAndVerify(WebElement target, IndicatorState state) {
+        // since this method verify indicator rendering over drag source, need force move a bit
+        // to render indicator in this case (otherwise it doesn't get rendered)
+        // split into more steps for better ability debug in case it doesn't work
+        // new Actions(driver).clickAndHold(page.drag1).build().perform();
+        new Actions(driver).moveByOffset(1, 1).build().perform();
+        // waiting(5000);
+        new Actions(driver).moveToElement(target).perform();
+        indicator.verifyState(state);
+        // since dragSource is the same for all iteration, it is not required drop.
+        // but keep droping to simulate real behavior
+        new Actions(driver).moveToElement(page.getDrag1Element()).perform();
+        // new Actions(driver).moveToElement(page.drag1).release().build().perform();
+    }
 
+    @CoversAttributes("dragIndicator")
+    public void testCustomIndicator() {
+
+        dragSourceAttributes.set(dragIndicator, "indicator2");
+        indicator = new Indicator(page.getIndicator2Element());
+
+        new Actions(driver).clickAndHold(page.getDrag1Element()).perform();
+        testMovingOverDifferentStates();
+        new Actions(driver).release().perform();
+    }
+
+    @CoversAttributes("dragIndicator")
     public void testDefaultIndicator() {
-
         indicator = new Indicator(page.getDefaultIndicatorElement());
         indicator.setDefaultIndicator(true);
         dragSourceAttributes.set(dragIndicator, "");
@@ -69,18 +95,20 @@ public abstract class AbstractDragSourceTest extends AbstractWebDriverTest {
         actionQueue.release(page.getDrop1Element()).perform();
     }
 
-    public void testCustomIndicator() {
-
-        dragSourceAttributes.set(dragIndicator, "indicator2");
-        indicator = new Indicator(page.getIndicator2Element());
-
-        new Actions(driver).clickAndHold(page.getDrag1Element()).perform();
-        testMovingOverDifferentStates();
-        new Actions(driver).release().perform();
+    protected void testMovingOverDifferentStates() {
+        enterAndVerify(page.getDrop2Element(), REJECTING);
+        enterAndVerify(page.getDrop1Element(), ACCEPTING);
+        enterAndVerify(page.getDrag1Element(), DRAGGING);
+        enterAndVerify(page.getDrop1Element(), ACCEPTING);
+        enterAndVerify(page.getDrag2Element(), DRAGGING);
+        enterAndVerify(page.getDrop2Element(), REJECTING);
+        enterAndVerify(page.getDrag2Element(), DRAGGING);
+        enterAndVerify(page.getDrop1Element(), ACCEPTING);
+        enterAndVerify(page.getDrop2Element(), REJECTING);
     }
 
+    @CoversAttributes({ "dragIndicator", "rendered" })
     public void testRendered() {
-
         dragSourceAttributes.set(dragIndicator, "indicator2");
         dragSourceAttributes.set(rendered, true);
 
@@ -108,6 +136,7 @@ public abstract class AbstractDragSourceTest extends AbstractWebDriverTest {
 
     }
 
+    @CoversAttributes("type")
     public void testType() {
         dragSourceAttributes.set(type, "drg3");
 
@@ -120,33 +149,6 @@ public abstract class AbstractDragSourceTest extends AbstractWebDriverTest {
         enterAndVerify(page.getDrop1Element(), IndicatorState.REJECTING);
 
         new Actions(driver).release().perform();
-    }
-
-    protected void testMovingOverDifferentStates() {
-        enterAndVerify(page.getDrop2Element(), REJECTING);
-        enterAndVerify(page.getDrop1Element(), ACCEPTING);
-        enterAndVerify(page.getDrag1Element(), DRAGGING);
-        enterAndVerify(page.getDrop1Element(), ACCEPTING);
-        enterAndVerify(page.getDrag2Element(), DRAGGING);
-        enterAndVerify(page.getDrop2Element(), REJECTING);
-        enterAndVerify(page.getDrag2Element(), DRAGGING);
-        enterAndVerify(page.getDrop1Element(), ACCEPTING);
-        enterAndVerify(page.getDrop2Element(), REJECTING);
-    }
-
-    protected void enterAndVerify(WebElement target, IndicatorState state) {
-        // since this method verify indicator rendering over drag source, need force move a bit
-        // to render indicator in this case (otherwise it doesn't get rendered)
-        // split into more steps for better ability debug in case it doesn't work
-        // new Actions(driver).clickAndHold(page.drag1).build().perform();
-        new Actions(driver).moveByOffset(1, 1).build().perform();
-        // waiting(5000);
-        new Actions(driver).moveToElement(target).perform();
-        indicator.verifyState(state);
-        // since dragSource is the same for all iteration, it is not required drop.
-        // but keep droping to simulate real behavior
-        new Actions(driver).moveToElement(page.getDrag1Element()).perform();
-        // new Actions(driver).moveToElement(page.drag1).release().build().perform();
     }
 
 }

@@ -31,6 +31,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -60,6 +61,7 @@ public class TestComponentControl extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "event", "onbeforeoperation", "target" })
     public void testOnbeforeoperation() {
         testFireEvent(componentControlAttributes, ComponentControlAttributes.onbeforeoperation, new Action() {
             @Override
@@ -70,6 +72,7 @@ public class TestComponentControl extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "event", "operation", "target" })
     @RegressionTest("https://issues.jboss.org/browse/RF-9306")
     public void testOperation() {
         // initially, the scroller is on 3rd page and operation is set to "previous"
@@ -84,6 +87,7 @@ public class TestComponentControl extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "event", "selector", "target" })
     public void testSelector() {
         componentControlAttributes.set(ComponentControlAttributes.selector, "span.rf-ds[id$=scroller]");
         componentControlAttributes.set(ComponentControlAttributes.target, "");

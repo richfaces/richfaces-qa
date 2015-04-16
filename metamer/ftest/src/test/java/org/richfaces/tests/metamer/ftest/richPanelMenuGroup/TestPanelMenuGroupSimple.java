@@ -42,6 +42,7 @@ import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -63,11 +64,13 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     };
 
     @Test
+    @CoversAttributes("data")
     public void testData() {
         testData(collapseFirstGroupAction);
     }
 
     @Test
+    @CoversAttributes("disabled")
     public void testDisabled() {
         assertFalse(getPage().getTopGroup().advanced().isDisabled());
 
@@ -83,6 +86,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     }
 
     @Test
+    @CoversAttributes("disabledClass")
     @Templates(value = "plain")
     public void testDisabledClass() {
         panelMenuGroupAttributes.set(disabled, true);
@@ -90,14 +94,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     }
 
     @Test
-    @Templates(value = "plain")
-    public void testLeftDisabledIcon() {
-        panelMenuGroupAttributes.set(disabled, true);
-
-        verifyStandardIcons(leftDisabledIcon, getPage().getTopGroup().advanced().getLeftIconElement(), getPage().getTopGroup().advanced().getLeftIconElement(), "");
-    }
-
-    @Test
+    @CoversAttributes("leftCollapsedIcon")
     @Templates(value = "plain")
     public void testLeftCollapsedIcon() {
         Graphene.guardAjax(getPage().getMenu()).collapseGroup(1);
@@ -110,6 +107,16 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     }
 
     @Test
+    @CoversAttributes("leftDisabledIcon")
+    @Templates(value = "plain")
+    public void testLeftDisabledIcon() {
+        panelMenuGroupAttributes.set(disabled, true);
+
+        verifyStandardIcons(leftDisabledIcon, getPage().getTopGroup().advanced().getLeftIconElement(), getPage().getTopGroup().advanced().getLeftIconElement(), "");
+    }
+
+    @Test
+    @CoversAttributes("leftExpandedIcon")
     @Templates(value = "plain")
     public void testLeftExpandedIcon() {
 
@@ -120,11 +127,13 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     }
 
     @Test
+    @CoversAttributes("limitRender")
     public void testLimitRender() {
         testLimitRender(collapseFirstGroupAction);
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         assertTrue(new WebElementConditionFactory(getPage().getTopGroup().advanced().getRootElement()).isVisible().apply(driver));
@@ -135,23 +144,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     }
 
     @Test
-    @Templates(value = "plain")
-    public void testRightDisabledIcon() {
-        panelMenuGroupAttributes.set(disabled, true);
-
-        verifyStandardIcons(rightDisabledIcon, getPage().getTopGroup().advanced().getRightIconElement(), getPage().getTopGroup().advanced().getRightIconElement(), "");
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testRightExpandedIcon() {
-        verifyStandardIcons(rightExpandedIcon, getPage().getTopGroup().advanced().getRightIconElement(), getPage().getTopGroup().advanced().getRightIconElement(), "");
-
-        panelMenuGroupAttributes.set(disabled, true);
-        assertTrue(getPage().getTopGroup().advanced().isTransparent(getPage().getTopGroup().advanced().getRightIconElement()));
-    }
-
-    @Test
+    @CoversAttributes("rightCollapsedIcon")
     @Templates(value = "plain")
     public void testRightCollapsedIcon() {
         Graphene.guardAjax(getPage().getMenu()).collapseGroup(1);
@@ -163,6 +156,26 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     }
 
     @Test
+    @CoversAttributes("rightDisabledIcon")
+    @Templates(value = "plain")
+    public void testRightDisabledIcon() {
+        panelMenuGroupAttributes.set(disabled, true);
+
+        verifyStandardIcons(rightDisabledIcon, getPage().getTopGroup().advanced().getRightIconElement(), getPage().getTopGroup().advanced().getRightIconElement(), "");
+    }
+
+    @Test
+    @CoversAttributes("rightExpandedIcon")
+    @Templates(value = "plain")
+    public void testRightExpandedIcon() {
+        verifyStandardIcons(rightExpandedIcon, getPage().getTopGroup().advanced().getRightIconElement(), getPage().getTopGroup().advanced().getRightIconElement(), "");
+
+        panelMenuGroupAttributes.set(disabled, true);
+        assertTrue(getPage().getTopGroup().advanced().isTransparent(getPage().getTopGroup().advanced().getRightIconElement()));
+    }
+
+    @Test
+    @CoversAttributes("selectable")
     @Templates(exclude = "uiRepeat")
     public void testSelectable() {
         panelMenuGroupAttributes.set(selectable, false);
@@ -175,30 +188,28 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     }
 
     @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
+    @CoversAttributes("selectable")
     @Templates(value = "uiRepeat")
     @IssueTracking("https://issues.jboss.org/browse/RF-13727")
     public void testSelectableInUirepeat() {
-        panelMenuGroupAttributes.set(selectable, false);
-        guardAjax(getPage().getMenu()).collapseGroup(1);
-        assertFalse(getPage().getTopGroup().advanced().isSelected());
-
-        panelMenuGroupAttributes.set(selectable, true);
-        guardAjax(getPage().getMenu()).expandGroup(1);
-        assertTrue(getPage().getTopGroup().advanced().isSelected());
+        testSelectable();
     }
 
     @Test
+    @CoversAttributes("status")
     public void testStatus() {
         testStatus(collapseFirstGroupAction);
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         testStyle(getPage().getTopGroup().advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @RegressionTest("https://issues.jboss.org/browse/RF-10485")
     @Templates(value = "plain")
     public void testStyleClass() {

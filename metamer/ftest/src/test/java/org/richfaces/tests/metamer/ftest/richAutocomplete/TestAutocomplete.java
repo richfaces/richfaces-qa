@@ -35,6 +35,7 @@ import org.richfaces.fragment.common.ClearType;
 import org.richfaces.fragment.common.ScrollingType;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -62,6 +63,7 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes({ "autofill", "selectFirst" })
     @RegressionTest("https://issues.jboss.org/browse/RF-11323")
     public void testTypePrefixDeleteAll_typePrefixConfirm() {
         Graphene.guardAjax(autocomplete).type("ala");
@@ -79,6 +81,7 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes({ "autofill", "selectFirst" })
     public void testSimpleSelectionWithMouse() {
         SelectOrConfirm typed = Graphene.guardAjax(autocomplete).type("a");
         Graphene.guardAjax(typed).select(ChoicePickerHelper.byVisibleText().endsWith("na"));
@@ -86,6 +89,7 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes({ "autofill", "selectFirst" })
     public void testSimpleSelectionWithKeyboard() {
         autocomplete.advanced().setScrollingType(ScrollingType.BY_KEYS);
         testSimpleSelectionWithMouse();

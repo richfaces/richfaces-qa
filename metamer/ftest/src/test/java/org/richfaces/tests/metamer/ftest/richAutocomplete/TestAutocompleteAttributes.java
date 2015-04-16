@@ -48,6 +48,7 @@ import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -107,6 +108,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("disabled")
     public void testDisabled() {
         // defaultly autocomplete is enabled
         selectHawaii();
@@ -123,6 +125,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("immediate")
     public void testImmediate() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
         autocompleteAttributes.set(AutocompleteAttributes.immediate, Boolean.TRUE);
@@ -137,16 +140,18 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("inputClass")
     @Templates(value = "plain")
     public void testInputClass() {
         testStyleClass(autocomplete.advanced().getInput().advanced().getInputElement(), BasicAttributes.inputClass);
     }
 
     @Test(groups = "Future")
+    @CoversAttributes("layout")
     @IssueTracking("https://issues.jboss.org/browse/RF-12820")
     public void testLayout() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
-        String[] layouts = new String[]{ "div", "list", "table" };
+        String[] layouts = new String[] { "div", "list", "table" };
         for (String layout : layouts) {
             autocompleteAttributes.set(AutocompleteAttributes.layout, layout);
             autocomplete.clear();
@@ -156,6 +161,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("minChars")
     public void testMinChars() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
         autocompleteAttributes.set(AutocompleteAttributes.minChars, 3);
@@ -168,6 +174,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("mode")
     public void testMode() {
         // default state, should be ajax
         autocompleteAttributes.set(AutocompleteAttributes.mode, "null");
@@ -192,12 +199,14 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("onbeforedomupdate")
     public void testOnbeforedomupdate() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onbeforedomupdate, typeHToAutocompleteInputAction);
     }
 
     @Test(groups = "Future")
+    @CoversAttributes("onbegin")
     @IssueTracking(value = "https://issues.jboss.org/browse/RF-13537")
     public void testOnbegin() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
@@ -205,6 +214,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("onblur")
     public void testOnblur() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onblur, new Action() {
             @Override
@@ -216,6 +226,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("onchange")
     public void testOnchange() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onchange, new Action() {
@@ -228,6 +239,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onclick, new Actions(driver).click(autocomplete.advanced()
@@ -235,6 +247,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("oncomplete")
     public void testOncomplete() {
         // requires ajax mode since it reacts on DOM changes
         autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
@@ -242,6 +255,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.ondblclick, new Actions(driver).doubleClick(autocomplete
@@ -249,6 +263,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("onfocus")
     public void testOnfocus() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onfocus, new Action() {
             @Override
@@ -259,6 +274,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("onkeydown")
     @Templates(value = "plain")
     public void testOnkeydown() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onkeydown, new Actions(driver).keyDown(autocomplete
@@ -267,12 +283,14 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("onkeypress")
     @Templates(value = "plain")
     public void testOnkeypress() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onkeypress, typeHToAutocompleteInputAction);
     }
 
     @Test
+    @CoversAttributes("onkeyup")
     @Templates(value = "plain")
     public void testOnkeyup() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onkeyup, new Actions(driver).keyDown(autocomplete
@@ -280,6 +298,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("onlistclick")
     @Templates(value = "plain")
     public void testOnlistclick() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
@@ -294,6 +313,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("onlistdblclick")
     @Templates(value = "plain")
     public void testOnlistdblclick() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
@@ -308,6 +328,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("onlistkeydown")
     @Templates(value = "plain")
     public void testOnlistkeydown() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
@@ -322,6 +343,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("onlistkeypress")
     @Templates(value = "plain")
     public void testOnlistkeypress() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
@@ -336,6 +358,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("onlistkeyup")
     @Templates(value = "plain")
     public void testOnlistkeyup() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
@@ -350,6 +373,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("onlistmousedown")
     @Templates(value = "plain")
     public void testOnlistmousedown() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
@@ -365,6 +389,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("onlistmousemove")
     @Templates(value = "plain")
     public void testOnlistmousemove() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
@@ -380,6 +405,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("onlistmouseout")
     @Templates(value = "plain")
     public void testOnlistmouseout() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
@@ -395,6 +421,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("onlistmouseover")
     @Templates(value = "plain")
     public void testOnlistmouseover() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
@@ -409,6 +436,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("onlistmouseup")
     @Templates(value = "plain")
     public void testOnlistmouseup() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
@@ -423,6 +451,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onmousedown, new Actions(driver).clickAndHold(page
@@ -431,6 +460,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onmousemove, new Actions(driver).moveToElement(autocomplete
@@ -438,6 +468,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onmouseout, new Actions(driver).moveToElement(page
@@ -445,6 +476,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onmouseover, new Actions(driver).moveToElement(driver
@@ -452,6 +484,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onmouseup, new Actions(driver).clickAndHold(page
@@ -459,6 +492,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("onselectitem")
     public void testOnselectitem() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onselectitem, new Action() {
@@ -470,12 +504,14 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("popupClass")
     @Templates(value = "plain")
     public void testPopupClass() {
         testStyleClass(popup, BasicAttributes.popupClass);
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         autocompleteAttributes.set(AutocompleteAttributes.rendered, Boolean.FALSE);
@@ -497,6 +533,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("selectedItemClass")
     @Templates(value = "plain")
     public void testSelectedItemClass() {
         String testedClass = "metamer-ftest-class";
@@ -512,6 +549,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("showButton")
     @Templates(value = "plain")
     public void testShowButton() {
         // defaultly button should not be present
@@ -527,18 +565,21 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         testStyle(autocomplete.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates("plain")
     public void testStyleClass() {
         testStyleClass(autocomplete.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("tabindex")
     @Templates(value = "plain")
     public void testTabindex() {
         testHTMLAttribute(autocomplete.advanced().getInput().advanced().getInputElement(), autocompleteAttributes,
@@ -546,6 +587,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("tokens")
     public void testTokens() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
         // default token is ', '
@@ -562,6 +604,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("value")
     @Templates("plain")
     public void testValue() {
         autocompleteAttributes.set(AutocompleteAttributes.value, "Johny Derp speaking!");
@@ -572,6 +615,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("valueChangeListener")
     public void testValueChangeListener() {
         selectHawaii();
         checkOutput("Hawaii");

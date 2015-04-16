@@ -42,6 +42,7 @@ import org.richfaces.fragment.hotkey.RichFacesHotkey;
 import org.richfaces.fragment.log.Log.LogEntryLevel;
 import org.richfaces.fragment.log.RichFacesLog;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
@@ -118,6 +119,7 @@ public class TestLog extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "level", "mode", "hotkey" })
     @Templates("plain")
     @UseWithField(field = "levelToSet", valuesFrom = FROM_ENUM, value = "")
     public void testHotkeyAndPopupMode() {
@@ -163,6 +165,7 @@ public class TestLog extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes({ "level", "mode" })
     @Templates(value = "plain")
     @Uses({
         @UseWithField(field = "levelToSet", valuesFrom = FROM_ENUM, value = ""),
@@ -192,6 +195,7 @@ public class TestLog extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         attributes.set(LogAttributes.rendered, false);

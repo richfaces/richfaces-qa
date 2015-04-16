@@ -27,6 +27,7 @@ import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annot
 import java.net.URL;
 
 import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBean;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.Assert;
@@ -48,6 +49,7 @@ public class TestGraphValidator extends AbstractGraphValidatorTest {
     }
 
     @Test
+    @CoversAttributes("groups")
     @UseWithField(field = "group", valuesFrom = FROM_ENUM, value = "")
     public void testGroups() {
         graphValidatorAttributes.set(GraphValidatorAttributes.groups, group.toString());
@@ -105,6 +107,7 @@ public class TestGraphValidator extends AbstractGraphValidatorTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         assertPresent(panel, "Panel should be present.");

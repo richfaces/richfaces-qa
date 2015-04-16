@@ -23,6 +23,7 @@ package org.richfaces.tests.metamer.ftest.richOrderingList;
 
 import org.richfaces.tests.metamer.bean.ConverterBean;
 import org.richfaces.tests.metamer.ftest.abstractions.converter.AbstractConverterTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.Test;
 
 /**
@@ -38,13 +39,13 @@ public class TestOrderingListConverter extends AbstractConverterTest {
     }
 
     @Override
-    protected String outputForEmptyValue() {
-        return ConverterBean.DEFAULT_VALUE;
+    public String getComponentName() {
+        return "richOrderingList";
     }
 
     @Override
-    public String getComponentName() {
-        return "richOrderingList";
+    protected String outputForEmptyValue() {
+        return ConverterBean.DEFAULT_VALUE;
     }
 
     @Override
@@ -53,11 +54,13 @@ public class TestOrderingListConverter extends AbstractConverterTest {
     }
 
     @Test
+    @CoversAttributes("converter")
     public void testConverter() {
         checkConverter();
     }
 
     @Test
+    @CoversAttributes("converterMessage")
     public void testConverterMessage() {
         checkConverterMessage();
     }

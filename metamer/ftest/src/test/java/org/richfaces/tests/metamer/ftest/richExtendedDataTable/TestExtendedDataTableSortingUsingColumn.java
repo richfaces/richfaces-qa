@@ -29,10 +29,10 @@ import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SortingEDT;
 import org.testng.annotations.Test;
-
 
 /**
  * Extracted EDT template into separate future tests as atm there is a Graphene but
@@ -43,119 +43,30 @@ import org.testng.annotations.Test;
  */
 public class TestExtendedDataTableSortingUsingColumn extends DataTableSortingTest {
 
-    @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richExtendedDataTable/sorting-using-column.xhtml");
-    }
 
     @FindByJQuery("div.rf-edt[id$=richEDT]")
     private SortingEDT table;
-
 
     @Override
     protected SortingEDT getTable() {
         return table;
     }
 
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richExtendedDataTable/sorting-using-column.xhtml");
+    }
+
     @Test
+    @CoversAttributes("sortMode")
     @Templates(exclude = "richExtendedDataTable")
-    @Override
-    public void testSortModeSingle() {
-        super.testSortModeSingle();
-    }
-
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
-    @Templates(value = "richExtendedDataTable")
-    public void testSortModeSingleInEDT() {
-        super.testSortModeSingle();
-    }
-
-    @Test
-    @Templates(exclude = "richExtendedDataTable")
-    @Override
-    public void testSortModeSingleReverse() {
-        super.testSortModeSingleReverse();
-    }
-
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
-    @Templates(value = "richExtendedDataTable")
-    public void testSortModeSingleReverseInEDT() {
-        super.testSortModeSingleReverse();
-    }
-
-    @Test(groups = { "Future" })
-    @Override
-    @IssueTracking("https://issues.jboss.org/browse/RF-9932 http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790")
-    public void testSortModeSingleRerenderAll() {
-        super.testSortModeSingleRerenderAll();
-    }
-
-    @Test
-    @Templates(exclude = "richExtendedDataTable")
-    @Override
-    public void testSortModeSingleFullPageRefresh() {
-        super.testSortModeSingleFullPageRefresh();
-    }
-
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
-    @Templates(value = "richExtendedDataTable")
-    public void testSortModeSingleFullPageRefreshInEDT() {
-        super.testSortModeSingleFullPageRefresh();
-    }
-
-    @Test
-    @Templates(exclude="richExtendedDataTable")
     @Override
     public void testSortModeMulti() {
         super.testSortModeMulti();
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
-    @Templates(value="richExtendedDataTable")
-    public void testSortModeMultiInEDT() {
-        super.testSortModeMulti();
-    }
-
-    @Test
-    @Templates(exclude = "richExtendedDataTable")
-    @Override
-    public void testSortModeMultiReverse() {
-        super.testSortModeMultiReverse();
-    }
-
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
-    @Templates(value = "richExtendedDataTable")
-    public void testSortModeMultiReverseInEDT() {
-        super.testSortModeMultiReverse();
-    }
-
-    @Test
-    @Templates(exclude = "richExtendedDataTable")
-    @Override
-    public void testSortModeMultiReplacingOldOccurences() {
-        super.testSortModeMultiReplacingOldOccurences();
-    }
-
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
-    @Templates(value = "richExtendedDataTable")
-    public void testSortModeMultiReplacingOldOccurencesInEDT() {
-        super.testSortModeMultiReplacingOldOccurences();
-    }
-
-    @Test(groups = { "Future" })
-    @Override
-    @IssueTracking("https://issues.jboss.org/browse/RF-9932 http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790")
-    public void testSortModeMultiRerenderAll() {
-        super.testSortModeMultiRerenderAll();
-    }
-
-    @Test
+    @CoversAttributes("sortMode")
     @Templates(exclude = "richExtendedDataTable")
     @Override
     public void testSortModeMultiFullPageRefresh() {
@@ -163,9 +74,114 @@ public class TestExtendedDataTableSortingUsingColumn extends DataTableSortingTes
     }
 
     @Test
+    @CoversAttributes("sortMode")
     @RegressionTest("https://issues.jboss.org/browse/RF-13881")
     @Templates(value = "richExtendedDataTable")
     public void testSortModeMultiFullPageRefreshInEDT() {
         super.testSortModeMultiFullPageRefresh();
+    }
+
+    @Test
+    @CoversAttributes("sortMode")
+    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
+    @Templates(value = "richExtendedDataTable")
+    public void testSortModeMultiInEDT() {
+        super.testSortModeMulti();
+    }
+
+    @Test
+    @CoversAttributes("sortMode")
+    @Templates(exclude = "richExtendedDataTable")
+    @Override
+    public void testSortModeMultiReplacingOldOccurences() {
+        super.testSortModeMultiReplacingOldOccurences();
+    }
+
+    @Test
+    @CoversAttributes("sortMode")
+    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
+    @Templates(value = "richExtendedDataTable")
+    public void testSortModeMultiReplacingOldOccurencesInEDT() {
+        super.testSortModeMultiReplacingOldOccurences();
+    }
+
+    @Test(groups = { "Future" })
+    @CoversAttributes("sortMode")
+    @Override
+    @IssueTracking("https://issues.jboss.org/browse/RF-9932 http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790")
+    public void testSortModeMultiRerenderAll() {
+        super.testSortModeMultiRerenderAll();
+    }
+
+    @Test
+    @CoversAttributes("sortMode")
+    @Templates(exclude = "richExtendedDataTable")
+    @Override
+    public void testSortModeMultiReverse() {
+        super.testSortModeMultiReverse();
+    }
+
+    @Test
+    @CoversAttributes("sortMode")
+    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
+    @Templates(value = "richExtendedDataTable")
+    public void testSortModeMultiReverseInEDT() {
+        super.testSortModeMultiReverse();
+    }
+
+    @Test
+    @CoversAttributes("sortMode")
+    @Templates(exclude = "richExtendedDataTable")
+    @Override
+    public void testSortModeSingle() {
+        super.testSortModeSingle();
+    }
+
+    @Test
+    @CoversAttributes("sortMode")
+    @Templates(exclude = "richExtendedDataTable")
+    @Override
+    public void testSortModeSingleFullPageRefresh() {
+        super.testSortModeSingleFullPageRefresh();
+    }
+
+    @Test
+    @CoversAttributes("sortMode")
+    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
+    @Templates(value = "richExtendedDataTable")
+    public void testSortModeSingleFullPageRefreshInEDT() {
+        super.testSortModeSingleFullPageRefresh();
+    }
+
+    @Test
+    @CoversAttributes("sortMode")
+    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
+    @Templates(value = "richExtendedDataTable")
+    public void testSortModeSingleInEDT() {
+        super.testSortModeSingle();
+    }
+
+    @Test(groups = { "Future" })
+    @CoversAttributes("sortMode")
+    @Override
+    @IssueTracking("https://issues.jboss.org/browse/RF-9932 http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790")
+    public void testSortModeSingleRerenderAll() {
+        super.testSortModeSingleRerenderAll();
+    }
+
+    @Test
+    @CoversAttributes("sortMode")
+    @Templates(exclude = "richExtendedDataTable")
+    @Override
+    public void testSortModeSingleReverse() {
+        super.testSortModeSingleReverse();
+    }
+
+    @Test
+    @CoversAttributes("sortMode")
+    @RegressionTest(value = "https://issues.jboss.org/browse/RF-13881")
+    @Templates(value = "richExtendedDataTable")
+    public void testSortModeSingleReverseInEDT() {
+        super.testSortModeSingleReverse();
     }
 }

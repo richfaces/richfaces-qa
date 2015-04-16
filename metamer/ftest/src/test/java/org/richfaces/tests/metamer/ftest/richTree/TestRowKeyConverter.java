@@ -30,6 +30,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -39,18 +40,19 @@ import org.testng.annotations.Test;
  */
 public class TestRowKeyConverter extends AbstractTreeTest {
 
+    private final String[] converterPages = new String[] { "rowKeyConverterSwingTreeNode", "rowKeyConverterRichFacesTreeNode", "rowKeyConverterRichFacesTreeDataModel" };
+
     @FindBy(className = "rf-tr-nd-exp")
     private List<WebElement> expanded;
     @FindBy(className = "rf-trn-hnd")
     private WebElement toggle;
-
-    private final String[] converterPages = new String[]{ "rowKeyConverterSwingTreeNode", "rowKeyConverterRichFacesTreeNode", "rowKeyConverterRichFacesTreeDataModel" };
 
     public int getNumberOfExpandedNodes() {
         return expanded.size();
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("rowKeyConverter")
     @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "converterPages")
     public void testToggle() {
         toggle();

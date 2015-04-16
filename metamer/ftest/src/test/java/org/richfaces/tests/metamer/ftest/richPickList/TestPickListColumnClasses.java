@@ -34,6 +34,7 @@ import org.richfaces.fragment.list.AbstractListComponent;
 import org.richfaces.fragment.pickList.RichFacesPickList;
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractColumnClassesTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.LazyLoadedCachedValue;
 import org.testng.annotations.Test;
@@ -68,6 +69,7 @@ public class TestPickListColumnClasses extends AbstractColumnClassesTest {
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesEqualsToColumns_commaSeparated() {
@@ -75,6 +77,7 @@ public class TestPickListColumnClasses extends AbstractColumnClassesTest {
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesEqualsToColumns_spaceSeparated() {
@@ -82,6 +85,7 @@ public class TestPickListColumnClasses extends AbstractColumnClassesTest {
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesGreaterThanColumns_commaSeparated() {
@@ -89,6 +93,7 @@ public class TestPickListColumnClasses extends AbstractColumnClassesTest {
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesLesserThanColumns_commaSeparated() {
@@ -96,6 +101,7 @@ public class TestPickListColumnClasses extends AbstractColumnClassesTest {
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesLesserThanColumns_spaceSeparated() {
@@ -103,6 +109,7 @@ public class TestPickListColumnClasses extends AbstractColumnClassesTest {
     }
 
     @Test
+    @CoversAttributes("columnClasses")
     @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_oneColumnClass() {

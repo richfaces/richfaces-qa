@@ -37,6 +37,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -53,6 +54,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @CoversAttributes("caption")
     public void testCaption() {
         String testedValue = "New Caption";
         attributes.set(OrderingListAttributes.caption, testedValue);
@@ -60,6 +62,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @CoversAttributes("disabled")
     public void testDisabled() {
         attributes.set(OrderingListAttributes.disabled, Boolean.TRUE);
         for (WebElement li : orderingList.advanced().getItemsElements()) {
@@ -73,6 +76,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @CoversAttributes("disabledClass")
     @Templates(value = "plain")
     public void testDisabledClass() {
         attributes.set(OrderingListAttributes.disabled, Boolean.TRUE);
@@ -80,6 +84,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @CoversAttributes("downBottomText")
     @Templates(value = "plain")
     public void testDownBottomText() {
         String testedValue = "New text";
@@ -88,6 +93,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @CoversAttributes("downText")
     @Templates(value = "plain")
     public void testDownText() {
         String testedValue = "New text";
@@ -96,12 +102,14 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @CoversAttributes("headerClass")
     @Templates(value = "plain")
     public void testHeaderClass() {
         testStyleClass(orderingList.advanced().getHeaderElement(), BasicAttributes.headerClass);
     }
 
     @Test
+    @CoversAttributes("immediate")
     public void testImmediate() {
         attributes.set(OrderingListAttributes.immediate, Boolean.FALSE);
         orderingList.select(1).putItBefore(0);
@@ -117,6 +125,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @CoversAttributes("itemClass")
     @Templates(value = "plain")
     public void testItemClass() {
         String testedClass = "metamer-ftest-class";
@@ -127,6 +136,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @CoversAttributes("listHeight")
     @Templates(value = "plain")
     public void testListHeight() {
         int testedValue = 600;
@@ -136,6 +146,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @CoversAttributes("listWidth")
     @Templates(value = "plain")
     public void testListWidth() {
         int testedValue = 600;
@@ -145,6 +156,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @CoversAttributes("maxListHeight")
     @Templates(value = "plain")
     public void testMaxListHeight() {
         int testedValue = 600;
@@ -155,6 +167,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @CoversAttributes("minListHeight")
     @Templates(value = "plain")
     public void testMinListHeight() {
         int testedValue = 600;
@@ -165,6 +178,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @CoversAttributes("onblur")
     @Templates(value = "plain")
     public void testOnblur() {
         WebElement focusKeeper = driver.findElement(By.cssSelector(".rf-ord input[id$=FocusKeeper]"));
@@ -172,25 +186,29 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @CoversAttributes("onchange")
     @Templates(value = "plain")
     public void testOnchange() {
         testFireEvent(Event.CHANGE, orderingList.advanced().getContentAreaElement());
     }
 
     @Test
+    @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
-        testFireEvent(attributes, OrderingListAttributes.onlistclick,
+        testFireEvent(attributes, OrderingListAttributes.onclick,
             new Actions(driver).click(orderingList.advanced().getContentAreaElement()).build());
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(Event.DBLCLICK, orderingList.advanced().getContentAreaElement());
     }
 
     @Test
+    @CoversAttributes("onfocus")
     @Templates(value = "plain")
     public void testOnfocus() {
         testFireEvent(attributes, OrderingListAttributes.onfocus,
@@ -198,114 +216,133 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @CoversAttributes("onkeydown")
     @Templates(value = "plain")
     public void testOnkeydown() {
         testFireEvent(Event.KEYDOWN, orderingList.advanced().getContentAreaElement());
     }
 
     @Test
+    @CoversAttributes("onkeypress")
     @Templates(value = "plain")
     public void testOnkeypress() {
         testFireEvent(Event.KEYPRESS, orderingList.advanced().getContentAreaElement());
     }
 
     @Test
+    @CoversAttributes("onkeyup")
     @Templates(value = "plain")
     public void testOnkeyup() {
         testFireEvent(Event.KEYUP, orderingList.advanced().getContentAreaElement());
     }
 
     @Test
+    @CoversAttributes("onlistclick")
     @Templates(value = "plain")
     public void testOnlistclick() {
         testFireEvent(attributes, OrderingListAttributes.onlistclick, new Actions(driver).click(orderingList.advanced().getItemsElements().get(0)).build());
     }
 
     @Test
+    @CoversAttributes("onlistdblclick")
     @Templates(value = "plain")
     public void testOnlistdblclick() {
         testFireEvent(Event.DBLCLICK, orderingList.advanced().getItemsElements().get(0), "listdblclick");
     }
 
     @Test
+    @CoversAttributes("onlistkeydown")
     @Templates(value = "plain")
     public void testOnlistkeydown() {
-        testFireEvent(Event.KEYDOWN, orderingList.advanced().getItemsElements().get(0), "listkeydown");
+        testFireEvent(Event.KEYDOWN, orderingList.advanced().getItemsElements().get(0), "onlistkeydown");
     }
 
     @Test
+    @CoversAttributes("onlistkeypress")
     @Templates(value = "plain")
     public void testOnlistkeypress() {
         testFireEvent(Event.KEYPRESS, orderingList.advanced().getItemsElements().get(0), "listkeypress");
     }
 
     @Test
+    @CoversAttributes("onlistkeyup")
     @Templates(value = "plain")
     public void testOnlistkeyup() {
         testFireEvent(Event.KEYUP, orderingList.advanced().getItemsElements().get(0), "listkeyup");
     }
 
     @Test
+    @CoversAttributes("onlistmousedown")
     @Templates(value = "plain")
     public void testOnlistmousedown() {
         testFireEvent(Event.MOUSEDOWN, orderingList.advanced().getItemsElements().get(0), "listmousedown");
     }
 
     @Test
+    @CoversAttributes("onlistmousemove")
     @Templates(value = "plain")
     public void testOnlistmousemove() {
         testFireEvent(Event.MOUSEMOVE, orderingList.advanced().getItemsElements().get(0), "listmousemove");
     }
 
     @Test
+    @CoversAttributes("onlistmouseout")
     @Templates(value = "plain")
     public void testOnlistmouseout() {
         testFireEvent(Event.MOUSEOUT, orderingList.advanced().getItemsElements().get(0), "listmouseout");
     }
 
     @Test
+    @CoversAttributes("onlistmouseover")
     @Templates(value = "plain")
     public void testOnlistmouseover() {
         testFireEvent(Event.MOUSEOVER, orderingList.advanced().getItemsElements().get(0), "listmouseover");
     }
 
     @Test
+    @CoversAttributes("onlistmouseup")
     @Templates(value = "plain")
     public void testOnlistmouseup() {
         testFireEvent(Event.MOUSEUP, orderingList.advanced().getItemsElements().get(0), "listmouseup");
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEvent(Event.MOUSEDOWN, orderingList.advanced().getContentAreaElement());
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEvent(Event.MOUSEMOVE, orderingList.advanced().getContentAreaElement());
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEvent(Event.MOUSEOUT, orderingList.advanced().getContentAreaElement());
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEvent(Event.MOUSEOVER, orderingList.advanced().getContentAreaElement());
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEvent(Event.MOUSEUP, orderingList.advanced().getContentAreaElement());
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         attributes.set(OrderingListAttributes.rendered, false);
@@ -313,6 +350,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @CoversAttributes("selectItemClass")
     @Templates(value = "plain")
     public void testSelectItemClass() {
         attributes.set(OrderingListAttributes.selectItemClass, "metamer-ftest-class");
@@ -321,18 +359,21 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         testStyle(orderingList.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates(value = "plain")
     public void testStyleClass() {
-        testStyle(orderingList.advanced().getRootElement());
+        testStyleClass(orderingList.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("upText")
     @Templates(value = "plain")
     public void testUpText() {
         String testedValue = "New text";
@@ -341,6 +382,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @CoversAttributes("upTopText")
     @Templates(value = "plain")
     public void testUpTopText() {
         String testedValue = "New text";
@@ -349,6 +391,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @CoversAttributes("valueChangeListener")
     public void testValueChangeListener() {
         orderingList.select(0).putItAfter(ChoicePickerHelper.byIndex().last());
         submitAndCheckElementsOrderPersists();

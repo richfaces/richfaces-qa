@@ -35,6 +35,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.panel.TextualRichFacesPanel;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -61,6 +62,33 @@ public class TestPanel extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richPanel/simple.xhtml");
     }
 
+    @Test
+    @CoversAttributes("bodyClass")
+    @Templates(value = "plain")
+    public void testBodyClass() {
+        testStyleClass(panelWithHeader.advanced().getBodyElement(), bodyClass);
+        testStyleClass(panelWithoutHeader.advanced().getBodyElement(), bodyClass);
+    }
+
+    @Test
+    @CoversAttributes("header")
+    @Templates(value = "plain")
+    public void testHeader() {
+        panelAttributes.set(PanelAttributes.header, "new header");
+
+        assertEquals(panelWithHeader.getHeaderText(), "header of panel",
+            "Header of the first panel should not change (facet defined).");
+        assertEquals(panelWithoutHeader.getHeaderText(), "new header",
+            "Header of the second panel.");
+    }
+
+    @Test
+    @CoversAttributes("headerClass")
+    @Templates(value = "plain")
+    public void testHeaderClass() {
+        testStyleClass(panelWithHeader.advanced().getHeaderElement(), headerClass);
+    }
+
     @Test(groups = "smoke")
     @Templates(value = "plain")
     public void testInit() {
@@ -84,30 +112,7 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
-    @Templates(value = "plain")
-    public void testBodyClass() {
-        testStyleClass(panelWithHeader.advanced().getBodyElement(), bodyClass);
-        testStyleClass(panelWithoutHeader.advanced().getBodyElement(), bodyClass);
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testHeader() {
-        panelAttributes.set(PanelAttributes.header, "new header");
-
-        assertEquals(panelWithHeader.getHeaderText(), "header of panel",
-            "Header of the first panel should not change (facet defined).");
-        assertEquals(panelWithoutHeader.getHeaderText(), "new header",
-            "Header of the second panel.");
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testHeaderClass() {
-        testStyleClass(panelWithHeader.advanced().getHeaderElement(), headerClass);
-    }
-
-    @Test
+    @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
         Action clickAction = new Actions(driver).click(panelWithHeader.advanced().getRootElement()).build();
@@ -118,6 +123,7 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates(value = "plain")
     public void testOndblclick() {
         Action dblClickAction = new Actions(driver).doubleClick(panelWithHeader.advanced().getRootElement()).build();
@@ -128,6 +134,7 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onkeydown")
     @Templates(value = "plain")
     public void testOnkeydown() {
         testFireEventWithJS(panelWithHeader.advanced().getRootElement(), Event.KEYDOWN, panelAttributes,
@@ -137,6 +144,7 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onkeypress")
     @Templates(value = "plain")
     public void testOnkeypress() {
         testFireEventWithJS(panelWithHeader.advanced().getRootElement(), Event.KEYPRESS, panelAttributes,
@@ -146,6 +154,7 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onkeyup")
     @Templates(value = "plain")
     public void testOnkeyup() {
         testFireEventWithJS(panelWithHeader.advanced().getRootElement(), Event.KEYUP, panelAttributes,
@@ -155,6 +164,7 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEventWithJS(panelWithHeader.advanced().getRootElement(), panelAttributes, PanelAttributes.onmousedown);
@@ -162,6 +172,7 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEventWithJS(panelWithHeader.advanced().getRootElement(), panelAttributes, PanelAttributes.onmousemove);
@@ -169,6 +180,7 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates(value = "plain")
     public void testOnmouseout() {
         // TODO 2013-02-01 JJa: try implement using WebDriver API (doesn't work for now)
@@ -179,6 +191,7 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
     public void testOnmouseover() {
         // TODO 2013-02-01 JJa: try implement using WebDriver API (doesn't work for now)
@@ -189,6 +202,7 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEventWithJS(panelWithHeader.advanced().getRootElement(), panelAttributes, PanelAttributes.onmouseup);
@@ -196,6 +210,7 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         panelAttributes.set(PanelAttributes.rendered, Boolean.FALSE);
@@ -205,6 +220,7 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         testStyle(panelWithHeader.advanced().getRootElement());
@@ -212,6 +228,7 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(panelWithHeader.advanced().getRootElement());
@@ -219,6 +236,7 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
         testTitle(panelWithHeader.advanced().getRootElement());

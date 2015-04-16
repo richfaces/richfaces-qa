@@ -38,6 +38,7 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -61,6 +62,7 @@ public class TestPanelMenuItemDOMEventHandlers extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
         panelMenuItemAttributes.set(mode, client);
@@ -70,6 +72,7 @@ public class TestPanelMenuItemDOMEventHandlers extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates("plain")
     public void testOndblclick() {
         panelMenuItemAttributes.set(mode, client);
@@ -78,6 +81,7 @@ public class TestPanelMenuItemDOMEventHandlers extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
         panelMenuItemAttributes.set(mode, client);
@@ -87,6 +91,7 @@ public class TestPanelMenuItemDOMEventHandlers extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates(value = "plain")
     public void testOnmousemove() {
         panelMenuItemAttributes.set(mode, client);
@@ -95,6 +100,7 @@ public class TestPanelMenuItemDOMEventHandlers extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates(value = "plain")
     public void testOnmouseout() {
         panelMenuItemAttributes.set(mode, client);
@@ -103,16 +109,17 @@ public class TestPanelMenuItemDOMEventHandlers extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
     public void testOnmouseover() {
-        //This test should be done first, because use static x and y variables
         panelMenuItemAttributes.set(mode, client);
-        Actions mouseover = new Actions(driver).moveToElement(page.getRequestTimeElement());
-        mouseover.moveToElement(page.getItem().advanced().getRootElement(), 3, 3);
+        Actions mouseover = new Actions(driver).moveToElement(page.getRequestTimeElement())
+            .moveToElement(page.getItem().advanced().getRootElement(), 3, 3);
         testFireEvent(panelMenuItemAttributes, onmouseover, mouseover.build());
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates(value = "plain")
     public void testOnmouseup() {
         panelMenuItemAttributes.set(mode, client);

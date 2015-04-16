@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.openqa.selenium.WebElement;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.Test;
 
 /**
@@ -47,6 +48,7 @@ public class TestAutocompleteFiltering extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("clientFilterFunction")
     public void testClientFilterFunction() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
         autocompleteAttributes.set(AutocompleteAttributes.clientFilterFunction, CLIENT_FILTER_FUNCTION_NAME);
@@ -57,7 +59,7 @@ public class TestAutocompleteFiltering extends AbstractAutocompleteTest {
         assertNotNull(found, "Suggestions aren't available.");
         assertFalse(found.isEmpty(), "Suggestions aren't available.");
 
-        String[] expected = new String[]{ "Springfield of Illinois", "Raleigh of North Carolina",
+        String[] expected = new String[] { "Springfield of Illinois", "Raleigh of North Carolina",
             "Bismarck of North Dakota" };
 
         Set<String> suggestions = new HashSet<String>();

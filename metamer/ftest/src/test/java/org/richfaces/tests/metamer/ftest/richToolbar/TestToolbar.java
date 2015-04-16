@@ -38,6 +38,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -51,23 +52,34 @@ import org.testng.annotations.Test;
  */
 public class TestToolbar extends AbstractWebDriverTest {
 
+    private final By[] itemsBy = new By[] { By.cssSelector("td[id$=createDocument_itm]"), By.cssSelector("td[id$=createFolder_itm]"),
+        By.cssSelector("td[id$=copy_itm]"), By.cssSelector("td[id$=save_itm]"), By.cssSelector("td[id$=saveAs_itm]"),
+        By.cssSelector("td[id$=saveAll_itm]"), By.cssSelector("td[id$=input_itm]"), By.cssSelector("td[id$=button_itm]") };
+    private final String[] separators = { "disc", "grid", "line", "square" };
     private final Attributes<ToolbarAttributes> toolbarAttributes = getAttributes();
+
+    private String itemSeparator;
+    private WebElement[] items;
 
     @Page
     private ToolbarPage page;
 
-    private WebElement[] items;
-    private final String[] separators = { "disc", "grid", "line", "square" };
-
-    private final By[] itemsBy = new By[]{ By.cssSelector("td[id$=createDocument_itm]"), By.cssSelector("td[id$=createFolder_itm]"),
-        By.cssSelector("td[id$=copy_itm]"), By.cssSelector("td[id$=save_itm]"), By.cssSelector("td[id$=saveAs_itm]"),
-        By.cssSelector("td[id$=saveAll_itm]"), By.cssSelector("td[id$=input_itm]"), By.cssSelector("td[id$=button_itm]") };
-
-    private String itemSeparator;
-
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richToolbar/simple.xhtml");
+    }
+
+    @Test
+    @CoversAttributes("height")
+    @Templates(value = "plain")
+    public void testHeight() {
+        AttributeConditionFactory styleAttr = new WebElementConditionFactory(page.getToolbar()).attribute("style");
+        assertTrue(styleAttr.isPresent().apply(driver),
+            "Attribute style should be present.");
+        assertTrue(styleAttr.contains("height: 28px").apply(driver), "Height in attribute style should be 28px");
+
+        toolbarAttributes.set(ToolbarAttributes.height, "50px");
+        assertTrue(styleAttr.contains("height: 50px").apply(driver), "Attribute style should have height 50px.");
     }
 
     @Test(groups = "smoke")
@@ -91,18 +103,7 @@ public class TestToolbar extends AbstractWebDriverTest {
     }
 
     @Test
-    @Templates(value = "plain")
-    public void testHeight() {
-        AttributeConditionFactory styleAttr = new WebElementConditionFactory(page.getToolbar()).attribute("style");
-        assertTrue(styleAttr.isPresent().apply(driver),
-            "Attribute style should be present.");
-        assertTrue(styleAttr.contains("height: 28px").apply(driver), "Height in attribute style should be 28px");
-
-        toolbarAttributes.set(ToolbarAttributes.height, "50px");
-        assertTrue(styleAttr.contains("height: 50px").apply(driver), "Attribute style should have height 50px.");
-    }
-
-    @Test
+    @CoversAttributes("itemClass")
     @Templates(value = "plain")
     public void testItemClass() {
         for (By itemBy : itemsBy) {
@@ -111,6 +112,7 @@ public class TestToolbar extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("itemSeparator")
     @UseWithField(field = "itemSeparator", valuesFrom = FROM_FIELD, value = "separators")
     public void testItemSeparatorCorrect() {
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, itemSeparator);
@@ -120,15 +122,7 @@ public class TestToolbar extends AbstractWebDriverTest {
     }
 
     @Test
-    public void testItemSeparatorNone() {
-        toolbarAttributes.set(ToolbarAttributes.itemSeparator, "none");
-        assertTrue(new WebElementConditionFactory(page.getSeparator().getRoot()).not().isPresent().apply(driver), "Item separator should not be present on the page.");
-
-        toolbarAttributes.set(ToolbarAttributes.itemSeparator, "null");
-        assertTrue(new WebElementConditionFactory(page.getSeparator().getRoot()).not().isPresent().apply(driver), "Item separator should not be present on the page.");
-    }
-
-    @Test
+    @CoversAttributes("itemSeparator")
     public void testItemSeparatorCustom() {
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, "star");
 
@@ -140,6 +134,7 @@ public class TestToolbar extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("itemSeparator")
     public void testItemSeparatorNonExisting() {
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, "non-existing");
 
@@ -151,6 +146,17 @@ public class TestToolbar extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("itemSeparator")
+    public void testItemSeparatorNone() {
+        toolbarAttributes.set(ToolbarAttributes.itemSeparator, "none");
+        assertTrue(new WebElementConditionFactory(page.getSeparator().getRoot()).not().isPresent().apply(driver), "Item separator should not be present on the page.");
+
+        toolbarAttributes.set(ToolbarAttributes.itemSeparator, "null");
+        assertTrue(new WebElementConditionFactory(page.getSeparator().getRoot()).not().isPresent().apply(driver), "Item separator should not be present on the page.");
+    }
+
+    @Test
+    @CoversAttributes("itemStyle")
     @Templates(value = "plain")
     public void testItemStyle() {
         for (By itemBy : itemsBy) {
@@ -159,6 +165,7 @@ public class TestToolbar extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onitemclick")
     @Templates(value = "plain")
     public void testOnitemclick() {
         for (By itemBy : itemsBy) {
@@ -168,6 +175,7 @@ public class TestToolbar extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onitemdblclick")
     @Templates(value = "plain")
     public void testOnitemdblclick() {
         for (By itemBy : itemsBy) {
@@ -177,6 +185,7 @@ public class TestToolbar extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onitemkeydown")
     @Templates(value = "plain")
     public void testOnitemkeydown() {
         // TODO JJa 2013-03-14: Doesn't work for now with Action, rewrite if it changes
@@ -187,6 +196,7 @@ public class TestToolbar extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onitemkeypress")
     @Templates(value = "plain")
     public void testOnitemkeypress() {
         // TODO JJa 2013-03-14: Doesn't work for now with Action, rewrite if it changes
@@ -197,6 +207,7 @@ public class TestToolbar extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onitemkeyup")
     @Templates(value = "plain")
     public void testOnitemkeyup() {
         // TODO JJa 2013-03-14: Doesn't work for now with Action, rewrite if it changes
@@ -207,6 +218,7 @@ public class TestToolbar extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onitemmousedown")
     @Templates(value = "plain")
     public void testOnitemmousedown() {
         for (By itemBy : itemsBy) {
@@ -215,6 +227,7 @@ public class TestToolbar extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onitemmousemove")
     @Templates(value = "plain")
     public void testOnitemmousemove() {
         for (By itemBy : itemsBy) {
@@ -224,6 +237,7 @@ public class TestToolbar extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onitemmouseout")
     @Templates(value = "plain")
     public void testOnitemmouseout() {
         // TODO JJa 2013-03-14: Doesn't work for now with Action, rewrite if it changes
@@ -234,6 +248,7 @@ public class TestToolbar extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onitemmouseover")
     @Templates(value = "plain")
     public void testOnitemmouseover() {
         for (By itemBy : itemsBy) {
@@ -243,6 +258,7 @@ public class TestToolbar extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onitemmouseup")
     @Templates(value = "plain")
     public void testOnitemmouseup() {
         for (By itemBy : itemsBy) {
@@ -251,6 +267,7 @@ public class TestToolbar extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         toolbarAttributes.set(ToolbarAttributes.rendered, Boolean.FALSE);
@@ -259,18 +276,21 @@ public class TestToolbar extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         super.testStyle(page.getToolbar());
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates(value = "plain")
     public void testStyleClass() {
         super.testStyleClass(page.getToolbar());
     }
 
     @Test
+    @CoversAttributes("width")
     @Templates(value = "plain")
     public void testWidth() {
         String styleAttr = page.getToolbar().getAttribute("style");

@@ -33,6 +33,7 @@ import org.richfaces.component.SwitchType;
 import org.richfaces.fragment.common.Actions;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.tree.Tree.TreeNode;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.richTree.AbstractTreeTest;
@@ -66,6 +67,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("dir")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testDir() {
@@ -74,6 +76,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("handleClass")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testHandleClass() {
@@ -85,6 +88,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("iconClass")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testIconClass() {
@@ -96,6 +100,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("iconCollapsed")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testIconCollapsed() {
@@ -117,6 +122,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("iconExpanded")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testIconExpanded() {
@@ -135,6 +141,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("iconLeaf")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testIconLeaf() {
@@ -145,6 +152,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("immediate")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testImmediate() {
         treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax);
@@ -159,6 +167,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("labelClass")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testLabelClass() {
@@ -170,6 +179,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("lang")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testLang() {
@@ -177,6 +187,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("onbeforetoggle")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testOnbeforetoggle() {
         treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax);
@@ -184,6 +195,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("onclick")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnclick() {
@@ -192,6 +204,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates("plain")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testOndblclick() {
@@ -200,6 +213,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("onkeydown")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnkeydown() {
@@ -207,6 +221,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("onkeypress")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnkeypress() {
@@ -214,6 +229,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("onkeyup")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnkeyup() {
@@ -221,6 +237,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnmousedown() {
@@ -229,6 +246,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnmousemove() {
@@ -237,6 +255,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnmouseout() {
@@ -246,6 +265,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnmouseover() {
@@ -259,6 +279,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates("plain")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testOnmouseup() {
@@ -267,6 +288,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("ontoggle")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testOntoggle() {
         treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax);
@@ -274,6 +296,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testRendered() {
@@ -284,6 +307,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates("plain")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testStyle() {
@@ -292,6 +316,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates("plain")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testStyleClass() {
@@ -300,6 +325,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("title")
     @Templates("plain")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testTitle() {
@@ -307,6 +333,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     }
 
     @Test
+    @CoversAttributes("toggleListener")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testToggleListener() {
         treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax);

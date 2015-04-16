@@ -48,6 +48,7 @@ import org.richfaces.fragment.pickList.RichFacesPickList;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -68,16 +69,24 @@ public class TestPickList extends AbstractWebDriverTest {
 
     private final Attributes<PickListAttributes> pickListAttributes = getAttributes();
 
-    @FindBy(css = "input[id$=hButton]")
-    private WebElement hSubmit;
     @FindBy(css = "input[id$=a4jButton]")
     private WebElement ajaxSubmit;
+    @FindBy(css = "input[id$=hButton]")
+    private WebElement hSubmit;
+    @FindBy(css = "[id$=msg]")
+    private RichFacesMessage message;
     @FindBy(css = "span[id$=output]")
     private WebElement output;
     @FindBy(css = "[id$=pickList]")
     private RichFacesPickList pickList;
-    @FindBy(css = "[id$=msg]")
-    private RichFacesMessage message;
+
+    private void assertButtonDisabled(WebElement e) {
+        assertFalse(PickListButton.from(e).isEnabled(), "Button should be disabled.");
+    }
+
+    private void assertButtonEnabled(WebElement e) {
+        assertTrue(PickListButton.from(e).isEnabled(), "Button should be enabled.");
+    }
 
     @Override
     public URL getTestUrl() {
@@ -100,6 +109,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("addAllText")
     @Templates(value = "plain")
     public void testAddAllText() {
         String label = "xxx";
@@ -108,6 +118,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("addText")
     @Templates(value = "plain")
     public void testAddText() {
         String label = "xxx";
@@ -139,6 +150,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("disabled")
     public void testDisabled() {
         String disabledOptionClass = "rf-pick-opt-dis";
         pickList.advanced().getSourceList().getItem(0).select();
@@ -161,6 +173,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("disabledClass")
     @Templates(value = "plain")
     public void testDisabledClass() {
         pickListAttributes.set(PickListAttributes.disabled, Boolean.TRUE);
@@ -168,6 +181,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("downBottomText")
     @Templates(value = "plain")
     public void testDownBottomText() {
         String label = "xxx";
@@ -177,6 +191,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("downText")
     @Templates(value = "plain")
     public void testDownText() {
         String label = "xxx";
@@ -186,6 +201,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("immediate")
     public void testImmediate() {
         pickListAttributes.set(PickListAttributes.immediate, Boolean.FALSE);
         pickList.add(0);
@@ -201,6 +217,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("itemClass")
     @Templates(value = "plain")
     public void testItemClass() {
         String testedClass = "metamer-ftest-class";
@@ -232,6 +249,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("listHeight")
     @Templates(value = "plain")
     public void testListHeight() {
         int testedValue = 600;
@@ -243,6 +261,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("listWidth")
     @Templates(value = "plain")
     public void testListWidth() {
         int testedValue = 600;
@@ -254,6 +273,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("maxListHeight")
     @Templates(value = "plain")
     public void testMaxListHeight() {
         int testedValue = 600;
@@ -266,6 +286,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("minListHeight")
     @Templates(value = "plain")
     public void testMinListHeight() {
         int testedValue = 600;
@@ -278,6 +299,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onadditems")
     public void testOnadditems() {
         testFireEvent("additems", new Action() {
             @Override
@@ -288,6 +310,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onblur")
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     public void testOnblur() {
         testFireEvent(pickListAttributes, PickListAttributes.onblur,
@@ -295,77 +318,90 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onchange")
     public void testOnchange() {
         testFireEvent(Event.CHANGE, pickList.advanced().getRootElement(), "change");
     }
 
     @Test
+    @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(Event.CLICK, pickList.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(Event.DBLCLICK, pickList.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onfocus")
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     public void testOnfocus() {
         testFireEvent(Event.FOCUS, pickList.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onkeydown")
     @Templates(value = "plain")
     public void testOnkeydown() {
         testFireEvent(Event.KEYDOWN, pickList.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onkeypress")
     @Templates(value = "plain")
     public void testOnkeypress() {
         testFireEvent(Event.KEYPRESS, pickList.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onkeyup")
     @Templates(value = "plain")
     public void testOnkeyup() {
         testFireEvent(Event.KEYUP, pickList.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEvent(Event.MOUSEDOWN, pickList.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEvent(Event.MOUSEMOVE, pickList.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEvent(Event.MOUSEOUT, pickList.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEvent(Event.MOUSEOVER, pickList.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEvent(Event.MOUSEUP, pickList.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onremoveitems")
     public void testOnremoveitems() {
         testFireEvent("removeitems", new Action() {
             @Override
@@ -377,6 +413,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onsourceblur")
     @RegressionTest("https://issues.jboss.org/browse/RF-11322")
     public void testOnsourceblur() {
         testFireEvent(pickListAttributes, PickListAttributes.onsourceblur, new Action() {
@@ -388,6 +425,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onsourceclick")
     @Templates(value = "plain")
     public void testOnsourceclick() {
         testFireEvent(pickListAttributes, PickListAttributes.onsourceclick,
@@ -395,12 +433,14 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onsourcedblclick")
     @Templates(value = "plain")
     public void testOnsourcedblclick() {
         testFireEvent(Event.DBLCLICK, pickList.advanced().getSourceListContentAreaElement(), "sourcedblclick");
     }
 
     @Test
+    @CoversAttributes("onsourcefocus")
     @RegressionTest("https://issues.jboss.org/browse/RF-11322")
     public void testOnsourcefocus() {
         testFireEvent(pickListAttributes, PickListAttributes.onsourcefocus,
@@ -408,6 +448,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onsourcekeydown")
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     @Templates(value = "plain")
     public void testOnsourcekeydown() {
@@ -415,6 +456,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onsourcekeypress")
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     @Templates(value = "plain")
     public void testOnsourcekeypress() {
@@ -422,6 +464,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onsourcekeyup")
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     @Templates(value = "plain")
     public void testOnsourcekeyup() {
@@ -429,41 +472,47 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onsourcemousedown")
     @Templates(value = "plain")
     public void testOnsourcemousedown() {
         testFireEvent(Event.MOUSEDOWN, pickList.advanced().getSourceListContentAreaElement(), "sourcemousedown");
     }
 
     @Test
+    @CoversAttributes("onsourcemousemove")
     @Templates(value = "plain")
     public void testOnsourcemousemove() {
         testFireEvent(Event.MOUSEMOVE, pickList.advanced().getSourceListContentAreaElement(), "sourcemousemove");
     }
 
     @Test
+    @CoversAttributes("onsourcemouseout")
     @Templates(value = "plain")
     public void testOnsourcemouseout() {
         testFireEvent(Event.MOUSEOUT, pickList.advanced().getSourceListContentAreaElement(), "sourcemouseout");
     }
 
     @Test
+    @CoversAttributes("onsourcemouseover")
     @Templates(value = "plain")
     public void testOnsourcemouseover() {
         testFireEvent(Event.MOUSEOVER, pickList.advanced().getSourceListContentAreaElement(), "sourcemouseover");
     }
 
     @Test
+    @CoversAttributes("onsourcemouseup")
     @Templates(value = "plain")
     public void testOnsourcemouseup() {
         testFireEvent(Event.MOUSEUP, pickList.advanced().getSourceListContentAreaElement(), "sourcemouseup");
     }
 
     @Test
+    @CoversAttributes("ontargetblur")
     @RegressionTest("https://issues.jboss.org/browse/RF-11322")
     public void testOntargetblur() {
         testFireEvent(
             pickListAttributes,
-            PickListAttributes.ontargetfocus,
+            PickListAttributes.ontargetblur,
             new Action() {
                 @Override
                 public void perform() {
@@ -476,6 +525,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("ontargetclick")
     @Templates(value = "plain")
     public void testOntargetclick() {
         testFireEvent(pickListAttributes, PickListAttributes.ontargetclick,
@@ -483,12 +533,14 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("ontargetdblclick")
     @Templates(value = "plain")
     public void testOntargetdblclick() {
         testFireEvent(Event.DBLCLICK, pickList.advanced().getTargetListContentAreaElement(), "targetdblclick");
     }
 
     @Test
+    @CoversAttributes("ontargetfocus")
     @RegressionTest("https://issues.jboss.org/browse/RF-11322")
     public void testOntargetfocus() {
         testFireEvent(pickListAttributes, PickListAttributes.ontargetfocus,
@@ -503,6 +555,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("ontargetkeydown")
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     @Templates(value = "plain")
     public void testOntargetkeydown() {
@@ -510,6 +563,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("ontargetkeypress")
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     @Templates(value = "plain")
     public void testOntargetkeypress() {
@@ -517,6 +571,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("ontargetkeyup")
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     @Templates(value = "plain")
     public void testOntargetkeyup() {
@@ -524,36 +579,42 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("ontargetmousedown")
     @Templates(value = "plain")
     public void testOntargetmousedown() {
         testFireEvent(Event.MOUSEDOWN, pickList.advanced().getTargetListContentAreaElement(), "targetmousedown");
     }
 
     @Test
+    @CoversAttributes("ontargetmousemove")
     @Templates(value = "plain")
     public void testOntargetmousemove() {
         testFireEvent(Event.MOUSEMOVE, pickList.advanced().getTargetListContentAreaElement(), "targetmousemove");
     }
 
     @Test
+    @CoversAttributes("ontargetmouseout")
     @Templates(value = "plain")
     public void testOntargetmouseout() {
         testFireEvent(Event.MOUSEOUT, pickList.advanced().getTargetListContentAreaElement(), "targetmouseout");
     }
 
     @Test
+    @CoversAttributes("ontargetmouseover")
     @Templates(value = "plain")
     public void testOntargetmouseover() {
         testFireEvent(Event.MOUSEOVER, pickList.advanced().getTargetListContentAreaElement(), "targetmouseover");
     }
 
     @Test
+    @CoversAttributes("ontargetmouseup")
     @Templates(value = "plain")
     public void testOntargetmouseup() {
         testFireEvent(Event.MOUSEUP, pickList.advanced().getTargetListContentAreaElement(), "targetmouseup");
     }
 
     @Test
+    @CoversAttributes("orderable")
     public void testOrderable() {
         // firstly check ordering controls doesn't appear near pickList if not "orderable"
         pickListAttributes.set(PickListAttributes.orderable, Boolean.FALSE);
@@ -609,6 +670,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("removeAllText")
     @Templates(value = "plain")
     public void testRemoveAllText() {
         String label = "xxx";
@@ -617,6 +679,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("removeText")
     @Templates(value = "plain")
     public void testRemoveText() {
         String label = "xxx";
@@ -625,6 +688,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         pickListAttributes.set(PickListAttributes.rendered, Boolean.TRUE);
@@ -634,6 +698,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("required")
     public void testRequired() {
         pickListAttributes.set(PickListAttributes.required, Boolean.TRUE);
         pickList.add(0);
@@ -646,6 +711,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("requiredMessage")
     public void testRequiredMessage() {
         String messageString = "This is new required message.";
         pickListAttributes.set(PickListAttributes.required, Boolean.TRUE);
@@ -668,6 +734,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("selectItemClass")
     @Templates(value = "plain")
     public void testSelectItemClass() {
         testHTMLAttribute(new FutureTarget<WebElement>() {
@@ -684,6 +751,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("sourceCaption")
     public void testSourceCaption() {
         String caption = "This is source";
         pickListAttributes.set(PickListAttributes.sourceCaption, caption);
@@ -691,12 +759,14 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         testStyle(pickList.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @RegressionTest("https://issues.jboss.org/browse/RF-13350")
     @Templates(value = "plain")
     public void testStyleClass() {
@@ -707,6 +777,7 @@ public class TestPickList extends AbstractWebDriverTest {
      * Verify switchByClick attribute
      */
     @Test
+    @CoversAttributes("switchByClick")
     public void testSwitchByClick() {
         pickListAttributes.set(PickListAttributes.switchByClick, Boolean.TRUE);
         ListItem item = pickList.advanced().getSourceList().getItems().get(0);
@@ -727,6 +798,7 @@ public class TestPickList extends AbstractWebDriverTest {
      * Verify switchByDblClick attribute
      */
     @Test
+    @CoversAttributes("switchByDblClick")
     public void testSwitchByDblClick() {
         pickListAttributes.set(PickListAttributes.switchByDblClick, Boolean.TRUE);
         ListItem item = pickList.advanced().getSourceList().getItems().get(0);
@@ -743,6 +815,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("targetCaption")
     public void testTargetCaption() {
         String caption = "This is target";
         pickListAttributes.set(PickListAttributes.targetCaption, caption);
@@ -750,6 +823,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("upText")
     @Templates(value = "plain")
     public void testUpText() {
         String label = "xxx";
@@ -759,6 +833,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("upTopText")
     @Templates(value = "plain")
     public void testUpTopText() {
         String label = "xxx";
@@ -768,6 +843,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("validator")
     public void testValidator() {
         pickList.addAll();
         submitAjax();
@@ -775,6 +851,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("validatorMessage")
     public void testValidatorMessage() {
         String messageText = "Custom validatorMessage.";
         pickListAttributes.set(PickListAttributes.validatorMessage, messageText);
@@ -784,6 +861,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("valueChangeListener")
     public void testValueChangeListener() {
         pickList.add(0);
         submitAjax();
@@ -792,14 +870,6 @@ public class TestPickList extends AbstractWebDriverTest {
         pickList.add(0);
         submitAjax();
         getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: [Alabama] -> [Alabama, Alaska]");
-    }
-
-    private void assertButtonDisabled(WebElement e) {
-        assertFalse(PickListButton.from(e).isEnabled(), "Button should be disabled.");
-    }
-
-    private void assertButtonEnabled(WebElement e) {
-        assertTrue(PickListButton.from(e).isEnabled(), "Button should be enabled.");
     }
 
     public static class PickListButton {

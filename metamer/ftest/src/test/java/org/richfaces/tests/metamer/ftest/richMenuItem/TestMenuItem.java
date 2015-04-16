@@ -37,6 +37,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.dropDownMenu.RichFacesDropDownMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -54,31 +55,24 @@ public class TestMenuItem extends AbstractWebDriverTest {
 
     private final Attributes<MenuItemAttributes> menuItemAttributes = getAttributes();
 
-    @FindByJQuery(".rf-tb-itm:eq(0)")
-    private RichFacesDropDownMenu fileDropDownMenu;
-    @FindByJQuery(".rf-ddm-lbl-dec:eq(0)")
-    private WebElement target1;
-    @FindBy(css = "div[id$=menu1] div.rf-ddm-lbl-dec")
-    private WebElement fileMenuLabel;
-    @FindBy(css = "div[id$=menu1]")
-    private WebElement fileMenu;
-    @FindBy(css = "div[id$=menu1_list]")
-    private WebElement fileMenuList;
-    @FindBy(css = "div[id$=menuItem1] > span.rf-ddm-itm-lbl ")
-    private WebElement label;
-    @FindBy(css = "div[id$=menuItem1] > span.rf-ddm-itm-ic > img")
-    private WebElement icon;
     @FindBy(css = "div[id$=menuItem1] > span.rf-ddm-itm-ic > span.rf-ddm-emptyIcon")
     private WebElement emptyIcon;
+    @FindByJQuery(".rf-tb-itm:eq(0)")
+    private RichFacesDropDownMenu fileDropDownMenu;
+    @FindBy(css = "div[id$=menu1]")
+    private WebElement fileMenu;
+    @FindBy(css = "div[id$=menu1] div.rf-ddm-lbl-dec")
+    private WebElement fileMenuLabel;
+    @FindBy(css = "div[id$=menu1_list]")
+    private WebElement fileMenuList;
+    @FindBy(css = "div[id$=menuItem1] > span.rf-ddm-itm-ic > img")
+    private WebElement icon;
+    @FindBy(css = "div[id$=menuItem1] > span.rf-ddm-itm-lbl ")
+    private WebElement label;
     @FindBy(css = "div[id$=menuItem1]")
     private WebElement menuItem1;
-    @FindBy(css = "span[id$=status] > span")
-    private WebElement statusText;
-
-    @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richMenuItem/simple.xhtml");
-    }
+    @FindByJQuery(value = ".rf-ddm-lbl-dec:eq(0)")
+    private WebElement target1;
 
     private void openMenu() {
         fileDropDownMenu.advanced().show(target1);
@@ -94,7 +88,18 @@ public class TestMenuItem extends AbstractWebDriverTest {
         MetamerPage.waitRequest(menuItem1, type).click();
     }
 
+    @BeforeMethod(groups = "smoke")
+    private void updateDropDownMenuInvoker() {
+        fileDropDownMenu.advanced().setShowEvent(Event.MOUSEOVER);
+    }
+
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richMenuItem/simple.xhtml");
+    }
+
     @Test
+    @CoversAttributes("action")
     public void testAction() {
         openMenu();
         MetamerPage.waitRequest(menuItem1, WaitRequestType.XHR).click();
@@ -102,6 +107,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("actionListener")
     public void testActionListener() {
         openMenu();
         MetamerPage.waitRequest(menuItem1, WaitRequestType.XHR).click();
@@ -109,6 +115,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("bypassUpdates")
     public void testBypassUpdates() {
         menuItemAttributes.set(MenuItemAttributes.bypassUpdates, Boolean.TRUE);
         openMenuAndClickOnTheItem();
@@ -118,6 +125,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("data")
     public void testData() {
         testData(new Action() {
             @Override
@@ -128,12 +136,14 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("dir")
     @Templates("plain")
     public void testDir() {
         testDir(menuItem1);
     }
 
     @Test
+    @CoversAttributes("disabled")
     public void testDisabled() {
         menuItemAttributes.set(MenuItemAttributes.disabled, Boolean.TRUE);
 
@@ -144,6 +154,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("execute")
     public void testExecute() {
         menuItemAttributes.set(MenuItemAttributes.execute, "@this executeChecker");
         openMenuAndClickOnTheItem();
@@ -151,6 +162,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("icon")
     @Templates(value = "plain")
     public void testIcon() {
         menuItemAttributes.set(MenuItemAttributes.icon, "star");
@@ -167,6 +179,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("iconDisabled")
     @Templates(value = "plain")
     public void testIconDisabled() {
         menuItemAttributes.set(MenuItemAttributes.disabled, Boolean.TRUE);
@@ -186,6 +199,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("immediate")
     public void testImmediate() {
         menuItemAttributes.set(MenuItemAttributes.immediate, Boolean.TRUE);
         openMenuAndClickOnTheItem(WaitRequestType.XHR);
@@ -213,6 +227,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("label")
     @Templates("plain")
     public void testLabel() {
         testLabelChanges(menuItem1, menuItemAttributes, MenuItemAttributes.label, new Action() {
@@ -224,12 +239,14 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("lang")
     @Templates("plain")
     public void testLang() {
         testLang(menuItem1);
     }
 
     @Test
+    @CoversAttributes("limitRender")
     public void testLimitRender() {
         menuItemAttributes.set(MenuItemAttributes.limitRender, Boolean.TRUE);
         openMenu();
@@ -237,6 +254,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("mode")
     public void testMode() {
         menuItemAttributes.set(MenuItemAttributes.mode, "ajax");
         openMenuAndClickOnTheItem(WaitRequestType.XHR);
@@ -252,6 +270,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onbeforedomupdate")
     public void testOnbeforedomupdate() {
         testFireEvent("beforedomupdate", new Action() {
             @Override
@@ -262,6 +281,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onbegin")
     public void testOnbegin() {
         testFireEvent("begin", new Action() {
             @Override
@@ -272,12 +292,14 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(Event.CLICK, menuItem1);
     }
 
     @Test
+    @CoversAttributes("oncomplete")
     public void testOncomplete() {
         testFireEvent("complete", new Action() {
             @Override
@@ -288,60 +310,70 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(Event.DBLCLICK, menuItem1);
     }
 
     @Test
+    @CoversAttributes("onkeydown")
     @Templates(value = "plain")
     public void testOnkeydown() {
         testFireEvent(Event.KEYDOWN, menuItem1);
     }
 
     @Test
+    @CoversAttributes("onkeypress")
     @Templates(value = "plain")
     public void testOnkeypress() {
         testFireEvent(Event.KEYPRESS, menuItem1);
     }
 
     @Test
+    @CoversAttributes("onkeyup")
     @Templates(value = "plain")
     public void testOnkeyup() {
         testFireEvent(Event.KEYUP, menuItem1);
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEvent(Event.MOUSEDOWN, menuItem1);
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEvent(Event.MOUSEMOVE, menuItem1);
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEvent(Event.MOUSEOUT, menuItem1);
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEvent(Event.MOUSEOVER, menuItem1);
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEvent(Event.MOUSEUP, menuItem1);
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         menuItemAttributes.set(MenuItemAttributes.rendered, Boolean.FALSE);
@@ -349,6 +381,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("status")
     public void testStatus() {
         testStatus(new Action() {
             @Override
@@ -359,25 +392,23 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         testStyle(menuItem1);
     }
 
     @Test
-    @Templates(value = "plain")
+    @CoversAttributes("styleClass")
+    @Templates("plain")
     public void testStyleClass() {
         testStyleClass(menuItem1);
     }
 
     @Test
+    @CoversAttributes("title")
     @Templates("plain")
     public void testTitle() {
         testTitle(menuItem1);
-    }
-
-    @BeforeMethod(groups = "smoke")
-    private void updateDropDownMenuInvoker() {
-        fileDropDownMenu.advanced().setShowEvent(Event.MOUSEOVER);
     }
 }

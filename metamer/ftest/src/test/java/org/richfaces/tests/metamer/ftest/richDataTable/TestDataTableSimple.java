@@ -29,6 +29,7 @@ import java.net.URL;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSimpleTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SimpleDT;
@@ -40,126 +41,144 @@ import org.testng.annotations.Test;
  */
 public class TestDataTableSimple extends DataTableSimpleTest {
 
+    private final Attributes<DataTableAttributes> attributes = getAttributes();
+
     @FindBy(css = "table.rf-dt[id$=richDataTable]")
     private SimpleDT table;
     @FindBy(css = "table.rf-dt[id$=richDataTable]")
     private WebElement tableRoot;
-
-    private final Attributes<DataTableAttributes> attributes = getAttributes();
-
-    @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richDataTable/simple.xhtml");
-    }
 
     @Override
     protected SimpleDT getTable() {
         return table;
     }
 
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richDataTable/simple.xhtml");
+    }
+
     @Test
+    @CoversAttributes("first")
     @UseWithField(field = "first", valuesFrom = FROM_FIELD, value = "COUNTS")
     public void testFirst() {
         super.testFirst();
     }
 
     @Test
+    @CoversAttributes("noDataLabel")
     @Templates("plain")
     public void testNoDataLabel() {
         super.testNoDataLabel();
     }
 
     @Test
+    @CoversAttributes("onrowclick")
     @Templates("plain")
     public void testOnrowclick() {
         super.testOnrowclick();
     }
 
     @Test
+    @CoversAttributes("onrowdblclick")
     @Templates("plain")
     public void testOnrowdblclick() {
         super.testOnrowdblclick();
     }
 
     @Test
+    @CoversAttributes("onrowkeydown")
     @Templates("plain")
     public void testOnrowkeydown() {
         super.testOnrowkeydown();
     }
 
     @Test
+    @CoversAttributes("onrowkeypress")
     @Templates("plain")
     public void testOnrowkeypress() {
         super.testOnrowkeypress();
     }
 
     @Test
+    @CoversAttributes("onrowkeyup")
     @Templates("plain")
     public void testOnrowkeyup() {
         super.testOnrowkeyup();
     }
 
     @Test
+    @CoversAttributes("onrowmousedown")
     @Templates("plain")
     public void testOnrowmousedown() {
         super.testOnrowmousedown();
     }
 
     @Test
+    @CoversAttributes("onrowmousemove")
     @Templates("plain")
     public void testOnrowmousemove() {
         super.testOnrowmousemove();
     }
 
     @Test
+    @CoversAttributes("onrowmouseout")
     @Templates("plain")
     public void testOnrowmouseout() {
         super.testOnrowmouseout();
     }
 
     @Test
+    @CoversAttributes("onrowmouseover")
     @Templates("plain")
     public void testOnrowmouseover() {
         super.testOnrowmouseover();
     }
 
     @Test
+    @CoversAttributes("onrowmouseup")
     @Templates("plain")
     public void testOnrowmouseup() {
         super.testOnrowmouseup();
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates("plain")
     public void testRendered() {
         super.testRendered();
     }
 
     @Test
+    @CoversAttributes("rowClass")
     @Templates("plain")
     public void testRowClass() {
         super.testRowClass();
     }
 
     @Test
+    @CoversAttributes("rowClasses")
     @Templates("plain")
     public void testRowClasses() {
         super.testRowClasses();
     }
 
     @Test
+    @CoversAttributes("rows")
     @UseWithField(field = "rows", valuesFrom = FROM_FIELD, value = "COUNTS")
     public void testRows() {
         super.testRows();
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates("plain")
     public void testStyle() {
         testStyle(tableRoot);
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates("plain")
     public void testStyleClass() {
         testStyleClass(tableRoot);

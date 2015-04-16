@@ -25,10 +25,12 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.bean.ValueBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.Test;
 
 /**
@@ -45,6 +47,7 @@ public class TestPlaceholderConverter extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("converter")
     public void testConverter() {
         assertEquals(input.getAttribute("value"), ValueBean.DEFAULT_VALUE);
     }

@@ -33,6 +33,7 @@ import java.net.URL;
 import org.richfaces.fragment.collapsibleSubTableToggler.RichFacesCollapsibleSubTableToggler;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Utils;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.richCollapsibleSubTable.AbstractCollapsibleSubTableTest;
@@ -50,7 +51,7 @@ public class TestCollapsibleSubTableToggler extends AbstractCollapsibleSubTableT
     private final Attributes<CollapsibleSubTableTogglerAttributes> attributes = getAttributes();
 
     private Event event = Event.CLICK;
-    private Event[] events = new Event[]{ Event.DBLCLICK, Event.CLICK };
+    private Event[] events = new Event[] { Event.DBLCLICK, Event.CLICK };
 
     private Boolean toggleByImage = Boolean.TRUE;
 
@@ -60,6 +61,7 @@ public class TestCollapsibleSubTableToggler extends AbstractCollapsibleSubTableT
     }
 
     @Test
+    @CoversAttributes("collapsedIcon")
     @Templates("plain")
     public void testCollapsedIcon() {
         attributes.set(CollapsibleSubTableTogglerAttributes.collapsedIcon, IMAGE_URL);
@@ -89,6 +91,7 @@ public class TestCollapsibleSubTableToggler extends AbstractCollapsibleSubTableT
     }
 
     @Test
+    @CoversAttributes("collapsedLabel")
     @Templates("plain")
     public void testCollapsedLabel() {
         attributes.set(CollapsibleSubTableTogglerAttributes.collapsedIcon, "none");
@@ -121,6 +124,7 @@ public class TestCollapsibleSubTableToggler extends AbstractCollapsibleSubTableT
     }
 
     @Test
+    @CoversAttributes("event")
     @Templates("plain")
     @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "events")
     public void testEvent() {
@@ -129,6 +133,7 @@ public class TestCollapsibleSubTableToggler extends AbstractCollapsibleSubTableT
     }
 
     @Test
+    @CoversAttributes("expandedIcon")
     @Templates("plain")
     public void testExpandedIcon() {
         attributes.set(CollapsibleSubTableTogglerAttributes.expandedIcon, IMAGE_URL);
@@ -155,6 +160,7 @@ public class TestCollapsibleSubTableToggler extends AbstractCollapsibleSubTableT
     }
 
     @Test
+    @CoversAttributes("expandedLabel")
     @Templates("plain")
     public void testExpandedLabel() {
         attributes.set(CollapsibleSubTableTogglerAttributes.expandedLabel, LABEL);
@@ -182,6 +188,7 @@ public class TestCollapsibleSubTableToggler extends AbstractCollapsibleSubTableT
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates("plain")
     public void testRendered() {
         attributes.set(rendered, Boolean.FALSE);
@@ -196,9 +203,6 @@ public class TestCollapsibleSubTableToggler extends AbstractCollapsibleSubTableT
 
         private CollapsibleSubTableWithEmployees subtable;
         protected RichFacesCollapsibleSubTableToggler toggler;
-
-        public TogglerTester() {
-        }
 
         public void test() {
             for (int i = 1; i <= 2; i++) {

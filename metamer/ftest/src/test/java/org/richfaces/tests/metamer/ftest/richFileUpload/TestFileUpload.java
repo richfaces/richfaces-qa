@@ -38,6 +38,7 @@ import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -53,11 +54,6 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
     private final Action succesfulFileUploadAction = new SuccesfulFileUploadAction();
 
-    @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richFileUpload/simple.xhtml");
-    }
-
     private void _testFireEventWithJS(FileUploadAttributes testedAttribute, WebElement element) {
         // same as 'testFireEventWithJS', but added a ';return false;' to the attribute value to not open the file dialog
         fileUploadAttributes.set(testedAttribute, "metamerEvents += \"" + testedAttribute.toString() + " \";return false;");
@@ -68,7 +64,13 @@ public class TestFileUpload extends AbstractFileUploadTest {
         assertEquals(returnedString, testedAttribute.toString(), "Event " + e + " does not work.");
     }
 
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richFileUpload/simple.xhtml");
+    }
+
     @Test(groups = { "smoke" })
+    @CoversAttributes("acceptedTypes")
     @RegressionTest("https://issues.jboss.org/browse/RFPL-3503")
     public void testAcceptedTypes() {
         String acceptable = "txt";
@@ -82,12 +84,14 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @CoversAttributes("addLabel")
     @Templates("plain")
     public void testAddLabel() {
         testLabelChanges(fileUpload.advanced().getAddButtonElement(), fileUploadAttributes, FileUploadAttributes.addLabel, null);
     }
 
     @Test
+    @CoversAttributes("clearAllLabel")
     @RegressionTest("https://issues.jboss.org/browse/RFPL-3503")
     @Templates("plain")
     public void testClearAllLabel() {
@@ -95,6 +99,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @CoversAttributes("clearLabel")
     @RegressionTest("https://issues.jboss.org/browse/RFPL-3503")
     @Templates("plain")
     public void testClearLabel() {
@@ -109,11 +114,13 @@ public class TestFileUpload extends AbstractFileUploadTest {
     @IssueTracking(value = { "https://issues.jboss.org/browse/RF-12039" })
     @RegressionTest("https://issues.jboss.org/browse/RFPL-3503")
     @Test(groups = "Future")
+    @CoversAttributes("data")
     public void testData() {
         testData(succesfulFileUploadAction);
     }
 
     @Test
+    @CoversAttributes("deleteLabel")
     @Templates("plain")
     public void testDeleteLabel() {
         testLabelChanges(new FutureTarget<WebElement>() {
@@ -130,12 +137,14 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @CoversAttributes("dir")
     @Templates("plain")
     public void testDir() {
         testDir(fileUpload.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("disabled")
     @Templates("plain")
     public void testDisabled() {
         fileUploadAttributes.set(FileUploadAttributes.disabled, Boolean.TRUE);
@@ -147,6 +156,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test(groups = { "smoke" })
+    @CoversAttributes("doneLabel")
     @Templates("plain")
     @RegressionTest(value = { "https://issues.jboss.org/browse/RF-12122", "https://issues.jboss.org/browse/RFPL-3503" })
     public void testDoneLabel() {
@@ -159,6 +169,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @CoversAttributes("execute")
     @RegressionTest(value = { "https://issues.jboss.org/browse/RF-12122", "https://issues.jboss.org/browse/RFPL-3503" })
     public void testExecute() {
         String cmd = "executeChecker";
@@ -168,6 +179,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test(groups = { "smoke" })
+    @CoversAttributes("immediateUpload")
     @RegressionTest("https://issues.jboss.org/browse/RFPL-3503")
     public void testImmediateUpload() {
         fileUploadAttributes.set(FileUploadAttributes.immediateUpload, Boolean.TRUE);
@@ -188,12 +200,14 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @CoversAttributes("lang")
     @Templates("plain")
     public void testLang() {
         testLang(fileUpload.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("limitRender")
     @RegressionTest(value = { "https://issues.jboss.org/browse/RF-12122", "https://issues.jboss.org/browse/RFPL-3503" })
     public void testLimitRender() {
         //sendFile depends on requestTime and uploadedFilesPanel
@@ -212,6 +226,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @CoversAttributes("listHeight")
     @Templates(value = "plain")
     public void testListHeight() {
         String height = "100px";
@@ -221,6 +236,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @CoversAttributes("maxFilesQuantity")
     @RegressionTest("https://issues.jboss.org/browse/RFPL-3503")
     public void testMaxFilesQuantity() {
         final int maxFilesQuantity = 1;
@@ -246,6 +262,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @CoversAttributes("noDuplicate")
     public void testNoDuplicate() {
         fileUploadAttributes.set(FileUploadAttributes.noDuplicate, Boolean.TRUE);
         sendFileToInputWithWaiting(acceptableFile, true);
@@ -254,18 +271,21 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12037")
+    @CoversAttributes("onbeforedomupdate")
     @Test(groups = "Future")
     public void testOnbeforedomupdate() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onbeforedomupdate, succesfulFileUploadAction);
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12037")
+    @CoversAttributes("onbegin")
     @Test(groups = "Future")
     public void testOnbegin() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onbegin, succesfulFileUploadAction);
     }
 
     @Test
+    @CoversAttributes("onclear")
     @Templates("plain")
     public void testOnclear() {
         testFireEvent("clear", new Action() {
@@ -278,24 +298,28 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @CoversAttributes("onclick")
     @Templates("plain")
     public void testOnclick() {
         _testFireEventWithJS(FileUploadAttributes.onclick, fileUpload.advanced().getFileInputElement());
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12037")
+    @CoversAttributes("oncomplete")
     @Test(groups = "Future")
     public void testOncomplete() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.oncomplete, succesfulFileUploadAction);
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates("plain")
     public void testOndblclick() {
         _testFireEventWithJS(FileUploadAttributes.ondblclick, fileUpload.advanced().getFileInputElement());
     }
 
     @Test
+    @CoversAttributes("onfileselect")
     public void testOnfileselect() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onfileselect, new Action() {
             @Override
@@ -306,60 +330,70 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @CoversAttributes("onfilesubmit")
     @RegressionTest("https://issues.jboss.org/browse/RFPL-3503")
     public void testOnfilesubmit() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onfilesubmit, succesfulFileUploadAction);
     }
 
     @Test
+    @CoversAttributes("onkeydown")
     @Templates("plain")
     public void testOnkeydown() {
         testFireEventWithJS(fileUpload.advanced().getRootElement(), fileUploadAttributes, FileUploadAttributes.onkeydown);
     }
 
     @Test
+    @CoversAttributes("onkeypress")
     @Templates("plain")
     public void testOnkeypress() {
         testFireEventWithJS(fileUpload.advanced().getRootElement(), fileUploadAttributes, FileUploadAttributes.onkeypress);
     }
 
     @Test
+    @CoversAttributes("onkeyup")
     @Templates("plain")
     public void testOnkeyup() {
         testFireEventWithJS(fileUpload.advanced().getRootElement(), fileUploadAttributes, FileUploadAttributes.onkeyup);
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
         _testFireEventWithJS(FileUploadAttributes.onmousedown, fileUpload.advanced().getFileInputElement());
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates("plain")
     public void testOnmousemove() {
         testFireEventWithJS(fileUpload.advanced().getRootElement(), fileUploadAttributes, FileUploadAttributes.onmousemove);
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates("plain")
     public void testOnmouseout() {
         testFireEventWithJS(fileUpload.advanced().getRootElement(), fileUploadAttributes, FileUploadAttributes.onmouseout);
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates("plain")
     public void testOnmouseover() {
         testFireEventWithJS(fileUpload.advanced().getRootElement(), fileUploadAttributes, FileUploadAttributes.onmouseover);
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates("plain")
     public void testOnmouseup() {
-        _testFireEventWithJS(FileUploadAttributes.onmousedown, fileUpload.advanced().getFileInputElement());
+        _testFireEventWithJS(FileUploadAttributes.onmouseup, fileUpload.advanced().getFileInputElement());
     }
 
     @Test
+    @CoversAttributes("ontyperejected")
     public void testOntyperejected() {
         String acceptable = "txt";
         fileUploadAttributes.set(FileUploadAttributes.acceptedTypes, acceptable);
@@ -372,12 +406,14 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @CoversAttributes("onuploadcomplete")
     @RegressionTest("https://issues.jboss.org/browse/RFPL-3503")
     public void testOnuploadcomplete() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onuploadcomplete, succesfulFileUploadAction);
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates("plain")
     public void testRendered() {
         fileUploadAttributes.set(FileUploadAttributes.rendered, Boolean.FALSE);
@@ -385,6 +421,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test(enabled = false)
+    @CoversAttributes("serverErrorLabel")
     @Templates("plain")
     public void testServerErrorLabel() {
         //TODO how to test it
@@ -411,6 +448,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @CoversAttributes("sizeExceededLabel")
     @RegressionTest("https://issues.jboss.org/browse/RFPL-3503")
     @Templates("plain")
     public void testSizeExceededLabel() {
@@ -428,30 +466,35 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @CoversAttributes("status")
     @RegressionTest(value = { "https://issues.jboss.org/browse/RF-12879", "https://issues.jboss.org/browse/RF-13994", "https://issues.jboss.org/browse/RFPL-3503" })
     public void testStatus() {
         testStatus(succesfulFileUploadAction);
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates("plain")
     public void testStyle() {
         testStyle(fileUpload.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates("plain")
     public void testStyleClass() {
         testStyleClass(fileUpload.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("title")
     @Templates("plain")
     public void testTitle() {
         testTitle(fileUpload.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("uploadLabel")
     @Templates("plain")
     public void testUploadLabel() {
         testLabelChanges(fileUpload.advanced().getUploadButtonElement(), fileUploadAttributes, FileUploadAttributes.uploadLabel, new Action() {

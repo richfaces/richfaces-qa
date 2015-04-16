@@ -31,6 +31,7 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -50,33 +51,30 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
     @Page
     private ProgressBarPage page;
 
+    /**
+     * @return progress size in %
+     */
+    private int getProgress() {
+        String width = page.getProgressElement().getCssValue("width");
+        if (width.contains("%")) {
+            return Integer.parseInt(width.replace("%", ""));
+        } else {
+            float widthInPixels = Float.parseFloat(width.replace("px", "")) / 2.0f;
+            // round the decimal number to integer and divide by 2 to obtain per cents because progress bar width is 200px
+            return Math.round(widthInPixels);
+        }
+    }
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richProgressBar/static.xhtml");
     }
 
     @Test
-    public void testInitialFacet() {
-        assertPresent(page.getProgressBarElement(), "Progress bar is not present on the page.");
-        assertVisible(page.getProgressBarElement(), "Progress bar should be visible on the page.");
-        assertVisible(page.getInitialOutputElement(), "Initial output should be visible on the page.");
-        assertNotVisible(page.getFinishOutputElement(), "Finish output should not be visible on the page.");
-        assertEquals(page.getInitialOutputElement().getText(), "Initial", "Content of initial facet.");
-
-        assertNotVisible(page.getRemainElement(), "Progress bar should not show progress.");
-        assertNotVisible(page.getProgressElement(), "Progress bar should not show progress.");
-        assertNotVisible(page.getLabelElement(), "Progress bar should not show progress.");
-
-        MetamerPage.waitRequest(page.getInitialFacetRenderedCheckboxElement(), WaitRequestType.HTTP).click();
-
-        assertPresent(page.getProgressBarElement(), "Progress bar is not present on the page.");
-        assertVisible(page.getProgressBarElement(), "Progress bar should be visible on the page.");
-        assertNotPresent(page.getInitialOutputElement(), "Initial output should not be present on the page.");
-        assertNotVisible(page.getFinishOutputElement(), "Finish output should not be visible on the page.");
-
-        assertPresent(page.getRemainElement(), "Progress bar should show progress.");
-        assertPresent(page.getProgressElement(), "Progress bar should show progress.");
-        assertPresent(page.getLabelElement(), "Progress bar should show progress.");
+    @CoversAttributes("finishClass")
+    @Templates(value = "plain")
+    public void testFinishClass() {
+        testStyleClass(page.getFinishElement(), BasicAttributes.finishClass);
     }
 
     @Test(groups = "smoke")
@@ -107,18 +105,38 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
     }
 
     @Test
-    @Templates(value = "plain")
-    public void testFinishClass() {
-        testStyleClass(page.getFinishElement(), BasicAttributes.finishClass);
-    }
-
-    @Test
+    @CoversAttributes("initialClass")
     @Templates(value = "plain")
     public void testInitialClass() {
         testStyleClass(page.getInitElement(), BasicAttributes.initialClass);
     }
 
     @Test
+    public void testInitialFacet() {
+        assertPresent(page.getProgressBarElement(), "Progress bar is not present on the page.");
+        assertVisible(page.getProgressBarElement(), "Progress bar should be visible on the page.");
+        assertVisible(page.getInitialOutputElement(), "Initial output should be visible on the page.");
+        assertNotVisible(page.getFinishOutputElement(), "Finish output should not be visible on the page.");
+        assertEquals(page.getInitialOutputElement().getText(), "Initial", "Content of initial facet.");
+
+        assertNotVisible(page.getRemainElement(), "Progress bar should not show progress.");
+        assertNotVisible(page.getProgressElement(), "Progress bar should not show progress.");
+        assertNotVisible(page.getLabelElement(), "Progress bar should not show progress.");
+
+        MetamerPage.waitRequest(page.getInitialFacetRenderedCheckboxElement(), WaitRequestType.HTTP).click();
+
+        assertPresent(page.getProgressBarElement(), "Progress bar is not present on the page.");
+        assertVisible(page.getProgressBarElement(), "Progress bar should be visible on the page.");
+        assertNotPresent(page.getInitialOutputElement(), "Initial output should not be present on the page.");
+        assertNotVisible(page.getFinishOutputElement(), "Finish output should not be visible on the page.");
+
+        assertPresent(page.getRemainElement(), "Progress bar should show progress.");
+        assertPresent(page.getProgressElement(), "Progress bar should show progress.");
+        assertPresent(page.getLabelElement(), "Progress bar should show progress.");
+    }
+
+    @Test
+    @CoversAttributes("label")
     @Templates("plain")
     public void testLabel() {
         MetamerPage.waitRequest(page.getInitialFacetRenderedCheckboxElement(), WaitRequestType.HTTP).click();
@@ -134,6 +152,7 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("maxValue")
     @Templates("plain")
     public void testMaxValue() {
         progressBarAttributes.set(ProgressBarAttributes.maxValue, 1000);
@@ -142,6 +161,7 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("minValue")
     @Templates("plain")
     public void testMinValue() {
         progressBarAttributes.set(ProgressBarAttributes.maxValue, 100);
@@ -151,30 +171,35 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("progressClass")
     @Templates(value = "plain")
     public void testProgressClass() {
         testStyleClass(page.getProgressElement(), BasicAttributes.progressClass);
     }
 
     @Test
+    @CoversAttributes("remainingClass")
     @Templates(value = "plain")
     public void testRemainingClass() {
         testStyleClass(page.getRemainElement(), BasicAttributes.remainingClass);
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         testStyle(page.getProgressBarElement());
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(page.getProgressBarElement());
     }
 
     @Test
+    @CoversAttributes("value")
     @Templates("plain")
     public void testValue() {
         progressBarAttributes.set(ProgressBarAttributes.maxValue, 100);
@@ -196,19 +221,5 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
         assertEquals(getProgress(), 100, "Progress when value=456.");
         assertFalse(page.getInitialOutputElement().isDisplayed(), "Initial output should not be visible on the page.");
         assertTrue(page.getFinishOutputElement().isDisplayed(), "Finish output should be visible on the page.");
-    }
-
-    /**
-     * @return progress size in %
-     */
-    private int getProgress() {
-        String width = page.getProgressElement().getCssValue("width");
-        if (width.contains("%")) {
-            return Integer.parseInt(width.replace("%", ""));
-        } else {
-            float widthInPixels = Float.parseFloat(width.replace("px", "")) / 2.0f;
-            // round the decimal number to integer and divide by 2 to obtain per cents because progress bar width is 200px
-            return Math.round(widthInPixels);
-        }
     }
 }

@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richTabPanel;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.fragment.switchable.SwitchType.CLIENT;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -41,11 +42,10 @@ import org.richfaces.fragment.switchable.SwitchType;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
-
-import static org.richfaces.fragment.switchable.SwitchType.CLIENT;
 
 /**
  * Test case for page /faces/components/richTabPanel/simple.xhtml
@@ -56,78 +56,19 @@ public class TestTabPanel extends AbstractWebDriverTest {
 
     private final Attributes<TabPanelAttributes> tabPanelAttributes = getAttributes();
 
+    @FindBy(xpath = "//input[contains(@id, 'switchButton1')]")
+    private WebElement moveTo;
+
+    @Page
+    private TabPanelSimplePage page;
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richTabPanel/simple.xhtml");
     }
 
-    @Page
-    private TabPanelSimplePage page;
-
-    @FindBy(xpath = "//input[contains(@id, 'switchButton1')]")
-    private WebElement moveTo;
-
     @Test
-    @Templates(exclude = {"hDataTable", "richCollapsibleSubTable", "richDataGrid", "richDataTable"})
-    public void testHeaderAlignment() {
-        // assert initial setting, header should be on the left
-
-        assertPresent(driver.findElement(By.xpath("//td[contains(@style, 'padding-right: 5px; width: 100%')]")),
-                "Header is not on the left!");
-
-        // move header to right and assert
-        tabPanelAttributes.set(TabPanelAttributes.headerAlignment, "right");
-        assertPresent(driver.findElement(By.xpath("//td[contains(@style, 'padding-left: 5px; width:100%')]")),
-                "Header is not on the right!");
-
-        // move the header back to left and assert
-        tabPanelAttributes.set(TabPanelAttributes.headerAlignment, "left");
-        assertPresent(driver.findElement(By.xpath("//td[contains(@style, 'padding-right: 5px; width: 100%')]")),
-                "Header is not on the left!");
-    }
-
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11550")
-    @Templates(value = {"hDataTable", "richCollapsibleSubTable", "richDataGrid", "richDataTable"})
-    public void testHeaderAlignmentIterationComponents() {
-        testHeaderAlignment();
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testHeaderPosition() {
-        // assert initial settings
-        assertPresent(driver.findElement(By.xpath("//div[@class = 'rf-tab-hdr-tabline-vis rf-tab-hdr-tabline-top']")),
-                "Header should be in the top!");
-
-        // move to the bottom
-        tabPanelAttributes.set(TabPanelAttributes.headerPosition, "bottom");
-        assertPresent(driver.findElement(By.xpath("//div[@class = 'rf-tab-hdr-tabline-vis rf-tab-hdr-tabline-btm']")),
-                "Header should be in the top!");
-
-        // move back to top and assert
-        tabPanelAttributes.set(TabPanelAttributes.headerPosition, "top");
-        assertPresent(driver.findElement(By.xpath("//div[@class = 'rf-tab-hdr-tabline-vis rf-tab-hdr-tabline-top']")),
-                "Header should be in the top!");
-    }
-
-    @Test
-    public void testInit() {
-        // assert panel tab visibility
-        assertVisible(page.getPanelTabAsWebElement(), "Panel tab is not visible!");
-
-        List<WebElement> allHeaders = page.getTabPanel().advanced().getAllVisibleHeadersElements();
-        assertEquals(allHeaders.size(), 5);
-
-        List<WebElement> allInactiveHeaders = page.getTabPanel().advanced().getAllInactiveHeadersElements();
-        assertEquals(allInactiveHeaders.size(), 3);
-
-        List<WebElement> allDisabledHeaders = page.getTabPanel().advanced().getAllDisabledHeadersElements();
-        assertEquals(allDisabledHeaders.size(), 1);
-        assertVisible(allDisabledHeaders.get(0), "Fourth disabled tab should be visible!");
-    }
-
-    @Test
+    @CoversAttributes("activeItem")
     @RegressionTest("https://issues.jboss.org/browse/RF-10351")
     public void testActiveItem() {
         // assert tab panel is visible
@@ -141,6 +82,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("cycledSwitching")
     public void testCycledSwitching() {
         String panelId = (String) executeJS("return testedComponentId");
         String result = "someString";
@@ -161,12 +103,61 @@ public class TestTabPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("dir")
     @Templates(value = "plain")
     public void testDir() {
         super.testDir(page.getPanelTabAsWebElement());
     }
 
     @Test
+    @CoversAttributes("headerAlignment")
+    @Templates(exclude = { "hDataTable", "richCollapsibleSubTable", "richDataGrid", "richDataTable" })
+    public void testHeaderAlignment() {
+        // assert initial setting, header should be on the left
+
+        assertPresent(driver.findElement(By.xpath("//td[contains(@style, 'padding-right: 5px; width: 100%')]")),
+            "Header is not on the left!");
+
+        // move header to right and assert
+        tabPanelAttributes.set(TabPanelAttributes.headerAlignment, "right");
+        assertPresent(driver.findElement(By.xpath("//td[contains(@style, 'padding-left: 5px; width:100%')]")),
+            "Header is not on the right!");
+
+        // move the header back to left and assert
+        tabPanelAttributes.set(TabPanelAttributes.headerAlignment, "left");
+        assertPresent(driver.findElement(By.xpath("//td[contains(@style, 'padding-right: 5px; width: 100%')]")),
+            "Header is not on the left!");
+    }
+
+    @Test
+    @CoversAttributes("headerAlignment")
+    @RegressionTest("https://issues.jboss.org/browse/RF-11550")
+    @Templates(value = { "hDataTable", "richCollapsibleSubTable", "richDataGrid", "richDataTable" })
+    public void testHeaderAlignmentIterationComponents() {
+        testHeaderAlignment();
+    }
+
+    @Test
+    @CoversAttributes("headerPosition")
+    @Templates(value = "plain")
+    public void testHeaderPosition() {
+        // assert initial settings
+        assertPresent(driver.findElement(By.xpath("//div[@class = 'rf-tab-hdr-tabline-vis rf-tab-hdr-tabline-top']")),
+            "Header should be in the top!");
+
+        // move to the bottom
+        tabPanelAttributes.set(TabPanelAttributes.headerPosition, "bottom");
+        assertPresent(driver.findElement(By.xpath("//div[@class = 'rf-tab-hdr-tabline-vis rf-tab-hdr-tabline-btm']")),
+            "Header should be in the top!");
+
+        // move back to top and assert
+        tabPanelAttributes.set(TabPanelAttributes.headerPosition, "top");
+        assertPresent(driver.findElement(By.xpath("//div[@class = 'rf-tab-hdr-tabline-vis rf-tab-hdr-tabline-top']")),
+            "Header should be in the top!");
+    }
+
+    @Test
+    @CoversAttributes("immediate")
     @RegressionTest("https://issues.jboss.org/browse/RF-10054")
     public void testImmediate() {
         tabPanelAttributes.set(TabPanelAttributes.immediate, Boolean.TRUE);
@@ -176,6 +167,23 @@ public class TestTabPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    public void testInit() {
+        // assert panel tab visibility
+        assertVisible(page.getPanelTabAsWebElement(), "Panel tab is not visible!");
+
+        List<WebElement> allHeaders = page.getTabPanel().advanced().getAllVisibleHeadersElements();
+        assertEquals(allHeaders.size(), 5);
+
+        List<WebElement> allInactiveHeaders = page.getTabPanel().advanced().getAllInactiveHeadersElements();
+        assertEquals(allInactiveHeaders.size(), 3);
+
+        List<WebElement> allDisabledHeaders = page.getTabPanel().advanced().getAllDisabledHeadersElements();
+        assertEquals(allDisabledHeaders.size(), 1);
+        assertVisible(allDisabledHeaders.get(0), "Fourth disabled tab should be visible!");
+    }
+
+    @Test
+    @CoversAttributes("itemChangeListener")
     @RegressionTest("https://issues.jboss.org/browse/RF-10523")
     public void testItemChangeListener() {
         page.getTabPanel().switchTo(2);
@@ -183,22 +191,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
     }
 
     @Test
-    @Templates(value = "plain")
-    public void testLang() {
-        testLang(page.getPanelTabAsWebElement());
-    }
-
-    @Test
-    public void testOnbeforeitemchange() {
-        testFireEvent(tabPanelAttributes, TabPanelAttributes.onbeforeitemchange, new Action() {
-            @Override
-            public void perform() {
-                new Actions(driver).click(page.getTabPanel().advanced().getAllInactiveHeadersElements().get(2)).build().perform();
-            }
-        });
-    }
-
-    @Test
+    @CoversAttributes({ "onbeforeitemchange", "onitemchange" })
     @RegressionTest("https://issues.jboss.org/browse/RF-10165")
     public void testItemchangeEvents() {
         tabPanelAttributes.set(TabPanelAttributes.onbeforeitemchange, "metamerEvents += \"beforeitemchange \"");
@@ -215,6 +208,25 @@ public class TestTabPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("lang")
+    @Templates(value = "plain")
+    public void testLang() {
+        testLang(page.getPanelTabAsWebElement());
+    }
+
+    @Test
+    @CoversAttributes("onbeforeitemchange")
+    public void testOnbeforeitemchange() {
+        testFireEvent(tabPanelAttributes, TabPanelAttributes.onbeforeitemchange, new Action() {
+            @Override
+            public void perform() {
+                new Actions(driver).click(page.getTabPanel().advanced().getAllInactiveHeadersElements().get(2)).build().perform();
+            }
+        });
+    }
+
+    @Test
+    @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(tabPanelAttributes, TabPanelAttributes.onclick, new Action() {
@@ -226,6 +238,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(tabPanelAttributes, TabPanelAttributes.ondblclick, new Action() {
@@ -237,6 +250,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onitemchange")
     public void testOnitemchange() {
         testFireEvent(tabPanelAttributes, TabPanelAttributes.onitemchange, new Action() {
             @Override
@@ -247,6 +261,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEvent(tabPanelAttributes, TabPanelAttributes.onmousedown, new Action() {
@@ -258,6 +273,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEvent(tabPanelAttributes, TabPanelAttributes.onmousemove, new Action() {
@@ -269,6 +285,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEvent(tabPanelAttributes, TabPanelAttributes.onmouseout, new Action() {
@@ -280,6 +297,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEvent(tabPanelAttributes, TabPanelAttributes.onmouseover, new Action() {
@@ -291,18 +309,20 @@ public class TestTabPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEvent(tabPanelAttributes, TabPanelAttributes.onmouseup, new Action() {
             @Override
             public void perform() {
                 new Actions(driver).moveToElement(moveTo).clickAndHold().moveToElement(page.getPanelTabAsWebElement())
-                        .release().build().perform();
+                    .release().build().perform();
             }
         });
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         tabPanelAttributes.set(TabPanelAttributes.rendered, Boolean.FALSE);
@@ -310,25 +330,21 @@ public class TestTabPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         testStyle(page.getPanelTabAsWebElement());
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(page.getPanelTabAsWebElement());
     }
 
     @Test
-    public void testSwitchTypeNull() {
-        for (int i = 2; i >= 0; i--) {
-            page.getTabPanel().switchTo(i);
-        }
-    }
-
-    @Test
+    @CoversAttributes("switchType")
     @Templates(value = "plain")
     public void testSwitchTypeAjax() {
         // since ajax is default choice, null type test will test this too
@@ -337,6 +353,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("switchType")
     public void testSwitchTypeClient() {
         tabPanelAttributes.set(TabPanelAttributes.switchType, "client");
         page.getTabPanel().advanced().setSwitchType(CLIENT);
@@ -346,7 +363,16 @@ public class TestTabPanel extends AbstractWebDriverTest {
         }
     }
 
+    @Test
+    @CoversAttributes("switchType")
+    public void testSwitchTypeNull() {
+        for (int i = 2; i >= 0; i--) {
+            page.getTabPanel().switchTo(i);
+        }
+    }
+
     @Test(groups = "smoke")
+    @CoversAttributes("switchType")
     @RegressionTest("https://issues.jboss.org/browse/RF-10040")
     public void testSwitchTypeServer() {
         tabPanelAttributes.set(TabPanelAttributes.switchType, "server");
@@ -358,6 +384,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("tabActiveHeaderClass")
     @IssueTracking("https://issues.jboss.org/browse/RF-9309")
     @Templates(value = "plain")
     public void testTabActiveHeaderClass() {
@@ -377,15 +404,17 @@ public class TestTabPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("tabContentClass")
     @Templates(value = "plain")
     public void testTabContentClass() {
         String contentClass = "metamer-ftest-class";
         tabPanelAttributes.set(TabPanelAttributes.tabContentClass, contentClass);
         assertTrue(driver.findElement(By.xpath("//div[contains(text(), 'content of tab 1')] ")).getAttribute("class")
-                .contains(contentClass));
+            .contains(contentClass));
     }
 
     @Test
+    @CoversAttributes("tabDisabledHeaderClass")
     @IssueTracking("https://issues.jboss.org/browse/RF-9309")
     @Templates(value = "plain")
     public void testTabDisabledHeaderClass() {
@@ -405,7 +434,8 @@ public class TestTabPanel extends AbstractWebDriverTest {
     }
 
     @Test
-    @IssueTracking({"https://issues.jboss.org/browse/RF-9309", "https://issues.jboss.org/browse/RF-11549"})
+    @CoversAttributes("tabHeaderClass")
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-9309", "https://issues.jboss.org/browse/RF-11549" })
     @Templates(value = "plain")
     public void testTabHeaderClass() {
         String testString = "metamer-ftest-class";
@@ -424,6 +454,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("tabInactiveHeaderClass")
     @IssueTracking("https://issues.jboss.org/browse/RF-9309")
     @Templates(value = "plain")
     public void testTabInactiveHeaderClass() {
@@ -443,7 +474,8 @@ public class TestTabPanel extends AbstractWebDriverTest {
     }
 
     @Test
-    @Templates("plain")
+    @CoversAttributes("title")
+    @Templates(value = "plain")
     public void testTitle() {
         testTitle(page.getPanelTabAsWebElement());
     }

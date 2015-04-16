@@ -26,6 +26,7 @@ import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import org.openqa.selenium.WebElement;
 import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.BeforeMethod;
@@ -48,6 +49,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("groupCollapsedLeftIcon")
     @Templates("plain")
     public void testGroupCollapsedLeftIcon() {
         guardAjax(getPage().getPanelMenu()).expandGroup("Group 2");
@@ -56,6 +58,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("groupCollapsedRightIcon")
     @Templates("plain")
     public void testGroupCollapsedRightIcon() {
         guardAjax(getPage().getPanelMenu()).expandGroup("Group 2");
@@ -64,6 +67,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("groupDisabledLeftIcon")
     @Templates("plain")
     public void testGroupDisabledLeftIcon() {
         guardAjax(getPage().getPanelMenu()).expandGroup("Group 2");
@@ -73,6 +77,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("groupDisabledRightIcon")
     @Templates("plain")
     public void testGroupDisabledRightIcon() {
         guardAjax(getPage().getPanelMenu()).expandGroup("Group 2");
@@ -81,6 +86,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("groupExpandedLeftIcon")
     @Templates("plain")
     public void testGroupExpandedLeftIcon() {
         guardAjax(getPage().getPanelMenu()).expandGroup("Group 2");
@@ -90,6 +96,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("groupExpandedRightIcon")
     @Templates("plain")
     public void testGroupExpandedRightIcon() {
         guardAjax(getPage().getPanelMenu()).expandGroup("Group 2");
@@ -99,6 +106,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("itemDisabledLeftIcon")
     @Templates("plain")
     public void testItemDisabledLeftIcon() {
         guardAjax(getPage().getPanelMenu()).expandGroup("Group 2");
@@ -107,6 +115,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("itemDisabledRightIcon")
     @Templates("plain")
     public void testItemDisabledRightIcon() {
         guardAjax(getPage().getPanelMenu()).expandGroup("Group 2");
@@ -115,6 +124,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("itemLeftIcon")
     @Templates("plain")
     public void testItemLeftIcon() {
         guardAjax(getPage().getPanelMenu()).expandGroup("Group 2");
@@ -123,6 +133,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("itemRightIcon")
     @Templates("plain")
     public void testItemRightIcon() {
         guardAjax(getPage().getPanelMenu()).expandGroup("Group 2");
@@ -131,6 +142,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("topGroupCollapsedLeftIcon")
     @Templates("plain")
     public void testTopGroupCollapsedLeftIcon() {
         verifyStandardIcons(PanelMenuAttributes.topGroupCollapsedLeftIcon, getPage().getGroup1().advanced().getLeftIconElement(), getPage().getGroup1().advanced()
@@ -138,6 +150,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("topGroupCollapsedRightIcon")
     @Templates("plain")
     public void testTopGroupCollapsedRightIcon() {
         verifyStandardIcons(PanelMenuAttributes.topGroupCollapsedRightIcon, getPage().getGroup1().advanced().getRightIconElement(), getPage().getGroup1().advanced()
@@ -145,6 +158,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("topGroupDisabledLeftIcon")
     @Templates("plain")
     public void testTopGroupDisabledLeftIcon() {
         verifyStandardIcons(PanelMenuAttributes.topGroupDisabledLeftIcon, getPage().getGroup4().advanced().getLeftIconElement(), getPage().getGroup4().advanced()
@@ -152,6 +166,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("topGroupDisabledRightIcon")
     @Templates("plain")
     public void testTopGroupDisabledRightIcon() {
         verifyStandardIcons(PanelMenuAttributes.topGroupDisabledRightIcon, getPage().getGroup4().advanced().getRightIconElement(), getPage().getGroup4().advanced()
@@ -159,6 +174,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("topGroupExpandedLeftIcon")
     @Templates("plain")
     public void testTopGroupExpandedLeftIcon() {
         guardAjax(getPage().getPanelMenu()).expandGroup("Group 1");
@@ -167,6 +183,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("topGroupExpandedRightIcon")
     @Templates("plain")
     public void testTopGroupExpandedRightIcon() {
         guardAjax(getPage().getPanelMenu()).expandGroup("Group 1");
@@ -175,6 +192,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("topItemDisabledLeftIcon")
     @Templates("plain")
     public void testTopItemDisabledLeftIcon() {
         verifyStandardIcons(PanelMenuAttributes.topItemDisabledLeftIcon, getPage().getItem4().advanced().getLeftIconElement(), getPage().getItem4().advanced()
@@ -182,6 +200,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("topItemDisabledRightIcon")
     @Templates("plain")
     public void testTopItemDisabledRightIcon() {
         verifyStandardIcons(PanelMenuAttributes.topItemDisabledRightIcon, getPage().getItem4().advanced().getRightIconElement(), getPage().getItem4().advanced()
@@ -189,6 +208,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("topItemLeftIcon")
     @Templates("plain")
     public void testTopItemLeftIcon() {
         verifyStandardIcons(PanelMenuAttributes.topItemLeftIcon, getPage().getItem3().advanced().getLeftIconElement(), getPage().getItem3().advanced()
@@ -196,6 +216,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("topItemRightIcon")
     @Templates("plain")
     public void testTopItemRightIcon() {
         verifyStandardIcons(PanelMenuAttributes.topItemRightIcon, getPage().getItem3().advanced().getRightIconElement(), getPage().getItem3().advanced()

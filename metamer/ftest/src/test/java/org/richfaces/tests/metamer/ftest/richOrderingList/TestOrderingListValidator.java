@@ -27,6 +27,7 @@ import java.net.URL;
 
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.message.RichFacesMessage;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.validator.PhoenixFirstValidator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -37,6 +38,7 @@ import org.testng.annotations.Test;
 public class TestOrderingListValidator extends AbstractOrderingListTest {
 
     private static final int PHOENIX_INDEX = 2;
+
     @FindBy(css = "[id$=message]")
     private RichFacesMessage message;
 
@@ -46,6 +48,7 @@ public class TestOrderingListValidator extends AbstractOrderingListTest {
     }
 
     @Test
+    @CoversAttributes("validatorMessage")
     public void testValidatorMessage() {
         String customMessage = "Phoenix first!";
         submit();

@@ -36,6 +36,7 @@ import org.richfaces.fragment.select.RichFacesSelect;
 import org.richfaces.fragment.select.SelectSuggestions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -46,12 +47,12 @@ import org.testng.annotations.Test;
  */
 public class TestSelectAutocompleteMethod extends AbstractWebDriverTest {
 
-    @FindBy(css = "div[id$=select]")
-    private RichFacesSelect select;
+    private final Attributes<SelectAttributes> attributes = getAttributes();
     @FindBy(css = "span[id$=output]")
     private WebElement output;
 
-    private final Attributes<SelectAttributes> attributes = getAttributes();
+    @FindBy(css = "div[id$=select]")
+    private RichFacesSelect select;
 
     @Override
     public URL getTestUrl() {
@@ -59,6 +60,7 @@ public class TestSelectAutocompleteMethod extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("autocompleteMethod")
     public void testAutocompleteFunctionality() {
         SelectSuggestions selectState = Graphene.guardAjax(select).type("a");
         List<WebElement> suggestions = select.advanced().getSuggestionsElements();
@@ -82,6 +84,7 @@ public class TestSelectAutocompleteMethod extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("minChars")
     public void testMinChars() {
         attributes.set(SelectAttributes.mode, Mode.ajax);
         attributes.set(SelectAttributes.minChars, 3);
@@ -98,26 +101,7 @@ public class TestSelectAutocompleteMethod extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13965")
-    public void testPopupWillShowAfterWholeInputClearedAtOnce() {
-        attributes.set(SelectAttributes.mode, Mode.ajax);
-        // fill in some value
-        Graphene.guardAjax(Graphene.guardAjax(select).type("a")).select(1);
-        waitUntilOutputEqualsTo("Alaska");
-        // clear the whole input at once with JS
-        TextInputComponentImpl input = select.advanced().getInput();
-        input.advanced().clear(ClearType.JS);
-        // type 'a' >>> popup will show
-        Graphene.guardAjax(input).sendKeys("a");
-        select.advanced().waitUntilSuggestionsAreVisible();
-        select.advanced().getSuggestionsElements().get(3).click();
-        select.advanced().waitUntilSuggestionsAreNotVisible();
-        // blur >>> trigger onchange event
-        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();
-        waitUntilOutputEqualsTo("Arkansas");
-    }
-
-    @Test
+    @CoversAttributes("mode")
     public void testMode() {
         attributes.set(SelectAttributes.mode, Mode.cachedAjax);
         Graphene.guardAjax(Graphene.guardAjax(select).type("a")).select(1);
@@ -140,6 +124,26 @@ public class TestSelectAutocompleteMethod extends AbstractWebDriverTest {
         attributes.set(SelectAttributes.mode, Mode.ajax);
         Graphene.guardAjax(Graphene.guardAjax(select).type("ala")).select(0);
         waitUntilOutputEqualsTo("Alabama");
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-13965")
+    public void testPopupWillShowAfterWholeInputClearedAtOnce() {
+        attributes.set(SelectAttributes.mode, Mode.ajax);
+        // fill in some value
+        Graphene.guardAjax(Graphene.guardAjax(select).type("a")).select(1);
+        waitUntilOutputEqualsTo("Alaska");
+        // clear the whole input at once with JS
+        TextInputComponentImpl input = select.advanced().getInput();
+        input.advanced().clear(ClearType.JS);
+        // type 'a' >>> popup will show
+        Graphene.guardAjax(input).sendKeys("a");
+        select.advanced().waitUntilSuggestionsAreVisible();
+        select.advanced().getSuggestionsElements().get(3).click();
+        select.advanced().waitUntilSuggestionsAreNotVisible();
+        // blur >>> trigger onchange event
+        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();
+        waitUntilOutputEqualsTo("Arkansas");
     }
 
     @Test

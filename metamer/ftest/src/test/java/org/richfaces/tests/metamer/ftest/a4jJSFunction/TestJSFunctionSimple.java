@@ -35,6 +35,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -76,6 +77,7 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("action")
     public void testAction() {
         jsFunctionAttributes.set(JSFunctionAttributes.action, "increaseYearAction");
 
@@ -96,6 +98,7 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("actionListener")
     public void testActionListener() {
         jsFunctionAttributes.set(JSFunctionAttributes.actionListener, "increaseYearActionListener");
 
@@ -118,6 +121,7 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "action", "bypassUpdates" })
     public void testBypassUpdates() {
         jsFunctionAttributes.set(JSFunctionAttributes.action, "decreaseYearAction");
         jsFunctionAttributes.set(JSFunctionAttributes.bypassUpdates, true);
@@ -133,6 +137,7 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("data")
     public void testData() {
         testData(new Action() {
             @Override
@@ -143,6 +148,7 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("execute")
     public void testExecute() {
         jsFunctionAttributes.set(JSFunctionAttributes.execute, "input executeChecker");
 
@@ -152,6 +158,7 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "actionListener", "immediate" })
     public void testImmediate() {
         jsFunctionAttributes.set(JSFunctionAttributes.actionListener, "decreaseYearActionListener");
         jsFunctionAttributes.set(JSFunctionAttributes.immediate, true);
@@ -163,6 +170,7 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("limitRender")
     @RegressionTest("https://issues.jboss.org/browse/RF-10011")
     public void testLimitRender() {
         jsFunctionAttributes.set(JSFunctionAttributes.limitRender, true);
@@ -182,6 +190,7 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("name")
     public void testName() {
         jsFunctionAttributes.set(JSFunctionAttributes.name, "metamer");
 
@@ -189,6 +198,7 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "onbegin", "onbeforedomupdate", "oncomplete" })
     public void testEvents() {
         jsFunctionAttributes.set(JSFunctionAttributes.onbegin, "metamerEvents += \"begin \"");
         jsFunctionAttributes.set(JSFunctionAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
@@ -206,6 +216,7 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("render")
     public void testRender() {
         jsFunctionAttributes.set(JSFunctionAttributes.render, "time1");
 
@@ -223,6 +234,7 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         jsFunctionAttributes.set(JSFunctionAttributes.rendered, false);
@@ -235,6 +247,7 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("status")
     public void testStatus() {
         jsFunctionAttributes.set(JSFunctionAttributes.status, "statusChecker");
 

@@ -35,6 +35,7 @@ import org.jboss.test.selenium.support.color.ColorUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 
 /**
@@ -43,24 +44,24 @@ import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
  */
 public abstract class AbstractPlaceholderNonJSFTest extends AbstractWebDriverTest {
 
-    private final Attributes<PlaceholderAttributes> placeholderAttributes = getAttributes();
+    private static final String DEFAULT_PLACEHOLDER_CLASS = "rf-plhdr";
+    private static final String DEFAULT_PLACEHOLDER_TEXT = "Watermark text";
 
     private static final String INPUT1_ID = "[id$=input1]";
     private static final String INPUT2_ID = "[id$=input2]";
     private static final String INPUT3_ID = "[id$=input3]";
-    private static final String DEFAULT_PLACEHOLDER_TEXT = "Watermark text";
-    private static final String DEFAULT_PLACEHOLDER_CLASS = "rf-plhdr";
 
     private final String componentName;
 
-    @FindBy(css = "[id$=placeholder]")
-    private WebElement placeholder;
     @FindBy(css = INPUT1_ID)
     private WebElement input1;
     @FindBy(css = INPUT2_ID)
     private WebElement input2;
     @FindBy(css = INPUT3_ID)
     private WebElement input3;
+    @FindBy(css = "[id$=placeholder]")
+    private WebElement placeholder;
+    private final Attributes<PlaceholderAttributes> placeholderAttributes = getAttributes();
 
     public AbstractPlaceholderNonJSFTest(String componentName) {
         this.componentName = componentName;
@@ -74,11 +75,6 @@ public abstract class AbstractPlaceholderNonJSFTest extends AbstractWebDriverTes
         input.click();
     }
 
-    @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richPlaceholder/" + componentName + ".xhtml");
-    }
-
     private String getInputStyleClass(WebElement input) {
         return input.getAttribute("class");
     }
@@ -89,6 +85,11 @@ public abstract class AbstractPlaceholderNonJSFTest extends AbstractWebDriverTes
 
     private String getInputValue(WebElement input) {
         return input.getAttribute("value");
+    }
+
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richPlaceholder/" + componentName + ".xhtml");
     }
 
     private void sendKeysToInput(WebElement input, String keys) {
@@ -153,6 +154,7 @@ public abstract class AbstractPlaceholderNonJSFTest extends AbstractWebDriverTes
         assertEquals(getInputTextColor(input3), Color.black, "Input 3 text color");
     }
 
+    @CoversAttributes("rendered")
     public void testRendered() {
         placeholderAttributes.set(PlaceholderAttributes.selector, INPUT1_ID);
         placeholderAttributes.set(PlaceholderAttributes.rendered, Boolean.FALSE);
@@ -170,6 +172,37 @@ public abstract class AbstractPlaceholderNonJSFTest extends AbstractWebDriverTes
         assertEquals(getInputTextColor(input3), Color.black, "Input 3 text color");
     }
 
+    @CoversAttributes("selector")
+    public void testSelectorEmpty() {
+        placeholderAttributes.set(PlaceholderAttributes.selector, "");
+
+        assertEquals(getInputValue(input1), DEFAULT_PLACEHOLDER_TEXT, "Input 1 value");
+        assertEquals(getInputValue(input2), DEFAULT_PLACEHOLDER_TEXT, "Input 2 value");
+        assertEquals(getInputValue(input3), DEFAULT_PLACEHOLDER_TEXT, "Input 3 value");
+        assertTrue(getInputStyleClass(input1).contains(DEFAULT_PLACEHOLDER_CLASS), "Input 1 styleClass");
+        assertTrue(getInputStyleClass(input2).contains(DEFAULT_PLACEHOLDER_CLASS), "Input 2 styleClass");
+        assertTrue(getInputStyleClass(input3).contains(DEFAULT_PLACEHOLDER_CLASS), "Input 3 styleClass");
+        assertEquals(getInputTextColor(input1), Color.blue, "Input 1 text color");
+        assertEquals(getInputTextColor(input2), Color.blue, "Input 2 text color");
+        assertEquals(getInputTextColor(input3), Color.blue, "Input 3 text color");
+    }
+
+    @CoversAttributes("selector")
+    public void testSelectorMultiple() {
+        placeholderAttributes.set(PlaceholderAttributes.selector, INPUT1_ID + ", " + INPUT2_ID);
+
+        assertEquals(getInputValue(input1), DEFAULT_PLACEHOLDER_TEXT, "Input 1 value");
+        assertEquals(getInputValue(input2), DEFAULT_PLACEHOLDER_TEXT, "Input 2 value");
+        assertEquals(getInputValue(input3), "", "Input 3 value");
+        assertTrue(getInputStyleClass(input1).contains(DEFAULT_PLACEHOLDER_CLASS), "Input 1 styleClass");
+        assertTrue(getInputStyleClass(input2).contains(DEFAULT_PLACEHOLDER_CLASS), "Input 2 styleClass");
+        assertFalse(getInputStyleClass(input3).contains(DEFAULT_PLACEHOLDER_CLASS), "Input 3 styleClass");
+        assertEquals(getInputTextColor(input1), Color.blue, "Input 1 text color");
+        assertEquals(getInputTextColor(input2), Color.blue, "Input 2 text color");
+        assertEquals(getInputTextColor(input3), Color.black, "Input 3 text color");
+    }
+
+    @CoversAttributes("selector")
     public void testSelectorSingle() {
         placeholderAttributes.set(PlaceholderAttributes.selector, INPUT1_ID);
 
@@ -195,39 +228,13 @@ public abstract class AbstractPlaceholderNonJSFTest extends AbstractWebDriverTes
         assertEquals(getInputTextColor(input3), Color.black, "Input 3 text color");
     }
 
-    public void testSelectorMultiple() {
-        placeholderAttributes.set(PlaceholderAttributes.selector, INPUT1_ID + ", " + INPUT2_ID);
-
-        assertEquals(getInputValue(input1), DEFAULT_PLACEHOLDER_TEXT, "Input 1 value");
-        assertEquals(getInputValue(input2), DEFAULT_PLACEHOLDER_TEXT, "Input 2 value");
-        assertEquals(getInputValue(input3), "", "Input 3 value");
-        assertTrue(getInputStyleClass(input1).contains(DEFAULT_PLACEHOLDER_CLASS), "Input 1 styleClass");
-        assertTrue(getInputStyleClass(input2).contains(DEFAULT_PLACEHOLDER_CLASS), "Input 2 styleClass");
-        assertFalse(getInputStyleClass(input3).contains(DEFAULT_PLACEHOLDER_CLASS), "Input 3 styleClass");
-        assertEquals(getInputTextColor(input1), Color.blue, "Input 1 text color");
-        assertEquals(getInputTextColor(input2), Color.blue, "Input 2 text color");
-        assertEquals(getInputTextColor(input3), Color.black, "Input 3 text color");
-    }
-
-    public void testSelectorEmpty() {
-        placeholderAttributes.set(PlaceholderAttributes.selector, "");
-
-        assertEquals(getInputValue(input1), DEFAULT_PLACEHOLDER_TEXT, "Input 1 value");
-        assertEquals(getInputValue(input2), DEFAULT_PLACEHOLDER_TEXT, "Input 2 value");
-        assertEquals(getInputValue(input3), DEFAULT_PLACEHOLDER_TEXT, "Input 3 value");
-        assertTrue(getInputStyleClass(input1).contains(DEFAULT_PLACEHOLDER_CLASS), "Input 1 styleClass");
-        assertTrue(getInputStyleClass(input2).contains(DEFAULT_PLACEHOLDER_CLASS), "Input 2 styleClass");
-        assertTrue(getInputStyleClass(input3).contains(DEFAULT_PLACEHOLDER_CLASS), "Input 3 styleClass");
-        assertEquals(getInputTextColor(input1), Color.blue, "Input 1 text color");
-        assertEquals(getInputTextColor(input2), Color.blue, "Input 2 text color");
-        assertEquals(getInputTextColor(input3), Color.blue, "Input 3 text color");
-    }
-
+    @CoversAttributes("styleClass")
     public void testStyleClass() {
         placeholderAttributes.set(PlaceholderAttributes.selector, INPUT1_ID);
         testStyleClass(input1);
     }
 
+    @CoversAttributes("value")
     public void testTypeToInputWithPlaceholder() {
         placeholderAttributes.set(PlaceholderAttributes.selector, INPUT1_ID);
         String text = "abcd";

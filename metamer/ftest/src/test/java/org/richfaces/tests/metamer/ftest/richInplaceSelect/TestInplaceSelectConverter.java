@@ -25,6 +25,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.inplaceSelect.RichFacesInplaceSelect;
 import org.richfaces.tests.metamer.bean.ConverterBean;
 import org.richfaces.tests.metamer.ftest.abstractions.converter.AbstractConverterTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.Test;
 
 /**
@@ -32,9 +33,9 @@ import org.testng.annotations.Test;
  */
 public class TestInplaceSelectConverter extends AbstractConverterTest {
 
+    private static final String VALUE = "VALUE";
     @FindBy(css = "[id$=convertableInput]")
     private RichFacesInplaceSelect input;
-    private static final String VALUE = "VALUE";
 
     @Override
     protected String badValue() {
@@ -47,21 +48,23 @@ public class TestInplaceSelectConverter extends AbstractConverterTest {
     }
 
     @Override
-    public String getComponentName() {
-        return "richInplaceSelect";
-    }
-
-    @Override
     protected void setBadValue() {
         input.select(VALUE).confirm();
     }
 
+    @Override
+    public String getComponentName() {
+        return "richInplaceSelect";
+    }
+
     @Test
+    @CoversAttributes("converter")
     public void testConverter() {
         checkConverter();
     }
 
     @Test
+    @CoversAttributes("converterMessage")
     public void testConverterMessage() {
         checkConverterMessage();
     }

@@ -46,6 +46,7 @@ import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -70,11 +71,11 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
 
     public enum Position {
 
-        top("top"),
+        NULL("null"),
         bottom("bottom"),
-        right("right"),
         left("left"),
-        NULL("null");
+        right("right"),
+        top("top");
         final String value;
 
         private Position(String value) {
@@ -98,6 +99,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("accesskey")
     @RegressionTest("https://issues.jboss.org/browse/RF-11315")
     @Templates(value = "plain")
     public void testAccesskey() {
@@ -106,18 +108,21 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("showArrows")
     @Override
     public void testClickLeftArrow() {
         super.testClickLeftArrow();
     }
 
     @Test
+    @CoversAttributes("showArrows")
     @Override
     public void testClickRightArrow() {
         super.testClickRightArrow();
     }
 
     @Test
+    @CoversAttributes("decreaseClass")
     @Templates(value = "plain")
     public void testDecreaseClass() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
@@ -125,6 +130,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("decreaseSelectedClass")
     @Templates(value = "plain")
     public void testDecreaseSelectedClass() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.delay, 4000);
@@ -140,6 +146,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("delay")
     @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
     @Templates("plain")
     public void testDelay() {
@@ -152,12 +159,14 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("dir")
     @Templates(value = "plain")
     public void testDir() {
         testDir(slider.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("disabled")
     public void testDisabled() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.disabled, Boolean.TRUE);
         assertVisible(slider.advanced().getDisabledHandleElement(), "Disabled handle is not on the page.");
@@ -167,6 +176,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("enableManualInput")
     public void testEnableManualInput() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.enableManualInput, Boolean.FALSE);
         assertEquals(slider.advanced().getInput().advanced().getInputElement().getAttribute("readonly"), "true",
@@ -175,12 +185,14 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("handleClass")
     @Templates(value = "plain")
     public void testHandleClass() {
         testStyleClass(slider.advanced().getHandleElement(), BasicAttributes.handleClass);
     }
 
     @Test
+    @CoversAttributes("handleSelectedClass")
     @Templates(value = "plain")
     public void testHandleSelectedClass() {
         String value = "metamer-ftest-class";
@@ -191,6 +203,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("immediate")
     public void testImmediate() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.immediate, Boolean.TRUE);
 
@@ -204,6 +217,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("increaseClass")
     @Templates(value = "plain")
     public void testIncreaseClass() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
@@ -211,6 +225,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("increaseSelectedClass")
     @Templates(value = "plain")
     public void testIncreaseSelectedClass() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.delay, 4000);
@@ -238,12 +253,14 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("inputClass")
     @Templates(value = "plain")
     public void testInputClass() {
         testStyleClass(slider.advanced().getInput().advanced().getInputElement(), BasicAttributes.inputClass);
     }
 
     @Test
+    @CoversAttributes("inputPosition")
     @UseWithField(field = "position", valuesFrom = FROM_ENUM, value = "")
     @Templates(value = "plain")
     public void testInputPosition() {
@@ -272,6 +289,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("inputSize")
     @Templates(value = "plain")
     public void testInputSize() {
         int testedSize = 2;
@@ -286,12 +304,14 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("lang")
     @Templates(value = "plain")
     public void testLang() {
         testLang(slider.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("maxValue")
     public void testMaxValueByHandleMoving() {
         int maxnum = 15;
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.maxValue, maxnum);
@@ -302,6 +322,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("maxValue")
     public void testMaxValueByTyping() {
         int maxnum = 13;
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.maxValue, maxnum);
@@ -318,6 +339,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("maxlength")
     @RegressionTest("https://issues.jboss.org/browse/RF-9860")
     @Templates(value = "plain")
     public void testMaxlength() {
@@ -332,6 +354,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("minValue")
     public void testMinValueByHandleMoving() {
         int value = -15;
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.minValue, value);
@@ -342,6 +365,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("minValue")
     public void testMinValueByTyping() {
         int minValue = -13;
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.minValue, minValue);
@@ -365,12 +389,14 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test(groups = { "Future" })
+    @CoversAttributes("onblur")
     @IssueTracking("https://issues.jboss.org/browse/RF-10829")
     public void testOnblur() {
         testFireEventWithJS(slider.advanced().getRootElement(), inputNumberSliderAttributes, InputNumberSliderAttributes.onblur);
     }
 
     @Test
+    @CoversAttributes("onchange")
     public void testOnchangeByArrowsClicking() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
         testFireEvent(inputNumberSliderAttributes, InputNumberSliderAttributes.onchange, new Action() {
@@ -388,12 +414,14 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("onchange")
     public void testOnchangeByTyping() {
         testFireEvent(inputNumberSliderAttributes, InputNumberSliderAttributes.onchange,
             typeToInputActionWithXHRWaitRequest("5"));
     }
 
     @Test
+    @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(inputNumberSliderAttributes, InputNumberSliderAttributes.onclick,
@@ -401,6 +429,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(inputNumberSliderAttributes, InputNumberSliderAttributes.ondblclick,
@@ -408,6 +437,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test(groups = { "Future" })
+    @CoversAttributes("onfocus")
     @IssueTracking("https://issues.jboss.org/browse/RF-10829")
     public void testOnfocus() {
         testFireEventWithJS(slider.advanced().getRootElement(), inputNumberSliderAttributes,
@@ -415,6 +445,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("onkeydown")
     @Templates(value = "plain")
     public void testOnkeydown() {
         testFireEventWithJS(slider.advanced().getRootElement(), inputNumberSliderAttributes,
@@ -422,6 +453,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("onkeypress")
     @Templates(value = "plain")
     public void testOnkeypress() {
         testFireEventWithJS(slider.advanced().getRootElement(), inputNumberSliderAttributes,
@@ -429,6 +461,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("onkeyup")
     @Templates(value = "plain")
     public void testOnkeyup() {
         testFireEventWithJS(slider.advanced().getRootElement(), inputNumberSliderAttributes,
@@ -436,6 +469,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEventWithJS(slider.advanced().getRootElement(), inputNumberSliderAttributes,
@@ -443,6 +477,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEventWithJS(slider.advanced().getRootElement(), inputNumberSliderAttributes,
@@ -450,6 +485,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEventWithJS(slider.advanced().getRootElement(), inputNumberSliderAttributes,
@@ -457,6 +493,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEventWithJS(slider.advanced().getRootElement(), inputNumberSliderAttributes,
@@ -464,6 +501,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEventWithJS(slider.advanced().getRootElement(), inputNumberSliderAttributes,
@@ -471,6 +509,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test(groups = { "Future" })
+    @CoversAttributes("onselect")
     @IssueTracking("https://issues.jboss.org/browse/RF-10829")
     public void testOnselect() {
         testFireEventWithJS(slider.advanced().getRootElement(), inputNumberSliderAttributes,
@@ -478,6 +517,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.rendered, Boolean.FALSE);
@@ -485,6 +525,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("showArrows")
     public void testShowArrows() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
 
@@ -493,6 +534,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("showBoundaryValues")
     public void testShowBoundaryValues() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showBoundaryValues, Boolean.FALSE);
 
@@ -501,6 +543,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("showInput")
     public void testShowInput() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showInput, Boolean.FALSE);
         assertFalse(new WebElementConditionFactory(slider.advanced().getInput().advanced().getInputElement()).isVisible()
@@ -508,6 +551,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("showTooltip")
     @RegressionTest("https://issues.jboss.org/browse/RF-11314")
     public void testShowTooltip() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showTooltip, Boolean.TRUE);
@@ -522,6 +566,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("step")
     public void testStep() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.step, 7);
@@ -546,18 +591,21 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         testStyle(slider.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(slider.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("tabindex")
     @RegressionTest("https://issues.jboss.org/browse/RF-10980")
     @Templates(value = "plain")
     public void testTabindex() {
@@ -570,12 +618,14 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
         testTitle(slider.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("tooltipClass")
     @Templates(value = "plain")
     public void testTooltipClass() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showTooltip, Boolean.TRUE);
@@ -584,6 +634,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("trackClass")
     @Templates(value = "plain")
     public void testTrackClass() {
         testStyleClass(slider.advanced().getTrackElement(), BasicAttributes.trackClass);
@@ -624,12 +675,14 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("valueChangeListener")
     public void testValueChangeListener() {
         typeToInputActionWithXHRWaitRequest("5").perform();
         getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: 2 -> 5");
     }
 
     @Test
+    @CoversAttributes("value")
     @Templates("plain")
     @UseWithField(field = "number", valuesFrom = FROM_FIELD, value = "bigNumbers")
     public void testValueBig() {
@@ -641,6 +694,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("value")
     @Templates("plain")
     @UseWithField(field = "number", valuesFrom = FROM_FIELD, value = "correctNumbers")
     public void testValueCorrect() {
@@ -651,6 +705,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
+    @CoversAttributes("value")
     @Templates("plain")
     @UseWithField(field = "number", valuesFrom = FROM_FIELD, value = "smallNumbers")
     public void testValueSmall() {

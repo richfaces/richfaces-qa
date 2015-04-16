@@ -34,12 +34,13 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Utils;
-import org.richfaces.fragment.notify.RichFacesNotifyMessage;
 import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
+import org.richfaces.fragment.notify.RichFacesNotifyMessage;
 import org.richfaces.tests.metamer.bean.rich.RichNotifyBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.Assert;
@@ -57,12 +58,27 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     @FindBy(id = "newSpan")
     private WebElement newSpan;
 
+    public static void waitForOpacityChange(final double opacity, final WebElement element) {
+        Graphene.waitGui().withTimeout(3, TimeUnit.SECONDS).until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver from) {
+                return element.getCssValue("opacity").equals((opacity == 0 ? "0" : (opacity == 1 ? "1" : String.valueOf(opacity))));
+            }
+
+            @Override
+            public String toString() {
+                return "opacity change to value '" + opacity + "'. Actual value '" + element.getCssValue("opacity") + "'";
+            }
+        });
+    }
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richNotify/simple.xhtml");
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("detail")
     public void testDetail() {
         String detail = "Some detail";
         notifyAttributes.set(NotifyAttributes.detail, detail);
@@ -71,6 +87,7 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("escape")
     public void testEscape() {
         String newSpanString = "<span id='newSpan'>new span</span>";
         notifyAttributes.set(NotifyAttributes.detail, newSpanString);
@@ -91,6 +108,7 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12925")
     @Test(groups = "Future")
+    @CoversAttributes({ "detail", "summary" })
     public void testNoDetailNoSummary() {
         notifyAttributes.set(NotifyAttributes.detail, "");
         notifyAttributes.set(NotifyAttributes.summary, "");
@@ -98,6 +116,7 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("nonblocking")
     public void testNonblocking() {
         notifyAttributes.set(NotifyAttributes.nonblocking, Boolean.TRUE);
         notifyAttributes.set(NotifyAttributes.nonblockingOpacity, 0);
@@ -108,6 +127,7 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("nonblockingOpacity")
     public void testNonblockingOpacity() {
         notifyAttributes.set(NotifyAttributes.nonblocking, Boolean.TRUE);
         notifyAttributes.set(NotifyAttributes.nonblockingOpacity, 0.5);
@@ -118,66 +138,77 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onclick")
     @Templates(value = "plain")
-    public void testOnClick() {
+    public void testOnclick() {
         testFireEvent(Event.CLICK, message.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates(value = "plain")
-    public void testOnDblClick() {
+    public void testOndblclick() {
         testFireEvent(Event.DBLCLICK, message.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onkeydown")
     @Templates(value = "plain")
-    public void testOnKeyDown() {
+    public void testOnkeydown() {
         testFireEvent(Event.KEYDOWN, message.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onkeypress")
     @Templates(value = "plain")
-    public void testOnKeyPress() {
+    public void testOnkeypress() {
         testFireEvent(Event.KEYPRESS, message.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onkeyup")
     @Templates(value = "plain")
-    public void testOnKeyUp() {
+    public void testOnkeyup() {
         testFireEvent(Event.KEYUP, message.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
-    public void testOnMouseDown() {
+    public void testOnmousedown() {
         testFireEvent(Event.MOUSEDOWN, message.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates(value = "plain")
-    public void testOnMouseMove() {
+    public void testOnmousemove() {
         testFireEvent(Event.MOUSEMOVE, message.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates(value = "plain")
-    public void testOnMouseOut() {
+    public void testOnmouseout() {
         testFireEvent(Event.MOUSEOUT, message.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
-    public void testOnMouseOver() {
+    public void testOnmouseover() {
         testFireEvent(Event.MOUSEOVER, message.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates(value = "plain")
-    public void testOnMouseUp() {
+    public void testOnmouseup() {
         testFireEvent(Event.MOUSEUP, message.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         notifyAttributes.set(NotifyAttributes.rendered, Boolean.TRUE);
@@ -187,6 +218,7 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("showCloseButton")
     public void testShowCloseButton() {
         notifyAttributes.set(NotifyAttributes.showCloseButton, Boolean.TRUE);
         message.close();
@@ -202,6 +234,7 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("showShadow")
     @RegressionTest("https://issues.jboss.org/browse/RF-13792")
     public void testShowShadow() {
         notifyAttributes.set(NotifyAttributes.showShadow, Boolean.TRUE);
@@ -212,6 +245,7 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("stack")
     public void testStack() {
         String[] stacks = { "topLeftStack", "bottomRightStack" };
         //default position is top right
@@ -226,6 +260,7 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("stayTime")
     public void testStaytime() {
         notifyAttributes.set(NotifyAttributes.stayTime, 1000);
         notifyAttributes.set(NotifyAttributes.sticky, Boolean.FALSE);
@@ -234,6 +269,7 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("sticky")
     public void testSticky() {
         notifyAttributes.set(NotifyAttributes.stayTime, 1000);
         notifyAttributes.set(NotifyAttributes.sticky, Boolean.TRUE);
@@ -242,30 +278,18 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(message.advanced().getRootElement());
     }
 
     @Test
+    @CoversAttributes("summary")
     public void testSummary() {
         String summary = "Some summary";
         notifyAttributes.set(NotifyAttributes.summary, summary);
         Assert.assertEquals(message.getDetail(), RichNotifyBean.DEFAULT_DETAIL);
         Assert.assertEquals(message.getSummary(), summary);
-    }
-
-    public static void waitForOpacityChange(final double opacity, final WebElement element) {
-        Graphene.waitGui().withTimeout(3, TimeUnit.SECONDS).until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver from) {
-                return element.getCssValue("opacity").equals((opacity == 0 ? "0" : (opacity == 1 ? "1" : String.valueOf(opacity))));
-            }
-
-            @Override
-            public String toString() {
-                return "opacity change to value '" + opacity + "'. Actual value '" + element.getCssValue("opacity") + "'";
-            }
-        });
     }
 }

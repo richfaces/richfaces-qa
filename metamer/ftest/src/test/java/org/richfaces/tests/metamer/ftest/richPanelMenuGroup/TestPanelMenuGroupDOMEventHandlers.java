@@ -33,6 +33,7 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGrou
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.fragment.common.Event;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -48,6 +49,7 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     private final Attributes<PanelMenuGroupAttributes> panelMenuGroupAttributes = getAttributes();
 
     @Test
+    @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
         panelMenuGroupAttributes.set(mode, client);
@@ -57,6 +59,7 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates(value = "plain")
     public void testOndblclick() {
         panelMenuGroupAttributes.set(mode, client);
@@ -65,6 +68,7 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
         panelMenuGroupAttributes.set(mode, client);
@@ -74,6 +78,7 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates(value = "plain")
     public void testOnmousemove() {
         panelMenuGroupAttributes.set(mode, client);
@@ -82,6 +87,7 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates(value = "plain")
     public void testOnmouseout() {
         panelMenuGroupAttributes.set(mode, client);
@@ -90,6 +96,7 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
     public void testOnmouseover() {
         //This test should be done first, because use static x and y variables
@@ -100,11 +107,11 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates(value = "plain")
     public void testOnmouseup() {
         panelMenuGroupAttributes.set(mode, client);
         Action mouseup = new Actions(driver).clickAndHold(getPage().getTopGroup().advanced().getHeaderElement()).release().build();
         testFireEvent(panelMenuGroupAttributes, onmouseup, mouseup);
     }
-
 }

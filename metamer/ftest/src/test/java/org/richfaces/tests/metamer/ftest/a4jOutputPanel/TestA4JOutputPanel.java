@@ -47,6 +47,7 @@ import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
@@ -63,9 +64,9 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
 
     private final Attributes<OutputPanelAttributes> outputPanelAttributes = getAttributes();
 
-    private Event[] events = new Event[]{ CLICK, DBLCLICK, KEYDOWN, KEYPRESS, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER,
+    private Event[] events = new Event[] { CLICK, DBLCLICK, KEYDOWN, KEYPRESS, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER,
         MOUSEUP };
-    private String[] layouts = new String[]{ "block", "inline" };
+    private String[] layouts = new String[] { "block", "inline" };
     private Event event;
     private String layout;
     @FindBy(css = "input[id$=button]")
@@ -85,20 +86,14 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "onclick", "ondblclick", "onkeydown", "onkeypress",
+        "onkeyup", "onmousedown", "onmousemove", "onmouseout", "onmouseover", "onmouseup", "layout" })
     @Uses({
         @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "events"),
         @UseWithField(field = "layout", valuesFrom = FROM_FIELD, value = "layouts") })
     public void testEvent() {
-        WebElement element;
-
-        if ("inline".equals(layout)) {
-            outputPanelAttributes.set(OutputPanelAttributes.layout, "inline");
-            element = outputSpan;
-        } else {
-            element = outputDiv;
-        }
-
-        testFireEvent(event, element);
+        outputPanelAttributes.set(OutputPanelAttributes.layout, layout);
+        testFireEvent(event, "inline".equals(layout) ? outputSpan : outputDiv);
     }
 
     @Test
@@ -112,6 +107,7 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("ajaxRendered")
     @IssueTracking("https://issues.jboss.org/browse/RF-10555")
     public void testAjaxRendered() {
         outputPanelAttributes.set(OutputPanelAttributes.ajaxRendered, false);
@@ -127,18 +123,21 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("dir")
     @Templates(value = "plain")
     public void testDir() {
         testDir(outputDiv);
     }
 
     @Test
+    @CoversAttributes("lang")
     @Templates(value = "plain")
     public void testLang() {
         testLang(outputDiv);
     }
 
     @Test
+    @CoversAttributes("layout")
     public void testLayout() {
         assertTrue(outputDiv.isPresent(), "Div should be rendered on the beginning.");
         assertFalse(outputSpan.isPresent(), "Div should be rendered on the beginning.");
@@ -159,6 +158,7 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @RegressionTest("https://issues.jboss.org/browse/RF-11312")
     @Templates(value = "plain")
     public void testRendered() {
@@ -182,18 +182,21 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         testStyle(outputDiv);
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(outputDiv);
     }
 
     @Test
+    @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
         testTitle(outputDiv);

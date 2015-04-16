@@ -25,6 +25,7 @@ import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import java.net.URL;
 
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -39,126 +40,148 @@ public class TestMessageAttributes extends AbstractMessageTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("ajaxRendered")
     public void testAjaxRendered() {
         checkAjaxRendered();
     }
 
     @Test
+    @CoversAttributes("dir")
     @Templates(value = "plain")
     public void testDir() {
         checkDir();
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("escape")
     public void testEscape() {
         checkEscape();
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("FOR")
     public void testFor() {
         checkFor();
     }
 
     @Test
+    @CoversAttributes("lang")
     @Templates(value = "plain")
     public void testLang() {
         checkLang();
     }
 
     @Test
+    @CoversAttributes({ "showDetail", "showSummary" })
     public void testNoShowDetailNoShowSummary() {
         checkNoShowDetailNoShowSummary();
     }
 
     @Test
+    @CoversAttributes("onclick")
     @Templates(value = "plain")
-    public void testOnClick() {
-        checkOnClick();
+    public void testOnclick() {
+        checkOnclick();
     }
 
     @Test
+    @CoversAttributes("ondblclick")
     @Templates(value = "plain")
-    public void testOnDblClick() {
-        checkOnDblClick();
+    public void testOndblclick() {
+        checkOndblclick();
     }
 
     @Test
+    @CoversAttributes("onkeydown")
     @Templates(value = "plain")
-    public void testOnKeyDown() {
-        checkOnKeyDown();
+    public void testOnkeydown() {
+        checkOnkeydown();
     }
 
     @Test
+    @CoversAttributes("onkeypress")
     @Templates(value = "plain")
-    public void testOnKeyPress() {
-        checkOnKeyPress();
+    public void testOnkeypress() {
+        checkOnkeypress();
     }
 
     @Test
+    @CoversAttributes("onkeyup")
     @Templates(value = "plain")
-    public void testOnKeyUp() {
-        checkOnKeyUp();
+    public void testOnkeyup() {
+        checkOnkeyup();
     }
 
     @Test
+    @CoversAttributes("onmousedown")
     @Templates(value = "plain")
-    public void testOnMouseDown() {
-        checkOnMouseDown();
+    public void testOnmousedown() {
+        checkOnmousedown();
     }
 
     @Test
+    @CoversAttributes("onmousemove")
     @Templates(value = "plain")
-    public void testOnMouseMove() {
-        checkOnMouseMove();
+    public void testOnmousemove() {
+        checkOnmousemove();
     }
 
     @Test
+    @CoversAttributes("onmouseout")
     @Templates(value = "plain")
-    public void testOnMouseOut() {
-        checkOnMouseOut();
+    public void testOnmouseout() {
+        checkOnmouseout();
     }
 
     @Test
+    @CoversAttributes("onmouseover")
     @Templates(value = "plain")
-    public void testOnMouseOver() {
-        checkOnMouseOver();
+    public void testOnmouseover() {
+        checkOnmouseover();
     }
 
     @Test
+    @CoversAttributes("onmouseup")
     @Templates(value = "plain")
-    public void testOnMouseUp() {
-        checkOnMouseUp();
+    public void testOnmouseup() {
+        checkOnmouseup();
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         checkRendered();
     }
 
     @Test
+    @CoversAttributes("showDetail")
     public void testShowDetail() {
         checkShowDetail();
     }
 
     @Test
+    @CoversAttributes("showSummary")
     public void testShowSummary() {
         checkShowSummary();
     }
 
     @Test
+    @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
         checkStyle();
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates(value = "plain")
     public void testStyleClass() {
         checkStyleClass();
     }
 
     @Test
+    @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
         checkTitle();

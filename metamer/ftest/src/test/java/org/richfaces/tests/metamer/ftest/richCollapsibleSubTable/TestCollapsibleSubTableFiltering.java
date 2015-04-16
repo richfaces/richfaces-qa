@@ -33,6 +33,7 @@ import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.model.Employee;
 import org.testng.annotations.BeforeMethod;
@@ -62,6 +63,7 @@ public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTabl
     }
 
     @Test
+    @CoversAttributes("filterVar")
     @Templates(exclude = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
     public void testFilteringExpressionContainsIgnoreCase() {
         verifyFilteringInBothSubTables(Boolean.TRUE, "Alexander");
@@ -69,6 +71,7 @@ public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTabl
     }
 
     @Test
+    @CoversAttributes("filterVar")
     @RegressionTest("https://issues.jboss.org/browse/RF-12673")
     @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
     public void testFilteringExpressionContainsIgnoreCaseInSwitchablePanels() {
@@ -76,6 +79,7 @@ public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTabl
     }
 
     @Test
+    @CoversAttributes("filterVar")
     @Templates(exclude = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
     public void testFilteringExpressionEquals() {
         verifyFilteringInBothSubTables(Boolean.FALSE, "Director");
@@ -84,6 +88,7 @@ public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTabl
     }
 
     @Test
+    @CoversAttributes("filterVar")
     @RegressionTest("https://issues.jboss.org/browse/RF-12673")
     @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
     public void testFilteringExpressionEqualsInSwitchablePanels() {

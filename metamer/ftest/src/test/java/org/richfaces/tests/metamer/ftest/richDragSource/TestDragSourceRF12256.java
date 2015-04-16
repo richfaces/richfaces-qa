@@ -43,14 +43,14 @@ public class TestDragSourceRF12256 extends AbstractDragSourceTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12441")
-    public void testDefaultIndicator() {
-        super.testDefaultIndicator();
+    public void testCustomIndicator() {
+        super.testCustomIndicator();
     }
 
     @Test
-    public void testCustomIndicator() {
-        super.testCustomIndicator();
+    @RegressionTest("https://issues.jboss.org/browse/RF-12441")
+    public void testDefaultIndicator() {
+        super.testDefaultIndicator();
     }
 
     @Test
@@ -63,5 +63,4 @@ public class TestDragSourceRF12256 extends AbstractDragSourceTest {
     public void testType() {
         super.testType();
     }
-
 }

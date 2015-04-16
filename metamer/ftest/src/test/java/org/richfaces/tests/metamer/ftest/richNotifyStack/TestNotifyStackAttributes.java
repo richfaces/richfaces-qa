@@ -42,6 +42,7 @@ import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
 import org.richfaces.fragment.notify.RichFacesNotify;
 import org.richfaces.fragment.notify.RichFacesNotify.NotifyMessageItemImpl;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
@@ -142,6 +143,7 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "direction", "method" })
     @Uses({
         @UseWithField(field = "direction", valuesFrom = FROM_ENUM, value = ""),
         @UseWithField(field = "method", valuesFrom = FROM_ENUM, value = "")
@@ -172,6 +174,7 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("position")
     @UseWithField(field = "position", valuesFrom = FROM_ENUM, value = "")
     @Templates(value = "plain")
     public void testPosition() {
@@ -188,6 +191,7 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         notifyStackAttributes.set(NotifyStackAttributes.rendered, Boolean.TRUE);

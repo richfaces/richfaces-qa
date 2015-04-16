@@ -41,6 +41,7 @@ import org.jboss.arquillian.graphene.javascript.JavaScript;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -60,7 +61,7 @@ public class TestPollSimple extends AbstractWebDriverTest {
     private Integer[] ints = { 1500, 2500 };
 
     private String event;
-    private String[] events = new String[]{ "timer", "begin", "beforedomupdate", "complete" };
+    private String[] events = new String[] { "timer", "begin", "beforedomupdate", "complete" };
 
     private final Action intervalTestingAction = new Action() {
         private String value = "";
@@ -82,12 +83,14 @@ public class TestPollSimple extends AbstractWebDriverTest {
     }
 
     @BeforeMethod
+    @CoversAttributes({ "interval", "enabled" })
     public void enablePoll() {
         pollAttributes.set(PollAttributes.interval, INTERVAL);
         pollAttributes.set(PollAttributes.enabled, true);
     }
 
     @Test
+    @CoversAttributes("action")
     public void testAction() {
         waitForNSubsequentRequests(2);
         getMetamerPage().assertListener(INVOKE_APPLICATION, "action invoked");
@@ -95,6 +98,7 @@ public class TestPollSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("actionListener")
     public void testActionListener() {
         waitForNSubsequentRequests(2);
         getMetamerPage().assertListener(INVOKE_APPLICATION, "action listener invoked");
@@ -102,6 +106,7 @@ public class TestPollSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("bypassUpdates")
     public void testBypassUpdates() {
         pollAttributes.set(PollAttributes.bypassUpdates, true);
         waitForNSubsequentRequests(2);
@@ -110,6 +115,7 @@ public class TestPollSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "ontimer", "onbegin", "onbeforedomupdate", "oncomplete" })
     @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "events")
     public void testClientSideEvent() {
         testClientSideEventHandlers(event);
@@ -123,11 +129,13 @@ public class TestPollSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "ontimer", "onbegin", "onbeforedomupdate", "oncomplete" })
     public void testClientSideEventsOrder() {
         testClientSideEventHandlers(events);
     }
 
     @Test
+    @CoversAttributes("data")
     public void testData() {
         testData(new Action() {
             @Override
@@ -138,6 +146,7 @@ public class TestPollSimple extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("enabled")
     public void testEnabled() {
         pollAttributes.set(PollAttributes.enabled, false);
 
@@ -150,6 +159,7 @@ public class TestPollSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("execute")
     public void testExecute() {
         pollAttributes.set(PollAttributes.execute, "executeChecker");
 
@@ -159,6 +169,7 @@ public class TestPollSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("immediate")
     public void testImmediate() {
         pollAttributes.set(PollAttributes.immediate, true);
         waitForNSubsequentRequests(2);
@@ -167,11 +178,13 @@ public class TestPollSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("interval")
     public void testInterval_inAllTemplates() {
         testDelay(intervalTestingAction, intervalTestingAction, "interval", 1500);
     }
 
     @Test
+    @CoversAttributes("interval")
     @UseWithField(field = "interval", valuesFrom = FROM_FIELD, value = "ints")
     @Templates("plain")
     public void testIntervals() {
@@ -179,6 +192,7 @@ public class TestPollSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("limitRender")
     public void testLimitRender() {
         pollAttributes.set(PollAttributes.limitRender, true);
         pollAttributes.set(PollAttributes.render, "renderChecker");
@@ -192,6 +206,7 @@ public class TestPollSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("render")
     public void testRender() {
         pollAttributes.set(PollAttributes.render, "renderChecker");
         String render = getMetamerPage().getRenderCheckerOutputElement().getText();
@@ -205,6 +220,7 @@ public class TestPollSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "rendered", "enabled" })
     @Templates("plain")
     public void testRendered() {
         pollAttributes.set(PollAttributes.enabled, true);
@@ -219,6 +235,7 @@ public class TestPollSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("status")
     public void testStatus() {
         testStatus(null);
     }

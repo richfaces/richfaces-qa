@@ -29,6 +29,7 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -38,10 +39,10 @@ import org.testng.annotations.Test;
  */
 public class TestColumnWidth extends AbstractWebDriverTest {
 
-    @FindByJQuery(".rf-edt[id$=richDataTable] .rf-edt-c:first")
-    private WebElement firstColumn;
 
     private final Attributes<ColumnAttributes> attributes = getAttributes();
+    @FindByJQuery(value = ".rf-edt[id$=richDataTable] .rf-edt-c:first")
+    private WebElement firstColumn;
 
     private String getColumnWidth() {
         return firstColumn.getCssValue("width");
@@ -53,6 +54,7 @@ public class TestColumnWidth extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("width")
     @Templates("plain")
     public void testWidth() {
         String width = "400px";

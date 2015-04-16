@@ -68,6 +68,7 @@ import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -150,6 +151,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("boundaryDatesMode")
     @UseWithField(field = "boundaryDatesMode", valuesFrom = FROM_ENUM, value = "")
     @Templates("plain")
     public void testBoundaryDatesMode() {
@@ -206,12 +208,14 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("buttonClass")
     @Templates(value = "plain")
     public void testButtonClass() {
         testStyleClass(popupCalendar.getPopupButtonElement(), BasicAttributes.buttonClass);
     }
 
     @Test
+    @CoversAttributes("buttonLabel")
     @Templates(value = "plain")
     public void testButtonClassLabel() {
         calendarAttributes.set(CalendarAttributes.buttonLabel, "label");
@@ -219,6 +223,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("buttonIcon")
     @Templates(value = "plain")
     public void testButtonClassIcon() {
         calendarAttributes.set(CalendarAttributes.buttonIcon, "heart");
@@ -226,6 +231,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("buttonIcon")
     @Templates(value = "plain")
     public void testButtonIcon() {
         calendarAttributes.set(CalendarAttributes.buttonIcon, "star");
@@ -238,6 +244,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("buttonDisabledIcon")
     @RegressionTest("https://issues.jboss.org/browse/RF-10255")
     @Templates(value = "plain")
     public void testButtonDisabledIcon() {
@@ -254,6 +261,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("buttonLabel")
     @Templates("plain")
     public void testButtonLabel() {
         calendarAttributes.set(CalendarAttributes.buttonLabel, "label");
@@ -268,6 +276,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("converterMessage")
     @RegressionTest("https://issues.jboss.org/browse/RF-11313")
     public void testConverterMessage() {
         String errorMsg = "conversion error";
@@ -282,6 +291,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("datePattern")
     public void testDatePattern() {
         String pattern = "hh:mm:ss a MMMM d, yyyy";
         calendarAttributes.set(CalendarAttributes.datePattern, pattern);
@@ -300,6 +310,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("dayClassFunction")
     @Templates(value = "plain")
     public void testDayClassFunction() {
         int tuesdayDay = 3;
@@ -321,6 +332,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("dayDisableFunction")
     public void testDayDisableFunction() {
         calendarAttributes.set(CalendarAttributes.dayDisableFunction, "disableTuesdays");
         int tuesdayDay = 3;
@@ -342,6 +354,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("direction")
     @Templates("plain")
     @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "")
     public void testDirection() {
@@ -354,6 +367,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("defaultLabel")
     @Templates("plain")
     public void testDefaultLabel() {
         String defaultLabel = "RichFaces 4";
@@ -362,6 +376,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("defaultTime")
     @RegressionTest({ "https://issues.jboss.org/browse/RF-9837", "https://issues.jboss.org/browse/RF-10085" })
     public void testDefaultTime() {
         final String t = "06:06";
@@ -379,6 +394,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("disabled")
     public void testDisabled() {
         calendarAttributes.set(CalendarAttributes.disabled, Boolean.TRUE);
         assertEquals(popupCalendar.getInput().advanced().getInputElement().getAttribute("disabled"), "true");
@@ -399,6 +415,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("enableManualInput")
     @Templates("plain")
     public void testEnableManualInput() {
         assertEquals(popupCalendar.getInput().advanced().getInputElement().getAttribute("readonly"), "true");
@@ -409,6 +426,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("firstWeekDay")
     @RegressionTest("https://issues.jboss.org/browse/RF-9646")
     public void testFirstWeekDay() {
         DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
@@ -428,6 +446,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("horizontalOffset")
     @Templates("plain")
     public void testHorizontalOffset() {
         testHorizontalOffset(new ShowElementAndReturnAction() {
@@ -439,6 +458,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("immediate")
     @RegressionTest("https://issues.jboss.org/browse/RF-10821")
     public void testImmediate() {
         calendarAttributes.set(CalendarAttributes.immediate, Boolean.TRUE);
@@ -448,12 +468,14 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("inputClass")
     @Templates(value = "plain")
     public void testInputClass() {
         testStyleClass(popupCalendar.getInput().advanced().getInputElement(), BasicAttributes.inputClass);
     }
 
     @Test
+    @CoversAttributes("inputSize")
     @Templates("plain")
     public void testInputSize() {
         calendarAttributes.set(CalendarAttributes.inputSize, "30");
@@ -462,12 +484,14 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("inputStyle")
     @Templates(value = "plain")
     public void testInputStyle() {
         testStyle(popupCalendar.getInput().advanced().getInputElement(), BasicAttributes.inputStyle);
     }
 
     @Test
+    @CoversAttributes("jointPoint")
     @Templates("plain")
     @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "")
     public void testJointPoint() {
@@ -481,6 +505,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("locale")
     @Templates("plain")
     public void testLocale() {
         String locale = "ru";
@@ -500,6 +525,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("minDaysInFirstWeek")
     @RegressionTest("https://issues.jboss.org/browse/RF-12552")
     public void testMinDaysInFirstWeek() {
         calendarAttributes.set(CalendarAttributes.minDaysInFirstWeek, 1);
@@ -526,6 +552,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("mode")
     @UseWithField(field = "mode", valuesFrom = FROM_ENUM, value = "")
     public void testMode() {
         calendarAttributes.set(CalendarAttributes.mode, mode.value);
@@ -548,6 +575,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("monthLabels")
     @Templates("plain")
     public void testMonthLabels() {
         String labelsString = "január, február, marec, apríl, máj, jún, júl, august, september, október, november, december";
@@ -569,6 +597,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("monthLabelsShort")
     @Templates("plain")
     public void testMonthLabelsShort() {
         String labelsString = "jan, feb, mar, apr, máj, jún, júl, aug, sep, okt, nov, dec";
@@ -582,21 +611,25 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("ontimeselect")
     public void testOnTimeSelect() {
         testFireEvent(calendarAttributes, CalendarAttributes.ontimeselect, setTimeAction);
     }
 
     @Test
+    @CoversAttributes("onbeforetimeselect")
     public void testOnbeforetimeselect() {
         testFireEvent(calendarAttributes, CalendarAttributes.onbeforetimeselect, setTimeAction);
     }
 
     @Test
+    @CoversAttributes("onchange")
     public void testOnchange() {
         testFireEvent(calendarAttributes, CalendarAttributes.onchange, setCurrentDateWithCalendarsTodayButtonAction);
     }
 
     @Test
+    @CoversAttributes("onclean")
     public void testOnclean() {
         testFireEvent(calendarAttributes, CalendarAttributes.onclean, new Action() {
             @Override
@@ -610,6 +643,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("oncomplete")
     public void testOncomplete() {
         calendarAttributes.set(CalendarAttributes.mode, "ajax");
         testFireEvent(calendarAttributes, CalendarAttributes.oncomplete, new Action() {
@@ -620,13 +654,15 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         });
     }
 
-    @RegressionTest("https://issues.jboss.org/browse/RF-12505")
     @Test
+    @CoversAttributes("oncurrentdateselect")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12505")
     public void testOncurrentdateselect() {
         testFireEvent(calendarAttributes, CalendarAttributes.oncurrentdateselect, setTodayAndThenClickToNextMonthAction);
     }
 
     @Test
+    @CoversAttributes("ondatemouseout")
     @Templates(value = "plain")
     public void testOndatemouseout() {
         testFireEvent(calendarAttributes, CalendarAttributes.ondatemouseout, new Action() {
@@ -638,6 +674,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("ondatemouseover")
     @Templates(value = "plain")
     public void testOndatemouseover() {
         testFireEvent(calendarAttributes, CalendarAttributes.ondatemouseover, new Action() {
@@ -649,11 +686,13 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("ondateselect")
     public void testOndateselect() {
         testFireEvent(calendarAttributes, CalendarAttributes.ondateselect, setCurrentDateWithCalendarsTodayButtonAction);
     }
 
     @Test
+    @CoversAttributes("onhide")
     public void testOnhide() {
         testFireEvent(
             calendarAttributes,
@@ -663,6 +702,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("oninputblur")
     public void testOninputblur() {
         // this throws the condition 2x
         // testFireEventWithJS(calendar.getInput(), Event.BLUR, calendarAttributes, CalendarAttributes.oninputblur);
@@ -672,6 +712,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("oninputchange")
     @RegressionTest("https://issues.jboss.org/browse/RF-9602")
     public void testOninputchange() {
         calendarAttributes.set(CalendarAttributes.enableManualInput, Boolean.TRUE);
@@ -685,6 +726,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("oninputclick")
     @Templates(value = "plain")
     public void testOninputclick() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputclick,
@@ -692,6 +734,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("oninputdblclick")
     @Templates(value = "plain")
     public void testOninputdblclick() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputdblclick,
@@ -699,12 +742,14 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("oninputfocus")
     public void testOninputfocus() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputfocus,
             new Actions(driver).click(popupCalendar.getInput().advanced().getInputElement()).build());
     }
 
     @Test
+    @CoversAttributes("oninputkeydown")
     @Templates(value = "plain")
     public void testOninputkeydown() {
         testFireEventWithJS(popupCalendar.getInput().advanced().getInputElement(), Event.KEYDOWN, calendarAttributes,
@@ -712,6 +757,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("oninputkeypress")
     @Templates(value = "plain")
     public void testOninputkeypress() {
         testFireEventWithJS(popupCalendar.getInput().advanced().getInputElement(), Event.KEYPRESS, calendarAttributes,
@@ -719,6 +765,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("oninputkeyup")
     @Templates(value = "plain")
     public void testOninputkeyup() {
         testFireEventWithJS(popupCalendar.getInput().advanced().getInputElement(), Event.KEYUP, calendarAttributes,
@@ -726,6 +773,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("oninputmousedown")
     @Templates(value = "plain")
     public void testOninputmousedown() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputmousedown,
@@ -735,6 +783,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("oninputmousemove")
     @Templates(value = "plain")
     public void testOninputmousemove() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputmousemove,
@@ -742,6 +791,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("oninputmouseout")
     @Templates(value = "plain")
     public void testOninputmouseout() {
         testFireEvent(
@@ -752,6 +802,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("oninputmouseover")
     @Templates(value = "plain")
     public void testOninputmouseover() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseover,
@@ -759,6 +810,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("oninputmouseup")
     @Templates(value = "plain")
     public void testOninputmouseup() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseup,
@@ -766,12 +818,14 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("oninputmouseup")
     public void testOninputselect() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseup,
             new Actions(driver).click(popupCalendar.getInput().advanced().getInputElement()).build());
     }
 
     @Test
+    @CoversAttributes("onshow")
     public void testOnshow() {
         testFireEvent(calendarAttributes, CalendarAttributes.onshow, new Action() {
             @Override
@@ -782,16 +836,19 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("onbeforecurrentdateselect")
     public void testOnbeforecurrentdateselect() {
         testFireEvent(calendarAttributes, CalendarAttributes.onbeforecurrentdateselect, setTodayAndThenClickToNextMonthAction);
     }
 
     @Test
+    @CoversAttributes("onbeforedateselect")
     public void testOnbeforedateselect() {
         testFireEvent(calendarAttributes, CalendarAttributes.onbeforedateselect, setCurrentDateWithCalendarsTodayButtonAction);
     }
 
     @Test
+    @CoversAttributes("popup")
     public void testPopup() {
         calendarAttributes.set(CalendarAttributes.popup, Boolean.FALSE);
         assertTrue(inlineCalendar.isVisible(), "Inline calendar should be visible.");
@@ -800,6 +857,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("popupClass")
     @Templates(value = "plain")
     public void testPopupClass() {
         testHTMLAttribute(popupCalendar.openPopup().getRoot(), calendarAttributes, CalendarAttributes.popupClass,
@@ -807,6 +865,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("popupStyle")
     @Templates(value = "plain")
     public void testPopupStyle() {
         testHTMLAttribute(popupCalendar.openPopup().getRoot(), calendarAttributes, CalendarAttributes.popupStyle,
@@ -814,6 +873,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         calendarAttributes.set(CalendarAttributes.rendered, Boolean.FALSE);
@@ -821,6 +881,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("required")
     @UseWithField(field = "booleanValue", valuesFrom = FROM_FIELD, value = "booleans")
     public void testRequired() {
         calendarAttributes.set(CalendarAttributes.required, booleanValue);
@@ -834,6 +895,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("requiredMessage")
     public void testRequiredMessage() {
         String msg = "RichFaces 4";
         calendarAttributes.set(CalendarAttributes.requiredMessage, msg);
@@ -845,6 +907,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("resetTimeOnDateSelect")
     @UseWithField(field = "booleanValue", valuesFrom = FROM_FIELD, value = "booleans")
     public void testResetTimeOnDateSelect() {
         calendarAttributes.set(CalendarAttributes.resetTimeOnDateSelect, booleanValue);
@@ -865,6 +928,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("showApplyButton")
     @UseWithField(field = "booleanValue", valuesFrom = FROM_FIELD, value = "booleans")
     public void testShowApplyButton() {
         calendarAttributes.set(CalendarAttributes.showApplyButton, booleanValue);
@@ -882,6 +946,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("showFooter")
     @UseWithField(field = "booleanValue", valuesFrom = FROM_FIELD, value = "booleans")
     @Templates("plain")
     public void testShowFooter() {
@@ -899,6 +964,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("showHeader")
     @UseWithField(field = "booleanValue", valuesFrom = FROM_FIELD, value = "booleans")
     @Templates("plain")
     public void testShowHeader() {
@@ -916,6 +982,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("showInput")
     @UseWithField(field = "booleanValue", valuesFrom = FROM_FIELD, value = "booleans")
     @Templates("plain")
     public void testShowInput() {
@@ -928,6 +995,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("showWeekDaysBar")
     @UseWithField(field = "booleanValue", valuesFrom = FROM_FIELD, value = "booleans")
     @Templates("plain")
     public void testShowWeekDaysBar() {
@@ -941,6 +1009,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("showWeeksBar")
     @UseWithField(field = "booleanValue", valuesFrom = FROM_FIELD, value = "booleans")
     public void testShowWeeksBar() {
         calendarAttributes.set(CalendarAttributes.showWeeksBar, booleanValue);
@@ -953,6 +1022,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("style")
     @RegressionTest("https://issues.jboss.org/browse/RF-9655")
     @Templates(value = "plain")
     public void testStyle() {
@@ -960,12 +1030,14 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("styleClass")
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(popupCalendar.getRootElement());
     }
 
     @Test
+    @CoversAttributes("tabindex")
     @Templates(value = "plain")
     public void testTabindexInput() {
         testHTMLAttribute(popupCalendar.getInput().advanced().getInputElement(), calendarAttributes,
@@ -973,6 +1045,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("tabindex")
     @RegressionTest("https://issues.jboss.org/browse/RF-10980")
     @Templates(value = "richPopupPanel")
     public void testTabindexInputInPopupPanel() {
@@ -981,12 +1054,14 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("tabindex")
     @Templates("plain")
     public void testTabindexButton() {
         testHTMLAttribute(popupCalendar.getPopupButtonElement(), calendarAttributes, CalendarAttributes.tabindex, "101");
     }
 
     @Test
+    @CoversAttributes("todayControlMode")
     @UseWithField(field = "todayControlMode", valuesFrom = FROM_ENUM, value = "")
     public void testTodayControlMode() {
         calendarAttributes.set(CalendarAttributes.todayControlMode, todayControlMode.value);
@@ -1020,12 +1095,14 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("valueChangeListener")
     public void testValueChangeListener() {
         setCurrentDateWithCalendarsTodayButtonAction.perform();
         getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> " + popupCalendar.getInput().getStringValue());
     }
 
     @Test
+    @CoversAttributes("verticalOffset")
     @Templates("plain")
     public void testVerticalOffset() {
         testVerticalOffset(new ShowElementAndReturnAction() {
@@ -1037,6 +1114,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("weekDayLabelsShort")
     @Templates("plain")
     public void testWeekDayLabelsShort() {
         List<String> originalValues = Arrays.asList("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
@@ -1051,6 +1129,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("zindex")
     @Templates(value = "plain")
     public void testZindex() {
         final String zindex = "30";

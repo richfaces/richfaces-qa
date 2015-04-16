@@ -38,6 +38,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.model.SortMode;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.model.Employee;
 import org.testng.annotations.Test;
@@ -66,6 +67,7 @@ public class TestCollapsibleSubTableSorting extends AbstractCollapsibleSubTableT
     }
 
     @Test
+    @CoversAttributes("sortMode")
     @UseWithField(field = "sortMode", valuesFrom = FROM_ENUM, value = "")
     @RegressionTest("https://issues.jboss.org/browse/RF-11302")
     public void testSorting() {

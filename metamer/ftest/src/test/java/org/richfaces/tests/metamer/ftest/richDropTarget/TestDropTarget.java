@@ -52,6 +52,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState;
@@ -68,61 +69,72 @@ public class TestDropTarget extends AbstractWebDriverTest {
 
     private final Attributes<DropTargetAttributes> dropTargetAttributes = getAttributes();
 
+    private Indicator indicator;
+
     @Page
     private DropTargetSimplePage page;
 
-    private Indicator indicator;
+    private void doDrop() {
+        new Actions(driver).release().build().perform();
+    }
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richDropTarget/simple.xhtml");
     }
 
+    private void guardedDrop() {
+        Graphene.guardAjax(new Actions(driver).release()).perform();
+    }
+
+    private void testAcceptedDropping(WebElement draggable) {
+        verifyAcception(draggable, ACCEPTING);
+        guardedDrop();
+        assertNotPresent(page.getIndicator(), "Indicator should be no longer visible");
+    }
+
     @Test
+    @CoversAttributes("acceptedTypes")
     public void testAcceptedTypes() {
         dropTargetAttributes.set(acceptedTypes, "drg2");
         indicator = new Indicator(page.getIndicator());
 
-        testAcception(page.getDrg1(), REJECTING);
+        verifyAcception(page.getDrg1(), REJECTING);
         doDrop();
-        testAcception(page.getDrg2(), ACCEPTING);
+        verifyAcception(page.getDrg2(), ACCEPTING);
         guardedDrop();
-        testAcception(page.getDrg3(), REJECTING);
+        verifyAcception(page.getDrg3(), REJECTING);
         doDrop();
 
         dropTargetAttributes.set(acceptedTypes, "drg1, drg3");
 
-        testAcception(page.getDrg1(), ACCEPTING);
+        verifyAcception(page.getDrg1(), ACCEPTING);
         guardedDrop();
-        testAcception(page.getDrg2(), REJECTING);
+        verifyAcception(page.getDrg2(), REJECTING);
         doDrop();
-        testAcception(page.getDrg3(), ACCEPTING);
+        verifyAcception(page.getDrg3(), ACCEPTING);
         guardedDrop();
     }
 
     @Test
-    public void testRender() {
-        dropTargetAttributes.set(render, "droppable1 droppable2 renderChecker");
-
+    @CoversAttributes("bypassUpdates")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10535")
+    public void testBypassUpdates() {
+        dropTargetAttributes.set(bypassUpdates, true);
         indicator = new Indicator(page.getIndicator());
 
-        testAcception(page.getDrg1(), ACCEPTING);
-
-        String drop1Content = page.getDrop1().getText();
-        String drop2Content = page.getDrop2().getText();
-        new Actions(driver).release(page.getDrop1()).perform();
-
-        // new Actions(driver).dragAndDrop(page.drg1, page.drop1).build().perform();
-        // TODO JJa: find replacement
-        // waitAjax.waitForChange(retrieveDrop1);
-        // assertTrue(retrieveDrop2.isValueChanged());
-        Graphene.waitModel().until().element(page.getDrop1()).text().not().equalTo(drop1Content);
-        Graphene.waitModel().until(new WebElementConditionFactory(page.getDrop2()).not().text().equalTo(drop2Content));
+        verifyAcception(page.getDrg1(), ACCEPTING);
+        guardedDrop();
+        // wait for drop accept before assert listener to avoid IndexOutOfBounds
+        // while drop processing change phases list
+        Graphene.waitModel().until().element(page.getDropValue()).is().present();
+        page.assertListener(PROCESS_VALIDATIONS, "dropListener");
+        page.assertPhases(RESTORE_VIEW, APPLY_REQUEST_VALUES, PROCESS_VALIDATIONS, RENDER_RESPONSE);
     }
 
     @Test
+    @CoversAttributes("dropListener")
     public void testDropListenerAndEvent() {
-
         indicator = new Indicator(page.getIndicator());
 
         testAcceptedDropping(page.getDrg1());
@@ -153,48 +165,7 @@ public class TestDropTarget extends AbstractWebDriverTest {
     }
 
     @Test
-    public void testExecute() {
-        dropTargetAttributes.set(execute, "executeChecker");
-
-        testAcception(page.getDrg1(), ACCEPTING);
-        guardedDrop();
-
-        Graphene.waitModel().until().element(page.getDropValue()).is().present();
-        page.assertListener(UPDATE_MODEL_VALUES, "executeChecker");
-        page.assertListener(INVOKE_APPLICATION, "dropListener");
-        page.assertPhases(ANY_PHASE);
-    }
-
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-10535")
-    public void testImmediate() {
-        dropTargetAttributes.set(immediate, true);
-        indicator = new Indicator(page.getIndicator());
-
-        testAcception(page.getDrg1(), ACCEPTING);
-        guardedDrop();
-
-        Graphene.waitModel().until().element(page.getDropValue()).is().present();
-        page.assertListener(APPLY_REQUEST_VALUES, "dropListener");
-        page.assertPhases(RESTORE_VIEW, APPLY_REQUEST_VALUES, RENDER_RESPONSE);
-    }
-
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-10535")
-    public void testBypassUpdates() {
-        dropTargetAttributes.set(bypassUpdates, true);
-        indicator = new Indicator(page.getIndicator());
-
-        testAcception(page.getDrg1(), ACCEPTING);
-        guardedDrop();
-        // wait for drop accept before assert listener to avoid IndexOutOfBounds
-        // while drop processing change phases list
-        Graphene.waitModel().until().element(page.getDropValue()).is().present();
-        page.assertListener(PROCESS_VALIDATIONS, "dropListener");
-        page.assertPhases(RESTORE_VIEW, APPLY_REQUEST_VALUES, PROCESS_VALIDATIONS, RENDER_RESPONSE);
-    }
-
-    @Test
+    @CoversAttributes({ "onbeforedomupdate", "onbegin", "oncomplete" })
     public void testEvents() {
         dropTargetAttributes.set(onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
         dropTargetAttributes.set(onbegin, "metamerEvents += \"begin \"");
@@ -203,7 +174,7 @@ public class TestDropTarget extends AbstractWebDriverTest {
 
         executeJS("metamerEvents = \"\";");
 
-        testAcception(page.getDrg1(), ACCEPTING);
+        verifyAcception(page.getDrg1(), ACCEPTING);
         guardedDrop();
         Graphene.waitModel().until().element(page.getDropValue()).is().present();
 
@@ -215,23 +186,58 @@ public class TestDropTarget extends AbstractWebDriverTest {
         assertEquals(events[2], "complete", "Attribute oncomplete doesn't work");
     }
 
-    private void testAcception(WebElement drag, IndicatorState state) {
+    @Test
+    @CoversAttributes("execute")
+    public void testExecute() {
+        dropTargetAttributes.set(execute, "executeChecker");
+
+        verifyAcception(page.getDrg1(), ACCEPTING);
+        guardedDrop();
+
+        Graphene.waitModel().until().element(page.getDropValue()).is().present();
+        page.assertListener(UPDATE_MODEL_VALUES, "executeChecker");
+        page.assertListener(INVOKE_APPLICATION, "dropListener");
+        page.assertPhases(ANY_PHASE);
+    }
+
+    @Test
+    @CoversAttributes("immediate")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10535")
+    public void testImmediate() {
+        dropTargetAttributes.set(immediate, true);
+        indicator = new Indicator(page.getIndicator());
+
+        verifyAcception(page.getDrg1(), ACCEPTING);
+        guardedDrop();
+
+        Graphene.waitModel().until().element(page.getDropValue()).is().present();
+        page.assertListener(APPLY_REQUEST_VALUES, "dropListener");
+        page.assertPhases(RESTORE_VIEW, APPLY_REQUEST_VALUES, RENDER_RESPONSE);
+    }
+
+    @Test
+    @CoversAttributes("render")
+    public void testRender() {
+        dropTargetAttributes.set(render, "droppable1 droppable2 renderChecker");
+
+        indicator = new Indicator(page.getIndicator());
+
+        verifyAcception(page.getDrg1(), ACCEPTING);
+
+        String drop1Content = page.getDrop1().getText();
+        String drop2Content = page.getDrop2().getText();
+        new Actions(driver).release(page.getDrop1()).perform();
+
+        // new Actions(driver).dragAndDrop(page.drg1, page.drop1).build().perform();
+        // TODO JJa: find replacement
+        // waitAjax.waitForChange(retrieveDrop1);
+        // assertTrue(retrieveDrop2.isValueChanged());
+        Graphene.waitModel().until().element(page.getDrop1()).text().not().equalTo(drop1Content);
+        Graphene.waitModel().until(new WebElementConditionFactory(page.getDrop2()).not().text().equalTo(drop2Content));
+    }
+
+    private void verifyAcception(WebElement drag, IndicatorState state) {
         new Actions(driver).clickAndHold(drag).moveToElement(page.getDrop1()).perform();
         indicator.verifyState(state);
     }
-
-    private void testAcceptedDropping(WebElement draggable) {
-        testAcception(draggable, ACCEPTING);
-        guardedDrop();
-        assertNotPresent(page.getIndicator(), "Indicator should be no longer visible");
-    }
-
-    private void doDrop() {
-        new Actions(driver).release().build().perform();
-    }
-
-    private void guardedDrop() {
-        Graphene.guardAjax(new Actions(driver).release()).perform();
-    }
-
 }
