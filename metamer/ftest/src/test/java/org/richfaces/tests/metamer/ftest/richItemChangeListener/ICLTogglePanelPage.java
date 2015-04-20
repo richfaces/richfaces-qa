@@ -30,7 +30,7 @@ import org.openqa.selenium.support.FindBy;
 public class ICLTogglePanelPage extends ICLPage {
 
     @FindBy(css = "a[id$=tcLink2]")
-    public WebElement panel;
+    private WebElement panel;
 
     @Override
     public WebElement getInactivePanel() {

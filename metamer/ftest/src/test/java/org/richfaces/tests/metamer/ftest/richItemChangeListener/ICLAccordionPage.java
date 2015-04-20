@@ -30,7 +30,7 @@ import org.openqa.selenium.support.FindBy;
 public class ICLAccordionPage extends ICLPage {
 
     @FindBy(css = "div[id$='item2:header']")
-    public WebElement panel;
+    private WebElement panel;
 
     @Override
     public WebElement getInactivePanel() {
