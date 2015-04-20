@@ -31,5 +31,9 @@ import org.openqa.selenium.support.FindBy;
 class MessagesComponentCommonPage extends MessageComponentCommonPage {
 
     @FindBy(css = "input[id$=generateAllMsgsBtn]")
-    public WebElement generateAllMsgsButton;
+    private WebElement generateAllMsgsButton;
+
+    public WebElement getGenerateAllMsgsButton() {
+        return generateAllMsgsButton;
+    }
 }

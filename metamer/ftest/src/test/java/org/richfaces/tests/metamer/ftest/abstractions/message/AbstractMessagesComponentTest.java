@@ -199,7 +199,7 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
     protected void generateAllKindsOfMessagesWithWait() {
         setCorrectValues();
         submitWithA4jBtn();
-        MetamerPage.waitRequest(getPage().generateAllMsgsButton, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(getPage().getGenerateAllMsgsButton(), WaitRequestType.XHR).click();
         getPage().getMessagesComponentWithGlobal().advanced().waitUntilMessagesAreVisible().perform();
     }
 

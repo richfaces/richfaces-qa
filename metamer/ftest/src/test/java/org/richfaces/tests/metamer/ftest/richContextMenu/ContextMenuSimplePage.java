@@ -65,7 +65,7 @@ public class ContextMenuSimplePage extends MetamerPage {
     @FindByJQuery("div[id$=menuGroup4_list]")
     private WebElement groupList;
 
-    public final int SHOW_DELAY_TOLERANCE = 600;
+    public static final int SHOW_DELAY_TOLERANCE = 600;
 
     public void clickOnFirstPanel(DriverType type) {
         if (type == DriverType.InternetExplorer) {

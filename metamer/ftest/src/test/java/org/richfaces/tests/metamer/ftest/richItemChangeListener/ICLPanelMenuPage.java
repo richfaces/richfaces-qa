@@ -30,7 +30,7 @@ import org.openqa.selenium.support.FindBy;
 public class ICLPanelMenuPage extends ICLPage {
 
     @FindBy(css = "div[id$=item1] > table > tbody > tr > td[class=rf-pm-top-itm-lbl]")
-    public WebElement panel;
+    private WebElement panel;
 
     @Override
     public WebElement getInactivePanel() {
