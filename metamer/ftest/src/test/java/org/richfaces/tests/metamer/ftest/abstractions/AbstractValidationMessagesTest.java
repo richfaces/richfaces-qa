@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.abstractions;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
@@ -82,9 +81,9 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
      */
     public void testJSR303MessagesJSF() {
         page.setWrongValuesAndSubmitJSF();
-        assertEquals(page.getJsr303InAttMsgElement().getText(), MSG_ATT);
-        assertEquals(page.getJsr303InBeanMsgElement().getText(), MSG_BEAN);
-        assertEquals(page.getJsr303InBundleMsgElement().getText(), MSG_BUNDLE_JSR);
+        assertTrue(page.getJsr303InAttMsgElement().getText().endsWith(MSG_ATT));
+        assertTrue(page.getJsr303InBeanMsgElement().getText().endsWith(MSG_BEAN));
+        assertTrue(page.getJsr303InBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSR));
     }
 
     /**
@@ -94,9 +93,9 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
      */
     public void testJSR303MessagesRF() {
         page.setWrongValuesAndSubmitRF();
-        assertEquals(page.getJsr303InAttMsgElement().getText(), MSG_ATT);
-        assertEquals(page.getJsr303InBeanMsgElement().getText(), MSG_BEAN);
-        assertEquals(page.getJsr303InBundleMsgElement().getText(), MSG_BUNDLE_JSR);
+        assertTrue(page.getJsr303InAttMsgElement().getText().endsWith(MSG_ATT));
+        assertTrue(page.getJsr303InBeanMsgElement().getText().endsWith(MSG_BEAN));
+        assertTrue(page.getJsr303InBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSR));
     }
 
     /**
@@ -106,9 +105,9 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
      */
     public void testCSVMessagesJSF() {
         page.setWrongValuesAndSubmitJSF();
-        assertEquals(page.getCsvInAttMsgElement().getText(), MSG_ATT);
-        assertEquals(page.getCsvInBeanMsgElement().getText(), MSG_BEAN);
-        assertEquals(page.getCsvInBundleMsgElement().getText(), MSG_BUNDLE_JSR);
+        assertTrue(page.getCsvInAttMsgElement().getText().endsWith(MSG_ATT));
+        assertTrue(page.getCsvInBeanMsgElement().getText().endsWith(MSG_BEAN));
+        assertTrue(page.getCsvInBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSR));
     }
 
     /**
@@ -118,9 +117,9 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
      */
     public void testCSVMessagesRF() {
         page.setWrongValuesAndSubmitRF();
-        assertEquals(page.getCsvInAttMsgElement().getText(), MSG_ATT);
-        assertEquals(page.getCsvInBeanMsgElement().getText(), MSG_BEAN);
-        assertEquals(page.getCsvInBundleMsgElement().getText(), MSG_BUNDLE_JSR);
+        assertTrue(page.getCsvInAttMsgElement().getText().endsWith(MSG_ATT));
+        assertTrue(page.getCsvInBeanMsgElement().getText().endsWith(MSG_BEAN));
+        assertTrue(page.getCsvInBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSR));
     }
 
     /**
@@ -130,12 +129,12 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
      */
     public void testJSFMessagesJSF() {
         page.setWrongValuesAndSubmitJSF();
-        assertEquals(page.getJsfInAttMsgElement().getText(), MSG_ATT);
+        assertTrue(page.getJsfInAttMsgElement().getText().endsWith(MSG_ATT));
         assertTrue(page.getJsfInBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSF_DEFAULT));
         page.activateCustomMessages();
         page.setWrongValuesAndSubmitJSF();
-        assertEquals(page.getJsfInAttMsgElement().getText(), MSG_ATT);
-        assertEquals(page.getJsfInBundleMsgElement().getText(), MSG_BUNDLE_JSF_CUSTOM);
+        assertTrue(page.getJsfInAttMsgElement().getText().endsWith(MSG_ATT));
+        assertTrue(page.getJsfInBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSF_CUSTOM));
     }
 
     /**
@@ -145,11 +144,11 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
      */
     public void testJSFMessagesRF() {
         page.setWrongValuesAndSubmitRF();
-        assertEquals(page.getJsfInAttMsgElement().getText(), MSG_ATT);
+        assertTrue(page.getJsfInAttMsgElement().getText().endsWith(MSG_ATT));
         assertTrue(page.getJsfInBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSF_DEFAULT));
         page.activateCustomMessages();
         page.setWrongValuesAndSubmitRF();
-        assertEquals(page.getJsfInAttMsgElement().getText(), MSG_ATT);
-        assertEquals(page.getJsfInBundleMsgElement().getText(), MSG_BUNDLE_JSF_CUSTOM);
+        assertTrue(page.getJsfInAttMsgElement().getText().endsWith(MSG_ATT));
+        assertTrue(page.getJsfInBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSF_CUSTOM));
     }
 }
