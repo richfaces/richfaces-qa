@@ -71,9 +71,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                 <h:outputLabel id="renderCheckerLabel" value="Render Checker" for="renderChecker"/>
                 <a4j:outputPanel id="renderChecker">
-                    <h:outputText value="#{phasesBean.date}">
-                        <f:convertDateTime pattern="HH:MM:ss.SSS" />
-                    </h:outputText>
+                    <h:outputText value="#{phasesBean.date}"/>
                 </a4j:outputPanel>
 
                 <h:outputLabel id="statusCheckerLabel" value="Status Checker" for="statusChecker" />
@@ -92,9 +90,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                 <h:outputLabel id="jsFunctionCheckerLabel" value="jsFunction Checker" for="jsFunctionChecker"/>
                 <a4j:outputPanel id="jsFunctionChecker">
-                    <h:outputText value="#{phasesBean.date}">
-                        <f:convertDateTime pattern="HH:MM:ss.SSS" />
-                    </h:outputText>
+                    <h:outputText value="#{phasesBean.date}"/>
                 </a4j:outputPanel>
 
                 <h:outputLabel id="showUiDebugLabel" value="Show ui:debug (must be enabled)" for="showUiDebug"/>
@@ -171,9 +167,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             <h:panelGrid columns="1">
                 <a4j:outputPanel id="phasesPanel" layout="block" ajaxRendered="true">
-                    <h:outputText id="requestTime" value="#{phasesBean.date}">
-                        <f:convertDateTime pattern="HH:mm:ss.SSS" />
-                    </h:outputText>
+                    <h:outputText id="requestTime" value="#{phasesBean.date}"/>
                     <ul class="phases-list">
                         <a4j:repeat value="#{phasesBean.phases}" var="phase">
                             <li>#{phase}</li>

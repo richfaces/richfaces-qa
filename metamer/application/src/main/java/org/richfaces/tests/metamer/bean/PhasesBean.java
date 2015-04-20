@@ -22,13 +22,15 @@
 package org.richfaces.tests.metamer.bean;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +43,9 @@ import org.slf4j.LoggerFactory;
 @ManagedBean(name = "phasesBean")
 @RequestScoped
 public class PhasesBean {
+
+    public static final String DATE_PATTERN = "HH:mm:ss.SSS";
+    public static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern(DATE_PATTERN);
 
     private static Logger logger;
     private List<String> phases;
@@ -63,7 +68,7 @@ public class PhasesBean {
         this.phases = phases;
     }
 
-    public Date getDate() {
-        return new Date();
+    public String getDate() {
+        return new DateTime().toString(DATE_FORMAT);
     }
 }
