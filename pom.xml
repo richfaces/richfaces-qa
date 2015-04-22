@@ -48,7 +48,7 @@ FSF site: http://www.fsf.org. -->
         <version.tomee1-7>1.7.1</version.tomee1-7>
 
         <!-- arquillian versions -->
-        <arquillian.bom.version>1.1.5.Final</arquillian.bom.version>
+        <arquillian.bom.version>1.1.8.Final</arquillian.bom.version>
         <arquillian.wildfly.container>1.0.0.Alpha2</arquillian.wildfly.container>
         <arquillian.tomcat.version>1.0.0.CR7</arquillian.tomcat.version>
         <arquillian.drone.version>1.3.1.Final</arquillian.drone.version>
@@ -1308,7 +1308,7 @@ FSF site: http://www.fsf.org. -->
                 </plugins>
             </build>
         </profile>
-        
+
         <profile>
             <id>take-screenshots</id>
             <dependencies>
@@ -1319,7 +1319,7 @@ FSF site: http://www.fsf.org. -->
                 </dependency>
             </dependencies>
         </profile>
-    
+
         <!--
          Tasks:
            * kill containers (GlassFish, Tomcat, AS) and Drivers (IEDriver, ChromeDriver) processes before running tests
@@ -1329,7 +1329,7 @@ FSF site: http://www.fsf.org. -->
            * set paths to EAP, drivers (IEDriver, ChromeDriver), browser binaries (Firefox)
            * fail the build before testing when misconfigured (e.g. when path does not exist)
            * on jenkins use specified version of Firefox (version is specified in configuration of the RichFaces QA Maven Plugin)
-         
+
          Activate by setting property 'browser' to (case insensitive options):
            a) for firefox: *firefox* or *ff*
            b) for chrome: *chrome*, *cr*
@@ -1384,11 +1384,11 @@ FSF site: http://www.fsf.org. -->
                                 </goals>
                                 <configuration>
                                     <!-- when firefox version is not specified, use one of the following configurations -->
-                                    <!-- 
+                                    <!--
                                     The osName/version/arch values are case insensitive and the detected system has to
                                     contain them to use the configuration. When a configuration is not present, e.g. when
                                     osVersion is missing, then it does not depend on this value (see configuration for Windows
-                                    or Mac). The firefoxBin or firefoxVersion is mandatory. 
+                                    or Mac). The firefoxBin or firefoxVersion is mandatory.
                                     -->
                                     <jenkinsFirefoxConfigurations>
                                         <!-- SOLARIS 10 SPARC -->
