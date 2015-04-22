@@ -39,9 +39,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="head">
             <script type="text/javascript">
-                    function add(element) {
-                        element.innerHTML = 1 + parseInt(element.innerHTML);
-                    }
+                function add(element) {
+                    element.innerHTML = 1 + parseInt(element.innerHTML);
+                }
             </script>
         </ui:define>
 
@@ -53,18 +53,20 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                        onbeforedomupdate="#{a4jQueueBean.attributes['onbeforedomupdate'].value}"
                        oncomplete="#{a4jQueueBean.attributes['oncomplete'].value}"
                        onerror="#{a4jQueueBean.attributes['onerror'].value}"
-                       onevent="#{a4jQueueBean.attributes['onevent'].value}"
                        onrequestdequeue="#{a4jQueueBean.attributes['onrequestdequeue'].value}"
                        onrequestqueue="#{a4jQueueBean.attributes['onrequestqueue'].value}"
                        onsubmit="#{a4jQueueBean.attributes['onsubmit'].value}"
                        rendered="#{a4jQueueBean.attributes['rendered'].value}"
                        requestDelay="#{a4jQueueBean.attributes['requestDelay'].value}"
+                       status="#{a4jQueueBean.attributes['status'].value}"
                        />
 
             <h:form id="form">
                 <h:panelGrid columns="2">
                     <h:outputText value="Type here:" />
-                    <h:inputText id="input1" value="#{a4jQueueBean.text}" onkeypress="add(#{rich:element('events1')}); #{rich:element('timeWatcher:grid')}.event(); "
+                    <h:inputText id="input1" value="#{a4jQueueBean.text}" onkeypress="add(#{rich:element('events1')});
+                    #{rich:element('timeWatcher:grid')}.event();
+                                 "
                                  disabled="#{not (facesContext.maximumSeverity==null)}">
                         <a4j:ajax event="keypress" onbegin="add(#{rich:element('requests')}); #{rich:element('timeWatcher:grid')}.begin(); " render="outtext" oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.difference(); "
                                   onbeforedomupdate="add(#{rich:element('updates')});"/>
@@ -72,12 +74,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                     <h:outputText value="Click here:" />
                     <h:commandButton id="actionButton" value="Action" action="#{richBean.dummyAction}"
-                                     onclick="add(#{rich:element('events1')}); #{rich:element('timeWatcher:grid')}.event();">
+                                     onclick="add(#{rich:element('events1')});
+                                             #{rich:element('timeWatcher:grid')}.event();">
                         <a4j:ajax onbegin="add(#{rich:element('requests')}); #{rich:element('timeWatcher:grid')}.begin(); "
                                   oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.difference(); "
                                   onbeforedomupdate="add(#{rich:element('updates')});" />
                     </h:commandButton>
-                    
+
                     <h:outputText value="Click here (with error):" />
                     <a4j:commandButton id="errorButton" value="Action" action="#{richBean.causeError}"/>
 
