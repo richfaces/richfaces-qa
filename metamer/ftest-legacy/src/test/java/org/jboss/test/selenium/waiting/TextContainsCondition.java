@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -18,13 +18,11 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.jboss.test.selenium.waiting;
 
 import static org.apache.commons.lang.StringEscapeUtils.escapeJavaScript;
-
 import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
-
 import static org.jboss.arquillian.ajocado.javascript.JavaScript.js;
 
 import org.apache.commons.lang.Validate;
