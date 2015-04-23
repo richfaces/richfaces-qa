@@ -80,6 +80,13 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("action")
+    public void testAction() {
+        Graphene.guardAjax(page.getTabPanel()).switchTo(0);
+        page.assertListener(PhaseId.INVOKE_APPLICATION, "action invoked");
+    }
+
+    @Test
     @CoversAttributes("actionListener")
     @RegressionTest("https://issues.jboss.org/browse/RF-11427")
     @Templates(exclude = "uiRepeat")
@@ -258,11 +265,35 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onbeforedomupdate")
+    @Templates(value = "plain")
+    public void testOnbeforedomupdate() {
+        testFireEvent("onbeforedomupdate", new Action() {
+            @Override
+            public void perform() {
+                page.getTabPanel().switchTo(0);
+            }
+        });
+    }
+
+    @Test
     @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
         Action action = new Actions(driver).click(page.getItemContents().get(0)).build();
         testFireEvent(tabAttributes, TabAttributes.onclick, action);
+    }
+
+    @Test
+    @CoversAttributes("oncomplete")
+    @Templates(value = "plain")
+    public void testOncomplete() {
+        testFireEvent("oncomplete", new Action() {
+            @Override
+            public void perform() {
+                page.getTabPanel().switchTo(0);
+            }
+        });
     }
 
     @Test
