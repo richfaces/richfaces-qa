@@ -290,6 +290,13 @@ public class TestToolbar extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("title")
+    @Templates(value = "plain")
+    public void testTitle() {
+        testTitle(page.getToolbar());
+    }
+
+    @Test
     @CoversAttributes("width")
     @Templates(value = "plain")
     public void testWidth() {
