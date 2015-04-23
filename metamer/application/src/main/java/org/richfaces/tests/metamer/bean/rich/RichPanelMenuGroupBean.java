@@ -31,7 +31,6 @@ import javax.faces.bean.SessionScoped;
 
 import org.richfaces.component.UIPanelMenuGroup;
 import org.richfaces.tests.metamer.Attributes;
-import org.richfaces.tests.metamer.bean.RichBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,7 +66,6 @@ public class RichPanelMenuGroupBean implements Serializable {
         // already defined in source directly
         attributes.remove("name");
         attributes.remove("label");
-        attributes.remove("changeExpandListener");
         attributes.remove("action");
         attributes.remove("actionListener");
 
@@ -87,9 +85,5 @@ public class RichPanelMenuGroupBean implements Serializable {
 
     public Map<String, Boolean> getExpanded() {
         return expanded;
-    }
-
-    public void changeExpandListener(Object event) {
-        RichBean.logToPage("* group expanded");
     }
 }
