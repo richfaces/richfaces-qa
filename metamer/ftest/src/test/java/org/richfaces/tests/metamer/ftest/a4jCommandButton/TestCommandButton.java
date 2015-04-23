@@ -35,6 +35,7 @@ import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactor
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Action;
+import org.richfaces.fragment.common.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
@@ -85,6 +86,13 @@ public class TestCommandButton extends AbstractWebDriverTest {
         page.verifyOutput1Text(CommandButtonLinkPage.STRING_UNICODE1);
         page.verifyOutput2Text(CommandButtonLinkPage.STRING_UNICODE2);
         page.verifyOutput3Text(CommandButtonLinkPage.STRING_UNICODE3);
+    }
+
+    @Test
+    @CoversAttributes("accesskey")
+    @Templates(value = "plain")
+    public void testAccesskey() {
+        testHTMLAttribute(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.accesskey, "a");
     }
 
     @Test
@@ -360,6 +368,12 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("status")
+    public void testStatus() {
+        testStatus(new Actions(driver).click(page.getButtonElement()).build());
+    }
+
+    @Test
     @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
@@ -372,6 +386,13 @@ public class TestCommandButton extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(page.getButtonElement());
+    }
+
+    @Test
+    @CoversAttributes("tabindex")
+    @Templates(value = "plain")
+    public void testTabindex() {
+        testHTMLAttribute(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.tabindex, "10");
     }
 
     @Test
