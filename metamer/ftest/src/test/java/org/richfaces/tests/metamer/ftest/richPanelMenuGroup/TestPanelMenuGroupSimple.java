@@ -35,6 +35,8 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGrou
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import javax.faces.event.PhaseId;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.openqa.selenium.WebElement;
@@ -62,6 +64,20 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
             Graphene.guardAjax(getPage().getMenu()).collapseGroup(1);
         }
     };
+
+    @Test
+    @CoversAttributes("action")
+    public void testAction() {
+        collapseFirstGroupAction.perform();
+        getPage().assertListener(PhaseId.INVOKE_APPLICATION, "action invoked");
+    }
+
+    @Test
+    @CoversAttributes("actionListener")
+    public void testActionListener() {
+        collapseFirstGroupAction.perform();
+        getPage().assertListener(PhaseId.INVOKE_APPLICATION, "action listener invoked");
+    }
 
     @Test
     @CoversAttributes("data")
