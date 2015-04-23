@@ -203,6 +203,20 @@ public class TestLog extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("style")
+    @Templates(value = "plain")
+    public void testStyle() {
+        testStyle(log.advanced().getRootElement());
+    }
+
+    @Test
+    @CoversAttributes("styleClass")
+    @Templates(value = "plain")
+    public void testStyleClass() {
+        testStyleClass(log.advanced().getRootElement());
+    }
+
+    @Test
     public void testSubmit() {
         input.clear().sendKeys("RichFaces 4");
         submit();
