@@ -2,7 +2,7 @@
 
 Metamer is a testing application and test suite which covers all of RichFaces 4 components and it is able to display them in different templates (tables, accordion, ui:repeat, ...)
 
-== Metamer Maven Structure 
+== Metamer Maven Structure
 
 Metamer consists of root module and three submodules:
 
@@ -96,7 +96,7 @@ To change the JSF implementation you can build Metamer with either a script ment
 == Functional Test Development
 
 === Running a test
-* switch to metamer/ftest directory and run +mvn clean verify -PprofileName -Dtest=testName -Dtemplates=templateName [-Dbrowser=browserName]+ 
+* switch to metamer/ftest directory and run +mvn clean verify -PprofileName -Dtest=testName -Dtemplates=templateName [-Dbrowser=browserName]+
 ** profileName is a name of a container you want to use, see pom.xml in parent for their names
 *** e.g. +-Pwildfly-remote-8-1+
 ** testName is a name of a specific test to run
@@ -104,7 +104,7 @@ To change the JSF implementation you can build Metamer with either a script ment
 *** regular expression can be used, for instance +-Dtest=TestA*+ will run all test classes which name begins with 'TestA'
 ** omit +-Dtest+ if you want to run all tests
 ** templateName is one or more of the templates such as plain, richPanel, a4jRepeat, uiRepeat
-*** list of all templates used in tests can be found in `AbstractMetamerTest` in the annotation `@Templates` over the field *template*  
+*** list of all templates used in tests can be found in `AbstractMetamerTest` in the annotation `@Templates` over the field *template*
 *** all templates are case insensitive and have aliases (can be found/edited in `org.richfaces.tests.metamer.Template`)
 *** to run tests in:
 **** all templates: use `*` or `all`
@@ -116,7 +116,7 @@ To change the JSF implementation you can build Metamer with either a script ment
 **** some examples:
 ***** `-Dbrowser=ff` to run tests with system's Firefox browser.
 ***** `-Dbrowser=cr` to run tests with system's Chrome browser.
-***** `-Dbrowser=ie9` or `-Dbrowser=ie-9` to run tests with system's IE browser (the version `9` will be ignored) 
+***** `-Dbrowser=ie9` or `-Dbrowser=ie-9` to run tests with system's IE browser (the version `9` will be ignored)
 ***** `-Dbrowser=ff30` or `-Dbrowser=ff-30` to run tests with Firefox 30. If working in non-Jenkins environment, then the browser binary will be downloaded and stored at `{user.home}/selenium`, otherwise the binary will be linked from network drive.
 
 === Debugging a test
@@ -130,7 +130,7 @@ To change the JSF implementation you can build Metamer with either a script ment
 *** tests should extend +AbstractWebDriverTest+, have a look at: method with +@Deployment+ annotation, +@Drone WebDriver browser+ injection point, +@ArquillianResource contextRoot+, +@BeforeMethod loadPage+
 *** we are using Page Object pattern, have a look at @Page annotation
 *** we are using Page Fragments pattern, have a look at @FindBy annotations, for more information see Graphene documentation
- 
+
 === Creating issue reproducers in Metamer
 
 * when creating new facelet for the issue, create it under affected component with the name of issue number (e.g. +rf-15422.xhtml+)
@@ -179,6 +179,10 @@ In tests there are several important annotations we use:
 * +@Uses+
 ** this is helper annotation for using multiple `@UseWithField` annotations in a single test method
 
+* +@CoversAttributes+
+** this indicates that the test covers testing of RichFaces component's attribute (e.g. oncomplete, status, styleClass) or multiple attributes. The actual component is obtained from test package.
+** this annotation is used in +CoverageCollectorTool+ to automatize the report of all covered attributes of all RichFaces components.
+
 == Metamer RichFaces Bug Report Guidelines
 
 . Find if JIRA already exists (use filters to ease your work)
@@ -199,3 +203,15 @@ e. ACTUAL: shows 15 items
 *** Description with code sample (Bean + JSF)
 *** use {code} for formatting code samples and stack traces (see JIRA formating rules for more info on formating)
 *** eventually provide specific version control revision or WAR directly
+
+== About Tools
+There are a few tools to simplify/automatize some work in Metamer:
+
+* +ComponentsAttributesCollectorTool+
+** updates or creates java component attributes file (e.g. NotifyMessageAttributes.java) for each RichFaces component
+** tool should be runnable from IDE with test classpath (e.g. in NetBeans simply 'Run File')
+
+* +CoverageCollectorTool+
+** creates a coverage report of all RichFaces components attributes
+** for creating report it uses component attributes file (e.g. NotifyMessageAttributes.java) and all test methods (annotated with +@Test+) with +@CoversAttributes+ annotation. So it is important to have correctly annotated test methods and to have updated all of the components attributes files.
+** tool should be runnable from IDE with test classpath (e.g. in NetBeans simply 'Run File')
