@@ -31,8 +31,10 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebDriver;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -117,7 +119,8 @@ public class TestActionListener extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-10585")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10585")
+    @Skip(On.JSF.MyFaces.class)
     public void testInvokeListenerMethodCC() {
         final String msg = "Method expression listener called from composite component";
 
