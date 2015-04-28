@@ -57,7 +57,6 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
 
     @BeforeMethod(alwaysRun = true)
     public void resetPage() {
-        setDefault();
         //inits document JavaScript variable, which will hold state of setting of all inputs
         executeJS(ValidationPage.JS_STATE_VARIABLE + "=''");
     }
@@ -108,13 +107,17 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
      */
     @CoversAttributes("validatorMessage")
     public void testJSFMessagesJSF() {
-        page.setWrongValuesAndSubmitJSF();
-        assertTrue(page.getJsfInAttMsgElement().getText().endsWith(MSG_ATT));
-        assertTrue(page.getJsfInBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSF_DEFAULT));
-        page.activateCustomMessages();
-        page.setWrongValuesAndSubmitJSF();
-        assertTrue(page.getJsfInAttMsgElement().getText().endsWith(MSG_ATT));
-        assertTrue(page.getJsfInBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSF_CUSTOM));
+        try {
+            page.setWrongValuesAndSubmitJSF();
+            assertTrue(page.getJsfInAttMsgElement().getText().endsWith(MSG_ATT));
+            assertTrue(page.getJsfInBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSF_DEFAULT));
+            page.activateCustomMessages();
+            page.setWrongValuesAndSubmitJSF();
+            assertTrue(page.getJsfInAttMsgElement().getText().endsWith(MSG_ATT));
+            assertTrue(page.getJsfInBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSF_CUSTOM));
+        } finally {
+            page.deactivateCustomMessages();
+        }
     }
 
     /**
@@ -124,13 +127,17 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
      */
     @CoversAttributes("validatorMessage")
     public void testJSFMessagesRF() {
-        page.setWrongValuesAndSubmitRF();
-        assertTrue(page.getJsfInAttMsgElement().getText().endsWith(MSG_ATT));
-        assertTrue(page.getJsfInBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSF_DEFAULT));
-        page.activateCustomMessages();
-        page.setWrongValuesAndSubmitRF();
-        assertTrue(page.getJsfInAttMsgElement().getText().endsWith(MSG_ATT));
-        assertTrue(page.getJsfInBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSF_CUSTOM));
+        try {
+            page.setWrongValuesAndSubmitRF();
+            assertTrue(page.getJsfInAttMsgElement().getText().endsWith(MSG_ATT));
+            assertTrue(page.getJsfInBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSF_DEFAULT));
+            page.activateCustomMessages();
+            page.setWrongValuesAndSubmitRF();
+            assertTrue(page.getJsfInAttMsgElement().getText().endsWith(MSG_ATT));
+            assertTrue(page.getJsfInBundleMsgElement().getText().endsWith(MSG_BUNDLE_JSF_CUSTOM));
+        } finally {
+            page.deactivateCustomMessages();
+        }
     }
 
     /**
