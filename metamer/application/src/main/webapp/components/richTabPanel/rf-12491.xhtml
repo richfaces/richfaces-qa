@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:rich="http://richfaces.org/rich">
+
+    <!--
+    JBoss, Home of Professional Open Source
+    Copyright 2010-2015, Red Hat, Inc. and individual contributors
+    by the @authors tag. See the copyright.txt in the distribution for a
+    full listing of individual contributors.
+
+    This is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as
+    published by the Free Software Foundation; either version 2.1 of
+    the License, or (at your option) any later version.
+
+    This software is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this software; if not, write to the Free
+    Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+    02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+        <ui:define name="component">
+            <p>
+                Page for simulating issue <a href="https://issues.jboss.org/browse/RF-12491">RF-12491</a>.
+            </p>
+            <br/>
+            To reproduce RF-12491: Datatable model is accessed in tab panel which is not rendered using switch type "server":
+            <ol>
+                <li>Refresh the phases/counts by 'refresh' button</li>
+                <li>The 'second getter invoked in phases:' should be empty.</li>
+            </ol>
+            <br/>
+            <rich:panel header="Counts and invoked phases">
+                <a4j:commandButton id="refreshCounts" value="refresh" execute="panel" render="panel" limitRender="true"/>
+                <a4j:commandButton id="resetCounts" value="reset" action="#{rf12491.resetAll()}" execute="panel" render="panel" limitRender="true"/>
+                <br/>
+                <a4j:outputPanel id="panel" ajaxRendered="true">
+                    First dataTable getter invoked in phases: <h:outputText id="firstGetterInvokedPhases" value="#{rf12491.getterForTable1InvokedInPhases}"/>
+                    <br/>
+                    Second dataTable getter invoked in phases: <h:outputText id="secondGetterInvokedPhases" value="#{rf12491.getterForTable2InvokedInPhases}"/>
+                </a4j:outputPanel>
+            </rich:panel>
+            <br/>
+            <rich:tabPanel id="tabPanel" switchType="#{rf12491.switchType}">
+                <rich:tab header="tab 1">
+                    <rich:dataTable id="table1" var="capital" value="#{rf12491.table1}">
+                        <rich:column>
+                            <f:facet name="header">
+                                State
+                            </f:facet>
+                            <h:outputText value="#{capital.state}" />
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                Name
+                            </f:facet>
+                            <h:outputText value="#{capital.name}" />
+                        </rich:column>
+                    </rich:dataTable>
+                </rich:tab>
+
+                <rich:tab header="tab 2">
+                    <rich:dataTable id="table2" var="capital" value="#{rf12491.table2}">
+                        <rich:column>
+                            <f:facet name="header">
+                                State
+                            </f:facet>
+                            <h:outputText value="#{capital.state}" />
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                Name
+                            </f:facet>
+                            <h:outputText value="#{capital.name}" />
+                        </rich:column>
+                    </rich:dataTable>
+                </rich:tab>
+            </rich:tabPanel>
+
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <h:panelGrid columns="2">
+                <h:panelGroup layout="block">
+                    <h:outputLabel for="switchTypeInput" value="switchType of the tab panel:" />
+                </h:panelGroup>
+                <h:selectOneRadio id="switchTypeInput" value="#{rf12491.switchType}" onchange="submit();">
+                    <f:selectItems value="#{rf12491.switchTypes}"/>
+                </h:selectOneRadio>
+            </h:panelGrid>
+        </ui:define>
+    </ui:composition>
+</html>
