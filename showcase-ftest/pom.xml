@@ -27,7 +27,7 @@
         <android.skip>true</android.skip>
         <!-- -->
         <version.showcase-portlet>3.3.3.Final</version.showcase-portlet>
-        <version.jboss-portal>7.5.0.Final</version.jboss-portal>
+        <version.jboss-portal>7.2.0.Final</version.jboss-portal>
     </properties>
 
     <dependencies>
