@@ -183,6 +183,9 @@ In tests there are several important annotations we use:
 ** this indicates that the test covers testing of RichFaces component's attribute (e.g. oncomplete, status, styleClass) or multiple attributes. The actual component is obtained from test package.
 ** this annotation is used in +CoverageCollectorTool+ to automatize the report of all covered attributes of all RichFaces components.
 
+* +@Skip+
+** this indicates that the test method will be skipped if given configuration/condition occurs. Without any value specified, the test with this annotation will always be skipped. See the javadoc of +SkipConfigurator+ for more details and examples.
+
 == Metamer RichFaces Bug Report Guidelines
 
 . Find if JIRA already exists (use filters to ease your work)
