@@ -28,6 +28,7 @@ import org.jboss.arquillian.graphene.request.RequestGuardException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -267,6 +268,13 @@ public class Attributes<T extends AttributeEnum> {
                 ex = e;
             } catch (RequestGuardException e) {
                 ex = e;
+            } catch (TimeoutException e) {
+                ex = e;
+                // when there are two simultaneous requests -- ajax + http (e.g. poll triggers an update while setting an attribute),
+                // it can lead to ViewExpiredException >>> an error page is displayed >>> cannot find any expected element on the page >>> TimeoutException
+                // resolution: reload the page and try to set the attribute again
+                WebDriver driver = browser.getTarget();
+                driver.get(driver.getCurrentUrl());
             }
         }
         throw ex;
