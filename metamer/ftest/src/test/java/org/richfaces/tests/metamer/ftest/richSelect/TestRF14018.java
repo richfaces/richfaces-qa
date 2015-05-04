@@ -32,6 +32,7 @@ import org.jboss.arquillian.graphene.javascript.JavaScript;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.select.RichFacesSelect;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -55,6 +56,7 @@ public class TestRF14018 extends AbstractWebDriverTest {
     }
 
     @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-14018")
     public void testTypeUnknownWillThrowJSException() {
         attributes.set(SelectAttributes.selectFirst, true);
 
