@@ -28,11 +28,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     <title>Metamer: RichFaces Testing Application</title>
     <meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8" />
     <h:outputStylesheet library="css" name="common.ecss" />
-    <h:outputScript library="script" name="homepage-common.js" />
 </h:head>
 
-<h:body onload="focusInput()">
-    <h1 style="float: left">Metamer: RichFaces Testing Application</h1>
+    <h:body onload="$('[id$=\'linksForm:componentSearch\']').focus().select();">
+        <h1 style="float: left">Metamer: RichFaces Testing Application</h1>
 
     <h:form id="invalidateSessionForm" style="float: right; ">
         <h:panelGrid columns="1">
