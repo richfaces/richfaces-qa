@@ -933,24 +933,15 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     protected <T extends AttributeEnum> Attributes<T> getAttributes(String attributesTableId) {
-        return AttributesImpl.<T>getAttributesFor(getFutureDriver(), attributesTableId);
+        return AttributesImpl.<T>getAttributesFor(testResourcesProvider, attributesTableId);
     }
 
     protected <T extends AttributeEnum> Attributes<T> getAttributes() {
         return getAttributes("");
     }
 
-    private FutureTarget<WebDriver> getFutureDriver() {
-        return new FutureTarget<WebDriver>() {
-            @Override
-            public WebDriver getTarget() {
-                return driver;
-            }
-        };
-    }
-
     protected UnsafeAttributes getUnsafeAttributes(String attributesTableId) {
-        return new AttributesImpl<AttributeEnum>(getFutureDriver(), attributesTableId);
+        return new AttributesImpl<AttributeEnum>(testResourcesProvider, attributesTableId);
     }
 
     protected UnsafeAttributes getUnsafeAttributes() {

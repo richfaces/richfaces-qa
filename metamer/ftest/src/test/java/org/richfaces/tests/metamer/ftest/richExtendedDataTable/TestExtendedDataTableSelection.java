@@ -38,6 +38,7 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.page.SelectionPage;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -48,6 +49,7 @@ import org.testng.annotations.Test;
 public class TestExtendedDataTableSelection extends AbstractDataTableTest {
 
     private final Collection<Integer> selected = new TreeSet<Integer>();
+    private final Attributes<ExtendedDataTableAttributes> tableAttributes = getAttributes();
 
     @Page
     private SelectionPage page;
@@ -60,6 +62,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     @BeforeMethod
     public void clearSelected() {
         selected.clear();
+        page.setTableAttributes(tableAttributes);
     }
 
     @Test

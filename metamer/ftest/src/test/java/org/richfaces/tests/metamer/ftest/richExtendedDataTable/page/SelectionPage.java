@@ -26,18 +26,14 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
-import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
-import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.ExtendedDataTableAttributes;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SimpleEDT;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.AttributesImpl;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -56,14 +52,14 @@ public class SelectionPage {
     @FindBy(css = "div.rf-edt[id$=richEDT]")
     private SimpleEDT table;
 
-    @Drone
-    private WebDriver browser;
-
-    private final Attributes<ExtendedDataTableAttributes> tableAttributes
-        = AttributesImpl.<ExtendedDataTableAttributes>getAttributesFor(getFutureDriver());
+    private Attributes<ExtendedDataTableAttributes> tableAttributes;
 
     public RichFacesDataScroller getDataScroller() {
         return dataScroller2;
+    }
+
+    public void setTableAttributes(Attributes<ExtendedDataTableAttributes> tableAttributes) {
+        this.tableAttributes = tableAttributes;
     }
 
     public void selectRow(int rowIndex, Keys... keys) {
@@ -119,15 +115,5 @@ public class SelectionPage {
         return index
             - ((dataScroller2.getActivePageNumber() - 1)
             * Integer.parseInt(tableAttributes.get(ExtendedDataTableAttributes.rows)));
-    }
-
-    private AbstractWebDriverTest.FutureTarget<WebDriver> getFutureDriver() {
-        return new AbstractWebDriverTest.FutureTarget<WebDriver>() {
-
-            @Override
-            public WebDriver getTarget() {
-                return browser;
-            }
-        };
     }
 }

@@ -49,6 +49,4 @@ public interface Attributes<T extends AttributeEnum> {
     void set(T attribute, Number no);
 
     void set(T attribute, String string);
-
-    void setRequestType(MetamerPage.WaitRequestType requestType);
 }
