@@ -52,13 +52,13 @@ import com.google.common.collect.Sets;
  */
 public class BrowserConsoleLogSaverListener extends TestListenerAdapter {
 
-    private static final boolean APPEND = true;
-    private static final File BUILD_DIRECTORY = new File(System.getProperty("maven.project.build.directory", "./target/"));
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
-    private static final Set<Level> LOOK_FOR_MESSAGES_LEVEL = Sets.newHashSet(Level.INFO, Level.WARNING, Level.SEVERE);
+    public static final boolean APPEND = true;
+    public static final File BUILD_DIRECTORY = new File(System.getProperty("maven.project.build.directory", "./target/"));
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
+    public static final Set<Level> LOOK_FOR_MESSAGES_LEVEL = Sets.newHashSet(Level.SEVERE);
     private static final String NEW_LINE = "\n";
-    private static final File OUTPUT_FILE = new File(BUILD_DIRECTORY, "browserConsole.log");
-    private static final String[] POSSIBLE_CONSOLE_ERRORS = new String[] { "error", "undefined" };
+    public static final File OUTPUT_FILE = new File(BUILD_DIRECTORY, "browserConsole.log");
+    public static final String[] POSSIBLE_CONSOLE_ERRORS = new String[] { "error", "undefined" };
 
     private int errorsCount = 0;
 
@@ -113,7 +113,7 @@ public class BrowserConsoleLogSaverListener extends TestListenerAdapter {
                             break;
                         }
                     }
-                    if (!msg.endsWith("\n")) {
+                    if (!msg.endsWith(NEW_LINE)) {
                         msg = msg.concat(NEW_LINE);
                     }
                     FileUtils.writeStringToFile(OUTPUT_FILE, msg, APPEND);
