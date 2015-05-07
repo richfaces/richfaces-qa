@@ -45,6 +45,8 @@ import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.BecauseOf;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -203,7 +205,8 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
         assertTrue(getPage().getTopGroup().advanced().isSelected());
     }
 
-    @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
+    @Test // fails with JSF 2.2
+    @Skip(BecauseOf.UIRepeatSetIndexIssue.class)
     @CoversAttributes("selectable")
     @Templates(value = "uiRepeat")
     @IssueTracking("https://issues.jboss.org/browse/RF-13727")

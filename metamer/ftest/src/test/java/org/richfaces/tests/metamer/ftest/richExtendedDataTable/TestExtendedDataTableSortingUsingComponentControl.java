@@ -30,6 +30,8 @@ import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.BecauseOf;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SortingEDT;
 import org.testng.annotations.Test;
@@ -81,8 +83,8 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
         super.testSortModeMultiFullPageRefresh();
     }
 
-    @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
-
+    @Test // fails with JSF 2.2
+    @Skip(BecauseOf.UIRepeatSetIndexIssue.class)
     @CoversAttributes("sortMode")
     @IssueTracking("https://issues.jboss.org/browse/RF-13690")
     @Templates(value = "uiRepeat")
@@ -98,8 +100,8 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
         super.testSortModeMulti();
     }
 
-    @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
-
+    @Test // fails with JSF 2.2
+    @Skip(BecauseOf.UIRepeatSetIndexIssue.class)
     @CoversAttributes("sortMode")
     @IssueTracking("https://issues.jboss.org/browse/RF-13690")
     @Templates(value = "uiRepeat")
@@ -123,7 +125,8 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
         super.testSortModeMultiReplacingOldOccurences();
     }
 
-    @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
+    @Test // fails with JSF 2.2
+    @Skip(BecauseOf.UIRepeatSetIndexIssue.class)
     @CoversAttributes("sortMode")
     @Templates(value = "uiRepeat")
     @IssueTracking("https://issues.jboss.org/browse/RF-13690")
@@ -156,8 +159,8 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
         super.testSortModeMultiReverse();
     }
 
-    @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
-
+    @Test // fails with JSF 2.2
+    @Skip(BecauseOf.UIRepeatSetIndexIssue.class)
     @CoversAttributes("sortMode")
     @Templates(value = "uiRepeat")
     @IssueTracking("https://issues.jboss.org/browse/RF-13690")
@@ -189,8 +192,8 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
         super.testSortModeSingleFullPageRefresh();
     }
 
-    @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
-
+    @Test // fails with JSF 2.2
+    @Skip(BecauseOf.UIRepeatSetIndexIssue.class)
     @CoversAttributes("sortMode")
     @IssueTracking("https://issues.jboss.org/browse/RF-13690")
     @Templates(value = "uiRepeat")
@@ -206,8 +209,8 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
         super.testSortModeSingle();
     }
 
-    @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
-
+    @Test // fails with JSF 2.2
+    @Skip(BecauseOf.UIRepeatSetIndexIssue.class)
     @CoversAttributes("sortMode")
     @Templates(value = "uiRepeat")
     @IssueTracking("https://issues.jboss.org/browse/RF-13690")
@@ -240,7 +243,8 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
         super.testSortModeSingleReverse();
     }
 
-    @Test(groups = { "Future", "uiRepeat" })
+    @Test
+    @Skip(BecauseOf.UIRepeatSetIndexIssue.class)
     @CoversAttributes("sortMode")
     @Templates(value = "uiRepeat")
     @IssueTracking(value = "https://issues.jboss.org/browse/RF-13690")

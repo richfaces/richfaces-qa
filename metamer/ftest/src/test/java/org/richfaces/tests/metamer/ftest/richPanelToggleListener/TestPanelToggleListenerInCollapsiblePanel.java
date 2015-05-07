@@ -23,6 +23,8 @@ package org.richfaces.tests.metamer.ftest.richPanelToggleListener;
 
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.BecauseOf;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -46,8 +48,9 @@ public class TestPanelToggleListenerInCollapsiblePanel extends AbstractPanelTogg
         super.testPTLAsAttributeOfComponent(PTL_as_ComponentAttribute_PhaseName);
     }
 
-    @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
-    @Templates(value = { "uiRepeat"})
+    @Test // fails with JSF 2.2
+    @Skip(BecauseOf.UIRepeatSetIndexIssue.class)
+    @Templates(value = { "uiRepeat" })
     @IssueTracking(value = "https://issues.jboss.org/browse/RF-13690")
     public void testPTLAsAttributeInUiRepeat() {
         super.testPTLAsAttributeOfComponent(PTL_as_ComponentAttribute_PhaseName);
@@ -94,7 +97,8 @@ public class TestPanelToggleListenerInCollapsiblePanel extends AbstractPanelTogg
         super.testPTLInComponentWithListener(PTL_inComponent_usingType_PhaseName);
     }
 
-    @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
+    @Test // fails with JSF 2.2
+    @Skip(BecauseOf.UIRepeatSetIndexIssue.class)
     @Templates(value = "uiRepeat")
     @IssueTracking("https://issues.jboss.org/browse/RF-13690")
     public void testPTLInsideComponentUsingTypeInUiRepeat() {

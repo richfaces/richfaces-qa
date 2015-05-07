@@ -16,6 +16,8 @@ import org.richfaces.fragment.panelMenu.RichFacesPanelMenu;
 import org.richfaces.fragment.panelMenu.RichFacesPanelMenuItem;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.BecauseOf;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -72,10 +74,11 @@ public class TestPanelMenuFragmentShowcase extends AbstractWebDriverTest {
         assertEquals(selectedItem.getText(), "item21");
     }
 
-    @Test (groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
+    @Test // fails with JSF 2.2
+    @Skip(BecauseOf.UIRepeatSetIndexIssue.class)
     @IssueTracking("https://issues.jboss.org/browse/RF-13727")
-    @Templates (value = "uiRepeat")
-    public void testFragmentInUiRepeat(){
+    @Templates(value = "uiRepeat")
+    public void testFragmentInUiRepeat() {
         testFragment();
     }
 }
