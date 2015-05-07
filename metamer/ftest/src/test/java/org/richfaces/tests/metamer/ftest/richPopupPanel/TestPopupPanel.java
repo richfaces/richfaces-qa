@@ -49,6 +49,7 @@ import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -257,7 +258,8 @@ public class TestPopupPanel extends AbstractWebDriverTest {
         checkMove(-50, -50);
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @CoversAttributes("height")
     @IssueTracking("https://issues.jboss.org/browse/RF-10251")
     @Templates(value = "plain")
@@ -310,7 +312,8 @@ public class TestPopupPanel extends AbstractWebDriverTest {
 
 //    Attribute is hidden after https://issues.jboss.org/browse/RF-13140
 //
-//    @Test(groups = "Future")
+//    @Test
+//    @Skip
 //    @CoversAttributes("keepVisualState")
 //    @IssueTracking("https://issues.jboss.org/browse/RF-10697")
 //    public void testKeepVisualState() {
@@ -706,7 +709,8 @@ public class TestPopupPanel extends AbstractWebDriverTest {
         checkMove(-50, -50);
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @CoversAttributes("width")
     @IssueTracking("https://issues.jboss.org/browse/RF-10251")
     @Templates(value = "plain")

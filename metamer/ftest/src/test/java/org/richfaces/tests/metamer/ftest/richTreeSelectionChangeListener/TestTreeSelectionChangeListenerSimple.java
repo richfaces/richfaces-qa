@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richTreeSelectionChangeListener;
 
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.testng.annotations.Test;
 
 /**
@@ -54,7 +55,8 @@ public class TestTreeSelectionChangeListenerSimple extends AbstractTreeSelection
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12142")
-    @Test(groups = "Future")
+    @Test
+    @Skip
     public void testTSCLOutsideComponentUsingForAndType() {
         super.testTSCLAsForAttributeWithType(TSCL_outsideComponent_usingType_PhaseName);
     }

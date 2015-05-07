@@ -28,6 +28,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -169,28 +170,32 @@ public class TestPlaceHolderWithEditor extends AbstractPlaceholderTest {
         }
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @IssueTracking({ "https://issues.jboss.org/browse/RF-12624", "https://issues.jboss.org/browse/RF-12625" })
     @Override
     public void testAjaxSubmit() {
         super.testAjaxSubmit();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-12624")
     @Override
     public void testClickOnInputWithPlaceholder() {
         super.testClickOnInputWithPlaceholder();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @IssueTracking({ "https://issues.jboss.org/browse/RF-12624", "https://issues.jboss.org/browse/RF-12632" })
     @Override
     public void testDeleteTextFromInputWithPlaceholder() {
         super.testDeleteTextFromInputWithPlaceholder();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-12624")
     @Override
     public void testHTTPSubmit() {
@@ -205,7 +210,8 @@ public class TestPlaceHolderWithEditor extends AbstractPlaceholderTest {
         super.testRendered();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-12624")
     @Override
     public void testSelector() {
@@ -219,7 +225,8 @@ public class TestPlaceHolderWithEditor extends AbstractPlaceholderTest {
         super.testSelectorEmpty();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @IssueTracking({ "https://issues.jboss.org/browse/RF-12624", "https://issues.jboss.org/browse/RF-12632" })
     @Override
     public void testStyleClass() {
@@ -228,7 +235,8 @@ public class TestPlaceHolderWithEditor extends AbstractPlaceholderTest {
             "Input does not contain set class 'metamer-ftest-class'");
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @IssueTracking({ "https://issues.jboss.org/browse/RF-12624", "https://issues.jboss.org/browse/RF-12632" })
     @Override
     public void testTypeToInputWithPlaceholder() {

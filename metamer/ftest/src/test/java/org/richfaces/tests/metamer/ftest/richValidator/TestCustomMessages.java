@@ -30,6 +30,7 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.testng.annotations.Test;
 
@@ -51,7 +52,8 @@ public class TestCustomMessages extends AbstractWebDriverTest {
         verifyMessages();
     }
 
-    @Test(groups = { "Future" })
+    @Test
+    @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-12511")
     public void testMessages2() {
         page.setAllWrong2();

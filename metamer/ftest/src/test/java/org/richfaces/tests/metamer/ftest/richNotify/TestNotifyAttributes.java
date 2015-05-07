@@ -41,6 +41,7 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.Assert;
@@ -107,7 +108,8 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12925")
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @CoversAttributes({ "detail", "summary" })
     public void testNoDetailNoSummary() {
         notifyAttributes.set(NotifyAttributes.detail, "");

@@ -49,6 +49,7 @@ import org.richfaces.fragment.tooltip.TextualRichFacesTooltip;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -184,7 +185,8 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
         });
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @CoversAttributes("jointPoint")
     @Templates("plain")
     @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "")

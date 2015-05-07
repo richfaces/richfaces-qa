@@ -30,6 +30,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -57,7 +58,8 @@ public class TestListWithScroller extends AbstractListTest {
         testNumberedPages(scrollerOutsideTable);
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @IssueTracking({ "https://issues.jboss.org/browse/RF-11787", "https://issues.jboss.org/browse/RF-13732" })
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "richList",
             "a4jRepeat", "hDataTable", "uiRepeat" })
@@ -72,7 +74,8 @@ public class TestListWithScroller extends AbstractListTest {
         testNumberedPages(scrollerInTableFooter);
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @Templates(value = "uiRepeat")
     public void testScrollerWithRowsAttributeInWithUiRepeat() {
         testNumberedPages(scrollerInTableFooter);

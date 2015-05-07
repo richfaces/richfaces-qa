@@ -38,6 +38,7 @@ import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -207,7 +208,8 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
         assertTrue((Boolean) executeJS("return RichFaces.component('" + getEditorId() + "').isReadOnly()"));
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @IssueTracking(value = { "https://code.google.com/p/selenium/issues/detail?id=7643" })
     @Templates(value = { "plain" })
     public void testJsSetReadOnly() {

@@ -30,6 +30,7 @@ import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.testng.annotations.Test;
 
 /**
@@ -43,7 +44,8 @@ public class TestInstantAttributes extends AbstractStatusTest {
         return buildUrl(contextPath, "faces/components/a4jStatus/instantAttributes.xhtml");
     }
 
-    @Test(groups = { "Future" })
+    @Test
+    @Skip
     @CoversAttributes("onerror")
     @IssueTracking({ "https://issues.jboss.org/browse/RF-9118",
         "http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-1024" })

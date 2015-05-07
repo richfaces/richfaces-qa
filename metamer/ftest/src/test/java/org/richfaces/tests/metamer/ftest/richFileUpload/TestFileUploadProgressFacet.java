@@ -30,6 +30,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -48,7 +49,8 @@ public class TestFileUploadProgressFacet extends AbstractFileUploadTest {
         return buildUrl(contextPath, "faces/components/richFileUpload/progressFacet.xhtml");
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @RegressionTest("https://issues.jboss.org/browse/RFPL-3503")
     @IssueTracking("https://issues.jboss.org/browse/RFPL-2263")
     public void testCustomProgressBarPresenceBeforeFinishedUpload() {

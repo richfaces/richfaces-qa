@@ -28,6 +28,7 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFilteringTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.FilteringEDT;
 import org.testng.annotations.Test;
 
@@ -80,7 +81,8 @@ public class TestExtendedDataTableFiltering extends DataTableFilteringTest {
         super.testFullPageRefresh(false);
     }
 
-    @Test(groups = { "Future" })
+    @Test
+    @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-9932 http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790")
     public void testRerenderAll() {
         super.testRerenderAll(false);

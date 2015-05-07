@@ -31,6 +31,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
@@ -47,7 +48,8 @@ public class TestRF12510 extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/a4jJSFunction/rf-12510.xhtml");
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-12510")
     public void testTriggerJSFunctionAndSeeHowManyTimesCalledMethodOnData() {
         int beforeTrigger = page.parseCounterToInt();

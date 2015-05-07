@@ -47,6 +47,7 @@ import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -388,7 +389,8 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         super.testMoveWithSlider();
     }
 
-    @Test(groups = { "Future" })
+    @Test
+    @Skip
     @CoversAttributes("onblur")
     @IssueTracking("https://issues.jboss.org/browse/RF-10829")
     public void testOnblur() {
@@ -436,7 +438,8 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
             new Actions(driver).doubleClick(slider.advanced().getRootElement()).build());
     }
 
-    @Test(groups = { "Future" })
+    @Test
+    @Skip
     @CoversAttributes("onfocus")
     @IssueTracking("https://issues.jboss.org/browse/RF-10829")
     public void testOnfocus() {
@@ -508,7 +511,8 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
             InputNumberSliderAttributes.onmouseup);
     }
 
-    @Test(groups = { "Future" })
+    @Test
+    @Skip
     @CoversAttributes("onselect")
     @IssueTracking("https://issues.jboss.org/browse/RF-10829")
     public void testOnselect() {

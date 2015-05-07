@@ -50,6 +50,7 @@ import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.model.Capital;
@@ -495,7 +496,8 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         });
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @CoversAttributes("onlisthide")
     @IssueTracking("https://issues.jboss.org/browse/RF-11768")
     public void testOnlisthide() {
@@ -564,7 +566,8 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         testFireEvent(Event.MOUSEUP, popup, "listmouseup");
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @CoversAttributes("onlistshow")
     @IssueTracking("https://issues.jboss.org/browse/RF-11768")
     public void testOnlistshow() {

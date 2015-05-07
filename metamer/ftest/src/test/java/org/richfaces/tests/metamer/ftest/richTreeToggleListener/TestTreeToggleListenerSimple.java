@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richTreeToggleListener;
 
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.testng.annotations.Test;
 
 /**
@@ -54,7 +55,8 @@ public class TestTreeToggleListenerSimple extends AbstractTreeToggleListenerTest
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12121")
-    @Test(groups = "Future")
+    @Test
+    @Skip
     public void testTTLOutsideComponentUsingForAndType() {
         super.testTTLAsForAttributeWithType(TTL_outsideComponent_usingType_PhaseName);
     }

@@ -29,6 +29,7 @@ import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SortingDT;
 import org.testng.annotations.Test;
 
@@ -71,7 +72,8 @@ public class TestDataTableSortingUsingColumn extends DataTableSortingTest {
         super.testSortModeMultiReplacingOldOccurences();
     }
 
-    @Test(groups = { "Future" })
+    @Test
+    @Skip
     @CoversAttributes("sortMode")
     @Override
     @IssueTracking({ "https://issues.jboss.org/browse/RF-9932",
@@ -101,7 +103,8 @@ public class TestDataTableSortingUsingColumn extends DataTableSortingTest {
         super.testSortModeSingleFullPageRefresh();
     }
 
-    @Test(groups = { "Future" })
+    @Test
+    @Skip
     @CoversAttributes("sortMode")
     @Override
     @IssueTracking({ "https://issues.jboss.org/browse/RF-9932",

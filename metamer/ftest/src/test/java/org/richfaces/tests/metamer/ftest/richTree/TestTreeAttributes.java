@@ -37,6 +37,7 @@ import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
@@ -324,7 +325,8 @@ public class TestTreeAttributes extends AbstractTreeTest {
         testFireEvent(treeAttributes, TreeAttributes.onselectionchange, selectFirstNodeAjaxAction);
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @CoversAttributes("onselectionchange")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates(value = "a4jRegion")
@@ -365,7 +367,8 @@ public class TestTreeAttributes extends AbstractTreeTest {
         testRequestEventsAfter(events);
     }
 
-    @Test(groups = { "Future" })
+    @Test
+    @Skip
     @CoversAttributes({ "onbeforeselectionchange", "onbegin", "onbeforedomupdate", "oncomplete", "onselectionchange" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11319")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
@@ -416,7 +419,8 @@ public class TestTreeAttributes extends AbstractTreeTest {
         testStyleClass(tree.advanced().getRootElement());
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @CoversAttributes({ "onbeforenodetoggle", "onbegin", "onbeforedomupdate", "oncomplete", "onnodetoggle" })
     @IssueTracking("https://issues.jboss.org/browse/RF-10265")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")

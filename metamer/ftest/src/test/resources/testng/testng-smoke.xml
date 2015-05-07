@@ -6,7 +6,6 @@
             <run>
                 <include name="arquillian" />
                 <include name="smoke" />
-                <exclude name="Future" />
                 <exclude name="extended" />
             </run>
         </groups>
@@ -15,5 +14,5 @@
             <package name="org.richfaces.tests.metamer.ftest.*" />
         </packages>
     </test>
-    
+
 </suite>
