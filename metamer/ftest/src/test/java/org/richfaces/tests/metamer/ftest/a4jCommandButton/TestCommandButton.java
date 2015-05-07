@@ -408,7 +408,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
     @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
-        testTitle(page.getButtonElement());
+        htmlAttributeTester().testTitle(page.getButtonElement()).test();
     }
 
     @Test

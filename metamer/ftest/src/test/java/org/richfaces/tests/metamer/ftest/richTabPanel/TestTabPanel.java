@@ -495,6 +495,6 @@ public class TestTabPanel extends AbstractWebDriverTest {
     @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
-        testTitle(page.getPanelTabAsWebElement());
+        htmlAttributeTester().testTitle(page.getPanelTabAsWebElement()).test();
     }
 }

@@ -132,6 +132,6 @@ public class TestDataGrid extends AbstractDataGridTest {
     @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
-        testTitle(dataGridRoot);
+        htmlAttributeTester().testTitle(dataGridRoot).test();
     }
 }

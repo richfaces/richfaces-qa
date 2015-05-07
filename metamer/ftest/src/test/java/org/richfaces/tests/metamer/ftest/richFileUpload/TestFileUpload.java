@@ -631,7 +631,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     @CoversAttributes("title")
     @Templates("plain")
     public void testTitle() {
-        testTitle(fileUpload.advanced().getRootElement());
+        htmlAttributeTester().testTitle(fileUpload.advanced().getRootElement()).test();
     }
 
     @Test

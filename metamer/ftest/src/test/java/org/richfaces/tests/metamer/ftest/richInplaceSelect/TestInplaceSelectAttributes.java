@@ -789,7 +789,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
-        testTitle(select.advanced().getRootElement());
+        htmlAttributeTester().testTitle(select.advanced().getRootElement()).test();
     }
 
     @Test

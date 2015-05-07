@@ -382,7 +382,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     @CoversAttributes("title")
     @Templates("plain")
     public void testTitle() {
-        testTitle(group);
+        htmlAttributeTester().testTitle(group).test();
     }
 
     @Test

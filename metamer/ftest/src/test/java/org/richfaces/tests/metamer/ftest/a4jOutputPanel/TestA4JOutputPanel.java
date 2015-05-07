@@ -197,6 +197,6 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
     @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
-        testTitle(outputDiv);
+        htmlAttributeTester().testTitle(outputDiv).test();
     }
 }

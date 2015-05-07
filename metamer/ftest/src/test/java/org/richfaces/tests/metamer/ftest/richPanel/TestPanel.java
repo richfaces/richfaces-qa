@@ -236,7 +236,7 @@ public class TestPanel extends AbstractWebDriverTest {
     @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
-        testTitle(panelWithHeader.advanced().getRootElement());
-        testTitle(panelWithoutHeader.advanced().getRootElement());
+        htmlAttributeTester().testTitle(panelWithHeader.advanced().getRootElement()).test();
+        htmlAttributeTester().testTitle(panelWithoutHeader.advanced().getRootElement()).test();
     }
 }

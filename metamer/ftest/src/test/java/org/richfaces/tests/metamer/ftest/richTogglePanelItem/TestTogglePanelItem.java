@@ -247,6 +247,6 @@ public class TestTogglePanelItem extends AbstractWebDriverTest {
     @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
-        testTitle(item1);
+        htmlAttributeTester().testTitle(item1).test();
     }
 }

@@ -529,7 +529,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
-        testTitle(inplaceInput.advanced().getRootElement());
+        htmlAttributeTester().testTitle(inplaceInput.advanced().getRootElement()).test();
     }
 
     @Test

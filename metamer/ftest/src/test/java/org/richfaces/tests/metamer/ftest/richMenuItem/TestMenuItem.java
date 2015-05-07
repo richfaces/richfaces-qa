@@ -416,7 +416,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     @CoversAttributes("title")
     @Templates("plain")
     public void testTitle() {
-        testTitle(menuItem1);
+        htmlAttributeTester().testTitle(menuItem1).test();
     }
 
     @BeforeMethod(groups = "smoke")

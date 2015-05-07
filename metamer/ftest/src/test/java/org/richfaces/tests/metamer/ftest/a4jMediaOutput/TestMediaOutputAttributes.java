@@ -264,7 +264,7 @@ public class TestMediaOutputAttributes extends AbstractMediaOutputTest {
     @CoversAttributes("title")
     @Templates("plain")
     public void testTitle() {
-        testTitle(mediaOutput);
+        htmlAttributeTester().testTitle(mediaOutput).test();
     }
 
     @Test

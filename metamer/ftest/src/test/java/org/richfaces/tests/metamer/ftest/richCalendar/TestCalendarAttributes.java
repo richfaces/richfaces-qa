@@ -1095,7 +1095,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @CoversAttributes("title")
     @Templates("plain")
     public void testTitle() {
-        testTitle(popupCalendar.getInput().advanced().getInputElement());
+        htmlAttributeTester().testTitle(popupCalendar.getInput().advanced().getInputElement()).test();
     }
 
     @Test

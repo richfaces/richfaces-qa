@@ -708,7 +708,7 @@ public class TestSelect extends AbstractWebDriverTest {
     @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
-        testTitle(select.advanced().getInput().advanced().getInputElement());
+        htmlAttributeTester().testTitle(select.advanced().getInput().advanced().getInputElement()).test();
     }
 
     @Test

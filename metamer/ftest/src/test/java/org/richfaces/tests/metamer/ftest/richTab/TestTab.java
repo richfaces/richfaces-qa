@@ -539,6 +539,6 @@ public class TestTab extends AbstractWebDriverTest {
     @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
-        testTitle(page.getFirstTabContentParentElement());
+        htmlAttributeTester().testTitle(page.getFirstTabContentParentElement()).test();
     }
 }

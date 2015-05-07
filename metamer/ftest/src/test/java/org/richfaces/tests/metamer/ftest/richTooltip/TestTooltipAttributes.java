@@ -526,7 +526,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
-        super.testTitle(tooltip().show().advanced().getTooltipElement());
+        htmlAttributeTester().testTitle(tooltip().show().advanced().getTooltipElement()).test();
     }
 
     @Test

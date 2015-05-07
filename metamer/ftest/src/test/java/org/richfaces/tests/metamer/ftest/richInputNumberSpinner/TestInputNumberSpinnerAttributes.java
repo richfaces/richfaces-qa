@@ -563,7 +563,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
-        testTitle(spinner.advanced().getRootElement());
+        htmlAttributeTester().testTitle(spinner.advanced().getRootElement()).test();
     }
 
     @Test

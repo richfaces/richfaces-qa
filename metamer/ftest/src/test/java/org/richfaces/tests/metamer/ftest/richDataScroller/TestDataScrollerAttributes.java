@@ -389,7 +389,7 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     @CoversAttributes("title")
     @Templates("plain")
     public void testTitle() {
-        super.testTitle(page.getScroller(scroller).advanced().getRootElement());
+        htmlAttributeTester().testTitle(page.getScroller(scroller).advanced().getRootElement()).test();
     }
 
     private void verifyJsApi() {

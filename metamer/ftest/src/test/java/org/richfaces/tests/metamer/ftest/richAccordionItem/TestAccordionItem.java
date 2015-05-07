@@ -513,6 +513,6 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     @CoversAttributes("title")
     @Templates("plain")
     public void testTitle() {
-        testTitle(testElement);
+        htmlAttributeTester().testTitle(testElement).test();
     }
 }

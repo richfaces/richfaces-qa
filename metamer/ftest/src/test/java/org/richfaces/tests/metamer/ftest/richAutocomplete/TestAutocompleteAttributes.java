@@ -688,7 +688,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
-        testTitle(autocomplete.advanced().getInput().advanced().getInputElement());
+        htmlAttributeTester().testTitle(autocomplete.advanced().getInput().advanced().getInputElement()).test();
     }
 
     @Test

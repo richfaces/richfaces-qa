@@ -655,7 +655,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
-        testTitle(slider.advanced().getRootElement());
+        htmlAttributeTester().testTitle(slider.advanced().getRootElement()).test();
     }
 
     @Test

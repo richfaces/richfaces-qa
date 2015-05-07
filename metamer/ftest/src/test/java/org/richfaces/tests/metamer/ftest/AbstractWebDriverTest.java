@@ -987,16 +987,6 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * A helper method for testing attribute "title".
-     *
-     * @param element WebElement reference of tested element
-     */
-    protected void testTitle(WebElement element) {
-        final String testTitle = "RichFaces 4";
-        testHTMLAttribute(element, getBasicAttributes(), BasicAttributes.title, testTitle);
-    }
-
-    /**
      * Helper method for testing table's style class attributes (e.g. cellClass, columnFooterClass)
      *
      * @param attributeName

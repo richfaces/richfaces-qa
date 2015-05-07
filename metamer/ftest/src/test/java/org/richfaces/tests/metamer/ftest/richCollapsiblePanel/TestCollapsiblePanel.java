@@ -244,7 +244,7 @@ public class TestCollapsiblePanel extends TestFacets {
     @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
-        testTitle(panel.advanced().getRootElement());
+        htmlAttributeTester().testTitle(panel.advanced().getRootElement()).test();
     }
 
     @Test

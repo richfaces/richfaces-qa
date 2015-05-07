@@ -294,7 +294,7 @@ public class TestListAttributes extends AbstractListTest {
     @CoversAttributes("title")
     @Templates("plain")
     public void testTitle() {
-        testTitle(list.getRootElement());
+        htmlAttributeTester().testTitle(list.getRootElement()).test();
     }
 
     @Test(groups = "smoke")

@@ -196,7 +196,7 @@ public class TestEditor extends AbstractWebDriverTest {
     @CoversAttributes("title")
     @Templates("plain")
     public void testTitle() {
-        testTitle(getEditorTextArea());
+        htmlAttributeTester().testTitle(getEditorTextArea()).test();
     }
 
     @Test
