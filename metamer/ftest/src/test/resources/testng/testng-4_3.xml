@@ -5,7 +5,6 @@
         <groups>
             <run>
                 <include name="arquillian" />
-                <include name="4.3" />
             </run>
         </groups>
 
