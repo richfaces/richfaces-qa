@@ -33,6 +33,8 @@ import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.BecauseOf;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -149,7 +151,8 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
         testClientSideExpansionEvent();
     }
 
-    @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
+    @Test // fails with JSF 2.2
+    @Skip(BecauseOf.UIRepeatSetIndexIssue.class)
     @CoversAttributes({ "onbeforeselect", "onbeforeswitch", "onbegin", "onbeforedomupdate", "onselect", "onswitch",
         "oncomplete" })
     @IssueTracking("https://issues.jboss.org/browse/RF-13727")
@@ -185,7 +188,8 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
         testClientSideExpansionEventsOrderAjax();
     }
 
-    @Test(groups = { "Future", "uiRepeat" }) // fails with JSF 2.2
+    @Test // fails with JSF 2.2
+    @Skip(BecauseOf.UIRepeatSetIndexIssue.class)
     @CoversAttributes({ "onbeforeselect", "onbeforeswitch", "onbeforeexpand", "onbegin", "onbeforedomupdate",
         "onselect", "onexpand", "onswitch", "oncomplete" })
     @IssueTracking("https://issues.jboss.org/browse/RF-13727")

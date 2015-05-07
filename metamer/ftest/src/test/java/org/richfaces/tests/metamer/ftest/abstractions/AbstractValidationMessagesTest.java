@@ -29,7 +29,6 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -59,11 +58,6 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
     public void resetPage() {
         //inits document JavaScript variable, which will hold state of setting of all inputs
         executeJS(ValidationPage.JS_STATE_VARIABLE + "=''");
-    }
-
-    @AfterClass(alwaysRun = true)
-    public void setDefault() {
-        page.deactivateCustomMessages();
     }
 
     /**

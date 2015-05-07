@@ -32,6 +32,8 @@ import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.BecauseOf;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -62,7 +64,8 @@ public class TestAccordionItemKVS extends AbstractWebDriverTest {
         testRefreshFullPage();
     }
 
-    @Test(groups = { "Future", "keepVisualStateTesting", "uiRepeat" }) // fails with JSF 2.2
+    @Test(groups = { "keepVisualStateTesting" }) // fails with JSF 2.2
+    @Skip(BecauseOf.UIRepeatSetIndexIssue.class)
     @Templates(value = { "uiRepeat" })
     @IssueTracking("https://issues.jboss.org/browse/RF-13727")
     public void testRefreshFullPageInUiRepeat() {

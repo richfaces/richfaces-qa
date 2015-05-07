@@ -121,6 +121,14 @@ public class BecauseOf {
             return result;
         }
     }
+
+    public static class UIRepeatSetIndexIssue extends SkipOnIssue {
+
+        public UIRepeatSetIndexIssue() {
+            super(On.Container.WildFly81.class, On.Container.WildFly82.class, On.Container.Tomcat8.class);
+        }
+    }
+
 //    sample implementation:
 //
 //    public static class Issue1234 extends SkipOnIssue {
