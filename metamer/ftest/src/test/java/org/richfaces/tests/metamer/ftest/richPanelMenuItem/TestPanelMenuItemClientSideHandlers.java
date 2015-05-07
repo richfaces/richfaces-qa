@@ -34,6 +34,7 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -94,7 +95,8 @@ public class TestPanelMenuItemClientSideHandlers extends AbstractWebDriverTest {
         testRequestEventsAfter(clientEvents);
     }
 
-    @Test(groups = { "Future" })
+    @Test
+    @Skip
     @CoversAttributes("onselect")
     @IssueTracking("https://issues.jboss.org/browse/RF-10844")
     public void testClientSideEventsOrderServer() {

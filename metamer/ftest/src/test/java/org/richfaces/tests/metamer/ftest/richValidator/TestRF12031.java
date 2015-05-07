@@ -33,6 +33,7 @@ import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.testng.annotations.Test;
 
 /**
@@ -54,7 +55,8 @@ public class TestRF12031 extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richValidator/rf-12031.xhtml");
     }
 
-    @Test(groups = { "Future" })
+    @Test
+    @Skip
     @IssueTracking({ "https://issues.jboss.org/browse/RF-12031", "https://issues.jboss.org/browse/RF-12536" })
     public void testCSVOnConditionallyRenderedInput() {
         toggleButton.click();

@@ -29,6 +29,7 @@ import java.net.URL;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
@@ -66,8 +67,9 @@ public class TestCalendarKVS extends AbstractCalendarTest {
         reloadTesterInput.testFullPageRefresh();
     }
 
+    @Test(groups = { "keepVisualStateTesting" })
+    @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-12300")
-    @Test(groups = { "keepVisualStateTesting", "Future" })
     public void testRenderAll() {
         CalendarInputReloadTester reloadTesterInput = new CalendarInputReloadTester();
         reloadTesterInput.testRerenderAll();
@@ -96,7 +98,7 @@ public class TestCalendarKVS extends AbstractCalendarTest {
 
         @Override
         public String[] getInputValues() {
-            return new String[]{ "Feb 17, 2012 12:00", "Jan 1, 2012 12:00" };
+            return new String[] { "Feb 17, 2012 12:00", "Jan 1, 2012 12:00" };
         }
     }
 
@@ -118,7 +120,7 @@ public class TestCalendarKVS extends AbstractCalendarTest {
 
         @Override
         public String[] getInputValues() {
-            return new String[]{ "" };
+            return new String[] { "" };
         }
     }
 }

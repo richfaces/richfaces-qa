@@ -6,7 +6,6 @@
             <run>
                 <exclude name="4.3" />
                 <exclude name="4.Future" />
-                <exclude name="Future" />
                 <exclude name="extended" />
             </run>
         </groups>
@@ -19,7 +18,7 @@
             <package name="org.richfaces.tests.metamer.ftest.richToolbarGroup" />
             <package name="org.richfaces.tests.metamer.ftest.richTooltip" />
         </packages>
-        
+
     </test>
 
 </suite>

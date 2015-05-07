@@ -30,6 +30,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -137,7 +138,8 @@ public class TestHCommandButton extends AbstractAjaxTest {
         super.testRender();
     }
 
-    @Test(groups = { "Future" })
+    @Test
+    @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-11341")
     public void testRerenderAll() {
         super.testRerenderAll();

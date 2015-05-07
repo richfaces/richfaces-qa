@@ -29,6 +29,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.testng.annotations.Test;
 
 /**
@@ -44,7 +45,8 @@ public class TestRF12030 extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richMessage/RF-12030.xhtml");
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @IssueTracking("https://issues.jboss.org/browse/RFPL-12030")
     public void testDataScrollerWorksAfterCollapseOfPanel() {
         String valueFromFstRowBeforeCollapse = page.getFirstTableRowElement().getText().trim();

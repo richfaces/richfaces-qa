@@ -31,6 +31,7 @@ import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richNotify.TestNotifyAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -56,7 +57,8 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12923")
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @CoversAttributes("dir")
     @Templates("plain")
     public void testDir() {
@@ -76,7 +78,8 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12923")
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @CoversAttributes("lang")
     @Templates("plain")
     public void testLang() {
@@ -84,7 +87,8 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12925")
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @CoversAttributes({ "showDetail", "showSummary" })
     public void testNoShowDetailNoShowSummary() {
         checkNoShowDetailNoShowSummary();
@@ -280,7 +284,8 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12923")
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @CoversAttributes("style")
     public void testStyle() {
         checkStyle();
@@ -294,7 +299,8 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12923")
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @CoversAttributes("title")
     @Templates("plain")
     public void testTitle() {

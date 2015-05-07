@@ -7,6 +7,7 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SortingEDT;
 import org.testng.annotations.BeforeTest;
@@ -39,7 +40,8 @@ public class TestExtendedDataTableSortingBuiltIn extends DataTableSortingTest {
         super.testSortModeSingle();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @Templates(value = "richExtendedDataTable")
     public void testSortModeSingleInEDT() {
         super.testSortModeSingle();
@@ -52,13 +54,15 @@ public class TestExtendedDataTableSortingBuiltIn extends DataTableSortingTest {
         super.testSortModeSingleReverse();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @Templates(value = "richExtendedDataTable")
     public void testSortModeSingleReverseInEDT() {
         super.testSortModeSingleReverse();
     }
 
-    @Test(groups = { "Future" })
+    @Test
+    @Skip
     @Override
     @IssueTracking("https://issues.jboss.org/browse/RF-9932 http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790")
     public void testSortModeSingleRerenderAll() {
@@ -72,7 +76,8 @@ public class TestExtendedDataTableSortingBuiltIn extends DataTableSortingTest {
         super.testSortModeSingleFullPageRefresh();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @Templates(value = "richExtendedDataTable")
     public void testSortModeSingleFullPageRefreshInEDT() {
         super.testSortModeSingleFullPageRefresh();
@@ -85,7 +90,8 @@ public class TestExtendedDataTableSortingBuiltIn extends DataTableSortingTest {
         super.testSortModeMulti();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @Templates(value="richExtendedDataTable")
     public void testSortModeMultiInEDT() {
         super.testSortModeMulti();
@@ -98,7 +104,8 @@ public class TestExtendedDataTableSortingBuiltIn extends DataTableSortingTest {
         super.testSortModeMultiReverse();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @Templates(value = "richExtendedDataTable")
     public void testSortModeMultiReverseInEDT() {
         super.testSortModeMultiReverse();
@@ -111,13 +118,15 @@ public class TestExtendedDataTableSortingBuiltIn extends DataTableSortingTest {
         super.testSortModeMultiReplacingOldOccurences();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @Templates(value = "richExtendedDataTable")
     public void testSortModeMultiReplacingOldOccurencesInEDT() {
         super.testSortModeMultiReplacingOldOccurences();
     }
 
-    @Test(groups = { "Future" })
+    @Test
+    @Skip
     @Override
     @IssueTracking("https://issues.jboss.org/browse/RF-9932 http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790")
     public void testSortModeMultiRerenderAll() {
@@ -131,7 +140,8 @@ public class TestExtendedDataTableSortingBuiltIn extends DataTableSortingTest {
         super.testSortModeMultiFullPageRefresh();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @Templates(value = "richExtendedDataTable")
     public void testSortModeMultiFullPageRefreshInEDT() {
         super.testSortModeMultiFullPageRefresh();

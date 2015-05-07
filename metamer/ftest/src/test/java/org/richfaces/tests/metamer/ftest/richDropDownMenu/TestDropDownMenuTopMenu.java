@@ -28,6 +28,7 @@ import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annot
 import java.net.URL;
 
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.annotations.Test;
@@ -168,7 +169,8 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
         super.testOnitemclick();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-12792")
     public void testOnkeydown() {
         super.testOnkeydown();
@@ -198,7 +200,8 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
         super.testOnmousemove();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-12854")
     @Templates(value = "plain")
     public void testOnmouseout() {

@@ -28,6 +28,7 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.testng.annotations.Test;
 
 /**
@@ -47,7 +48,8 @@ public class TestWrappingValidatorSingle extends AbstractValidatorsTest {
         return buildUrl(contextPath, "faces/components/richValidator/single.xhtml");
     }
 
-    @Test(groups = { "Future" })
+    @Test
+    @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-11576")
     public void testIntegerMin() {
         getPage().getSetCorrectBtn().click();

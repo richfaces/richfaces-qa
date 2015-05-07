@@ -29,6 +29,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -122,7 +123,8 @@ public class TestPlaceHolderWithInplaceSelect extends AbstractPlaceholderJSFTest
         super.testClickOnInputWithPlaceholder();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-12651")
     @RegressionTest("https://issues.jboss.org/browse/RF-12623")
     @Override
@@ -137,7 +139,8 @@ public class TestPlaceHolderWithInplaceSelect extends AbstractPlaceholderJSFTest
         super.testHTTPSubmit();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-12650")
     @RegressionTest("https://issues.jboss.org/browse/RF-12623")
     @Override
@@ -155,7 +158,8 @@ public class TestPlaceHolderWithInplaceSelect extends AbstractPlaceholderJSFTest
         testStyleClass(spanElementWithStyleClass);
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-12651")
     @RegressionTest("https://issues.jboss.org/browse/RF-12623")
     @Override

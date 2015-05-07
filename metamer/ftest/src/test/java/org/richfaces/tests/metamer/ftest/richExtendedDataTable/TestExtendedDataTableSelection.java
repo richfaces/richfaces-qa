@@ -37,6 +37,7 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractDataTableTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.page.SelectionPage;
 import org.testng.annotations.BeforeMethod;
@@ -126,14 +127,16 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
         testMultiSelectionUsingShiftBetweenPagesInReversedOrder();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-13973")
     @Templates(value = "uiRepeat")
     public void testMultiSelectionUsingShiftBetweenPagesInReversedOrderInUiRepeat() {
         testMultiSelectionUsingShiftBetweenPagesInReversedOrder();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-9977")
     public void testMultiSelectionUsingCtrlAndShiftCombinations() {
         IntRange range1 = new IntRange(2, 14);
@@ -181,7 +184,8 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
         testMultiSelectionRemovingUsingCtrl();
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-13474")
     @Templates("a4jRegion")
     public void testMultiSelectionRemovingUsingCtrlRegion() {

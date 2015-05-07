@@ -30,6 +30,7 @@ import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SortingEDT;
 import org.testng.annotations.Test;
@@ -105,7 +106,8 @@ public class TestExtendedDataTableSortingUsingColumn extends DataTableSortingTes
         super.testSortModeMultiReplacingOldOccurences();
     }
 
-    @Test(groups = { "Future" })
+    @Test
+    @Skip
     @CoversAttributes("sortMode")
     @Override
     @IssueTracking("https://issues.jboss.org/browse/RF-9932 http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790")
@@ -161,7 +163,8 @@ public class TestExtendedDataTableSortingUsingColumn extends DataTableSortingTes
         super.testSortModeSingle();
     }
 
-    @Test(groups = { "Future" })
+    @Test
+    @Skip
     @CoversAttributes("sortMode")
     @Override
     @IssueTracking("https://issues.jboss.org/browse/RF-9932 http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790")

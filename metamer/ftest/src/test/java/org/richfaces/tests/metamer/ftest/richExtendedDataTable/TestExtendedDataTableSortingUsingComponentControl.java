@@ -134,7 +134,8 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
         super.testSortModeMultiReplacingOldOccurences();
     }
 
-    @Test(groups = { "Future" })
+    @Test
+    @Skip
     @CoversAttributes("sortMode")
     @Override
     @IssueTracking({ "https://issues.jboss.org/browse/RF-9932",
@@ -218,7 +219,8 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
         super.testSortModeSingle();
     }
 
-    @Test(groups = { "Future" })
+    @Test
+    @Skip
     @CoversAttributes("sortMode")
     @Override
     @IssueTracking({ "https://issues.jboss.org/browse/RF-9932",

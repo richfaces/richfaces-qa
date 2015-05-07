@@ -23,6 +23,7 @@ package org.richfaces.tests.metamer.ftest.richItemChangeListener;
 
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -67,13 +68,15 @@ public class TestTabPanelItemChangeListener extends AbstractItemChangeListenerTe
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12087")
-    @Test(groups = "Future")
+    @Test
+    @Skip
     public void testICLInsideComponentUsingListener() {
         super.testICLInComponentWithListener(ICL_inComponent_usingListener_PhaseName);
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12089")
-    @Test(groups = "Future")
+    @Test
+    @Skip
     public void testICLOutsideComponentUsingForAndType() {
         super.testICLAsForAttributeWithType(ICL_outsideComponent_usingType_PhaseName);
     }

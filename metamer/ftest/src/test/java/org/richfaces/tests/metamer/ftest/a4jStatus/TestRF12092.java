@@ -28,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.testng.annotations.Test;
 
 /**
@@ -47,7 +48,8 @@ public class TestRF12092 extends AbstractStatusTest {
         // do not setup the delay
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @IssueTracking("https://issues.jboss.org/browse/RFPL-12092")
     public void testStatusIsClearedWhenRequestCompleted() {
         // the page should update after 5 seconds

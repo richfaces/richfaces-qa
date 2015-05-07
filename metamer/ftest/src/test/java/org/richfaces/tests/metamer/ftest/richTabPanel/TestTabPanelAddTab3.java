@@ -32,6 +32,7 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -71,7 +72,8 @@ public class TestTabPanelAddTab3 extends AbstractWebDriverTest {
         createAndVerifyTab(page.getCreateTabButtonA4j());
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @Templates(value = { "extendedDataTable", "collapsibleSubTable", "dataGrid", "a4jRepeat", "uiRepeat" })
     @IssueTracking("https://issues.jboss.org/browse/RF-14006")
     public void testAddWithA4j_RF14006() {
@@ -84,7 +86,8 @@ public class TestTabPanelAddTab3 extends AbstractWebDriverTest {
         createAndVerifyTab(page.getCreateTabButtonHButton());
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @Templates(value = { "extendedDataTable", "collapsibleSubTable", "dataGrid", "a4jRepeat", "uiRepeat" })
     @IssueTracking("https://issues.jboss.org/browse/RF-14006")
     public void testAddWithH_RF14006() {

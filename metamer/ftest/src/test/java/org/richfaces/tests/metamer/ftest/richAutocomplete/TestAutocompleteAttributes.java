@@ -49,6 +49,7 @@ import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -146,7 +147,8 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
         testStyleClass(autocomplete.advanced().getInput().advanced().getInputElement(), BasicAttributes.inputClass);
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @CoversAttributes("layout")
     @IssueTracking("https://issues.jboss.org/browse/RF-12820")
     public void testLayout() {
@@ -205,7 +207,8 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onbeforedomupdate, typeHToAutocompleteInputAction);
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @CoversAttributes("onbegin")
     @IssueTracking(value = "https://issues.jboss.org/browse/RF-13537")
     public void testOnbegin() {

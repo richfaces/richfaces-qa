@@ -34,6 +34,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.testng.annotations.Test;
 
 /**
@@ -49,12 +50,13 @@ public class TestAccordionKVS extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richAccordion/simple.xhtml");
     }
 
-    @Test(groups = {"keepVisualStateTesting"})
+    @Test(groups = { "keepVisualStateTesting" })
     public void testRefreshFullPage() {
         new AccordionReloadTester().testFullPageRefresh();
     }
 
-    @Test(groups = {"keepVisualStateTesting", "Future"})
+    @Test(groups = { "keepVisualStateTesting" })
+    @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-12035")
     public void testRenderAll() {
         new AccordionReloadTester().testRerenderAll();
@@ -70,18 +72,18 @@ public class TestAccordionKVS extends AbstractWebDriverTest {
         @Override
         public void verifyResponse(final Integer accordionIndex) {
             Graphene.waitAjax()
-                    .withMessage("Test failed with accordion item " + (accordionIndex+1))
-                    .until(new BooleanConditionWrapper(new ExpectedCondition<Boolean>() {
-                        @Override
-                        public Boolean apply(WebDriver input) {
-                            return page.getAccordion().advanced().getAccordionItems().get(accordionIndex).advanced().isActive();
-                        }
-                    }, NoSuchElementException.class, StaleElementReferenceException.class));
+                .withMessage("Test failed with accordion item " + (accordionIndex + 1))
+                .until(new BooleanConditionWrapper(new ExpectedCondition<Boolean>() {
+                    @Override
+                    public Boolean apply(WebDriver input) {
+                        return page.getAccordion().advanced().getAccordionItems().get(accordionIndex).advanced().isActive();
+                    }
+                }, NoSuchElementException.class, StaleElementReferenceException.class));
         }
 
         @Override
         public Integer[] getInputValues() {
-            return new Integer[]{4, 2, 1, 0};
+            return new Integer[] { 4, 2, 1, 0 };
         }
     }
 }

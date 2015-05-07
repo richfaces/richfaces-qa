@@ -33,6 +33,7 @@ import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -113,7 +114,8 @@ public class TestMediaOutputAttributes extends AbstractMediaOutputTest {
         }
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @CoversAttributes("onblur")
     @IssueTracking("https://issues.jboss.org/browse/RF-13070")
     public void testOnblur() {
@@ -135,7 +137,8 @@ public class TestMediaOutputAttributes extends AbstractMediaOutputTest {
         testFireEvent(Event.DBLCLICK, mediaOutput);
     }
 
-    @Test(groups = "Future")
+    @Test
+    @Skip
     @CoversAttributes("onfocus")
     @IssueTracking("https://issues.jboss.org/browse/RF-13070")
     public void testOnfocus() {

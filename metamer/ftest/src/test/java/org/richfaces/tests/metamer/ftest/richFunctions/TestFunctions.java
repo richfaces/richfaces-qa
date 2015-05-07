@@ -38,6 +38,7 @@ import org.richfaces.fragment.common.ClearType;
 import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -168,7 +169,8 @@ public class TestFunctions extends AbstractWebDriverTest {
         assertEquals(output, "RichFaces.jQuery(document.getElementById('" + clientId + "'))", "Function jQuerySelector() doesn't work.");
     }
 
-    @Test(groups = { "Future" })
+    @Test
+    @Skip
     @Templates(value = { "a4jRepeat", "hDataTable", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
         "richExtendedDataTable", "richList", "uiRepeat" })
     @IssueTracking("https://issues.jboss.org/browse/RF-10465")
