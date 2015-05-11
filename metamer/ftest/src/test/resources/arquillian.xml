@@ -24,7 +24,7 @@ http://www.fsf.org. -->
             <property name="enableAssertions">false</property>
         </configuration>
     </container>
-    
+
     <container qualifier="jbosseap-managed-6-2">
         <configuration>
             <property name="javaVmArguments">${arquillian.container.jbossas.7-1.jvm.args}</property>
@@ -33,8 +33,17 @@ http://www.fsf.org. -->
             <property name="enableAssertions">false</property>
         </configuration>
     </container>
-    
+
     <container qualifier="jbosseap-managed-6-3">
+        <configuration>
+            <property name="javaVmArguments">${arquillian.container.jbossas.7-1.jvm.args}</property>
+            <property name="managementAddress">${arquillian.container.jbossas.7-1.node0}</property>
+            <property name="serverConfig">standalone.xml</property>
+            <property name="enableAssertions">false</property>
+        </configuration>
+    </container>
+
+    <container qualifier="jbosseap-managed-7-0">
         <configuration>
             <property name="javaVmArguments">${arquillian.container.jbossas.7-1.jvm.args}</property>
             <property name="managementAddress">${arquillian.container.jbossas.7-1.node0}</property>
@@ -60,7 +69,7 @@ http://www.fsf.org. -->
             <property name="enableAssertions">false</property>
         </configuration>
     </container>
-    
+
     <container qualifier="wildfly-managed-9-0">
         <configuration>
             <property name="javaVmArguments">${arquillian.container.jbossas.7-1.jvm.args}</property>
@@ -75,7 +84,7 @@ http://www.fsf.org. -->
 
     <container qualifier="wildfly-remote-8-2">
     </container>
-    
+
     <container qualifier="wildfly-remote-9-0">
     </container>
 
