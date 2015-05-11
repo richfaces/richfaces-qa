@@ -69,6 +69,7 @@ FSF site: http://www.fsf.org. -->
         <jbossEAP61Home>${project.build.directory}/jboss-eap-6.1</jbossEAP61Home>
         <jbossEAP62Home>${project.build.directory}/jboss-eap-6.2</jbossEAP62Home>
         <jbossEAP63Home>${project.build.directory}/jboss-eap-6.3</jbossEAP63Home>
+        <jbossEAP70Home>${project.build.directory}/jboss-eap-7.0</jbossEAP70Home>
 
         <wildfly8-1Home>${project.build.directory}/wildfly-${version.wildfly8-1}</wildfly8-1Home>
         <wildfly8-2Home>${project.build.directory}/wildfly-${version.wildfly8-2}</wildfly8-2Home>
@@ -750,6 +751,36 @@ FSF site: http://www.fsf.org. -->
             </build>
         </profile>
         <profile>
+            <id>jbosseap-managed-7-0</id>
+            <properties>
+                <metamer.classifier>jbas71</metamer.classifier>
+                <version.eap>7.0.0.DR1</version.eap>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.wildfly</groupId>
+                    <artifactId>wildfly-arquillian-container-managed</artifactId>
+                    <version>8.2.0.Final</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <arquillian.launch>jbosseap-managed-7-0</arquillian.launch>
+                            </systemProperties>
+                            <environmentVariables>
+                                <JBOSS_HOME>${jbossEAP70Home}</JBOSS_HOME>
+                            </environmentVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <id>wildfly-managed-8-1</id>
             <properties>
                 <metamer.classifier>jbas71</metamer.classifier>
@@ -1350,6 +1381,7 @@ FSF site: http://www.fsf.org. -->
                 <jbossEAP61Home>${qa.eap.home}</jbossEAP61Home>
                 <jbossEAP62Home>${qa.eap.home}</jbossEAP62Home>
                 <jbossEAP63Home>${qa.eap.home}</jbossEAP63Home>
+                <jbossEAP70Home>${qa.eap.home}</jbossEAP70Home>
 
                 <!-- all following properties are used by the qa-maven-plugin -->
                 <eapVersion>${version.eap}</eapVersion>
