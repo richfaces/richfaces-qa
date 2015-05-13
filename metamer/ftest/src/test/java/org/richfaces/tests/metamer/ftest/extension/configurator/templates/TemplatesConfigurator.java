@@ -48,23 +48,20 @@ import com.google.common.collect.Lists;
 public class TemplatesConfigurator implements ConfiguratorExtension {
 
     public static final String[] ALL_TEMPLATES_STRINGS = { "all", "*" };
-    private static final TemplatesList PLAIN_TEMPLATE = TemplatesList.parseFrom("plain");
+    private static final String PLAIN = "plain";
+    private static final TemplatesList PLAIN_TEMPLATE = TemplatesList.parseFrom(PLAIN);
     private static final String TEMPLATE_LIST_SEPARATOR = ",";
     private static final String TEMPLATE_PROPERTY_NAME = "templates";
 
-    private Templates annotation;
-    private Templates annotationOnMethod;
-    private Templates annotationOnTestClass;
-    private final EnumSet<Template> defaultTestedTemplates = EnumSet.noneOf(Template.class);
-    private EnumSet<Template> possibleTemplates;
-    private final List<TemplatesList> shouldRunInTemplates = Lists.newLinkedList();
-    private Field templateField;
-
-    public TemplatesConfigurator() {
-        init();
+    private List<TemplatesList> addTemplatesListForEachTestedTemplate(EnumSet<Template> defaultTestedTemplates) {
+        List<TemplatesList> result = Lists.newLinkedList();
+        for (Template template : defaultTestedTemplates) {
+            result.add(removeRedundantPlainTemplate(TemplatesList.fromTemplate(template)));
+        }
+        return result;
     }
 
-    private static void checkIfMoreValuesAreNotSet(Templates annotation) throws IllegalStateException {
+    private void checkIfAnnotationIsValid(Templates annotation) throws IllegalStateException {
         boolean exludedIsEmpty = true, valuesIsEmpty = true;
         String[] values;
         if (annotation.exclude() != null) {
@@ -88,25 +85,14 @@ public class TemplatesConfigurator implements ConfiguratorExtension {
         }
     }
 
-    private static List<Template> parseTemplates(String[] templates) {
-        List<Template> result = Lists.newLinkedList();
-        for (String template : templates) {
-            result.add(Template.valueFrom(template));
-        }
-        return result;
-    }
-
     @Override
     public List<Config> createConfigurations(Method m, Object testInstance) {
         List<Config> result = Lists.newLinkedList();
 
-        init();
-
-        annotation = null;
-        annotationOnMethod = m.getAnnotation(Templates.class);
-        annotationOnTestClass = testInstance.getClass().getAnnotation(Templates.class);
-        annotation = (annotationOnMethod != null ? annotationOnMethod : annotationOnTestClass);
-        templateField = ReflectionUtils.getFirstFieldAnnotatedWith(Templates.class, testInstance);
+        Templates annotationOnMethod = m.getAnnotation(Templates.class);
+        Templates annotationOnTestClass = testInstance.getClass().getAnnotation(Templates.class);
+        Templates annotation = (annotationOnMethod != null ? annotationOnMethod : annotationOnTestClass);
+        Field templateField = ReflectionUtils.getFirstFieldAnnotatedWith(Templates.class, testInstance);
 
         // if Skip annotation is present and no @Templates is specified, then run only in plain template
         Skip skipAnnotation = m.getAnnotation(Skip.class);
@@ -115,42 +101,23 @@ public class TemplatesConfigurator implements ConfiguratorExtension {
             return result;
         }
 
-        initTestedTemplates();
-        parseTemplatesListFromSystemProperty();
-
-        possibleTemplates = getAllPossibleTemplatesFromAnnotation(annotation);
+        EnumSet<Template> defaultTestedTemplates = getTestedTemplatesFromField(templateField);
+        EnumSet<Template> possibleTemplates = getAllPossibleTemplatesFromAnnotation(annotation, defaultTestedTemplates);
         if (possibleTemplates.isEmpty()) {
             throw new IllegalStateException("No possible templates configured!");
         }
 
-        List<TemplatesList> runnableTemplatesLists = getRunnableTemplatesLists();
-
-        for (TemplatesList templatesList : runnableTemplatesLists) {
+        for (TemplatesList templatesList : getRunnableTemplatesLists(parseTemplatesListFromSystemProperty(defaultTestedTemplates), possibleTemplates)) {
             result.add(new FieldConfig(testInstance, templatesList, templateField));
         }
         return result;
     }
 
-    private void createTemplatesListForEachTestedTemplate(List<TemplatesList> toList) {
-        for (Template template : defaultTestedTemplates) {
-            toList.add(removeRedundantPlainTemplate(TemplatesList.fromTemplate(template)));
-        }
-    }
-
-    private boolean doesTemplatesListContainAllSupportedTemplates(TemplatesList templatesList) {
-        for (Template template : templatesList) {
-            if (!possibleTemplates.contains(template)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private EnumSet<Template> getAllPossibleTemplatesFromAnnotation(Templates annotationOnMethodOrOnClass) {
+    private EnumSet<Template> getAllPossibleTemplatesFromAnnotation(Templates annotationOnMethodOrOnClass, EnumSet<Template> defaultTestedTemplates) {
         if (annotationOnMethodOrOnClass == null) {// annotation is null >>> ALL templates are possible
             return defaultTestedTemplates.clone();
         }
-        checkIfMoreValuesAreNotSet(annotationOnMethodOrOnClass);
+        checkIfAnnotationIsValid(annotationOnMethodOrOnClass);
         EnumSet<Template> set = null;
         if (annotationOnMethodOrOnClass.value() != null && !Arrays.asList(annotationOnMethodOrOnClass.value()).isEmpty()) {
             set = EnumSet.copyOf(parseTemplates(annotationOnMethodOrOnClass.value()));
@@ -163,10 +130,10 @@ public class TemplatesConfigurator implements ConfiguratorExtension {
         return set;
     }
 
-    private List<TemplatesList> getRunnableTemplatesLists() {
+    private List<TemplatesList> getRunnableTemplatesLists(List<TemplatesList> listOfTemplates, EnumSet<Template> possibleTemplates) {
         List<TemplatesList> willRunInTemplatesLists = Lists.newLinkedList();
-        for (TemplatesList templatesList : shouldRunInTemplates) {
-            if (doesTemplatesListContainAllSupportedTemplates(templatesList)) {
+        for (TemplatesList templatesList : listOfTemplates) {
+            if (isTemplatesListValid(templatesList, possibleTemplates)) {
                 willRunInTemplatesLists.add(templatesList);
             } else {
 //                System.out.println("IGNORED templates list: " + templatesList);
@@ -175,27 +142,18 @@ public class TemplatesConfigurator implements ConfiguratorExtension {
         return willRunInTemplatesLists;
     }
 
+    private EnumSet<Template> getTestedTemplatesFromField(Field fielWithTemplatesAnnotation) {
+        EnumSet<Template> result = EnumSet.noneOf(Template.class);
+        String[] value = fielWithTemplatesAnnotation.getAnnotation(Templates.class).value();
+        for (String string : value) {
+            result.add(Template.valueFrom(string));
+        }
+        return result;
+    }
+
     @Override
     public boolean ignoreConfigurations() {
         return Boolean.FALSE;
-    }
-
-    private void init() {
-        annotation = null;
-        annotationOnMethod = null;
-        annotationOnTestClass = null;
-        possibleTemplates = null;
-        shouldRunInTemplates.clear();
-        defaultTestedTemplates.clear();
-        templateField = null;
-    }
-
-    private void initTestedTemplates() {
-        defaultTestedTemplates.clear();
-        String[] value = templateField.getAnnotation(Templates.class).value();
-        for (String string : value) {
-            defaultTestedTemplates.add(Template.valueFrom(string));
-        }
     }
 
     private boolean isAllTemplateString(String templatesListString) throws IllegalArgumentException {
@@ -211,18 +169,37 @@ public class TemplatesConfigurator implements ConfiguratorExtension {
         return false;
     }
 
-    private void parseTemplatesListFromSystemProperty() {
-        String[] split = System.getProperty(TEMPLATE_PROPERTY_NAME, "plain").split(TEMPLATE_LIST_SEPARATOR);
-        for (String templatesListString : split) {
-            if (isAllTemplateString(templatesListString)) {
-                createTemplatesListForEachTestedTemplate(shouldRunInTemplates);
-            } else {
-                shouldRunInTemplates.add(removeRedundantPlainTemplate(TemplatesList.parseFrom(templatesListString)));
+    private boolean isTemplatesListValid(TemplatesList templatesList, EnumSet<Template> possibleTemplates) {
+        for (Template template : templatesList) {
+            if (!possibleTemplates.contains(template)) {
+                return false;
             }
         }
-        if (shouldRunInTemplates.isEmpty()) {
+        return true;
+    }
+
+    private List<Template> parseTemplates(String[] templates) {
+        List<Template> result = Lists.newLinkedList();
+        for (String template : templates) {
+            result.add(Template.valueFrom(template));
+        }
+        return result;
+    }
+
+    private List<TemplatesList> parseTemplatesListFromSystemProperty(EnumSet<Template> defaultTestedTemplates) {
+        List<TemplatesList> result = Lists.newLinkedList();
+        String[] split = System.getProperty(TEMPLATE_PROPERTY_NAME, PLAIN).split(TEMPLATE_LIST_SEPARATOR);
+        for (String templatesListString : split) {
+            if (isAllTemplateString(templatesListString)) {
+                result.addAll(addTemplatesListForEachTestedTemplate(defaultTestedTemplates));
+            } else {
+                result.add(removeRedundantPlainTemplate(TemplatesList.parseFrom(templatesListString)));
+            }
+        }
+        if (result.isEmpty()) {
             throw new IllegalStateException("No templates to run in were specified.");
         }
+        return result;
     }
 
     private TemplatesList removeRedundantPlainTemplate(TemplatesList tList) {
