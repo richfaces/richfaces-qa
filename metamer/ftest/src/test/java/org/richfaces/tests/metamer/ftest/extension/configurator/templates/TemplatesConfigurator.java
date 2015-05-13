@@ -32,6 +32,7 @@ import org.richfaces.tests.metamer.TemplatesList;
 import org.richfaces.tests.metamer.ftest.extension.configurator.ConfiguratorExtension;
 import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config;
 import org.richfaces.tests.metamer.ftest.extension.configurator.config.FieldConfig;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.utils.ReflectionUtils;
 
@@ -47,18 +48,16 @@ import com.google.common.collect.Lists;
 public class TemplatesConfigurator implements ConfiguratorExtension {
 
     public static final String[] ALL_TEMPLATES_STRINGS = { "all", "*" };
+    private static final TemplatesList PLAIN_TEMPLATE = TemplatesList.parseFrom("plain");
     private static final String TEMPLATE_LIST_SEPARATOR = ",";
     private static final String TEMPLATE_PROPERTY_NAME = "templates";
-
-    private final EnumSet<Template> defaultTestedTemplates = EnumSet.noneOf(Template.class);
-    private final List<TemplatesList> shouldRunInTemplates = Lists.newLinkedList();
 
     private Templates annotation;
     private Templates annotationOnMethod;
     private Templates annotationOnTestClass;
-
+    private final EnumSet<Template> defaultTestedTemplates = EnumSet.noneOf(Template.class);
     private EnumSet<Template> possibleTemplates;
-
+    private final List<TemplatesList> shouldRunInTemplates = Lists.newLinkedList();
     private Field templateField;
 
     public TemplatesConfigurator() {
@@ -99,15 +98,25 @@ public class TemplatesConfigurator implements ConfiguratorExtension {
 
     @Override
     public List<Config> createConfigurations(Method m, Object testInstance) {
+        List<Config> result = Lists.newLinkedList();
+
         init();
-        templateField = ReflectionUtils.getFirstFieldAnnotatedWith(Templates.class, testInstance);
-        initTestedTemplates();
-        parseTemplatesListFromSystemProperty();
 
         annotation = null;
         annotationOnMethod = m.getAnnotation(Templates.class);
         annotationOnTestClass = testInstance.getClass().getAnnotation(Templates.class);
         annotation = (annotationOnMethod != null ? annotationOnMethod : annotationOnTestClass);
+        templateField = ReflectionUtils.getFirstFieldAnnotatedWith(Templates.class, testInstance);
+
+        // if Skip annotation is present and no @Templates is specified, then run only in plain template
+        Skip skipAnnotation = m.getAnnotation(Skip.class);
+        if (annotation == null && skipAnnotation != null) {
+            result.add(new FieldConfig(testInstance, PLAIN_TEMPLATE, templateField));
+            return result;
+        }
+
+        initTestedTemplates();
+        parseTemplatesListFromSystemProperty();
 
         possibleTemplates = getAllPossibleTemplatesFromAnnotation(annotation);
         if (possibleTemplates.isEmpty()) {
@@ -116,7 +125,6 @@ public class TemplatesConfigurator implements ConfiguratorExtension {
 
         List<TemplatesList> runnableTemplatesLists = getRunnableTemplatesLists();
 
-        List<Config> result = Lists.newLinkedList();
         for (TemplatesList templatesList : runnableTemplatesLists) {
             result.add(new FieldConfig(testInstance, templatesList, templateField));
         }
