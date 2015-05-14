@@ -36,33 +36,11 @@ import org.testng.annotations.Test;
  */
 public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
 
+    private Integer delay;
+
     @Override
     public String getComponentTestPagePath() {
         return "richDropDownMenu/topMenu.xhtml";
-    }
-
-    private Integer delay;
-
-    @Test
-    public void testInit() {
-        super.testInit();
-    }
-
-    @Test(groups = "smoke")
-    public void testShowEvent() {
-        super.testShowEvent();
-    }
-
-    @Test
-    @Templates("plain")
-    public void testStyle() {
-        super.testStyle();
-    }
-
-    @Test
-    @Templates("plain")
-    public void testStyleClass() {
-        super.testStyleClass();
     }
 
     @Test
@@ -76,6 +54,29 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
     @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "")
     public void testDirection() {
         super.testDirection();
+    }
+
+    @Test
+    public void testDisabled() {
+        super.testDisabled();
+    }
+
+    @Test
+    @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
+    @Templates("plain")
+    public void testHideDelay() {
+        super.testHideDelay(delay);
+    }
+
+    @Test
+    @Templates("plain")
+    public void testHorizontalOffset() {
+        super.testHorizontalOffset();
+    }
+
+    @Test
+    public void testInit() {
+        super.testInit();
     }
 
     @Test
@@ -94,43 +95,6 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
     @Test(groups = "smoke")
     public void testMode() {
         super.testMode();
-    }
-
-    @Test
-    public void testDisabled() {
-        super.testDisabled();
-    }
-
-    @Test
-    @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
-    @Templates("plain")
-    public void testHideDelay() {
-        super.testHideDelay(delay);
-    }
-
-    @Test
-    @Templates(value = "plain")
-    public void testPopupWidth() {
-        super.testPopupWidth();
-    }
-
-    @Test
-    @Templates("plain")
-    public void testRendered() {
-        super.testRendered();
-    }
-
-    @Test
-    @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
-    @Templates("plain")
-    public void testShowDelay() {
-        super.testShowDelay(delay);
-    }
-
-    @Test
-    @Templates("plain")
-    public void testTitle() {
-        super.testTitle();
     }
 
     @Test
@@ -161,7 +125,7 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
     }
 
     @Test
-    @Templates(value = "plain")
+    @Templates("plain")
     public void testOnitemclick() {
         super.testOnitemclick();
     }
@@ -212,7 +176,7 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
     }
 
     @Test
-    @Templates(value = "plain")
+    @Templates("plain")
     public void testOnmouseup() {
         super.testOnmouseup();
     }
@@ -223,13 +187,54 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
     }
 
     @Test
-    @Templates("plain")
-    public void testHorizontalOffset() {
-        super.testHorizontalOffset();
+    @Templates(value = "plain")
+    public void testPopupWidth() {
+        super.testPopupWidth();
     }
 
     @Test
     @Templates("plain")
+    public void testRendered() {
+        super.testRendered();
+    }
+
+    @Test
+    @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
+    @Templates("plain")
+    public void testShowDelay() {
+        super.testShowDelay(delay);
+    }
+
+    @Test(groups = "smoke")
+    public void testShowEvent() {
+        super.testShowEvent();
+    }
+
+    @Test
+    @Templates(value = "plain")
+    public void testStyle() {
+        super.testStyle();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testStyleClass() {
+        super.testStyleClass();
+    }
+
+    @Test(groups = "smoke")
+    public void testSubMenuOpening() {
+        super.testSubMenuOpening();
+    }
+
+    @Test
+    @Templates("plain")
+    public void testTitle() {
+        super.testTitle();
+    }
+
+    @Test
+    @Templates(value = "plain")
     public void testVerticalOffset() {
         super.testVerticalOffset();
     }
