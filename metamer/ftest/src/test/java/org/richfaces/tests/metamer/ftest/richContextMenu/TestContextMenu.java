@@ -33,6 +33,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -460,6 +461,15 @@ public class TestContextMenu extends AbstractWebDriverTest {
         contextMenuAttributes.set(ContextMenuAttributes.styleClass, styleClassVal);
         String styleClass = page.getContextMenuRoot().getAttribute("class");
         assertTrue(styleClass.contains(styleClassVal));
+    }
+
+    @Test(groups = "smoke")
+    public void testSubMenuOpening() {
+        updateShowAction();
+
+        Graphene.guardHttp(page.getContextMenu().expandGroup("Save As...", page.getTargetPanel1()))
+            .selectItem("Save All");
+        assertEquals(page.getOutput().getText(), "Save All");
     }
 
     @Test

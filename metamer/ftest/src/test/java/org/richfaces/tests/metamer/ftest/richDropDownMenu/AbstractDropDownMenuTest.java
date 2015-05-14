@@ -30,6 +30,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -477,6 +478,12 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         String styleClass = getCurrentMenu().advanced().getTopLevelElement()
             .getAttribute("class");
         assertTrue(styleClass.contains(styleClassVal));
+    }
+
+    public void testSubMenuOpening() {
+        updateDropDownMenuInvokerToClick();
+        Graphene.guardAjax(getCurrentMenu().expandGroup("Save As...", page.getTarget1())).selectItem("Save All");
+        assertEquals(page.getOutput().getText(), "Save All");
     }
 
     @CoversAttributes("title")
