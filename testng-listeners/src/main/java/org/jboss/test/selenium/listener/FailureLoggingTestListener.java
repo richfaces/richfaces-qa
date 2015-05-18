@@ -67,6 +67,7 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
     @Override
     public void onConfigurationFailure(ITestResult result) {
         saveStackTrace(result);
+        saveScreenshotAndPageSource(result);
     }
 
     @Override
