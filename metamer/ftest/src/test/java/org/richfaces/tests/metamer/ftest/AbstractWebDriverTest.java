@@ -228,10 +228,18 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     protected void openPageWithCurrentConfiguration() {
-        if (runInPortalEnv) {
-            goToTestInPortal();
-        } else {
-            driver.get(buildUrl(getTestUrl() + "?templates=" + template.toString()).toExternalForm());
+        for (int i = 0; i < 5; i++) {
+            if (runInPortalEnv) {
+                goToTestInPortal();
+            } else {
+                driver.get(buildUrl(getTestUrl() + "?templates=" + template.toString()).toExternalForm());
+                // check that page does not contain exception report
+                if (!driver.findElement(Utils.BY_BODY).getText().contains("Exception report")) {
+                    break;
+                } else {
+                    System.err.println("Error when loading page occured. Load page attempt #" + (i + 1) + '.');
+                }
+            }
         }
     }
 
