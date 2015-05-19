@@ -443,12 +443,14 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     @CoversAttributes("required")
     public void testRequired() {
         inplaceInputAttributes.set(InplaceInputAttributes.required, Boolean.TRUE);
-        MetamerPage.waitRequest(inplaceInput.type(""), WaitRequestType.XHR).confirm();
+        Graphene.guardAjax(inplaceInput.type("")).confirm();
         assertTrue(requiredMessage.advanced().isVisible());
         assertEquals(requiredMessage.getDetail(), inplaceInputAttributes.get(InplaceInputAttributes.requiredMessage));
 
+        Graphene.guardAjax(inplaceInput.type("value that will be deleted in next step")).confirm();
+
         inplaceInputAttributes.set(InplaceInputAttributes.required, Boolean.FALSE);
-        MetamerPage.waitRequest(inplaceInput.type(""), WaitRequestType.XHR).confirm();
+        Graphene.guardAjax(inplaceInput.type("")).confirm();
         assertFalse(requiredMessage.advanced().isVisible());
     }
 
