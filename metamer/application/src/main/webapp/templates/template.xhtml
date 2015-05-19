@@ -52,8 +52,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                 <h:panelGroup id="commonGrid" layout="block" rendered="#{richBean.reComponent}">
 
-                    <c:set var="nestedPrefix" value="#{templateBean.componentPrefix}" />
-                    <c:set var="nestedComponentId" value="#{templateBean.componentPrefix}#{componentId}" />
+                    <c:set var="nestedPrefix" value="#{templateBean.componentPrefix}" scope="view" />
+                    <c:set var="nestedComponentId" value="#{templateBean.componentPrefix}#{componentId}" scope="view" />
 
                     <c:choose>
                         <c:when test="#{dontRenderForm != null and dontRenderForm}">
