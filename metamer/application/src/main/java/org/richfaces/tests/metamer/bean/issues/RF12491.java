@@ -43,6 +43,7 @@ import com.google.common.collect.Maps;
 @ManagedBean(name = "rf12491")
 public class RF12491 implements Serializable {
 
+    private static final char SPACE = ' ';
     private static final List<Capital> capitals = Model.unmarshallCapitals();
     private static final long serialVersionUID = 1L;
 
@@ -58,7 +59,7 @@ public class RF12491 implements Serializable {
         for (PhaseId key : map.keySet()) {
             sb.append(map.get(key))
                 .append('x')
-                .append(key.getName())
+                .append(getPhaseName(key))
                 .append('(')
                 .append(key.getOrdinal())
                 .append("), ");
@@ -76,6 +77,15 @@ public class RF12491 implements Serializable {
 
     public String getGetterForTable2InvokedInPhases() {
         return createStringFromMap(getterForTable2InvokedInPhases);
+    }
+
+    /**
+     * Get phase name from toString method (the PhaseId#getName was added in JSF 2.2)
+     */
+    private String getPhaseName(PhaseId phase) {
+        String result = phase.toString();
+        result = result.substring(0, result.indexOf(SPACE));
+        return result;
     }
 
     public SwitchType getSwitchType() {
