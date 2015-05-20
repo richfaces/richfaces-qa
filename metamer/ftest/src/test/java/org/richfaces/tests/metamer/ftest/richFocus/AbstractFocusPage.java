@@ -21,7 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.richFocus;
 
-import org.openqa.selenium.interactions.Actions;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.interactions.Keyboard;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 
 /**
@@ -29,9 +30,12 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
  */
 public class AbstractFocusPage extends MetamerPage {
 
-    protected static final String EXPECTED_STRING = "RichFaces";
+    public static final String EXPECTED_STRING = "RichFaces";
+
+    @ArquillianResource
+    private Keyboard keyboard;
 
     public void typeStringAndDoNotCareAboutFocus() {
-        new Actions(driver).sendKeys(EXPECTED_STRING).perform();
+        keyboard.sendKeys(EXPECTED_STRING);
     }
 }

@@ -75,6 +75,31 @@ public class TestFocus extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("preserve")
+    public void testPreserveIgnoresValidationAware() {
+        focusAttributes.set(FocusAttributes.validationAware, false);
+        testPreserveTrue();
+        focusAttributes.set(FocusAttributes.validationAware, true);
+        testPreserveTrue();
+    }
+
+    private void testPreserveTrue() {
+        focusAttributes.set(FocusAttributes.preserve, true);
+        // focus the age input
+        page.getAgeInput().advanced().getInputElement().click();
+        // validate empty fields
+        page.ajaxValidateInputs();
+        // wait for the age input is focused again
+        waitModel().until(new ElementIsFocused(page.getAgeInput().advanced().getInputElement()));
+        // type a string
+        page.typeStringAndDoNotCareAboutFocus();
+        // the age input text is changed to the typed text
+        String actual = page.getAgeInput().getStringValue();
+        assertTrue(actual.contains(AbstractFocusPage.EXPECTED_STRING),
+            "The age input should be focused, since the preserve is true and before form submission that input was focused!");
+    }
+
+    @Test
     @CoversAttributes("validationAware")
     @Templates(exclude = { "richAccordion", "richCollapsiblePanel", "richTabPanel" })
     public void testValidationAwareFalse() {

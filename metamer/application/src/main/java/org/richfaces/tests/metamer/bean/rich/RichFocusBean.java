@@ -52,8 +52,6 @@ public class RichFocusBean implements Serializable {
     private Long age;
     private String address;
 
-    private boolean preserve = false;
-
     /**
      * Initializes the managed bean.
      */
@@ -110,13 +108,5 @@ public class RichFocusBean implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public boolean isPreserve() {
-        return preserve;
-    }
-
-    public void setPreserve(boolean preserve) {
-        this.preserve = preserve;
     }
 }

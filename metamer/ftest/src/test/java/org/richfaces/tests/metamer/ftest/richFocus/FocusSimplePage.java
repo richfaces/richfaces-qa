@@ -55,31 +55,15 @@ public class FocusSimplePage extends AbstractFocusPage {
         return nameInput;
     }
 
-    public void setNameInput(TextInputComponentImpl nameInput) {
-        this.nameInput = nameInput;
-    }
-
     public TextInputComponentImpl getAgeInput() {
         return ageInput;
-    }
-
-    public void setAgeInput(TextInputComponentImpl ageInput) {
-        this.ageInput = ageInput;
     }
 
     public TextInputComponentImpl getAddressInput() {
         return addressInput;
     }
 
-    public void setAddressInput(TextInputComponentImpl addressInput) {
-        this.addressInput = addressInput;
-    }
-
     public WebElement getPreserveAttributeCheckBox() {
         return preserveAttributeCheckBox;
-    }
-
-    public void setPreserveAttributeCheckBox(WebElement preserveAttributeCheckBox) {
-        this.preserveAttributeCheckBox = preserveAttributeCheckBox;
     }
 }
