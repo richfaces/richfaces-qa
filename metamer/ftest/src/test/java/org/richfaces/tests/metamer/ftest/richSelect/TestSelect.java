@@ -338,7 +338,8 @@ public class TestSelect extends AbstractWebDriverTest {
     @CoversAttributes("onfocus")
     @Templates(value = "plain")
     public void testOnfocus() {
-        testFireEvent(Event.FOCUS, select.advanced().getInput().advanced().getInputElement());
+        testFireEvent(selectAttributes, SelectAttributes.onfocus,
+            new Actions(driver).click(select.advanced().getInput().advanced().getInputElement()).build());
     }
 
     @Test
