@@ -43,6 +43,8 @@ import com.google.common.collect.Maps;
 @ManagedBean(name = "rf12491")
 public class RF12491 implements Serializable {
 
+    private static final char BRACKET_LEFT = '(';
+
     private static final char SPACE = ' ';
     private static final List<Capital> capitals = Model.unmarshallCapitals();
     private static final long serialVersionUID = 1L;
@@ -60,7 +62,7 @@ public class RF12491 implements Serializable {
             sb.append(map.get(key))
                 .append('x')
                 .append(getPhaseName(key))
-                .append('(')
+                .append(BRACKET_LEFT)
                 .append(key.getOrdinal())
                 .append("), ");
         }
@@ -80,11 +82,12 @@ public class RF12491 implements Serializable {
     }
 
     /**
-     * Get phase name from toString method (the PhaseId#getName was added in JSF 2.2)
+     * Get phase name from toString method (the PhaseId#getName was added in JSF 2.2).
+     * Also gets rid of phase ordinal in MyFaces.
      */
     private String getPhaseName(PhaseId phase) {
         String result = phase.toString();
-        result = result.substring(0, result.indexOf(SPACE));
+        result = result.substring(0, Math.max(result.indexOf(SPACE), result.indexOf(BRACKET_LEFT)));
         return result;
     }
 
