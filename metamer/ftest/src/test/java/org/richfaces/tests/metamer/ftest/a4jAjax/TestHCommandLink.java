@@ -27,10 +27,9 @@ import static org.testng.Assert.assertEquals;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
-import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.SkipOnResultsCache;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
@@ -89,16 +88,21 @@ public class TestHCommandLink extends AbstractAjaxTest {
     }
 
     @Test
-    @Skip(On.JSF.MyFaces.class)
-    @IssueTracking("https://issues.jboss.org/browse/RF-14045")
+    @RegressionTest("https://issues.jboss.org/browse/RF-14045")
     public void testDisabled() {
         ajaxAttributes.set(AjaxAttributes.disabled, true);
 
         page.getInputElement().sendKeys("RichFaces 4");
-        Graphene.guardHttp(page.getLinkElement()).click();
 
-        assertOutput1Changed();
-        assertOutput2Changed();
+        if (SkipOnResultsCache.getInstance().getResultFor(On.JSF.MyFaces.class)) {// is using MyFaces?
+            Graphene.guardNoRequest(page.getLinkElement()).click();
+            assertOutput1NotChanged();
+            assertOutput2NotChanged();
+        } else {
+            Graphene.guardHttp(page.getLinkElement()).click();
+            assertOutput1Changed();
+            assertOutput2Changed();
+        }
     }
 
     @Test
