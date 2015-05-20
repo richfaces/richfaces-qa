@@ -50,6 +50,7 @@ import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotatio
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -88,6 +89,14 @@ public class TestSelect extends AbstractWebDriverTest {
             Graphene.guardAjax(select.openSelect()).select(10);
         }
     };
+
+    @BeforeMethod
+    public void closeSelectPopupIfVisible() {
+        if (select.advanced().isPopupPresent()) {
+            getMetamerPage().getResponseDelayElement().click();// blur
+            select.advanced().waitUntilSuggestionsAreNotVisible();
+        }
+    }
 
     @Override
     public URL getTestUrl() {
