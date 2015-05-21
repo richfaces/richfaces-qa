@@ -93,8 +93,10 @@ public class TestSelect extends AbstractWebDriverTest {
     @BeforeMethod
     public void closeSelectPopupIfVisible() {
         if (select.advanced().isPopupPresent()) {
-            getMetamerPage().getResponseDelayElement().click();// blur
-            select.advanced().waitUntilSuggestionsAreNotVisible();
+            // focus somewhere else
+            getMetamerPage().getResponseDelayElement().click();
+            // wait for popup to close
+            select.advanced().waitUntilSuggestionsAreNotVisible().perform();
         }
     }
 
