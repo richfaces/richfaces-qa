@@ -27,7 +27,8 @@ import static org.testng.Assert.assertEquals;
 import java.util.Collections;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.component.SortOrder;
 import org.richfaces.tests.metamer.bean.rich.RichColumnBean;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
@@ -39,22 +40,27 @@ import org.richfaces.tests.metamer.model.Capital;
  */
 public abstract class AbstractColumnSortingTest extends AbstractColumnTest {
 
+    @FindBy(id = "beforeForm:sortOrderInput:0")
+    private WebElement orderAscendingButton;
+    @FindBy(id = "beforeForm:sortOrderInput:1")
+    private WebElement orderDescendingButton;
+    @FindBy(id = "beforeForm:sortOrderInput:2")
+    private WebElement orderUnsortedButton;
     @UseForAllTests(valuesFrom = FROM_ENUM, value = "")
     protected SortOrder sortOrder;
 
     public void checkSortingWithSortOrder() {
-
         switch (sortOrder) {
             case ascending:
-                Graphene.guardAjax(driver.findElement(By.id("beforeForm:sortOrderInput:0"))).click();
+                selectOrder(orderAscendingButton);
                 Collections.sort(capitals, RichColumnBean.STATE_NAME_LENGTH_COMPARATOR);
                 break;
             case descending:
-                Graphene.guardAjax(driver.findElement(By.id("beforeForm:sortOrderInput:1"))).click();
+                selectOrder(orderDescendingButton);
                 Collections.sort(capitals, Collections.reverseOrder(RichColumnBean.STATE_NAME_LENGTH_COMPARATOR));
                 break;
             default:
-                Graphene.guardAjax(driver.findElement(By.id("beforeForm:sortOrderInput:2"))).click();
+                selectOrder(orderUnsortedButton);
                 break;
         }
         Capital actualCapital, expectedCapital;
@@ -64,6 +70,12 @@ public abstract class AbstractColumnSortingTest extends AbstractColumnTest {
 
             assertEquals(actualCapital.getName(), expectedCapital.getName());
             assertEquals(actualCapital.getState(), expectedCapital.getState());
+        }
+    }
+
+    private void selectOrder(WebElement button) {
+        if (!button.isSelected()) {
+            Graphene.guardAjax(button).click();
         }
     }
 }
