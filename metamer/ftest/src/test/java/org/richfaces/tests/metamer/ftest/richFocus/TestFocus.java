@@ -31,8 +31,10 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -75,12 +77,22 @@ public class TestFocus extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richExtendedDataTable", "uiRepeat" })
     @CoversAttributes("preserve")
     public void testPreserveIgnoresValidationAware() {
         focusAttributes.set(FocusAttributes.validationAware, false);
         testPreserveTrue();
         focusAttributes.set(FocusAttributes.validationAware, true);
         testPreserveTrue();
+    }
+
+    @Test
+    @Skip
+    @IssueTracking("https://issues.jboss.org/browse/RF-14046")
+    @Templates({ "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richExtendedDataTable", "uiRepeat" })
+    @CoversAttributes("preserve")
+    public void testPreserveIgnoresValidationAwareInIterationComponents() {
+        testPreserveIgnoresValidationAware();
     }
 
     private void testPreserveTrue() {
