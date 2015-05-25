@@ -63,7 +63,7 @@ import org.testng.annotations.Test;
 public class TestProgressBarAjax extends AbstractWebDriverTest {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormat.forPattern("HH:mm:ss.SSS");
-    private final Integer[] ints = { 1200, 1600, 2200 };
+    private final Integer[] ints = { 2000, 2500 };
 
     @Page
     private ProgressBarPage page;
@@ -368,8 +368,8 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
 
     @Test
     public void testProgress() {
-        testOneRunOfProgressBar(page.getStartButtonElement(), 1400);
-        testOneRunOfProgressBar(page.getRestartButtonElement(), 1400);
+        testOneRunOfProgressBar(page.getStartButtonElement(), 2000);
+        testOneRunOfProgressBar(page.getRestartButtonElement(), 2000);
     }
 
     @Test
