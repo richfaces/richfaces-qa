@@ -262,6 +262,7 @@ public class TestCollapsiblePanel extends TestFacets {
     }
 
     private void verifyStandardIcons(Icon icon, CollapsiblePanelAttributes attribute) {
-        new IconsChecker<CollapsiblePanelAttributes>(collapsiblePanelAttributes, "rf-ico-", "-hdr").checkAll(attribute, icon, "");
+        new IconsChecker<CollapsiblePanelAttributes>(driver, collapsiblePanelAttributes).checkAll(attribute,
+            icon.getIconDivElement(), icon.getIconImageElement(), true, true);
     }
 }

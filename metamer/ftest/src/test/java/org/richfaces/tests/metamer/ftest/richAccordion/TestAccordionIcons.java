@@ -32,7 +32,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
+import org.richfaces.tests.metamer.ftest.checker.IconsChecker;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -65,11 +65,9 @@ public class TestAccordionIcons extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testItemActiveLeftIcon() {
         By image = By.cssSelector(String.format(leftIcon, "1") + " img");
-
         // icon=null
         assertFalse(new WebElementConditionFactory(page.getLeftActiveIcon()).isPresent().apply(driver), "Left icon of active item should not be present on the page.");
-
-        verifyStandardIcons(AccordionAttributes.itemActiveLeftIcon, page.getLeftActiveIcon(), image, "");
+        verifyStandardIcons(AccordionAttributes.itemActiveLeftIcon, page.getLeftActiveIcon(), image);
     }
 
     @Test
@@ -77,11 +75,9 @@ public class TestAccordionIcons extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testItemActiveRightIcon() {
         By image = By.cssSelector(String.format(rightIcon, "1") + " img");
-
         // icon=null
         assertFalse(new WebElementConditionFactory(page.getRightActiveIcon()).isPresent().apply(driver), "Right icon of active item should not be present on the page.");
-
-        verifyStandardIcons(AccordionAttributes.itemActiveRightIcon, page.getRightActiveIcon(), image, "");
+        verifyStandardIcons(AccordionAttributes.itemActiveRightIcon, page.getRightActiveIcon(), image);
     }
 
     @Test
@@ -89,8 +85,7 @@ public class TestAccordionIcons extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testItemDisabledLeftIcon() {
         By image = By.cssSelector(String.format(leftIcon, "4") + " img");
-
-        verifyStandardIcons(AccordionAttributes.itemDisabledLeftIcon, page.getLeftDisabledIcon(), image, "-dis");
+        verifyStandardIcons(AccordionAttributes.itemDisabledLeftIcon, page.getLeftDisabledIcon(), image);
     }
 
     @Test
@@ -99,7 +94,7 @@ public class TestAccordionIcons extends AbstractWebDriverTest {
     public void testItemDisabledRightIcon() {
         By image = By.cssSelector(String.format(rightIcon, "4") + " img");
 
-        verifyStandardIcons(AccordionAttributes.itemDisabledRightIcon, page.getRightDisabledIcon(), image, "-dis");
+        verifyStandardIcons(AccordionAttributes.itemDisabledRightIcon, page.getRightDisabledIcon(), image);
     }
 
     @Test
@@ -108,8 +103,7 @@ public class TestAccordionIcons extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testItemInactiveLeftIcon() {
         By image = By.cssSelector(String.format(leftIcon, "3") + " img");
-
-        verifyStandardIcons(AccordionAttributes.itemInactiveLeftIcon, page.getLeftInactiveIcon(), image, "");
+        verifyStandardIcons(AccordionAttributes.itemInactiveLeftIcon, page.getLeftInactiveIcon(), image);
     }
 
     @Test
@@ -117,15 +111,10 @@ public class TestAccordionIcons extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testItemInactiveRightIcon() {
         By image = By.cssSelector(String.format(rightIcon, "3") + " img");
-
-        verifyStandardIcons(AccordionAttributes.itemInactiveRightIcon, page.getRightInactiveIcon(), image, "");
+        verifyStandardIcons(AccordionAttributes.itemInactiveRightIcon, page.getRightInactiveIcon(), image);
     }
 
-    private void verifyStandardIcons(AccordionAttributes attribute, WebElement icon, By image, String classSuffix) {
-        IconsCheckerWebdriver checker = new IconsCheckerWebdriver<AccordionAttributes>(driver, accordionAttributes, "rf-ico-", "-hdr");
-        checker.checkCssImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
-        checker.checkCssNoImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
-        checker.checkImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), image, classSuffix);
-        checker.checkNone(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
+    private void verifyStandardIcons(AccordionAttributes attribute, WebElement icon, By image) {
+        new IconsChecker<AccordionAttributes>(driver, accordionAttributes).checkAll(attribute, icon, image, true, true);
     }
 }
