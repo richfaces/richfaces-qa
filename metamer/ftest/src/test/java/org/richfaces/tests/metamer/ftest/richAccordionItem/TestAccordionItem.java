@@ -50,7 +50,7 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
+import org.richfaces.tests.metamer.ftest.checker.IconsChecker;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -90,13 +90,8 @@ public class TestAccordionItem extends AbstractWebDriverTest {
         return elem.getAttribute("class").contains(className);
     }
 
-    private void verifyStandardIcons(AccordionItemAttributes attribute, WebElement icon, By image, String classSuffix) {
-        IconsCheckerWebdriver<AccordionItemAttributes> checker = new IconsCheckerWebdriver<AccordionItemAttributes>(driver, accordionItemAttributes,
-            "rf-ico-", "-hdr");
-        checker.checkCssImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
-        checker.checkCssNoImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
-        checker.checkImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), image, classSuffix);
-        checker.checkNone(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
+    private void verifyStandardIcons(AccordionItemAttributes attribute, WebElement icon, By image) {
+        new IconsChecker<AccordionItemAttributes>(driver, accordionItemAttributes).checkAll(attribute, icon, image, true, true);
     }
 
     @Test
@@ -222,7 +217,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
         }
         guardAjax(page.getItemHeaders().get(0)).click();
         waitAjax(driver).until().element(page.getItemContents().get(0)).is().visible();
-        verifyStandardIcons(AccordionItemAttributes.leftActiveIcon, page.getLeftActiveIcon(), image, "");
+        verifyStandardIcons(AccordionItemAttributes.leftActiveIcon, page.getLeftActiveIcon(), image);
     }
 
     @Test
@@ -242,7 +237,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
 
         accordionItemAttributes.set(AccordionItemAttributes.disabled, true);
 
-        verifyStandardIcons(AccordionItemAttributes.leftDisabledIcon, page.getLeftDisabledIcon(), image, "-dis");
+        verifyStandardIcons(AccordionItemAttributes.leftDisabledIcon, page.getLeftDisabledIcon(), image);
     }
 
     @Test
@@ -260,7 +255,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
             }
         }
 
-        verifyStandardIcons(AccordionItemAttributes.leftInactiveIcon, page.getLeftInactiveIcon(), image, "");
+        verifyStandardIcons(AccordionItemAttributes.leftInactiveIcon, page.getLeftInactiveIcon(), image);
     }
 
     @Test
@@ -430,7 +425,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
         }
         guardAjax(page.getItemHeaders().get(0)).click();
         waitAjax(driver).until().element(page.getItemContents().get(0)).is().visible();
-        verifyStandardIcons(AccordionItemAttributes.rightActiveIcon, page.getRightActiveIcon(), image, "");
+        verifyStandardIcons(AccordionItemAttributes.rightActiveIcon, page.getRightActiveIcon(), image);
     }
 
     @Test
@@ -450,7 +445,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
 
         accordionItemAttributes.set(AccordionItemAttributes.disabled, true);
 
-        verifyStandardIcons(AccordionItemAttributes.rightDisabledIcon, page.getRightDisabledIcon(), image, "-dis");
+        verifyStandardIcons(AccordionItemAttributes.rightDisabledIcon, page.getRightDisabledIcon(), image);
     }
 
     @Test
@@ -468,7 +463,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
             }
         }
 
-        verifyStandardIcons(AccordionItemAttributes.rightInactiveIcon, page.getRightInactiveIcon(), image, "");
+        verifyStandardIcons(AccordionItemAttributes.rightInactiveIcon, page.getRightInactiveIcon(), image);
     }
 
     @Test
