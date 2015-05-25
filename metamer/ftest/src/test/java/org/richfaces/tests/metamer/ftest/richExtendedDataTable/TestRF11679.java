@@ -22,17 +22,20 @@
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
 import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
+
+import com.google.common.base.Predicate;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -57,16 +60,29 @@ public class TestRF11679 extends AbstractWebDriverTest {
     public void testEDTResizesWithWindow() {
         Dimension sizeBefore = driver.manage().window().getSize();
         try {
-            int tolerance = 10; // px
+            final int tolerance = 10; // px
             // save the height of EDT
-            int edtHeightBefore = getEDTHeight();
+            final int edtHeightBefore = getEDTHeight();
             // simulate browser's window resizing
             driver.manage().window().setSize(new Dimension(sizeBefore.getWidth(), 250));
+            waiting(200);
             driver.manage().window().setSize(new Dimension(sizeBefore.getWidth(), 350));
+            waiting(200);
             // resize browser's window back to original size
             driver.manage().window().setSize(sizeBefore);
+            waiting(200);
             // check height of EDT after browser's window maximized
-            assertEquals(getEDTHeight(), edtHeightBefore, tolerance);
+            Graphene.waitGui().until(new Predicate<WebDriver>() {
+                @Override
+                public boolean apply(WebDriver t) {
+                    return Math.abs(getEDTHeight() - edtHeightBefore) <= tolerance;
+                }
+
+                @Override
+                public String toString() {
+                    return "height of the EDT is resized back to the original size.";
+                }
+            });
         } finally {
             driver.manage().window().setSize(sizeBefore);
         }
