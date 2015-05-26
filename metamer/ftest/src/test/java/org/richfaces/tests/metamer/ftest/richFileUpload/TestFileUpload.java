@@ -238,6 +238,33 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @CoversAttributes("maxFileSize")
+    public void testMaxFileSize() {
+        long fileSize = createFileFromString(acceptableFile).length();
+        // set limit to lower number than file size
+        fileUploadAttributes.set(FileUploadAttributes.maxFileSize, fileSize - 5);
+        // file will not be accepted
+        sendFileToInputWithWaiting(acceptableFile, false);
+        assertEquals(fileUpload.advanced().getItems().size(), 0);
+
+        // set limit to greater number than file size
+        fileUploadAttributes.set(FileUploadAttributes.maxFileSize, fileSize + 1000);
+        // file will be accepted and uploaded
+        sendFileWithWaiting(acceptableFile, true, true);
+        assertEquals(fileUpload.advanced().getItems().size(), 1);
+        fileUpload.clearAll();
+
+        // set limit to maximum size
+        fileUploadAttributes.set(FileUploadAttributes.maxFileSize, 0);
+        // small file will be accepted and uploaded
+        sendFileWithWaiting(acceptableFile, true, true);
+        assertEquals(fileUpload.advanced().getItems().size(), 1);
+        fileUpload.clearAll();
+        // big file (size exceeding file upload limit in web.xml) will be accepted, but not uploaded
+        sendFileWithWaiting(bigFile, true, false);
+    }
+
+    @Test
     @CoversAttributes("maxFilesQuantity")
     @RegressionTest("https://issues.jboss.org/browse/RFPL-3503")
     public void testMaxFilesQuantity() {
@@ -395,6 +422,19 @@ public class TestFileUpload extends AbstractFileUploadTest {
     @Templates("plain")
     public void testOnmouseup() {
         _testFireEventWithJS(FileUploadAttributes.onmouseup, fileUpload.advanced().getFileInputElement());
+    }
+
+    @Test
+    @CoversAttributes("onsizerejected")
+    @Templates("plain")
+    public void testOnsizerejected() {
+        fileUploadAttributes.set(FileUploadAttributes.maxFileSize, 1);
+        testFireEvent(fileUploadAttributes, FileUploadAttributes.onsizerejected, new Action() {
+            @Override
+            public void perform() {
+                sendFileToInputWithWaiting(acceptableFile, false);
+            }
+        });
     }
 
     @Test
