@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2015, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+        <ui:param name="componentId" value="richEDT" />
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="head">
+            <style type="text/css">
+                .rf-edt[id$=richEDT] {
+                    width: 215px !important;
+                    height: 300px !important;
+                }
+            </style>
+        </ui:define>
+
+        <ui:define name="outOfTemplateBefore">
+            <br/>
+            <h:outputText value="Show data in table: " />
+            <h:selectBooleanCheckbox id="noDataCheckbox" value="#{richExtendedDataTableBean.state}">
+                <a4j:ajax render="#{nestedComponentId} scroller1"/>
+            </h:selectBooleanCheckbox>
+            <br/><br/>
+        </ui:define>
+
+        <ui:define name="component">
+            <p>
+                <a href="https://issues.jboss.org/browse/RF-14023">RF-14023: rich:contextMenu - on ajax re-render the destroy function doesn`t clean up properly</a>
+                <br/>
+                <br/>
+                Could be reproduced by:
+                <ol>
+                    <li>Select first row in table below (by left click)</li>
+                    <li>You'll see an error in browser console: 'TypeError: RichFaces.ui.MenuItem is not a constructor'</li>
+                    <li>Show context menu on the selected row (by right click)</li>
+                    <li>Menu will not show up and you'll have another error in browser console: 'TypeError: this.popup is null'.</li>
+                </ol>
+            </p>
+
+            <rich:extendedDataTable id="edt"
+                                    selection="#{rf14023.selection}"
+                                    value="#{rf14023.items}"
+                                    var="record">
+                <a4j:ajax execute="@form"
+                          event="selectionchange"
+                          listener="#{rf14023.selectionListener}"
+                          render="contextMenu"/>
+                <rich:column id="columnState" sortBy="#{record.state}">
+                    <h:outputText value="#{record.state}" />
+                </rich:column>
+                <rich:column id="columnCapital" sortBy="#{record.name}">
+                    <h:outputText value="#{record.name}" />
+                </rich:column>
+            </rich:extendedDataTable>
+
+            <rich:contextMenu id="contextMenu"
+                              target="edt"
+                              mode="ajax">
+                <rich:menuGroup label="Edit from selected">
+                    <c:forEach items="#{rf14023.selectionItems}" var="item">
+                        <rich:menuItem label="Item #{item.state},#{item.name}" action="#{rf14023.setCurrentItem(item)}"/>
+                    </c:forEach>
+                </rich:menuGroup>
+            </rich:contextMenu>
+
+            <a4j:outputPanel ajaxRendered="true">
+                Current menu selection:
+                <h:outputText id="output" value="#{rf14023.currentItem}"/>
+            </a4j:outputPanel>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+        </ui:define>
+
+    </ui:composition>
+</html>
