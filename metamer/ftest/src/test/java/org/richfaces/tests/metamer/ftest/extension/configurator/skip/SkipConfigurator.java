@@ -21,6 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.extension.configurator.skip;
 
+import static java.text.MessageFormat.format;
+
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -36,10 +38,11 @@ import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.
  * Configurator for not running test on specified circumstances. To use this extension, mark test method with @Skip annotation.<br/>
  * Configurator can be turned off by system property <code>configurator.skip.enabled=false</code>.<br/>
  * Configurator can run in reverse mode, activated by system property <code>configurator.skip.reverse</code>. In reverse mode, only those tests, which should be skipped by this configurator, will run.<br/>
+ * Configurator can run only a specific skip case, specified by system property <code>configurator.skip.case=CASE</code>. Only those tests, which simple name of the first class specified in @Skip annotation matches expression <code>.*CASE.*</code>, will run. This specific configuration ignores reverse mode.<br/>
  * Some examples:<br/>
  * To always skip the test:<br/>
  * <code>@Skip</code><br/>
- * Some already predeifned conditions can be found in {@link org.richfaces.tests.metamer.ftest.extension.configurator.skip.On On}.<br/>
+ * Some already predefined conditions can be found in {@link org.richfaces.tests.metamer.ftest.extension.configurator.skip.On On}.<br/>
  * To skip the test on Firefox browser:<br/>
  * <code>@Skip(On.Browser.Firefox.class)</code><br/>
  * To skip the test on Firefox browser on the Windows OS:<br/>
@@ -55,6 +58,7 @@ import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.
 public class SkipConfigurator implements ConfiguratorExtension {
 
     private static final List<Config> LIST_WITH_EMPTY_CONFIG = new LinkedList<Config>();
+    public static String PROPERTY_CASE = "configurator.skip.case";
     public static String PROPERTY_ENABLED = "configurator.skip.enabled";
     public static String PROPERTY_REVERSE = "configurator.skip.reverse";
 
@@ -92,14 +96,38 @@ public class SkipConfigurator implements ConfiguratorExtension {
 
     @Override
     public List<Config> createConfigurations(Method m, Object testInstance) {
-        if (isPropertyNotPresentOrTrue(PROPERTY_ENABLED)) {
-            List<Config> result = _createConfigurations(m, testInstance);
-            if (isPropertyNotPresentOrFalse(PROPERTY_REVERSE)) {
-                result = result.isEmpty() ? getNotSkippedConfiguration() : getSkippedConfiguration();
+        if (isPropertyNotPresentOrTrue(PROPERTY_ENABLED)) {// is configurator enabled?
+            String caseProperty = getCaseProperty();
+            if (caseProperty != null) {
+                return getConfigurationForGivenCase(m, caseProperty);
             }
-            return result;
+            List<Config> result = _createConfigurations(m, testInstance);
+            return isPropertyPresentOrTrue(PROPERTY_REVERSE)// is reverse mode enabled?
+                ? (result.isEmpty()
+                    ? getNotSkippedConfiguration()
+                    : getSkippedConfiguration())
+                : result;
         }
         return getNotSkippedConfiguration();
+    }
+
+    private String getCaseProperty() {
+        return System.getProperty(PROPERTY_CASE);
+    }
+
+    private List<Config> getConfigurationForGivenCase(Method m, String caseProperty) {
+        Skip skipAnnotation = m.getAnnotation(Skip.class);
+        if (skipAnnotation != null) {
+            if (skipAnnotation.value() != null) {
+                return skipAnnotation.value()[0].getSimpleName().matches(format(".*{0}.*", caseProperty))
+                    ? getNotSkippedConfiguration()
+                    : getSkippedConfiguration();
+            } else {
+                return getSkippedConfiguration();
+            }
+        } else {
+            return getSkippedConfiguration();
+        }
     }
 
     private List<Config> getNotSkippedConfiguration() {
@@ -128,12 +156,12 @@ public class SkipConfigurator implements ConfiguratorExtension {
         return Boolean.TRUE;
     }
 
-    private boolean isPropertyNotPresentOrFalse(String name) {
-        return Boolean.parseBoolean(System.getProperty(name, "false"));
-    }
-
     private boolean isPropertyNotPresentOrTrue(String name) {
         return Boolean.parseBoolean(System.getProperty(name, "true"));
+    }
+
+    private boolean isPropertyPresentOrTrue(String name) {
+        return Boolean.parseBoolean(System.getProperty(name, "false"));
     }
 
     @Override
