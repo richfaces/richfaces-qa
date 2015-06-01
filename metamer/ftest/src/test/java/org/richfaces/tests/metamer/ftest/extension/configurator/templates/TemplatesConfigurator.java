@@ -53,6 +53,10 @@ public class TemplatesConfigurator implements ConfiguratorExtension {
     private static final String TEMPLATE_LIST_SEPARATOR = ",";
     private static final String TEMPLATE_PROPERTY_NAME = "templates";
 
+    private static String getTemplatePropertyValue() {
+        return System.getProperty(TEMPLATE_PROPERTY_NAME, PLAIN);
+    }
+
     private List<TemplatesList> addTemplatesListForEachTestedTemplate(EnumSet<Template> defaultTestedTemplates) {
         List<TemplatesList> result = Lists.newLinkedList();
         for (Template template : defaultTestedTemplates) {
@@ -94,9 +98,10 @@ public class TemplatesConfigurator implements ConfiguratorExtension {
         Templates annotation = (annotationOnMethod != null ? annotationOnMethod : annotationOnTestClass);
         Field templateField = ReflectionUtils.getFirstFieldAnnotatedWith(Templates.class, testInstance);
 
-        // if Skip annotation is present and no @Templates is specified, then run only in plain template
+        // if Skip annotation is present, no @Templates is specified and template property (-Dtemplates) is set to all
+        // templates, then run test only in plain template
         Skip skipAnnotation = m.getAnnotation(Skip.class);
-        if (annotation == null && skipAnnotation != null) {
+        if (annotation == null && skipAnnotation != null && isAllTemplateString(getTemplatePropertyValue())) {
             result.add(new FieldConfig(testInstance, PLAIN_TEMPLATE, templateField));
             return result;
         }
@@ -188,7 +193,7 @@ public class TemplatesConfigurator implements ConfiguratorExtension {
 
     private List<TemplatesList> parseTemplatesListFromSystemProperty(EnumSet<Template> defaultTestedTemplates) {
         List<TemplatesList> result = Lists.newLinkedList();
-        String[] split = System.getProperty(TEMPLATE_PROPERTY_NAME, PLAIN).split(TEMPLATE_LIST_SEPARATOR);
+        String[] split = getTemplatePropertyValue().split(TEMPLATE_LIST_SEPARATOR);
         for (String templatesListString : split) {
             if (isAllTemplateString(templatesListString)) {
                 result.addAll(addTemplatesListForEachTestedTemplate(defaultTestedTemplates));
