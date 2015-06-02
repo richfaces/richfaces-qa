@@ -1,11 +1,8 @@
 package org.richfaces.tests.metamer.ftest.richPanelMenu;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
@@ -27,8 +24,8 @@ public class TestPanelMenuFragmentShowcase extends AbstractWebDriverTest {
     private final Attributes<PanelMenuAttributes> panelMenuAttributes = getAttributes();
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richPanelMenu/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richPanelMenu/simple.xhtml";
     }
 
     @FindBy(className = "rf-pm")

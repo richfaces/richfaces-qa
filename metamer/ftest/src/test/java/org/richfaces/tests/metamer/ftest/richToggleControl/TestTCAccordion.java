@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richToggleControl;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
@@ -40,8 +36,8 @@ public class TestTCAccordion extends AbstractTestToggleControl {
     private WebElement[] items2;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richToggleControl/accordion.xhtml");
+    public String getComponentTestPagePath() {
+        return "richToggleControl/accordion.xhtml";
     }
 
     @Test
@@ -66,14 +62,14 @@ public class TestTCAccordion extends AbstractTestToggleControl {
 
     private WebElement[] getItems1() {
         if (items1 == null) {
-            items1 = new WebElement[]{ getPage().getPanel1Item1Content(), getPage().getPanel1Item2Content(), getPage().getPanel1Item3Content() };
+            items1 = new WebElement[] { getPage().getPanel1Item1Content(), getPage().getPanel1Item2Content(), getPage().getPanel1Item3Content() };
         }
         return items1;
     }
 
     private WebElement[] getItems2() {
         if (items2 == null) {
-            items2 = new WebElement[]{ getPage().getPanel2Item1Content(), getPage().getPanel2Item2Content(), getPage().getPanel2Item3Content() };
+            items2 = new WebElement[] { getPage().getPanel2Item1Content(), getPage().getPanel2Item2Content(), getPage().getPanel2Item3Content() };
         }
         return items2;
     }

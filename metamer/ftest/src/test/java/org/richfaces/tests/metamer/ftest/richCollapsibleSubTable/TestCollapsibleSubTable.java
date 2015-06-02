@@ -21,14 +21,12 @@
  */
 package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import java.net.URL;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
@@ -48,8 +46,8 @@ import org.testng.annotations.Test;
 public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richCollapsibleSubTable/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richCollapsibleSubTable/simple.xhtml";
     }
 
     private WebElement getTestedRow() {

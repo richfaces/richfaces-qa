@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
-
-import java.net.URL;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -57,8 +54,8 @@ public class TestExtendedDataTableSimple extends DataTableSimpleTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richExtendedDataTable/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richExtendedDataTable/simple.xhtml";
     }
 
     @Test

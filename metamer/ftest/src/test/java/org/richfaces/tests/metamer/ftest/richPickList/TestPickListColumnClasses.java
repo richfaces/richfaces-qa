@@ -21,9 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richPickList;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
 import java.text.MessageFormat;
 
 import org.jboss.arquillian.graphene.findby.ByJQuery;
@@ -58,8 +55,8 @@ public class TestPickListColumnClasses extends AbstractColumnClassesTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richPickList/moreColumns.xhtml");
+    public String getComponentTestPagePath() {
+        return "richPickList/moreColumns.xhtml";
     }
 
     @Override

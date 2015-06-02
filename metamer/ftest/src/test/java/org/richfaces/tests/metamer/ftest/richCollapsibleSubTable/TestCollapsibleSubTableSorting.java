@@ -21,11 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.testng.Assert.assertEquals;
 
-import java.net.URL;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -62,8 +60,8 @@ public class TestCollapsibleSubTableSorting extends AbstractCollapsibleSubTableT
     private SortingState sortingStateWomen;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richCollapsibleSubTable/sorting-using-column.xhtml");
+    public String getComponentTestPagePath() {
+        return "richCollapsibleSubTable/sorting-using-column.xhtml";
     }
 
     @Test

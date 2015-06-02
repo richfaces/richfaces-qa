@@ -21,15 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
-
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableScrollerTest;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SimpleEDT;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -41,8 +36,8 @@ public class TestExtendedDataTableScroller extends DataTableScrollerTest {
     private SimpleEDT table;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richExtendedDataTable/scroller.xhtml");
+    public String getComponentTestPagePath() {
+        return "richExtendedDataTable/scroller.xhtml";
     }
 
     @Override

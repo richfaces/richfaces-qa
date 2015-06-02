@@ -154,6 +154,7 @@ public class Indicator {
     }
 
     public enum IndicatorState {
+
         HIDDEN, DRAGGING, ACCEPTING, REJECTING;
     }
 

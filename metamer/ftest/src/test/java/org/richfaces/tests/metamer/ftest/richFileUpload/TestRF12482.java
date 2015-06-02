@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richFileUpload;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
@@ -35,8 +31,8 @@ import org.testng.annotations.Test;
 public class TestRF12482 extends AbstractFileUploadTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richFileUpload/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richFileUpload/simple.xhtml";
     }
 
     @Test

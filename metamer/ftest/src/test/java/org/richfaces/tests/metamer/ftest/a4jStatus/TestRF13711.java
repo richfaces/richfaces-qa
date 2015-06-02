@@ -22,10 +22,7 @@
 package org.richfaces.tests.metamer.ftest.a4jStatus;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.AssertJUnit.assertEquals;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
@@ -58,8 +55,8 @@ public class TestRF13711 extends AbstractWebDriverTest {
     private WebElement referencedStatusButton;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jStatus/rf-13711.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jStatus/rf-13711.xhtml";
     }
 
     @Test

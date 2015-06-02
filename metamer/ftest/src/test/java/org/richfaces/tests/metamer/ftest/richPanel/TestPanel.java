@@ -21,13 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.richPanel;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.bodyClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.headerClass;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -58,8 +55,8 @@ public class TestPanel extends AbstractWebDriverTest {
     private TextualRichFacesPanel panelWithoutHeader;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richPanel/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richPanel/simple.xhtml";
     }
 
     @Test

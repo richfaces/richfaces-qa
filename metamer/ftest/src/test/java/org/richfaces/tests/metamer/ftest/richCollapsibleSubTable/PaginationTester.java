@@ -33,7 +33,7 @@ public abstract class PaginationTester {
 
     public void initializeTestedPages(int lastPage) {
         int l = lastPage;
-        testPages = new int[]{ 3, l, l / 2, l - 1 };
+        testPages = new int[] { 3, l, l / 2, l - 1 };
         for (int i = 0; i < testPages.length; i++) {
             testPages[i] = Math.min(l, Math.max(1, testPages[i]));
         }

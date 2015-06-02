@@ -34,6 +34,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
  *
  */
 public class DropDownMenuPage extends MetamerPage {
+
     @FindByJQuery(".rf-tb-itm:eq(0)")
     private RichFacesDropDownMenu fileDropDownMenuTop;
 

@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richTree;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
@@ -91,7 +87,7 @@ public abstract class AbstractTreeTest extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richTree/" + sample + ".xhtml");
+    public String getComponentTestPagePath() {
+        return "richTree/" + sample + ".xhtml";
     }
 }

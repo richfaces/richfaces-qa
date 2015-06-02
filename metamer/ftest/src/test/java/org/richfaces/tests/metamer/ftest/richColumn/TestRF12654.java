@@ -21,10 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.richColumn;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static java.text.MessageFormat.format;
 
-import java.net.URL;
-import java.text.MessageFormat;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -43,7 +41,7 @@ import org.testng.annotations.Test;
  */
 public class TestRF12654 extends AbstractWebDriverTest {
 
-    private final String[] pages = new String[]{ "rf-12654-CST", "rf-12654-DT", "rf-12654-EDT" };
+    private final String[] pages = new String[] { "rf-12654-CST", "rf-12654-DT", "rf-12654-EDT" };
     private String page;
 
     @FindBy(css = "[id$='testButton']")
@@ -52,8 +50,8 @@ public class TestRF12654 extends AbstractWebDriverTest {
     private RichFacesLog log;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, MessageFormat.format("faces/components/richColumn/{0}.xhtml", page));
+    public String getComponentTestPagePath() {
+        return format("richColumn/{0}.xhtml", page);
     }
 
     @Test

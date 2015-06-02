@@ -21,7 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jOutputPanel;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.fragment.common.Event.CLICK;
 import static org.richfaces.fragment.common.Event.DBLCLICK;
 import static org.richfaces.fragment.common.Event.KEYDOWN;
@@ -36,8 +35,6 @@ import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annot
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneElement;
@@ -81,8 +78,8 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jOutputPanel/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jOutputPanel/simple.xhtml";
     }
 
     @Test

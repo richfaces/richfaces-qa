@@ -21,12 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.richSelect;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,8 +99,8 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richSelect/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richSelect/simple.xhtml";
     }
 
     @Test(groups = "smoke")

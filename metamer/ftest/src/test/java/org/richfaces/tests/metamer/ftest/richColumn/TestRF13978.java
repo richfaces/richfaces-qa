@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richColumn;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -44,8 +40,8 @@ public class TestRF13978 extends AbstractWebDriverTest {
     private WebElement ajaxSubmit;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richColumn/rf-13978.xhtml");
+    public String getComponentTestPagePath() {
+        return "richColumn/rf-13978.xhtml";
     }
 
     @Test

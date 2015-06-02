@@ -21,12 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.richProgressBar;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,8 +57,8 @@ public class TestProgressBarClient extends AbstractWebDriverTest {
     private ProgressBarPage page;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richProgressBar/clientMode.xhtml");
+    public String getComponentTestPagePath() {
+        return "richProgressBar/clientMode.xhtml";
     }
 
     @Test

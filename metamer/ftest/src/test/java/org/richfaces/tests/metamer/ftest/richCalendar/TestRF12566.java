@@ -22,11 +22,8 @@
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.fragment.log.Log.LogEntryLevel.ERROR;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
@@ -47,8 +44,8 @@ public class TestRF12566 extends AbstractWebDriverTest {
     private RF12566Page page;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richCalendar/rf-12566.xhtml");
+    public String getComponentTestPagePath() {
+        return "richCalendar/rf-12566.xhtml";
     }
 
     @Test

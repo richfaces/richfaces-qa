@@ -21,11 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jCommandLink;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
@@ -58,8 +55,8 @@ public class TestCommandLink extends AbstractWebDriverTest {
     private CommandButtonLinkPage page;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jCommandLink/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jCommandLink/simple.xhtml";
     }
 
     @Test(groups = "client-side-perf")

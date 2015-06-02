@@ -32,6 +32,7 @@ import static org.testng.Assert.fail;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -90,6 +91,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     protected static final int WAIT_TIME = 5;// s
     protected static final int MINOR_WAIT_TIME = 50;// ms
     protected static final int TRIES = 20;// for guardListSize and expectedReturnJS
+    private static final String FACES_COMPONENTS_PATH = "faces/components/";
 
     @Drone
     protected WebDriver driver;
@@ -112,6 +114,16 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     // this field is used by MetamerTestInfo to gather information about actual test method configuration
     private Config currentConfiguration;
+
+    /**
+     * @return method should return a String representing 'component/page' (case sensitive). E.g.: <code>a4jActionListener/all.xhtml</code>, <code>a4jAjax/hCommandButton.xhtml</code>
+     */
+    public abstract String getComponentTestPagePath();
+
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, FACES_COMPONENTS_PATH + getComponentTestPagePath());
+    }
 
     public enum DriverType {
 

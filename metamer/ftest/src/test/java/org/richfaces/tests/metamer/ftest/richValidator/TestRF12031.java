@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richValidator;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
@@ -51,8 +47,8 @@ public class TestRF12031 extends AbstractWebDriverTest {
     private WebElement toggleButton;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richValidator/rf-12031.xhtml");
+    public String getComponentTestPagePath() {
+        return "richValidator/rf-12031.xhtml";
     }
 
     @Test

@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jStatus;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.requestTimeChangesWaiting;
-
-import java.net.URL;
 
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
@@ -40,8 +37,8 @@ import org.testng.annotations.Test;
 public class TestInstantAttributes extends AbstractStatusTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jStatus/instantAttributes.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jStatus/instantAttributes.xhtml";
     }
 
     @Test

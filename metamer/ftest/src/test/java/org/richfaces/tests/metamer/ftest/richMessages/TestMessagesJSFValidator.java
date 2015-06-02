@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richMessages;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.testng.annotations.Test;
 
 /**
@@ -36,8 +32,8 @@ import org.testng.annotations.Test;
 public class TestMessagesJSFValidator extends AbstractMessagesTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richMessages/jsfValidator.xhtml");
+    public String getComponentTestPagePath() {
+        return "richMessages/jsfValidator.xhtml";
     }
 
     @Test

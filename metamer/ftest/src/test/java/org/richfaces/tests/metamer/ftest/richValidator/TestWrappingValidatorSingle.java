@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richValidator;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
@@ -44,8 +40,8 @@ public class TestWrappingValidatorSingle extends AbstractValidatorsTest {
 
     /** component page locator */
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richValidator/single.xhtml");
+    public String getComponentTestPagePath() {
+        return "richValidator/single.xhtml";
     }
 
     @Test

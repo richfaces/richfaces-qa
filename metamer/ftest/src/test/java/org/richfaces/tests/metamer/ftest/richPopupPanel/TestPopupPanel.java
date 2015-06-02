@@ -21,13 +21,11 @@
  */
 package org.richfaces.tests.metamer.ftest.richPopupPanel;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertTrue;
 
-import java.net.URL;
 import java.util.EnumSet;
 import java.util.Locale;
 
@@ -143,8 +141,8 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richPopupPanel/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richPopupPanel/simple.xhtml";
     }
 
     private void hidePopup() {

@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richItemChangeListener;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.page.Page;
@@ -54,8 +50,8 @@ public abstract class AbstractItemChangeListenerTest<P extends ICLPage> extends 
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richItemChangeListener/" + testedComponent + ".xhtml");
+    public String getComponentTestPagePath() {
+        return "richItemChangeListener/" + testedComponent + ".xhtml";
     }
 
     private void testICL(final String expectedText) {

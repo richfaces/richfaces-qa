@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richSelect;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -56,8 +52,8 @@ public class TestSelectJSApi extends AbstractWebDriverTest {
     private RichFacesSelect select;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richSelect/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richSelect/simple.xhtml";
     }
 
     private String getValue() {

@@ -50,7 +50,7 @@ public class ReflectionUtils {
     }
 
     public static List<Field> getAllFieldsAnnotatedWith(Class<? extends Annotation> annoClass, Object instance) {
-        return getAllFieldsAnnotatedWith(new Class[]{ annoClass }, instance);
+        return getAllFieldsAnnotatedWith(new Class[] { annoClass }, instance);
     }
 
     public static List<Method> getAllMethodsAnnotatedWith(Class<? extends Annotation>[] annoClasses, Object instance) {
@@ -82,7 +82,7 @@ public class ReflectionUtils {
     }
 
     public static List<Method> getAllMethodsAnnotatedWith(Class<? extends Annotation> annoClass, Object instance) {
-        return getAllMethodsAnnotatedWith(new Class[]{ annoClass }, instance);
+        return getAllMethodsAnnotatedWith(new Class[] { annoClass }, instance);
     }
 
     public static Field getFirstFieldAnnotatedWith(Class<? extends Annotation>[] annoClasses, Object instance) {
@@ -116,7 +116,7 @@ public class ReflectionUtils {
     }
 
     public static Field getFirstFieldAnnotatedWith(Class<? extends Annotation> annoClass, Object instance) {
-        return getFirstFieldAnnotatedWith(new Class[]{ annoClass }, instance);
+        return getFirstFieldAnnotatedWith(new Class[] { annoClass }, instance);
     }
 
     public static Method getFirstMethodAnnotatedWith(Class<? extends Annotation>[] annoClasses, Object instance) {
@@ -146,7 +146,7 @@ public class ReflectionUtils {
     }
 
     public static Method getFirstMethodAnnotatedWith(Class<? extends Annotation> annoClass, Object instance) {
-        return getFirstMethodAnnotatedWith(new Class[]{ annoClass }, instance);
+        return getFirstMethodAnnotatedWith(new Class[] { annoClass }, instance);
     }
 
     public static Method getFirstMethodWithName(String methodName, Object instance) {

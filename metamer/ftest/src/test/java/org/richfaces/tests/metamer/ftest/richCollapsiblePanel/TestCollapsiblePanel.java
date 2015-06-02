@@ -21,11 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.richCollapsiblePanel;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.STRINGS;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
@@ -59,8 +56,8 @@ public class TestCollapsiblePanel extends TestFacets {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richCollapsiblePanel/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richCollapsiblePanel/simple.xhtml";
     }
 
     @Test

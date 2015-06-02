@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richPickList;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.pickList.RichFacesPickList;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -42,8 +38,8 @@ public class TestPickListWithColumns extends AbstractWebDriverTest {
     private RichFacesPickList picklist;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richPickList/columnLayout.xhtml");
+    public String getComponentTestPagePath() {
+        return "richPickList/columnLayout.xhtml";
     }
 
     @Test

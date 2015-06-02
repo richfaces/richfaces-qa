@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richPopupPanel;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.Dimension;
@@ -50,8 +47,8 @@ public class TestDynamicContentSize extends AbstractWebDriverTest {
     private TestedPopupPanel popup;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richPopupPanel/rf-13655.xhtml");
+    public String getComponentTestPagePath() {
+        return "richPopupPanel/rf-13655.xhtml";
     }
 
     @Test

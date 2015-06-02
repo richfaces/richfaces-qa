@@ -21,12 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.richDataScroller;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
@@ -86,8 +83,8 @@ public class TestDataScrollerFacets extends AbstractWebDriverTest {
     private WebElement facetLastDisabled;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richDataScroller/facets.xhtml");
+    public String getComponentTestPagePath() {
+        return "richDataScroller/facets.xhtml";
     }
 
     @Test

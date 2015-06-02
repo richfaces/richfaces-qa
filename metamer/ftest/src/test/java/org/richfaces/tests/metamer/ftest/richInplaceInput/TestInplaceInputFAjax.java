@@ -21,11 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
@@ -49,8 +46,8 @@ public class TestInplaceInputFAjax extends AbstractWebDriverTest {
     private RichFacesInplaceInput inplaceInput;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richInplaceInput/fAjax.xhtml");
+    public String getComponentTestPagePath() {
+        return "richInplaceInput/fAjax.xhtml";
     }
 
     @Test

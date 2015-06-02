@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jPush;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
@@ -66,8 +63,8 @@ public class TestTwoPush extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jPush/twoPush.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jPush/twoPush.xhtml";
     }
 
     private DateTime getTimeFromOutput(WebElement output) {

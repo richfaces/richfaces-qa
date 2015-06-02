@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richDataTable;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
@@ -47,8 +43,8 @@ public class TestDataTableSortingUsingComponentControl extends DataTableSortingT
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richDataTable/sorting-using-component-control.xhtml");
+    public String getComponentTestPagePath() {
+        return "richDataTable/sorting-using-component-control.xhtml";
     }
 
     @Test

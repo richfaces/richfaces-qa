@@ -21,12 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.richAccordion;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import java.net.URL;
 import java.util.List;
 
 import javax.faces.event.PhaseId;
@@ -59,8 +57,8 @@ public class TestAccordion extends AbstractWebDriverTest {
     private AccordionPage page;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richAccordion/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richAccordion/simple.xhtml";
     }
 
     @Test

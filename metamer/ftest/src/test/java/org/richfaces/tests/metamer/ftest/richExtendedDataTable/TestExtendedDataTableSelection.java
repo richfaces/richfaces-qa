@@ -21,12 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.openqa.selenium.Keys.CONTROL;
 import static org.openqa.selenium.Keys.SHIFT;
 import static org.testng.Assert.assertEquals;
 
-import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.TreeSet;
@@ -55,8 +53,8 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     private SelectionPage page;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richExtendedDataTable/selection.xhtml");
+    public String getComponentTestPagePath() {
+        return "richExtendedDataTable/selection.xhtml";
     }
 
     @BeforeMethod

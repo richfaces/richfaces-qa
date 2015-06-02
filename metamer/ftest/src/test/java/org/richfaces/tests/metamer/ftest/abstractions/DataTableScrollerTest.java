@@ -23,16 +23,14 @@ package org.richfaces.tests.metamer.ftest.abstractions;
 
 import static org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton.FIRST;
 import static org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton.LAST;
+import static org.testng.Assert.assertEquals;
 
 import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
 import org.richfaces.fragment.dataTable.AbstractTable;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleFooterInterface;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleHeaderInterface;
-import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
-
-import static org.testng.Assert.assertEquals;
-
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 
 /**
@@ -48,7 +46,7 @@ public abstract class DataTableScrollerTest extends AbstractDataTableTest {
         testRowCount(dataScroller2);
     }
 
-    @Templates(exclude = {"a4jRepeat", "hDataTable", "richDataTable", "uiRepeat"})
+    @Templates(exclude = { "a4jRepeat", "hDataTable", "richDataTable", "uiRepeat" })
     public void testRowCountOutsideTable() {
         testRowCount(dataScroller1);
     }

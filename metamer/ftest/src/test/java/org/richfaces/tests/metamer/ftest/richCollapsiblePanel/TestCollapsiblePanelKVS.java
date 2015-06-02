@@ -24,10 +24,7 @@ package org.richfaces.tests.metamer.ftest.richCollapsiblePanel;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.test.selenium.support.url.URLUtils;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.collapsiblePanel.TextualRichFacesCollapsiblePanel;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -52,8 +49,8 @@ public class TestCollapsiblePanelKVS extends AbstractWebDriverTest {
     private final CollapsiblePanelReloadTester reloadTester = new CollapsiblePanelReloadTester();
 
     @Override
-    public URL getTestUrl() {
-        return URLUtils.buildUrl(contextPath, "faces/components/richCollapsiblePanel/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richCollapsiblePanel/simple.xhtml";
     }
 
     @Test
@@ -98,7 +95,7 @@ public class TestCollapsiblePanelKVS extends AbstractWebDriverTest {
 
         @Override
         public Boolean[] getInputValues() {
-            return new Boolean[]{ Boolean.TRUE, Boolean.FALSE };
+            return new Boolean[] { Boolean.TRUE, Boolean.FALSE };
         }
     }
 }

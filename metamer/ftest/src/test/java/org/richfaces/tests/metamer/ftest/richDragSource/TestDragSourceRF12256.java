@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richDragSource;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
@@ -38,8 +34,8 @@ import org.testng.annotations.Test;
 public class TestDragSourceRF12256 extends AbstractDragSourceTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richDragSource/RF-12256.xhtml");
+    public String getComponentTestPagePath() {
+        return "richDragSource/RF-12256.xhtml";
     }
 
     @Test

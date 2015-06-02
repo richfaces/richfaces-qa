@@ -21,13 +21,11 @@
  */
 package org.richfaces.tests.metamer.ftest.richPlaceholder;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.awt.Color;
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.test.selenium.support.color.ColorUtils;
@@ -114,8 +112,8 @@ public abstract class AbstractPlaceholderTest extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richPlaceholder/" + componentName + ".xhtml");
+    public String getComponentTestPagePath() {
+        return "richPlaceholder/" + componentName + ".xhtml";
     }
 
     protected void sendKeysToInput1(String keys) {

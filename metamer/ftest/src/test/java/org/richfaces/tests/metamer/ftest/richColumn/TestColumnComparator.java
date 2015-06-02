@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richColumn;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.ColumnGroupDT;
@@ -40,8 +36,8 @@ public class TestColumnComparator extends AbstractColumnSortingTest {
     private ColumnGroupDT table;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richColumn/comparator.xhtml");
+    public String getComponentTestPagePath() {
+        return "richColumn/comparator.xhtml";
     }
 
     @Test

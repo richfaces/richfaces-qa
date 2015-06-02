@@ -21,13 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
-
-import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
@@ -69,8 +66,8 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     private RichFacesMessage requiredMessage;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richInplaceInput/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richInplaceInput/simple.xhtml";
     }
 
     @Test(groups = "smoke")

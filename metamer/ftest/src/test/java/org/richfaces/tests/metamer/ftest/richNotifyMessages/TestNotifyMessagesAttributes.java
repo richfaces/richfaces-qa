@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richNotifyMessages;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.openqa.selenium.TimeoutException;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
@@ -46,8 +42,8 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
     private final Attributes<NotifyMessagesAttributes> notifyMessagesAttributes = getAttributes();
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richNotifyMessages/jsr303.xhtml");
+    public String getComponentTestPagePath() {
+        return "richNotifyMessages/jsr303.xhtml";
     }
 
     @Test(groups = "smoke")

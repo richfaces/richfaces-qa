@@ -21,11 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.richTreeModelAdaptor;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 
-import java.net.URL;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
@@ -55,8 +53,8 @@ public class TestTreeModelAdaptorToggling extends TestTreeToggling {
     private Boolean recursiveLeafChildrenNullable;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richTree/treeAdaptors.xhtml");
+    public String getComponentTestPagePath() {
+        return "richTree/treeAdaptors.xhtml";
     }
 
     @BeforeMethod
@@ -71,7 +69,7 @@ public class TestTreeModelAdaptorToggling extends TestTreeToggling {
 
     @BeforeClass
     public void setupTreeModelTesting() {
-        paths = new Integer[][]{ { 2, 1, 0, 1 }, { 1, 3, 5 } };
+        paths = new Integer[][] { { 2, 1, 0, 1 }, { 1, 3, 5 } };
     }
 
     @Test

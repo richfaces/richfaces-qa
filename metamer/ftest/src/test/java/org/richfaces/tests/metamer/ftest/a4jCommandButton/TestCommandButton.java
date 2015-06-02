@@ -21,13 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jCommandButton;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.STRINGS;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
@@ -61,8 +58,8 @@ public class TestCommandButton extends AbstractWebDriverTest {
     private String type;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jCommandButton/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jCommandButton/simple.xhtml";
     }
 
     @Test(groups = "client-side-perf")

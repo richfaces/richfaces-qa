@@ -21,7 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jLog;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.fragment.log.Log.LogEntryLevel.INFO;
 import static org.richfaces.fragment.log.Log.LogEntryLevel.values;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
@@ -29,7 +28,6 @@ import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annot
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-import java.net.URL;
 import java.util.Set;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -102,8 +100,8 @@ public class TestLog extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jLog/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jLog/simple.xhtml";
     }
 
     private void submit() {

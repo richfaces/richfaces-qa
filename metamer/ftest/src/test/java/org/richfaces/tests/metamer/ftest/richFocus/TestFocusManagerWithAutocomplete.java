@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richFocus;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.openqa.selenium.WebElement;
@@ -50,8 +46,8 @@ public class TestFocusManagerWithAutocomplete extends AbstractWebDriverTest {
     private WebElement inputText;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richFocus/rf-13251.xhtml");
+    public String getComponentTestPagePath() {
+        return "richFocus/rf-13251.xhtml";
     }
 
     @Test

@@ -21,10 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.richColumn;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 
-import java.net.URL;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -63,8 +61,8 @@ public class TestColumnFiltering extends AbstractColumnTest {
     private ColumnGroupDT actualTable;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richColumn/filtering.xhtml");
+    public String getComponentTestPagePath() {
+        return "richColumn/filtering.xhtml";
     }
 
     @Test

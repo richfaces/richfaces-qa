@@ -27,7 +27,6 @@ import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
 import static org.jboss.arquillian.graphene.Graphene.waitAjax;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.contentClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.headerActiveClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.headerClass;
@@ -36,8 +35,6 @@ import static org.richfaces.tests.metamer.ftest.BasicAttributes.headerInactiveCl
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.headerStyle;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
@@ -72,8 +69,8 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     private WebElement testElement;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richAccordionItem/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richAccordionItem/simple.xhtml";
     }
 
     /**

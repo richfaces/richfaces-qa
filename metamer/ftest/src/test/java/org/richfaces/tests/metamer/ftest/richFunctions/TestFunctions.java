@@ -21,14 +21,11 @@
  */
 package org.richfaces.tests.metamer.ftest.richFunctions;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNotSame;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
@@ -112,8 +109,8 @@ public class TestFunctions extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richFunctions/all.xhtml");
+    public String getComponentTestPagePath() {
+        return "richFunctions/all.xhtml";
     }
 
     private boolean isAdmin() {

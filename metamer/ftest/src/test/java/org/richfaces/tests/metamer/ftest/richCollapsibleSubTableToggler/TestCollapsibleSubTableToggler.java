@@ -21,14 +21,11 @@
  */
 package org.richfaces.tests.metamer.ftest.richCollapsibleSubTableToggler;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.richfaces.tests.metamer.ftest.richCollapsibleSubTableToggler.CollapsibleSubTableTogglerAttributes.rendered;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import org.richfaces.fragment.collapsibleSubTableToggler.RichFacesCollapsibleSubTableToggler;
 import org.richfaces.fragment.common.Event;
@@ -56,8 +53,8 @@ public class TestCollapsibleSubTableToggler extends AbstractCollapsibleSubTableT
     private Boolean toggleByImage = Boolean.TRUE;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richCollapsibleSubTableToggler/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richCollapsibleSubTableToggler/simple.xhtml";
     }
 
     @Test

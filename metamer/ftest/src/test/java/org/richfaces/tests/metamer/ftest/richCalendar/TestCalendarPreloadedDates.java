@@ -21,12 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import java.net.URL;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -86,8 +84,8 @@ public class TestCalendarPreloadedDates extends AbstractCalendarTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richCalendar/preloadedDates.xhtml");
+    public String getComponentTestPagePath() {
+        return "richCalendar/preloadedDates.xhtml";
     }
 
     @Test

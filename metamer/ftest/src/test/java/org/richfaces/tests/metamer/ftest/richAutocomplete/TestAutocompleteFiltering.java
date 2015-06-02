@@ -21,12 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
-import java.net.URL;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -43,8 +41,8 @@ public class TestAutocompleteFiltering extends AbstractAutocompleteTest {
     private static final String CLIENT_FILTER_FUNCTION_NAME = "customClientFilterFunction";
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richAutocomplete/filtering.xhtml");
+    public String getComponentTestPagePath() {
+        return "richAutocomplete/filtering.xhtml";
     }
 
     @Test

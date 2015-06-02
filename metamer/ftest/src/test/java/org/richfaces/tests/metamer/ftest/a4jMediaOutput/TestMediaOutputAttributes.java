@@ -21,13 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jMediaOutput;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
-
-import java.net.URL;
 
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
@@ -49,8 +46,8 @@ public class TestMediaOutputAttributes extends AbstractMediaOutputTest {
     private final Attributes<MediaOutputAttributes> mediaOutputAttributes = getAttributes();
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jMediaOutput/imagePng.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jMediaOutput/imagePng.xhtml";
     }
 
     @Test

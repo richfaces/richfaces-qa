@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jQueue;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Actions;
@@ -45,8 +41,8 @@ public class TestQueueAttributes extends AbstractWebDriverTest {
     private final Attributes<QueueAttributes> attributes = getAttributes();
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jQueue/globalQueue.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jQueue/globalQueue.xhtml";
     }
 
     @Test

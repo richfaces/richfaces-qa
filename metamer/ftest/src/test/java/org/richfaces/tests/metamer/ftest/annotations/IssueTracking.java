@@ -35,5 +35,6 @@ import java.lang.annotation.Target;
 @Target({ METHOD, TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface IssueTracking {
+
     String[] value();
 }

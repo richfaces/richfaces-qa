@@ -21,12 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.richPickList;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import java.net.URL;
 import java.util.List;
 
 import javax.faces.event.PhaseId;
@@ -89,8 +87,8 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richPickList/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richPickList/simple.xhtml";
     }
 
     private void submitAjax() {

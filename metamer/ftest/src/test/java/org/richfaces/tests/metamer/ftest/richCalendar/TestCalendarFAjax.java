@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
@@ -37,8 +33,8 @@ import org.testng.annotations.Test;
 public class TestCalendarFAjax extends AbstractCalendarTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richCalendar/fAjax.xhtml");
+    public String getComponentTestPagePath() {
+        return "richCalendar/fAjax.xhtml";
     }
 
     @Test

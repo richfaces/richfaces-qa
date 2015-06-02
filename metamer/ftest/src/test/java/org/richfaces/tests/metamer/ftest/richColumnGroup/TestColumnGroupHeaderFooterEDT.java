@@ -1,9 +1,5 @@
 package org.richfaces.tests.metamer.ftest.richColumnGroup;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
@@ -15,7 +11,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:mtomasek@redhat.com">Martin Tomasek</a>
  *
  */
-public class TestColumnGroupHeaderFooterEDT extends TestColumnGroupHeaderFooter{
+public class TestColumnGroupHeaderFooterEDT extends TestColumnGroupHeaderFooter {
 
     @FindBy(css = ".rf-edt[id$=richEDT]")
     private ColumnGroupEDT table;
@@ -26,8 +22,8 @@ public class TestColumnGroupHeaderFooterEDT extends TestColumnGroupHeaderFooter{
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richColumnGroup/headerFooterEDT.xhtml");
+    public String getComponentTestPagePath() {
+        return "richColumnGroup/headerFooterEDT.xhtml";
     }
 
     @Test

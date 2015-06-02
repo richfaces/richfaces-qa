@@ -21,9 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jStatus;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.support.FindBy;
@@ -42,8 +39,8 @@ public class TestReferencedUsage extends AbstractStatusTest {
     private RichFacesStatus status2;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jStatus/referencedUsage.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jStatus/referencedUsage.xhtml";
     }
 
     @Test

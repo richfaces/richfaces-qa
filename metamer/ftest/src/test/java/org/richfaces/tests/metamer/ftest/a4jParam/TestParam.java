@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jParam;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.JavascriptExecutor;
@@ -51,8 +48,8 @@ public class TestParam extends AbstractWebDriverTest {
     private SimpleParamPage page;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jParam/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jParam/simple.xhtml";
     }
 
     @Test(groups = "smoke")

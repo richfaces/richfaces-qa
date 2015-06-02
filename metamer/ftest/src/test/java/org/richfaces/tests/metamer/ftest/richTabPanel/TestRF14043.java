@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richTabPanel;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.tabPanel.RichFacesTabPanel;
@@ -45,8 +41,8 @@ public class TestRF14043 extends AbstractWebDriverTest {
     private RichFacesTabPanel tabPanel;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richTab/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richTab/simple.xhtml";
     }
 
     @Test

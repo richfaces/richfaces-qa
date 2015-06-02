@@ -1,9 +1,6 @@
 package org.richfaces.tests.metamer.ftest.richContextMenu.fragmentTest;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.fragment.common.Event;
@@ -21,8 +18,8 @@ public class TestContextMenuFragment extends AbstractWebDriverTest {
     private final Attributes<ContextMenuAttributes> contextMenuAttributes = getAttributes();
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richContextMenu/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richContextMenu/simple.xhtml";
     }
 
     @Test

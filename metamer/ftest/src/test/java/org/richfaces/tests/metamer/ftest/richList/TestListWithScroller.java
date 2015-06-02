@@ -22,9 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richList;
 
 import static org.jboss.arquillian.graphene.Graphene.waitAjax;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
 
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
@@ -47,13 +44,13 @@ public class TestListWithScroller extends AbstractListTest {
     private RichFacesDataScroller scrollerInTableFooter;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richList/scroller.xhtml");
+    public String getComponentTestPagePath() {
+        return "richList/scroller.xhtml";
     }
 
     @Test
     @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "richList",
-            "a4jRepeat", "hDataTable", "uiRepeat" })
+        "a4jRepeat", "hDataTable", "uiRepeat" })
     public void testScrollerWithRowsAttributeOut() {
         testNumberedPages(scrollerOutsideTable);
     }
@@ -62,14 +59,14 @@ public class TestListWithScroller extends AbstractListTest {
     @Skip
     @IssueTracking({ "https://issues.jboss.org/browse/RF-11787", "https://issues.jboss.org/browse/RF-13732" })
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "richList",
-            "a4jRepeat", "hDataTable", "uiRepeat" })
+        "a4jRepeat", "hDataTable", "uiRepeat" })
     public void testScrollerWithRowsAttributeOutIterationComponents() {
         testNumberedPages(scrollerOutsideTable);
     }
 
     @Test
     @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "richList",
-            "a4jRepeat", "uiRepeat" })
+        "a4jRepeat", "uiRepeat" })
     public void testScrollerWithRowsAttributeIn() {
         testNumberedPages(scrollerInTableFooter);
     }
@@ -84,7 +81,7 @@ public class TestListWithScroller extends AbstractListTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11787")
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "richList",
-            "a4jRepeat" })
+        "a4jRepeat" })
     public void testScrollerWithRowsAttributeInIterationComponents() {
         testNumberedPages(scrollerInTableFooter);
     }

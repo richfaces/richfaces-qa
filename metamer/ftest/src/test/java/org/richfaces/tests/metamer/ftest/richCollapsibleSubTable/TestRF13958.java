@@ -21,11 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import org.testng.annotations.Test;
 
@@ -35,8 +32,8 @@ import org.testng.annotations.Test;
 public class TestRF13958 extends AbstractNestedCollapsibleSubTablesTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richCollapsibleSubTable/rf-13927.xhtml");// reused sample
+    public String getComponentTestPagePath() {
+        return "richCollapsibleSubTable/rf-13927.xhtml";// reused sample
     }
 
     @Test

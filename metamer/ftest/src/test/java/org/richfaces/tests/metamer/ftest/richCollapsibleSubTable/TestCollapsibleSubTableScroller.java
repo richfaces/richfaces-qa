@@ -21,14 +21,12 @@
  */
 package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.richfaces.tests.metamer.ftest.richCollapsibleSubTable.ExpandMode.ajax;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import java.net.URL;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -63,8 +61,8 @@ public class TestCollapsibleSubTableScroller extends AbstractCollapsibleSubTable
     private final int rows = 5;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richCollapsibleSubTable/scroller.xhtml");
+    public String getComponentTestPagePath() {
+        return "richCollapsibleSubTable/scroller.xhtml";
     }
 
     @BeforeMethod

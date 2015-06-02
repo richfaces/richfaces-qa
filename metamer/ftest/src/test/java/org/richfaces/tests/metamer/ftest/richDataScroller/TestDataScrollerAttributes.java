@@ -21,14 +21,12 @@
  */
 package org.richfaces.tests.metamer.ftest.richDataScroller;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
-import java.net.URL;
 import java.util.Arrays;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -68,8 +66,8 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richDataScroller/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richDataScroller/simple.xhtml";
     }
 
     @Test

@@ -21,12 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.richCollapsiblePanel;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import java.net.URL;
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -79,8 +77,8 @@ public class TestRF13913 extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richCollapsiblePanel/rf-13913.xhtml");
+    public String getComponentTestPagePath() {
+        return "richCollapsiblePanel/rf-13913.xhtml";
     }
 
     @Test

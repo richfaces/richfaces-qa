@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richOrderingList;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.testng.annotations.Test;
 
@@ -38,8 +34,8 @@ import org.testng.annotations.Test;
 public class TestOrderingListMoving extends AbstractOrderingListTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richOrderingList/withColumn.xhtml");
+    public String getComponentTestPagePath() {
+        return "richOrderingList/withColumn.xhtml";
     }
 
     @Test

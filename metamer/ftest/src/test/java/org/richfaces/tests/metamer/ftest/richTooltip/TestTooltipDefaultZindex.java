@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richTooltip;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.fragment.common.Event;
@@ -46,8 +43,8 @@ public class TestTooltipDefaultZindex extends AbstractWebDriverTest {
     private TooltipPage page;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richTooltip/zindex.xhtml");
+    public String getComponentTestPagePath() {
+        return "richTooltip/zindex.xhtml";
     }
 
     @BeforeMethod

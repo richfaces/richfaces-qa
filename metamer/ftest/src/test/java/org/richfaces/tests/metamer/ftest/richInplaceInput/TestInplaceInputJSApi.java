@@ -21,12 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -46,10 +43,10 @@ public class TestInplaceInputJSApi extends AbstractWebDriverTest {
 
     @FindBy(css = "span[id$=inplaceInput]")
     private RichFacesInplaceInput inplaceInput;
-    //
+
     @FindBy(css = "input[id$=value]")
     private WebElement output;
-    //
+
     @FindBy(id = "cancel")
     private WebElement cancelButton;
     @FindBy(id = "getInput")
@@ -64,12 +61,12 @@ public class TestInplaceInputJSApi extends AbstractWebDriverTest {
     private WebElement saveButton;
     @FindBy(id = "setValue")
     private WebElement setValueButton;
-    //
+
     private static final String SOME_TEXT = "another completely different string";
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richInplaceInput/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richInplaceInput/simple.xhtml";
     }
 
     @Test
@@ -114,7 +111,7 @@ public class TestInplaceInputJSApi extends AbstractWebDriverTest {
         isValueChangedButton.click();
         assertEquals(getValueFromOutput(), "false");
         MetamerPage.waitRequest(inplaceInput.type(SOME_TEXT),
-                WaitRequestType.XHR).confirm();
+            WaitRequestType.XHR).confirm();
         isValueChangedButton.click();
         assertEquals(getValueFromOutput(), "true");
     }

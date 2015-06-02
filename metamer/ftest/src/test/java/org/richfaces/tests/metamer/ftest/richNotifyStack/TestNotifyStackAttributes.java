@@ -21,10 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.richNotifyStack;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 
-import java.net.URL;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -138,8 +136,8 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richNotifyStack/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richNotifyStack/simple.xhtml";
     }
 
     @Test

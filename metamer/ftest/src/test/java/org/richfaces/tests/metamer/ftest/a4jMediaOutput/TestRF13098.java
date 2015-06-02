@@ -23,8 +23,8 @@ public class TestRF13098 extends AbstractMediaOutputTest {
     private WebElement imageTwo;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jMediaOutput/rf-13098.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jMediaOutput/rf-13098.xhtml";
     }
 
     @Test

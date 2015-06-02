@@ -21,11 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.richJQuery;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 
 import java.awt.Color;
-import java.net.URL;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -75,8 +73,8 @@ public class TestJQueryAttributes extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richJQuery/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richJQuery/simple.xhtml";
     }
 
     @Test

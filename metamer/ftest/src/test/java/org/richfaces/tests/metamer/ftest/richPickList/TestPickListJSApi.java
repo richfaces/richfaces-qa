@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richPickList;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.TextInputComponentImpl;
@@ -56,8 +52,8 @@ public class TestPickListJSApi extends AbstractWebDriverTest {
     private RichFacesPickList pickList;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richPickList/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richPickList/simple.xhtml";
     }
 
     @Test

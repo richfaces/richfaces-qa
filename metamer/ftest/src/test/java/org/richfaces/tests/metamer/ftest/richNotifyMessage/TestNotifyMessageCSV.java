@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richNotifyMessage;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.testng.annotations.Test;
 
 /**
@@ -33,8 +29,8 @@ import org.testng.annotations.Test;
 public class TestNotifyMessageCSV extends AbstractNotifyMessageTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richNotifyMessage/csv.xhtml");
+    public String getComponentTestPagePath() {
+        return "richNotifyMessage/csv.xhtml";
     }
 
     @Test(groups = "smoke")

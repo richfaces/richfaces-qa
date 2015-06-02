@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richPopupPanel;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -55,8 +52,8 @@ public class TestPopupPanelDefaultZindex extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richPopupPanel/zindex.xhtml");
+    public String getComponentTestPagePath() {
+        return "richPopupPanel/zindex.xhtml";
     }
 
     private void openPopupPanel() {

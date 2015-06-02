@@ -21,17 +21,13 @@
  */
 package org.richfaces.tests.metamer.ftest.richDataTable;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 
-import java.net.URL;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
-
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableScrollerTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
-import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SimpleDT;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -39,8 +35,8 @@ import org.testng.annotations.Test;
 public class TestDataTableScroller extends DataTableScrollerTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richDataTable/scroller.xhtml");
+    public String getComponentTestPagePath() {
+        return "richDataTable/scroller.xhtml";
     }
 
     @FindByJQuery("table.rf-dt[id$=richDataTable]")

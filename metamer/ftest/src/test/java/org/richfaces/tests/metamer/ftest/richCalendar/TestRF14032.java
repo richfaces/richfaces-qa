@@ -21,12 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
-
-import java.net.URL;
 
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.Keys;
@@ -45,8 +42,8 @@ public class TestRF14032 extends AbstractCalendarTest {
     private Keyboard keyboard;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richCalendar/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richCalendar/simple.xhtml";
     }
 
     @Test

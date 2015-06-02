@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
@@ -45,8 +42,8 @@ public class TestCalendarTimeZone extends AbstractCalendarTest {
     private DateTimeFormatter dtf;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richCalendar/timeZone.xhtml");
+    public String getComponentTestPagePath() {
+        return "richCalendar/timeZone.xhtml";
     }
 
     @BeforeMethod

@@ -21,10 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.richOrderingList;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 
-import java.net.URL;
 import java.util.List;
 
 import org.openqa.selenium.support.FindBy;
@@ -70,8 +68,8 @@ public class TestOrderingListFragment extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richOrderingList/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richOrderingList/simple.xhtml";
     }
 
     @Test

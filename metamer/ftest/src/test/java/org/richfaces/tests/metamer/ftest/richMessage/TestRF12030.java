@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richMessage;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -41,8 +37,8 @@ public class TestRF12030 extends AbstractWebDriverTest {
     private RF12030Page page;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richMessage/RF-12030.xhtml");
+    public String getComponentTestPagePath() {
+        return "richMessage/RF-12030.xhtml";
     }
 
     @Test
@@ -57,9 +53,9 @@ public class TestRF12030 extends AbstractWebDriverTest {
         Graphene
             .waitModel()
             .until(
-            "The value from the first row of table"
-            + " should be different as the table was navigated to the second page. "
-            + "DataScroller does not work as expected!").element(page.getFirstTableRowElement()).text().not()
+                "The value from the first row of table"
+                + " should be different as the table was navigated to the second page. "
+                + "DataScroller does not work as expected!").element(page.getFirstTableRowElement()).text().not()
             .contains(valueFromFstRowBeforeCollapse);
     }
 }

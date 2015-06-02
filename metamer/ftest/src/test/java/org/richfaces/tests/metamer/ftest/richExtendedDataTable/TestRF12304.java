@@ -21,16 +21,13 @@
  */
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
-import org.richfaces.tests.metamer.ftest.richExtendedDataTable.page.RF12304Page;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.richExtendedDataTable.page.RF12304Page;
 import org.testng.annotations.Test;
 
 /**
@@ -43,8 +40,8 @@ public class TestRF12304 extends AbstractWebDriverTest {
     private RF12304Page page;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richExtendedDataTable/rf-12304.xhtml");
+    public String getComponentTestPagePath() {
+        return "richExtendedDataTable/rf-12304.xhtml";
     }
 
     @Test

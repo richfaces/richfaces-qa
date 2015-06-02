@@ -21,12 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.richTooltip;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.hideEvent;
 import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.showEvent;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.fragment.common.Event;
@@ -52,8 +49,8 @@ public class TestRF10971 extends AbstractWebDriverTest {
     private TextualRichFacesTooltip tooltipStateHawaii;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richTooltip/rf-10971.xhtml");
+    public String getComponentTestPagePath() {
+        return "richTooltip/rf-10971.xhtml";
     }
 
     private void setupTooltips() {

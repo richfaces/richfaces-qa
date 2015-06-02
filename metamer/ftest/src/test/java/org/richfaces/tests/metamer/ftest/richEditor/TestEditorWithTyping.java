@@ -23,11 +23,8 @@ package org.richfaces.tests.metamer.ftest.richEditor;
 
 import static java.text.MessageFormat.format;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
@@ -55,8 +52,8 @@ public class TestEditorWithTyping extends AbstractWebDriverTest {
     private final String phaseListenerLogFormat = "*3 value changed: <p>{0}</p> -> <p>{1}</p>";
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richEditor/anotherSimple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richEditor/anotherSimple.xhtml";
     }
 
     /**

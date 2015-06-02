@@ -21,12 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import java.net.URL;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -57,8 +55,8 @@ public class TestCalendarModel extends AbstractCalendarTest {
     private static final String datePattern = "MMM dd, yyyy";
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richCalendar/dataModel.xhtml");
+    public String getComponentTestPagePath() {
+        return "richCalendar/dataModel.xhtml";
     }
 
     @Override

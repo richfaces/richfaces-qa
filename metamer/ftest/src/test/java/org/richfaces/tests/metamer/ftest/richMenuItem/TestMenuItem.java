@@ -21,11 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.richMenuItem;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
@@ -94,8 +91,8 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richMenuItem/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richMenuItem/simple.xhtml";
     }
 
     @Test

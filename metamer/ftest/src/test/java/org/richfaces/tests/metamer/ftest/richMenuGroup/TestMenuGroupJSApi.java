@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richMenuGroup;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -57,8 +53,8 @@ public class TestMenuGroupJSApi extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richMenuGroup/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richMenuGroup/simple.xhtml";
     }
 
     @Test

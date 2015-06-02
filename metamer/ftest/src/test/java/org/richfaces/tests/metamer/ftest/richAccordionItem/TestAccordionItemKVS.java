@@ -23,9 +23,6 @@ package org.richfaces.tests.metamer.ftest.richAccordionItem;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.openqa.selenium.WebElement;
@@ -45,8 +42,8 @@ import org.testng.annotations.Test;
 public class TestAccordionItemKVS extends AbstractWebDriverTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richAccordionItem/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richAccordionItem/simple.xhtml";
     }
 
     @Test(groups = { "keepVisualStateTesting" })

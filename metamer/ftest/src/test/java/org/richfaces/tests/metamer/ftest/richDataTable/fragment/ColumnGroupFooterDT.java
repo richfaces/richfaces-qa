@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.ColumnGroupFooterInterface;
 
-public class ColumnGroupFooterDT implements ColumnGroupFooterInterface{
+public class ColumnGroupFooterDT implements ColumnGroupFooterInterface {
 
     @Root
     private WebElement rootElement;

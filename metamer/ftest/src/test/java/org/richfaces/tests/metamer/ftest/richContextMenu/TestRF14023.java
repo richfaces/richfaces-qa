@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richContextMenu;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.contextMenu.RichFacesContextMenu;
@@ -44,8 +40,8 @@ public class TestRF14023 extends AbstractWebDriverTest {
     private SimpleEDT edt;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richContextMenu/RF-14023.xhtml");
+    public String getComponentTestPagePath() {
+        return "richContextMenu/RF-14023.xhtml";
     }
 
     @Test

@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.abstractions;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
@@ -76,8 +72,8 @@ public class AbstractKeepSavedTest extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/" + componentName + "/keepSaved.xhtml");
+    public String getComponentTestPagePath() {
+        return "" + componentName + "/keepSaved.xhtml";
     }
 
     protected void submit() {

@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richPlaceholder;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -42,8 +39,8 @@ public class TestPlaceholderConverter extends AbstractWebDriverTest {
     private WebElement input;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richPlaceholder/converter.xhtml");
+    public String getComponentTestPagePath() {
+        return "richPlaceholder/converter.xhtml";
     }
 
     @Test
