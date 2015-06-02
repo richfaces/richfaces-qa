@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richInputNumberSlider;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
-
-import java.net.URL;
 
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
@@ -39,8 +36,8 @@ import org.testng.annotations.Test;
 public class TestInputNumberSliderFAjax extends AbstractSliderTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richInputNumberSlider/fAjax.xhtml");
+    public String getComponentTestPagePath() {
+        return "richInputNumberSlider/fAjax.xhtml";
     }
 
     @Test

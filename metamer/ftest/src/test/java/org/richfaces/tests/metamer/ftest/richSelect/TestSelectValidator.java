@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richSelect;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.message.RichFacesMessage;
@@ -51,8 +47,8 @@ public class TestSelectValidator extends AbstractWebDriverTest {
     private RichFacesMessage message;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richSelect/validator.xhtml");
+    public String getComponentTestPagePath() {
+        return "richSelect/validator.xhtml";
     }
 
     @Test

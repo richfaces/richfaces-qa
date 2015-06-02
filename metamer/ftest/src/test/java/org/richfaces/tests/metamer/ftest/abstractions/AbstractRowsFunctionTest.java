@@ -21,10 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.abstractions;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 
-import java.net.URL;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -98,8 +96,8 @@ public class AbstractRowsFunctionTest extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/" + componentName + "/rows.xhtml");
+    public String getComponentTestPagePath() {
+        return "" + componentName + "/rows.xhtml";
     }
 
     private void incrementExceptFirstLast() {

@@ -1,4 +1,4 @@
-/*
+ /*
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -21,12 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.richTooltip;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.hideEvent;
 import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.showEvent;
 import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.target;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
@@ -53,8 +50,8 @@ public class TestTooltipTarget extends AbstractWebDriverTest {
     private TooltipPage page;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richTooltip/targetting.xhtml");
+    public String getComponentTestPagePath() {
+        return "richTooltip/targetting.xhtml";
     }
 
     @Test

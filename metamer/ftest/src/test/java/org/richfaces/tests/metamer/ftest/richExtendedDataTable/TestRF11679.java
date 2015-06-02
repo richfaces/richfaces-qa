@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
@@ -50,8 +46,8 @@ public class TestRF11679 extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richExtendedDataTable/rf-11679.xhtml");
+    public String getComponentTestPagePath() {
+        return "richExtendedDataTable/rf-11679.xhtml";
     }
 
     @Test

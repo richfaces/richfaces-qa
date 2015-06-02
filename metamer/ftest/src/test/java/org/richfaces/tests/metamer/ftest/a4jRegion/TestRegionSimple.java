@@ -21,11 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jRegion;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneElement;
@@ -56,8 +53,8 @@ public class TestRegionSimple extends AbstractWebDriverTest {
     private GrapheneElement emailOutput;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jRegion/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jRegion/simple.xhtml";
     }
 
     @Test(groups = "smoke")

@@ -21,9 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richPanelToggleListener;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.page.Page;
@@ -48,8 +45,8 @@ public abstract class AbstractPanelToggleListenerTest extends AbstractWebDriverT
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richPanelToggleListener/" + testedComponent + ".xhtml");
+    public String getComponentTestPagePath() {
+        return "richPanelToggleListener/" + testedComponent + ".xhtml";
     }
 
     private void testPTL(final String expectedText) {

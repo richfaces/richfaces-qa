@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richSelect;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -65,8 +61,8 @@ public class TestRF12312 extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richSelect/RF-12312.xhtml");
+    public String getComponentTestPagePath() {
+        return "richSelect/RF-12312.xhtml";
     }
 
     @BeforeMethod

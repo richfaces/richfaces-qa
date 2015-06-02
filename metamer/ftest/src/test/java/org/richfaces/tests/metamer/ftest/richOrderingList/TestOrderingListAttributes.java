@@ -21,12 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.richOrderingList;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
-
-import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
@@ -49,8 +46,8 @@ import org.testng.annotations.Test;
 public class TestOrderingListAttributes extends AbstractOrderingListTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richOrderingList/withColumn.xhtml");
+    public String getComponentTestPagePath() {
+        return "richOrderingList/withColumn.xhtml";
     }
 
     @Test

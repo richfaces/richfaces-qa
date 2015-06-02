@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFacetsTest;
@@ -47,8 +43,8 @@ public class TestExtendedDataTableFacets extends DataTableFacetsTest {
     private final Attributes<ExtendedDataTableAttributes> attributes = getAttributes();
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richExtendedDataTable/facets.xhtml");
+    public String getComponentTestPagePath() {
+        return "richExtendedDataTable/facets.xhtml";
     }
 
     @Override

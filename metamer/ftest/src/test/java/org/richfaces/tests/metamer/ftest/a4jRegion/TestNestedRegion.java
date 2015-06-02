@@ -21,11 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jRegion;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 
-import java.net.URL;
 import java.util.EnumSet;
 
 import org.jboss.arquillian.graphene.page.Page;
@@ -57,8 +55,8 @@ public class TestNestedRegion extends AbstractWebDriverTest {
     EnumSet<Component> actualChanges;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jRegion/nested.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jRegion/nested.xhtml";
     }
 
     @Test

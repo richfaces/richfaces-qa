@@ -21,7 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.richSelect;
 
-import java.net.URL;
+import static org.testng.Assert.assertEquals;
+
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -52,8 +53,8 @@ public class TestSelectAutocompleteMethod extends AbstractWebDriverTest {
     private RichFacesSelect select;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richSelect/autocompleteMethod.xhtml");
+    public String getComponentTestPagePath() {
+        return "richSelect/autocompleteMethod.xhtml";
     }
 
     @Test(groups = "smoke")

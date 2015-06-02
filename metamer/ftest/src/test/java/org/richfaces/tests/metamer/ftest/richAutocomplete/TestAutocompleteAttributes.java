@@ -23,12 +23,10 @@ package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import java.net.URL;
 import java.util.List;
 
 import javax.faces.event.PhaseId;
@@ -83,8 +81,8 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     };
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richAutocomplete/autocomplete.xhtml");
+    public String getComponentTestPagePath() {
+        return "richAutocomplete/autocomplete.xhtml";
     }
 
     private Autocomplete selectHawaii() {

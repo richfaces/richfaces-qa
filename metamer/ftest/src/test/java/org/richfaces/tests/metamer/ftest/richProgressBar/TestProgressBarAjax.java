@@ -21,13 +21,11 @@
  */
 package org.richfaces.tests.metamer.ftest.richProgressBar;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -112,8 +110,8 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richProgressBar/ajaxMode.xhtml");
+    public String getComponentTestPagePath() {
+        return "richProgressBar/ajaxMode.xhtml";
     }
 
     @Test

@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richComponentControl;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
@@ -56,8 +52,8 @@ public class TestComponentControl extends AbstractWebDriverTest {
     private RichFacesDataScroller dataScroller;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richComponentControl/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richComponentControl/simple.xhtml";
     }
 
     @Test

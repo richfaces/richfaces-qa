@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richColumn;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
@@ -39,7 +36,6 @@ import org.testng.annotations.Test;
  */
 public class TestColumnWidth extends AbstractWebDriverTest {
 
-
     private final Attributes<ColumnAttributes> attributes = getAttributes();
     @FindByJQuery(value = ".rf-edt[id$=richDataTable] .rf-edt-c:first")
     private WebElement firstColumn;
@@ -49,8 +45,8 @@ public class TestColumnWidth extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richColumn/simpleWithEDT.xhtml");
+    public String getComponentTestPagePath() {
+        return "richColumn/simpleWithEDT.xhtml";
     }
 
     @Test

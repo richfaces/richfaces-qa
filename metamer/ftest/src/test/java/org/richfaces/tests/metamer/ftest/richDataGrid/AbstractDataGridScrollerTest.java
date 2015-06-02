@@ -24,10 +24,6 @@ package org.richfaces.tests.metamer.ftest.richDataGrid;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import javax.xml.bind.JAXBException;
 
 import org.openqa.selenium.support.FindBy;
@@ -65,8 +61,8 @@ public abstract class AbstractDataGridScrollerTest extends AbstractDataGridTest 
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richDataGrid/scroller.xhtml");
+    public String getComponentTestPagePath() {
+        return "richDataGrid/scroller.xhtml";
     }
 
     public void testColumnsAttribute() {
@@ -117,7 +113,7 @@ public abstract class AbstractDataGridScrollerTest extends AbstractDataGridTest 
 
     public void initializeTestedPages(int lastPage) {
         int l = lastPage;
-        testPages = new int[]{3, l, 1, l - 2, l, 2, l - 2, l - 1};
+        testPages = new int[] { 3, l, 1, l - 2, l, 2, l - 2, l - 1 };
         for (int i = 0; i < testPages.length; i++) {
             testPages[i] = min(l, max(1, testPages[i]));
         }

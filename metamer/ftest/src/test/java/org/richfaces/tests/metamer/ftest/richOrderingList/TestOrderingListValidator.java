@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richOrderingList;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
@@ -43,8 +39,8 @@ public class TestOrderingListValidator extends AbstractOrderingListTest {
     private RichFacesMessage message;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richOrderingList/validator.xhtml");
+    public String getComponentTestPagePath() {
+        return "richOrderingList/validator.xhtml";
     }
 
     @Test

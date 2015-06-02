@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jStatus;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.TextInputComponentImpl;
@@ -62,8 +58,8 @@ public class TestFacets extends AbstractStatusTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jStatus/facets.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jStatus/facets.xhtml";
     }
 
     @Test

@@ -1,9 +1,6 @@
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.inplaceInput.RichFacesInplaceInput;
@@ -19,8 +16,8 @@ public class TestRefactoredInplaceInputShowcase extends AbstractWebDriverTest {
     private RichFacesInplaceInput inplaceInput;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richInplaceInput/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richInplaceInput/simple.xhtml";
     }
 
     @Test

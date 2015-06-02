@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richMessage;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
@@ -35,8 +31,8 @@ import org.testng.annotations.Test;
 public class TestMessageAttributes extends AbstractMessageTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richMessage/jsr303.xhtml");
+    public String getComponentTestPagePath() {
+        return "richMessage/jsr303.xhtml";
     }
 
     @Test(groups = "smoke")

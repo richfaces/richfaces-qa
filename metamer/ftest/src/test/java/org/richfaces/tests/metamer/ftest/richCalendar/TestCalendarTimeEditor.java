@@ -21,12 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
@@ -48,8 +45,8 @@ import org.testng.annotations.Test;
 public class TestCalendarTimeEditor extends AbstractCalendarTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richCalendar/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richCalendar/simple.xhtml";
     }
 
     @Test
@@ -73,39 +70,39 @@ public class TestCalendarTimeEditor extends AbstractCalendarTest {
     @Test
     @Templates("plain")
     public void testHoursInputClick() {
-        testTimeSet(new int[]{ 2, 15 }, Time.hours, SetValueBy.BUTTONS);
+        testTimeSet(new int[] { 2, 15 }, Time.hours, SetValueBy.BUTTONS);
     }
 
     @Test
     @Templates("plain")
     public void testHoursInputType() {
-        testTimeSet(new int[]{ 2, 15 }, Time.hours, SetValueBy.TYPING);
+        testTimeSet(new int[] { 2, 15 }, Time.hours, SetValueBy.TYPING);
     }
 
     @Test
     @Templates("plain")
     public void testMinutesInputClick() {
-        testTimeSet(new int[]{ 1, 59 }, Time.minutes, SetValueBy.BUTTONS);
+        testTimeSet(new int[] { 1, 59 }, Time.minutes, SetValueBy.BUTTONS);
     }
 
     @Test
     @Templates("plain")
     public void testMinutesInputType() {
-        testTimeSet(new int[]{ 1, 59 }, Time.minutes, SetValueBy.TYPING);
+        testTimeSet(new int[] { 1, 59 }, Time.minutes, SetValueBy.TYPING);
     }
 
     @Test
     @Templates("plain")
     public void testSecondsInputClick() {
         calendarAttributes.set(CalendarAttributes.datePattern, "MMM d, yyyy HH:mm:ss");
-        testTimeSet(new int[]{ 1, 59 }, Time.seconds, SetValueBy.BUTTONS);
+        testTimeSet(new int[] { 1, 59 }, Time.seconds, SetValueBy.BUTTONS);
     }
 
     @Test
     @Templates("plain")
     public void testSecondsInputType() {
         calendarAttributes.set(CalendarAttributes.datePattern, "MMM d, yyyy HH:mm:ss");
-        testTimeSet(new int[]{ 1, 59 }, Time.seconds, SetValueBy.TYPING);
+        testTimeSet(new int[] { 1, 59 }, Time.seconds, SetValueBy.TYPING);
     }
 
     @Test

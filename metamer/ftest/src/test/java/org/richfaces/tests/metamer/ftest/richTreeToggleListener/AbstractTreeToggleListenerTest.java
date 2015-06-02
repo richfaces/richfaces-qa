@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richTreeToggleListener;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.page.Page;
@@ -49,8 +45,8 @@ public abstract class AbstractTreeToggleListenerTest extends AbstractWebDriverTe
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richTreeToggleListener/" + testedComponent + ".xhtml");
+    public String getComponentTestPagePath() {
+        return "richTreeToggleListener/" + testedComponent + ".xhtml";
     }
 
     private void testTTL(String expectedText) {

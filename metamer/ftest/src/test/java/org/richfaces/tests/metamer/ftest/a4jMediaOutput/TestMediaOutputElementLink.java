@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jMediaOutput;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -42,8 +39,8 @@ public class TestMediaOutputElementLink extends AbstractMediaOutputTest {
     private WebElement markedText;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jMediaOutput/elementLink.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jMediaOutput/elementLink.xhtml";
     }
 
     @Test

@@ -23,10 +23,7 @@ package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.component.Mode;
@@ -62,8 +59,8 @@ public class TestPanelMenuItemClientSideHandlers extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richPanelMenuItem/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richPanelMenuItem/simple.xhtml";
     }
 
     @Test

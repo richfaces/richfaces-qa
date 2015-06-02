@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richAccordion;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertFalse;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.page.Page;
@@ -55,8 +52,8 @@ public class TestAccordionIcons extends AbstractWebDriverTest {
     private final String rightIcon = "div[id$=item%s] td.rf-ac-itm-exp-ico";
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richAccordion/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richAccordion/simple.xhtml";
     }
 
     @Test

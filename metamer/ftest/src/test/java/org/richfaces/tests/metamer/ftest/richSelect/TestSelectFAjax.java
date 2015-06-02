@@ -21,11 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.richSelect;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
@@ -53,8 +50,8 @@ public class TestSelectFAjax extends AbstractWebDriverTest {
     private WebElement item10;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richSelect/fAjax.xhtml");
+    public String getComponentTestPagePath() {
+        return "richSelect/fAjax.xhtml";
     }
 
     @Test

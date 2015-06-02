@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jRepeat;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -43,8 +40,8 @@ public class TestMatrix extends AbstractWebDriverTest {
     private MatrixPage page;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jRepeat/matrix.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jRepeat/matrix.xhtml";
     }
 
     @BeforeMethod(groups = "smoke")
@@ -58,14 +55,14 @@ public class TestMatrix extends AbstractWebDriverTest {
         assertEquals(page.getOutputRowsElements().size(), MatrixPage.ROWS_COUNT, "number of rows in output matrix");
 
         assertEquals(page.getInputRowsElements().get(1).findElements(MatrixPage.BY_CELL).size(), MatrixPage.COLUMNS_COUNT,
-                "number of columns in the second row of input matrix");
+            "number of columns in the second row of input matrix");
         assertEquals(page.getInputRowsElements().get(3).findElements(MatrixPage.BY_CELL).size(), MatrixPage.COLUMNS_COUNT,
-                "number of columns in the fourth row of input matrix");
+            "number of columns in the fourth row of input matrix");
 
         assertEquals(page.getOutputRowsElements().get(1).findElements(MatrixPage.BY_CELL).size(), MatrixPage.COLUMNS_COUNT,
-                "number of columns in the second row of output matrix");
+            "number of columns in the second row of output matrix");
         assertEquals(page.getOutputRowsElements().get(3).findElements(MatrixPage.BY_CELL).size(), MatrixPage.COLUMNS_COUNT,
-                "number of columns in the fourth row of output matrix");
+            "number of columns in the fourth row of output matrix");
     }
 
     @Test(groups = "smoke")
@@ -139,7 +136,7 @@ public class TestMatrix extends AbstractWebDriverTest {
 
         @Override
         public int[][] getInputValues() {
-            return new int[][]{ { 0, 3 } };
+            return new int[][] { { 0, 3 } };
         }
     }
 }

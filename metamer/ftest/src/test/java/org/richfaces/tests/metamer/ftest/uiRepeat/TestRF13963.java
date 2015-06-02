@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.uiRepeat;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -44,8 +40,8 @@ public class TestRF13963 extends AbstractWebDriverTest {
     private WebElement ajaxSubmit;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/uiRepeat/rf-13963.xhtml");
+    public String getComponentTestPagePath() {
+        return "uiRepeat/rf-13963.xhtml";
     }
 
     @Test

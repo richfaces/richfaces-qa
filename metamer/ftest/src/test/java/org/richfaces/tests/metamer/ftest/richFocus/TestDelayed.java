@@ -22,10 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richFocus;
 
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
@@ -44,8 +41,8 @@ public class TestDelayed extends AbstractWebDriverTest {
     private FocusDelayedPage page;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richFocus/delayed.xhtml");
+    public String getComponentTestPagePath() {
+        return "richFocus/delayed.xhtml";
     }
 
     @Test

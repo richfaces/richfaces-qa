@@ -25,10 +25,7 @@ import static java.text.MessageFormat.format;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.AssertJUnit.assertEquals;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
@@ -73,8 +70,8 @@ public class TestTabPanelAddTab3 extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richTabPanel/addTab3.xhtml");
+    public String getComponentTestPagePath() {
+        return "richTabPanel/addTab3.xhtml";
     }
 
     @Test

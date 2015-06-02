@@ -60,7 +60,7 @@ public class CustomValidationTestsPage extends NumberInputValidationPage {
 
     private void moveSliderWithWaitRequest(int byPixels, RichFacesInputNumberSlider slider) {
         MetamerPage.waitRequest(slider.advanced(), MetamerPage.WaitRequestType.XHR)
-                .dragHandleToPointInTrace(byPixels);
+            .dragHandleToPointInTrace(byPixels);
     }
 
     @RegressionTest("https://issues.jboss.org/browse/RF-11314")

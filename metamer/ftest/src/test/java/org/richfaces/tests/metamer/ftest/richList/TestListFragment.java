@@ -21,11 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.richList;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.list.RichFacesList;
@@ -52,8 +49,8 @@ public class TestListFragment extends AbstractListTest {
     private ListType type;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richList/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richList/simple.xhtml";
     }
 
     @Test

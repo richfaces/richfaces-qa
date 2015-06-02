@@ -21,11 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jMediaOutput;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.GrapheneElement;
 import org.openqa.selenium.support.FindBy;
@@ -43,8 +40,8 @@ public class TestMediaOutputElementScript extends AbstractMediaOutputTest {
     private GrapheneElement javascriptText;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jMediaOutput/elementScript.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jMediaOutput/elementScript.xhtml";
     }
 
     @Test

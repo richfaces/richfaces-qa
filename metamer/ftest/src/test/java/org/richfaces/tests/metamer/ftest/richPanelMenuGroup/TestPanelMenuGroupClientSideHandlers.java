@@ -23,11 +23,8 @@ package org.richfaces.tests.metamer.ftest.richPanelMenuGroup;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.STRINGS;
-
-import java.net.URL;
 
 import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
@@ -64,8 +61,8 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     private final String[] serverCollapsionEvents = new String[] { "onbeforeswitch", "onbeforecollapse" };
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richPanelMenuGroup/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richPanelMenuGroup/simple.xhtml";
     }
 
     @Test

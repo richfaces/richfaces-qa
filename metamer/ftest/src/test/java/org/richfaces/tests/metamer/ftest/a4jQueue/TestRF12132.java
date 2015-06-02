@@ -22,10 +22,8 @@
 package org.richfaces.tests.metamer.ftest.a4jQueue;
 
 import static org.jboss.arquillian.graphene.Graphene.waitAjax;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 
-import java.net.URL;
 import java.util.Random;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -59,8 +57,8 @@ public class TestRF12132 extends AbstractWebDriverTest {
     private WebElement submitButtonWithNotExistingOncompleteFunction;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jQueue/rf-12132.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jQueue/rf-12132.xhtml";
     }
 
     @Test

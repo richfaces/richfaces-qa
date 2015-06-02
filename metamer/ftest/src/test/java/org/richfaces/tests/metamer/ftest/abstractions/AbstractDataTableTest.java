@@ -38,6 +38,7 @@ import org.richfaces.tests.metamer.model.Employee;
  * @version $Revision: 22688 $
  */
 public abstract class AbstractDataTableTest extends AbstractWebDriverTest {
+
     protected static final List<Capital> CAPITALS = Model.unmarshallCapitals();
     protected static final List<Employee> EMPLOYEES = Model.unmarshallEmployees();
     protected static final int ELEMENTS_TOTAL = 50;
@@ -52,7 +53,7 @@ public abstract class AbstractDataTableTest extends AbstractWebDriverTest {
     protected static final int COLUMN_NUMBER_OF_KIDS2 = 4;
 
     protected static final Integer[] COUNTS = new Integer[] { 1, 3, 11, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL,
-            ELEMENTS_TOTAL + 1 };
+        ELEMENTS_TOTAL + 1 };
 
     @FindByJQuery("input[id$=noDataCheckbox]")
     protected WebElement showDataLocator;
@@ -64,12 +65,12 @@ public abstract class AbstractDataTableTest extends AbstractWebDriverTest {
     protected RichFacesDataScroller dataScroller2;
 
     protected void enableShowData(final boolean showData) {
-        if(showData) {
+        if (showData) {
             if (!showDataLocator.isEnabled()) {
                 Graphene.guardAjax(showDataLocator).click();
             }
         } else {
-            if(showDataLocator.isEnabled()) {
+            if (showDataLocator.isEnabled()) {
                 Graphene.guardAjax(showDataLocator).click();
             }
         }

@@ -21,13 +21,11 @@
  */
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotEquals;
 
-import java.net.URL;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -62,8 +60,8 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
     private Point location;// for testScrollerForNotFrozenColumns
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richExtendedDataTable/frozenColumns.xhtml");
+    public String getComponentTestPagePath() {
+        return "richExtendedDataTable/frozenColumns.xhtml";
     }
 
     @Test

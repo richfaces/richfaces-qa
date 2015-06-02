@@ -53,7 +53,6 @@ public abstract class AbstractColumnTest extends AbstractWebDriverTest {
         capitals = Model.unmarshallCapitals();
     }
 
-
     public static class StateCapitalRow extends Capital {
 
         private static final long serialVersionUID = 1L;

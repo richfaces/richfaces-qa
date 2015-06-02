@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richInputNumberSpinner;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -61,8 +58,8 @@ public class TestInputNumberSpinnerJSApi extends AbstractWebDriverTest {
     private RichFacesInputNumberSpinner spinner;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richInputNumberSpinner/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richInputNumberSpinner/simple.xhtml";
     }
 
     private String getValueFromOutputJSField() {

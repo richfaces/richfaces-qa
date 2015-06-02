@@ -21,11 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jActionListener;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
@@ -56,8 +53,8 @@ public class TestActionListener extends AbstractWebDriverTest {
     private ActionListenerPage page;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jActionListener/all.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jActionListener/all.xhtml";
     }
 
     Predicate<WebDriver> messageIsVisible = new Predicate<WebDriver>() {

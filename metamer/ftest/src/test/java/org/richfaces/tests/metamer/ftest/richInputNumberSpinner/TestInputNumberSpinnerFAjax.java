@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richInputNumberSpinner;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
-
-import java.net.URL;
 
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.annotations.Test;
@@ -36,8 +33,8 @@ import org.testng.annotations.Test;
 public class TestInputNumberSpinnerFAjax extends AbstractInputNumberSpinnerTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richInputNumberSpinner/fAjax.xhtml");
+    public String getComponentTestPagePath() {
+        return "richInputNumberSpinner/fAjax.xhtml";
     }
 
     @Test

@@ -21,14 +21,11 @@
  */
 package org.richfaces.tests.metamer.ftest.richToolbar;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemStyle;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.condition.AttributeConditionFactory;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
@@ -65,8 +62,8 @@ public class TestToolbar extends AbstractWebDriverTest {
     private ToolbarPage page;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richToolbar/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richToolbar/simple.xhtml";
     }
 
     @Test

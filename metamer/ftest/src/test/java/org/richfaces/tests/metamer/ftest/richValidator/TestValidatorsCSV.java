@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richValidator;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
@@ -37,8 +33,8 @@ import org.testng.annotations.Test;
 public class TestValidatorsCSV extends AbstractValidatorsTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richValidator/csv.xhtml");
+    public String getComponentTestPagePath() {
+        return "richValidator/csv.xhtml";
     }
 
     @Test

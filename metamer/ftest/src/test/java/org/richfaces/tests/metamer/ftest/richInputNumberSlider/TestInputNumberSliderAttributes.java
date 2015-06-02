@@ -22,14 +22,11 @@
 package org.richfaces.tests.metamer.ftest.richInputNumberSlider;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
@@ -95,8 +92,8 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     };
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richInputNumberSlider/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richInputNumberSlider/simple.xhtml";
     }
 
     @Test

@@ -21,11 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richCollapsiblePanel;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.testng.AssertJUnit.assertEquals;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -37,8 +32,8 @@ import org.testng.annotations.Test;
 public class TestCollapsiblePanelJSApi extends AbstractWebDriverTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richCollapsiblePanel/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richCollapsiblePanel/simple.xhtml";
     }
 
     @FindBy(css = "div[id$='collapsiblePanel:content']")

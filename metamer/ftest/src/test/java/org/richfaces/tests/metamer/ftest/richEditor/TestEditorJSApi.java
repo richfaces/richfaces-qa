@@ -23,12 +23,9 @@ package org.richfaces.tests.metamer.ftest.richEditor;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.waitAjax;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.By;
@@ -51,8 +48,8 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
     private EditorSimplePage page;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richEditor/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richEditor/simple.xhtml";
     }
 
     @FindBy(xpath = "//div[contains(@class,'rf-ed') and contains (@id, 'editor')]")

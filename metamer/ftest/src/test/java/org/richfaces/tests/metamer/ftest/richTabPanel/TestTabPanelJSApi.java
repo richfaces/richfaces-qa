@@ -23,13 +23,11 @@ package org.richfaces.tests.metamer.ftest.richTabPanel;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertFalse;
 import static org.testng.AssertJUnit.assertNull;
 import static org.testng.AssertJUnit.assertTrue;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,8 +54,8 @@ public class TestTabPanelJSApi extends AbstractWebDriverTest {
     private List<WebElement> switchToButtons;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richTabPanel/addTab2.xhtml");
+    public String getComponentTestPagePath() {
+        return "richTabPanel/addTab2.xhtml";
     }
 
     private String JsPrevItem() {

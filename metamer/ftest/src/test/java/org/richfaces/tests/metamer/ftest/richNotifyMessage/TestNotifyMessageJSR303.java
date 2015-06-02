@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richNotifyMessage;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.testng.annotations.Test;
 
 /**
@@ -33,8 +29,8 @@ import org.testng.annotations.Test;
 public class TestNotifyMessageJSR303 extends AbstractNotifyMessageTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richNotifyMessage/jsr303.xhtml");
+    public String getComponentTestPagePath() {
+        return "richNotifyMessage/jsr303.xhtml";
     }
 
     @Test

@@ -21,12 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
@@ -34,11 +31,11 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
 import org.richfaces.fragment.calendar.HeaderControls;
 import org.richfaces.fragment.calendar.PopupCalendar;
 import org.richfaces.fragment.calendar.TimeEditor;
 import org.richfaces.fragment.calendar.YearAndMonthEditor;
-import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
@@ -83,8 +80,8 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
     private WebElement hideTimeEditor;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richCalendar/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richCalendar/simple.xhtml";
     }
 
     @Test

@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richCalendar.fragmentTest;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -48,8 +45,8 @@ public class TestCalendarFragment extends AbstractCalendarTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richCalendar/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richCalendar/simple.xhtml";
     }
 
     @BeforeMethod

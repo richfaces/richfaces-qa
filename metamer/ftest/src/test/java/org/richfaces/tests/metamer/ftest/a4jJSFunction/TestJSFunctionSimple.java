@@ -21,11 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jJSFunction;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotSame;
-
-import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
@@ -56,8 +53,8 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
     private JSFunctionPage page;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jJSFunction/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jJSFunction/simple.xhtml";
     }
 
     @Test

@@ -21,9 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jPush;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
 import java.text.MessageFormat;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -57,8 +54,8 @@ public class TestRF13929 extends AbstractWebDriverTest {
     private WebElement pushWithoutSubtopic;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jPush/rf-13929.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jPush/rf-13929.xhtml";
     }
 
     private void performPush(WebElement push, PushNotificationsNumberStorage storage) {

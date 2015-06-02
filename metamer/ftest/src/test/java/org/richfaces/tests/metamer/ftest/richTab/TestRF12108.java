@@ -1,9 +1,6 @@
 package org.richfaces.tests.metamer.ftest.richTab;
 
 import static org.jboss.arquillian.graphene.Graphene.waitAjax;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebDriver;
@@ -14,7 +11,7 @@ import org.testng.annotations.Test;
 
 import com.google.common.base.Predicate;
 
-public class TestRF12108 extends AbstractWebDriverTest{
+public class TestRF12108 extends AbstractWebDriverTest {
 
     @FindByJQuery(value = "input[id*='notHandled']")
     private WebElement inputNotHandledCorrectly;
@@ -23,8 +20,8 @@ public class TestRF12108 extends AbstractWebDriverTest{
     private WebElement outputGenerated;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richTabPanel/rf-12108.xhtml");
+    public String getComponentTestPagePath() {
+        return "richTabPanel/rf-12108.xhtml";
     }
 
     @Test
@@ -41,5 +38,5 @@ public class TestRF12108 extends AbstractWebDriverTest{
                 return expectedOutput.equals(actualOutput);
             }
         });
-        }
+    }
 }

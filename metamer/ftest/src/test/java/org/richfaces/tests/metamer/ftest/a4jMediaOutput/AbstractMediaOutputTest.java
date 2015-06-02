@@ -38,7 +38,7 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
  */
 public abstract class AbstractMediaOutputTest extends AbstractWebDriverTest {
 
-    @FindBy(css="*[id$=mediaOutput]")
+    @FindBy(css = "*[id$=mediaOutput]")
     protected GrapheneElement mediaOutput;
 
     protected String getTextContentByUrlAttribute(WebElement element, String urlAttribute) throws IOException {
@@ -48,7 +48,7 @@ public abstract class AbstractMediaOutputTest extends AbstractWebDriverTest {
         try {
             input = new BufferedReader(new InputStreamReader(url.openStream()));
             String line;
-            while((line = input.readLine()) != null) {
+            while ((line = input.readLine()) != null) {
                 foundContent.append(line);
             }
         } finally {

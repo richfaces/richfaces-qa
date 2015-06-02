@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.abstractions;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -50,8 +47,8 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/" + component + "/validationMessages.xhtml");
+    public String getComponentTestPagePath() {
+        return "" + component + "/validationMessages.xhtml";
     }
 
     @BeforeMethod(alwaysRun = true)

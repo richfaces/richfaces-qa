@@ -44,8 +44,8 @@ import org.testng.annotations.Test;
 public class TestMediaOutputImagePng extends AbstractMediaOutputTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jMediaOutput/imagePng.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jMediaOutput/imagePng.xhtml";
     }
 
     @Test(groups = "smoke")

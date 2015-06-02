@@ -21,13 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
-
-import java.net.URL;
 
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -57,8 +54,8 @@ public class TestCollapsibleSubTableFacets extends AbstractCollapsibleSubTableTe
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richCollapsibleSubTable/facets.xhtml");
+    public String getComponentTestPagePath() {
+        return "richCollapsibleSubTable/facets.xhtml";
     }
 
     private void testFacet(FacetsAttributes attribute) {

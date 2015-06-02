@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jStatus;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.common.Utils;
@@ -45,8 +42,8 @@ public class TestStatusJSApi extends AbstractStatusTest {
     private final Attributes<StatusAttributes> statusAttributes = getAttributes();
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jStatus/withoutFacets.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jStatus/withoutFacets.xhtml";
     }
 
     @BeforeMethod

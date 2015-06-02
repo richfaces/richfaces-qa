@@ -24,7 +24,6 @@ package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.disabledClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.leftIconClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.rightIconClass;
@@ -41,8 +40,6 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemA
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.status;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
@@ -75,8 +72,8 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     private final Attributes<PanelMenuItemAttributes> panelMenuItemAttributes = getAttributes();
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richPanelMenuItem/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richPanelMenuItem/simple.xhtml";
     }
 
     @BeforeMethod(alwaysRun = true)

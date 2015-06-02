@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richMessages;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
@@ -37,8 +33,8 @@ import org.testng.annotations.Test;
 public class TestMessagesCSV extends AbstractMessagesTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richMessages/csv.xhtml");
+    public String getComponentTestPagePath() {
+        return "richMessages/csv.xhtml";
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12922")//fix the waiting below

@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jAjax;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
@@ -54,8 +50,8 @@ public class TestHSelectManyListbox extends AbstractAjaxTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jAjax/hSelectManyListbox.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jAjax/hSelectManyListbox.xhtml";
     }
 
     @Override

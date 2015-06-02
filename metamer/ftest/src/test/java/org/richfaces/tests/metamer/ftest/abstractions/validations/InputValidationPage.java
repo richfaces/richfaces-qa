@@ -21,8 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.abstractions.validations;
 
-import com.google.common.collect.Maps;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +30,8 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.collections.Lists;
+
+import com.google.common.collect.Maps;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -45,7 +45,9 @@ public abstract class InputValidationPage {
     @FindBy(css = "input[id$=a4jButton]")
     private WebElement a4jCommandButton;
     //
-    protected final Map<String, ValidationMessageCase> messageCases = new HashMap<String, ValidationMessageCase>();;
+    protected final Map<String, ValidationMessageCase> messageCases = new HashMap<String, ValidationMessageCase>();
+
+    ;
 
     public void assertAllMessagesAreVisibleAndCorrect() {
         for (ValidationMessageCase vmc : getMessageCases().values()) {

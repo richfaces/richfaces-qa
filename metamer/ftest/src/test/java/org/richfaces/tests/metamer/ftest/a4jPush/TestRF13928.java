@@ -21,10 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jPush;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 
-import java.net.URL;
 import java.text.MessageFormat;
 import java.util.concurrent.TimeUnit;
 
@@ -57,8 +55,8 @@ public class TestRF13928 extends AbstractWebDriverTest {
     private WebElement subscriptionOutput;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jPush/rf-13928.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jPush/rf-13928.xhtml";
     }
 
     private FluentWait<WebDriver, Void> getWait() {

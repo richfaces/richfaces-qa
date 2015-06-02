@@ -21,18 +21,14 @@
  */
 package org.richfaces.tests.metamer.ftest.richChart;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
 public class TestBarChart extends AbstractChartTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richChart/simpleBar.xhtml");
+    public String getComponentTestPagePath() {
+        return "richChart/simpleBar.xhtml";
     }
 
     @Test

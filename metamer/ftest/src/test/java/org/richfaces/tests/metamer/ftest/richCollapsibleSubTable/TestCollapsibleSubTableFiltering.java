@@ -21,10 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 
-import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -53,8 +51,8 @@ public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTabl
     private final int rows = 7;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richCollapsibleSubTable/filtering.xhtml");
+    public String getComponentTestPagePath() {
+        return "richCollapsibleSubTable/filtering.xhtml";
     }
 
     @BeforeMethod

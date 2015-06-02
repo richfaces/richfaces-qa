@@ -21,11 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.richDataGrid;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import javax.xml.bind.JAXBException;
 
@@ -60,8 +57,8 @@ public class TestDataGrid extends AbstractDataGridTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richDataGrid/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richDataGrid/simple.xhtml";
     }
 
     @Test

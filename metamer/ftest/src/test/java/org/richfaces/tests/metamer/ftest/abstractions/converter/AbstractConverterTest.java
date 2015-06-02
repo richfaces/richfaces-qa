@@ -21,12 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.abstractions.converter;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -92,8 +89,8 @@ public abstract class AbstractConverterTest extends AbstractWebDriverTest {
     protected abstract String getComponentName();
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/" + getComponentName() + "/converter.xhtml");
+    public String getComponentTestPagePath() {
+        return "" + getComponentName() + "/converter.xhtml";
     }
 
     private String getOutputText() {

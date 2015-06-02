@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richTreeSelectionChangeListener;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.page.Page;
@@ -49,8 +45,8 @@ public abstract class AbstractTreeSelectionChangeListenerTest extends AbstractWe
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richTreeSelectionChangeListener/" + testedComponent + ".xhtml");
+    public String getComponentTestPagePath() {
+        return "richTreeSelectionChangeListener/" + testedComponent + ".xhtml";
     }
 
     private void testTSCL(String expectedText) {

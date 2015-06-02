@@ -21,13 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.richTogglePanel;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.STRINGS;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
@@ -96,8 +93,8 @@ public class TestTogglePanel extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richTogglePanel/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richTogglePanel/simple.xhtml";
     }
 
     @Test(groups = "smoke")

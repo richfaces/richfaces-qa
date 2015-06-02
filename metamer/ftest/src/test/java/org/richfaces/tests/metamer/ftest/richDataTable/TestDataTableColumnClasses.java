@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richDataTable;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractColumnClassesTest;
@@ -51,8 +47,8 @@ public class TestDataTableColumnClasses extends AbstractColumnClassesTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richDataTable/filtering.xhtml");
+    public String getComponentTestPagePath() {
+        return "richDataTable/filtering.xhtml";
     }
 
     @Test

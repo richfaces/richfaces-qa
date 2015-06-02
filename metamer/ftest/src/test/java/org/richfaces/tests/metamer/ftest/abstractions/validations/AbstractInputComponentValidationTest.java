@@ -21,10 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.abstractions.validations;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 
-import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
@@ -85,8 +83,8 @@ public abstract class AbstractInputComponentValidationTest extends AbstractWebDr
     protected abstract InputValidationPage getPage();
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/" + getComponentName() + "/" + kindOfTest().toLowerCase(Locale.ENGLISH) + ".xhtml");
+    public String getComponentTestPagePath() {
+        return "" + getComponentName() + "/" + kindOfTest().toLowerCase(Locale.ENGLISH) + ".xhtml";
     }
 
     /**

@@ -21,11 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.richOrderingList;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.message.RichFacesMessage;
@@ -43,8 +40,8 @@ public class TestOrderingListRequired extends AbstractOrderingListTest {
     private RichFacesMessage message;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richOrderingList/required.xhtml");
+    public String getComponentTestPagePath() {
+        return "richOrderingList/required.xhtml";
     }
 
     @Override

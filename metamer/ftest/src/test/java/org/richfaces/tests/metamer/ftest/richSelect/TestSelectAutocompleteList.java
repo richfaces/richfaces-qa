@@ -21,10 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.richSelect;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 
-import java.net.URL;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -53,8 +51,8 @@ public class TestSelectAutocompleteList extends AbstractWebDriverTest {
     private final Attributes<SelectAttributes> attributes = getAttributes();
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richSelect/autocompleteList.xhtml");
+    public String getComponentTestPagePath() {
+        return "richSelect/autocompleteList.xhtml";
     }
 
     @Test

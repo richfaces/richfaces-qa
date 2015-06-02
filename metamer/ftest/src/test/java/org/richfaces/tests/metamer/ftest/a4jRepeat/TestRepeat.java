@@ -24,15 +24,11 @@ package org.richfaces.tests.metamer.ftest.a4jRepeat;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.a4jRegion.RegionAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -66,8 +62,8 @@ public class TestRepeat extends AbstractWebDriverTest {
     private final Integer[] intsRows = { -2, -1, 0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL, ELEMENTS_TOTAL + 1 };
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jRepeat/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jRepeat/simple.xhtml";
     }
 
     @Test

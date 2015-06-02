@@ -21,12 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.richTreeModelAdaptor;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
-
-import java.net.URL;
 
 import org.richfaces.component.SwitchType;
 import org.richfaces.fragment.tree.Tree.TreeNode;
@@ -48,8 +45,8 @@ public class TestTreeModelAdaptorSimple extends AbstractTreeTest {
     private final Attributes<RecursiveModelAdaptorAttributes> recursiveModelAdaptorAttributes = getAttributes("recursiveAttributes");
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richTree/treeAdaptors.xhtml");
+    public String getComponentTestPagePath() {
+        return "richTree/treeAdaptors.xhtml";
     }
 
     @Test

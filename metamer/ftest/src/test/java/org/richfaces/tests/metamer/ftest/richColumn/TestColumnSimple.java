@@ -21,14 +21,12 @@
  */
 package org.richfaces.tests.metamer.ftest.richColumn;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.richColumn.ColumnAttributes.breakRowBefore;
 import static org.richfaces.tests.metamer.ftest.richColumn.ColumnAttributes.colspan;
 import static org.richfaces.tests.metamer.ftest.richColumn.ColumnAttributes.rendered;
 import static org.richfaces.tests.metamer.ftest.richColumn.ColumnAttributes.rowspan;
 import static org.testng.Assert.assertEquals;
 
-import java.net.URL;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -70,8 +68,8 @@ public class TestColumnSimple extends AbstractColumnTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richColumn/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richColumn/simple.xhtml";
     }
 
     private WebElement headerCell(int row, int column) {

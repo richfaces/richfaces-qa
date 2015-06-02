@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.NullFragment;
@@ -48,8 +45,8 @@ public class TestRF13933 extends AbstractWebDriverTest {
     private SimpleEDT edt3;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richExtendedDataTable/rf-13933.xhtml");
+    public String getComponentTestPagePath() {
+        return "richExtendedDataTable/rf-13933.xhtml";
     }
 
     @Test

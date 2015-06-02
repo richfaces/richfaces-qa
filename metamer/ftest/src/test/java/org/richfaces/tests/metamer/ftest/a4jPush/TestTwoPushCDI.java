@@ -21,17 +21,13 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jPush;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.testng.annotations.Test;
 
 public class TestTwoPushCDI extends TestTwoPush {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jPush/twoPushCDI.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jPush/twoPushCDI.xhtml";
     }
 
     @Test
@@ -51,6 +47,6 @@ public class TestTwoPushCDI extends TestTwoPush {
 
     @Test
     public void testSimplePushEventReceive() {
-       super.testSimplePushEventReceive();
+        super.testSimplePushEventReceive();
     }
 }

@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richFileUpload;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -45,8 +41,8 @@ public class TestFileUploadProgressFacet extends AbstractFileUploadTest {
     private WebElement customPB;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richFileUpload/progressFacet.xhtml");
+    public String getComponentTestPagePath() {
+        return "richFileUpload/progressFacet.xhtml";
     }
 
     @Test

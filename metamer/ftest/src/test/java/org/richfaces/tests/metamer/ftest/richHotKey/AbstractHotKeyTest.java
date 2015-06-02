@@ -21,10 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.richHotKey;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 
-import java.net.URL;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
@@ -81,8 +79,8 @@ public abstract class AbstractHotKeyTest extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richHotKey/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richHotKey/simple.xhtml";
     }
 
     @BeforeMethod(groups = "smoke")

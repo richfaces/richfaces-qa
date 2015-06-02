@@ -21,13 +21,11 @@
  */
 package org.richfaces.tests.metamer.ftest.richTabPanel;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.fragment.switchable.SwitchType.CLIENT;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import java.net.URL;
 import java.util.List;
 
 import javax.faces.event.PhaseId;
@@ -63,8 +61,8 @@ public class TestTabPanel extends AbstractWebDriverTest {
     private TabPanelSimplePage page;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richTabPanel/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richTabPanel/simple.xhtml";
     }
 
     @Test

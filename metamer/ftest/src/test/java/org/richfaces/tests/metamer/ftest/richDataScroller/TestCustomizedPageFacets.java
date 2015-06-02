@@ -22,10 +22,8 @@
 package org.richfaces.tests.metamer.ftest.richDataScroller;
 
 import static org.jboss.arquillian.graphene.Graphene.waitAjax;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertTrue;
 
-import java.net.URL;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
@@ -48,8 +46,8 @@ import org.testng.annotations.Test;
 public class TestCustomizedPageFacets extends AbstractWebDriverTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richDataScroller/customizedFacets.xhtml");
+    public String getComponentTestPagePath() {
+        return "richDataScroller/customizedFacets.xhtml";
     }
 
     @FindBy(xpath = "//span/select/option[@selected]")

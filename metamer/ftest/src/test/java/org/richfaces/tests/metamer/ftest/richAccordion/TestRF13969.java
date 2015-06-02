@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richAccordion;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.switchable.SwitchType;
@@ -55,8 +51,8 @@ public class TestRF13969 extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richAccordion/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richAccordion/simple.xhtml";
     }
 
     @Test

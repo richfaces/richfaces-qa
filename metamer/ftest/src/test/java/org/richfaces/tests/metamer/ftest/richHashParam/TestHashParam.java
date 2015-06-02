@@ -21,18 +21,15 @@
  */
 package org.richfaces.tests.metamer.ftest.richHashParam;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Locations;
 import org.richfaces.fragment.common.Utils;
-import org.richfaces.fragment.popupPanel.TextualRichFacesPopupPanel;
 import org.richfaces.fragment.popupPanel.PopupPanel.ResizerLocation;
+import org.richfaces.fragment.popupPanel.TextualRichFacesPopupPanel;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -67,8 +64,8 @@ public class TestHashParam extends AbstractWebDriverTest {
     private WebElement hiddenLink;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richHashParam/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richHashParam/simple.xhtml";
     }
 
     private void openPopup() {

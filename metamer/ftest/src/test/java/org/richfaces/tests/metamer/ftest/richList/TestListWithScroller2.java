@@ -21,9 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richList;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
@@ -70,8 +67,8 @@ public class TestListWithScroller2 extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richList/scroller2.xhtml");
+    public String getComponentTestPagePath() {
+        return "richList/scroller2.xhtml";
     }
 
     @Test

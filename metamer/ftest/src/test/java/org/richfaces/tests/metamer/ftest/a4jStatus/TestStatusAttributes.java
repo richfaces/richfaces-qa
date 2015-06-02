@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jStatus;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -41,8 +37,8 @@ public class TestStatusAttributes extends AbstractStatusTest {
     private static final String STARTTEXT = "start text";
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jStatus/withoutFacets.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jStatus/withoutFacets.xhtml";
     }
 
     @Override

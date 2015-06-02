@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richPopupPanel;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.TextInputComponentImpl;
@@ -64,8 +60,8 @@ public class TestPopupPanelJSApi extends AbstractWebDriverTest {
     final int TOLERANCE = 5;// px
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richPopupPanel/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richPopupPanel/simple.xhtml";
     }
 
     private void openPopupPanel() {

@@ -21,11 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jMediaOutput;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
-import java.net.URL;
 
 import org.richfaces.tests.metamer.bean.a4j.A4JMediaOutputBean;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
@@ -37,8 +35,8 @@ import org.testng.annotations.Test;
 public class TestMediaOutputTextPlain extends AbstractMediaOutputTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jMediaOutput/textPlain.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jMediaOutput/textPlain.xhtml";
     }
 
     @Test

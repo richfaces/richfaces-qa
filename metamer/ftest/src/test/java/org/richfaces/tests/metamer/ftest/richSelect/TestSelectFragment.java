@@ -21,12 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.richSelect;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
@@ -63,8 +60,8 @@ public class TestSelectFragment extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richSelect/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richSelect/simple.xhtml";
     }
 
     @Test

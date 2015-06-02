@@ -21,10 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.richTreeModelAdaptor;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 
-import java.net.URL;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -59,11 +57,11 @@ public class TestTreeModelAdaptorLazyLoading extends AbstractWebDriverTest {
 
     private TreeNode treeNode;
 
-    private final Integer[][] paths = new Integer[][]{ { 1, 1, 1, 8, 1 }, { 4, 4, 11, 4 } };
+    private final Integer[][] paths = new Integer[][] { { 1, 1, 1, 8, 1 }, { 4, 4, 11, 4 } };
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richTree/treeAdaptors.xhtml");
+    public String getComponentTestPagePath() {
+        return "richTree/treeAdaptors.xhtml";
     }
 
     @Test(groups = "smoke")

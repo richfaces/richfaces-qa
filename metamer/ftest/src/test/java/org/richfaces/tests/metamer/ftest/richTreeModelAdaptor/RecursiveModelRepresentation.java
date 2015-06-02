@@ -26,5 +26,6 @@ package org.richfaces.tests.metamer.ftest.richTreeModelAdaptor;
  * @version $Revision: 22493 $
  */
 public enum RecursiveModelRepresentation {
+
     MAP, LIST;
 }

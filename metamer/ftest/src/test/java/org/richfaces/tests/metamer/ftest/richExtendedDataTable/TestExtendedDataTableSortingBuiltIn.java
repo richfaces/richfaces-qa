@@ -1,9 +1,5 @@
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
@@ -19,8 +15,8 @@ public class TestExtendedDataTableSortingBuiltIn extends DataTableSortingTest {
     private SortingEDT table;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richExtendedDataTable/builtInFiltering.xhtml");
+    public String getComponentTestPagePath() {
+        return "richExtendedDataTable/builtInFiltering.xhtml";
     }
 
     @Override
@@ -84,7 +80,7 @@ public class TestExtendedDataTableSortingBuiltIn extends DataTableSortingTest {
     }
 
     @Test
-    @Templates(exclude="richExtendedDataTable")
+    @Templates(exclude = "richExtendedDataTable")
     @Override
     public void testSortModeMulti() {
         super.testSortModeMulti();
@@ -92,7 +88,7 @@ public class TestExtendedDataTableSortingBuiltIn extends DataTableSortingTest {
 
     @Test
     @Skip
-    @Templates(value="richExtendedDataTable")
+    @Templates(value = "richExtendedDataTable")
     public void testSortModeMultiInEDT() {
         super.testSortModeMulti();
     }

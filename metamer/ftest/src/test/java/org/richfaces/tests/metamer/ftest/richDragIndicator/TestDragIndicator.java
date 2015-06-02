@@ -21,15 +21,12 @@
  */
 package org.richfaces.tests.metamer.ftest.richDragIndicator;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.DragIndicatorAttributes.acceptClass;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.DragIndicatorAttributes.draggingClass;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.DragIndicatorAttributes.rejectClass;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.DragIndicatorAttributes.rendered;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
@@ -58,8 +55,8 @@ public class TestDragIndicator extends AbstractWebDriverTest {
     private DragIndicatorSimplePage page;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richDragIndicator/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richDragIndicator/simple.xhtml";
     }
 
     @Test

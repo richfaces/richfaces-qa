@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richToggleControl;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
@@ -40,8 +36,8 @@ public class TestTCTabPanel extends AbstractTestToggleControl {
     private WebElement[] items2;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richToggleControl/tabPanel.xhtml");
+    public String getComponentTestPagePath() {
+        return "richToggleControl/tabPanel.xhtml";
     }
 
     @Test
@@ -66,14 +62,14 @@ public class TestTCTabPanel extends AbstractTestToggleControl {
 
     private WebElement[] getItems1() {
         if (items1 == null) {
-            items1 = new WebElement[]{ getPage().getPanel1Item1(), getPage().getPanel1Item2(), getPage().getPanel1Item3() };
+            items1 = new WebElement[] { getPage().getPanel1Item1(), getPage().getPanel1Item2(), getPage().getPanel1Item3() };
         }
         return items1;
     }
 
     private WebElement[] getItems2() {
         if (items2 == null) {
-            items2 = new WebElement[]{ getPage().getPanel2Item1(), getPage().getPanel2Item2(), getPage().getPanel2Item3() };
+            items2 = new WebElement[] { getPage().getPanel2Item1(), getPage().getPanel2Item2(), getPage().getPanel2Item3() };
         }
         return items2;
     }

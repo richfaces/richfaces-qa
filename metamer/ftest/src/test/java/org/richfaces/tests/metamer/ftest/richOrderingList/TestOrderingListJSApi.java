@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richOrderingList;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Utils;
@@ -56,8 +52,8 @@ public class TestOrderingListJSApi extends AbstractOrderingListTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richOrderingList/jsApi.xhtml");
+    public String getComponentTestPagePath() {
+        return "richOrderingList/jsApi.xhtml";
     }
 
     private String getValueFromOutputJSField() {

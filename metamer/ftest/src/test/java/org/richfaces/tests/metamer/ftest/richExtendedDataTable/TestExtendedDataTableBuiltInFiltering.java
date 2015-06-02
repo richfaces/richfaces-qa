@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFilteringTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
@@ -42,8 +38,8 @@ public class TestExtendedDataTableBuiltInFiltering extends DataTableFilteringTes
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richExtendedDataTable/builtInFiltering.xhtml");
+    public String getComponentTestPagePath() {
+        return "richExtendedDataTable/builtInFiltering.xhtml";
     }
 
     @Test

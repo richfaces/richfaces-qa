@@ -21,11 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.richTreeModelAdaptor;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 
-import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -52,10 +50,10 @@ public class TestTreeModelAdaptorSelection extends AbstractTreeSelectionTest {
     private WebElement recursiveLeafChildrenNullableElement;
 
     private PathsCrate path;
-    private final PathsCrate[] paths = new PathsCrate[]{
-        new PathsCrate("listModel", new Integer[][]{ { 1, 0, 2 }, { 2, 2, 1, 1 } }),
-        new PathsCrate("mapModel", new Integer[][]{ { 1, 0, 4 }, { 2, 2, 1, 5 } }),
-        new PathsCrate("recursiveModel", new Integer[][]{ { 3, 0, 9, 1 }, { 0, 3, 2, 10, 3 } }) };
+    private final PathsCrate[] paths = new PathsCrate[] {
+        new PathsCrate("listModel", new Integer[][] { { 1, 0, 2 }, { 2, 2, 1, 1 } }),
+        new PathsCrate("mapModel", new Integer[][] { { 1, 0, 4 }, { 2, 2, 1, 5 } }),
+        new PathsCrate("recursiveModel", new Integer[][] { { 3, 0, 9, 1 }, { 0, 3, 2, 10, 3 } }) };
 
     @UseForAllTests(valuesFrom = FROM_ENUM, value = "")
     private RecursiveModelRepresentation representation;
@@ -64,8 +62,8 @@ public class TestTreeModelAdaptorSelection extends AbstractTreeSelectionTest {
     private Boolean recursiveLeafChildrenNullable;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richTree/treeAdaptors.xhtml");
+    public String getComponentTestPagePath() {
+        return "richTree/treeAdaptors.xhtml";
     }
 
     @BeforeMethod

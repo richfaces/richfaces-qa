@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richGraphValidator;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -38,8 +34,8 @@ import org.testng.annotations.Test;
 public class TestGraphValidatorSummary extends AbstractGraphValidatorTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richGraphValidator/allWithSummary.xhtml");
+    public String getComponentTestPagePath() {
+        return "richGraphValidator/allWithSummary.xhtml";
     }
 
     @Test

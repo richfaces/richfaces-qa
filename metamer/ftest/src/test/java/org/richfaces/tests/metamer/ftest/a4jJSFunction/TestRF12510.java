@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jJSFunction;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
@@ -44,8 +41,8 @@ public class TestRF12510 extends AbstractWebDriverTest {
     private RF12510Page page;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jJSFunction/rf-12510.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jJSFunction/rf-12510.xhtml";
     }
 
     @Test

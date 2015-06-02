@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -40,8 +37,8 @@ import org.testng.annotations.Test;
 public class TestAutocompleteKVS extends AbstractAutocompleteTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richAutocomplete/autocomplete.xhtml");
+    public String getComponentTestPagePath() {
+        return "richAutocomplete/autocomplete.xhtml";
     }
 
     @Test(groups = { "keepVisualStateTesting" })
@@ -70,7 +67,7 @@ public class TestAutocompleteKVS extends AbstractAutocompleteTest {
 
         @Override
         public String[] getInputValues() {
-            return new String[]{ "Hawaii" };
+            return new String[] { "Hawaii" };
         }
     }
 }

@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richInputNumberSlider;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -57,8 +54,8 @@ public class TestInputNumberSliderJSApi extends AbstractSliderTest {
     private WebElement value;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richInputNumberSlider/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richInputNumberSlider/simple.xhtml";
     }
 
     private String getValueFromOutputJSField() {

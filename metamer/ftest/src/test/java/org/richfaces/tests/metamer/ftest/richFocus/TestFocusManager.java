@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richFocus;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
@@ -44,8 +40,8 @@ public class TestFocusManager extends AbstractWebDriverTest {
     private FocusSimplePage page;
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richFocus/focusManager.xhtml");
+    public String getComponentTestPagePath() {
+        return "richFocus/focusManager.xhtml";
     }
 
     @Test(groups = "smoke")

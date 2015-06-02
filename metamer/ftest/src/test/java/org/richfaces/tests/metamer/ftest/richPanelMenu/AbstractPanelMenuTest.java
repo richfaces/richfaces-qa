@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richPanelMenu;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 
@@ -46,7 +42,7 @@ public class AbstractPanelMenuTest extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richPanelMenu/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richPanelMenu/simple.xhtml";
     }
 }

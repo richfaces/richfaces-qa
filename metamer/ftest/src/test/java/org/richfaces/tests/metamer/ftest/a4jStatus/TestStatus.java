@@ -21,9 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jStatus;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.richfaces.tests.metamer.ftest.MetamerAttributes;
@@ -38,8 +35,8 @@ import org.testng.annotations.Test;
 public class TestStatus extends AbstractStatusTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jStatus/facets.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jStatus/facets.xhtml";
     }
 
     @Test(groups = "smoke")

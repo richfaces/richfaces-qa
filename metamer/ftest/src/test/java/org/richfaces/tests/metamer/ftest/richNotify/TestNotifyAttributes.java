@@ -21,9 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richNotify;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -74,8 +71,8 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richNotify/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richNotify/simple.xhtml";
     }
 
     @Test(groups = "smoke")

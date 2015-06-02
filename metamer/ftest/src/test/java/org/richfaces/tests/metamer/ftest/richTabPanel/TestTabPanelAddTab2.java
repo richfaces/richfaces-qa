@@ -23,11 +23,9 @@ package org.richfaces.tests.metamer.ftest.richTabPanel;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.fragment.switchable.SwitchType.SERVER;
 import static org.testng.AssertJUnit.assertEquals;
 
-import java.net.URL;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
@@ -82,8 +80,8 @@ public class TestTabPanelAddTab2 extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richTabPanel/addTab2.xhtml");
+    public String getComponentTestPagePath() {
+        return "richTabPanel/addTab2.xhtml";
     }
 
     /**

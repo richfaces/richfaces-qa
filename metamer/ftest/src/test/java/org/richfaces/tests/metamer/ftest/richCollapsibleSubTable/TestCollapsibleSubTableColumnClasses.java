@@ -21,10 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-
-import java.net.URL;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractColumnClassesTest;
@@ -51,8 +47,8 @@ public class TestCollapsibleSubTableColumnClasses extends AbstractColumnClassesT
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richCollapsibleSubTable/filtering.xhtml");
+    public String getComponentTestPagePath() {
+        return "richCollapsibleSubTable/filtering.xhtml";
     }
 
     @Test

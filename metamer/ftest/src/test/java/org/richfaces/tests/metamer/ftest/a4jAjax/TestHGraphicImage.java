@@ -21,10 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jAjax;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
-
-import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
@@ -58,8 +55,8 @@ public class TestHGraphicImage extends AbstractAjaxTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jAjax/hGraphicImage.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jAjax/hGraphicImage.xhtml";
     }
 
     @Override

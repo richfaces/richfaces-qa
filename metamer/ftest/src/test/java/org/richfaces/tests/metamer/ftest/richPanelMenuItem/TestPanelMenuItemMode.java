@@ -30,11 +30,9 @@ import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 
-import java.net.URL;
 import java.util.LinkedList;
 
 import javax.faces.event.PhaseId;
@@ -107,8 +105,8 @@ public class TestPanelMenuItemMode extends AbstractWebDriverTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richPanelMenuItem/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richPanelMenuItem/simple.xhtml";
     }
 
     @Test

@@ -21,13 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.richFileUpload;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
@@ -66,8 +63,8 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richFileUpload/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richFileUpload/simple.xhtml";
     }
 
     @Test(groups = { "smoke" })

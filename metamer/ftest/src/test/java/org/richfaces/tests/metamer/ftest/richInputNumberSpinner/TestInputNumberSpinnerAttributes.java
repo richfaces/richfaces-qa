@@ -21,13 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.richInputNumberSpinner;
 
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.richfaces.tests.metamer.ftest.richInputNumberSpinner.AbstractInputNumberSpinnerTest.DEFAULT_MAX_VALUE;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
@@ -72,8 +69,8 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     }
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richInputNumberSpinner/simple.xhtml");
+    public String getComponentTestPagePath() {
+        return "richInputNumberSpinner/simple.xhtml";
     }
 
     @Test

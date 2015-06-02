@@ -34,29 +34,29 @@ public class CustomMessagesPage extends MetamerPage {
 
     public static final String CUSTOM_MESSAGE_TEXT = "Custom message";
 
-    @FindBy(id="setCorrectValuesButton")
+    @FindBy(id = "setCorrectValuesButton")
     private WebElement setAllCorrectButton;
-    @FindBy(id="setWrongValuesButton1")
+    @FindBy(id = "setWrongValuesButton1")
     private WebElement setAllWrongButton1;
-    @FindBy(id="setWrongValuesButton2")
+    @FindBy(id = "setWrongValuesButton2")
     private WebElement setAllWrongButton2;
 
-    @FindBy(css="input[id$='hButton']")
+    @FindBy(css = "input[id$='hButton']")
     private WebElement hButton;
-    @FindBy(css="input[id$='a4jButton']")
+    @FindBy(css = "input[id$='a4jButton']")
     private WebElement a4jButton;
 
-    @FindBy(css="span[id$=doubleRangeMessage] > span > span")
+    @FindBy(css = "span[id$=doubleRangeMessage] > span > span")
     private WebElement doubleRangeMessage;
-    @FindBy(css="span[id$=longRangeMessage] > span > span")
+    @FindBy(css = "span[id$=longRangeMessage] > span > span")
     private WebElement longRangeMessage;
-    @FindBy(css="span[id$=lengthMessage] > span > span")
+    @FindBy(css = "span[id$=lengthMessage] > span > span")
     private WebElement lengthMessage;
-    @FindBy(css="span[id$=regexpMessage] > span > span")
+    @FindBy(css = "span[id$=regexpMessage] > span > span")
     private WebElement regexpMessage;
-    @FindBy(css="span[id$=requiredMessage] > span > span")
+    @FindBy(css = "span[id$=requiredMessage] > span > span")
     private WebElement requiredMessage;
-    @FindBy(css="span[id$=customMessage] > span > span")
+    @FindBy(css = "span[id$=customMessage] > span > span")
     private WebElement customMessage;
 
     public void setAllCorrect() {
