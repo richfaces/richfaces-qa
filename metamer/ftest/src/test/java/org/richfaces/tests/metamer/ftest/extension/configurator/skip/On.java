@@ -114,6 +114,18 @@ public class On {
         }
 
         /**
+         * Skip test when use of Tomcat 7 is detected (when <code>activated.maven.profiles</code> are containing <code>tomcat-managed-7</code>
+         * or <code>tomcat-remote-7</code>).
+         */
+        public static class Tomcat7 implements SkipOn {
+
+            @Override
+            public boolean apply() {
+                return containerProfileActivated("tomcat-managed-7", "tomcat-remote-7");
+            }
+        }
+
+        /**
          * Skip test when use of EAP 6.2.4 is detected (when <code>activated.maven.profiles</code> are containing <code>jbosseap-managed-6-2</code>
          * or <code>jbosseap-remote-6-2</code> and <code>version.eap=6.2.4</code>).
          */
