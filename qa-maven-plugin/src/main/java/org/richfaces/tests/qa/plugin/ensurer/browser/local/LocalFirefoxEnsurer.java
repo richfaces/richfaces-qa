@@ -21,6 +21,10 @@
  */
 package org.richfaces.tests.qa.plugin.ensurer.browser.local;
 
+import static org.richfaces.tests.qa.plugin.utils.Version.Format.major;
+import static org.richfaces.tests.qa.plugin.utils.Version.Format.minor;
+import static org.richfaces.tests.qa.plugin.utils.Version.Format.specifier;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -31,7 +35,6 @@ import java.util.List;
 import org.richfaces.tests.qa.plugin.ensurer.browser.BrowserEnsurer;
 import org.richfaces.tests.qa.plugin.properties.PropertiesProvider;
 import org.richfaces.tests.qa.plugin.utils.Servant;
-import org.richfaces.tests.qa.plugin.utils.Version;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
@@ -76,9 +79,9 @@ public class LocalFirefoxEnsurer implements BrowserEnsurer {
             File targetDir = new File(pp.getProjectBuildDirectory());
 
             List<String> possibleVersions = Lists.newArrayList();
+            possibleVersions.add(pp.getBrowser().getVersion().getFormat(EnumSet.of(major, minor, specifier)));
             possibleVersions.add(versionFull);
-            possibleVersions.add(pp.getBrowser().getVersion().getFormat(EnumSet.of(Version.Format.major, Version.Format.minor, Version.Format.specifier)));
-            possibleVersions.add(pp.getBrowser().getVersion().getFormat(EnumSet.of(Version.Format.major, Version.Format.specifier)));
+            possibleVersions.add(pp.getBrowser().getVersion().getFormat(EnumSet.of(major, specifier)));
             Exception caughtException = null;
             for (String possibleVersion : possibleVersions) {
                 try {
