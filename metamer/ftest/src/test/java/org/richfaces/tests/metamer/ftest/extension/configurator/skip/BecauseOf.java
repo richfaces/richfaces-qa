@@ -125,7 +125,7 @@ public class BecauseOf {
     public static class UIRepeatSetIndexIssue extends SkipOnIssue {
 
         public UIRepeatSetIndexIssue() {
-            super(On.Container.WildFly81.class, On.Container.WildFly82.class, On.Container.Tomcat8.class);
+            super(On.Container.WildFly81.class, On.Container.WildFly82.class, On.Container.WildFly90.class, On.Container.Tomcat7.class, On.Container.Tomcat8.class);
         }
     }
 
