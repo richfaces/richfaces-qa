@@ -1,6 +1,6 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2014, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,31 +18,30 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.metamer.ftest.a4jQueue;
 
-
 import static org.richfaces.tests.metamer.ftest.a4jQueue.QueueAttributes.ignoreDupResponses;
-import static org.richfaces.tests.metamer.ftest.a4jQueue.QueueAttributes.rendered;
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
 
-import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.testng.annotations.Test;
-
-import org.jboss.arquillian.graphene.page.interception.AjaxHalter;
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.a4jQueue.QueueFragment.Input;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.AjaxRequestHalter;
+import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.Halter;
+import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.Halter.HaltedRequest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-
-import static org.jboss.arquillian.graphene.halter.AjaxState.OPENED;
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
-import static org.testng.Assert.fail;
+import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -50,36 +49,62 @@ import static org.testng.Assert.fail;
  */
 public class TestGlobalQueue extends AbstractWebDriverTest {
 
+    private final Attributes<QueueAttributes> attributes = getAttributes();
+
     @FindBy(tagName = "body")
     private QueueFragment queue;
 
-    private final Attributes<QueueAttributes> attributes = getAttributes();
-
-    Integer requestDelay;
-    Integer[] requestDelays = {3000, 1200};
+    private Integer requestDelay;
+    private Integer[] requestDelays = { 1900, 1000 };
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jQueue/globalQueue.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jQueue/globalQueue.xhtml";
     }
 
-    /**
-     * Tests delay between time last event occurs and time when event triggers
-     * request (begin).
-     */
     @Test
-    @UseWithField(field = "requestDelay", valuesFrom = FROM_FIELD, value = "requestDelays")
-    public void testRequestDelay() {
-        attributes.set(QueueAttributes.requestDelay, requestDelay);
+    @CoversAttributes("ignoreDupResponses")
+    public void testIgnoreDuplicatedResponsesFalse() throws InterruptedException {
+        attributes.set(ignoreDupResponses, false);
 
-        queue.initializeTimes();
+        Halter halter = AjaxRequestHalter.getHalter();
+        queue.type("a");
+        HaltedRequest req = halter.nextRequest().continueToPhaseAfter().opened();
+        queue.type("b");
+        req.completeRequest();
 
-        for (int i = 0; i < 5; i++) {
-            queue.fireEvent(1);
-            queue.checkTimes(requestDelay);
+        queue.waitForChange("", queue.getRepeatedTextElement());
+        assertEquals(queue.getRepeatedText(), "a");
+
+        halter.nextRequest().completeRequest();
+        queue.waitForChange("a", queue.getRepeatedTextElement());
+        assertEquals(queue.getRepeatedText(), "ab");
+    }
+
+    @Test
+    @CoversAttributes("ignoreDupResponses")
+    public void testIgnoreDuplicatedResponsesTrue() {
+        attributes.set(ignoreDupResponses, true);
+
+        Halter halter = AjaxRequestHalter.getHalter();
+        queue.type("c");
+        HaltedRequest req = halter.nextRequest().continueToPhaseAfter().opened();
+        queue.type("d");
+        req.completeRequest();
+
+        try {
+            queue.waitForChange("", queue.getRepeatedTextElement());
+            fail("should timeout here!");
+        } catch (TimeoutException ex) {
+            //OK
         }
 
-        queue.checkDeviationMedian(requestDelay);
+        assertEquals(queue.getRepeatedText(), "");
+
+        halter.nextRequest().completeRequest();
+
+        queue.waitForChange("", queue.getRepeatedTextElement());
+        assertEquals(queue.getRepeatedText(), "cd");
     }
 
     /**
@@ -90,23 +115,17 @@ public class TestGlobalQueue extends AbstractWebDriverTest {
     public void testMultipleRequestsWithDelay() {
         attributes.set(QueueAttributes.requestDelay, 3000);
 
-        AjaxHalter.enable();
+        Halter halter = AjaxRequestHalter.getHalter();
 
         queue.fireEvent(4);
-        AjaxHalter handle = AjaxHalter.getHandleBlocking();
-        handle.continueAfter(OPENED);
-        handle.complete();
+        halter.nextRequest().completeRequest();
 
         queue.checkCounts(4, 1, 1);
 
         queue.fireEvent(3);
-        handle = AjaxHalter.getHandleBlocking();
-        handle.continueAfter(OPENED);
-        handle.complete();
+        halter.nextRequest().completeRequest();
 
         queue.checkCounts(7, 2, 2);
-
-        AjaxHalter.disable();
     }
 
     /**
@@ -121,102 +140,79 @@ public class TestGlobalQueue extends AbstractWebDriverTest {
     public void testMultipleRequestsWithNoDelay() {
         attributes.set(QueueAttributes.requestDelay, 0);
 
-        AjaxHalter.enable();
+        Halter halter = AjaxRequestHalter.getHalter();
 
         queue.fireEvent(1);
         queue.checkCounts(1, 1, 0);
 
-        AjaxHalter handle = AjaxHalter.getHandleBlocking();
-        handle.continueAfter(OPENED);
+        HaltedRequest req = halter.nextRequest().continueToPhaseAfter().opened();
 
         queue.fireEvent(1);
         queue.checkCounts(2, 1, 0);
 
-        handle.complete();
+        req.completeRequest();
         queue.checkCounts(2, 2, 1);
 
-        handle = AjaxHalter.getHandleBlocking();
-        handle.continueAfter(OPENED);
+        req = halter.nextRequest().continueToPhaseAfter().opened();
         queue.fireEvent(4);
         queue.checkCounts(6, 2, 1);
 
-        handle.complete();
+        req.completeRequest();
         queue.checkCounts(6, 3, 2);
 
-        handle = AjaxHalter.getHandleBlocking();
-        handle.continueAfter(OPENED);
+        req = halter.nextRequest().continueToPhaseAfter().opened();
         queue.fireEvent(1);
         queue.checkCounts(7, 3, 2);
 
-        handle.complete();
+        req.completeRequest();
         queue.checkCounts(7, 4, 3);
 
-        handle = AjaxHalter.getHandleBlocking();
-        handle.continueAfter(OPENED);
+        req = halter.nextRequest().continueToPhaseAfter().opened();
         queue.checkCounts(7, 4, 3);
 
-        handle.complete();
+        req.completeRequest();
         queue.checkCounts(7, 4, 4);
-
-        AjaxHalter.disable();
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-9328")
+    @CoversAttributes("rendered")
+    @RegressionTest("https://issues.jboss.org/browse/RF-9328")
     public void testRendered() {
-        attributes.set(QueueAttributes.requestDelay, 1500);
-        attributes.set(rendered, false);
+        attributes.set(QueueAttributes.requestDelay, 2000);
+        attributes.set(QueueAttributes.onrequestqueue, "alert('requestQueued')");
+        attributes.set(QueueAttributes.onrequestdequeue, "alert('requestDequeued')");
+        attributes.set(QueueAttributes.rendered, false);
 
         queue.initializeTimes();
-        queue.fireEvent(1);
+        Graphene.guardAjax(queue).fireEvent(1);
 
         // check that no requestDelay is applied while renderer=false
-        queue.checkTimes(0);
-        // TODO should check that no attributes is applied with renderes=false
-    }
-
-    @Test
-    public void testIgnoreDuplicatedResponsesFalse() throws InterruptedException {
-        attributes.set(ignoreDupResponses, false);
-
-        AjaxHalter.enable();
-        queue.type("a");
-        AjaxHalter handle = AjaxHalter.getHandleBlocking();
-        handle.continueAfter(OPENED);
-        queue.type("b");
-        handle.complete();
-        queue.waitForChange("", queue.getRepeatedTextElement());
-        assertEquals(queue.getRepeatedText(), "a");
-        handle = AjaxHalter.getHandleBlocking();
-        handle.complete();
-        queue.waitForChange("a", queue.getRepeatedTextElement());
-        assertEquals(queue.getRepeatedText(), "ab");
-    }
-
-    @Test
-    public void testIgnoreDuplicatedResponsesTrue() {
-        attributes.set(ignoreDupResponses, true);
-
-        AjaxHalter.enable();
-        queue.type("c");
-        AjaxHalter handle = AjaxHalter.getHandleBlocking();
-        handle.continueAfter(OPENED);
-        queue.type("d");
-        handle.complete();
-
+        queue.checkDeviation(Input.FIRST, 0);
         try {
-            queue.waitForChange("", queue.getRepeatedTextElement());
-            fail("should timeout here!");
-        } catch(TimeoutException ex) {
-            //OK
+            Graphene.waitGui().withTimeout(2, TimeUnit.SECONDS).until(ExpectedConditions.alertIsPresent());
+            fail("No alert should be present!");
+        } catch (Exception e) {
+            //ok
+        }
+    }
+
+    /**
+     * Tests delay between time last event occurs and time when event triggers
+     * request (begin).
+     */
+    @Test
+    @CoversAttributes("requestDelay")
+    @UseWithField(field = "requestDelay", valuesFrom = FROM_FIELD, value = "requestDelays")
+    public void testRequestDelay() {
+        attributes.set(QueueAttributes.requestDelay, requestDelay);
+
+        queue.initializeTimes();
+
+        for (int i = 0; i < 5; i++) {
+            Graphene.guardAjax(queue).fireEvent(1);
+            queue.checkDeviation(Input.FIRST, requestDelay);
         }
 
-        assertEquals(queue.getRepeatedText(), "");
-
-        handle = AjaxHalter.getHandleBlocking();
-        handle.complete();
-
-        queue.waitForChange("", queue.getRepeatedTextElement());
-        assertEquals(queue.getRepeatedText(), "cd");
+        queue.checkDeviationMedian(requestDelay);
     }
 }
