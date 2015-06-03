@@ -47,9 +47,9 @@ import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
  */
 public abstract class AbstractAttachQueueTest extends AbstractWebDriverTest {
 
-    protected static final Long DELAY_A = 2000L;
-    protected static final Long DELAY_B = 4000L;
-    protected static final Long GLOBAL_DELAY = 8000L;
+    protected static final Long DELAY_A = 1000L;
+    protected static final Long DELAY_B = 2000L;
+    protected static final Long GLOBAL_DELAY = 4000L;
 
     protected final Attributes<AttachQueueAttributes> attachQueueAttributes = getAttributes();
     protected final Attributes<AttachQueueAttributes> attachQueueAttrs1 = getAttributes("afterForm:attributes1");
