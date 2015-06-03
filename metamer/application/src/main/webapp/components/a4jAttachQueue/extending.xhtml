@@ -51,7 +51,6 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                        onbeforedomupdate="#{a4jQueueBean.attributes['onbeforedomupdate'].value}"
                        oncomplete="#{a4jQueueBean.attributes['oncomplete'].value}"
                        onerror="#{a4jQueueBean.attributes['onerror'].value}"
-                       onevent="#{a4jQueueBean.attributes['onevent'].value}"
                        onrequestdequeue="#{a4jQueueBean.attributes['onrequestdequeue'].value}"
                        onrequestqueue="#{a4jQueueBean.attributes['onrequestqueue'].value}"
                        onsubmit="#{a4jQueueBean.attributes['onsubmit'].value}"
@@ -85,13 +84,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <div>&lt;a4j:attachQueue 2 /&gt;</div>
 
                     <a4j:attachQueue id="a4jAttachQueue2"
-                                     ignoreDupResponses="#{a4jAttachQueueBean.attributes['ignoreDupResponses'].value}"
-                                     name="#{a4jAttachQueueBean.attributes['name'].value}"
-                                     onrequestdequeue="#{a4jAttachQueueBean.attributes['onrequestdequeue'].value}"
-                                     onrequestqueue="#{a4jAttachQueueBean.attributes['onrequestqueue'].value}"
-                                     rendered="#{a4jAttachQueueBean.attributes['rendered'].value}"
-                                     requestDelay="#{a4jAttachQueueBean.attributes['requestDelay'].value}"
-                                     requestGroupingId="#{a4jAttachQueueBean.attributes['requestGroupingId'].value}"
+                                     ignoreDupResponses="#{a4jAttachQueueBean.attributes2['ignoreDupResponses'].value}"
+                                     name="#{a4jAttachQueueBean.attributes2['name'].value}"
+                                     onrequestdequeue="#{a4jAttachQueueBean.attributes2['onrequestdequeue'].value}"
+                                     onrequestqueue="#{a4jAttachQueueBean.attributes2['onrequestqueue'].value}"
+                                     rendered="#{a4jAttachQueueBean.attributes2['rendered'].value}"
+                                     requestDelay="#{a4jAttachQueueBean.attributes2['requestDelay'].value}"
+                                     requestGroupingId="#{a4jAttachQueueBean.attributes2['requestGroupingId'].value}"
                                      />                                    
                     <h:inputText id="input2" value="#{a4jAttachQueueBean.text2}" onkeypress="add(#{rich:element('events2')}); #{rich:element('timeWatcher:grid')}.event(2); " />
                 </a4j:ajax>
