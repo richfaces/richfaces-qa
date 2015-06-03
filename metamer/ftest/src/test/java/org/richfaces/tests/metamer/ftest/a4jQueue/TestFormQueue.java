@@ -39,9 +39,9 @@ import org.testng.annotations.Test;
 @Templates("plain")
 public class TestFormQueue extends AbstractWebDriverTest {
 
-    private static final Long DELAY_A = 2000L;
-    private static final Long DELAY_B = 4000L;
-    private static final Long GLOBAL_DELAY = 6000L;
+    private static final Long DELAY_A = 1000L;
+    private static final Long DELAY_B = 2000L;
+    private static final Long GLOBAL_DELAY = 4000L;
 
     private final Attributes<QueueAttributes> attributesGlobalQueue = getAttributes("attributeForm:globalQueueAttributes");
     private final Attributes<QueueAttributes> attributesQueueA = getAttributes("attributeForm:formQueue1Attributes");

@@ -38,7 +38,7 @@ import org.testng.annotations.Test;
  */
 public class TestAttachQueueNamed extends AbstractWebDriverTest {
 
-    private static final Long DELAY = 3000L;
+    private static final Long DELAY = 2000L;
 
     @FindBy(tagName = "body")
     private QueueFragment queue;
