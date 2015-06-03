@@ -1,6 +1,6 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2014, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,11 +18,12 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.metamer.ftest.a4jQueue;
 
-import com.google.common.base.Predicate;
-
+import static org.jboss.arquillian.graphene.Graphene.waitAjax;
+import static org.jboss.arquillian.graphene.Graphene.waitGui;
+import static org.richfaces.tests.metamer.ftest.a4jQueue.QueueFragment.Input.FIRST;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -34,151 +35,59 @@ import java.util.concurrent.TimeUnit;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.jboss.arquillian.test.api.ArquillianResource;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
-import static org.jboss.arquillian.graphene.Graphene.waitAjax;
-import static org.jboss.arquillian.graphene.Graphene.waitGui;
-import static org.richfaces.tests.metamer.ftest.a4jQueue.QueueFragment.Input.FIRST;
+import com.google.common.base.Predicate;
 
 public class QueueFragment {
 
-    List<Long> deviations = new ArrayList<Long>();
-//    LocatorReference<JQueryLocator> form = new LocatorReference<JQueryLocator>(null);
+    private static final int MAXIMUM_DEVIATION = 1800;
+    private static final int MAXIMUM_WAIT_TIME_IN_SECS = 7;
+    private static final int MAXIMUM_DEVIATION_WHEN_NO_DELAY = 500;
+    private static final int MINIMUM_DEVIATION = 500;
 
-    @FindByJQuery("input:text[id$=input1]")
-    private WebElement input1;
-
-    @FindByJQuery("input:text[id$=input2]")
-    private WebElement input2;
-
-    @FindByJQuery("input:submit[id$=actionButton]")
-    private WebElement button;
-
-    @FindByJQuery("span[id$=outtext]")
-    private WebElement repeatedText;
-
-    @FindByJQuery("span[id$=events1]")
-    private WebElement events1;
-
-    @FindByJQuery("span[id$=events2]")
-    private WebElement events2;
-
-    @FindByJQuery("span[id$=requests]")
-    private WebElement requests;
-
-    @FindByJQuery("span[id$=updates]")
-    private WebElement updates;
-
-    @FindByJQuery("span[id$=event1\\:outputTime]")
-    private WebElement event1Time;
-
-    @FindByJQuery("span[id$=event2\\:outputTime]")
-    private WebElement event2Time;
-
-    @FindByJQuery("span[id$=begin\\:outputTime]")
-    private WebElement beginTime;
-
-    @FindByJQuery("span[id$=complete\\:outputTime]")
-    private WebElement completeTime;
-
-    @FindByJQuery("input[id$=actionButton]")
-    private WebElement actionButton;
-
-    @ArquillianResource
-    private JavascriptExecutor js;
-
-    public Integer getTextAsInteger(WebElement element) {
-        return Integer.parseInt(element.getText());
-    }
-
-    public Integer getRequestCount() {
-        return getTextAsInteger(requests);
-    }
-
-    public Integer getEvent1Count() {
-        return getTextAsInteger(events1);
-    }
-
-    public Integer getEvent2Count() {
-        return getTextAsInteger(events2);
-    }
-
-    public Integer getDOMUpdateCount() {
-        return getTextAsInteger(updates);
-    }
-
-    private Long getAttributeTitleAsLong(WebElement element) {
-        return Long.parseLong(element.getAttribute("title"));
-    }
-
-    public Long getEvent1Time() {
-        return getAttributeTitleAsLong(event1Time);
-    }
-
-    public Long getEvent2Time() {
-        return getAttributeTitleAsLong(event2Time);
-    }
-
-    public Long getBeginTime() {
-        return getAttributeTitleAsLong(beginTime);
-    }
-
-    public Long getCompleteTime() {
-        return getAttributeTitleAsLong(completeTime);
-    }
+    private final List<Long> deviations = new ArrayList<Long>();
+    private Boolean event2Present = null;
 
     @Drone
     private WebDriver browser;
 
-    private Boolean event2Present = null;
+    @FindBy(css = "span[id$='begin:outputTime']")
+    private WebElement beginTime;
+    @FindBy(css = "span[id$='complete:outputTime']")
+    private WebElement completeTime;
+    @FindBy(css = "span[id$='event1:outputTime']")
+    private WebElement event1Time;
+    @FindBy(css = "span[id$='event2:outputTime']")
+    private WebElement event2Time;
+    @FindBy(css = "span[id$=events1]")
+    private WebElement events1;
+    @FindBy(css = "span[id$=events2]")
+    private WebElement events2;
+    @FindBy(css = "input[id$=input1]")
+    private WebElement input1;
+    @FindBy(css = "input[id$=input2]")
+    private WebElement input2;
+    @FindBy(css = "span[id$=outtext]")
+    private WebElement repeatedText;
+    @FindBy(css = "span[id$=requests]")
+    private WebElement requests;
+    @FindBy(css = "span[id$=updates]")
+    private WebElement updates;
 
-    public void waitForChange(final String oldValue, final WebElement elementToChange) {
-        waitGui().until(new Predicate<WebDriver>() {
-
-            @Override
-            public boolean apply(WebDriver t) {
-                return !oldValue.equals(elementToChange.getText());
-            }
-        });
-    }
-
-    private boolean isEvent2Present() {
-        if (event2Present == null) {
-            event2Present = new WebElementConditionFactory(input2).isPresent().apply(browser);
-            Boolean event2TimePresent = new WebElementConditionFactory(event2Time).isPresent().apply(browser);
-            assertEquals(event2Present, event2TimePresent);
+    private void assertChangeIfNotEqualToOldValue(final Retriever retrieveCount, final Integer eventCount, final String eventType) {
+        if (!eventCount.equals(retrieveCount.retrieve())) {
+            Graphene.waitAjax().withTimeout(MAXIMUM_WAIT_TIME_IN_SECS, TimeUnit.SECONDS).withMessage(eventType).until(new Predicate<WebDriver>() {
+                @Override
+                public boolean apply(WebDriver t) {
+                    return retrieveCount.retrieve().equals(eventCount);
+                }
+            });
+        } else {
+            assertEquals(retrieveCount.retrieve(), eventCount, eventType);
         }
-        return event2Present;
-    }
-
-    public void fireEvent(int countOfEvents) {
-        fireEvent(Input.FIRST, countOfEvents);
-    }
-
-    public void fireEvent(Input input, int countOfEvents) {
-        for (int i = 0; i < countOfEvents; i++) {
-            if (input == Input.FIRST) {
-                input1.sendKeys(" ");
-            } else {
-                input2.sendKeys(" ");
-            }
-        }
-    }
-
-    public void clickButton() {
-        button.click();
-    }
-
-    public void type(String text) {
-        input1.sendKeys(text);
-    }
-
-    public String getRepeatedText() {
-        return repeatedText.getText();
     }
 
     public void checkCounts(int events1, int requests, int domUpdates) {
@@ -196,23 +105,191 @@ public class QueueFragment {
         }
     }
 
-    private void assertChangeIfNotEqualToOldValue(final Retriever retrieveCount, final Integer eventCount, final String eventType) {
-        if (!eventCount.equals(retrieveCount.retrieve())) {
-            Graphene.waitAjax().withTimeout(12, TimeUnit.SECONDS).withMessage(eventType).until(new Predicate<WebDriver>() {
+    public void checkDeviation(long deviation, long maxDeviation) {
+        assertTrue(deviation <= maxDeviation,
+            String.format("Deviation (%d) is greater than maxDeviation (%d)", deviation, maxDeviation));
+    }
 
-                @Override
-                public boolean apply(WebDriver t) {
-                    return retrieveCount.retrieve().equals(eventCount);
-                }
-            });
-        } else {
-            assertEquals(retrieveCount.retrieve(), eventCount, eventType);
+    public void checkDeviation(Input input, long requestDelay) {
+        long eventTimeLong = input == FIRST ? getAttributeTitleAsLong(event1Time) : getAttributeTitleAsLong(event2Time);
+        long beginTimeLong = getAttributeTitleAsLong(beginTime);
+
+        long actualDelay = beginTimeLong - eventTimeLong;
+        long deviation = Math.abs(actualDelay - requestDelay);
+        long maxDeviation = Math.min(MAXIMUM_DEVIATION, Math.max(MINIMUM_DEVIATION, requestDelay / 2));
+        checkDeviation(deviation, maxDeviation);
+        deviations.add(deviation);
+    }
+
+    public void checkDeviationMedian(long requestDelay) {
+        long maximumDeviationMedian = Math.max(25, Math.min(50, requestDelay / 4));
+        long deviationMedian = getMedian(deviations);
+        assertTrue(
+            deviationMedian <= maximumDeviationMedian,
+            String.format("Deviation median (%d) should not be greater than defined maximum %d", deviationMedian,
+                maximumDeviationMedian));
+    }
+
+    public void checkNoDelayBetweenEvents() {
+        checkDeviation(Math.abs(getEvent1Time() - getEvent2Time()), MAXIMUM_DEVIATION_WHEN_NO_DELAY);
+    }
+
+    /**
+     * Fire event(s) on first input.
+     * @param countOfEvents count of events to be triggered
+     */
+    public void fireEvent(int countOfEvents) {
+        fireEvent(Input.FIRST, countOfEvents);
+    }
+
+    /**
+     * Fire event(s) on specified input.
+     * @param input input where the events be triggered on
+     * @param countOfEvents count of events to be triggered
+     */
+    public void fireEvent(Input input, int countOfEvents) {
+        for (int i = 0; i < countOfEvents; i++) {
+            if (input == Input.FIRST) {
+                input1.sendKeys(" ");
+            } else {
+                input2.sendKeys(" ");
+            }
         }
+    }
+
+    private Long getAttributeTitleAsLong(WebElement element) {
+        return Long.parseLong(element.getAttribute("title"));
+    }
+
+    public Long getBeginTime() {
+        return getAttributeTitleAsLong(beginTime);
+    }
+
+    public Long getCompleteTime() {
+        return getAttributeTitleAsLong(completeTime);
+    }
+
+    public Integer getDOMUpdateCount() {
+        return getTextAsInteger(updates);
+    }
+
+    public Integer getEvent1Count() {
+        return getTextAsInteger(events1);
+    }
+
+    public Long getEvent1Time() {
+        return getAttributeTitleAsLong(event1Time);
+    }
+
+    public Integer getEvent2Count() {
+        return getTextAsInteger(events2);
+    }
+
+    public Long getEvent2Time() {
+        return getAttributeTitleAsLong(event2Time);
+    }
+
+    private <T extends Comparable<T>> T getMedian(List<T> list) {
+        List<T> listCopy = new ArrayList<T>(list);
+        Collections.sort(listCopy);
+        return listCopy.get(listCopy.size() / 2);
+    }
+
+    public String getRepeatedText() {
+        return repeatedText.getText();
+    }
+
+    public WebElement getRepeatedTextElement() {
+        return repeatedText;
+    }
+
+    public Integer getRequestCount() {
+        return getTextAsInteger(requests);
+    }
+
+    public Integer getTextAsInteger(WebElement element) {
+        return Integer.parseInt(element.getText());
+    }
+
+    public void initializeTimes() {
+        deviations.clear();
+    }
+
+    private boolean isEvent2Present() {
+        if (event2Present == null) {
+            event2Present = new WebElementConditionFactory(input2).isPresent().apply(browser);
+            Boolean event2TimePresent = new WebElementConditionFactory(event2Time).isPresent().apply(browser);
+            assertEquals(event2Present, event2TimePresent);
+        }
+        return event2Present;
+    }
+
+    /**
+     * Type text to the first input.
+     */
+    public void type(String text) {
+        input1.sendKeys(text);
+    }
+
+    public void waitForChange(final String oldValue, final WebElement elementToChange) {
+        waitGui().until(new Predicate<WebDriver>() {
+            @Override
+            public boolean apply(WebDriver t) {
+                return !oldValue.equals(elementToChange.getText());
+            }
+        });
+    }
+
+    private long waitForChangeAndReturn(final WebElement timeElement, boolean canFail) {
+        final long before = getAttributeTitleAsLong(timeElement);
+        try {
+            waitAjax()
+                .pollingEvery(500, TimeUnit.MILLISECONDS)
+                .withTimeout(MAXIMUM_WAIT_TIME_IN_SECS, TimeUnit.SECONDS)
+                .until(new Predicate<WebDriver>() {
+                    @Override
+                public boolean apply(WebDriver t) {
+                        long now = getAttributeTitleAsLong(timeElement);
+                        return now != before;
+                    }
+                });
+        } catch (RuntimeException ex) {
+            if (!canFail) {
+                throw ex;
+            }
+        }
+        long result = getAttributeTitleAsLong(timeElement);
+        return result;
+    }
+
+    public void waitForTimeChangeAndCheckDeviation(Input input, long requestDelay) {
+        long eventTimeLong = input == FIRST ? getAttributeTitleAsLong(event1Time) : getAttributeTitleAsLong(event2Time);
+        long beginTimeLong = waitForChangeAndReturn(beginTime, true);
+
+        long actualDelay = beginTimeLong - eventTimeLong;
+        long deviation = Math.abs(actualDelay - requestDelay);
+        long maxDeviation = Math.min(MAXIMUM_DEVIATION, Math.max(MINIMUM_DEVIATION, requestDelay / 2));
+        checkDeviation(deviation, maxDeviation);
+
+        deviations.add(deviation);
+    }
+
+    public static enum Input {
+
+        FIRST, SECOND
     }
 
     public interface Retriever {
 
         Integer retrieve();
+    }
+
+    public class DOMUpdatesRetriever implements Retriever {
+
+        @Override
+        public Integer retrieve() {
+            return getDOMUpdateCount();
+        }
     }
 
     public class Event1Retriever implements Retriever {
@@ -231,150 +308,11 @@ public class QueueFragment {
         }
     }
 
-    public class DOMUpdatesRetriever implements Retriever {
-
-        @Override
-        public Integer retrieve() {
-            return getDOMUpdateCount();
-        }
-    }
-
     public class RequestsRetriever implements Retriever {
 
         @Override
         public Integer retrieve() {
             return getRequestCount();
         }
-    }
-
-    public void initializeTimes() {
-        deviations.clear();
-    }
-
-    public void checkTimes(long requestDelay) {
-        checkTimes(FIRST, requestDelay);
-    }
-
-    public void checkTimes(Input input, long requestDelay) {
-        long eventTimeLong = input == FIRST ? getAttributeTitleAsLong(event1Time) : getAttributeTitleAsLong(event2Time);
-        long beginTimeLong = waitForChangeAndReturn(beginTime, true);
-
-        long actualDelay = beginTimeLong - eventTimeLong;
-        long deviation = Math.abs(actualDelay - requestDelay);
-        long maxDeviation = Math.max(300, requestDelay / 2);
-        checkDeviation(deviation, maxDeviation);
-
-        deviations.add(deviation);
-    }
-
-    private long waitForChangeAndReturn(final WebElement timeElement, boolean canFail) {
-        final long before = getAttributeTitleAsLong(timeElement);
-        try {
-            waitAjax().pollingEvery(1, TimeUnit.MICROSECONDS)
-                    .withTimeout(12, TimeUnit.SECONDS)
-                    .until(new Predicate<WebDriver>() {
-
-                        @Override
-                        public boolean apply(WebDriver t) {
-                            long now = getAttributeTitleAsLong(timeElement);
-                            return now != before;
-                        }
-                    });
-        } catch (RuntimeException ex) {
-            if (!canFail) {
-                throw ex;
-            }
-        }
-        long result = getAttributeTitleAsLong(timeElement);
-        return result;
-    }
-
-    public void checkNoDelayBetweenEvents() {
-        long event1Time = getEvent1Time();
-        long event2Time = getEvent2Time();
-        long actualDelay = Math.abs(event1Time - event2Time);
-
-        checkDeviation(actualDelay, 150);
-    }
-
-    public void checkDeviation(long deviation, long maxDeviation) {
-        assertTrue(deviation <= maxDeviation,
-                String.format("Deviation (%d) is greater than maxDeviation (%d)", deviation, maxDeviation));
-    }
-
-    public void checkDeviationMedian(long requestDelay) {
-        long maximumDeviationMedian = Math.max(25, Math.min(50, requestDelay / 4));
-        long deviationMedian = getMedian(deviations);
-        assertTrue(
-                deviationMedian <= maximumDeviationMedian,
-                String.format("Deviation median (%d) should not be greater than defined maximum %d", deviationMedian,
-                        maximumDeviationMedian));
-    }
-
-    private <T extends Comparable<T>> T getMedian(List<T> list) {
-        List<T> listCopy = new ArrayList<T>(list);
-        Collections.sort(listCopy);
-        return listCopy.get(listCopy.size() / 2);
-    }
-
-    public static enum Input {
-
-        FIRST, SECOND;
-    }
-
-    public WebElement getInput1Element() {
-        return input1;
-    }
-
-    public WebElement getInput2Element() {
-        return input2;
-    }
-
-    public WebElement getButtonElement() {
-        return button;
-    }
-
-    public WebElement getRepeatedTextElement() {
-        return repeatedText;
-    }
-
-    public WebElement getEvents1Element() {
-        return events1;
-    }
-
-    public WebElement getEvents2Element() {
-        return events2;
-    }
-
-    public WebElement getRequestsElement() {
-        return requests;
-    }
-
-    public WebElement getUpdatesElement() {
-        return updates;
-    }
-
-    public WebElement getEvent1TimeElement() {
-        return event1Time;
-    }
-
-    public WebElement getEvent2TimeElement() {
-        return event2Time;
-    }
-
-    public WebElement getBeginTimeElement() {
-        return beginTime;
-    }
-
-    public WebElement getCompleteTimeElement() {
-        return completeTime;
-    }
-
-    public JavascriptExecutor getJs() {
-        return js;
-    }
-
-    public WebElement getActionButtonElement() {
-        return actionButton;
     }
 }

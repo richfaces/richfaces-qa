@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source
- * Copyright 2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -21,8 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jAttachQueue;
 
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  *
@@ -30,21 +30,14 @@ import org.openqa.selenium.WebElement;
  */
 public class AttachQueuePage {
 
-    @FindByJQuery("span[id$=output1]")
-    private WebElement output1;
-
-    @FindByJQuery("span[id$=output2]")
-    private WebElement output2;
-
-    @FindByJQuery("input[id$=input1]")
+    @FindBy(css = "input[id$=input1]")
     private WebElement input1;
-
-    @FindByJQuery("input[id$=input2]")
+    @FindBy(css = "input[id$=input2]")
     private WebElement input2;
-
-    public WebElement getOutput1() {
-        return output1;
-    }
+    @FindBy(css = "span[id$=output1]")
+    private WebElement output1;
+    @FindBy(css = "span[id$=output2]")
+    private WebElement output2;
 
     public WebElement getInput1() {
         return input1;
@@ -52,6 +45,10 @@ public class AttachQueuePage {
 
     public WebElement getInput2() {
         return input2;
+    }
+
+    public WebElement getOutput1() {
+        return output1;
     }
 
     public WebElement getOutput2() {

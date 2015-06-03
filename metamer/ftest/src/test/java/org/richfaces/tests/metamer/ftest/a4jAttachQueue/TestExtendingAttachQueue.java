@@ -1,6 +1,6 @@
-/*******************************************************************************
+/*
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2014, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2015, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,12 +18,8 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.metamer.ftest.a4jAttachQueue;
-
-import java.net.URL;
-
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
 
 import org.richfaces.tests.metamer.ftest.a4jQueue.QueueAttributes;
 import org.testng.annotations.BeforeMethod;
@@ -36,8 +32,8 @@ import org.testng.annotations.Test;
 public class TestExtendingAttachQueue extends AbstractAttachQueueTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jAttachQueue/extending.xhtml");
+    public String getComponentTestPagePath() {
+        return "a4jAttachQueue/extending.xhtml";
     }
 
     @BeforeMethod
@@ -58,8 +54,8 @@ public class TestExtendingAttachQueue extends AbstractAttachQueueTest {
     }
 
     @Test
-    public void testTimingOneQueueTwoEvents() {
-        super.testTimingOneQueueTwoEvents();
+    public void testQueueAndDequeueEvents() {
+        super.testQueueAndDequeueEvents();
     }
 
     @Test
@@ -68,7 +64,7 @@ public class TestExtendingAttachQueue extends AbstractAttachQueueTest {
     }
 
     @Test
-    public void testQueueAndDequeueEvents() {
-        super.testQueueAndDequeueEvents();
+    public void testTimingBetweenTwoQueues() {
+        super.testTimingBetweenTwoQueues();
     }
 }

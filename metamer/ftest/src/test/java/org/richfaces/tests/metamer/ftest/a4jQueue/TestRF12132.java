@@ -47,8 +47,6 @@ public class TestRF12132 extends AbstractWebDriverTest {
     private TextInputComponentImpl input;
     @FindBy(css = "[id$=log]")
     private RichFacesLog log;
-    @FindBy(css = "[id$=log]")
-    private WebElement logAsWebElement;
     @FindBy(css = "[id$=output]")
     private WebElement output;
     @FindBy(css = "[id$=action]")
