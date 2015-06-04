@@ -23,7 +23,7 @@ package org.richfaces.tests.metamer.ftest.a4jPush;
 
 import org.testng.annotations.Test;
 
-public class TestTwoPushCDI extends TestTwoPush {
+public class TestTwoPushCDI extends TestTwoPushTopicsContext {
 
     @Override
     public String getComponentTestPagePath() {

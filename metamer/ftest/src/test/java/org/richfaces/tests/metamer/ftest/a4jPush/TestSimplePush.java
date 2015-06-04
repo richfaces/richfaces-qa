@@ -46,10 +46,10 @@ import com.google.common.collect.Lists;
  */
 public class TestSimplePush extends AbstractWebDriverTest {
 
-    private static final int NUMBER_OF_VALUES = 5;
+    private static final int NUMBER_OF_TESTED_UPDATES = 3;
+    private static final DateTimeFormatter TIME_PARSER = DateTimeFormat.forPattern(A4JPushBean.DATE_PATTERN);
     private static final int TOLERANCE = 2;// s
     private static final int UPDATE_INTERVAL = 5;// s
-    private static final DateTimeFormatter TIME_PARSER = DateTimeFormat.forPattern(A4JPushBean.DATE_PATTERN);
 
     @FindBy(css = "div[id$=messagePanel] span.timestamp")
     private WebElement timestamp;
@@ -65,7 +65,7 @@ public class TestSimplePush extends AbstractWebDriverTest {
         List<String> timeStampsString = Lists.newArrayList();
         String previousTimeStampText;
         Graphene.waitModel().until().element(timestamp).is().present();
-        for (int i = 0; i < NUMBER_OF_VALUES; ++i) {
+        for (int i = 0; i < NUMBER_OF_TESTED_UPDATES; ++i) {
             previousTimeStampText = timestamp.getText();
             timeStampsString.add(previousTimeStampText.replaceAll("[\\[|\\]]", ""));
             Graphene.waitModel().until().element(timestamp).text().not().equalTo(previousTimeStampText);

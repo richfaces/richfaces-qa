@@ -21,9 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jPush;
 
+import static java.text.MessageFormat.format;
+
 import static org.testng.Assert.assertEquals;
 
-import java.text.MessageFormat;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -45,7 +46,7 @@ public class TestRF13928 extends AbstractWebDriverTest {
     private static final String DATA_TEMPLATE = "received data #{0}";
     private static final int NUMBER_OF_TESTED_UPDATES = 3;
     private static final String SUBSCRIPTION_TEMPLATE = "subscribed #{0} times";
-    private static final int UPDATE_INTERVAL_SECONDS = 5;
+    private static final int UPDATE_INTERVAL_SECONDS = 5 + 2;
 
     private Attributes<PushAttributes> attributes = getAttributes();
 
@@ -73,27 +74,24 @@ public class TestRF13928 extends AbstractWebDriverTest {
 
         // enable push
         attributes.set(PushAttributes.rendered, Boolean.TRUE);
-        waiting(1000);// https://issues.jboss.org/browse/RFPL-3692 , remove if needed after RF-13949 solved
         for (int i = 1; i <= NUMBER_OF_TESTED_UPDATES; ++i) {
             getWait().until().element(dataOutput).text().not().equalTo(previousDataOutputText);
             previousDataOutputText = dataOutput.getText();
-            assertEquals(previousDataOutputText, MessageFormat.format(DATA_TEMPLATE, i));
-            assertEquals(subscriptionOutput.getText(), MessageFormat.format(SUBSCRIPTION_TEMPLATE, 1), "Only 1 subscription expected.");
+            assertEquals(previousDataOutputText, format(DATA_TEMPLATE, i));
+            assertEquals(subscriptionOutput.getText(), format(SUBSCRIPTION_TEMPLATE, 1), "Only 1 subscription expected.");
         }
 
         // test second subscription
         // disable push
         attributes.set(PushAttributes.rendered, Boolean.FALSE);
-        waiting(1000);// https://issues.jboss.org/browse/RFPL-3692 , remove if needed after RF-13949 solved
         previousDataOutputText = dataOutput.getText();
         // enable push
         attributes.set(PushAttributes.rendered, Boolean.TRUE);
-        waiting(1000);// https://issues.jboss.org/browse/RFPL-3692 , remove if needed after RF-13949 solved
         for (int i = NUMBER_OF_TESTED_UPDATES + 1; i <= 2 * NUMBER_OF_TESTED_UPDATES; ++i) {
             getWait().until().element(dataOutput).text().not().equalTo(previousDataOutputText);
             previousDataOutputText = dataOutput.getText();
-            assertEquals(previousDataOutputText, MessageFormat.format(DATA_TEMPLATE, i));
-            assertEquals(subscriptionOutput.getText(), MessageFormat.format(SUBSCRIPTION_TEMPLATE, 2), "2 subscriptions expected.");
+            assertEquals(previousDataOutputText, format(DATA_TEMPLATE, i));
+            assertEquals(subscriptionOutput.getText(), format(SUBSCRIPTION_TEMPLATE, 2), "2 subscriptions expected.");
         }
     }
 }

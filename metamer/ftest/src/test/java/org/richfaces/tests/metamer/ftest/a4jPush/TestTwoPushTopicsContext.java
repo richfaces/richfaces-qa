@@ -30,36 +30,30 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.metamer.bean.a4j.A4JPushBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.google.common.base.Predicate;
 
-public class TestTwoPush extends AbstractWebDriverTest {
+public class TestTwoPushTopicsContext extends AbstractWebDriverTest {
 
+    private static final int NUMBER_OF_TESTED_UPDATES = 3;
     private static final boolean TIME_WILL_NOT_UPDATE = Boolean.FALSE;
     private static final boolean TIME_WILL_UPDATE = Boolean.TRUE;
 
-    private final Attributes<PushAttributes> pushAttributes = getAttributes();
-
     @Page
     private TwoPushPage page;
+    private final Attributes<PushAttributes> pushAttributes = getAttributes();
 
-    private void clickPushEnableCheckbox(boolean waitForReinitialization) {
+    private void clickPushEnableCheckbox() {
         // Graphene.guardAjax doesn't work here
         String requestTime = page.getRequestTimeElement().getText();
         page.getPushEnabledChckBoxElement().click();
-        waiting(1000);// https://issues.jboss.org/browse/RFPL-3692 , remove if needed after RF-13949 solved
         Graphene.waitModel().until().element(page.getRequestTimeElement()).text().not().equalTo(requestTime);
-        if (waitForReinitialization) {
-            waitUntilPushInitializes();
-        }
     }
 
     @Override
@@ -76,18 +70,18 @@ public class TestTwoPush extends AbstractWebDriverTest {
     @Test(groups = "smoke")
     @CoversAttributes({ "address", "ondataavailable" })
     public void testBothPushes() {
-        verifyPushUpdate(3, TIME_WILL_UPDATE, page.getPush1BtnElement(), page.getOutput1Element());
-        verifyPushUpdate(3, TIME_WILL_UPDATE, page.getPush2BtnElement(), page.getOutput2Element());
+        verifyPushUpdate(NUMBER_OF_TESTED_UPDATES, TIME_WILL_UPDATE, page.getPush1BtnElement(), page.getOutput1Element());
+        verifyPushUpdate(NUMBER_OF_TESTED_UPDATES, TIME_WILL_UPDATE, page.getPush2BtnElement(), page.getOutput2Element());
         verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.getPush1BtnElement(), page.getOutput2Element());
         verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.getPush2BtnElement(), page.getOutput1Element());
-        clickPushEnableCheckbox(true);//disable 1st push
-        verifyPushUpdate(3, TIME_WILL_UPDATE, page.getPush2BtnElement(), page.getOutput2Element());
-        verifyPushUpdate(3, TIME_WILL_NOT_UPDATE, page.getPush1BtnElement(), page.getOutput1Element());
+        clickPushEnableCheckbox();//disable 1st push
+        verifyPushUpdate(NUMBER_OF_TESTED_UPDATES, TIME_WILL_UPDATE, page.getPush2BtnElement(), page.getOutput2Element());
+        verifyPushUpdate(NUMBER_OF_TESTED_UPDATES, TIME_WILL_NOT_UPDATE, page.getPush1BtnElement(), page.getOutput1Element());
         verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.getPush1BtnElement(), page.getOutput2Element());
         verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.getPush2BtnElement(), page.getOutput1Element());
-        clickPushEnableCheckbox(true);//enable 1st push
-        verifyPushUpdate(3, TIME_WILL_UPDATE, page.getPush2BtnElement(), page.getOutput2Element());
-        verifyPushUpdate(3, TIME_WILL_UPDATE, page.getPush1BtnElement(), page.getOutput1Element());
+        clickPushEnableCheckbox();//enable 1st push
+        verifyPushUpdate(NUMBER_OF_TESTED_UPDATES, TIME_WILL_UPDATE, page.getPush2BtnElement(), page.getOutput2Element());
+        verifyPushUpdate(NUMBER_OF_TESTED_UPDATES, TIME_WILL_UPDATE, page.getPush1BtnElement(), page.getOutput1Element());
         verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.getPush1BtnElement(), page.getOutput2Element());
         verifyPushUpdate(1, TIME_WILL_NOT_UPDATE, page.getPush2BtnElement(), page.getOutput1Element());
     }
@@ -102,8 +96,8 @@ public class TestTwoPush extends AbstractWebDriverTest {
         String event = expectedReturnJS("return sessionStorage.getItem('metamerEvents')", expected1);
         // there are 2 push components on page (this example verify that one doesn't influence another one)
         assertEquals(event, expected1, "Attribute onsubscribed should be called 2 times on page load");
-        clickPushEnableCheckbox(false);//disable
-        clickPushEnableCheckbox(false);//enable
+        clickPushEnableCheckbox();//disable
+        clickPushEnableCheckbox();//enable
         // second onsubscribed event receive after manual re-attach by checkbox
         Graphene.waitModel()
             .withMessage("Onsubscribed should be called 3 times after push reenabled")
@@ -120,15 +114,15 @@ public class TestTwoPush extends AbstractWebDriverTest {
     @Test
     @CoversAttributes({ "address", "ondataavailable", "rendered" })
     public void testPushEnable() {
-        clickPushEnableCheckbox(false);// disable push updates
-        clickPushEnableCheckbox(true);// enable push updates
-        verifyPushUpdate(5, TIME_WILL_UPDATE, page.getPush1BtnElement(), page.getOutput1Element());
+        clickPushEnableCheckbox();// disable push updates
+        clickPushEnableCheckbox();// enable push updates
+        verifyPushUpdate(NUMBER_OF_TESTED_UPDATES, TIME_WILL_UPDATE, page.getPush1BtnElement(), page.getOutput1Element());
     }
 
     @Test
     @CoversAttributes({ "address", "ondataavailable" })
     public void testSimplePushEventReceive() {
-        verifyPushUpdate(5, TIME_WILL_UPDATE, page.getPush1BtnElement(), page.getOutput1Element());
+        verifyPushUpdate(NUMBER_OF_TESTED_UPDATES, TIME_WILL_UPDATE, page.getPush1BtnElement(), page.getOutput1Element());
     }
 
     /**
@@ -142,29 +136,6 @@ public class TestTwoPush extends AbstractWebDriverTest {
             MetamerPage.requestTimeChangesWaiting(pushButton).click();
             Graphene.waitAjax().until(new TimeChangePredicate(time1, outputWithTime, timeWillUpdate));
         }
-    }
-
-    /**
-     * When push component on page is disabled/re-enabled the same and even other push components don't receive updates for some
-     * time. This method should wait until push receives updates. It continously clicks the second push button (second push is
-     * always enabled) and checks if it received an update. Because of https://issues.jboss.org/browse/RF-12096.
-     *
-     * Sometimes the push is not initialized on page load, this will initialize push before each test.
-     */
-    @BeforeMethod(alwaysRun = true, dependsOnMethods = "loadPage")
-    public void waitUntilPushInitializes() {
-        new WebDriverWait(driver, 70, 1000)
-            .withMessage("Waiting for push to reinitialize")
-            .until(new Predicate<WebDriver>() {
-
-                @Override
-                public boolean apply(WebDriver input) {
-                    DateTime time1 = getTimeFromOutput(page.getOutput2Element());
-                    MetamerPage.requestTimeChangesWaiting(page.getPush2BtnElement()).click();
-                    DateTime time2 = getTimeFromOutput(page.getOutput2Element());
-                    return time2.isAfter(time1);
-                }
-            });
     }
 
     private class TimeChangePredicate implements Predicate<WebDriver> {
@@ -184,7 +155,6 @@ public class TestTwoPush extends AbstractWebDriverTest {
             if (timeWillChange) {
                 return getTimeFromOutput(outputWithTime).isAfter(timeBefore);
             }
-            waiting(1000);
             return getTimeFromOutput(outputWithTime).isEqual(timeBefore);
         }
 
