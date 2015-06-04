@@ -22,13 +22,13 @@
 package org.richfaces.tests.metamer.ftest.a4jAttachQueue;
 
 import static org.richfaces.tests.metamer.ftest.a4jQueue.QueueAttributes.requestDelay;
-import static org.richfaces.tests.metamer.ftest.a4jQueue.QueueFragment.Input.FIRST;
-import static org.richfaces.tests.metamer.ftest.a4jQueue.QueueFragment.Input.SECOND;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.a4jQueue.QueueAttributes;
 import org.richfaces.tests.metamer.ftest.a4jQueue.QueueFragment;
+import org.richfaces.tests.metamer.ftest.a4jQueue.QueueFragment.Input;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -38,7 +38,7 @@ import org.testng.annotations.Test;
  */
 public class TestAttachQueueNamed extends AbstractWebDriverTest {
 
-    private static final Long DELAY = 2000L;
+    private static final Long TESTED_DELAY = 1000L;
 
     @FindBy(tagName = "body")
     private QueueFragment queue;
@@ -56,14 +56,12 @@ public class TestAttachQueueNamed extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("name")
     public void testNameReferencing() {
-        queueAttributes.set(requestDelay, DELAY);
+        queueAttributes.set(requestDelay, TESTED_DELAY);
 
-        queue.initializeTimes();
+        Graphene.guardAjax(queue).fireEvent(Input.FIRST, 1);
+        queue.checkLastDelay(TESTED_DELAY);
 
-        queue.fireEvent(FIRST, 1);
-        queue.waitForTimeChangeAndCheckDeviation(FIRST, DELAY);
-
-        queue.fireEvent(SECOND, 1);
-        queue.waitForTimeChangeAndCheckDeviation(SECOND, DELAY);
+        Graphene.guardAjax(queue).fireEvent(Input.SECOND, 1);
+        queue.checkLastDelay(TESTED_DELAY);
     }
 }

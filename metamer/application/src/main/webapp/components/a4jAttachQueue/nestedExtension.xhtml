@@ -64,7 +64,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <a4j:ajax event="click" execute="@form"
                           onbegin="add(#{rich:element('requests')}); #{rich:element('timeWatcher:grid')}.begin(); "
                           onbeforedomupdate="add(#{rich:element('updates')});"
-                          oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.difference(); ">
+                          oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.countDelayAndMedian(); ">
 
                     <div>&lt;a4j:attachQueue id="..1" /&gt;</div>
 
@@ -90,7 +90,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         <a4j:ajax event="valueChange" render="output2" execute="@form"
                                   onbegin="add(#{rich:element('requests')}); #{rich:element('timeWatcher:grid')}.begin(); "
                                   onbeforedomupdate="add(#{rich:element('updates')});"
-                                  oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.difference(); ">
+                                  oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.countDelayAndMedian(); ">
 
                             <h:inputText id="input2" value="#{a4jAttachQueueBean.text2}"
                                          onclick="add(#{rich:element('events1')}); #{rich:element('timeWatcher:grid')}.event(1); "

@@ -21,8 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jQueue;
 
-import static org.testng.Assert.assertTrue;
-
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.a4jQueue.QueueFragment.Input;
@@ -34,6 +32,8 @@ import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 // https://issues.jboss.org/browse/RF-9430
 @Templates("plain")
@@ -42,6 +42,7 @@ public class TestFormQueue extends AbstractWebDriverTest {
     private static final Long DELAY_A = 1000L;
     private static final Long DELAY_B = 2000L;
     private static final Long GLOBAL_DELAY = 4000L;
+    private static final String KEYPRESS = "keypress";
 
     private final Attributes<QueueAttributes> attributesGlobalQueue = getAttributes("attributeForm:globalQueueAttributes");
     private final Attributes<QueueAttributes> attributesQueueA = getAttributes("attributeForm:formQueue1Attributes");
@@ -58,17 +59,10 @@ public class TestFormQueue extends AbstractWebDriverTest {
     }
 
     /**
-     * <p>
      * Tests the event handlers producing count of events (count of events, requests and updates).
-     *
-     * <p>
      * Uses one form queue, which controls events from two distinct event sources.
-     * </p>
-     *
-     * <p>
      * When one source waits for delay and another source produces event, events from first source should be immediately
      * processed.
-     * </p>
      */
     @Test
     public void testCountsOneQueueTwoEvents() {
@@ -78,29 +72,22 @@ public class TestFormQueue extends AbstractWebDriverTest {
         Halter halter = AjaxRequestHalter.getHalter();
 
         queueA.fireEvent(Input.FIRST, 2);
-        queueA.checkCounts(2, 0, 0, 0);
+        queueA.waitAndCheckEventsCounts(2, 0, 0, 0);
         queueA.fireEvent(Input.SECOND, 3);
-        queueA.checkCounts(2, 3, 1, 0);
+        queueA.waitAndCheckEventsCounts(2, 3, 1, 0);
 
-        queueA.checkCounts(2, 3, 1, 0);
+        queueA.waitAndCheckEventsCounts(2, 3, 1, 0);
         halter.completeFollowingRequests(1);
-        queueA.checkCounts(2, 3, 2, 1);
+        queueA.waitAndCheckEventsCounts(2, 3, 2, 1);
         halter.completeFollowingRequests(1);
-        queueA.checkCounts(2, 3, 2, 2);
+        queueA.waitAndCheckEventsCounts(2, 3, 2, 2);
     }
 
     /**
-     * <p>
      * Tests the event handlers producing count of events (count of events, requests and updates).
-     *
-     * <p>
      * Uses two form queues, controlling events from four distinct event sources (two for each queue).
-     * </p>
-     *
-     * <p>
      * When one source waits for delay and another source produces event, events from first source should be immediately
      * processed.
-     * </p>
      */
     @Test
     public void testCountsTwoQueuesThreeEvents() {
@@ -111,94 +98,80 @@ public class TestFormQueue extends AbstractWebDriverTest {
         Halter halter = AjaxRequestHalter.getHalter();
 
         queueA.fireEvent(Input.FIRST, 1);
-        queueA.checkCounts(1, 0, 0, 0);
+        queueA.waitAndCheckEventsCounts(1, 0, 0, 0);
         queueA.fireEvent(Input.SECOND, 1);
-        queueA.checkCounts(1, 1, 1, 0);
+        queueA.waitAndCheckEventsCounts(1, 1, 1, 0);
         queueB.fireEvent(Input.FIRST, 1);
-        queueB.checkCounts(1, 0, 0, 0);
+        queueB.waitAndCheckEventsCounts(1, 0, 0, 0);
         queueB.fireEvent(Input.SECOND, 1);
 
-        queueA.checkCounts(1, 1, 1, 0);
-        queueB.checkCounts(1, 1, 0, 0);
+        queueA.waitAndCheckEventsCounts(1, 1, 1, 0);
+        queueB.waitAndCheckEventsCounts(1, 1, 0, 0);
 
         halter.completeFollowingRequests(1);
-        queueA.checkCounts(1, 1, 2, 1);
-        halter.completeFollowingRequests(1);
-        queueA.checkCounts(1, 1, 2, 2);
-        queueB.checkCounts(1, 1, 1, 0);
-        halter.completeFollowingRequests(1);
-        queueB.checkCounts(1, 1, 2, 1);
-        halter.completeFollowingRequests(1);
+        queueA.waitAndCheckEventsCounts(1, 1, 2, 1);
 
-        queueA.checkCounts(1, 1, 2, 2);
-        queueB.checkCounts(1, 1, 2, 2);
+        halter.completeFollowingRequests(1);
+        queueA.waitAndCheckEventsCounts(1, 1, 2, 2);
+        queueB.waitAndCheckEventsCounts(1, 1, 1, 0);
+
+        halter.completeFollowingRequests(1);
+        queueB.waitAndCheckEventsCounts(1, 1, 2, 1);
+
+        halter.completeFollowingRequests(1);
+        queueA.waitAndCheckEventsCounts(1, 1, 2, 2);
+        queueB.waitAndCheckEventsCounts(1, 1, 2, 2);
     }
 
     /**
-     * <p>
      * Tests request delays for one form queue.
-     * </p>
-     *
-     * <p>
      * Uses one form queue, which controls events from two distinct event sources.
-     * </p>
-     * <p>
      * When one source waits for delay and another source produces event, events from first source should be immediately
      * processed.
-     * </p>
      */
     @Test
     public void testTimingOneQueueTwoEvents() {
         attributesQueueA.set(QueueAttributes.requestDelay, DELAY_A);
         attributesGlobalQueue.set(QueueAttributes.requestDelay, GLOBAL_DELAY);
 
-        queueA.initializeTimes();
+        getMultipleEventsFirerer()
+            .addEvent(queueA.getInput1(), 1, KEYPRESS)
+            .addEvent(queueA.getInput2(), 1, KEYPRESS)
+            .perform();
 
-        Halter halter = AjaxRequestHalter.getHalter();
-
-        queueA.fireEvent(Input.FIRST, 2);
-        queueA.fireEvent(Input.SECOND, 3);
-
-        halter.completeFollowingRequests(2);
-        queueA.checkDeviation(Input.SECOND, DELAY_A);
+        queueA.waitForNumberOfDelaysEqualsTo(2);
+        queueA.checkDelayAtIndexIs(1, 0);
+        queueA.checkLastDelay(DELAY_A);
     }
 
     /**
-     * <p>
      * Tests request delays for two form queues.
-     * </p>
-     *
-     * <p>
      * Uses two form queues, controlling events from four distinct event sources (two for each queue).
-     * </p>
-     *
-     * <p>
      * When one source waits for delay and another source produces event, events from first source should be immediately
      * processed.
-     * </p>
      */
     @Test
-    public void testTimingTwoQueuesFourEvents() throws InterruptedException {
+    public void testTimingTwoQueuesFourEvents() {
         attributesQueueA.set(QueueAttributes.requestDelay, DELAY_A);
         attributesQueueB.set(QueueAttributes.requestDelay, DELAY_B);
         attributesGlobalQueue.set(QueueAttributes.requestDelay, GLOBAL_DELAY);
 
-        queueA.initializeTimes();
-        queueB.initializeTimes();
+        getMultipleEventsFirerer()
+            .addEvent(queueA.getInput1(), 1, KEYPRESS)
+            .addEvent(queueA.getInput2(), 1, KEYPRESS)
+            .addEvent(queueB.getInput1(), 1, KEYPRESS)
+            .addEvent(queueB.getInput2(), 1, KEYPRESS)
+            .perform();
 
-        Halter halter = AjaxRequestHalter.getHalter();
+        queueA.waitForNumberOfDelaysEqualsTo(2);
+        queueA.checkDelayAtIndexIs(0, 0);
+        queueA.checkDelayAtIndexIs(1, 0);
+        queueA.checkMedian(0);
 
-        queueA.fireEvent(Input.FIRST, 1);
-        queueA.fireEvent(Input.SECOND, 1);
-        queueB.fireEvent(Input.FIRST, 1);
-        queueB.fireEvent(Input.SECOND, 1);
+        queueB.waitForNumberOfDelaysEqualsTo(2);
+        queueB.checkDelayAtIndexIs(0, DELAY_B);
+        queueB.checkDelayAtIndexIs(1, 0);
+        queueB.checkMedian(DELAY_B / 2);
 
-        halter.completeFollowingRequests(4);
-
-        queueB.checkDeviation(Input.SECOND, DELAY_B);
-
-        assertTrue(queueA.getBeginTime() - queueA.getEvent1Time() < 1000);
-        assertTrue(queueA.getBeginTime() - queueA.getEvent2Time() < 1000);
-        assertTrue(queueB.getBeginTime() - queueB.getEvent1Time() > DELAY_B);
     }
 }

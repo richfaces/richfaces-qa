@@ -59,10 +59,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                        />
 
             <fieldset>
-                <legend>&lt;a4j:ajax event="keyup" &gt;</legend>
+                <legend>&lt;a4j:ajax event="keypress" &gt;</legend>
 
                 <a4j:ajax event="keypress" render="output1" execute="@form" onbegin="add(#{rich:element('requests')}); #{rich:element('timeWatcher:grid')}.begin(); "
-                          oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.difference();" onbeforedomupdate="add(#{rich:element('updates')});">
+                          oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.countDelayAndMedian();" onbeforedomupdate="add(#{rich:element('updates')});">
 
                     <div>&lt;a4j:attachQueue 1 /&gt;</div>
 
@@ -79,7 +79,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:inputText id="input1" value="#{a4jAttachQueueBean.text1}" onkeypress="add(#{rich:element('events1')}); #{rich:element('timeWatcher:grid')}.event(1); " />
                 </a4j:ajax>
                 <a4j:ajax event="keypress" render="output2" execute="@form" onbegin="add(#{rich:element('requests')}); #{rich:element('timeWatcher:grid')}.begin(); "
-                          oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.difference();" onbeforedomupdate="add(#{rich:element('updates')});">
+                          oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.countDelayAndMedian();" onbeforedomupdate="add(#{rich:element('updates')});">
 
                     <div>&lt;a4j:attachQueue 2 /&gt;</div>
 
@@ -91,7 +91,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                      rendered="#{a4jAttachQueueBean.attributes2['rendered'].value}"
                                      requestDelay="#{a4jAttachQueueBean.attributes2['requestDelay'].value}"
                                      requestGroupingId="#{a4jAttachQueueBean.attributes2['requestGroupingId'].value}"
-                                     />                                    
+                                     />
                     <h:inputText id="input2" value="#{a4jAttachQueueBean.text2}" onkeypress="add(#{rich:element('events2')}); #{rich:element('timeWatcher:grid')}.event(2); " />
                 </a4j:ajax>
 
@@ -125,7 +125,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br />
             Attributes for wrapping attach queue 2
             <metamer:attributes value="#{a4jAttachQueueBean.attributes2}" id="attributes2" />
-            <br />            
+            <br />
             Attributes for queue1
             <br />
             <metamer:attributes value="#{a4jQueueBean.attributes}" id="queueAttributes" />
