@@ -122,7 +122,7 @@ public class QueueFragment {
     }
 
     public void checkDeviationMedian(long requestDelay) {
-        long maximumDeviationMedian = Math.max(25, Math.min(50, requestDelay / 4));
+        long maximumDeviationMedian = 200;
         long deviationMedian = getMedian(deviations);
         assertTrue(
             deviationMedian <= maximumDeviationMedian,
