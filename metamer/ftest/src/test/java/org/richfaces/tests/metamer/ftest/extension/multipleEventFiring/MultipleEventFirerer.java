@@ -19,43 +19,16 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.metamer.ftest.a4jAttachQueue;
+package org.richfaces.tests.metamer.ftest.extension.multipleEventFiring;
 
-import org.testng.annotations.Test;
+import org.openqa.selenium.WebElement;
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestExtendingAttachQueue extends AbstractAttachQueueTest {
+public interface MultipleEventFirerer {
 
-    @Override
-    public String getComponentTestPagePath() {
-        return "a4jAttachQueue/extending.xhtml";
-    }
+    MultipleEventFirerer addEvent(WebElement element, int count, String eventName);
 
-    @Test
-    public void testNoRequestDelay() {
-        super.testNoRequestDelay();
-    }
-
-    @Test
-    public void testQueueAndDequeueEvents() {
-        super.testQueueAndDequeueEvents();
-    }
-
-    @Test
-    public void testRendered() {
-        super.testRendered();
-    }
-
-    @Test
-    public void testRequestDelay() {
-        super.testRequestDelay();
-    }
-
-    @Test
-    public void testTwoQueuesTwoEvents() {
-        super.testTwoQueuesTwoEvents();
-    }
+    void perform();
 }

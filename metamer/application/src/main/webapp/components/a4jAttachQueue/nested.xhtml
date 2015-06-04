@@ -60,7 +60,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             <h:inputText id="input1" value="#{a4jAttachQueueBean.text1}" onkeypress="add(#{rich:element('events1')}); #{rich:element('timeWatcher:grid')}.event(1); ">
                 <a4j:ajax event="keypress" render="output1" execute="@form" onbegin="add(#{rich:element('requests')}); #{rich:element('timeWatcher:grid')}.begin(); "
-                          onbeforedomupdate="add(#{rich:element('updates')});" oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.difference(); ">
+                          onbeforedomupdate="add(#{rich:element('updates')});" oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.countDelayAndMedian(); ">
                     <a4j:attachQueue id="a4jAttachQueue1"
                                      ignoreDupResponses="#{a4jAttachQueueBean.attributes['ignoreDupResponses'].value}"
                                      name="#{a4jAttachQueueBean.attributes['name'].value}"
@@ -75,7 +75,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             <h:inputText id="input2" value="#{a4jAttachQueueBean.text2}" onkeypress="add(#{rich:element('events2')}); #{rich:element('timeWatcher:grid')}.event(2); ">
                 <a4j:ajax event="keypress" render="output2" execute="@form" onbegin="add(#{rich:element('requests')}); #{rich:element('timeWatcher:grid')}.begin(); "
-                          onbeforedomupdate="add(#{rich:element('updates')});" oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.difference(); ">
+                          onbeforedomupdate="add(#{rich:element('updates')});" oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.countDelayAndMedian(); ">
                     <a4j:attachQueue id="a4jAttachQueue2"
                                      ignoreDupResponses="#{a4jAttachQueueBean.attributes2['ignoreDupResponses'].value}"
                                      name="#{a4jAttachQueueBean.attributes2['name'].value}"

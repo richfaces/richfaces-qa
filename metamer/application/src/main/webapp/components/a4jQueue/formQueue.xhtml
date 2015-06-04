@@ -92,7 +92,7 @@
                                 <a4j:ajax event="keypress"
                                           onbegin="add(#{rich:element('requests')});  #{rich:element('timeWatcher:grid')}.begin(); "
                                           render="outtext"
-                                          oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.difference();"
+                                          oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.countDelayAndMedian();"
                                           onbeforedomupdate="add(#{rich:element('updates')}); " />
                             </h:inputText>
                             <h:outputText value="Event 2:" />
@@ -102,7 +102,7 @@
                                 <a4j:ajax event="keypress"
                                           onbegin="add(#{rich:element('requests')});  #{rich:element('timeWatcher:grid')}.begin(); "
                                           render="outtext"
-                                          oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.difference();"
+                                          oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.countDelayAndMedian();"
                                           onbeforedomupdate="add(#{rich:element('updates')}); " />
                             </h:inputText>
 

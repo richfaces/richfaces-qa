@@ -74,6 +74,8 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.extension.configurator.Configurator;
 import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config;
 import org.richfaces.tests.metamer.ftest.extension.configurator.transformer.DataProviderTestTransformer;
+import org.richfaces.tests.metamer.ftest.extension.multipleEventFiring.MultipleEventFirerer;
+import org.richfaces.tests.metamer.ftest.extension.multipleEventFiring.MultipleEventFirererImpl;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
@@ -982,6 +984,10 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             events,
             String.format("The events (%s) don't came in right order (%s)", Arrays.deepToString(actualEvents),
                 Arrays.deepToString(events)));
+    }
+
+    public MultipleEventFirerer getMultipleEventsFirerer() {
+        return new MultipleEventFirererImpl(executor);
     }
 
     public void cleanMetamerEventsVariable() {

@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.a4jAttachQueue;
 
 import static org.richfaces.tests.metamer.ftest.a4jQueue.QueueFragment.Input.FIRST;
-import static org.richfaces.tests.metamer.ftest.a4jQueue.QueueFragment.Input.SECOND;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
@@ -36,14 +35,15 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.a4jQueue.QueueAttributes;
 import org.richfaces.tests.metamer.ftest.a4jQueue.QueueFragment;
-import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.AjaxRequestHalter;
-import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.Halter;
+import org.richfaces.tests.metamer.ftest.a4jQueue.QueueFragment.Input;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.testng.annotations.BeforeMethod;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public abstract class AbstractAttachQueueTest extends AbstractWebDriverTest {
 
@@ -54,34 +54,35 @@ public abstract class AbstractAttachQueueTest extends AbstractWebDriverTest {
     protected final Attributes<AttachQueueAttributes> attachQueueAttributes = getAttributes();
     protected final Attributes<AttachQueueAttributes> attachQueueAttrs1 = getAttributes("afterForm:attributes1");
     protected final Attributes<AttachQueueAttributes> attachQueueAttrs2 = getAttributes("afterForm:attributes2");
-    protected final Attributes<QueueAttributes> queueAttributes = getAttributes("afterForm:queueAttributes");
 
     @ArquillianResource
     private JavascriptExecutor jsExecutor;
+
     @FindBy(tagName = "body")
     private QueueFragment queue;
+
+    protected final Attributes<QueueAttributes> queueAttributes = getAttributes("afterForm:queueAttributes");
 
     public QueueFragment getQueue() {
         return queue;
     }
 
-    protected void testDelay() {
-        queue.initializeTimes();
-        queue.fireEvent(FIRST, 1);
-        queue.waitForTimeChangeAndCheckDeviation(FIRST, DELAY_A);
+    @BeforeMethod
+    public void setupDelays() {
+        attachQueueAttrs1.set(AttachQueueAttributes.requestDelay, DELAY_A);
+        attachQueueAttrs2.set(AttachQueueAttributes.requestDelay, DELAY_B);
+        queueAttributes.set(QueueAttributes.requestDelay, GLOBAL_DELAY);
     }
 
-    protected void testNoDelay() {
+    @CoversAttributes("requestDelay")
+    protected void testNoRequestDelay() {
         attachQueueAttrs1.set(AttachQueueAttributes.requestDelay, 0);
 
-        Halter halter = AjaxRequestHalter.getHalter();
-
-        queue.fireEvent(FIRST, 4);
-        queue.checkCounts(4, 0, 1, 0);
-        halter.completeFollowingRequests(1);
-        queue.checkCounts(4, 0, 2, 1);
-        halter.completeFollowingRequests(1);
-        queue.checkCounts(4, 0, 2, 2);
+        queue.fireEvent(FIRST, 2);
+        queue.waitAndCheckEventsCounts(2, 2, 2);
+        queue.waitForNumberOfDelaysEqualsTo(2);
+        queue.checkLastDelay(0);
+        queue.checkMedian(0);
     }
 
     @CoversAttributes({ "onrequestqueue", "onrequestdequeue" })
@@ -107,11 +108,10 @@ public abstract class AbstractAttachQueueTest extends AbstractWebDriverTest {
         attachQueueAttrs1.set(AttachQueueAttributes.onrequestdequeue, "alert('requestDequeued')");
         attachQueueAttrs1.set(AttachQueueAttributes.rendered, false);
 
-        queue.initializeTimes();
-        Graphene.guardAjax(queue).fireEvent(1);
+        Graphene.guardAjax(queue).fireEvents(1);
 
         // check that no requestDelay is applied while renderer=false
-        queue.checkDeviation(QueueFragment.Input.FIRST, 0);
+        queue.checkLastDelay(0);
         try {
             Graphene.waitGui().withTimeout(2, TimeUnit.SECONDS).until(ExpectedConditions.alertIsPresent());
             fail("No alert should be present!");
@@ -120,23 +120,52 @@ public abstract class AbstractAttachQueueTest extends AbstractWebDriverTest {
         }
     }
 
-    protected void testTimingBetweenTwoQueues() {
-        attachQueueAttrs1.set(AttachQueueAttributes.requestDelay, DELAY_A);
-        attachQueueAttrs2.set(AttachQueueAttributes.requestDelay, DELAY_B);
-        queue.initializeTimes();
+    @CoversAttributes("requestDelay")
+    protected void testRequestDelay() {
+        // test first attachQueue
+        queue.fireEvent(Input.FIRST, 1);
+        queue.waitForNumberOfDelaysEqualsTo(1);
+        queue.checkLastDelay(DELAY_A);
+        queue.fireEvent(Input.FIRST, 1);
+        queue.waitForNumberOfDelaysEqualsTo(2);
+        queue.checkLastDelay(DELAY_A);
+        queue.fireEvent(Input.FIRST, 1);
+        queue.waitForNumberOfDelaysEqualsTo(3);
+        queue.checkLastDelay(DELAY_A);
+        queue.checkMedian(DELAY_A);
 
-        Halter halter = AjaxRequestHalter.getHalter();
+        queue.resetDelays();
+        // test second attachQueue
+        queue.fireEvent(Input.SECOND, 1);
+        queue.waitForNumberOfDelaysEqualsTo(1);
+        queue.checkLastDelay(DELAY_B);
+        queue.fireEvent(Input.SECOND, 1);
+        queue.waitForNumberOfDelaysEqualsTo(2);
+        queue.checkLastDelay(DELAY_B);
+        queue.fireEvent(Input.SECOND, 1);
+        queue.waitForNumberOfDelaysEqualsTo(3);
+        queue.checkLastDelay(DELAY_B);
+        queue.checkMedian(DELAY_B);
+    }
 
-        // fire some events on first input and immediatly some events on the second input
+    /**
+     * Tests request delays for 2 queues.
+     * When one source waits for delay and another source produces event, events from first source should be immediately
+     * processed.
+     */
+    protected void testTwoQueuesTwoEvents() {
+        // fire an event on first input and immediatly an event on the second input
+        getMultipleEventsFirerer()
+            .addEvent(queue.getInput1(), 1, "keypress")
+            .addEvent(queue.getInput2(), 1, "keypress")
+            .perform();
+
         // this will lead to 2 requests
-        queue.fireEvent(FIRST, 3);
-        queue.fireEvent(SECOND, 1);
+        queue.waitAndCheckEventsCounts(1, 1, 2, 2);
 
-        // complete both requests
-        halter.completeFollowingRequests(2);
-        // first one with no delay
-        queue.checkNoDelayBetweenEvents();
-        // second one with specified delay
-        queue.checkDeviation(SECOND, DELAY_B);
+        // first one has no delay
+        queue.checkDelayAtIndexIs(1, 0);
+        // second one has specified delay
+        queue.checkLastDelay(DELAY_B);
     }
 }

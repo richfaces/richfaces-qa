@@ -22,14 +22,13 @@
 package org.richfaces.tests.metamer.ftest.a4jAttachQueue;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
 
 import org.jboss.arquillian.graphene.page.Page;
-import org.richfaces.tests.metamer.ftest.a4jQueue.QueueAttributes;
 import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.AjaxRequestHalter;
 import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.Halter;
 import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.Halter.HaltedRequest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -47,18 +46,6 @@ public class TestNestedAttachQueue extends AbstractAttachQueueTest {
         return "a4jAttachQueue/nested.xhtml";
     }
 
-    @BeforeMethod
-    public void setupDelays() {
-        attachQueueAttrs1.set(AttachQueueAttributes.requestDelay, DELAY_A);
-        attachQueueAttrs2.set(AttachQueueAttributes.requestDelay, DELAY_B);
-        queueAttributes.set(QueueAttributes.requestDelay, GLOBAL_DELAY);
-    }
-
-    @Test
-    public void testDelay() {
-        super.testDelay();
-    }
-
     @Test
     @CoversAttributes("ignoreDupResponses")
     public void testIgnoreDuplicatedResponsesFalse() {
@@ -69,8 +56,10 @@ public class TestNestedAttachQueue extends AbstractAttachQueueTest {
         HaltedRequest req = halter.nextRequest().continueToPhaseAfter().opened();
         getQueue().type("b");
         req.completeRequest();
+
         getQueue().waitForChange("", page.getOutput1());
         assertEquals(page.getOutput1().getText(), "a");
+
         halter.completeFollowingRequests(1);
         getQueue().waitForChange("a", page.getOutput1());
         assertEquals(page.getOutput1().getText(), "ab");
@@ -86,20 +75,24 @@ public class TestNestedAttachQueue extends AbstractAttachQueueTest {
         HaltedRequest req = halter.nextRequest().continueToPhaseAfter().opened();
         getQueue().type("d");
         req.completeRequest();
+
         try {
             getQueue().waitForChange("", page.getOutput1());
-        } catch (Exception e) {
+            fail("should timeout here!");
+        } catch (Exception ignored) {
             // expected timeout
         }
         assertEquals(page.getOutput1().getText(), "");
+
         halter.completeFollowingRequests(1);
+
         getQueue().waitForChange("", page.getOutput1());
         assertEquals(page.getOutput1().getText(), "cd");
     }
 
     @Test
-    public void testNoDelay() {
-        super.testNoDelay();
+    public void testNoRequestDelay() {
+        super.testNoRequestDelay();
     }
 
     @Test
@@ -110,6 +103,11 @@ public class TestNestedAttachQueue extends AbstractAttachQueueTest {
     @Test
     public void testRendered() {
         super.testRendered();
+    }
+
+    @Test
+    public void testRequestDelay() {
+        super.testRequestDelay();
     }
 
     /**
@@ -127,18 +125,20 @@ public class TestNestedAttachQueue extends AbstractAttachQueueTest {
         attachQueueAttrs2.set(AttachQueueAttributes.requestGroupingId, "group1");
         Halter halter = AjaxRequestHalter.getHalter();
         page.getInput1().sendKeys("a");
-        getQueue().checkCounts(1, 0, 0, 0);
+        getQueue().waitAndCheckEventsCounts(1, 0, 0, 0);
         page.getInput2().sendKeys("b");
-        getQueue().checkCounts(1, 1, 1, 0);//1 event from both inputs, 1 request and 0 dom updates
-        halter.completeFollowingRequests(1);//complete request
+        getQueue().waitAndCheckEventsCounts(1, 1, 1, 0);//1 event from both inputs, 1 request and 0 dom updates
+
+        halter.completeFollowingRequests(1);
         getQueue().waitForChange("", page.getOutput2());
-        getQueue().checkCounts(1, 1, 1, 1);//only 1 dom update should be triggered
+        getQueue().waitAndCheckEventsCounts(1, 1, 1, 1);//only 1 dom update should be triggered
+
         assertEquals(page.getOutput1().getText(), "", "The faster (lower delay) request haven't replaced the slower");
         assertEquals(page.getOutput2().getText(), "b", "The faster (lower delay) request haven't replaced the slower.");
     }
 
     @Test
-    public void testTimingBetweenTwoQueues() {
-        super.testTimingBetweenTwoQueues();
+    public void testTwoQueuesTwoEvents() {
+        super.testTwoQueuesTwoEvents();
     }
 }

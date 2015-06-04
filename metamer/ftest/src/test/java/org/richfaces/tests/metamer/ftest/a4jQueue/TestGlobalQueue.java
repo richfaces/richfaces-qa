@@ -29,11 +29,9 @@ import static org.testng.Assert.fail;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.a4jQueue.QueueFragment.Input;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.AjaxRequestHalter;
 import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.Halter;
@@ -45,6 +43,7 @@ import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestGlobalQueue extends AbstractWebDriverTest {
@@ -55,7 +54,7 @@ public class TestGlobalQueue extends AbstractWebDriverTest {
     private QueueFragment queue;
 
     private Integer requestDelay;
-    private Integer[] requestDelays = { 1900, 1000 };
+    private Integer[] requestDelays = { 500, 1500 };
 
     @Override
     public String getComponentTestPagePath() {
@@ -76,7 +75,7 @@ public class TestGlobalQueue extends AbstractWebDriverTest {
         queue.waitForChange("", queue.getRepeatedTextElement());
         assertEquals(queue.getRepeatedText(), "a");
 
-        halter.nextRequest().completeRequest();
+        halter.completeFollowingRequests(1);
         queue.waitForChange("a", queue.getRepeatedTextElement());
         assertEquals(queue.getRepeatedText(), "ab");
     }
@@ -95,13 +94,13 @@ public class TestGlobalQueue extends AbstractWebDriverTest {
         try {
             queue.waitForChange("", queue.getRepeatedTextElement());
             fail("should timeout here!");
-        } catch (TimeoutException ex) {
-            //OK
+        } catch (Exception ignored) {
+            // expected timeout
         }
 
         assertEquals(queue.getRepeatedText(), "");
 
-        halter.nextRequest().completeRequest();
+        halter.completeFollowingRequests(1);
 
         queue.waitForChange("", queue.getRepeatedTextElement());
         assertEquals(queue.getRepeatedText(), "cd");
@@ -112,66 +111,91 @@ public class TestGlobalQueue extends AbstractWebDriverTest {
      * isn't delayed by configured requestDelay.
      */
     @Test
-    public void testMultipleRequestsWithDelay() {
-        attributes.set(QueueAttributes.requestDelay, 3000);
+    public void testMultipleRequestsWithDelayStacking() {
+        long delay = 2000;
+        attributes.set(QueueAttributes.requestDelay, delay);
 
         Halter halter = AjaxRequestHalter.getHalter();
 
-        queue.fireEvent(4);
-        halter.nextRequest().completeRequest();
+        queue.fireEvents(4);
+        queue.waitAndCheckEventsCounts(4, 1, 0);
 
-        queue.checkCounts(4, 1, 1);
+        halter.completeFollowingRequests(1);
+        queue.waitAndCheckEventsCounts(4, 1, 1);
 
-        queue.fireEvent(3);
-        halter.nextRequest().completeRequest();
+        queue.fireEvents(3);
+        queue.waitAndCheckEventsCounts(7, 2, 1);
 
-        queue.checkCounts(7, 2, 2);
+        halter.completeFollowingRequests(1);
+        queue.waitAndCheckEventsCounts(7, 2, 2);
+    }
+
+    @Test
+    public void testMultipleRequestsWithDelayTiming() {
+        long delay = 2000;
+        attributes.set(QueueAttributes.requestDelay, delay);
+        queue.fireEvents(4);
+        queue.waitForNumberOfDelaysEqualsTo(1);
+        queue.checkLastDelay(delay);
+        queue.checkMedian(delay);
     }
 
     /**
-     * <p> When no requestDelay (0) is set, events should fire request
-     * immediately. </p>
+     * When no requestDelay (0) is set, events should fire request
+     * immediately.
      *
-     * <p> However, when one event is waiting in queue for processing of
-     * previous request, events should be stacked. </p>
+     * However, when one event is waiting in queue for processing of
+     * previous request, events should be stacked.
      */
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RFPL-1194")
-    public void testMultipleRequestsWithNoDelay() {
-        attributes.set(QueueAttributes.requestDelay, 0);
+    public void testMultipleRequestsWithNoDelayStacking() {
+        long delay = 0;
+        attributes.set(QueueAttributes.requestDelay, delay);
 
         Halter halter = AjaxRequestHalter.getHalter();
 
-        queue.fireEvent(1);
-        queue.checkCounts(1, 1, 0);
+        queue.fireEvents(1);
+        queue.waitAndCheckEventsCounts(1, 1, 0);
 
         HaltedRequest req = halter.nextRequest().continueToPhaseAfter().opened();
 
-        queue.fireEvent(1);
-        queue.checkCounts(2, 1, 0);
+        queue.fireEvents(1);
+        queue.waitAndCheckEventsCounts(2, 1, 0);
 
         req.completeRequest();
-        queue.checkCounts(2, 2, 1);
+        queue.waitAndCheckEventsCounts(2, 2, 1);
 
         req = halter.nextRequest().continueToPhaseAfter().opened();
-        queue.fireEvent(4);
-        queue.checkCounts(6, 2, 1);
+        queue.fireEvents(4);
+        queue.waitAndCheckEventsCounts(6, 2, 1);
 
         req.completeRequest();
-        queue.checkCounts(6, 3, 2);
+        queue.waitAndCheckEventsCounts(6, 3, 2);
 
         req = halter.nextRequest().continueToPhaseAfter().opened();
-        queue.fireEvent(1);
-        queue.checkCounts(7, 3, 2);
+        queue.fireEvents(1);
+        queue.waitAndCheckEventsCounts(7, 3, 2);
 
         req.completeRequest();
-        queue.checkCounts(7, 4, 3);
+        queue.waitAndCheckEventsCounts(7, 4, 3);
 
         req = halter.nextRequest().continueToPhaseAfter().opened();
-        queue.checkCounts(7, 4, 3);
+        queue.waitAndCheckEventsCounts(7, 4, 3);
 
         req.completeRequest();
-        queue.checkCounts(7, 4, 4);
+        queue.waitAndCheckEventsCounts(7, 4, 4);
+    }
+
+    @Test
+    public void testMultipleRequestsWithNoDelayTiming() {
+        long delay = 0;
+        attributes.set(QueueAttributes.requestDelay, delay);
+        queue.fireEvents(2);
+        queue.waitAndCheckEventsCounts(2, 2, 2);
+        queue.waitForNumberOfDelaysEqualsTo(2);
+        queue.checkLastDelay(0);
+        queue.checkMedian(0);
     }
 
     @Test
@@ -183,11 +207,10 @@ public class TestGlobalQueue extends AbstractWebDriverTest {
         attributes.set(QueueAttributes.onrequestdequeue, "alert('requestDequeued')");
         attributes.set(QueueAttributes.rendered, false);
 
-        queue.initializeTimes();
-        Graphene.guardAjax(queue).fireEvent(1);
+        Graphene.guardAjax(queue).fireEvents(1);
 
         // check that no requestDelay is applied while renderer=false
-        queue.checkDeviation(Input.FIRST, 0);
+        queue.checkLastDelay(0);
         try {
             Graphene.waitGui().withTimeout(2, TimeUnit.SECONDS).until(ExpectedConditions.alertIsPresent());
             fail("No alert should be present!");
@@ -205,14 +228,13 @@ public class TestGlobalQueue extends AbstractWebDriverTest {
     @UseWithField(field = "requestDelay", valuesFrom = FROM_FIELD, value = "requestDelays")
     public void testRequestDelay() {
         attributes.set(QueueAttributes.requestDelay, requestDelay);
+        final int numberOfChecks = 5;
 
-        queue.initializeTimes();
-
-        for (int i = 0; i < 5; i++) {
-            Graphene.guardAjax(queue).fireEvent(1);
-            queue.checkDeviation(Input.FIRST, requestDelay);
+        for (int i = 0; i < numberOfChecks; i++) {
+            Graphene.guardAjax(queue).fireEvents(1);
         }
-
-        queue.checkDeviationMedian(requestDelay);
+        queue.waitAndCheckEventsCounts(5, 5, 5);
+        queue.waitForNumberOfDelaysEqualsTo(numberOfChecks);
+        queue.checkMedian(requestDelay);
     }
 }

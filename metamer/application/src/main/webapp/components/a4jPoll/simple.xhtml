@@ -52,7 +52,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                           onbeforedomupdate="#{a4jPollBean.attributes['onbeforedomupdate'].value}"
                           onbegin="#{rich:element('timeWatcher:grid')}.begin(); #{a4jPollBean.attributes['onbegin'].value}"
                           oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{a4jPollBean.attributes['oncomplete'].value}"
-                          ontimer="#{rich:element('timeWatcher:grid')}.event(); #{rich:element('timeWatcher:grid')}.difference(); #{a4jPollBean.attributes['ontimer'].value}"
+                          ontimer="#{rich:element('timeWatcher:grid')}.event(); #{rich:element('timeWatcher:grid')}.countDelayAndMedian(); #{a4jPollBean.attributes['ontimer'].value}"
                           render="#{a4jPollBean.attributes['render'].value} output"
                           rendered="#{a4jPollBean.attributes['rendered'].value}"
                           status="#{a4jPollBean.attributes['status'].value}"
@@ -62,9 +62,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </h:panelGroup>
 
             <script type="text/javascript">
-    //<![CDATA[
-       var lastCounter = null;
-    //]]>
+                //<![CDATA[
+                var lastCounter = null;
+                //]]>
             </script>
 
             <h:panelGroup id="output">
@@ -77,14 +77,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <h:outputText id="outputCounter" value="#{a4jPollBean.counter}"/>
                 <span id="counterDelta"></span>
                 <script type="text/javascript">
-               	//<![CDATA[
-                                var counterDelta = document.getElementById('counterDelta');
-                                document.title = lastCounter;
+                    //<![CDATA[
+                    var counterDelta = document.getElementById('counterDelta');
+                    document.title = lastCounter;
                     if (lastCounter) {
                         counterDelta.innerHTML = '(delta: ' + (#{a4jPollBean.counter} - lastCounter) + ')';
                     }
                     lastCounter = #{a4jPollBean.counter};
-               	//]]>
+                    //]]>
                	</script>
             </h:panelGroup>
 
