@@ -44,7 +44,16 @@ public class RichAccordionItemBean implements Serializable {
 
     private static final long serialVersionUID = -1L;
     private static Logger logger;
+    private String activeItem;
     private Attributes attributes;
+
+    public String getActiveItem() {
+        return activeItem;
+    }
+
+    public Attributes getAttributes() {
+        return attributes;
+    }
 
     /**
      * Initializes the managed bean.
@@ -62,10 +71,12 @@ public class RichAccordionItemBean implements Serializable {
 
         // TODO will be tested in another way
         attributes.remove("converter");
+
+        activeItem = "item3";
     }
 
-    public Attributes getAttributes() {
-        return attributes;
+    public void setActiveItem(String activeItem) {
+        this.activeItem = activeItem;
     }
 
     public void setAttributes(Attributes attributes) {
