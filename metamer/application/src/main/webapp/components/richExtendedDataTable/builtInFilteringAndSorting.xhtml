@@ -128,7 +128,9 @@
                     <h:outputText value="There is no data." style="color: red;" />
                 </f:facet>
 
-                <rich:column id="columnSex" sortBy="#{record.sex}">
+                <rich:column id="columnSex"
+                             sortBy="#{record.sex}"
+                             sortOrder="#{richExtendedDataTableBean.sorting['columnSex'].order}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderSex" value="Sex" />
                     </f:facet>
@@ -141,9 +143,11 @@
                 </rich:column>
 
 
-                <rich:column id="columnName" filterValue="#{richExtendedDataTableBean.filtering['name']}"
+                <rich:column id="columnName"
+                             filterValue="#{richExtendedDataTableBean.filtering['name']}"
                              filterExpression="#{empty filterValue or fn:containsIgnoreCase(record.name, filterValue)}"
-                             sortBy="#{record.name}">
+                             sortBy="#{record.name}"
+                             sortOrder="#{richExtendedDataTableBean.sorting['columnName'].order}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderName" value="Name" />
                         <br />
@@ -156,8 +160,11 @@
                     </f:facet>
                 </rich:column>
 
-                <rich:column id="columnTitle" filterValue="#{richExtendedDataTableBean.filtering['title']}" sortBy="#{record.title}"
-                             filterExpression="#{empty filterValue or record.title == richExtendedDataTableBean.filtering['title']}">
+                <rich:column id="columnTitle"
+                             filterValue="#{richExtendedDataTableBean.filtering['title']}"
+                             filterExpression="#{empty filterValue or record.title == richExtendedDataTableBean.filtering['title']}"
+                             sortBy="#{record.title}"
+                             sortOrder="#{richExtendedDataTableBean.sorting['columnTitle'].order}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderTitle" value="Title" />
                         <br />
@@ -170,9 +177,11 @@
                     </f:facet>
                 </rich:column>
 
-                <rich:column id="columnNumberOfKids1" sortBy="#{record.numberOfKids}"
+                <rich:column id="columnNumberOfKids1"
                              filterValue="#{richExtendedDataTableBean.filtering['numberOfKids1']}"
-                             filterExpression="#{empty filterValue or record.numberOfKids gt filterValue or record.numberOfKids eq filterValue}">
+                             filterExpression="#{empty filterValue or record.numberOfKids gt filterValue or record.numberOfKids eq filterValue}"
+                             sortBy="#{record.numberOfKids}"
+                             sortOrder="#{richExtendedDataTableBean.sorting['columnNumberOfKids'].order}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderNumberOfKids" value="Number of Kids" />
                         <br />
@@ -184,9 +193,11 @@
                     </f:facet>
                 </rich:column>
 
-                <rich:column id="columnNumberOfKids2" filterValue="#{richExtendedDataTableBean.filtering['numberOfKids2']}"
+                <rich:column id="columnNumberOfKids2"
+                             filterValue="#{richExtendedDataTableBean.filtering['numberOfKids2']}"
+                             filterExpression="#{empty filterValue or record.numberOfKids lt filterValue or record.numberOfKids eq filterValue}"
                              sortBy="#{record.numberOfKids}"
-                             filterExpression="#{empty filterValue or record.numberOfKids lt filterValue or record.numberOfKids eq filterValue}">
+                             sortOrder="#{richExtendedDataTableBean.sorting['columnNumberOfKids2'].order}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderNumberOfKids2" value="Number of Kids" />
                         <br />
