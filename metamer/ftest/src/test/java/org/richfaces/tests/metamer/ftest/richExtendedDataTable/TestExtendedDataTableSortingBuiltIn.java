@@ -16,7 +16,7 @@ public class TestExtendedDataTableSortingBuiltIn extends DataTableSortingTest {
 
     @Override
     public String getComponentTestPagePath() {
-        return "richExtendedDataTable/builtInFiltering.xhtml";
+        return "richExtendedDataTable/builtInFilteringAndSorting.xhtml";
     }
 
     @Override
