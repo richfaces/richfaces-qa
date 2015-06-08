@@ -27,7 +27,7 @@ import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotatio
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.FilteringEDT;
 import org.testng.annotations.Test;
 
-public class TestExtendedDataTableBuiltInFiltering extends DataTableFilteringTest {
+public class TestExtendedDataTableFilteringBuiltIn extends DataTableFilteringTest {
 
     @FindByJQuery("div.rf-edt[id$=richEDT]")
     private FilteringEDT table;
