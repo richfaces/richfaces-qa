@@ -22,6 +22,8 @@
 package org.richfaces.tests.metamer.bean.rich;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -46,9 +48,22 @@ public class RichPanelMenuBean implements Serializable {
 
     private static final long serialVersionUID = -1L;
     private static Logger logger;
-    private Attributes attributes;
 
     private String activeItem;
+    private Attributes attributes;
+    private Map<String, Boolean> expanded = new HashMap<String, Boolean>();
+
+    public String getActiveItem() {
+        return activeItem;
+    }
+
+    public Attributes getAttributes() {
+        return attributes;
+    }
+
+    public Map<String, Boolean> getExpanded() {
+        return expanded;
+    }
 
     /**
      * Initializes the managed bean.
@@ -72,14 +87,6 @@ public class RichPanelMenuBean implements Serializable {
         attributes.remove("converter");
     }
 
-    public Attributes getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(Attributes attributes) {
-        this.attributes = attributes;
-    }
-
     /**
      * An item change listener that logs to the page old and new value.
      *
@@ -92,7 +99,7 @@ public class RichPanelMenuBean implements Serializable {
             + " -> " + event.getNewItem().getId());
     }
 
-    public String getActiveItem() {
-        return activeItem;
+    public void setAttributes(Attributes attributes) {
+        this.attributes = attributes;
     }
 }
