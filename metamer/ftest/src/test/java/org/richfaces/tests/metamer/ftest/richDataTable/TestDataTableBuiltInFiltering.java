@@ -39,7 +39,7 @@ public class TestDataTableBuiltInFiltering extends DataTableFilteringTest {
 
     @Override
     public String getComponentTestPagePath() {
-        return "richDataTable/builtInFiltering.xhtml";
+        return "richDataTable/builtInFilteringAndSorting.xhtml";
     }
 
     @Test
