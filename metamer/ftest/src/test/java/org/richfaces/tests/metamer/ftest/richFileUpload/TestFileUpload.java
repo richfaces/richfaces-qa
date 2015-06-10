@@ -33,10 +33,8 @@ import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactor
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.common.Event;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
-import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -109,10 +107,8 @@ public class TestFileUpload extends AbstractFileUploadTest {
         }, fileUploadAttributes, FileUploadAttributes.clearLabel, succesfulFileUploadAction);
     }
 
-    @IssueTracking(value = { "https://issues.jboss.org/browse/RF-12039" })
-    @RegressionTest("https://issues.jboss.org/browse/RFPL-3503")
     @Test
-    @Skip
+    @RegressionTest({ "https://issues.jboss.org/browse/RFPL-3503", "https://issues.jboss.org/browse/RF-12039" })
     @CoversAttributes("data")
     public void testData() {
         testData(succesfulFileUploadAction);
@@ -296,18 +292,16 @@ public class TestFileUpload extends AbstractFileUploadTest {
         assertEquals(fileUpload.advanced().getItems().size(), 1);
     }
 
-    @IssueTracking("https://issues.jboss.org/browse/RF-12037")
-    @CoversAttributes("onbeforedomupdate")
     @Test
-    @Skip
+    @RegressionTest("https://issues.jboss.org/browse/RF-12037")
+    @CoversAttributes("onbeforedomupdate")
     public void testOnbeforedomupdate() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onbeforedomupdate, succesfulFileUploadAction);
     }
 
-    @IssueTracking("https://issues.jboss.org/browse/RF-12037")
-    @CoversAttributes("onbegin")
     @Test
-    @Skip
+    @RegressionTest("https://issues.jboss.org/browse/RF-12037")
+    @CoversAttributes("onbegin")
     public void testOnbegin() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onbegin, succesfulFileUploadAction);
     }
@@ -332,10 +326,9 @@ public class TestFileUpload extends AbstractFileUploadTest {
         _testFireEventWithJS(FileUploadAttributes.onclick, fileUpload.advanced().getFileInputElement());
     }
 
-    @IssueTracking("https://issues.jboss.org/browse/RF-12037")
-    @CoversAttributes("oncomplete")
     @Test
-    @Skip
+    @RegressionTest("https://issues.jboss.org/browse/RF-12037")
+    @CoversAttributes("oncomplete")
     public void testOncomplete() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.oncomplete, succesfulFileUploadAction);
     }
