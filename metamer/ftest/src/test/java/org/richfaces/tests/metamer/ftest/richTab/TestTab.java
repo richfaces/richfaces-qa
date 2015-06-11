@@ -47,8 +47,6 @@ import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
-import org.richfaces.tests.metamer.ftest.extension.configurator.skip.BecauseOf;
-import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -79,8 +77,7 @@ public class TestTab extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes({ "action", "actionListener" })
-    @RegressionTest("https://issues.jboss.org/browse/RF-11427")
-    @Templates(exclude = "uiRepeat")
+    @RegressionTest({ "https://issues.jboss.org/browse/RF-11427", "https://issues.jboss.org/browse/RF-13748" })
     public void testActionAndActionListener() {
         Graphene.guardAjax(page.getTabPanel()).switchTo(2);
 
@@ -94,15 +91,6 @@ public class TestTab extends AbstractWebDriverTest {
         page.assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: tab3 -> tab1");
         page.assertListener(PhaseId.INVOKE_APPLICATION, "action listener invoked");
         page.assertListener(PhaseId.INVOKE_APPLICATION, "action invoked");
-    }
-
-    @Test // fails with JSF 2.2
-    @Skip(BecauseOf.UIRepeatSetIndexIssue.class)
-    @CoversAttributes("actionListener")
-    @Templates(value = "uiRepeat")
-    @IssueTracking("https://issues.jboss.org/browse/RF-13748")
-    public void testActionAndActionListenerInUiRepeat() {
-        testActionAndActionListener();
     }
 
     @Test
