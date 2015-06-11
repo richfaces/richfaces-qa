@@ -341,6 +341,19 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @CoversAttributes("onerror")
+    @Templates("plain")
+    public void testOnerror() {
+        testFireEvent("onerror", new Action() {
+            @Override
+            public void perform() {
+                // sending a bigger file than upload limit will trigger the onerror event
+                sendFileWithWaiting(bigFile, true, false);
+            }
+        });
+    }
+
+    @Test
     @CoversAttributes("onfileselect")
     public void testOnfileselect() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onfileselect, new Action() {

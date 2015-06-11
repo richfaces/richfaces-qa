@@ -51,6 +51,7 @@ public enum FileUploadAttributes implements AttributeEnum {
     onclick,
     oncomplete,
     ondblclick,
+    onerror,
     onfileselect,
     onfilesubmit,
     onkeydown,
