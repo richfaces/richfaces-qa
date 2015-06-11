@@ -385,14 +385,15 @@ public class MetamerPage {
     public void assertListener(PhaseId phaseId, String message) {
         initialize();
         Set<String> set = map.get(phaseId);
+        String messageWithoutStar = message.startsWith("*") ? message.substring(2) : message;
         if (set != null && set.size() > 0) {
             for (String description : set) {
-                if (description.contains(message)) {
+                if (description.contains(messageWithoutStar)) {
                     return;
                 }
             }
         }
-        throw new AssertionError("The '" + message + "' wasn't found across messages in phase " + phaseId);
+        throw new AssertionError("The '" + messageWithoutStar + "' wasn't found across messages in phase " + phaseId);
     }
 
     /**
@@ -403,13 +404,14 @@ public class MetamerPage {
      */
     public void assertNoListener(String message) {
         initialize();
+        String messageWithoutStar = message.startsWith("*") ? message.substring(2) : message;
         for (Entry<PhaseId, Set<String>> entry : map.entrySet()) {
             PhaseId phaseId = entry.getKey();
             Set<String> descriptions = entry.getValue();
 
             for (String description : descriptions) {
-                if (description.contains(message)) {
-                    throw new AssertionError("The '" + message + "' was found across messages in phase " + phaseId);
+                if (description.contains(messageWithoutStar)) {
+                    throw new AssertionError("The '" + messageWithoutStar + "' was found across messages in phase " + phaseId);
                 }
             }
         }
