@@ -28,6 +28,7 @@ import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annot
 import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -57,6 +58,7 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     }
 
     @Test
+    @Templates("plain")
     @CoversAttributes({ "onbeforeselect", "onbeforeswitch", "onbeforeexpand", "onbegin", "onbeforedomupdate",
         "onselect", "onexpand", "onswitch", "oncomplete" })
     @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "ajaxCollapsionEvents")
@@ -79,6 +81,7 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     }
 
     @Test
+    @Templates("plain")
     @CoversAttributes({ "onbeforeselect", "onbeforeswitch", "onbeforecollapse", "onselect", "oncollapse",
         "oncollapse", "onswitch" })
     @RegressionTest("https://issues.jboss.org/browse/RF-10564")
@@ -93,10 +96,11 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     }
 
     @Test
+    @Templates("plain")
     @CoversAttributes({ "onbeforeselect", "onbeforeswitch", "onbeforeexpand", "onbegin", "onbeforedomupdate",
         "onselect", "onexpand", "onswitch", "oncomplete" })
     @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "ajaxExpansionEvents")
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-11547", "https://issues.jboss.org/browse/RF-13727" })
+    @RegressionTest({ "https://issues.jboss.org/browse/RF-11547" })
     public void testExpansionEvent() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.ajax);
         guardAjax(getPage().getMenu()).collapseGroup(1);
@@ -118,6 +122,7 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     }
 
     @Test
+    @Templates("plain")
     @CoversAttributes({ "onbeforeselect", "onbeforeswitch", "onbeforeexpand", "onselect", "onexpand",
         "onswitch" })
     public void testExpansionEventsOrderClient() {
@@ -131,6 +136,7 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     }
 
     @Test
+    @Templates("plain")
     @CoversAttributes("onbeforeexpand")
     public void testOnbeforeexpandServer() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.server);
@@ -143,6 +149,7 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     }
 
     @Test
+    @Templates("plain")
     @CoversAttributes({ "onbeforeswitch", "onbeforecollapse" })
     public void testOnbeforeswitchOnbeforecollapseServer() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.server);
@@ -152,6 +159,7 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     }
 
     @Test
+    @Templates("plain")
     @CoversAttributes("onbeforeswitch")
     public void testOnbeforeswitchServer() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.server);
