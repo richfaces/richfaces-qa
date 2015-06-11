@@ -19,28 +19,31 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.metamer.ftest.richPanelToggleListener;
+package org.richfaces.tests.metamer.bean.rich;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import static java.text.MessageFormat.format;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
+import org.richfaces.event.PanelToggleEvent;
+import org.richfaces.event.PanelToggleListener;
+import org.richfaces.tests.metamer.bean.RichBean;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-//PTL = PanelToggleListener
-public class PTLCollapsiblePanelPage extends MetamerPage {
+@ManagedBean
+@SessionScoped
+public class PanelToggleListenerBeanUsingListener implements PanelToggleListener {
 
-    @FindBy(css = "div.rf-cp-ico-exp.rf-ico-chevron-down")
-    private WebElement collapseButton;
-    @FindBy(css = "div.rf-cp-ico-colps.rf-ico-chevron-up")
-    private WebElement expandButton;
+    public static final String COLLAPSED = "collapsed";
+    public static final String EXPANDED = "expanded";
+    public static final String MSG_TEMPLATE = "* panelToggleListener using @listener invoked, panel {0}";
+    private static final long serialVersionUID = 1L;
 
-    public WebElement getCollapseButton() {
-        return collapseButton;
-    }
-
-    public WebElement getExpandButton() {
-        return expandButton;
+    @Override
+    public void processPanelToggle(PanelToggleEvent event) {
+        RichBean.logToPage(format(MSG_TEMPLATE, event.getExpanded() ? EXPANDED : COLLAPSED));
     }
 }

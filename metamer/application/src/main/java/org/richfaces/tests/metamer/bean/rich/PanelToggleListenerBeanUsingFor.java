@@ -19,7 +19,12 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.metamer.bean;
+package org.richfaces.tests.metamer.bean.rich;
+
+import static java.text.MessageFormat.format;
+
+import static org.richfaces.tests.metamer.bean.rich.PanelToggleListenerBeanUsingListener.COLLAPSED;
+import static org.richfaces.tests.metamer.bean.rich.PanelToggleListenerBeanUsingListener.EXPANDED;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -27,16 +32,20 @@ import javax.faces.event.AbortProcessingException;
 
 import org.richfaces.event.PanelToggleEvent;
 import org.richfaces.event.PanelToggleListener;
+import org.richfaces.tests.metamer.bean.RichBean;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @ManagedBean
 @SessionScoped
-public class PanelToggleListenerBean2 implements PanelToggleListener {
+public class PanelToggleListenerBeanUsingFor implements PanelToggleListener {
+
+    public static final String MSG_TEMPLATE = "* panelToggleListener using @for invoked, panel {0}";
+    private static final long serialVersionUID = 1L;
 
     @Override
     public void processPanelToggle(PanelToggleEvent event) throws AbortProcessingException {
-        RichBean.logToPage("* pannelToggleListenerBean2 panel " + (event.getExpanded() ? "expanded" : "collapsed"));
+        RichBean.logToPage(format(MSG_TEMPLATE, event.getExpanded() ? EXPANDED : COLLAPSED));
     }
 }

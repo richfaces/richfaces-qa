@@ -21,138 +21,72 @@
  */
 package org.richfaces.tests.metamer.ftest.richPanelToggleListener;
 
+import static java.text.MessageFormat.format;
+
+import static org.richfaces.tests.metamer.bean.rich.PanelToggleListenerBeanUsingListener.COLLAPSED;
+import static org.richfaces.tests.metamer.bean.rich.PanelToggleListenerBeanUsingListener.EXPANDED;
+
+import javax.faces.event.PhaseId;
+
+import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.collapsiblePanel.TextualRichFacesCollapsiblePanel;
+import org.richfaces.tests.metamer.bean.rich.PanelToggleListenerBeanUsingFor;
+import org.richfaces.tests.metamer.bean.rich.PanelToggleListenerBeanUsingListener;
+import org.richfaces.tests.metamer.bean.rich.PanelToggleListenerBeanUsingType;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.extension.configurator.skip.BecauseOf;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
-import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestPanelToggleListenerInCollapsiblePanel extends AbstractPanelToggleListenerTest {
+public class TestPanelToggleListenerInCollapsiblePanel extends AbstractWebDriverTest {
 
-    private final String PTL_as_ComponentAttribute_PhaseName = "panel";
-    private final String PTL_inComponent_usingListener_PhaseName = "pannelToggleListenerBean panel";
-    private final String PTL_inComponent_usingType_PhaseName = "pannelToggleListenerBean2 panel";
-    private final String PTL_outsideComponent_usingType_PhaseName = "pannelToggleListenerBean3 panel";
+    @FindBy(css = ".rf-cp[id$='collapsiblePanel']")
+    private TextualRichFacesCollapsiblePanel panel;
 
-    public TestPanelToggleListenerInCollapsiblePanel() {
-        super("collapsiblePanel");
+    @Override
+    public String getComponentTestPagePath() {
+        return "richPanelToggleListener/collapsiblePanel.xhtml";
+    }
+
+    private void testPTL(final String expectedTextTemplate) {
+        //first test collapsing of panel
+        Graphene.guardAjax(panel).collapse();
+        //checks if phases contains the correct listener message
+        getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, format(expectedTextTemplate, COLLAPSED));
+        //then test expanding of panel
+        Graphene.guardAjax(panel).expand();
+        //checks if phases contains the correct listener message
+        getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, format(expectedTextTemplate, EXPANDED));
     }
 
     @Test(groups = "smoke")
-    @Templates(exclude = { "uiRepeat", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "richCollapsiblePanel", "a4jRepeat" })
+    @RegressionTest({ "https://issues.jboss.org/browse/RF-11568" })
     public void testPTLAsAttribute() {
-        super.testPTLAsAttributeOfComponent(PTL_as_ComponentAttribute_PhaseName);
+        testPTL("panel {0}");
     }
 
-    @Test // fails with JSF 2.2
-    @Skip(BecauseOf.UIRepeatSetIndexIssue.class)
-    @Templates(value = { "uiRepeat" })
-    @IssueTracking(value = "https://issues.jboss.org/browse/RF-13690")
-    public void testPTLAsAttributeInUiRepeat() {
-        super.testPTLAsAttributeOfComponent(PTL_as_ComponentAttribute_PhaseName);
-    }
-
-    @RegressionTest("https://issues.jboss.org/browse/RF-11568")
-    @Test
-    @Templates(value = "richCollapsibleSubTable")
-    public void testPTLAsAttributeInRichCollapsibleSubTable() {
-        super.testPTLAsAttributeOfComponent(PTL_as_ComponentAttribute_PhaseName);
-    }
-
-    @RegressionTest("https://issues.jboss.org/browse/RF-11568")
-    @Test
-    @Templates(value = "richExtendedDataTable")
-    public void testPTLAsAttributeInRichExtendedDataTable() {
-        super.testPTLAsAttributeOfComponent(PTL_as_ComponentAttribute_PhaseName);
-    }
-
-    @IssueTracking("https://issues.jboss.org/browse/RF-11568")
     @Test
     @Skip
-    @Templates(value = "richCollapsiblePanel")
-    public void testPTLAsAttributeInRichCollapsiblePanel() {
-        super.testPTLAsAttributeOfComponent(PTL_as_ComponentAttribute_PhaseName);
-    }
-
-    @RegressionTest("https://issues.jboss.org/browse/RF-11568")
-    @Test
-    @Templates(value = "a4jRepeat")
-    public void testPTLAsAttributeInA4jRepeat() {
-        super.testPTLAsAttributeOfComponent(PTL_as_ComponentAttribute_PhaseName);
-    }
-
-    @RegressionTest("https://issues.jboss.org/browse/RF-11568")
-    @Test
-    @Templates(value = "richDataGrid")
-    public void testPTLAsAttributeInRichDataGrid() {
-        super.testPTLAsAttributeOfComponent(PTL_as_ComponentAttribute_PhaseName);
-    }
-
-    @Test
-    @Templates(exclude = { "uiRepeat", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "richCollapsiblePanel", "a4jRepeat" })
-    public void testPTLInsideComponentUsingType() {
-        super.testPTLInComponentWithListener(PTL_inComponent_usingType_PhaseName);
-    }
-
-    @Test // fails with JSF 2.2
-    @Skip(BecauseOf.UIRepeatSetIndexIssue.class)
-    @Templates(value = "uiRepeat")
-    @IssueTracking("https://issues.jboss.org/browse/RF-13690")
-    public void testPTLInsideComponentUsingTypeInUiRepeat() {
-        super.testPTLInComponentWithListener(PTL_inComponent_usingType_PhaseName);
-    }
-
-    @RegressionTest("https://issues.jboss.org/browse/RF-12280")
-    @Test
-    @Templates(value = "richCollapsibleSubTable")
-    public void testPTLInsideComponentUsingTypeInRichCollapsibleSubTable() {
-        super.testPTLInComponentWithListener(PTL_inComponent_usingType_PhaseName);
-    }
-
-    @RegressionTest("https://issues.jboss.org/browse/RF-12280")
-    @Test
-    @Templates(value = "richExtendedDataTable")
-    public void testPTLInsideComponentUsingTypeInRichExtendedDataTable() {
-        super.testPTLInComponentWithListener(PTL_inComponent_usingType_PhaseName);
-    }
-
-    @IssueTracking("https://issues.jboss.org/browse/RF-12280")
-    @Test
-    @Skip
-    @Templates(value = "richCollapsiblePanel")
-    public void testPTLInsideComponentUsingTypeInRichCollapsiblePanel() {
-        super.testPTLInComponentWithListener(PTL_inComponent_usingType_PhaseName);
-    }
-
-    @RegressionTest("https://issues.jboss.org/browse/RF-12280")
-    @Test
-    @Templates(value = "a4jRepeat")
-    public void testPTLInsideComponentUsingTypeInA4jRepeat() {
-        super.testPTLInComponentWithListener(PTL_inComponent_usingType_PhaseName);
-    }
-
-    @RegressionTest("https://issues.jboss.org/browse/RF-12280")
-    @Test
-    @Templates(value = "richDataGrid")
-    public void testPTLInsideComponentUsingTypeInRichDataGrid() {
-        super.testPTLInComponentWithListener(PTL_inComponent_usingType_PhaseName);
-    }
-
     @IssueTracking("https://issues.jboss.org/browse/RF-12105")
-    @Test
-    @Skip
     public void testPTLInsideComponentUsingListener() {
-        super.testPTLInComponentWithListener(PTL_inComponent_usingListener_PhaseName);
+        testPTL(PanelToggleListenerBeanUsingListener.MSG_TEMPLATE);
     }
 
-    @IssueTracking("https://issues.jboss.org/browse/RF-12106")
+    @Test
+    @RegressionTest({ "https://issues.jboss.org/browse/RF-12280" })
+    public void testPTLInsideComponentUsingType() {
+        testPTL(PanelToggleListenerBeanUsingType.MSG_TEMPLATE);
+    }
+
     @Test
     @Skip
-    public void testPTLOutsideComponentUsingForAndType() {
-        super.testPTLAsForAttributeWithType(PTL_outsideComponent_usingType_PhaseName);
+    @IssueTracking("https://issues.jboss.org/browse/RF-12106")
+    public void testPTLOutsideComponentUsingFor() {
+        testPTL(PanelToggleListenerBeanUsingFor.MSG_TEMPLATE);
     }
 }
