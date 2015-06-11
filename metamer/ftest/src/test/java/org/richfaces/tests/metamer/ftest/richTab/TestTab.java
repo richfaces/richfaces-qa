@@ -51,8 +51,6 @@ import org.richfaces.tests.metamer.ftest.extension.configurator.skip.BecauseOf;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -80,24 +78,17 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
-    @CoversAttributes("action")
-    public void testAction() {
-        Graphene.guardAjax(page.getTabPanel()).switchTo(0);
-        page.assertListener(PhaseId.INVOKE_APPLICATION, "action invoked");
-    }
-
-    @Test
-    @CoversAttributes("actionListener")
+    @CoversAttributes({ "action", "actionListener" })
     @RegressionTest("https://issues.jboss.org/browse/RF-11427")
     @Templates(exclude = "uiRepeat")
     public void testActionAndActionListener() {
-        MetamerPage.waitRequest(page.getTabPanel(), WaitRequestType.XHR).switchTo(2);
+        Graphene.guardAjax(page.getTabPanel()).switchTo(2);
 
         page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
             PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
         page.assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: tab1 -> tab3");
 
-        MetamerPage.waitRequest(page.getTabPanel(), WaitRequestType.XHR).switchTo(0);
+        Graphene.guardAjax(page.getTabPanel()).switchTo(0);
         page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
             PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
         page.assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: tab3 -> tab1");
