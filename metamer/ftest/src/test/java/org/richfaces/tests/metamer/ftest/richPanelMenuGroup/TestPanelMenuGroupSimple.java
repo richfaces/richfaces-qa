@@ -41,12 +41,9 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.checker.IconsChecker;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
-import org.richfaces.tests.metamer.ftest.extension.configurator.skip.BecauseOf;
-import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -194,7 +191,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
 
     @Test
     @CoversAttributes("selectable")
-    @Templates(exclude = "uiRepeat")
+    @RegressionTest("https://issues.jboss.org/browse/RF-13727")
     public void testSelectable() {
         panelMenuGroupAttributes.set(selectable, false);
         guardAjax(getPage().getMenu()).collapseGroup(1);
@@ -203,15 +200,6 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
         panelMenuGroupAttributes.set(selectable, true);
         guardAjax(getPage().getMenu()).expandGroup(1);
         assertTrue(getPage().getTopGroup().advanced().isSelected());
-    }
-
-    @Test // fails with JSF 2.2
-    @Skip(BecauseOf.UIRepeatSetIndexIssue.class)
-    @CoversAttributes("selectable")
-    @Templates(value = "uiRepeat")
-    @IssueTracking("https://issues.jboss.org/browse/RF-13727")
-    public void testSelectableInUirepeat() {
-        testSelectable();
     }
 
     @Test
