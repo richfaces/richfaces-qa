@@ -32,10 +32,7 @@ import org.richfaces.fragment.log.Log.LogEntryLevel;
 import org.richfaces.fragment.log.RichFacesLog;
 import org.richfaces.tests.metamer.bean.issues.RF13780;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
-import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
 /**
@@ -70,8 +67,7 @@ public class TestRF13780 extends AbstractWebDriverTest {
     }
 
     @Test
-    @Templates(exclude = "uiRepeat")
-    @RegressionTest("https://issues.jboss.org/browse/RF-13988")
+    @RegressionTest({ "https://issues.jboss.org/browse/RF-13988", "https://issues.jboss.org/browse/RF-13993" })
     public void testAjaxWillUpdateComponentsFollowingCollapsedCollapsiblePanel() {
         String text = "1";
         testCollapsedCollapsiblePanelWillNotBeVisited();
@@ -89,16 +85,7 @@ public class TestRF13780 extends AbstractWebDriverTest {
     }
 
     @Test
-    @Skip
-    @Templates("uiRepeat")
-    @IssueTracking({ "https://issues.jboss.org/browse/RF-13988", "https://issues.jboss.org/browse/RF-13993" })
-    public void testAjaxWillUpdateComponentsFollowingCollapsedCollapsiblePanelInUIRepeat() {
-        testAjaxWillUpdateComponentsFollowingCollapsedCollapsiblePanel();
-    }
-
-    @Test
-    @Templates(exclude = "uiRepeat")
-    @RegressionTest("https://issues.jboss.org/browse/RF-13780")
+    @RegressionTest({ "https://issues.jboss.org/browse/RF-13780", "https://issues.jboss.org/browse/RF-13993" })
     public void testCollapsedCollapsiblePanelWillNotBeVisited() {
         log.changeLevel(LogEntryLevel.ERROR);
         assertNoErrorsInLog();
@@ -107,13 +94,5 @@ public class TestRF13780 extends AbstractWebDriverTest {
 
         changeInputTextTo("1");
         assertNoErrorsInLog();
-    }
-
-    @Test
-    @Skip
-    @Templates("uiRepeat")
-    @IssueTracking({ "https://issues.jboss.org/browse/RF-13780", "https://issues.jboss.org/browse/RF-13993" })
-    public void testCollapsedCollapsiblePanelWillNotBeVisitedInUIRepeat() {
-        testCollapsedCollapsiblePanelWillNotBeVisited();
     }
 }
