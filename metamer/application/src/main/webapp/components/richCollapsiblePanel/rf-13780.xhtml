@@ -55,7 +55,7 @@
                 <a4j:ajax event="change" render="output"/>
             </r:inplaceInput>
             <br/>
-            <r:collapsiblePanel id="panel" switchType="ajax">
+            <r:collapsiblePanel id="panel" switchType="ajax" expanded="#{richCollapsiblePanelBean.attributes['expanded'].value}">
                 rich:messages component:
                 <br/>
                 <r:messages id="messages"/>
