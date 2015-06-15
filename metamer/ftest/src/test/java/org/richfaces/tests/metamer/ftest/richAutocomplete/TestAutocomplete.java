@@ -27,6 +27,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.WebDriver;
 import org.richfaces.fragment.autocomplete.SelectOrConfirm;
 import org.richfaces.fragment.common.ClearType;
 import org.richfaces.fragment.common.ScrollingType;
@@ -36,6 +37,8 @@ import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotatio
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import com.google.common.base.Predicate;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -71,7 +74,12 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
         SelectOrConfirm typed = Graphene.guardAjax(autocomplete).type("ala");
         assertFalse(autocomplete.advanced().getSuggestionsElements().isEmpty());
         Graphene.guardAjax(typed).confirm();
-        assertTrue(autocomplete.advanced().getSuggestionsElements().isEmpty());
+        Graphene.waitAjax().until(new Predicate<WebDriver>() {
+            @Override
+            public boolean apply(WebDriver t) {
+                return autocomplete.advanced().getSuggestionsElements().isEmpty();
+            }
+        });
         String expectedStateForPrefix = getExpectedStateForPrefix("ala", selectFirst);
         assertEquals(autocomplete.advanced().getInput().getStringValue(), expectedStateForPrefix);
         checkOutput(expectedStateForPrefix);
