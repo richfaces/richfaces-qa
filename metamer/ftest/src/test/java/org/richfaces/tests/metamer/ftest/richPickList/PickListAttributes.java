@@ -41,6 +41,7 @@ public enum PickListAttributes implements AttributeEnum {
     id,
     immediate,
     itemClass,
+    keepSourceOrder,
     listHeight,
     listWidth,
     maxListHeight,
