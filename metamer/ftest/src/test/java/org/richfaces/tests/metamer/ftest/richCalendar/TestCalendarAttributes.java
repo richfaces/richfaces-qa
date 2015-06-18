@@ -21,6 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
@@ -529,7 +530,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         calendarAttributes.set(CalendarAttributes.minDaysInFirstWeek, 1);
         // 1.1.2011 starts with saturday => only 1 day in first weak
         DateTime firstOf2011 = firstOfJanuary2012.withYear(2011);
-        popupCalendar.setDateTime(firstOf2011);
+        guardAjax(popupCalendar).setDateTime(firstOf2011);
         CalendarWeek firstDisplayedWeek = popupCalendar.openPopup().getDayPicker().getWeek(1);
         int secondDisplayedWeekNumber = popupCalendar.openPopup().getDayPicker().getWeek(2).getWeekNumber();
         List<CalendarDay> days = filterOutBoundaryDays(Lists.newArrayList(firstDisplayedWeek.getCalendarDays()));
@@ -580,7 +581,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         calendarAttributes.set(CalendarAttributes.monthLabels, labelsString);
 
         // set date to 1st day of year
-        popupCalendar.setDateTime(todayMidday.withMonthOfYear(1).withDayOfMonth(1));
+        guardAjax(popupCalendar).setDateTime(todayMidday.withMonthOfYear(1).withDayOfMonth(1));
 
         List<String> expectedLabels = Arrays.asList(labelsString.split(", "));
         HeaderControls hc = popupCalendar.openPopup().getHeaderControls();
@@ -1070,7 +1071,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
             case NULL:
             case SELECT:
                 // set date to tomorrow
-                popupCalendar.setDateTime(todayMidday.plusDays(1));
+                guardAjax(popupCalendar).setDateTime(todayMidday.plusDays(1));
                 // set date with calendar's 'Today' button,
                 // this will scroll and select todays day
                 MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.NONE).todayDate();
@@ -1079,7 +1080,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
                 assertTrue(selectedDay.is(DayType.todayDay));
                 break;
             case SCROLL:
-                popupCalendar.setDateTime(todayMidday.plusMonths(1));
+                guardAjax(popupCalendar).setDateTime(todayMidday.plusDays(1));
                 // set date with calendar's 'Today' button,
                 // this will only scroll to today but will not select it
                 MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.NONE).todayDate();
