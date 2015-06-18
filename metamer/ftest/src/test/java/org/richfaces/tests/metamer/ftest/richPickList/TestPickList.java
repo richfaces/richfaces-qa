@@ -782,6 +782,7 @@ public class TestPickList extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("selectItemClass")
     @Templates(value = "plain")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12777")
     public void testSelectItemClass() {
         testHTMLAttribute(new FutureTarget<WebElement>() {
             @Override
@@ -794,6 +795,14 @@ public class TestPickList extends AbstractWebDriverTest {
                 pickList.advanced().getSourceList().getItem(0).select();
             }
         });
+        // RF-12777, check add and remove buttons are enabled when some item is selected
+        // the item in source list should be selected from previous step
+        // the add button should be enabled
+        assertTrue(pickList.advanced().getAddButtonElement().isEnabled());
+        // add item to the target list
+        pickList.advanced().getAddButtonElement().click();
+        // the added item remains selected, the remove button should be enabled
+        assertTrue(pickList.advanced().getRemoveButtonElement().isEnabled());
     }
 
     @Test
