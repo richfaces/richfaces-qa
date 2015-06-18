@@ -91,6 +91,14 @@ public class TestPickList extends AbstractWebDriverTest {
         return "richPickList/simple.xhtml";
     }
 
+    private List<String> getStringsFromElements(List<WebElement> elements) {
+        List<String> result = Lists.newArrayList();
+        for (WebElement element : elements) {
+            result.add(element.getText());
+        }
+        return result;
+    }
+
     private void submitAjax() {
         MetamerPage.waitRequest(ajaxSubmit, WaitRequestType.XHR).click();
     }
@@ -244,6 +252,46 @@ public class TestPickList extends AbstractWebDriverTest {
         assertEquals(item.getText(), textSource);
         assertEquals(Utils.getIndexOfElement(item.getRootElement()), pickList
             .advanced().getSourceList().size() - 1, "Index of removed item.");
+    }
+
+    @Test
+    @CoversAttributes("keepSourceOrder")
+    public void testKeepSourceOrder() {
+        pickListAttributes.set(PickListAttributes.keepSourceOrder, Boolean.TRUE);
+        // save original elements text and size
+        final List<String> sourceListOriginal = getStringsFromElements(pickList.advanced().getSourceListItemsElements());
+        final int originalSourceListSize = pickList.advanced().getSourceListItemsElements().size();
+
+        // pick some items
+        pickList.addMultiple(ChoicePickerHelper.byIndex().indexes(1, 6, 10));
+        // check that items were added
+        assertEquals(pickList.advanced().getTargetListItemsElements().size(), 3);
+        // save text from picked elements
+        final List<String> pickedElementsText = getStringsFromElements(pickList.advanced().getTargetListItemsElements());
+        // remove all items from target list
+        pickList.removeAll();
+        // source list should contain all elements as before testing
+        assertEquals(pickList.advanced().getSourceListItemsElements().size(), originalSourceListSize);
+        // check that position of elements was not changed
+        assertEquals(getStringsFromElements(pickList.advanced().getSourceListItemsElements()), sourceListOriginal);
+
+        // check default value of keepSourceOrder == false
+        pickListAttributes.set(PickListAttributes.keepSourceOrder, Boolean.FALSE);
+        // pick some items
+        pickList.addMultiple(ChoicePickerHelper.byIndex().indexes(1, 6, 10));
+        // check that items were added
+        assertEquals(pickList.advanced().getTargetListItemsElements().size(), 3);
+        // remove all items from target list
+        pickList.removeAll();
+        // source list should contain all elements as before testing
+        assertEquals(pickList.advanced().getSourceListItemsElements().size(), originalSourceListSize);
+        // source list should contain removed items in the end of the list and the position of other items should remain the same
+        List<String> expectedSourceListAfterRemove = Lists.newArrayList(sourceListOriginal);
+        expectedSourceListAfterRemove.remove(10);
+        expectedSourceListAfterRemove.remove(6);
+        expectedSourceListAfterRemove.remove(1);
+        expectedSourceListAfterRemove.addAll(pickedElementsText);
+        assertEquals(getStringsFromElements(pickList.advanced().getSourceListItemsElements()), expectedSourceListAfterRemove);
     }
 
     @Test
