@@ -56,6 +56,7 @@ import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
 import org.richfaces.fragment.calendar.DayPicker.CalendarDay.DayType;
 import org.richfaces.fragment.calendar.DayPicker.CalendarWeek;
 import org.richfaces.fragment.calendar.HeaderControls;
+import org.richfaces.fragment.calendar.PopupCalendar;
 import org.richfaces.fragment.calendar.PopupCalendar.PopupFooterControls;
 import org.richfaces.fragment.calendar.PopupCalendar.PopupHeaderControls;
 import org.richfaces.fragment.calendar.RichFacesAdvancedPopupCalendar.OpenedBy;
@@ -1064,6 +1065,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @UseWithField(field = "todayControlMode", valuesFrom = FROM_ENUM, value = "")
     public void testTodayControlMode() {
         calendarAttributes.set(CalendarAttributes.todayControlMode, todayControlMode.value);
+        PopupCalendar popup;
         switch (todayControlMode) {
             case HIDDEN:
                 assertNotVisible(popupCalendar.openPopup().getFooterControls().getTodayButtonElement());
@@ -1071,24 +1073,33 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
             case NULL:
             case SELECT:
                 // set date to tomorrow
-                guardAjax(popupCalendar).setDateTime(todayMidday.plusDays(1));
+                guardAjax(popupCalendar).setDateTime(firstOfJanuary2012);
                 // set date with calendar's 'Today' button,
                 // this will scroll and select todays day
-                MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.NONE).todayDate();
-                CalendarDay selectedDay = popupCalendar.openPopup().getDayPicker().getSelectedDay();
+                popup = popupCalendar.openPopup();
+                MetamerPage.waitRequest(popup.getFooterControls(), WaitRequestType.NONE).todayDate();
+                CalendarDay selectedDay = popup.getDayPicker().getSelectedDay();
                 assertNotNull(selectedDay);
                 assertTrue(selectedDay.is(DayType.todayDay));
+                // view of day picker should change to current month and year
+                assertEquals(popup.getHeaderControls().getYearAndMonth().getMonthOfYear(),
+                    todayMidday.getMonthOfYear(), "Year should match with actual year.");
+                assertEquals(popup.getHeaderControls().getYearAndMonth().getYear(),
+                    todayMidday.getYear(), "Month should match with actual month.");
                 break;
             case SCROLL:
-                guardAjax(popupCalendar).setDateTime(todayMidday.plusDays(1));
+                guardAjax(popupCalendar).setDateTime(firstOfJanuary2012);
                 // set date with calendar's 'Today' button,
                 // this will only scroll to today but will not select it
-                MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.NONE).todayDate();
+                popup = popupCalendar.openPopup();
+                MetamerPage.waitRequest(popup.getFooterControls(), WaitRequestType.NONE).todayDate();
                 // no selected day should be in calendar
-                assertNull(popupCalendar.openPopup().getDayPicker().getSelectedDay());
-                // but view of day picker should will change to current month
-                assertEquals(popupCalendar.openPopup().getHeaderControls().getYearAndMonth().getMonthOfYear(),
-                    todayMidday.getMonthOfYear());
+                assertNull(popup.getDayPicker().getSelectedDay());
+                // but view of day picker should change to current month and year
+                assertEquals(popup.getHeaderControls().getYearAndMonth().getMonthOfYear(),
+                    todayMidday.getMonthOfYear(), "Year should match with actual year.");
+                assertEquals(popup.getHeaderControls().getYearAndMonth().getYear(),
+                    todayMidday.getYear(), "Month should match with actual month.");
                 break;
         }
     }
