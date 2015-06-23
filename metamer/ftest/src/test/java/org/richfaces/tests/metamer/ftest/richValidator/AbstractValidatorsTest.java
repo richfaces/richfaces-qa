@@ -214,7 +214,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
     }
 
     protected void submitAjax() {
-        Graphene.guardAjax(getPage().getA4jCommandBtn()).click();
+        getPage().getA4jCommandBtn().click();
     }
 
     public void verifyAllWrongWithAjaxSubmit() {
@@ -291,7 +291,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         // date input past
         getPage().getInputPast().clear();
         getPage().getInputPast().sendKeys(wrongValue.get(ID.past).toString());
-        Graphene.guardAjax(getPage().getA4jCommandBtn()).click();
+        submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.past);
     }
