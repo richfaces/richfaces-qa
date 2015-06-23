@@ -65,6 +65,7 @@ import com.google.common.io.Files;
 @ArquillianSuiteDeployment
 public abstract class AbstractMetamerTest extends Arquillian {
 
+    private static final String EAP_63_AND_UP_REGEX = ".*jbosseap-(managed|remote)-(6-[3-9]).*";
     // Key to enable WS on EAP
     public static final String EAP_WS_ENABLED = "eap.ws.enabled";
     /** Keys to manage resources optimization (in previous releases named mapping), compression and packaging, used in web.xml */
@@ -111,11 +112,11 @@ public abstract class AbstractMetamerTest extends Arquillian {
             runCLICommand("undeploy *metamer*");
         }
 
-        if (isUsingEAP63()) {
+        if (isUsingEAP63AndUp()) {
             if (Boolean.getBoolean(EAP_WS_ENABLED)) {
                 try {
                     System.out.println("### Enabling WebSockets in EAP ###");
-                    enableWebSocketsInEAP63(war);
+                    enableWebSocketsInEAP63AndUp(war);
                     System.out.println("### Enabling of WebSockets in EAP was successful ###");
                 } catch (Throwable t) {
                     t.printStackTrace(System.err);
@@ -170,7 +171,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
             ":reload");
     }
 
-    private static void enableWebSocketsInEAP63(WebArchive war) {
+    private static void enableWebSocketsInEAP63AndUp(WebArchive war) {
         modifyJBossWebXMLToUseWS(war);
         enableWSInJBossCLI();
     }
@@ -179,8 +180,8 @@ public abstract class AbstractMetamerTest extends Arquillian {
         return activatedMavenProfiles.contains("jbosseap");
     }
 
-    private static boolean isUsingEAP63() {
-        return isUsingEAP() && activatedMavenProfiles.contains("-6-3");
+    private static boolean isUsingEAP63AndUp() {
+        return activatedMavenProfiles.matches(EAP_63_AND_UP_REGEX);
     }
 
     private static boolean isUsingJBossContainer() {
