@@ -119,12 +119,13 @@ public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
         assertEquals(headerControls.getCloseButtonElement().getText(), "x", "Button's text");
 
         YearAndMonthEditor yearAndMonthEditor = headerControls.openYearAndMonthEditor();
-        assertTrue(yearAndMonthEditor.isVisible());
+        assertTrue(yearAndMonthEditor.isVisible(), "Year and month editor should be visible");
+        waiting(500);// stabilization wait time, without it the whole popup will disappear
         yearAndMonthEditor.cancelDate();// close the year and month editor popup
-        assertFalse(yearAndMonthEditor.isVisible());
-
+        assertFalse(yearAndMonthEditor.isVisible(), "Year and month editor should not be visible");
+        assertTrue(openedPopup.isVisible(), "Calendar popup should be visible");
         headerControls.closePopup();
-        assertFalse(openedPopup.isVisible());
+        assertFalse(openedPopup.isVisible(), "Calendar popup should not be visible");
     }
 
     private boolean isVisible(WebElement element) {
