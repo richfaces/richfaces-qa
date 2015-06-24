@@ -40,7 +40,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="head"/>
 
         <ui:define name="outOfTemplateBefore">
-            <rich:dataScroller id="scroller1" for="richList" maxPages="7" render="#{nestedComponentId}" />
+            <rich:dataScroller id="scroller1"
+                               page="#{richDataScrollerBean.attributes['page'].value}"
+                               for="richList"
+                               maxPages="7"
+                               render="#{nestedComponentId} #{templateBean.componentPrefix}scroller2" />
         </ui:define>
 
         <ui:define name="component">
@@ -88,7 +92,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 #{item.name}
             </rich:list>
 
-            <rich:dataScroller id="scroller2" for="richList" maxPages="7" render="richList scroller1" />
+            <rich:dataScroller id="scroller2"
+                               page="#{richDataScrollerBean.attributes['page'].value}"
+                               for="richList"
+                               maxPages="7"
+                               render="richList scroller1" />
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
