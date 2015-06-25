@@ -181,25 +181,14 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
 
     @CoversAttributes({ "onbeforesubmit", "onbegin", "onbeforedomupdate", "oncomplete" })
     public void testEvents() {
-        attsSetter()
-            .setAttribute(AjaxAttributes.onbeforesubmit).toValue("metamerEvents += \"beforesubmit \"")
-            .setAttribute(AjaxAttributes.onbegin).toValue("metamerEvents += \"begin \"")
-            .setAttribute(AjaxAttributes.onbeforedomupdate).toValue("metamerEvents += \"beforedomupdate \"")
-            .setAttribute(AjaxAttributes.oncomplete).toValue("metamerEvents += \"complete \"")
-            .asSingleAction().perform();
-
-        ((JavascriptExecutor) driver).executeScript("metamerEvents = \"\"");
-        String reqTime = page.getRequestTimeElement().getText();
-        performAction();
-        Graphene.waitModel().until("Page was not updated").element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
-
-        String[] events = ((JavascriptExecutor) driver).executeScript("return metamerEvents").toString().split(" ");
-
-        assertEquals(events.length, 4, "4 events should be fired.");
-        assertEquals(events[0], "beforesubmit", "Attribute onbeforesubmit doesn't work");
-        assertEquals(events[1], "begin", "Attribute onbegin doesn't work");
-        assertEquals(events[2], "beforedomupdate", "Attribute onbeforedomupdate doesn't work");
-        assertEquals(events[3], "complete", "Attribute oncomplete doesn't work");
+        eventsOrderTester().testOrderOfEvents(AjaxAttributes.onbeforesubmit, AjaxAttributes.onbegin, AjaxAttributes.onbeforedomupdate, AjaxAttributes.oncomplete)
+            .triggeredByAction(new Action() {
+                @Override
+                public void perform() {
+                    performAction();
+                }
+            })
+            .test();
     }
 
     public void testEventsForTextInputs() {

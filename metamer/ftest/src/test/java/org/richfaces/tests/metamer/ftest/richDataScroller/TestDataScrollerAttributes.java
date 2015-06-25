@@ -27,8 +27,6 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
-import java.util.Arrays;
-
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -110,27 +108,15 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     @Test
     @CoversAttributes({ "onbegin", "onbeforedomupdate", "oncomplete" })
     public void testEvents() throws InterruptedException {
-        // set event attributes
-        attsSetter()
-            .setAttribute(DataScrollerAttributes.onbeforedomupdate).toValue("metamerEvents += \"beforedomupdate \"")
-            .setAttribute(DataScrollerAttributes.onbegin).toValue("metamerEvents += \"begin \"")
-            .setAttribute(DataScrollerAttributes.oncomplete).toValue("metamerEvents += \"complete \"")
-            .asSingleAction().perform();
-        // reset events
-        executor.executeScript("metamerEvents = \"\";");
-        movePopupTemplateWhenUsingScrollerOutsideTable();
-        // action
-        MetamerPage.waitRequest(page.getScroller(scroller), WaitRequestType.XHR).switchTo(
-            DataScrollerSwitchButton.FAST_FORWARD);
-        // check events
-        String[] events = executor.executeScript("return metamerEvents;").toString().split(" ");
-        assertEquals(events.length, 3, "3 events should be fired, found events are " + Arrays.toString(events) + ".");
-        assertEquals(events[0], "begin", "Attribute onbegin doesn't work, found events are " + Arrays.toString(events)
-            + ".");
-        assertEquals(events[1], "beforedomupdate", "Attribute onbeforedomupdate doesn't work, found events are "
-            + Arrays.toString(events) + ".");
-        assertEquals(events[2], "complete",
-            "Attribute oncomplete doesn't work, found events are " + Arrays.toString(events) + ".");
+        eventsOrderTester()
+            .testOrderOfEvents(DataScrollerAttributes.onbegin, DataScrollerAttributes.onbeforedomupdate, DataScrollerAttributes.oncomplete)
+            .triggeredByAction(new Action() {
+                @Override
+            public void perform() {
+                movePopupTemplateWhenUsingScrollerOutsideTable();
+                Graphene.guardAjax(page.getScroller(scroller)).switchTo(DataScrollerSwitchButton.FAST_FORWARD);
+                }
+            }).test();
     }
 
     @Test

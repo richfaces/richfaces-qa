@@ -28,7 +28,6 @@ import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.common.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -54,32 +53,16 @@ public class TestCommandLink extends AbstractWebDriverTest {
     @Page
     private CommandButtonLinkPage page;
 
+    private final Action submitAction = new Action() {
+        @Override
+        public void perform() {
+            page.submitByLink();
+        }
+    };
+
     @Override
     public String getComponentTestPagePath() {
         return "a4jCommandLink/simple.xhtml";
-    }
-
-    @Test(groups = "client-side-perf")
-    public void testSimpleClick() {
-        page.typeToInput(CommandButtonLinkPage.STRING_RF1);
-        page.submitByLink();
-        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
-
-        page.verifyOutput1Text();
-        page.verifyOutput2Text();
-        page.verifyOutput3Text();
-    }
-
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-9665")
-    public void testSimpleClickUnicode() {
-        page.typeToInput(CommandButtonLinkPage.STRING_UNICODE1);
-        page.submitByLink();
-        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_UNICODE1);
-
-        page.verifyOutput1Text(CommandButtonLinkPage.STRING_UNICODE1);
-        page.verifyOutput2Text(CommandButtonLinkPage.STRING_UNICODE2);
-        page.verifyOutput3Text(CommandButtonLinkPage.STRING_UNICODE3);
     }
 
     @Test
@@ -184,6 +167,14 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "onbegin", "onbeforedomupdate", "oncomplete" })
+    public void testEvents() {
+        eventsOrderTester()
+            .testOrderOfEvents(CommandLinkAttributes.onbegin, CommandLinkAttributes.onbeforedomupdate, CommandLinkAttributes.oncomplete)
+            .triggeredByAction(submitAction).test();
+    }
+
+    @Test
     @CoversAttributes("execute")
     public void testExecute() {
         commandLinkAttributes.set(CommandLinkAttributes.execute, "input executeChecker");
@@ -221,8 +212,10 @@ public class TestCommandLink extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("limitRender")
     public void testLimitRender() {
-        commandLinkAttributes.set(CommandLinkAttributes.limitRender, true);
-        commandLinkAttributes.set(CommandLinkAttributes.render, "output1 requestTime");
+        attsSetter()
+            .setAttribute(CommandLinkAttributes.limitRender).toValue("true")
+            .setAttribute(CommandLinkAttributes.render).toValue("output1 requestTime")
+            .asSingleAction().perform();
         page.typeToInput(CommandButtonLinkPage.STRING_RF1);
         page.submitByLink();
         page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
@@ -232,70 +225,42 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
-    @CoversAttributes({ "onbegin", "onbeforedomupdate", "oncomplete" })
-    public void testEvents() {
-        commandLinkAttributes.set(CommandLinkAttributes.onbegin, "metamerEvents += \"begin \"");
-        commandLinkAttributes.set(CommandLinkAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
-        commandLinkAttributes.set(CommandLinkAttributes.oncomplete, "metamerEvents += \"complete \"");
-
-        ((JavascriptExecutor) driver).executeScript("metamerEvents = \"\"");
-        String reqTime = page.getRequestTimeElement().getText();
-        page.submitByLink();
-        Graphene.waitModel().until("Page was not updated").element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
-
-        String[] events = ((JavascriptExecutor) driver).executeScript("return metamerEvents").toString().split(" ");
-
-        assertEquals(events.length, 3, "3 events should be fired.");
-        assertEquals(events[0], "begin", "Attribute onbegin doesn't work");
-        assertEquals(events[1], "beforedomupdate", "Attribute onbeforedomupdate doesn't work");
-        assertEquals(events[2], "complete", "Attribute oncomplete doesn't work");
+    @CoversAttributes("onbeforedomupdate")
+    public void testOnbeforedomupdate() {
+        eventTester().testEvent(CommandLinkAttributes.onbeforedomupdate).withCustomAction(submitAction).test();
     }
 
     @Test
     @CoversAttributes("onbegin")
     public void testOnbegin() {
-        testFireEvent(commandLinkAttributes, CommandLinkAttributes.onbegin, new Action() {
-            @Override
-            public void perform() {
-                page.submitByLink();
-            }
-        });
-    }
-
-    @Test
-    @CoversAttributes("onbeforedomupdate")
-    public void testOnbeforedomupdate() {
-        testFireEvent(commandLinkAttributes, CommandLinkAttributes.onbeforedomupdate, new Action() {
-            @Override
-            public void perform() {
-                page.submitByLink();
-            }
-        });
-    }
-
-    @Test
-    @CoversAttributes("oncomplete")
-    public void testOncomplete() {
-        testFireEvent(commandLinkAttributes, CommandLinkAttributes.oncomplete, new Action() {
-            @Override
-            public void perform() {
-                page.submitByLink();
-            }
-        });
+        eventTester().testEvent(CommandLinkAttributes.onbegin).withCustomAction(submitAction).test();
     }
 
     @Test
     @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
-        testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onclick);
+        eventTester().testEvent(CommandLinkAttributes.onclick).onElement(page.getLinkElement()).test();
+    }
+
+    @Test
+    @CoversAttributes("oncomplete")
+    public void testOncomplete() {
+        eventTester().testEvent(CommandLinkAttributes.oncomplete).withCustomAction(submitAction).test();
     }
 
     @Test
     @CoversAttributes("ondblclick")
     @Templates(value = "plain")
     public void testOndblclick() {
-        testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.ondblclick);
+        eventTester().testEvent(CommandLinkAttributes.ondblclick).onElement(page.getLinkElement()).test();
+    }
+
+    @Test
+    @CoversAttributes("onkeyup")
+    @Templates(value = "plain")
+    public void testOneyup() {
+        eventTester().testEvent(CommandLinkAttributes.onkeyup).onElement(page.getLinkElement()).test();
     }
 
     @Test
@@ -314,56 +279,56 @@ public class TestCommandLink extends AbstractWebDriverTest {
     @CoversAttributes("onkeydown")
     @Templates(value = "plain")
     public void testOnkeydown() {
-        testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onkeydown);
+        eventTester().testEvent(CommandLinkAttributes.onkeydown).onElement(page.getLinkElement()).test();
     }
 
     @Test
     @CoversAttributes("onkeypress")
     @Templates(value = "plain")
     public void testOnkeypress() {
-        testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onkeypress);
+        eventTester().testEvent(CommandLinkAttributes.onkeypress).onElement(page.getLinkElement()).test();
     }
 
     @Test
     @CoversAttributes("onkeyup")
     @Templates(value = "plain")
     public void testOnkeyup() {
-        testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onkeyup);
+        eventTester().testEvent(CommandLinkAttributes.onkeypress).onElement(page.getLinkElement()).test();
     }
 
     @Test
     @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
-        testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onmousedown);
+        eventTester().testEvent(CommandLinkAttributes.onmousedown).onElement(page.getLinkElement()).test();
     }
 
     @Test
     @CoversAttributes("onmousemove")
     @Templates(value = "plain")
     public void testOnmousemove() {
-        testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onmousemove);
+        eventTester().testEvent(CommandLinkAttributes.onmousemove).onElement(page.getLinkElement()).test();
     }
 
     @Test
     @CoversAttributes("onmouseout")
     @Templates(value = "plain")
     public void testOnmouseout() {
-        testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onmouseout);
+        eventTester().testEvent(CommandLinkAttributes.onmouseout).onElement(page.getLinkElement()).test();
     }
 
     @Test
     @CoversAttributes("onmouseover")
     @Templates(value = "plain")
     public void testOnmouseover() {
-        testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onmouseover);
+        eventTester().testEvent(CommandLinkAttributes.onmouseover).onElement(page.getLinkElement()).test();
     }
 
     @Test
     @CoversAttributes("onmouseup")
     @Templates(value = "plain")
     public void testOnmouseup() {
-        testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onmouseup);
+        eventTester().testEvent(CommandLinkAttributes.onmouseup).onElement(page.getLinkElement()).test();
     }
 
     @Test
@@ -377,10 +342,12 @@ public class TestCommandLink extends AbstractWebDriverTest {
     @CoversAttributes("render")
     @RegressionTest("https://issues.jboss.org/browse/RF-10555")
     public void testRender() {
-        commandLinkAttributes.set(CommandLinkAttributes.action, "doubleStringAction");
-        commandLinkAttributes.set(CommandLinkAttributes.actionListener, "doubleStringActionListener");
+        attsSetter()
+            .setAttribute(CommandLinkAttributes.action).toValue("doubleStringAction")
+            .setAttribute(CommandLinkAttributes.actionListener).toValue("doubleStringActionListener")
+            .setAttribute(CommandLinkAttributes.render).toValue("output1")
+            .asSingleAction().perform();
 
-        commandLinkAttributes.set(CommandLinkAttributes.render, "output1");
         page.typeToInput(CommandButtonLinkPage.STRING_RF1);
         page.submitByLink();
         page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
@@ -424,6 +391,29 @@ public class TestCommandLink extends AbstractWebDriverTest {
         testHTMLAttribute(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.shape, "default");
     }
 
+    @Test(groups = "client-side-perf")
+    public void testSimpleClick() {
+        page.typeToInput(CommandButtonLinkPage.STRING_RF1);
+        page.submitByLink();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
+
+        page.verifyOutput1Text();
+        page.verifyOutput2Text();
+        page.verifyOutput3Text();
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-9665")
+    public void testSimpleClickUnicode() {
+        page.typeToInput(CommandButtonLinkPage.STRING_UNICODE1);
+        page.submitByLink();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_UNICODE1);
+
+        page.verifyOutput1Text(CommandButtonLinkPage.STRING_UNICODE1);
+        page.verifyOutput2Text(CommandButtonLinkPage.STRING_UNICODE2);
+        page.verifyOutput3Text(CommandButtonLinkPage.STRING_UNICODE3);
+    }
+
     @Test
     @CoversAttributes("status")
     public void testStatus() {
@@ -434,7 +424,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
     @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
-        testStyle(page.getLinkElement());
+        htmlAttributeTester().testStyle(page.getLinkElement()).test();
     }
 
     @Test
@@ -442,7 +432,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-9307")
     @Templates(value = "plain")
     public void testStyleClass() {
-        testStyleClass(page.getLinkElement());
+        htmlAttributeTester().testStyleClass(page.getLinkElement()).test();
     }
 
     @Test
@@ -456,7 +446,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
     @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
-        testHTMLAttribute(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.title, "metamer");
+        htmlAttributeTester().testTitle(page.getLinkElement()).test();
     }
 
     @Test

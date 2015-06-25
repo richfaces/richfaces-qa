@@ -28,9 +28,9 @@ import static org.testng.Assert.assertTrue;
 
 import javax.faces.event.PhaseId;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.page.Page;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.common.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -50,6 +50,13 @@ import org.testng.annotations.Test;
  */
 public class TestCommandButton extends AbstractWebDriverTest {
 
+    private final Action clickButtonAction = new Action() {
+        @Override
+        public void perform() {
+            page.getButtonElement().click();
+        }
+    };
+
     private final Attributes<CommandButtonAttributes> commandButtonAttributes = getAttributes();
 
     @Page
@@ -60,29 +67,6 @@ public class TestCommandButton extends AbstractWebDriverTest {
     @Override
     public String getComponentTestPagePath() {
         return "a4jCommandButton/simple.xhtml";
-    }
-
-    @Test(groups = "client-side-perf")
-    public void testSimpleClick() {
-        page.typeToInput(CommandButtonLinkPage.STRING_RF1);
-        page.submitByButton();
-        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
-
-        page.verifyOutput1Text();
-        page.verifyOutput2Text();
-        page.verifyOutput3Text();
-    }
-
-    @Test(groups = "smoke")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9665")
-    public void testSimpleClickUnicode() {
-        page.typeToInput(CommandButtonLinkPage.STRING_UNICODE1);
-        page.submitByButton();
-        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_UNICODE1);
-
-        page.verifyOutput1Text(CommandButtonLinkPage.STRING_UNICODE1);
-        page.verifyOutput2Text(CommandButtonLinkPage.STRING_UNICODE2);
-        page.verifyOutput3Text(CommandButtonLinkPage.STRING_UNICODE3);
     }
 
     @Test
@@ -171,6 +155,17 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes({ "onbegin", "onbeforedomupdate", "oncomplete" })
+    public void testEvents() {
+        eventsOrderTester().testOrderOfEvents("onbegin", "onbeforedomupdate", "oncomplete").triggeredByAction(new Action() {
+            @Override
+            public void perform() {
+                Graphene.guardAjax(page.getButtonElement()).click();
+            }
+        }).test();
+    }
+
+    @Test
     @CoversAttributes("execute")
     public void testExecute() {
         commandButtonAttributes.set(CommandButtonAttributes.execute, "input executeChecker");
@@ -197,8 +192,10 @@ public class TestCommandButton extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("limitRender")
     public void testLimitRender() {
-        commandButtonAttributes.set(CommandButtonAttributes.limitRender, true);
-        commandButtonAttributes.set(CommandButtonAttributes.render, "output1 requestTime");
+        attsSetter()
+            .setAttribute(CommandButtonAttributes.limitRender).toValue(true)
+            .setAttribute(CommandButtonAttributes.render).toValue("output1 requestTime")
+            .asSingleAction().perform();
         page.typeToInput(CommandButtonLinkPage.STRING_RF1);
         page.submitByButton();
         page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
@@ -208,82 +205,56 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test
-    @CoversAttributes({ "onbegin", "onbeforedomupdate", "oncomplete" })
-    public void testEvents() {
-        commandButtonAttributes.set(CommandButtonAttributes.onbegin, "metamerEvents += \"begin \"");
-        commandButtonAttributes.set(CommandButtonAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
-        commandButtonAttributes.set(CommandButtonAttributes.oncomplete, "metamerEvents += \"complete \"");
-
-        ((JavascriptExecutor) driver).executeScript("metamerEvents = \"\"");
-        MetamerPage.waitRequest(page.getButtonElement(), WaitRequestType.XHR).click();
-
-        String[] events = ((JavascriptExecutor) driver).executeScript("return metamerEvents").toString().split(" ");
-
-        assertEquals(events.length, 3, "3 events should be fired.");
-        assertEquals(events[0], "begin", "Attribute onbegin doesn't work");
-        assertEquals(events[1], "beforedomupdate", "Attribute onbeforedomupdate doesn't work");
-        assertEquals(events[2], "complete", "Attribute oncomplete doesn't work");
+    @CoversAttributes("onbeforedomupdate")
+    public void testOnbeforedomupdate() {
+        eventTester().testEvent(CommandButtonAttributes.onbeforedomupdate).withCustomAction(clickButtonAction).test();
     }
 
     @Test
     @CoversAttributes("onbegin")
     public void testOnbegin() {
-        testFireEvent(commandButtonAttributes, CommandButtonAttributes.onbegin, new Action() {
-            @Override
-            public void perform() {
-                page.getButtonElement().click();
-            }
-        });
-    }
-
-    @Test
-    @CoversAttributes("onbeforedomupdate")
-    public void testOnbeforedomupdate() {
-        testFireEvent(commandButtonAttributes, CommandButtonAttributes.onbeforedomupdate, new Action() {
-            @Override
-            public void perform() {
-                page.getButtonElement().click();
-            }
-        });
-    }
-
-    @Test
-    @CoversAttributes("oncomplete")
-    public void testOncomplete() {
-        testFireEvent(commandButtonAttributes, CommandButtonAttributes.oncomplete, new Action() {
-            @Override
-            public void perform() {
-                page.getButtonElement().click();
-            }
-        });
+        eventTester().testEvent(CommandButtonAttributes.onbegin).withCustomAction(clickButtonAction).test();
     }
 
     @Test
     @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
-        testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onclick);
+        eventTester().testEvent(CommandButtonAttributes.onclick).onElement(page.getButtonElement()).test();
+    }
+
+    @Test
+    @CoversAttributes("oncomplete")
+    public void testOncomplete() {
+        eventTester().testEvent(CommandButtonAttributes.oncomplete).withCustomAction(clickButtonAction).test();
     }
 
     @Test
     @CoversAttributes("ondblclick")
     @Templates(value = "plain")
     public void testOndblclick() {
-        testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.ondblclick);
+        eventTester().testEvent(CommandButtonAttributes.ondblclick).onElement(page.getButtonElement()).test();
+    }
+
+    @Test
+    @CoversAttributes("onkeyup")
+    @Templates(value = "plain")
+    public void testOneyup() {
+        eventTester().testEvent(CommandButtonAttributes.onkeyup).onElement(page.getButtonElement()).test();
     }
 
     @Test
     @CoversAttributes("onkeydown")
     @Templates(value = "plain")
     public void testOnkeydown() {
-        testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onkeydown);
+        eventTester().testEvent(CommandButtonAttributes.onkeydown).onElement(page.getButtonElement()).test();
     }
 
     @Test
     @CoversAttributes("onkeypress")
     @Templates(value = "plain")
     public void testOnkeypress() {
-        testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onkeypress);
+        eventTester().testEvent(CommandButtonAttributes.onkeypress).onElement(page.getButtonElement()).test();
     }
 
     @Test
@@ -299,55 +270,49 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test
-    @CoversAttributes("onkeyup")
-    @Templates(value = "plain")
-    public void testOneyup() {
-        testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onkeyup);
-    }
-
-    @Test
     @CoversAttributes("onmousedown")
     @Templates(value = "plain")
     public void testOnmousedown() {
-        testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onmousedown);
+        eventTester().testEvent(CommandButtonAttributes.onmousedown).onElement(page.getButtonElement()).test();
     }
 
     @Test
     @CoversAttributes("onmousemove")
     @Templates(value = "plain")
     public void testOnmousemove() {
-        testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onmousemove);
+        eventTester().testEvent(CommandButtonAttributes.onmousemove).onElement(page.getButtonElement()).test();
     }
 
     @Test
     @CoversAttributes("onmouseout")
     @Templates(value = "plain")
     public void testOnmouseout() {
-        testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onmouseout);
+        eventTester().testEvent(CommandButtonAttributes.onmouseout).onElement(page.getButtonElement()).test();
     }
 
     @Test
     @CoversAttributes("onmouseover")
     @Templates(value = "plain")
     public void testOnmouseover() {
-        testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onmouseover);
+        eventTester().testEvent(CommandButtonAttributes.onmouseover).onElement(page.getButtonElement()).test();
     }
 
     @Test
     @CoversAttributes("onmouseup")
     @Templates(value = "plain")
     public void testOnmouseup() {
-        testFireEventWithJS(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.onmouseup);
+        eventTester().testEvent(CommandButtonAttributes.onmouseup).onElement(page.getButtonElement()).test();
     }
 
     @Test
     @CoversAttributes("render")
     @RegressionTest("https://issues.jboss.org/browse/RF-10555")
     public void testRender() {
-        commandButtonAttributes.set(CommandButtonAttributes.action, "doubleStringAction");
-        commandButtonAttributes.set(CommandButtonAttributes.actionListener, "doubleStringActionListener");
-
-        commandButtonAttributes.set(CommandButtonAttributes.render, "output1");
+        attsSetter()
+            .setAttribute(CommandButtonAttributes.action).toValue("doubleStringAction")
+            .setAttribute(CommandButtonAttributes.actionListener).toValue("doubleStringActionListener")
+            .setAttribute(CommandButtonAttributes.render).toValue("output1")
+            .asSingleAction().perform();
         page.typeToInput(CommandButtonLinkPage.STRING_RF1);
         page.submitByButton();
         page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
@@ -376,6 +341,29 @@ public class TestCommandButton extends AbstractWebDriverTest {
         assertFalse(new WebElementConditionFactory(page.getButtonElement()).isPresent().apply(driver), "Button should not be on page.");
     }
 
+    @Test(groups = "client-side-perf")
+    public void testSimpleClick() {
+        page.typeToInput(CommandButtonLinkPage.STRING_RF1);
+        page.submitByButton();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
+
+        page.verifyOutput1Text();
+        page.verifyOutput2Text();
+        page.verifyOutput3Text();
+    }
+
+    @Test(groups = "smoke")
+    @RegressionTest("https://issues.jboss.org/browse/RF-9665")
+    public void testSimpleClickUnicode() {
+        page.typeToInput(CommandButtonLinkPage.STRING_UNICODE1);
+        page.submitByButton();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_UNICODE1);
+
+        page.verifyOutput1Text(CommandButtonLinkPage.STRING_UNICODE1);
+        page.verifyOutput2Text(CommandButtonLinkPage.STRING_UNICODE2);
+        page.verifyOutput3Text(CommandButtonLinkPage.STRING_UNICODE3);
+    }
+
     @Test
     @CoversAttributes("status")
     public void testStatus() {
@@ -386,7 +374,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
     @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
-        testStyle(page.getButtonElement());
+        htmlAttributeTester().testStyle(page.getButtonElement()).test();
     }
 
     @Test
@@ -394,7 +382,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-9307")
     @Templates(value = "plain")
     public void testStyleClass() {
-        testStyleClass(page.getButtonElement());
+        htmlAttributeTester().testStyleClass(page.getButtonElement()).test();
     }
 
     @Test

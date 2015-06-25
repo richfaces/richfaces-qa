@@ -210,19 +210,14 @@ public class TestTabPanel extends AbstractWebDriverTest {
     @CoversAttributes({ "onbeforeitemchange", "onitemchange" })
     @RegressionTest("https://issues.jboss.org/browse/RF-10165")
     public void testItemchangeEvents() {
-        attsSetter()
-            .setAttribute(TabPanelAttributes.onbeforeitemchange).toValue("metamerEvents += \"beforeitemchange \"")
-            .setAttribute(TabPanelAttributes.onitemchange).toValue("metamerEvents += \"itemchange \"")
-            .asSingleAction().perform();
-        executeJS("window.metamerEvents = \"\";");
-        page.getTabPanel().switchTo(2);
-
-        Object obj = executeJS("return window.metamerEvents");
-        String[] events = ((String) obj).split(" ");
-
-        assertEquals(events.length, 2, "Two events should be fired - beforeitemchange and itemchange.");
-        assertEquals(events[0], "beforeitemchange", "Attribute onbeforeitemchange doesn't work");
-        assertEquals(events[1], "itemchange", "Attribute onitemchange doesn't work");
+        eventsOrderTester()
+            .testOrderOfEvents(TabPanelAttributes.onbeforeitemchange, TabPanelAttributes.onitemchange)
+            .triggeredByAction(new Action() {
+                @Override
+                public void perform() {
+                    page.getTabPanel().switchTo(2);
+                }
+            }).test();
     }
 
     @Test

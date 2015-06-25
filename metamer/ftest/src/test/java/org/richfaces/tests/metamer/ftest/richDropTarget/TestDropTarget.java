@@ -29,7 +29,7 @@ import static javax.faces.event.PhaseId.RENDER_RESPONSE;
 import static javax.faces.event.PhaseId.RESTORE_VIEW;
 import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
 
-import static org.testng.Assert.assertEquals;
+import static org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState.ACCEPTING;
 import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -168,26 +168,17 @@ public class TestDropTarget extends AbstractWebDriverTest {
     @Test
     @CoversAttributes({ "onbeforedomupdate", "onbegin", "oncomplete" })
     public void testEvents() {
-        attsSetter()
-            .setAttribute(DropTargetAttributes.onbeforedomupdate).toValue("metamerEvents += \"beforedomupdate \"")
-            .setAttribute(DropTargetAttributes.onbegin).toValue("metamerEvents += \"begin \"")
-            .setAttribute(DropTargetAttributes.oncomplete).toValue("metamerEvents += \"complete \"")
-            .asSingleAction().perform();
-
-        indicator = new Indicator(page.getIndicator());
-
-        executeJS("metamerEvents = \"\";");
-
-        verifyAcception(page.getDrg1(), IndicatorState.ACCEPTING);
-        guardedDrop();
-        Graphene.waitModel().until().element(page.getDropValue()).is().present();
-
-        String[] events = ((String) executeJS("return metamerEvents;")).split(" ");
-
-        assertEquals(events.length, 3, "3 events should be fired.");
-        assertEquals(events[0], "begin", "Attribute onbegin doesn't work");
-        assertEquals(events[1], "beforedomupdate", "Attribute onbeforedomupdate doesn't work");
-        assertEquals(events[2], "complete", "Attribute oncomplete doesn't work");
+        eventsOrderTester()
+            .testOrderOfEvents(DropTargetAttributes.onbegin, DropTargetAttributes.onbeforedomupdate, DropTargetAttributes.oncomplete)
+            .triggeredByAction(new Action() {
+                @Override
+                public void perform() {
+                    indicator = new Indicator(page.getIndicator());
+                    verifyAcception(page.getDrg1(), ACCEPTING);
+                    guardedDrop();
+                    Graphene.waitModel().until().element(page.getDropValue()).is().present();
+                }
+            }).test();
     }
 
     @Test
