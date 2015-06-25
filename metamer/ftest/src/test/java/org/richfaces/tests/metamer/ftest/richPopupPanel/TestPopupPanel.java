@@ -158,10 +158,13 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("autosized")
     public void testAutosized() {
-        popupPanelAttributes.set(PopupPanelAttributes.height, -1);// set value to default (as if the attibute is not present)
-        popupPanelAttributes.set(PopupPanelAttributes.width, -1);// set value to default (as if the attibute is not present)
-        popupPanelAttributes.set(PopupPanelAttributes.resizeable, Boolean.FALSE);// need to be turned off to set @autosized=true
-        popupPanelAttributes.set(PopupPanelAttributes.autosized, Boolean.FALSE);
+        attsSetter()
+            .setAttribute(PopupPanelAttributes.height).toValue(-1)// set value to default (as if the attribute is not present)
+            .setAttribute(PopupPanelAttributes.width).toValue(-1)// set value to default (as if the attribute is not present)
+            .setAttribute(PopupPanelAttributes.resizeable).toValue(false)// need to be turned off to set @autosized=true
+            .setAttribute(PopupPanelAttributes.autosized).toValue(false)
+            .asSingleAction().perform();
+
         int contentWidth = 100;
         int panelPadding = 30;
         int tolerance = 10;
@@ -170,15 +173,17 @@ public class TestPopupPanel extends AbstractWebDriverTest {
         assertEquals(panel.getBodyContent().getParagraphElement().getCssValue("width"), contentWidth + "px",
             "Paragraph's width.");
         assertEquals(panel.advanced().getLocations().getWidth(),
-            Integer.valueOf(popupPanelAttributes.get(PopupPanelAttributes.minWidth)).intValue(),
+            Integer.parseInt(popupPanelAttributes.get(PopupPanelAttributes.minWidth)),
             tolerance,
             "Panel's width should be the same as its minWidth, when its content is smaller.");
 
-        popupPanelAttributes.set(PopupPanelAttributes.autosized, Boolean.TRUE);
-        popupPanelAttributes.set(PopupPanelAttributes.minWidth, 20);
-        popupPanelAttributes.set(PopupPanelAttributes.minHeight, 20);
-        popupPanelAttributes.set(PopupPanelAttributes.maxWidth, 1000);
-        popupPanelAttributes.set(PopupPanelAttributes.maxHeight, 1000);
+        attsSetter()
+            .setAttribute(PopupPanelAttributes.autosized).toValue(true)
+            .setAttribute(PopupPanelAttributes.minWidth).toValue(20)
+            .setAttribute(PopupPanelAttributes.minHeight).toValue(20)
+            .setAttribute(PopupPanelAttributes.maxWidth).toValue(1000)
+            .setAttribute(PopupPanelAttributes.maxHeight).toValue(1000)
+            .asSingleAction().perform();
         openPopupPanel();
         assertEquals(panel.advanced().getLocations().getWidth(),
             contentWidth + panelPadding,
@@ -262,8 +267,10 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     @IssueTracking("https://issues.jboss.org/browse/RF-10251")
     @Templates(value = "plain")
     public void testHeightZero() {
-        popupPanelAttributes.set(PopupPanelAttributes.minHeight, 300);
-        popupPanelAttributes.set(PopupPanelAttributes.height, 0);
+        attsSetter()
+            .setAttribute(PopupPanelAttributes.minHeight).toValue(300)
+            .setAttribute(PopupPanelAttributes.height).toValue(0)
+            .asSingleAction().perform();
         openPopupPanel();
         checkCssValueOfPanel("height", 300);
         checkMove(50, 50);
@@ -353,9 +360,11 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     @CoversAttributes("maxHeight")
     @Templates(value = "plain")
     public void testMaxheight() {
-        popupPanelAttributes.set(PopupPanelAttributes.minHeight, 200);
-        popupPanelAttributes.set(PopupPanelAttributes.height, 390);
-        popupPanelAttributes.set(PopupPanelAttributes.maxHeight, 400);
+        attsSetter()
+            .setAttribute(PopupPanelAttributes.minHeight).toValue(200)
+            .setAttribute(PopupPanelAttributes.height).toValue(390)
+            .setAttribute(PopupPanelAttributes.maxHeight).toValue(400)
+            .asSingleAction().perform();
         openPopupPanel();
         // following is not working reliable, replacing with JS API function
 //        panel.resizeFromLocation(ResizerLocation.S, 0, +120);// resize panel to maximum
@@ -369,9 +378,11 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     @CoversAttributes("maxWidth")
     @Templates(value = "plain")
     public void testMaxwidth() {
-        popupPanelAttributes.set(PopupPanelAttributes.minWidth, 200);
-        popupPanelAttributes.set(PopupPanelAttributes.width, 390);
-        popupPanelAttributes.set(PopupPanelAttributes.maxWidth, 400);
+        attsSetter()
+            .setAttribute(PopupPanelAttributes.minWidth).toValue(200)
+            .setAttribute(PopupPanelAttributes.width).toValue(390)
+            .setAttribute(PopupPanelAttributes.maxWidth).toValue(400)
+            .asSingleAction().perform();
         openPopupPanel();
         // following is not working reliable, replacing with JS API function
 //        panel.resizeFromLocation(ResizerLocation.E, +120, 0);// resize panel to maximum
@@ -385,9 +396,11 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     @CoversAttributes("minHeight")
     @Templates(value = "plain")
     public void testMinheight() {
-        popupPanelAttributes.set(PopupPanelAttributes.minHeight, 200);
-        popupPanelAttributes.set(PopupPanelAttributes.height, 300);
-        popupPanelAttributes.set(PopupPanelAttributes.maxHeight, 400);
+        attsSetter()
+            .setAttribute(PopupPanelAttributes.minHeight).toValue(200)
+            .setAttribute(PopupPanelAttributes.height).toValue(250)
+            .setAttribute(PopupPanelAttributes.maxHeight).toValue(400)
+            .asSingleAction().perform();
         openPopupPanel();
         panel.advanced().resizeFromLocation(ResizerLocation.S, 1, -120);// resize panel to minimum
         checkCssValueOfPanel("height", 200);
@@ -397,9 +410,11 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     @CoversAttributes("minWidth")
     @Templates(value = "plain")
     public void testMinwidth() {
-        popupPanelAttributes.set(PopupPanelAttributes.minWidth, 200);
-        popupPanelAttributes.set(PopupPanelAttributes.width, 300);
-        popupPanelAttributes.set(PopupPanelAttributes.maxWidth, 400);
+        attsSetter()
+            .setAttribute(PopupPanelAttributes.minWidth).toValue(200)
+            .setAttribute(PopupPanelAttributes.width).toValue(250)
+            .setAttribute(PopupPanelAttributes.maxWidth).toValue(400)
+            .asSingleAction().perform();
         openPopupPanel();
         panel.advanced().resizeFromLocation(ResizerLocation.E, -120, 1);// resize panel to minimum
         checkCssValueOfPanel("width", 200);
@@ -600,12 +615,14 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     @UseWithField(field = "resizer", valuesFrom = FROM_ENUM, value = "")
     public void testResize() {
         driver.manage().window().setSize(new Dimension(1024, 768));// to stabilize job on Jenkins
-        popupPanelAttributes.set(PopupPanelAttributes.height, 400);
-        popupPanelAttributes.set(PopupPanelAttributes.width, 400);
-        popupPanelAttributes.set(PopupPanelAttributes.minHeight, 100);
-        popupPanelAttributes.set(PopupPanelAttributes.minWidth, 100);
-        popupPanelAttributes.set(PopupPanelAttributes.maxHeight, 800);
-        popupPanelAttributes.set(PopupPanelAttributes.maxWidth, 800);
+        attsSetter()
+            .setAttribute(PopupPanelAttributes.height).toValue(400)
+            .setAttribute(PopupPanelAttributes.width).toValue(400)
+            .setAttribute(PopupPanelAttributes.minHeight).toValue(100)
+            .setAttribute(PopupPanelAttributes.minWidth).toValue(100)
+            .setAttribute(PopupPanelAttributes.maxHeight).toValue(800)
+            .setAttribute(PopupPanelAttributes.maxWidth).toValue(800)
+            .asSingleAction().perform();
         int resizeBy = 100;
         checkResize(resizer,
             EnumSet.of(ResizerLocation.N, ResizerLocation.S).contains(resizer) ? 0 : resizeBy,
@@ -713,8 +730,10 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     @IssueTracking("https://issues.jboss.org/browse/RF-10251")
     @Templates(value = "plain")
     public void testWidthZero() {
-        popupPanelAttributes.set(PopupPanelAttributes.minWidth, 200);
-        popupPanelAttributes.set(PopupPanelAttributes.width, 0);
+        attsSetter()
+            .setAttribute(PopupPanelAttributes.width).toValue(0)
+            .setAttribute(PopupPanelAttributes.minWidth).toValue(200)
+            .asSingleAction().perform();
         openPopupPanel();
         checkCssValueOfPanel("width", 200);
         checkMove(50, 50);

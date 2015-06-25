@@ -29,9 +29,7 @@ import static org.richfaces.tests.metamer.ftest.BasicAttributes.rightIconClass;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.disabled;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.leftDisabledIcon;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.leftIcon;
-import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.limitRender;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.mode;
-import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.render;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.rendered;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.rightDisabledIcon;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.rightIcon;
@@ -167,8 +165,10 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     @Test(groups = "smoke")
     @CoversAttributes("limitRender")
     public void testLimitRender() {
-        panelMenuItemAttributes.set(render, "renderChecker");
-        panelMenuItemAttributes.set(limitRender, true);
+        attsSetter()
+            .setAttribute(PanelMenuItemAttributes.render).toValue("renderChecker")
+            .setAttribute(PanelMenuItemAttributes.limitRender).toValue(true)
+            .asSingleAction().perform();
 
         String renderChecker = page.getRenderCheckerOutputElement().getText();
         MetamerPage.requestTimeNotChangesWaiting(page.getItem()).select();

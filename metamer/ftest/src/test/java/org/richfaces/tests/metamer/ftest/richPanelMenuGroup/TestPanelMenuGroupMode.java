@@ -100,10 +100,12 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
         @UseWithField(field = "mode", valuesFrom = FROM_FIELD, value = "requestModes")
     })
     public void testAjaxAndServerMode() {
-        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.immediate, immediate);
-        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.bypassUpdates, bypassUpdates);
-        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, mode);
-        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.execute, "@this executeChecker");
+        attsSetter()
+            .setAttribute(PanelMenuGroupAttributes.immediate).toValue(immediate)
+            .setAttribute(PanelMenuGroupAttributes.bypassUpdates).toValue(bypassUpdates)
+            .setAttribute(PanelMenuGroupAttributes.mode).toValue(mode)
+            .setAttribute(PanelMenuGroupAttributes.execute).toValue("@this executeChecker")
+            .asSingleAction().perform();
 
         assertTrue(getPage().getTopGroup().advanced().isExpanded());
         switch (mode) {

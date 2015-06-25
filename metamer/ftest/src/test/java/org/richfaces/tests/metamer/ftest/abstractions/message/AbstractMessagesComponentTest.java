@@ -112,8 +112,10 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
     }
 
     public void checkShowDetail() {
-        messagesAttributes.set(MessagesAttributes.showSummary, Boolean.TRUE);
-        messagesAttributes.set(MessagesAttributes.showDetail, Boolean.TRUE);
+        attsSetter()
+            .setAttribute(MessagesAttributes.showSummary).toValue(true)
+            .setAttribute(MessagesAttributes.showDetail).toValue(true)
+            .asSingleAction().perform();
         generateValidationMessagesWithWait();
 
         assertVisible(getPage().getMessagesComponentWithGlobal().getItem(0).advanced().getDetailElement(), "Detail should be visible");
@@ -127,8 +129,10 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
     }
 
     public void checkShowSummary() {
-        messagesAttributes.set(MessagesAttributes.showDetail, Boolean.TRUE);
-        messagesAttributes.set(MessagesAttributes.showSummary, Boolean.TRUE);
+        attsSetter()
+            .setAttribute(MessagesAttributes.showSummary).toValue(true)
+            .setAttribute(MessagesAttributes.showDetail).toValue(true)
+            .asSingleAction().perform();
         generateValidationMessagesWithWait();
 
         assertVisible(getPage().getMessagesComponentWithGlobal().getItem(0).advanced().getSummaryElement(), "Summary should be visible");

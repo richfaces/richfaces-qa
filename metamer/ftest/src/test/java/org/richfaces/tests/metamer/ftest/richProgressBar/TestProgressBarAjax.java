@@ -152,10 +152,12 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     @Test
     @CoversAttributes({ "maxValue", "onbegin", "onbeforedomupdate", "oncomplete" })
     public void testEvents() {
-        progressBarAttributes.set(ProgressBarAttributes.maxValue, 5);//the test will be quicker
-        progressBarAttributes.set(ProgressBarAttributes.onbegin, "metamerEvents += \"begin \"");
-        progressBarAttributes.set(ProgressBarAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
-        progressBarAttributes.set(ProgressBarAttributes.oncomplete, "metamerEvents += \"complete \"");
+        attsSetter()
+            .setAttribute(ProgressBarAttributes.maxValue).toValue(5)
+            .setAttribute(ProgressBarAttributes.onbegin).toValue("metamerEvents += \"begin \"")
+            .setAttribute(ProgressBarAttributes.onbeforedomupdate).toValue("metamerEvents += \"beforedomupdate \"")
+            .setAttribute(ProgressBarAttributes.oncomplete).toValue("metamerEvents += \"complete \"")
+            .asSingleAction().perform();
 
         long expectedRunTime = getExpectedRunTimeInMillis();
         executeJS("metamerEvents = \"\"");
@@ -298,8 +300,10 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     @Test
     @CoversAttributes({ "maxValue", "onfinish" })
     public void testOnfinish() {
-        progressBarAttributes.set(ProgressBarAttributes.maxValue, 5);//the test will be quicker
-        progressBarAttributes.set(ProgressBarAttributes.onfinish, "metamerEvents += \"finish \"");
+        attsSetter()
+            .setAttribute(ProgressBarAttributes.maxValue).toValue(5)//the test will be quicker
+            .setAttribute(ProgressBarAttributes.onfinish).toValue("metamerEvents += \"finish \"")
+            .asSingleAction().perform();
 
         executeJS("metamerEvents = \"\"");
         long expectedRunTime = getExpectedRunTimeInMillis();

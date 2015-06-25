@@ -84,8 +84,10 @@ public class TestSelectAutocompleteMethod extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("minChars")
     public void testMinChars() {
-        attributes.set(SelectAttributes.mode, Mode.ajax);
-        attributes.set(SelectAttributes.minChars, 3);
+        attsSetter()
+            .setAttribute(SelectAttributes.mode).toValue(Mode.ajax)
+            .setAttribute(SelectAttributes.minChars).toValue("3")
+            .asSingleAction().perform();
 
         Graphene.guardNoRequest(select.advanced().getInput().sendKeys("a").advanced()).trigger("blur");
 

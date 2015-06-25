@@ -125,8 +125,10 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
     @Test
     @CoversAttributes("nonblocking")
     public void testNonblocking() {
-        notifyMessagesAttributes.set(NotifyMessagesAttributes.nonblocking, Boolean.TRUE);
-        notifyMessagesAttributes.set(NotifyMessagesAttributes.nonblockingOpacity, 0);
+        attsSetter()
+            .setAttribute(NotifyMessagesAttributes.nonblocking).toValue(true)
+            .setAttribute(NotifyMessagesAttributes.nonblockingOpacity).toValue(0)
+            .asSingleAction().perform();
         generateValidationMessagesWithWait();
         Utils.triggerJQ(executor, "mouseover", getPage().getMessagesComponentWithGlobal().getItem(0).getRootElement());
         TestNotifyAttributes.waitForOpacityChange(0, getPage().getMessagesComponentWithGlobal().getItem(0).getRootElement());
@@ -137,8 +139,10 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
     @Test
     @CoversAttributes("nonblockingOpacity")
     public void testNonblockingOpacity() {
-        notifyMessagesAttributes.set(NotifyMessagesAttributes.nonblocking, Boolean.TRUE);
-        notifyMessagesAttributes.set(NotifyMessagesAttributes.nonblockingOpacity, 0.5);
+        attsSetter()
+            .setAttribute(NotifyMessagesAttributes.nonblocking).toValue(true)
+            .setAttribute(NotifyMessagesAttributes.nonblockingOpacity).toValue(0.5)
+            .asSingleAction().perform();
         generateValidationMessagesWithWait();
         Utils.triggerJQ(executor, "mouseover", getPage().getMessagesComponentWithGlobal().getItem(0).getRootElement());
         TestNotifyAttributes.waitForOpacityChange(0.5, getPage().getMessagesComponentWithGlobal().getItem(0).getRootElement());
@@ -293,8 +297,10 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
     @Test
     @CoversAttributes("stayTime")
     public void testStayTime() {
-        notifyMessagesAttributes.set(NotifyMessagesAttributes.stayTime, 1000);
-        notifyMessagesAttributes.set(NotifyMessagesAttributes.sticky, Boolean.FALSE);
+        attsSetter()
+            .setAttribute(NotifyMessagesAttributes.stayTime).toValue(1000)
+            .setAttribute(NotifyMessagesAttributes.sticky).toValue(false)
+            .asSingleAction().perform();
         generateValidationMessagesWithWait();
         waiting(3000);
         Assert.assertEquals(getPage().getMessagesComponentWithGlobal().size(), 0, "There should be no message anymore.");
@@ -304,8 +310,10 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
     @Test
     @CoversAttributes("sticky")
     public void testSticky() {
-        notifyMessagesAttributes.set(NotifyMessagesAttributes.stayTime, 1000);
-        notifyMessagesAttributes.set(NotifyMessagesAttributes.sticky, Boolean.TRUE);
+        attsSetter()
+            .setAttribute(NotifyMessagesAttributes.stayTime).toValue(1000)
+            .setAttribute(NotifyMessagesAttributes.sticky).toValue(true)
+            .asSingleAction().perform();
         generateValidationMessagesWithWait();
         waiting(3000);
         Assert.assertTrue(getPage().getMessagesComponentWithGlobal().size() > 0, "There should be some messages.");

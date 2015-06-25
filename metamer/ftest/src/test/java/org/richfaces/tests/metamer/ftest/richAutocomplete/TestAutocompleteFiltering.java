@@ -48,8 +48,10 @@ public class TestAutocompleteFiltering extends AbstractAutocompleteTest {
     @Test
     @CoversAttributes({ "autocompleteList", "clientFilterFunction" })
     public void testClientFilterFunction() {
-        autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
-        autocompleteAttributes.set(AutocompleteAttributes.clientFilterFunction, CLIENT_FILTER_FUNCTION_NAME);
+        attsSetter()
+            .setAttribute(AutocompleteAttributes.mode).toValue("client")
+            .setAttribute(AutocompleteAttributes.clientFilterFunction).toValue(CLIENT_FILTER_FUNCTION_NAME)
+            .asSingleAction().perform();
 
         autocomplete.type("No");
 

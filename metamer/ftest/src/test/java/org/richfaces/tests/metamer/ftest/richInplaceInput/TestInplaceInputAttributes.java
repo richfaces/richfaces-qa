@@ -459,8 +459,10 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     @CoversAttributes("requiredMessage")
     public void testRequiredMessage() {
         String reqMsg = "Another new and completely different required message.";
-        inplaceInputAttributes.set(InplaceInputAttributes.required, Boolean.TRUE);
-        inplaceInputAttributes.set(InplaceInputAttributes.requiredMessage, reqMsg);
+        attsSetter()
+            .setAttribute(InplaceInputAttributes.required).toValue(true)
+            .setAttribute(InplaceInputAttributes.requiredMessage).toValue(reqMsg)
+            .asSingleAction().perform();
         MetamerPage.waitRequest(inplaceInput.type(""), WaitRequestType.XHR).confirm();
         assertTrue(requiredMessage.advanced().isVisible());
         assertEquals(requiredMessage.getDetail(), reqMsg);

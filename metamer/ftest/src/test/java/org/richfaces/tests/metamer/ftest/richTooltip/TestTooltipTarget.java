@@ -21,8 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richTooltip;
 
-import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.hideEvent;
-import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.showEvent;
 import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.target;
 
 import org.jboss.arquillian.graphene.page.Page;
@@ -58,11 +56,13 @@ public class TestTooltipTarget extends AbstractWebDriverTest {
     @CoversAttributes("target")
     @RegressionTest("https://issues.jboss.org/browse/RF-11370")
     public void testTarget() {
-        tooltipAttributes.set(showEvent, "click");
-        tooltipAttributes.set(hideEvent, "dblclick");
-        // set some offset so the tooltip will not block triggering the event on element
-        tooltipAttributes.set(TooltipAttributes.horizontalOffset, 100);
-        tooltipAttributes.set(TooltipAttributes.verticalOffset, 100);
+        attsSetter()
+            .setAttribute(TooltipAttributes.hideEvent).toValue("dblclick")
+            .setAttribute(TooltipAttributes.showEvent).toValue("click")
+            // set some offset so the tooltip will not block triggering the event on element
+            .setAttribute(TooltipAttributes.horizontalOffset).toValue(100)
+            .setAttribute(TooltipAttributes.verticalOffset).toValue(100)
+            .asSingleAction().perform();
         page.getTooltip().advanced().setShowEvent(Event.CLICK);
         page.getTooltip().advanced().setHideEvent(Event.DBLCLICK);
         for (WebElement panel : Lists.newArrayList(page.getPanel(), page.getPanelJSFDiv(), page.getPanelRegularDiv())) {

@@ -154,8 +154,10 @@ public abstract class AbstractPlaceholderNonJSFTest extends AbstractWebDriverTes
 
     @CoversAttributes("rendered")
     public void testRendered() {
-        placeholderAttributes.set(PlaceholderAttributes.selector, INPUT1_ID);
-        placeholderAttributes.set(PlaceholderAttributes.rendered, Boolean.FALSE);
+        attsSetter()
+            .setAttribute(PlaceholderAttributes.selector).toValue(INPUT1_ID)
+            .setAttribute(PlaceholderAttributes.rendered).toValue(false)
+            .asSingleAction().perform();
 
         assertFalse(new WebElementConditionFactory(placeholder).isVisible().apply(driver), "Placeholder should not be visible");
 

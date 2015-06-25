@@ -49,8 +49,10 @@ public class TestTooltipDefaultZindex extends AbstractWebDriverTest {
 
     @BeforeMethod
     public void setupAttributes() {
-        tooltipAttributes.set(TooltipAttributes.hideEvent, "mouseout");
-        tooltipAttributes.set(TooltipAttributes.showEvent, "click");
+        attsSetter()
+            .setAttribute(TooltipAttributes.hideEvent).toValue("mouseout")
+            .setAttribute(TooltipAttributes.showEvent).toValue("click")
+            .asSingleAction().perform();
         tooltip().advanced().setHideEvent(Event.MOUSEOUT);
         tooltip().advanced().setShowEvent(Event.CLICK);
     }

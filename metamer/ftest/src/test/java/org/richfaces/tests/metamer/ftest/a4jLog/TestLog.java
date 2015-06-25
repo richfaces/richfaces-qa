@@ -123,9 +123,12 @@ public class TestLog extends AbstractWebDriverTest {
     public void testHotkeyAndPopupMode() {
         String originalWindow = driver.getWindowHandle();
         try {
-            attributes.set(LogAttributes.level, levelToSet.toString().toLowerCase());
-            attributes.set(LogAttributes.mode, "popup");
-            attributes.set(LogAttributes.hotkey, "d");
+            attsSetter()
+                .setAttribute(LogAttributes.level).toValue(levelToSet.toString().toLowerCase())
+                .setAttribute(LogAttributes.mode).toValue("popup")
+                .setAttribute(LogAttributes.hotkey).toValue("d")
+                .asSingleAction().perform();
+
             hotkey.setHotkey("ctrl+shift+d");
             assertEquals(driver.getWindowHandles().size(), 1, "There should be only 1 browser window.");
             hotkey.invoke();

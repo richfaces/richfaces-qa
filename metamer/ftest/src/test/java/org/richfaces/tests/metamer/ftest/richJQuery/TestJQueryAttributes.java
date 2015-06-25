@@ -60,16 +60,20 @@ public class TestJQueryAttributes extends AbstractWebDriverTest {
 
     private void setupDomReadyTypeAttributes() {
         jQueryAttributes.reset(JQueryAttributes.event);
-        jQueryAttributes.set(JQueryAttributes.query, "css('color', 'red')");
-        jQueryAttributes.set(JQueryAttributes.selector, "#jQueryTestButton");
-        jQueryAttributes.set(JQueryAttributes.timing, "domready");
+        attsSetter()
+            .setAttribute(JQueryAttributes.query).toValue("css('color', 'red')")
+            .setAttribute(JQueryAttributes.selector).toValue("#jQueryTestButton")
+            .setAttribute(JQueryAttributes.timing).toValue("domready")
+            .asSingleAction().perform();
     }
 
     private void setupImmediateTypeAttributes() {
-        jQueryAttributes.set(JQueryAttributes.event, "click");
-        jQueryAttributes.set(JQueryAttributes.query, "$(this).css('color', 'red')");
-        jQueryAttributes.set(JQueryAttributes.selector, "#jQueryTestButton");
-        jQueryAttributes.set(JQueryAttributes.timing, "immediate");
+        attsSetter()
+            .setAttribute(JQueryAttributes.event).toValue("click")
+            .setAttribute(JQueryAttributes.query).toValue("$(this).css('color', 'red')")
+            .setAttribute(JQueryAttributes.selector).toValue("#jQueryTestButton")
+            .setAttribute(JQueryAttributes.timing).toValue("immediate")
+            .asSingleAction().perform();
     }
 
     @Override
@@ -100,8 +104,10 @@ public class TestJQueryAttributes extends AbstractWebDriverTest {
     @CoversAttributes({ "attachType", "event", "query", "selector", "timing" })
     public void testAttachTypeOne() {
         setupImmediateTypeAttributes();
-        jQueryAttributes.set(JQueryAttributes.attachType, "one");
-        jQueryAttributes.set(JQueryAttributes.query, "metamerEvents+=\"first \"");
+        attsSetter()
+            .setAttribute(JQueryAttributes.attachType).toValue("one")
+            .setAttribute(JQueryAttributes.query).toValue("metamerEvents+=\"first \"")
+            .asSingleAction().perform();
 
         button.click();
         String events = expectedReturnJS("return metamerEvents", "first");

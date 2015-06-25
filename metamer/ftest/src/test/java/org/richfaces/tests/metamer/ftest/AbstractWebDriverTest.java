@@ -323,9 +323,10 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      */
     protected void testData(Action triggeringAction) {
         String testedValue = "RF5";
-        UnsafeAttributes attributes = getUnsafeAttributes("");
-        attributes.set("data", testedValue);
-        attributes.set("oncomplete", "data = event.data");
+        attsSetter()
+            .setAttribute("data").toValue(testedValue)
+            .setAttribute("oncomplete").toValue("data = event.data")
+            .asSingleAction().perform();
         Graphene.guardAjax(new ActionWrapper(triggeringAction)).perform();
         assertEquals(expectedReturnJS("return window.data;", testedValue), testedValue);
     }

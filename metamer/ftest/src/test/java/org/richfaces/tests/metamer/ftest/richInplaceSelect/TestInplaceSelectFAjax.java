@@ -70,9 +70,11 @@ public class TestInplaceSelectFAjax extends AbstractWebDriverTest {
     @Test(groups = "smoke")
     @RegressionTest("https://issues.jboss.org/browse/RF-11227")
     public void testClick() {
-        inplaceSelectAttributes.set(InplaceSelectAttributes.showControls, Boolean.TRUE);
-        inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnBlur, Boolean.FALSE);
-        inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
+        attsSetter()
+            .setAttribute(InplaceSelectAttributes.showControls).toValue(true)
+            .setAttribute(InplaceSelectAttributes.saveOnSelect).toValue(false)
+            .setAttribute(InplaceSelectAttributes.saveOnBlur).toValue(false)
+            .asSingleAction().perform();
 
         select.advanced().switchToEditingState();
         List<WebElement> options = select.advanced().getOptions();

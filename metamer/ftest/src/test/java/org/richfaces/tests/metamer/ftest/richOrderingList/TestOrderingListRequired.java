@@ -66,8 +66,10 @@ public class TestOrderingListRequired extends AbstractOrderingListTest {
     @CoversAttributes("requiredMessage")
     public void testRequiredMessage() {
         String requiredMessage = "Custom required message.";
-        attributes.set(OrderingListAttributes.required, Boolean.TRUE);
-        attributes.set(OrderingListAttributes.requiredMessage, requiredMessage);
+        attsSetter()
+            .setAttribute(OrderingListAttributes.required).toValue(true)
+            .setAttribute(OrderingListAttributes.requiredMessage).toValue(requiredMessage)
+            .asSingleAction().perform();
         submit();
         assertVisible(message.advanced().getRootElement(), "Message should be visible.");
         assertEquals(message.getDetail(), requiredMessage);

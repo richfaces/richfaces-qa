@@ -271,8 +271,10 @@ public class TestPickList extends AbstractListScrollingTest {
     @Templates(value = "plain")
     public void testDownBottomText() {
         String label = "xxx";
-        pickListAttributes.set(PickListAttributes.downBottomText, label);
-        pickListAttributes.set(PickListAttributes.orderable, Boolean.TRUE);
+        attsSetter()
+            .setAttribute(PickListAttributes.downBottomText).toValue(label)
+            .setAttribute(PickListAttributes.orderable).toValue(true)
+            .asSingleAction().perform();
         assertEquals(pickList.advanced().getBottomButtonElement().getText(), label);
     }
 
@@ -281,8 +283,10 @@ public class TestPickList extends AbstractListScrollingTest {
     @Templates(value = "plain")
     public void testDownText() {
         String label = "xxx";
-        pickListAttributes.set(PickListAttributes.downText, label);
-        pickListAttributes.set(PickListAttributes.orderable, Boolean.TRUE);
+        attsSetter()
+            .setAttribute(PickListAttributes.downText).toValue(label)
+            .setAttribute(PickListAttributes.orderable).toValue(true)
+            .asSingleAction().perform();
         assertEquals(pickList.advanced().getDownButtonElement().getText(), label);
     }
 
@@ -435,8 +439,10 @@ public class TestPickList extends AbstractListScrollingTest {
     public void testMinListHeight() {
         int testedValue = 600;
         int tolerance = 10;
-        pickListAttributes.set(PickListAttributes.listHeight, "");
-        pickListAttributes.set(PickListAttributes.minListHeight, testedValue);
+        attsSetter()
+            .setAttribute(PickListAttributes.listHeight).toValue("")
+            .setAttribute(PickListAttributes.minListHeight).toValue(testedValue)
+            .asSingleAction().perform();
         assertEquals(
             Integer.valueOf(pickList.advanced().getSourceListContentAreaElement().getCssValue("min-height").replace("px", "")),
             testedValue, tolerance);
@@ -858,8 +864,10 @@ public class TestPickList extends AbstractListScrollingTest {
     @CoversAttributes("requiredMessage")
     public void testRequiredMessage() {
         String messageString = "This is new required message.";
-        pickListAttributes.set(PickListAttributes.required, Boolean.TRUE);
-        pickListAttributes.set(PickListAttributes.requiredMessage, messageString);
+        attsSetter()
+            .setAttribute(PickListAttributes.required).toValue(true)
+            .setAttribute(PickListAttributes.requiredMessage).toValue(messageString)
+            .asSingleAction().perform();
         submitAjax();
         assertEquals(message.getDetail(), messageString);
     }
@@ -1002,8 +1010,10 @@ public class TestPickList extends AbstractListScrollingTest {
     @Templates(value = "plain")
     public void testUpText() {
         String label = "xxx";
-        pickListAttributes.set(PickListAttributes.upText, label);
-        pickListAttributes.set(PickListAttributes.orderable, Boolean.TRUE);
+        attsSetter()
+            .setAttribute(PickListAttributes.orderable).toValue(true)
+            .setAttribute(PickListAttributes.upText).toValue(label)
+            .asSingleAction().perform();
         assertEquals(pickList.advanced().getUpButtonElement().getText(), label);
     }
 
@@ -1012,8 +1022,10 @@ public class TestPickList extends AbstractListScrollingTest {
     @Templates(value = "plain")
     public void testUpTopText() {
         String label = "xxx";
-        pickListAttributes.set(PickListAttributes.upTopText, label);
-        pickListAttributes.set(PickListAttributes.orderable, Boolean.TRUE);
+        attsSetter()
+            .setAttribute(PickListAttributes.orderable).toValue(true)
+            .setAttribute(PickListAttributes.upTopText).toValue(label)
+            .asSingleAction().perform();
         assertEquals(pickList.advanced().getTopButtonElement().getText(), label);
     }
 

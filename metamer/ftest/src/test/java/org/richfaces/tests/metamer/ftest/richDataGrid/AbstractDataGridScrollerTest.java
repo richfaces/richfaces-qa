@@ -66,20 +66,25 @@ public abstract class AbstractDataGridScrollerTest extends AbstractDataGridTest 
     }
 
     public void testColumnsAttribute() {
-        dataGridAttributes.set(DataGridAttributes.elements, 7);
-        dataGridAttributes.set(DataGridAttributes.first, 0);
         elements = 7;
         first = 0;
+        attsSetter()
+            .setAttribute(DataGridAttributes.elements).toValue(elements)
+            .setAttribute(DataGridAttributes.first).toValue(first)
+            .asSingleAction().perform();
+
         setupDataScroller();
         testNumberedPages();
         dataGridAttributes.set(DataGridAttributes.elements, 0);
     }
 
     public void testElementsAttribute() {
-        dataGridAttributes.set(DataGridAttributes.columns, 3);
-        dataGridAttributes.set(DataGridAttributes.first, 0);
         first = 0;
         columns = 3;
+        attsSetter()
+            .setAttribute(DataGridAttributes.columns).toValue(columns)
+            .setAttribute(DataGridAttributes.first).toValue(first)
+            .asSingleAction().perform();
         setupDataScroller();
         testNumberedPages();
     }
@@ -87,11 +92,14 @@ public abstract class AbstractDataGridScrollerTest extends AbstractDataGridTest 
     public void testFirstAttributeDoesntInfluentScroller() {
         // the attribute for component was already set, now verify that this attribute doesn't influent rendering (it
         // means dataGrid with scroller ignores this attribute, it means it is always equal to zero)
-        dataGridAttributes.set(DataGridAttributes.columns, 3);
-        dataGridAttributes.set(DataGridAttributes.elements, 7);
         first = 0;
         columns = 3;
         elements = 7;
+        attsSetter()
+            .setAttribute(DataGridAttributes.columns).toValue(columns)
+            .setAttribute(DataGridAttributes.first).toValue(first)
+            .setAttribute(DataGridAttributes.elements).toValue(elements)
+            .asSingleAction().perform();
         setupDataScroller();
         testNumberedPages();
     }

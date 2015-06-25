@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.richNotifyStack;
 
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -148,9 +147,11 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
     })
     @Templates("plain")
     public void testDirectionAndMethod() {
-        notifyStackAttributes.set(NotifyStackAttributes.direction, direction.name().toLowerCase(Locale.ENGLISH));
-        notifyStackAttributes.set(NotifyStackAttributes.method, method.name().toLowerCase(Locale.ENGLISH));
-        notifyStackAttributes.set(NotifyStackAttributes.position, "topRight");
+        attsSetter()
+            .setAttribute(NotifyStackAttributes.direction).toValue(direction.name().toLowerCase())
+            .setAttribute(NotifyStackAttributes.method).toValue(method.name().toLowerCase())
+            .setAttribute(NotifyStackAttributes.position).toValue("topRight")
+            .asSingleAction().perform();
         waiting(500); // workaround for document not ready error
 
         generateMessagesWithWait(3);

@@ -193,8 +193,10 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     public void testMaxListHeight() {
         int testedValue = 600;
         int tolerance = 10;
-        attributes.set(OrderingListAttributes.maxListHeight, testedValue);
-        attributes.set(OrderingListAttributes.listHeight, "");
+        attsSetter()
+            .setAttribute(OrderingListAttributes.maxListHeight).toValue(testedValue)
+            .setAttribute(OrderingListAttributes.listHeight).toValue("")
+            .asSingleAction().perform();
         assertEquals(Integer.valueOf(orderingList.advanced().getContentAreaElement().getCssValue("max-height").replace("px", "")), testedValue, tolerance);
     }
 
@@ -204,8 +206,10 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     public void testMinListHeight() {
         int testedValue = 600;
         int tolerance = 10;
-        attributes.set(OrderingListAttributes.listHeight, "");
-        attributes.set(OrderingListAttributes.minListHeight, testedValue);
+        attsSetter()
+            .setAttribute(OrderingListAttributes.minListHeight).toValue(testedValue)
+            .setAttribute(OrderingListAttributes.listHeight).toValue("")
+            .asSingleAction().perform();
         assertEquals(Integer.valueOf(orderingList.advanced().getContentAreaElement().getCssValue("min-height").replace("px", "")), testedValue, tolerance);
     }
 

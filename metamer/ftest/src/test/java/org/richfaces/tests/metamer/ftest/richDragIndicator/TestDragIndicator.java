@@ -21,9 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richDragIndicator;
 
-import static org.richfaces.tests.metamer.ftest.richDragIndicator.DragIndicatorAttributes.acceptClass;
-import static org.richfaces.tests.metamer.ftest.richDragIndicator.DragIndicatorAttributes.draggingClass;
-import static org.richfaces.tests.metamer.ftest.richDragIndicator.DragIndicatorAttributes.rejectClass;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.DragIndicatorAttributes.rendered;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -62,8 +59,10 @@ public class TestDragIndicator extends AbstractWebDriverTest {
     @Test
     @CoversAttributes({ "acceptClass", "draggingClass" })
     public void testAccepting() {
-        dragIndicatorAttributes.set(draggingClass, DRAGGING_CLASS);
-        dragIndicatorAttributes.set(acceptClass, ACCEPT_CLASS);
+        attsSetter()
+            .setAttribute(DragIndicatorAttributes.draggingClass).toValue(DRAGGING_CLASS)
+            .setAttribute(DragIndicatorAttributes.acceptClass).toValue(ACCEPT_CLASS)
+            .asSingleAction().perform();
 
         Actions actionQueue = new Actions(driver);
 
@@ -93,8 +92,10 @@ public class TestDragIndicator extends AbstractWebDriverTest {
     @Test(groups = "smoke")
     @CoversAttributes({ "acceptClass", "draggingClass" })
     public void testDragging() {
-        dragIndicatorAttributes.set(draggingClass, DRAGGING_CLASS);
-        dragIndicatorAttributes.set(acceptClass, ACCEPT_CLASS);
+        attsSetter()
+            .setAttribute(DragIndicatorAttributes.draggingClass).toValue(DRAGGING_CLASS)
+            .setAttribute(DragIndicatorAttributes.acceptClass).toValue(ACCEPT_CLASS)
+            .asSingleAction().perform();
 
         Actions actionQueue = new Actions(driver);
 
@@ -127,9 +128,11 @@ public class TestDragIndicator extends AbstractWebDriverTest {
     @Test
     @CoversAttributes({ "acceptClass", "draggingClass", "rejectClass" })
     public void testMovingOverDifferentStates() {
-        dragIndicatorAttributes.set(draggingClass, DRAGGING_CLASS);
-        dragIndicatorAttributes.set(rejectClass, REJECT_CLASS);
-        dragIndicatorAttributes.set(acceptClass, ACCEPT_CLASS);
+        attsSetter()
+            .setAttribute(DragIndicatorAttributes.draggingClass).toValue(DRAGGING_CLASS)
+            .setAttribute(DragIndicatorAttributes.acceptClass).toValue(ACCEPT_CLASS)
+            .setAttribute(DragIndicatorAttributes.rejectClass).toValue(REJECT_CLASS)
+            .asSingleAction().perform();
 
         for (int i = 0; i <= 20; ++i) {
             Actions actionQueue = new Actions(driver);
@@ -170,8 +173,10 @@ public class TestDragIndicator extends AbstractWebDriverTest {
     @Test
     @CoversAttributes({ "draggingClass", "rejectClass" })
     public void testRejecting() {
-        dragIndicatorAttributes.set(draggingClass, DRAGGING_CLASS);
-        dragIndicatorAttributes.set(rejectClass, REJECT_CLASS);
+        attsSetter()
+            .setAttribute(DragIndicatorAttributes.draggingClass).toValue(DRAGGING_CLASS)
+            .setAttribute(DragIndicatorAttributes.rejectClass).toValue(REJECT_CLASS)
+            .asSingleAction().perform();
 
         Actions actionQueue = new Actions(driver);
 
@@ -199,9 +204,10 @@ public class TestDragIndicator extends AbstractWebDriverTest {
     @Test(groups = "smoke")
     @CoversAttributes({ "rendered", "draggingClass" })
     public void testRendered() throws InterruptedException {
-
-        dragIndicatorAttributes.set(draggingClass, DRAGGING_CLASS);
-        dragIndicatorAttributes.set(rendered, true);
+        attsSetter()
+            .setAttribute(DragIndicatorAttributes.draggingClass).toValue(DRAGGING_CLASS)
+            .setAttribute(DragIndicatorAttributes.rendered).toValue(true)
+            .asSingleAction().perform();
 
         // before any mouse move, no indicator appears on page
         assertFalse(new WebElementConditionFactory(page.getIndicatorElement()).isPresent().apply(driver));

@@ -21,8 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richTooltip;
 
-import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.hideEvent;
-import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.showEvent;
 import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
@@ -55,8 +53,10 @@ public class TestRF10971 extends AbstractWebDriverTest {
 
     private void setupTooltips() {
         // set show/hide events to click/dblclick to stabilize tests
-        tooltipAttributes.set(showEvent, "click");
-        tooltipAttributes.set(hideEvent, "dblclick");
+        attsSetter()
+            .setAttribute(TooltipAttributes.showEvent).toValue("click")
+            .setAttribute(TooltipAttributes.hideEvent).toValue("dblclick")
+            .asSingleAction().perform();
 
         tooltipCapitalDover.advanced().setShowEvent(Event.CLICK);
         tooltipCapitalDover.advanced().setHideEvent(Event.DBLCLICK);
@@ -68,8 +68,10 @@ public class TestRF10971 extends AbstractWebDriverTest {
         tooltipStateHawaii.advanced().setHideEvent(Event.DBLCLICK);
 
         // set some offset so the tooltip will not block triggering the event on element
-        tooltipAttributes.set(TooltipAttributes.horizontalOffset, 100);
-        tooltipAttributes.set(TooltipAttributes.verticalOffset, 100);
+        attsSetter()
+            .setAttribute(TooltipAttributes.horizontalOffset).toValue(100)
+            .setAttribute(TooltipAttributes.verticalOffset).toValue(100)
+            .asSingleAction().perform();
     }
 
     @Test

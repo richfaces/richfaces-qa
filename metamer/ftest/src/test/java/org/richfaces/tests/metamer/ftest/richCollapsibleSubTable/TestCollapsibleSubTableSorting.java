@@ -69,8 +69,10 @@ public class TestCollapsibleSubTableSorting extends AbstractCollapsibleSubTableT
     @UseWithField(field = "sortMode", valuesFrom = FROM_ENUM, value = "")
     @RegressionTest("https://issues.jboss.org/browse/RF-11302")
     public void testSorting() {
-        attributes.set(CollapsibleSubTableAttributes.rows, rows);
-        attributes.set(CollapsibleSubTableAttributes.sortMode, sortMode);
+        attsSetter()
+            .setAttribute(CollapsibleSubTableAttributes.rows).toValue(rows)
+            .setAttribute(CollapsibleSubTableAttributes.sortMode).toValue(sortMode)
+            .asSingleAction().perform();
 
         sortingStateMen = new SortingState(getEmployees(Boolean.TRUE));
         sortingStateWomen = new SortingState(getEmployees(Boolean.FALSE));

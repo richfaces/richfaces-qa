@@ -208,8 +208,10 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
     @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
     @Templates("plain")
     public void testRowClass() {
-        attributes.set(CollapsibleSubTableAttributes.rows, 13);
-        attributes.set(CollapsibleSubTableAttributes.rowClass, "rowClass");
+        attsSetter()
+            .setAttribute(CollapsibleSubTableAttributes.rows).toValue(13)
+            .setAttribute(CollapsibleSubTableAttributes.rowClass).toValue("rowClass")
+            .asSingleAction().perform();
         CollapsibleSubTableWithEmployees subtable = getSubTable(isMale);
 
         int rowCount = subtable.advanced().getNumberOfVisibleRows();
@@ -228,8 +230,10 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
     @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
     @Templates("plain")
     public void testRowClasses() {
-        attributes.set(CollapsibleSubTableAttributes.rows, 13);
-        attributes.set(CollapsibleSubTableAttributes.rowClasses, "row1,row2,row3");
+        attsSetter()
+            .setAttribute(CollapsibleSubTableAttributes.rows).toValue(13)
+            .setAttribute(CollapsibleSubTableAttributes.rowClasses).toValue("row1,row2,row3")
+            .asSingleAction().perform();
         CollapsibleSubTableWithEmployees subtable = getSubTable(isMale);
 
         int rowCount = subtable.advanced().getNumberOfVisibleRows();

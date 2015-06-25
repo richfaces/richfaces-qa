@@ -61,8 +61,10 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
 
     @BeforeMethod(groups = "smoke")
     public void prepareProperties() {
-        autocompleteAttributes.set(AutocompleteAttributes.autofill, autofill);
-        autocompleteAttributes.set(AutocompleteAttributes.selectFirst, selectFirst);
+        attsSetter()
+            .setAttribute(AutocompleteAttributes.autofill).toValue(autofill)
+            .setAttribute(AutocompleteAttributes.selectFirst).toValue(selectFirst)
+            .asSingleAction().perform();
         autocomplete.clear();
     }
 

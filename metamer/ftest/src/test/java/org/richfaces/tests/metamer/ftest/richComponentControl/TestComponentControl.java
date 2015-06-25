@@ -85,8 +85,10 @@ public class TestComponentControl extends AbstractWebDriverTest {
     @Test
     @CoversAttributes({ "event", "selector", "target" })
     public void testSelector() {
-        componentControlAttributes.set(ComponentControlAttributes.selector, "span.rf-ds[id$=scroller]");
-        componentControlAttributes.set(ComponentControlAttributes.target, "");
+        attsSetter()
+            .setAttribute(ComponentControlAttributes.selector).toValue("span.rf-ds[id$=scroller]")
+            .setAttribute(ComponentControlAttributes.target).toValue("")
+            .asSingleAction().perform();
 
         testOperation();
     }

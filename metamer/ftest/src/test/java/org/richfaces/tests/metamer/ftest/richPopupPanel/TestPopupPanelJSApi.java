@@ -98,10 +98,12 @@ public class TestPopupPanelJSApi extends AbstractWebDriverTest {
 
     @Test
     public void testResize() {
-        popupPanelAttributes.set(PopupPanelAttributes.maxHeight, 420);
-        popupPanelAttributes.set(PopupPanelAttributes.maxWidth, 420);
-        popupPanelAttributes.set(PopupPanelAttributes.height, 400);
-        popupPanelAttributes.set(PopupPanelAttributes.width, 400);
+        attsSetter()
+            .setAttribute(PopupPanelAttributes.maxHeight).toValue(420)
+            .setAttribute(PopupPanelAttributes.maxWidth).toValue(420)
+            .setAttribute(PopupPanelAttributes.height).toValue(400)
+            .setAttribute(PopupPanelAttributes.width).toValue(400)
+            .asSingleAction().perform();
         openPopupPanel();
         int widthBefore = panel.advanced().getLocations().getWidth();
         int heightBefore = panel.advanced().getLocations().getHeight();

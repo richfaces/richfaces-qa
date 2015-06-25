@@ -101,12 +101,14 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     }
 
     @Test
-    @CoversAttributes({ "onbeforedomupdate", "onbegin", "oncomplete" })
+    @CoversAttributes({ "onbegin", "onbeforedomupdate", "oncomplete" })
     public void testEvents() throws InterruptedException {
         // set event attributes
-        attributes.set(DataScrollerAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
-        attributes.set(DataScrollerAttributes.onbegin, "metamerEvents += \"begin \"");
-        attributes.set(DataScrollerAttributes.oncomplete, "metamerEvents += \"complete \"");
+        attsSetter()
+            .setAttribute(DataScrollerAttributes.onbeforedomupdate).toValue("metamerEvents += \"beforedomupdate \"")
+            .setAttribute(DataScrollerAttributes.onbegin).toValue("metamerEvents += \"begin \"")
+            .setAttribute(DataScrollerAttributes.oncomplete).toValue("metamerEvents += \"complete \"")
+            .asSingleAction().perform();
         // reset events
         executor.executeScript("metamerEvents = \"\";");
         // action
@@ -226,7 +228,9 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     @CoversAttributes("maxPages")
     public void testMaxPages() {
         // initial value is 10 which means that 6 pages (i.e. all) should be displayed
-        assertEquals(page.getScroller(scroller).advanced().getCountOfVisiblePages(), 6 /* it means - all pages */,
+        assertEquals(page.getScroller(scroller).advanced().getCountOfVisiblePages(), 6 /*
+             * it means - all pages
+             */,
             "The number of visible pages doesn't match.");
 
         attributes.set(DataScrollerAttributes.maxPages, 3);

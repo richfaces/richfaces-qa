@@ -109,16 +109,20 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     @Skip
     @CoversAttributes({ "detail", "summary" })
     public void testNoDetailNoSummary() {
-        notifyAttributes.set(NotifyAttributes.detail, "");
-        notifyAttributes.set(NotifyAttributes.summary, "");
+        attsSetter()
+            .setAttribute(NotifyAttributes.detail).toValue("")
+            .setAttribute(NotifyAttributes.summary).toValue("")
+            .asSingleAction().perform();
         Assert.assertFalse(message.advanced().isVisible());
     }
 
     @Test
     @CoversAttributes("nonblocking")
     public void testNonblocking() {
-        notifyAttributes.set(NotifyAttributes.nonblocking, Boolean.TRUE);
-        notifyAttributes.set(NotifyAttributes.nonblockingOpacity, 0);
+        attsSetter()
+            .setAttribute(NotifyAttributes.nonblocking).toValue(true)
+            .setAttribute(NotifyAttributes.nonblockingOpacity).toValue(0)
+            .asSingleAction().perform();
         Utils.triggerJQ(executor, "mouseover", message.advanced().getRootElement());
         TestNotifyAttributes.waitForOpacityChange(0, message.advanced().getRootElement());
         Utils.triggerJQ(executor, "mouseout", message.advanced().getRootElement());
@@ -128,8 +132,10 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("nonblockingOpacity")
     public void testNonblockingOpacity() {
-        notifyAttributes.set(NotifyAttributes.nonblocking, Boolean.TRUE);
-        notifyAttributes.set(NotifyAttributes.nonblockingOpacity, 0.5);
+        attsSetter()
+            .setAttribute(NotifyAttributes.nonblocking).toValue(true)
+            .setAttribute(NotifyAttributes.nonblockingOpacity).toValue(0.5)
+            .asSingleAction().perform();
         Utils.triggerJQ(executor, "mouseover", message.advanced().getRootElement());
         TestNotifyAttributes.waitForOpacityChange(0.5, message.advanced().getRootElement());
         Utils.triggerJQ(executor, "mouseout", message.advanced().getRootElement());
@@ -261,8 +267,10 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("stayTime")
     public void testStaytime() {
-        notifyAttributes.set(NotifyAttributes.stayTime, 1000);
-        notifyAttributes.set(NotifyAttributes.sticky, Boolean.FALSE);
+        attsSetter()
+            .setAttribute(NotifyAttributes.stayTime).toValue(1000)
+            .setAttribute(NotifyAttributes.sticky).toValue(false)
+            .asSingleAction().perform();
         waiting(3000);
         assertNotVisible(message.advanced().getRootElement(), "Message should not be visible now.");
     }
@@ -270,8 +278,10 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("sticky")
     public void testSticky() {
-        notifyAttributes.set(NotifyAttributes.stayTime, 1000);
-        notifyAttributes.set(NotifyAttributes.sticky, Boolean.TRUE);
+        attsSetter()
+            .setAttribute(NotifyAttributes.stayTime).toValue(1000)
+            .setAttribute(NotifyAttributes.sticky).toValue(true)
+            .asSingleAction().perform();
         waiting(3000);
         assertVisible(message.advanced().getRootElement(), "Message should be visible until closed.");
     }

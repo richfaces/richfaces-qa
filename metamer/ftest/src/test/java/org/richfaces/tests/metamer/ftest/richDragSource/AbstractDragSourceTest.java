@@ -25,7 +25,6 @@ import static org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.Indi
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState.DRAGGING;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState.REJECTING;
 import static org.richfaces.tests.metamer.ftest.richDragSource.DragSourceAttributes.dragIndicator;
-import static org.richfaces.tests.metamer.ftest.richDragSource.DragSourceAttributes.rendered;
 import static org.richfaces.tests.metamer.ftest.richDragSource.DragSourceAttributes.type;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -136,8 +135,10 @@ public abstract class AbstractDragSourceTest extends AbstractWebDriverTest {
 
     @CoversAttributes({ "dragIndicator", "rendered" })
     public void testRendered() {
-        dragSourceAttributes.set(dragIndicator, "indicator2");
-        dragSourceAttributes.set(rendered, true);
+        attsSetter()
+            .setAttribute(DragSourceAttributes.dragIndicator).toValue("indicator2")
+            .setAttribute(DragSourceAttributes.rendered).toValue(true)
+            .asSingleAction().perform();
 
         // before any mouse move, no indicator appears on page
         assertFalse(page.getIndicator2Element().isPresent());

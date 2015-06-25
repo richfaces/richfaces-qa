@@ -32,8 +32,6 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.inputNumberSpinner.RichFacesInputNumberSpinner;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -81,11 +79,11 @@ public class TestInputNumberSpinnerJSApi extends AbstractWebDriverTest {
     @Test(groups = "smoke")
     public void testDecrease() {
         inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.minValue, -1);
-        MetamerPage.waitRequest(decreaseButton, WaitRequestType.XHR).click();
-        MetamerPage.waitRequest(decreaseButton, WaitRequestType.XHR).click();
+        Graphene.guardAjax(decreaseButton).click();
+        Graphene.guardAjax(decreaseButton).click();
         assertEquals(spinner.advanced().getInput().getStringValue(), "0");//2 - 1 - 1
-        MetamerPage.waitRequest(decreaseButton, WaitRequestType.XHR).click();
-        MetamerPage.waitRequest(decreaseButton, WaitRequestType.NONE).click();
+        Graphene.guardAjax(decreaseButton).click();
+        Graphene.guardNoRequest(decreaseButton).click();
         assertEquals(spinner.advanced().getInput().getStringValue(), "-1");//-2, but min is -1
     }
 
@@ -103,7 +101,7 @@ public class TestInputNumberSpinnerJSApi extends AbstractWebDriverTest {
     @Test
     public void testGetValue() {
         assertEquals(getValueFromOutputJSField(), "");
-        MetamerPage.waitRequest(getValueButton, WaitRequestType.NONE).click();
+        Graphene.guardNoRequest(getValueButton).click();
         assertEquals(getValueFromOutputJSField(), DEFAULT_VALUE);
         assertEquals(spinner.advanced().getInput().getStringValue(), DEFAULT_VALUE);
     }
@@ -112,29 +110,29 @@ public class TestInputNumberSpinnerJSApi extends AbstractWebDriverTest {
     public void testIncrease() {
         inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.maxValue, 5);
 
-        MetamerPage.waitRequest(increaseButton, WaitRequestType.XHR).click();
-        MetamerPage.waitRequest(increaseButton, WaitRequestType.XHR).click();
+        Graphene.guardAjax(increaseButton).click();
+        Graphene.guardAjax(increaseButton).click();
         assertEquals(spinner.advanced().getInput().getStringValue(), "4");//2 + 1 + 1
-        MetamerPage.waitRequest(increaseButton, WaitRequestType.XHR).click();
-        MetamerPage.waitRequest(increaseButton, WaitRequestType.NONE).click();
+        Graphene.guardAjax(increaseButton).click();
+        Graphene.guardNoRequest(increaseButton).click();
         assertEquals(spinner.advanced().getInput().getStringValue(), "5");//6, but max is 5
 
     }
 
     @Test
     public void testMultiple() {
-        MetamerPage.waitRequest(setValueButton, WaitRequestType.XHR).click();//5
-        MetamerPage.waitRequest(increaseButton, WaitRequestType.XHR).click();//6
-        MetamerPage.waitRequest(increaseButton, WaitRequestType.XHR).click();//7
-        MetamerPage.waitRequest(decreaseButton, WaitRequestType.XHR).click();//6
-        MetamerPage.waitRequest(getValueButton, WaitRequestType.NONE).click();
+        Graphene.guardAjax(setValueButton).click();//5
+        Graphene.guardAjax(increaseButton).click();//6
+        Graphene.guardAjax(increaseButton).click();//7
+        Graphene.guardAjax(decreaseButton).click();//6
+        Graphene.guardNoRequest(getValueButton).click();
         assertEquals(getValueFromOutputJSField(), "6");//5 + 1 + 1 - 1
         assertEquals(spinner.advanced().getInput().getStringValue(), "6");
     }
 
     @Test
     public void testSetValue() {
-        MetamerPage.waitRequest(setValueButton, WaitRequestType.XHR).click();
+        Graphene.guardAjax(setValueButton).click();
         assertEquals(spinner.advanced().getInput().getStringValue(), SET_VALUE);
     }
 }

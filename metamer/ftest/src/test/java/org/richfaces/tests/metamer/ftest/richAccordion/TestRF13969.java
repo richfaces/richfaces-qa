@@ -65,8 +65,10 @@ public class TestRF13969 extends AbstractWebDriverTest {
         headersHeight *= page.getAccordion().getNumberOfAccordionItems();
         int heightBefore = getActualItemContentHeight();
 
-        accordionAttributes.set(AccordionAttributes.switchType, switchType.toString().toLowerCase());
-        accordionAttributes.set(AccordionAttributes.height, testedHeight + "px");
+        attsSetter()
+            .setAttribute(AccordionAttributes.switchType).toValue(switchType.toString().toLowerCase())
+            .setAttribute(AccordionAttributes.height).toValue(testedHeight + "px")
+            .asSingleAction().perform();
         page.getAccordion().advanced().setSwitchType(switchType);
 
         int heightAfter = getActualItemContentHeight();

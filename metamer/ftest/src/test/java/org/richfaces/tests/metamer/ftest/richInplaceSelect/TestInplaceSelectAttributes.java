@@ -161,8 +161,10 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     @CoversAttributes("showControls")
     @Templates(exclude = { "richAccordion", "richTabPanel" })
     public void testClickCancelButton() {
-        inplaceSelectAttributes.set(InplaceSelectAttributes.showControls, Boolean.TRUE);
-        inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
+        attsSetter()
+            .setAttribute(InplaceSelectAttributes.showControls).toValue(true)
+            .setAttribute(InplaceSelectAttributes.saveOnSelect).toValue(false)
+            .asSingleAction().perform();
         select.advanced().setSaveOnSelect(Boolean.FALSE);
 
         ConfirmOrCancel confirmOrCancel = Graphene.guardNoRequest(select).select(10);
@@ -177,8 +179,10 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     @CoversAttributes("showControls")
     @Templates(exclude = { "richAccordion", "richTabPanel" })
     public void testClickOkButton() {
-        inplaceSelectAttributes.set(InplaceSelectAttributes.showControls, Boolean.TRUE);
-        inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
+        attsSetter()
+            .setAttribute(InplaceSelectAttributes.showControls).toValue(true)
+            .setAttribute(InplaceSelectAttributes.saveOnSelect).toValue(false)
+            .asSingleAction().perform();
         ConfirmOrCancel confOrCancl = Graphene.guardNoRequest(select).select(10);
         assertEquals(getOutputText(), "", "Output should be empty.");
         Graphene.guardAjax(confOrCancl).confirmByControlls();
@@ -205,8 +209,10 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("disabled")
     public void testDisabled() {
-        inplaceSelectAttributes.set(InplaceSelectAttributes.disabled, Boolean.TRUE);
-        inplaceSelectAttributes.set(InplaceSelectAttributes.value, "Hawaii");
+        attsSetter()
+            .setAttribute(InplaceSelectAttributes.disabled).toValue(true)
+            .setAttribute(InplaceSelectAttributes.value).toValue("Hawaii")
+            .asSingleAction().perform();
 
         assertPresent(select.advanced().getRootElement(), "Inplace input is not on the page.");
         assertPresent(select.advanced().getLabelInputElement(), "Default label should be present on the page.");
@@ -655,8 +661,10 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     @CoversAttributes({ "saveOnBlur", "saveOnSelect" })
     @RegressionTest("https://issues.jboss.org/browse/RF-10739")
     public void testSaveOnBlurSelectFalseFalse() {
-        inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
-        inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnBlur, Boolean.FALSE);
+        attsSetter()
+            .setAttribute(InplaceSelectAttributes.saveOnSelect).toValue(false)
+            .setAttribute(InplaceSelectAttributes.saveOnBlur).toValue(false)
+            .asSingleAction().perform();
         select.advanced().setSaveOnSelect(Boolean.FALSE);
         // select
         MetamerPage.requestTimeNotChangesWaiting(select, GUARD_TIME).select(10);// Graphene.guardNoRequest waits too long

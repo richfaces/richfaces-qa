@@ -248,8 +248,10 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-10255")
     @Templates(value = "plain")
     public void testButtonDisabledIcon() {
-        calendarAttributes.set(CalendarAttributes.buttonDisabledIcon, "heart");
-        calendarAttributes.set(CalendarAttributes.disabled, Boolean.TRUE);
+        attsSetter()
+            .setAttribute(CalendarAttributes.buttonDisabledIcon).toValue("heart")
+            .setAttribute(CalendarAttributes.disabled).toValue(true)
+            .asSingleAction().perform();
 
         String src = popupCalendar.getPopupButtonElement().getAttribute("src");
         assertTrue(src.endsWith("heart.png"), "Calendar's icon was not updated.");
@@ -280,8 +282,10 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-11313")
     public void testConverterMessage() {
         String errorMsg = "conversion error";
-        calendarAttributes.set(CalendarAttributes.enableManualInput, Boolean.TRUE);
-        calendarAttributes.set(CalendarAttributes.converterMessage, errorMsg);
+        attsSetter()
+            .setAttribute(CalendarAttributes.enableManualInput).toValue(true)
+            .setAttribute(CalendarAttributes.converterMessage).toValue(errorMsg)
+            .asSingleAction().perform();
 
         popupCalendar.getInput().sendKeys("RF 4");
         submitWithA4jSubmitBtn();
@@ -923,8 +927,10 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @CoversAttributes("requiredMessage")
     public void testRequiredMessage() {
         String msg = "RichFaces 4";
-        calendarAttributes.set(CalendarAttributes.requiredMessage, msg);
-        calendarAttributes.set(CalendarAttributes.required, Boolean.TRUE);
+        attsSetter()
+            .setAttribute(CalendarAttributes.requiredMessage).toValue(msg)
+            .setAttribute(CalendarAttributes.required).toValue(true)
+            .asSingleAction().perform();
         submitWithA4jSubmitBtn();
 
         assertTrue(message.advanced().isVisible());

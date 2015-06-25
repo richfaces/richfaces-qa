@@ -168,9 +168,12 @@ public class TestDropTarget extends AbstractWebDriverTest {
     @Test
     @CoversAttributes({ "onbeforedomupdate", "onbegin", "oncomplete" })
     public void testEvents() {
-        dropTargetAttributes.set(DropTargetAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
-        dropTargetAttributes.set(DropTargetAttributes.onbegin, "metamerEvents += \"begin \"");
-        dropTargetAttributes.set(DropTargetAttributes.oncomplete, "metamerEvents += \"complete \"");
+        attsSetter()
+            .setAttribute(DropTargetAttributes.onbeforedomupdate).toValue("metamerEvents += \"beforedomupdate \"")
+            .setAttribute(DropTargetAttributes.onbegin).toValue("metamerEvents += \"begin \"")
+            .setAttribute(DropTargetAttributes.oncomplete).toValue("metamerEvents += \"complete \"")
+            .asSingleAction().perform();
+
         indicator = new Indicator(page.getIndicator());
 
         executeJS("metamerEvents = \"\";");

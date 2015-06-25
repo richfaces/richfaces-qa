@@ -194,8 +194,10 @@ public class TestPollSimple extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("limitRender")
     public void testLimitRender() {
-        pollAttributes.set(PollAttributes.limitRender, true);
-        pollAttributes.set(PollAttributes.render, "renderChecker");
+        attsSetter()
+            .setAttribute(PollAttributes.limitRender).toValue(true)
+            .setAttribute(PollAttributes.render).toValue("renderChecker")
+            .asSingleAction().perform();
         String render = getMetamerPage().getRenderCheckerOutputElement().getText();
         String time = getRequestTimeElement().getText();
         Graphene.waitModel()
@@ -238,8 +240,10 @@ public class TestPollSimple extends AbstractWebDriverTest {
     @CoversAttributes({ "rendered", "enabled" })
     @Templates("plain")
     public void testRendered() {
-        pollAttributes.set(PollAttributes.enabled, true);
-        pollAttributes.set(PollAttributes.rendered, false);
+        attsSetter()
+            .setAttribute(PollAttributes.enabled).toValue(true)
+            .setAttribute(PollAttributes.rendered).toValue(false)
+            .asSingleAction().perform();
 
         String time = getRequestTimeElement().getText();
         waiting(2 * INTERVAL);

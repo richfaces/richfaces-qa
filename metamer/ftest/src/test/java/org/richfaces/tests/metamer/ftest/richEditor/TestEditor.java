@@ -164,8 +164,10 @@ public class TestEditor extends AbstractWebDriverTest {
     public void testRequiredMessage() {
         String testMessage1 = "Click hButton";
         String testMessage2 = "Click a4jButton";
-        editorAttributes.set(EditorAttributes.required, Boolean.TRUE);
-        editorAttributes.set(EditorAttributes.requiredMessage, testMessage1);
+        attsSetter()
+            .setAttribute(EditorAttributes.required).toValue(true)
+            .setAttribute(EditorAttributes.requiredMessage).toValue(testMessage1)
+            .asSingleAction().perform();
         page.getHButton().click();
         waitAjax().until().element(page.getErrorMsg()).is().present();
         assertEquals(page.getErrorMsg().getText(), testMessage1);

@@ -109,8 +109,10 @@ public class TestProgressBarClient extends AbstractWebDriverTest {
 
     @Test
     public void testPause() {
-        progressBarAttributes.set(ProgressBarAttributes.interval, 1000);
-        progressBarAttributes.set(ProgressBarAttributes.maxValue, 50);
+        attsSetter()
+            .setAttribute(ProgressBarAttributes.maxValue).toValue(50)
+            .setAttribute(ProgressBarAttributes.interval).toValue(1000)
+            .asSingleAction().perform();
         page.getStartButtonClientElement().click();
         waiting(3000);
 
@@ -131,8 +133,10 @@ public class TestProgressBarClient extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("onfinish")
     public void testOnfinish() {
-        progressBarAttributes.set(ProgressBarAttributes.maxValue, 10);
-        progressBarAttributes.set(ProgressBarAttributes.interval, 100);
+        attsSetter()
+            .setAttribute(ProgressBarAttributes.maxValue).toValue(10)
+            .setAttribute(ProgressBarAttributes.interval).toValue(100)
+            .asSingleAction().perform();
         testFireEvent("finish", new Action() {
             @Override
             public void perform() {
@@ -179,8 +183,10 @@ public class TestProgressBarClient extends AbstractWebDriverTest {
     }
 
     private void testOneRunOfProgressBar(int interval) {
-        progressBarAttributes.set(ProgressBarAttributes.interval, interval);
-        progressBarAttributes.set(ProgressBarAttributes.maxValue, 10);
+        attsSetter()
+            .setAttribute(ProgressBarAttributes.maxValue).toValue(10)
+            .setAttribute(ProgressBarAttributes.interval).toValue(interval)
+            .asSingleAction().perform();
 
         long delta = (long) (interval * 0.3);
         long maxWaitTime = interval + delta;

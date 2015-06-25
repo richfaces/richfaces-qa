@@ -25,9 +25,7 @@ import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.disabled;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.groupMode;
-import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.itemMode;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.rendered;
-import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.width;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -69,8 +67,10 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     @CoversAttributes("disabled")
     @RegressionTest("https://issues.jboss.org/browse/RF-10158")
     public void testDisabled() {
-        panelMenuAttributes.set(groupMode, PanelMenuMode.client);
-        panelMenuAttributes.set(disabled, false);
+        attsSetter()
+            .setAttribute(PanelMenuAttributes.groupMode).toValue("client")
+            .setAttribute(PanelMenuAttributes.disabled).toValue(false)
+            .asSingleAction().perform();
 
         assertEquals(getPage().getPanelMenu().advanced().getAllDisabledGroups().size(), 2);
         assertEquals(getPage().getPanelMenu().advanced().getAllDisabledItems().size(), 3);
@@ -174,8 +174,10 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-12778")
     public void testJsApiCollapseAll() {
-        panelMenuAttributes.set(groupMode, PanelMenuMode.client);
-        panelMenuAttributes.set(itemMode, PanelMenuMode.client);
+        attsSetter()
+            .setAttribute(PanelMenuAttributes.groupMode).toValue("client")
+            .setAttribute(PanelMenuAttributes.itemMode).toValue("client")
+            .asSingleAction().perform();
 
         // expand all group manually
         getPage().getPanelMenu().expandGroup("Group 1");
@@ -191,8 +193,10 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-12778")
     public void testJsApiCollapseAll1() {
-        panelMenuAttributes.set(groupMode, PanelMenuMode.client);
-        panelMenuAttributes.set(itemMode, PanelMenuMode.client);
+        attsSetter()
+            .setAttribute(PanelMenuAttributes.groupMode).toValue("client")
+            .setAttribute(PanelMenuAttributes.itemMode).toValue("client")
+            .asSingleAction().perform();
 
         // expand all group manually
         getPage().getPanelMenu().expandGroup("Group 1");
@@ -208,8 +212,10 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-12778")
     public void testJsApiExpandAll() {
-        panelMenuAttributes.set(groupMode, PanelMenuMode.client);
-        panelMenuAttributes.set(itemMode, PanelMenuMode.client);
+        attsSetter()
+            .setAttribute(PanelMenuAttributes.groupMode).toValue("client")
+            .setAttribute(PanelMenuAttributes.itemMode).toValue("client")
+            .asSingleAction().perform();
 
         getPage().getExpandAll().click();
 
@@ -220,8 +226,10 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-12778")
     public void testJsApiExpandAll1() {
-        panelMenuAttributes.set(groupMode, PanelMenuMode.client);
-        panelMenuAttributes.set(itemMode, PanelMenuMode.client);
+        attsSetter()
+            .setAttribute(PanelMenuAttributes.groupMode).toValue("client")
+            .setAttribute(PanelMenuAttributes.itemMode).toValue("client")
+            .asSingleAction().perform();
 
         getPage().getExpandAllBtn1().click();
 
@@ -232,8 +240,10 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-12778")
     public void testJsApiSelectItem() {
-        panelMenuAttributes.set(groupMode, PanelMenuMode.client);
-        panelMenuAttributes.set(itemMode, PanelMenuMode.client);
+        attsSetter()
+            .setAttribute(PanelMenuAttributes.groupMode).toValue("client")
+            .setAttribute(PanelMenuAttributes.itemMode).toValue("client")
+            .asSingleAction().perform();
 
         getPage().getSelecItem().click();
 
@@ -244,8 +254,10 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-12778")
     public void testJsApiSelectItem1() {
-        panelMenuAttributes.set(groupMode, PanelMenuMode.client);
-        panelMenuAttributes.set(itemMode, PanelMenuMode.client);
+        attsSetter()
+            .setAttribute(PanelMenuAttributes.groupMode).toValue("client")
+            .setAttribute(PanelMenuAttributes.itemMode).toValue("client")
+            .asSingleAction().perform();
 
         getPage().getSelectItemBtn1().click();
 
@@ -310,8 +322,10 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-10302")
     @Templates(value = "plain")
     public void testWidth() {
-        panelMenuAttributes.set(PanelMenuAttributes.style, "");
-        panelMenuAttributes.set(width, "300px");
+        attsSetter()
+            .setAttribute(PanelMenuAttributes.style).toValue("")
+            .setAttribute(PanelMenuAttributes.width).toValue("300px")
+            .asSingleAction().perform();
         assertTrue(getPage().getPanelMenu().advanced().getRootElement().getCssValue("width").contains("300px"));
     }
 }

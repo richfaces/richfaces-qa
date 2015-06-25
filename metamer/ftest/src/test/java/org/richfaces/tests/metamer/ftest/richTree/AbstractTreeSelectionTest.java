@@ -115,8 +115,10 @@ public abstract class AbstractTreeSelectionTest extends AbstractTreeTest {
 
     @BeforeMethod(groups = "smoke")
     public void prepareTest() {
-        treeAttributes.set(TreeAttributes.selectionType, selectionType);
-        treeAttributes.set(TreeAttributes.toggleType, selectionType);
+        attsSetter()
+            .setAttribute(TreeAttributes.selectionType).toValue(selectionType)
+            .setAttribute(TreeAttributes.toggleType).toValue(selectionType)
+            .asSingleAction().perform();
     }
 
     protected void testSubNodesSelectionWithEvents() {

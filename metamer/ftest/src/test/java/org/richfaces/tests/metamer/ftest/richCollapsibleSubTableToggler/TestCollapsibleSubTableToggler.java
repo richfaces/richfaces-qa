@@ -91,8 +91,10 @@ public class TestCollapsibleSubTableToggler extends AbstractCollapsibleSubTableT
     @CoversAttributes("collapsedLabel")
     @Templates("plain")
     public void testCollapsedLabel() {
-        attributes.set(CollapsibleSubTableTogglerAttributes.collapsedIcon, "none");
-        attributes.set(CollapsibleSubTableTogglerAttributes.collapsedLabel, LABEL);
+        attsSetter()
+            .setAttribute(CollapsibleSubTableTogglerAttributes.collapsedIcon).toValue("none")
+            .setAttribute(CollapsibleSubTableTogglerAttributes.collapsedLabel).toValue(LABEL)
+            .asSingleAction().perform();
 
         new TogglerTester() {
             private String expandedImageUrl;

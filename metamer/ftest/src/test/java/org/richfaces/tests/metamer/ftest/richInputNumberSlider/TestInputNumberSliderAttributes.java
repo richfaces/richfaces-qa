@@ -132,8 +132,10 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     @CoversAttributes("decreaseSelectedClass")
     @Templates(value = "plain")
     public void testDecreaseSelectedClass() {
-        inputNumberSliderAttributes.set(InputNumberSliderAttributes.delay, 4000);
-        inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
+        attsSetter()
+            .setAttribute(InputNumberSliderAttributes.delay).toValue(4000)
+            .setAttribute(InputNumberSliderAttributes.showArrows).toValue(true)
+            .asSingleAction().perform();
 
         String value = "metamer-ftest-class";
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.decreaseSelectedClass, value);
@@ -149,8 +151,10 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
     @Templates("plain")
     public void testDelay() {
-        inputNumberSliderAttributes.set(InputNumberSliderAttributes.delay, delay);
-        inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
+        attsSetter()
+            .setAttribute(InputNumberSliderAttributes.delay).toValue(delay)
+            .setAttribute(InputNumberSliderAttributes.showArrows).toValue(true)
+            .asSingleAction().perform();
 
         fireEvent(slider.advanced().getArrowIncreaseElement(), Event.MOUSEDOWN);// starts with increasing/decreasing of the value
         testDelay(delayTestAction, delayTestAction, "delay", delay);
@@ -596,8 +600,10 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     @Test
     @CoversAttributes("step")
     public void testStep() {
-        inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
-        inputNumberSliderAttributes.set(InputNumberSliderAttributes.step, 7);
+        attsSetter()
+            .setAttribute(InputNumberSliderAttributes.step).toValue(7)
+            .setAttribute(InputNumberSliderAttributes.showArrows).toValue(true)
+            .asSingleAction().perform();
 
         MetamerPage.waitRequest(slider, WaitRequestType.XHR).increase();
         assertEquals(output.getText(), "9", "Wrong output");

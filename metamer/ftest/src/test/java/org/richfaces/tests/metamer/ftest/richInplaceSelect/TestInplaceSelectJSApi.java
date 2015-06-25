@@ -90,8 +90,10 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
 
     @Test
     public void cancel() {
-        inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnBlur, Boolean.FALSE);
-        inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
+        attsSetter()
+            .setAttribute(InplaceSelectAttributes.saveOnSelect).toValue(false)
+            .setAttribute(InplaceSelectAttributes.saveOnBlur).toValue(false)
+            .asSingleAction().perform();
         String defaultText = inplaceSelect.advanced().getLabelValue();
         inplaceSelect.select(HAWAII);
         Graphene.guardNoRequest(cancelButton).click();
@@ -181,8 +183,10 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
 
     @Test
     public void save() {
-        inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnBlur, Boolean.FALSE);
-        inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
+        attsSetter()
+            .setAttribute(InplaceSelectAttributes.saveOnSelect).toValue(false)
+            .setAttribute(InplaceSelectAttributes.saveOnBlur).toValue(false)
+            .asSingleAction().perform();
         inplaceSelect.select(HAWAII);
         inplaceSelect.advanced().waitForPopupToHide().perform();
         Graphene.guardAjax(saveButton).click();

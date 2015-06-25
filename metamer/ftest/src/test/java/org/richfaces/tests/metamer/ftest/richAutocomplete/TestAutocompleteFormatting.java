@@ -55,9 +55,11 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
 
     @BeforeMethod
     public void prepareProperties() {
-        autocompleteAttributes.set(AutocompleteAttributes.autofill, autofill);
-        autocompleteAttributes.set(AutocompleteAttributes.selectFirst, selectFirst);
-        autocompleteAttributes.set(AutocompleteAttributes.layout, layout);
+        attsSetter()
+            .setAttribute(AutocompleteAttributes.autofill).toValue(autofill)
+            .setAttribute(AutocompleteAttributes.selectFirst).toValue(selectFirst)
+            .setAttribute(AutocompleteAttributes.layout).toValue(layout)
+            .asSingleAction().perform();
         if (autofill == null) {
             autofill = false;
         }

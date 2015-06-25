@@ -279,8 +279,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testOnkeydown() {
         updateShowAction();
-        page.getContextMenu().advanced().show(page.getTargetPanel1());
-        testFireEventWithJS(page.getContextMenu().advanced().getItemsElements().get(1), Event.KEYDOWN, contextMenuAttributes,
+        testFireEventWithJS(page.getContextMenu().advanced().getItemsElements().get(0), contextMenuAttributes,
             ContextMenuAttributes.onkeydown);
     }
 
@@ -289,13 +288,8 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @Templates("plain")
     public void testOnkeypress() {
         updateShowAction();
-        testFireEvent(contextMenuAttributes, ContextMenuAttributes.onkeypress, new Action() {
-            @Override
-            public void perform() {
-                page.getContextMenu().advanced().show(page.getTargetPanel1());
-                new Actions(driver).sendKeys("a").build().perform();
-            }
-        });
+        testFireEventWithJS(page.getContextMenu().advanced().getMenuItemElements().get(0), contextMenuAttributes,
+            ContextMenuAttributes.onkeypress);
     }
 
     @Test
@@ -303,8 +297,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testOnkeyup() {
         updateShowAction();
-        page.getContextMenu().advanced().show(page.getTargetPanel1());
-        testFireEventWithJS(page.getContextMenu().advanced().getItemsElements().get(1), Event.KEYUP, contextMenuAttributes,
+        testFireEventWithJS(page.getContextMenu().advanced().getItemsElements().get(0), contextMenuAttributes,
             ContextMenuAttributes.onkeyup);
     }
 

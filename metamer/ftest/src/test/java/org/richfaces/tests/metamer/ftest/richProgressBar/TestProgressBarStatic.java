@@ -76,8 +76,10 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
 
     @Test(groups = "smoke")
     public void testFinishFacet() {
-        progressBarAttributes.set(ProgressBarAttributes.maxValue, 100);
-        progressBarAttributes.set(ProgressBarAttributes.value, 100);
+        attsSetter()
+            .setAttribute(ProgressBarAttributes.maxValue).toValue(100)
+            .setAttribute(ProgressBarAttributes.value).toValue(100)
+            .asSingleAction().perform();
 
         assertPresent(page.getProgressBarElement(), "Progress bar is not present on the page.");
         assertVisible(page.getProgressBarElement(), "Progress bar should be visible on the page.");
@@ -153,8 +155,10 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
     @CoversAttributes("maxValue")
     @Templates("plain")
     public void testMaxValue() {
-        progressBarAttributes.set(ProgressBarAttributes.maxValue, 1000);
-        progressBarAttributes.set(ProgressBarAttributes.value, 100);
+        attsSetter()
+            .setAttribute(ProgressBarAttributes.maxValue).toValue(1000)
+            .setAttribute(ProgressBarAttributes.value).toValue(100)
+            .asSingleAction().perform();
         assertEquals(getProgress(), 10, "Progress when value=100 and maxValue=1000.");
     }
 
@@ -162,9 +166,11 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
     @CoversAttributes("minValue")
     @Templates("plain")
     public void testMinValue() {
-        progressBarAttributes.set(ProgressBarAttributes.maxValue, 100);
-        progressBarAttributes.set(ProgressBarAttributes.minValue, 90);
-        progressBarAttributes.set(ProgressBarAttributes.value, 95);
+        attsSetter()
+            .setAttribute(ProgressBarAttributes.maxValue).toValue(100)
+            .setAttribute(ProgressBarAttributes.minValue).toValue(90)
+            .setAttribute(ProgressBarAttributes.value).toValue(95)
+            .asSingleAction().perform();
         assertEquals(getProgress(), 50, "Progress when value=95 and minValue=90.");
     }
 
@@ -200,8 +206,10 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
     @CoversAttributes("value")
     @Templates("plain")
     public void testValue() {
-        progressBarAttributes.set(ProgressBarAttributes.maxValue, 100);
-        progressBarAttributes.set(ProgressBarAttributes.value, 0);
+        attsSetter()
+            .setAttribute(ProgressBarAttributes.maxValue).toValue(100)
+            .setAttribute(ProgressBarAttributes.value).toValue(0)
+            .asSingleAction().perform();
         assertEquals(getProgress(), 0, "Progress when value=0.");
 
         progressBarAttributes.set(ProgressBarAttributes.value, 37);

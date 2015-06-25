@@ -222,8 +222,10 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     @Test
     @CoversAttributes("minChars")
     public void testMinChars() {
-        autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
-        autocompleteAttributes.set(AutocompleteAttributes.minChars, 3);
+        attsSetter()
+            .setAttribute(AutocompleteAttributes.mode).toValue("ajax")
+            .setAttribute(AutocompleteAttributes.minChars).toValue(3)
+            .asSingleAction().perform();
         // no request is sent until min number of chars is provided
         guardNoRequest(autocomplete.type("ha"));
         autocomplete.clear();

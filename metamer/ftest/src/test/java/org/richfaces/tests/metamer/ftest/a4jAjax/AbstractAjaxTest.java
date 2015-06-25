@@ -131,8 +131,10 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
 
     @CoversAttributes({ "bypassUpdates", "listener", "event" })// #performAction() is using @event
     public void testBypassUpdates() {
-        ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
-        ajaxAttributes.set(AjaxAttributes.bypassUpdates, true);
+        attsSetter()
+            .setAttribute(AjaxAttributes.listener).toValue("doubleStringListener")
+            .setAttribute(AjaxAttributes.bypassUpdates).toValue(true)
+            .asSingleAction().perform();
 
         String reqTime = page.getRequestTimeElement().getText();
         performAction();
@@ -179,10 +181,12 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
 
     @CoversAttributes({ "onbeforesubmit", "onbegin", "onbeforedomupdate", "oncomplete" })
     public void testEvents() {
-        ajaxAttributes.set(AjaxAttributes.onbeforesubmit, "metamerEvents += \"beforesubmit \"");
-        ajaxAttributes.set(AjaxAttributes.onbegin, "metamerEvents += \"begin \"");
-        ajaxAttributes.set(AjaxAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
-        ajaxAttributes.set(AjaxAttributes.oncomplete, "metamerEvents += \"complete \"");
+        attsSetter()
+            .setAttribute(AjaxAttributes.onbeforesubmit).toValue("metamerEvents += \"beforesubmit \"")
+            .setAttribute(AjaxAttributes.onbegin).toValue("metamerEvents += \"begin \"")
+            .setAttribute(AjaxAttributes.onbeforedomupdate).toValue("metamerEvents += \"beforedomupdate \"")
+            .setAttribute(AjaxAttributes.oncomplete).toValue("metamerEvents += \"complete \"")
+            .asSingleAction().perform();
 
         ((JavascriptExecutor) driver).executeScript("metamerEvents = \"\"");
         String reqTime = page.getRequestTimeElement().getText();
@@ -199,10 +203,12 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
     }
 
     public void testEventsForTextInputs() {
-        ajaxAttributes.set(AjaxAttributes.onbeforesubmit, "metamerEvents += \"beforesubmit \"");
-        ajaxAttributes.set(AjaxAttributes.onbegin, "metamerEvents += \"begin \"");
-        ajaxAttributes.set(AjaxAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
-        ajaxAttributes.set(AjaxAttributes.oncomplete, "metamerEvents += \"complete \"");
+        attsSetter()
+            .setAttribute(AjaxAttributes.onbeforesubmit).toValue("metamerEvents += \"beforesubmit \"")
+            .setAttribute(AjaxAttributes.onbegin).toValue("metamerEvents += \"begin \"")
+            .setAttribute(AjaxAttributes.onbeforedomupdate).toValue("metamerEvents += \"beforedomupdate \"")
+            .setAttribute(AjaxAttributes.oncomplete).toValue("metamerEvents += \"complete \"")
+            .asSingleAction().perform();
 
         ((JavascriptExecutor) driver).executeScript("metamerEvents = \"\"");
         final String text = "RichFaces";
@@ -246,8 +252,10 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
 
     @CoversAttributes("immediate")
     public void testImmediate() {
-        ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
-        ajaxAttributes.set(AjaxAttributes.immediate, true);
+        attsSetter()
+            .setAttribute(AjaxAttributes.listener).toValue("doubleStringListener")
+            .setAttribute(AjaxAttributes.immediate).toValue(true)
+            .asSingleAction().perform();
 
         String reqTime = page.getRequestTimeElement().getText();
         performAction();
@@ -265,9 +273,11 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
 
     @CoversAttributes({ "immediate", "bypassUpdates", "listener" })
     public void testImmediateBypassUpdates() {
-        ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
-        ajaxAttributes.set(AjaxAttributes.bypassUpdates, true);
-        ajaxAttributes.set(AjaxAttributes.immediate, true);
+        attsSetter()
+            .setAttribute(AjaxAttributes.listener).toValue("doubleStringListener")
+            .setAttribute(AjaxAttributes.bypassUpdates).toValue(true)
+            .setAttribute(AjaxAttributes.immediate).toValue(true)
+            .asSingleAction().perform();
 
         String reqTime = page.getRequestTimeElement().getText();
         performAction();

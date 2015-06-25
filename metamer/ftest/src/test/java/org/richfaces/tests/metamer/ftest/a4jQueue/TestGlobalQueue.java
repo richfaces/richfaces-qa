@@ -202,10 +202,12 @@ public class TestGlobalQueue extends AbstractWebDriverTest {
     @CoversAttributes("rendered")
     @RegressionTest("https://issues.jboss.org/browse/RF-9328")
     public void testRendered() {
-        attributes.set(QueueAttributes.requestDelay, 2000);
-        attributes.set(QueueAttributes.onrequestqueue, "alert('requestQueued')");
-        attributes.set(QueueAttributes.onrequestdequeue, "alert('requestDequeued')");
-        attributes.set(QueueAttributes.rendered, false);
+        attsSetter()
+            .setAttribute(QueueAttributes.requestDelay).toValue(2000)
+            .setAttribute(QueueAttributes.onrequestqueue).toValue("alert('requestQueued')")
+            .setAttribute(QueueAttributes.onrequestdequeue).toValue("alert('requestDequeued')")
+            .setAttribute(QueueAttributes.rendered).toValue(false)
+            .asSingleAction().perform();
 
         Graphene.guardAjax(queue).fireEvents(1);
 

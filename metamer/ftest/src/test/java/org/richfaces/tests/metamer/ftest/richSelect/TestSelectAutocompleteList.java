@@ -58,8 +58,10 @@ public class TestSelectAutocompleteList extends AbstractWebDriverTest {
     @Test
     @CoversAttributes({ "autocompleteList", "clientFilterFunction", "itemLabel", "itemValue" })
     public void testAutocompleteFunctionalityWithClientFiltering() {
-        attributes.set(SelectAttributes.mode, Mode.client);
-        attributes.set(SelectAttributes.clientFilterFunction, "filterValuesByContains");
+        attsSetter()
+            .setAttribute(SelectAttributes.mode).toValue(Mode.client)
+            .setAttribute(SelectAttributes.clientFilterFunction).toValue("filterValuesByContains")
+            .asSingleAction().perform();
         SelectSuggestions selectState = Graphene.guardNoRequest(select).type("aw");
         List<WebElement> suggestions = select.advanced().getSuggestionsElements();
         assertEquals(suggestions.size(), 2);

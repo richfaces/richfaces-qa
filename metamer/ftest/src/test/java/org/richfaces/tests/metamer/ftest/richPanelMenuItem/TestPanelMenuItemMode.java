@@ -112,11 +112,12 @@ public class TestPanelMenuItemMode extends AbstractWebDriverTest {
     @Test
     @CoversAttributes({ "bypassUpdates", "execute", "immediate", "mode" })
     public void testMode() {
-        panelMenuItemAttributes.set(PanelMenuItemAttributes.immediate, immediate);
-        panelMenuItemAttributes.set(PanelMenuItemAttributes.bypassUpdates, bypassUpdates);
-        panelMenuItemAttributes.set(PanelMenuItemAttributes.mode, mode);
-
-        panelMenuItemAttributes.set(PanelMenuItemAttributes.execute, "@this executeChecker");
+        attsSetter()
+            .setAttribute(PanelMenuItemAttributes.immediate).toValue(immediate)
+            .setAttribute(PanelMenuItemAttributes.bypassUpdates).toValue(bypassUpdates)
+            .setAttribute(PanelMenuItemAttributes.mode).toValue(mode)
+            .setAttribute(PanelMenuItemAttributes.execute).toValue("@this executeChecker")
+            .asSingleAction().perform();
 
         switch (mode) {
             case ajax:
