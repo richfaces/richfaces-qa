@@ -27,7 +27,6 @@ import org.richfaces.tests.metamer.ftest.abstractions.DataTableFacetsTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SimpleEDT;
-import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -39,8 +38,6 @@ public class TestExtendedDataTableFacets extends DataTableFacetsTest {
 
     @FindBy(css = "div.rf-edt[id$=richEDT]")
     private SimpleEDT table;
-
-    private final Attributes<ExtendedDataTableAttributes> attributes = getAttributes();
 
     @Override
     public String getComponentTestPagePath() {
