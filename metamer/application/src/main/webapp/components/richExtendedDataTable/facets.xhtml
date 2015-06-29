@@ -92,7 +92,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                     >
 
                 <f:facet name="noData">
-                    <h:outputText value="#{richExtendedDataTableBean.facets['noData']}" style="color: red;"/>
+                    <h:outputText value="#{richExtendedDataTableBean.facets['noData']}" style="color: red;"
+                                  rendered="#{not empty richExtendedDataTableBean.facets['noData']}"/>
                 </f:facet>
 
                 <f:facet name="header">

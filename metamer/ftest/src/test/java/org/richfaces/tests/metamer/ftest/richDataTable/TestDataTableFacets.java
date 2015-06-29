@@ -29,7 +29,6 @@ import org.richfaces.tests.metamer.ftest.abstractions.DataTableFacetsTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SimpleDT;
-import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -42,8 +41,6 @@ public class TestDataTableFacets extends DataTableFacetsTest {
 
     @FindBy(css = "table.rf-dt[id$=richDataTable]")
     private WebElement tableRoot;
-
-    private final Attributes<DataTableAttributes> attributes = getAttributes();
 
     @Override
     public String getComponentTestPagePath() {
