@@ -35,7 +35,6 @@ import java.util.List;
 
 import javax.faces.event.PhaseId;
 
-import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.TimeoutException;
@@ -49,6 +48,7 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 /**
@@ -61,10 +61,17 @@ import org.testng.annotations.Test;
  */
 public class TestTab extends AbstractWebDriverTest {
 
-    private final Attributes<TabAttributes> tabAttributes = getAttributes();
-
     @Page
     private TabSimplePage page;
+
+    private final Action switchToTabAction = new Action() {
+
+        @Override
+        public void perform() {
+            page.getTabPanel().switchTo(0);
+        }
+    };
+    private final Attributes<TabAttributes> tabAttributes = getAttributes();
 
     private boolean belongsClass(WebElement elem, String className) {
         return elem.getAttribute("class").contains(className);
@@ -79,13 +86,13 @@ public class TestTab extends AbstractWebDriverTest {
     @CoversAttributes({ "action", "actionListener" })
     @RegressionTest({ "https://issues.jboss.org/browse/RF-11427", "https://issues.jboss.org/browse/RF-13748" })
     public void testActionAndActionListener() {
-        Graphene.guardAjax(page.getTabPanel()).switchTo(2);
+        page.getTabPanel().switchTo(2);
 
         page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
             PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
         page.assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: tab1 -> tab3");
 
-        Graphene.guardAjax(page.getTabPanel()).switchTo(0);
+        page.getTabPanel().switchTo(0);
         page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
             PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
         page.assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: tab3 -> tab1");
@@ -94,11 +101,35 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("bypassUpdates")
+    public void testBypassUpdates() {
+        tabAttributes.set(TabAttributes.bypassUpdates, true);
+
+        page.getTabPanel().switchTo(0);
+        page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS, PhaseId.RENDER_RESPONSE);
+        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "action invoked");
+        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "action listener invoked");
+
+        tabAttributes.set(TabAttributes.bypassUpdates, false);
+        page.getTabPanel().switchTo(0);
+        page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
+            PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
+        page.assertListener(PhaseId.INVOKE_APPLICATION, "action invoked");
+        page.assertListener(PhaseId.INVOKE_APPLICATION, "action listener invoked");
+    }
+
+    @Test
     @CoversAttributes("contentClass")
     @Templates(value = "plain")
     public void testContentClass() {
         tabAttributes.set(TabAttributes.contentClass, "metamer-ftest-class");
         assertTrue(belongsClass(page.getItemContents().get(0), "metamer-ftest-class"));
+    }
+
+    @Test
+    @CoversAttributes("data")
+    public void testData() {
+        testData(switchToTabAction);
     }
 
     @Test
@@ -134,6 +165,14 @@ public class TestTab extends AbstractWebDriverTest {
             //OK
         }
         assertEquals(page.getTabPanel().advanced().getActiveHeaderElement().getText(), "tab2 header");
+    }
+
+    @Test
+    @CoversAttributes("execute")
+    public void testExecute() {
+        tabAttributes.set(TabAttributes.execute, "@this executeChecker");
+        page.getTabPanel().switchTo(0);
+        page.assertListener(PhaseId.UPDATE_MODEL_VALUES, MetamerPage.STRING_EXECUTE_CHECKER_MSG);
     }
 
     @Test
@@ -208,6 +247,23 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("immediate")
+    public void testImmediate() {
+        tabAttributes.set(TabAttributes.immediate, true);
+        page.getTabPanel().switchTo(0);
+        getMetamerPage().assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.RENDER_RESPONSE);
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "action invoked");
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "action listener invoked");
+
+        tabAttributes.set(TabAttributes.immediate, false);
+        page.getTabPanel().switchTo(0);
+        page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
+            PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
+        page.assertListener(PhaseId.INVOKE_APPLICATION, "action invoked");
+        page.assertListener(PhaseId.INVOKE_APPLICATION, "action listener invoked");
+    }
+
+    @Test
     public void testInit() {
         assertVisible(page.getTabPanel().advanced().getRootElement(), "Tab panel is not present on the page.");
 
@@ -232,6 +288,12 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("limitRender")
+    public void testLimitRender() {
+        testLimitRender(switchToTabAction);
+    }
+
+    @Test
     @CoversAttributes("name")
     @IssueTracking("https://issues.jboss.org/browse/RF-10488")
     public void testName() {
@@ -248,12 +310,14 @@ public class TestTab extends AbstractWebDriverTest {
     @CoversAttributes("onbeforedomupdate")
     @Templates(value = "plain")
     public void testOnbeforedomupdate() {
-        testFireEvent("onbeforedomupdate", new Action() {
-            @Override
-            public void perform() {
-                page.getTabPanel().switchTo(0);
-            }
-        });
+        testFireEvent("onbeforedomupdate", switchToTabAction);
+    }
+
+    @Test
+    @CoversAttributes("onbegin")
+    @Templates(value = "plain")
+    public void testOnbegin() {
+        testFireEvent("onbegin", switchToTabAction);
     }
 
     @Test
@@ -268,12 +332,7 @@ public class TestTab extends AbstractWebDriverTest {
     @CoversAttributes("oncomplete")
     @Templates(value = "plain")
     public void testOncomplete() {
-        testFireEvent("oncomplete", new Action() {
-            @Override
-            public void perform() {
-                page.getTabPanel().switchTo(0);
-            }
-        });
+        testFireEvent("oncomplete", switchToTabAction);
     }
 
     @Test
@@ -291,8 +350,8 @@ public class TestTab extends AbstractWebDriverTest {
         testFireEvent(tabAttributes, TabAttributes.onenter, new Action() {
             @Override
             public void perform() {
-                Graphene.guardAjax(page.getInactiveHeaders().get(1)).click();
-                Graphene.guardAjax(page.getInactiveHeaders().get(0)).click();
+                page.getInactiveHeaders().get(1).click();
+                page.getInactiveHeaders().get(0).click();
             }
         });
     }
@@ -393,11 +452,23 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("render")
+    public void testRender() {
+        testRender(switchToTabAction);
+    }
+
+    @Test
     @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
         tabAttributes.set(TabAttributes.rendered, Boolean.FALSE);
         assertNotPresent(page.getFirstTabContentParentElement(), "Tab should not be rendered when rendered=false.");
+    }
+
+    @Test
+    @CoversAttributes("status")
+    public void testStatus() {
+        testStatus(switchToTabAction);
     }
 
     @Test
