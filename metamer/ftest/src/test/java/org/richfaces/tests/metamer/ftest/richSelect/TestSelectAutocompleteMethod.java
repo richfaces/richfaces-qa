@@ -58,7 +58,7 @@ public class TestSelectAutocompleteMethod extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
-    @CoversAttributes("autocompleteMethod")
+    @CoversAttributes({ "autocompleteMethod", "itemLabel", "itemValue" })
     public void testAutocompleteFunctionality() {
         SelectSuggestions selectState = Graphene.guardAjax(select).type("a");
         List<WebElement> suggestions = select.advanced().getSuggestionsElements();

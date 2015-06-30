@@ -56,7 +56,7 @@ public class TestSelectAutocompleteList extends AbstractWebDriverTest {
     }
 
     @Test
-    @CoversAttributes({ "autocompleteList", "clientFilterFunction" })
+    @CoversAttributes({ "autocompleteList", "clientFilterFunction", "itemLabel", "itemValue" })
     public void testAutocompleteFunctionalityWithClientFiltering() {
         attributes.set(SelectAttributes.mode, Mode.client);
         attributes.set(SelectAttributes.clientFilterFunction, "filterValuesByContains");
