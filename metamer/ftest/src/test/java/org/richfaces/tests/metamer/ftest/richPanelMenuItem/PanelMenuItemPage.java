@@ -21,7 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
 
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.panelMenu.RichFacesPanelMenu;
 import org.richfaces.fragment.panelMenu.RichFacesPanelMenuItem;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 
@@ -32,10 +34,22 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
  */
 public class PanelMenuItemPage extends MetamerPage {
 
-    @FindByJQuery("div[id$=item12]")
+    @FindBy(css = "div[id$=item12]")
     private RichFacesPanelMenuItem item;
+    @FindBy(css = "[id$=panelMenu]")
+    private RichFacesPanelMenu panelMenu;
+    @FindBy(css = "[id$=current]")
+    private WebElement selectedItemOutputElement;
 
     public RichFacesPanelMenuItem getItem() {
         return item;
+    }
+
+    public RichFacesPanelMenu getPanelMenu() {
+        return panelMenu;
+    }
+
+    public String getSelectedItemOutputText() {
+        return selectedItemOutputElement.getText();
     }
 }

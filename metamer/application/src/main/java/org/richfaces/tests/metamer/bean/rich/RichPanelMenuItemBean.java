@@ -42,9 +42,13 @@ import org.slf4j.LoggerFactory;
 @SessionScoped
 public class RichPanelMenuItemBean implements Serializable {
 
-    private static final long serialVersionUID = -1L;
     private static Logger logger;
+    private static final long serialVersionUID = -1L;
     private Attributes attributes;
+
+    public Attributes getAttributes() {
+        return attributes;
+    }
 
     /**
      * Initializes the managed bean.
@@ -56,18 +60,14 @@ public class RichPanelMenuItemBean implements Serializable {
 
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIPanelMenuItem.class, getClass());
 
+        attributes.setAttribute("name", "item12");
+        attributes.setAttribute("label", "Item 1.2 (influenced by attributes)");
         attributes.setAttribute("rendered", true);
         attributes.setAttribute("selectable", true);
 
         // already defined in source directly
         attributes.remove("action");
         attributes.remove("actionListener");
-        attributes.remove("name");
-        attributes.remove("label");
-    }
-
-    public Attributes getAttributes() {
-        return attributes;
     }
 
     public void setAttributes(Attributes attributes) {
