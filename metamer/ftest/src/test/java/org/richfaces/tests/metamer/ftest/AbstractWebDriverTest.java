@@ -342,7 +342,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         UnsafeAttributes attributes = getUnsafeAttributes("");
         attributes.set("limitRender", true);
         attributes.set("render", "@this renderChecker");
-        attributes.set("mode", SwitchType.ajax);
+        setModeOrSwitchTypeToAjax();
         String renderCheckerText = metamerPage.getRenderCheckerOutputElement().getText();
         String requestTime = metamerPage.getRequestTimeElement().getText();
         Graphene.guardAjax(new ActionWrapper(triggeringAction)).perform();
@@ -355,7 +355,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     protected void testRender(Action triggeringAction) {
         UnsafeAttributes attributes = getUnsafeAttributes("");
         attributes.set("render", "@this renderChecker");
-        attributes.set("mode", SwitchType.ajax);
+        setModeOrSwitchTypeToAjax();
         String renderCheckerText = metamerPage.getRenderCheckerOutputElement().getText();
         String requestTime = metamerPage.getRequestTimeElement().getText();
         Graphene.guardAjax(new ActionWrapper(triggeringAction)).perform();
@@ -363,6 +363,21 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             .equalTo(renderCheckerText);
         Graphene.waitGui().until().element(metamerPage.getRequestTimeElement()).text().not()
             .equalTo(requestTime);
+    }
+
+    private void setModeOrSwitchTypeToAjax() {
+        UnsafeAttributes attributes = getUnsafeAttributes("");
+        try {
+            attributes.set("mode", SwitchType.ajax);
+            return;
+        } catch (RuntimeException ignored) {
+        }
+        try {
+            attributes.set("switchType", SwitchType.ajax);
+            return;
+        } catch (RuntimeException ignored) {
+        }
+        fail("Neither of @mode nor @switchType was found.");
     }
 
     /**
