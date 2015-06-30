@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
-import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.disabledClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.leftIconClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.rightIconClass;
@@ -38,13 +37,15 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemA
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.rightIcon;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.selectable;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.status;
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
+
+import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.page.Page;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.PanelMenuMode;
@@ -57,8 +58,6 @@ import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import com.google.common.base.Predicate;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -81,6 +80,17 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
         panelMenuItemAttributes.set(mode, PanelMenuMode.ajax);
     }
 
+    @Test
+    @CoversAttributes({ "action", "actionListener" })
+    public void testActionAndActionListener() {
+        guardAjax(page.getItem()).select();
+
+        page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
+            PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
+        page.assertListener(PhaseId.INVOKE_APPLICATION, "action listener invoked");
+        page.assertListener(PhaseId.INVOKE_APPLICATION, "action invoked");
+    }
+
     @Test(groups = "smoke")
     @CoversAttributes("data")
     public void testData() {
@@ -95,6 +105,9 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("disabled")
     public void testDisabled() {
+        // unselect tested item
+        guardAjax(page.getPanelMenu()).selectItem(0);
+
         assertFalse(page.getItem().advanced().isDisabled());
 
         panelMenuItemAttributes.set(disabled, true);
@@ -114,6 +127,15 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     public void testDisabledClass() {
         panelMenuItemAttributes.set(disabled, true);
         testStyleClass(page.getItem().advanced().getRootElement(), disabledClass);
+    }
+
+    @Test
+    @CoversAttributes("label")
+    @Templates(value = "plain")
+    public void testLabel() {
+        String testedVal = "completely new label";
+        panelMenuItemAttributes.set(PanelMenuItemAttributes.label, testedVal);
+        assertEquals(page.getItem().advanced().getRootElement().getText().trim(), testedVal);
     }
 
     @Test
@@ -152,6 +174,27 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
         MetamerPage.requestTimeNotChangesWaiting(page.getItem()).select();
         Graphene.waitModel().until("Page was not updated").element(page.getRenderCheckerOutputElement()).text().not()
             .equalTo(renderChecker);
+    }
+
+    @Test
+    @CoversAttributes("name")
+    @Templates(value = "plain")
+    public void testName() {
+        String testedVal = "itemWithNewName";
+        panelMenuItemAttributes.set(PanelMenuItemAttributes.name, testedVal);
+        guardAjax(page.getItem()).select();
+        assertEquals(page.getSelectedItemOutputText(), testedVal);
+    }
+
+    @Test
+    @CoversAttributes("render")
+    public void testRender() {
+        testRender(new Action() {
+            @Override
+            public void perform() {
+                guardAjax(page.getItem()).select();
+            }
+        });
     }
 
     @Test
@@ -196,14 +239,11 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("selectable")
     public void testSelectable() {
-        panelMenuItemAttributes.set(selectable, false);
-        page.getItem().select();
-        waitGui().until(new Predicate<WebDriver>() {
-            public boolean apply(WebDriver driver) {
-                return !page.getItem().advanced().isSelected();
-            }
-        });
+        // unselect tested item
+        guardAjax(page.getPanelMenu()).selectItem(0);
 
+        panelMenuItemAttributes.set(selectable, false);
+        guardNoRequest(page.getItem()).select();
         assertFalse(page.getItem().advanced().isSelected());
 
         panelMenuItemAttributes.set(selectable, true);
