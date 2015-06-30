@@ -46,6 +46,7 @@ import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -314,6 +315,8 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @Skip
+    @IssueTracking("https://issues.jboss.org/browse/RF-14076")
     @CoversAttributes("onbegin")
     @Templates(value = "plain")
     public void testOnbegin() {
@@ -466,6 +469,8 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
+    @Skip
+    @IssueTracking("https://issues.jboss.org/browse/RF-14076")
     @CoversAttributes("status")
     public void testStatus() {
         testStatus(switchToTabAction);
