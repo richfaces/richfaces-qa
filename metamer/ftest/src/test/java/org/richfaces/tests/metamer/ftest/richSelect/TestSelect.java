@@ -663,6 +663,13 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("tabindex")
+    @Templates(value = "plain")
+    public void testTabindex() {
+        testHTMLAttribute(select.advanced().getInput().advanced().getInputElement(), selectAttributes, SelectAttributes.tabindex, "100");
+    }
+
+    @Test
     @CoversAttributes("title")
     @Templates(value = "plain")
     public void testTitle() {
