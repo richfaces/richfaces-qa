@@ -21,6 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -525,5 +526,15 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
 
         assertEquals(inplaceInput.advanced().getLabelValue(), testedValue);
         assertEquals(inplaceInput.getTextInput().getStringValue(), testedValue);
+    }
+
+    @Test
+    @CoversAttributes("valueChangeListener")
+    public void testValueChangeListener() {
+        String value = "new value";
+        guardAjax(inplaceInput.type(value)).confirm();
+
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: RichFaces 4 -> " + value);
+        getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
     }
 }
