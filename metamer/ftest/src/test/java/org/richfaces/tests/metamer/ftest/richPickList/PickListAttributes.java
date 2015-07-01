@@ -28,7 +28,6 @@ public enum PickListAttributes implements AttributeEnum {
     addAllText,
     addText,
     binding,
-    caption,
     collectionType,
     columnClasses,
     converter,
