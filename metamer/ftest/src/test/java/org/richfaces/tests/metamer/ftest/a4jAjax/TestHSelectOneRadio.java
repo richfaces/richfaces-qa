@@ -40,6 +40,11 @@ public class TestHSelectOneRadio extends AbstractAjaxTest {
     private final Attributes<AjaxAttributes> ajaxAttributes = getAttributes();
 
     @Override
+    public String getComponentTestPagePath() {
+        return "a4jAjax/hSelectOneRadio.xhtml";
+    }
+
+    @Override
     public String getDefaultOutput() {
         return "Ferrari";
     }
@@ -50,17 +55,17 @@ public class TestHSelectOneRadio extends AbstractAjaxTest {
     }
 
     @Override
-    public String getComponentTestPagePath() {
-        return "a4jAjax/hSelectOneRadio.xhtml";
-    }
-
-    @Override
     public void performAction() {
         Graphene.guardAjax(page.getSelectOneRadioElement()).click();
     }
 
     @Override
     public void performAction(String input) {
+        performAction();
+    }
+
+    @Override
+    public void performSingleAjaxRequestAction() {
         performAction();
     }
 
@@ -109,6 +114,11 @@ public class TestHSelectOneRadio extends AbstractAjaxTest {
     @UseWithField(field = "listener", valuesFrom = ValuesFrom.FROM_ENUM, value = "")
     public void testListener() {
         super.testListener();
+    }
+
+    @Test
+    public void testOnerror() {
+        super.testOnerror();
     }
 
     @Test

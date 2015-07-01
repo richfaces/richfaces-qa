@@ -47,6 +47,11 @@ public class TestHCommandButton extends AbstractAjaxTest {
     private final Attributes<AjaxAttributes> ajaxAttributes = getAttributes();
 
     @Override
+    public String getComponentTestPagePath() {
+        return "a4jAjax/hCommandButton.xhtml";
+    }
+
+    @Override
     public String getDefaultOutput() {
         return "";
     }
@@ -54,11 +59,6 @@ public class TestHCommandButton extends AbstractAjaxTest {
     @Override
     public String getExpectedOutput() {
         return "RichFaces 4";
-    }
-
-    @Override
-    public String getComponentTestPagePath() {
-        return "a4jAjax/hCommandButton.xhtml";
     }
 
     @Override
@@ -70,6 +70,11 @@ public class TestHCommandButton extends AbstractAjaxTest {
         page.getInputElement().clear();
         page.getInputElement().sendKeys(input);
         Graphene.guardAjax(page.getButtonElement()).click();
+    }
+
+    @Override
+    public void performSingleAjaxRequestAction() {
+        performAction();
     }
 
     @Test
@@ -128,6 +133,11 @@ public class TestHCommandButton extends AbstractAjaxTest {
     @UseWithField(field = "listener", valuesFrom = ValuesFrom.FROM_ENUM, value = "")
     public void testListener() {
         super.testListener();
+    }
+
+    @Test
+    public void testOnerror() {
+        super.testOnerror();
     }
 
     @Test

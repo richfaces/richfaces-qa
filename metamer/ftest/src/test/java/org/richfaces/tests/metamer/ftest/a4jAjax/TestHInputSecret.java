@@ -37,6 +37,11 @@ import org.testng.annotations.Test;
 public class TestHInputSecret extends AbstractAjaxTest {
 
     @Override
+    public String getComponentTestPagePath() {
+        return "a4jAjax/hInputSecret.xhtml";
+    }
+
+    @Override
     public String getDefaultOutput() {
         return "";
     }
@@ -44,11 +49,6 @@ public class TestHInputSecret extends AbstractAjaxTest {
     @Override
     public String getExpectedOutput() {
         return "RichFaces 4";
-    }
-
-    @Override
-    public String getComponentTestPagePath() {
-        return "a4jAjax/hInputSecret.xhtml";
     }
 
     @Override
@@ -60,6 +60,11 @@ public class TestHInputSecret extends AbstractAjaxTest {
     public void performAction(String input) {
         page.getInputElement().clear();
         typeKeys(input);
+    }
+
+    @Override
+    public void performSingleAjaxRequestAction() {
+        performAction("1");
     }
 
     @Test
@@ -106,6 +111,11 @@ public class TestHInputSecret extends AbstractAjaxTest {
     @UseWithField(field = "listener", valuesFrom = ValuesFrom.FROM_ENUM, value = "")
     public void testListener() {
         super.testListener();
+    }
+
+    @Test
+    public void testOnerror() {
+        super.testOnerror();
     }
 
     @Test

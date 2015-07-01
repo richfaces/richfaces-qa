@@ -125,6 +125,8 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
 
     public abstract void performAction();
 
+    public abstract void performSingleAjaxRequestAction();
+
     @CoversAttributes({ "bypassUpdates", "listener" })
     public void testBypassUpdates() {
         ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
@@ -293,6 +295,17 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
     public void testListener() {
         ajaxAttributes.set(AjaxAttributes.listener, listener);
         getActionMapForListeners().get(listener).perform();
+    }
+
+    @CoversAttributes("onerror")
+    public void testOnerror() {
+        ajaxAttributes.set(AjaxAttributes.listener, causeErrorListener);
+        testFireEvent("onerror", new Action() {
+            @Override
+            public void perform() {
+                performSingleAjaxRequestAction();
+            }
+        });
     }
 
     @CoversAttributes("render")
