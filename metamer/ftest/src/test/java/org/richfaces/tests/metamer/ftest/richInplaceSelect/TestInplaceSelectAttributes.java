@@ -776,4 +776,13 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         inplaceSelectAttributes.set(InplaceSelectAttributes.value, "North Carolina");
         assertEquals(select.advanced().getLabelValue(), "North Carolina", "Label should contain selected value.");
     }
+
+    @Test
+    @CoversAttributes("valueChangeListener")
+    public void testValueChangeListener() {
+        guardAjax(select).select("Alaska");
+
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Alaska");
+        getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
+    }
 }
