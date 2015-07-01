@@ -42,7 +42,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             <a4j:commandButton id="button1" value="A4J Command Button" render="output1,output2" >
                 <a4j:param id="a4jParam1"
-                           assignTo="#{a4jParamBean.parameter}"
+                           assignTo="#{a4jParamBean.attributes['assignTo'].value}"
                            name="#{a4jParamBean.attributes['name'].value}"
                            noEscape="#{a4jParamBean.attributes['noEscape'].value}"
                            rendered="#{a4jParamBean.attributes['rendered'].value}"
@@ -52,7 +52,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             <h:commandButton id="button2" value="H Command Button">
                 <a4j:param id="a4jParam2"
-                           assignTo="#{a4jParamBean.parameter}"
+                           assignTo="#{a4jParamBean.attributes['assignTo'].value}"
                            name="#{a4jParamBean.attributes['name'].value}"
                            noEscape="#{a4jParamBean.attributes['noEscape'].value}"
                            rendered="#{a4jParamBean.attributes['rendered'].value}"
@@ -64,7 +64,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             <br/><br/>
 
-            output1: <a4j:outputPanel id="output1" layout="inline">#{a4jParamBean.parameter}</a4j:outputPanel>
+            output1: <a4j:outputPanel id="output1" layout="inline">#{a4jParamBean.attributes['assignTo'].value}</a4j:outputPanel>
             <br/>
             output2: <a4j:outputPanel id="output2" layout="inline">#{a4jParamBean.requestParameter}</a4j:outputPanel>
 
