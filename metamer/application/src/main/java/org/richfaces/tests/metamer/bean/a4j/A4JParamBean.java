@@ -47,7 +47,6 @@ public class A4JParamBean implements Serializable {
     private static final long serialVersionUID = -23993426776944L;
     private static Logger logger;
     private Attributes attributes;
-    private String parameter;
 
     /**
      * Initializes the managed bean.
@@ -59,6 +58,7 @@ public class A4JParamBean implements Serializable {
 
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIParameter.class, getClass());
 
+        attributes.setAttribute("assignTo", "");
         attributes.setAttribute("name", "param");
         attributes.setAttribute("noEscape", true);
         attributes.get("noEscape").setType(Boolean.class);
@@ -84,21 +84,13 @@ public class A4JParamBean implements Serializable {
         this.attributes = attributes;
     }
 
-    public String getParameter() {
-        return parameter;
-    }
-
-    public void setParameter(String parameter) {
-        this.parameter = parameter;
-    }
-
     public String getRequestParameter() {
         Map<String, String> requestParameterMap = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         return requestParameterMap.get(attributes.get("name").getValue().toString());
     }
 
     public String reset() {
-        parameter = null;
+        attributes.setAttribute("assignTo", "");
         return null;
     }
 }

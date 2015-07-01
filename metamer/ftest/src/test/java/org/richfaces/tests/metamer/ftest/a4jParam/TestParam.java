@@ -21,17 +21,16 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jParam;
 
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
+import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.testng.Assert.assertEquals;
 
-import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -44,8 +43,16 @@ public class TestParam extends AbstractWebDriverTest {
 
     private final Attributes<ParamAttributes> paramAttributes = getAttributes();
 
-    @Page
-    private SimpleParamPage page;
+    @FindBy(css = "input[id$=button1]")
+    private WebElement button1Element;
+    @FindBy(css = "input[id$=button2]")
+    private WebElement button2Element;
+    @FindBy(css = "input[id$=resetButton]")
+    private WebElement resetButtonElement;
+    @FindBy(css = "span[id$=output1]")
+    private WebElement output1Element;
+    @FindBy(css = "span[id$=output2]")
+    private WebElement output2Element;
 
     @Override
     public String getComponentTestPagePath() {
@@ -53,36 +60,34 @@ public class TestParam extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
-    public void testParameter() {
-        MetamerPage.waitRequest(page.getButton1Element(), WaitRequestType.XHR).click();
+    @CoversAttributes("assignTo")
+    public void testAssignTo() {
+        final String screenWidth = ((JavascriptExecutor) driver).executeScript("return screen.width").toString();
 
-        String screenWidth = ((JavascriptExecutor) driver).executeScript("return screen.width").toString();
+        guardAjax(button1Element).click();
+        assertEquals(output1Element.getText(), screenWidth, "Output 1 after clicking on first button.");
+        assertEquals(output2Element.getText(), screenWidth, "Output 2 after clicking on first button.");
 
-        assertEquals(page.getOutput1Element().getText(), screenWidth, "Output 1 after clicking on first button.");
-        assertEquals(page.getOutput2Element().getText(), screenWidth, "Output 2 after clicking on first button.");
+        guardAjax(resetButtonElement).click();
+        assertEquals(output1Element.getText(), "", "Output 1 after clicking on reset button.");
+        assertEquals(output2Element.getText(), "", "Output 2 after clicking on reset button.");
 
-        MetamerPage.waitRequest(page.getResetButtonElement(), WaitRequestType.XHR).click();
-
-        assertEquals(page.getOutput1Element().getText(), "", "Output 1 after clicking on reset button.");
-        assertEquals(page.getOutput2Element().getText(), "", "Output 2 after clicking on reset button.");
-
-        MetamerPage.waitRequest(page.getButton2Element(), WaitRequestType.HTTP).click();
-
-        assertEquals(page.getOutput1Element().getText(), "screen.width", "Output 1 after clicking on second button.");
-        assertEquals(page.getOutput2Element().getText(), "screen.width", "Output 2 after clicking on second button.");
+        guardHttp(button2Element).click();
+        assertEquals(output1Element.getText(), "screen.width", "Output 1 after clicking on second button.");
+        assertEquals(output2Element.getText(), "screen.width", "Output 2 after clicking on second button.");
     }
 
     @Test
     @CoversAttributes("name")
     public void testName() {
+        final String screenWidth = ((JavascriptExecutor) driver).executeScript("return screen.width").toString();
+
         paramAttributes.set(ParamAttributes.name, "metamer");
 
-        MetamerPage.waitRequest(page.getButton1Element(), WaitRequestType.XHR).click();
+        guardAjax(button1Element).click();
 
-        String screenWidth = ((JavascriptExecutor) driver).executeScript("return screen.width").toString();
-
-        assertEquals(page.getOutput1Element().getText(), screenWidth, "Output 1 after clicking on first button.");
-        assertEquals(page.getOutput2Element().getText(), screenWidth, "Output 2 after clicking on first button.");
+        assertEquals(output1Element.getText(), screenWidth, "Output 1 after clicking on first button.");
+        assertEquals(output2Element.getText(), screenWidth, "Output 2 after clicking on first button.");
     }
 
     @Test
@@ -90,10 +95,10 @@ public class TestParam extends AbstractWebDriverTest {
     public void testNoEscape() {
         paramAttributes.set(ParamAttributes.noEscape, false);
 
-        MetamerPage.waitRequest(page.getButton1Element(), WaitRequestType.XHR).click();
+        guardAjax(button1Element).click();
 
-        assertEquals(page.getOutput1Element().getText(), "screen.width", "Output 1 after clicking on first button.");
-        assertEquals(page.getOutput2Element().getText(), "screen.width", "Output 2 after clicking on first button.");
+        assertEquals(output1Element.getText(), "screen.width", "Output 1 after clicking on first button.");
+        assertEquals(output2Element.getText(), "screen.width", "Output 2 after clicking on first button.");
     }
 
     @Test
@@ -101,69 +106,19 @@ public class TestParam extends AbstractWebDriverTest {
     public void testValue() {
         paramAttributes.set(ParamAttributes.value, "4+5");
 
-        MetamerPage.waitRequest(page.getButton1Element(), WaitRequestType.XHR).click();
+        guardAjax(button1Element).click();
 
-        assertEquals(page.getOutput1Element().getText(), "9", "Output 1 after clicking on first button.");
-        assertEquals(page.getOutput2Element().getText(), "9", "Output 2 after clicking on first button.");
+        assertEquals(output1Element.getText(), "9", "Output 1 after clicking on first button.");
+        assertEquals(output2Element.getText(), "9", "Output 2 after clicking on first button.");
 
-        MetamerPage.waitRequest(page.getResetButtonElement(), WaitRequestType.XHR).click();
+        guardAjax(resetButtonElement).click();
 
-        assertEquals(page.getOutput1Element().getText(), "", "Output 1 after clicking on reset button.");
-        assertEquals(page.getOutput2Element().getText(), "", "Output 2 after clicking on reset button.");
+        assertEquals(output1Element.getText(), "", "Output 1 after clicking on reset button.");
+        assertEquals(output2Element.getText(), "", "Output 2 after clicking on reset button.");
 
-        MetamerPage.waitRequest(page.getButton2Element(), WaitRequestType.HTTP).click();
+        guardHttp(button2Element).click();
 
-        assertEquals(page.getOutput1Element().getText(), "4+5", "Output 1 after clicking on second button.");
-        assertEquals(page.getOutput2Element().getText(), "4+5", "Output 2 after clicking on second button.");
-    }
-
-    public class SimpleParamPage extends MetamerPage {
-
-        @FindBy(css = "input[id$=button1]")
-        private WebElement button1Element;
-        @FindBy(css = "input[id$=button2]")
-        private WebElement button2Element;
-        @FindBy(css = "input[id$=resetButton]")
-        private WebElement resetButtonElement;
-        @FindBy(css = "span[id$=output1]")
-        private WebElement output1Element;
-        @FindBy(css = "span[id$=output2]")
-        private WebElement output2Element;
-
-        /**
-         * @return the button1Element
-         */
-        public WebElement getButton1Element() {
-            return button1Element;
-        }
-
-        /**
-         * @return the button2Element
-         */
-        public WebElement getButton2Element() {
-            return button2Element;
-        }
-
-        /**
-         * @return the output1Element
-         */
-        public WebElement getOutput1Element() {
-            return output1Element;
-        }
-
-        /**
-         * @return the output2Element
-         */
-        public WebElement getOutput2Element() {
-            return output2Element;
-        }
-
-        /**
-         * @return the resetButtonElement
-         */
-        public WebElement getResetButtonElement() {
-            return resetButtonElement;
-        }
-
+        assertEquals(output1Element.getText(), "4+5", "Output 1 after clicking on second button.");
+        assertEquals(output2Element.getText(), "4+5", "Output 2 after clicking on second button.");
     }
 }
