@@ -41,6 +41,7 @@ import org.richfaces.fragment.inplaceInput.InplaceComponentState;
 import org.richfaces.fragment.inplaceInput.RichFacesInplaceInput;
 import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -169,11 +170,11 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     }
 
     @Test
-    @CoversAttributes("disabled")
+    @CoversAttributes("disabledClass")
     @Templates(value = "plain")
     public void testDisabledClass() {
         inplaceInputAttributes.set(InplaceInputAttributes.disabled, Boolean.TRUE);
-        testStyleClass(inplaceInput.advanced().getRootElement());
+        testStyleClass(inplaceInput.advanced().getRootElement(), BasicAttributes.disabledClass);
     }
 
     @Test
