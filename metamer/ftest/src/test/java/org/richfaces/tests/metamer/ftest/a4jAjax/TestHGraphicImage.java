@@ -45,6 +45,11 @@ public class TestHGraphicImage extends AbstractAjaxTest {
     private final Attributes<AjaxAttributes> ajaxAttributes = getAttributes();
 
     @Override
+    public String getComponentTestPagePath() {
+        return "a4jAjax/hGraphicImage.xhtml";
+    }
+
+    @Override
     public String getDefaultOutput() {
         return "";
     }
@@ -52,11 +57,6 @@ public class TestHGraphicImage extends AbstractAjaxTest {
     @Override
     public String getExpectedOutput() {
         return "RichFaces 4";
-    }
-
-    @Override
-    public String getComponentTestPagePath() {
-        return "a4jAjax/hGraphicImage.xhtml";
     }
 
     @Override
@@ -69,6 +69,11 @@ public class TestHGraphicImage extends AbstractAjaxTest {
         page.getInputElement().clear();
         page.getInputElement().sendKeys(input);
         Graphene.guardAjax(page.getImageElement()).click();
+    }
+
+    @Override
+    public void performSingleAjaxRequestAction() {
+        performAction();
     }
 
     @Test
@@ -116,6 +121,11 @@ public class TestHGraphicImage extends AbstractAjaxTest {
     @UseWithField(field = "listener", valuesFrom = ValuesFrom.FROM_ENUM, value = "")
     public void testListener() {
         super.testListener();
+    }
+
+    @Test
+    public void testOnerror() {
+        super.testOnerror();
     }
 
     @Test

@@ -40,6 +40,11 @@ public class TestHSelectManyListbox extends AbstractAjaxTest {
     private final Attributes<AjaxAttributes> ajaxAttributes = getAttributes();
 
     @Override
+    public String getComponentTestPagePath() {
+        return "a4jAjax/hSelectManyListbox.xhtml";
+    }
+
+    @Override
     public String getDefaultOutput() {
         return "[Ferrari, Lexus]";
     }
@@ -50,11 +55,6 @@ public class TestHSelectManyListbox extends AbstractAjaxTest {
     }
 
     @Override
-    public String getComponentTestPagePath() {
-        return "a4jAjax/hSelectManyListbox.xhtml";
-    }
-
-    @Override
     public void performAction() {
         performAction("Audi");
     }
@@ -62,6 +62,11 @@ public class TestHSelectManyListbox extends AbstractAjaxTest {
     @Override
     public void performAction(String input) {
         Graphene.guardAjax(page.getSelectManyListbox()).selectByValue(input);
+    }
+
+    @Override
+    public void performSingleAjaxRequestAction() {
+        performAction();
     }
 
     @Test
@@ -109,6 +114,11 @@ public class TestHSelectManyListbox extends AbstractAjaxTest {
     @UseWithField(field = "listener", valuesFrom = ValuesFrom.FROM_ENUM, value = "")
     public void testListener() {
         super.testListener();
+    }
+
+    @Test
+    public void testOnerror() {
+        super.testOnerror();
     }
 
     @Test

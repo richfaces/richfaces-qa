@@ -48,6 +48,11 @@ public class TestHCommandLink extends AbstractAjaxTest {
     private final Attributes<AjaxAttributes> ajaxAttributes = getAttributes();
 
     @Override
+    public String getComponentTestPagePath() {
+        return "a4jAjax/hCommandLink.xhtml";
+    }
+
+    @Override
     public String getDefaultOutput() {
         return "";
     }
@@ -55,11 +60,6 @@ public class TestHCommandLink extends AbstractAjaxTest {
     @Override
     public String getExpectedOutput() {
         return "RichFaces 4";
-    }
-
-    @Override
-    public String getComponentTestPagePath() {
-        return "a4jAjax/hCommandLink.xhtml";
     }
 
     @Override
@@ -72,6 +72,11 @@ public class TestHCommandLink extends AbstractAjaxTest {
     @Override
     public void performAction() {
         performAction("RichFaces 4");
+    }
+
+    @Override
+    public void performSingleAjaxRequestAction() {
+        performAction();
     }
 
     @Test
@@ -131,6 +136,11 @@ public class TestHCommandLink extends AbstractAjaxTest {
     @UseWithField(field = "listener", valuesFrom = ValuesFrom.FROM_ENUM, value = "")
     public void testListener() {
         super.testListener();
+    }
+
+    @Test
+    public void testOnerror() {
+        super.testOnerror();
     }
 
     @Test
