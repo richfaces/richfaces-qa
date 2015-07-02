@@ -28,6 +28,8 @@ import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.richfaces.fragment.tabPanel.RichFacesTabPanel;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -77,10 +79,10 @@ public class TestJSF22FlowScopedAnnotation extends AbstractWebDriverTest {
 
     @Test
     @Templates(value = "plain")
-    // TODO add annotation to run with JSF 2.2+ ONLY
+    @Skip(On.JSF.VersionLowerThan22.class)
     public void testFlowScopedAnnotation() {
 
-        // verify that first page is index page
+        // verify that you are on the first page
         assertTrue(startingPageButton.isDisplayed());
 
         // start the flow

@@ -21,6 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.extension.configurator.skip;
 
+import org.richfaces.tests.metamer.ftest.extension.utils.JSFDetectionUtils;
+
 /**
  * For examples see javadoc of {@link org.richfaces.tests.metamer.ftest.extension.configurator.skip.SkipConfigurator SkipConfigurator}.
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -222,7 +224,7 @@ public class On {
 
             @Override
             public boolean apply() {
-                return !systemPropertyIsContaing("metamer.classifier", "", "myfaces");
+                return JSFDetectionUtils.isMojarra();
             }
         }
 
@@ -234,7 +236,19 @@ public class On {
 
             @Override
             public boolean apply() {
-                return systemPropertyIsContaing("metamer.classifier", "", "myfaces");
+                return JSFDetectionUtils.isMyFaces();
+            }
+        }
+
+        /**
+         * Skip tests when version of JSF is < 2.2.x
+         *
+         */
+        public static class VersionLowerThan22 implements SkipOn {
+
+            @Override
+            public boolean apply() {
+                return JSFDetectionUtils.isVersionLowerThan22();
             }
         }
     }
