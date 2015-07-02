@@ -365,6 +365,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("mode")// ajax
     public void testProgress() {
         testOneRunOfProgressBar(page.getStartButtonElement(), 2000);
         testOneRunOfProgressBar(page.getRestartButtonElement(), 2000);

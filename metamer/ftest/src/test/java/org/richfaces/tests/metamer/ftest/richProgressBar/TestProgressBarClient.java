@@ -102,6 +102,7 @@ public class TestProgressBarClient extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("mode")// client
     public void testProgress() throws ParseException {
         testOneRunOfProgressBar(2000);
     }
