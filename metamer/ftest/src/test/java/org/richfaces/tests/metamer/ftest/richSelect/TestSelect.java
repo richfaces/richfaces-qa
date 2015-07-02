@@ -684,6 +684,14 @@ public class TestSelect extends AbstractWebDriverTest {
         assertEquals(select.advanced().getInput().getStringValue(), "North Carolina", "Input should contain selected value.");
     }
 
+    @Test
+    @CoversAttributes("valueChangeListener")
+    public void testValueChangeListener() {
+        selectHawaiiGuardedAction.perform();
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Hawaii");
+        getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
+    }
+
     class SelectSettings {
 
         private final int possitionInFilteredList;
