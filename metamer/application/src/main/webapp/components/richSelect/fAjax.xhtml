@@ -87,7 +87,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                       tabindex="#{richSelectBean.attributes['tabindex'].value}"
                       title="#{richSelectBean.attributes['title'].value}"
                       value="#{richSelectBean.attributes['value'].value}"
-                      valueChangeListener="#{richSelectBean.listener}">
+                      valueChangeListener="#{richBean.valueChangeListener}">
 
                 <f:selectItems value="#{richSelectBean.capitalsOptions}" />
                 <f:ajax event="change" render="output :phasesPanel"/>

@@ -98,7 +98,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                       styleClass="#{richSelectBean.attributes['styleClass'].value}"
                       tabindex="#{richSelectBean.attributes['tabindex'].value}"
                       title="#{richSelectBean.attributes['title'].value}"
-                      valueChangeListener="#{richSelectBean.listener}">
+                      valueChangeListener="#{richBean.valueChangeListener}">
 
                 <f:ajax event="change" execute="@form" render="output"/>
                 <f:converter converterId="capitalConverterSelect" />

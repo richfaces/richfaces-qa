@@ -32,12 +32,10 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import org.richfaces.component.UISelect;
 import org.richfaces.tests.metamer.Attributes;
-import org.richfaces.tests.metamer.bean.RichBean;
 import org.richfaces.tests.metamer.bean.abstractions.SelectValidationBean;
 import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBean;
 import org.richfaces.tests.metamer.model.Capital;
@@ -143,9 +141,5 @@ public class RichSelectBean extends SelectValidationBean implements Serializable
             }
         });
         return suggestions;
-    }
-
-    public void listener(ValueChangeEvent event) {
-        RichBean.logToPage("* value changed: " + event.getOldValue() + " -> " + event.getNewValue());
     }
 }
