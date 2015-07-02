@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.ftest.richOrderingList;
 import static org.testng.Assert.assertEquals;
 
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.Test;
 
 /**
@@ -69,6 +70,7 @@ public class TestOrderingList extends AbstractOrderingListTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes({ "itemLabel", "itemValue" })
     public void testSubmit() {
         String firstBefore = orderingList.advanced().getItemsElements().get(0).getText();
         String thirdBefore = orderingList.advanced().getItemsElements().get(2).getText();
