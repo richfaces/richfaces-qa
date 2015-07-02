@@ -109,6 +109,7 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("mode")// static
     public void testInitialFacet() {
         assertPresent(page.getProgressBarElement(), "Progress bar is not present on the page.");
         assertVisible(page.getProgressBarElement(), "Progress bar should be visible on the page.");
