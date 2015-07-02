@@ -44,7 +44,7 @@ public class TestOrderingListValidator extends AbstractOrderingListTest {
     }
 
     @Test
-    @CoversAttributes("validatorMessage")
+    @CoversAttributes({ "validator", "validatorMessage" })
     public void testValidatorMessage() {
         String customMessage = "Phoenix first!";
         submit();
