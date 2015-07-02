@@ -71,6 +71,18 @@ public class TestMenuItem extends AbstractWebDriverTest {
     @FindByJQuery(value = ".rf-ddm-lbl-dec:eq(0)")
     private WebElement target1;
 
+    private final Action openMenuAndClickOnTheMenuItemAction = new Action() {
+        @Override
+        public void perform() {
+            openMenuAndClickOnTheItem();
+        }
+    };
+
+    @Override
+    public String getComponentTestPagePath() {
+        return "richMenuItem/simple.xhtml";
+    }
+
     private void openMenu() {
         fileDropDownMenu.advanced().show(target1);
         Graphene.waitGui().until().element(fileMenuLabel).is().visible();
@@ -83,16 +95,6 @@ public class TestMenuItem extends AbstractWebDriverTest {
     private void openMenuAndClickOnTheItem(WaitRequestType type) {
         openMenu();
         MetamerPage.waitRequest(menuItem1, type).click();
-    }
-
-    @BeforeMethod(groups = "smoke")
-    private void updateDropDownMenuInvoker() {
-        fileDropDownMenu.advanced().setShowEvent(Event.MOUSEOVER);
-    }
-
-    @Override
-    public String getComponentTestPagePath() {
-        return "richMenuItem/simple.xhtml";
     }
 
     @Test
@@ -124,12 +126,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("data")
     public void testData() {
-        testData(new Action() {
-            @Override
-            public void perform() {
-                openMenuAndClickOnTheItem();
-            }
-        });
+        testData(openMenuAndClickOnTheMenuItemAction);
     }
 
     @Test
@@ -269,23 +266,13 @@ public class TestMenuItem extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("onbeforedomupdate")
     public void testOnbeforedomupdate() {
-        testFireEvent("beforedomupdate", new Action() {
-            @Override
-            public void perform() {
-                openMenuAndClickOnTheItem();
-            }
-        });
+        testFireEvent("beforedomupdate", openMenuAndClickOnTheMenuItemAction);
     }
 
     @Test
     @CoversAttributes("onbegin")
     public void testOnbegin() {
-        testFireEvent("begin", new Action() {
-            @Override
-            public void perform() {
-                openMenuAndClickOnTheItem();
-            }
-        });
+        testFireEvent("begin", openMenuAndClickOnTheMenuItemAction);
     }
 
     @Test
@@ -298,12 +285,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("oncomplete")
     public void testOncomplete() {
-        testFireEvent("complete", new Action() {
-            @Override
-            public void perform() {
-                openMenuAndClickOnTheItem();
-            }
-        });
+        testFireEvent("complete", openMenuAndClickOnTheMenuItemAction);
     }
 
     @Test
@@ -370,6 +352,12 @@ public class TestMenuItem extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("render")
+    public void testRender() {
+        testRender(openMenuAndClickOnTheMenuItemAction);
+    }
+
+    @Test
     @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
@@ -380,12 +368,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("status")
     public void testStatus() {
-        testStatus(new Action() {
-            @Override
-            public void perform() {
-                openMenuAndClickOnTheItem();
-            }
-        });
+        testStatus(openMenuAndClickOnTheMenuItemAction);
     }
 
     @Test
@@ -407,5 +390,10 @@ public class TestMenuItem extends AbstractWebDriverTest {
     @Templates("plain")
     public void testTitle() {
         testTitle(menuItem1);
+    }
+
+    @BeforeMethod(groups = "smoke")
+    private void updateDropDownMenuInvoker() {
+        fileDropDownMenu.advanced().setShowEvent(Event.MOUSEOVER);
     }
 }
