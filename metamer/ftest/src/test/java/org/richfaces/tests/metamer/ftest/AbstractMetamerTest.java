@@ -103,24 +103,29 @@ public abstract class AbstractMetamerTest extends Arquillian {
             enableResourceOptimization(war);
         }
 
-        if (isUsingEAP()) {
-            workaroundCLIVersionInEAP63And64();
-        }
+        // advanced features, tested only with browser profile
+        if (isUsingBrowserProfile()) {
+            // workaround to enable running commands through JBoss CLI in EAP 6.3 and up
+            if (isUsingEAP()) {
+                workaroundCLIVersionInEAP63And64();
+            }
 
-        // undeploy all metamer WARs if using a JBoss container
-        if (isUsingJBossContainer()) {
-            runCLICommand("undeploy *metamer*");
-        }
+            // undeploy all metamer WARs if using a JBoss container
+            if (isUsingJBossContainer()) {
+                runCLICommand("undeploy *metamer*");
+            }
 
-        if (isUsingEAP63AndUp()) {
-            if (Boolean.getBoolean(EAP_WS_ENABLED)) {
-                try {
-                    System.out.println("### Enabling WebSockets in EAP ###");
-                    enableWebSocketsInEAP63AndUp(war);
-                    System.out.println("### Enabling of WebSockets in EAP was successful ###");
-                } catch (Throwable t) {
-                    t.printStackTrace(System.err);
-                    System.out.println("### Enabling of WebSockets in EAP was NOT successful ###");
+            // enable WS in EAP 6.3 and up
+            if (isUsingEAP63AndUp()) {
+                if (Boolean.getBoolean(EAP_WS_ENABLED)) {
+                    try {
+                        System.out.println("### Enabling WebSockets in EAP ###");
+                        enableWebSocketsInEAP63AndUp(war);
+                        System.out.println("### Enabling of WebSockets in EAP was successful ###");
+                    } catch (Throwable t) {
+                        t.printStackTrace(System.err);
+                        System.out.println("### Enabling of WebSockets in EAP was NOT successful ###");
+                    }
                 }
             }
         }
@@ -165,6 +170,9 @@ public abstract class AbstractMetamerTest extends Arquillian {
         war.setWebXML(new StringAsset(webXmlDefault.exportAsString()));
     }
 
+    /**
+     * Runs a command through JBoss CLI for enabling WebSockets and restarting the server.
+     */
     private static void enableWSInJBossCLI() throws IllegalStateException {
         runCLICommand(
             "/subsystem=web/connector=http/:write-attribute(name=protocol,value=org.apache.coyote.http11.Http11NioProtocol)",
@@ -174,6 +182,10 @@ public abstract class AbstractMetamerTest extends Arquillian {
     private static void enableWebSocketsInEAP63AndUp(WebArchive war) {
         modifyJBossWebXMLToUseWS(war);
         enableWSInJBossCLI();
+    }
+
+    private static boolean isUsingBrowserProfile() {
+        return activatedMavenProfiles.contains("browser");
     }
 
     private static boolean isUsingEAP() {
@@ -192,6 +204,9 @@ public abstract class AbstractMetamerTest extends Arquillian {
         return activatedMavenProfiles.contains("wildfly");
     }
 
+    /**
+     * Replaces jboss-web.xml in the final WAR with a version with enabled WebSockets.
+     */
     private static void modifyJBossWebXMLToUseWS(WebArchive war) throws IllegalArgumentException {
         File file = null;
         try {
@@ -202,6 +217,9 @@ public abstract class AbstractMetamerTest extends Arquillian {
         war.addAsWebInfResource(file);
     }
 
+    /**
+     * Runs a command through JBoss CLI.
+     */
     private static void runCLICommand(String... commands) throws IllegalStateException {
         final CommandContext ctx;
         try {
@@ -227,6 +245,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
     }
 
     /**
+     * Workaround works only for container placed in project's target directory.
      * Workaround the exception during parsing the jboss-cli.xml. Change the urn:jboss:cli:1.3 to *1.2
      */
     private static void workaroundCLIVersionInEAP63And64() throws URISyntaxException, IOException {
