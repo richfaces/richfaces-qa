@@ -105,7 +105,7 @@ public class TestHInputTextarea extends AbstractAjaxTest {
     @Test
     @UseWithField(field = "listener", valuesFrom = ValuesFrom.FROM_ENUM, value = "")
     public void testListener() {
-        testListener(getActionMapForListeners());
+        super.testListener();
     }
 
     @Test

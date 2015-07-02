@@ -290,14 +290,9 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
     }
 
     @CoversAttributes("listener")
-    public void testListener(EnumMap<Listener, Action> changeValueAndCheckActionsMap) {
-        ajaxAttributes.set(AjaxAttributes.listener, listener);
-        changeValueAndCheckActionsMap.get(listener).perform();
-    }
-
-    @CoversAttributes("listener")
     public void testListener() {
-        testListener(getActionMapForListeners());
+        ajaxAttributes.set(AjaxAttributes.listener, listener);
+        getActionMapForListeners().get(listener).perform();
     }
 
     @CoversAttributes("render")
