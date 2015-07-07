@@ -21,7 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jQueue;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -40,14 +42,35 @@ public class TestQueueAttributes extends AbstractWebDriverTest {
 
     private final Attributes<QueueAttributes> attributes = getAttributes();
 
+    private final Action guardedClickActionButtonAction = new Action() {
+        @Override
+        public void perform() {
+            Graphene.guardAjax(actionButton).click();
+        }
+    };
+
     @Override
     public String getComponentTestPagePath() {
         return "a4jQueue/globalQueue.xhtml";
     }
 
     @Test
-    @CoversAttributes("status")
-    @RegressionTest("https://issues.jboss.org/browse/RF-13203")
+    @CoversAttributes("onrequestdequeue")
+    public void testOnrequestdequeue() {
+        attributes.set(QueueAttributes.requestDelay, 0);
+        testFireEvent("onrequestdequeue", guardedClickActionButtonAction);
+    }
+
+    @Test
+    @CoversAttributes(value = "onrequestqueue")
+    public void testOnrequestqueue() {
+        attributes.set(QueueAttributes.requestDelay, 0);
+        testFireEvent("onrequestqueue", guardedClickActionButtonAction);
+    }
+
+    @Test
+    @CoversAttributes(value = "status")
+    @RegressionTest(value = "https://issues.jboss.org/browse/RF-13203")
     public void testStatus() {
         attributes.set(QueueAttributes.requestDelay, 0);
         testStatus(new Actions(driver).click(actionButton).build());
