@@ -116,6 +116,7 @@ public class TestActionListener extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("FOR")
     @IssueTracking("https://issues.jboss.org/browse/RF-10585")
     @Skip(On.JSF.MyFaces.class)
     public void testInvokeListenerMethodCC() {
