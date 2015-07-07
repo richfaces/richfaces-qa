@@ -818,10 +818,18 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
-    @CoversAttributes("oninputmouseup")
+    @CoversAttributes("oninputselect")
     public void testOninputselect() {
-        testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseup,
-            new Actions(driver).click(popupCalendar.getInput().advanced().getInputElement()).build());
+        setCurrentDateWithCalendarsTodayButtonAction.perform();
+        WebElement inputElement = popupCalendar.getInput().advanced().getInputElement();
+        final int width = Utils.getLocations(inputElement).getWidth();
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputselect, new Actions(driver)
+            .moveToElement(inputElement, 3, 3)
+            .clickAndHold()
+            .moveByOffset(width - 5, 0)
+            .release()
+            .build()
+        );
     }
 
     @Test
