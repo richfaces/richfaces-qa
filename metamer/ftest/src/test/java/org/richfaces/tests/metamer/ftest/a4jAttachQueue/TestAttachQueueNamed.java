@@ -30,6 +30,7 @@ import org.richfaces.tests.metamer.ftest.a4jQueue.QueueAttributes;
 import org.richfaces.tests.metamer.ftest.a4jQueue.QueueFragment;
 import org.richfaces.tests.metamer.ftest.a4jQueue.QueueFragment.Input;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.MultipleCoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -54,7 +55,10 @@ public class TestAttachQueueNamed extends AbstractWebDriverTest {
      * Tests that queue is referenced by name from attachQueues by watching their requestDelay.
      */
     @Test
-    @CoversAttributes("name")
+    @MultipleCoversAttributes({
+        @CoversAttributes("name"),
+        @CoversAttributes(value = "name", attributeEnumClass = QueueAttributes.class)
+    })
     public void testNameReferencing() {
         queueAttributes.set(requestDelay, TESTED_DELAY);
 
