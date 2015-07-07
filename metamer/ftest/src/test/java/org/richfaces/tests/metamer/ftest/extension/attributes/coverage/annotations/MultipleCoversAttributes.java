@@ -27,7 +27,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
 /**
  * Used for marking of all tested attributes in test method.
@@ -37,18 +36,10 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  */
 @Target({ METHOD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface CoversAttributes {
+public @interface MultipleCoversAttributes {
 
     /**
-     * Specify attribute(s) covered by this test.
+     * Specify covered attributes using multiple CoversAttributes.
      */
-    String[] value();
-
-    /**
-     * Specify AttributeEnum class or it will be automatically detected from actual test package.
-     */
-    Class<? extends AttributeEnum> attributeEnumClass() default DetectFromPackage.class;
-
-    public static final class DetectFromPackage implements AttributeEnum {
-    }
+    CoversAttributes[] value();
 }

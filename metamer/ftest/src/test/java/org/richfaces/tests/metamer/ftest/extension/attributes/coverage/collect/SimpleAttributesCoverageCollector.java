@@ -31,7 +31,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes.DetectFromPackage;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.MultipleCoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.finder.ClassFinder;
 import org.richfaces.tests.metamer.ftest.extension.finder.MethodFinder;
 import org.richfaces.tests.metamer.ftest.extension.finder.SimpleClassFinder;
@@ -76,11 +79,15 @@ public class SimpleAttributesCoverageCollector implements AttributesCoverageColl
     }
 
     private void collect(Method original, Method parentMethod) {
-        if (!checkedMethods.contains(original)) {
-            CoversAttributes annotation = parentMethod.getAnnotation(CoversAttributes.class);
-            if (annotation != null) {
+        if (!checkedMethods.contains(original)) {// already resolved same method?
+            CoversAttributes coversAnnotation = parentMethod.getAnnotation(CoversAttributes.class);
+            MultipleCoversAttributes coversMultipleAnnotations = parentMethod.getAnnotation(MultipleCoversAttributes.class);
+            if (coversAnnotation != null) {
                 checkedMethods.add(original);
-                handleCoversAttribute(annotation, original);
+                handleCoversAttribute(coversAnnotation, original);
+            } else if (coversMultipleAnnotations != null) {
+                checkedMethods.add(original);
+                handleMultipleCoversAttribute(coversMultipleAnnotations, original);
             } else {
                 // try to scan for annotations in parent classes for methods with same name as this @Test method
                 for (Method methodInParent : parentMethod.getDeclaringClass().getSuperclass().getDeclaredMethods()) {
@@ -99,18 +106,28 @@ public class SimpleAttributesCoverageCollector implements AttributesCoverageColl
         }
     }
 
-    private Class<? extends Enum> getEnumClassFromMethod(Method m) {
+    @SuppressWarnings("unchecked")
+    private Class<? extends Enum> getEnumClassFromAnnotationOrMethodPackage(CoversAttributes annotation, Method m) {
+        // check if the annotation contains attributes enum class
+        if (annotation != null) {
+            Class<? extends AttributeEnum> attributeClass = annotation.attributeEnumClass();
+            if (!attributeClass.equals(DetectFromPackage.class)) {
+                return (Class<? extends Enum>) attributeClass;
+            }
+        }
+
         Package aPackage = m.getDeclaringClass().getPackage();
         String packageName = aPackage.getName();
 
+        // already in cache?
         if (pkgClassMap.containsKey(aPackage)) {
             return pkgClassMap.get(aPackage);
         }
 
         String expectedFQN = getEnumFQNFromPackageName(packageName);
 
-        // do not scan for enum in abstract test superclass of multiple components, e.g. AbstractValidationMessagesTest
         Class<? extends Enum> result;
+        // scan only in a4j.* or rich.* subpackages, do not scan for enum in abstract test superclass of multiple components, e.g. AbstractValidationMessagesTest
         if (expectedFQN.startsWith(A4J_COMPONENT_TEST_PACKAGE) || expectedFQN.startsWith(RICH_COMPONENT_TEST_PACKAGE)) {
             try {
                 result = (Class<? extends Enum>) Class.forName(expectedFQN);
@@ -128,7 +145,7 @@ public class SimpleAttributesCoverageCollector implements AttributesCoverageColl
      * Adds covered attribute(s) to the inner map
      */
     private void handleCoversAttribute(CoversAttributes annotation, Method original) {
-        Class<? extends Enum> attributeClass = getEnumClassFromMethod(original);
+        Class<? extends Enum> attributeClass = getEnumClassFromAnnotationOrMethodPackage(annotation, original);
         if (attributeClass != null) {
             EnumSet set;
             if (map.containsKey(attributeClass)) {
@@ -146,6 +163,12 @@ public class SimpleAttributesCoverageCollector implements AttributesCoverageColl
                 }
             }
             map.put(attributeClass, set);
+        }
+    }
+
+    private void handleMultipleCoversAttribute(MultipleCoversAttributes annotation, Method original) {
+        for (CoversAttributes value : annotation.value()) {
+            handleCoversAttribute(value, original);
         }
     }
 }
