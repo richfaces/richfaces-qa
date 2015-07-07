@@ -29,6 +29,7 @@ import java.util.regex.Pattern;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -37,8 +38,10 @@ import org.openqa.selenium.support.FindBy;
  */
 public class SimplePage {
 
-    private Map<Integer, String> texts = new HashMap<Integer, String>();
+    private final Map<Integer, String> cachedTexts = new HashMap<Integer, String>(20);
 
+    @FindBy(css = "[id$='dataScroller']")
+    private RichFacesDataScroller dataScroller;
     @FindBy(css = "#list li")
     private List<WebElement> rowsElements;
     @FindBy(css = "span.statuses")
@@ -48,16 +51,39 @@ public class SimplePage {
         return Integer.valueOf(getValue("begin", position));
     }
 
+    /**
+     * @return the texts
+     */
+    public Map<Integer, String> getCachedTexts() {
+        return cachedTexts;
+    }
+
+    public int getCount(int position) {
+        return Integer.valueOf(getValue("count", position));
+    }
+
+    public RichFacesDataScroller getDataScroller() {
+        return dataScroller;
+    }
+
     public int getEnd(int position) {
         return Integer.valueOf(getValue("end", position));
+    }
+
+    public int getFirstRowFromStateVar(int position) {
+        return Integer.valueOf(getValue("firstRowFromStateVar", position));
     }
 
     public int getIndex(int position) {
         return Integer.valueOf(getValue("index", position));
     }
 
-    public int getCount(int position) {
-        return Integer.valueOf(getValue("count", position));
+    public int getRowCount(int position) {
+        return Integer.valueOf(getValue("rowCount", position));
+    }
+
+    public int getRowKeyVar(int position) {
+        return Integer.valueOf(getValue("rowKeyVar", position));
     }
 
     /**
@@ -74,11 +100,19 @@ public class SimplePage {
         return statusesElements;
     }
 
-    /**
-     * @return the texts
-     */
-    public Map<Integer, String> getTexts() {
-        return texts;
+    private String getValue(String name, int position) {
+        String obtained;
+        if (getCachedTexts().containsKey(position)) {
+            obtained = getCachedTexts().get(position);
+        } else {
+            obtained = getStatusesElements().get(position).getText();
+            getCachedTexts().put(position, obtained);
+        }
+        return parseValue(name, obtained);
+    }
+
+    public boolean isEven(int position) {
+        return Boolean.valueOf(getValue("even", position));
     }
 
     public boolean isFirst(int position) {
@@ -89,25 +123,6 @@ public class SimplePage {
         return Boolean.valueOf(getValue("last", position));
     }
 
-    public boolean isEven(int position) {
-        return Boolean.valueOf(getValue("even", position));
-    }
-
-    public int getRowCount(int position) {
-        return Integer.valueOf(getValue("rowCount", position));
-    }
-
-    private String getValue(String name, int position) {
-        String obtained;
-        if (getTexts().containsKey(position)) {
-            obtained = getTexts().get(position);
-        } else {
-            obtained = getStatusesElements().get(position).getText();
-            getTexts().put(position, obtained);
-        }
-        return parseValue(name, obtained);
-    }
-
     private String parseValue(String name, String text) {
         Pattern pattern = Pattern.compile(String.format("(?:^|.* )%s=([^,]+)(?:,.*|$)", name));
         Matcher matcher = pattern.matcher(text);
@@ -115,5 +130,9 @@ public class SimplePage {
             throw new IllegalArgumentException(String.format("the text '%s' cannot be parsed", text));
         }
         return matcher.group(1);
+    }
+
+    public void resetCachedTexts() {
+        getCachedTexts().clear();
     }
 }
