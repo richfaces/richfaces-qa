@@ -382,4 +382,22 @@ public class TestAccordion extends AbstractWebDriverTest {
         }
     }
 
+    @Test
+    @CoversAttributes("title")
+    @Templates(value = "plain")
+    public void testTitle() {
+        testHTMLAttribute(page.getAccordionRootElement(), accordionAttributes, AccordionAttributes.title, "new title");
+    }
+
+    @Test
+    @CoversAttributes("width")
+    @Templates(value = "plain")
+    public void testWidth() {
+        String width = "400px";
+        accordionAttributes.set(AccordionAttributes.width, width);
+        assertEquals(page.getAccordionRootElement().getCssValue("width"), width);
+        width = "150px";
+        accordionAttributes.set(AccordionAttributes.width, width);
+        assertEquals(page.getAccordionRootElement().getCssValue("width"), width);
+    }
 }
