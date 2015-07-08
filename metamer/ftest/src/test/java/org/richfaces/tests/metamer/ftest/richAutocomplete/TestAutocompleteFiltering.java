@@ -46,7 +46,7 @@ public class TestAutocompleteFiltering extends AbstractAutocompleteTest {
     }
 
     @Test
-    @CoversAttributes("clientFilterFunction")
+    @CoversAttributes({ "autocompleteList", "clientFilterFunction" })
     public void testClientFilterFunction() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
         autocompleteAttributes.set(AutocompleteAttributes.clientFilterFunction, CLIENT_FILTER_FUNCTION_NAME);

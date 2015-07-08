@@ -63,7 +63,7 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
     }
 
     @Test(groups = "smoke")
-    @CoversAttributes({ "autofill", "selectFirst" })
+    @CoversAttributes({ "autocompleteMethod", "autofill", "selectFirst" })
     @RegressionTest("https://issues.jboss.org/browse/RF-11323")
     public void testTypePrefixDeleteAll_typePrefixConfirm() {
         Graphene.guardAjax(autocomplete).type("ala");
