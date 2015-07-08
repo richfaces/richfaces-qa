@@ -25,7 +25,9 @@ import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.MultipleCoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
+import org.richfaces.tests.metamer.ftest.richColumn.ColumnAttributes;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SortingDT;
 import org.testng.annotations.Test;
 
@@ -48,7 +50,10 @@ public class TestDataTableSortingUsingColumn extends DataTableSortingTest {
     }
 
     @Test
-    @CoversAttributes("sortMode")
+    @MultipleCoversAttributes({
+        @CoversAttributes("sortMode"),
+        @CoversAttributes(value = { "sortBy", "sortOrder", "sortType" }, attributeEnumClass = ColumnAttributes.class)
+    })
     @Override
     public void testSortModeMulti() {
         super.testSortModeMulti();

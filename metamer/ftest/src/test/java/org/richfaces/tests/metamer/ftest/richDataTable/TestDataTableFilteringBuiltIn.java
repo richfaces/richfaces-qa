@@ -24,6 +24,8 @@ package org.richfaces.tests.metamer.ftest.richDataTable;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFilteringTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.MultipleCoversAttributes;
+import org.richfaces.tests.metamer.ftest.richColumn.ColumnAttributes;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.FilteringDT;
 import org.testng.annotations.Test;
 
@@ -43,7 +45,10 @@ public class TestDataTableFilteringBuiltIn extends DataTableFilteringTest {
     }
 
     @Test
-    @CoversAttributes("filterVar")
+    @MultipleCoversAttributes({
+        @CoversAttributes("filterVar"),
+        @CoversAttributes(value = { "filterExpression", "filterType", "filterValue" }, attributeEnumClass = ColumnAttributes.class)
+    })
     public void testCombination() {
         super.testFilterCombinations(true);
     }
