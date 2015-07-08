@@ -35,7 +35,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.a4jStatus.StatusAttributes;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.MultipleCoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 
 /**
@@ -325,7 +327,10 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
         new LocalReloadTester().testRerenderAll();
     }
 
-    @CoversAttributes("status")
+    @MultipleCoversAttributes({
+        @CoversAttributes("status"),
+        @CoversAttributes(value = "name", attributeEnumClass = StatusAttributes.class)
+    })
     public void testStatus() {
         ajaxAttributes.set(AjaxAttributes.status, "statusChecker");
 
