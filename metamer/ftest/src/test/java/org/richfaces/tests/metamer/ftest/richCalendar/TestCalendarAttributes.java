@@ -881,6 +881,23 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("readonly")
+    @Templates("plain")
+    public void testReadonly() {
+        calendarAttributes.set(CalendarAttributes.readonly, Boolean.TRUE);
+        // the input should be readonly
+        assertEquals(popupCalendar.getInput().advanced().getInputElement().getAttribute("readonly"), "true");
+        // and user cannot select a day
+        DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
+        Integer dayNumber = dayPicker.getTodayDay().getDayNumber();
+        try {
+            dayPicker.selectDayInMonth(dayNumber >= 28 ? dayNumber - 1 : dayNumber + 1);
+            fail("No day should be selectable!");
+        } catch (TimeoutException expected) {
+        }
+    }
+
+    @Test
     @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
