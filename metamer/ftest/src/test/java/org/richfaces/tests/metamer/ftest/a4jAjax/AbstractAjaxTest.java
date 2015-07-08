@@ -129,7 +129,7 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
 
     public abstract void performSingleAjaxRequestAction();
 
-    @CoversAttributes({ "bypassUpdates", "listener" })
+    @CoversAttributes({ "bypassUpdates", "listener", "event" })// #performAction() is using @event
     public void testBypassUpdates() {
         ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
         ajaxAttributes.set(AjaxAttributes.bypassUpdates, true);
