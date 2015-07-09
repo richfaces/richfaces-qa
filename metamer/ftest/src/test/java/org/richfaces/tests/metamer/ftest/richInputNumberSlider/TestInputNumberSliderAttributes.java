@@ -32,6 +32,7 @@ import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -198,6 +199,32 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         fireEvent(slider.advanced().getHandleElement(), Event.MOUSEDOWN);
         assertTrue(slider.advanced().getHandleElement().getAttribute("class").contains(value),
             "handleSelectedClass does not work");
+    }
+
+    @Test
+    @CoversAttributes("handleType")
+    @Templates(value = "plain")
+    public void testHandleType() {
+        // check default value, same as 'arrow'
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.handleType, "");
+        final WebElement handleContainer = slider.advanced().getRootElement().findElement(By.className("rf-insl-hnd-cntr"));
+        final WebElement sliderRoot = slider.advanced().getRootElement();
+        String style = handleContainer.getAttribute("style");
+        assertFalse(sliderRoot.getAttribute("class").contains("rf-insl-bar"));
+        assertTrue(style.contains("display: block"));
+        assertTrue(style.contains("padding-left: 60%"));// initial value: 2 from <-10,10>
+
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.handleType, "arrow");
+        style = handleContainer.getAttribute("style");
+        assertFalse(sliderRoot.getAttribute("class").contains("rf-insl-bar"));
+        assertTrue(style.contains("display: block"));
+        assertTrue(style.contains("padding-left: 60%"));// initial value: 2 from <-10,10>
+
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.handleType, "bar");
+        style = handleContainer.getAttribute("style");
+        assertTrue(sliderRoot.getAttribute("class").contains("rf-insl-bar"));
+        assertTrue(style.contains("display: block"));
+        assertTrue(style.contains("width: 60%"));// initial value: 2 from <-10,10>
     }
 
     @Test
