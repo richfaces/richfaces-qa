@@ -461,6 +461,19 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @CoversAttributes("render")
+    public void testRender() {
+        fileUploadAttributes.set(FileUploadAttributes.render, "@this renderChecker");
+        String renderCheckerText = getMetamerPage().getRenderCheckerOutputElement().getText();
+        String requestTime = getMetamerPage().getRequestTimeElement().getText();
+        Graphene.guardAjax(new ActionWrapper(succesfulFileUploadAction)).perform();
+        Graphene.waitGui().until().element(getMetamerPage().getRenderCheckerOutputElement()).text().not()
+            .equalTo(renderCheckerText);
+        Graphene.waitGui().until().element(getMetamerPage().getRequestTimeElement()).text().not()
+            .equalTo(requestTime);
+    }
+
+    @Test
     @CoversAttributes("rendered")
     @Templates("plain")
     public void testRendered() {
