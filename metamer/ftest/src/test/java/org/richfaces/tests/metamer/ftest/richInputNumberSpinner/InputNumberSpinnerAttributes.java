@@ -36,7 +36,6 @@ public enum InputNumberSpinnerAttributes implements AttributeEnum {
     id,
     immediate,
     inputClass,
-    inputPosition,
     inputSize,
     label,
     lang,
