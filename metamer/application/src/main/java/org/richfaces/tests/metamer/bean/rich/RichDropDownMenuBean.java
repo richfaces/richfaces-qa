@@ -66,6 +66,7 @@ public class RichDropDownMenuBean implements Serializable {
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIDropDownMenu.class, getClass());
 
         attributes.setAttribute("mode", "ajax");
+        attributes.setAttribute("label", "File");
         attributes.setAttribute("rendered", true);
         initializeDynamicMenuGroups();
     }
