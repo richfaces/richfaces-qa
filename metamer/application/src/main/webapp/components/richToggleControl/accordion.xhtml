@@ -68,9 +68,20 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </h:commandButton>
             </h:panelGrid>
 
-            universal toggle control (settings below)
+            universal toggle control (settings below), binded to click event
             <h:commandButton id="tcCustom" value="#{richToggleControlBean.attributes['targetPanel'].value} #{richToggleControlBean.attributes['targetItem'].value}">
-                <rich:toggleControl targetPanel="#{richToggleControlBean.attributes['targetPanel'].value}"
+                <rich:toggleControl disableDefault="#{richToggleControlBean.attributes['disableDefault'].value}"
+                                    event="click"
+                                    targetPanel="#{richToggleControlBean.attributes['targetPanel'].value}"
+                                    targetItem="#{richToggleControlBean.attributes['targetItem'].value}"
+                                    />
+            </h:commandButton>
+            <br/>
+            universal toggle control (settings below), binded to mouseover event
+            <h:commandButton id="tcCustom2" value="#{richToggleControlBean.attributes['targetPanel'].value} #{richToggleControlBean.attributes['targetItem'].value}">
+                <rich:toggleControl disableDefault="#{richToggleControlBean.attributes['disableDefault'].value}"
+                                    event="mouseover"
+                                    targetPanel="#{richToggleControlBean.attributes['targetPanel'].value}"
                                     targetItem="#{richToggleControlBean.attributes['targetItem'].value}"
                                     />
             </h:commandButton>
@@ -106,7 +117,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="outOfTemplateAfter">
             <br/>
-            Attributes for the first toggle control:
+            Attributes for the toggle control:
             <br/><br/>
             <metamer:attributes value="#{richToggleControlBean.attributes}" id="attributes" />
         </ui:define>

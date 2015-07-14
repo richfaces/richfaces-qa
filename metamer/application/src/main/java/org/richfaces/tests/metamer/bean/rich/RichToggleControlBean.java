@@ -58,10 +58,10 @@ public class RichToggleControlBean implements Serializable {
 
         attributes.setAttribute("targetPanel", "panel1");
         attributes.setAttribute("targetItem", "item1");
+        attributes.setAttribute("disableDefault", true);
 
         // TODO following attributes have to be tested in another way
-        attributes.remove("disableDefault");
-        attributes.remove("event"); // has to be literal
+        attributes.remove("event");// has to be literal
     }
 
     public Attributes getAttributes() {

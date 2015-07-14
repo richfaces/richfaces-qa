@@ -43,6 +43,8 @@ public class ToggleControlPage {
     private WebElement tcPanel2Item3;
     @FindBy(css = "input[id$=tcCustom]")
     private WebElement tcCustom;
+    @FindBy(css = "input[id$=tcCustom2]")
+    private WebElement tcCustom2;
 
     @FindBy(css = "div[id$='item11:content']")
     private WebElement panel1Item1Content;
@@ -119,6 +121,10 @@ public class ToggleControlPage {
 
     public WebElement getTcCustom() {
         return tcCustom;
+    }
+
+    public WebElement getTcCustom2() {
+        return tcCustom2;
     }
 
     public WebElement getTcPanel1Item1() {
