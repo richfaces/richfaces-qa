@@ -121,7 +121,7 @@ public class TestCollapsibleSubTableToggler extends AbstractCollapsibleSubTableT
     }
 
     @Test
-    @CoversAttributes("event")
+    @CoversAttributes({ "event", "FOR" })
     @Templates("plain")
     @UseWithField(field = "event", valuesFrom = FROM_FIELD, value = "events")
     public void testEvent() {
