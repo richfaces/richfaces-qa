@@ -52,7 +52,12 @@
         <param-name>org.richfaces.resourceOptimization.packagingStages</param-name>
         <param-value>None</param-value>
     </context-param>
-
+    
+    <!--Required for @FlowScoped annotation with JSF 2.2+-->
+    <context-param>
+        <param-name>javax.faces.CLIENT_WINDOW_MODE</param-name>
+        <param-value>url</param-value>
+    </context-param>
 
     <context-param>
         <param-name>org.richfaces.skin</param-name>
@@ -69,7 +74,11 @@
         <filter-name>Test Identity Filter</filter-name>
         <servlet-name>Faces Servlet</servlet-name>
     </filter-mapping>
-
+    
+    <!--Tomcat character encoding filter & mapping to enforce UTF-8-->
+    ${filter}
+    ${filterMapping}
+    
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
