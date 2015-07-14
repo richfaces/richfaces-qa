@@ -28,6 +28,7 @@ import static javax.faces.event.PhaseId.RESTORE_VIEW;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -102,6 +103,24 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
                             .getLocations().moveAllBy(-moveBy, 0) : locations.getLocations(), tolerance, tolerance, "");
                 }
             }).perform();
+    }
+
+    @Test
+    @CoversAttributes("attached")
+    public void testAttached() {
+        tooltipAttributes.set(TooltipAttributes.attached, true);
+        tooltip().show().hide();
+
+        tooltipAttributes.set(TooltipAttributes.attached, false);
+        try {
+            tooltip().show();
+            fail("Not attached tooltip cannot be invoked by triggering show event on parent component");
+        } catch (TimeoutException ok) {
+        }
+        tooltip().advanced().waitUntilTooltipIsVisible();
+        // when not attached, tooltip can be invoked by JS API
+        page.getJsAPIshowClick().click();
+        assertTrue(tooltip().advanced().isVisible());
     }
 
     @Test
