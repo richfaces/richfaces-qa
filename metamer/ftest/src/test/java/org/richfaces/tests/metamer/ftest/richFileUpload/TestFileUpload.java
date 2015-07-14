@@ -476,6 +476,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @CoversAttributes("fileUploadListener")
     @RegressionTest(value = { "https://issues.jboss.org/browse/RF-12122", "https://issues.jboss.org/browse/RFPL-3503" })
     public void testSingleFileUpload() {
         sendFileToInputWithWaiting(filenames[0], true);
@@ -493,6 +494,8 @@ public class TestFileUpload extends AbstractFileUploadTest {
         assertEquals(fileUpload.advanced().getItems().size(), 1, "List of uploaded files should contain one file.");
         assertEquals(fileUpload.advanced().getItems().getItem(0).getFilename(), filenames[0],
             "Uploaded file does not appear in uploadedList.");
+
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "upload listener");
     }
 
     @Test
