@@ -220,15 +220,17 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     @RegressionTest("http://java.net/jira/browse/JAVASERVERFACES-1805")
     @Templates(value = "plain")
     public void testInputWidth() {
-        inplaceInputAttributes.set(InplaceInputAttributes.inputWidth, "300");
-        String width = inplaceInput.advanced().getEditInputElement().getCssValue("width");
-        assertEquals(width, "300px", "Width of input did not change.");
+        final int defaultWidth = 66;
+        final int tolerance = 20;
+        final int testedWidth = 300;
+
+        inplaceInputAttributes.set(InplaceInputAttributes.inputWidth, testedWidth);
+        int actualWidth = Double.valueOf(inplaceInput.advanced().getEditInputElement().getCssValue("width").replace("px", "")).intValue();
+        assertEquals(actualWidth, testedWidth, tolerance, "Width of input did not change.");
 
         inplaceInputAttributes.set(InplaceInputAttributes.inputWidth, "");
-
-        width = inplaceInput.advanced().getEditInputElement().getCssValue("width");
-        Integer widthI = Integer.parseInt(width.substring(0, width.indexOf("px")));
-        assertEquals(widthI, 66, 20, "Default width of input was not set.");
+        actualWidth = Double.valueOf(inplaceInput.advanced().getEditInputElement().getCssValue("width").replace("px", "")).intValue();
+        assertEquals(actualWidth, defaultWidth, tolerance, "Default width of input was not set.");
     }
 
     @Test
