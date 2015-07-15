@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.ftest.richDataScroller;
 import javax.xml.bind.JAXBException;
 
 import org.jboss.arquillian.graphene.page.Page;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richDataScroller.SimplePage.ScrollerPosition;
 import org.testng.annotations.Test;
@@ -46,6 +47,7 @@ public class TestScrollerOutsideTable extends AbstractScrollerTest {
     }
 
     @Test(groups = "smoke")
+    @CoversAttributes("FOR")
     public void testNumberedPages() {
         testNumberedPages(page.getScroller(ScrollerPosition.DATA_SCROLLER_OUTSIDE_TABLE));
     }

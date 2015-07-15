@@ -29,6 +29,8 @@ import static org.testng.Assert.fail;
 
 import java.util.Arrays;
 
+import javax.faces.event.PhaseId;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.By;
@@ -53,6 +55,7 @@ import org.testng.annotations.Test;
 public class TestDataScrollerAttributes extends AbstractWebDriverTest {
 
     private final Attributes<DataScrollerAttributes> attributes = getAttributes("attributes");
+
     @Page
     private SimplePage page;
 
@@ -61,13 +64,13 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
 
     private final Attributes<DataTableAttributes> tableAttributes = getAttributes("tableAttributes");
 
-    private int getNumberOfRows() {
-        return driver.findElements(By.cssSelector("table[id$=richDataTable].rf-dt tbody tr.rf-dt-r")).size();
-    }
-
     @Override
     public String getComponentTestPagePath() {
         return "richDataScroller/simple.xhtml";
+    }
+
+    private int getNumberOfRows() {
+        return driver.findElements(By.cssSelector("table[id$=richDataTable].rf-dt tbody tr.rf-dt-r")).size();
     }
 
     @Test
@@ -239,6 +242,19 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("render")
+    public void testRender() {
+        attributes.set(DataScrollerAttributes.render, "@this renderChecker");
+        String renderCheckerText = getMetamerPage().getRenderCheckerOutputElement().getText();
+        String requestTime = getMetamerPage().getRequestTimeElement().getText();
+        Graphene.guardAjax(page.getScroller(scroller)).switchTo(DataScrollerSwitchButton.NEXT);
+        Graphene.waitGui().until().element(getMetamerPage().getRenderCheckerOutputElement()).text().not()
+            .equalTo(renderCheckerText);
+        Graphene.waitGui().until().element(getMetamerPage().getRequestTimeElement()).text().not()
+            .equalTo(requestTime);
+    }
+
+    @Test
     @CoversAttributes("renderIfSinglePage")
     public void testRenderIfSinglePage() {
         // prepare table to display all data at once
@@ -261,6 +277,25 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     public void testRendered() {
         attributes.set(DataScrollerAttributes.rendered, false);
         Graphene.waitGui().until().element(page.getScroller(scroller).advanced().getRootElement()).is().not().present();
+    }
+
+    @Test
+    @CoversAttributes("scrollListener")
+    public void testScrollListener() {
+        Graphene.guardAjax(page.getScroller(scroller)).switchTo(DataScrollerSwitchButton.NEXT);
+        getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "scroll event: 1 -> next");
+        Graphene.guardAjax(page.getScroller(scroller)).switchTo(DataScrollerSwitchButton.FAST_FORWARD);
+        getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "scroll event: 2 -> fastForward");
+        Graphene.guardAjax(page.getScroller(scroller)).switchTo(DataScrollerSwitchButton.LAST);
+        getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "scroll event: 3 -> last");
+        Graphene.guardAjax(page.getScroller(scroller)).switchTo(DataScrollerSwitchButton.PREVIOUS);
+        getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "scroll event: 6 -> previous");
+        Graphene.guardAjax(page.getScroller(scroller)).switchTo(DataScrollerSwitchButton.FAST_REWIND);
+        getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "scroll event: 5 -> fastRewind");
+        Graphene.guardAjax(page.getScroller(scroller)).switchTo(DataScrollerSwitchButton.FIRST);
+        getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "scroll event: 4 -> first");
+        Graphene.guardAjax(page.getScroller(scroller)).switchTo(5);
+        getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "scroll event: 1 -> 5");
     }
 
     @Test
