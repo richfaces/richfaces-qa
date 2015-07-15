@@ -59,15 +59,6 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     private WebElement disabledIncreaseBtn;
     private final Attributes<InputNumberSpinnerAttributes> inputNumberSpinnerAttributes = getAttributes();
 
-    private void typeToInput(String value, WaitRequestType type) {
-        MetamerPage.waitRequest(spinner.advanced().getInput().advanced().clear(ClearType.JS).sendKeys(value).advanced(), type)
-            .trigger("blur");
-    }
-
-    private void typeToInput(String value) {
-        typeToInput(value, WaitRequestType.XHR);
-    }
-
     @Override
     public String getComponentTestPagePath() {
         return "richInputNumberSpinner/simple.xhtml";
@@ -580,6 +571,15 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     }
 
     @Test
+    @CoversAttributes("valueChangeListener")
+    public void testValueChangeListener() {
+        String testedValue = "4";
+        String listenerMsg = "value changed: " + DEFAULT_VALUE + " -> " + testedValue;
+        typeToInput(testedValue);
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, listenerMsg);
+    }
+
+    @Test
     @CoversAttributes("value")
     @Templates("plain")
     @UseWithField(field = "number", valuesFrom = FROM_FIELD, value = "correctNumbers")
@@ -597,5 +597,14 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
 
         assertEquals(getOutputText(), number, "Output was not updated.");
         assertEquals(getInputText(), "-10", "Input was not updated.");
+    }
+
+    private void typeToInput(String value, WaitRequestType type) {
+        MetamerPage.waitRequest(spinner.advanced().getInput().advanced().clear(ClearType.JS).sendKeys(value).advanced(), type)
+            .trigger("blur");
+    }
+
+    private void typeToInput(String value) {
+        typeToInput(value, WaitRequestType.XHR);
     }
 }
