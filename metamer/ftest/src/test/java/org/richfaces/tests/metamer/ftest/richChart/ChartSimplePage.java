@@ -42,6 +42,9 @@ public class ChartSimplePage extends MetamerPage {
     @FindByJQuery(value = "div[id$='chart'] div.chart-title")
     private WebElement chartTitleElement;
 
+    @FindByJQuery(value = "canvas[class='flot-overlay']")
+    private WebElement chartCanvas;
+
     public WebElement getChartTitleElement() {
         return chartTitleElement;
     }
@@ -60,5 +63,13 @@ public class ChartSimplePage extends MetamerPage {
 
     public WebElement getChartElement() {
         return chartElement;
+    }
+
+    public WebElement getChartCanvas() {
+        return chartCanvas;
+    }
+
+    public String getChartId() {
+        return getChartElement().getAttribute("id");
     }
 }

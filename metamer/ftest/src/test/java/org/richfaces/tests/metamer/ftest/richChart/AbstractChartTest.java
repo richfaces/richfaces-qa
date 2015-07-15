@@ -38,7 +38,7 @@ public abstract class AbstractChartTest extends AbstractWebDriverTest {
     private final Attributes<ChartAttributes> chartAttributes = getAttributes();
 
     @Page
-    private ChartSimplePage page;
+    protected ChartSimplePage page;
 
     @CoversAttributes("onmouseout")
     public void testOnmouseout() {

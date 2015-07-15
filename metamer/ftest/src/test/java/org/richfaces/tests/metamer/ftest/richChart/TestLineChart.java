@@ -21,10 +21,20 @@
  */
 package org.richfaces.tests.metamer.ftest.richChart;
 
+import static org.jboss.arquillian.graphene.Graphene.waitAjax;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotEquals;
+
+import org.jboss.arquillian.graphene.javascript.JavaScript;
+import org.openqa.selenium.interactions.Actions;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
 public class TestLineChart extends AbstractChartTest {
+
+    @JavaScript
+    protected ChartJs chartJS;
 
     @Override
     public String getComponentTestPagePath() {
@@ -53,5 +63,81 @@ public class TestLineChart extends AbstractChartTest {
     @Templates("plain")
     public void testTitle() {
         super.testTitle();
+    }
+
+    @Test
+    @Templates("plain")
+    @CoversAttributes("zoom")
+    public void testZoom() {
+        // zoom is only available in line chart
+
+        // get plot coordinates on screen before zooming
+        int xBeforeZoom = chartJS.pointXPos(page.getChartId(), 0, 0);
+
+        // zoom some area
+        new Actions(driver)
+            .moveToElement(page.getChartCanvas(), chartJS.pointXPos(page.getChartId(), 1, 1), chartJS.pointYPos(page.getChartId(), 1, 1))
+            .clickAndHold()
+            .moveToElement(page.getChartCanvas(), chartJS.pointXPos(page.getChartId(), 2, 2), chartJS.pointYPos(page.getChartId(), 2, 2)).release()
+            .build().perform();
+        new Actions(driver).clickAndHold().moveByOffset(200, 50).release().build().perform();
+
+        // get the coordinates after zooming, they should be different
+        int xAfterZoom = chartJS.pointXPos(page.getChartId(), 0, 0);
+
+        // assert coordinates do not equal after zoom, only x axis is zoomed
+        assertNotEquals(xBeforeZoom, xAfterZoom);
+
+        // perform zoom reset by JS
+        chartJS.resetZoom(page.getChartId());
+
+        // get the coordinates again
+        int xZoomReset = chartJS.pointXPos(page.getChartId(), 0, 0);
+
+        // assert that this equals initial state, only x axis is zoomed
+        assertEquals(xBeforeZoom, xZoomReset);
+    }
+
+    @Test
+    @Templates("plain")
+    @CoversAttributes("onplotclick")
+    public void testOnplotclickClientSide() {
+
+        final String plotClick = "Point with index 0 within series 0 was clicked";
+
+        // retrieve plot offset in canvas via JS (coordinates differ based on browser)
+        int x = chartJS.pointXPos(page.getChartId(), 0, 0);
+        int y = chartJS.pointYPos(page.getChartId(), 0, 0);
+
+        new Actions(driver).moveToElement(page.getChartCanvas(), x, y).click().build().perform();
+        waitAjax(driver).until().element(page.getPlotClickMessage()).text().contains(plotClick);
+    }
+
+    @Test
+    @Templates("plain")
+    @CoversAttributes("onplotclick")
+    public void testOnplotclickServerSide() {
+
+        final String plotClick = "Point with index 0 within series 0 was clicked";
+
+        // retrieve plot offset in canvas via JS (coordinates differ based on browser)
+        int x = chartJS.pointXPos(page.getChartId(), 0, 0);
+        int y = chartJS.pointYPos(page.getChartId(), 0, 0);
+
+        new Actions(driver).moveToElement(page.getChartCanvas(), x, y).click().build().perform();
+        waitAjax(driver).until().element(page.getServerSideMessage()).text().contains(plotClick);
+    }
+
+    @Test
+    @Templates("plain")
+    @CoversAttributes("onplothover")
+    public void testOnplothover() {
+        // retrieve plot offset in canvas via JS (coordinates differ based on browser)
+        int x = chartJS.pointXPos(page.getChartId(), 0, 0);
+        int y = chartJS.pointYPos(page.getChartId(), 0, 0);
+
+        // now move over the plot and wait until the text changes
+        new Actions(driver).moveToElement(page.getChartCanvas(), x, y).build().perform();
+        waitAjax(driver).until().element(page.getPlotHoverMessage()).text().contains("USA [1990,19.1]");
     }
 }
