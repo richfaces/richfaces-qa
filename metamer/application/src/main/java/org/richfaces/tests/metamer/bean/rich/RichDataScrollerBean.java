@@ -21,6 +21,8 @@
  */
 package org.richfaces.tests.metamer.bean.rich;
 
+import static org.richfaces.tests.metamer.bean.RichBean.logToPage;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +36,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
 import org.richfaces.component.UIDataScroller;
+import org.richfaces.event.DataScrollEvent;
 import org.richfaces.tests.metamer.Attributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,16 +51,58 @@ import org.slf4j.LoggerFactory;
 @SessionScoped
 public class RichDataScrollerBean implements Serializable {
 
-    private static final long serialVersionUID = 122475400649809L;
     private static Logger logger;
+    private static final long serialVersionUID = 122475400649809L;
     private Attributes attributes;
-    private Attributes tableAttributes;
-    private boolean state = true;
-
     private Map<String, String> facets;
 
     @ManagedProperty(value = "#{model.capitals.size()}")
     private int size; // used for customized page facet
+    private boolean state = true;
+    private Attributes tableAttributes;
+
+    public Attributes getAttributes() {
+        return attributes;
+    }
+
+    public Map<String, String> getFacets() {
+        return facets;
+    }
+
+    /**
+     * Used for customized page facet (customizedFacets.xhtml)
+     *
+     * @return List of items from which you can choose
+     */
+    public List<SelectItem> getPagesToScroll() {
+        List<SelectItem> list = new ArrayList<SelectItem>();
+        double rows = Integer.parseInt(getTableAttributes().get("rows").getValue().toString());
+        int page = Integer.parseInt(getAttributes().get("page").getValue().toString());
+        for (int i = 1; i <= Math.ceil(size / rows); i++) {
+            if (Math.abs(i - page) < 6) {
+                SelectItem item = new SelectItem(i);
+                list.add(item);
+            }
+        }
+        return list;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    /**
+     * Used for customized page facet (customizedFacets.xhtml)
+     * @return max number in spinner which is number of pages in table
+     */
+    public int getSpinnerMaxNumber() {
+        double rows = Integer.parseInt(getTableAttributes().get("rows").getValue().toString());
+        return (int) Math.ceil(size / rows);
+    }
+
+    public Attributes getTableAttributes() {
+        return tableAttributes;
+    }
 
     /**
      * Initializes the managed bean.
@@ -100,22 +145,6 @@ public class RichDataScrollerBean implements Serializable {
         facets.put("last_disabled", ">>>d");
     }
 
-    public Attributes getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(Attributes attributes) {
-        this.attributes = attributes;
-    }
-
-    public Attributes getTableAttributes() {
-        return tableAttributes;
-    }
-
-    public void setTableAttributes(Attributes tableAttributes) {
-        this.tableAttributes = tableAttributes;
-    }
-
     /**
      * Getter for state.
      *
@@ -123,6 +152,18 @@ public class RichDataScrollerBean implements Serializable {
      */
     public boolean isState() {
         return state;
+    }
+
+    public void scrollListener(DataScrollEvent event) {
+        logToPage("* scroll event: " + event.getOldScrolVal() + " -> " + event.getNewScrolVal());
+    }
+
+    public void setAttributes(Attributes attributes) {
+        this.attributes = attributes;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 
     /**
@@ -134,42 +175,7 @@ public class RichDataScrollerBean implements Serializable {
         this.state = state;
     }
 
-    public Map<String, String> getFacets() {
-        return facets;
-    }
-
-    /**
-     * Used for customized page facet (customizedFacets.xhtml)
-     *
-     * @return List of items from which you can choose
-     */
-    public List<SelectItem> getPagesToScroll() {
-        List<SelectItem> list = new ArrayList<SelectItem>();
-        double rows = Integer.parseInt(getTableAttributes().get("rows").getValue().toString());
-        int page = Integer.parseInt(getAttributes().get("page").getValue().toString());
-        for (int i = 1; i <= Math.ceil(size / rows); i++) {
-            if (Math.abs(i - page) < 6) {
-                SelectItem item = new SelectItem(i);
-                list.add(item);
-            }
-        }
-        return list;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    /**
-     * Used for customized page facet (customizedFacets.xhtml)
-     * @return max number in spinner which is number of pages in table
-     */
-    public int getSpinnerMaxNumber() {
-        double rows = Integer.parseInt(getTableAttributes().get("rows").getValue().toString());
-        return (int) Math.ceil(size / rows);
+    public void setTableAttributes(Attributes tableAttributes) {
+        this.tableAttributes = tableAttributes;
     }
 }
