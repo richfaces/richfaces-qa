@@ -39,13 +39,24 @@ public class TestDropTargetInCollapsibleSubTable extends TestDropTarget {
     }
 
     @Test
-    public void testRender() {
-        super.testRender();
+    @RegressionTest("https://issues.jboss.org/browse/RF-10535")
+    public void testBypassUpdates() {
+        super.testBypassUpdates();
     }
 
     @Test
-    public void testDropListenerAndEvent() {
-        super.testDropListenerAndEvent();
+    public void testData() {
+        super.testData();
+    }
+
+    @Test
+    public void testDropListenerAndValue() {
+        super.testDropListenerAndValue();
+    }
+
+    @Test
+    public void testEvents() {
+        super.testEvents();
     }
 
     @Test
@@ -60,13 +71,22 @@ public class TestDropTargetInCollapsibleSubTable extends TestDropTarget {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-10535")
-    public void testBypassUpdates() {
-        super.testBypassUpdates();
+    public void testLimitRender() {
+        super.testLimitRender();
     }
 
     @Test
-    public void testEvents() {
-        super.testEvents();
+    public void testRender() {
+        super.testRender();
+    }
+
+    @Test
+    public void testRendered() {
+        super.testRendered();
+    }
+
+    @Test
+    public void testStatus() {
+        super.testStatus();
     }
 }
