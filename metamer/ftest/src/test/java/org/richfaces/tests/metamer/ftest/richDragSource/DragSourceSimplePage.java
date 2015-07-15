@@ -21,6 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.richDragSource;
 
+import java.util.List;
+
 import org.jboss.arquillian.graphene.GrapheneElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -32,10 +34,10 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
  */
 public class DragSourceSimplePage extends MetamerPage {
 
-    @FindBy(css = "div.rf-ind[id$=indicator]")
-    private GrapheneElement indicatorElement;
     @FindBy(css = "div.rf-ind[id$=indicator2Clone]")
     private GrapheneElement indicator2Element;
+    @FindBy(css = "div.rf-ind[id$=indicator]")
+    private GrapheneElement indicatorElement;
     @FindBy(css = "body > div.ui-draggable")
     private GrapheneElement defaultIndicatorElement;
 
@@ -50,6 +52,11 @@ public class DragSourceSimplePage extends MetamerPage {
     private WebElement drop1Element;
     @FindBy(css = "[id$=droppable2]")
     private WebElement drop2Element;
+
+    @FindBy(css = "[id$=droppedValues1] tbody tr")
+    private List<WebElement> droppedValues1Rows;
+    @FindBy(css = "[id$=droppedValues2] tbody tr")
+    private List<WebElement> droppedValues2Rows;
 
     /**
      * @return the defaultIndicatorElement
@@ -93,6 +100,14 @@ public class DragSourceSimplePage extends MetamerPage {
         return drop2Element;
     }
 
+    public List<WebElement> getDroppedValues1Rows() {
+        return droppedValues1Rows;
+    }
+
+    public List<WebElement> getDroppedValues2Rows() {
+        return droppedValues2Rows;
+    }
+
     /**
      * @return the indicator2Element
      */
@@ -106,5 +121,4 @@ public class DragSourceSimplePage extends MetamerPage {
     public GrapheneElement getIndicatorElement() {
         return indicatorElement;
     }
-
 }

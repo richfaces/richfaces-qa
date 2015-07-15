@@ -49,6 +49,11 @@ public class TestDragSource extends AbstractDragSourceTest {
     }
 
     @Test
+    public void testDragValue() {
+        super.testDragValue();
+    }
+
+    @Test
     @Templates(value = "plain")
     public void testRendered() {
         super.testRendered();

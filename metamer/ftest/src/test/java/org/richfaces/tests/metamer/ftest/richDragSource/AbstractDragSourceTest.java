@@ -27,9 +27,11 @@ import static org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.Indi
 import static org.richfaces.tests.metamer.ftest.richDragSource.DragSourceAttributes.dragIndicator;
 import static org.richfaces.tests.metamer.ftest.richDragSource.DragSourceAttributes.rendered;
 import static org.richfaces.tests.metamer.ftest.richDragSource.DragSourceAttributes.type;
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -48,6 +50,7 @@ public abstract class AbstractDragSourceTest extends AbstractWebDriverTest {
     private final Attributes<DragSourceAttributes> dragSourceAttributes = getAttributes();
 
     protected Indicator indicator;
+
     @Page
     private DragSourceSimplePage page;
 
@@ -68,7 +71,6 @@ public abstract class AbstractDragSourceTest extends AbstractWebDriverTest {
 
     @CoversAttributes("dragIndicator")
     public void testCustomIndicator() {
-
         dragSourceAttributes.set(dragIndicator, "indicator2");
         indicator = new Indicator(page.getIndicator2Element());
 
@@ -93,6 +95,27 @@ public abstract class AbstractDragSourceTest extends AbstractWebDriverTest {
         testMovingOverDifferentStates();
 
         actionQueue.release(page.getDrop1Element()).perform();
+    }
+
+    @CoversAttributes("dragValue")
+    public void testDragValue() {
+        Graphene.guardAjax(new Actions(driver).dragAndDrop(page.getDrag1Element(), page.getDrop1Element())).perform();
+        assertEquals(page.getDroppedValues1Rows().get(0).getText(), "#1 1");
+
+        Graphene.guardAjax(new Actions(driver).dragAndDrop(page.getDrag2Element(), page.getDrop1Element())).perform();
+        assertEquals(page.getDroppedValues1Rows().get(0).getText(), "#2 2");
+        assertEquals(page.getDroppedValues1Rows().get(1).getText(), "#1 1");
+
+        Graphene.guardAjax(new Actions(driver).dragAndDrop(page.getDrag3Element(), page.getDrop2Element())).perform();
+        assertEquals(page.getDroppedValues1Rows().get(0).getText(), "#2 2");
+        assertEquals(page.getDroppedValues1Rows().get(1).getText(), "#1 1");
+        assertEquals(page.getDroppedValues2Rows().get(0).getText(), "#3 3");
+
+        Graphene.guardAjax(new Actions(driver).dragAndDrop(page.getDrag2Element(), page.getDrop1Element())).perform();
+        assertEquals(page.getDroppedValues1Rows().get(0).getText(), "#2 4");
+        assertEquals(page.getDroppedValues1Rows().get(1).getText(), "#2 2");
+        assertEquals(page.getDroppedValues1Rows().get(2).getText(), "#1 1");
+        assertEquals(page.getDroppedValues2Rows().get(0).getText(), "#3 3");
     }
 
     protected void testMovingOverDifferentStates() {
