@@ -47,7 +47,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                               validator="org.richfaces.CaliforniaFirstValidator"
                               validatorMessage="#{richSelectBean.validatorMessage}"
                               value="#{richSelectBean.attributes['value'].value}"
-                              valueChangeListener="#{richSelectBean.listener}">
+                              valueChangeListener="#{richBean.valueChangeListener}">
                         <f:selectItems value="#{richSelectBean.capitalsOptions}" />
                         <a4j:ajax event="change"/>
                     </r:select>
@@ -56,7 +56,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <r:select id="select"
                               validator="org.richfaces.CaliforniaFirstValidator"
                               value="#{richSelectBean.attributes['value'].value}"
-                              valueChangeListener="#{richSelectBean.listener}">
+                              valueChangeListener="#{richBean.valueChangeListener}">
                         <f:selectItems value="#{richSelectBean.capitalsOptions}" />
                         <a4j:ajax event="change"/>
                     </r:select>
