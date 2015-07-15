@@ -198,7 +198,7 @@ public class TestEditor extends AbstractWebDriverTest {
     }
 
     @Test
-    @CoversAttributes("toolbar")
+    @CoversAttributes({ "toolbar", "config" })
     public void testToolbar() {
 
         editorAttributes.set(toolbar, "basic");
@@ -209,6 +209,7 @@ public class TestEditor extends AbstractWebDriverTest {
         assertTrue(page.getEditor().advanced().getToolbar().isAdvanced());
 
         // since config facet has been introduced...
+        // uses custom @config
         editorAttributes.set(toolbar, "custom");
         assertTrue(page.getEditor().advanced().getToolbar().numberOfToolbarItems() == 9);
     }
