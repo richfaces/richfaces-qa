@@ -78,6 +78,7 @@ public class TestJQueryAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("attachType")
     public void testAttachTypeLive() {
         for (int count = 1; count <= 4; count++) {
             if (count > 1) {
@@ -96,7 +97,7 @@ public class TestJQueryAttributes extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
-    @CoversAttributes({ "event", "query", "selector", "timing" })
+    @CoversAttributes({ "attachType", "event", "query", "selector", "timing" })
     public void testAttachTypeOne() {
         setupImmediateTypeAttributes();
         jQueryAttributes.set(JQueryAttributes.attachType, "one");
