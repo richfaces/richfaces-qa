@@ -35,6 +35,7 @@ import java.util.List;
 
 import javax.faces.event.PhaseId;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.TimeoutException;
@@ -351,8 +352,8 @@ public class TestTab extends AbstractWebDriverTest {
         testFireEvent(tabAttributes, TabAttributes.onenter, new Action() {
             @Override
             public void perform() {
-                page.getInactiveHeaders().get(1).click();
-                page.getInactiveHeaders().get(0).click();
+                Graphene.guardAjax(page.getTabPanel()).switchTo(1);
+                Graphene.guardAjax(page.getTabPanel()).switchTo(0);
             }
         });
     }
