@@ -65,15 +65,6 @@ public class TestFocus extends AbstractWebDriverTest {
     }
 
     @Test
-    public void testFocusOnFirstInputAfterLoad() {
-        page.typeStringAndDoNotCareAboutFocus();
-
-        String actual = page.getNameInput().getStringValue();
-        assertEquals(actual, AbstractFocusPage.EXPECTED_STRING,
-            "The first input (with label name) was not focused after page load!");
-    }
-
-    @Test
     @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richExtendedDataTable", "uiRepeat" })
     @CoversAttributes("preserve")
     public void testPreserveIgnoresValidationAware() {
@@ -106,6 +97,21 @@ public class TestFocus extends AbstractWebDriverTest {
         String actual = page.getAgeInput().getStringValue();
         assertTrue(actual.contains(AbstractFocusPage.EXPECTED_STRING),
             "The age input should be focused, since the preserve is true and before form submission that input was focused!");
+    }
+
+    @Test
+    @CoversAttributes("rendered")
+    public void testRendered() {
+        focusAttributes.set(FocusAttributes.rendered, true);
+        // first input should be focused on page load
+        page.typeStringAndDoNotCareAboutFocus();
+        assertEquals(page.getNameInput().getStringValue(), AbstractFocusPage.EXPECTED_STRING,
+            "The first input (with label name) was not focused after page load!");
+
+        focusAttributes.set(FocusAttributes.rendered, false);
+        // no input should be focused on page load
+        page.typeStringAndDoNotCareAboutFocus();
+        assertEquals(page.getNameInput().getStringValue().trim(), "", "The first input (with label name) should not be focused on page load and it should be empty, when @rendered=false");
     }
 
     @Test
