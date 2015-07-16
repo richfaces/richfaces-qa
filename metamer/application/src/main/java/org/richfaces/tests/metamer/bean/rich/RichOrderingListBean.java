@@ -49,17 +49,36 @@ import com.google.common.collect.Lists;
 @SessionScoped
 public class RichOrderingListBean implements Serializable {
 
+    private static final String DEFAULT_COLLECTION_TYPE = "java.util.LinkedList";
     private static final Logger LOGGER = LoggerFactory.getLogger(RichOrderingListBean.class);
     private static final long serialVersionUID = 5868941019675985273L;
 
     private Attributes attributes;
     @ManagedProperty("#{model.capitals}")
     private List<Capital> capitals;
+    private Object collectionType;
     @ManagedProperty("#{model.employees}")
     private List<Employee> employees;
     private List<Capital> emptyCapitals = Lists.newArrayList();
     private Collection<String> hiddenAttributes = new ArrayList<String>();
     private String validatorMessage;
+
+    private Object extractCollectionType(String collectionString) {
+        if (collectionString.startsWith("s:")) {
+            return collectionString.substring(2);
+        } else if (collectionString.startsWith("c:")) {
+            try {
+                return Class.forName(collectionString.substring(2));
+            } catch (ClassNotFoundException e) {
+                LOGGER.error(e + "\n Setting collectionType back to " + DEFAULT_COLLECTION_TYPE + '.');
+                attributes.setAttribute("collectionType", "s:" + DEFAULT_COLLECTION_TYPE);
+                return DEFAULT_COLLECTION_TYPE;
+            }
+        } else {
+            attributes.setAttribute("collectionType", "s:" + DEFAULT_COLLECTION_TYPE);
+            return DEFAULT_COLLECTION_TYPE;
+        }
+    }
 
     public Attributes getAttributes() {
         return attributes;
@@ -67,6 +86,14 @@ public class RichOrderingListBean implements Serializable {
 
     public List<Capital> getCapitals() {
         return capitals;
+    }
+
+    public Object getCollectionType() {
+        String collectionTypeString = attributes.get("collectionType").getValue().toString();
+        if (collectionTypeString.contains(":")) {
+            collectionType = extractCollectionType(collectionTypeString);
+        }
+        return collectionType;
     }
 
     public List<Employee> getEmployees() {
@@ -98,11 +125,12 @@ public class RichOrderingListBean implements Serializable {
         attributes.setAttribute("upText", "Up");
         attributes.setAttribute("upTopText", "Top");
         attributes.setAttribute("required", false);
+        attributes.setAttribute("collectionType", "s:" + DEFAULT_COLLECTION_TYPE);
 
         employees = employees.subList(0, 10);
 
         // TODO has to be tested in another way
-        String[] attrsToHide = new String[] { "collectionType", "itemLabel", "itemValue", "value", "var",
+        String[] attrsToHide = new String[] { "itemLabel", "itemValue", "value", "var",
             "converter", "converterMessage", "validator", "validatorMessage", "valueChangeListener" };
         for (String attribute : attrsToHide) {
             hiddenAttributes.add(attribute);
