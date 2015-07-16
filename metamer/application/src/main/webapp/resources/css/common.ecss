@@ -50,3 +50,11 @@ ul a.link {
 .template-data-grid > tbody > tr > td:first-child {
 	width: 50px;
 }
+
+.metamer-ftest-class {
+	background-color: yellow !important;
+	border-width: 5px !important;
+	border-color: red !important;
+	color: green !important;
+	padding: 5px !important;
+}
