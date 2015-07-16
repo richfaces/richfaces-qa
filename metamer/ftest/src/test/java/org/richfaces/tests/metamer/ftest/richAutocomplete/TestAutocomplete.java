@@ -27,13 +27,16 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.richfaces.fragment.autocomplete.SelectOrConfirm;
 import org.richfaces.fragment.common.ClearType;
 import org.richfaces.fragment.common.ScrollingType;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -98,5 +101,24 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
     public void testSimpleSelectionWithKeyboard() {
         autocomplete.advanced().setScrollingType(ScrollingType.BY_KEYS);
         testSimpleSelectionWithMouse();
+    }
+
+    @RegressionTest("https://issues.jboss.org/browse/RF-14087")
+    @CoversAttributes({ "mode", "minChars", "autofill", "showButton", "value" })
+    @Skip
+    @Test
+    public void testShowSuggestionsWithButton() {
+        // prepare autocomplete attributes
+        autocompleteAttributes.set(AutocompleteAttributes.showButton, Boolean.TRUE);
+        autocompleteAttributes.set(AutocompleteAttributes.autofill, Boolean.FALSE);
+        autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
+        autocompleteAttributes.set(AutocompleteAttributes.minChars, 0);
+        autocompleteAttributes.set(AutocompleteAttributes.value, "Alaska");
+
+        // try to open the suggestions by clicking the button and assert
+        WebElement button = driver.findElement(By.cssSelector("span[class$=btn-arrow]"));
+        button.click();
+        autocomplete.advanced().waitForSuggestionsToBeVisible();
+        assertVisible(autocomplete.advanced().getSuggestionsElements().get(0), "Suggestion should be visible");
     }
 }
