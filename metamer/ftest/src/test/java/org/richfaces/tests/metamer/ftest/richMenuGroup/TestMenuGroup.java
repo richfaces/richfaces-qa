@@ -108,7 +108,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
      * RichAccordion template is disabled because of a reported bug: https://issues.jboss.org/browse/RF-13264
      */
     @Test
-    @CoversAttributes("dir")
+    @CoversAttributes("direction")
     @Templates("plain")
     @RegressionTest("https://issues.jboss.org/browse/RF-10218")
     @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "direction")
