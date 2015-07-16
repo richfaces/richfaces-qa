@@ -346,7 +346,7 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
-    @CoversAttributes("rendered")
+    @CoversAttributes({ "rendered", "nodeType" })// @nodeType -- used in facelet, for each node type
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates("plain")
     public void testRendered() {
@@ -354,6 +354,14 @@ public class TestTreeAttributes extends AbstractTreeTest {
         assertVisible(tree.advanced().getRootElement(), "Tree should be visible");
         treeAttributes.set(TreeAttributes.rendered, Boolean.FALSE);
         assertNotVisible(tree.advanced().getRootElement(), "Tree should not be visible");
+    }
+
+    @Test
+    @CoversAttributes("selectionChangeListener")
+    @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
+    public void testSelectionChangeListener() {
+        selectFirstNodeAjaxAction.perform();
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "selection change listener invoked");
     }
 
     @Test
@@ -471,14 +479,6 @@ public class TestTreeAttributes extends AbstractTreeTest {
 
         treeAttributes.set(TreeAttributes.toggleType, SwitchType.server);
         getGuarded(tree, SwitchType.server).expandNode(2);
-    }
-
-    @Test
-    @CoversAttributes("selectionChangeListener")
-    @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
-    public void testSelectionChangeListener() {
-        selectFirstNodeAjaxAction.perform();
-        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "selection change listener invoked");
     }
 
 }
