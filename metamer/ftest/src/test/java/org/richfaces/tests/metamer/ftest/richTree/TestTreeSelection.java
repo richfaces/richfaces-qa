@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.ftest.richTree;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
@@ -41,6 +42,7 @@ public class TestTreeSelection extends AbstractTreeSelectionTest {
         @UseWithField(field = "selectionType", valuesFrom = FROM_FIELD, value = "selectionTypeAjax"),
         @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     })
+    @CoversAttributes({ "selection", "selectionType" })
     public void testSubNodesSelectionAjax() {
         testSubNodesSelectionWithEvents();
     }
@@ -50,6 +52,7 @@ public class TestTreeSelection extends AbstractTreeSelectionTest {
         @UseWithField(field = "selectionType", valuesFrom = FROM_FIELD, value = "selectionTypeClient"),
         @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     })
+    @CoversAttributes("selectionType")
     public void testSubNodesSelectionClient() {
         testSubNodesSelectionWithEvents();
     }

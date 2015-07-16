@@ -37,7 +37,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.component.SwitchType;
 import org.richfaces.fragment.tree.Tree.TreeNode;
-import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -120,7 +119,6 @@ public abstract class AbstractTreeSelectionTest extends AbstractTreeTest {
         treeAttributes.set(TreeAttributes.toggleType, selectionType);
     }
 
-    @CoversAttributes("selectionType")
     protected void testSubNodesSelectionWithEvents() {
         expandAll();
         assertEquals(allSelectedItems.size(), 0);
