@@ -32,9 +32,10 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  */
 public enum BasicAttributes implements AttributeEnum {
 
-    buttonClass,
     bodyClass,
+    buttonClass,
     captionClass,
+    changedClass,
     contentClass,
     controlsClass,
     decreaseClass,
@@ -47,12 +48,11 @@ public enum BasicAttributes implements AttributeEnum {
     groupClass,
     groupDisabledClass,
     handleClass,
-    headerDisabledClass,
+    headerActiveClass,
     headerClass,
+    headerDisabledClass,
     headerInactiveClass,
     headerStyle,
-    headerActiveClass,
-    changedClass,
     iconClass,
     increaseClass,
     initialClass,
@@ -87,6 +87,8 @@ public enum BasicAttributes implements AttributeEnum {
     title,
     tooltipClass,
     topGroupClass,
+    topGroupDisabledClass,
     topItemClass,
+    topItemDisabledClass,
     trackClass,
 }

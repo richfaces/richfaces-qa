@@ -21,6 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richPanelMenu;
 
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.disabled;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.groupMode;
@@ -31,6 +32,9 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import javax.faces.event.PhaseId;
+
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.richfaces.PanelMenuMode;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
@@ -45,7 +49,6 @@ import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22749 $
  */
 public class TestPanelMenuSimple extends AbstractPanelMenuTest {
 
@@ -105,6 +108,33 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     public void testGroupDisabledClass() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
         super.testStyleClass(getPage().getGroup26().advanced().getRootElement(), BasicAttributes.groupDisabledClass);
+    }
+
+    @Test
+    @CoversAttributes("immediate")
+    public void testImmediate() {
+        panelMenuAttributes.set(PanelMenuAttributes.immediate, true);
+        Graphene.guardAjax(getPage().getPanelMenu()).selectItem("Item 1");
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "item changed: null -> item1");
+        getMetamerPage().assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.RENDER_RESPONSE);
+
+        // select item in sub group
+        guardAjax(getPage().getPanelMenu().expandGroup(0)).selectItem(2);
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "item changed: item1 -> item13");
+        getMetamerPage().assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.RENDER_RESPONSE);
+    }
+
+    @Test
+    @CoversAttributes("itemChangeListener")
+    public void testItemChangeListener() {
+        guardAjax(getPage().getPanelMenu()).selectItem("Item 1");
+        getMetamerPage().assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: null -> item1");
+        getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
+
+        // select item in sub group
+        guardAjax(getPage().getPanelMenu().expandGroup(0)).selectItem(2);
+        getMetamerPage().assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: item1 -> item13");
+        getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
     }
 
     @Test
@@ -237,10 +267,25 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     }
 
     @Test
+    @CoversAttributes("topGroupDisabledClass")
+    @Templates(value = "plain")
+    public void testTopGroupDisabledClass() {
+        testStyleClass(getPage().getGroup4().advanced().getRootElement(), BasicAttributes.topGroupDisabledClass);
+    }
+
+    @Test
     @CoversAttributes("topItemClass")
     @Templates(value = "plain")
     public void testTopItemClass() {
         testStyleClass(getPage().getItem3().advanced().getRootElement(), BasicAttributes.topItemClass);
+    }
+
+    @Test
+    @CoversAttributes("topItemDisabledClass")
+    @Templates(value = "plain")
+    public void testTopItemDisabledClass() {
+        testStyleClass(getPage().getItem2().advanced().getRootElement(), BasicAttributes.topItemDisabledClass);
+        testStyleClass(getPage().getItem4().advanced().getRootElement(), BasicAttributes.topItemDisabledClass);
     }
 
     @Test
