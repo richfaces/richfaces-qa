@@ -32,6 +32,7 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGrou
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.rightDisabledIcon;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.rightExpandedIcon;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.selectable;
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -41,10 +42,16 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
+import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.panelMenu.RichFacesPanelMenuGroup;
+import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.checker.IconsChecker;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -64,6 +71,9 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
         }
     };
 
+    private Event testedEvent;
+    private final Event[] testedEvents = new Event[] { Event.CLICK, Event.DBLCLICK, Event.KEYPRESS };
+
     @Test
     @CoversAttributes("action")
     public void testAction() {
@@ -76,6 +86,19 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     public void testActionListener() {
         collapseFirstGroupAction.perform();
         getPage().assertListener(PhaseId.INVOKE_APPLICATION, "action listener invoked");
+    }
+
+    @Test
+    @CoversAttributes("collapseEvent")
+    @UseWithField(field = "testedEvent", valuesFrom = ValuesFrom.FROM_FIELD, value = "testedEvents")
+    @Templates(value = "plain")
+    public void testCollapseEvent() {
+        RichFacesPanelMenuGroup menuGroup = getPage().getTopGroup();
+        // setup events
+        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.collapseEvent, testedEvent);
+        menuGroup.advanced().setCollapseEvent(testedEvent);
+        // collapse the group
+        guardAjax(getPage().getMenu()).collapseGroup("Group 2 (influenced by attributes)");
     }
 
     @Test
@@ -109,6 +132,44 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     }
 
     @Test
+    @CoversAttributes("expandEvent")
+    @UseWithField(field = "testedEvent", valuesFrom = ValuesFrom.FROM_FIELD, value = "testedEvents")
+    @Templates(value = "plain")
+    public void testExpandEvent() {
+        RichFacesPanelMenuGroup menuGroup = getPage().getTopGroup();
+        // collapse the tested group first, we are checking the @expandEvent
+        guardAjax(getPage().getMenu()).collapseGroup("Group 2 (influenced by attributes)");
+        // setup events
+        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.expandEvent, testedEvent);
+        menuGroup.advanced().setExpandEvent(testedEvent);
+        // expand the group
+        guardAjax(getPage().getMenu()).expandGroup("Group 2 (influenced by attributes)");
+    }
+
+    @Test
+    @CoversAttributes("expanded")
+    @Templates(value = "plain")
+    public void testExpanded() {
+        assertEquals(getPage().getExpandedGroupsOutputText(), "{group1=false, group2=true, group23=true, group3=false}");
+        // collapse group23
+        guardAjax(getPage().getSubGroup().advanced().getLabelElement()).click();
+        assertEquals(getPage().getExpandedGroupsOutputText(), "{group1=false, group2=true, group23=false, group3=false}");
+        // collapse group2
+        guardAjax(getPage().getTopGroup().advanced().getLabelElement()).click();
+        assertEquals(getPage().getExpandedGroupsOutputText(), "{group1=false, group2=false, group23=false, group3=false}");
+    }
+
+    @Test
+    @CoversAttributes("label")
+    @Templates(value = "plain")
+    public void testLabel() {
+        String testedVal = "completely new label +éíáýžřčšě;";
+        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.label, testedVal);
+        assertEquals(getPage().getTopGroup().advanced().getLabelElement().getText().trim(), "Group 2 (influenced by attributes) - " + testedVal);
+        assertEquals(getPage().getSubGroup().advanced().getLabelElement().getText().trim(), "Group 2.3 (influenced by attributes) - " + testedVal);
+    }
+
+    @Test
     @CoversAttributes("leftCollapsedIcon")
     @Templates(value = "plain")
     public void testLeftCollapsedIcon() {
@@ -126,7 +187,6 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     @Templates(value = "plain")
     public void testLeftDisabledIcon() {
         panelMenuGroupAttributes.set(disabled, true);
-
         verifyStandardIcons(leftDisabledIcon, getPage().getTopGroup().advanced().getLeftIconElement(), getPage().getTopGroup().advanced().getLeftIconElement());
     }
 
@@ -134,7 +194,6 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     @CoversAttributes("leftExpandedIcon")
     @Templates(value = "plain")
     public void testLeftExpandedIcon() {
-
         verifyStandardIcons(leftExpandedIcon, getPage().getTopGroup().advanced().getLeftIconElement(), getPage().getTopGroup().advanced().getLeftIconElement());
 
         panelMenuGroupAttributes.set(disabled, true);
@@ -142,9 +201,41 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     }
 
     @Test
+    @CoversAttributes("leftIconClass")
+    @Templates(value = "plain")
+    public void testLeftIconClass() {
+        testStyleClass(Utils.getAncestorOfElement(getPage().getTopGroup().advanced().getLeftIconElement(), "td"), BasicAttributes.leftIconClass);
+    }
+
+    @Test
     @CoversAttributes("limitRender")
     public void testLimitRender() {
         testLimitRender(collapseFirstGroupAction);
+    }
+
+    @Test
+    @CoversAttributes("name")
+    @Templates(value = "plain")
+    public void testName() {
+        String testedVal = "new group name +éíáýžřčšě;";
+        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.name, testedVal);
+        // select group group23
+        guardAjax(getPage().getSubGroup().advanced().getLabelElement()).click();
+        assertEquals(getPage().getSelectedItemOutputText(), "group23 - " + testedVal);
+        // select group group2
+        guardAjax(getPage().getTopGroup().advanced().getLabelElement()).click();
+        assertEquals(getPage().getSelectedItemOutputText(), "group2 - " + testedVal);
+    }
+
+    @Test
+    @CoversAttributes("render")
+    public void testRender() {
+        testRender(new Action() {
+            @Override
+            public void perform() {
+                guardAjax(getPage().getTopGroup().advanced().getLabelElement()).click();
+            }
+        });
     }
 
     @Test
@@ -187,6 +278,13 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
 
         panelMenuGroupAttributes.set(disabled, true);
         assertTrue(getPage().getTopGroup().advanced().isTransparent(getPage().getTopGroup().advanced().getRightIconElement()));
+    }
+
+    @Test
+    @CoversAttributes("rightIconClass")
+    @Templates(value = "plain")
+    public void testRightIconClass() {
+        testStyleClass(Utils.getAncestorOfElement(getPage().getTopGroup().advanced().getRightIconElement(), "td"), BasicAttributes.rightIconClass);
     }
 
     @Test

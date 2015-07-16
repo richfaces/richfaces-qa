@@ -22,7 +22,7 @@
 package org.richfaces.tests.metamer.bean.rich;
 
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -47,7 +47,7 @@ public class RichPanelMenuGroupBean implements Serializable {
     private static final long serialVersionUID = -1L;
     private static Logger logger;
     private Attributes attributes;
-    private Map<String, Boolean> expanded = new HashMap<String, Boolean>();
+    private Map<String, Boolean> expanded = new LinkedHashMap<String, Boolean>();
 
     /**
      * Initializes the managed bean.
@@ -62,17 +62,20 @@ public class RichPanelMenuGroupBean implements Serializable {
         attributes.setAttribute("rendered", true);
         attributes.setAttribute("selectable", true);
         attributes.setAttribute("mode", "ajax");
+        attributes.setAttribute("name", "sample name");
+        attributes.setAttribute("label", "sample label");
 
         // already defined in source directly
-        attributes.remove("name");
-        attributes.remove("label");
         attributes.remove("action");
         attributes.remove("actionListener");
 
         // expanded needs to be set separately
         attributes.remove("expanded");
+
+        expanded.put("group1", false);
         expanded.put("group2", true);
         expanded.put("group23", true);
+        expanded.put("group3", false);
     }
 
     public Attributes getAttributes() {

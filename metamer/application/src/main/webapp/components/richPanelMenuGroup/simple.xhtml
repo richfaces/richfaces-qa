@@ -42,6 +42,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                             itemChangeListener="#{richPanelMenuBean.itemChangeListener}">
 
                 <rich:panelMenuGroup id="group1"
+                                     expanded="#{richPanelMenuGroupBean.expanded['group1']}"
                                      name="group1"
                                      label="Group 1">
                     <rich:panelMenuItem id="item11" name="item11" label="Item 1.1"/>
@@ -50,8 +51,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </rich:panelMenuGroup>
 
                 <rich:panelMenuGroup id="group2"
-                                     name="group2"
-                                     label="Group 2 (influenced by attributes)"
+                                     name="group2 - #{richPanelMenuGroupBean.attributes['name'].value}"
+                                     label="Group 2 (influenced by attributes) - #{richPanelMenuGroupBean.attributes['label'].value}"
                                      action="#{richBean.dummyAction}"
                                      actionListener="#{richBean.dummyActionListener}"
                                      bypassUpdates="#{richPanelMenuGroupBean.attributes['bypassUpdates'].value}"
@@ -103,8 +104,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <rich:panelMenuItem id="item22" name="item22" label="Item 2.2" />
 
                     <rich:panelMenuGroup id="group23"
-                                         name="group23"
-                                         label="Group 2.3 (influenced by attributes)"
+                                         name="group23 - #{richPanelMenuGroupBean.attributes['name'].value}"
+                                         label="Group 2.3 (influenced by attributes) - #{richPanelMenuGroupBean.attributes['label'].value}"
                                          action="#{richBean.dummyAction}"
                                          actionListener="#{richBean.dummyActionListener}"
                                          bypassUpdates="#{richPanelMenuGroupBean.attributes['bypassUpdates'].value}"
@@ -161,6 +162,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </rich:panelMenuGroup>
 
                 <rich:panelMenuGroup id="group3"
+                                     expanded="#{richPanelMenuGroupBean.expanded['group3']}"
                                      name="group3"
                                      label="Group 3">
                     <rich:panelMenuItem id="item31" name="item31" label="Item 3.1"/>
@@ -168,14 +170,19 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <rich:panelMenuItem id="item33" name="item33" label="Item 3.3"/>
                 </rich:panelMenuGroup>
             </rich:panelMenu>
-
             <br/><br/>
-
             <fieldset>
                 <legend>selected item</legend>
 
                 <a4j:outputPanel id="selectedPanel" ajaxRendered="true">
                     <h:outputText id="current" value="#{richPanelMenuBean.currentItem}" />
+                </a4j:outputPanel>
+            </fieldset>
+            <br/><br/>
+            <fieldset>
+                <legend>expanded groups</legend>
+                <a4j:outputPanel id="expandedGroupsPanel" ajaxRendered="true">
+                    <h:outputText id="expandedGroups" value="#{richPanelMenuGroupBean.expanded}" />
                 </a4j:outputPanel>
             </fieldset>
 

@@ -21,6 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richPanelMenuGroup;
 
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.panelMenu.RichFacesPanelMenu;
 import org.richfaces.fragment.panelMenu.RichFacesPanelMenuGroup;
@@ -29,32 +30,43 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
  * @since 4.3.1
- *
  */
 public class PanelMenuGroupPage extends MetamerPage {
 
-    @FindBy(css = "div.rf-pm[id$=panelMenu]")
-    private RichFacesPanelMenu menu;
-    @FindBy(css = "div[id$=group2]")
-    private RichFacesPanelMenuGroup topGroup;
+    @FindBy(css = "[id$=expandedGroups]")
+    private WebElement expandedGroupsOutputElement;
     @FindBy(css = "div[id$=group1]")
     private RichFacesPanelMenuGroup group1;
+    @FindBy(css = "div.rf-pm[id$=panelMenu]")
+    private RichFacesPanelMenu menu;
+    @FindBy(css = "[id$=current]")
+    private WebElement selectedItemOutputElement;
     @FindBy(css = "div[id$=group23]")
     private RichFacesPanelMenuGroup subGroup;
+    @FindBy(css = "div[id$=group2]")
+    private RichFacesPanelMenuGroup topGroup;
 
-    public RichFacesPanelMenu getMenu() {
-        return menu;
-    }
-
-    public RichFacesPanelMenuGroup getTopGroup() {
-        return topGroup;
+    public String getExpandedGroupsOutputText() {
+        return expandedGroupsOutputElement.getText().trim();
     }
 
     public RichFacesPanelMenuGroup getGroup1() {
         return group1;
     }
 
+    public RichFacesPanelMenu getMenu() {
+        return menu;
+    }
+
+    public String getSelectedItemOutputText() {
+        return selectedItemOutputElement.getText().trim();
+    }
+
     public RichFacesPanelMenuGroup getSubGroup() {
         return subGroup;
+    }
+
+    public RichFacesPanelMenuGroup getTopGroup() {
+        return topGroup;
     }
 }
