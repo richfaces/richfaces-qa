@@ -46,19 +46,19 @@ import org.slf4j.LoggerFactory;
 @SessionScoped
 public class RichPanelMenuBean implements Serializable {
 
-    private static final long serialVersionUID = -1L;
     private static Logger logger;
+    private static final long serialVersionUID = -1L;
 
-    private String activeItem;
     private Attributes attributes;
+    private String currentItem;
     private Map<String, Boolean> expanded = new HashMap<String, Boolean>();
-
-    public String getActiveItem() {
-        return activeItem;
-    }
 
     public Attributes getAttributes() {
         return attributes;
+    }
+
+    public String getCurrentItem() {
+        return currentItem;
     }
 
     public Map<String, Boolean> getExpanded() {
@@ -90,11 +90,10 @@ public class RichPanelMenuBean implements Serializable {
     /**
      * An item change listener that logs to the page old and new value.
      *
-     * @param event
-     *            an event representing the activation of a user interface component
+     * @param event an event representing the activation of a user interface component
      */
     public void itemChangeListener(ItemChangeEvent event) {
-        activeItem = event.getNewItemName();
+        currentItem = event.getNewItemName();
         RichBean.logToPage("* item changed: " + (event.getOldItem() == null ? null : event.getOldItem().getId())
             + " -> " + event.getNewItem().getId());
     }

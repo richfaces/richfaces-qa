@@ -39,7 +39,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="component">
 
             <rich:panelMenu id="panelMenu"
-                            activeItem="#{richPanelMenuBean.activeItem}"
+                            activeItem="#{richPanelMenuBean.attributes['activeItem'].value}"
                             bubbleSelection="#{richPanelMenuBean.attributes['bubbleSelection'].value}"
                             collapseEvent="#{richPanelMenuBean.attributes['collapseEvent'].value}"
                             disabled="#{richPanelMenuBean.attributes['disabled'].value}"
@@ -164,7 +164,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <legend>selected item</legend>
 
                 <a4j:outputPanel id="selectedPanel" ajaxRendered="true">
-                    <h:outputText id="current" value="#{richPanelMenuBean.activeItem}" />
+                    <h:outputText id="current" value="#{richPanelMenuBean.currentItem}" />
                 </a4j:outputPanel>
             </fieldset>
 
