@@ -54,64 +54,87 @@ import com.google.common.collect.Lists;
  * Managed bean storing glogal setting for the application, e.g. skin.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 23169 $
  */
 @ManagedBean
 @SessionScoped
 public class RichBean implements Serializable {
 
-    private static final long serialVersionUID = 5590865106686406193L;
     private static final Logger logger = LoggerFactory.getLogger(RichBean.class);
-    private String skin;
-    private List<SelectItem> skinningList;
-    private Skinning skinning;
-    private List<String> skins;
-    private boolean reDefault;
-    private boolean reComponent;
-    private boolean reTests;
-    private boolean log;
-    private String component;
-    private Map<String, String> allComponentsPermanentList;
-    private Map<String, String> filteredComponents;
-    private String selectedComponent;
-    private String container;
-    private boolean dummyBooleanResp;
+    private static final long serialVersionUID = 5590865106686406193L;
+
     private String activeTabOnIndex = "a4j";
-    private int delay;
-    private boolean stateless;
+    private Map<String, String> allComponentsPermanentList;
+    private String component;
     private String componentFormEnctype;
     private List<SelectItem> componentFormEnctypes;
+    private String container;
+    private int delay;
+    private boolean dummyBooleanResp;
+    private Map<String, String> filteredComponents;
+    private boolean log;
+    private boolean reComponent;
+    private boolean reDefault;
+    private boolean reTests;
+    private String selectedComponent;
+    private String skin;
+    private Skinning skinning;
+    private List<SelectItem> skinningList;
+    private List<String> skins;
+    private boolean stateless;
     private boolean uiDebugEnabled;
 
-    public enum Skinning {
-
-        NONE, SKINNING, SKINNING_CLASSES
+    public static void logToPage(String msg) {
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        ExpressionFactory factory = ctx.getApplication().getExpressionFactory();
+        ValueExpression exp = factory.createValueExpression(ctx.getELContext(), "#{phasesBean.phases}", List.class);
+        List<String> phases = (List<String>) exp.getValue(ctx.getELContext());
+        phases.add(msg);
     }
 
-    @PostConstruct
-    public void init() {
-        logger.debug("initializing bean " + getClass().getName());
-        createSkinList();
-        createComponentsMap();
+    /**
+     * An action listener that does nothing.
+     *
+     * @param event an event representing the activation of a user interface component (not used)
+     */
+    public void actionListener(AjaxBehaviorEvent event) {
+        logToPage("* action listener invoked");
+    }
 
-        component = "none";
-        container = "plain";
-        skin = "blueSky";
-        skinningList = new ArrayList<SelectItem>();
-        skinningList.add(new SelectItem(Skinning.NONE));
-        skinningList.add(new SelectItem(Skinning.SKINNING));
-        skinningList.add(new SelectItem(Skinning.SKINNING_CLASSES));
-        skinning = Skinning.SKINNING;
-        reTests = false;
-        reComponent = true;
-        uiDebugEnabled = false;
+    /**
+     * An action listener that does nothing.
+     *
+     * @param event an event representing the activation of a user interface component (not used)
+     */
+    public void actionListener2(AjaxBehaviorEvent event) {
+        logToPage("* action listener *2 invoked");
+    }
 
-        this.stateless = Boolean.valueOf(System.getProperty("statelessViews", "false"));
-        this.delay = 0;
-        componentFormEnctypes = Lists.newArrayList(
-            new SelectItem("application/x-www-form-urlencoded", "default"),
-            new SelectItem("multipart/form-data", "multipart"));
-        componentFormEnctype = componentFormEnctypes.get(0).getValue().toString();
+    public void causeAjaxErrorAction() {
+        getResponse().setStatus(501);
+    }
+
+    public void causeAjaxErrorActionListener(AjaxBehaviorEvent event) {
+        getResponse().setStatus(501);
+    }
+
+    /**
+     * Action that causes an error. Suitable for testing 'onerror' attribute.
+     *
+     * @return method never returns any value
+     * @throws FacesException thrown always
+     */
+    public String causeError() {
+        throw new FacesException("Ajax request caused an error. This is intentional behavior.");
+    }
+
+    /**
+     * A change event listener that logs to the page old and new value. This is 2nd ValueChacgeListener. Use 2 different
+     * listeners is useful when testing more than one listener definition for one component
+     *
+     * @param event an event representing the activation of a user interface component
+     */
+    public void changeEventListener(AjaxBehaviorEvent event) {
+        logToPage("* 2 value changed ");
     }
 
     private void createComponentsMap() {
@@ -224,6 +247,44 @@ public class RichBean implements Serializable {
         skins.add("plain");
     }
 
+    /**
+     * An action that does nothing.
+     *
+     * @return null
+     */
+    public String dummyAction() {
+        logToPage("* action invoked");
+        return null;
+    }
+
+    /**
+     * An action listener that does nothing.
+     *
+     * @param event an event representing the activation of a user interface component (not used)
+     */
+    public void dummyActionListener(ActionEvent event) {
+        logToPage("* action listener invoked");
+    }
+
+    /**
+     * An action that does nothing but has delay
+     *
+     * @return null
+     */
+    public String dummyActionWithDelay() {
+        logToPage("* action invoked [start]");
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            logToPage(" *** Error while dummy action handler sleeps.");
+        }
+
+        logToPage("* action invoked [end]");
+        dummyBooleanResp = !dummyBooleanResp;
+        return null;
+    }
+
     private void filterComponents() {
         //reset all displayed components
         this.filteredComponents.clear();
@@ -234,18 +295,6 @@ public class RichBean implements Serializable {
             String valueToFind = selectedComponent.toLowerCase();
             filteredComponents.putAll(findRelevantComponents(valueToFind, allComponentsPermanentList));
         }
-    }
-
-    public HttpServletResponse getResponse() {
-        return (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-    }
-
-    public void causeAjaxErrorActionListener(AjaxBehaviorEvent event) {
-        getResponse().setStatus(501);
-    }
-
-    public void causeAjaxErrorAction() {
-        getResponse().setStatus(501);
     }
 
     /**
@@ -271,28 +320,52 @@ public class RichBean implements Serializable {
         return result;
     }
 
+    public String getActiveTabOnIndex() {
+        return activeTabOnIndex;
+    }
+
+    public String getComponent() {
+        return component;
+    }
+
+    public String getComponentFormEnctype() {
+        return componentFormEnctype;
+    }
+
+    public List<SelectItem> getComponentFormEnctypes() {
+        return componentFormEnctypes;
+    }
+
+    public String getContainer() {
+        return container;
+    }
+
     public int getDelay() {
         return delay;
     }
 
-    public boolean isStateless() {
-        return stateless;
+    public boolean getDummyBooleanResp() {
+        return dummyBooleanResp;
     }
 
-    public void setDelay(int delay) {
-        this.delay = delay;
+    public boolean getExecuteChecker() {
+        return true;
     }
 
-    public void setStateless(boolean stateless) {
-        this.stateless = stateless;
+    public Map<String, String> getFilteredComponents() {
+        return filteredComponents;
     }
 
-    public boolean isUiDebugEnabled() {
-        return uiDebugEnabled;
+    public Object[] getFilteredComponentsList() {
+        return filteredComponents.keySet().toArray();
     }
 
-    public void setUiDebugEnabled(boolean uiDebugEnabled) {
-        this.uiDebugEnabled = uiDebugEnabled;
+    public HttpServletResponse getResponse() {
+        return (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+    }
+
+    public String getSelectedComponent() {
+        return selectedComponent;
     }
 
     /**
@@ -304,25 +377,12 @@ public class RichBean implements Serializable {
         return skin;
     }
 
-    /**
-     * Setter for user's skin.
-     *
-     * @param skin a RichFaces skin
-     */
-    public void setSkin(String skin) {
-        this.skin = skin;
-    }
-
     public String getSkinning() {
         if (skinning == Skinning.SKINNING) {
             return "enabled";
         } else {
             return "disabled";
         }
-    }
-
-    public void setSkinning(String skinning) {
-        this.skinning = Skinning.valueOf(skinning);
     }
 
     public String getSkinningClasses() {
@@ -333,88 +393,12 @@ public class RichBean implements Serializable {
         }
     }
 
-    public void setSkinningClasses(String skinningClasses) {
-        this.skinning = Skinning.valueOf(skinningClasses);
-    }
-
     public List<SelectItem> getSkinningList() {
         return skinningList;
     }
 
-    public void setSkins(List<String> skins) {
-        this.skins = skins;
-    }
-
     public List<String> getSkins() {
         return skins;
-    }
-
-    public void setReDefault(boolean reDefault) {
-        this.reDefault = reDefault;
-    }
-
-    public boolean isReDefault() {
-        return reDefault;
-    }
-
-    public void setReComponent(boolean reComponent) {
-        this.reComponent = reComponent;
-    }
-
-    public boolean isReComponent() {
-        return reComponent;
-    }
-
-    public void setLog(boolean log) {
-        this.log = log;
-    }
-
-    public boolean isLog() {
-        return log;
-    }
-
-    public void setComponent(String component) {
-        this.component = component;
-    }
-
-    public String getComponent() {
-        return component;
-    }
-
-    public String getComponentFormEnctype() {
-        return componentFormEnctype;
-    }
-
-    public void setComponentFormEnctype(String componentFormEnctype) {
-        this.componentFormEnctype = componentFormEnctype;
-    }
-
-    public List<SelectItem> getComponentFormEnctypes() {
-        return componentFormEnctypes;
-    }
-
-    public String getContainer() {
-        return container;
-    }
-
-    public void setContainer(String container) {
-        this.container = container;
-    }
-
-    public boolean isReTests() {
-        return reTests;
-    }
-
-    public void setReTests(boolean reTests) {
-        this.reTests = reTests;
-    }
-
-    public String getActiveTabOnIndex() {
-        return activeTabOnIndex;
-    }
-
-    public void setActiveTabOnIndex(String activeTabOnIndex) {
-        this.activeTabOnIndex = activeTabOnIndex;
     }
 
     public String getTestsPage() {
@@ -423,6 +407,32 @@ public class RichBean implements Serializable {
         } else {
             return String.format("/components/%s/tests.xhtml", component);
         }
+    }
+
+    @PostConstruct
+    public void init() {
+        logger.debug("initializing bean " + getClass().getName());
+        createSkinList();
+        createComponentsMap();
+
+        component = "none";
+        container = "plain";
+        skin = "blueSky";
+        skinningList = new ArrayList<SelectItem>();
+        skinningList.add(new SelectItem(Skinning.NONE));
+        skinningList.add(new SelectItem(Skinning.SKINNING));
+        skinningList.add(new SelectItem(Skinning.SKINNING_CLASSES));
+        skinning = Skinning.SKINNING;
+        reTests = false;
+        reComponent = true;
+        uiDebugEnabled = false;
+
+        this.stateless = Boolean.valueOf(System.getProperty("statelessViews", "false"));
+        this.delay = 0;
+        componentFormEnctypes = Lists.newArrayList(
+            new SelectItem("application/x-www-form-urlencoded", "default"),
+            new SelectItem("multipart/form-data", "multipart"));
+        componentFormEnctype = componentFormEnctypes.get(0).getValue().toString();
     }
 
     public String invalidateSession() {
@@ -442,78 +452,28 @@ public class RichBean implements Serializable {
         throw new IllegalStateException();
     }
 
-    public static void logToPage(String msg) {
-        FacesContext ctx = FacesContext.getCurrentInstance();
-        ExpressionFactory factory = ctx.getApplication().getExpressionFactory();
-        ValueExpression exp = factory.createValueExpression(ctx.getELContext(), "#{phasesBean.phases}", List.class);
-        List<String> phases = (List<String>) exp.getValue(ctx.getELContext());
-        phases.add(msg);
+    public boolean isLog() {
+        return log;
     }
 
-    /**
-     * Action that causes an error. Suitable for testing 'onerror' attribute.
-     *
-     * @return method never returns any value
-     * @throws FacesException thrown always
-     */
-    public String causeError() {
-        throw new FacesException("Ajax request caused an error. This is intentional behavior.");
+    public boolean isReComponent() {
+        return reComponent;
     }
 
-    /**
-     * An action that does nothing.
-     *
-     * @return null
-     */
-    public String dummyAction() {
-        logToPage("* action invoked");
-        return null;
+    public boolean isReDefault() {
+        return reDefault;
     }
 
-    /**
-     * An action that does nothing but has delay
-     *
-     * @return null
-     */
-    public String dummyActionWithDelay() {
-        logToPage("* action invoked [start]");
-
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            logToPage(" *** Error while dummy action handler sleeps.");
-        }
-
-        logToPage("* action invoked [end]");
-        dummyBooleanResp = !dummyBooleanResp;
-        return null;
+    public boolean isReTests() {
+        return reTests;
     }
 
-    /**
-     * An action listener that does nothing.
-     *
-     * @param event an event representing the activation of a user interface component (not used)
-     */
-    public void dummyActionListener(ActionEvent event) {
-        logToPage("* action listener invoked");
+    public boolean isStateless() {
+        return stateless;
     }
 
-    /**
-     * An action listener that does nothing.
-     *
-     * @param event an event representing the activation of a user interface component (not used)
-     */
-    public void actionListener(AjaxBehaviorEvent event) {
-        logToPage("* action listener invoked");
-    }
-
-    /**
-     * An action listener that does nothing.
-     *
-     * @param event an event representing the activation of a user interface component (not used)
-     */
-    public void actionListener2(AjaxBehaviorEvent event) {
-        logToPage("* action listener *2 invoked");
+    public boolean isUiDebugEnabled() {
+        return uiDebugEnabled;
     }
 
     /**
@@ -526,6 +486,88 @@ public class RichBean implements Serializable {
             + (event.getNewItem() != null ? event.getNewItem().getId() : null));
     }
 
+    public void setActiveTabOnIndex(String activeTabOnIndex) {
+        this.activeTabOnIndex = activeTabOnIndex;
+    }
+
+    public void setComponent(String component) {
+        this.component = component;
+    }
+
+    public void setComponentFormEnctype(String componentFormEnctype) {
+        this.componentFormEnctype = componentFormEnctype;
+    }
+
+    public void setContainer(String container) {
+        this.container = container;
+    }
+
+    public void setDelay(int delay) {
+        this.delay = delay;
+    }
+
+    public void setDummyBooleanResp(boolean dummyBooleanResp) {
+        this.dummyBooleanResp = dummyBooleanResp;
+    }
+
+    public void setExecuteChecker(boolean executeChecker) {
+        logToPage("* executeChecker");
+    }
+
+    public void setFilteredComponents(Map<String, String> allComponents) {
+        this.filteredComponents = allComponents;
+    }
+
+    public void setLog(boolean log) {
+        this.log = log;
+    }
+
+    public void setReComponent(boolean reComponent) {
+        this.reComponent = reComponent;
+    }
+
+    public void setReDefault(boolean reDefault) {
+        this.reDefault = reDefault;
+    }
+
+    public void setReTests(boolean reTests) {
+        this.reTests = reTests;
+    }
+
+    public void setSelectedComponent(String selectedComponent) {
+        this.selectedComponent = selectedComponent;
+        filterComponents();
+    }
+
+    /**
+     * Setter for user's skin.
+     *
+     * @param skin a RichFaces skin
+     */
+    public void setSkin(String skin) {
+        this.skin = skin;
+    }
+
+    public void setSkinning(String skinning) {
+        this.skinning = Skinning.valueOf(skinning);
+    }
+
+    public void setSkinningClasses(String skinningClasses) {
+        this.skinning = Skinning.valueOf(skinningClasses);
+    }
+
+    public void setSkins(List<String> skins) {
+        this.skins = skins;
+    }
+
+    public void setStateless(boolean stateless) {
+        this.stateless = stateless;
+    }
+
+    public void setUiDebugEnabled(boolean uiDebugEnabled) {
+        this.uiDebugEnabled = uiDebugEnabled;
+    }
+
     /**
      * A value change listener that logs to the page old and new value.
      *
@@ -533,16 +575,6 @@ public class RichBean implements Serializable {
      */
     public void valueChangeListener(ValueChangeEvent event) {
         logToPage("* 1 value changed: " + event.getOldValue() + " -> " + event.getNewValue());
-    }
-
-    /**
-     * A change event listener that logs to the page old and new value. This is 2nd ValueChacgeListener. Use 2 different
-     * listeners is useful when testing more than one listener definition for one component
-     *
-     * @param event an event representing the activation of a user interface component
-     */
-    public void changeEventListener(AjaxBehaviorEvent event) {
-        logToPage("* 2 value changed ");
     }
 
     /**
@@ -569,40 +601,8 @@ public class RichBean implements Serializable {
             + (newVal != null && newVal.length() > 21 ? newVal.substring(0, 20) : newVal != null ? newVal : "null"));
     }
 
-    public boolean getExecuteChecker() {
-        return true;
-    }
+    public enum Skinning {
 
-    public void setExecuteChecker(boolean executeChecker) {
-        logToPage("* executeChecker");
-    }
-
-    public boolean getDummyBooleanResp() {
-        return dummyBooleanResp;
-    }
-
-    public void setDummyBooleanResp(boolean dummyBooleanResp) {
-        this.dummyBooleanResp = dummyBooleanResp;
-    }
-
-    public String getSelectedComponent() {
-        return selectedComponent;
-    }
-
-    public void setSelectedComponent(String selectedComponent) {
-        this.selectedComponent = selectedComponent;
-        filterComponents();
-    }
-
-    public Map<String, String> getFilteredComponents() {
-        return filteredComponents;
-    }
-
-    public Object[] getFilteredComponentsList() {
-        return filteredComponents.keySet().toArray();
-    }
-
-    public void setFilteredComponents(Map<String, String> allComponents) {
-        this.filteredComponents = allComponents;
+        NONE, SKINNING, SKINNING_CLASSES
     }
 }
