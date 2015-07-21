@@ -23,7 +23,9 @@ package org.richfaces.tests.metamer.ftest.richOrderingList;
 
 import static org.testng.Assert.assertEquals;
 
+import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.Test;
 
@@ -49,6 +51,23 @@ public class TestOrderingList extends AbstractOrderingListTest {
         assertButtonDisabled(orderingList.advanced().getDownButtonElement(), "The button [down] should be disabled.");
         assertButtonDisabled(orderingList.advanced().getTopButtonElement(), "The button [top] should be disabled.");
         assertButtonDisabled(orderingList.advanced().getUpButtonElement(), "The button [up] should be disabled.");
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-13558")
+    public void testScrollingWithKeyboard() {
+        final Action workaround = new Action() {
+            @Override
+            public void perform() {
+                orderingList.select(1);
+                // workaround for webdriver issue https://code.google.com/p/selenium/issues/detail?id=7937
+                // the initial focus of keyboard is in browser's url bar instead on the actual clicked item
+                // clicking any button on the page should workaround this problem
+                orderingList.advanced().getUpButtonElement().click();
+                orderingList.advanced().getDownButtonElement().click();
+            }
+        };
+        checkScrollingWithKeyboard(orderingList.advanced().getRootElement(), orderingList.advanced().getItemsElements(), workaround);
     }
 
     @Test(groups = "smoke")

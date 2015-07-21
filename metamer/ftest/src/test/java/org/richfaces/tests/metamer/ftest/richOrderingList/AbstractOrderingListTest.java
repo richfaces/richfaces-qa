@@ -35,7 +35,7 @@ import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.fragment.list.ListItem;
 import org.richfaces.fragment.list.RichFacesListItem;
 import org.richfaces.fragment.orderingList.RichFacesOrderingList;
-import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.abstractions.AbstractListScrollingTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 
 /**
@@ -44,7 +44,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractOrderingListTest extends AbstractWebDriverTest {
+public abstract class AbstractOrderingListTest extends AbstractListScrollingTest {
 
     @FindBy(css = "div[id$=orderingList]")
     protected RichFacesOrderingList orderingList;

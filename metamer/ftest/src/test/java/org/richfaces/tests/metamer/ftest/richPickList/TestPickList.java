@@ -43,8 +43,8 @@ import org.richfaces.fragment.list.ListItem;
 import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.fragment.orderingList.OrderingList;
 import org.richfaces.fragment.pickList.RichFacesPickList;
-import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
+import org.richfaces.tests.metamer.ftest.abstractions.AbstractListScrollingTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -63,7 +63,7 @@ import com.google.common.collect.Lists;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestPickList extends AbstractWebDriverTest {
+public class TestPickList extends AbstractListScrollingTest {
 
     private final Attributes<PickListAttributes> pickListAttributes = getAttributes();
 
@@ -235,8 +235,8 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     /**
-     * Verify that item keep selected even moved from source to target, or back. If selected Alaska from sources, and
-     * then added to target, it should remain selected in target list
+     * Verify that item keep selected even moved from source to target, or back. If selected Alaska from sources, and then added
+     * to target, it should remain selected in target list
      */
     @Test(groups = "smoke")
     public void testKeepSelected() {
@@ -777,6 +777,28 @@ public class TestPickList extends AbstractWebDriverTest {
         String textTarget = pickList.advanced().getTargetList().getItem(0).getText();
         assertEquals(textTarget, textSource);
         assertEquals(output.getText(), "[" + textSource + "]");
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-13558")
+    public void testScrollingWithKeyboard() {
+        final WebElement focusElement = pickList.advanced().getRootElement();
+
+        final Action workaround = new Action() {
+            @Override
+            public void perform() {
+                // workaround for webdriver issue https://code.google.com/p/selenium/issues/detail?id=7937
+                // the initial focus of keyboard is in browser's url bar instead on the actual clicked item
+                // clicking any button on the page should workaround this problem
+                pickList.advanced().getSourceList().getItem(ChoicePickerHelper.byIndex().last()).select();
+                pickList.advanced().getAddButtonElement().click();
+                pickList.advanced().getRemoveButtonElement().click();
+            }
+        };
+
+        checkScrollingWithKeyboard(focusElement, pickList.advanced().getSourceListItemsElements(), workaround);
+        pickList.addAll();
+        checkScrollingWithKeyboard(focusElement, pickList.advanced().getTargetListItemsElements());
     }
 
     @Test
