@@ -34,9 +34,9 @@ import org.richfaces.fragment.autocomplete.SelectOrConfirm;
 import org.richfaces.fragment.common.ClearType;
 import org.richfaces.fragment.common.ScrollingType;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
-import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -103,9 +103,8 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
         testSimpleSelectionWithMouse();
     }
 
-    @RegressionTest("https://issues.jboss.org/browse/RF-14087")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14087")
     @CoversAttributes({ "mode", "minChars", "autofill", "showButton", "value" })
-    @Skip
     @Test
     public void testShowSuggestionsWithButton() {
         // prepare autocomplete attributes
