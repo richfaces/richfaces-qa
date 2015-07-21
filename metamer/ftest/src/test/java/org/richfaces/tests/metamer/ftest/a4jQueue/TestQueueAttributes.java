@@ -39,6 +39,8 @@ public class TestQueueAttributes extends AbstractWebDriverTest {
 
     @FindBy(css = "[id$=actionButton]")
     private WebElement actionButton;
+    @FindBy(css = "[id$=errorButton]")
+    private WebElement errorButton;
 
     private final Attributes<QueueAttributes> attributes = getAttributes();
 
@@ -48,10 +50,24 @@ public class TestQueueAttributes extends AbstractWebDriverTest {
             Graphene.guardAjax(actionButton).click();
         }
     };
+    private final Action guardedClickErrorButtonAction = new Action() {
+        @Override
+        public void perform() {
+            Graphene.guardAjax(errorButton).click();
+        }
+    };
 
     @Override
     public String getComponentTestPagePath() {
         return "a4jQueue/globalQueue.xhtml";
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11805")
+    @CoversAttributes("onerror")
+    public void testOnerror() {
+        attributes.set(QueueAttributes.requestDelay, 0);
+        testFireEvent("onerror", guardedClickErrorButtonAction);
     }
 
     @Test
