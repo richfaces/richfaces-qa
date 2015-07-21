@@ -48,16 +48,23 @@ import com.google.common.collect.Lists;
  */
 public class AttributesCollectorFromTaglib implements AttributesCollector {
 
+    private static final String JS_FUNCTION_NAME = "JSFunction";
+    private static final String JS_FUNCTION_TAGNAME = "jsFunction";
     private static final String METAINF_A4J_TAGLIB_XML = "META-INF/a4j.taglib.xml";
     private static final String METAINF_RICH_TAGLIB_XML = "META-INF/rich.taglib.xml";
     private static final String RICHFACES_JAR_REGEXP = ".*richfaces[^/]+jar.*";
+
+    private static String getTagName(Tag tag) {
+        String tagName = tag.getTagName();
+        return tagName.equals(JS_FUNCTION_TAGNAME) ? JS_FUNCTION_NAME : WordUtils.capitalize(tagName);
+    }
 
     @Override
     public Map<String, List<String>> collectAttributes() {
         Map<String, List<String>> result = new HashMap<String, List<String>>(100);
         try {
             for (Tag tag : getAllTagsSorted(getTaglibFiles(METAINF_A4J_TAGLIB_XML, METAINF_RICH_TAGLIB_XML))) {
-                result.put(WordUtils.capitalize(tag.getTagName()), getAttributesFromTag(tag));
+                result.put(getTagName(tag), getAttributesFromTag(tag));
             }
         } catch (JAXBException ex) {
             System.err.println(ex);
