@@ -36,7 +36,6 @@ public enum PanelMenuGroupAttributes implements AttributeEnum {
     execute,
     expandEvent,
     expanded,
-    hoverClass,
     id,
     immediate,
     label,
