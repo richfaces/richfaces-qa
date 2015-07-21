@@ -54,7 +54,6 @@ public enum PanelMenuItemAttributes implements AttributeEnum {
     onmouseover,
     onmouseup,
     onselect,
-    onunselect,
     render,
     rendered,
     resetValues,

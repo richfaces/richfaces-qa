@@ -64,7 +64,6 @@ public enum PanelMenuGroupAttributes implements AttributeEnum {
     onmouseup,
     onselect,
     onswitch,
-    onunselect,
     render,
     rendered,
     resetValues,
