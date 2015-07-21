@@ -52,6 +52,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                           onbeforedomupdate="#{a4jPollBean.attributes['onbeforedomupdate'].value}"
                           onbegin="#{rich:element('timeWatcher:grid')}.begin(); #{a4jPollBean.attributes['onbegin'].value}"
                           oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{a4jPollBean.attributes['oncomplete'].value}"
+                          onerror="#{a4jPollBean.attributes['onerror'].value}"
                           ontimer="#{rich:element('timeWatcher:grid')}.event(); #{rich:element('timeWatcher:grid')}.countDelayAndMedian(); #{a4jPollBean.attributes['ontimer'].value}"
                           render="#{a4jPollBean.attributes['render'].value} output"
                           rendered="#{a4jPollBean.attributes['rendered'].value}"

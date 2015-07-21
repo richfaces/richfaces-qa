@@ -33,10 +33,13 @@ import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annot
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import java.util.concurrent.TimeUnit;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.javascript.JavaScript;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
+import org.richfaces.fragment.status.Status.StatusState;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -200,6 +203,20 @@ public class TestPollSimple extends AbstractWebDriverTest {
             .element(getMetamerPage().getRenderCheckerOutputElement())
             .text().not().equalTo(render);
         assertTrue(time.equals(getRequestTimeElement().getText()));
+    }
+
+    @Test
+    @CoversAttributes("onerror")
+    public void testOnerror() {
+        pollAttributes.set(PollAttributes.enabled, false);
+        pollAttributes.set(PollAttributes.action, "causeAjaxErrorAction");
+        testFireEvent("onerror", new Action() {
+            @Override
+            public void perform() {
+                pollAttributes.set(PollAttributes.enabled, true);
+                getMetamerPage().getStatus().advanced().waitUntilStatusStateChanges(StatusState.ERROR).withTimeout(3, TimeUnit.SECONDS).perform();
+            }
+        });
     }
 
     @Test

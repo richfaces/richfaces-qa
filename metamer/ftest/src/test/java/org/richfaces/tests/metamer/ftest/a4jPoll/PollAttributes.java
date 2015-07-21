@@ -39,6 +39,7 @@ public enum PollAttributes implements AttributeEnum {
     onbeforedomupdate,
     onbegin,
     oncomplete,
+    onerror,
     ontimer,
     render,
     rendered,

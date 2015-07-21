@@ -287,6 +287,18 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onerror")
+    public void testOnerror() {
+        commandButtonAttributes.set(CommandButtonAttributes.action, "causeAjaxErrorAction");
+        testFireEvent("onerror", new Action() {
+            @Override
+            public void perform() {
+                page.submitByButton();
+            }
+        });
+    }
+
+    @Test
     @CoversAttributes("onkeyup")
     @Templates(value = "plain")
     public void testOneyup() {

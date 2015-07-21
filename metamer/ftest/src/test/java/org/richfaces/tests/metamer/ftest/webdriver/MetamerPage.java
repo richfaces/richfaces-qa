@@ -52,6 +52,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.richfaces.fragment.status.RichFacesStatus;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -71,6 +72,8 @@ public class MetamerPage {
     private WebElement requestTime;
     @FindBy(css = "span[id$=statusCheckerOutput]")
     private WebElement statusCheckerOutput;
+    @FindBy(css = "[id$='a4jStatusPanel']")
+    private RichFacesStatus status;
     @FindBy(css = "span[id$=renderChecker]")
     private WebElement renderCheckerOutput;
     @FindBy(css = "span[id$=jsFunctionChecker]")
@@ -89,6 +92,10 @@ public class MetamerPage {
     protected WebDriver driver;
     private String reqTime;
     private Map<PhaseId, Set<String>> map = new LinkedHashMap<PhaseId, Set<String>>();
+
+    public RichFacesStatus getStatus() {
+        return status;
+    }
 
     public WebElement getStatusCheckerOutputElement() {
         return statusCheckerOutput;

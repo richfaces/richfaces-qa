@@ -38,6 +38,7 @@ public enum JSFunctionAttributes implements AttributeEnum {
     onbeforedomupdate,
     onbegin,
     oncomplete,
+    onerror,
     render,
     rendered,
     resetValues,

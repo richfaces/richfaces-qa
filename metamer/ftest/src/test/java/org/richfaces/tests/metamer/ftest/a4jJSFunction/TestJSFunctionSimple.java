@@ -213,6 +213,18 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onerror")
+    public void testOnerror() {
+        jsFunctionAttributes.set(JSFunctionAttributes.action, "causeAjaxErrorAction");
+        testFireEvent("onerror", new Action() {
+            @Override
+            public void perform() {
+                Graphene.guardAjax(page.getLinkElement()).click();
+            }
+        });
+    }
+
+    @Test
     @CoversAttributes("render")
     public void testRender() {
         jsFunctionAttributes.set(JSFunctionAttributes.render, "time1");

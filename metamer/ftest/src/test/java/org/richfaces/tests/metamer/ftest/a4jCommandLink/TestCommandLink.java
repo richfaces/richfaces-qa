@@ -299,6 +299,18 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onerror")
+    public void testOnerror() {
+        commandLinkAttributes.set(CommandLinkAttributes.action, "causeAjaxErrorAction");
+        testFireEvent("onerror", new Action() {
+            @Override
+            public void perform() {
+                page.submitByLink();
+            }
+        });
+    }
+
+    @Test
     @CoversAttributes("onkeydown")
     @Templates(value = "plain")
     public void testOnkeydown() {
@@ -315,7 +327,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("onkeyup")
     @Templates(value = "plain")
-    public void testOneyup() {
+    public void testOnkeyup() {
         testFireEventWithJS(page.getLinkElement(), commandLinkAttributes, CommandLinkAttributes.onkeyup);
     }
 

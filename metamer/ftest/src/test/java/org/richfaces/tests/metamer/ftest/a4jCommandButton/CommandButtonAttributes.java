@@ -42,6 +42,7 @@ public enum CommandButtonAttributes implements AttributeEnum {
     onclick,
     oncomplete,
     ondblclick,
+    onerror,
     onkeydown,
     onkeypress,
     onkeyup,

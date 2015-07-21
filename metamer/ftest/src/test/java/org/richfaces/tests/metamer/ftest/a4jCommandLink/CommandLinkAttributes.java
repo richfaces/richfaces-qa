@@ -44,6 +44,7 @@ public enum CommandLinkAttributes implements AttributeEnum {
     onclick,
     oncomplete,
     ondblclick,
+    onerror,
     onkeydown,
     onkeypress,
     onkeyup,
