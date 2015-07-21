@@ -26,6 +26,7 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -76,6 +77,11 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     private static final long serialVersionUID = -1L;
     private static Logger logger = LoggerFactory.getLogger(Attributes.class);
     private static Map<Class<?>, List<Attribute>> richfacesAttributes;
+    private static final String RICH_BEAN_NAME = "richBean";
+
+    private final Class[] actionEventClassArray = new Class[] { ActionEvent.class };
+    private final Class[] ajaxBehaviorEventClassArray = new Class[] { AjaxBehaviorEvent.class };
+
     // K - name of a component attribute, V - value of the component attribute
     private Map<String, Attribute> attributes;
     // class object of managed bean
@@ -495,16 +501,14 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
         // if no select options for "actionListener" are defined in property file and it is an EL expression
         if (!hasSelectOptions("actionListener") && isStringEL(listener)) {
-            method = getExpressionFactory().createMethodExpression(elContext, listener, void.class,
-                new Class[]{ ActionEvent.class });
-            method.invoke(elContext, new Object[]{ event });
+            method = getExpressionFactory().createMethodExpression(elContext, listener, void.class, actionEventClassArray);
+            method.invoke(elContext, new Object[] { event });
         }
 
         // if select options for "actionListener" are defined in property file
         if (hasSelectOptions("actionListener")) {
-            method = getExpressionFactory().createMethodExpression(elContext, getMethodEL(listener), void.class,
-                new Class[]{ ActionEvent.class });
-            method.invoke(elContext, new Object[]{ event });
+            method = getExpressionFactory().createMethodExpression(elContext, getMethodEL(listener), void.class, actionEventClassArray);
+            method.invoke(elContext, new Object[] { event });
         }
     }
 
@@ -531,16 +535,14 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
         // if no select options for "listener" are defined in property file and it is an EL expression
         if (!hasSelectOptions("listener") && isStringEL(listener)) {
-            method = getExpressionFactory().createMethodExpression(elContext, listener, void.class,
-                new Class[]{ AjaxBehaviorEvent.class });
-            method.invoke(elContext, new Object[]{ event });
+            method = getExpressionFactory().createMethodExpression(elContext, listener, void.class, ajaxBehaviorEventClassArray);
+            method.invoke(elContext, new Object[] { event });
         }
 
         // if select options for "listener" are defined in property file
         if (hasSelectOptions("listener")) {
-            method = getExpressionFactory().createMethodExpression(elContext, getMethodEL(listener), void.class,
-                new Class[]{ AjaxBehaviorEvent.class });
-            method.invoke(elContext, new Object[]{ event });
+            method = getExpressionFactory().createMethodExpression(elContext, getMethodEL(listener), void.class, ajaxBehaviorEventClassArray);
+            method.invoke(elContext, new Object[] { event });
         }
     }
 
@@ -551,21 +553,25 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
      * @return string containing an expression for an action or action listener, e.g. #{bean.toUpperCaseAction}
      */
     private String getMethodEL(String methodName) {
-        // get name of the managed bean
-        String el = beanClass.getAnnotation(ManagedBean.class).name();
-
-        if ("".equals(el)) {
-            // create name of a managed bean according to standard, i.e. MyBean -> myBean
-            el = beanClass.getSimpleName().substring(0, 1).toLowerCase() + beanClass.getSimpleName().substring(1);
+        String beanName = RICH_BEAN_NAME;
+        // check if bean has such method, if not, invoke method over richBean
+        for (Method declaredMethod : beanClass.getDeclaredMethods()) {
+            if (declaredMethod.getName().equals(methodName)) {
+                // get name of the managed bean
+                beanName = beanClass.getAnnotation(ManagedBean.class).name();
+                if ("".equals(beanName)) {
+                    // create name of a managed bean according to standard, i.e. MyBean -> myBean
+                    beanName = beanClass.getSimpleName().substring(0, 1).toLowerCase() + beanClass.getSimpleName().substring(1);
+                }
+                break;
+            }
         }
 
-        StringBuilder methodEL = new StringBuilder("#{");
-        methodEL.append(el);
-        methodEL.append(".");
-        methodEL.append(methodName);
-        methodEL.append("}");
-
-        return methodEL.toString();
+        return new StringBuilder("#{")
+            .append(beanName)
+            .append(".")
+            .append(methodName)
+            .append("}").toString();
     }
 
     /**
