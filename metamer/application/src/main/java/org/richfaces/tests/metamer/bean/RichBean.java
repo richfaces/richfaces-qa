@@ -41,6 +41,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.richfaces.event.ItemChangeEvent;
@@ -235,9 +236,22 @@ public class RichBean implements Serializable {
         }
     }
 
+    public HttpServletResponse getResponse() {
+        return (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+    }
+
+    public void causeAjaxErrorActionListener(AjaxBehaviorEvent event) {
+        getResponse().setStatus(501);
+    }
+
+    public void causeAjaxErrorAction() {
+        getResponse().setStatus(501);
+    }
+
     /**
-     * This method create Map of components to display. If input parameter searchString match in value
-     * of any component from map, then add this component to new map.
+     * This method create Map of components to display. If input parameter searchString match in value of any component from
+     * map, then add this component to new map.
+     *
      * @param searchString patter to find. if null then empty map is returned.
      * @param map of all components. If null then empty map is returned.
      * @return Map of components with string key and string value which value match with patter in searchString.
@@ -293,8 +307,7 @@ public class RichBean implements Serializable {
     /**
      * Setter for user's skin.
      *
-     * @param skin
-     *            a RichFaces skin
+     * @param skin a RichFaces skin
      */
     public void setSkin(String skin) {
         this.skin = skin;
@@ -441,8 +454,7 @@ public class RichBean implements Serializable {
      * Action that causes an error. Suitable for testing 'onerror' attribute.
      *
      * @return method never returns any value
-     * @throws FacesException
-     *             thrown always
+     * @throws FacesException thrown always
      */
     public String causeError() {
         throw new FacesException("Ajax request caused an error. This is intentional behavior.");
@@ -480,8 +492,7 @@ public class RichBean implements Serializable {
     /**
      * An action listener that does nothing.
      *
-     * @param event
-     *            an event representing the activation of a user interface component (not used)
+     * @param event an event representing the activation of a user interface component (not used)
      */
     public void dummyActionListener(ActionEvent event) {
         logToPage("* action listener invoked");
@@ -490,8 +501,7 @@ public class RichBean implements Serializable {
     /**
      * An action listener that does nothing.
      *
-     * @param event
-     *            an event representing the activation of a user interface component (not used)
+     * @param event an event representing the activation of a user interface component (not used)
      */
     public void actionListener(AjaxBehaviorEvent event) {
         logToPage("* action listener invoked");
@@ -500,8 +510,7 @@ public class RichBean implements Serializable {
     /**
      * An action listener that does nothing.
      *
-     * @param event
-     *            an event representing the activation of a user interface component (not used)
+     * @param event an event representing the activation of a user interface component (not used)
      */
     public void actionListener2(AjaxBehaviorEvent event) {
         logToPage("* action listener *2 invoked");
@@ -510,8 +519,7 @@ public class RichBean implements Serializable {
     /**
      * An item change listener that logs to the page old and new value.
      *
-     * @param event
-     *            an event representing the activation of a user interface component
+     * @param event an event representing the activation of a user interface component
      */
     public void itemChangeListener(ItemChangeEvent event) {
         logToPage("* item changed: " + (event.getOldItem() == null ? null : event.getOldItem().getId()) + " -> "
@@ -521,8 +529,7 @@ public class RichBean implements Serializable {
     /**
      * A value change listener that logs to the page old and new value.
      *
-     * @param event
-     *            an event representing the activation of a user interface component
+     * @param event an event representing the activation of a user interface component
      */
     public void valueChangeListener(ValueChangeEvent event) {
         logToPage("* 1 value changed: " + event.getOldValue() + " -> " + event.getNewValue());
@@ -532,19 +539,17 @@ public class RichBean implements Serializable {
      * A change event listener that logs to the page old and new value. This is 2nd ValueChacgeListener. Use 2 different
      * listeners is useful when testing more than one listener definition for one component
      *
-     * @param event
-     *            an event representing the activation of a user interface component
+     * @param event an event representing the activation of a user interface component
      */
     public void changeEventListener(AjaxBehaviorEvent event) {
         logToPage("* 2 value changed ");
     }
 
     /**
-     * A value change listener that logs to the page old and new value. But if event value was longer that 20 chars,
-     * only first 20 chars will be logged
+     * A value change listener that logs to the page old and new value. But if event value was longer that 20 chars, only first
+     * 20 chars will be logged
      *
-     * @param event
-     *            an event representing the activation of a user interface component
+     * @param event an event representing the activation of a user interface component
      */
     public void valueChangeListenerImproved(ValueChangeEvent event) {
         String oldVal = event.getOldValue() != null ? event.getOldValue().toString() : null;
