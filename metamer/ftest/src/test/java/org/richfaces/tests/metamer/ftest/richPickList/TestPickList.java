@@ -281,17 +281,22 @@ public class TestPickList extends AbstractListScrollingTest {
     }
 
     @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-14093")
     @CoversAttributes("keepSourceOrder")
     public void testKeepSourceOrder() {
+        int maxIndex = 53;
+        final Integer[] indexesAtOnce = new Integer[] { 1, 0, 26, maxIndex, maxIndex - 1 };
+        final Integer[] indexesOneByOne = new Integer[] { 1, 0, 26 - 2, maxIndex - 3, maxIndex - 4 };
+
         pickListAttributes.set(PickListAttributes.keepSourceOrder, Boolean.TRUE);
         // save original elements text and size
         final List<String> sourceListOriginal = getStringsFromElements(pickList.advanced().getSourceListItemsElements());
         final int originalSourceListSize = pickList.advanced().getSourceListItemsElements().size();
 
-        // pick some items
-        pickList.addMultiple(ChoicePickerHelper.byIndex().indexes(1, 6, 10));
+        // pick some items, all at once
+        pickList.addMultiple(ChoicePickerHelper.byIndex().indexes(indexesAtOnce));
         // check that items were added
-        assertEquals(pickList.advanced().getTargetListItemsElements().size(), 3);
+        assertEquals(pickList.advanced().getTargetListItemsElements().size(), indexesAtOnce.length);
         // save text from picked elements
         final List<String> pickedElementsText = getStringsFromElements(pickList.advanced().getTargetListItemsElements());
         // remove all items from target list
@@ -301,21 +306,34 @@ public class TestPickList extends AbstractListScrollingTest {
         // check that position of elements was not changed
         assertEquals(getStringsFromElements(pickList.advanced().getSourceListItemsElements()), sourceListOriginal);
 
+        // pick some items, one by one, RF-14093
+        for (int index : indexesOneByOne) {
+            pickList.add(index);
+        }
+        // check that items were added
+        assertEquals(pickList.advanced().getTargetListItemsElements().size(), indexesAtOnce.length);
+        // remove all items from target list
+        pickList.removeAll();
+        // source list should contain all elements as before testing
+        assertEquals(pickList.advanced().getSourceListItemsElements().size(), originalSourceListSize);
+        // check that position of elements was not changed
+        assertEquals(getStringsFromElements(pickList.advanced().getSourceListItemsElements()), sourceListOriginal);
+
         // check default value of keepSourceOrder == false
         pickListAttributes.set(PickListAttributes.keepSourceOrder, Boolean.FALSE);
-        // pick some items
-        pickList.addMultiple(ChoicePickerHelper.byIndex().indexes(1, 6, 10));
+        // pick some items, all at once
+        pickList.addMultiple(ChoicePickerHelper.byIndex().indexes(indexesAtOnce));
         // check that items were added
-        assertEquals(pickList.advanced().getTargetListItemsElements().size(), 3);
+        assertEquals(pickList.advanced().getTargetListItemsElements().size(), indexesAtOnce.length);
         // remove all items from target list
         pickList.removeAll();
         // source list should contain all elements as before testing
         assertEquals(pickList.advanced().getSourceListItemsElements().size(), originalSourceListSize);
         // source list should contain removed items in the end of the list and the position of other items should remain the same
         List<String> expectedSourceListAfterRemove = Lists.newArrayList(sourceListOriginal);
-        expectedSourceListAfterRemove.remove(10);
-        expectedSourceListAfterRemove.remove(6);
-        expectedSourceListAfterRemove.remove(1);
+        // remove picked elements
+        expectedSourceListAfterRemove.removeAll(pickedElementsText);
+        // add picked elements to the end of the list
         expectedSourceListAfterRemove.addAll(pickedElementsText);
         assertEquals(getStringsFromElements(pickList.advanced().getSourceListItemsElements()), expectedSourceListAfterRemove);
     }
