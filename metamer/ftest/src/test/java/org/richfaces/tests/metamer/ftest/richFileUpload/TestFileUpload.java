@@ -26,12 +26,15 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertTrue;
 
+import java.util.List;
+
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
@@ -49,6 +52,9 @@ public class TestFileUpload extends AbstractFileUploadTest {
     private final Attributes<FileUploadAttributes> fileUploadAttributes = getAttributes();
 
     private final Action succesfulFileUploadAction = new SuccesfulFileUploadAction();
+
+    @FindBy(css = "span[id$='uploadedFilesPanel'] li")
+    private List<WebElement> uploadedFiles;
 
     private void _testFireEventWithJS(FileUploadAttributes testedAttribute, WebElement element) {
         // same as 'testFireEventWithJS', but added a ';return false;' to the attribute value to not open the file dialog
@@ -171,6 +177,15 @@ public class TestFileUpload extends AbstractFileUploadTest {
         fileUploadAttributes.set(FileUploadAttributes.execute, cmd);
         succesfulFileUploadAction.perform();
         getMetamerPage().assertListener(PhaseId.UPDATE_MODEL_VALUES, "executeChecker");
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-14092")
+    public void testFilenameEncodingIsPreserved() {
+        sendFileWithWaiting(unicodeNameFile, true, true);
+        waitUntilUploadedFilesListShow(1);
+        assertEquals(fileUpload.advanced().getItems().getItem(0).getFilename(), unicodeNameFile);
+        assertEquals(uploadedFiles.get(0).getText(), unicodeNameFile);
     }
 
     @Test(groups = { "smoke" })
@@ -507,6 +522,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
         assertEquals(fileUpload.advanced().getItems().size(), 1, "List of uploaded files should contain one file.");
         assertEquals(fileUpload.advanced().getItems().getItem(0).getFilename(), filenames[0],
             "Uploaded file does not appear in uploadedList.");
+        assertEquals(uploadedFiles.get(0).getText(), filenames[0]);
 
         getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, "upload listener");
     }

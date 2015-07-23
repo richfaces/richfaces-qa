@@ -46,6 +46,7 @@ public abstract class AbstractFileUploadTest extends AbstractWebDriverTest {
     protected static final String notAcceptableFile = "file1.x";
     protected static final String acceptableFile = "file1.txt";
     protected static final String bigFile = "bigFile.txt";
+    protected static final String unicodeNameFile = "ľščťžýáíéúôňфывацукйешгщь.txt";
     protected static final String[] filenames = { acceptableFile, "file2.txt" };
     protected static final String ap = "\"";
     protected int filesToUploadCount;
