@@ -48,6 +48,8 @@ import org.richfaces.tests.metamer.ftest.abstractions.AbstractListScrollingTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -71,6 +73,7 @@ public class TestPickList extends AbstractListScrollingTest {
     private WebElement ajaxSubmit;
     @FindBy(css = "input[id$=hButton]")
     private WebElement hSubmit;
+    private Boolean keepSourceOrder;
     @FindBy(css = "[id$=msg]")
     private RichFacesMessage message;
     @FindBy(css = "span[id$=output]")
@@ -130,6 +133,29 @@ public class TestPickList extends AbstractListScrollingTest {
         String label = "xxx";
         pickListAttributes.set(PickListAttributes.addText, label);
         assertEquals(pickList.advanced().getAddButtonElement().getText(), label);
+    }
+
+    @Test
+    @UseWithField(field = "keepSourceOrder", valuesFrom = ValuesFrom.FROM_FIELD, value = "booleans")
+    @RegressionTest("https://issues.jboss.org/browse/RF-14094")
+    public void testButtonsStateUsingKeepSourceOrdered() {
+        pickListAttributes.set(PickListAttributes.keepSourceOrder, keepSourceOrder);
+        assertButtonDisabled(pickList.advanced().getAddButtonElement());
+        assertButtonEnabled(pickList.advanced().getAddAllButtonElement());
+        assertButtonDisabled(pickList.advanced().getRemoveButtonElement());
+        assertButtonDisabled(pickList.advanced().getRemoveAllButtonElement());
+
+        pickList.add(0);
+        assertButtonDisabled(pickList.advanced().getAddButtonElement());
+        assertButtonEnabled(pickList.advanced().getAddAllButtonElement());
+        assertButtonEnabled(pickList.advanced().getRemoveButtonElement());
+        assertButtonEnabled(pickList.advanced().getRemoveAllButtonElement());
+
+        pickList.remove(0);
+        assertButtonEnabled(pickList.advanced().getAddButtonElement());
+        assertButtonEnabled(pickList.advanced().getAddAllButtonElement());
+        assertButtonDisabled(pickList.advanced().getRemoveButtonElement());
+        assertButtonDisabled(pickList.advanced().getRemoveAllButtonElement());
     }
 
     @Test
