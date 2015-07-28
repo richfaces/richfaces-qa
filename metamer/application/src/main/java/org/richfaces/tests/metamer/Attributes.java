@@ -62,7 +62,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.richfaces.component.UIStatus;
-import org.richfaces.tests.metamer.bean.RichBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -464,8 +463,6 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
             return null;
         }
 
-        RichBean.logToPage("* action invoked");
-
         // if no select options for "action" are defined in property file and it is an EL expression
         if (!hasSelectOptions("action") && isStringEL(outcome)) {
             method = getExpressionFactory().createMethodExpression(elContext, outcome, String.class, new Class[0]);
@@ -501,8 +498,6 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
             return;
         }
 
-        RichBean.logToPage("* action listener invoked");
-
         // if no select options for "actionListener" are defined in property file and it is an EL expression
         if (!hasSelectOptions(ACTION_LISTENER) && isStringEL(listener)) {
             method = getExpressionFactory().createMethodExpression(elContext, listener, void.class, actionEventClassArray);
@@ -533,8 +528,6 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
         if (listener == null) {
             return;
         }
-
-        RichBean.logToPage("* listener invoked");
 
         // if no select options for "listener" are defined in property file and it is an EL expression
         if (!hasSelectOptions(LISTENER) && isStringEL(listener)) {
@@ -567,7 +560,6 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
             return;
         }
 
-//        RichBean.logToPage("* value change listener invoked");
         // if no select options for "valueChangeListener" are defined in property file and it is an EL expression
         if (!hasSelectOptions(VALUE_CHANGE_LISTENER) && isStringEL(listener)) {
             method = getExpressionFactory().createMethodExpression(elContext, listener, void.class, valueChangeEventClassArray);

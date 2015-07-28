@@ -32,6 +32,7 @@ import javax.faces.event.ActionEvent;
 
 import org.richfaces.component.UIFunction;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.tests.metamer.bean.RichBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,20 +87,24 @@ public class A4JJSFunctionBean implements Serializable {
     }
 
     public String increaseYearAction() {
+        RichBean.logToPage("* action invoked");
         year++;
         return null;
     }
 
     public String decreaseYearAction() {
+        RichBean.logToPage("* action invoked");
         year--;
         return null;
     }
 
     public void increaseYearActionListener(ActionEvent event) {
+        RichBean.logToPage("* action listener invoked");
         year++;
     }
 
     public void decreaseYearActionListener(ActionEvent event) {
+        RichBean.logToPage("* action listener invoked");
         year--;
     }
 }

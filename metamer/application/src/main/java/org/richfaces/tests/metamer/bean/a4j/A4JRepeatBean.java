@@ -32,6 +32,7 @@ import javax.faces.bean.SessionScoped;
 
 import org.richfaces.component.UIRepeat;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.tests.metamer.bean.RichBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,14 +68,17 @@ public class A4JRepeatBean implements Serializable {
         }
 
         public void clearValueAction() {
+            RichBean.logToPage("* action invoked");
             setValue(0);
         }
 
         public void increaseValueAction() {
+            RichBean.logToPage("* action invoked");
             value++;
         }
 
         public void decreaseValueAction() {
+            RichBean.logToPage("* action invoked");
             value--;
         }
     }

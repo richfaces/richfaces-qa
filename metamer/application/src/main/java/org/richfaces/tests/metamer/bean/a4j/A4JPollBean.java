@@ -31,6 +31,7 @@ import javax.faces.event.ActionEvent;
 
 import org.richfaces.component.UIPoll;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.tests.metamer.bean.RichBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,8 +79,7 @@ public class A4JPollBean implements Serializable {
     /**
      * Setter for attributes.
      *
-     * @param attributes
-     *            map containing all attributes of tested component. Name of the component is key in the map.
+     * @param attributes map containing all attributes of tested component. Name of the component is key in the map.
      */
     public void setAttributes(Attributes attributes) {
         this.attributes = attributes;
@@ -98,20 +98,24 @@ public class A4JPollBean implements Serializable {
     }
 
     public String increaseCounterAction() {
+        RichBean.logToPage("* action invoked");
         counter++;
         return null;
     }
 
     public String decreaseCounterAction() {
+        RichBean.logToPage("* action invoked");
         counter--;
         return null;
     }
 
     public void increaseCounterActionListener(ActionEvent event) {
+        RichBean.logToPage("* action listener invoked");
         counter++;
     }
 
     public void decreaseCounterActionListener(ActionEvent event) {
+        RichBean.logToPage("* action listener invoked");
         counter--;
     }
 }

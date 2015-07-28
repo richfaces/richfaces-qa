@@ -27,6 +27,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import org.richfaces.tests.metamer.bean.RichBean;
+
 /**
  *  Backing bean for RF-12084 issue simulation
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
@@ -57,6 +59,7 @@ public class TestBean implements Serializable {
     }
 
     public void checkBoxListener() {
+        RichBean.logToPage("* listener invoked");
         System.out.println("Changed to:" + checkBox);
     }
 

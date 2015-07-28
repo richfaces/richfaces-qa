@@ -30,6 +30,7 @@ import javax.faces.event.ActionEvent;
 
 import org.richfaces.component.UICommandLink;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.tests.metamer.bean.RichBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,8 +82,7 @@ public class A4JCommandLinkBean implements Serializable {
     /**
      * Setter for attributes.
      *
-     * @param attributes
-     *            map containing all attributes of tested component. Name of the component is key in the map.
+     * @param attributes map containing all attributes of tested component. Name of the component is key in the map.
      */
     public void setAttributes(Attributes attributes) {
         this.attributes = attributes;
@@ -118,8 +118,7 @@ public class A4JCommandLinkBean implements Serializable {
     /**
      * Setter for input.
      *
-     * @param input
-     *            value which user entered into text input on the page
+     * @param input value which user entered into text input on the page
      */
     public void setInput(String input) {
         this.input = input;
@@ -131,6 +130,7 @@ public class A4JCommandLinkBean implements Serializable {
      * @return null since no navigation should be performed
      */
     public String first6CharsAction() {
+        RichBean.logToPage("* action invoked");
         if (input == null) {
             return "";
         } else {
@@ -146,6 +146,7 @@ public class A4JCommandLinkBean implements Serializable {
      * @return null since no navigation should be performed
      */
     public String doubleStringAction() {
+        RichBean.logToPage("* action invoked");
         if (input == null) {
             input2 = "";
         } else {
@@ -161,6 +162,7 @@ public class A4JCommandLinkBean implements Serializable {
      * @return null since no navigation should be performed
      */
     public String toUpperCaseAction() {
+        RichBean.logToPage("* action invoked");
         if (input == null) {
             return "";
         } else {
@@ -172,10 +174,10 @@ public class A4JCommandLinkBean implements Serializable {
     /**
      * An action listener that takes the first six characters from input and stores it to input3.
      *
-     * @param event
-     *            an event representing the activation of a user interface component (not used)
+     * @param event an event representing the activation of a user interface component (not used)
      */
     public void first6CharsActionListener(ActionEvent event) {
+        RichBean.logToPage("* action listener invoked");
         if (input == null) {
             input3 = "";
         } else {
@@ -187,10 +189,10 @@ public class A4JCommandLinkBean implements Serializable {
     /**
      * An action listener that takes user's input, doubles it and stores it to input3.
      *
-     * @param event
-     *            an event representing the activation of a user interface component (not used)
+     * @param event an event representing the activation of a user interface component (not used)
      */
     public void doubleStringActionListener(ActionEvent event) {
+        RichBean.logToPage("* action listener invoked");
         if (input == null) {
             input3 = "";
         } else {
@@ -201,10 +203,10 @@ public class A4JCommandLinkBean implements Serializable {
     /**
      * An action listener that takes user's input, converts it to upper case and stores it to input3.
      *
-     * @param event
-     *            an event representing the activation of a user interface component (not used)
+     * @param event an event representing the activation of a user interface component (not used)
      */
     public void toUpperCaseActionListener(ActionEvent event) {
+        RichBean.logToPage("* action listener invoked");
         if (input == null) {
             input3 = "";
         } else {

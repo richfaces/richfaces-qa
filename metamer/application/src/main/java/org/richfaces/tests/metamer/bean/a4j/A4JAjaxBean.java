@@ -33,6 +33,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 import org.ajax4jsf.component.behavior.AjaxBehavior;
 import org.richfaces.tests.metamer.Attribute;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.tests.metamer.bean.RichBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -104,32 +105,29 @@ public class A4JAjaxBean implements Serializable {
     }
 
     /**
-     * An action listener that takes user's input, doubles it and stores it to
-     * output.
+     * An action listener that takes user's input, doubles it and stores it to output.
      *
-     * @param event an event representing the activation of a user interface
-     * component (not used)
+     * @param event an event representing the activation of a user interface component (not used)
      */
     public void doubleStringListener(AjaxBehaviorEvent event) {
+        RichBean.logToPage("* listener invoked");
         this.actualListenerAction = actionDoubleStringListener;
     }
 
     /**
-     * An action listener that takes the first six characters from input and
-     * stores it to output.
+     * An action listener that takes the first six characters from input and stores it to output.
      *
-     * @param event an event representing the activation of a user interface
-     * component (not used)
+     * @param event an event representing the activation of a user interface component (not used)
      */
     public void first6CharsListener(AjaxBehaviorEvent event) {
+        RichBean.logToPage("* listener invoked");
         this.actualListenerAction = actionFirst6CharsListener;
     }
 
     /**
      * Getter for attributes.
      *
-     * @return A map containing all attributes of tested component. Name of the
-     * component is key in the map.
+     * @return A map containing all attributes of tested component. Name of the component is key in the map.
      */
     public Attributes getAttributes() {
         return attributes;
@@ -270,8 +268,7 @@ public class A4JAjaxBean implements Serializable {
     /**
      * Setter for attributes.
      *
-     * @param attributes map containing all attributes of tested component. Name
-     * of the component is key in the map.
+     * @param attributes map containing all attributes of tested component. Name of the component is key in the map.
      */
     public void setAttributes(Attributes attributes) {
         this.attributes = attributes;
@@ -362,13 +359,12 @@ public class A4JAjaxBean implements Serializable {
     }
 
     /**
-     * An action listener that takes user's input, converts it to upper case and
-     * stores it to output.
+     * An action listener that takes user's input, converts it to upper case and stores it to output.
      *
-     * @param event an event representing the activation of a user interface
-     * component (not used)
+     * @param event an event representing the activation of a user interface component (not used)
      */
     public void toUpperCaseListener(AjaxBehaviorEvent event) {
+        RichBean.logToPage("* listener invoked");
         this.actualListenerAction = actionToUpperCaseListener;
     }
 
