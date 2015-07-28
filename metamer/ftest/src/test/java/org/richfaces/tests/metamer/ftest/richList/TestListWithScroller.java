@@ -21,6 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richList;
 
+
 import static org.jboss.arquillian.graphene.Graphene.waitAjax;
 
 import org.openqa.selenium.support.FindBy;
@@ -59,14 +60,12 @@ public class TestListWithScroller extends AbstractListTest {
 
     private void testNumberedPages(RichFacesDataScroller dataScroller) {
         final int[] testPages = new int[] { 1, 10, 2 };
-        rows = 20;
-
         for (int pageNumber : testPages) {
             // switch and wait for this action to complete
             dataScroller.switchTo(pageNumber);
             waitAjax(driver).until().element(dataScroller.advanced().getActivePageElement()).text()
                 .equalTo(Integer.toString(pageNumber));
-            verifyList(dataScroller.getActivePageNumber(), rows);
+            verifyList(dataScroller.getActivePageNumber());
         }
     }
 }

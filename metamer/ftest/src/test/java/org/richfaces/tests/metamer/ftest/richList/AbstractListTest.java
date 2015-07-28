@@ -46,6 +46,7 @@ public abstract class AbstractListTest extends AbstractWebDriverTest {
     static final List<Employee> employees = Model.unmarshallEmployees();
     static final int ELEMENTS_TOTAL = employees.size();
     static final Integer[] INTS = { -1, 0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL, ELEMENTS_TOTAL + 1 };
+    private static final String START_ATTRIBUTE = "start";
 
     @FindBy(css = "[id$=richList]")
     protected RichFacesList list;
@@ -58,37 +59,27 @@ public abstract class AbstractListTest extends AbstractWebDriverTest {
     List<Employee> expectedEmployees;
 
     private void countExpectedValues() {
-        String firstAtt = getAttributes().get(ListAttributes.first);
-        if (firstAtt != null && !firstAtt.isEmpty()) {
-            first = Integer.valueOf(firstAtt);
-        } else {
-            first = null;
-        }
-        String rowsAtt = getAttributes().get(ListAttributes.rows);
-        if (rowsAtt != null && !rowsAtt.isEmpty()) {
-            rows = Integer.valueOf(rowsAtt);
-        } else {
-            rows = null;
-        }
+        initFirst();
+        initRows();
         // expected begin
-        if (first == null || first < 0) {
+        if (first < 0) {
             expectedBegin = 0;
         } else {
             expectedBegin = first;
         }
         expectedBegin = minMax(0, expectedBegin, ELEMENTS_TOTAL);
         // expected displayed rows
-        if (rows == null || rows < 1 || rows > ELEMENTS_TOTAL) {
+        if (rows < 1 || rows > ELEMENTS_TOTAL) {
             displayedRows = ELEMENTS_TOTAL;
         } else {
             displayedRows = rows;
         }
-        if (first != null && first < 0) {
+        if (first < 0) {
             displayedRows = 0;
         }
         displayedRows = min(displayedRows, ELEMENTS_TOTAL - expectedBegin);
         // expected end
-        if (rows == null || rows < 1) {
+        if (rows < 1) {
             expectedEnd = ELEMENTS_TOTAL - 1;
         } else {
             expectedEnd = rows - 1;
@@ -96,8 +87,28 @@ public abstract class AbstractListTest extends AbstractWebDriverTest {
         expectedEmployees = employees.subList(expectedBegin, expectedBegin + displayedRows);
     }
 
-    private void countExpectedValues(int activePageNumber, int rows) {
-        int expectedBegin = rows * (activePageNumber - 1);
+    private void initFirst() throws NumberFormatException {
+        String firstAtt = getAttributes().get(ListAttributes.first);
+        if (firstAtt != null && !firstAtt.isEmpty()) {
+            first = Integer.valueOf(firstAtt);
+        } else {
+            first = 0;
+        }
+    }
+
+    private void initRows() throws NumberFormatException {
+        String rowsAtt = getAttributes().get(ListAttributes.rows);
+        if (rowsAtt != null && !rowsAtt.isEmpty()) {
+            rows = Integer.valueOf(rowsAtt);
+        } else {
+            rows = Integer.MAX_VALUE;
+        }
+    }
+
+    private void countExpectedValues(int activePageNumber) {
+        initRows();
+        initFirst();
+        expectedBegin = rows * (activePageNumber - 1) + (first >= 0 ? first : 0);
         displayedRows = rows;
         expectedEmployees = employees.subList(expectedBegin, expectedBegin + rows);
     }
@@ -106,19 +117,21 @@ public abstract class AbstractListTest extends AbstractWebDriverTest {
         return max(min, min(max, value));
     }
 
-    private void verifyCounts() {
+    private void verifyCounts(boolean usingDataScroller) {
         assertEquals(list.getItems().size(), displayedRows);
+        // RF-11781:
+        assertEquals(list.getRootElement().getAttribute(START_ATTRIBUTE), String.valueOf(usingDataScroller ? expectedBegin + 1 : first + 1));
     }
 
     protected void verifyList() {
         countExpectedValues();
-        verifyCounts();
+        verifyCounts(false);
         verifyRows();
     }
 
-    protected void verifyList(int activePageNumber, int rows) {
-        countExpectedValues(activePageNumber, rows);
-        verifyCounts();
+    protected void verifyList(int activePageNumber) {
+        countExpectedValues(activePageNumber);
+        verifyCounts(true);
         verifyRows();
     }
 
@@ -136,6 +149,7 @@ public abstract class AbstractListTest extends AbstractWebDriverTest {
 
     /**
      * Returns a list of integers which stand for number of rows which we are going to test.
+     *
      * @param visiblePageRows number of visible rows on the current page
      * @return List of integers representing a set of rows to test
      */

@@ -68,8 +68,7 @@ public class TestListAttributes extends AbstractListTest {
     @UseWithField(field = "first", valuesFrom = FROM_FIELD, value = "INTS")
     public void testFirst() {
         listAttributes.set(ListAttributes.first, first);
-        rows = 20;
-        listAttributes.set(ListAttributes.rows, rows);
+        listAttributes.set(ListAttributes.rows, 20);
         verifyList();
     }
 
