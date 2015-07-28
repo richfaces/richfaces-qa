@@ -263,6 +263,20 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
             .advanced().getInput().advanced().getInputElement()).build());
     }
 
+    @Skip
+    @Test
+    @IssueTracking("https://issues.jboss.org/browse/RF-14098")
+    @CoversAttributes("onerror")
+    public void testOnerror() {
+        testFireEvent("onerror", new Action() {
+            @Override
+            public void perform() {
+                selectHawaii();
+                Graphene.guardAjax(page).blur();
+            }
+        });
+    }
+
     @Test
     @CoversAttributes("onfocus")
     public void testOnfocus() {
