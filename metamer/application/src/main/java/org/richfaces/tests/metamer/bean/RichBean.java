@@ -32,7 +32,6 @@ import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
 import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
-import javax.faces.FacesException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -115,16 +114,6 @@ public class RichBean implements Serializable {
 
     public void causeAjaxErrorActionListener(AjaxBehaviorEvent event) {
         getResponse().setStatus(501);
-    }
-
-    /**
-     * Action that causes an error. Suitable for testing 'onerror' attribute.
-     *
-     * @return method never returns any value
-     * @throws FacesException thrown always
-     */
-    public String causeError() {
-        throw new FacesException("Ajax request caused an error. This is intentional behavior.");
     }
 
     /**

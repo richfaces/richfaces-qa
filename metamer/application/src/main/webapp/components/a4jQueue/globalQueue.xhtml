@@ -82,7 +82,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </h:commandButton>
 
                     <h:outputText value="Click here (with error):" />
-                    <a4j:commandButton id="errorButton" value="Action" action="#{richBean.causeError}"/>
+                    <a4j:commandButton id="errorButton" value="Action" action="#{richBean.causeAjaxErrorAction}"/>
 
                     <h:outputText value="Repeated text:" />
                     <h:outputText value="#{a4jQueueBean.text}" id="outtext" style="font-weight:bold;" />

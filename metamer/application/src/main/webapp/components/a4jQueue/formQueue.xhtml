@@ -110,7 +110,7 @@
                             <h:outputText value="Repeated text:" />
                             <h:outputText value="#{a4jQueueBean.text}" id="outtext" style="font-weight:bold;" />
                             <h:outputText value="Click here (with error):" />
-                            <a4j:commandButton id="errorButton" value="Action with error" action="#{richBean.causeError}" />
+                            <a4j:commandButton id="errorButton" value="Action with error" action="#{richBean.causeAjaxErrorAction}" />
                             <h:outputText value="Event 1 count:" />
                             <h:outputText value="0" id="events1" />
                             <h:outputText value="Event 2 count:" />
