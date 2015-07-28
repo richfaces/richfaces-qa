@@ -92,6 +92,7 @@ public class RichCalendarBean extends DateInputValidationBeanImpl implements Ser
         attributes.setAttribute("showInput", true);
         attributes.setAttribute("showWeeksBar", true);
         attributes.setAttribute("showWeekDaysBar", true);
+        attributes.setAttribute("valueChangeListener", "valueChangeListener");
 
         // TODO has to be tested in another way
         attributes.remove("converter");
@@ -101,7 +102,6 @@ public class RichCalendarBean extends DateInputValidationBeanImpl implements Ser
         attributes.remove("preloadDateRangeEnd");
         attributes.remove("validator");
         attributes.remove("value");//value on page will cause convertExceptions
-        attributes.remove("valueChangeListener");
         attributes.remove("timeZone");
     }
 

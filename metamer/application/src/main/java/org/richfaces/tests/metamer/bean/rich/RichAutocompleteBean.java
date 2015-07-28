@@ -21,8 +21,6 @@
  */
 package org.richfaces.tests.metamer.bean.rich;
 
-import com.google.common.collect.Lists;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +38,8 @@ import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBeanIm
 import org.richfaces.tests.metamer.model.Capital;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.Lists;
 
 /**
  * Managed bean for rich:autocomplete.
@@ -74,13 +74,13 @@ public class RichAutocompleteBean extends StringInputValidationBeanImpl implemen
         attributes.setAttribute("requiredMessage", StringInputValidationBean.REQUIRED_VALIDATION_MSG);
         attributes.setAttribute("tokens", ", ");
         attributes.setAttribute("validatorMessage", "validator message");
+        attributes.setAttribute("valueChangeListener", "valueChangeListener");
 
         ajaxAttributes = Attributes.getEmptyAttributes(getClass());
         ajaxAttributes.setAttribute("render", "output");
         ajaxAttributes.setAttribute("execute", "autocomplete");
 
         attributes.remove("var"); // this attr is supposed to be used with @fetchValue, and cannot be changed
-        attributes.remove("valueChangeListener"); // unnecessary attribute for client
 
         // since this bean is session scoped, valueX should be reset explicitly
     }

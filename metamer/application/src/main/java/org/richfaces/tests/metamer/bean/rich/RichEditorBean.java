@@ -60,6 +60,7 @@ public class RichEditorBean implements Serializable {
         attributes.setAttribute("requiredMessage", "Editor's value cannot be empty!");
         attributes.setAttribute("toolbar", "basic");
         attributes.setAttribute("skin", "moono");
+        attributes.setAttribute("valueChangeListener", "valueChangeListenerImproved");
 
         attributes.remove("config"); // config facet covered with @toolbar=custom
         attributes.remove("converter");

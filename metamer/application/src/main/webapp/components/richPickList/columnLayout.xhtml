@@ -112,7 +112,7 @@
                         validator="#{richPickListBean.validatePickListValue}"
                         validatorMessage="#{richPickListBean.attributes['validatorMessage'].value}"
                         value="#{richPickListBean.value}"
-                        valueChangeListener="#{richBean.valueChangeListenerImproved}"
+                        valueChangeListener="#{richPickListBean.attributes.valueChangeListener}"
                         var="tmp">
                 <f:selectItems value="#{richPickListBean.capitals}" />
 

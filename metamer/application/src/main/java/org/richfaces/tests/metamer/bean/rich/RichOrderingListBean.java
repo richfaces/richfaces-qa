@@ -126,12 +126,13 @@ public class RichOrderingListBean implements Serializable {
         attributes.setAttribute("upTopText", "Top");
         attributes.setAttribute("required", false);
         attributes.setAttribute("collectionType", "s:" + DEFAULT_COLLECTION_TYPE);
+        attributes.setAttribute("valueChangeListener", "valueChangeListenerImproved");
 
         employees = employees.subList(0, 10);
 
         // TODO has to be tested in another way
         String[] attrsToHide = new String[] { "itemLabel", "itemValue", "value", "var",
-            "converter", "converterMessage", "validator", "validatorMessage", "valueChangeListener" };
+            "converter", "converterMessage", "validator", "validatorMessage" };
         for (String attribute : attrsToHide) {
             hiddenAttributes.add(attribute);
             attributes.remove(attribute);

@@ -37,27 +37,28 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-        
-        	<rich:messages globalOnly="true" />
-        	<rich:messages for="editor" />
-            
+
+            <rich:messages globalOnly="true" />
+            <rich:messages for="editor" />
+
             <a4j:outputPanel id="panel">
-              <rich:editor id="editor"
-                           value="#{richEditorBean.attributes['value'].value}"
-                           valueChangeListener="#{richBean.valueChangeListenerImproved}" />
+                <rich:editor id="editor"
+                             value="#{richEditorBean.attributes['value'].value}"
+                             valueChangeListener="#{richEditorBean.attributes.valueChangeListener}"
+                             />
             </a4j:outputPanel>
-                		 
+
             <br/>
             <h:commandButton id="hButton" value="[h] Submit" />
             <a4j:commandButton id="a4jButton" value="[a4j] Submit" render="output" />
-            
+
             <br/>
             <a4j:commandButton id="renderPanel" render="panel" value="render panel" />
             <a4j:commandButton id="renderEditor" render="editor" value="render editor" />
-            
+
             <br/><br/>
             Your text: <h:outputText id="output" value="#{richEditorBean.attributes['value'].value}"/>
-            
+
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

@@ -63,12 +63,12 @@ public class RichInplaceInputBean extends StringInputValidationBeanImpl implemen
         attributes.setAttribute("requiredMessage", StringInputValidationBean.REQUIRED_VALIDATION_MSG);
         attributes.setAttribute("saveOnBlur", true);
         attributes.setAttribute("value", "RichFaces 4");
+        attributes.setAttribute("valueChangeListener", "valueChangeListener");
 
         // TODO has to be tested in another way
         attributes.remove("converter");
         attributes.remove("converterMessage");
         attributes.remove("validator");
         attributes.remove("validatorMessage");
-        attributes.remove("valueChangeListener");
     }
 }

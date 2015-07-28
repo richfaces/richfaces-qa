@@ -92,7 +92,7 @@
                             upText="#{richOrderingListBean.attributes['upText'].value}"
                             upTopText="#{richOrderingListBean.attributes['upTopText'].value}"
                             value="#{richOrderingListBean.capitals}"
-                            valueChangeListener="#{richBean.valueChangeListenerImproved}"
+                            valueChangeListener="#{richOrderingListBean.attributes.valueChangeListener}"
                             var="capital">
                 <f:converter converterId="capitalConverter" />
                 <r:column>

@@ -89,7 +89,7 @@
                                upText="#{richOrderingListBean.attributes['upText'].value}"
                                upTopText="#{richOrderingListBean.attributes['upTopText'].value}"
                                value="#{richOrderingListBean.employees}"
-                               valueChangeListener="#{richBean.valueChangeListenerImproved}"
+                               valueChangeListener="#{richOrderingListBean.attributes.valueChangeListener}"
                                var="item">
                 <rich:column id="columnName">
                     <h:outputText id="name" value="#{item.name}" />

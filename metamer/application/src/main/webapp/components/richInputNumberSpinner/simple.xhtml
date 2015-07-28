@@ -85,7 +85,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                      tabindex="#{richInputNumberSpinnerBean.attributes['tabindex'].value}"
                                      title="#{richInputNumberSpinnerBean.attributes['title'].value}"
                                      value="#{richInputNumberSpinnerBean.attributes['value'].value}"
-                                     valueChangeListener="#{richBean.valueChangeListener}"
+                                     valueChangeListener="#{richInputNumberSpinnerBean.attributes.valueChangeListener}"
                                      >
 
                 <a4j:ajax event="change" render="output" />

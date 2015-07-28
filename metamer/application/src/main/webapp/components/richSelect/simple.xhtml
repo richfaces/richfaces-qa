@@ -93,7 +93,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                       tabindex="#{richSelectBean.attributes['tabindex'].value}"
                       title="#{richSelectBean.attributes['title'].value}"
                       value="#{richSelectBean.attributes['value'].value}"
-                      valueChangeListener="#{richBean.valueChangeListener}">
+                      valueChangeListener="#{richSelectBean.attributes.valueChangeListener}">
 
                 <f:selectItems value="#{richSelectBean.capitalsOptions}" />
                 <a4j:ajax event="change" render="output"/>

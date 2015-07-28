@@ -49,7 +49,7 @@ public class TestEditorWithTyping extends AbstractWebDriverTest {
     @Page
     private EditorSimplePage page;
 
-    private final String phaseListenerLogFormat = "*3 value changed: <p>{0}</p> -> <p>{1}</p>";
+    private final String phaseListenerLogFormat = "* 3 value changed: <p>{0}</p> -> <p>{1}</p>";
 
     @Override
     public String getComponentTestPagePath() {
@@ -131,7 +131,6 @@ public class TestEditorWithTyping extends AbstractWebDriverTest {
      * @param submitBtn
      */
     private void verifyValueChangeListener(WebElement submitBtn, final WebElement listener) {
-
         page.getEditor().type("text1");
         // and submit typed text
         submitBtn.submit();

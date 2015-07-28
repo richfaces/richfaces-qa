@@ -57,7 +57,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <rich:inputNumberSpinner id="spinnerDE"
                                          step="0.5"
                                          value="#{richInputNumberSpinnerBean.valueLocaleDE}"
-                                         valueChangeListener="#{richBean.valueChangeListener}"
+                                         valueChangeListener="#{richInputNumberSpinnerBean.attributes.valueChangeListener}"
                                          >
                     <f:convertNumber minFractionDigits="1" locale="de"/>
                     <a4j:ajax event="change" render="outputDE" />
@@ -76,7 +76,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <rich:inputNumberSpinner id="spinnerEN"
                                          step="0.5"
                                          value="#{richInputNumberSpinnerBean.valueLocaleEN}"
-                                         valueChangeListener="#{richBean.valueChangeListener}"
+                                         valueChangeListener="#{richInputNumberSpinnerBean.attributes.valueChangeListener}"
                                          >
                     <f:convertNumber minFractionDigits="1" locale="en"/>
                     <a4j:ajax event="change" render="outputEN" />

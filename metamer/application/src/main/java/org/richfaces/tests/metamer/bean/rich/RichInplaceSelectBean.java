@@ -79,13 +79,13 @@ public class RichInplaceSelectBean extends SelectValidationBean implements Seria
         attributes.setAttribute("requiredMessage", StringInputValidationBean.REQUIRED_VALIDATION_MSG);
         attributes.setAttribute("saveOnBlur", true);
         attributes.setAttribute("saveOnSelect", true);
+        attributes.setAttribute("valueChangeListener", "valueChangeListener");
 
         // TODO has to be tested in another way
         attributes.remove("converter");
         attributes.remove("converterMessage");
         attributes.remove("validator");
         attributes.remove("validatorMessage");
-        attributes.remove("valueChangeListener");
 
         // TODO remove as soon as RF-10411 is resolved
         attributes.setAttribute("changedStateClass", null);

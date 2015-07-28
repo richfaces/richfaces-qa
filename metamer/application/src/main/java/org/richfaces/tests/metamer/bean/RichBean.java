@@ -116,6 +116,10 @@ public class RichBean implements Serializable {
         getResponse().setStatus(501);
     }
 
+    public void causeAjaxErrorValueChangeListener(ValueChangeEvent event) {
+        getResponse().setStatus(501);
+    }
+
     /**
      * A change event listener that logs to the page old and new value. This is 2nd ValueChacgeListener. Use 2 different
      * listeners is useful when testing more than one listener definition for one component
@@ -584,7 +588,7 @@ public class RichBean implements Serializable {
             newVal = newVal.replace("\r", "").replace("\n", "");
         }
 
-        logToPage("*3 value changed: "
+        logToPage("* 3 value changed: "
             + (oldVal != null && oldVal.length() > 21 ? oldVal.substring(0, 20) : oldVal != null ? oldVal : "null")
             + " -> "
             + (newVal != null && newVal.length() > 21 ? newVal.substring(0, 20) : newVal != null ? newVal : "null"));

@@ -140,10 +140,10 @@ public class RichPickListBean implements Serializable {
         attributes.setAttribute("downBottomText", "⇓ Last");
 
         attributes.setAttribute("listWidth", "220");
+        attributes.setAttribute("valueChangeListener", "valueChangeListenerImproved");
 
         attributes.remove("converter");
         attributes.remove("converterMessage");
-        attributes.remove("valueChangeListener");
         attributes.remove("columnVar");
 
         employees = employees.subList(0, 10);

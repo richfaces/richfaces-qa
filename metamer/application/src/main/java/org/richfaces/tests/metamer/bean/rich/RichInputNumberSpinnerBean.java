@@ -67,13 +67,13 @@ public class RichInputNumberSpinnerBean extends NumberInputValidationBeanImpl im
         attributes.setAttribute("requiredMessage", NumberInputValidationBean.REQUIRED_VALIDATION_MSG);
         attributes.setAttribute("step", 1);
         attributes.setAttribute("value", 2);
+        attributes.setAttribute("valueChangeListener", "valueChangeListener");
 
         // will be tested in another way
         attributes.remove("converter");
         attributes.remove("converterMessage");
         attributes.remove("validator");
         attributes.remove("validatorMessage");
-        attributes.remove("valueChangeListener");
     }
 
     public double getValueLocaleDE() {

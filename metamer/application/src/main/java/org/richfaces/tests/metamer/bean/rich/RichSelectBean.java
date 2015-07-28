@@ -83,13 +83,13 @@ public class RichSelectBean extends SelectValidationBean implements Serializable
         attributes.setAttribute("required", true);
         attributes.setAttribute("requiredMessage", StringInputValidationBean.REQUIRED_VALIDATION_MSG);
         attributes.setAttribute("showButton", true);
+        attributes.setAttribute("valueChangeListener", "valueChangeListener");
 
         // TODO has to be tested in another way
         attributes.remove("converter");
         attributes.remove("converterMessage");
         attributes.remove("validator");
         attributes.remove("validatorMessage");
-        attributes.remove("valueChangeListener");
 
         attributes.remove("var");
         attributes.remove("itemLabel");

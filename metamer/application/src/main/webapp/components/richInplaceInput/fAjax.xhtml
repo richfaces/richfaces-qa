@@ -83,7 +83,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                title="#{richInplaceInputBean.attributes['title'].value}"
                                validatorMessage="#{richInplaceInputBean.attributes['validatorMessage'].value}"
                                value="#{richInplaceInputBean.attributes['value'].value}"
-                               valueChangeListener="#{richBean.valueChangeListener}"
+                               valueChangeListener="#{richInplaceInputBean.attributes.valueChangeListener}"
                                >
 
                 <f:ajax event="change" render="output :phasesPanel"/>

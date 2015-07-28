@@ -114,7 +114,7 @@
                            validator="#{richPickListBean.validatePickListValue}"
                            validatorMessage="#{richPickListBean.attributes['validatorMessage'].value}"
                            value="#{richPickListBean.value}"
-                           valueChangeListener="#{richBean.valueChangeListenerImproved}"
+                           valueChangeListener="#{richPickListBean.attributes.valueChangeListener}"
                            var="item">
                 <f:selectItems value="#{richPickListBean.employees}" />
 

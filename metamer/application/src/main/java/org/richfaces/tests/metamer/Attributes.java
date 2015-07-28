@@ -54,6 +54,7 @@ import javax.faces.component.behavior.BehaviorBase;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -78,9 +79,13 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     private static Logger logger = LoggerFactory.getLogger(Attributes.class);
     private static Map<Class<?>, List<Attribute>> richfacesAttributes;
     private static final String RICH_BEAN_NAME = "richBean";
+    private static final String ACTION_LISTENER = "actionListener";
+    private static final String LISTENER = "listener";
+    private static final String VALUE_CHANGE_LISTENER = "valueChangeListener";
 
     private final Class[] actionEventClassArray = new Class[] { ActionEvent.class };
     private final Class[] ajaxBehaviorEventClassArray = new Class[] { AjaxBehaviorEvent.class };
+    private final Class[] valueChangeEventClassArray = new Class[] { ValueChangeEvent.class };
 
     // K - name of a component attribute, V - value of the component attribute
     private Map<String, Attribute> attributes;
@@ -485,14 +490,13 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
      */
     public void actionListener(ActionEvent event) {
         ELContext elContext = FacesContext.getCurrentInstance().getELContext();
-        MethodExpression method = null;
+        MethodExpression method;
 
-        if (attributes.get("actionListener") == null) {
+        if (attributes.get(ACTION_LISTENER) == null) {
             return;
         }
 
-        String listener = (String) attributes.get("actionListener").getValue();
-
+        String listener = (String) attributes.get(ACTION_LISTENER).getValue();
         if (listener == null) {
             return;
         }
@@ -500,13 +504,13 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
         RichBean.logToPage("* action listener invoked");
 
         // if no select options for "actionListener" are defined in property file and it is an EL expression
-        if (!hasSelectOptions("actionListener") && isStringEL(listener)) {
+        if (!hasSelectOptions(ACTION_LISTENER) && isStringEL(listener)) {
             method = getExpressionFactory().createMethodExpression(elContext, listener, void.class, actionEventClassArray);
             method.invoke(elContext, new Object[] { event });
         }
 
         // if select options for "actionListener" are defined in property file
-        if (hasSelectOptions("actionListener")) {
+        if (hasSelectOptions(ACTION_LISTENER)) {
             method = getExpressionFactory().createMethodExpression(elContext, getMethodEL(listener), void.class, actionEventClassArray);
             method.invoke(elContext, new Object[] { event });
         }
@@ -519,14 +523,13 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
      */
     public void listener(AjaxBehaviorEvent event) {
         ELContext elContext = FacesContext.getCurrentInstance().getELContext();
-        MethodExpression method = null;
+        MethodExpression method;
 
-        if (attributes.get("listener") == null) {
+        if (attributes.get(LISTENER) == null) {
             return;
         }
 
-        String listener = (String) attributes.get("listener").getValue();
-
+        String listener = (String) attributes.get(LISTENER).getValue();
         if (listener == null) {
             return;
         }
@@ -534,14 +537,46 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
         RichBean.logToPage("* listener invoked");
 
         // if no select options for "listener" are defined in property file and it is an EL expression
-        if (!hasSelectOptions("listener") && isStringEL(listener)) {
+        if (!hasSelectOptions(LISTENER) && isStringEL(listener)) {
             method = getExpressionFactory().createMethodExpression(elContext, listener, void.class, ajaxBehaviorEventClassArray);
             method.invoke(elContext, new Object[] { event });
         }
 
         // if select options for "listener" are defined in property file
-        if (hasSelectOptions("listener")) {
+        if (hasSelectOptions(LISTENER)) {
             method = getExpressionFactory().createMethodExpression(elContext, getMethodEL(listener), void.class, ajaxBehaviorEventClassArray);
+            method.invoke(elContext, new Object[] { event });
+        }
+    }
+
+    /**
+     * A value change listener for tested JSF component. Can be modified dynamically.
+     *
+     * @param event event representing the activation of a user interface component
+     */
+    public void valueChangeListener(ValueChangeEvent event) {
+        ELContext elContext = FacesContext.getCurrentInstance().getELContext();
+        MethodExpression method;
+
+        if (attributes.get(VALUE_CHANGE_LISTENER) == null) {
+            return;
+        }
+
+        String listener = (String) attributes.get(VALUE_CHANGE_LISTENER).getValue();
+        if (listener == null) {
+            return;
+        }
+
+//        RichBean.logToPage("* value change listener invoked");
+        // if no select options for "valueChangeListener" are defined in property file and it is an EL expression
+        if (!hasSelectOptions(VALUE_CHANGE_LISTENER) && isStringEL(listener)) {
+            method = getExpressionFactory().createMethodExpression(elContext, listener, void.class, valueChangeEventClassArray);
+            method.invoke(elContext, new Object[] { event });
+        }
+
+        // if select options for "valueChangeListener" are defined in property file
+        if (hasSelectOptions(VALUE_CHANGE_LISTENER)) {
+            method = getExpressionFactory().createMethodExpression(elContext, getMethodEL(listener), void.class, valueChangeEventClassArray);
             method.invoke(elContext, new Object[] { event });
         }
     }

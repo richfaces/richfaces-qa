@@ -61,8 +61,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 		 toolbar="#{richEditorBean.attributes['toolbar'].value}"
                 		 validator="#{richEditorBean.validateEditorValue}"
                 		 value="#{richEditorBean.attributes['value'].value}"
-                		 valueChangeListener="#{richBean.valueChangeListenerImproved}"
-                		 width="#{richEditorBean.attributes['width'].value}" >                            
+                         valueChangeListener="#{richEditorBean.attributes.valueChangeListener}"
+                         width="#{richEditorBean.attributes['width'].value}" >                            
                <c:if test="#{richEditorBean.attributes['toolbar'].value=='custom'}" >
                   <f:facet name="config" >
                     toolbar: "MyToolbar",
