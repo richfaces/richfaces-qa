@@ -26,7 +26,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.FacesException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -93,16 +92,6 @@ public class A4JAjaxBean implements Serializable {
     private String simpleText1;
     private String simpleText2;
     private String text;
-
-    /**
-     * An action listener causing error. Suitable for testing onerror attribute.
-     *
-     * @param event an event representing the activation of a user interface
-     * component (not used)
-     */
-    public void causeErrorListener(AjaxBehaviorEvent event) {
-        throw new FacesException("Ajax request caused an error. This is intentional behavior.");
-    }
 
     /**
      * Clean up field actualListenerAction (managed by listeners), when the attribute @listener is null or empty
