@@ -337,6 +337,10 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
         return attributes.entrySet();
     }
 
+    public Class<?> getBeanClass() {
+        return beanClass;
+    }
+
     public Attribute get(String key) {
         return attributes.get(key);
     }

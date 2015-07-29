@@ -1,6 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" 
-      xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:composite="http://java.sun.com/jsf/composite" xmlns:a4j="http://richfaces.org/a4j"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:a4j="http://richfaces.org/a4j"
       xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
     <h:body>
@@ -64,7 +69,31 @@
                                 </c:when>
 
                                 <c:otherwise>
-                                    <h:inputText id="#{entry.key}Input" value="#{entry.value.value}" style="width: 200px;" onchange="#{cc.attrs.type == 'server' ? 'submit()' : 'submitAjax()'}" />
+                                    <c:choose>
+                                        <ui:remove>
+                                            <!-- When attribute starts with 'on', then add event on double clicking the input to fill the input with function which invokes an alert. -->
+                                        </ui:remove>
+                                        <c:when test="#{fn:startsWith(entry.key,'on')}">
+                                            <h:inputText id="#{entry.key}Input"
+                                                         value="#{entry.value.value}"
+                                                         style="width: 200px;"
+                                                         onchange="#{cc.attrs.type == 'server' ? 'submit()' : 'submitAjax()'}"
+                                                         ondblclick="
+                                                                 var $this = $(this);
+                                                                 var valToSet = 'alert(\'#{entry.key} triggered (#{cc.attrs.value.getBeanClass().getSimpleName()})\')';
+                                                                 if (valToSet !== $(this).val()) {
+                                                                     $this.val(valToSet).change();
+                                                                 }"
+                                                         />
+                                        </c:when>
+                                        <c:otherwise>
+                                            <h:inputText id="#{entry.key}Input"
+                                                         value="#{entry.value.value}"
+                                                         style="width: 200px;"
+                                                         onchange="#{cc.attrs.type == 'server' ? 'submit()' : 'submitAjax()'}"
+                                                         />
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:otherwise>
                             </c:choose>
                         </c:if>
