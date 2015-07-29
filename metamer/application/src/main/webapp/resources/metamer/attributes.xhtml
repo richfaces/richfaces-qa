@@ -23,6 +23,7 @@
 
         <composite:implementation>
 
+            <h:outputScript library="script" name="attributesOndblclick.js"/>
             <h:outputStylesheet library="metamer" name="css/attributes.ecss" />
 
             <a4j:jsFunction id="submitAjaxFunction" name="submitAjax" execute="#{cc.attrs.execute}" render="#{cc.attrs.render}" />
@@ -78,12 +79,7 @@
                                                          value="#{entry.value.value}"
                                                          style="width: 200px;"
                                                          onchange="#{cc.attrs.type == 'server' ? 'submit()' : 'submitAjax()'}"
-                                                         ondblclick="
-                                                                 var $this = $(this);
-                                                                 var valToSet = 'alert(\'#{entry.key} triggered (#{cc.attrs.value.getBeanClass().getSimpleName()})\')';
-                                                                 if (valToSet !== $(this).val()) {
-                                                                     $this.val(valToSet).change();
-                                                                 }"
+                                                         ondblclick="attributesOndblclick(this, '#{entry.key}', '#{cc.attrs.value.getBeanClass().getSimpleName()}')"
                                                          />
                                         </c:when>
                                         <c:otherwise>
