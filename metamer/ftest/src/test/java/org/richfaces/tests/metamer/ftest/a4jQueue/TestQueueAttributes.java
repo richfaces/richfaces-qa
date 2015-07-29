@@ -71,6 +71,30 @@ public class TestQueueAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11711")
+    @CoversAttributes("onbeforedomupdate")
+    public void testOnbeforedomupdate() {
+        attributes.set(QueueAttributes.requestDelay, 0);
+        testFireEvent("onbeforedomupdate", guardedClickActionButtonAction);
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11711")
+    @CoversAttributes("oncomplete")
+    public void testOncomplete() {
+        attributes.set(QueueAttributes.requestDelay, 0);
+        testFireEvent("oncomplete", guardedClickActionButtonAction);
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11711")
+    @CoversAttributes("onsubmit")
+    public void testOnsubmit() {
+        attributes.set(QueueAttributes.requestDelay, 0);
+        testFireEvent("onsubmit", guardedClickActionButtonAction);
+    }
+
+    @Test
     @CoversAttributes("onrequestdequeue")
     public void testOnrequestdequeue() {
         attributes.set(QueueAttributes.requestDelay, 0);
