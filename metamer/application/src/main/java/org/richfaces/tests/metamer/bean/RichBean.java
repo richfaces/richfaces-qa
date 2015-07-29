@@ -112,7 +112,11 @@ public class RichBean implements Serializable {
         getResponse().setStatus(501);
     }
 
-    public void causeAjaxErrorActionListener(AjaxBehaviorEvent event) {
+    public void causeAjaxErrorActionListener(ActionEvent event) {
+        getResponse().setStatus(501);
+    }
+
+    public void causeAjaxErrorListener(AjaxBehaviorEvent event) {
         getResponse().setStatus(501);
     }
 

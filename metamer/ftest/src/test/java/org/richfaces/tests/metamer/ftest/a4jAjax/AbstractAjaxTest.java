@@ -52,7 +52,7 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
 
     private final Attributes<AjaxAttributes> ajaxAttributes = getAttributes();
 
-    private final String causeAjaxErrorActionListener = "causeAjaxErrorActionListener";
+    private final String causeAjaxErrorListener = "causeAjaxErrorListener";
     private EnumMap<Listener, Action> enumMap = new EnumMap<Listener, Action>(Listener.class);
     protected Listener listener;
 
@@ -301,7 +301,7 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
 
     @CoversAttributes("onerror")
     public void testOnerror() {
-        ajaxAttributes.set(AjaxAttributes.listener, causeAjaxErrorActionListener);
+        ajaxAttributes.set(AjaxAttributes.listener, causeAjaxErrorListener);
         testFireEvent("onerror", new Action() {
             @Override
             public void perform() {
