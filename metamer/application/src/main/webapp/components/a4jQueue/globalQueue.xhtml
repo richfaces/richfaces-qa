@@ -65,7 +65,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <h:panelGrid columns="2">
                     <h:outputText value="Type here:" />
                     <h:inputText id="input1" value="#{a4jQueueBean.text}" onkeypress="add(#{rich:element('events1')});
-                    #{rich:element('timeWatcher:grid')}.event();
+                                 #{rich:element('timeWatcher:grid')}.event();
                                  "
                                  disabled="#{not (facesContext.maximumSeverity==null)}">
                         <a4j:ajax event="keypress" onbegin="add(#{rich:element('requests')}); #{rich:element('timeWatcher:grid')}.begin(); " render="outtext" oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.countDelayAndMedian(); "
@@ -75,7 +75,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:outputText value="Click here:" />
                     <h:commandButton id="actionButton" value="Action" action="#{richBean.dummyAction}"
                                      onclick="add(#{rich:element('events1')});
-                                             #{rich:element('timeWatcher:grid')}.event();">
+                                     #{rich:element('timeWatcher:grid')}.event();">
                         <a4j:ajax onbegin="add(#{rich:element('requests')}); #{rich:element('timeWatcher:grid')}.begin(); "
                                   oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.countDelayAndMedian(); "
                                   onbeforedomupdate="add(#{rich:element('updates')});" />
@@ -83,6 +83,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                     <h:outputText value="Click here (with error):" />
                     <a4j:commandButton id="errorButton" value="Action" action="#{richBean.causeAjaxErrorAction}"/>
+
+                    <h:outputText value="Click here (with events, customizable by commandButtonAttributes):" />
+                    <a4j:commandButton id="customButton"
+                                       onbeforedomupdate="#{a4jButtonBean.attributes['onbeforedomupdate'].value}"
+                                       oncomplete="#{a4jButtonBean.attributes['oncomplete'].value}"
+                                       onerror="#{a4jButtonBean.attributes['onerror'].value}"
+                                       value="#{a4jButtonBean.attributes['value'].value}"
+                                       action="#{richBean.dummyAction()}"/>
 
                     <h:outputText value="Repeated text:" />
                     <h:outputText value="#{a4jQueueBean.text}" id="outtext" style="font-weight:bold;" />
@@ -109,8 +117,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         <a4j:ajax event="change" />
                     </h:selectBooleanCheckbox>
                 </h:panelGrid>
-
-                <metamer:attributes value="#{a4jQueueBean.attributes}" id="attributes" />
+                <br/>
+                <h:outputText value="Queue Attributes:"/>
+                <metamer:attributes id="attributes" value="#{a4jQueueBean.attributes}"/>
+                <br/>
+                <h:outputText value="Command Button Attributes:"/>
+                <metamer:attributes id="commandButtonAttributes"
+                                    value="#{a4jButtonBean.attributes}"
+                                    include="onbeforedomupdate,oncomplete,onerror,value"
+                                    />
             </h:form>
         </ui:define>
 
