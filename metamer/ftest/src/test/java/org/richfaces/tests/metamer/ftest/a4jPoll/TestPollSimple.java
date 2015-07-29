@@ -215,6 +215,7 @@ public class TestPollSimple extends AbstractWebDriverTest {
             public void perform() {
                 pollAttributes.set(PollAttributes.enabled, true);
                 getMetamerPage().getStatus().advanced().waitUntilStatusStateChanges(StatusState.ERROR).withTimeout(3, TimeUnit.SECONDS).perform();
+                waiting(1000);// to stabilize the test
             }
         });
     }
