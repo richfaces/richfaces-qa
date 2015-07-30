@@ -47,7 +47,6 @@ public enum AutocompleteAttributes implements AttributeEnum {
     onclick,
     oncomplete,
     ondblclick,
-    onerror,
     onfocus,
     onkeydown,
     onkeypress,
