@@ -3,7 +3,7 @@
     <parent>
         <artifactId>richfaces-qa-parent</artifactId>
         <groupId>org.richfaces.tests</groupId>
-        <version>4.5.8.20150803-Final</version>
+        <version>4.5.9-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
