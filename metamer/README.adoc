@@ -4,12 +4,11 @@ Metamer is a testing application and test suite which covers all of RichFaces 4 
 
 == Metamer Maven Structure
 
-Metamer consists of root module and three submodules:
+Metamer consists of root module and 2 submodules:
 
-* root - parent for application, ftest and ftest-legacy
-* application - Java-EE application
-* ftest - functional test suite using Selenium 2, contains most of tests
-* ftest-legacy - legacy functional test suite using Selenium 1
+* root - parent for application, ftest
+** application - Java-EE application
+** ftest - functional test suite using Selenium 2, contains all tests
 
 == Metamer Application Structure
 
