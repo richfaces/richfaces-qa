@@ -142,8 +142,7 @@ To change the JSF implementation you can build Metamer with either a script ment
 * create also a test class with the same name (e.g. `TestRF15422.java`) under the package for the affected component
 * annotate test method with:
 
-** `@Test(groups = "Future")`
-
+** `@Skip` (the skip condition can be specified, see @Skip annotation below)
 ** `@IssueTracking(value = { "https://issues.jboss.org/browse/RF-15422" })`
 
 * try to reuse existing backing beans, otherwise create new ones in the package `application/src/main/java/org/richfaces/tests/metamer/bean/issues`
