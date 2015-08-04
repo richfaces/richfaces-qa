@@ -212,7 +212,7 @@ There are a few tools to simplify/automatize some work in Metamer:
 
 * +ComponentsAttributesCollectorTool+
 ** updates or creates java component attributes file (e.g. NotifyMessageAttributes.java) for each RichFaces component
-** tool should be runnable from IDE with test classpath (e.g. in NetBeans simply 'Run File')
+** tool should be runnable from IDE with test classpath (e.g. in NetBeans simply 'Run File') or by invoking maven command from 'metamer/ftest' `mvn test -Pupdate-attributes`
 
 * +CoverageCollectorTool+
 ** creates a coverage report of all RichFaces components attributes
