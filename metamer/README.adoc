@@ -21,44 +21,44 @@ Source code is available at https://github.com/richfaces/richfaces-qa/tree/maste
 
 * Templates
 ** configurable nesting of templates using various container components:
-** root: +webapp/templates/template.xhtml+
+** root: `webapp/templates/template.xhtml`
 ** templates:
 *** plain
 *** iteration - a4jRepeat, hDataTable, richDataTable...
 *** panels -  richPanel, richTabPanel, richTogglePanel, richAccordion...
 * Page Parts
-** +template.xhtml+ - nesting mechanism (see above)
-** +header.xhtml+ - contains general controls
-** +footer.xhtml+ - contains output of VersionBean
-* Customization per component (ui:insert in +template.xhtml+):
+** `template.xhtml` - nesting mechanism (see above)
+** `header.xhtml` - contains general controls
+** `footer.xhtml` - contains output of VersionBean
+* Customization per component (ui:insert in `template.xhtml`):
 ** outOfTemplateBefore - usually contains additional controls for advanced features of components which can’t be covered by customization of attribute values
 ** content - contains component nested in all configured templates
 ** outOfTemplateAfter - as for outOfTemplateBefore, usually contains attribute list
 * Attributes
 ** attributes for each component are bound directly from page using following notation:
-*** +#{componentBean.attributes[‘attributeName’].value}+
-*** where +attributes+ stands for +class Attributes extends Map<String, Attribute>+
-*** attributes are loaded to map from richfaces’s +faces-config.xml+
-*** attributes can have predefined enumeration values using +ComponentBean.properties+ files
+*** `#{componentBean.attributes[‘attributeName’].value}`
+*** where `attributes` stands for `class Attributes extends Map<String, Attribute>`
+*** attributes are loaded to map from richfaces’s `faces-config.xml`
+*** attributes can have predefined enumeration values using `ComponentBean.properties` files
 * Separation
 ** each component has own package (named like Bean for given component) for component samples
 ** in each package there is:
-*** +list.xhtml+ - the links to all samples
-*** +simple.xhtml+ - default component usage (not compulsory)
-*** +{feature}.xhtml+ - feature sample
+*** `list.xhtml` - the links to all samples
+*** `simple.xhtml` - default component usage (not compulsory)
+*** `{feature}.xhtml` - feature sample
 
 === Managed Beans
 
 * per component (and some per component/feature)
 * bean.* packages
-* +RichBean+
+* `RichBean`
 ** serves common functionality for general tests (actions, action listeners)
-* +TemplatesBean+
+* `TemplatesBean`
 ** serves list of templates for user session
-* +PhasesBean+
+* `PhasesBean`
 ** holds the list of phases which request goes through
-** phases provided by +RichPhaseListener+
-* +VersionBean+
+** phases provided by `RichPhaseListener`
+* `VersionBean`
 ** provides set of runtime and browser versions
 ** output on each Metamer page => can be copied to JIRA’s environment
 
@@ -71,19 +71,19 @@ Source code is available at https://github.com/richfaces/richfaces-qa/tree/maste
 
 === Additional Resources
 
-* any other resources are located under +webapp/resources/*+
+* any other resources are located under `webapp/resources/*`
 
 == Building and running Metamer
 
 === Building Metamer
-Metamer can be built in several profiles to satisfy compatibility with various runtimes and JSF implementations. To build the application, run bash script +build.sh+ in root directory of Metamer. This script generates several WAR archives with application in directory +application/target+ which can be used in various scenarios:
+Metamer can be built in several profiles to satisfy compatibility with various runtimes and JSF implementations. To build the application, run bash script `build.sh` in root directory of Metamer. This script generates several WAR archives with application in directory `application/target` which can be used in various scenarios:
 
 * metamer-jbas71.war - to deploy on Wildfly 8
 * metamer-tomcat7-mojarra.war - with bundled JSF Mojarra reference implementation to deploy on Tomcat 7
 * metamer-tomcat7-myfaces.war - with bundled JSF MyFaces to deploy on Tomcat 7
 * metamer-tomee15.war - to deploy on TomEE 1.5
 
-To build the application with one specific profile run +mvn clean install -DskipTests -P{profileName}+ where +profileName+ can be found in https://github.com/richfaces/richfaces-qa/blob/master/pom.xml[pom.xml] in root directory. Created WAR file will be located in +application/target+ folder.
+To build the application with one specific profile run `mvn clean install -DskipTests -P{profileName}` where `profileName` can be found in https://github.com/richfaces/richfaces-qa/blob/master/pom.xml[pom.xml] in root directory. Created WAR file will be located in `application/target` folder.
 
 === Deploying Metamer
 
@@ -91,18 +91,18 @@ To deploy the application just copy the WAR file into server deployment folder. 
 
 === Changing JSF implementation
 
-To change the JSF implementation you can build Metamer with either a script mentioned above or a pre-set profile named +war-tomcat7-myfaces+
+To change the JSF implementation you can build Metamer with either a script mentioned above or a pre-set profile named `war-tomcat7-myfaces`
 
 == Functional Test Development
 
 === Running a test
 * switch to metamer/ftest directory and run `mvn clean verify -PprofileName -Dtest=testName -Dtemplates=templateName [-Dbrowser=browserName] [-Drepeats=numberOfRepeats] [-Dconfigurator.skip.reverse] [-Dconfigurator.skip.case=caseName]`
 ** profileName is a name of a container you want to use, see pom.xml in parent for their names
-*** e.g. +-Pwildfly-remote-8-1+
+*** e.g. `-Pwildfly-remote-8-1`
 ** testName is a name of a specific test to run
-*** e.g. +-Dtest=TestEditor+ for all tests in TestEditor class or +-Dtest=TestEditor#testRendered+ to run just one method
-*** regular expression can be used, for instance +-Dtest=TestA*+ will run all test classes which name begins with 'TestA'
-** omit +-Dtest+ if you want to run all tests
+*** e.g. `-Dtest=TestEditor` for all tests in TestEditor class or `-Dtest=TestEditor#testRendered` to run just one method
+*** regular expression can be used, for instance `-Dtest=TestA*` will run all test classes which name begins with 'TestA'
+** omit `-Dtest` if you want to run all tests
 ** templateName is one or more of the templates such as plain, richPanel, a4jRepeat, uiRepeat
 *** list of all templates used in tests can be found in `AbstractMetamerTest` in the annotation `@Templates` over the field *template*
 *** all templates are case insensitive and have aliases (can be found/edited in `org.richfaces.tests.metamer.Template`)
@@ -124,70 +124,70 @@ To change the JSF implementation you can build Metamer with either a script ment
 
 === Debugging a test
 * set a breakpoint in code
-* to run debugging from terminal simply add another switch +-Dmaven.surefire.debug test+
+* to run debugging from terminal simply add another switch `-Dmaven.surefire.debug test`
 
 === Creating new tests
-** create or modify .xhtml in the +application/src/main/webapp/components+, this is the facelet which will be loaded in the test
-** create .java test class in the package for the component, in the +ftest/src/test/java/...+
+** create or modify .xhtml in the `application/src/main/webapp/components`, this is the facelet which will be loaded in the test
+** create .java test class in the package for the component, in the `ftest/src/test/java/...`
 ** we are using Arquillian Graphene 2, tests have these specifics:
-*** tests should extend +AbstractWebDriverTest+, have a look at: method with +@Deployment+ annotation, +@Drone WebDriver browser+ injection point, +@ArquillianResource contextRoot+, +@BeforeMethod loadPage+
+*** tests should extend `AbstractWebDriverTest`, have a look at: method with `@Deployment` annotation, `@Drone WebDriver browser` injection point, `@ArquillianResource contextRoot`, `@BeforeMethod loadPage`
 *** we are using Page Object pattern, have a look at @Page annotation
 *** we are using Page Fragments pattern, have a look at @FindBy annotations, for more information see Graphene documentation
 
 === Creating issue reproducers in Metamer
 
-* when creating new facelet for the issue, create it under affected component with the name of issue number (e.g. +rf-15422.xhtml+)
-** the newly created issue should also contain a steps to reproduce the issue, e.g. +<r:panel header="steps to reproduce">1. blah blah <br /> 2. blah blah</r:panel>+
+* when creating new facelet for the issue, create it under affected component with the name of issue number (e.g. `rf-15422.xhtml`)
+** the newly created issue should also contain a steps to reproduce the issue, e.g. `<r:panel header="steps to reproduce">1. blah blah <br /> 2. blah blah</r:panel>`
 ** list the newly created facelet also in the list.xhtml, together with the issue description and reference
-* create also a test class with the same name (e.g. +TestRF15422.java+) under the package for the affected component
+* create also a test class with the same name (e.g. `TestRF15422.java`) under the package for the affected component
 * annotate test method with:
 
-** +@Test(groups = "Future")+
+** `@Test(groups = "Future")`
 
-** +@IssueTracking(value = { "https://issues.jboss.org/browse/RF-15422" })+
+** `@IssueTracking(value = { "https://issues.jboss.org/browse/RF-15422" })`
 
-* try to reuse existing backing beans, otherwise create new ones in the package +application/src/main/java/org/richfaces/tests/metamer/bean/issues+
+* try to reuse existing backing beans, otherwise create new ones in the package `application/src/main/java/org/richfaces/tests/metamer/bean/issues`
 * make a comment in the JIRA issue what facelet reproduce the issue, and also steps to reproduce it
 
 === About annotations
 In tests there are several important annotations we use:
 
-* +@Test(groups = "Future")+
+* `@Test(groups = "Future")`
 ** adding a test into future group means this test is currently failing and is expected to pass once the fix will be done
 ** there is a separate Jenkins job running future tests only
-** once a test passing, change this to +@Test+ only
+** once a test passing, change this to `@Test` only
 
-* +@IssueTracking("https://issues.jboss.org/browse/RF-007")+
+* `@IssueTracking("https://issues.jboss.org/browse/RF-007")`
 ** IssueTracking means the test is tracking an issue and is usually used along with future tests
-** this helps us to determine why the test marked as future fails, once the test is all right this annotation changes to +@RegressionTest("https://issues.jboss.org/browse/RF-007")+
+** this helps us to determine why the test marked as future fails, once the test is all right this annotation changes to `@RegressionTest("https://issues.jboss.org/browse/RF-007")`
 
-* +@RegressionTest("https://issues.jboss.org/browse/RF-007")+
+* `@RegressionTest("https://issues.jboss.org/browse/RF-007")`
 ** this indicates that the test was once tracking some issue and that issue was already resolved
 ** if such a test fails we know that it is a regression problem immediately
 
-* +@Templates(value = {"templateName"}, exclude = {"anotherTemplateName"})+
+* `@Templates(value = {"templateName"}, exclude = {"anotherTemplateName"})`
 ** this indicates in which templates you want or you do not want the test to be execute
 ** test will not run when it is not executed with correct template
-** beware that it work only for templates listed in +@Templates+ annotation in +AbstractMetamerTest+
+** beware that it work only for templates listed in `@Templates` annotation in `AbstractMetamerTest`
 
-* +@UseForAllTests+
+* `@UseForAllTests`
 ** this indicates that the field will be used as injection point in all tests from the class where it is placed to all classes extending it
 ** all test methods in this hierarchy can run multiple times each time with different value injected to the annotated field (values and how to get them is specified in annotation parameters, see the javadoc for more informations)
 
-* +@UseWithField+
+* `@UseWithField`
 ** this indicates that the test method will be used with a field to which the values specified in annotation attributes will be injected
 ** uses the first field which will be found in class hierarchy from current class to the `Object` class
 ** such marked test method can run multiple times each time with different value injected to the field which is using (field, values and how to get them is specified in annotation parameters, see the javadoc for more informations)
 
-* +@Uses+
+* `@Uses`
 ** this is helper annotation for using multiple `@UseWithField` annotations in a single test method
 
-* +@CoversAttributes+
+* `@CoversAttributes`
 ** this indicates that the test covers testing of RichFaces component's attribute (e.g. oncomplete, status, styleClass) or multiple attributes. The actual component is obtained from test package.
-** this annotation is used in +CoverageCollectorTool+ to automatize the report of all covered attributes of all RichFaces components.
+** this annotation is used in `CoverageCollectorTool` to automatize the report of all covered attributes of all RichFaces components.
 
-* +@Skip+
-** this indicates that the test method will be skipped if given configuration/condition occurs. Without any value specified, the test with this annotation will always be skipped. See the javadoc of +SkipConfigurator+ for more details and examples.
+* `@Skip`
+** this indicates that the test method will be skipped if given configuration/condition occurs. Without any value specified, the test with this annotation will always be skipped. See the javadoc of `SkipConfigurator` for more details and examples.
 
 == Metamer RichFaces Bug Report Guidelines
 
@@ -213,11 +213,11 @@ e. ACTUAL: shows 15 items
 == About Tools
 There are a few tools to simplify/automatize some work in Metamer:
 
-* +ComponentsAttributesCollectorTool+
+* `ComponentsAttributesCollectorTool`
 ** updates or creates java component attributes file (e.g. NotifyMessageAttributes.java) for each RichFaces component
 ** tool should be runnable from IDE with test classpath (e.g. in NetBeans simply 'Run File') or by invoking maven command from 'metamer/ftest' `mvn test -Pupdate-attributes`
 
-* +CoverageCollectorTool+
+* `CoverageCollectorTool`
 ** creates a coverage report of all RichFaces components attributes
-** for creating report it uses component attributes file (e.g. NotifyMessageAttributes.java) and all test methods (annotated with +@Test+) with +@CoversAttributes+ annotation. So it is important to have correctly annotated test methods and to have updated all of the components attributes files.
+** for creating report it uses component attributes file (e.g. NotifyMessageAttributes.java) and all test methods (annotated with `@Test`) with `@CoversAttributes` annotation. So it is important to have correctly annotated test methods and to have updated all of the components attributes files.
 ** tool should be runnable from IDE with test classpath (e.g. in NetBeans simply 'Run File')
