@@ -96,7 +96,7 @@ To change the JSF implementation you can build Metamer with either a script ment
 == Functional Test Development
 
 === Running a test
-* switch to metamer/ftest directory and run +mvn clean verify -PprofileName -Dtest=testName -Dtemplates=templateName [-Dbrowser=browserName]+
+* switch to metamer/ftest directory and run `mvn clean verify -PprofileName -Dtest=testName -Dtemplates=templateName [-Dbrowser=browserName] [-Drepeats=numberOfRepeats] [-Dconfigurator.skip.reverse] [-Dconfigurator.skip.case=caseName]`
 ** profileName is a name of a container you want to use, see pom.xml in parent for their names
 *** e.g. +-Pwildfly-remote-8-1+
 ** testName is a name of a specific test to run
@@ -118,6 +118,9 @@ To change the JSF implementation you can build Metamer with either a script ment
 ***** `-Dbrowser=cr` to run tests with system's Chrome browser.
 ***** `-Dbrowser=ie9` or `-Dbrowser=ie-9` to run tests with system's IE browser (the version `9` will be ignored)
 ***** `-Dbrowser=ff30` or `-Dbrowser=ff-30` to run tests with Firefox 30. If working in non-Jenkins environment, then the browser binary will be downloaded and stored at `{user.home}/selenium`, otherwise the binary will be linked from network drive.
+** repeats will invoke each test multiple times (set by this property value)
+** configurator.skip.reverse will run only those tests, which are marked with @Skip annotation and its condition is met (can depend on current OS, used container, JSF implementation...)
+** configurator.skip.case=caseName will run only those tests, which are marked with @Skip annotation with case-sensitive value equal to the choosed `caseName` class name. Use e.g. `-Dconfigurator.skip.case=MyFaces` to run only tests with annotation `@Skip(On.JSF.MyFaces.class)`, `-Dconfigurator.skip.case=UIRepeatSetIndexIssue` to run only tests with annotation `@Skip(BecauseOf.UIRepeatSetIndexIssue.class)`
 
 === Debugging a test
 * set a breakpoint in code
