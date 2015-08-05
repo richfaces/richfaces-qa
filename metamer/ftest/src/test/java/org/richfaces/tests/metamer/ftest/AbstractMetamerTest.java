@@ -26,9 +26,13 @@ import static org.testng.Assert.assertTrue;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -52,6 +56,8 @@ import org.jboss.shrinkwrap.descriptor.api.javaee6.ParamValueType;
 import org.jboss.shrinkwrap.descriptor.api.webapp30.WebAppDescriptor;
 import org.richfaces.tests.metamer.TemplatesList;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.utils.files.LineIdentifiers;
+import org.richfaces.tests.metamer.ftest.utils.files.SimpleFileManipulator;
 
 import com.google.common.io.Files;
 
@@ -91,6 +97,14 @@ public abstract class AbstractMetamerTest extends Arquillian {
                 RESOURCE_OPTIMIZATION_PARAM_ALL, RESOURCE_OPTIMIZATION_PARAM_NONE, value));
     }
 
+    private static File copyJBossWebXMLToTarget(WebArchive war) throws IOException {
+        File file = new File("target/jboss-web.xml");
+        FileChannel outChannel = new FileOutputStream(file).getChannel();
+        ReadableByteChannel fromChannel = Channels.newChannel(war.get(ArchivePaths.create("WEB-INF/jboss-web.xml")).getAsset().openStream());
+        outChannel.transferFrom(fromChannel, 0, Integer.MAX_VALUE);
+        return file;
+    }
+
     @Deployment(testable = false, name = "updated")
     @OverProtocol("Servlet 3.0")
     public static WebArchive createTestArchive() throws IOException, URISyntaxException {
@@ -105,8 +119,10 @@ public abstract class AbstractMetamerTest extends Arquillian {
 
         // advanced features, tested only with browser profile
         if (isUsingBrowserProfile()) {
+            File temporaryJBossWebXML = copyJBossWebXMLToTarget(war);
             // workaround to enable running commands through JBoss CLI in EAP 6.3 and up
             if (isUsingEAP()) {
+                removeDefaultEncodingFromJbossWebXML(war, temporaryJBossWebXML);
                 workaroundCLIVersionInEAP63And64();
             }
 
@@ -120,7 +136,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
                 if (Boolean.getBoolean(EAP_WS_ENABLED)) {
                     try {
                         System.out.println("### Enabling WebSockets in EAP ###");
-                        enableWebSocketsInEAP63AndUp(war);
+                        enableWebSocketsInEAP63AndUp(war, temporaryJBossWebXML);
                         System.out.println("### Enabling of WebSockets in EAP was successful ###");
                     } catch (Throwable t) {
                         t.printStackTrace(System.err);
@@ -128,6 +144,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
                     }
                 }
             }
+            temporaryJBossWebXML.deleteOnExit();
         }
         return war;
     }
@@ -179,8 +196,17 @@ public abstract class AbstractMetamerTest extends Arquillian {
             ":reload");
     }
 
-    private static void enableWebSocketsInEAP63AndUp(WebArchive war) {
-        modifyJBossWebXMLToUseWS(war);
+    private static File enableWSInJbossWebXML(File jbossWebXMLFile) {
+        SimpleFileManipulator.inFile(jbossWebXMLFile)
+            .appendLine("<enable-websockets>true</enable-websockets>")
+            .beforeLine(LineIdentifiers.lineContains("</jboss-web>"))
+            .perform();
+        return jbossWebXMLFile;
+    }
+
+    private static void enableWebSocketsInEAP63AndUp(WebArchive war, File jBossWebXML) {
+        System.out.println(" * adding  <enable-websockets>true</enable-websockets> to jboss-web.xml");
+        replaceJBossWebXMLInWar(war, enableWSInJbossWebXML(jBossWebXML));
         enableWSInJBossCLI();
     }
 
@@ -205,16 +231,31 @@ public abstract class AbstractMetamerTest extends Arquillian {
     }
 
     /**
+     * If not removed and using EAP, you get: <code>
+     * Caused by: java.lang.Exception: {"JBAS014671: Failed services" => {"jboss.deployment.unit.\"metamer.war\".PARSE" => "org.jboss.msc.service.StartException in service jboss.deployment.unit.\"metamer.war\".PARSE: JBAS018733: Failed to process phase PARSE of deployment \"metamer.war\"
+     * Caused by: org.jboss.as.server.deployment.DeploymentUnitProcessingException: JBAS018014: Failed to parse XML descriptor \"/content/metamer.war/WEB-INF/jboss-web.xml\" at [4,3]
+     * Caused by: javax.xml.stream.XMLStreamException: ParseError at [row,col]:[4,3]
+     * Message: Unexpected element 'default-encoding' encountered"}}</code>
+     */
+    private static void removeDefaultEncodingFromJbossWebXML(WebArchive war, File jBossWebXML) {
+        System.out.println(" * removing line containing <default-encoding> from jboss-web.xml");
+        replaceJBossWebXMLInWar(war, removeDefaultEncodingInJbossWebXML(jBossWebXML));
+    }
+
+    private static File removeDefaultEncodingInJbossWebXML(File jbossWebXMLFile) {
+        SimpleFileManipulator.inFile(jbossWebXMLFile)
+            .deleteLine(LineIdentifiers.lineContains("<default-encoding>"))
+            .perform();
+        return jbossWebXMLFile;
+    }
+
+    /**
      * Replaces jboss-web.xml in the final WAR with a version with enabled WebSockets.
      */
-    private static void modifyJBossWebXMLToUseWS(WebArchive war) throws IllegalArgumentException {
-        File file = null;
-        try {
-            file = new File(AbstractMetamerTest.class.getResource("eap/jboss-web.xml").toURI());
-        } catch (URISyntaxException ex) {
-        }
+    private static WebArchive replaceJBossWebXMLInWar(WebArchive war, File jbossWebXML) throws IllegalArgumentException {
         war.delete(ArchivePaths.create("WEB-INF/jboss-web.xml"));
-        war.addAsWebInfResource(file);
+        war.addAsWebInfResource(jbossWebXML);
+        return war;
     }
 
     /**
