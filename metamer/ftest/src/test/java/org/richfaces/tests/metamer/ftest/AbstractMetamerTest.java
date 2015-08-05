@@ -72,6 +72,7 @@ import com.google.common.io.Files;
 public abstract class AbstractMetamerTest extends Arquillian {
 
     private static final String EAP_63_AND_UP_REGEX = ".*jbosseap-(managed|remote)-(6-[3-9]).*";
+    private static final String EAP_70_AND_UP_REGEX = ".*jbosseap-(managed|remote)-(7-[0-9]).*";
     // Key to enable WS on EAP
     public static final String EAP_WS_ENABLED = "eap.ws.enabled";
     /** Keys to manage resources optimization (in previous releases named mapping), compression and packaging, used in web.xml */
@@ -122,7 +123,9 @@ public abstract class AbstractMetamerTest extends Arquillian {
             File temporaryJBossWebXML = copyJBossWebXMLToTarget(war);
             // workaround to enable running commands through JBoss CLI in EAP 6.3 and up
             if (isUsingEAP()) {
-                removeDefaultEncodingFromJbossWebXML(war, temporaryJBossWebXML);
+                if (!isUsingEAP70AndUp()) {
+                    removeDefaultEncodingFromJbossWebXML(war, temporaryJBossWebXML);
+                }
                 workaroundCLIVersionInEAP63And64();
             }
 
@@ -220,6 +223,10 @@ public abstract class AbstractMetamerTest extends Arquillian {
 
     private static boolean isUsingEAP63AndUp() {
         return activatedMavenProfiles.matches(EAP_63_AND_UP_REGEX);
+    }
+
+    private static boolean isUsingEAP70AndUp() {
+        return activatedMavenProfiles.matches(EAP_70_AND_UP_REGEX);
     }
 
     private static boolean isUsingJBossContainer() {
