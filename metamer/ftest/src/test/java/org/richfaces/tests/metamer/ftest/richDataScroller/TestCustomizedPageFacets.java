@@ -83,7 +83,9 @@ public class TestCustomizedPageFacets extends AbstractWebDriverTest {
     @Templates("uiRepeat")
     @Skip(expressions = {
         @AndExpression(On.Container.EAP624.class),
-        @AndExpression(On.Container.EAP633.class)
+        @AndExpression(On.Container.EAP633.class),
+        @AndExpression(On.Container.EAP642.class),
+        @AndExpression(On.Container.EAP643.class)
     })
     public void testTopCustomizedPageFacetInUiRepeat() {
         testTopCustomizedPageFacet();
