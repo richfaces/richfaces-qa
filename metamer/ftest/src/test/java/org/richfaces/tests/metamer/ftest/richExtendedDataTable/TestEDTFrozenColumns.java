@@ -25,12 +25,14 @@ import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annot
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotEquals;
+import static org.testng.Assert.assertTrue;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
-import org.jboss.arquillian.graphene.page.Page;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -40,7 +42,6 @@ import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotatio
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 /**
@@ -48,10 +49,31 @@ import org.testng.annotations.Test;
  */
 public class TestEDTFrozenColumns extends AbstractWebDriverTest {
 
+    private static final String CLASS_STRING = "class";
+    private static final String METAMER_FTEST_CLASS_STRING = "metamer-ftest-class";
+    private static final String COLUMN2_STRING = "column2";
+    private static final String ROW2_STRING = "row2";
+
     private final Attributes<ExtendedDataTableAttributes> extendedDataTableAttributes = getAttributes();
 
-    @Page
-    private FrozenColumnsPage page;
+    @FindBy(css = "div[id$=richEDT] td.rf-edt-ftr-fzn div table tr td")
+    private List<WebElement> frozenColumnsElements;
+    @FindBy(css = "[id$='richEDT:tbtf'].rf-edt-tbl tr")
+    private List<WebElement> frozenRowsElements;
+    @FindBy(css = "[id$='richEDT:tbn'] tr")
+    private List<WebElement> rowsElements;
+    @FindBy(css = "div[id$=richEDT] td.rf-edt-ftr-fzn")
+    private WebElement frozenColumnsTdElement;
+    @FindBy(xpath = "//div[contains(@id,'richEDT')]//div[@class='rf-edt-ftr']//table//tbody//tr//td[@colspan=1][1]//div[@class='rf-edt-scrl']")
+    private WebElement defaultScrollerElement;
+    @FindBy(xpath = "//div[contains(@id,'richEDT')]//div[@class='rf-edt-ftr']//table//tbody//tr//td[@colspan=1][2]//div[@class='rf-edt-scrl']")
+    private WebElement movedScrollerElement;
+    @FindBy(css = "div[id$=richEDT] a.rf-ds-btn-next")
+    private WebElement nextPageElement;
+    @FindBy(xpath = "//div[contains(@id,'richEDT')]//span[contains(@id, 'scroller2_ds_2')][contains(text(), '2')]")
+    private WebElement secondPageSpanElement;
+    @FindBy(xpath = "//div[contains(@id,'richEDT')]//span[contains(@id, 'scroller2_ds_3')][contains(text(), '3')]")
+    private WebElement thirdPageSpanElement;
 
     private final Integer[] ints = { 0, 2, 4 };
     private final Integer[] ints2 = { 1, 3 };
@@ -59,16 +81,58 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
     private Integer numberOfColumns;
     private Point location;// for testScrollerForNotFrozenColumns
 
+    public void _testFrozenColumnsShow() {
+        // wait for list of elements with frozen columns with expected size
+        List<WebElement> frozenColumns = guardListSize(frozenColumnsElements, numberOfColumns);
+        // frozenColumns feature is implemented in such a way that thare are no frozen column when frozenColumns equals
+        // number of columns
+        int expectedNumberOfColumns = numberOfColumns == 4 ? 0 : numberOfColumns;
+        assertEquals(frozenColumns.size(), expectedNumberOfColumns,
+            "The number of frozen columns set is not equal to the number of frozen columns found");
+    }
+
+    private void _testScrollerForNotFrozenColumns() {
+        // check if there is default scroller
+        Graphene.waitModel().until("Default scroller should not be in the page.").element(defaultScrollerElement).is()
+            .not().present();
+        // check if there is scroller for not frozen columns
+        Graphene.waitModel().until("Scroller for the not frozen columns should be in the page.")
+            .element(movedScrollerElement).is().present();
+        // check if the location of scroller moved
+        assertNotEquals(location, movedScrollerElement.getLocation(), "The position of scroller has not been changed.");
+    }
+
     @Override
     public String getComponentTestPagePath() {
         return "richExtendedDataTable/frozenColumns.xhtml";
     }
 
     @Test
-    @CoversAttributes("frozenColumns")
-    public void testInit() {
-        Boolean present = new WebElementConditionFactory(page.getFrozenColumnsTdElement()).isPresent().apply(driver);
-        assertFalse(present, "No frozen columns should be in page.");
+    @CoversAttributes({ "frozenColumns", "columnClasses" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-12351")
+    public void testColumnClassesAreInSyncInBothFrozenAndNotFrozenPartOfTable() {
+        extendedDataTableAttributes.set(ExtendedDataTableAttributes.frozenColumns, 1);
+        extendedDataTableAttributes.set(ExtendedDataTableAttributes.columnClasses, "metamer-ftest-class,column2");
+        extendedDataTableAttributes.set(ExtendedDataTableAttributes.rows, 7);
+
+        int size = frozenRowsElements.size();
+        String toContain, containsClasses;
+        for (int i = 0; i < size; i++) {
+            List<WebElement> cols = frozenRowsElements.get(i).findElements(By.tagName("td"));
+            int frozenColsSize = cols.size();
+            for (int j = 0; j < frozenColsSize; j++) {
+                toContain = j % 2 == 0 ? METAMER_FTEST_CLASS_STRING : COLUMN2_STRING;
+                containsClasses = cols.get(j).getAttribute(CLASS_STRING);
+                assertTrue(containsClasses.contains(toContain), MessageFormat.format("Frozen column #{0} should contain class <{1}>, but had <{2}>", j, toContain, containsClasses));
+            }
+            cols = rowsElements.get(i).findElements(By.tagName("td"));
+            int colsSize = cols.size();
+            for (int j = 0; j < colsSize; j++) {
+                toContain = (j + frozenColsSize) % 2 == 0 ? METAMER_FTEST_CLASS_STRING : COLUMN2_STRING;
+                containsClasses = cols.get(j).getAttribute(CLASS_STRING);
+                assertTrue(containsClasses.contains(toContain), MessageFormat.format("Not frozen column #{0} should contain class <{1}>, but had <{2}>", j, toContain, containsClasses));
+            }
+        }
     }
 
     /**
@@ -85,14 +149,14 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
         _testFrozenColumnsShow();
 
         // change page
-        page.getNextPageElement().click();
-        Graphene.waitModel().until().element(page.getSecondPageSpanElement()).is().visible();
+        nextPageElement.click();
+        Graphene.waitModel().until().element(secondPageSpanElement).is().visible();
         // test
         _testFrozenColumnsShow();
 
         // change page
-        page.getNextPageElement().click();
-        Graphene.waitModel().until().element(page.getThirdPageSpanElement()).is().visible();
+        nextPageElement.click();
+        Graphene.waitModel().until().element(thirdPageSpanElement).is().visible();
         // test
         _testFrozenColumnsShow();
     }
@@ -106,14 +170,28 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
         testFrozenColumnsShow();
     }
 
-    public void _testFrozenColumnsShow() {
-        // wait for list of elements with frozen columns with expected size
-        List<WebElement> frozenColumns = guardListSize(page.getFrozenColumnsElements(), numberOfColumns);
-        // frozenColumns feature is implemented in such a way that thare are no frozen column when frozenColumns equals
-        // number of columns
-        int expectedNumberOfColumns = numberOfColumns == 4 ? 0 : numberOfColumns;
-        assertEquals(frozenColumns.size(), expectedNumberOfColumns,
-            "The number of frozen columns set is not equal to the number of frozen columns found");
+    @Test
+    @CoversAttributes("frozenColumns")
+    public void testInit() {
+        Boolean present = new WebElementConditionFactory(frozenColumnsTdElement).isPresent().apply(driver);
+        assertFalse(present, "No frozen columns should be in page.");
+    }
+
+    @Test
+    @CoversAttributes({ "frozenColumns", "rowClasses" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-12351")
+    public void testRowClassesAreInSyncInBothFrozenAndNotFrozenPartOfTable() {
+        extendedDataTableAttributes.set(ExtendedDataTableAttributes.frozenColumns, 1);
+        extendedDataTableAttributes.set(ExtendedDataTableAttributes.rowClasses, "metamer-ftest-class,row2");
+        extendedDataTableAttributes.set(ExtendedDataTableAttributes.rows, 7);
+
+        int size = frozenRowsElements.size();
+        String toContain;
+        for (int i = 0; i < size; i++) {
+            toContain = i % 2 == 0 ? METAMER_FTEST_CLASS_STRING : ROW2_STRING;
+            assertTrue(frozenRowsElements.get(i).getAttribute(CLASS_STRING).contains(toContain));
+            assertTrue(rowsElements.get(i).getAttribute(CLASS_STRING).contains(toContain));
+        }
     }
 
     /**
@@ -127,21 +205,21 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
     // TODO https://issues.jboss.org/browse/RF-12236 , when numberOfColumns=4
     public void testScrollerForNotFrozenColumns() {
         // check if default scroller is present and get its location
-        Graphene.waitModel().until("Default scroller is not in the page.").element(page.getDefaultScrollerElement()).is().present();
-        location = page.getDefaultScrollerElement().getLocation();
+        Graphene.waitModel().until("Default scroller is not in the page.").element(defaultScrollerElement).is().present();
+        location = defaultScrollerElement.getLocation();
         extendedDataTableAttributes.set(ExtendedDataTableAttributes.frozenColumns, numberOfColumns);
         // test
         _testScrollerForNotFrozenColumns();
 
         // change page
-        page.getNextPageElement().click();
-        Graphene.waitModel().until().element(page.getSecondPageSpanElement()).is().visible();
+        nextPageElement.click();
+        Graphene.waitModel().until().element(secondPageSpanElement).is().visible();
         // test
         _testScrollerForNotFrozenColumns();
 
         // change page
-        page.getNextPageElement().click();
-        Graphene.waitModel().until().element(page.getThirdPageSpanElement()).is().visible();
+        nextPageElement.click();
+        Graphene.waitModel().until().element(thirdPageSpanElement).is().visible();
         // test
         _testScrollerForNotFrozenColumns();
     }
@@ -158,83 +236,5 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
     // TODO https://issues.jboss.org/browse/RF-12236 , when numberOfColumns=4
     public void testScrollerForNotFrozenColumnsInRichExtendedDataTable() {
         testScrollerForNotFrozenColumns();
-    }
-
-    private void _testScrollerForNotFrozenColumns() {
-        // check if there is default scroller
-        Graphene.waitModel().until("Default scroller should not be in the page.").element(page.getDefaultScrollerElement()).is()
-            .not().present();
-        // check if there is scroller for not frozen columns
-        Graphene.waitModel().until("Scroller for the not frozen columns should be in the page.")
-            .element(page.getMovedScrollerElement()).is().present();
-        // check if the location of scroller moved
-        assertNotEquals(location, page.getMovedScrollerElement().getLocation(), "The position of scroller has not been changed.");
-    }
-
-    public static class FrozenColumnsPage extends MetamerPage {
-
-        @FindBy(xpath = "//div[contains(@id,'richEDT')]//td[@class='rf-edt-ftr-fzn']//div//table//tr//td")
-        private List<WebElement> frozenColumnsElements;
-        @FindBy(xpath = "//div[contains(@id,'richEDT')]//td[@class='rf-edt-ftr-fzn']")
-        private WebElement frozenColumnsTdElement;
-        @FindBy(xpath = "//div[contains(@id,'richEDT')]//div[@class='rf-edt-ftr']//table//tbody//tr//td[@colspan=1][1]//div[@class='rf-edt-scrl']")
-        private WebElement defaultScrollerElement;
-        @FindBy(xpath = "//div[contains(@id,'richEDT')]//div[@class='rf-edt-ftr']//table//tbody//tr//td[@colspan=1][2]//div[@class='rf-edt-scrl']")
-        private WebElement movedScrollerElement;
-        @FindBy(css = "div[id$=richEDT] a.rf-ds-btn-next")
-        private WebElement nextPageElement;
-        @FindBy(xpath = "//div[contains(@id,'richEDT')]//span[contains(@id, 'scroller2_ds_2')][contains(text(), '2')]")
-        private WebElement secondPageSpanElement;
-        @FindBy(xpath = "//div[contains(@id,'richEDT')]//span[contains(@id, 'scroller2_ds_3')][contains(text(), '3')]")
-        private WebElement thirdPageSpanElement;
-
-        /**
-         * @return the defaultScrollerElement
-         */
-        public WebElement getDefaultScrollerElement() {
-            return defaultScrollerElement;
-        }
-
-        /**
-         * @return the frozenColumnsElements
-         */
-        public List<WebElement> getFrozenColumnsElements() {
-            return frozenColumnsElements;
-        }
-
-        /**
-         * @return the frozenColumnsTdElement
-         */
-        public WebElement getFrozenColumnsTdElement() {
-            return frozenColumnsTdElement;
-        }
-
-        /**
-         * @return the movedScrollerElement
-         */
-        public WebElement getMovedScrollerElement() {
-            return movedScrollerElement;
-        }
-
-        /**
-         * @return the nextPageElement
-         */
-        public WebElement getNextPageElement() {
-            return nextPageElement;
-        }
-
-        /**
-         * @return the secondPageSpanElement
-         */
-        public WebElement getSecondPageSpanElement() {
-            return secondPageSpanElement;
-        }
-
-        /**
-         * @return the thirdPageSpanElement
-         */
-        public WebElement getThirdPageSpanElement() {
-            return thirdPageSpanElement;
-        }
     }
 }
