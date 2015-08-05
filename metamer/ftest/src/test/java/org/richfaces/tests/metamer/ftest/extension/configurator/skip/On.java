@@ -129,7 +129,7 @@ public class On {
 
         /**
          * Skip test when use of EAP 6.2.4 is detected (when <code>activated.maven.profiles</code> are containing <code>jbosseap-managed-6-2</code>
-         * or <code>jbosseap-remote-6-2</code> and <code>version.eap=6.2.4</code>).
+         * or <code>jbosseap-remote-6-2</code> and <code>version.eap=6.2.4*</code>).
          */
         public static class EAP624 implements SkipOn {
 
@@ -141,7 +141,7 @@ public class On {
 
         /**
          * Skip test when use of EAP 6.3.3 is detected (when <code>activated.maven.profiles</code> are containing <code>jbosseap-managed-6-3</code>
-         * or <code>jbosseap-remote-6-3</code> and <code>version.eap=6.3.3</code>).
+         * or <code>jbosseap-remote-6-3</code> and <code>version.eap=6.3.3*</code>).
          */
         public static class EAP633 implements SkipOn {
 
@@ -153,13 +153,37 @@ public class On {
 
         /**
          * Skip test when use of EAP 6.4.0 is detected (when <code>activated.maven.profiles</code> are containing <code>jbosseap-managed-6-4</code>
-         * or <code>jbosseap-remote-6-4</code> and <code>version.eap=6.4.0</code>).
+         * or <code>jbosseap-remote-6-4</code> and <code>version.eap=6.4.0*</code>).
          */
         public static class EAP640 implements SkipOn {
 
             @Override
             public boolean apply() {
                 return containerProfileActivated("jbosseap-managed-6-4", "jbosseap-remote-6-4") && eapVersionSetTo("6.4.0");
+            }
+        }
+
+        /**
+         * Skip test when use of EAP 6.4.2 is detected (when <code>activated.maven.profiles</code> are containing <code>jbosseap-managed-6-4</code>
+         * or <code>jbosseap-remote-6-4</code> and <code>version.eap=6.4.2*</code>).
+         */
+        public static class EAP642 implements SkipOn {
+
+            @Override
+            public boolean apply() {
+                return containerProfileActivated("jbosseap-managed-6-4", "jbosseap-remote-6-4") && eapVersionSetTo("6.4.2");
+            }
+        }
+
+        /**
+         * Skip test when use of EAP 6.4.3 is detected (when <code>activated.maven.profiles</code> are containing <code>jbosseap-managed-6-4</code>
+         * or <code>jbosseap-remote-6-4</code> and <code>version.eap=6.4.3*</code>).
+         */
+        public static class EAP643 implements SkipOn {
+
+            @Override
+            public boolean apply() {
+                return containerProfileActivated("jbosseap-managed-6-4", "jbosseap-remote-6-4") && eapVersionSetTo("6.4.3");
             }
         }
 
