@@ -37,6 +37,8 @@ import org.richfaces.fragment.calendar.DayPicker;
 import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
 import org.richfaces.fragment.calendar.PopupCalendar;
 import org.richfaces.fragment.calendar.PopupCalendar.PopupHeaderControls;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -135,6 +137,18 @@ public class TestCalendarBasic extends AbstractCalendarTest {
 
         assertEquals(yearAndMonth.getYear(), previousYearAndMonth.plusYears(1).getYear(), "Year did not change correctly.");
         assertEquals(yearAndMonth.getMonthOfYear(), previousYearAndMonth.plusYears(1).getMonthOfYear(), "Month did not change correctly.");
+    }
+
+    @Test
+    @IssueTracking("https://issues.jboss.org/browse/RF-14110")
+    @Skip
+    public void testOpenAndClosePopupRepeatedly() {
+        popupCalendar.openPopup();
+        popupCalendar.closePopup();
+        popupCalendar.openPopup();
+        popupCalendar.closePopup();
+        popupCalendar.openPopup();
+        popupCalendar.closePopup();
     }
 
     @Test
