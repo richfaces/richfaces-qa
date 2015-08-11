@@ -25,6 +25,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Keyboard;
@@ -50,7 +51,8 @@ public class TestRF14032 extends AbstractCalendarTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-14032")
     public void testSelectedYearWillChangeOnlyByArrowsPressing() {
         // set some reference date
-        popupCalendar.setDateTime(firstOfJanuary2012);
+        Graphene.guardAjax(popupCalendar).setDateTime(firstOfJanuary2012);
+        waiting(500);// stabilization wait time, without it the whole popup will disappear
         PopupCalendar popup = popupCalendar.openPopup();
         // set a different year and month than the reference date
         popup.getHeaderControls().openYearAndMonthEditor().selectDate(todayMidday).confirmDate();
