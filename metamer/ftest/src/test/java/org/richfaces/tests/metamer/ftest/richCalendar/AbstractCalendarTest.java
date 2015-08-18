@@ -120,7 +120,8 @@ public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
 
         YearAndMonthEditor yearAndMonthEditor = headerControls.openYearAndMonthEditor();
         assertTrue(yearAndMonthEditor.isVisible(), "Year and month editor should be visible");
-        waiting(500);// stabilization wait time, without it the whole popup will disappear
+        // stabilization wait time, without it the whole popup will disappear right after it is displayed, https://issues.jboss.org/browse/RF-14110
+        waiting(500);
         yearAndMonthEditor.cancelDate();// close the year and month editor popup
         assertFalse(yearAndMonthEditor.isVisible(), "Year and month editor should not be visible");
         assertTrue(openedPopup.isVisible(), "Calendar popup should be visible");
