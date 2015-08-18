@@ -204,6 +204,10 @@ public class TestMenuItem extends AbstractWebDriverTest {
 
     @Test(groups = "smoke")
     public void testInit() {
+        // in some circumstances the menu is visible on page load (perhaps the mouse pointer ends up on the menu element from previous step),
+        // this should move the mouse out of the menu and reload the page
+        getMetamerPage().fullPageRefresh();
+
         assertPresent(fileMenu, "Drop down menu \"File\" should be present on the page");
         assertVisible(fileMenu, "Drop down menu \"File\" should be visible on the page");
         assertVisible(fileMenuLabel, "Label of menu should be visible on the page");
