@@ -32,7 +32,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.remote.RemoteWebElement;
-import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
@@ -44,6 +44,8 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
 
     private final Attributes<EditorAttributes> editorAttributes = getAttributes();
 
+    private final String editorTextAreaTag = "textarea";
+
     @Page
     private EditorSimplePage page;
 
@@ -52,80 +54,32 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
         return "richEditor/simple.xhtml";
     }
 
-    @FindBy(xpath = "//div[contains(@class,'rf-ed') and contains (@id, 'editor')]")
-    private WebElement editor;
-
-    private final String editorTextAreaTag = "textarea";
-
     private String getEditorId() {
-        return editor.getAttribute("id");
+        return getEditorRootElement().getAttribute("id");
+    }
+
+    private WebElement getEditorRootElement() {
+        return page.getEditor().advanced().getRootElement();
     }
 
     private WebElement getEditorTextArea() {
         return driver.findElement(By.tagName(editorTextAreaTag));
     }
 
-    private void jsSetFocus() {
-        executeJS("RichFaces.component('" + getEditorId() + "').focus()");
-    }
-
     private void jsBlur() {
         executeJS("RichFaces.component('" + getEditorId() + "').blur()");
     }
 
-    private Boolean jsIsFocused() {
-        Boolean jsResult = (Boolean) executeJS("return RichFaces.component('" + getEditorId() + "').isFocused()");
-        return jsResult;
-    }
-
     private String jsGetValue() {
-        return (String) executeJS("return RichFaces.component('" + getEditorId() + "').getValue()");
+        return Utils.invokeRichFacesJSAPIFunction(getEditorRootElement(), "getValue()");
     }
 
-    @Test
-    @Templates(value = { "plain" })
-    public void testJsGetValue() {
-        String testText = "Some nice and cool text";
-        page.getEditor().type(testText);
-        String jsResult = (String) jsGetValue();
-        assertTrue(jsResult.contains(testText));
+    private Boolean jsIsFocused() {
+        return Utils.invokeRichFacesJSAPIFunction(getEditorRootElement(), "isFocused()");
     }
 
-    @Test
-    @Templates(value = { "plain" })
-    public void testJsSetValue() {
-        // should be empty
-        assertEquals(page.getEditor().getText(), "");
-        String testText = "NEW VALUE SET BY JS!";
-        executeJS("RichFaces.component('" + getEditorId() + "').setValue('" + testText + "')");
-        assertEquals(page.getEditor().getText(), testText);
-    }
-
-    @Test
-    @Templates(value = { "plain" })
-    public void testJsGetInput() {
-        RemoteWebElement textArea;
-        textArea = (RemoteWebElement) executeJS("return RichFaces.component('" + getEditorId() + "').getInput()");
-        assertEquals(textArea.getAttribute("id"), getEditorTextArea().getAttribute("id"));
-    }
-
-    /**
-     * Test through fire JS event
-     */
-    @Test
-    @Templates(value = { "plain" })
-    public void testJsFocus() {
-        testFireEvent(editorAttributes, EditorAttributes.onfocus, new Action() {
-            @Override
-            public void perform() {
-                driver.findElement(By.xpath("//input[@name='focus']")).click();
-                try {
-                    Thread.sleep(2000L);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+    private void jsSetFocus() {
+        Utils.invokeRichFacesJSAPIFunction(getEditorRootElement(), "focus()");
     }
 
     /**
@@ -139,19 +93,75 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
             public void perform() {
                 // focus first, then blur
                 driver.findElement(By.xpath("//input[@name='focus']")).click();
-                try {
-                    Thread.sleep(2000L);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                waiting(2000);
                 driver.findElement(By.xpath("//input[@name='blur']")).click();
-                try {
-                    Thread.sleep(2000L);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                waiting(2000);
             }
         });
+    }
+
+    /**
+     * Test through fire JS event
+     */
+    @Test
+    @Templates(value = { "plain" })
+    public void testJsFocus() {
+        testFireEvent(editorAttributes, EditorAttributes.onfocus, new Action() {
+            @Override
+            public void perform() {
+                driver.findElement(By.xpath("//input[@name='focus']")).click();
+                waiting(2000);
+            }
+        });
+    }
+
+    /**
+     * Idea is to get editor Object and use several its functions to assure the object works correctly
+     */
+    @Test
+    @Templates(value = { "plain" })
+    public void testJsGetEditor() {
+        String someText = "some text";
+        Utils.invokeRichFacesJSAPIFunction(getEditorRootElement(), "getEditor().setReadOnly(true)");
+        try {
+            page.getEditor().type("Nice text");
+        } catch (Exception e) {
+            // OK exception should be thrown as you cannot edit read only editor
+        }
+        // additional check with JS function
+
+        assertTrue(Utils.<Boolean>invokeRichFacesJSAPIFunction(getEditorRootElement(), "isReadOnly()"));
+        // set back to editable
+        Utils.invokeRichFacesJSAPIFunction(getEditorRootElement(), "getEditor().setReadOnly(false)");
+        Utils.invokeRichFacesJSAPIFunction(getEditorRootElement(), "getEditor().setData('" + someText + "')");
+        assertEquals(page.getEditor().getText(), someText);
+    }
+
+    @Test
+    @Templates(value = { "plain" })
+    public void testJsGetInput() {
+        RemoteWebElement textArea = Utils.invokeRichFacesJSAPIFunction(getEditorRootElement(), "getInput()");
+        assertEquals(textArea.getAttribute("id"), getEditorTextArea().getAttribute("id"));
+    }
+
+    @Test
+    @Templates(value = { "plain" })
+    public void testJsGetValue() {
+        String testText = "Some nice and cool text";
+        page.getEditor().type(testText);
+        assertTrue(jsGetValue().contains(testText));
+    }
+
+    @Test
+    @Templates(value = { "plain" })
+    public void testJsIsDirty() {
+        page.getEditor().type("Some text");
+        assertTrue(Utils.<Boolean>invokeRichFacesJSAPIFunction(getEditorRootElement(), "isDirty()"));
+
+        page.getEditor().type("even more text!");
+        guardAjax(page.getA4jButton()).click();
+        waitAjax(driver).until().element(page.getOutput()).text().contains("even more text!");
+        assertFalse(Utils.<Boolean>invokeRichFacesJSAPIFunction(getEditorRootElement(), "isDirty()"));
     }
 
     @Test
@@ -172,14 +182,14 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
 
     @Test
     @Templates(value = { "plain" })
-    public void testJsIsDirty() {
-        page.getEditor().type("Some text");
-        assertTrue((Boolean) executeJS("return RichFaces.component('" + getEditorId() + "').isDirty()"));
+    public void testJsIsReadOnly() {
+        // initially false
 
-        page.getEditor().type("even more text!");
-        guardAjax(page.getA4jButton()).click();
-        waitAjax(driver).until().element(page.getOutput()).text().contains("even more text!");
-        assertFalse((Boolean) executeJS("return RichFaces.component('" + getEditorId() + "').isDirty()"));
+        assertFalse(Utils.<Boolean>invokeRichFacesJSAPIFunction(getEditorRootElement(), "isReadOnly()"));
+
+        // set read only and assert true
+        editorAttributes.set(EditorAttributes.readonly, true);
+        assertTrue(Utils.<Boolean>invokeRichFacesJSAPIFunction(getEditorRootElement(), "isReadOnly()"));
     }
 
     @Test
@@ -187,22 +197,11 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
     public void testJsIsValueChanged() {
         // edit, submit changes and assert
         page.getEditor().type("Hello");
-        assertTrue((Boolean) executeJS("return RichFaces.component('" + getEditorId() + "').isValueChanged()"));
+        assertTrue(Utils.<Boolean>invokeRichFacesJSAPIFunction(getEditorRootElement(), "isValueChanged()"));
 
         // click submit again with no changes
         page.fullPageRefresh();
-        assertFalse((Boolean) executeJS("return RichFaces.component('" + getEditorId() + "').isValueChanged()"));
-    }
-
-    @Test
-    @Templates(value = { "plain" })
-    public void testJsIsReadOnly() {
-        // initially false
-        assertFalse((Boolean) executeJS("return RichFaces.component('" + getEditorId() + "').isReadOnly()"));
-
-        // set read only and assert true
-        editorAttributes.set(EditorAttributes.readonly, true);
-        assertTrue((Boolean) executeJS("return RichFaces.component('" + getEditorId() + "').isReadOnly()"));
+        assertFalse(Utils.<Boolean>invokeRichFacesJSAPIFunction(getEditorRootElement(), "isValueChanged()"));
     }
 
     @Test
@@ -217,41 +216,28 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
         assertEquals(page.getEditor().getText(), testText);
         page.getEditor().clear();
 
-        executeJS("RichFaces.component('" + getEditorId() + "').setReadOnly(true)");
-        try {
-            page.getEditor().type(testText);
-        } catch (Exception e) {
-            // OK exception should be thrown as you cannot edit read only editor
-        }
+        Utils.invokeRichFacesJSAPIFunction(getEditorRootElement(), "setReadOnly(true)");
+        page.getEditor().type(testText);
+        assertEquals(page.getEditor().getText(), "");
+
         // additional check with JS function
-        assertTrue((Boolean) executeJS("return RichFaces.component('" + getEditorId() + "').isReadOnly()"));
+        assertTrue(Utils.<Boolean>invokeRichFacesJSAPIFunction(getEditorRootElement(), "isReadOnly()"));
 
         // revert back to editable and assert
-        executeJS("RichFaces.component('" + getEditorId() + "').setReadOnly(false)");
+        Utils.invokeRichFacesJSAPIFunction(getEditorRootElement(), "setReadOnly(false)");
         page.getEditor().type(testText);
         guardAjax(page.getA4jButton()).click();
         assertEquals(page.getEditor().getText(), testText);
     }
 
-    /**
-     * Idea is to get editor Object and use several its functions to assure the object works correctly
-     */
     @Test
     @Templates(value = { "plain" })
-    public void testJsGetEditor() {
-        String someText = "some text";
-        executeJS("RichFaces.component('" + getEditorId() + "').getEditor().setReadOnly()");
-        try {
-            page.getEditor().type("Nice text");
-        } catch (Exception e) {
-            // OK exception should be thrown as you cannot edit read only editor
-        }
-        // additional check with JS function
-        assertTrue((Boolean) executeJS("return RichFaces.component('" + getEditorId() + "').isReadOnly()"));
-        // set back to editable
-        executeJS("RichFaces.component('" + getEditorId() + "').getEditor().setReadOnly(false)");
+    public void testJsSetValue() {
+        // should be empty
+        assertEquals(page.getEditor().getText(), "");
+        String testText = "NEW VALUE SET BY JS!";
 
-        executeJS("RichFaces.component('" + getEditorId() + "').getEditor().setData('" + someText + "')");
-        assertEquals(page.getEditor().getText(), someText);
+        Utils.invokeRichFacesJSAPIFunction(getEditorRootElement(), "setValue('" + testText + "')");
+        assertEquals(page.getEditor().getText(), testText);
     }
 }
