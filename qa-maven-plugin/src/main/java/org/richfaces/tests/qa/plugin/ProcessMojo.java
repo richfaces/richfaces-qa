@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-*/
+ */
 package org.richfaces.tests.qa.plugin;
 
 import java.io.File;
@@ -103,7 +103,7 @@ public class ProcessMojo extends AbstractMojo implements PropertiesProvider {
     private final LazyLoadedCachedValue<Browser> browser = new LazyLoadedCachedValue<Browser>() {
         @Override
         protected Browser initValue() {
-            String browserFromSystemProperty = System.getProperty(BROWSER);
+            String browserFromSystemProperty = System.getProperty(BROWSER, browserString);
             if (browserFromSystemProperty != null && !browserFromSystemProperty.isEmpty()) {
                 return Browser.parseFromString(browserFromSystemProperty);
             }
@@ -139,6 +139,9 @@ public class ProcessMojo extends AbstractMojo implements PropertiesProvider {
             return Version.parseVersion(seleniumVersion);
         }
     };
+
+    @Parameter(property = "browser")
+    private String browserString;
 
     private final URL chromeDriverBaseURL = Utils.createURLSilently("http://chromedriver.storage.googleapis.com");
     @Parameter(defaultValue = "qa.chrome.driver.bin")
