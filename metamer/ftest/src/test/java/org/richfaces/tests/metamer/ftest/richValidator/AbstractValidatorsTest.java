@@ -225,6 +225,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
     public void verifyAllWrongWithJSFSubmit() {
         clickWrongButton();
+        waiting(2000);// stabilization wait time, wait for all ajax requests are completed
         getPage().gethCommandBtn().click();
         checkAllErrorMessagesAreVisibleAndCorrect();
     }
