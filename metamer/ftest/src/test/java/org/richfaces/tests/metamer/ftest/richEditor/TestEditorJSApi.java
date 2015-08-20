@@ -34,8 +34,7 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -205,8 +204,7 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
     }
 
     @Test
-    @Skip
-    @IssueTracking(value = { "https://code.google.com/p/selenium/issues/detail?id=7643" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-14120")
     @Templates(value = { "plain" })
     public void testJsSetReadOnly() {
         String testText = "Some random text";
