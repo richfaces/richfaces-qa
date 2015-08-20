@@ -117,7 +117,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
-            <metamer:attributes value="#{richAutocompleteBean.attributes}" id="attributes" />
+            <metamer:attributes value="#{richAutocompleteBean.attributes}" id="attributes" exclude="autocompleteList,autocompleteMethod"  />
             <metamer:attributes value="#{richAutocompleteBean.ajaxAttributes}" id="ajaxAttributes" />
         </ui:define>
 
