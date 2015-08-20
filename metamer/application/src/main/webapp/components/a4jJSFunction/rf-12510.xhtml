@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:rich="http://richfaces.org/rich"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
-<!--
-JBoss, Home of Professional Open Source
-Copyright 2010-2015, Red Hat, Inc. and individual contributors
-by the @authors tag. See the copyright.txt in the distribution for a
-full listing of individual contributors.
-
-This is free software; you can redistribute it and/or modify it
-under the terms of the GNU Lesser General Public License as
-published by the Free Software Foundation; either version 2.1 of
-the License, or (at your option) any later version.
-
-This software is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public
-License along with this software; if not, write to the Free
-Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    <!--
+    JBoss, Home of Professional Open Source
+    Copyright 2010-2015, Red Hat, Inc. and individual contributors
+    by the @authors tag. See the copyright.txt in the distribution for a
+    full listing of individual contributors.
+    
+    This is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as
+    published by the Free Software Foundation; either version 2.1 of
+    the License, or (at your option) any later version.
+    
+    This software is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    Lesser General Public License for more details.
+    
+    You should have received a copy of the GNU Lesser General Public
+    License along with this software; if not, write to the Free
+    Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+    02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-<ui:composition template="/templates/template.xhtml">
+    <ui:composition template="/templates/template.xhtml">
         <ui:define name="view">
             <f:metadata>
                 <f:viewParam name="templates" value="#{templateBean.templates}">
@@ -38,29 +38,34 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </f:viewParam>
             </f:metadata>
         </ui:define>
-	<ui:define name="component">
+        <ui:define name="component">
 
-		<rich:panel header="Issue description">
-			<p>RF-12510 - jsFunction data called before completion</p>
-			<p><a href="https://issues.jboss.org/browse/RF-12510">link</a></p>
-			<p>Steps to reproduce:</p>
-			<ul>
-				<li>Hover the link</li>
-				<li>See the counter</li>
-				<li>It should be incremented by one.</li>
-			</ul>
-		</rich:panel>
+            <rich:panel header="Issue description">
+                <p><a href="https://issues.jboss.org/browse/RF-12510">RF-12510</a> - jsFunction data called before completion. Automatized.</p>
+                <br/>
+                <p>Steps to reproduce:</p>
+                <ul>
+                    <li>Click the link below this panel</li>
+                    <li>Both counters should contain same data.</li>
+                    <li>Counters should be incremented at least by one (This is not a proper use case, because the getter in bean contains business logic).</li>
+                </ul>
+            </rich:panel>
+            <a id="trigger"
+               onclick="myFunc()"
+               style="font-size: large"
+               href="#">Click me and see how many times the getData was invoked</a>
+            <ul>
+                <li>data from getCounter method, re-rendered/updated from jsFunction: <h:outputText id="counter" value="#{rf12510.counter}" /></li>
+                <li>data from event, updated by JavaScript in oncomplete function of jsFunction: <span id="oncompleteCounter">0</span></li>
+            </ul>
+            <h:form>
+                <a4j:jsFunction name="myFunc"
+                                data="#{rf12510.data}"
+                                action="#{rf12510.action}"
+                                oncomplete="$('[id$=oncompleteCounter]').html(event.data);"
+                                render="counter" />
+            </h:form>
+        </ui:define>
 
-		<span onmouseover="myFunc()" id="trigger">Hover me and see the counter:</span>
-		<b> Method to retrieve data of a4j:jsFunction called: <h:outputText id="showcounter"
-				value="#{rf12510.counter}" />
-		</b>
-
-		<h:form>
-			<a4j:jsFunction name="myFunc" data="#{rf12510.year}"
-				action="#{rf12510.action}" render="showcounter" />
-		</h:form>
-	</ui:define>
-
-</ui:composition>
+    </ui:composition>
 </html>

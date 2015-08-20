@@ -22,71 +22,48 @@
 package org.richfaces.tests.metamer.ftest.a4jJSFunction;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.graphene.page.Page;
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestRF12510 extends AbstractWebDriverTest {
 
-    @Page
-    private RF12510Page page;
+    @FindBy(css = "span[id$=counter]")
+    private WebElement counter;
+    @FindBy(id = "trigger")
+    private WebElement jsFunctionTrigger;
+    @FindBy(css = "span[id$=oncompleteCounter]")
+    private WebElement oncompleteCounter;
 
     @Override
     public String getComponentTestPagePath() {
         return "a4jJSFunction/rf-12510.xhtml";
     }
 
-    @Test
-    @Skip
-    @IssueTracking("https://issues.jboss.org/browse/RF-12510")
-    public void testTriggerJSFunctionAndSeeHowManyTimesCalledMethodOnData() {
-        int beforeTrigger = page.parseCounterToInt();
-        page.triggerJSFunction();
-
-        int afterTrigger = page.parseCounterToInt();
-        assertEquals(afterTrigger, beforeTrigger + 1,
-            "Counter which counts number of invocations of jsFunction method on attribute data was called more than once!");
+    private int parseCounterToInt(WebElement counter) {
+        return Integer.parseInt(counter.getText());
     }
 
-    public class RF12510Page extends MetamerPage {
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12510")
+    public void testTriggerJSFunctionAndSeeHowManyTimesCalledMethodOnData() {
+        Graphene.guardAjax(jsFunctionTrigger).click();
 
-        @FindBy(css = "span[id$=showcounter]")
-        private WebElement counter;
+        int afterTrigger1 = parseCounterToInt(counter);
+        int afterTrigger2 = parseCounterToInt(oncompleteCounter);
 
-        @FindBy(id = "trigger")
-        private WebElement jsFunctionTrigger;
-
-        public void triggerJSFunction() {
-            jsFunctionTrigger.click();
-        }
-
-        public int parseCounterToInt() {
-            return Integer.parseInt(counter.getText());
-        }
-
-        public WebElement getCounter() {
-            return counter;
-        }
-
-        public void setCounter(WebElement counter) {
-            this.counter = counter;
-        }
-
-        public WebElement getJsFunctionTrigger() {
-            return jsFunctionTrigger;
-        }
-
-        public void setJsFunctionTrigger(WebElement jsFunctionTrigger) {
-            this.jsFunctionTrigger = jsFunctionTrigger;
-        }
+        // this was fixed
+        assertEquals(afterTrigger1, afterTrigger2, "Both counters should have the same data.");
+        // used case is not valid and getter in bean contain business logic, the data could increase more than one time.
+        assertTrue(afterTrigger1 >= 1, "The counter should increase at least by one.");
     }
 }

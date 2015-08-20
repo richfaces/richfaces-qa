@@ -25,47 +25,37 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
+// should not be view-scoped (see https://jira.jboss.org/browse/RF-9287 )
 @ManagedBean(name = "rf12510")
-// should not be view-scoped (see https://jira.jboss.org/browse/RF-9287)
-@ViewScoped
+@SessionScoped
 public class RF12510 implements Serializable {
 
     private static final long serialVersionUID = 54887878L;
     private int counter = 0;
-    private int year;
 
-    /**
-     * Initializes the managed bean.
-     */
-    @PostConstruct
-    public void init() {
-        year = 1001;
-    }
-
-    public String action() {
-        return year + "";
+    public void action() {
     }
 
     public int getCounter() {
         return counter;
     }
 
-    public void setCounter(int counter) {
-        this.counter = counter;
-    }
-
-    public int getYear() {
+    public int getData() {
         counter++;
-        return year;
+        return getCounter();
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    /**
+     * Initializes the managed bean.
+     */
+    @PostConstruct
+    public void init() {
+        counter = 0;
     }
-
 }
