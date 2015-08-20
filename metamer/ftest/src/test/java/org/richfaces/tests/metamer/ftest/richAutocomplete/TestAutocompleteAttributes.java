@@ -146,7 +146,6 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
-    @Skip
     @CoversAttributes("layout")
     @IssueTracking("https://issues.jboss.org/browse/RF-12820")
     public void testLayout() {
