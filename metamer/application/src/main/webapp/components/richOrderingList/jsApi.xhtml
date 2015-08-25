@@ -43,11 +43,11 @@
             <h:commandButton id="submitButton" value="submit"/>
             <br/>
             <rich:orderingList id="orderingList"
-                            collectionType="java.util.LinkedList"
-                            itemLabel="#{capital.name}"
-                            itemValue="#{capital}"
-                            value="#{richOrderingListBean.capitals}"
-                            var="capital">
+                               collectionType="#{richOrderingListBean.collectionType}"
+                               itemLabel="#{capital.name}"
+                               itemValue="#{capital}"
+                               value="#{richOrderingListBean.capitals}"
+                               var="capital">
                 <f:converter converterId="capitalConverter" />
             </rich:orderingList>
 

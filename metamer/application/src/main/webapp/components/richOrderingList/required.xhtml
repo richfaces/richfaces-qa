@@ -50,7 +50,7 @@
             <c:choose>
                 <c:when test="#{not empty richOrderingListBean.attributes['requiredMessage'].value}">
                     <r:orderingList id="orderingList"
-                                    collectionType="java.util.LinkedList"
+                                    collectionType="#{richOrderingListBean.collectionType}"
                                     itemLabel="#{capital.name}"
                                     itemValue="#{capital}"
                                     required="#{richOrderingListBean.attributes['required'].value}"

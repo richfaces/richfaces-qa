@@ -30,6 +30,7 @@ import java.util.List;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -51,8 +52,6 @@ import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annota
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -103,11 +102,11 @@ public class TestPickList extends AbstractListScrollingTest {
     }
 
     private void submitAjax() {
-        MetamerPage.waitRequest(ajaxSubmit, WaitRequestType.XHR).click();
+        Graphene.guardAjax(ajaxSubmit).click();
     }
 
     private void submitHTTP() {
-        MetamerPage.waitRequest(hSubmit, WaitRequestType.HTTP).click();
+        Graphene.guardHttp(hSubmit).click();
     }
 
     @Test(groups = "smoke")
@@ -156,6 +155,61 @@ public class TestPickList extends AbstractListScrollingTest {
         assertButtonEnabled(pickList.advanced().getAddAllButtonElement());
         assertButtonDisabled(pickList.advanced().getRemoveButtonElement());
         assertButtonDisabled(pickList.advanced().getRemoveAllButtonElement());
+    }
+
+    @Test
+    @CoversAttributes("collectionType")
+    public void testCollectionType() {
+        int i = 0;
+        int size = pickList.advanced().getSourceList().size();
+        String textSource1, textSource2, textTarget1, textTarget2;
+        // the @collectionType attribute accepts both String and Class values, which are resolved in bean by according prefix
+        for (String testedValue : new String[] { "class-ArrayList", "string-LinkedList", "class-Stack", "string-Vector" }) {
+            pickListAttributes.set(PickListAttributes.collectionType, testedValue);
+
+            textSource1 = pickList.advanced().getSourceList().getItem(i).getText();
+            textSource2 = pickList.advanced().getSourceList().getItem(ChoicePickerHelper.byIndex().beforeLast(i)).getText();
+
+            pickList.add(i);
+            submitAjax();
+            textTarget1 = pickList.advanced().getTargetList().getItem(0).getText();
+            assertEquals(textTarget1, textSource1);
+            assertEquals(output.getText(), "[" + textSource1 + "]");
+
+            pickList.add(ChoicePickerHelper.byIndex().beforeLast(i > size - i ? i - 1 : i));
+            submitHTTP();
+            textTarget1 = pickList.advanced().getTargetList().getItem(0).getText();
+            textTarget2 = pickList.advanced().getTargetList().getItem(1).getText();
+            assertEquals(textTarget1, textSource1);
+            assertEquals(textTarget2, textSource2);
+            assertEquals(output.getText(), "[" + textSource1 + ", " + textSource2 + "]");
+
+            pickList.removeAll();
+            submitAjax();
+            assertEquals(output.getText(), "[]");
+
+            i += 4;// check different values with each collection type
+        }
+    }
+
+    @Test(groups = "extended")
+    @CoversAttributes("collectionType")
+    public void testCollectionType_unsupportedTypeThrowsException() {
+        try {
+            pickListAttributes.set(PickListAttributes.collectionType, "invalid-LinkedHashMap");
+            submitHTTP();
+            String exceptionText = driver.findElement(By.tagName("body")).getText();
+            assertTrue(exceptionText.contains("java.util.LinkedHashMap cannot be cast to java.util.List"));
+
+            loadPage();
+            pickListAttributes.set(PickListAttributes.collectionType, "invalid-LinkedHashSet");
+            submitHTTP();
+            exceptionText = driver.findElement(By.tagName("body")).getText();
+            assertTrue(exceptionText.contains("java.util.LinkedHashSet cannot be cast to java.util.List"));
+        } finally {
+            loadPage();
+            pickListAttributes.set(PickListAttributes.collectionType, "string-LinkedList");
+        }
     }
 
     @Test

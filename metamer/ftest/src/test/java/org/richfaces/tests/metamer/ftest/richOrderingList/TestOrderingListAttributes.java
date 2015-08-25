@@ -59,6 +59,41 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @CoversAttributes("collectionType")
+    public void testCollectionType() {
+        int indexInMiddle1 = 22;
+        int indexInMiddle2 = 7;
+        // the @collectionType attribute accepts both String and Class values, which are resolved in bean by according prefix
+        for (String testedValue : new String[] { "class-ArrayList", "string-LinkedList", "class-Stack", "string-Vector" }) {
+            attributes.set(OrderingListAttributes.collectionType, testedValue);
+            orderingList.select(indexInMiddle1).putItBefore(0);
+            submitAndCheckElementsOrderPersists();
+            orderingList.select(ChoicePickerHelper.byIndex().last()).putItAfter(indexInMiddle2);
+            submitAndCheckElementsOrderPersists();
+        }
+    }
+
+    @Test(groups = "extended")
+    @CoversAttributes("collectionType")
+    public void testCollectionType_unsupportedTypeThrowsException() {
+        try {
+            attributes.set(OrderingListAttributes.collectionType, "invalid-LinkedHashMap");
+            submit();
+            String exceptionText = driver.findElement(By.tagName("body")).getText();
+            assertTrue(exceptionText.contains("java.util.LinkedHashMap cannot be cast to java.util.Collection"));
+
+            loadPage();
+            attributes.set(OrderingListAttributes.collectionType, "invalid-LinkedHashSet");
+            submit();
+            exceptionText = driver.findElement(By.tagName("body")).getText();
+            assertTrue(exceptionText.contains("Ordered List Components must be backed by a List or Array"));
+        } finally {
+            loadPage();
+            attributes.set(OrderingListAttributes.collectionType, "string-LinkedList");
+        }
+    }
+
+    @Test
     @CoversAttributes("disabled")
     public void testDisabled() {
         attributes.set(OrderingListAttributes.disabled, Boolean.TRUE);

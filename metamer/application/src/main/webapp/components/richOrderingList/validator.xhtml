@@ -45,7 +45,7 @@
             <c:choose >
                 <c:when test="#{not empty richOrderingListBean.validatorMessage}">
                     <r:orderingList id="orderingList"
-                                    collectionType="java.util.LinkedList"
+                                    collectionType="#{richOrderingListBean.collectionType}"
                                     itemLabel="#{capital.name}"
                                     itemValue="#{capital}"
                                     validator="org.richfaces.PhoenixFirstValidator"
@@ -57,7 +57,7 @@
                 </c:when>
                 <c:otherwise>
                     <r:orderingList id="orderingList"
-                                    collectionType="java.util.LinkedList"
+                                    collectionType="#{richOrderingListBean.collectionType}"
                                     itemLabel="#{capital.name}"
                                     itemValue="#{capital}"
                                     validator="org.richfaces.PhoenixFirstValidator"

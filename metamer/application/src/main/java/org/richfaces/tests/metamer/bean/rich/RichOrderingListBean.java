@@ -49,34 +49,42 @@ import com.google.common.collect.Lists;
 @SessionScoped
 public class RichOrderingListBean implements Serializable {
 
-    private static final String DEFAULT_COLLECTION_TYPE = "java.util.LinkedList";
+    private static final String CLASS_DASH = "class-";
+    private static final String COLLECTION_TYPE = "collectionType";
+    private static final String DEFAULT_COLLECTION = "LinkedList";
+    private static final String INVALID_DASH = "invalid-";
+    private static final String JAVA_UTIL_STRING = "java.util.";
     private static final Logger LOGGER = LoggerFactory.getLogger(RichOrderingListBean.class);
+    private static final String STRING_DASH = "string-";
     private static final long serialVersionUID = 5868941019675985273L;
 
     private Attributes attributes;
     @ManagedProperty("#{model.capitals}")
     private List<Capital> capitals;
-    private Object collectionType;
     @ManagedProperty("#{model.employees}")
     private List<Employee> employees;
     private List<Capital> emptyCapitals = Lists.newArrayList();
     private Collection<String> hiddenAttributes = new ArrayList<String>();
     private String validatorMessage;
 
-    private Object extractCollectionType(String collectionString) {
-        if (collectionString.startsWith("s:")) {
-            return collectionString.substring(2);
-        } else if (collectionString.startsWith("c:")) {
+    public static Object extractCollectionType(Attributes attributes) {
+        String collectionString = attributes.get(COLLECTION_TYPE).getValue().toString();
+        if (collectionString.startsWith(STRING_DASH)) {// starts with 'string-' >>> return String
+            return collectionString.replace(STRING_DASH, JAVA_UTIL_STRING);
+        } else if (collectionString.startsWith(CLASS_DASH)) {// starts with 'class-' >>> return Class
             try {
-                return Class.forName(collectionString.substring(2));
+                return Class.forName(collectionString.replace(CLASS_DASH, JAVA_UTIL_STRING));
             } catch (ClassNotFoundException e) {
-                LOGGER.error(e + "\n Setting collectionType back to " + DEFAULT_COLLECTION_TYPE + '.');
-                attributes.setAttribute("collectionType", "s:" + DEFAULT_COLLECTION_TYPE);
-                return DEFAULT_COLLECTION_TYPE;
+                LOGGER.error(e + "\n Setting collectionType back to " + DEFAULT_COLLECTION + '.');
+                attributes.setAttribute(COLLECTION_TYPE, STRING_DASH + DEFAULT_COLLECTION);
+                return extractCollectionType(attributes);
             }
-        } else {
-            attributes.setAttribute("collectionType", "s:" + DEFAULT_COLLECTION_TYPE);
-            return DEFAULT_COLLECTION_TYPE;
+        } else if (collectionString.startsWith(INVALID_DASH)) {// starts with 'invalid-' >>> return Class
+            attributes.setAttribute(COLLECTION_TYPE, collectionString.replace("invalid", "class"));
+            return extractCollectionType(attributes);
+        } else {// starts with none of 'string-', 'class-', 'invalid-' >>> return String
+            attributes.setAttribute(COLLECTION_TYPE, STRING_DASH + DEFAULT_COLLECTION);
+            return extractCollectionType(attributes);
         }
     }
 
@@ -89,11 +97,7 @@ public class RichOrderingListBean implements Serializable {
     }
 
     public Object getCollectionType() {
-        String collectionTypeString = attributes.get("collectionType").getValue().toString();
-        if (collectionTypeString.contains(":")) {
-            collectionType = extractCollectionType(collectionTypeString);
-        }
-        return collectionType;
+        return extractCollectionType(attributes);
     }
 
     public List<Employee> getEmployees() {
@@ -125,7 +129,7 @@ public class RichOrderingListBean implements Serializable {
         attributes.setAttribute("upText", "Up");
         attributes.setAttribute("upTopText", "Top");
         attributes.setAttribute("required", false);
-        attributes.setAttribute("collectionType", "s:" + DEFAULT_COLLECTION_TYPE);
+        attributes.setAttribute(COLLECTION_TYPE, STRING_DASH + DEFAULT_COLLECTION);
         attributes.setAttribute("valueChangeListener", "valueChangeListenerImproved");
 
         employees = employees.subList(0, 10);

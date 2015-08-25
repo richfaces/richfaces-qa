@@ -40,7 +40,7 @@
             <r:pickList id="pickList"
                         addAllText="#{richPickListBean.attributes['addAllText'].value}"
                         addText="#{richPickListBean.attributes['addText'].value}"
-                        collectionType="java.util.LinkedList"
+                        collectionType="#{richPickListBean.collectionType}"
                         columnClasses="#{richPickListBean.attributes['columnClasses'].value}"
                         converter="capitalConverter"
                         disabled="#{richPickListBean.attributes['disabled'].value}"

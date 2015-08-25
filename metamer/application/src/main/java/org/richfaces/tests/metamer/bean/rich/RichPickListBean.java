@@ -21,6 +21,8 @@
  */
 package org.richfaces.tests.metamer.bean.rich;
 
+import static org.richfaces.tests.metamer.bean.rich.RichOrderingListBean.extractCollectionType;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +56,6 @@ public class RichPickListBean implements Serializable {
 
     private static final Logger LOG = LoggerFactory.getLogger(RichPickListBean.class);
 
-    /** Generated Serial UID Number */
     private static final long serialVersionUID = 2158237918061200181L;
 
     private Attributes attributes;
@@ -87,6 +88,10 @@ public class RichPickListBean implements Serializable {
      */
     public List<SelectItem> getCapitalsOptions() {
         return capitalsOptions;
+    }
+
+    public Object getCollectionType() {
+        return extractCollectionType(attributes);
     }
 
     public List<Employee> getEmployees() {
@@ -129,6 +134,8 @@ public class RichPickListBean implements Serializable {
         attributes.setAttribute("requiredMessage", "Not empty target list is required!");
         attributes.setAttribute("validatorMessage", "We are sorry, but @ is not allowed to join us!");
 
+        attributes.setAttribute("collectionType", "string-LinkedList");
+
         attributes.setAttribute("addText", ">");
         attributes.setAttribute("addAllText", ">>");
         attributes.setAttribute("removeText", "<");
@@ -166,8 +173,7 @@ public class RichPickListBean implements Serializable {
     }
 
     /**
-     * @param capitalsOptions
-     *            the capitalsOptions to set
+     * @param capitalsOptions the capitalsOptions to set
      */
     public void setCapitalsOptions(List<SelectItem> capitalsOptions) {
         this.capitalsOptions = capitalsOptions;
@@ -178,16 +184,14 @@ public class RichPickListBean implements Serializable {
     }
 
     /**
-     * @param validationOptions
-     *            the validationOptions to set
+     * @param validationOptions the validationOptions to set
      */
     public void setValidationOptions(List<SelectItem> validationOptions) {
         this.validationOptions = validationOptions;
     }
 
     /**
-     * @param value
-     *            the value to set
+     * @param value the value to set
      */
     public void setValue(List<SelectItem> value) {
         this.value = value;
