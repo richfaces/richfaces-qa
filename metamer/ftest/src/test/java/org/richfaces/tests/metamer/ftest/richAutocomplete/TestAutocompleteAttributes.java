@@ -46,6 +46,7 @@ import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -104,6 +105,47 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
         autocomplete.advanced().waitForSuggestionsToBeVisible();
         new Actions(driver).moveToElement(autocomplete.advanced().getSuggestionsElements().get(0)).build().perform();
         assertEquals(autocomplete.advanced().getInput().getStringValue(), "hawaii");
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-14122")
+    @CoversAttributes("autofill")
+    public void testAutofillWorksCaseInsensitively() {
+        autocompleteAttributes.set(AutocompleteAttributes.autofill, true);
+        // set @selectFirst=true so we do not have to focus on suggestions
+        autocompleteAttributes.set(AutocompleteAttributes.selectFirst, true);
+        autocomplete.clear();
+        // focus mouse out of the autocomplete suggestions
+        getMetamerPage().getResponseDelayElement().click();
+
+        SelectOrConfirm typed;
+
+        typed = Graphene.guardAjax(autocomplete).type("A");
+        assertEquals(autocomplete.advanced().getInput().getStringValue(), "Alabama");
+        Graphene.guardAjax(typed).confirm();
+        assertEquals(autocomplete.advanced().getInput().getStringValue(), "Alabama");
+        checkOutput("Alabama");
+
+        autocomplete.clear();
+        typed = Graphene.guardAjax(autocomplete).type("Ar");
+        assertEquals(autocomplete.advanced().getInput().getStringValue(), "Arizona");
+        Graphene.guardAjax(typed).confirm();
+        assertEquals(autocomplete.advanced().getInput().getStringValue(), "Arizona");
+        checkOutput("Arizona");
+
+        autocomplete.clear();
+        typed = Graphene.guardAjax(autocomplete).type("aLAs");
+        assertEquals(autocomplete.advanced().getInput().getStringValue(), "aLAska");
+        Graphene.guardAjax(typed).confirm();
+        assertEquals(autocomplete.advanced().getInput().getStringValue(), "Alaska");
+        checkOutput("Alaska");
+
+        autocomplete.clear();
+        typed = Graphene.guardAjax(autocomplete).type("MIC");
+        assertEquals(autocomplete.advanced().getInput().getStringValue(), "MIChigan");
+        Graphene.guardAjax(typed).confirm();
+        assertEquals(autocomplete.advanced().getInput().getStringValue(), "Michigan");
+        checkOutput("Michigan");
     }
 
     @Test
