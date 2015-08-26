@@ -97,14 +97,31 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                           listener="#{richBean.changeEventListener}" />
 
                 <a4j:ajax event="selectitem" render="output"
-                	listener="#{richBean.actionListener}"
-                />
+                          listener="#{richBean.actionListener}" />
 
             </rich:autocomplete>
 
             <br/><br/>
             Your selection: <h:outputText id="output" value="#{richAutocompleteBean.attributes['value'].value}"/>
-
+            <br/><br/>
+            <fieldset>
+                <legend>JavaScript API</legend>
+                On click:
+                <br/>
+                <input id="setValue" type="button" name="setValue" value="setValue('Value set by JS API')" onclick="#{rich:component('autocomplete')}.setValue('Value set by JS API');" />
+                <br/>
+                <br/>
+                On mouseover:
+                <br/>
+                <input id="showPopup" type="button" name="showPopup" value="showPopup()" onmouseover="#{rich:component('autocomplete')}.showPopup();" />
+                <input id="hidePopup" type="button" name="hidePopup" value="hidePopup()" onmouseover="#{rich:component('autocomplete')}.hidePopup()" />
+                <br/>
+                <br/>
+                Output value for all get methods: <h:inputText id="value"/>
+                <br/>
+                <input id="getValue" name="getValue" type="button" value="getValue()" onclick="$('[id$=value]').val(String(#{rich:component('autocomplete')}.getValue()));" />
+                <br/>
+            </fieldset>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
