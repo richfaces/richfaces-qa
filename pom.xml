@@ -889,7 +889,7 @@ FSF site: http://www.fsf.org. -->
                 <dependency>
                     <groupId>org.wildfly</groupId>
                     <artifactId>wildfly-arquillian-container-managed</artifactId>
-                    <version>${arquillian.wildfly.container}</version>
+                    <version>${version.wildfly8-2}</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
