@@ -112,6 +112,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <br/><br/>
                 On click:
                 <br/>
+                <input id="focus" type="button" name="focus" value="focus()" onclick="#{r:component('select')}.focus();" />
                 <input id="getValue" type="button" name="getValue" value="getValue()" onclick="$('[id$=value]').val(#{r:component('select')}.getValue())" />
                 <input id="setValue" type="button" name="setValue" value="setValue('Arizona')" onclick="#{r:component('select')}.setValue('Arizona')" />
                 <input id="getLabel" type="button" name="getLabel" value="getLabel()" onclick="$('[id$=value]').val(#{r:component('select')}.getLabel())" />

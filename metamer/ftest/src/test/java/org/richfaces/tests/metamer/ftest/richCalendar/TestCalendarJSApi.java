@@ -44,6 +44,8 @@ import org.testng.annotations.Test;
  */
 public class TestCalendarJSApi extends AbstractCalendarTest {
 
+    @FindBy(id = "focus")
+    private WebElement focus;
     @FindBy(css = "[id$=value]")
     private WebElement gettersValue;
     @FindBy(id = "getValue")
@@ -82,6 +84,13 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
     @Override
     public String getComponentTestPagePath() {
         return "richCalendar/simple.xhtml";
+    }
+
+    @Test
+    public void testFocus() {
+        popupCalendar.getPopup().waitUntilIsNotVisible().perform();
+        focus.click();
+        popupCalendar.getPopup().waitUntilIsVisible().perform();
     }
 
     @Test

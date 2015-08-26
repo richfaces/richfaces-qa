@@ -58,6 +58,7 @@
                 <br/><br/>
                 On click:
                 <br/>
+                <input id="focus" type="button" name="focus" value="focus()" onclick="#{rich:component('orderingList')}.focus();" />
                 <input id="getList" type="button" name="getList" value="getList().length()" onclick="$('[id$=value]').val(#{rich:component('orderingList')}.getList().length())" />
                 <input id="up" type="button" name="up" value="up()" onclick="#{rich:component('orderingList')}.up()" />
                 <input id="down" type="button" name="down" value="down()" onclick="#{rich:component('orderingList')}.down()" />

@@ -26,7 +26,10 @@ import static org.testng.Assert.assertEquals;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Keyboard;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Utils;
 import org.testng.annotations.Test;
@@ -36,10 +39,15 @@ import org.testng.annotations.Test;
  */
 public class TestAutocompleteJSApi extends AbstractAutocompleteTest {
 
-    @FindBy(id = "getValue")
-    private WebElement getValue;
+    @ArquillianResource
+    private Keyboard keyboard;
+
     @FindBy(className = "rf-au-lst-cord")
     private WebElement autocompletePopup;
+    @FindBy(id = "focus")
+    private WebElement focus;
+    @FindBy(id = "getValue")
+    private WebElement getValue;
     @FindBy(css = "[id$=value]")
     private WebElement gettersValue;
     @FindBy(id = "hidePopup")
@@ -52,6 +60,17 @@ public class TestAutocompleteJSApi extends AbstractAutocompleteTest {
     @Override
     public String getComponentTestPagePath() {
         return "richAutocomplete/autocomplete.xhtml";
+    }
+
+    @Test
+    public void testFocus() {
+        focus.click();
+
+        Graphene.guardAjax(keyboard).sendKeys("ala");
+        autocomplete.advanced().waitForSuggestionsToBeVisible().perform();
+        keyboard.sendKeys(Keys.ARROW_DOWN);
+        Graphene.guardAjax(keyboard).sendKeys(Keys.ENTER);
+        checkOutput("Alabama");
     }
 
     @Test

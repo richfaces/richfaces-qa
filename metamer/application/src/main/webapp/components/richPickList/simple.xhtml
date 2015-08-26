@@ -131,6 +131,7 @@
                 <br/><br/>
                 On click:
                 <br/>
+                <input id="focus" type="button" name="focus" value="focus()" onclick="#{r:component('pickList')}.focus();" />
                 <input id="getSourceList" type="button" name="getSourceList" value="getSourceList().length()" onclick="$('[id$=value]').val(#{r:component('pickList')}.getSourceList().length())" />
                 <input id="getTargetList" type="button" name="getTargetList" value="getTargetList().length()" onclick="$('[id$=value]').val(#{r:component('pickList')}.getTargetList().length())" />
                 <input id="add" type="button" name="add" value="add()" onclick="#{r:component('pickList')}.add()" />

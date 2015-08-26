@@ -21,8 +21,13 @@
  */
 package org.richfaces.tests.metamer.ftest.richSelect;
 
+import static org.testng.Assert.assertEquals;
+
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Keyboard;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.fragment.common.Utils;
@@ -36,6 +41,14 @@ import org.testng.annotations.Test;
  */
 public class TestSelectJSApi extends AbstractWebDriverTest {
 
+    @ArquillianResource
+    private Keyboard keyboard;
+
+    @FindBy(css = "[id$='output']")
+    private WebElement output;
+
+    @FindBy(id = "focus")
+    private WebElement focusButton;
     @FindBy(css = "input[id$=getValue]")
     private WebElement getValueButton;
     @FindBy(css = "input[id$=setValue]")
@@ -58,6 +71,18 @@ public class TestSelectJSApi extends AbstractWebDriverTest {
 
     private String getValue() {
         return value.getStringValue();
+    }
+
+    @Test
+    public void testFocus() {
+        focusButton.click();
+
+        keyboard.sendKeys("ala");
+        select.advanced().waitUntilSuggestionsAreVisible().perform();
+        keyboard.sendKeys(Keys.ARROW_DOWN);
+        keyboard.sendKeys(Keys.ENTER);
+        Graphene.guardAjax(keyboard).sendKeys(Keys.TAB);
+        assertEquals(output.getText(), "Alabama");
     }
 
     @Test

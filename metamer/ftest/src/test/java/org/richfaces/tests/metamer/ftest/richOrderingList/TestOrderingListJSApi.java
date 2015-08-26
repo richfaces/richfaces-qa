@@ -21,7 +21,14 @@
  */
 package org.richfaces.tests.metamer.ftest.richOrderingList;
 
+import static org.testng.Assert.assertEquals;
+
+import java.util.List;
+
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Keyboard;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Utils;
 import org.testng.Assert;
@@ -34,6 +41,11 @@ import org.testng.annotations.Test;
  */
 public class TestOrderingListJSApi extends AbstractOrderingListTest {
 
+    @ArquillianResource
+    private Keyboard keyboard;
+
+    @FindBy(id = "focus")
+    private WebElement focus;
     @FindBy(css = "[id$=getList]")
     private WebElement getListLength;
     @FindBy(css = "[id$=up]")
@@ -58,6 +70,18 @@ public class TestOrderingListJSApi extends AbstractOrderingListTest {
 
     private String getValueFromOutputJSField() {
         return value.getAttribute("value");
+    }
+
+    @Test
+    public void testFocus() {
+        assertEquals(orderingList.advanced().getSelectedItemsElements().size(), 0);
+
+        focus.click();
+
+        keyboard.sendKeys(Keys.ARROW_DOWN);
+        final List<WebElement> selectedItemsElements = orderingList.advanced().getSelectedItemsElements();
+        assertEquals(selectedItemsElements.size(), 1);
+        assertEquals(selectedItemsElements.get(0).getText(), "Montgomery");
     }
 
     @Test

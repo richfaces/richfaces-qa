@@ -23,7 +23,11 @@ package org.richfaces.tests.metamer.ftest.richInputNumberSpinner;
 
 import static org.testng.Assert.assertEquals;
 
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Keyboard;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.inputNumberSpinner.RichFacesInputNumberSpinner;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -44,6 +48,14 @@ public class TestInputNumberSpinnerJSApi extends AbstractWebDriverTest {
     private static final String DEFAULT_VALUE = "2";
     private static final String SET_VALUE = "5";
 
+    @ArquillianResource
+    private Keyboard keyboard;
+
+    @FindBy(css = "[id$='output']")
+    private WebElement output;
+
+    @FindBy(id = "focus")
+    private WebElement focusButton;
     @FindBy(css = "[id$=getValue]")
     private WebElement getValueButton;
     @FindBy(css = "[id$=setValue]")
@@ -75,6 +87,17 @@ public class TestInputNumberSpinnerJSApi extends AbstractWebDriverTest {
         MetamerPage.waitRequest(decreaseButton, WaitRequestType.XHR).click();
         MetamerPage.waitRequest(decreaseButton, WaitRequestType.NONE).click();
         assertEquals(spinner.advanced().getInput().getStringValue(), "-1");//-2, but min is -1
+    }
+
+    @Test
+    public void testFocus() {
+        focusButton.click();
+
+        // default value is 2, this will set the value to 12
+        keyboard.sendKeys("1");
+        Graphene.guardAjax(keyboard).sendKeys(Keys.TAB);
+        // the value will be set to maximum -- 10
+        assertEquals(output.getText(), "10");
     }
 
     @Test

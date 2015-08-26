@@ -21,7 +21,14 @@
  */
 package org.richfaces.tests.metamer.ftest.richPickList;
 
+import static org.testng.Assert.assertEquals;
+
+import java.util.List;
+
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Keyboard;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.fragment.pickList.RichFacesPickList;
@@ -34,6 +41,11 @@ import org.testng.annotations.Test;
  */
 public class TestPickListJSApi extends AbstractWebDriverTest {
 
+    @ArquillianResource
+    private Keyboard keyboard;
+
+    @FindBy(id = "focus")
+    private WebElement focus;
     @FindBy(id = "getSourceList")
     private WebElement getSourceListLength;
     @FindBy(id = "getTargetList")
@@ -72,6 +84,18 @@ public class TestPickListJSApi extends AbstractWebDriverTest {
         int size = pickList.advanced().getSourceList().size();
         addAllButton.click();
         Assert.assertEquals(pickList.advanced().getTargetList().size(), size);
+    }
+
+    @Test
+    public void testFocus() {
+        assertEquals(pickList.advanced().getSelectedSourceListItemsElements().size(), 0);
+
+        focus.click();
+
+        keyboard.sendKeys(Keys.ARROW_DOWN);
+        List<WebElement> selectedSourceListItemsElements = pickList.advanced().getSelectedSourceListItemsElements();
+        assertEquals(selectedSourceListItemsElements.size(), 1);
+        assertEquals(selectedSourceListItemsElements.get(0).getText(), "Alabama");
     }
 
     @Test
