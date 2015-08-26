@@ -77,9 +77,9 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     private int getExpectedNumberOfUpdates() {
-        int max = Integer.valueOf(progressBarAttributes.get(ProgressBarAttributes.maxValue));
-        double interval = Integer.valueOf(progressBarAttributes.get(ProgressBarAttributes.interval)) / 1000.0;//s
-        double maximumTime = (RichProgressBarBean.UPDATE_INTERVAL / 1000.0) * max;//s
+        int max = Integer.parseInt(progressBarAttributes.get(ProgressBarAttributes.maxValue));
+        double interval = Double.parseDouble(progressBarAttributes.get(ProgressBarAttributes.interval));
+        double maximumTime = RichProgressBarBean.UPDATE_INTERVAL * max;//s
         int updates = (int) (maximumTime / interval) - 1; //-1 to be sure that no invalid values will be gathered
         if (updates < 2) {
             throw new RuntimeException("The measurement will not be possible. "
@@ -88,13 +88,10 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         return updates;
     }
 
-    /**
-     * @return in seconds
-     */
-    private int getExpectedRunTime() {
-        int max = Integer.valueOf(progressBarAttributes.get(ProgressBarAttributes.maxValue));
-        double maximumTime = (RichProgressBarBean.UPDATE_INTERVAL / 1000.0) * max;//s
-        return (int) (maximumTime * 1.5);
+    private long getExpectedRunTimeInMillis() {
+        int max = Integer.parseInt(progressBarAttributes.get(ProgressBarAttributes.maxValue));
+        double maximumTime = RichProgressBarBean.UPDATE_INTERVAL * max;//s
+        return (long) (maximumTime * 1.5);
     }
 
     private int getProgress() {
@@ -160,12 +157,12 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         progressBarAttributes.set(ProgressBarAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
         progressBarAttributes.set(ProgressBarAttributes.oncomplete, "metamerEvents += \"complete \"");
 
-        long expectedRunTime = getExpectedRunTime();
+        long expectedRunTime = getExpectedRunTimeInMillis();
         executeJS("metamerEvents = \"\"");
 
         MetamerPage.requestTimeChangesWaiting(page.getStartButtonElement()).click();
         Graphene.waitAjax()
-            .withTimeout(expectedRunTime, TimeUnit.SECONDS)
+            .withTimeout(expectedRunTime, TimeUnit.MILLISECONDS)
             .withMessage("Progress bar should disappear after it finishes.")
             .until()
             .element(page.getRestartButtonElement())
@@ -242,7 +239,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         List<String> timesString = new ArrayList<String>();
         List<String> labelsList = new ArrayList<String>();
         List<Integer> progressList = new ArrayList<Integer>();
-        long expectedRunTime = getExpectedRunTime();
+        long expectedRunTime = getExpectedRunTimeInMillis();
         int expectedNumberOfUpdates = getExpectedNumberOfUpdates();
 
         MetamerPage.requestTimeChangesWaiting(button).click();
@@ -284,7 +281,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         }
 
         Graphene.waitGui()
-            .withTimeout(expectedRunTime, TimeUnit.SECONDS)
+            .withTimeout(expectedRunTime, TimeUnit.MILLISECONDS)
             .withMessage("Progress bar should disappear after it finishes.")
             .until()
             .element(page.getRestartButtonElement())
@@ -305,11 +302,11 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         progressBarAttributes.set(ProgressBarAttributes.onfinish, "metamerEvents += \"finish \"");
 
         executeJS("metamerEvents = \"\"");
-        long expectedRunTime = getExpectedRunTime();
+        long expectedRunTime = getExpectedRunTimeInMillis();
 
         MetamerPage.requestTimeChangesWaiting(page.getStartButtonElement()).click();
         Graphene.waitAjax()
-            .withTimeout(expectedRunTime, TimeUnit.SECONDS)
+            .withTimeout(expectedRunTime, TimeUnit.MILLISECONDS)
             .withMessage("Progress bar should disappear after it finishes.")
             .until()
             .element(page.getRestartButtonElement())
