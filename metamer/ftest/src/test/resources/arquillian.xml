@@ -87,6 +87,15 @@ http://www.fsf.org. -->
             <property name="enableAssertions">false</property>
         </configuration>
     </container>
+    
+    <container qualifier="wildfly-managed-10-0">
+        <configuration>
+            <property name="javaVmArguments">${arquillian.container.jbossas.7-1.jvm.args}</property>
+            <property name="managementAddress">${arquillian.container.jbossas.7-1.node0}</property>
+            <property name="serverConfig">standalone.xml</property>
+            <property name="enableAssertions">false</property>
+        </configuration>
+    </container>
 
     <container qualifier="wildfly-remote-8-1">
     </container>
@@ -95,6 +104,9 @@ http://www.fsf.org. -->
     </container>
 
     <container qualifier="wildfly-remote-9-0">
+    </container>
+    
+    <container qualifier="wildfly-remote-10-0">
     </container>
 
     <container qualifier="tomee-remote-1-7">
