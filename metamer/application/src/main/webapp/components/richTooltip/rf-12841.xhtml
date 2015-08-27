@@ -46,19 +46,28 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <h2>Tooltip: JavaScript Error with showDelay and partial update</h2>
             <b>Description:</b>
             <i>
-rich:tooltip causes script error when showDelay is used and the tooltip is updated due to a JSF request.<br/>
-Console log of Firefox:<br/>
-TypeError: tooltip.popup is null<br/>
-tooltip.popup.show(tooltip.saveShowEvent); in tooltip.js (line 245)<br/>
+                rich:tooltip causes script error when showDelay is used and the tooltip is updated due to a JSF request.<br/>
+                Console log of Firefox:<br/>
+                TypeError: tooltip.popup is null<br/>
+                tooltip.popup.show(tooltip.saveShowEvent); in tooltip.js (line 245)<br/>
             </i>
-            <!--  -->
-            <br/>
-            <a4j:commandLink action="#{richTooltipBean.toggle}" render="@this">
+            <br/><br/>
+            Steps to reproduce:
+            <ol>
+                <li>Click on the triangles (right below) two times immediately after each other (to cause two AJAX requests)</li>
+                <li>You will get the error in browser's console</li>
+            </ol>
+            <br/><br/>
+            <a4j:commandLink id="commandLink"
+                             action="#{richTooltipBean.toggle}"
+                             render="@this">
                 <h:graphicImage library="org.richfaces.images"
-                    name="#{richTooltipBean.expanded ? 'triangleUp.png' : 'triangleDown.png'}"/>
-                        
-                <rich:tooltip followMouse="false" showDelay="1000">
-                    #{richTooltipBean.expanded ? 'close' : 'expand'}
+                                name="#{richTooltipBean.expanded ? 'triangleUp.png' : 'triangleDown.png'}"/>
+
+                <rich:tooltip id="tooltip"
+                              followMouse="false"
+                              showDelay="4000">
+                    #{richTooltipBean.expanded ? 'collapsed' : 'expanded'}
                 </rich:tooltip>
             </a4j:commandLink>
         </ui:define>
