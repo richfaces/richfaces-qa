@@ -189,15 +189,33 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
 
     @Test
     @CoversAttributes("layout")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12820")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12820")
     public void testLayout() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
+        autocompleteAttributes.set(AutocompleteAttributes.autofill, true);
+        autocompleteAttributes.set(AutocompleteAttributes.selectFirst, true);
         String[] layouts = new String[] { "div", "list", "table" };
         for (String layout : layouts) {
             autocompleteAttributes.set(AutocompleteAttributes.layout, layout);
             autocomplete.clear();
-            Graphene.guardAjax(Graphene.guardAjax(autocomplete).type("ala")).select(ChoicePickerHelper.byVisibleText().contains("Alaska"));
-            checkOutput("Alaska");
+            // move mouse out of the autocomplete suggestions
+            getMetamerPage().getResponseDelayElement().click();
+
+            SelectOrConfirm typed = Graphene.guardAjax(autocomplete).type("m");
+            List<WebElement> suggestionsElements = autocomplete.advanced().getSuggestionsElements();
+            assertEquals(suggestionsElements.size(), 8);
+            // check the first value from suggestions is set in input
+            assertEquals(autocomplete.advanced().getInput().getStringValue(), "maine");
+            // move mouse over different suggestions and check autofilled value
+            new Actions(driver).moveToElement(suggestionsElements.get(7)).perform();
+            assertEquals(autocomplete.advanced().getInput().getStringValue(), "montana");
+            new Actions(driver).moveToElement(suggestionsElements.get(3)).perform();
+            assertEquals(autocomplete.advanced().getInput().getStringValue(), "michigan");
+            new Actions(driver).moveToElement(suggestionsElements.get(0)).perform();
+            assertEquals(autocomplete.advanced().getInput().getStringValue(), "maine");
+            // select last option
+            Graphene.guardAjax(typed).select(7);
+            checkOutput("Montana");
         }
     }
 
