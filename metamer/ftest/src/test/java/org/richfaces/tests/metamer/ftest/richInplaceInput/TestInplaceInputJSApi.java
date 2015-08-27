@@ -25,7 +25,11 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Keyboard;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.inplaceInput.InplaceComponentState;
@@ -37,12 +41,19 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for JavaScript API on page faces/components/richInplaceInput/simple.xhtml.
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestInplaceInputJSApi extends AbstractWebDriverTest {
 
+    @ArquillianResource
+    private Keyboard keyboard;
+
     @FindBy(css = "span[id$=inplaceInput]")
     private RichFacesInplaceInput inplaceInput;
+
+    @FindBy(css = "[id$='output']")
+    private WebElement outputTextElement;
 
     @FindBy(css = "input[id$=value]")
     private WebElement output;
@@ -57,6 +68,8 @@ public class TestInplaceInputJSApi extends AbstractWebDriverTest {
     private WebElement isEditStateButton;
     @FindBy(id = "isValueChanged")
     private WebElement isValueChangedButton;
+    @FindBy(id = "open")
+    private WebElement openButton;
     @FindBy(id = "save")
     private WebElement saveButton;
     @FindBy(id = "setValue")
@@ -114,6 +127,21 @@ public class TestInplaceInputJSApi extends AbstractWebDriverTest {
             WaitRequestType.XHR).confirm();
         isValueChangedButton.click();
         assertEquals(getValueFromOutput(), "true");
+    }
+
+    @Test
+    public void open() {
+        // clear the input
+        Graphene.guardAjax(inplaceInput.type("")).confirm();
+        assertTrue(inplaceInput.advanced().isInState(InplaceComponentState.CHANGED));
+
+        openButton.click();
+
+        assertTrue(inplaceInput.advanced().isInState(InplaceComponentState.ACTIVE));
+        keyboard.sendKeys("New value");
+        Graphene.guardAjax(keyboard).sendKeys(Keys.TAB);
+        assertEquals(outputTextElement.getText(), "New value");
+        assertTrue(inplaceInput.advanced().isInState(InplaceComponentState.CHANGED));
     }
 
     @Test

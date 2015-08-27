@@ -128,6 +128,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <input id="getLabel" type="button" name="getLabel" value="getLabel()" onclick="$('[id$=value]').val(String(#{rich:component('inplaceSelect')}.getLabel()))" />
                 <input id="getValue" type="button" name="getValue" value="getValue()" onclick="$('[id$=value]').val(String(#{rich:component('inplaceSelect')}.getValue()))" />
                 <input id="isValueChanged" type="button" name="isValueChanged" value="isValueChanged()" onclick="$('[id$=value]').val(String(#{rich:component('inplaceSelect')}.isValueChanged()))" />
+                <input id="open" type="button" name="open" value="open()" onclick="#{rich:component('inplaceSelect')}.open()" />
                 <input id="save" type="button" name="save" value="save()" onclick="#{rich:component('inplaceSelect')}.save()" />
                 <input id="setLabel" type="button" name="setLabel" value="setLabel('Completely different label')" onclick="#{rich:component('inplaceSelect')}.setLabel('Completely different label')" />
                 <input id="setValue" type="button" name="setValue" value="setValue('Hawaii')" onclick="#{rich:component('inplaceSelect')}.setValue('Hawaii')" />

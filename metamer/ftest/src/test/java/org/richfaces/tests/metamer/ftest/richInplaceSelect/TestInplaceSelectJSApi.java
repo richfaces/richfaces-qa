@@ -26,7 +26,10 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Keyboard;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.inplaceInput.InplaceComponentState;
@@ -46,6 +49,12 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
     private static final String HAWAII = "Hawaii";
     private final Attributes<InplaceSelectAttributes> inplaceSelectAttributes = getAttributes();
 
+    @ArquillianResource
+    private Keyboard keyboard;
+
+    @FindBy(css = "[id$='output']")
+    private WebElement outputTextElement;
+
     @FindBy(id = "cancel")
     private WebElement cancelButton;
     @FindBy(id = "getInput")
@@ -64,6 +73,8 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
     private WebElement isEditStateButton;
     @FindBy(id = "isValueChanged")
     private WebElement isValueChangedButton;
+    @FindBy(id = "open")
+    private WebElement openButton;
     @FindBy(css = "input[id$=':value']")
     private WebElement output;
     @FindBy(css = "[id$=inplaceSelect] span.rf-is-lst-cord")
@@ -153,6 +164,19 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
         Graphene.guardAjax(inplaceSelect).select(HAWAII);
         isValueChangedButton.click();
         assertEquals(getValueFromOutput(), "true");
+    }
+
+    @Test
+    public void open() {
+        openButton.click();
+
+        inplaceSelect.advanced().waitForPopupToShow().perform();
+        assertTrue(inplaceSelect.advanced().isInState(InplaceComponentState.ACTIVE));
+        keyboard.sendKeys(Keys.ARROW_DOWN);
+        keyboard.sendKeys(Keys.ENTER);
+        Graphene.guardAjax(keyboard).sendKeys(Keys.TAB);
+        assertEquals(outputTextElement.getText(), "Alabama");
+        assertTrue(inplaceSelect.advanced().isInState(InplaceComponentState.CHANGED));
     }
 
     @Test
