@@ -27,6 +27,7 @@ public enum DragSourceAttributes implements AttributeEnum {
 
     binding,
     dragIndicator,
+    dragOptions,
     dragValue,
     id,
     rendered,
