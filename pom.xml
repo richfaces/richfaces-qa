@@ -801,7 +801,7 @@ FSF site: http://www.fsf.org. -->
             <id>jbosseap-managed-7-0</id>
             <properties>
                 <metamer.classifier>jbas71</metamer.classifier>
-                <version.eap>7.0.0.DR8</version.eap>
+                <version.eap>7.0.0.DR9</version.eap>
             </properties>
             <dependencies>
                 <dependency>
