@@ -58,32 +58,33 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <br/>
                 Could be reproduced by:
                 <ol>
-                    <li>clicking the button 'Show detached context menu' a context menu should show up</li>
-                    <li>clicking the button 'Show attached context menu'  a context menu should show up</li>
+                    <li>click somewhere in the 'Click here to show detached context menu' and the context menu should show up on the correct/clicked position and stay visible</li>
                 </ol>
             </p>
             <br/><br/>
-            <h:button id="buttonAttached"
-                      value="Show attached context menu"
-                      onclick="return false;" />
+            <h:outputLabel id="menuAttached"
+                           style="background-color: gray;"
+                           value="Click here to show attached context menu" />
 
             <rich:contextMenu id="contextMenu1"
                               attached="true"
                               mode="client"
                               showEvent="click"
-                              target="buttonAttached" >
+                              target="menuAttached" >
 
                 <rich:menuItem label="Menu item 1" />
             </rich:contextMenu>
             <br/>
-            <h:button id="buttonDetached"
-                      value="Show detached context menu"
-                             onclick="return false;" >
+            <h:outputLabel id="menuDetached"
+                           style="background-color: gray;"
+                           value="Click here to show detached context menu" >
 
                 <rich:componentControl event="click"
                                        target="contextMenu2"
-                                       operation="show" />
-            </h:button>
+                                       operation="show">
+                    <a4j:param noEscape="true" value="event" />
+                </rich:componentControl>
+            </h:outputLabel>
 
             <rich:contextMenu id="contextMenu2"
                               attached="false"
