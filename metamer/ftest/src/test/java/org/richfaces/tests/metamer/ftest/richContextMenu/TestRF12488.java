@@ -55,7 +55,7 @@ public class TestRF12488 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12048")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12488")
     public void testDetachedContextMenuShouldShowOnCorrectPositionAndStayVisible() {
         // check no menu is displayed
         contextMenu1.advanced().waitUntilIsNotVisible().perform();
