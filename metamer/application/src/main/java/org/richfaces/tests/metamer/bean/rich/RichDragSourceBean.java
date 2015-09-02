@@ -60,6 +60,7 @@ public class RichDragSourceBean implements Serializable {
 
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIDragSource.class, getClass());
 
+        attributes.setAttribute("dragOptions", "");
         attributes.setAttribute("dragIndicator", "indicator");
         attributes.setAttribute("type", "drg1");
         attributes.setAttribute("rendered", true);

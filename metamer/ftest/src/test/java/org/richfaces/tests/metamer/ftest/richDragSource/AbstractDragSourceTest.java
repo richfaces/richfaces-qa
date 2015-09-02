@@ -47,7 +47,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
  */
 public abstract class AbstractDragSourceTest extends AbstractWebDriverTest {
 
-    private final Attributes<DragSourceAttributes> dragSourceAttributes = getAttributes();
+    protected final Attributes<DragSourceAttributes> dragSourceAttributes = getAttributes();
 
     protected Indicator indicator;
 
@@ -67,6 +67,10 @@ public abstract class AbstractDragSourceTest extends AbstractWebDriverTest {
         // but keep droping to simulate real behavior
         new Actions(driver).moveToElement(page.getDrag1Element()).perform();
         // new Actions(driver).moveToElement(page.drag1).release().build().perform();
+    }
+
+    public DragSourceSimplePage getPage() {
+        return page;
     }
 
     @CoversAttributes("dragIndicator")

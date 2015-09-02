@@ -21,8 +21,15 @@
  */
 package org.richfaces.tests.metamer.ftest.richDragSource;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
+
+import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator;
 import org.testng.annotations.Test;
 
 /**
@@ -46,6 +53,31 @@ public class TestDragSource extends AbstractDragSourceTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-12441")
     public void testDefaultIndicator() {
         super.testDefaultIndicator();
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-14081")
+    @CoversAttributes("dragOptions")
+    public void testDragOptions() {
+        indicator = new Indicator(getPage().getDefaultIndicatorElement());
+        indicator.setDefaultIndicator(true);
+        dragSourceAttributes.set(DragSourceAttributes.dragOptions, "predefined1");
+        Actions actionQueue = new Actions(driver);
+
+        actionQueue.clickAndHold(getPage().getDrag1Element()).perform();
+        assertFalse(getPage().getDefaultIndicatorElement().isPresent());
+
+        actionQueue.moveByOffset(1, 1).perform();
+        assertTrue(getPage().getDefaultIndicatorElement().isPresent());
+
+        // check indicator has predefined properties from @dragOptions (from JavaScript object 'predefined1')
+        assertEquals(getPage().getDefaultIndicatorElement().getCssValue("opacity"), "0.5");
+        assertEquals(getPage().getDefaultIndicatorElement().getCssValue("cursor"), "crosshair");
+
+        // check it is working
+        testMovingOverDifferentStates();
+
+        actionQueue.release(getPage().getDrop1Element()).perform();
     }
 
     @Test

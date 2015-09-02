@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <!--
     JBoss, Home of Professional Open Source
@@ -46,17 +51,39 @@
             <rich:dragIndicator id="indicator2" acceptClass="acceptClass" rejectClass="rejectClass" draggingClass="draggingClass" />
             <p>Use @indicator=indicator2 to switch to usage of second defined indicator with custom styling</p>
 
-
+            <h:outputScript>
+                // used in @dragOptions
+                predefined1 = {
+                    helper: "clone",
+                    cursor: "crosshair",
+                    opacity: 0.5,
+                    cursorAt: {
+                        left: 5,
+                        top: 5
+                    }
+                };
+            </h:outputScript>
             <table>
                 <tr>
                     <td>
                         <a4j:outputPanel id="draggable1" layout="block" styleClass="metamer-draggable" style="border: 3px solid red">
                             <h:outputText value="#1: type=#{richDragSourceBean.attributes['type'].value}" />
-                            <rich:dragSource
-                                dragValue="#{richDragSourceBean.dragValues[0]}"
-                                dragIndicator="#{richDragSourceBean.attributes['dragIndicator'].value}"
-                                type="#{richDragSourceBean.attributes['type'].value}"
-                                rendered="#{richDragSourceBean.attributes['rendered'].value}"  />
+                            <c:choose>
+                                <c:when test="#{empty richDragSourceBean.attributes['dragOptions'].value}">
+                                    <rich:dragSource
+                                        dragValue="#{richDragSourceBean.dragValues[0]}"
+                                        dragIndicator="#{richDragSourceBean.attributes['dragIndicator'].value}"
+                                        type="#{richDragSourceBean.attributes['type'].value}"
+                                        rendered="#{richDragSourceBean.attributes['rendered'].value}"  />
+                                </c:when>
+                                <c:otherwise>
+                                    <rich:dragSource
+                                        dragOptions="#{richDragSourceBean.attributes['dragOptions'].value}"
+                                        dragValue="#{richDragSourceBean.dragValues[0]}"
+                                        type="#{richDragSourceBean.attributes['type'].value}"
+                                        rendered="#{richDragSourceBean.attributes['rendered'].value}"  />
+                                </c:otherwise>
+                            </c:choose>
                         </a4j:outputPanel>
                     </td>
                     <td>
@@ -94,13 +121,13 @@
                 <h:dataTable id="droppedValues1" var="droppedValue" value="#{richDropTargetBean.droppedEntries1}">
                     <h:column>
                         <f:facet name="header">
-						Dragged
+                            Dragged
                         </f:facet>
                         <h:outputText value="##{droppedValue.value.number}" />
                     </h:column>
                     <h:column>
                         <f:facet name="header">
-						Dropped
+                            Dropped
                         </f:facet>
                         <h:outputText value="#{droppedValue.key.number}" />
                     </h:column>
@@ -128,13 +155,13 @@
                 <h:dataTable id="droppedValues2" var="droppedValue" value="#{richDropTargetBean.droppedEntries2}">
                     <h:column>
                         <f:facet name="header">
-						Dragged
+                            Dragged
                         </f:facet>
                         <h:outputText value="##{droppedValue.value.number}" />
                     </h:column>
                     <h:column>
                         <f:facet name="header">
-						Dropped
+                            Dropped
                         </f:facet>
                         <h:outputText value="#{droppedValue.key.number}" />
                     </h:column>
