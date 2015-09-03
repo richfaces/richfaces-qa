@@ -38,7 +38,6 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Actions;
 import org.richfaces.fragment.common.Event;
-import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.inplaceInput.ConfirmOrCancel;
 import org.richfaces.fragment.inplaceInput.InplaceComponentState;
 import org.richfaces.fragment.inplaceSelect.RichFacesInplaceSelect;
@@ -51,6 +50,7 @@ import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotatio
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.model.Capital;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -62,28 +62,30 @@ import org.testng.annotations.Test;
  */
 public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
+    private static final int GUARD_TIME = 2000;
+
     private final Attributes<InplaceSelectAttributes> inplaceSelectAttributes = getAttributes();
 
     private final By listBy = By.cssSelector("span.rf-is-lst-cord");
     private final By listHeightBy = By.cssSelector("span.rf-is-lst-scrl");
     private final By listWidthBy = By.cssSelector("span.rf-is-lst-pos");
 
-    @FindBy(css = "[id$=inplaceSelect]")
-    private RichFacesInplaceSelect select;
-    @FindBy(css = "[id$=inplaceSelect] span.rf-is-lst-cord")
-    private WebElement popup;
     @FindBy(css = "body > span.rf-is-lst-cord")
     private WebElement globalPopup;
     @FindBy(css = "span[id$=output]")
     private WebElement output;
-
-    private String getOutputText() {
-        return output.getText().trim();
-    }
+    @FindBy(css = "[id$=inplaceSelect] span.rf-is-lst-cord")
+    private WebElement popup;
+    @FindBy(css = "[id$=inplaceSelect]")
+    private RichFacesInplaceSelect select;
 
     @Override
     public String getComponentTestPagePath() {
         return "richInplaceSelect/simple.xhtml";
+    }
+
+    private String getOutputText() {
+        return output.getText().trim();
     }
 
     @BeforeMethod(groups = "smoke")
@@ -657,13 +659,10 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnBlur, Boolean.FALSE);
         select.advanced().setSaveOnSelect(Boolean.FALSE);
         // select
-        Graphene.guardNoRequest(select).select(10);
+        MetamerPage.requestTimeNotChangesWaiting(select, GUARD_TIME).select(10);// Graphene.guardNoRequest waits too long
         assertEquals(getOutputText(), "", "Output should be empty.");
         // blur
-        String requestTime = getMetamerPage().getRequestTimeElement().getText().trim();
-        Utils.triggerJQ(executor, "blur", select.advanced().getEditInputElement());
-        waiting(2000L);
-        assertEquals(getMetamerPage().getRequestTimeElement().getText().trim(), requestTime, "Request time shouldn't change.");
+        MetamerPage.requestTimeNotChangesWaiting(getMetamerPage().getResponseDelayElement(), GUARD_TIME).click();// Graphene.guardNoRequest waits too long
         assertEquals(getOutputText(), "", "Output should be empty.");
         // with confirmation
         guardAjax(select.select(10)).confirm();
@@ -685,12 +684,10 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
         select.advanced().setSaveOnSelect(Boolean.FALSE);
         // select
-        Graphene.guardNoRequest(select).select(10);
+        MetamerPage.requestTimeNotChangesWaiting(select, GUARD_TIME).select(10);// Graphene.guardNoRequest waits too long
         assertEquals(getOutputText(), "", "Output should be empty.");
         // blur
-        String requestTime = getMetamerPage().getRequestTimeElement().getText();
-        Utils.triggerJQ(executor, "blur", select.advanced().getEditInputElement());
-        Graphene.waitAjax().until().element(getMetamerPage().getRequestTimeElement()).text().not().equalTo(requestTime);
+        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();
         assertEquals(getOutputText(), "Hawaii", "Output should contain selected value.");
     }
 
