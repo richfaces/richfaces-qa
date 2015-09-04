@@ -64,6 +64,16 @@ public class JSFDetectionUtils {
         return !isPatternPresentInJsfVersionTag(".*[2-9]{1}[\\.]{1}[2-9].*");
     }
 
+    /**
+     * Detects if JSF version is greater than 2.2.11 (in the next version several issues
+     * with ui:repeate were fixed)
+     *
+     * @return true if JSF version is greater than 2.2.11, false otherwise
+     */
+    public static boolean isVersionGreaterThan2211() {
+        return isPatternPresentInJsfVersionTag(".*[2-9]{1}[\\.]{1}[2-9][\\.]{1}[1-9][2-9].*");
+    }
+
     private static boolean isPatternPresentInJsfVersionTag(String pattern) {
         if (cachedResponse.get() != null) {
             return cachedResponse.get().matches(pattern);

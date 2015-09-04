@@ -266,13 +266,35 @@ public class On {
 
         /**
          * Skip tests when version of JSF is < 2.2.x
-         *
          */
         public static class VersionLowerThan22 implements SkipOn {
 
             @Override
             public boolean apply() {
                 return JSFDetectionUtils.isVersionLowerThan22();
+            }
+        }
+
+        /**
+         * Skip tests when version of Mojarra is < 2.2.12
+         */
+        public static class VersionMojarraLowerThan2212 implements SkipOn {
+
+            @Override
+            public boolean apply() {
+                return JSFDetectionUtils.isMojarra() && !JSFDetectionUtils.isVersionGreaterThan2211();
+            }
+        }
+
+        /**
+         * Skip tests when version of Mojarra is > 2.2.11
+         *
+         */
+        public static class VersionMojarraGreaterThan2211 implements SkipOn {
+
+            @Override
+            public boolean apply() {
+                return JSFDetectionUtils.isMojarra() && JSFDetectionUtils.isVersionGreaterThan2211();
             }
         }
     }
