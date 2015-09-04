@@ -27,6 +27,8 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.bean.issues.RF13963;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.testng.annotations.Test;
 
 /**
@@ -46,6 +48,7 @@ public class TestRF13963 extends AbstractWebDriverTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-13963")
+    @Skip(On.JSF.VersionLowerThan22.class)
     public void testUnrenderedUIRepeatIsNotVisited() {
         Graphene.guardAjax(ajaxSubmit).click();
         getMetamerPage().assertNoListener(UNEXPECTED_MESSAGE);

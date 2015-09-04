@@ -41,6 +41,7 @@ import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
@@ -112,6 +113,7 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
 
     @Test
     @CoversAttributes("immediate")
+    @Templates(exclude = "uiRepeat")
     public void testImmediate() {
         panelMenuAttributes.set(PanelMenuAttributes.immediate, true);
         Graphene.guardAjax(getPage().getPanelMenu()).selectItem("Item 1");
@@ -125,7 +127,15 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     }
 
     @Test
+    @Templates("uiRepeat")
+    @Skip(On.JSF.VersionMojarraLowerThan2212.class)
+    public void testImmediateInUiRepeat() {
+        testImmediate();
+    }
+
+    @Test
     @CoversAttributes("itemChangeListener")
+    @Templates(exclude = "uiRepeat")
     public void testItemChangeListener() {
         guardAjax(getPage().getPanelMenu()).selectItem("Item 1");
         getMetamerPage().assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: null -> item1");
@@ -135,6 +145,13 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
         guardAjax(getPage().getPanelMenu().expandGroup(0)).selectItem(2);
         getMetamerPage().assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: item1 -> item13");
         getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
+    }
+
+    @Test
+    @Templates("uiRepeat")
+    @Skip(On.JSF.VersionMojarraLowerThan2212.class)
+    public void testItemChangeListenerInUiRepeat() {
+        testItemChangeListener();
     }
 
     @Test

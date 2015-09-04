@@ -23,6 +23,7 @@ package org.richfaces.tests.metamer.ftest.richItemChangeListener;
 
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
@@ -42,8 +43,15 @@ public class TestTogglePanelItemChangeListener extends AbstractItemChangeListene
     }
 
     @Test
-    @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid" })
+    @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "uiRepeat" })
     public void testICLAsAttribute() {
+        super.testICLAsAttributeOfComponent(ICL_as_ComponentAttribute_PhaseName);
+    }
+
+    @Test
+    @Templates("uiRepeat")
+    @Skip(On.JSF.VersionMojarraGreaterThan2211.class)
+    public void testICLAsAttributeInUiRepeat() {
         super.testICLAsAttributeOfComponent(ICL_as_ComponentAttribute_PhaseName);
     }
 
@@ -55,8 +63,15 @@ public class TestTogglePanelItemChangeListener extends AbstractItemChangeListene
     }
 
     @Test
-    @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid" })
+    @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "uiRepeat" })
     public void testICLInsideComponentUsingType() {
+        super.testICLInComponentWithType(ICL_inComponent_usingType_PhaseName);
+    }
+
+    @Test
+    @Templates("uiRepeat")
+    @Skip(On.JSF.VersionMojarraGreaterThan2211.class)
+    public void testICLInsideComponentUsingTypeInUiRepeat() {
         super.testICLInComponentWithType(ICL_inComponent_usingType_PhaseName);
     }
 
