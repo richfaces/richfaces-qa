@@ -85,8 +85,10 @@ public class TestContextMenuTextSubstitutions extends AbstractWebDriverTest {
                 optionText = menuItem.getText();
                 // select item
                 Graphene.guardAjax(menuItem).click();
+                menu.advanced().waitUntilIsNotVisible().perform();
                 // check output
                 assertEquals(output.getText(), optionText);
+                waiting(500);// stabilization wait time
             }
         }
     }
