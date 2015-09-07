@@ -84,6 +84,7 @@ public class TestColumnFiltering extends AbstractColumnTest {
             String namePart = STATE_NAME.substring(0, i);
 
             Graphene.guardAjax(stateNameFilterInput.clear()).sendKeys(namePart);
+            waiting(500);// stabilization wait time
 
             List<? extends Capital> actualCapitals = actualTable.getAllRows();
 
