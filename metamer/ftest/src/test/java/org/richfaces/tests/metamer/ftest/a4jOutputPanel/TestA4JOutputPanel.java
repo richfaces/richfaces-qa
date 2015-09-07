@@ -83,6 +83,7 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     @CoversAttributes({ "onclick", "ondblclick", "onkeydown", "onkeypress",
         "onkeyup", "onmousedown", "onmousemove", "onmouseout", "onmouseover", "onmouseup", "layout" })
     @Uses({
@@ -96,10 +97,10 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11312")
     public void testClick() {
-        increaseCounterButton.click();
+        Graphene.guardAjax(increaseCounterButton).click();
         Graphene.waitGui().until().element(outputDiv).text().equalTo("1");
 
-        increaseCounterButton.click();
+        Graphene.guardAjax(increaseCounterButton).click();
         Graphene.waitGui().until().element(outputDiv).text().equalTo("2");
     }
 
@@ -109,14 +110,14 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
     public void testAjaxRendered() {
         outputPanelAttributes.set(OutputPanelAttributes.ajaxRendered, false);
 
-        increaseCounterButton.click();
-        increaseCounterButton.click();
+        Graphene.guardAjax(increaseCounterButton).click();
+        Graphene.guardAjax(increaseCounterButton).click();
 
         String output = outputDiv.getText();
         assertEquals(output, "0", "Output after two clicks when ajaxRendered is set to false.");
 
         getMetamerPage().rerenderAll();
-        Graphene.waitGui().until().element(outputDiv).text().equalTo("2");
+        Graphene.waitAjax().until().element(outputDiv).text().equalTo("2");
     }
 
     @Test
