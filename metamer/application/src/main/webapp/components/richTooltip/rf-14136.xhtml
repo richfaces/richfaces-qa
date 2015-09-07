@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich" xmlns:h="http://java.sun.com/jsf/html">
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="head">
+            <style type="text/css">
+                .sample-panel {
+                    border: 1px solid black;
+                    background: white;
+                }
+            </style>
+        </ui:define>
+
+        <ui:define name="component">
+
+            <p>
+                This is reproducer for <a href="https://issues.jboss.org/browse/RF-14136">RF-14136: [rich:tooltip] hideDelay does not work</a>. Automatized.
+                <br/>
+                Steps to reproduce:
+                <ul>
+                    <li>Move mouse over the image below</li>
+                    <li>The tooltip should appear immediately</li>
+                    <li>Move mouse out of the image</li>
+                    <li>The tooltip should disappear after 1500 ms</li>
+                </ul>
+            </p>
+            <br/>
+            <h:graphicImage id="imageWithTooltip" library="images/icons" name="create_doc.gif" styleClass="pic">
+                <rich:tooltip id="tooltip" hideDelay="1500">Tooltip text</rich:tooltip>
+            </h:graphicImage>
+        </ui:define>
+    </ui:composition>
+</html>
