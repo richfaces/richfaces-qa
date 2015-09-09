@@ -187,6 +187,9 @@ In tests there are several important annotations we use:
 * `@Skip`
 ** this indicates that the test method will be skipped if given configuration/condition occurs. Without any value specified, the test with this annotation will always be skipped. See the javadoc of `SkipConfigurator` for more details and examples.
 
+* `@Unstable`
+** this indicates unstable test method. Such annotated method can be executed more times, until the first success occurs or the maximum of retry attempts is reached.
+
 == Metamer RichFaces Bug Report Guidelines
 
 . Find if JIRA already exists (use filters to ease your work)

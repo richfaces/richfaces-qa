@@ -74,12 +74,15 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.extension.configurator.Configurator;
 import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config;
 import org.richfaces.tests.metamer.ftest.extension.configurator.transformer.DataProviderTestTransformer;
+import org.richfaces.tests.metamer.ftest.extension.configurator.unstable.UnstableTestConfigurator;
 import org.richfaces.tests.metamer.ftest.extension.multipleEventFiring.MultipleEventFirerer;
 import org.richfaces.tests.metamer.ftest.extension.multipleEventFiring.MultipleEventFirererImpl;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
+import org.testng.IHookCallBack;
+import org.testng.ITestResult;
 import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -118,7 +121,8 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     private Config currentConfiguration;
 
     /**
-     * @return method should return a String representing 'component/page' (case sensitive). E.g.: <code>a4jActionListener/all.xhtml</code>, <code>a4jAjax/hCommandButton.xhtml</code>
+     * @return method should return a String representing 'component/page' (case sensitive). E.g.:
+     * <code>a4jActionListener/all.xhtml</code>, <code>a4jAjax/hCommandButton.xhtml</code>
      */
     public abstract String getComponentTestPagePath();
 
@@ -185,6 +189,14 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         currentConfiguration = c.configureNextStep();
     }
 
+    /**
+     * Overriding method from Arquillian to introduce new test execution behavior
+     */
+    @Override
+    public void run(final IHookCallBack callBack, final ITestResult testResult) {
+        super.run(UnstableTestConfigurator.getGuardedCallback(callBack), testResult);
+    }
+
     @AfterMethod(alwaysRun = true)
     public void unconfigure() {
         if (currentConfiguration != null) {
@@ -229,7 +241,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * locator provided (e.g. @attributename="table2:onChange").
      *
      * @param attributeName name of the attribute (attach prefix of the attribute table if needed another attribute table than
-     *        the first one)
+     * the first one)
      * @param value value, which String representation will be set to attribute input.
      */
     protected void setAttribute(String attributeName, Object value) {
@@ -302,8 +314,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     /**
      * Tries to execute JavaScript script for few times and expects a
      *
-     * @expectedValue as result. Returns single trimmed String with expected
-     * value or what it found or null.
+     * @expectedValue as result. Returns single trimmed String with expected value or what it found or null.
      *
      * @param expectedValue expected return value of javaScript
      * @param script whole JavaScript that will be executed
@@ -327,6 +338,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     /**
      * Helper method for testing data.
+     *
      * @param triggeringAction
      */
     protected void testData(Action triggeringAction) {
@@ -416,7 +428,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * @param testedAttribute attribute which will be tested
      * @param value tested value of attribute
      * @param actionAfterSettingOfAttribute action which will be performed after setting the attribute(e.g. open popup), if it
-     *        is null then it is skipped
+     * is null then it is skipped
      */
     protected <T extends AttributeEnum> void testHTMLAttribute(FutureTarget<WebElement> element, Attributes<T> attributes,
         T testedAttribute, String value, Action actionAfterSettingOfAttribute) {
@@ -438,8 +450,9 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Testing of HTMLAttribute (e.g. type). Expects that if an attribute is set to @value, then the value will be set to @anotherValue
-     * (e.g. null -> submit for a4j:commandButton)
+     * Testing of HTMLAttribute (e.g. type). Expects that if an attribute is set to @value, then the value will be set to
+     *
+     * @anotherValue (e.g. null -> submit for a4j:commandButton)
      *
      * E.g. testHTMLAttribute(page.link, mediaOutputAttributes, MediaOutputAttributes.type, "text/html");
      *
@@ -496,13 +509,14 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Helper method for testing of delays (showDelay, hideDelay). Runs the @actionWithDelay 4 times and measure time spent in it.
-     * Then count a median from these 4 values and asserts it to the @expectedDelay with 50% tolerance.
+     * Helper method for testing of delays (showDelay, hideDelay). Runs the @actionWithDelay 4 times and measure time spent in
+     * it. Then count a median from these 4 values and asserts it to the @expectedDelay with 50% tolerance.
      *
      * @param actionBefore action before the measured action. Can be used for e.g. close/open menu. Can be null.
      * @param actionWithDelay the measured action. Can be e.g. open/close menu.
      * @param attributeName name of the measured attribute (e.g. hideDelay, showDelay).
-     * @param expectedDelayInMillis expected delay spent in @actionWithDelay and also a value that will be set in attribute with name @attributeName
+     * @param expectedDelayInMillis expected delay spent in @actionWithDelay and also a value that will be set in attribute with
+     * name @attributeName
      */
     protected void testDelay(final Action actionBefore, final Action actionWithDelay, String attributeName, long expectedDelayInMillis) {
         getUnsafeAttributes("").set(attributeName, expectedDelayInMillis);
@@ -534,6 +548,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     /**
      * Use with <code>@UseWithField(field = "positioning",valuesFrom = FROM_ENUM, value = "")</code>.
+     *
      * @param showAction action which will show the tested menu and will return it as a WebElement.
      */
     protected void testDirection(ShowElementAndReturnAction showAction) {
@@ -542,6 +557,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     /**
      * Use with <code>@UseWithField(field = "positioning",valuesFrom = FROM_ENUM, value = "")</code>.
+     *
      * @param maxOffSetX width of the menu item, input, etc. from which will be the menu displayed
      * @param maxOffsetY height of the menu item, input, etc. from which will be the menu displayed
      * @param showAction action which will show the tested menu and will return it as a WebElement.
@@ -670,8 +686,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * @event using jQuery on the element
      * @element. Then it checks if the event was fired.
      *
-     * @see testFireEventWithJS(WebElement element, Attributes<T> attributes, T
-     * testedAttribute)
+     * @see testFireEventWithJS(WebElement element, Attributes<T> attributes, T testedAttribute)
      * @param element WebElement on which will be the event triggered
      * @param event event wich will be triggered
      * @param attributes attributes instance which will be used for setting attribute
@@ -752,7 +767,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * A helper method for testing events.
      *
      * @param attributeName name of the attribute that should be set (i.e. inputselect, onselect ; can be without the prefix
-     *        'on')
+     * 'on')
      * @param eventFiringAction action which will be performed to trigger the event
      */
     protected void testFireEvent(String attributeName, Action eventFiringAction) {
@@ -785,8 +800,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * @param element element which <code>getText()</code> method will be used for checking of label text
      * @param attributes attributes instance which will be used for setting attribute
      * @param testedAttribute attribute which will be tested
-     * @param labelChangeAction action which will change the label (if no action
-     * needed use <code>null</code> or empty Action)
+     * @param labelChangeAction action which will change the label (if no action needed use <code>null</code> or empty Action)
      */
     protected <T extends AttributeEnum> void testLabelChanges(WebElement element, Attributes<T> attributes, T testedAttribute,
         Action labelChangeAction) {
@@ -1089,8 +1103,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Abstract ReloadTester for testing component's state after reloading the
-     * page
+     * Abstract ReloadTester for testing component's state after reloading the page
      *
      * @param <T> the type of input values which will be set, sent and then verified
      */
@@ -1186,8 +1199,8 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Helper class for testing of popup menu's hide/show delays. Executes the measuring in browser using JavaScript, JS API
-     * of the component and attributes 'onhide' and 'onshow' of the component.
+     * Helper class for testing of popup menu's hide/show delays. Executes the measuring in browser using JavaScript, JS API of
+     * the component and attributes 'onhide' and 'onshow' of the component.
      */
     protected class MenuDelayTester {
 
