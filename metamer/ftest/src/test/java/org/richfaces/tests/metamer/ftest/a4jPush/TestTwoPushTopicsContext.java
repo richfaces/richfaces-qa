@@ -33,12 +33,14 @@ import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.bean.a4j.A4JPushBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.unstable.annotation.Unstable;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 import com.google.common.base.Predicate;
 
+@Unstable
 public class TestTwoPushTopicsContext extends AbstractWebDriverTest {
 
     private static final int NUMBER_OF_TESTED_UPDATES = 3;

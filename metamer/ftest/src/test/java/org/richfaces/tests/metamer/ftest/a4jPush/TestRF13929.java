@@ -29,11 +29,13 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.bean.issues.RF13929;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.unstable.annotation.Unstable;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
+@Unstable
 public class TestRF13929 extends AbstractWebDriverTest {
 
     private static final String TEMPLATE_OUTPUT_NO_SUBTOPIC = "data from topic #{0}";

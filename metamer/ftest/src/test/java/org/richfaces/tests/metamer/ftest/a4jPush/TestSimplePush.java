@@ -35,6 +35,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.bean.a4j.A4JPushBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.unstable.annotation.Unstable;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.Lists;
@@ -44,6 +45,7 @@ import com.google.common.collect.Lists;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
+@Unstable
 public class TestSimplePush extends AbstractWebDriverTest {
 
     private static final int NUMBER_OF_TESTED_UPDATES = 3;
