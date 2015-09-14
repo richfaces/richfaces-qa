@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.richfaces.tests</groupId>
         <artifactId>richfaces-qa-parent</artifactId>
-        <version>4.5.10-SNAPSHOT</version>
+        <version>4.5.9.20150914-Final</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
