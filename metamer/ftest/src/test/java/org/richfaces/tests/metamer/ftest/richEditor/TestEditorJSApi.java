@@ -36,6 +36,7 @@ import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.unstable.annotation.Unstable;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -152,6 +153,7 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
     }
 
     @Test
+    @Unstable
     @Templates(value = { "plain" })
     public void testJsIsDirty() {
         page.getEditor().type("Some text");
