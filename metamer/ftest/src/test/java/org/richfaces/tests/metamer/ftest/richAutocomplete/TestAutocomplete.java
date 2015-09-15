@@ -37,6 +37,7 @@ import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.unstable.annotation.Unstable;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -66,6 +67,7 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
     }
 
     @Test(groups = "smoke")
+    @Unstable
     @CoversAttributes({ "autocompleteMethod", "autofill", "selectFirst" })
     @RegressionTest("https://issues.jboss.org/browse/RF-11323")
     public void testTypePrefixDeleteAll_typePrefixConfirm() {
