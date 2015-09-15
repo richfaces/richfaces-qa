@@ -12,13 +12,29 @@
     <description>Functional tests for richfaces-archetype-kitchensink</description>
 
     <properties>
-        <application.target.directory>${basedir}/../apps/richfaces-kitchensink/target</application.target.directory>
-        <application.war>${application.target.directory}/richfaces-kitchensink.war</application.war>
+        <!-- arquillian properties -->
+        <!-- default values according to http://docs.oracle.com/javase/7/docs/technotes/guides/net/ipv6_guide/index.html -->
+        <jvm.args.ip>-Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=false</jvm.args.ip>
+        <!-- jvm args for all containers without setting prefered IP -->
+        <arquillian.container.all.jvm.args>-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -DstatelessViews=${statelessViews}</arquillian.container.all.jvm.args>
+        <arquillian.container.all.jvm.args.withIP>${arquillian.container.all.jvm.args} ${jvm.args.ip}</arquillian.container.all.jvm.args.withIP>
+        <!-- following will be set as system properties -->
+        <arquillian.container.jbossas.7-1.node0>127.0.0.1</arquillian.container.jbossas.7-1.node0>
+        <arquillian.container.jbossas.7-1.jvm.args>${arquillian.container.all.jvm.args.withIP}
+            -Djboss.bind.address=${arquillian.container.jbossas.7-1.node0}
+            -Djboss.bind.address.management=${arquillian.container.jbossas.7-1.node0}
+            -Djboss.bind.address.unsecure=${arquillian.container.jbossas.7-1.node0}
+        </arquillian.container.jbossas.7-1.jvm.args>
+
 
         <!-- which tests should be run and which not -->
         <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
+
+        <application.target.directory>${basedir}/../apps/richfaces-kitchensink/target</application.target.directory>
+        <application.war>${application.target.directory}/richfaces-kitchensink.war</application.war>
+
         <!-- testng listeners for better console output -->
-        <testng.listeners>org.jboss.test.selenium.listener.ConsoleStatusTestListener,org.jboss.test.selenium.listener.FailureLoggingTestListener,org.jboss.test.selenium.listener.SeleniumLoggingTestListener</testng.listeners>
+        <testng.listeners>org.jboss.test.selenium.listener.ConsoleStatusTestListener,org.jboss.test.selenium.listener.FailureLoggingTestListener</testng.listeners>
     </properties>
 
     <dependencies>
@@ -56,94 +72,38 @@
         </dependency>
     </dependencies>
 
-    <profiles>
-        <profile>
-            <id>mobile</id>
-            <properties>
-                <android.serial>aaa</android.serial>
-                <android.sdk.home />
-                <android.apk.version>2.21.0</android.apk.version>
-                <testng.suite.xml>src/test/resources/testng/testngMobile.xml</testng.suite.xml>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <testFailureIgnore>true</testFailureIgnore>
-                            <!-- Variables accessible from JAVA code by System.getProperty -->
-                            <systemProperties>
-                                <application.war>${application.war}</application.war>
-                                <!--
-                                    ip the address of your computer when you want to test on real
-                                    device, on emulator the 10.0.2.2
-                                -->
-                                <host>10.0.2.2</host>
-                                <arq.extension.graphene.waitAjaxInterval>5</arq.extension.graphene.waitAjaxInterval>
-                                <arq.extension.graphene.waitModelInterval>10</arq.extension.graphene.waitModelInterval>
-                            </systemProperties>
-                            <!-- Variables accessible e.g. from arquillian.xml -->
-                            <systemPropertyVariables>
-                                <android.serial>${android.serial}</android.serial>
-                                <android.sdk.home>${android.sdk.home}</android.sdk.home>
-                                <android.apk.version>${android.apk.version}</android.apk.version>
-                                <browser.capabilities>android</browser.capabilities>
-                                <androidSkip>false</androidSkip>
-                                <androidDroneSkip>false</androidDroneSkip>
-                            </systemPropertyVariables>
-                            <suiteXmlFiles>
-                                <suiteXmlFiles>${testng.suite.xml}</suiteXmlFiles>
-                            </suiteXmlFiles>
-                            <!-- Logging configuration for Selenium -->
-                            <argLine>-Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties</argLine>
-                            <!-- listeners for better console output -->
-                            <properties>
-                                <property>
-                                    <name>listener</name>
-                                    <value>${testng.listeners}</value>
-                                </property>
-                            </properties>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>desktop</id>
-            <properties>
-                <testng.suite.xml>src/test/resources/testng/testngDesktop.xml</testng.suite.xml>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <testFailureIgnore>true</testFailureIgnore>
-                            <!-- Variables accessible from JAVA code by System.getProperty -->
-                            <systemProperties>
-                                <application.war>${application.war}</application.war>
-                            </systemProperties>
-                            <!-- Variables accessible e.g. from arquillian.xml -->
-                            <systemPropertyVariables>
-                                <androidSkip>true</androidSkip>
-                                <browser.capabilities>firefox</browser.capabilities>
-                            </systemPropertyVariables>
-                            <suiteXmlFiles>
-                                <suiteXmlFiles>${testng.suite.xml}</suiteXmlFiles>
-                            </suiteXmlFiles>
-                            <!-- Logging configuration for Selenium -->
-                            <argLine>-Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties</argLine>
-                            <!-- listeners for better console output -->
-                            <properties>
-                                <property>
-                                    <name>listener</name>
-                                    <value>${testng.listeners}</value>
-                                </property>
-                            </properties>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <!-- Variables accessible from JAVA code by System.getProperty -->
+                    <systemProperties>
+                        <application.war>${application.war}</application.war>
+                    </systemProperties>
+                    <!-- Variables accessible e.g. from arquillian.xml -->
+                    <systemPropertyVariables>
+                        <arquillian.webdriver.browser>firefox</arquillian.webdriver.browser>
+                        <project.build.directory>${project.build.directory}</project.build.directory>
+                        <arquillian.container.jbossas.7-1.node0>${arquillian.container.jbossas.7-1.node0}</arquillian.container.jbossas.7-1.node0>
+                        <arquillian.container.jbossas.7-1.jvm.args>${arquillian.container.jbossas.7-1.jvm.args}</arquillian.container.jbossas.7-1.jvm.args>
+                        <arquillian.container.all.jvm.args>${arquillian.container.all.jvm.args}</arquillian.container.all.jvm.args>
+                    </systemPropertyVariables>
+                    <suiteXmlFiles>
+                        <suiteXmlFiles>${testng.suite.xml}</suiteXmlFiles>
+                    </suiteXmlFiles>
+                    <!-- Logging configuration for Selenium -->
+                    <argLine>-Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties</argLine>
+                    <!-- listeners for better console output -->
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>${testng.listeners}</value>
+                        </property>
+                    </properties>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

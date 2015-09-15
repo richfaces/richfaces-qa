@@ -27,40 +27,24 @@ import org.openqa.selenium.support.FindBy;
 
 public class MemberDetails {
 
-    @FindBy(xpath="//*[@class='rf-pp-cnt']/descendant::input[contains(@id,'email')]")
-    private WebElement emailOnDesktop;
+    @FindBy(css = ".rf-pp-hdr-cntrls a")
+    private WebElement backToForm;
+    @FindBy(xpath = "//*[@class='rf-pp-cnt']/descendant::input[contains(@id,'email')]")
+    private WebElement email;
 
-    @FindBy(xpath="//span[contains(@id, 'email')]")
-    private WebElement emailOnMobile;
+    public WebElement getBackToForm() {
+        return backToForm;
+    }
 
-    @FindBy(xpath="//*[@class='rf-pp-hdr-cntrls ']/a")
-    private WebElement backToFormDesktop;
+    public WebElement getEmail() {
+        return email;
+    }
 
-    @FindBy(id="back-button")
-    private WebElement backToMenuMobile;
-
-    public void waitMemberDetailsAreAvailableOnDesktop() {
+    public void waitMemberDetailsAreAvailable() {
         Graphene.waitAjax()
-                .until()
-                .element(backToFormDesktop)
-                .is()
-                .visible();
+            .until()
+            .element(backToForm)
+            .is()
+            .visible();
     }
-
-    public WebElement getBackToMenuMobile() {
-        return backToMenuMobile;
-    }
-
-    public WebElement getBackToFormDesktop() {
-        return backToFormDesktop;
-    }
-
-    public WebElement getEmailOnDesktop() {
-        return emailOnDesktop;
-    }
-
-    public WebElement getEmailOnMobile() {
-        return emailOnMobile;
-    }
-
 }

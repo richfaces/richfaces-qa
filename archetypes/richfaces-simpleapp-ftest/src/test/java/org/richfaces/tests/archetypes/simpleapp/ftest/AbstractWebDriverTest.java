@@ -19,12 +19,11 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.archetypes.kitchensink.ftest.common;
+package org.richfaces.tests.archetypes.simpleapp.ftest;
 
 import static java.text.MessageFormat.format;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -37,27 +36,15 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeMethod;
 
 /**
- * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class AbstractKitchensinkTest extends Arquillian {
-
-    protected final String CSV_EMAIL = "not a well-formed email address";
-    protected final String CSV_ERROR_MSG = "The number of error messages after client side validation is wrong!";
-    protected final String CSV_NAME_PATTERN = "must contain only letters and spaces";
-    protected final String CSV_NAME_SIZE = "size must be between 1 and 25";
-    protected final String CSV_NOT_EMPTY = "may not be empty";
-    protected final String CSV_NOT_NULL = "may not be null";
-    protected final String CSV_PHONE = "size must be between 10 and 12";
-    protected final String CSV_PHONE_SIZE = "numeric value out of bounds (<12 digits>.<0 digits> expected)";
-
-    protected final int WAIT_FOR_ERR_MSG_RENDER = 3;
-
-    @ArquillianResource
-    protected URL contextRoot;
+public abstract class AbstractWebDriverTest extends Arquillian {
 
     @Drone
-    protected WebDriver webDriver;
+    protected WebDriver browser;
+    @ArquillianResource
+    protected URL contextRoot;
 
     static {
         if (System.getProperty("browser") == null) {
@@ -71,28 +58,23 @@ public class AbstractKitchensinkTest extends Arquillian {
     }
 
     private static File getWarFile() {
-        File warFile = new File(System.getProperty("application.war"));
+        String warFilePath = System.getProperty("application.war");
+        boolean isTomcatProfileActivated = System.getProperty("activated.maven.profiles").contains("tomcat");
+        if (isTomcatProfileActivated) {
+            warFilePath = warFilePath.replace("-jee6.war", ".war");
+        }
+        File warFile = new File(warFilePath);
         if (!warFile.exists()) {
-            throw new RuntimeException(format("The war at <{0}> does not exist. Use script at <archetypes/apps/richfaces-archetype-kitchensink.sh> to create a simple project.", warFile.getAbsolutePath()));
+            throw new RuntimeException(format("The war at <{0}> does not exist. Use script at <archetypes/apps/richfaces-archetype-simpleapp.sh> to create a simple project.", warFile.getAbsolutePath()));
         }
         return warFile;
     }
 
-    protected URL getDeployedURL() {
-        return contextRoot;
-    }
-
-    protected String getUrlSuffix() {
-        return null;
-    }
-
-    @BeforeMethod(dependsOnGroups = "arquillian")
-    public void loadPage() throws MalformedURLException {
-        webDriver.manage().deleteAllCookies();
-        if (getUrlSuffix() == null) {
-            webDriver.get(getDeployedURL().toExternalForm());
-        } else {
-            webDriver.get(new URL(getDeployedURL(), getUrlSuffix()).toExternalForm());
-        }
+    /**
+     * Initializes web driver to open a test page
+     */
+    @BeforeMethod(alwaysRun = true)
+    public void initializePageUrl() {
+        browser.get(contextRoot.toExternalForm());
     }
 }

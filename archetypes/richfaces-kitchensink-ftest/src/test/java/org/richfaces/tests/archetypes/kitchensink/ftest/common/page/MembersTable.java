@@ -22,8 +22,8 @@
 package org.richfaces.tests.archetypes.kitchensink.ftest.common.page;
 
 import java.util.List;
-import org.jboss.arquillian.graphene.Graphene;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -34,22 +34,15 @@ public class MembersTable {
 
     @FindBy(css = ".rf-dt-b")
     private WebElement table;
-
     @FindBy(css = ".rf-dt-b tr")
     private WebElement tableRow;
-
     @FindBy(css = ".rf-dt-b tr")
     private List<WebElement> tableRows;
-
     @FindBy(css = ".rf-dt-ftr-c a")
     private WebElement urlAllMembersRestData;
 
-    public WebElement getUrlAllMembersRestData() {
-        return urlAllMembersRestData;
-    }
-
-    public List<WebElement> getTableRows() {
-        return tableRows;
+    public int getNumberOfRows() {
+        return table.findElements(By.cssSelector(".rf-dt-b tr")).size();
     }
 
     public WebElement getTable() {
@@ -60,8 +53,12 @@ public class MembersTable {
         return tableRow;
     }
 
-    public int getNumberOfRows() {
-        return table.findElements(By.cssSelector(".rf-dt-b tr")).size();
+    public List<WebElement> getTableRows() {
+        return tableRows;
+    }
+
+    public WebElement getUrlAllMembersRestData() {
+        return urlAllMembersRestData;
     }
 
     public void waitUntilNumberOfRowsChanged(final int numberOfRowsBefore) {

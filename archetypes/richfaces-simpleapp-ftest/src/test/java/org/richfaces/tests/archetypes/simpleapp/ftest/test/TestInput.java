@@ -19,35 +19,34 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.archetypes;
+package org.richfaces.tests.archetypes.simpleapp.ftest.test;
 
-import java.io.File;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.page.Page;
+import org.richfaces.tests.archetypes.simpleapp.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.archetypes.simpleapp.ftest.page.WithInputPage;
+import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface TestConfiguration {
+public class TestInput extends AbstractWebDriverTest {
 
-    /**
-     * WAR file which is deployed by Arquillian.
-     *
-     * @return war file
-     */
-    File getApplicationWar();
+    private final String inputName = "RichFaces Fan";
 
-    /**
-     * Context path will be used to retrieve pages from right URL. Don't hesitate to use it in cases of building
-     * absolute URLs.
-     *
-     * @return context path
-     */
-    String getContextPath();
+    @Page
+    private WithInputPage page;
 
-    /**
-     * Context root can be used to obtaining full URL paths, is set to actual tested application's context root
-     *
-     * @return context root
-     */
-    String getContextRoot();
-
+    @Test
+    public void testTypeName() {
+        page.getInput().click();
+        page.getInput().clear();
+        page.getInput().sendKeys(inputName);
+        Graphene.waitAjax()
+            .until()
+            .element(page.getOutput())
+            .text()
+            .equalTo("Hello " + inputName + "!");
+    }
 }

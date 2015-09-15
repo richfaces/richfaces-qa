@@ -30,11 +30,9 @@ import org.jboss.arquillian.drone.api.annotation.Qualifier;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
- * @version $Revision$
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD, ElementType.PARAMETER })
 @Qualifier
 public @interface SecondWindow {
-
 }

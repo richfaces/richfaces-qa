@@ -19,30 +19,23 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.archetypes;
+package org.richfaces.tests.archetypes.simpleapp.ftest.page;
 
-import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.openqa.selenium.WebDriver;
-import org.testng.annotations.BeforeMethod;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
-/**
- * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
- */
-public abstract class AbstractWebDriverTest extends AbstractTest {
+public class WithInputPage {
 
-    @Drone
-    protected WebDriver browser;
+    @FindBy(css = "input[id=nameInput]")
+    private WebElement input;
+    @FindBy(css = "span[id=output]")
+    private WebElement output;
 
-    protected AbstractWebDriverTest(TestConfiguration configuration) {
-        super(configuration);
+    public WebElement getInput() {
+        return input;
     }
 
-    /**
-     * Initializes web driver to open a test page
-     */
-    @BeforeMethod(alwaysRun = true)
-    public void initializePageUrl() {
-        browser.get(getPath());
+    public WebElement getOutput() {
+        return output;
     }
-
 }
