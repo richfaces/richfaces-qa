@@ -34,6 +34,7 @@ import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.contextMenu.RichFacesContextMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -94,6 +95,7 @@ public class TestContextMenuTextSubstitutions extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("attached")// whole test class uses @attached=false
     public void testTextIsReplaced() {
         String stateText, capitalText;
         List<WebElement> menuItemElements;

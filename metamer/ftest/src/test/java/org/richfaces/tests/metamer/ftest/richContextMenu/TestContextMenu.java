@@ -116,7 +116,8 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
-    @CoversAttributes("disabled")
+    @CoversAttributes({ "attached",// whole test class uses @attached=true (default value)
+        "disabled" })
     public void testDisabled() {
         updateShowAction();
         page.getContextMenu().advanced().show(page.getTargetPanel1());
