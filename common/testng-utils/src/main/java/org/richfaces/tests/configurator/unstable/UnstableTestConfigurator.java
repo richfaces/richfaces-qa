@@ -19,26 +19,31 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.metamer.ftest.extension.configurator.unstable;
+package org.richfaces.tests.configurator.unstable;
 
 import static java.text.MessageFormat.format;
 
 import java.lang.reflect.Method;
 import java.util.List;
 
-import org.richfaces.tests.metamer.ftest.extension.configurator.unstable.annotation.Unstable;
-import org.richfaces.tests.metamer.ftest.extension.utils.ReflectionUtils;
+import org.richfaces.tests.configurator.unstable.annotation.Unstable;
+import org.richfaces.tests.utils.ReflectionUtils;
 import org.testng.IHookCallBack;
 import org.testng.ITestResult;
 import org.testng.annotations.BeforeMethod;
 
 /**
- * This is not a ConfiguratorExtension. This configurator is called inside <code>run()</code> method of IHookable interface
- * implemented in Arquillian and overridden in AbstractWebDriverTest. It is used to create proxy for
- * {@link org.testng.IHookCallBack IHookCallBack} interface to modify the test execution behavior. Mark the test method with
- * {@link org.richfaces.tests.metamer.ftest.extension.configurator.unstable.annotation.Unstable @Unstable} annotation and it
- * will be called more times, until the first success occurs (see the javadoc of the annotation for the default value of retry
- * attempts).
+ * Configurator is used to create proxy for {@link org.testng.IHookCallBack IHookCallBack} interface to modify the test
+ * execution behavior. For marked tests it will re-run the execution until the first success occurs or the maximum number of
+ * retry attempts is reached (defined in {@link org.richfaces.tests.configurator.unstable.annotation.Unstable @Unstable}).
+ * <br/>
+ * How to use:<br/>
+ * 1) override <code>run</code> method from Arquillian in your test base:<br/>
+ * <code>@Override public void run(final IHookCallBack callBack, final ITestResult testResult) {</code><br/>
+ * <code>    super.run(UnstableTestConfigurator.getGuardedCallback(callBack), testResult);</code><br/>
+ * <code>}</code><br/>
+ * 2) mark the unstable test method/class with annotation
+ * {@link org.richfaces.tests.configurator.unstable.annotation.Unstable @Unstable}<br/>
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */

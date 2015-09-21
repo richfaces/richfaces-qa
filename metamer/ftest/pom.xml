@@ -103,6 +103,13 @@ FSF site: http://www.fsf.org. -->
             <scope>test</scope>
             <version>${project.version}</version>
         </dependency>
+        <!-- TestNG Utils -->
+        <dependency>
+            <groupId>org.richfaces.tests</groupId>
+            <artifactId>testng-utils</artifactId>
+            <scope>test</scope>
+            <version>${project.version}</version>
+        </dependency>
         <!-- see the https://community.jboss.org/wiki/WhatsTheCauseOfThisExceptionJavalangClassFormatErrorAbsentCode -->
         <dependency>
             <groupId>org.jboss.spec</groupId>

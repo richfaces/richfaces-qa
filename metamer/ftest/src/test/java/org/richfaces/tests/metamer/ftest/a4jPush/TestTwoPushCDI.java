@@ -21,7 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jPush;
 
-import org.richfaces.tests.metamer.ftest.extension.configurator.unstable.annotation.Unstable;
+import org.richfaces.tests.configurator.unstable.annotation.Unstable;
 import org.testng.annotations.Test;
 
 @Unstable

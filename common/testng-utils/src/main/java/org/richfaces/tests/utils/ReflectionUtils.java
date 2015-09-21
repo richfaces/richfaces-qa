@@ -19,16 +19,15 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.metamer.ftest.extension.utils;
+package org.richfaces.tests.utils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import com.google.common.collect.Lists;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -36,7 +35,7 @@ import com.google.common.collect.Lists;
 public class ReflectionUtils {
 
     public static List<Field> getAllFieldsAnnotatedWith(Class<? extends Annotation>[] annoClasses, Object instance) {
-        List<Field> result = Lists.newArrayList();
+        List<Field> result = new ArrayList<Field>(10);
         Class<?> klass = instance.getClass();
         while (!klass.equals(Object.class)) {
             for (Field field : klass.getDeclaredFields()) {
@@ -54,7 +53,7 @@ public class ReflectionUtils {
     }
 
     public static List<Method> getAllMethodsAnnotatedWith(Class<? extends Annotation>[] annoClasses, Object instance) {
-        List<Method> result = Lists.newArrayList();
+        List<Method> result = new ArrayList<Method>(10);
         Class<?> klass = instance.getClass();
         while (!klass.equals(Object.class)) {
             for (Method m : klass.getDeclaredMethods()) {
@@ -68,7 +67,7 @@ public class ReflectionUtils {
     }
 
     public static List<Field> getAllFieldsWithName(String name, Object instance) {
-        List<Field> result = Lists.newArrayList();
+        List<Field> result = new ArrayList<Field>(10);
         Class<?> klass = instance.getClass();
         while (!klass.equals(Object.class)) {
             for (Field field : klass.getDeclaredFields()) {

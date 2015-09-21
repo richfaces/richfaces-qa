@@ -15,5 +15,6 @@
     <modules>
         <module>xhrhalter</module>
         <module>webdriver-utils</module>
+        <module>testng-utils</module>
     </modules>
 </project>

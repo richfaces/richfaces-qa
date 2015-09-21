@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.StringUtils;
 import org.jboss.test.selenium.utils.testng.TestInfo;
 import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config;
-import org.richfaces.tests.metamer.ftest.extension.utils.ReflectionUtils;
+import org.richfaces.tests.utils.ReflectionUtils;
 import org.testng.ITestResult;
 
 /**

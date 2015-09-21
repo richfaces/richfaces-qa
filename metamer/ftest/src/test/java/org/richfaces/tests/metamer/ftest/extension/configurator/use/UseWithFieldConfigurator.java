@@ -30,7 +30,7 @@ import org.richfaces.tests.metamer.ftest.extension.configurator.ConfiguratorExte
 import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config;
 import org.richfaces.tests.metamer.ftest.extension.configurator.config.FieldConfig;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
-import org.richfaces.tests.metamer.ftest.extension.utils.ReflectionUtils;
+import org.richfaces.tests.utils.ReflectionUtils;
 
 import com.google.common.collect.Lists;
 

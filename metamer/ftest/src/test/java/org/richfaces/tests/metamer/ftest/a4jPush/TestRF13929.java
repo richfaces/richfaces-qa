@@ -26,10 +26,10 @@ import java.text.MessageFormat;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.configurator.unstable.annotation.Unstable;
 import org.richfaces.tests.metamer.bean.issues.RF13929;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.extension.configurator.unstable.annotation.Unstable;
 import org.testng.annotations.Test;
 
 /**

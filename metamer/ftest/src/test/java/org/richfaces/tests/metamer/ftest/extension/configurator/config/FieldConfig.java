@@ -23,7 +23,7 @@ package org.richfaces.tests.metamer.ftest.extension.configurator.config;
 
 import java.lang.reflect.Field;
 
-import org.richfaces.tests.metamer.ftest.extension.utils.ReflectionUtils;
+import org.richfaces.tests.utils.ReflectionUtils;
 
 /**
  * Configuration which stores fields and values to inject.

@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.metamer.ftest.extension.configurator.unstable.annotation;
+package org.richfaces.tests.configurator.unstable.annotation;
 
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
@@ -30,7 +30,7 @@ import java.lang.annotation.Target;
 
 /**
  * Annotation is used to mark unstable test method or a whole class. It is used by
- * {@link org.richfaces.tests.metamer.ftest.extension.configurator.unstable.UnstableTestConfigurator UnstableTestConfigurator}.
+ * {@link org.richfaces.tests.configurator.unstable.UnstableTestConfigurator UnstableTestConfigurator}.
  * Default value of retry attempts is 5.
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
