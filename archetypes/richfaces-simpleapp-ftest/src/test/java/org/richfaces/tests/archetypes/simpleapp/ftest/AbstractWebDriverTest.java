@@ -33,6 +33,9 @@ import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.openqa.selenium.WebDriver;
+import org.richfaces.tests.configurator.unstable.UnstableTestConfigurator;
+import org.testng.IHookCallBack;
+import org.testng.ITestResult;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -76,5 +79,13 @@ public abstract class AbstractWebDriverTest extends Arquillian {
     @BeforeMethod(alwaysRun = true)
     public void initializePageUrl() {
         browser.get(contextRoot.toExternalForm());
+    }
+
+    /**
+     * Overriding method from Arquillian to introduce new test execution behavior
+     */
+    @Override
+    public void run(final IHookCallBack callBack, final ITestResult testResult) {
+        super.run(UnstableTestConfigurator.getGuardedCallback(callBack), testResult);
     }
 }

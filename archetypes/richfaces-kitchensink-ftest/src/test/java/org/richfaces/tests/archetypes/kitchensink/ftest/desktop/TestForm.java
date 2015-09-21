@@ -32,12 +32,14 @@ import org.richfaces.tests.archetypes.kitchensink.ftest.common.AbstractKitchensi
 import org.richfaces.tests.archetypes.kitchensink.ftest.common.page.MemberDetails;
 import org.richfaces.tests.archetypes.kitchensink.ftest.common.page.MembersTable;
 import org.richfaces.tests.archetypes.kitchensink.ftest.common.page.RegisterForm;
+import org.richfaces.tests.configurator.unstable.annotation.Unstable;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
+@Unstable
 public class TestForm extends AbstractKitchensinkTest {
 
     @Page

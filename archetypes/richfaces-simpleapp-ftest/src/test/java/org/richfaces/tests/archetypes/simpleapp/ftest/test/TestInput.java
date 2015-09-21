@@ -25,6 +25,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.archetypes.simpleapp.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.archetypes.simpleapp.ftest.page.WithInputPage;
+import org.richfaces.tests.configurator.unstable.annotation.Unstable;
 import org.testng.annotations.Test;
 
 /**
@@ -39,6 +40,7 @@ public class TestInput extends AbstractWebDriverTest {
     private WithInputPage page;
 
     @Test
+    @Unstable
     public void testTypeName() {
         page.getInput().click();
         page.getInput().clear();
