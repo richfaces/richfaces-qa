@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richDataTable;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFilteringTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.MultipleCoversAttributes;
@@ -31,17 +32,24 @@ import org.testng.annotations.Test;
 
 public class TestDataTableFilteringBuiltIn extends DataTableFilteringTest {
 
-    @FindByJQuery("table.rf-dt[id$=richDataTable]")
-    private FilteringDT table;
+    private final Action ajaxAction = new Action() {
+        @Override
+        public void perform() {
+            table.getHeader().filterNameBuiltIn("a");
+        }
+    };
 
-    @Override
-    protected FilteringDT getTable() {
-        return table;
-    }
+    @FindByJQuery(value = "table.rf-dt[id$=richDataTable]")
+    private FilteringDT table;
 
     @Override
     public String getComponentTestPagePath() {
         return "richDataTable/builtInFilteringAndSorting.xhtml";
+    }
+
+    @Override
+    protected FilteringDT getTable() {
+        return table;
     }
 
     @Test
@@ -51,6 +59,12 @@ public class TestDataTableFilteringBuiltIn extends DataTableFilteringTest {
     })
     public void testCombination() {
         super.testFilterCombinations(true);
+    }
+
+    @Test
+    @CoversAttributes("data")
+    public void testData() {
+        testData(ajaxAction);
     }
 
     @Test
@@ -71,4 +85,15 @@ public class TestDataTableFilteringBuiltIn extends DataTableFilteringTest {
         super.testFilterNumberOfKindsBuiltIn();
     }
 
+    @Test
+    @CoversAttributes("onbeforedomupdate")
+    public void testOnbeforedomupdate() {
+        testFireEvent("onbeforedomupdate", ajaxAction);
+    }
+
+    @Test
+    @CoversAttributes("oncomplete")
+    public void testOncomplete() {
+        testFireEvent("oncomplete", ajaxAction);
+    }
 }
