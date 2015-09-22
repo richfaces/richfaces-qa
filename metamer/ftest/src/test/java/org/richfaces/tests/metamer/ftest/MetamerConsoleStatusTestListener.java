@@ -21,7 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest;
 
-import org.jboss.test.selenium.listener.ConsoleStatusTestListener;
 import org.testng.ITestResult;
 
 /**
@@ -29,7 +28,7 @@ import org.testng.ITestResult;
  * @version $Revision: 19564 $
  *
  */
-public class MetamerConsoleStatusTestListener extends ConsoleStatusTestListener {
+public class MetamerConsoleStatusTestListener extends ParallelConsoleStatusListener {
 
     protected String getMessage(ITestResult result) {
         String message = super.getMessage(result);

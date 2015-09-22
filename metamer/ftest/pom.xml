@@ -220,6 +220,21 @@ FSF site: http://www.fsf.org. -->
     </build>
 
     <profiles>
+        <profile>
+            <id>parallel</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <!-- one fork for each core -->
+                            <forkCount>1C</forkCount>
+                            <reuseForks>false</reuseForks>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <!-- profile for testing Metamer within Portal env. -->
         <profile>
             <id>jbossportal-remote-7-1</id>

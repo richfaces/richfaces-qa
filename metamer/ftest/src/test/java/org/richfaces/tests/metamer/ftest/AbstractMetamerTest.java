@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.channels.Channels;
@@ -37,11 +38,8 @@ import java.text.MessageFormat;
 import java.util.List;
 
 import org.eu.ingwar.tools.arquillian.extension.suite.annotations.ArquillianSuiteDeployment;
-import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OverProtocol;
 import org.jboss.arquillian.container.test.api.RunAsClient;
-import org.jboss.arquillian.test.api.ArquillianResource;
-import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.as.cli.CliInitializationException;
 import org.jboss.as.cli.CommandContext;
 import org.jboss.as.cli.CommandContextFactory;
@@ -70,7 +68,7 @@ import com.google.common.io.Files;
  */
 @RunAsClient
 @ArquillianSuiteDeployment
-public abstract class AbstractMetamerTest extends Arquillian {
+public abstract class AbstractMetamerTest extends Arquillian2 {
 
     private static final String EAP_63_AND_UP_REGEX = ".*jbosseap-(managed|remote)-(6-[3-9]).*";
     private static final String EAP_70_AND_UP_REGEX = ".*jbosseap-(managed|remote)-(7-[0-9]).*";
@@ -89,11 +87,19 @@ public abstract class AbstractMetamerTest extends Arquillian {
     private static WebArchive deployedWar;
     protected static final Boolean runInPortalEnv = Boolean.getBoolean("runInPortalEnv");
 
-    @ArquillianResource
-    protected URL contextPath;
+//    @ArquillianResource
+    protected final URL contextPath;
     @Templates(value = { "plain", "richAccordion", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richCollapsiblePanel", "richTabPanel", "richPopupPanel", "a4jRegion", "a4jRepeat", "uiRepeat" })
     protected TemplatesList template;
+
+    public AbstractMetamerTest() {
+        try {
+            contextPath = new URL("http://localhost:8080/metamer/");
+        } catch (MalformedURLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 
     private static void checkValueIsValidForResourceOptimizationParam(String value) {
         assertNotNull(value, "The parameter for resource optimization can only be <None> or <All>, not null!");
@@ -110,7 +116,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
         return file;
     }
 
-    @Deployment(testable = false, name = "updated")
+//    @Deployment(testable = false, name = "updated", managed = false)
     @OverProtocol("Servlet 3.0")
     public static WebArchive createTestArchive() throws IOException, URISyntaxException {
         WebArchive war = createWarFromZipFile();
