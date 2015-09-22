@@ -880,6 +880,24 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
+     * Helper method for testing table's style class attributes (e.g. cellClass, columnFooterClass)
+     *
+     * @param attributeName
+     * @param elementClassName
+     * @param expectedCount
+     */
+    protected void testTableStyleClass(String attributeName, String elementClassName, int expectedCount) {
+        String klass = "metamer-ftest-class";
+        setAttribute(attributeName, klass);
+        List<WebElement> elems = driver.findElements(By.className(elementClassName));
+        assertTrue(expectedCount > 0);
+        assertEquals(elems.size(), expectedCount);
+        for (WebElement elem : elems) {
+            assertTrue(elem.getAttribute("class").contains(klass));
+        }
+    }
+
+    /**
      * Tries to check and wait for correct size (@size) of list. Depends on list of WebElements decorated with
      * StaleReferenceAwareFieldDecorator.
      *

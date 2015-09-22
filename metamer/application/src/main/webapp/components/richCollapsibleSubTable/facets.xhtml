@@ -132,15 +132,45 @@
                     </f:facet>
 
                     <rich:column id="columnName">
+                        <f:facet name="header">
+                            <h:outputText id="columnHeaderName" value="#{richSubTableBean.facets['nameHeader']}"
+                                          rendered="#{not empty richSubTableBean.facets['nameHeader']}"/>
+                        </f:facet>
+
                         <h:outputText id="name" value="#{item.name}" />
+
+                        <f:facet name="footer">
+                            <h:outputText id="columnFooterName" value="#{richSubTableBean.facets['nameFooter']}"
+                                          rendered="#{not empty richSubTableBean.facets['nameFooter']}"/>
+                        </f:facet>
                     </rich:column>
                     <rich:column id="columnTitle">
+                        <f:facet name="header">
+                            <h:outputText id="columnHeaderTitle" value="#{richSubTableBean.facets['titleHeader']}"
+                                          rendered="#{not empty richSubTableBean.facets['titleHeader']}"/>
+                        </f:facet>
+
                         <h:outputText id="title" value="#{item.title}" />
+
+                        <f:facet name="footer">
+                            <h:outputText id="columnFooterTitle" value="#{richSubTableBean.facets['titleFooter']}"
+                                          rendered="#{not empty richSubTableBean.facets['titleFooter']}"/>
+                        </f:facet>
                     </rich:column>
                     <rich:column id="columnBirthdate">
+                        <f:facet name="header">
+                            <h:outputText id="columnHeaderBirthdate" value="#{richSubTableBean.facets['birthdateHeader']}"
+                                          rendered="#{not empty richSubTableBean.facets['birthdateHeader']}"/>
+                        </f:facet>
+
                         <h:outputText id="birthdate" value="#{item.birthdate}">
                             <f:convertDateTime pattern="d MMM yyyy" />
                         </h:outputText>
+
+                        <f:facet name="footer">
+                            <h:outputText id="columnFooterBirthdate" value="#{richSubTableBean.facets['birthdateFooter']}"
+                                          rendered="#{not empty richSubTableBean.facets['birthdateFooter']}"/>
+                        </f:facet>
                     </rich:column>
 
                 </rich:collapsibleSubTable>
@@ -159,6 +189,25 @@
 
                     <h:outputLabel value="Footer Facet:" />
                     <h:inputText id="footerInput" value="#{richSubTableBean.facets['footer']}" />
+
+                    <h:outputLabel value="Name Column Header:" />
+                    <h:inputText id="nameHeaderInput" value="#{richSubTableBean.facets['nameHeader']}" />
+
+                    <h:outputLabel value="Name Column Footer:" />
+                    <h:inputText id="nameFooterInput" value="#{richSubTableBean.facets['nameFooter']}" />
+
+                    <h:outputLabel value="Title Column Header:" />
+                    <h:inputText id="titleHeaderInput" value="#{richSubTableBean.facets['titleHeader']}" />
+
+                    <h:outputLabel value="Title Column Footer:" />
+                    <h:inputText id="titleFooterInput" value="#{richSubTableBean.facets['titleFooter']}" />
+
+                    <h:outputLabel value="Birthdate Column Header:" />
+                    <h:inputText id="birthdateHeaderInput" value="#{richSubTableBean.facets['birthdateHeader']}" />
+
+                    <h:outputLabel value="Birthdate Column Footer:" />
+                    <h:inputText id="birthdateFooterInput" value="#{richSubTableBean.facets['birthdateFooter']}" />
+
                 </h:panelGrid>
             </a4j:ajax>
 

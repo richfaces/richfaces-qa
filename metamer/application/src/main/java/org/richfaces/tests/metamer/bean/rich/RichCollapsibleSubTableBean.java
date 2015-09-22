@@ -124,6 +124,17 @@ public class RichCollapsibleSubTableBean implements Serializable {
         expanded.put(women, true);
 
         state = true;
+
+        // facets initial values
+        facets.put("noData", "There is no data.");
+        facets.put("header", "Header");
+        facets.put("footer", "Footer");
+        facets.put("nameHeader", "Name Header");
+        facets.put("nameFooter", "Name Footer");
+        facets.put("titleHeader", "Title Header");
+        facets.put("titleFooter", "Title Footer");
+        facets.put("birthdateHeader", "Birthday Header");
+        facets.put("birthdateFooter", "Birthday Footer");
     }
 
     public Attributes getAttributes() {

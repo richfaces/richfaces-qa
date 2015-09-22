@@ -24,12 +24,14 @@ package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 import static org.richfaces.tests.metamer.ftest.richCollapsibleSubTable.ExpandMode.client;
 import static org.testng.Assert.fail;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.fragment.Root;
+import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -151,6 +153,35 @@ public abstract class AbstractCollapsibleSubTableTest extends AbstractWebDriverT
     }
 
     public static class CollapsibleSubTableWithEmployees extends RichFacesCollapsibleSubTable<NullFragment, EmployeeRecord, NullFragment> {
+
+        private List<WebElement> columnFooterElements;
+        private List<WebElement> columnHeaderElements;
+
+        private final AdvancedCollapsibleSubTableInteractions interactions = new Interactions();
+
+        @Override
+        public AdvancedCollapsibleSubTableInteractions advanced() {
+            return interactions;
+        }
+
+        public class Interactions extends AdvancedCollapsibleSubTableInteractions {
+
+            @Override
+            public List<WebElement> getColumnFooterElements() {
+                if (columnFooterElements == null) {
+                    columnFooterElements = advanced().getTableRootElement().findElements(By.className("rf-cst-sftr-c"));
+                }
+                return Collections.unmodifiableList(columnFooterElements);
+            }
+
+            @Override
+            public List<WebElement> getColumnHeaderElements() {
+                if (columnHeaderElements == null) {
+                    columnHeaderElements = advanced().getTableRootElement().findElements(By.className("rf-cst-shdr-c"));
+                }
+                return Collections.unmodifiableList(columnHeaderElements);
+            }
+        }
     }
 
     public static class EmployeeRecord {
