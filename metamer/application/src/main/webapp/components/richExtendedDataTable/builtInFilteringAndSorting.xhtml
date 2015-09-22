@@ -92,14 +92,19 @@
         </ui:define>
 
         <ui:define name="component">
-            <rich:extendedDataTable id="richEDT" columnClasses="#{richExtendedDataTableBean.attributes['columnClasses'].value}"
+            <rich:extendedDataTable id="richEDT"
+                                    columnClasses="#{richExtendedDataTableBean.attributes['columnClasses'].value}"
+                                    data="#{richExtendedDataTableBean.attributes['data'].value}"
                                     first="#{richExtendedDataTableBean.attributes['first'].value}"
                                     footerClass="#{richExtendedDataTableBean.attributes['footerClass'].value}"
                                     frozenColumns="#{richExtendedDataTableBean.attributes['frozenColumns'].value}"
                                     headerClass="#{richExtendedDataTableBean.attributes['headerClass'].value}"
                                     keepSaved="#{richExtendedDataTableBean.attributes['keepSaved'].value}"
                                     noDataLabel="#{richExtendedDataTableBean.attributes['noDataLabel'].value}"
+                                    onbeforedomupdate="#{richExtendedDataTableBean.attributes['onbeforedomupdate'].value}"
                                     onbeforeselectionchange="#{richExtendedDataTableBean.attributes['onbeforeselectionchange'].value}"
+                                    oncomplete="#{richExtendedDataTableBean.attributes['oncomplete'].value}"
+                                    onready="#{richExtendedDataTableBean.attributes['onready'].value}"
                                     onrowclick="#{richExtendedDataTableBean.attributes['onrowclick'].value}"
                                     onrowdblclick="#{richExtendedDataTableBean.attributes['onrowdblclick'].value}"
                                     onrowkeydown="#{richExtendedDataTableBean.attributes['onrowkeydown'].value}"

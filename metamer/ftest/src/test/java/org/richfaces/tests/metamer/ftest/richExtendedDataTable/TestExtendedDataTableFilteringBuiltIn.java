@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFilteringTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.FilteringEDT;
@@ -29,23 +30,36 @@ import org.testng.annotations.Test;
 
 public class TestExtendedDataTableFilteringBuiltIn extends DataTableFilteringTest {
 
+    private final Action ajaxAction = new Action() {
+        @Override
+        public void perform() {
+            table.getHeader().filterNameBuiltIn("a");
+        }
+    };
+
     @FindByJQuery("div.rf-edt[id$=richEDT]")
     private FilteringEDT table;
-
-    @Override
-    protected FilteringEDT getTable() {
-        return table;
-    }
 
     @Override
     public String getComponentTestPagePath() {
         return "richExtendedDataTable/builtInFilteringAndSorting.xhtml";
     }
 
+    @Override
+    protected FilteringEDT getTable() {
+        return table;
+    }
+
     @Test
     @CoversAttributes("filterVar")
     public void testCombination() {
         super.testFilterCombinations(true);
+    }
+
+    @Test
+    @CoversAttributes("data")
+    public void testData() {
+        testData(ajaxAction);
     }
 
     @Test
@@ -64,5 +78,38 @@ public class TestExtendedDataTableFilteringBuiltIn extends DataTableFilteringTes
     @CoversAttributes("filterVar")
     public void testNumberOfKids() {
         super.testFilterNumberOfKindsBuiltIn();
+    }
+
+    @Test
+    @CoversAttributes("onbeforedomupdate")
+    public void testOnbeforedomupdate() {
+        testFireEvent("onbeforedomupdate", ajaxAction);
+    }
+
+    @Test
+    @CoversAttributes("oncomplete")
+    public void testOncomplete() {
+        testFireEvent("oncomplete", ajaxAction);
+    }
+
+    @Test
+    @CoversAttributes("onready")
+    public void testOnready() {
+        // after page re-render
+        testFireEvent("onready", new Action() {
+            @Override
+            public void perform() {
+                getMetamerPage().rerenderAll();
+            }
+        });
+        // after full page refresh
+        testFireEvent("onready", new Action() {
+            @Override
+            public void perform() {
+                getMetamerPage().fullPageRefresh();
+            }
+        });
+        // after ajax request
+        testFireEvent("onready", ajaxAction);
     }
 }
