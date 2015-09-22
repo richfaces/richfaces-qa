@@ -43,6 +43,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
+@Templates("plain")
 public class TestCollapsibleSubTableFacets extends AbstractCollapsibleSubTableTest {
 
     private static final String EMPTY_STRING = "";
@@ -67,7 +68,6 @@ public class TestCollapsibleSubTableFacets extends AbstractCollapsibleSubTableTe
 
     @Test
     @CoversAttributes("cellClass")
-    @Templates("plain")
     public void testCellClass() {
         testTableStyleClass("cellClass", "rf-cst-c", (getSubTable(isMale).getAllRows().size()
             + getSubTable(!isMale).getAllRows().size()) * 3);// 3 columns
@@ -75,28 +75,24 @@ public class TestCollapsibleSubTableFacets extends AbstractCollapsibleSubTableTe
 
     @Test
     @CoversAttributes("columnFooterCellClass")
-    @Templates("plain")
     public void testColumnFooterCellClass() {
         testTableStyleClass("columnFooterCellClass", "rf-cst-sftr-c", 2 * 3);// 2 tables, 3 columns
     }
 
     @Test
     @CoversAttributes("columnFooterClass")
-    @Templates("plain")
     public void testColumnFooterClass() {
         testTableStyleClass("columnFooterClass", "rf-cst-sftr", 2);// 2 tables
     }
 
     @Test
     @CoversAttributes("columnHeaderCellClass")
-    @Templates("plain")
     public void testColumnHeaderCellClass() {
         testTableStyleClass("columnHeaderCellClass", "rf-cst-shdr-c", 2 * 3);// 2 tables, 3 columns
     }
 
     @Test
     @CoversAttributes("columnHeaderClass")
-    @Templates("plain")
     public void testColumnHeaderClass() {
         testTableStyleClass("columnHeaderClass", "rf-cst-shdr", 2);// 2 tables
     }
@@ -168,7 +164,6 @@ public class TestCollapsibleSubTableFacets extends AbstractCollapsibleSubTableTe
 
     @Test
     @CoversAttributes("firstRowClass")
-    @Templates("plain")
     public void testFirstRowClass() {
         String klass = "metamer-ftest-class";
         setAttribute("firstRowClass", "metamer-ftest-class");
@@ -180,14 +175,12 @@ public class TestCollapsibleSubTableFacets extends AbstractCollapsibleSubTableTe
 
     @Test
     @CoversAttributes("footerCellClass")
-    @Templates("plain")
     public void testFooterCellClass() {
         testTableStyleClass("footerCellClass", "rf-cst-ftr-c", 2);// 2 tables
     }
 
     @Test
     @CoversAttributes("footerClass")
-    @Templates("plain")
     public void testFooterClass() {
         dataTableFacets.set(FacetsAttributes.footer, SAMPLE_STRING);
         testStyleClass(getSubTable(isMale).advanced().getFooterElement(), BasicAttributes.footerClass);
@@ -201,14 +194,12 @@ public class TestCollapsibleSubTableFacets extends AbstractCollapsibleSubTableTe
 
     @Test
     @CoversAttributes("headerCellClass")
-    @Templates("plain")
     public void testHeaderCellClass() {
         testTableStyleClass("headerCellClass", "rf-cst-hdr-c", 2);// 2 tables
     }
 
     @Test
     @CoversAttributes("headerClass")
-    @Templates("plain")
     public void testHeaderClass() {
         dataTableFacets.set(FacetsAttributes.header, SAMPLE_STRING);
         testStyleClass(getSubTable(isMale).advanced().getHeaderElement(), BasicAttributes.headerClass);
@@ -231,7 +222,6 @@ public class TestCollapsibleSubTableFacets extends AbstractCollapsibleSubTableTe
     }
 
     @Test
-    @Templates("plain")
     public void testNoColumnFacets() {
         dataTableFacets.set(FacetsAttributes.birthdateFooter, EMPTY_STRING);
         dataTableFacets.set(FacetsAttributes.nameFooter, EMPTY_STRING);

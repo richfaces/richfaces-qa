@@ -36,6 +36,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
+@Templates("plain")
 public class TestDataTableFacets extends DataTableFacetsTest {
 
     @FindBy(css = "table.rf-dt[id$=richDataTable]")
@@ -66,49 +67,42 @@ public class TestDataTableFacets extends DataTableFacetsTest {
 
     @Test
     @CoversAttributes("captionClass")
-    @Templates("plain")
     public void testCaptionClass() {
         testStyleClass(tableRoot.findElement(By.tagName("caption")), BasicAttributes.captionClass);
     }
 
     @Test
     @CoversAttributes("cellClass")
-    @Templates("plain")
     public void testCellClass() {
         testTableStyleClass("cellClass", "rf-dt-c", table.getAllRows().size() * 2);// 2 columns
     }
 
     @Test
     @CoversAttributes("columnFooterCellClass")
-    @Templates("plain")
     public void testColumnFooterCellClass() {
         testTableStyleClass("columnFooterCellClass", "rf-dt-sftr-c", 2);// 2 columns
     }
 
     @Test
     @CoversAttributes("columnFooterClass")
-    @Templates("plain")
     public void testColumnFooterClass() {
         testTableStyleClass("columnFooterClass", "rf-dt-sftr", 1);// 1 row
     }
 
     @Test
     @CoversAttributes("columnHeaderCellClass")
-    @Templates("plain")
     public void testColumnHeaderCellClass() {
         testTableStyleClass("columnHeaderCellClass", "rf-dt-shdr-c", 2);// 2 columns
     }
 
     @Test
     @CoversAttributes("columnHeaderClass")
-    @Templates("plain")
     public void testColumnHeaderClass() {
         testTableStyleClass("columnHeaderClass", "rf-dt-shdr", 1);// 1 row
     }
 
     @Test
     @CoversAttributes("firstRowClass")
-    @Templates("plain")
     public void testFirstRowClass() {
         String klass = "metamer-ftest-class";
         setAttribute("firstRowClass", "metamer-ftest-class");
@@ -118,28 +112,24 @@ public class TestDataTableFacets extends DataTableFacetsTest {
 
     @Test
     @CoversAttributes("footerCellClass")
-    @Templates("plain")
     public void testFooterCellClass() {
         testTableStyleClass("footerCellClass", "rf-dt-ftr-c", 1);// 1 row
     }
 
     @Test
     @CoversAttributes("footerClass")
-    @Templates("plain")
     public void testFooterClass() {
         testStyleClass(table.getFooter().getTableFooterElement(), BasicAttributes.footerClass);
     }
 
     @Test
     @CoversAttributes("headerCellClass")
-    @Templates("plain")
     public void testHeaderCellClass() {
         testTableStyleClass("headerCellClass", "rf-dt-hdr-c", 1);// 1 row
     }
 
     @Test
     @CoversAttributes("headerClass")
-    @Templates("plain")
     public void testHeaderClass() {
         testStyleClass(table.getHeader().getTableHeaderElement(), BasicAttributes.headerClass);
     }
