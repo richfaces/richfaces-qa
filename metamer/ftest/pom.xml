@@ -352,5 +352,16 @@ FSF site: http://www.fsf.org. -->
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>tomcat-with-myfaces</id>
+            <activation>
+                <property>
+                    <name>myfaces</name>
+                </property>
+            </activation>
+            <properties>
+                <metamer.classifier>tomcat7-myfaces</metamer.classifier>
+            </properties>
+        </profile>
     </profiles>
 </project>
