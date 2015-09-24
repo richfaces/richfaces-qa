@@ -357,6 +357,7 @@ FSF site: http://www.fsf.org. -->
             <activation>
                 <property>
                     <name>myfaces</name>
+                    <value>true</value>
                 </property>
             </activation>
             <properties>
