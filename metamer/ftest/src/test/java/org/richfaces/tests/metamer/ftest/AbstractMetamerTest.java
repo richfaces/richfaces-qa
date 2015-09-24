@@ -121,11 +121,12 @@ public abstract class AbstractMetamerTest extends Arquillian {
         // advanced features, tested only with browser profile
         if (isUsingBrowserProfile()) {
             File temporaryJBossWebXML = copyJBossWebXMLToTarget(war);
-            // workaround to enable running commands through JBoss CLI in EAP 6.3 and up
             if (isUsingEAP()) {
+                // workaround xml parse error of 'default encoding' in jboss-web.xml in EAP version lesser than 7
                 if (!isUsingEAP70AndUp()) {
                     removeDefaultEncodingFromJbossWebXML(war, temporaryJBossWebXML);
                 }
+                // workaround to enable running commands through JBoss CLI in EAP 6.3 and up
                 workaroundCLIVersionInEAP63And64();
             }
 
