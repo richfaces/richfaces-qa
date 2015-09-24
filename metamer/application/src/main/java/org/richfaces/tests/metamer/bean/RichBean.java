@@ -21,6 +21,7 @@
  */
 package org.richfaces.tests.metamer.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -109,19 +110,19 @@ public class RichBean implements Serializable {
     }
 
     public void causeAjaxErrorAction() {
-        getResponse().setStatus(501);
+        sendErrorResponse();
     }
 
     public void causeAjaxErrorActionListener(ActionEvent event) {
-        getResponse().setStatus(501);
+        sendErrorResponse();
     }
 
     public void causeAjaxErrorListener(AjaxBehaviorEvent event) {
-        getResponse().setStatus(501);
+        sendErrorResponse();
     }
 
     public void causeAjaxErrorValueChangeListener(ValueChangeEvent event) {
-        getResponse().setStatus(501);
+        sendErrorResponse();
     }
 
     /**
@@ -357,10 +358,6 @@ public class RichBean implements Serializable {
         return filteredComponents.keySet().toArray();
     }
 
-    public HttpServletResponse getResponse() {
-        return (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-    }
-
     public String getSelectedComponent() {
         return selectedComponent;
     }
@@ -481,6 +478,18 @@ public class RichBean implements Serializable {
     public void itemChangeListener(ItemChangeEvent event) {
         logToPage("* item changed: " + (event.getOldItem() == null ? null : event.getOldItem().getId()) + " -> "
             + (event.getNewItem() != null ? event.getNewItem().getId() : null));
+    }
+
+    private void sendErrorResponse() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+        try {
+            response.sendError(501, "Intentional error");
+            // complete the response to prevent throwing of IllegalStateException (response already committed)
+            context.responseComplete();
+        } catch (IOException ex) {
+            logger.error("Was not able to send error response.", ex);
+        }
     }
 
     public void setActiveTabOnIndex(String activeTabOnIndex) {
