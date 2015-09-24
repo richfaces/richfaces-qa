@@ -45,9 +45,6 @@ FSF site: http://www.fsf.org. -->
         <version.tomcat7>7.0.64</version.tomcat7>
         <version.tomcat8>8.0.26</version.tomcat8>
 
-        <!-- versions of TomEE containers to use and download -->
-        <version.tomee1-7>1.7.1</version.tomee1-7>
-
         <!-- arquillian versions -->
         <arquillian.bom.version>1.1.9.Final</arquillian.bom.version>
         <arquillian.wildfly.container>1.0.1.Final</arquillian.wildfly.container>
@@ -586,57 +583,6 @@ FSF site: http://www.fsf.org. -->
     </dependencyManagement>
 
     <profiles>
-        <profile>
-            <id>tomee-remote-1-7</id>
-            <properties>
-                <metamer.classifier>tomee15</metamer.classifier>
-            </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>org.apache.openejb</groupId>
-                    <artifactId>arquillian-tomee-remote</artifactId>
-                    <version>${version.tomee1-7}</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>unpack</id>
-                                <phase>process-test-classes</phase>
-                                <goals>
-                                    <goal>unpack</goal>
-                                </goals>
-                                <configuration>
-                                    <artifactItems>
-                                        <artifactItem>
-                                            <groupId>org.apache.openejb</groupId>
-                                            <artifactId>apache-tomee</artifactId>
-                                            <version>${version.tomee1-7}</version>
-                                            <classifier>webprofile</classifier>
-                                            <type>zip</type>
-                                            <overWrite>false</overWrite>
-                                            <outputDirectory>${project.build.directory}</outputDirectory>
-                                        </artifactItem>
-                                    </artifactItems>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <systemProperties>
-                                <arquillian.launch>tomee-remote-1-7</arquillian.launch>
-                            </systemProperties>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
         <profile>
             <id>jbosseap-managed-6-1</id>
             <properties>

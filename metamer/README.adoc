@@ -80,7 +80,6 @@ Metamer can be built in several profiles to satisfy compatibility with various r
 * metamer-jbas71.war - to deploy on Wildfly 8
 * metamer-tomcat7-mojarra.war - with bundled JSF Mojarra reference implementation to deploy on Tomcat 7
 * metamer-tomcat7-myfaces.war - with bundled JSF MyFaces to deploy on Tomcat 7
-* metamer-tomee15.war - to deploy on TomEE 1.5
 
 To build the application with one specific profile run `mvn clean install -DskipTests -P{profileName}` where `profileName` can be found in https://github.com/richfaces/richfaces-qa/blob/master/pom.xml[pom.xml] in root directory. Created WAR file will be located in `application/target` folder.
 

@@ -109,18 +109,6 @@ http://www.fsf.org. -->
     <container qualifier="wildfly-remote-10-0">
     </container>
 
-    <container qualifier="tomee-remote-1-7">
-        <configuration>
-            <property name="conf">src/test/resources/tomEE</property>
-            <property name="httpPort">8080</property>
-            <property name="stopPort">9005</property>
-            <property name="openejbVersion">${version.tomee1-7}</property>
-            <property name="dir">target/apache-tomee-webprofile-${version.tomee1-7}</property>
-            <property name="appWorkingDir">target/arquillian-test-working-dir</property>
-            <property name="enableAssertions">false</property>
-        </configuration>
-    </container>
-
     <container qualifier="tomcat-managed-7">
         <configuration>
             <property name="javaVmArguments">
