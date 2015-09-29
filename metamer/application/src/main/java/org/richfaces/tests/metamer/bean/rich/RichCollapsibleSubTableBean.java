@@ -57,8 +57,7 @@ public class RichCollapsibleSubTableBean implements Serializable {
     @ManagedProperty("#{model.employees}")
     private List<Employee> employees;
     private List<List<Employee>> lists;
-    private int pageMen;
-    private int pageWomen;
+    private Map<Sex, Integer> pages = new HashMap<Sex, Integer>(2);
     // true = model, false = empty table
     private boolean state;
     // facets
@@ -137,6 +136,9 @@ public class RichCollapsibleSubTableBean implements Serializable {
         facets.put("titleFooter", "Title Footer");
         facets.put("birthdateHeader", "Birthday Header");
         facets.put("birthdateFooter", "Birthday Footer");
+
+        pages.put(Sex.MALE, 1);
+        pages.put(Sex.FEMALE, 1);
     }
 
     public Attributes getAttributes() {
@@ -163,24 +165,12 @@ public class RichCollapsibleSubTableBean implements Serializable {
         this.lists = lists;
     }
 
+    public Map<Sex, Integer> getPages() {
+        return pages;
+    }
+
     public boolean isState() {
         return state;
-    }
-
-    public int getPageMen() {
-        return pageMen;
-    }
-
-    public void setPageMen(int pageMen) {
-        this.pageMen = pageMen;
-    }
-
-    public int getPageWomen() {
-        return pageWomen;
-    }
-
-    public void setPageWomen(int pageWomen) {
-        this.pageWomen = pageWomen;
     }
 
     public void setState(boolean state) {

@@ -116,7 +116,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                           var="item">
 
                     <f:facet name="footer">
-                        <rich:dataScroller id="scroller1" for="richSubTable" maxPages="7" page="#{list[0].sex == 'MALE' ? richSubTableBean.pageMen : richSubTableBean.pageWomen}" render="richDataTable" />
+                        <rich:dataScroller id="scroller1" for="richSubTable" maxPages="7" page="#{richSubTableBean.pages[list[0].sex]}" render="richDataTable" />
                     </f:facet>
 
                     <rich:column id="columnName">
