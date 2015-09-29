@@ -73,6 +73,10 @@ import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config;
 import org.richfaces.tests.metamer.ftest.extension.configurator.transformer.DataProviderTestTransformer;
 import org.richfaces.tests.metamer.ftest.extension.multipleEventFiring.MultipleEventFirerer;
 import org.richfaces.tests.metamer.ftest.extension.multipleEventFiring.MultipleEventFirererImpl;
+import org.richfaces.tests.metamer.ftest.extension.tester.attributes.AttributeNotSetException;
+import org.richfaces.tests.metamer.ftest.extension.tester.attributes.AttributesHandler;
+import org.richfaces.tests.metamer.ftest.extension.tester.attributes.MultipleAttributesSetter;
+import org.richfaces.tests.metamer.ftest.extension.tester.basic.TestResourcesProvider;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.AttributesImpl;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -548,7 +552,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         getUnsafeAttributes("").set("direction", Positioning.bottomRight);
         try {
             getUnsafeAttributes("").set("jointPoint", Positioning.bottomRight);
-        } catch (NoSuchElementException ex) {
+        } catch (AttributeNotSetException ex) {
             if (!isDirectionTest) {// == jointPoint test, but no jointPoint attribute found
                 throw ex;
             }
@@ -616,11 +620,11 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
         try {
             getUnsafeAttributes("").set("direction", Positioning.bottomRight);
-        } catch (NoSuchElementException ignored) {
+        } catch (AttributeNotSetException ignored) {
         }
         try {
             getUnsafeAttributes("").set("jointPoint", Positioning.bottomRight);
-        } catch (NoSuchElementException ignored) {
+        } catch (AttributeNotSetException ignored) {
         }
 
         Locations locationsBefore = Utils.getLocations(showAction.perform());
@@ -932,22 +936,25 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         return AttributesImpl.<T>getAttributesFor(getFutureDriver(), attributesTableId);
     }
 
-    protected UnsafeAttributes getUnsafeAttributes(String attributesTableId) {
-        return new AttributesImpl<AttributeEnum>(getFutureDriver(), attributesTableId);
-    }
-
     protected <T extends AttributeEnum> Attributes<T> getAttributes() {
         return getAttributes("");
     }
 
     private FutureTarget<WebDriver> getFutureDriver() {
         return new FutureTarget<WebDriver>() {
-
             @Override
             public WebDriver getTarget() {
                 return driver;
             }
         };
+    }
+
+    protected UnsafeAttributes getUnsafeAttributes(String attributesTableId) {
+        return new AttributesImpl<AttributeEnum>(getFutureDriver(), attributesTableId);
+    }
+
+    protected UnsafeAttributes getUnsafeAttributes() {
+        return getUnsafeAttributes("");
     }
 
     /**
@@ -1266,5 +1273,27 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
                     lastReturnedString);
             }
         }
+    }
+
+    private final TestResourcesProvider testResourcesProvider = new TestResourcesProvider() {
+
+        @Override
+        public UnsafeAttributes getAttributes(String attributeTableId) {
+            return getUnsafeAttributes(attributeTableId);
+        }
+
+        @Override
+        public JavascriptExecutor getJSExecutor() {
+            return executor;
+        }
+
+        @Override
+        public WebDriver getWebDriver() {
+            return driver;
+        }
+    };
+
+    public MultipleAttributesSetter attsSetter() {
+        return new AttributesHandler(testResourcesProvider);
     }
 }
