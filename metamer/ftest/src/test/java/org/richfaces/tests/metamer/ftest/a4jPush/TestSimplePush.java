@@ -31,17 +31,20 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.configurator.unstable.annotation.Unstable;
 import org.richfaces.tests.metamer.bean.a4j.A4JPushBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.Lists;
 
 /**
  * Test for simple push example faces/components/a4jPush/simple.xhtml
+ *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
@@ -59,6 +62,21 @@ public class TestSimplePush extends AbstractWebDriverTest {
     @Override
     public String getComponentTestPagePath() {
         return "a4jPush/simple.xhtml";
+    }
+
+    @Test
+    @Templates("plain")
+    @CoversAttributes("onerror")
+    public void testOnerror() {
+        testFireEvent("onerror", new Action() {
+            @Override
+            public void perform() {
+                // wait for first received message from server
+                Graphene.waitModel().until().element(timestamp).is().present();
+                // trigger onerror
+                executeJS("$.atmosphere.requests[0].request.onError('Intentional error!');");
+            }
+        });
     }
 
     @Test
