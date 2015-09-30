@@ -18,19 +18,19 @@ You should have received a copy of the GNU Lesser General Public
 License along with this software; if not, write to the Free
 Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-    -->
-<faces-config version="2.2" 
-  xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+-->
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
   http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 
-  <flow-definition id="flowtest">
+    <flow-definition id="flowtest">
 
-    <flow-return id="returnFromFlowtestFlow">
-      <from-outcome>#{flowtest.returnValue}</from-outcome>
-    </flow-return>
+        <flow-return id="returnFromFlowtestFlow">
+            <from-outcome>/components/richTabPanel/jsfFlowScoped.xhtml</from-outcome>
+        </flow-return>
 
-  </flow-definition>
+    </flow-definition>
   
 </faces-config>

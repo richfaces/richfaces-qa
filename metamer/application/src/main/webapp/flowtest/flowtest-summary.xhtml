@@ -1,4 +1,4 @@
-    <!--
+<!--
 JBoss, Home of Professional Open Source
 Copyright 2010-2015, Red Hat, Inc. and individual contributors
 by the @authors tag. See the copyright.txt in the distribution for a
@@ -18,24 +18,21 @@ You should have received a copy of the GNU Lesser General Public
 License along with this software; if not, write to the Free
 Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-    -->
+-->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:h="http://java.sun.com/jsf/html"
-  xmlns:f="http://java.sun.com/jsf/core"
-  xmlns:r="http://richfaces.org/rich">
-<h:head>
-  <title>flowtest - Summary</title>
-</h:head>
-<h:body>
-  <h:form>
-    <h:outputText id='firstOutput' value="First input was: #{flowtest.firstInput}" />
-    <br />
-    <h:outputText
-      id='secondOutput' value="Second input was: #{flowtest.secondInput}" />
-    <br />
-    <h:commandButton value="Previous Page" action="flowtest-second" />
-    <h:commandButton id='exitFlowButton' value="Exit Flow" action="returnFromFlowtestFlow" />   
-  </h:form>
-</h:body>
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>flowtest - Summary</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            First input was: <h:outputText id='firstOutput' value="#{flowScopedBean.firstInput}" />
+            <br />
+            Second input was: <h:outputText id='secondOutput' value="#{flowScopedBean.secondInput}" />
+            <br />
+            <h:commandButton value="Previous Page" action="flowtest-second" />
+            <h:commandButton id='exitFlowButton' value="Exit Flow" action="returnFromFlowtestFlow" />
+        </h:form>
+    </h:body>
 </html>

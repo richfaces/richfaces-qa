@@ -21,11 +21,12 @@
  */
 package org.richfaces.tests.metamer.ftest.richTabPanel;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.tabPanel.RichFacesTabPanel;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
@@ -33,44 +34,38 @@ import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
-/** Only works with JSF 2.2+
+/**
+ * Only works with JSF 2.2+.
+ *
  * Tests @FlowScoped backing bean with RF stateful component (tabPanel)
+ *
  * @author <a href="mailto:manovotn@redhat.com">Matej Novotny</a>
  */
 public class TestJSF22FlowScopedAnnotation extends AbstractWebDriverTest {
 
-    private final String firstInput = "Voodoo string";
-    private final String secondInput = "Black magic";
+    private static final String TEXT_1 = "Voodoo string";
+    private static final String TEXT_2 = "Black magic";
 
-    @FindByJQuery(value = "div[id$='tabPanel']")
-    private RichFacesTabPanel tabPanel;
-
-    @FindByJQuery(value = "input[id$='indexPageButton']")
-    private WebElement startingPageButton;
-
-    @FindByJQuery(value = "input[id$='tabPageButton']")
-    private WebElement tabPageButton;
-
-    @FindByJQuery(value = "input[id$='secondInputPageButton']")
-    private WebElement goToSummaryButton;
-
-    @FindByJQuery(value = "input[id$='backToTabButton']")
-    private WebElement backToTabPageButton;
-
-    @FindByJQuery(value = "input[id$='exitFlowButton']")
+    @FindBy(css = "input[id$='exitFlowButton']")
     private WebElement exitFlowButton;
-
-    @FindByJQuery(value = "input[id$='tabInput']")
+    @FindBy(css = "input[id$='tabInput']")
     private WebElement firstFlowPageInput;
-
-    @FindByJQuery(value = "input[id$='secondInput']")
-    private WebElement secondFlowPageInput;
-
-    @FindByJQuery(value = "[id$='firstOutput']")
+    @FindBy(css = "[id$='firstOutput']")
     private WebElement firstOutput;
-
-    @FindByJQuery(value = "[id$='secondOutput']")
+    @FindBy(css = "input[id$='secondInputPageButton']")
+    private WebElement goToSummaryButton;
+    @FindBy(css = "input[id$='tabPageButton']")
+    private WebElement nextPageButton;
+    @FindBy(css = "input[id$='backToTabButton']")
+    private WebElement previousPageButton;
+    @FindBy(css = "input[id$='secondInput']")
+    private WebElement secondFlowPageInput;
+    @FindBy(css = "[id$='secondOutput']")
     private WebElement secondOutput;
+    @FindBy(css = "input[id$='indexPageButton']")
+    private WebElement startFlowButton;
+    @FindBy(css = "div[id$='tabPanel']")
+    private RichFacesTabPanel tabPanel;
 
     @Override
     public String getComponentTestPagePath() {
@@ -81,48 +76,49 @@ public class TestJSF22FlowScopedAnnotation extends AbstractWebDriverTest {
     @Templates(value = "plain")
     @Skip(On.JSF.VersionLowerThan22.class)
     public void testFlowScopedAnnotation() {
-
         // verify that you are on the first page
-        assertTrue(startingPageButton.isDisplayed());
+        assertTrue(startFlowButton.isDisplayed());
 
         // start the flow
-        Graphene.guardHttp(startingPageButton).click();
-        Graphene.waitGui(driver).until().element(tabPageButton).is().visible();
+        Graphene.guardHttp(startFlowButton).click();
+        Graphene.waitGui(driver).until().element(nextPageButton).is().visible();
 
         // verify that there is a tab panel and that the first tab is active
         assertTrue(tabPanel.advanced().getVisibleContent().isDisplayed(), "Tab panel should be present on the page");
-        assertTrue(tabPanel.advanced().getActiveHeaderElement().getText().equals("First tab"), "First tab should be active");
+        assertEquals(tabPanel.advanced().getActiveHeaderElement().getText().trim(), "First tab", "First tab should be active");
 
         // switch tabs and send input
         tabPanel.switchTo("Second tab");
         Graphene.waitGui().until().element(tabPanel.advanced().getActiveHeaderElement()).text().contains("Second tab");
         assertTrue(firstFlowPageInput.isDisplayed(), "Tab panel input should be visible now");
-        firstFlowPageInput.sendKeys(firstInput);
+        firstFlowPageInput.clear();
+        firstFlowPageInput.sendKeys(TEXT_1);
 
         // go to next flow page
-        Graphene.guardHttp(tabPageButton).click();
+        Graphene.guardHttp(nextPageButton).click();
         Graphene.waitModel().until().element(secondFlowPageInput).is().present();
 
         // verify first input value
-        assertTrue(firstOutput.getText().contains(firstInput), "First input should be changed by now");
+        assertEquals(firstOutput.getText().trim(), TEXT_1, "First input should be changed by now");
 
         // go to previous page, verify second tab is active, go to next page
-        Graphene.guardHttp(backToTabPageButton).click();
+        Graphene.guardHttp(previousPageButton).click();
         Graphene.waitGui().until().element(tabPanel.advanced().getActiveHeaderElement()).text().contains("Second tab");
-        Graphene.guardHttp(tabPageButton).click();
+        Graphene.guardHttp(nextPageButton).click();
         Graphene.waitModel().until().element(secondFlowPageInput).is().present();
 
         // enter second input and go forward
-        secondFlowPageInput.sendKeys(secondInput);
+        secondFlowPageInput.clear();
+        secondFlowPageInput.sendKeys(TEXT_2);
         Graphene.guardHttp(goToSummaryButton).click();
         Graphene.waitGui().until().element(exitFlowButton).is().present();
 
         // verify both inputs are there
-        assertTrue(firstOutput.getText().contains(firstInput), "First input was not changed correctly");
-        assertTrue(secondOutput.getText().contains(secondInput), "Second input was not changed correctly");
+        assertEquals(firstOutput.getText().trim(), TEXT_1, "First input was not changed correctly");
+        assertEquals(secondOutput.getText().trim(), TEXT_2, "Second input was not changed correctly");
 
         // exit the flow and verify you landed on index page again
         Graphene.guardHttp(exitFlowButton).click();
-        Graphene.waitGui(driver).until().element(startingPageButton).is().visible();
+        Graphene.waitGui(driver).until().element(startFlowButton).is().visible();
     }
 }

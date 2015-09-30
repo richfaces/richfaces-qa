@@ -22,7 +22,6 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:r="http://richfaces.org/rich">
     <h:head>
         <title>flowtest - Give Input Into Flow</title>
@@ -30,7 +29,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     <h:body>
         <h:form>
             <r:tabPanel id="tabPanel"
-                        activeItem="#{flowtest.activeItem}"
+                        activeItem="#{flowScopedBean.activeItem}"
                         switchType="ajax">
 
                 <r:tab id="tab1"
@@ -42,7 +41,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <r:tab id="tab2" name="tab2" header="Second tab">
                     <h:outputText value="Input any string: " />
                     <br />
-                    <h:inputText id='tabInput' value="#{flowtest.firstInput}" />
+                    <h:inputText id='tabInput' value="#{flowScopedBean.firstInput}" />
                 </r:tab>
             </r:tabPanel>
             <h:commandButton id='tabPageButton' value="Next Flow Page" action="flowtest-second" />

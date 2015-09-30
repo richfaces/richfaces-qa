@@ -23,6 +23,7 @@ package org.richfaces.tests.metamer.bean;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
 import javax.faces.flow.FlowScoped;
 import javax.inject.Named;
 
@@ -30,15 +31,19 @@ import javax.inject.Named;
  *
  * @author <a href="mailto:manovotn@redhat.com">Matej Novotny</a>
  */
-@Named("flowtest")
+@Named("flowScopedBean")
 @FlowScoped(value = "flowtest")
 public class FlowScopedBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String firstInput = "Empty";
-    private String secondInput = "Empty";
-    private String activeItem = "tab1";
+    private String activeItem;
+    private String firstInput;
+    private String secondInput;
+
+    public String getActiveItem() {
+        return activeItem;
+    }
 
     public String getFirstInput() {
         return firstInput;
@@ -48,8 +53,15 @@ public class FlowScopedBean implements Serializable {
         return secondInput;
     }
 
-    public String getReturnValue() {
-        return "/components/richTabPanel/jsfFlowScoped.xhtml";
+    @PostConstruct
+    public void init() {
+        firstInput = "Empty";
+        secondInput = "Empty";
+        activeItem = "tab1";
+    }
+
+    public void setActiveItem(String tabName) {
+        this.activeItem = tabName;
     }
 
     public void setFirstInput(String input) {
@@ -58,13 +70,5 @@ public class FlowScopedBean implements Serializable {
 
     public void setSecondInput(String input) {
         this.secondInput = input;
-    }
-
-    public String getActiveItem() {
-        return activeItem;
-    }
-
-    public void setActiveItem(String tabName) {
-        this.activeItem = tabName;
     }
 }
