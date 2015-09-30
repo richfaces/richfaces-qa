@@ -27,13 +27,13 @@
                     <h:outputLabel for="delay" value="Delay [ms]:"/>
                     <h:inputText id="delay" readonly="true" value="" size="50" />
                     <span class="reset" onclick="var id = '#{rich:clientId('delay')}';
-                            $('[id=\'' + id + '\']').val('')">&times;</span>
+                        $('[id=\'' + id + '\']').val('')">x</span>
                 </h:panelGrid>
                 <h:panelGrid columns="3" columnClasses="metamerClientTimeLabel, metamerClientTimeText">
                     <h:outputLabel for="median" value="Median from delays [ms]:"/>
                     <h:inputText id="median" readonly="true" value="" size="6" />
                     <span class="reset" onclick="var id = '#{rich:clientId('median')}';
-                            $('[id=\'' + id + '\']').val('')">&times;</span>
+                            $('[id=\'' + id + '\']').val('')">x</span>
                 </h:panelGrid>
             </h:panelGrid>
 
