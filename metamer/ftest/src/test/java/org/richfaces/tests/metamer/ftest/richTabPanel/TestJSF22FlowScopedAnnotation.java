@@ -30,6 +30,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.tabPanel.RichFacesTabPanel;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.AndExpression;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
@@ -74,7 +75,10 @@ public class TestJSF22FlowScopedAnnotation extends AbstractWebDriverTest {
 
     @Test
     @Templates(value = "plain")
-    @Skip(On.JSF.VersionLowerThan22.class)
+    @Skip(expressions = {
+        @AndExpression(On.JSF.VersionLowerThan22.class),
+        @AndExpression(On.JSF.MyFaces.class)// https://issues.jboss.org/browse/RFPL-3999
+    })
     public void testFlowScopedAnnotation() {
         // verify that you are on the first page
         assertTrue(startFlowButton.isDisplayed());
