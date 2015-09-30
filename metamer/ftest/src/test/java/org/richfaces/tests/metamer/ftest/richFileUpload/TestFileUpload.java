@@ -36,8 +36,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.AndExpression;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -180,6 +184,11 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @Skip(expressions = {// bug in UnderTow, see IssueTracking below
+        @AndExpression(On.Container.EAP70.class),
+        @AndExpression(On.Container.WildFly100.class)
+    })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-14151", "https://issues.jboss.org/browse/UNDERTOW-550" })
     @RegressionTest("https://issues.jboss.org/browse/RF-14092")
     public void testFilenameEncodingIsPreserved() {
         sendFileWithWaiting(unicodeNameFile, true, true);
