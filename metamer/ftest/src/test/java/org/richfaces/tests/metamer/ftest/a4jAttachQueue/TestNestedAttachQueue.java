@@ -29,6 +29,8 @@ import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.AjaxRequestHalter;
 import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.Halter;
 import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.Halter.HaltedRequest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.testng.annotations.Test;
 
 /**
@@ -47,6 +49,7 @@ public class TestNestedAttachQueue extends AbstractAttachQueueTest {
     }
 
     @Test
+    @Skip(On.JSF.MyFaces.class)// https://issues.jboss.org/browse/RFPL-3998
     @CoversAttributes("ignoreDupResponses")
     public void testIgnoreDuplicatedResponsesFalse() {
         attachQueueAttributes.set(AttachQueueAttributes.ignoreDupResponses, Boolean.FALSE);
@@ -66,6 +69,7 @@ public class TestNestedAttachQueue extends AbstractAttachQueueTest {
     }
 
     @Test
+    @Skip(On.JSF.MyFaces.class)// https://issues.jboss.org/browse/RFPL-3998
     @CoversAttributes("ignoreDupResponses")
     public void testIgnoreDuplicatedResponsesTrue() {
         attachQueueAttributes.set(AttachQueueAttributes.ignoreDupResponses, Boolean.TRUE);
@@ -111,10 +115,8 @@ public class TestNestedAttachQueue extends AbstractAttachQueueTest {
     }
 
     /**
-     * Groups two queues to one. Fires events on two inputs, where first
-     * input has higher @requestDelay, and if the second input's request will be
-     * processed by the queue in meantime, then the first input's request will be
-     * ignored/replaced.
+     * Groups two queues to one. Fires events on two inputs, where first input has higher @requestDelay, and if the second
+     * input's request will be processed by the queue in meantime, then the first input's request will be ignored/replaced.
      */
     @Test
     @CoversAttributes("requestGroupingId")

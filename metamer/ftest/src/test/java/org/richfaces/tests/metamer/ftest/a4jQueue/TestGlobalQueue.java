@@ -37,6 +37,8 @@ import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.AjaxRequestHalter;
 import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.Halter;
 import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.Halter.HaltedRequest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -62,6 +64,7 @@ public class TestGlobalQueue extends AbstractWebDriverTest {
     }
 
     @Test
+    @Skip(On.JSF.MyFaces.class)// https://issues.jboss.org/browse/RFPL-3998
     @CoversAttributes("ignoreDupResponses")
     public void testIgnoreDuplicatedResponsesFalse() throws InterruptedException {
         attributes.set(ignoreDupResponses, false);
@@ -81,6 +84,7 @@ public class TestGlobalQueue extends AbstractWebDriverTest {
     }
 
     @Test
+    @Skip(On.JSF.MyFaces.class)// https://issues.jboss.org/browse/RFPL-3998
     @CoversAttributes("ignoreDupResponses")
     public void testIgnoreDuplicatedResponsesTrue() {
         attributes.set(ignoreDupResponses, true);
@@ -107,8 +111,7 @@ public class TestGlobalQueue extends AbstractWebDriverTest {
     }
 
     /**
-     * Events from one source should be stacked as occurs, while last event
-     * isn't delayed by configured requestDelay.
+     * Events from one source should be stacked as occurs, while last event isn't delayed by configured requestDelay.
      */
     @Test
     public void testMultipleRequestsWithDelayStacking() {
@@ -141,13 +144,12 @@ public class TestGlobalQueue extends AbstractWebDriverTest {
     }
 
     /**
-     * When no requestDelay (0) is set, events should fire request
-     * immediately.
+     * When no requestDelay (0) is set, events should fire request immediately.
      *
-     * However, when one event is waiting in queue for processing of
-     * previous request, events should be stacked.
+     * However, when one event is waiting in queue for processing of previous request, events should be stacked.
      */
     @Test
+    @Skip(On.JSF.MyFaces.class)// https://issues.jboss.org/browse/RFPL-3998
     @RegressionTest("https://issues.jboss.org/browse/RFPL-1194")
     public void testMultipleRequestsWithNoDelayStacking() {
         long delay = 0;
@@ -222,8 +224,7 @@ public class TestGlobalQueue extends AbstractWebDriverTest {
     }
 
     /**
-     * Tests delay between time last event occurs and time when event triggers
-     * request (begin).
+     * Tests delay between time last event occurs and time when event triggers request (begin).
      */
     @Test
     @CoversAttributes("requestDelay")
