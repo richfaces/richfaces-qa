@@ -24,7 +24,9 @@ package org.richfaces.tests.metamer.ftest.extension.configurator.skip;
 import org.richfaces.tests.metamer.ftest.extension.utils.JSFDetectionUtils;
 
 /**
- * For examples see javadoc of {@link org.richfaces.tests.metamer.ftest.extension.configurator.skip.SkipConfigurator SkipConfigurator}.
+ * For examples see javadoc of
+ * {@link org.richfaces.tests.metamer.ftest.extension.configurator.skip.SkipConfigurator SkipConfigurator}.
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class On {
@@ -64,7 +66,8 @@ public class On {
     public interface Browser {
 
         /**
-         * Skip test when use of Chrome browser is detected (when property <code>browser=cr</code> or <code>browser=chrome</code>).
+         * Skip test when use of Chrome browser is detected (when property <code>browser=cr</code> or
+         * <code>browser=chrome</code>).
          */
         public static class Chrome implements SkipOn {
 
@@ -75,7 +78,8 @@ public class On {
         }
 
         /**
-         * Skip test when use of Firefox browser is detected (when property <code>browser=ff</code> or <code>browser=firefox</code>).
+         * Skip test when use of Firefox browser is detected (when property <code>browser=ff</code> or
+         * <code>browser=firefox</code>).
          */
         public static class Firefox implements SkipOn {
 
@@ -86,7 +90,8 @@ public class On {
         }
 
         /**
-         * Skip test when use of Internet Explorer browser is detected (when property <code>browser=ie</code>, <code>browser=internet</code> or <code>browser=explorer</code>).
+         * Skip test when use of Internet Explorer browser is detected (when property <code>browser=ie</code>,
+         * <code>browser=internet</code> or <code>browser=explorer</code>).
          */
         public static class IE implements SkipOn {
 
@@ -99,13 +104,14 @@ public class On {
     }
 
     /**
-     * Skip test when specific use of container is detected (using property <code>activated.maven.profiles</code> and <code>version.eap</code>).
+     * Skip test when specific use of container is detected (using property <code>activated.maven.profiles</code> and
+     * <code>version.eap</code>).
      */
     public interface Container {
 
         /**
-         * Skip test when use of Tomcat 8 is detected (when <code>activated.maven.profiles</code> are containing <code>tomcat-managed-8</code>
-         * or <code>tomcat-remote-8</code>).
+         * Skip test when use of Tomcat 8 is detected (when <code>activated.maven.profiles</code> are containing
+         * <code>tomcat-managed-8</code> or <code>tomcat-remote-8</code>).
          */
         public static class Tomcat8 implements SkipOn {
 
@@ -116,8 +122,8 @@ public class On {
         }
 
         /**
-         * Skip test when use of Tomcat 7 is detected (when <code>activated.maven.profiles</code> are containing <code>tomcat-managed-7</code>
-         * or <code>tomcat-remote-7</code>).
+         * Skip test when use of Tomcat 7 is detected (when <code>activated.maven.profiles</code> are containing
+         * <code>tomcat-managed-7</code> or <code>tomcat-remote-7</code>).
          */
         public static class Tomcat7 implements SkipOn {
 
@@ -128,8 +134,8 @@ public class On {
         }
 
         /**
-         * Skip test when use of EAP 6.2.4 is detected (when <code>activated.maven.profiles</code> are containing <code>jbosseap-managed-6-2</code>
-         * or <code>jbosseap-remote-6-2</code> and <code>version.eap=6.2.4*</code>).
+         * Skip test when use of EAP 6.2.4 is detected (when <code>activated.maven.profiles</code> are containing
+         * <code>jbosseap-managed-6-2</code> or <code>jbosseap-remote-6-2</code> and <code>version.eap=6.2.4*</code>).
          */
         public static class EAP624 implements SkipOn {
 
@@ -140,8 +146,8 @@ public class On {
         }
 
         /**
-         * Skip test when use of EAP 6.3.3 is detected (when <code>activated.maven.profiles</code> are containing <code>jbosseap-managed-6-3</code>
-         * or <code>jbosseap-remote-6-3</code> and <code>version.eap=6.3.3*</code>).
+         * Skip test when use of EAP 6.3.3 is detected (when <code>activated.maven.profiles</code> are containing
+         * <code>jbosseap-managed-6-3</code> or <code>jbosseap-remote-6-3</code> and <code>version.eap=6.3.3*</code>).
          */
         public static class EAP633 implements SkipOn {
 
@@ -152,8 +158,8 @@ public class On {
         }
 
         /**
-         * Skip test when use of EAP 6.4.0 is detected (when <code>activated.maven.profiles</code> are containing <code>jbosseap-managed-6-4</code>
-         * or <code>jbosseap-remote-6-4</code> and <code>version.eap=6.4.0*</code>).
+         * Skip test when use of EAP 6.4.0 is detected (when <code>activated.maven.profiles</code> are containing
+         * <code>jbosseap-managed-6-4</code> or <code>jbosseap-remote-6-4</code> and <code>version.eap=6.4.0*</code>).
          */
         public static class EAP640 implements SkipOn {
 
@@ -164,8 +170,8 @@ public class On {
         }
 
         /**
-         * Skip test when use of EAP 6.4.2 is detected (when <code>activated.maven.profiles</code> are containing <code>jbosseap-managed-6-4</code>
-         * or <code>jbosseap-remote-6-4</code> and <code>version.eap=6.4.2*</code>).
+         * Skip test when use of EAP 6.4.2 is detected (when <code>activated.maven.profiles</code> are containing
+         * <code>jbosseap-managed-6-4</code> or <code>jbosseap-remote-6-4</code> and <code>version.eap=6.4.2*</code>).
          */
         public static class EAP642 implements SkipOn {
 
@@ -176,8 +182,8 @@ public class On {
         }
 
         /**
-         * Skip test when use of EAP 6.4.3 is detected (when <code>activated.maven.profiles</code> are containing <code>jbosseap-managed-6-4</code>
-         * or <code>jbosseap-remote-6-4</code> and <code>version.eap=6.4.3*</code>).
+         * Skip test when use of EAP 6.4.3 is detected (when <code>activated.maven.profiles</code> are containing
+         * <code>jbosseap-managed-6-4</code> or <code>jbosseap-remote-6-4</code> and <code>version.eap=6.4.3*</code>).
          */
         public static class EAP643 implements SkipOn {
 
@@ -188,8 +194,8 @@ public class On {
         }
 
         /**
-         * Skip test when use of EAP 6.4.4 is detected (when <code>activated.maven.profiles</code> are containing <code>jbosseap-managed-6-4</code>
-         * or <code>jbosseap-remote-6-4</code> and <code>version.eap=6.4.4*</code>).
+         * Skip test when use of EAP 6.4.4 is detected (when <code>activated.maven.profiles</code> are containing
+         * <code>jbosseap-managed-6-4</code> or <code>jbosseap-remote-6-4</code> and <code>version.eap=6.4.4*</code>).
          */
         public static class EAP644 implements SkipOn {
 
@@ -200,8 +206,20 @@ public class On {
         }
 
         /**
-         * Skip test when use of WildFly 8.1 is detected (when <code>activated.maven.profiles</code> are containing <code>wildfly-managed-8-1</code>
-         * or <code>wildfly-remote-8-1</code>).
+         * Skip test when use of EAP 7.0 is detected (when <code>activated.maven.profiles</code> are containing
+         * <code>jbosseap-managed-7-0</code> or <code>jbosseap-remote-7-0</code>).
+         */
+        public static class EAP70 implements SkipOn {
+
+            @Override
+            public boolean apply() {
+                return containerProfileActivated("jbosseap-managed-7-0", "jbosseap-remote-7-0");
+            }
+        }
+
+        /**
+         * Skip test when use of WildFly 8.1 is detected (when <code>activated.maven.profiles</code> are containing
+         * <code>wildfly-managed-8-1</code> or <code>wildfly-remote-8-1</code>).
          */
         public static class WildFly81 implements SkipOn {
 
@@ -212,8 +230,8 @@ public class On {
         }
 
         /**
-         * Skip test when use of WildFly 8.2 is detected (when <code>activated.maven.profiles</code> are containing <code>wildfly-managed-8-2</code>
-         * or <code>wildfly-remote-8-2</code>).
+         * Skip test when use of WildFly 8.2 is detected (when <code>activated.maven.profiles</code> are containing
+         * <code>wildfly-managed-8-2</code> or <code>wildfly-remote-8-2</code>).
          */
         public static class WildFly82 implements SkipOn {
 
@@ -224,14 +242,26 @@ public class On {
         }
 
         /**
-         * Skip test when use of WildFly 9.0 is detected (when <code>activated.maven.profiles</code> are containing <code>wildfly-managed-9-0</code>
-         * or <code>wildfly-remote-9-0</code>).
+         * Skip test when use of WildFly 9.0 is detected (when <code>activated.maven.profiles</code> are containing
+         * <code>wildfly-managed-9-0</code> or <code>wildfly-remote-9-0</code>).
          */
         public static class WildFly90 implements SkipOn {
 
             @Override
             public boolean apply() {
                 return containerProfileActivated("wildfly-managed-9-0", "wildfly-remote-9-0");
+            }
+        }
+
+        /**
+         * Skip test when use of WildFly 10.0 is detected (when <code>activated.maven.profiles</code> are containing
+         * <code>wildfly-managed-10-0</code> or <code>wildfly-remote-10-0</code>).
+         */
+        public static class WildFly100 implements SkipOn {
+
+            @Override
+            public boolean apply() {
+                return containerProfileActivated("wildfly-managed-10-0", "wildfly-remote-10-0");
             }
         }
     }
@@ -265,8 +295,8 @@ public class On {
         }
 
         /**
-         * Skip test when use of MyFaces JSF implementation is detected (when property <code>metamer.classifier</code> does contain
-         * <code>myfaces</code>).
+         * Skip test when use of MyFaces JSF implementation is detected (when property <code>metamer.classifier</code> does
+         * contain <code>myfaces</code>).
          */
         public static class MyFaces implements SkipOn {
 
@@ -328,7 +358,8 @@ public class On {
         }
 
         /**
-         * Skip test when Solaris OS is detected (when <code>os.name</code> contains <code>sunos</code>, <code>sun</code> or <code>solaris</code>).
+         * Skip test when Solaris OS is detected (when <code>os.name</code> contains <code>sunos</code>, <code>sun</code> or
+         * <code>solaris</code>).
          */
         public static class Solaris implements SkipOn {
 
