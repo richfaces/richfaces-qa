@@ -129,14 +129,18 @@
 
                     <rich:column id="columnName"
                                  filterExpression="#{fn:containsIgnoreCase(item.name, filterVar)}"
-                                 filterValue="#{richSubTableBean.filtering['name']}">
+                                 filterValue="#{richSubTableBean.filtering['name']}"
+                                 sortBy="#{item.name}">
                         <h:outputText id="name" value="#{item.name}" />
                     </rich:column>
                     <rich:column id="columnTitle"
-                                 filterExpression="#{richSubTableBean.filtering['title'] == null || richSubTableBean.filtering['title'] == '' || item.title == richSubTableBean.filtering['title']}">
+                                 filterExpression="#{richSubTableBean.filtering['title'] == null || richSubTableBean.filtering['title'] == '' || item.title == richSubTableBean.filtering['title']}"
+                                 filterValue="#{richSubTableBean.filtering['title']}"
+                                 sortBy="#{item.title}">
                         <h:outputText id="title" value="#{item.title}" />
                     </rich:column>
-                    <rich:column id="columnBirthdate">
+                    <rich:column id="columnBirthdate"
+                                 sortBy="#{item.birthdate}">
                         <h:outputText id="birthdate" value="#{item.birthdate}">
                             <f:convertDateTime pattern="d MMM yyyy" />
                         </h:outputText>
