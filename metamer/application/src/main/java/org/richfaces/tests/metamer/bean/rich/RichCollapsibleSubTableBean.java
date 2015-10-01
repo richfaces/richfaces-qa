@@ -51,17 +51,24 @@ import org.slf4j.LoggerFactory;
 @SessionScoped
 public class RichCollapsibleSubTableBean implements Serializable {
 
-    private static final long serialVersionUID = -1L;
     private static Logger logger;
+    private static final long serialVersionUID = -1L;
+
     private Attributes attributes;
+
     @ManagedProperty("#{model.employees}")
     private List<Employee> employees;
-    private List<List<Employee>> lists;
-    private Map<Sex, Integer> pages = new HashMap<Sex, Integer>(2);
-    // true = model, false = empty table
-    private boolean state;
+    // expanded
+    private Map<List<Employee>, Boolean> expanded = new HashMap<List<Employee>, Boolean>();
+    // expanded state for employee detail (for RF-11656)
+    private Map<Employee, Boolean> expandedEmployee = new HashMap<Employee, Boolean>();
     // facets
     private Map<String, String> facets = new HashMap<String, String>();
+    // filtering
+    private Map<String, Object> filtering = new HashMap<String, Object>();
+
+    private List<List<Employee>> lists;
+    private Map<Sex, Integer> pages = new HashMap<Sex, Integer>(2);
     // sorting
     private ColumnSortingMap sorting = new ColumnSortingMap() {
 
@@ -72,13 +79,48 @@ public class RichCollapsibleSubTableBean implements Serializable {
             return attributes;
         }
     };
-    // filtering
-    private Map<String, Object> filtering = new HashMap<String, Object>();
-    // expanded
-    private Map<List<Employee>, Boolean> expanded = new HashMap<List<Employee>, Boolean>();
+    // true = model, false = empty table
+    private boolean state;
 
-    // expanded state for employee detail (for RF-11656)
-    private Map<Employee, Boolean> expandedEmployee = new HashMap<Employee, Boolean>();
+    public Attributes getAttributes() {
+        return attributes;
+    }
+
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public Map<List<Employee>, Boolean> getExpanded() {
+        return expanded;
+    }
+
+    public Map<Employee, Boolean> getExpandedEmployee() {
+        return expandedEmployee;
+    }
+
+    public Map<String, String> getFacets() {
+        return facets;
+    }
+
+    public Map<String, Object> getFiltering() {
+        return filtering;
+    }
+
+    public List<List<Employee>> getLists() {
+        return lists;
+    }
+
+    public Map<Sex, Integer> getPages() {
+        return pages;
+    }
+
+    public ColumnSortingMap getSorting() {
+        return sorting;
+    }
+
+    public ColumnSortingMap getSortingBuiltIn(boolean isMan) {
+        return sorting;
+    }
 
     /**
      * Initializes the managed bean.
@@ -141,63 +183,27 @@ public class RichCollapsibleSubTableBean implements Serializable {
         pages.put(Sex.FEMALE, 1);
     }
 
-    public Attributes getAttributes() {
-        return attributes;
+    public boolean isState() {
+        return state;
     }
 
     public void setAttributes(Attributes attributes) {
         this.attributes = attributes;
     }
 
-    public List<Employee> getEmployees() {
-        return employees;
-    }
-
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
     }
 
-    public List<List<Employee>> getLists() {
-        return lists;
+    public void setExpandedEmployee(Map<Employee, Boolean> expandedEmployee) {
+        this.expandedEmployee = expandedEmployee;
     }
 
     public void setLists(List<List<Employee>> lists) {
         this.lists = lists;
     }
 
-    public Map<Sex, Integer> getPages() {
-        return pages;
-    }
-
-    public boolean isState() {
-        return state;
-    }
-
     public void setState(boolean state) {
         this.state = state;
-    }
-
-    public Map<String, String> getFacets() {
-        return facets;
-    }
-
-    public ColumnSortingMap getSorting() {
-        return sorting;
-    }
-
-    public Map<String, Object> getFiltering() {
-        return filtering;
-    }
-
-    public Map<List<Employee>, Boolean> getExpanded() {
-        return expanded;
-    }
-
-    public Map<Employee, Boolean> getExpandedEmployee() {
-        return expandedEmployee;
-    }
-
-    public void setExpandedEmployee(Map<Employee, Boolean> expandedEmployee) {
-        this.expandedEmployee = expandedEmployee;
     }
 }

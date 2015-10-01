@@ -40,11 +40,10 @@
 
         <ui:define name="outOfTemplateBefore">
             <p>
-                This is reproducer for <a href="https://issues.jboss.org/browse/RF-13832">RF-1383</a>. I this table bellow is used built-in filtering.
+                Reproducer for <a href="https://issues.jboss.org/browse/RF-13832">RF-13832: Built-in filtering and sorting inside richcollapsibleSubTable</a>.
                 <ul>
                     <li>Write something to any of input field</li>
-                    <li>Hit Enter or tab</li>
-                    <li>Nothing will happen. Expected behavior is that records are filtered.</li>
+                    <li>Hit TAB (or ENTER -- RF-14150) to apply the value </li>
                 </ul>
             </p>
 
@@ -129,18 +128,21 @@
 
                     <rich:column id="columnName"
                                  filterExpression="#{fn:containsIgnoreCase(item.name, filterVar)}"
-                                 filterValue="#{richSubTableBean.filtering['name']}"
-                                 sortBy="#{item.name}">
+                                 filterValue="#{list[0].sex == 'MALE' ? richSubTableBean.filtering['name-men']:richSubTableBean.filtering['name-women']}"
+                                 sortBy="#{item.name}"
+                                 sortOrder="#{list[0].sex == 'MALE' ? richSubTableBean.sorting['name-men'].order : richSubTableBean.sorting['name-women'].order}">
                         <h:outputText id="name" value="#{item.name}" />
                     </rich:column>
                     <rich:column id="columnTitle"
-                                 filterExpression="#{richSubTableBean.filtering['title'] == null || richSubTableBean.filtering['title'] == '' || item.title == richSubTableBean.filtering['title']}"
-                                 filterValue="#{richSubTableBean.filtering['title']}"
-                                 sortBy="#{item.title}">
+                                 filterExpression="#{empty (list[0].sex == 'MALE' ? richSubTableBean.filtering['title-men']:richSubTableBean.filtering['title-women']) || item.title ==(list[0].sex == 'MALE' ? richSubTableBean.filtering['title-men']:richSubTableBean.filtering['title-women'])}"
+                                 filterValue="#{list[0].sex == 'MALE' ? richSubTableBean.filtering['title-men']:richSubTableBean.filtering['title-women']}"
+                                 sortBy="#{item.title}"
+                                 sortOrder="#{list[0].sex == 'MALE' ? richSubTableBean.sorting['title-men'].order : richSubTableBean.sorting['title-women'].order}">
                         <h:outputText id="title" value="#{item.title}" />
                     </rich:column>
                     <rich:column id="columnBirthdate"
-                                 sortBy="#{item.birthdate}">
+                                 sortBy="#{item.birthdate}"
+                                 sortOrder="#{list[0].sex == 'MALE' ? richSubTableBean.sorting['birthdate-men'].order : richSubTableBean.sorting['birthdate-women'].order}">
                         <h:outputText id="birthdate" value="#{item.birthdate}">
                             <f:convertDateTime pattern="d MMM yyyy" />
                         </h:outputText>

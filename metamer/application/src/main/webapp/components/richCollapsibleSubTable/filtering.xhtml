@@ -132,12 +132,13 @@
                     <rich:column id="columnName"
                                  filterExpression="#{fn:containsIgnoreCase(item.name, filterVar)}"
                                  filterType="custom"
-                                 filterValue="#{richSubTableBean.filtering['name']}"                                 >
+                                 filterValue="#{richSubTableBean.filtering['name']}">
                         <h:outputText id="name" value="#{item.name}" />
                     </rich:column>
                     <rich:column id="columnTitle"
-                                 filterExpression="#{richSubTableBean.filtering['title'] == null || richSubTableBean.filtering['title'] == '' || item.title == richSubTableBean.filtering['title']}"
-                                 filterType="custom">
+                                 filterExpression="#{empty richSubTableBean.filtering['title'] || item.title == richSubTableBean.filtering['title']}"
+                                 filterType="custom"
+                                 filterValue="#{richSubTableBean.filtering['title']}">
                         <h:outputText id="title" value="#{item.title}" />
                     </rich:column>
                     <rich:column id="columnBirthdate">
