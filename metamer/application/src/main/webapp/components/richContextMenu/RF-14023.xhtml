@@ -32,7 +32,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     -->
 
     <ui:composition template="/templates/template.xhtml">
-        <ui:param name="componentId" value="richEDT" />
+        <ui:param name="componentId" value="edt" />
 
         <ui:define name="view">
             <f:metadata>
@@ -55,7 +55,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/>
             <h:outputText value="Show data in table: " />
             <h:selectBooleanCheckbox id="noDataCheckbox" value="#{richExtendedDataTableBean.state}">
-                <a4j:ajax render="#{nestedComponentId} scroller1"/>
+                <a4j:ajax render="#{nestedComponentId}"/>
             </h:selectBooleanCheckbox>
             <br/><br/>
         </ui:define>
@@ -76,7 +76,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             <rich:extendedDataTable id="edt"
                                     selection="#{rf14023.selection}"
-                                    value="#{rf14023.items}"
+                                    value="#{richExtendedDataTableBean.state ? rf14023.items: null}"
                                     var="record">
                 <a4j:ajax execute="@form"
                           event="selectionchange"
