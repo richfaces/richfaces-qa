@@ -30,7 +30,10 @@ import java.util.Collection;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Keyboard;
 import org.richfaces.fragment.dataTable.AbstractTable;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.FilteringHeaderInterface;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.FilteringRowInterface;
@@ -51,6 +54,9 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
     private static final Integer[] FILTER_NUMBER_OF_KIDS = new Integer[] { 2, 100, 0, 5 };
     private static final String[] FILTER_TITLES = new String[] { "Director", null, "CEO" };
     private static final int MAX_VISIBLE_ROWS = 5;
+
+    @ArquillianResource
+    private Keyboard keyboard;
 
     private List<Employee> expectedEmployees;
     private ExpectedEmployee filterEmployee;
@@ -141,6 +147,15 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
         for (Integer filterNumberOfKids : FILTER_NUMBER_OF_KIDS) {
             getTable().getHeader().filterNumberOfKidsWithSpinner(filterNumberOfKids);
             filterEmployee.numberOfKids1 = filterNumberOfKids;
+            verifyFiltering();
+        }
+    }
+
+    public void testFilterNameBuiltInAppliesAfterEnterPressed() {
+        for (String filterName : FILTER_NAMES) {
+            getTable().getHeader().getNameBuiltInInput().clear().sendKeys(filterName);
+            Graphene.guardAjax(keyboard).pressKey(Keys.ENTER);
+            filterEmployee.name = filterName;
             verifyFiltering();
         }
     }

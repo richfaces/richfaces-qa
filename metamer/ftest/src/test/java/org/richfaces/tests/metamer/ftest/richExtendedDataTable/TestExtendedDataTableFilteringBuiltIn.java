@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFilteringTest;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.FilteringEDT;
 import org.testng.annotations.Test;
@@ -66,6 +67,12 @@ public class TestExtendedDataTableFilteringBuiltIn extends DataTableFilteringTes
     @CoversAttributes("filterVar")
     public void testFilterName() {
         super.testFilterName(true);
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-14150")
+    public void testFilterNameBuiltInAppliesAfterEnterPressed() {
+        super.testFilterNameBuiltInAppliesAfterEnterPressed();
     }
 
     @Test

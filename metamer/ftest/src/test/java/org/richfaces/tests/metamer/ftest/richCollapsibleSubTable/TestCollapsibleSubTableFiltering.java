@@ -29,10 +29,13 @@ import static org.testng.Assert.assertEquals;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Keyboard;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
@@ -60,6 +63,9 @@ public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTabl
     private DataTableWithCSTWithBuiltInFilteringHeader dataTableWithCSTWithBuiltInFilteringHeader;
     @FindBy(css = ".rf-dt[id$=richDataTable]")
     private DataTableWithCSTWithFilteringHeader dataTableWithCSTWithFilteringHeader;
+
+    @ArquillianResource
+    private Keyboard keyboard;
 
     private final int rows = 7;
 
@@ -96,6 +102,23 @@ public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTabl
     @BeforeMethod
     public void prepare() {
         attributes.set(CollapsibleSubTableAttributes.rows, rows);
+    }
+
+    @Test
+    @UseWithField(field = "sample", valuesFrom = ValuesFrom.STRINGS, value = sampleBuiltIn)
+    @RegressionTest("https://issues.jboss.org/browse/RF-14150")
+    public void testFilterNameBuiltInAppliesAfterEnterPressed() {
+        for (String testedValue : new String[] { "Alexander", "aLEX" }) {
+            // filter men table
+            getDataTable().getNameInput().clear().sendKeys(testedValue);
+            Graphene.guardAjax(keyboard).pressKey(Keys.ENTER);
+            // filter women table
+            getDataTable().getNameInput2().clear().sendKeys(testedValue);
+            Graphene.guardAjax(keyboard).pressKey(Keys.ENTER);
+            // check
+            verifyFilteringInSubTable(BY_NAME, Boolean.TRUE);
+            verifyFilteringInSubTable(BY_NAME, Boolean.FALSE);
+        }
     }
 
     @Test
