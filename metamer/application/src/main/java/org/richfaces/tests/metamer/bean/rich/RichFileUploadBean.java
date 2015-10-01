@@ -30,12 +30,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import org.richfaces.component.UIFileUpload;
+import org.richfaces.event.FileUploadEvent;
 import org.richfaces.model.UploadedFile;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.tests.metamer.bean.RichBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.richfaces.event.FileUploadEvent;
-import org.richfaces.tests.metamer.bean.RichBean;
 
 /**
  * Managed bean for rich:fileUpload.
@@ -68,6 +68,7 @@ public class RichFileUploadBean implements Serializable {
         attributes.setAttribute("clearLabel", "Clear");
         attributes.setAttribute("deleteLabel", "Delete");
         attributes.setAttribute("noDuplicate", false);
+        attributes.setAttribute("maxFilesQuantity", -1);
         attributes.setAttribute("rendered", true);
         attributes.setAttribute("uploadLabel", "Upload");
 
