@@ -21,6 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 
+import static java.text.MessageFormat.format;
+
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.testng.Assert.assertEquals;
 
@@ -37,7 +39,9 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.model.SortMode;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
 import org.richfaces.tests.metamer.model.Employee;
 import org.testng.annotations.Test;
 
@@ -50,18 +54,27 @@ import com.google.common.collect.Lists;
 public class TestCollapsibleSubTableSorting extends AbstractCollapsibleSubTableTest {
 
     @FindBy(css = ".rf-dt[id$=richDataTable]")
-    private DataTableWithCSTWithSortingHeader dataTable;
+    private DataTableWithCSTWithBuiltInSortingHeader dataTableWithCSTWithBuiltInSortingHeader;
+    @FindBy(css = ".rf-dt[id$=richDataTable]")
+    private DataTableWithCSTWithSortingHeader dataTableWithCSTWithSortingHeader;
 
     private final int rows = 15;
+    @UseForAllTests(valuesFrom = ValuesFrom.FROM_FIELD, value = "samples")
+    private String sample;
+    private final String[] samples = { "builtInFilteringAndSorting", "sorting-using-column" };
 
-    private SortMode sortMode;
+    private SortMode sortMode = SortMode.multi;
 
     private SortingState sortingStateMen;
     private SortingState sortingStateWomen;
 
     @Override
     public String getComponentTestPagePath() {
-        return "richCollapsibleSubTable/sorting-using-column.xhtml";
+        return format("richCollapsibleSubTable/{0}.xhtml", sample);
+    }
+
+    public DataTableWithCSTWithBuiltInSortingHeader getDataTable() {
+        return sample.equals("builtInFilteringAndSorting") ? dataTableWithCSTWithBuiltInSortingHeader : dataTableWithCSTWithSortingHeader;
     }
 
     @Test
@@ -84,7 +97,7 @@ public class TestCollapsibleSubTableSorting extends AbstractCollapsibleSubTableT
     }
 
     private void verifySortingInBothSubTables(final SortBy by) {
-        dataTable.sortBy(by);
+        getDataTable().sortBy(by);
 
         sortingStateMen.sortEmployees(sortMode, by);
         sortingStateWomen.sortEmployees(sortMode, by);
@@ -112,7 +125,42 @@ public class TestCollapsibleSubTableSorting extends AbstractCollapsibleSubTableT
         NAME, TITLE, BIRTHDAY;
     }
 
-    public static class DataTableWithCSTWithSortingHeader extends DataTableWithCST {
+    public static class DataTableWithCSTWithBuiltInSortingHeader extends DataTableWithCST {
+
+        @FindByJQuery(".rf-cst-shdr .rf-dt-srt-btn:eq(2)")
+        private WebElement sortByDate;
+        @FindByJQuery(value = ".rf-cst-shdr:eq(1) .rf-dt-srt-btn:eq(2)")
+        private WebElement sortByDate2;
+        @FindByJQuery(value = ".rf-cst-shdr .rf-dt-srt-btn:eq(0)")
+        private WebElement sortByName;
+        @FindByJQuery(".rf-cst-shdr:eq(1) .rf-dt-srt-btn:eq(0)")
+        private WebElement sortByName2;
+        @FindByJQuery(value = ".rf-cst-shdr .rf-dt-srt-btn:eq(1)")
+        private WebElement sortByTitle;
+        @FindByJQuery(".rf-cst-shdr:eq(1) .rf-dt-srt-btn:eq(1)")
+        private WebElement sortByTitle2;
+
+        public void sortBy(SortBy by) {
+            switch (by) {
+                case NAME:
+                    Graphene.guardAjax(sortByName).click();
+                    Graphene.guardAjax(sortByName2).click();
+                    break;
+                case TITLE:
+                    Graphene.guardAjax(sortByTitle).click();
+                    Graphene.guardAjax(sortByTitle2).click();
+                    break;
+                case BIRTHDAY:
+                    Graphene.guardAjax(sortByDate).click();
+                    Graphene.guardAjax(sortByDate2).click();
+                    break;
+                default:
+                    throw new UnsupportedOperationException("unknown sortBy " + by);
+            }
+        }
+    }
+
+    public static class DataTableWithCSTWithSortingHeader extends DataTableWithCSTWithBuiltInSortingHeader {
 
         @FindByJQuery(".rf-dt-hdr a:eq(0)")
         private WebElement sortByName;
@@ -121,6 +169,7 @@ public class TestCollapsibleSubTableSorting extends AbstractCollapsibleSubTableT
         @FindByJQuery(".rf-dt-hdr a:eq(2)")
         private WebElement sortByDate;
 
+        @Override
         public void sortBy(SortBy by) {
             switch (by) {
                 case NAME:
