@@ -197,17 +197,22 @@ public class TestPickList extends AbstractListScrollingTest {
     public void testCollectionType_unsupportedTypeThrowsException() {
         try {
             pickListAttributes.set(PickListAttributes.collectionType, "invalid-LinkedHashMap");
+            pickList.add(0);
             submitHTTP();
             String exceptionText = driver.findElement(By.tagName("body")).getText();
-            assertTrue(exceptionText.contains("java.util.LinkedHashMap cannot be cast to java.util.List"));
+            assertTrue(exceptionText.contains("java.util.LinkedHashMap cannot be cast to java.util.List")
+                || exceptionText.contains("java.util.LinkedHashMap cannot be cast to java.util.Collection"));
 
+            // check another invalid value
             loadPage();
             pickListAttributes.set(PickListAttributes.collectionType, "invalid-LinkedHashSet");
+            pickList.add(0);
             submitHTTP();
             exceptionText = driver.findElement(By.tagName("body")).getText();
             assertTrue(exceptionText.contains("java.util.LinkedHashSet cannot be cast to java.util.List"));
         } finally {
             loadPage();
+            // set back supported and default collectionType
             pickListAttributes.set(PickListAttributes.collectionType, "string-LinkedList");
         }
     }
