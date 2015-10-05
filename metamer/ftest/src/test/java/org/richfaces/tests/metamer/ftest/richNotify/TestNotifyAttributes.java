@@ -277,13 +277,24 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("sticky")
+    @RegressionTest("https://issues.jboss.org/browse/RF-11558")
     public void testSticky() {
         attsSetter()
             .setAttribute(NotifyAttributes.stayTime).toValue(1000)
             .setAttribute(NotifyAttributes.sticky).toValue(true)
+            .setAttribute(NotifyAttributes.showCloseButton).toValue(true)
             .asSingleAction().perform();
         waiting(3000);
         assertVisible(message.advanced().getRootElement(), "Message should be visible until closed.");
+        message.close();
+        assertNotVisible(message.advanced().getRootElement(), "Message should not be visible after closed.");
+
+        // when sticky, the close button should be always visible ( https://issues.jboss.org/browse/RF-11558 )
+        notifyAttributes.set(NotifyAttributes.showCloseButton, false);// this should reload the page and show the notify message again
+        waiting(3000);
+        assertVisible(message.advanced().getRootElement(), "Message should be visible until closed.");
+        message.close();
+        assertNotVisible(message.advanced().getRootElement(), "Message should not be visible after closed.");
     }
 
     @Test

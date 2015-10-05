@@ -277,14 +277,28 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
 
     @Test
     @CoversAttributes("sticky")
+    @RegressionTest("https://issues.jboss.org/browse/RF-11558")
     public void testSticky() {
         attsSetter()
             .setAttribute(NotifyMessageAttributes.stayTime).toValue(1000)
             .setAttribute(NotifyMessageAttributes.sticky).toValue(true)
+            .setAttribute(NotifyMessageAttributes.showCloseButton).toValue(true)
             .asSingleAction().perform();
         generateValidationMessagesWithWait();
         waiting(3000);
-        Assert.assertTrue(getPage().getGlobalNotify().size() > 0, "There should be some messages.");
+        int size = getPage().getGlobalNotify().size();
+        Assert.assertTrue(size > 0, "There should be some messages.");
+        getPage().getGlobalNotify().getItem(0).close();
+        Assert.assertEquals(getPage().getGlobalNotify().size(), size - 1, "There should be one message less than before.");
+
+        // when sticky, the close button should be always visible ( https://issues.jboss.org/browse/RF-11558 )
+        notifyMessageAttributes.set(NotifyMessageAttributes.showCloseButton, false);
+        generateValidationMessagesWithWait();
+        waiting(3000);
+        size = getPage().getGlobalNotify().size();
+        Assert.assertTrue(size > 0, "There should be some messages.");
+        getPage().getGlobalNotify().getItem(0).close();
+        Assert.assertEquals(getPage().getGlobalNotify().size(), size - 1, "There should be one message less than before.");
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12923")

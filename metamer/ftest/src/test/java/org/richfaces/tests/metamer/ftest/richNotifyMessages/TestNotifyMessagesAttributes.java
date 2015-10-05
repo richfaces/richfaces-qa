@@ -30,6 +30,7 @@ import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotatio
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richNotify.TestNotifyAttributes;
+import org.richfaces.tests.metamer.ftest.richNotifyMessage.NotifyMessageAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -309,15 +310,36 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
 
     @Test
     @CoversAttributes("sticky")
+    @RegressionTest("https://issues.jboss.org/browse/RF-11558")
     public void testSticky() {
         attsSetter()
             .setAttribute(NotifyMessagesAttributes.stayTime).toValue(1000)
             .setAttribute(NotifyMessagesAttributes.sticky).toValue(true)
+            .setAttribute(NotifyMessageAttributes.showCloseButton).toValue(true)
             .asSingleAction().perform();
         generateValidationMessagesWithWait();
         waiting(3000);
-        Assert.assertTrue(getPage().getMessagesComponentWithGlobal().size() > 0, "There should be some messages.");
-        Assert.assertTrue(getPage().getMessagesComponentWithFor().size() > 0, "There should be some messages.");
+        int sizeGlobal = getPage().getMessagesComponentWithGlobal().size();
+        int sizeFor = getPage().getMessagesComponentWithFor().size();
+        Assert.assertTrue(sizeGlobal > 0, "There should be some global messages.");
+        Assert.assertTrue(sizeFor > 0, "There should be some messages with specified @for.");
+        getPage().getMessagesComponentWithGlobal().getItem(0).close();
+        Assert.assertEquals(getPage().getMessagesComponentWithGlobal().size(), sizeGlobal - 1, "There should be one global message less than before.");
+        getPage().getMessagesComponentWithFor().getItem(0).close();
+        Assert.assertEquals(getPage().getMessagesComponentWithFor().size(), sizeFor - 1, "There should be one message with specified @for less than before.");
+
+        // when sticky, the close button should be always visible ( https://issues.jboss.org/browse/RF-11558 )
+        notifyMessagesAttributes.set(NotifyMessagesAttributes.showCloseButton, false);
+        generateValidationMessagesWithWait();
+        waiting(3000);
+        sizeGlobal = getPage().getMessagesComponentWithGlobal().size();
+        sizeFor = getPage().getMessagesComponentWithFor().size();
+        Assert.assertTrue(sizeGlobal > 0, "There should be some global messages.");
+        Assert.assertTrue(sizeFor > 0, "There should be some messages with specified @for.");
+        getPage().getMessagesComponentWithGlobal().getItem(0).close();
+        Assert.assertEquals(getPage().getMessagesComponentWithGlobal().size(), sizeGlobal - 1, "There should be one global message less than before.");
+        getPage().getMessagesComponentWithFor().getItem(0).close();
+        Assert.assertEquals(getPage().getMessagesComponentWithFor().size(), sizeFor - 1, "There should be one message with specified @for less than before.");
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12923")
