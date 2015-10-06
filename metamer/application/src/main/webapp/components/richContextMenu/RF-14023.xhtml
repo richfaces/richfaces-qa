@@ -64,13 +64,24 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <p>
                 <a href="https://issues.jboss.org/browse/RF-14023">RF-14023: rich:contextMenu - on ajax re-render the destroy function doesn`t clean up properly</a>
                 <br/>
-                <br/>
                 Could be reproduced by:
                 <ol>
                     <li>Select first row in table below (by left click)</li>
                     <li>You'll see an error in browser console: 'TypeError: RichFaces.ui.MenuItem is not a constructor'</li>
                     <li>Show context menu on the selected row (by right click)</li>
                     <li>Menu will not show up and you'll have another error in browser console: 'TypeError: this.popup is null'.</li>
+                </ol>
+                <br/>
+                <br/>
+                <a href="https://issues.jboss.org/browse/RF-14156">RF-14156: contextMenu with dynamic group doesn't work properly</a>
+                <br/>
+                Could be reproduced by:
+                <ol>
+                    <li>Select first row in table below (by left click)</li>
+                    <li>You'll see an error in browser console: 'TypeError: RichFaces.ui.MenuItem is not a constructor'</li>
+                    <li>Show context menu on the selected row (by right click)</li>
+                    <li>Select the only item in the group (Edit from selected >>> Item Alabama, Montgomery)</li>
+                    <li>No ajax update of the output below the table is triggered</li>
                 </ol>
             </p>
 

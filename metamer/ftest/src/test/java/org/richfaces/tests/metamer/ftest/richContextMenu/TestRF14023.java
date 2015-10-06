@@ -21,12 +21,19 @@
  */
 package org.richfaces.tests.metamer.ftest.richContextMenu;
 
+import static org.testng.Assert.assertEquals;
+
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.javascript.JavaScript;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.contextMenu.PopupMenuGroup;
 import org.richfaces.fragment.contextMenu.RichFacesContextMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SimpleEDT;
+import org.richfaces.tests.metamer.ftest.richSelect.TestRF14018.JSErrorStorage;
 import org.testng.annotations.Test;
 
 /**
@@ -38,6 +45,14 @@ public class TestRF14023 extends AbstractWebDriverTest {
     private RichFacesContextMenu contextMenu;
     @FindBy(css = "div.rf-edt[id$=edt]")
     private SimpleEDT edt;
+    @JavaScript
+    private JSErrorStorage jsErrorStorage;
+    @FindBy(css = "[id$=output]")
+    private WebElement output;
+
+    private void checkNoJSErrorsArePresent() {
+        assertEquals(jsErrorStorage.getMessages().size(), 0);
+    }
 
     @Override
     public String getComponentTestPagePath() {
@@ -45,18 +60,35 @@ public class TestRF14023 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14023")
+    @RegressionTest({ "https://issues.jboss.org/browse/RF-14023", "https://issues.jboss.org/browse/RF-14156" })
     public void testDynamicContextMenuAppearsAfterAjaxUpdateInEDT() {
-        // TODO: @jstefek improve test to check dynamic sub menu items and multiple rows selection after RF-14031 resolved
-        // select first row, this should be enough to prevent context menu from showing
-        Graphene.guardAjax(edt.getFirstRow().getStateColumn()).click();
-        // show context menu on first row
-        contextMenu.selectItem(0, edt.getFirstRow().getStateColumn());
-        // select second row
-        Graphene.guardAjax(edt.getRow(1).getStateColumn()).click();
-        // select first row
-        Graphene.guardAjax(edt.getFirstRow().getStateColumn()).click();
-        // show context menu on first row
-        contextMenu.selectItem(0, edt.getFirstRow().getStateColumn());
+        checkNoJSErrorsArePresent();
+        // select first row (this should be enough to prevent context menu from showing -- RF-14023)
+        WebElement menuTarget = edt.getFirstRow().getStateColumn();
+        Graphene.guardAjax(menuTarget).click();
+        // show context menu on first row and select an item
+        Graphene.guardAjax(contextMenu.expandGroup(0, menuTarget)).selectItem(0);
+        // check output
+        assertEquals(output.getText(), "Montgomery (Alabama)");
+        checkNoJSErrorsArePresent();
+
+        // select third row
+        Graphene.guardAjax(edt.getRow(2).getStateColumn()).click();
+        checkNoJSErrorsArePresent();
+
+        // select multiple rows (third row remains selected from previous step)
+        for (int index : new Integer[] { 0, 5, 10, 13 }) {
+            edt.selectRow(index, Keys.CONTROL);
+        }
+        checkNoJSErrorsArePresent();
+        // show context menu on third row
+        menuTarget = edt.getRow(2).getStateColumn();
+        PopupMenuGroup expandedGroup = contextMenu.expandGroup(0, menuTarget);
+        assertEquals(contextMenu.advanced().getItemsElements().size(), 6);// 5 items + 1 group
+        // select third item
+        Graphene.guardAjax(expandedGroup).selectItem(2);
+        // check output
+        assertEquals(output.getText(), "Denver (Colorado)");
+        checkNoJSErrorsArePresent();
     }
 }
