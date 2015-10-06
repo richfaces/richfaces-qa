@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.bean;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -136,8 +137,8 @@ public class RichBean implements Serializable {
     }
 
     private void createComponentsMap() {
-        filteredComponents = new TreeMap<String, String>();
-        allComponentsPermanentList = new TreeMap<String, String>();
+        filteredComponents = new LinkedHashMap<String, String>(90);
+        allComponentsPermanentList = new LinkedHashMap<String, String>(90);
 
         allComponentsPermanentList.put("a4jActionListener", "A4J Action Listener");
         allComponentsPermanentList.put("a4jAjax", "A4J Ajax");
@@ -155,12 +156,6 @@ public class RichBean implements Serializable {
         allComponentsPermanentList.put("a4jRegion", "A4J Region");
         allComponentsPermanentList.put("a4jRepeat", "A4J Repeat");
         allComponentsPermanentList.put("a4jStatus", "A4J Status");
-
-        allComponentsPermanentList.put("expressionLanguage", "Expression Language");
-        allComponentsPermanentList.put("commandButton", "JSF Command Button");
-        allComponentsPermanentList.put("hDataTable", "JSF Data Table");
-        allComponentsPermanentList.put("uiRepeat", "UI Repeat");
-        allComponentsPermanentList.put("skinning", "Skinning");
 
         allComponentsPermanentList.put("richAccordion", "Rich Accordion");
         allComponentsPermanentList.put("richAccordionItem", "Rich Accordion Item");
@@ -229,6 +224,12 @@ public class RichBean implements Serializable {
         allComponentsPermanentList.put("richTreeToggleListener", "Rich Tree Toggle Listener");
         allComponentsPermanentList.put("richValidator", "Rich Validator");
 
+        allComponentsPermanentList.put("expressionLanguage", "Expression Language");
+        allComponentsPermanentList.put("commandButton", "JSF Command Button");
+        allComponentsPermanentList.put("hDataTable", "JSF Data Table");
+        allComponentsPermanentList.put("uiRepeat", "UI Repeat");
+        allComponentsPermanentList.put("skinning", "Skinning");
+
         filteredComponents.putAll(allComponentsPermanentList);
 
     }
@@ -284,10 +285,10 @@ public class RichBean implements Serializable {
     }
 
     private void filterComponents() {
-        //reset all displayed components
+        // reset all displayed components
         this.filteredComponents.clear();
-        //If filter is not set up then put all components in it.
-        if (selectedComponent == null || selectedComponent.trim().length() == 0) {
+        // if filter is not set up then put all components in it.
+        if (selectedComponent == null || selectedComponent.trim().isEmpty()) {
             filteredComponents.putAll(allComponentsPermanentList);
         } else {
             String valueToFind = selectedComponent.toLowerCase();
