@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:a4j="http://richfaces.org/a4j">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2015, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="head">
+        </ui:define>
+
+        <ui:define name="component">
+            <p>
+                Reproducer for <a href="https://issues.jboss.org/browse/RF-14144" >RF-14144: ScrollerPage calls getRowCount() on Tree model if one the same view.</a>
+                When a rich:tree is on the same page as rich:dataScroller an java.lang.UnsupportedOperationException is thrown on the server side.
+                Automatized.
+            </p>
+            <p>
+                Steps to reproduce:
+                <ol>
+                    <li>Set 'Render tree' to true</li>
+                    <li>An error page will show up (Mojarra) or the tree and all the following components will not be rendered (MyFaces)</li>
+                </ol>
+            </p>
+            <br/>
+            <rich:panel>
+                Render tree:
+                <h:selectOneRadio id="renderTree" value="${richTreeBean.delayedRender}" onchange="submit()">
+                    <f:selectItem itemLabel="true" itemValue="true"/>
+                    <f:selectItem itemLabel="false" itemValue="false"/>
+                </h:selectOneRadio>
+                <br/>
+                <br/>
+                <rich:tree id="tree"
+                           var="node"
+                           value="#{richTreeBean.swingTreeNodeRoot}"
+                           rendered="${richTreeBean.delayedRender}"
+                           >
+                    <rich:treeNode >
+                        #{node.content.label}
+                    </rich:treeNode>
+                </rich:tree>
+                <br/>
+                <br/>
+                <rich:dataTable id="table"
+                                rowKeyVar="rowKey"
+                                rows="10"
+                                value="#{model.capitals}"
+                                var="capital">
+                    <rich:column id="columnName">
+                        <f:facet name="header">
+                            <h:outputText id="columnHeaderName" value="Name" />
+                        </f:facet>
+                        <h:outputText value="#{capital.name}" />
+                    </rich:column>
+                    <rich:column id="columnState">
+                        <f:facet name="header">
+                            <h:outputText id="columnHeaderState" value="State" />
+                        </f:facet>
+                        <h:outputText value="#{capital.state}" />
+                    </rich:column>
+                </rich:dataTable>
+                <rich:dataScroller id="scroller"
+                                   for="table"
+                                   fastControls="hide"
+                                   page="#{richDataScrollerBean.attributes['page'].value}"
+                                   />
+            </rich:panel>
+        </ui:define>
+        <ui:define name="outOfTemplateAfter"/>
+    </ui:composition>
+</html>
