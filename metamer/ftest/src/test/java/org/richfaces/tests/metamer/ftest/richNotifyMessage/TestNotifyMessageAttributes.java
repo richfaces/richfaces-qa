@@ -52,10 +52,9 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
         checkAjaxRendered();
     }
 
-    @IssueTracking("https://issues.jboss.org/browse/RF-12923")
     @Test
-    @Skip
     @CoversAttributes("dir")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12923")
     @Templates("plain")
     public void testDir() {
         checkDir();
@@ -73,10 +72,9 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
         checkFor();
     }
 
-    @IssueTracking("https://issues.jboss.org/browse/RF-12923")
     @Test
-    @Skip
     @CoversAttributes("lang")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12923")
     @Templates("plain")
     public void testLang() {
         checkLang();
