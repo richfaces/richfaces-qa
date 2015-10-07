@@ -299,7 +299,7 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
         Assert.assertEquals(getPage().getGlobalNotify().size(), size - 1, "There should be one message less than before.");
     }
 
-    @IssueTracking("https://issues.jboss.org/browse/RF-12923")
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-12923", "https://issues.jboss.org/browse/RF-14164" })
     @Test
     @Skip
     @CoversAttributes("style")
@@ -314,7 +314,7 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
         checkStyleClass();
     }
 
-    @IssueTracking("https://issues.jboss.org/browse/RF-12923")
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-12923", "https://issues.jboss.org/browse/RF-14164" })
     @Test
     @Skip
     @CoversAttributes("title")
