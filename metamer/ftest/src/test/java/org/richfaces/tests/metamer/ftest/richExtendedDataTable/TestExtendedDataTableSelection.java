@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 import static org.openqa.selenium.Keys.CONTROL;
 import static org.openqa.selenium.Keys.SHIFT;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -32,6 +33,8 @@ import java.util.TreeSet;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.math.IntRange;
 import org.jboss.arquillian.graphene.page.Page;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.TimeoutException;
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractDataTableTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
@@ -79,7 +82,8 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
-    @CoversAttributes("selection")
+    @CoversAttributes({ "selectionMode", // multiple (default value, same as 'null')
+        "selection" })
     @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat", "a4jRegion" })
     public void testMultiSelectionRemovingUsingCtrl() {
@@ -238,6 +242,68 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
         page.selectAllWithCrtlAndA();
         selected.addAll(selection(new IntRange(0, 49)));
         verifySelected();
+    }
+
+    @Test
+    @CoversAttributes({ "selection", "selectionMode" })
+    public void testSelectionModeMultipleKeyboardFree() {
+        tableAttributes.set(ExtendedDataTableAttributes.selectionMode, "multipleKeyboardFree");
+
+        page.selectRow(2);
+        assertEquals(page.getActualPreviousSelection(), expectedSelection());
+        assertEquals(page.getActualCurrentSelection(), expectedSelection(2));
+
+        // select another row
+        page.selectRow(4);
+        assertEquals(page.getActualPreviousSelection(), expectedSelection(2));
+        assertEquals(page.getActualCurrentSelection(), expectedSelection(2, 4));
+
+        // select another record using CONTROL (no effect), another record is selected
+        page.selectRow(7, Keys.CONTROL);
+        assertEquals(page.getActualPreviousSelection(), expectedSelection(2, 4));
+        assertEquals(page.getActualCurrentSelection(), expectedSelection(2, 4, 7));
+
+        // select another record using SHIFT (no effect), another record is selected
+        page.selectRow(0, Keys.SHIFT);
+        assertEquals(page.getActualPreviousSelection(), expectedSelection(2, 4, 7));
+        assertEquals(page.getActualCurrentSelection(), expectedSelection(0, 2, 4, 7));
+
+        // deselect previously selected row
+        page.deselectRow(4);// selecting and deselecting is performed by the same mechanism -- clicking on the row
+        assertEquals(page.getActualPreviousSelection(), expectedSelection(0, 2, 4, 7));
+        assertEquals(page.getActualCurrentSelection(), expectedSelection(0, 2, 7));
+    }
+
+    @Test
+    @Templates("plain")
+    @CoversAttributes({ "selection", "selectionMode" })
+    public void testSelectionModeNone() {
+        tableAttributes.set(ExtendedDataTableAttributes.selectionMode, "none");
+        try {
+            page.selectRow(2);
+            fail("Selection should not be possible when @selectionMode=none");
+        } catch (TimeoutException ok) {
+        }
+    }
+
+    @Test
+    @CoversAttributes({ "selection", "selectionMode" })
+    public void testSelectionModeSingle() {
+        tableAttributes.set(ExtendedDataTableAttributes.selectionMode, "single");
+
+        page.selectRow(2);
+        assertEquals(page.getActualPreviousSelection(), expectedSelection());
+        assertEquals(page.getActualCurrentSelection(), expectedSelection(2));
+
+        // select another record using CONTROL, only one record is selected
+        page.selectRow(4, Keys.CONTROL);
+        assertEquals(page.getActualPreviousSelection(), expectedSelection(2));
+        assertEquals(page.getActualCurrentSelection(), expectedSelection(4));
+
+        // select another record using SHIFT, only one record is selected
+        page.selectRow(7, Keys.SHIFT);
+        assertEquals(page.getActualPreviousSelection(), expectedSelection(4));
+        assertEquals(page.getActualCurrentSelection(), expectedSelection(7));
     }
 
     @Test
