@@ -75,6 +75,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                     frozenColumns="#{richExtendedDataTableBean.attributes['frozenColumns'].value}"
                                     headerClass="#{richExtendedDataTableBean.attributes['headerClass'].value}"
                                     keepSaved="#{richExtendedDataTableBean.attributes['keepSaved'].value}"
+                                    limitRender="#{richExtendedDataTableBean.attributes['limitRender'].value}"
                                     noDataLabel="#{richExtendedDataTableBean.attributes['noDataLabel'].value}"
                                     onbeforeselectionchange="#{richExtendedDataTableBean.attributes['onbeforeselectionchange'].value}"
                                     onrowclick="#{richExtendedDataTableBean.attributes['onrowclick'].value}"
@@ -88,6 +89,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                     onrowmouseover="#{richExtendedDataTableBean.attributes['onrowmouseover'].value}"
                                     onrowmouseup="#{richExtendedDataTableBean.attributes['onrowmouseup'].value}"
                                     onselectionchange="#{richExtendedDataTableBean.attributes['onselectionchange'].value}"
+                                    render="#{richExtendedDataTableBean.attributes['render'].value}"
                                     rendered="#{richExtendedDataTableBean.attributes['rendered'].value}"
                                     rowClass="#{richExtendedDataTableBean.attributes['rowClass'].value}"
                                     rowClasses="#{richExtendedDataTableBean.attributes['rowClasses'].value}"
@@ -101,7 +103,6 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                     value="#{richExtendedDataTableBean.state ? model.capitals : null}"
                                     var="record"
                                     >
-
 
                 <a4j:ajax execute="@this" event="beforeselectionchange" render="previousSelection" />
                 <a4j:ajax execute="@this" event="selectionchange" render="currentSelection" />
@@ -149,7 +150,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="outOfTemplateAfter">
             <h:panelGrid columns="2">
-                <h:outputLabel ajaxRendered="true" value="CurrentSelection:" styleClass="currentSelection" />
+                <h:outputLabel value="CurrentSelection:" styleClass="currentSelection" />
                 <a4j:outputPanel ajaxRendered="true">
                     <h:outputText id="currentSelection" value="#{richExtendedDataTableBean.attributes['selection'].value}" styleClass="currentSelection" />
                 </a4j:outputPanel>

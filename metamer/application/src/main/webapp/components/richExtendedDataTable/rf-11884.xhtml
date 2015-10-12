@@ -92,10 +92,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-        
+
             <p> This EDT has set last column @with to fixed value.
-            Even this columns size is not enough to display whole column content, there is not vertical scroller available.
-            Don't have more info form JIRA to simulate this problem better
+                Even this columns size is not enough to display whole column content, there is not vertical scroller available.
+                Don't have more info form JIRA to simulate this problem better
             </p>
 
             <rich:extendedDataTable id="richEDT"
@@ -105,6 +105,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                     frozenColumns="#{richExtendedDataTableBean.attributes['frozenColumns'].value}"
                                     headerClass="#{richExtendedDataTableBean.attributes['headerClass'].value}"
                                     keepSaved="#{richExtendedDataTableBean.attributes['keepSaved'].value}"
+                                    limitRender="#{richExtendedDataTableBean.attributes['limitRender'].value}"
                                     noDataLabel="#{richExtendedDataTableBean.attributes['noDataLabel'].value}"
                                     onbeforeselectionchange="#{richExtendedDataTableBean.attributes['onbeforeselectionchange'].value}"
                                     onrowclick="#{richExtendedDataTableBean.attributes['onrowclick'].value}"
@@ -118,6 +119,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                     onrowmouseover="#{richExtendedDataTableBean.attributes['onrowmouseover'].value}"
                                     onrowmouseup="#{richExtendedDataTableBean.attributes['onrowmouseup'].value}"
                                     onselectionchange="#{richExtendedDataTableBean.attributes['onselectionchange'].value}"
+                                    render="#{richExtendedDataTableBean.attributes['render'].value}"
                                     rendered="#{richExtendedDataTableBean.attributes['rendered'].value}"
                                     rowClass="#{richExtendedDataTableBean.attributes['rowClass'].value}"
                                     rowClasses="#{richExtendedDataTableBean.attributes['rowClasses'].value}"
