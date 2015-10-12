@@ -32,8 +32,8 @@ import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SortingE
 import org.testng.annotations.Test;
 
 /**
- * Extracted EDT template into separate future tests as atm there is a Graphene but
- * preventing from locating the correct element of EDT within another EDT.
+ * Extracted EDT template into separate future tests as atm there is a Graphene but preventing from locating the correct element
+ * of EDT within another EDT.
  *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22664 $
@@ -44,13 +44,13 @@ public class TestExtendedDataTableSortingUsingColumn extends DataTableSortingTes
     private SortingEDT table;
 
     @Override
-    protected SortingEDT getTable() {
-        return table;
+    public String getComponentTestPagePath() {
+        return "richExtendedDataTable/sorting-using-column.xhtml";
     }
 
     @Override
-    public String getComponentTestPagePath() {
-        return "richExtendedDataTable/sorting-using-column.xhtml";
+    protected SortingEDT getTable() {
+        return table;
     }
 
     @Test

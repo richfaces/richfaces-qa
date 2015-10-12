@@ -38,13 +38,13 @@ public class TestExtendedDataTableFiltering extends DataTableFilteringTest {
     private FilteringEDT table;
 
     @Override
-    protected FilteringEDT getTable() {
-        return table;
+    public String getComponentTestPagePath() {
+        return "richExtendedDataTable/filtering.xhtml";
     }
 
     @Override
-    public String getComponentTestPagePath() {
-        return "richExtendedDataTable/filtering.xhtml";
+    protected FilteringEDT getTable() {
+        return table;
     }
 
     @Test

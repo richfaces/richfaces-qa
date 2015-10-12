@@ -1,14 +1,23 @@
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SortingEDT;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class TestExtendedDataTableSortingBuiltIn extends DataTableSortingTest {
+
+    private final Action ajaxAction = new Action() {
+        @Override
+        public void perform() {
+            getTable().getHeader().sortByName(true);
+        }
+    };
 
     @FindBy(css = "div.rf-edt[id$=richEDT]")
     private SortingEDT table;
@@ -28,6 +37,17 @@ public class TestExtendedDataTableSortingBuiltIn extends DataTableSortingTest {
         super.setBuiltIn(true);
     }
 
+    @Test
+    @CoversAttributes("limitRender")
+    public void testLimitRender() {
+        testLimitRender(ajaxAction);
+    }
+
+    @Test
+    @CoversAttributes("render")
+    public void testRender() {
+        testRender(ajaxAction);
+    }
 
     @Test
     @Override
