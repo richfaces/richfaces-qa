@@ -247,7 +247,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("limitRender")
     public void testLimitRender() {
-        testLimitRender(new Action() {
+        testLimitRenderWithSwitchTypeOrMode(new Action() {
             @Override
             public void perform() {
                 tooltip().show();
@@ -440,7 +440,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testRender() {
         tooltipAttributes.set(TooltipAttributes.mode, SwitchType.ajax);
-        testRender(new Action() {
+        testRenderWithSwitchTypeOrMode(new Action() {
             @Override
             public void perform() {
                 tooltip().show();

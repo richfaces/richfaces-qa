@@ -291,7 +291,7 @@ public class TestTab extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("limitRender")
     public void testLimitRender() {
-        testLimitRender(switchToTabAction);
+        testLimitRenderWithSwitchTypeOrMode(switchToTabAction);
     }
 
     @Test
@@ -456,7 +456,7 @@ public class TestTab extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("render")
     public void testRender() {
-        testRender(switchToTabAction);
+        testRenderWithSwitchTypeOrMode(switchToTabAction);
     }
 
     @Test

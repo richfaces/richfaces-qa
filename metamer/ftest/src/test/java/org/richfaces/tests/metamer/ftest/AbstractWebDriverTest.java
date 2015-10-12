@@ -331,11 +331,15 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         assertEquals(expectedReturnJS("return window.data;", testedValue), testedValue);
     }
 
+    /**
+     * Test attribute @limitRender. Sets @render attribute to '@this renderChecker' and @limitRender to 'true' and performs an
+     * ajax-guarded action.
+     */
     protected void testLimitRender(Action triggeringAction) {
-        UnsafeAttributes attributes = getUnsafeAttributes("");
-        attributes.set("limitRender", true);
-        attributes.set("render", "@this renderChecker");
-        setModeOrSwitchTypeToAjax();
+        attsSetter()
+            .setAttribute("limitRender").toValue(true)
+            .setAttribute("render").toValue("@this renderChecker")
+            .asSingleAction().perform();
         String renderCheckerText = metamerPage.getRenderCheckerOutputElement().getText();
         String requestTime = metamerPage.getRequestTimeElement().getText();
         Graphene.guardAjax(new ActionWrapper(triggeringAction)).perform();
@@ -345,10 +349,19 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             .equalTo(requestTime);
     }
 
-    protected void testRender(Action triggeringAction) {
-        UnsafeAttributes attributes = getUnsafeAttributes("");
-        attributes.set("render", "@this renderChecker");
+    /**
+     * Same as testLimitRender, but tries to set @switchType or @mode to 'ajax'
+     */
+    protected void testLimitRenderWithSwitchTypeOrMode(Action triggeringAction) {
         setModeOrSwitchTypeToAjax();
+        testLimitRender(triggeringAction);
+    }
+
+    /**
+     * Test attribute @render. Sets mentioned attribute to '@this renderChecker' and performs an ajax-guarded action. * .
+     */
+    protected void testRender(Action triggeringAction) {
+        getUnsafeAttributes().set("render", "@this renderChecker");
         String renderCheckerText = metamerPage.getRenderCheckerOutputElement().getText();
         String requestTime = metamerPage.getRequestTimeElement().getText();
         Graphene.guardAjax(new ActionWrapper(triggeringAction)).perform();
@@ -356,6 +369,14 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             .equalTo(renderCheckerText);
         Graphene.waitGui().until().element(metamerPage.getRequestTimeElement()).text().not()
             .equalTo(requestTime);
+    }
+
+    /**
+     * Same as testRender, but tries to set @switchType or @mode to 'ajax'
+     */
+    protected void testRenderWithSwitchTypeOrMode(Action triggeringAction) {
+        setModeOrSwitchTypeToAjax();
+        testRender(triggeringAction);
     }
 
     private void setModeOrSwitchTypeToAjax() {

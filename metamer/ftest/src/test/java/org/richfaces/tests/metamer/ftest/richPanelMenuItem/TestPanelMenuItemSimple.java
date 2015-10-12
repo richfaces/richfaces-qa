@@ -189,7 +189,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("render")
     public void testRender() {
-        testRender(new Action() {
+        testRenderWithSwitchTypeOrMode(new Action() {
             @Override
             public void perform() {
                 guardAjax(page.getItem()).select();

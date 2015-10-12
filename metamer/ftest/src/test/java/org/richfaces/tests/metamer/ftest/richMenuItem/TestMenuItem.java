@@ -358,7 +358,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("render")
     public void testRender() {
-        testRender(openMenuAndClickOnTheMenuItemAction);
+        testRenderWithSwitchTypeOrMode(openMenuAndClickOnTheMenuItemAction);
     }
 
     @Test

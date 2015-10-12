@@ -210,7 +210,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     @Test
     @CoversAttributes("limitRender")
     public void testLimitRender() {
-        testLimitRender(collapseFirstGroupAction);
+        testLimitRenderWithSwitchTypeOrMode(collapseFirstGroupAction);
     }
 
     @Test
@@ -230,7 +230,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     @Test
     @CoversAttributes("render")
     public void testRender() {
-        testRender(new Action() {
+        testRenderWithSwitchTypeOrMode(new Action() {
             @Override
             public void perform() {
                 guardAjax(getPage().getTopGroup().advanced().getLabelElement()).click();
