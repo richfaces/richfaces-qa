@@ -29,7 +29,9 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -99,6 +101,18 @@ public class TestParam extends AbstractWebDriverTest {
 
         assertEquals(output1Element.getText(), "screen.width", "Output 1 after clicking on first button.");
         assertEquals(output2Element.getText(), "screen.width", "Output 2 after clicking on first button.");
+    }
+
+    @Test
+    @Skip
+    @IssueTracking("https://issues.jboss.org/browse/RF-13045")
+    @CoversAttributes("rendered")
+    public void testRendered() {
+        paramAttributes.set(ParamAttributes.rendered, false);
+        guardAjax(button1Element).click();
+
+        assertEquals(output1Element.getText(), "");
+        assertEquals(output2Element.getText(), "");
     }
 
     @Test
