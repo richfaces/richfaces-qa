@@ -48,16 +48,11 @@ import org.testng.annotations.Test;
  */
 public class TestExtendedDataTableSelection extends AbstractDataTableTest {
 
-    private final Collection<Integer> selected = new TreeSet<Integer>();
-    private final Attributes<ExtendedDataTableAttributes> tableAttributes = getAttributes();
-
     @Page
     private SelectionPage page;
 
-    @Override
-    public String getComponentTestPagePath() {
-        return "richExtendedDataTable/selection.xhtml";
-    }
+    private final Collection<Integer> selected = new TreeSet<Integer>();
+    private final Attributes<ExtendedDataTableAttributes> tableAttributes = getAttributes();
 
     @BeforeMethod
     public void clearSelected() {
@@ -65,96 +60,21 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
         page.setTableAttributes(tableAttributes);
     }
 
-    @Test
-    public void testSimpleSelection() {
-        page.selectRow(2);
-
-        assertEquals(page.getActualPreviousSelection(), expectedSelection());
-        assertEquals(page.getActualCurrentSelection(), expectedSelection(2));
+    private Collection<Integer> expectedSelection(int... selection) {
+        return new TreeSet<Integer>(order(selection));
     }
 
-    @Test
-    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat" })
-    public void testMultiSelectionUsingControl() {
-        Collection<Integer> forSelection = order(2, 5, 29, 16, 13, 21);
-
-        for (int s : forSelection) {
-            page.selectRow(s, CONTROL);
-
-            assertEquals(page.getActualPreviousSelection(), selected);
-            selected.add(s);
-            assertEquals(page.getActualCurrentSelection(), selected);
-        }
+    @Override
+    public String getComponentTestPagePath() {
+        return "richExtendedDataTable/selection.xhtml";
     }
 
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-10256")
-    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat" })
-    public void testMultiSelectionUsingControlIterationComponents() {
-        testMultiSelectionUsingControl();
+    private Collection<Integer> order(int... selection) {
+        return Arrays.asList(ArrayUtils.toObject(selection));
     }
 
-    @Test
-    public void testMultiSelectionUsingShiftOnOnePage() {
-        IntRange range = new IntRange(2, 5);
-
-        page.selectRow(range.getMinimumInteger());
-        page.selectRow(range.getMaximumInteger(), SHIFT);
-
-        assertEquals(page.getActualPreviousSelection(), expectedSelection(range.getMinimumInteger()));
-        assertEquals(page.getActualCurrentSelection(), selection(range));
-    }
-
-    @Test
-    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat", "uiRepeat" })
-    public void testMultiSelectionUsingShiftBetweenPagesInReversedOrder() {
-        IntRange range = new IntRange(12, 35);
-
-        page.selectRow(range.getMaximumInteger());
-        page.selectRow(range.getMinimumInteger(), SHIFT);
-
-        assertEquals(page.getActualPreviousSelection(), expectedSelection(range.getMaximumInteger()));
-        assertEquals(page.getActualCurrentSelection(), selection(range));
-    }
-
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-10256")
-    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat" })
-    public void testMultiSelectionUsingShiftBetweenPagesInReversedOrderIterationComponents() {
-        testMultiSelectionUsingShiftBetweenPagesInReversedOrder();
-    }
-
-    @Test
-    @Skip
-    @IssueTracking("https://issues.jboss.org/browse/RF-13973")
-    @Templates(value = "uiRepeat")
-    public void testMultiSelectionUsingShiftBetweenPagesInReversedOrderInUiRepeat() {
-        testMultiSelectionUsingShiftBetweenPagesInReversedOrder();
-    }
-
-    @Test
-    @Skip
-    @IssueTracking("https://issues.jboss.org/browse/RF-9977")
-    public void testMultiSelectionUsingCtrlAndShiftCombinations() {
-        IntRange range1 = new IntRange(2, 14);
-        IntRange range2 = new IntRange(18, 31);
-
-        page.selectRow(range1.getMaximumInteger());
-        page.selectRow(range1.getMinimumInteger(), SHIFT);
-        selected.addAll(selection(range1));
-        verifySelected();
-
-        page.selectRow(range2.getMaximumInteger(), CONTROL);
-        selected.addAll(expectedSelection(range2.getMaximumInteger()));
-        verifySelected();
-
-        page.selectRow(range2.getMinimumInteger(), CONTROL, SHIFT);
-        selected.addAll(selection(range2));
-        verifySelected();
+    private Collection<Integer> selection(IntRange range) {
+        return expectedSelection(range.toArray());
     }
 
     @Test
@@ -208,11 +128,87 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
-    public void testSelectSomeRowAndThenSelectAllWithKeyShortcut() {
-        page.selectRow(2);
-        page.selectAllWithCrtlAndA();
-        selected.addAll(selection(new IntRange(0, 49)));
+    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richList", "a4jRepeat" })
+    public void testMultiSelectionUsingControl() {
+        Collection<Integer> forSelection = order(2, 5, 29, 16, 13, 21);
+
+        for (int s : forSelection) {
+            page.selectRow(s, CONTROL);
+
+            assertEquals(page.getActualPreviousSelection(), selected);
+            selected.add(s);
+            assertEquals(page.getActualCurrentSelection(), selected);
+        }
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-10256")
+    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richList", "a4jRepeat" })
+    public void testMultiSelectionUsingControlIterationComponents() {
+        testMultiSelectionUsingControl();
+    }
+
+    @Test
+    @Skip
+    @IssueTracking("https://issues.jboss.org/browse/RF-9977")
+    public void testMultiSelectionUsingCtrlAndShiftCombinations() {
+        IntRange range1 = new IntRange(2, 14);
+        IntRange range2 = new IntRange(18, 31);
+
+        page.selectRow(range1.getMaximumInteger());
+        page.selectRow(range1.getMinimumInteger(), SHIFT);
+        selected.addAll(selection(range1));
         verifySelected();
+
+        page.selectRow(range2.getMaximumInteger(), CONTROL);
+        selected.addAll(expectedSelection(range2.getMaximumInteger()));
+        verifySelected();
+
+        page.selectRow(range2.getMinimumInteger(), CONTROL, SHIFT);
+        selected.addAll(selection(range2));
+        verifySelected();
+    }
+
+    @Test
+    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richList", "a4jRepeat", "uiRepeat" })
+    public void testMultiSelectionUsingShiftBetweenPagesInReversedOrder() {
+        IntRange range = new IntRange(12, 35);
+
+        page.selectRow(range.getMaximumInteger());
+        page.selectRow(range.getMinimumInteger(), SHIFT);
+
+        assertEquals(page.getActualPreviousSelection(), expectedSelection(range.getMaximumInteger()));
+        assertEquals(page.getActualCurrentSelection(), selection(range));
+    }
+
+    @Test
+    @Skip
+    @IssueTracking("https://issues.jboss.org/browse/RF-13973")
+    @Templates(value = "uiRepeat")
+    public void testMultiSelectionUsingShiftBetweenPagesInReversedOrderInUiRepeat() {
+        testMultiSelectionUsingShiftBetweenPagesInReversedOrder();
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-10256")
+    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richList", "a4jRepeat" })
+    public void testMultiSelectionUsingShiftBetweenPagesInReversedOrderIterationComponents() {
+        testMultiSelectionUsingShiftBetweenPagesInReversedOrder();
+    }
+
+    @Test
+    public void testMultiSelectionUsingShiftOnOnePage() {
+        IntRange range = new IntRange(2, 5);
+
+        page.selectRow(range.getMinimumInteger());
+        page.selectRow(range.getMaximumInteger(), SHIFT);
+
+        assertEquals(page.getActualPreviousSelection(), expectedSelection(range.getMinimumInteger()));
+        assertEquals(page.getActualCurrentSelection(), selection(range));
     }
 
     @Test
@@ -223,16 +219,20 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
         verifySelected();
     }
 
-    private Collection<Integer> order(int... selection) {
-        return Arrays.asList(ArrayUtils.toObject(selection));
+    @Test
+    public void testSelectSomeRowAndThenSelectAllWithKeyShortcut() {
+        page.selectRow(2);
+        page.selectAllWithCrtlAndA();
+        selected.addAll(selection(new IntRange(0, 49)));
+        verifySelected();
     }
 
-    private Collection<Integer> expectedSelection(int... selection) {
-        return new TreeSet<Integer>(order(selection));
-    }
+    @Test
+    public void testSimpleSelection() {
+        page.selectRow(2);
 
-    private Collection<Integer> selection(IntRange range) {
-        return expectedSelection(range.toArray());
+        assertEquals(page.getActualPreviousSelection(), expectedSelection());
+        assertEquals(page.getActualCurrentSelection(), expectedSelection(2));
     }
 
     private void verifySelected() {
