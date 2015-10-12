@@ -35,6 +35,7 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractDataTableTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.page.SelectionPage;
@@ -78,6 +79,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
+    @CoversAttributes("selection")
     @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat", "a4jRegion" })
     public void testMultiSelectionRemovingUsingCtrl() {
@@ -98,6 +100,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
+    @CoversAttributes("selection")
     @RegressionTest("https://issues.jboss.org/browse/RF-10256")
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat" })
@@ -106,6 +109,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
+    @CoversAttributes("selection")
     @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-13474")
     @Templates("a4jRegion")
@@ -128,6 +132,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
+    @CoversAttributes("selection")
     @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat" })
     public void testMultiSelectionUsingControl() {
@@ -143,6 +148,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
+    @CoversAttributes("selection")
     @RegressionTest("https://issues.jboss.org/browse/RF-10256")
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat" })
@@ -151,6 +157,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
+    @CoversAttributes("selection")
     @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-9977")
     public void testMultiSelectionUsingCtrlAndShiftCombinations() {
@@ -172,6 +179,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
+    @CoversAttributes("selection")
     @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat", "uiRepeat" })
     public void testMultiSelectionUsingShiftBetweenPagesInReversedOrder() {
@@ -185,6 +193,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
+    @CoversAttributes("selection")
     @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-13973")
     @Templates(value = "uiRepeat")
@@ -193,6 +202,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
+    @CoversAttributes("selection")
     @RegressionTest("https://issues.jboss.org/browse/RF-10256")
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat" })
@@ -201,6 +211,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
+    @CoversAttributes("selection")
     public void testMultiSelectionUsingShiftOnOnePage() {
         IntRange range = new IntRange(2, 5);
 
@@ -212,6 +223,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
+    @CoversAttributes("selection")
     @RegressionTest("https://issues.jboss.org/browse/RF-13941")
     public void testSelectAllWithKeyShortcut() {
         page.selectAllWithCrtlAndA();
@@ -220,6 +232,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
+    @CoversAttributes("selection")
     public void testSelectSomeRowAndThenSelectAllWithKeyShortcut() {
         page.selectRow(2);
         page.selectAllWithCrtlAndA();
@@ -228,6 +241,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
+    @CoversAttributes("selection")
     public void testSimpleSelection() {
         page.selectRow(2);
 
