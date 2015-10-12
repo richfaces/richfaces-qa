@@ -33,27 +33,20 @@ public class SortingEDTHeader implements SortingHeaderInterface {
 
     @FindByJQuery(".rf-edt-hdr-c-cnt:eq(0) a")
     private WebElement sexSortingAnchor;
-
     @FindByJQuery(".rf-edt-hdr-c-cnt:eq(1) a")
     private WebElement nameSortingAnchor;
-
     @FindByJQuery(".rf-edt-hdr-c-cnt:eq(2) a")
     private WebElement titleSortingAnchor;
-
     @FindByJQuery(".rf-edt-hdr-c-cnt:eq(3) a")
     private WebElement numberOfKidsSortingAnchor;
-
-    @FindByJQuery("[data-columnid$='columnName']")
-    private WebElement nameSortingBuiltIn;
-
-    @FindByJQuery("[data-columnid$='columnTitle']")
-    private WebElement titleSortingBuiltIn;
-
-    @FindByJQuery("[data-columnid$='columnNumberOfKids1']")
-    private WebElement numberOfKidsSortingBuiltIn;
-
-    @FindByJQuery("[data-columnid$='columnSex']")
+    @FindByJQuery(".rf-edt-c-srt:eq(0)")
     private WebElement sexSortingBuiltIn;
+    @FindByJQuery(".rf-edt-c-srt:eq(1)")
+    private WebElement nameSortingBuiltIn;
+    @FindByJQuery(".rf-edt-c-srt:eq(2)")
+    private WebElement titleSortingBuiltIn;
+    @FindByJQuery(".rf-edt-c-srt:eq(3)")
+    private WebElement numberOfKidsSortingBuiltIn;
 
     @Override
     public void sortBySex(boolean isBuiltIn) {
