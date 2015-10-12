@@ -26,6 +26,11 @@ import java.io.IOException;
 
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.result.CoverageResult;
 
+/**
+ * Saves covered, not covered and ignored attributes of all results.
+ *
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ */
 public class FullReportResultsSaver extends AbstractResultsSaver {
 
     protected void write(BufferedWriter bw) throws IOException {

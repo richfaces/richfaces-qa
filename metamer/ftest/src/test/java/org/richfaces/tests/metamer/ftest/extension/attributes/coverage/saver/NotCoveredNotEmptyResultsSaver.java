@@ -21,35 +21,20 @@
  */
 package org.richfaces.tests.metamer.ftest.extension.attributes.coverage.saver;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.text.MessageFormat;
-
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.result.CoverageResult;
 
 /**
- * Saves not covered attributes of all results.
+ * Saves only those results, which contains not covered attributes.
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class NotCoveredResultsSaver extends AbstractResultsSaver {
+public class NotCoveredNotEmptyResultsSaver extends NotCoveredResultsSaver {
 
     protected String getMessageForResult(CoverageResult cr) {
-        return MessageFormat.format("{0} attributes:\n * not covered: {1} ({2})\n", cr.getComponentName(), cr.getNotCovered().toString(),
-            cr.getNotCoveredFraction().toString());
-    }
-
-    @Override
-    protected void write(BufferedWriter bw) throws IOException {
-        try {
-            for (CoverageResult result : getResults()) {
-                bw.append(getMessageForResult(result));
-                bw.flush();
-            }
-        } finally {
-            if (bw != null) {
-                bw.close();
-            }
+        if (cr.getNotCoveredFraction().doubleValue() == 0) {
+            return "";
+        } else {
+            return super.getMessageForResult(cr);
         }
     }
 }

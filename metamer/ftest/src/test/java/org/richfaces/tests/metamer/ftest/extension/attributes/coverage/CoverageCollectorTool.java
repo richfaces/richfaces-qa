@@ -29,15 +29,15 @@ import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.collect.S
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.result.CoverageResult;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.result.CoverageResultsCreator;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.result.ResultsCreator;
-import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.saver.NotCoveredResultsSaver;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.saver.NotCoveredNotEmptyResultsSaver;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.saver.ResultsSaver;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.saver.ResultsSaver.SaveTo;
 
 /**
  * Checks all RF's components attributes coverage.
  *
- * Searches in all Metamer ftest classes for methods with annotation @CoversAttributes.
- * Saves the result to file target/coverage.txt.
+ * Searches in all Metamer ftest classes for methods with annotation @CoversAttributes. Saves the result to file
+ * target/coverage.txt.
  *
  * To perform the attributes coverage scan just run this file.
  *
@@ -48,7 +48,8 @@ public class CoverageCollectorTool {
     private static final String PACKAGE_TO_SCAN_FROM = "org.richfaces.tests.metamer.ftest";
     private static final AttributesCoverageCollector attributesCoverageCollector = new SimpleAttributesCoverageCollector();
     private static final ResultsCreator<? extends CoverageResult> resultsCreator = new CoverageResultsCreator();
-    private static final ResultsSaver resultsSaver = new NotCoveredResultsSaver();
+//    private static final ResultsSaver resultsSaver = new NotCoveredResultsSaver();
+    private static final ResultsSaver resultsSaver = new NotCoveredNotEmptyResultsSaver();
 //    private static final ResultsSaver resultsSaver = new FullReportResultsSaver();
 
     public static void main(String[] args) throws IOException {
