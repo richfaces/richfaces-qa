@@ -44,9 +44,15 @@ public class TestExtendedDataTableSimple extends DataTableSimpleTest {
 
     @FindBy(css = "div.rf-edt[id$=richEDT]")
     private SimpleEDT table;
-
     @FindBy(css = "div.rf-edt[id$=richEDT]")
     private WebElement tableRoot;
+
+    final Action selectFirstRowAction = new Action() {
+        @Override
+        public void perform() {
+            table.getFirstRow().getRootElement().click();
+        }
+    };
 
     @Override
     protected SimpleEDT getTable() {
@@ -76,12 +82,7 @@ public class TestExtendedDataTableSimple extends DataTableSimpleTest {
     @CoversAttributes("onbeforeselectionchange")
     @Templates("plain")
     public void testOnbeforeselectionchange() {
-        testFireEvent("onbeforeselectionchange", new Action() {
-            @Override
-            public void perform() {
-                table.getFirstRow().getRootElement().click();
-            }
-        });
+        testFireEvent("onbeforeselectionchange", selectFirstRowAction);
     }
 
     @Test
@@ -155,15 +156,10 @@ public class TestExtendedDataTableSimple extends DataTableSimpleTest {
     }
 
     @Test
-    @CoversAttributes("onbeforeselectionchange")
+    @CoversAttributes("onselectionchange")
     @Templates("plain")
     public void testOnselectionchange() {
-        testFireEvent("onbeforeselectionchange", new Action() {
-            @Override
-            public void perform() {
-                table.getFirstRow().getRootElement().click();
-            }
-        });
+        testFireEvent("onselectionchange", selectFirstRowAction);
     }
 
     @Test
