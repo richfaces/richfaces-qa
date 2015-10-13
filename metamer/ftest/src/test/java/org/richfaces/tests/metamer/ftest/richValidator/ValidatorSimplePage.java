@@ -21,9 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.richValidator;
 
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 
@@ -32,80 +32,80 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
  */
 public class ValidatorSimplePage extends MetamerPage {
 
-    @FindByJQuery("input[id$=a4jButton]")
+    @FindBy(css = "input[id$=a4jButton]")
     private WebElement a4jCommandBtn;
-    @FindByJQuery("input[id$=hButton]")
+    @FindBy(css = "input[id$=hButton]")
     private WebElement hCommandBtn;
 
-    @FindByJQuery(value = "input[id$=assertFalse]")
+    @FindBy(css = "input[id$=assertFalse]")
     private WebElement inputAssertFalse;
-    @FindByJQuery("input[id$=assertTrue]")
+    @FindBy(css = "input[id$=assertTrue]")
     private WebElement inputAssertTrue;
-    @FindByJQuery("input[id$=custom]")
+    @FindBy(css = "input[id$=custom]")
     private WebElement inputCustom;
-    @FindByJQuery("input[id$=decimalMinMax]")
+    @FindBy(css = "input[id$=decimalMinMax]")
     private WebElement inputDecimalMinMax;
-    @FindByJQuery("input[id$=digits]")
+    @FindBy(css = "input[id$=digits]")
     private WebElement inputDigits;
-    @FindByJQuery(value = "input[id$=future]")
+    @FindBy(css = "input[id$=future]")
     private WebElement inputFuture;
-    @FindByJQuery("input[id$=max]")
+    @FindBy(css = "input[id$=max]")
     private WebElement inputMax;
-    @FindByJQuery("input[id$=min]")
+    @FindBy(css = "input[id$=min]")
     private WebElement inputMin;
-    @FindByJQuery("input[id$=minMax]")
+    @FindBy(css = "input[id$=minMax]")
     private WebElement inputMinMax;
-    @FindByJQuery("input[id$=notEmpty]")
+    @FindBy(css = "input[id$=notEmpty]")
     private WebElement inputNotEmpty;
-    @FindByJQuery("input[id$=notNull]")
+    @FindBy(css = "input[id$=notNull]")
     private WebElement inputNotNull;
-    @FindByJQuery(value = "input[id$=past]")
+    @FindBy(css = "input[id$=past]")
     private WebElement inputPast;
-    @FindByJQuery("input[id$=pattern]")
+    @FindBy(css = "input[id$=pattern]")
     private WebElement inputPattern;
-    @FindByJQuery("input[id$=regexp]")
+    @FindBy(css = "input[id$=regexp]")
     private WebElement inputRegexp;
-    @FindByJQuery("input[id$=size]")
+    @FindBy(css = "input[id$=size]")
     private WebElement inputSize;
-    @FindByJQuery("input[id$=stringSize]")
+    @FindBy(css = "input[id$=stringSize]")
     private WebElement inputStringSize;
 
-    @FindByJQuery("span[id$=assertFalseMsg]")
+    @FindBy(css = "span[id$=assertFalseMsg]")
     private RichFacesMessage msgAssertFalse;
-    @FindByJQuery("span[id$=assertTrueMsg]")
+    @FindBy(css = "span[id$=assertTrueMsg]")
     private RichFacesMessage msgAssertTrue;
-    @FindByJQuery("span[id$=customMsg]")
+    @FindBy(css = "span[id$=customMsg]")
     private RichFacesMessage msgCustom;
-    @FindByJQuery("span[id$=decimalMinMaxMsg]")
+    @FindBy(css = "span[id$=decimalMinMaxMsg]")
     private RichFacesMessage msgDecimalMinMax;
-    @FindByJQuery("span[id$=digitsMsg]")
+    @FindBy(css = "span[id$=digitsMsg]")
     private RichFacesMessage msgDigits;
-    @FindByJQuery(value = "span[id$=futureMsg]")
+    @FindBy(css = "span[id$=futureMsg]")
     private RichFacesMessage msgFuture;
-    @FindByJQuery("span[id$=maxMsg]")
+    @FindBy(css = "span[id$=maxMsg]")
     private RichFacesMessage msgMax;
-    @FindByJQuery("span[id$=minMsg]")
+    @FindBy(css = "span[id$=minMsg]")
     private RichFacesMessage msgMin;
-    @FindByJQuery("span[id$=minMaxMsg]")
+    @FindBy(css = "span[id$=minMaxMsg]")
     private RichFacesMessage msgMinMax;
-    @FindByJQuery("span[id$=notEmptyMsg]")
+    @FindBy(css = "span[id$=notEmptyMsg]")
     private RichFacesMessage msgNotEmpty;
-    @FindByJQuery("span[id$=notNullMsg]")
+    @FindBy(css = "span[id$=notNullMsg]")
     private RichFacesMessage msgNotNull;
-    @FindByJQuery(value = "span[id$=pastMsg]")
+    @FindBy(css = "span[id$=pastMsg]")
     private RichFacesMessage msgPast;
-    @FindByJQuery("span[id$=patternMsg]")
+    @FindBy(css = "span[id$=patternMsg]")
     private RichFacesMessage msgPattern;
-    @FindByJQuery("span[id$=regexpMsg]")
+    @FindBy(css = "span[id$=regexpMsg]")
     private RichFacesMessage msgRegexp;
-    @FindByJQuery(value = "span[id$=sizeMsg]")
+    @FindBy(css = "span[id$=sizeMsg]")
     private RichFacesMessage msgSize;
-    @FindByJQuery("span[id$=stringSizeMsg]")
+    @FindBy(css = "span[id$=stringSizeMsg]")
     private RichFacesMessage msgStringSize;
 
-    @FindByJQuery("input[id$=setCorrectValuesButton]")
+    @FindBy(css = "input[id$=setCorrectValuesButton]")
     private WebElement setCorrectBtn;
-    @FindByJQuery(value = "input[id$=setWrongValuesButton]")
+    @FindBy(css = "input[id$=setWrongValuesButton]")
     private WebElement setWrongBtn;
 
     /**
