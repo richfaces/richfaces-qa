@@ -69,26 +69,12 @@
                                 </c:when>
 
                                 <c:otherwise>
-                                    <c:choose>
-                                        <ui:remove>
-                                            <!-- When attribute starts with 'on', then add event on double clicking the input to fill the input with function which invokes an alert. -->
-                                        </ui:remove>
-                                        <c:when test="#{fn:startsWith(entry.key,'on')}">
-                                            <h:inputText id="#{entry.key}Input"
-                                                         value="#{entry.value.value}"
-                                                         style="width: 200px;"
-                                                         onchange="#{cc.attrs.type == 'server' ? 'submit()' : 'submitAjax()'}"
-                                                         ondblclick="attributesOndblclick(this, '#{entry.key}', '#{cc.attrs.value.getBeanClass().getSimpleName()}')"
-                                                         />
-                                        </c:when>
-                                        <c:otherwise>
-                                            <h:inputText id="#{entry.key}Input"
-                                                         value="#{entry.value.value}"
-                                                         style="width: 200px;"
-                                                         onchange="#{cc.attrs.type == 'server' ? 'submit()' : 'submitAjax()'}"
-                                                         />
-                                        </c:otherwise>
-                                    </c:choose>
+                                    <h:inputText id="#{entry.key}Input"
+                                                 value="#{entry.value.value}"
+                                                 style="width: 200px;"
+                                                 onchange="#{cc.attrs.type == 'server' ? 'submit()' : 'submitAjax()'}"
+                                                 ondblclick="attributesOndblclick(this, '#{entry.key}', '#{cc.attrs.value.getBeanClass().getSimpleName()}')"
+                                                 />
                                 </c:otherwise>
                             </c:choose>
                         </c:if>
