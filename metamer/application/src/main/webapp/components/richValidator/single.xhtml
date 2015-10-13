@@ -47,36 +47,39 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
             <script type="text/javascript">
-            function setCorrectValues() {
-                $('input[id$=min]').val('4'); 
-            }
+                function setCorrectValues() {
+                    $('input[id$=min]').val('4');
+                }
 
-            function setWrongValues() {
-                $('input[id$=min]').val('1');
-            }
+                function setWrongValues() {
+                    $('input[id$=min]').val('1');
+                }
             </script>
 
             <input id="setCorrectValuesButton" name="setCorrectValuesButton" type="button" value="set correct values" onclick="setCorrectValues()"/>
             <input id="setWrongValuesButton" name="setWrongValuesButton" type="button" value="set wrong values" onclick="setWrongValues()"/>
 
             <h:panelGrid columns="3">
-     
-	                <h:outputLabel for="min" value="#{minBean.description}" />
-	                <h:inputText id="min" value="#{minBean.value}" label="#{minBean.label}" converter="#{minBean.converter}">
-                        <rich:validator data="#{richValidatorBean.attributes['data'].value}"
-                                disabled="#{richValidatorBean.attributes['disabled'].value}"
-                                immediate="#{richValidatorBean.attributes['immediate'].value}"
-                                onbeforedomupdate="#{richValidatorBean.attributes['onbeforedomupdate'].value}"
-                                onbeforesubmit="#{richValidatorBean.attributes['onbeforesubmit'].value}"
-                                onbegin="#{richValidatorBean.attributes['onbegin'].value}"
-                                oncomplete="#{richValidatorBean.attributes['oncomplete'].value}"
-                                onerror="#{richValidatorBean.attributes['onerror'].value}"
-                                queueId="#{richValidatorBean.attributes['queueId'].value}"
-                                status="#{richValidatorBean.attributes['status'].value}"
-                                event="blur" />
-                    </h:inputText>
-	                <rich:message id="minMsg" for="min" />
- 
+
+                <h:outputLabel for="min" value="#{minBean.description}" />
+                <h:inputText id="min" value="#{minBean.value}" label="#{minBean.label}" converter="#{minBean.converter}">
+                    <rich:validator data="#{richValidatorBean.attributes['data'].value}"
+                                    disabled="#{richValidatorBean.attributes['disabled'].value}"
+                                    immediate="#{richValidatorBean.attributes['immediate'].value}"
+                                    listener="#{richValidatorBean.attributes.listener}"
+                                    onbeforedomupdate="#{richValidatorBean.attributes['onbeforedomupdate'].value}"
+                                    onbeforesubmit="#{richValidatorBean.attributes['onbeforesubmit'].value}"
+                                    onbegin="#{richValidatorBean.attributes['onbegin'].value}"
+                                    oncomplete="#{richValidatorBean.attributes['oncomplete'].value}"
+                                    onerror="#{richValidatorBean.attributes['onerror'].value}"
+                                    oninvalid="#{richValidatorBean.attributes['oninvalid'].value}"
+                                    onvalid="#{richValidatorBean.attributes['onvalid'].value}"
+                                    queueId="#{richValidatorBean.attributes['queueId'].value}"
+                                    status="#{richValidatorBean.attributes['status'].value}"
+                                    event="blur" />
+                </h:inputText>
+                <rich:message id="minMsg" for="min" />
+
             </h:panelGrid>
 
             <br/>
