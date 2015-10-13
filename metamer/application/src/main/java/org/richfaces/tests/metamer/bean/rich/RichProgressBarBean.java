@@ -26,9 +26,9 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import org.richfaces.tests.metamer.Attribute;
 
 import org.richfaces.component.UIProgressBar;
+import org.richfaces.tests.metamer.Attribute;
 import org.richfaces.tests.metamer.Attributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

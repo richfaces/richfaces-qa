@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.validation;
 
 import java.math.BigDecimal;
+
 import javax.faces.bean.ManagedBean;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;

@@ -31,11 +31,11 @@ import org.richfaces.resource.SerializableResource;
 public class MediaData implements SerializableResource {
 
     private static final long serialVersionUID = 1L;
-    int height = 120;
-    int width = 300;
-    Integer color;
-    float scale;
-    String text;
+    private Integer color;
+    private int height = 120;
+    private float scale;
+    private String text;
+    private int width = 300;
 
     public MediaData() {
         text = "RichFaces 4.0";
@@ -47,39 +47,39 @@ public class MediaData implements SerializableResource {
         return color;
     }
 
-    public void setColor(Integer color) {
-        this.color = color;
+    public int getHeight() {
+        return height;
     }
 
     public float getScale() {
         return scale;
     }
 
-    public void setScale(float scale) {
-        this.scale = scale;
-    }
-
     public String getText() {
         return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 
     public int getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
+    public void setColor(Integer color) {
+        this.color = color;
     }
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public void setScale(float scale) {
+        this.scale = scale;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
     }
 }

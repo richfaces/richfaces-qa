@@ -21,10 +21,10 @@
  */
 package org.richfaces.tests.metamer;
 
-import org.richfaces.tests.metamer.model.Labeled;
-
 import java.io.Serializable;
 import java.util.Comparator;
+
+import org.richfaces.tests.metamer.model.Labeled;
 
 /**
  * @author <a href="http://community.jboss.org/people/bleathem">Brian Leathem</a>

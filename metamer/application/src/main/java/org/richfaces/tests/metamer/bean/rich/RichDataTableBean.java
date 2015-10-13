@@ -172,11 +172,8 @@ public class RichDataTableBean implements Serializable {
 
             public boolean accept(Employee e) {
                 String sex = (String) getFiltering().get("sex");
-                if (sex == null || sex.length() == 0 || sex.equalsIgnoreCase("all")
-                        || sex.equalsIgnoreCase(e.getSex().toString())) {
-                    return true;
-                }
-                return false;
+                return sex == null || sex.length() == 0 || sex.equalsIgnoreCase("all")
+                    || sex.equalsIgnoreCase(e.getSex().toString());
             }
         };
     }

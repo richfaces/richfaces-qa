@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.model;
 
 import java.awt.Color;
+
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**

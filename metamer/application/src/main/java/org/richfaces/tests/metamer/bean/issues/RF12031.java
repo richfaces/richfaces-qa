@@ -20,11 +20,7 @@ public class RF12031 {
     private String firstName;
 
     public void toggleRender() {
-        if (!mustRenderThePanel) {
-            mustRenderThePanel = true;
-        } else {
-            mustRenderThePanel = false;
-        }
+        mustRenderThePanel = !mustRenderThePanel;
     }
 
     public boolean isMustRenderThePanel() {

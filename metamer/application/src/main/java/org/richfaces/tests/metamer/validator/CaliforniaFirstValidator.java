@@ -21,16 +21,12 @@
  */
 package org.richfaces.tests.metamer.validator;
 
-import java.util.List;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
-
-import org.richfaces.tests.metamer.model.Capital;
 
 /**
  * Custom validator for capital names.
@@ -40,7 +36,7 @@ public class CaliforniaFirstValidator implements Validator {
 
     public static final String VALIDATOR_ERROR_MSG = "California has to be the first state.";
     private static final FacesMessage MESSAGE = new FacesMessage(FacesMessage.SEVERITY_ERROR, VALIDATOR_ERROR_MSG,
-            VALIDATOR_ERROR_MSG);
+        VALIDATOR_ERROR_MSG);
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {

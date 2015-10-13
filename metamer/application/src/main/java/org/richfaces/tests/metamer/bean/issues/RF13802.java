@@ -5,8 +5,10 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
+
 /**
  * This is bean for reproducer issue rf-13802.
+ *
  * @author mtomasek Martin Tomasek
  *
  */
@@ -14,6 +16,8 @@ import javax.faces.event.ActionEvent;
 @ManagedBean(name = "rf13802")
 @SessionScoped
 public class RF13802 implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String value;
     private int counter = 0;

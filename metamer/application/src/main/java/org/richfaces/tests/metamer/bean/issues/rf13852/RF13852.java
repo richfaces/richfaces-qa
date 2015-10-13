@@ -11,16 +11,13 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 
 import org.richfaces.component.UIExtendedDataTable;
-import org.richfaces.tests.metamer.bean.issues.RowFiller;
 import org.richfaces.component.UISelect;
+import org.richfaces.tests.metamer.bean.issues.RowFiller;
 
 @ViewScoped
 @ManagedBean(name = "rf13852")
 public class RF13852 implements Serializable {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
     private List<String> selectLOV;
     private List<RowFiller> rowFiller = new ArrayList<RowFiller>();
@@ -37,7 +34,6 @@ public class RF13852 implements Serializable {
     }
 
     public void newRowBtnAction(AjaxBehaviorEvent event) {
-
         RowFiller newRow = new RowFiller();
         newRow.setRecordNumber(currentRecordNumber++);
         if (rowFiller.size() == 0) {
@@ -48,7 +44,6 @@ public class RF13852 implements Serializable {
     }
 
     public void clearAllBtnAction(AjaxBehaviorEvent event) {
-
         if (rowFiller != null) {
             rowFiller.clear();
         }
@@ -65,29 +60,17 @@ public class RF13852 implements Serializable {
     }
 
     public void selectionListener(AjaxBehaviorEvent event) {
-
         UIExtendedDataTable dataTable = (UIExtendedDataTable) event.getComponent();
-
         Object originalKey = dataTable.getRowKey();
-
         if (getSelection() != null) {
-
             for (Object selectionKey : getSelection()) {
-
                 dataTable.setRowKey(selectionKey);
-
                 if (dataTable.isRowAvailable()) {
-
                     currentRow = (RowFiller) dataTable.getRowData();
-
                 }// end if data row is available check
-
             }// end key loop
-
             dataTable.setRowKey(originalKey);
-
         }// end selection object existence verification
-
     }
 
     public void textOneAction(AjaxBehaviorEvent event) {

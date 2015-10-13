@@ -13,6 +13,8 @@ import org.richfaces.focus.FocusManager;
 @SessionScoped
 public class RF13251 implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private String actionResult;
 
     public RF13251() {

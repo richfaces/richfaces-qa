@@ -25,8 +25,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * An implementation of list for storing templates. This list ensures that the last item
- * in list is always template "plain".
+ * An implementation of list for storing templates. This list ensures that the last item in list is always template "plain".
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 21299 $
@@ -35,6 +34,7 @@ public class TemplatesList extends ArrayList<Template> {
 
     public static final String ITEMS_SEPARATOR_COMMANDLINE = "\\+";
     public static final String ITEMS_SEPARATOR_WEB = ">";
+    private static final long serialVersionUID = 1L;
 
     public TemplatesList() {
         super.add(Template.PLAIN);

@@ -23,6 +23,7 @@ package org.richfaces.tests.metamer.validation;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.faces.bean.ManagedBean;
 import javax.validation.constraints.Size;
 

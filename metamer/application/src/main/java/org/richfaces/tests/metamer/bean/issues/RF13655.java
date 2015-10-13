@@ -24,12 +24,15 @@ package org.richfaces.tests.metamer.bean.issues;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 @ManagedBean(name = "rf13655")
 @SessionScoped
 public class RF13655 implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     List<String> items = new ArrayList<String>();
 

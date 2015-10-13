@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer;
 
 import java.io.IOException;
 import java.security.Principal;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -33,6 +34,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
+
 import org.richfaces.tests.metamer.bean.UserBean;
 
 /**

@@ -2,7 +2,6 @@ package org.richfaces.tests.metamer.bean.issues;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;

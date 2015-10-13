@@ -21,12 +21,12 @@
  */
 package org.richfaces.tests.metamer.bean.abstractions;
 
-import com.google.common.collect.Lists;
-
 import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.model.SelectItem;
+
+import com.google.common.collect.Lists;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>

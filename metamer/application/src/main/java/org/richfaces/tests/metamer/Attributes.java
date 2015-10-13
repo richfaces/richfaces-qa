@@ -242,7 +242,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
      * Loads help strings from property file.
      */
     private void loadHelp() {
-        ResourceBundle rb = null;
+        ResourceBundle rb;
         try {
             rb = ResourceBundle.getBundle(beanClass.getName());
         } catch (MissingResourceException mre) {
@@ -250,8 +250,8 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
         }
 
         Enumeration<String> keys = rb.getKeys();
-        String key = null;
-        Attribute attribute = null;
+        String key;
+        Attribute attribute;
 
         while (keys.hasMoreElements()) {
             key = keys.nextElement();
@@ -270,7 +270,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
      * @return map where key is attribute's name and value is list of select items usable to select attribute value
      */
     private void loadSelectOptions() {
-        ResourceBundle rb = null;
+        ResourceBundle rb;
         try {
             rb = ResourceBundle.getBundle(beanClass.getName());
         } catch (MissingResourceException mre) {
@@ -278,13 +278,13 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
         }
 
         Enumeration<String> keys = rb.getKeys();
-        String key = null;
+        String key;
 
         // e.g. attr.action.toUpperCaseAction
         Pattern pattern = Pattern.compile("(.*)\\.(.*)\\.(.*)");
-        Matcher matcher = null;
-        SelectItem item = null;
-        Attribute attribute = null;
+        Matcher matcher;
+        SelectItem item;
+        Attribute attribute;
 
         while (keys.hasMoreElements()) {
             key = keys.nextElement();
@@ -455,7 +455,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
      */
     public String action() {
         ELContext elContext = FacesContext.getCurrentInstance().getELContext();
-        MethodExpression method = null;
+        MethodExpression method;
 
         if (attributes.get("action") == null) {
             return null;
@@ -659,7 +659,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
         // not all attributes of given class are needed
         Set<String> excludeSet = getExcludeSet();
-        Attribute attribute = null;
+        Attribute attribute;
         // create list of all attributes and their types
         for (PropertyDescriptor descriptor : descriptors) {
             if (!excludeSet.contains(descriptor.getName())) {
