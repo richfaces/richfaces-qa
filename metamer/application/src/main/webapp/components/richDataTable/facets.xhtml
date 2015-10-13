@@ -107,14 +107,25 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </f:facet>
 
                 <f:facet name="header">
-                    <h:outputText 	id="header" value="#{richDataTableBean.facets['header']}"
-                                   rendered="#{not empty richDataTableBean.facets['header']}" />
+                    <rich:columnGroup id="headerFacetGroup" rendered="#{not empty richDataTableBean.facets['header']}">
+                        <rich:column id="headerFacetRow1Col1" colspan="2">
+                            <h:outputText value="Header facet row 1 col1 (#{richDataTableBean.facets['header']})" />
+                        </rich:column>
+                        <rich:column id="headerFacetRow2Col1" breakRowBefore="true">
+                            <h:outputText value="Header facet row 2 col1" />
+                        </rich:column>
+                        <rich:column id="headerFacetRow2Col2">
+                            <h:outputText value="Header facet row 2 col2" />
+                        </rich:column>
+                    </rich:columnGroup>
                 </f:facet>
 
-                <rich:column id="columnState" sortBy="#{record.state}">
+                <rich:column id="columnState">
                     <f:facet name="header">
-                        <h:outputText id="columnHeaderState" value="#{richDataTableBean.facets['columnStateHeader']}"
-                                      rendered="#{not empty richDataTableBean.facets['columnStateHeader']}"/>
+                        <rich:column>
+                            <h:outputText id="columnHeaderState" value="#{richDataTableBean.facets['columnStateHeader']}"
+                                          rendered="#{not empty richDataTableBean.facets['columnStateHeader']}"/>
+                        </rich:column>
                     </f:facet>
 
                     <h:outputText value="#{record.state}" />
@@ -124,10 +135,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </f:facet>
                 </rich:column>
 
-                <rich:column id="columnCapital" sortBy="#{record.name}">
+                <rich:column id="columnCapital">
                     <f:facet name="header">
-                        <h:outputText id="columnHeaderCapital" value="#{richDataTableBean.facets['columnCapitalHeader']}"
-                                      rendered="#{not empty richDataTableBean.facets['columnCapitalHeader']}"/>
+                        <rich:column>
+                            <h:outputText id="columnHeaderCapital" value="#{richDataTableBean.facets['columnCapitalHeader']}"
+                                          rendered="#{not empty richDataTableBean.facets['columnCapitalHeader']}"/>
+                        </rich:column>
                     </f:facet>
 
                     <h:outputText value="#{record.name}" />
@@ -138,8 +151,17 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </rich:column>
 
                 <f:facet name="footer">
-                    <h:outputText id="footer" value="#{richDataTableBean.facets['footer']}"
-                                  rendered="#{not empty richDataTableBean.facets['footer']}" />
+                    <rich:columnGroup id="footerFacetGroup" rendered="#{not empty richDataTableBean.facets['footer']}">
+                        <rich:column id="footerFacetRow1Col1" colspan="2">
+                            <h:outputText value="Footer facet row 1 col1 (#{richDataTableBean.facets['footer']})" />
+                        </rich:column>
+                        <rich:column id="footerFacetRow2Col1" breakRowBefore="true">
+                            <h:outputText value="Footer facet row 2 col1" />
+                        </rich:column>
+                        <rich:column id="footerFacetRow2Col2">
+                            <h:outputText value="Footer facet row 2 col2" />
+                        </rich:column>
+                    </rich:columnGroup>
                 </f:facet>
 
             </rich:dataTable>
