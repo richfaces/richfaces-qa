@@ -87,6 +87,12 @@ public class TestDataTableFilteringBuiltIn extends DataTableFilteringTest {
     }
 
     @Test
+    @CoversAttributes("limitRender")
+    public void testLimitRender() {
+        testLimitRender(ajaxAction);
+    }
+
+    @Test
     @CoversAttributes("filterVar")
     public void testNumberOfKids() {
         super.testFilterNumberOfKindsBuiltIn();
@@ -102,5 +108,11 @@ public class TestDataTableFilteringBuiltIn extends DataTableFilteringTest {
     @CoversAttributes("oncomplete")
     public void testOncomplete() {
         testFireEvent("oncomplete", ajaxAction);
+    }
+
+    @Test
+    @CoversAttributes("render")
+    public void testRender() {
+        testRender(ajaxAction);
     }
 }

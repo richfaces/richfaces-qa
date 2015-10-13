@@ -1,6 +1,7 @@
 package org.richfaces.tests.metamer.ftest.richDataTable;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.MultipleCoversAttributes;
@@ -11,22 +12,41 @@ import org.testng.annotations.Test;
 
 public class TestDataTableSortingBuiltIn extends DataTableSortingTest {
 
-    @FindByJQuery("table.rf-dt[id$=richDataTable]")
-    private SortingDT table;
+    private final Action ajaxAction = new Action() {
+        @Override
+        public void perform() {
+            getTable().getHeader().sortByName(true);
+        }
+    };
 
-    @Override
-    public SortingDT getTable() {
-        return table;
-    }
+    @FindByJQuery(value = "table.rf-dt[id$=richDataTable]")
+    private SortingDT table;
 
     @Override
     public String getComponentTestPagePath() {
         return "richDataTable/builtInFilteringAndSorting.xhtml";
     }
 
+    @Override
+    public SortingDT getTable() {
+        return table;
+    }
+
     @BeforeTest
     public void setUp() {
         super.setBuiltIn(true);
+    }
+
+    @Test
+    @CoversAttributes("limitRender")
+    public void testLimitRender() {
+        testLimitRender(ajaxAction);
+    }
+
+    @Test
+    @CoversAttributes("render")
+    public void testRender() {
+        testRender(ajaxAction);
     }
 
     @Test
