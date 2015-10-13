@@ -55,13 +55,15 @@
         </ui:define>
 
         <ui:define name="component">
-            <rich:dataTable id="richDataTable" captionClass="#{richDataTableBean.attributes['captionClass'].value}"
+            <rich:dataTable id="richDataTable"
+                            captionClass="#{richDataTableBean.attributes['captionClass'].value}"
                             columnClasses="#{richDataTableBean.attributes['columnClasses'].value}"
                             data="#{richDataTableBean.attributes['data'].value}"
                             first="#{richDataTableBean.attributes['first'].value}"
                             footerClass="#{richDataTableBean.attributes['footerClass'].value}"
                             headerClass="#{richDataTableBean.attributes['headerClass'].value}"
                             keepSaved="#{richDataTableBean.attributes['keepSaved'].value}"
+                            limitRender="#{richDataTableBean.attributes['limitRender'].value}"
                             noDataLabel="#{richDataTableBean.attributes['noDataLabel'].value}"
                             onbeforedomupdate="#{richDataTableBean.attributes['onbeforedomupdate'].value}"
                             oncomplete="#{richDataTableBean.attributes['oncomplete'].value}"
@@ -75,6 +77,7 @@
                             onrowmouseout="#{richDataTableBean.attributes['onrowmouseout'].value}"
                             onrowmouseover="#{richDataTableBean.attributes['onrowmouseover'].value}"
                             onrowmouseup="#{richDataTableBean.attributes['onrowmouseup'].value}"
+                            render="#{richDataTableBean.attributes['render'].value}"
                             rendered="#{richDataTableBean.attributes['rendered'].value}"
                             rowClass="#{richDataTableBean.attributes['rowClass'].value}"
                             rowClasses="#{richDataTableBean.attributes['rowClasses'].value}"
