@@ -21,20 +21,42 @@
  */
 package org.richfaces.tests.metamer.ftest.richValidator;
 
+import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
 /**
  * Selenium tests for page faces/components/richValidator/csv.xhtml
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision: 22997 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestValidatorsCSV extends AbstractValidatorsTest {
 
     @Override
     public String getComponentTestPagePath() {
         return "richValidator/csv.xhtml";
+    }
+
+    public Action getSuccessfulAjaxValidationAction() {
+        return new CustomAction(getPage().getInputDecimalMinMax(), "5", true);
+    }
+
+    public Action getSuccessfulNonAjaxValidationAction() {
+        return new CustomAction(getPage().getInputMax(), "-10", false);
+    }
+
+    public Action getUnsuccessfulAjaxValidationAction() {
+        return new CustomAction(getPage().getInputDecimalMinMax(), "100", true);
+    }
+
+    public Action getUnsuccessfulNonAjaxValidationAction() {
+        return new CustomAction(getPage().getInputMax(), "100", false);
     }
 
     @Test
@@ -56,6 +78,14 @@ public class TestValidatorsCSV extends AbstractValidatorsTest {
     @Test
     public void testBooleanTrue() {
         verifyBooleanTrue();
+    }
+
+    @Test
+    @CoversAttributes("data")
+    public void testData() {
+        // needs ajax request
+        testData(getSuccessfulAjaxValidationAction());
+        testData(getUnsuccessfulAjaxValidationAction());
     }
 
     @Test
@@ -89,9 +119,74 @@ public class TestValidatorsCSV extends AbstractValidatorsTest {
     }
 
     @Test
+    @CoversAttributes("onbeforedomupdate")
+    public void testOnbeforedomupdate() {
+        // needs ajax request
+        testFireEvent("onbeforedomupdate", getSuccessfulAjaxValidationAction());
+        testFireEvent("onbeforedomupdate", getUnsuccessfulAjaxValidationAction());
+    }
+
+    @Test
+    @CoversAttributes("onbeforesubmit")
+    public void testOnbeforesubmit() {
+        // needs ajax request
+        testFireEvent("onbeforesubmit", getSuccessfulAjaxValidationAction());
+        testFireEvent("onbeforesubmit", getUnsuccessfulAjaxValidationAction());
+    }
+
+    @Test
+    @CoversAttributes("onbegin")
+    public void testOnbegin() {
+        // needs ajax request
+        testFireEvent("onbegin", getSuccessfulAjaxValidationAction());
+        testFireEvent("onbegin", getUnsuccessfulAjaxValidationAction());
+    }
+
+    @Test
+    @CoversAttributes("oncomplete")
+    public void testOncomplete() {
+        // needs ajax request
+        testFireEvent("oncomplete", getSuccessfulAjaxValidationAction());
+        testFireEvent("oncomplete", getUnsuccessfulAjaxValidationAction());
+    }
+
+    @Test
+    @CoversAttributes({ "listener", "onerror" })
+    public void testOnerror() {
+        // needs ajax request
+        setAttribute("listener", "causeAjaxErrorListener");
+        testFireEvent("onerror", getSuccessfulAjaxValidationAction());
+        testFireEvent("onerror", getUnsuccessfulAjaxValidationAction());
+    }
+
+    @Test
+    @Templates("plain")
+    @CoversAttributes("oninvalid")
+    public void testOninvalid() {
+        testFireEvent("oninvalid", getUnsuccessfulNonAjaxValidationAction());
+        testFireEvent("oninvalid", getUnsuccessfulAjaxValidationAction());
+    }
+
+    @Test
+    @Templates("plain")
+    @CoversAttributes("onvalid")
+    public void testOnvalid() {
+        testFireEvent("onvalid", getSuccessfulNonAjaxValidationAction());
+        testFireEvent("onvalid", getSuccessfulAjaxValidationAction());
+    }
+
+    @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11035")
     public void testSelectionSize() {
         verifySelectionSize();
+    }
+
+    @Test
+    @CoversAttributes("status")
+    public void testStatus() {
+        // needs ajax request
+        testStatus(getSuccessfulAjaxValidationAction());
+        testStatus(getUnsuccessfulAjaxValidationAction());
     }
 
     @Test
@@ -122,5 +217,29 @@ public class TestValidatorsCSV extends AbstractValidatorsTest {
     @Test
     public void testTextRegExp() {
         verifyRegExp();
+    }
+
+    private final class CustomAction implements Action {
+
+        private final WebElement input;
+        private final boolean isAjax;
+        private final String value;
+
+        public CustomAction(WebElement input, String value, boolean isAjax) {
+            this.input = input;
+            this.value = value;
+            this.isAjax = isAjax;
+        }
+
+        @Override
+        public void perform() {
+            // have to clear the value with JS or there will be unwanted request when invoking 'input.clear()'
+            Utils.jQ("val('')", input);
+            // set value
+            input.sendKeys(value);
+            // blur >>> validation will be triggered
+            WebElement blurElement = getMetamerPage().getResponseDelayElement();
+            (isAjax ? Graphene.guardAjax(blurElement) : blurElement).click();
+        }
     }
 }
