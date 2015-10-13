@@ -30,10 +30,13 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import java.util.List;
+
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
+import org.openqa.selenium.WebElement;
 import org.richfaces.PanelMenuMode;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
@@ -61,6 +64,32 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
 
     private int getExpandedGroupsCount() {
         return getPage().getPanelMenu().advanced().getAllExpandedGroups().size();
+    }
+
+    @Test
+    @CoversAttributes("activeItem")
+    public void testActiveItem() {
+        // https://issues.jboss.org/browse/RF-13104
+        // the activeItem is a String, so it cannot change dynamically to actual selected item
+        // TODO: refactor the test after issue RF-13104 is resolved
+        List<WebElement> selectedItems = getPage().getPanelMenu().advanced().getAllSelectedItems();
+        assertEquals(selectedItems.size(), 0);
+
+        panelMenuAttributes.set(PanelMenuAttributes.activeItem, "item3");
+        selectedItems = getPage().getPanelMenu().advanced().getAllSelectedItems();
+        assertEquals(selectedItems.size(), 1);
+        assertEquals(selectedItems.get(0).getText(), "Item 3");
+
+        panelMenuAttributes.set(PanelMenuAttributes.activeItem, "item1");
+        selectedItems = getPage().getPanelMenu().advanced().getAllSelectedItems();
+        assertEquals(selectedItems.size(), 1);
+        assertEquals(selectedItems.get(0).getText(), "Item 1");
+
+        panelMenuAttributes.set(PanelMenuAttributes.activeItem, "item241");
+        getPage().getPanelMenu().expandGroup("Group 2").expandGroup("Group 2.4");
+        selectedItems = getPage().getPanelMenu().advanced().getAllSelectedItems();
+        assertEquals(selectedItems.size(), 1);
+        assertEquals(selectedItems.get(0).getText(), "Item 2.4.1");
     }
 
     @Test
