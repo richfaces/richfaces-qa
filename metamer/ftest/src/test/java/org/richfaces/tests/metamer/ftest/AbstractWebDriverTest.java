@@ -50,6 +50,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -304,12 +305,16 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     protected String expectedReturnJS(String script, String expectedValue, Object... args) {
         String result = null;
         for (int i = 0; i < TRIES; i++) {
-            Object executedScriptResult = executeJS(script, args);
-            if (executedScriptResult != null) {
-                result = ((String) executedScriptResult).trim();
-                if (result.equals(expectedValue)) {
-                    return result;
+            try {
+                Object executedScriptResult = executeJS(script, args);
+                if (executedScriptResult != null) {
+                    result = (String.valueOf(executedScriptResult)).trim();
+                    if (result.equals(expectedValue)) {
+                        return result;
+                    }
                 }
+            } catch (WebDriverException ignored) {
+                // e.g. when retrieved property is not defined
             }
             waiting(100);
         }
