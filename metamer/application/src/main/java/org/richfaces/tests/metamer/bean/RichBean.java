@@ -32,6 +32,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
+import javax.el.ELContext;
 import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
 import javax.faces.bean.ManagedBean;
@@ -87,8 +88,9 @@ public class RichBean implements Serializable {
     public static void logToPage(String msg) {
         FacesContext ctx = FacesContext.getCurrentInstance();
         ExpressionFactory factory = ctx.getApplication().getExpressionFactory();
-        ValueExpression exp = factory.createValueExpression(ctx.getELContext(), "#{phasesBean.phases}", List.class);
-        List<String> phases = (List<String>) exp.getValue(ctx.getELContext());
+        ELContext elContext = ctx.getELContext();
+        ValueExpression exp = factory.createValueExpression(elContext, "#{phasesBean.phases}", List.class);
+        List<String> phases = (List<String>) exp.getValue(elContext);
         phases.add(msg);
     }
 
@@ -282,6 +284,15 @@ public class RichBean implements Serializable {
         logToPage("* action invoked [end]");
         dummyBooleanResp = !dummyBooleanResp;
         return null;
+    }
+
+    /**
+     * An action that just logs message to the page.
+     */
+    public void dummyListener(AjaxBehaviorEvent event) {
+        RichBean.logToPage("* listener invoked");
+        // force phasesPanel to render
+        FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("phasesPanel");
     }
 
     private void filterComponents() {
