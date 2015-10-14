@@ -37,14 +37,15 @@
                 Simple page that contains <b>rich:validator</b> testing the support for JSR-303 and input boxes for all validator's attributes.
             </metamer:testPageLink>
 
+            <metamer:testPageLink id="customMessages" outcome="customMessages"
+                                  value="Client Side Validation With Custom Validator Messages">
+                Page demonstrating issue <a href="https://issues.jboss.org/browse/RF-12511">RF-12511</a>.
+                <br /><b>Automated in:</b> org.richfaces.tests.metamer.ftest.richValidator.TestCustomMessages
+            </metamer:testPageLink>
+
             <metamer:testPageLink id="jsr303" outcome="jsr303"
                                   value="JSR-303 Bean Validation">
                 Page containing input with various JSR-303 validators.
-            </metamer:testPageLink>
-
-            <metamer:testPageLink id="wrapping" outcome="wrapping"
-                                  value="Client side validation for many inputs wrapped by rich:validator">
-                Simple page that contains many inputs within <b>rich:validator</b>
             </metamer:testPageLink>
 
             <metamer:testPageLink id="single" outcome="single"
@@ -52,10 +53,13 @@
                 Simple page that contains simple inputs within <b>rich:validator</b>
             </metamer:testPageLink>
 
-            <metamer:testPageLink id="customMessages" outcome="customMessages"
-                                  value="Client Side Validation With Custom Validator Messages">
-                Page demonstrating issue <a href="https://issues.jboss.org/browse/RF-12511">RF-12511</a>.
-                <br /><b>Automated in:</b> org.richfaces.tests.metamer.ftest.richValidator.TestCustomMessages
+            <metamer:testPageLink id="singleWithQueues" outcome="singleWithQueues" value="Client side validation for only one input component with two queues">
+                Simple page that contains one input with <b>rich:validator</b> and input boxes for all its attributes and 2 <b>a4j:queue</b> with different @requestDelays.
+            </metamer:testPageLink>
+
+            <metamer:testPageLink id="wrapping" outcome="wrapping"
+                                  value="Client side validation for many inputs wrapped by rich:validator">
+                Simple page that contains many inputs within <b>rich:validator</b>
             </metamer:testPageLink>
 
             <metamer:testPageLink id="rf-12031" outcome="rf-12031" value="RF-12031">

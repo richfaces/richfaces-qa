@@ -46,52 +46,49 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <script type="text/javascript">
-                function setCorrectValues() {
-                    $('input[id$=min]').val('4');
-                }
-
-                function setWrongValues() {
-                    $('input[id$=min]').val('1');
-                }
-            </script>
-
-            <input id="setCorrectValuesButton" name="setCorrectValuesButton" type="button" value="set correct values" onclick="setCorrectValues()"/>
-            <input id="setWrongValuesButton" name="setWrongValuesButton" type="button" value="set wrong values" onclick="setWrongValues()"/>
+            <p>
+                There are two queues with names: <b>q1</b> (@requestDelay 1500ms) and <b>q2</b> (@requestDelay 500ms).
+                To use one of these queues, set the @queueId attribute to the name of selected queue.
+                The counted delay between request created and request completed is saved to <b>span#delay</b>.
+            </p>
 
             <h:panelGrid columns="3">
-
-                <h:outputLabel for="min" value="#{minBean.description}" />
-                <h:inputText id="min" value="#{minBean.value}" label="#{minBean.label}" converter="#{minBean.converter}">
+                <h:outputLabel for="input" value="#{decimalMinMaxBean.description}" />
+                <h:inputText id="input"
+                             converter="#{decimalMinMaxBean.converter}"
+                             label="#{decimalMinMaxBean.label}"
+                             onblur="window.t1 = new Date().getTime();"
+                             size="40"
+                             value="#{decimalMinMaxBean.value}"
+                             >
                     <rich:validator data="#{richValidatorBean.attributes['data'].value}"
                                     disabled="#{richValidatorBean.attributes['disabled'].value}"
+                                    event="blur"
                                     immediate="#{richValidatorBean.attributes['immediate'].value}"
                                     listener="#{richValidatorBean.attributes.listener}"
                                     onbeforedomupdate="#{richValidatorBean.attributes['onbeforedomupdate'].value}"
                                     onbeforesubmit="#{richValidatorBean.attributes['onbeforesubmit'].value}"
                                     onbegin="#{richValidatorBean.attributes['onbegin'].value}"
-                                    oncomplete="#{richValidatorBean.attributes['oncomplete'].value}"
+                                    oncomplete="$('#delay').html(new Date().getTime()-window.t1);#{richValidatorBean.attributes['oncomplete'].value}"
                                     onerror="#{richValidatorBean.attributes['onerror'].value}"
                                     oninvalid="#{richValidatorBean.attributes['oninvalid'].value}"
                                     onvalid="#{richValidatorBean.attributes['onvalid'].value}"
+                                    queueId="#{richValidatorBean.attributes['queueId'].value}"
                                     status="#{richValidatorBean.attributes['status'].value}"
-                                    event="blur" />
+                                    />
                 </h:inputText>
-                <rich:message id="minMsg" for="min" />
-
+                <rich:message id="inputMsg" for="input" />
             </h:panelGrid>
-
             <br/>
-
-            <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
-            <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
-
+            delay: <span id="delay">-</span> [ms]
+            <a4j:queue name="q1" requestDelay="1500" />
+            <a4j:queue name="q2" requestDelay="500" />
             <br/>
             <rich:messages id="msgs"/>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
-            <metamer:attributes value="#{richValidatorBean.attributes}" id="attributes" exclude="queueId"/>
+            <metamer:attributes value="#{richValidatorBean.attributes}" id="attributes"/>
         </ui:define>
 
     </ui:composition>
