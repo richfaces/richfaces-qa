@@ -49,7 +49,7 @@ public class TestMediaOutputImagePng extends AbstractMediaOutputTest {
     }
 
     @Test(groups = "smoke")
-    @CoversAttributes({ "element", "mimeType", "uriAttribute" })
+    @CoversAttributes({ "createContent", "element", "mimeType", "uriAttribute" })
     public void init() {
         URL imageURL = buildUrl(contextPath, mediaOutput.getAttribute("src"));
 
