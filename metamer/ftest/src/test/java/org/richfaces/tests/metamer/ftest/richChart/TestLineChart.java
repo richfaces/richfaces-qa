@@ -51,9 +51,8 @@ public class TestLineChart extends AbstractChartTest {
 
     @Test
     @Templates("plain")
-    @CoversAttributes("onplotclick")
-    public void testOnplotclickClientSide() {
-
+    @CoversAttributes({ "onplotclick", "plotClickListener" })
+    public void testOnplotclick() {
         final String plotClick = "Point with index 0 within series 0 was clicked";
 
         // retrieve plot offset in canvas via JS (coordinates differ based on browser)
@@ -62,20 +61,7 @@ public class TestLineChart extends AbstractChartTest {
 
         new Actions(driver).moveToElement(page.getChartCanvas(), x, y).click().build().perform();
         waitAjax(driver).until().element(page.getPlotClickMessage()).text().contains(plotClick);
-    }
-
-    @Test
-    @Templates("plain")
-    @CoversAttributes("onplotclick")
-    public void testOnplotclickServerSide() {
-
-        final String plotClick = "Point with index 0 within series 0 was clicked";
-
-        // retrieve plot offset in canvas via JS (coordinates differ based on browser)
-        int x = chartJS.pointXPos(page.getChartId(), 0, 0);
-        int y = chartJS.pointYPos(page.getChartId(), 0, 0);
-
-        new Actions(driver).moveToElement(page.getChartCanvas(), x, y).click().build().perform();
+        // plotClickListener
         waitAjax(driver).until().element(page.getServerSideMessage()).text().contains(plotClick);
     }
 
