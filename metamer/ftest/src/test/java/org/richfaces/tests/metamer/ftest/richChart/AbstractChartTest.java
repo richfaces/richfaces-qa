@@ -60,6 +60,11 @@ public abstract class AbstractChartTest extends AbstractWebDriverTest {
         assertNotPresent(page.getChartElement(), "Chart should not be rendered.");
     }
 
+    @CoversAttributes("style")
+    public void testStyle() {
+        testStyle(page.getChartElement());
+    }
+
     @CoversAttributes("styleClass")
     public void testStyleClass() {
         testStyleClass(page.getChartElement());

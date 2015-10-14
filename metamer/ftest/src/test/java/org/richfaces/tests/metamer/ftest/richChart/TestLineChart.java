@@ -27,7 +27,9 @@ import static org.testng.Assert.assertNotEquals;
 
 import org.jboss.arquillian.graphene.javascript.JavaScript;
 import org.openqa.selenium.interactions.Actions;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -49,8 +51,59 @@ public class TestLineChart extends AbstractChartTest {
 
     @Test
     @Templates("plain")
+    @CoversAttributes("onplotclick")
+    public void testOnplotclickClientSide() {
+
+        final String plotClick = "Point with index 0 within series 0 was clicked";
+
+        // retrieve plot offset in canvas via JS (coordinates differ based on browser)
+        int x = chartJS.pointXPos(page.getChartId(), 0, 0);
+        int y = chartJS.pointYPos(page.getChartId(), 0, 0);
+
+        new Actions(driver).moveToElement(page.getChartCanvas(), x, y).click().build().perform();
+        waitAjax(driver).until().element(page.getPlotClickMessage()).text().contains(plotClick);
+    }
+
+    @Test
+    @Templates("plain")
+    @CoversAttributes("onplotclick")
+    public void testOnplotclickServerSide() {
+
+        final String plotClick = "Point with index 0 within series 0 was clicked";
+
+        // retrieve plot offset in canvas via JS (coordinates differ based on browser)
+        int x = chartJS.pointXPos(page.getChartId(), 0, 0);
+        int y = chartJS.pointYPos(page.getChartId(), 0, 0);
+
+        new Actions(driver).moveToElement(page.getChartCanvas(), x, y).click().build().perform();
+        waitAjax(driver).until().element(page.getServerSideMessage()).text().contains(plotClick);
+    }
+
+    @Test
+    @Templates("plain")
+    @CoversAttributes("onplothover")
+    public void testOnplothover() {
+        // retrieve plot offset in canvas via JS (coordinates differ based on browser)
+        int x = chartJS.pointXPos(page.getChartId(), 0, 0);
+        int y = chartJS.pointYPos(page.getChartId(), 0, 0);
+
+        // now move over the plot and wait until the text changes
+        new Actions(driver).moveToElement(page.getChartCanvas(), x, y).build().perform();
+        waitAjax(driver).until().element(page.getPlotHoverMessage()).text().contains("USA [1990,19.1]");
+    }
+
+    @Test
+    @Templates("plain")
     public void testRendered() {
         super.testRendered();
+    }
+
+    @Test
+    @Skip
+    @IssueTracking("https://issues.jboss.org/browse/RF-14176")
+    @Templates("plain")
+    public void testStyle() {
+        super.testStyle();
     }
 
     @Test
@@ -96,48 +149,5 @@ public class TestLineChart extends AbstractChartTest {
 
         // assert that this equals initial state, only x axis is zoomed
         assertEquals(xBeforeZoom, xZoomReset);
-    }
-
-    @Test
-    @Templates("plain")
-    @CoversAttributes("onplotclick")
-    public void testOnplotclickClientSide() {
-
-        final String plotClick = "Point with index 0 within series 0 was clicked";
-
-        // retrieve plot offset in canvas via JS (coordinates differ based on browser)
-        int x = chartJS.pointXPos(page.getChartId(), 0, 0);
-        int y = chartJS.pointYPos(page.getChartId(), 0, 0);
-
-        new Actions(driver).moveToElement(page.getChartCanvas(), x, y).click().build().perform();
-        waitAjax(driver).until().element(page.getPlotClickMessage()).text().contains(plotClick);
-    }
-
-    @Test
-    @Templates("plain")
-    @CoversAttributes("onplotclick")
-    public void testOnplotclickServerSide() {
-
-        final String plotClick = "Point with index 0 within series 0 was clicked";
-
-        // retrieve plot offset in canvas via JS (coordinates differ based on browser)
-        int x = chartJS.pointXPos(page.getChartId(), 0, 0);
-        int y = chartJS.pointYPos(page.getChartId(), 0, 0);
-
-        new Actions(driver).moveToElement(page.getChartCanvas(), x, y).click().build().perform();
-        waitAjax(driver).until().element(page.getServerSideMessage()).text().contains(plotClick);
-    }
-
-    @Test
-    @Templates("plain")
-    @CoversAttributes("onplothover")
-    public void testOnplothover() {
-        // retrieve plot offset in canvas via JS (coordinates differ based on browser)
-        int x = chartJS.pointXPos(page.getChartId(), 0, 0);
-        int y = chartJS.pointYPos(page.getChartId(), 0, 0);
-
-        // now move over the plot and wait until the text changes
-        new Actions(driver).moveToElement(page.getChartCanvas(), x, y).build().perform();
-        waitAjax(driver).until().element(page.getPlotHoverMessage()).text().contains("USA [1990,19.1]");
     }
 }
