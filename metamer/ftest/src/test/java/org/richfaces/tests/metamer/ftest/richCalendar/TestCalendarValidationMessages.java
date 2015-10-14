@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.ftest.richCalendar;
 import static org.testng.Assert.assertEquals;
 
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractValidationMessagesTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.Test;
 
 /**
@@ -66,6 +67,7 @@ public class TestCalendarValidationMessages extends AbstractValidationMessagesTe
     }
 
     @Test
+    @CoversAttributes("validator")
     @Override
     public void testJSFMessagesJSF() {
         page.setWrongValuesAndSubmitJSF();
