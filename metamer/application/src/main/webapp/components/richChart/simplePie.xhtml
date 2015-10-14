@@ -39,13 +39,16 @@
             <ui:include src="/components/richChart/script.xhtml"/>
 
             <rich:chart id="chart"
-                        title="#{chartPieBean.attributes['title'].value}"
-                        styleClass="#{chartPieBean.attributes['styleClass'].value}"
+                        hooks="#{chartPieBean.attributes['hooks'].value}"
+                        onmouseout="#{chartPieBean.attributes['onmouseout'].value}"
                         onplotclick="#{chartPieBean.attributes['onplotclick'].value}"
                         onplothover="#{chartPieBean.attributes['onplothover'].value}"
-                        onmouseout="#{chartPieBean.attributes['onmouseout'].value}"
                         plotClickListener="#{chartPieBean.handler}"
-                        rendered="#{chartPieBean.attributes['rendered'].value}">
+                        rendered="#{chartPieBean.attributes['rendered'].value}"
+                        style="#{chartPieBean.attributes['styleClass'].value}"
+                        styleClass="#{chartPieBean.attributes['styleClass'].value}"
+                        title="#{chartPieBean.attributes['title'].value}"
+                        >
                 <rich:chartLegend sorting="ascending" />
                 <rich:chartSeries data="#{chartPieBean.pie}" type="pie" />
                 <a4j:ajax event="plotclick" render="msg" execute="msg" />

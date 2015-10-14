@@ -39,13 +39,16 @@
             <ui:include src="/components/richChart/script.xhtml"/>
 
             <rich:chart id="chart" 
-                        title="#{chartBarBean.attributes['title'].value}"
-                        styleClass="#{chartBarBean.attributes['styleClass'].value}"
+                        hooks="#{chartBarBean.attributes['hooks'].value}"
+                        onmouseout="#{chartBarBean.attributes['onmouseout'].value}"
                         onplotclick="#{chartBarBean.attributes['onplotclick'].value}" 
                         onplothover="#{chartBarBean.attributes['onplothover'].value}"
-                        onmouseout="#{chartBarBean.attributes['onmouseout'].value}"
                         plotClickListener="#{chartBarBean.handler}"
-                        rendered="#{chartBarBean.attributes['rendered'].value}">
+                        rendered="#{chartBarBean.attributes['rendered'].value}"
+                        style="#{chartBarBean.attributes['styleClass'].value}"
+                        styleClass="#{chartBarBean.attributes['styleClass'].value}"
+                        title="#{chartBarBean.attributes['title'].value}"
+                        >
                 <rich:chartLegend sorting="ascending" />
                 <a4j:repeat value="#{chartBarBean.gdp}" var="country">
                     <rich:chartSeries label="#{country.state}" type="bar">
