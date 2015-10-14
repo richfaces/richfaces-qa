@@ -35,6 +35,12 @@ public class TestBarChart extends AbstractChartTest {
 
     @Test
     @Templates("plain")
+    public void testHooks() {
+        super.testHooks();
+    }
+
+    @Test
+    @Templates("plain")
     public void testOnmouseout() {
         super.testOnmouseout();
     }

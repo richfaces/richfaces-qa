@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richChart;
 
 import static org.jboss.arquillian.graphene.Graphene.waitAjax;
+import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.interactions.Action;
@@ -39,6 +40,14 @@ public abstract class AbstractChartTest extends AbstractWebDriverTest {
 
     @Page
     protected ChartSimplePage page;
+
+    @CoversAttributes("hooks")
+    public void testHooks() {
+        assertEquals(expectedReturnJS("return hooksInvoked", null), null, "Hooks should not be called yet.");
+        chartAttributes.set(ChartAttributes.hooks, "hooksInvoked = true");
+        // the hooks are called on chart rendering, setting the attribute should reload the page and invoke the hooks
+        assertEquals(expectedReturnJS("return hooksInvoked", "true"), "true", "Hooks should be called by now.");
+    }
 
     @CoversAttributes("onmouseout")
     public void testOnmouseout() {
