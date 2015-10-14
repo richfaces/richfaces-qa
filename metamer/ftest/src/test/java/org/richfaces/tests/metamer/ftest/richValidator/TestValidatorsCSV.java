@@ -21,12 +21,16 @@
  */
 package org.richfaces.tests.metamer.ftest.richValidator;
 
+import javax.faces.event.PhaseId;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.common.Utils;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -86,6 +90,24 @@ public class TestValidatorsCSV extends AbstractValidatorsTest {
         // needs ajax request
         testData(getSuccessfulAjaxValidationAction());
         testData(getUnsuccessfulAjaxValidationAction());
+    }
+
+    @Test
+    @Skip
+    @IssueTracking("https://issues.jboss.org/browse/RF-14174")
+    @CoversAttributes({ "immediate", "listener" })
+    public void testImmediate() {
+        final String listenerMsg = "listener invoked";
+        attsSetter()
+            .setAttribute("listener").toValue("dummyListener")
+            .setAttribute("immediate").toValue(false)
+            .asSingleAction().perform();
+        getSuccessfulAjaxValidationAction().perform();
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, listenerMsg);
+
+        setAttribute("immediate", false);
+        getUnsuccessfulAjaxValidationAction().perform();
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, listenerMsg);
     }
 
     @Test
