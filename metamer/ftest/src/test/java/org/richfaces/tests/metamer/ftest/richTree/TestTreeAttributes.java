@@ -37,10 +37,12 @@ import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.MultipleCoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
+import org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes;
 import org.testng.annotations.Test;
 
 import com.google.common.base.Optional;
@@ -346,7 +348,10 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
-    @CoversAttributes({ "rendered", "nodeType" })// @nodeType -- used in facelet, for each node type
+    @MultipleCoversAttributes(value = {
+        @CoversAttributes({ "rendered", "nodeType" }),// @nodeType -- used in facelet, for each node type (country, company, cd)
+        @CoversAttributes(value = "type", attributeEnumClass = TreeNodeAttributes.class)// @type is connected with @nodeType
+    })
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     @Templates("plain")
     public void testRendered() {
