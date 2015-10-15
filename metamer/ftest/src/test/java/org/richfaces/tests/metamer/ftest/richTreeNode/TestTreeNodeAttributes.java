@@ -29,6 +29,8 @@ import static org.testng.Assert.assertTrue;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.component.SwitchType;
 import org.richfaces.fragment.common.Actions;
 import org.richfaces.fragment.common.Event;
@@ -48,6 +50,11 @@ import com.google.common.base.Optional;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestTreeNodeAttributes extends AbstractTreeTest {
+
+    @FindBy(css = "[id$='collapseAll']")
+    private WebElement collapseAllButton;
+    @FindBy(css = "[id$='expandAll']")
+    private WebElement expandAllButton;
 
     private TreeNode getFirstNode() {
         return tree.advanced().getFirstNode();
@@ -73,6 +80,20 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     public void testDir() {
         testHTMLAttribute(getFirstNode().advanced().getNodeInfoElement(), firstNodeAttributes, TreeNodeAttributes.dir, "rtl");
         testHTMLAttribute(getFirstNode().advanced().getNodeInfoElement(), firstNodeAttributes, TreeNodeAttributes.dir, "ltr");
+    }
+
+    @Test
+    @CoversAttributes("expanded")
+    @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
+    public void testExpanded() {
+        assertEquals(tree.advanced().getNodesExpanded().size(), 0);
+        assertEquals(tree.advanced().getNodesCollapsed().size(), 4);
+        Graphene.guardAjax(expandAllButton).click();// sets @expanded of all nodes to true
+        assertEquals(tree.advanced().getNodesExpanded().size(), 4);
+        assertEquals(tree.advanced().getNodesCollapsed().size(), 0);
+        Graphene.guardAjax(collapseAllButton).click();// sets @expanded of all nodes to false
+        assertEquals(tree.advanced().getNodesExpanded().size(), 0);
+        assertEquals(tree.advanced().getNodesCollapsed().size(), 4);
     }
 
     @Test
