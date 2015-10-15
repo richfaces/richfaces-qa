@@ -44,6 +44,8 @@ import com.google.common.base.Predicate;
  */
 public class TestJQueryAttributes extends AbstractWebDriverTest {
 
+    private static final String RETURN_METAMER_EVENTS = "return metamerEvents";
+
     @FindBy(css = "input[id$=addComponentButton]")
     private WebElement addLiveComponent;
     @FindBy(css = "#jQueryTestButton")
@@ -56,6 +58,11 @@ public class TestJQueryAttributes extends AbstractWebDriverTest {
 
     private Color getButtonColor() {
         return ColorUtils.convertToAWTColor(button.getCssValue("color"));
+    }
+
+    @Override
+    public String getComponentTestPagePath() {
+        return "richJQuery/simple.xhtml";
     }
 
     private void setupDomReadyTypeAttributes() {
@@ -76,11 +83,6 @@ public class TestJQueryAttributes extends AbstractWebDriverTest {
             .asSingleAction().perform();
     }
 
-    @Override
-    public String getComponentTestPagePath() {
-        return "richJQuery/simple.xhtml";
-    }
-
     @Test
     @CoversAttributes("attachType")
     public void testAttachTypeLive() {
@@ -94,7 +96,7 @@ public class TestJQueryAttributes extends AbstractWebDriverTest {
                 WebElement component = liveTestComponent.get(i - 1);
                 String message = component.getText();
                 component.click();
-                String events = expectedReturnJS("return metamerEvents", message);
+                String events = expectedReturnJS(RETURN_METAMER_EVENTS, message);
                 assertEquals(events, message);
             }
         }
@@ -110,18 +112,17 @@ public class TestJQueryAttributes extends AbstractWebDriverTest {
             .asSingleAction().perform();
 
         button.click();
-        String events = expectedReturnJS("return metamerEvents", "first");
-        assertEquals(events, "first");
+        String expectedEvent = "first";
+        assertEquals(expectedReturnJS(RETURN_METAMER_EVENTS, expectedEvent), expectedEvent);
         button.click();
         button.click();
-        events = expectedReturnJS("return metamerEvents", "first");
-        assertEquals(events, "first", "There should be only one event fired when @attachType is set to 'one'.");
+        assertEquals(expectedReturnJS(RETURN_METAMER_EVENTS, expectedEvent), expectedEvent, "There should be only one event fired when @attachType is set to 'one'.");
+        expectedEvent = "one attachType rebound event";
         for (int i = 0; i < 3; i++) {
             executeJS("metamerEvents=''");
             rebind.click();
             button.click();
-            events = expectedReturnJS("return metamerEvents", "one attachType rebound event");
-            assertEquals(events, "one attachType rebound event");
+            assertEquals(expectedReturnJS(RETURN_METAMER_EVENTS, expectedEvent), expectedEvent);
         }
     }
 
