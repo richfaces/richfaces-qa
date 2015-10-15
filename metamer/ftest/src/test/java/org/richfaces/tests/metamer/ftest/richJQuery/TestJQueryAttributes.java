@@ -103,7 +103,7 @@ public class TestJQueryAttributes extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
-    @CoversAttributes({ "attachType", "event", "query", "selector", "timing" })
+    @CoversAttributes({ "attachType", "event", "name", "query", "selector", "timing" })
     public void testAttachTypeOne() {
         setupImmediateTypeAttributes();
         attsSetter()
