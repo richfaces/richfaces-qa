@@ -135,6 +135,21 @@ public class TestJQueryAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("rendered")
+    public void testRendered() {
+        jQueryAttributes.set(JQueryAttributes.rendered, false);
+        String expectedEvent = "";
+        button.click();
+        assertEquals(expectedReturnJS(RETURN_METAMER_EVENTS, expectedEvent), expectedEvent);
+
+        jQueryAttributes.set(JQueryAttributes.rendered, true);
+        expectedEvent = "immediate attachment";
+        button.click();
+        assertEquals(expectedReturnJS(RETURN_METAMER_EVENTS, expectedEvent), expectedEvent);
+
+    }
+
+    @Test
     @CoversAttributes({ "event", "query", "selector", "timing" })
     public void testTimingDomReady() {
         setupDomReadyTypeAttributes();
