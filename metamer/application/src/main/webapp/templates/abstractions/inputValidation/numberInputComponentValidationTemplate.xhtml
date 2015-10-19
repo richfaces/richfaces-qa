@@ -46,7 +46,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
             <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
             <br/><br/>
-            <h:panelGrid columns="4">
+            <style type="text/css">
+                /* the created validation message will not shift used template */
+                .col4 {
+                    width: 300px;
+                }
+            </style>
+
+            <h:panelGrid columns="4" columnClasses="col1,col2,col3,col4">
                 min 2:
                 <ui:insert name="min"/>
                 <input id="minCorrect" name="minCorrect" type="button" value="set correct value" onclick="setCorrectValues('min')"/>
