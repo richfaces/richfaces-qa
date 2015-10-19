@@ -19,44 +19,40 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.metamer.ftest.richOrderingList;
+package org.richfaces.tests.metamer.ftest.richInplaceSelect;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.fragment.orderingList.RichFacesOrderingList;
+import org.richfaces.fragment.inplaceSelect.RichFacesInplaceSelect;
 import org.richfaces.tests.metamer.ftest.abstractions.validator.AbstractInputComponentValidatorTest;
 import org.testng.annotations.Test;
 
 /**
+ * Test case for page faces/components/richSelect/validator.xhtml.
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestOrderingListValidator extends AbstractInputComponentValidatorTest {
+public class TestInplaceSelectValidator extends AbstractInputComponentValidatorTest {
 
-    @FindBy(css = "div[id$=component]")
-    protected RichFacesOrderingList orderingList;
-    @FindBy(css = "input[id$=submitButton]")
-    protected WebElement submitButton;
+    private static final int NOT_PHOENIX = 10;
+    private static final String PHOENIX = "Phoenix";
+
+    @FindBy(css = "[id$=component]")
+    private RichFacesInplaceSelect select;
 
     @Override
     public String getComponentTestPagePath() {
-        return "richOrderingList/validator.xhtml";
+        return "richInplaceSelect/validator.xhtml";
     }
 
     @Override
     protected void setCorrectValue() {
-        orderingList.select("Phoenix").putItBefore(0);
-        submit();
+        Graphene.guardAjax(select).select(PHOENIX);
     }
 
     @Override
     protected void setIncorrectValue() {
-        orderingList.select("Denver").putItBefore(0);
-        submit();
-    }
-
-    protected void submit() {
-        Graphene.guardHttp(submitButton).click();
+        Graphene.guardAjax(select).select(NOT_PHOENIX);
     }
 
     @Test

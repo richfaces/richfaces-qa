@@ -23,13 +23,8 @@ package org.richfaces.tests.metamer.ftest.richSelect;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.fragment.select.RichFacesSelect;
-import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
-import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.validator.CaliforniaFirstValidator;
-import org.testng.Assert;
+import org.richfaces.tests.metamer.ftest.abstractions.validator.AbstractInputComponentValidatorTest;
 import org.testng.annotations.Test;
 
 /**
@@ -37,34 +32,31 @@ import org.testng.annotations.Test;
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestSelectValidator extends AbstractWebDriverTest {
+public class TestSelectValidator extends AbstractInputComponentValidatorTest {
 
-    private final Attributes<SelectAttributes> selectAttributes = getAttributes();
+    private static final int NOT_PHOENIX = 10;
+    private static final String PHOENIX = "Phoenix";
 
-    @FindBy(css = "div[id$=select]")
+    @FindBy(css = "div[id$=component]")
     private RichFacesSelect select;
-    @FindBy(css = "[id$=message]")
-    private RichFacesMessage message;
 
     @Override
     public String getComponentTestPagePath() {
         return "richSelect/validator.xhtml";
     }
 
+    @Override
+    protected void setCorrectValue() {
+        Graphene.guardAjax(select.openSelect()).select(PHOENIX);
+    }
+
+    @Override
+    protected void setIncorrectValue() {
+        Graphene.guardAjax(select.openSelect()).select(NOT_PHOENIX);
+    }
+
     @Test
-    @CoversAttributes({ "validator", "validatorMessage" })
-    public void testValidatorMessage() {
-        String customMessage = "Custom message!";
-        Graphene.guardAjax(select.openSelect()).select(10);
-        Assert.assertTrue(message.advanced().isVisible(), "Validator message should be visible");
-        Assert.assertEquals(message.getDetail(), CaliforniaFirstValidator.VALIDATOR_ERROR_MSG);
-
-        selectAttributes.set(SelectAttributes.validatorMessage, customMessage);
-        Graphene.guardAjax(select.openSelect()).select(10);
-        Assert.assertTrue(message.advanced().isVisible(), "Validator message should be visible");
-        Assert.assertEquals(message.getDetail(), customMessage);
-
-        Graphene.guardAjax(select.openSelect()).select("California");
-        Assert.assertFalse(message.advanced().isVisible(), "Validator message should not be visible");
+    public void testValidator() {
+        super.testValidator();
     }
 }

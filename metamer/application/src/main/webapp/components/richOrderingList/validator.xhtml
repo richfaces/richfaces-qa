@@ -4,7 +4,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:r="http://richfaces.org/rich"
+      xmlns:rich="http://richfaces.org/rich"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <!--
@@ -40,40 +40,40 @@
         </ui:define>
 
         <ui:define name="component">
+            #{validatorBean.defaultMessage}
+            <br/>
             <h:commandButton id="submitButton" value="submit"/>
             <br/>
-            <c:choose >
-                <c:when test="#{not empty richOrderingListBean.validatorMessage}">
-                    <r:orderingList id="orderingList"
-                                    collectionType="#{richOrderingListBean.collectionType}"
-                                    itemLabel="#{capital.name}"
-                                    itemValue="#{capital}"
-                                    validator="org.richfaces.PhoenixFirstValidator"
-                                    validatorMessage="#{richOrderingListBean.validatorMessage}"
-                                    value="#{richOrderingListBean.capitals}"
-                                    var="capital">
+            <c:choose>
+                <c:when test="#{not empty validatorBean.validatorMessage}">
+                    <rich:orderingList id="component"
+                                       itemLabel="#{capital.name}"
+                                       itemValue="#{capital}"
+                                       validator="#{validatorBean.validateString}"
+                                       validatorMessage="#{validatorBean.validatorMessage}"
+                                       value="#{validatorBean.capitals}"
+                                       var="capital">
                         <f:converter converterId="capitalConverter" />
-                    </r:orderingList>
+                    </rich:orderingList>
                 </c:when>
                 <c:otherwise>
-                    <r:orderingList id="orderingList"
-                                    collectionType="#{richOrderingListBean.collectionType}"
-                                    itemLabel="#{capital.name}"
-                                    itemValue="#{capital}"
-                                    validator="org.richfaces.PhoenixFirstValidator"
-                                    value="#{richOrderingListBean.capitals}"
-                                    var="capital">
+                    <rich:orderingList id="component"
+                                       itemLabel="#{capital.name}"
+                                       itemValue="#{capital}"
+                                       validator="#{validatorBean.validateString}"
+                                       value="#{validatorBean.capitals}"
+                                       var="capital">
                         <f:converter converterId="capitalConverter" />
-                    </r:orderingList>
+                    </rich:orderingList>
                 </c:otherwise>
             </c:choose>
-            <r:message id="message" for="orderingList"/>
+            <rich:message id="message" for="component"/>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
             Validator message:
             <h:inputText id="validatorMessageInput"
-                         value="#{richOrderingListBean.validatorMessage}"
+                         value="#{validatorBean.validatorMessage}"
                          onchange="submit();"/>
         </ui:define>
 

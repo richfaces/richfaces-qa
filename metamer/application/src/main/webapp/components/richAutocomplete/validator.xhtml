@@ -43,23 +43,21 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/>
             <c:choose>
                 <c:when test="#{not empty validatorBean.validatorMessage}">
-                    <rich:select id="component"
-                                 validator="#{validatorBean.validateString}"
-                                 validatorMessage="#{validatorBean.validatorMessage}"
-                                 value="#{validatorBean.value}"
-                                 valueChangeListener="#{richBean.valueChangeListener}">
-                        <f:selectItems value="#{validatorBean.capitalsSelectItems}" />
+                    <rich:autocomplete id="component"
+                                       validator="#{validatorBean.validateString}"
+                                       validatorMessage="#{validatorBean.validatorMessage}"
+                                       value="#{validatorBean.value}"
+                                       valueChangeListener="#{richBean.valueChangeListener}">
                         <a4j:ajax event="change"/>
-                    </rich:select>
+                    </rich:autocomplete>
                 </c:when>
                 <c:otherwise>
-                    <rich:select id="component"
-                                 validator="#{validatorBean.validateString}"
-                                 value="#{validatorBean.value}"
-                                 valueChangeListener="#{richBean.valueChangeListener}">
-                        <f:selectItems value="#{validatorBean.capitalsSelectItems}" />
+                    <rich:autocomplete id="component"
+                                       validator="#{validatorBean.validateString}"
+                                       value="#{validatorBean.value}"
+                                       valueChangeListener="#{richBean.valueChangeListener}">
                         <a4j:ajax event="change"/>
-                    </rich:select>
+                    </rich:autocomplete>
                 </c:otherwise>
             </c:choose>
             <rich:message id="message" for="component"/>
