@@ -31,19 +31,17 @@ import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.bean.ConverterBean;
 import org.richfaces.tests.metamer.converter.SwitchableFailingConverter;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
-import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 
 /**
  * Base for testing of @converter and @converterMessage of input components.
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public abstract class AbstractConverterTest extends AbstractWebDriverTest {
 
     private static final String CUSTOM_CONVERTER_MESSAGE = "Custom converter message";
-    private final Attributes<ConverterAttributes> attributes = getAttributes();
 
     @FindBy(css = "[id$=output]")
     private WebElement output;
@@ -94,25 +92,20 @@ public abstract class AbstractConverterTest extends AbstractWebDriverTest {
     }
 
     private String getOutputText() {
-        return output.getText();
+        return output.getText().trim();
     }
 
     private void setConverterMessage(String message) {
-        attributes.set(ConverterAttributes.converterMessage, message);
+        setAttribute("converterMessage", message);
     }
 
     private void setFailing(boolean willFail) {
-        attributes.set(ConverterAttributes.failingConverter, willFail);
+        setAttribute("failingConverter", willFail);
     }
 
     protected abstract void setBadValue();
 
     private void submitAjax() {
         MetamerPage.waitRequest(ajaxSubmitButton, WaitRequestType.XHR).click();
-    }
-
-    private enum ConverterAttributes implements AttributeEnum {
-
-        converterMessage, failingConverter;
     }
 }
