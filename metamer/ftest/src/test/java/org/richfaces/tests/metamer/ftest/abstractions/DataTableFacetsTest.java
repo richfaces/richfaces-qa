@@ -37,8 +37,8 @@ import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
  */
 public abstract class DataTableFacetsTest extends AbstractDataTableTest {
 
-    private static final String SAMPLE_STRING = "Abc123!@#ĚščСам";
-    private static final String EMPTY_STRING = "";
+    protected static final String SAMPLE_STRING = "Abc123!@#ĚščСам";
+    protected static final String EMPTY_STRING = "";
 
     private final Attributes<DataTableAttributes> dataTableAttributes = getAttributes();
     private final Attributes<DataTableFacets> dataTableFacets = getAttributes();

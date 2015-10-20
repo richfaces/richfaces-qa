@@ -21,16 +21,22 @@
  */
 package org.richfaces.tests.metamer.ftest.richDataTable;
 
+import static java.text.MessageFormat.format;
+
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
+import org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFacetsTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SimpleDT;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
 /**
@@ -38,6 +44,10 @@ import org.testng.annotations.Test;
  */
 @Templates("plain")
 public class TestDataTableFacets extends DataTableFacetsTest {
+
+    private final Attributes<DataTableFacets> dataTableFacets = getAttributes();
+
+    private static final String HEADER_FACET_TEXT_TEMPLATE = "Header facet row 1 col1 ({0})";
 
     @FindBy(css = "table.rf-dt[id$=richDataTable]")
     private SimpleDT table;
@@ -113,7 +123,7 @@ public class TestDataTableFacets extends DataTableFacetsTest {
     @Test
     @CoversAttributes("footerCellClass")
     public void testFooterCellClass() {
-        testTableStyleClass("footerCellClass", "rf-dt-ftr-c", 1);// 1 row
+        testTableStyleClass("footerCellClass", "rf-dt-ftr-c", 3);// 3 cells
     }
 
     @Test
@@ -125,7 +135,7 @@ public class TestDataTableFacets extends DataTableFacetsTest {
     @Test
     @CoversAttributes("headerCellClass")
     public void testHeaderCellClass() {
-        testTableStyleClass("headerCellClass", "rf-dt-hdr-c", 1);// 1 row
+        testTableStyleClass("headerCellClass", "rf-dt-hdr-c", 3);// 3 cells
     }
 
     @Test
@@ -136,7 +146,16 @@ public class TestDataTableFacets extends DataTableFacetsTest {
 
     @Test
     public void testHeaderFacet() {
-        super.testHeaderFacet();
+        dataTableFacets.set(DataTableFacets.header, SAMPLE_STRING);
+        assertEquals(getTable().getHeader().getHeaderText(), format(HEADER_FACET_TEXT_TEMPLATE, SAMPLE_STRING));
+
+        dataTableFacets.set(DataTableFacets.header, EMPTY_STRING);
+        if (new WebElementConditionFactory(getTable().advanced().getHeaderElement()).isPresent().apply(driver)) {
+            assertEquals(getTable().advanced().getHeaderElement().getText(), EMPTY_STRING);
+        } else {
+            dataTableFacets.set(DataTableFacets.header, SAMPLE_STRING);
+            assertEquals(getTable().advanced().getHeaderElement().getText(), format(HEADER_FACET_TEXT_TEMPLATE, SAMPLE_STRING));
+        }
     }
 
     @Test
