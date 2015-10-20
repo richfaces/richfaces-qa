@@ -92,7 +92,7 @@
                                           columnHeaderFirstClass="#{richSubTableBean.attributes['columnHeaderFirstClass'].value}"
                                           expandMode="#{richSubTableBean.attributes['expandMode'].value}"
                                           expanded="#{richSubTableBean.expanded[list]}"
-                                          filterVar="filterVar"
+                                          filterVar="filterValue"
                                           first="#{richSubTableBean.attributes['first'].value}"
                                           firstColumnFooterClass="#{richSubTableBean.attributes['firstColumnFooterClass'].value}"
                                           firstRowClass="#{richSubTableBean.attributes['firstRowClass'].value}"
@@ -127,14 +127,14 @@
                                           var="item">
 
                     <rich:column id="columnName"
-                                 filterExpression="#{fn:containsIgnoreCase(item.name, filterVar)}"
+                                 filterExpression="#{empty filterValue || fn:containsIgnoreCase(item.name, filterValue)}"
                                  filterValue="#{list[0].sex == 'MALE' ? richSubTableBean.filtering['name-men']:richSubTableBean.filtering['name-women']}"
                                  sortBy="#{item.name}"
                                  sortOrder="#{list[0].sex == 'MALE' ? richSubTableBean.sorting['name-men'].order : richSubTableBean.sorting['name-women'].order}">
                         <h:outputText id="name" value="#{item.name}" />
                     </rich:column>
                     <rich:column id="columnTitle"
-                                 filterExpression="#{empty (list[0].sex == 'MALE' ? richSubTableBean.filtering['title-men']:richSubTableBean.filtering['title-women']) || item.title ==(list[0].sex == 'MALE' ? richSubTableBean.filtering['title-men']:richSubTableBean.filtering['title-women'])}"
+                                 filterExpression="#{empty filterValue || item.title == filterValue}"
                                  filterValue="#{list[0].sex == 'MALE' ? richSubTableBean.filtering['title-men']:richSubTableBean.filtering['title-women']}"
                                  sortBy="#{item.title}"
                                  sortOrder="#{list[0].sex == 'MALE' ? richSubTableBean.sorting['title-men'].order : richSubTableBean.sorting['title-women'].order}">

@@ -85,7 +85,9 @@
                             sortPriority="#{richDataTableBean.attributes['sortPriority'].value}"
                             style="#{richDataTableBean.attributes['style'].value}"
                             styleClass="#{richDataTableBean.attributes['styleClass'].value}"
-                            value="#{richDataTableBean.state ? model.employees : null}" var="record" filterVar="filterValue">
+                            value="#{richDataTableBean.state ? model.employees : null}"
+                            var="record"
+                            filterVar="filterValue">
 
                 <f:facet name="noData">
                     <h:outputText value="There is no data." style="color: red;" />
@@ -122,7 +124,7 @@
 
                 <rich:column id="columnTitle"
                              filterValue="#{richDataTableBean.filtering['title']}"
-                             filterExpression="#{empty filterValue or record.title == richDataTableBean.filtering['title']}"
+                             filterExpression="#{empty filterValue or record.title == filterValue}"
                              sortBy="#{record.title}"
                              sortOrder="#{richDataTableBean.sorting['columnTitle'].order}">
                     <f:facet name="header">

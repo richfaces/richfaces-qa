@@ -170,7 +170,7 @@
 
                 <rich:column id="columnTitle"
                              filterValue="#{richExtendedDataTableBean.filtering['title']}"
-                             filterExpression="#{empty filterValue or record.title == richExtendedDataTableBean.filtering['title']}"
+                             filterExpression="#{empty filterValue or record.title == filterValue}"
                              sortBy="#{record.title}"
                              sortOrder="#{richExtendedDataTableBean.sorting['columnTitle'].order}">
                     <f:facet name="header">
