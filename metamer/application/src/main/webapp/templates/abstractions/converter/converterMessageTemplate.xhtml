@@ -62,12 +62,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
         <ui:define name="outOfTemplateAfter">
             <h:panelGrid columns="2">
-                failingConverter:
+                <h:outputLabel for="failingConverterInput" value="failingConverter:"/>
                 <h:selectOneRadio id="failingConverterInput" value="#{converterBean.failing}" onchange="submit()">
                     <f:selectItem itemValue="true" itemLabel="true"/>
                     <f:selectItem itemValue="false" itemLabel="false"/>
                 </h:selectOneRadio>
-                converterMessage:  <h:inputText id="converterMessageInput" value="#{converterBean.converterMessage}" onchange="submit()"/>
+                <h:outputLabel for="converterMessageInput" value="converterMessage:"/>
+                <h:inputText id="converterMessageInput" value="#{converterBean.converterMessage}" onchange="submit()"/>
             </h:panelGrid>
         </ui:define>
 
