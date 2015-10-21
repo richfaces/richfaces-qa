@@ -707,7 +707,7 @@ FSF site: http://www.fsf.org. -->
             <id>jbosseap-managed-6-4</id>
             <properties>
                 <metamer.classifier>jbas71</metamer.classifier>
-                <version.eap>6.4.3</version.eap>
+                <version.eap>6.4.4</version.eap>
             </properties>
             <dependencies>
                 <dependency>
