@@ -35,6 +35,7 @@ import javax.faces.event.PhaseId;
 
 /**
  * Converter for testing of input components @converter and @converterMessage.
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @SessionScoped
@@ -45,7 +46,7 @@ public class SwitchableFailingConverter implements Converter {
     public static final String MESSAGE_TEMPLATE = "Cannot convert parameter '%s'.";
     private boolean failing = FALSE;
 
-    private FacesMessage creatConverterMessage(Object value) {
+    private FacesMessage createConverterMessage(Object value) {
         String msg = String.format(MESSAGE_TEMPLATE, (value == null ? "" : value.toString()));
         return new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
     }
@@ -53,7 +54,7 @@ public class SwitchableFailingConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         if (failing) {
-            throw new ConverterException(creatConverterMessage(value));
+            throw new ConverterException(createConverterMessage(value));
         }
         return value;
     }
@@ -61,9 +62,8 @@ public class SwitchableFailingConverter implements Converter {
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (failing
-                && context.getCurrentPhaseId().equals(PhaseId.PROCESS_VALIDATIONS)// because of f:selectItems conversion
-                ) {
-            throw new ConverterException(creatConverterMessage(value));
+            && context.getCurrentPhaseId().equals(PhaseId.PROCESS_VALIDATIONS)) {// because of f:selectItems conversion
+            throw new ConverterException(createConverterMessage(value));
         }
         return (value == null ? "" : value.toString());
     }

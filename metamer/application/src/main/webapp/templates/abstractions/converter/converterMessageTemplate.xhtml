@@ -42,15 +42,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <p>
                 The converter will fail when @failingConverter=true and a not empty value in the input is submitted.
             </p>
+            <c:choose>
+                <c:when test="#{not empty converterBean.converterMessage}">
+                    <ui:insert name="convertableInputWithMessage"/>
+                </c:when>
+                <c:otherwise>
+                    <ui:insert name="convertableInputWithoutMessage"/>
+                </c:otherwise>
+            </c:choose>
             <a:outputPanel ajaxRendered="true">
-                <c:choose>
-                    <c:when test="#{not empty converterBean.converterMessage}">
-                        <ui:insert name="convertableInputWithMessage"/>
-                    </c:when>
-                    <c:otherwise>
-                        <ui:insert name="convertableInputWithoutMessage"/>
-                    </c:otherwise>
-                </c:choose>
                 <br/>
                 <r:message id="msg" for="convertableInput"/>
                 <br/>

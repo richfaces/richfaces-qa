@@ -23,8 +23,6 @@ package org.richfaces.tests.metamer.bean;
 
 import static java.lang.Boolean.FALSE;
 
-import com.google.common.collect.Lists;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -35,8 +33,11 @@ import javax.faces.model.SelectItem;
 
 import org.richfaces.tests.metamer.converter.SwitchableFailingConverter;
 
+import com.google.common.collect.Lists;
+
 /**
  * Bean used for testing of input components @converter and @converterMessage
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @ManagedBean(name = "converterBean")
