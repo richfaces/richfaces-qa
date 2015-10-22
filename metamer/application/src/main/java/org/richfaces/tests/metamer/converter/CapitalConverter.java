@@ -23,10 +23,11 @@ package org.richfaces.tests.metamer.converter;
 
 import java.util.List;
 
-import javax.faces.FacesException;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 
 import org.richfaces.tests.metamer.bean.Model;
@@ -44,10 +45,17 @@ public class CapitalConverter implements Converter {
     // FIXME: @ManagedProperty(value="#{model.capitals}")
     private List<Capital> capitals = Model.unmarshallCapitals();
 
+    private String capitalAsString(Capital capital) {
+        if (capital == null) {
+            return null;
+        } else {
+            return capital.getName();
+        }
+    }
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        for(Capital capital : capitals) {
+        for (Capital capital : capitals) {
             if (capitalAsString(capital).equals(value)) {
                 Capital toReturn = new Capital();
                 toReturn.setName(capital.getName());
@@ -58,17 +66,18 @@ public class CapitalConverter implements Converter {
             }
         }
         LOGGER.debug("converting [" + value + "] to object wasn't succuessful.");
-        throw new FacesException("Cannot convert parameter \"" + value + "\" to the Capital.");
+        throw new ConverterException(new FacesMessage("Cannot convert parameter \"" + value + "\" to the Capital."));
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (!(value instanceof Capital)) {
             LOGGER.debug("converting [" + value + "] to string wasn't successful.");
-            throw new FacesException("Cannot convert parameter \"" + value + "\" to the String.");
+            throw new ConverterException(new FacesMessage("Cannot convert parameter \"" + value + "\" to the String."));
         }
-        LOGGER.debug("converting object [" + value + "] to string [" + capitalAsString((Capital) value) + "].");
-        return capitalAsString((Capital) value);
+        String result = capitalAsString((Capital) value);
+        LOGGER.debug("converting object [" + value + "] to string [" + result + "].");
+        return result;
     }
 
     public List<Capital> getCapitals() {
@@ -77,14 +86,6 @@ public class CapitalConverter implements Converter {
 
     public void setCapitals(List<Capital> capitals) {
         this.capitals = capitals;
-    }
-
-    private String capitalAsString(Capital capital) {
-        if (capital == null) {
-            return null;
-        } else {
-            return capital.getName();
-        }
     }
 
 }
