@@ -21,9 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richOrderingList;
 
-import org.richfaces.tests.metamer.bean.ConverterBean;
 import org.richfaces.tests.metamer.ftest.abstractions.converter.AbstractConverterTest;
-import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.Test;
 
 /**
@@ -31,37 +29,18 @@ import org.testng.annotations.Test;
  */
 public class TestOrderingListConverter extends AbstractConverterTest {
 
-    private static final String VALUE = "VALUE";
-
-    @Override
-    protected String badValue() {
-        return VALUE;
-    }
-
     @Override
     public String getComponentName() {
         return "richOrderingList";
     }
 
     @Override
-    protected String outputForEmptyValue() {
-        return ConverterBean.DEFAULT_VALUE;
-    }
-
-    @Override
-    protected void setBadValue() {
-        // empty, in this case the converter will always fail when submitted
+    protected String getDefaultValue() {
+        return DEFAULT_VALUE_LIST;
     }
 
     @Test
-    @CoversAttributes("converter")
-    public void testConverter() {
-        checkConverter();
-    }
-
-    @Test
-    @CoversAttributes("converterMessage")
-    public void testConverterMessage() {
-        checkConverterMessage();
+    public void testConverterAndConverterMessage() {
+        super.testConverterAndConverterMessage();
     }
 }

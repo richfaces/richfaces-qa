@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:r="http://richfaces.org/rich">
+      xmlns:rich="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -38,21 +38,21 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="convertableInputWithMessage">
-            <r:select id="convertableInput"
-                      converter="#{converterBean.converter}"
-                      converterMessage="#{converterBean.converterMessage}"
-                      value="#{converterBean.converterValue}"
-                      >
-                <f:selectItems value="#{converterBean.items}"/>
-            </r:select>
+            <rich:select id="convertableInput"
+                         converter="#{converterBean.converter}"
+                         converterMessage="#{converterBean.converterMessage}"
+                         value="#{converterBean.valueCapital}"
+                         >
+                <f:selectItems value="#{converterBean.capitals}"/>
+            </rich:select>
         </ui:define>
         <ui:define name="convertableInputWithoutMessage">
-            <r:select id="convertableInput"
-                      converter="#{converterBean.converter}"
-                      value="#{converterBean.converterValue}"
-                      >
-                <f:selectItems value="#{converterBean.items}"/>
-            </r:select>
+            <rich:select id="convertableInput"
+                         converter="#{converterBean.converter}"
+                         value="#{converterBean.valueCapital}"
+                         >
+                <f:selectItems value="#{converterBean.capitals}"/>
+            </rich:select>
         </ui:define>
     </ui:composition>
 </html>

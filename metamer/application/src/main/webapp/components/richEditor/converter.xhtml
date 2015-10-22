@@ -41,14 +41,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <rich:editor id="convertableInput"
                          converter="#{converterBean.converter}"
                          converterMessage="#{converterBean.converterMessage}"
-                         value="#{converterBean.converterValue}"
+                         value="#{converterBean.valueCapital}"
                          >
             </rich:editor>
         </ui:define>
         <ui:define name="convertableInputWithoutMessage">
             <rich:editor id="convertableInput"
                          converter="#{converterBean.converter}"
-                         value="#{converterBean.converterValue}"
+                         value="#{converterBean.valueCapital}"
                          >
             </rich:editor>
         </ui:define>

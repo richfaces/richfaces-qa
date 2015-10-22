@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:r="http://richfaces.org/rich">
+      xmlns:rich="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -38,21 +38,21 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="convertableInputWithMessage">
-            <r:inputNumberSlider id="convertableInput"
-                                 converter="#{converterBean.converter}"
-                                 converterMessage="#{converterBean.converterMessage}"
-                                 enableManualInput="true"
-                                 value="#{converterBean.converterValue}"
-                                 >
-            </r:inputNumberSlider>
+            <rich:inputNumberSlider id="convertableInput"
+                                    converter="#{converterBean.converter}"
+                                    converterMessage="#{converterBean.converterMessage}"
+                                    enableManualInput="true"
+                                    value="#{converterBean.valueNumber}"
+                                    >
+            </rich:inputNumberSlider>
         </ui:define>
         <ui:define name="convertableInputWithoutMessage">
-            <r:inputNumberSlider id="convertableInput"
-                                 converter="#{converterBean.converter}"
-                                 enableManualInput="true"
-                                 value="#{converterBean.converterValue}"
-                                 >
-            </r:inputNumberSlider>
+            <rich:inputNumberSlider id="convertableInput"
+                                    converter="#{converterBean.converter}"
+                                    enableManualInput="true"
+                                    value="#{converterBean.valueNumber}"
+                                    >
+            </rich:inputNumberSlider>
         </ui:define>
     </ui:composition>
 </html>

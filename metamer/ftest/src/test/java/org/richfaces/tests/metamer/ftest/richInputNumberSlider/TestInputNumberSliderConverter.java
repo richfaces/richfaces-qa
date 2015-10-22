@@ -21,11 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richInputNumberSlider;
 
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.fragment.common.ClearType;
-import org.richfaces.fragment.inputNumberSlider.RichFacesInputNumberSlider;
 import org.richfaces.tests.metamer.ftest.abstractions.converter.AbstractConverterTest;
-import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.Test;
 
 /**
@@ -33,40 +29,18 @@ import org.testng.annotations.Test;
  */
 public class TestInputNumberSliderConverter extends AbstractConverterTest {
 
-    private static final String DEFAULT_OUTPUT = "0";
-    private static final String VALUE = "10";
-    @FindBy(css = "[id$=convertableInput]")
-    private RichFacesInputNumberSlider input;
-
-    @Override
-    protected String badValue() {
-        return VALUE;
-    }
-
-    @Override
-    protected String outputForEmptyValue() {
-        return DEFAULT_OUTPUT;
-    }
-
-    @Override
-    protected void setBadValue() {
-        input.advanced().getInput().advanced().clear(ClearType.JS).sendKeys(VALUE);
-    }
-
     @Override
     public String getComponentName() {
         return "richInputNumberSlider";
     }
 
-    @Test
-    @CoversAttributes("converter")
-    public void testConverter() {
-        checkConverter();
+    @Override
+    protected String getDefaultValue() {
+        return DEFAULT_VALUE_NUMBER;
     }
 
     @Test
-    @CoversAttributes("converterMessage")
-    public void testConverterMessage() {
-        checkConverterMessage();
+    public void testConverterAndConverterMessage() {
+        super.testConverterAndConverterMessage();
     }
 }

@@ -3,8 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:a="http://richfaces.org/a4j"
-      xmlns:r="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
       xmlns:c="http://java.sun.com/jsp/jstl/core"
       xmlns:f="http://java.sun.com/jsf/core">
 
@@ -40,8 +40,19 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
             <p>
-                The converter will fail when @failingConverter=true and a not empty value in the input is submitted.
+                To fail the conversion you can:
+                <ul>
+                    <li>set <b>@failingConverter</b> to <b>true</b> and submit the value with <b>ajax submit</b> button below</li>
+                    <li>set invalid value (invalid date for calendar, non-capital for String input) and submit the value with <b>ajax submit</b> button below</li>
+                </ul>
             </p>
+            <p>
+                Possible values for String inputs:
+            </p>
+            <rich:list value="#{converterBean.capitals}"
+                       var="item">
+                #{item.name}
+            </rich:list>
             <c:choose>
                 <c:when test="#{not empty converterBean.converterMessage}">
                     <ui:insert name="convertableInputWithMessage"/>
@@ -50,25 +61,28 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <ui:insert name="convertableInputWithoutMessage"/>
                 </c:otherwise>
             </c:choose>
-            <a:outputPanel ajaxRendered="true">
+            <a4j:outputPanel ajaxRendered="true">
                 <br/>
-                <r:message id="msg" for="convertableInput"/>
+                <rich:message id="msg" for="convertableInput"/>
                 <br/>
-                <a:commandButton id="a4jButton" value="ajax submit"/>
+                <a4j:commandButton id="a4jButton" value="ajax submit"/>
                 <br/><br/>
-                output: <h:outputText id="output" value="#{converterBean.converterValue}"/>
+                output: <h:outputText id="output" value="#{converterBean.output}"/>
                 <br/>
-            </a:outputPanel>
+            </a4j:outputPanel>
         </ui:define>
         <ui:define name="outOfTemplateAfter">
             <h:panelGrid columns="2">
                 <h:outputLabel for="failingConverterInput" value="failingConverter:"/>
-                <h:selectOneRadio id="failingConverterInput" value="#{converterBean.failing}" onchange="submit()">
+                <h:selectOneRadio id="failingConverterInput" value="#{converterBean.failing}">
                     <f:selectItem itemValue="true" itemLabel="true"/>
                     <f:selectItem itemValue="false" itemLabel="false"/>
+                    <a4j:ajax/>
                 </h:selectOneRadio>
                 <h:outputLabel for="converterMessageInput" value="converterMessage:"/>
-                <h:inputText id="converterMessageInput" value="#{converterBean.converterMessage}" onchange="submit()"/>
+                <h:inputText id="converterMessageInput" value="#{converterBean.converterMessage}">
+                    <a4j:ajax/>
+                </h:inputText>
             </h:panelGrid>
         </ui:define>
 

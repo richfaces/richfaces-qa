@@ -21,19 +21,32 @@
  */
 package org.richfaces.tests.metamer.bean;
 
-import static java.lang.Boolean.FALSE;
-
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.model.SelectItem;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
+import javax.faces.convert.DateTimeConverter;
+import javax.faces.convert.IntegerConverter;
 
-import org.richfaces.tests.metamer.converter.SwitchableFailingConverter;
-
-import com.google.common.collect.Lists;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.richfaces.component.UICalendar;
+import org.richfaces.component.UIOrderingList;
+import org.richfaces.component.UIPickList;
+import org.richfaces.component.html.HtmlInputNumberSlider;
+import org.richfaces.component.html.HtmlInputNumberSpinner;
+import org.richfaces.tests.metamer.converter.CapitalConverter;
+import org.richfaces.tests.metamer.model.Capital;
 
 /**
  * Bean used for testing of input components @converter and @converterMessage
@@ -44,74 +57,170 @@ import com.google.common.collect.Lists;
 @SessionScoped
 public class ConverterBean implements Serializable {
 
-    public static final String DEFAULT_VALUE = "";
+    public static final String ERROR_MSG = "Intentional failure of the converter";
     private static final long serialVersionUID = -1L;
-    @ManagedProperty("#{switchableFailingConverter}")
+    private List<Capital> capitals;
     private SwitchableFailingConverter converter;
 
-    private Object converterValue = DEFAULT_VALUE;
-
-    private List<SelectItem> items = Lists.newArrayList(new SelectItem("", ""), new SelectItem("VALUE", "VALUE"));
-    private List<String> converterList = Lists.newArrayList("", "VALUE");
-    private List<String> converterValueList = Lists.newArrayList();
     private String converterMessage;
-    private boolean failing = FALSE;
+    private boolean failing;
+    @ManagedProperty(value = "#{model.capitals}")
+    private List<Capital> originalCapitals;
 
-    public SwitchableFailingConverter getConverter() {
-        return converter;
+    private Capital valueCapital;
+    private Date valueDate;
+    private List<Capital> valueListOfCapitals;
+    private Number valueNumber;
+
+    public List<Capital> getCapitals() {
+        return capitals;
     }
 
-    public List<String> getConverterList() {
-        return converterList;
+    public Converter getConverter() {
+        return converter;
     }
 
     public String getConverterMessage() {
         return converterMessage;
     }
 
-    public Object getConverterValue() {
-        return converterValue;
+    public List<Capital> getOriginalCapitals() {
+        return originalCapitals;
     }
 
-    public List<String> getConverterValueList() {
-        return converterValueList;
+    public Object getOutput() {
+        switch (converter.preferedOutput) {
+            case CAPITAL:
+                return valueCapital;
+            case DATE:
+                return valueDate;
+            case LIST_OF_CAPITALS:
+                return valueListOfCapitals;
+            case NUMBER:
+                return valueNumber;
+            default:
+                throw new UnsupportedOperationException();
+        }
     }
 
-    public List<SelectItem> getItems() {
-        return items;
+    public Capital getValueCapital() {
+        return valueCapital;
+    }
+
+    public Date getValueDate() {
+        return new DateTime(valueDate).withZone(DateTimeZone.forTimeZone(TimeZone.getTimeZone("UTC+1"))).toDate();
+    }
+
+    public List<Capital> getValueListOfCapitals() {
+        return valueListOfCapitals;
+    }
+
+    public Number getValueNumber() {
+        return valueNumber;
+    }
+
+    @PostConstruct
+    public void init() {
+        converter = new SwitchableFailingConverter();
+        capitals = originalCapitals.subList(0, 10);
+        valueCapital = originalCapitals.get(0);
+        valueDate = new Date(0);
+        valueListOfCapitals = originalCapitals.subList(0, 1);
+        valueNumber = 5;
     }
 
     public boolean isFailing() {
         return failing;
     }
 
-    public void setConverter(SwitchableFailingConverter converter) {
-        this.converter = converter;
-    }
-
-    public void setConverterList(List<String> converterList) {
-        this.converterList = converterList;
-    }
-
     public void setConverterMessage(String converterMessage) {
         this.converterMessage = converterMessage;
     }
 
-    public void setConverterValue(Object converterValue) {
-        this.converterValue = converterValue;
-    }
-
-    public void setConverterValueList(List<String> converterValueList) {
-        this.converterValueList = converterValueList;
-    }
-
     public void setFailing(boolean failing) {
-        this.converterValue = "";//reset the value
         this.failing = failing;
-        this.converter.setFailing(failing);
     }
 
-    public void setItems(List<SelectItem> items) {
-        this.items = items;
+    public void setOriginalCapitals(List<Capital> originalCapitals) {
+        this.originalCapitals = originalCapitals;
+    }
+
+    public void setValueCapital(Capital valueCapital) {
+        this.valueCapital = valueCapital;
+    }
+
+    public void setValueDate(Date valueDate) {
+        this.valueDate = valueDate;
+    }
+
+    public void setValueListOfCapitals(List<Capital> valueListOfCapitals) {
+        this.valueListOfCapitals = valueListOfCapitals;
+    }
+
+    public void setValueNumber(Number valueNumber) {
+        this.valueNumber = valueNumber;
+    }
+
+    private enum PreferedOutput {
+
+        DATE, LIST_OF_CAPITALS, NUMBER, CAPITAL
+    }
+
+    private class SwitchableFailingConverter implements Converter {
+
+        private PreferedOutput preferedOutput;
+        private final DateTimeConverter dateTimeConverter = new DateTimeConverter();
+        private final CapitalConverter capitalConverter = new CapitalConverter();
+        private final IntegerConverter integerConverter = new IntegerConverter();
+        private final FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ERROR_MSG, ERROR_MSG);
+
+        private Converter getConverter() {
+            switch (preferedOutput) {
+                case CAPITAL:
+                    return capitalConverter;
+                case DATE:
+                    return dateTimeConverter;
+                case LIST_OF_CAPITALS:
+                    return capitalConverter;
+                case NUMBER:
+                    return integerConverter;
+                default:
+                    throw new UnsupportedOperationException();
+            }
+        }
+
+        @Override
+        public Object getAsObject(FacesContext fc, UIComponent uic, String string) {
+            initPreferedOutput(uic);
+            if (failing) {
+                throw new ConverterException(message);
+            }
+            return getConverter().getAsObject(fc, uic, trimParagraph(string));
+        }
+
+        @Override
+        public String getAsString(FacesContext fc, UIComponent uic, Object o) {
+            initPreferedOutput(uic);
+            if (failing) {
+                throw new ConverterException(message);
+            }
+            return getConverter().getAsString(fc, uic, o);
+        }
+
+        private String trimParagraph(String value) {
+            return value.replace("<p>", "").replace("</p>", "").trim();
+        }
+
+        private void initPreferedOutput(UIComponent c) {
+            if (c instanceof UICalendar) {
+                preferedOutput = PreferedOutput.DATE;
+            } else if (c instanceof UIPickList || c instanceof UIOrderingList) {
+                preferedOutput = PreferedOutput.LIST_OF_CAPITALS;
+            } else if (c instanceof HtmlInputNumberSpinner || c instanceof HtmlInputNumberSlider) {
+                preferedOutput = PreferedOutput.NUMBER;
+            } else {
+                preferedOutput = PreferedOutput.CAPITAL;
+            }
+        }
     }
 }

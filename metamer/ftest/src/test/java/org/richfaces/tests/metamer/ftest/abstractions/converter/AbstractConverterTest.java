@@ -25,14 +25,13 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.bean.ConverterBean;
-import org.richfaces.tests.metamer.converter.SwitchableFailingConverter;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 
 /**
  * Base for testing of @converter and @converterMessage of input components.
@@ -43,46 +42,23 @@ public abstract class AbstractConverterTest extends AbstractWebDriverTest {
 
     private static final String CUSTOM_CONVERTER_MESSAGE = "Custom converter message";
 
-    @FindBy(css = "[id$=output]")
-    private WebElement output;
+    public static final String DEFAULT_VALUE_DATE = "Thu Jan 01 01:00:00 CET 1970";
+    public static final String DEFAULT_VALUE_NUMBER = "5";
+    public static final String DEFAULT_VALUE_LIST = "[Montgomery (Alabama)]";
+    public static final String DEFAULT_VALUE_SINGLE = "Montgomery (Alabama)";
+
     @FindBy(css = "[id$=a4jButton]")
     private WebElement ajaxSubmitButton;
+    @FindBy(css = "[id$='converterMessageInput']")
+    private WebElement converterMessageInput;
+    @FindBy(css = "[id$='failingConverterInput:1']")
+    private WebElement failingConverterFalseButton;
+    @FindBy(css = "[id$='failingConverterInput:0']")
+    private WebElement failingConverterTrueButton;
     @FindBy(css = "[id$=msg]")
     private RichFacesMessage message;
-
-    protected abstract String badValue();
-
-    protected abstract String outputForEmptyValue();
-
-    public void checkConverter() {
-        assertNotVisible(message.advanced().getRootElement(), "Message should not be visible.");
-        assertEquals(getOutputText(), ConverterBean.DEFAULT_VALUE, "Output");
-
-        submitAjax();
-        assertFalse(message.advanced().isVisible(), "Message should not be visible.");
-        assertEquals(getOutputText(), outputForEmptyValue(), "Output");
-
-        setFailing(true);
-        setBadValue();
-        submitAjax();
-        assertTrue(message.advanced().isVisible(), "Message should be visible.");
-        assertEquals(message.getDetail(), String.format(SwitchableFailingConverter.MESSAGE_TEMPLATE, badValue()), "Output");
-        assertEquals(getOutputText(), ConverterBean.DEFAULT_VALUE, "Output");
-    }
-
-    public void checkConverterMessage() {
-        setConverterMessage(CUSTOM_CONVERTER_MESSAGE);
-        submitAjax();
-        assertFalse(message.advanced().isVisible(), "Message should not be visible.");
-        assertEquals(getOutputText(), outputForEmptyValue(), "Output");
-
-        setFailing(true);
-        setBadValue();
-        submitAjax();
-        assertTrue(message.advanced().isVisible(), "Message should be visible.");
-        assertEquals(message.getDetail(), CUSTOM_CONVERTER_MESSAGE);
-        assertEquals(getOutputText(), ConverterBean.DEFAULT_VALUE, "Output");
-    }
+    @FindBy(css = "[id$=output]")
+    private WebElement output;
 
     protected abstract String getComponentName();
 
@@ -91,21 +67,52 @@ public abstract class AbstractConverterTest extends AbstractWebDriverTest {
         return "" + getComponentName() + "/converter.xhtml";
     }
 
+    protected abstract String getDefaultValue();
+
     private String getOutputText() {
         return output.getText().trim();
     }
 
     private void setConverterMessage(String message) {
-        setAttribute("converterMessage", message);
+        converterMessageInput.sendKeys(message);
+        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();
     }
 
     private void setFailing(boolean willFail) {
-        setAttribute("failingConverter", willFail);
+        Graphene.guardAjax(willFail ? failingConverterTrueButton : failingConverterFalseButton).click();
     }
 
-    protected abstract void setBadValue();
-
     private void submitAjax() {
-        MetamerPage.waitRequest(ajaxSubmitButton, WaitRequestType.XHR).click();
+        Graphene.guardAjax(ajaxSubmitButton).click();
+    }
+
+    @CoversAttributes({ "converter", "converterMessage" })
+    public void testConverterAndConverterMessage() {
+        assertNotVisible(message.advanced().getRootElement(), "Message should not be visible.");
+        assertEquals(getOutputText(), getDefaultValue());
+
+        submitAjax();
+        assertFalse(message.advanced().isVisible(), "Message should not be visible.");
+        assertEquals(getOutputText(), getDefaultValue());
+
+        setFailing(true);
+        submitAjax();
+        assertTrue(message.advanced().isVisible(), "Message should be visible.");
+        assertEquals(message.getDetail(), ConverterBean.ERROR_MSG);
+        assertEquals(getOutputText(), getDefaultValue());
+
+        //check converterMessage
+        setFailing(false);
+
+        setConverterMessage(CUSTOM_CONVERTER_MESSAGE);
+        submitAjax();
+        assertFalse(message.advanced().isVisible(), "Message should not be visible.");
+        assertEquals(getOutputText(), getDefaultValue());
+
+        setFailing(true);
+        submitAjax();
+        assertTrue(message.advanced().isVisible(), "Message should be visible.");
+        assertEquals(message.getDetail(), CUSTOM_CONVERTER_MESSAGE);
+        assertEquals(getOutputText(), getDefaultValue());
     }
 }

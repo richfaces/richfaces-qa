@@ -41,17 +41,17 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <r:inplaceSelect id="convertableInput"
                              converter="#{converterBean.converter}"
                              converterMessage="#{converterBean.converterMessage}"
-                             value="#{converterBean.converterValue}"
+                             value="#{converterBean.valueCapital}"
                              >
-                <f:selectItems value="#{converterBean.items}"/>
+                <f:selectItems value="#{converterBean.capitals}"/>
             </r:inplaceSelect>
         </ui:define>
         <ui:define name="convertableInputWithoutMessage">
             <r:inplaceSelect id="convertableInput"
                              converter="#{converterBean.converter}"
-                             value="#{converterBean.converterValue}"
+                             value="#{converterBean.valueCapital}"
                              >
-                <f:selectItems value="#{converterBean.items}"/>
+                <f:selectItems value="#{converterBean.capitals}"/>
             </r:inplaceSelect>
         </ui:define>
     </ui:composition>

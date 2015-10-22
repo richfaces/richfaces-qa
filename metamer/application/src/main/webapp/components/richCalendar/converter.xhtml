@@ -41,14 +41,16 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <rich:calendar id="convertableInput"
                            converter="#{converterBean.converter}"
                            converterMessage="#{converterBean.converterMessage}"
-                           value="#{converterBean.converterValue}"
+                           enableManualInput="true"
+                           value="#{converterBean.valueDate}"
                            >
             </rich:calendar>
         </ui:define>
         <ui:define name="convertableInputWithoutMessage">
             <rich:calendar id="convertableInput"
                            converter="#{converterBean.converter}"
-                           value="#{converterBean.converterValue}"
+                           enableManualInput="true"
+                           value="#{converterBean.valueDate}"
                            >
             </rich:calendar>
         </ui:define>

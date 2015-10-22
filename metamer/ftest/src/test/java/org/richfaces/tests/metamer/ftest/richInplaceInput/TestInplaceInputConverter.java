@@ -21,11 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.fragment.inplaceInput.RichFacesInplaceInput;
-import org.richfaces.tests.metamer.bean.ConverterBean;
 import org.richfaces.tests.metamer.ftest.abstractions.converter.AbstractConverterTest;
-import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.Test;
 
 /**
@@ -33,40 +29,18 @@ import org.testng.annotations.Test;
  */
 public class TestInplaceInputConverter extends AbstractConverterTest {
 
-    @FindBy(css = "[id$=convertableInput]")
-    private RichFacesInplaceInput input;
-    private static final String VALUE = "VALUE";
-
-    @Override
-    protected String badValue() {
-        return VALUE;
-    }
-
-    @Override
-    protected String outputForEmptyValue() {
-        return ConverterBean.DEFAULT_VALUE;
-    }
-
     @Override
     public String getComponentName() {
         return "richInplaceInput";
     }
 
     @Override
-    protected void setBadValue() {
-        input.type(VALUE).confirm();
+    protected String getDefaultValue() {
+        return DEFAULT_VALUE_SINGLE;
     }
 
     @Test(groups = "smoke")
-    @CoversAttributes("converter")
-    public void testConverter() {
-        checkConverter();
+    public void testConverterAndConverterMessage() {
+        super.testConverterAndConverterMessage();
     }
-
-    @Test(groups = "smoke")
-    @CoversAttributes("converterMessage")
-    public void testConverterMessage() {
-        checkConverterMessage();
-    }
-
 }
