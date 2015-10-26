@@ -24,7 +24,6 @@ package org.richfaces.tests.metamer.bean;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -40,11 +39,13 @@ import javax.faces.convert.IntegerConverter;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormat;
 import org.richfaces.component.UICalendar;
 import org.richfaces.component.UIOrderingList;
 import org.richfaces.component.UIPickList;
 import org.richfaces.component.html.HtmlInputNumberSlider;
 import org.richfaces.component.html.HtmlInputNumberSpinner;
+import org.richfaces.tests.metamer.bean.rich.RichCalendarBean;
 import org.richfaces.tests.metamer.converter.CapitalConverter;
 import org.richfaces.tests.metamer.model.Capital;
 
@@ -57,8 +58,10 @@ import org.richfaces.tests.metamer.model.Capital;
 @SessionScoped
 public class ConverterBean implements Serializable {
 
+    private static final DateTimeZone DATETIME_ZONE = DateTimeZone.forTimeZone(RichCalendarBean.TIME_ZONE);
     public static final String ERROR_MSG = "Intentional failure of the converter";
     private static final long serialVersionUID = -1L;
+
     private List<Capital> capitals;
     private SwitchableFailingConverter converter;
 
@@ -93,7 +96,7 @@ public class ConverterBean implements Serializable {
             case CAPITAL:
                 return valueCapital;
             case DATE:
-                return valueDate;
+                return new DateTime(valueDate).withZone(DATETIME_ZONE).toString(DateTimeFormat.mediumDateTime());
             case LIST_OF_CAPITALS:
                 return valueListOfCapitals;
             case NUMBER:
@@ -108,7 +111,7 @@ public class ConverterBean implements Serializable {
     }
 
     public Date getValueDate() {
-        return new DateTime(valueDate).withZone(DateTimeZone.forTimeZone(TimeZone.getTimeZone("UTC+1"))).toDate();
+        return valueDate;
     }
 
     public List<Capital> getValueListOfCapitals() {
@@ -173,6 +176,11 @@ public class ConverterBean implements Serializable {
         private final CapitalConverter capitalConverter = new CapitalConverter();
         private final IntegerConverter integerConverter = new IntegerConverter();
         private final FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ERROR_MSG, ERROR_MSG);
+
+        public SwitchableFailingConverter() {
+            dateTimeConverter.setPattern(UICalendar.DEFAULT_DATE_PATTERN);
+            dateTimeConverter.setTimeZone(RichCalendarBean.TIME_ZONE);
+        }
 
         private Converter getConverter() {
             switch (preferedOutput) {

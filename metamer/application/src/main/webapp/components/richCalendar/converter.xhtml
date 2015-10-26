@@ -43,6 +43,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                            converterMessage="#{converterBean.converterMessage}"
                            enableManualInput="true"
                            value="#{converterBean.valueDate}"
+                           timeZone="#{richCalendarBean.timeZone}"
                            >
             </rich:calendar>
         </ui:define>
@@ -51,6 +52,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                            converter="#{converterBean.converter}"
                            enableManualInput="true"
                            value="#{converterBean.valueDate}"
+                           timeZone="#{richCalendarBean.timeZone}"
                            >
             </rich:calendar>
         </ui:define>

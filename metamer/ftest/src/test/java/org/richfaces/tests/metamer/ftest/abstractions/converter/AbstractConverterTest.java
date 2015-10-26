@@ -42,9 +42,9 @@ public abstract class AbstractConverterTest extends AbstractWebDriverTest {
 
     private static final String CUSTOM_CONVERTER_MESSAGE = "Custom converter message";
 
-    public static final String DEFAULT_VALUE_DATE = "Thu Jan 01 01:00:00 CET 1970";
-    public static final String DEFAULT_VALUE_NUMBER = "5";
+    public static final String DEFAULT_VALUE_DATE = "Jan 1, 1970 12:00:00 AM";
     public static final String DEFAULT_VALUE_LIST = "[Montgomery (Alabama)]";
+    public static final String DEFAULT_VALUE_NUMBER = "5";
     public static final String DEFAULT_VALUE_SINGLE = "Montgomery (Alabama)";
 
     @FindBy(css = "[id$=a4jButton]")
