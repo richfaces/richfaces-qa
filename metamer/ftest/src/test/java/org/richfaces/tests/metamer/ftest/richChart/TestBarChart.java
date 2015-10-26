@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richChart;
 
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -52,7 +51,6 @@ public class TestBarChart extends AbstractChartTest {
     }
 
     @Test
-    @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-14176")
     @Templates("plain")
     public void testStyle() {
