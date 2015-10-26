@@ -22,18 +22,17 @@
 package org.richfaces.tests.metamer.ftest.richEditor;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
-import static org.jboss.arquillian.graphene.Graphene.waitAjax;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.richfaces.fragment.common.Utils;
-import org.richfaces.tests.configurator.unstable.annotation.Unstable;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -153,15 +152,25 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
     }
 
     @Test
-    @Unstable
     @Templates(value = { "plain" })
     public void testJsIsDirty() {
+        assertFalse(Utils.<Boolean>invokeRichFacesJSAPIFunction(getEditorRootElement(), "isDirty()"));
+
         page.getEditor().type("Some text");
         assertTrue(Utils.<Boolean>invokeRichFacesJSAPIFunction(getEditorRootElement(), "isDirty()"));
+        // trigger change event, to invoke ajax request
+        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();
+        assertEquals(page.getOutput().getText(), "<p>Some text</p>");
+        assertFalse(Utils.<Boolean>invokeRichFacesJSAPIFunction(getEditorRootElement(), "isDirty()"));
 
-        page.getEditor().type("even more text!");
-        guardAjax(page.getA4jButton()).click();
-        waitAjax(driver).until().element(page.getOutput()).text().contains("even more text!");
+        page.getEditor().type(". Even more text!");
+        assertTrue(Utils.<Boolean>invokeRichFacesJSAPIFunction(getEditorRootElement(), "isDirty()"));
+        // trigger change event, to invoke ajax request
+        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();
+        assertEquals(page.getOutput().getText(), "<p>Some text. Even more text!</p>");
+        assertFalse(Utils.<Boolean>invokeRichFacesJSAPIFunction(getEditorRootElement(), "isDirty()"));
+
+        Graphene.guardAjax(page.getA4jButton()).click();
         assertFalse(Utils.<Boolean>invokeRichFacesJSAPIFunction(getEditorRootElement(), "isDirty()"));
     }
 
