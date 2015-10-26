@@ -31,7 +31,6 @@ FSF site: http://www.fsf.org. -->
         <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
 
         <version.richfaces>4.5.11-SNAPSHOT</version.richfaces>
-        <richfaces.checkstyle.version>5</richfaces.checkstyle.version>
 
         <!-- version of JBoss containers to use and download -->
         <version.wildfly8-0>8.0.0.Final</version.wildfly8-0>
@@ -219,8 +218,8 @@ FSF site: http://www.fsf.org. -->
                 <dependencies>
                     <dependency>
                         <groupId>org.richfaces</groupId>
-                        <artifactId>richfaces-build-checkstyle</artifactId>
-                        <version>${richfaces.checkstyle.version}</version>
+                        <artifactId>richfaces-build-resources</artifactId>
+                        <version>${version.richfaces}</version>
                     </dependency>
                 </dependencies>
                 <configuration>
