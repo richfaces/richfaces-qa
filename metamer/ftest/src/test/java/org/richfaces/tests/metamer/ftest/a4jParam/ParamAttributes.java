@@ -31,6 +31,5 @@ public enum ParamAttributes implements AttributeEnum {
     id,
     name,
     noEscape,
-    rendered,
     value
 }

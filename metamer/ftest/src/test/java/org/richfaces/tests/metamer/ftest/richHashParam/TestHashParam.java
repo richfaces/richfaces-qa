@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richHashParam;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertTrue;
 
 import org.openqa.selenium.WebElement;
@@ -32,9 +31,7 @@ import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.popupPanel.PopupPanel.ResizerLocation;
 import org.richfaces.fragment.popupPanel.TextualRichFacesPopupPanel;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
-import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -163,18 +160,5 @@ public class TestHashParam extends AbstractWebDriverTest {
     public void testPanelWidth() {
         openPopup();
         assertEquals(Utils.getLocations(panel.advanced().getRootElement()).getWidth(), DEFAULT_WIDTH, TOLERANCE, "Panel width.");
-    }
-
-    @Test
-    @Skip
-    @IssueTracking("https://issues.jboss.org/browse/RF-13045")
-    @CoversAttributes("rendered")
-    public void testRendered() {
-        hashParamAttributes.set(HashParamAttributes.rendered, false);
-        openPopup();
-        assertNotEquals(panel.advanced().getLocations().getHeight(), DEFAULT_HEIGHT, TOLERANCE, "Panel height.");
-        assertNotEquals(panel.advanced().getLocations().getWidth(), DEFAULT_WIDTH, TOLERANCE, "Panel width.");
-        assertNotEquals(panel.advanced().getRootElement().getLocation().y, DEFAULT_TOP_MARGIN, TOLERANCE, "Top margin of the panel.");
-        assertNotEquals(panel.advanced().getRootElement().getLocation().x, DEFAULT_LEFT_MARGIN, TOLERANCE, "Left margin of the panel.");
     }
 }

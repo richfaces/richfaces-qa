@@ -27,6 +27,5 @@ public enum HashParamAttributes implements AttributeEnum {
 
     binding,
     id,
-    name,
-    rendered
+    name
 }
