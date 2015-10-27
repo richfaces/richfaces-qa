@@ -27,10 +27,8 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.common.Utils;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
-import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -93,8 +91,7 @@ public class TestValidatorsCSV extends AbstractValidatorsTest {
     }
 
     @Test
-    @Skip
-    @IssueTracking("https://issues.jboss.org/browse/RF-14174")
+    @RegressionTest("https://issues.jboss.org/browse/RF-14174")
     @CoversAttributes({ "immediate", "listener" })
     public void testImmediate() {
         final String listenerMsg = "listener invoked";
@@ -104,10 +101,22 @@ public class TestValidatorsCSV extends AbstractValidatorsTest {
             .asSingleAction().perform();
         getSuccessfulAjaxValidationAction().perform();
         getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, listenerMsg);
+        getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
 
-        setAttribute("immediate", false);
+        getUnsuccessfulAjaxValidationAction().perform();
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, listenerMsg);
+        getMetamerPage().assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
+            PhaseId.RENDER_RESPONSE);
+
+        setAttribute("immediate", true);
+        getSuccessfulAjaxValidationAction().perform();
+        getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, listenerMsg);
+        getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
+
         getUnsuccessfulAjaxValidationAction().perform();
         getMetamerPage().assertListener(PhaseId.APPLY_REQUEST_VALUES, listenerMsg);
+        getMetamerPage().assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
+            PhaseId.RENDER_RESPONSE);
     }
 
     @Test
