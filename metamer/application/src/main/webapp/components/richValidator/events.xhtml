@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2015, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="head">
+            <style type="text/css">
+                .rf-msg-err {
+                    display: block !important;
+                    margin-bottom: 6px;
+                }
+            </style>
+        </ui:define>
+
+        <ui:define name="component">
+            Following inputs are validated against the same value: #{minBean.description}.
+            <h:panelGrid columns="3">
+                <h:outputLabel for="click" value="click event:" />
+                <h:inputText id="click" value="#{minBean.value}" label="#{minBean.label}" converter="#{minBean.converter}">
+                    <rich:validator event="click" />
+                </h:inputText>
+                <rich:message id="clickMsg" for="click" />
+
+                <h:outputLabel for="dblclick" value="dblclick event:" />
+                <h:inputText id="dblclick" value="#{minBean.value}" label="#{minBean.label}" converter="#{minBean.converter}">
+                    <rich:validator event="dblclick" />
+                </h:inputText>
+                <rich:message id="dblclickMsg" for="dblclick" />
+
+                <h:outputLabel for="change" value="change event:" />
+                <h:inputText id="change" value="#{minBean.value}" label="#{minBean.label}" converter="#{minBean.converter}">
+                    <rich:validator event="change" />
+                </h:inputText>
+                <rich:message id="changeMsg" for="change" />
+
+                <h:outputLabel for="blur" value="blur event:" />
+                <h:inputText id="blur" value="#{minBean.value}" label="#{minBean.label}" converter="#{minBean.converter}">
+                    <rich:validator event="blur" />
+                </h:inputText>
+                <rich:message id="blurMsg" for="blur" />
+
+                <h:outputLabel for="focus" value="focus event:" />
+                <h:inputText id="focus" value="#{minBean.value}" label="#{minBean.label}" converter="#{minBean.converter}">
+                    <rich:validator event="focus" />
+                </h:inputText>
+                <rich:message id="focusMsg" for="focus" />
+
+                <h:outputLabel for="keypress" value="keypress event:" />
+                <h:inputText id="keypress" value="#{minBean.value}" label="#{minBean.label}" converter="#{minBean.converter}">
+                    <rich:validator event="keypress" />
+                </h:inputText>
+                <rich:message id="keypressMsg" for="keypress" />
+
+                <h:outputLabel for="keyup" value="keyup event:" />
+                <h:inputText id="keyup" value="#{minBean.value}" label="#{minBean.label}" converter="#{minBean.converter}">
+                    <rich:validator event="keyup" />
+                </h:inputText>
+                <rich:message id="keyupMsg" for="keyup" />
+            </h:panelGrid>
+            <br/>
+            Following selects are validated against the same value: size 3-6.
+            <h:panelGrid columns="3">
+                <h:outputLabel for="selectitem" value="selectitem event:" />
+                <rich:select id="selectitem"
+                             defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
+                             value="#{richSelectBean.sizeValue}"
+                             >
+                    <f:selectItems value="#{richSelectBean.validationOptionsSize}" />
+                    <rich:validator event="selectitem"/>
+                </rich:select>
+                <rich:message id="selectitemMsg" for="selectitem" />
+
+                <h:outputLabel for="listhide" value="listhide event:" />
+                <rich:select id="listhide"
+                             defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
+                             value="#{richSelectBean.sizeValue}"
+                             >
+                    <f:selectItems value="#{richSelectBean.validationOptionsSize}" />
+                    <rich:validator event="listhide"/>
+                </rich:select>
+                <rich:message id="listhideMsg" for="listhide" />
+
+                <h:outputLabel for="listshow" value="listshow event:" />
+                <rich:select id="listshow"
+                             defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
+                             value="#{richSelectBean.sizeValue}"
+                             >
+                    <f:selectItems value="#{richSelectBean.validationOptionsSize}" />
+                    <rich:validator event="listshow"/>
+                </rich:select>
+                <rich:message id="listshowMsg" for="listshow" />
+            </h:panelGrid>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{richValidatorBean.attributes}" id="attributes" exclude="queueId"/>
+        </ui:define>
+
+    </ui:composition>
+</html>
