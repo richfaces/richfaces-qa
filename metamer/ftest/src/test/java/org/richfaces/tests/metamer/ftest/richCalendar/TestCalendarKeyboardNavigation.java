@@ -37,10 +37,11 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-@RegressionTest("https://issues.jboss.org/browse/RF-14078")
+@RegressionTest({ "https://issues.jboss.org/browse/RF-14078", "https://issues.jboss.org/browse/RF-14166" })
 public class TestCalendarKeyboardNavigation extends AbstractCalendarTest {
 
     private static final String CLEAN_KEY = "c";
+    private static final Keys CLOSE_POPUP_KEY = Keys.ESCAPE;
     private static final Keys NEXT_DAY_KEY = Keys.ARROW_RIGHT;
     private static final Keys NEXT_MONTH_KEY = Keys.PAGE_DOWN;
     private static final Keys NEXT_WEEK_KEY = Keys.ARROW_DOWN;
@@ -100,6 +101,31 @@ public class TestCalendarKeyboardNavigation extends AbstractCalendarTest {
         Graphene.guardAjax(keyboard).sendKeys(Keys.ENTER);
         // the input should be empty
         assertCalendarInputEqualsTo("");
+    }
+
+    @Test
+    public void testClose() {
+        assertCalendarInputEqualsTo("");
+        // open calendar
+        popupCalendar.openPopup();
+        // invoke close key
+        keyboard.sendKeys(CLOSE_POPUP_KEY);
+        popupCalendar.getPopup().waitUntilIsNotVisible().perform();
+        // calendar value should stay unchanged
+        assertCalendarInputEqualsTo("");
+
+        // set some date
+        setReferenceDate_openPopup_check();
+        assertCalendarInputEqualsTo("Jan 1, 2012 12:00");
+        // open popup
+        popupCalendar.openPopup();
+        // scroll to previous day
+        keyboard.sendKeys(PREVIOUS_DAY_KEY);
+        // invoke close key
+        keyboard.sendKeys(CLOSE_POPUP_KEY);
+        popupCalendar.getPopup().waitUntilIsNotVisible().perform();
+        // calendar value should stay unchanged
+        assertCalendarInputEqualsTo("Jan 1, 2012 12:00");
     }
 
     @Test
