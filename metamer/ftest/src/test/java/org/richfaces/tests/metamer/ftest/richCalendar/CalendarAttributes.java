@@ -109,7 +109,6 @@ public enum CalendarAttributes implements AttributeEnum {
     value,
     valueChangeListener,
     verticalOffset,
-    weekDayLabels,
     weekDayLabelsShort,
     zindex
 }
