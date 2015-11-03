@@ -27,7 +27,6 @@ public enum AccordionItemAttributes implements AttributeEnum {
 
     binding,
     contentClass,
-    converter,
     dir,
     disabled,
     header,

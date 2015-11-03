@@ -27,7 +27,6 @@ public enum TabPanelAttributes implements AttributeEnum {
 
     activeItem,
     binding,
-    converter,
     cycledSwitching,
     dir,
     headerAlignment,

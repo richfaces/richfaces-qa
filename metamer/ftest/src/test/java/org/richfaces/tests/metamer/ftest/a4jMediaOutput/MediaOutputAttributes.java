@@ -35,7 +35,6 @@ public enum MediaOutputAttributes implements AttributeEnum {
     classid,
     codebase,
     codetype,
-    converter,
     coords,
     createContent,
     declare,

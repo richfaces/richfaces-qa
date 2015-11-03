@@ -27,7 +27,6 @@ public enum TooltipAttributes implements AttributeEnum {
 
     attached,
     binding,
-    converter,
     data,
     dir,
     direction,

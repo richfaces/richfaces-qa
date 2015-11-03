@@ -27,7 +27,6 @@ public enum TogglePanelAttributes implements AttributeEnum {
 
     activeItem,
     binding,
-    converter,
     cycledSwitching,
     dir,
     id,

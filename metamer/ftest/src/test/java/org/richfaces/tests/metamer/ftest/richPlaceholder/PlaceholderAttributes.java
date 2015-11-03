@@ -26,7 +26,6 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 public enum PlaceholderAttributes implements AttributeEnum {
 
     binding,
-    converter,
     id,
     rendered,
     selector,

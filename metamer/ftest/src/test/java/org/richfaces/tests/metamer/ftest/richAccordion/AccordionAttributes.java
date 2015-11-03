@@ -27,7 +27,6 @@ public enum AccordionAttributes implements AttributeEnum {
 
     activeItem,
     binding,
-    converter,
     cycledSwitching,
     dir,
     height,

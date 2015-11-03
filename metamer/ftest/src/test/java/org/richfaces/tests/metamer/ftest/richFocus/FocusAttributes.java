@@ -27,11 +27,9 @@ public enum FocusAttributes implements AttributeEnum {
 
     ajaxRendered,
     binding,
-    converter,
     delayed,
     id,
     preserve,
     rendered,
-    validationAware,
-    value
+    validationAware
 }

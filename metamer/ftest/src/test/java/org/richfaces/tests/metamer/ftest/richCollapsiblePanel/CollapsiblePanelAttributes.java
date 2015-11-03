@@ -27,7 +27,6 @@ public enum CollapsiblePanelAttributes implements AttributeEnum {
 
     binding,
     bodyClass,
-    converter,
     dir,
     expanded,
     header,
@@ -53,6 +52,5 @@ public enum CollapsiblePanelAttributes implements AttributeEnum {
     styleClass,
     switchType,
     title,
-    toggleListener,
-    value
+    toggleListener
 }

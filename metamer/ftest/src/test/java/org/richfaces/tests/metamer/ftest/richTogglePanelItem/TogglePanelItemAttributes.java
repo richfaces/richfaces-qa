@@ -26,7 +26,6 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 public enum TogglePanelItemAttributes implements AttributeEnum {
 
     binding,
-    converter,
     dir,
     id,
     lang,

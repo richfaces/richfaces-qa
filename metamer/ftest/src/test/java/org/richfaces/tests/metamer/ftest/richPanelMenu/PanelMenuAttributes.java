@@ -29,7 +29,6 @@ public enum PanelMenuAttributes implements AttributeEnum {
     binding,
     bubbleSelection,
     collapseEvent,
-    converter,
     disabled,
     expandEvent,
     expandSingle,

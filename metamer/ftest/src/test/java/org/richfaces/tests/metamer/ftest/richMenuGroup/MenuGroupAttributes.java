@@ -26,7 +26,6 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 public enum MenuGroupAttributes implements AttributeEnum {
 
     binding,
-    converter,
     dir,
     direction,
     disabled,
