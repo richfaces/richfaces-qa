@@ -57,7 +57,6 @@ public enum ExtendedDataTableAttributes implements AttributeEnum {
     onselectionchange,
     render,
     rendered,
-    resetValues,
     rowClass,
     rowClasses,
     rowKeyConverter,

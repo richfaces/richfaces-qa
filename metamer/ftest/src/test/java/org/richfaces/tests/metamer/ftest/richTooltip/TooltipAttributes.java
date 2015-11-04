@@ -56,7 +56,6 @@ public enum TooltipAttributes implements AttributeEnum {
     onshow,
     render,
     rendered,
-    resetValues,
     showDelay,
     showEvent,
     status,

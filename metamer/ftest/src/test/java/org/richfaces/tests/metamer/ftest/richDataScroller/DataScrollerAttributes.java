@@ -43,7 +43,6 @@ public enum DataScrollerAttributes implements AttributeEnum {
     render,
     renderIfSinglePage,
     rendered,
-    resetValues,
     scrollListener,
     status,
     stepControls,

@@ -61,7 +61,6 @@ public enum TreeAttributes implements AttributeEnum {
     onselectionchange,
     render,
     rendered,
-    resetValues,
     rowKeyConverter,
     rowKeyVar,
     selection,

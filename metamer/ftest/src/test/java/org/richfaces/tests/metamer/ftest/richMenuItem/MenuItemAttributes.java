@@ -56,7 +56,6 @@ public enum MenuItemAttributes implements AttributeEnum {
     onmouseup,
     render,
     rendered,
-    resetValues,
     status,
     style,
     styleClass,

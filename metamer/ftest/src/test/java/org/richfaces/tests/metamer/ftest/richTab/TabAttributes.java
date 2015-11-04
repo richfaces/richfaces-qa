@@ -64,7 +64,6 @@ public enum TabAttributes implements AttributeEnum {
     onmouseup,
     render,
     rendered,
-    resetValues,
     status,
     style,
     styleClass,

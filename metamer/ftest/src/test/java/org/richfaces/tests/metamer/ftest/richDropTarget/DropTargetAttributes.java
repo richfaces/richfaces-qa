@@ -40,6 +40,5 @@ public enum DropTargetAttributes implements AttributeEnum {
     oncomplete,
     render,
     rendered,
-    resetValues,
     status
 }

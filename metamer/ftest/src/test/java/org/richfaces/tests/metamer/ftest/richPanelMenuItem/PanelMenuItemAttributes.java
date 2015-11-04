@@ -56,7 +56,6 @@ public enum PanelMenuItemAttributes implements AttributeEnum {
     onselect,
     render,
     rendered,
-    resetValues,
     rightDisabledIcon,
     rightIcon,
     rightIconClass,

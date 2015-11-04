@@ -67,7 +67,6 @@ public enum FileUploadAttributes implements AttributeEnum {
     onuploadcomplete,
     render,
     rendered,
-    resetValues,
     serverErrorLabel,
     sizeExceededLabel,
     status,

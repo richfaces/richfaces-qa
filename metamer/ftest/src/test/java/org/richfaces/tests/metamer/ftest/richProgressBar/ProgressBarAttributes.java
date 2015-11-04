@@ -50,7 +50,6 @@ public enum ProgressBarAttributes implements AttributeEnum {
     progressClass,
     remainingClass,
     rendered,
-    resetValues,
     style,
     styleClass,
     value

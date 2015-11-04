@@ -66,7 +66,6 @@ public enum PanelMenuGroupAttributes implements AttributeEnum {
     onswitch,
     render,
     rendered,
-    resetValues,
     rightCollapsedIcon,
     rightDisabledIcon,
     rightExpandedIcon,

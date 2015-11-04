@@ -64,7 +64,6 @@ public enum DataTableAttributes implements AttributeEnum {
     onrowmouseup,
     render,
     rendered,
-    resetValues,
     rowClass,
     rowClasses,
     rowKeyConverter,
