@@ -225,28 +225,6 @@ public class TestCollapsibleSubTable extends AbstractCollapsibleSubTableTest {
     }
 
     @Test
-    @CoversAttributes("rowClasses")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10212")
-    @UseWithField(field = "isMale", valuesFrom = FROM_FIELD, value = "booleans")
-    @Templates("plain")
-    public void testRowClasses() {
-        attsSetter()
-            .setAttribute(CollapsibleSubTableAttributes.rows).toValue(13)
-            .setAttribute(CollapsibleSubTableAttributes.rowClasses).toValue("row1,row2,row3")
-            .asSingleAction().perform();
-        CollapsibleSubTableWithEmployees subtable = getSubTable(isMale);
-
-        int rowCount = subtable.advanced().getNumberOfVisibleRows();
-        assertEquals(rowCount, 13);
-        List<WebElement> tableRows = subtable.advanced().getTableRowsElements();
-
-        for (int i = 0; i < rowCount; i++) {
-            WebElement row = tableRows.get(i);
-            assertTrue(row.getAttribute("class").contains("row" + (i % 3 + 1)));
-        }
-    }
-
-    @Test
     @CoversAttributes("rows")
     @Templates(exclude = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
     public void testRows() {

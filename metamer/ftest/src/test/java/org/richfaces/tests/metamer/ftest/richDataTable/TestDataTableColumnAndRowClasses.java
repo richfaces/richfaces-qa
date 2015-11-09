@@ -19,41 +19,41 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
+package org.richfaces.tests.metamer.ftest.richDataTable;
 
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.metamer.ftest.abstractions.AbstractColumnClassesTest;
+import org.richfaces.tests.metamer.ftest.abstractions.AbstractColumnAndRowClassesTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
-import org.richfaces.tests.metamer.ftest.richCollapsibleSubTable.AbstractCollapsibleSubTableTest.EmployeeRecord;
-import org.richfaces.tests.metamer.ftest.richCollapsibleSubTable.TestCollapsibleSubTableFiltering.DataTableWithCSTWithFilteringHeader;
+import org.richfaces.tests.metamer.ftest.richDataTable.fragment.FilteringDT;
+import org.richfaces.tests.metamer.ftest.richDataTable.fragment.FilteringDTRow;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.LazyLoadedCachedValue;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestCollapsibleSubTableColumnClasses extends AbstractColumnClassesTest {
+@Templates("plain")
+public class TestDataTableColumnAndRowClasses extends AbstractColumnAndRowClassesTest {
 
-    @FindBy(css = ".rf-dt[id$=richDataTable]")
-    private DataTableWithCSTWithFilteringHeader table;
+    private final TableAdapter adapter = new DataTableAdapter();
 
-    private final TableAdapter tableAdapter = new CollapsibleSubTableAdapter();
+    @FindByJQuery(value = "table.rf-dt[id$=richDataTable]")
+    private FilteringDT table;
 
     public TableAdapter getAdaptedComponent() {
-        return tableAdapter;
+        return adapter;
     }
 
     @Override
     public String getComponentTestPagePath() {
-        return "richCollapsibleSubTable/filtering.xhtml";
+        return "richDataTable/filtering.xhtml";
     }
 
     @Test
     @CoversAttributes("columnClasses")
-    @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesEqualsToColumns_commaSeparated() {
         super.testColumnClasses_numberOfColumnClassesEqualsToColumns_commaSeparated();
@@ -61,7 +61,6 @@ public class TestCollapsibleSubTableColumnClasses extends AbstractColumnClassesT
 
     @Test
     @CoversAttributes("columnClasses")
-    @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesEqualsToColumns_spaceSeparated() {
         super.testColumnClasses_numberOfColumnClassesEqualsToColumns_spaceSeparated();
@@ -69,7 +68,6 @@ public class TestCollapsibleSubTableColumnClasses extends AbstractColumnClassesT
 
     @Test
     @CoversAttributes("columnClasses")
-    @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesGreaterThanColumns_commaSeparated() {
         super.testColumnClasses_numberOfColumnClassesGreaterThanColumns_commaSeparated();
@@ -77,7 +75,6 @@ public class TestCollapsibleSubTableColumnClasses extends AbstractColumnClassesT
 
     @Test
     @CoversAttributes("columnClasses")
-    @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesLesserThanColumns_commaSeparated() {
         super.testColumnClasses_numberOfColumnClassesLesserThanColumns_commaSeparated();
@@ -85,7 +82,6 @@ public class TestCollapsibleSubTableColumnClasses extends AbstractColumnClassesT
 
     @Test
     @CoversAttributes("columnClasses")
-    @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesLesserThanColumns_spaceSeparated() {
         super.testColumnClasses_numberOfColumnClassesLesserThanColumns_spaceSeparated();
@@ -93,42 +89,71 @@ public class TestCollapsibleSubTableColumnClasses extends AbstractColumnClassesT
 
     @Test
     @CoversAttributes("columnClasses")
-    @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_oneColumnClass() {
         super.testColumnClasses_oneColumnClass();
     }
 
-    private class CollapsibleSubTableAdapter implements TableAdapter {
+    @Test
+    @CoversAttributes("rowClasses")
+    public void testRowClasses_numberOfRowClassesEqualsToRows_commaSeparated() {
+        super.testRowClasses_numberOfRowClassesEqualsToRows_commaSeparated();
+    }
 
-        private final LazyLoadedCachedValue<Integer> menTableRecords = new LazyLoadedCachedValue<Integer>() {
+    @Test
+    @CoversAttributes("rowClasses")
+    public void testRowClasses_numberOfRowClassesEqualsToRows_spaceSeparated() {
+        super.testRowClasses_numberOfRowClassesEqualsToRows_spaceSeparated();
+    }
 
-            @Override
-            protected Integer initValue() {
-                return table.getRow(0).getAllRows().size();
-            }
-        };
+    @Test
+    @CoversAttributes("rowClasses")
+    public void testRowClasses_numberOfRowClassesGreaterThanRows_commaSeparated() {
+        super.testRowClasses_numberOfRowClassesGreaterThanRows_commaSeparated();
+    }
+
+    @Test
+    @CoversAttributes("rowClasses")
+    public void testRowClasses_numberOfRowClassesLesserThanRows_commaSeparated() {
+        super.testRowClasses_numberOfRowClassesLesserThanRows_commaSeparated();
+    }
+
+    @Test
+    @CoversAttributes("rowClasses")
+    public void testRowClasses_numberOfRowClassesLesserThanRows_spaceSeparated() {
+        super.testRowClasses_numberOfRowClassesLesserThanRows_spaceSeparated();
+    }
+
+    @Test
+    @CoversAttributes("rowClasses")
+    public void testRowClasses_oneRowClass() {
+        super.testRowClasses_oneRowClass();
+    }
+
+    private class DataTableAdapter implements TableAdapter {
+
         private final LazyLoadedCachedValue<Integer> visibleRows = new LazyLoadedCachedValue<Integer>() {
 
             @Override
             protected Integer initValue() {
-                return table.getRow(0).advanced().getNumberOfVisibleRows() + table.getRow(1).advanced().getNumberOfVisibleRows();
+                return table.advanced().getNumberOfVisibleRows();
             }
-
         };
 
         @Override
         public WebElement getColumnWithData(int r, int c) {
-            int correctTable = r > (menTableRecords.getValue() - 1) ? 1 : 0;
-            int correctRow = (correctTable == 1 ? r - menTableRecords.getValue() : r);
-            EmployeeRecord row = table.getRow(correctTable).getRow(correctRow);
+            FilteringDTRow row = table.getRow(r);
             switch (c) {
                 case 0:
-                    return row.getNameElement();
+                    return row.getSexColumnElement();
                 case 1:
-                    return row.getTitleElement();
+                    return row.getNameColumnElement();
                 case 2:
-                    return row.getBirthdateElement();
+                    return row.getTitleColumnElement();
+                case 3:
+                    return row.getNumberOfKids1ColumnElement();
+                case 4:
+                    return row.getNumberOfKids2ColumnElement();
                 default:
                     throw new UnsupportedOperationException("Table does not have so many rows!");
             }
@@ -136,7 +161,7 @@ public class TestCollapsibleSubTableColumnClasses extends AbstractColumnClassesT
 
         @Override
         public int getNumberOfColumns() {
-            return 3;
+            return 5;
         }
 
         @Override
@@ -144,5 +169,9 @@ public class TestCollapsibleSubTableColumnClasses extends AbstractColumnClassesT
             return visibleRows.getValue();
         }
 
+        @Override
+        public WebElement getRowWithData(int r) {
+            return table.getRow(r).getRootElement();
+        }
     }
 }

@@ -177,13 +177,6 @@ public class TestExtendedDataTableSimple extends DataTableSimpleTest {
     }
 
     @Test
-    @CoversAttributes("rowClasses")
-    @Templates("plain")
-    public void testRowClasses() {
-        super.testRowClasses();
-    }
-
-    @Test
     @CoversAttributes("rows")
     @UseWithField(field = "rows", valuesFrom = FROM_FIELD, value = "COUNTS")
     public void testRows() {

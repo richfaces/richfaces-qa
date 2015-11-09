@@ -19,28 +19,30 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.metamer.ftest.richDataTable;
+package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.metamer.ftest.abstractions.AbstractColumnClassesTest;
+import org.richfaces.tests.metamer.ftest.abstractions.AbstractColumnAndRowClassesTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
-import org.richfaces.tests.metamer.ftest.richDataTable.fragment.FilteringDT;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.FilteringDTRow;
+import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.FilteringEDT;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.LazyLoadedCachedValue;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestDataTableColumnClasses extends AbstractColumnClassesTest {
+@Templates("plain")
+public class TestExtendedDataTableColumnAndRowClasses extends AbstractColumnAndRowClassesTest {
 
-    private final TableAdapter adapter = new DataTableAdapter();
+    private final TableAdapter adapter = new ExtendedDataTableAdapter();
 
-    @FindByJQuery(value = "table.rf-dt[id$=richDataTable]")
-    private FilteringDT table;
+    @FindByJQuery("div.rf-edt[id$=richEDT]")
+    private FilteringEDT table;
 
     public TableAdapter getAdaptedComponent() {
         return adapter;
@@ -48,12 +50,16 @@ public class TestDataTableColumnClasses extends AbstractColumnClassesTest {
 
     @Override
     public String getComponentTestPagePath() {
-        return "richDataTable/filtering.xhtml";
+        return "richExtendedDataTable/filtering.xhtml";
+    }
+
+    @BeforeMethod
+    public void setupRows() {
+        setAttribute("rows", 10);
     }
 
     @Test
     @CoversAttributes("columnClasses")
-    @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesEqualsToColumns_commaSeparated() {
         super.testColumnClasses_numberOfColumnClassesEqualsToColumns_commaSeparated();
@@ -61,7 +67,6 @@ public class TestDataTableColumnClasses extends AbstractColumnClassesTest {
 
     @Test
     @CoversAttributes("columnClasses")
-    @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesEqualsToColumns_spaceSeparated() {
         super.testColumnClasses_numberOfColumnClassesEqualsToColumns_spaceSeparated();
@@ -69,7 +74,6 @@ public class TestDataTableColumnClasses extends AbstractColumnClassesTest {
 
     @Test
     @CoversAttributes("columnClasses")
-    @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesGreaterThanColumns_commaSeparated() {
         super.testColumnClasses_numberOfColumnClassesGreaterThanColumns_commaSeparated();
@@ -77,7 +81,6 @@ public class TestDataTableColumnClasses extends AbstractColumnClassesTest {
 
     @Test
     @CoversAttributes("columnClasses")
-    @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesLesserThanColumns_commaSeparated() {
         super.testColumnClasses_numberOfColumnClassesLesserThanColumns_commaSeparated();
@@ -85,7 +88,6 @@ public class TestDataTableColumnClasses extends AbstractColumnClassesTest {
 
     @Test
     @CoversAttributes("columnClasses")
-    @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesLesserThanColumns_spaceSeparated() {
         super.testColumnClasses_numberOfColumnClassesLesserThanColumns_spaceSeparated();
@@ -93,13 +95,48 @@ public class TestDataTableColumnClasses extends AbstractColumnClassesTest {
 
     @Test
     @CoversAttributes("columnClasses")
-    @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_oneColumnClass() {
         super.testColumnClasses_oneColumnClass();
     }
 
-    private class DataTableAdapter implements TableAdapter {
+    @Test
+    @CoversAttributes("rowClasses")
+    public void testRowClasses_numberOfRowClassesEqualsToRows_commaSeparated() {
+        super.testRowClasses_numberOfRowClassesEqualsToRows_commaSeparated();
+    }
+
+    @Test
+    @CoversAttributes("rowClasses")
+    public void testRowClasses_numberOfRowClassesEqualsToRows_spaceSeparated() {
+        super.testRowClasses_numberOfRowClassesEqualsToRows_spaceSeparated();
+    }
+
+    @Test
+    @CoversAttributes("rowClasses")
+    public void testRowClasses_numberOfRowClassesGreaterThanRows_commaSeparated() {
+        super.testRowClasses_numberOfRowClassesGreaterThanRows_commaSeparated();
+    }
+
+    @Test
+    @CoversAttributes("rowClasses")
+    public void testRowClasses_numberOfRowClassesLesserThanRows_commaSeparated() {
+        super.testRowClasses_numberOfRowClassesLesserThanRows_commaSeparated();
+    }
+
+    @Test
+    @CoversAttributes("rowClasses")
+    public void testRowClasses_numberOfRowClassesLesserThanRows_spaceSeparated() {
+        super.testRowClasses_numberOfRowClassesLesserThanRows_spaceSeparated();
+    }
+
+    @Test
+    @CoversAttributes("rowClasses")
+    public void testRowClasses_oneRowClass() {
+        super.testRowClasses_oneRowClass();
+    }
+
+    private class ExtendedDataTableAdapter implements TableAdapter {
 
         private final LazyLoadedCachedValue<Integer> visibleRows = new LazyLoadedCachedValue<Integer>() {
 
@@ -136,6 +173,11 @@ public class TestDataTableColumnClasses extends AbstractColumnClassesTest {
         @Override
         public int getNumberOfVisibleRows() {
             return visibleRows.getValue();
+        }
+
+        @Override
+        public WebElement getRowWithData(int r) {
+            return table.getRow(r).getRootElement();
         }
     }
 }

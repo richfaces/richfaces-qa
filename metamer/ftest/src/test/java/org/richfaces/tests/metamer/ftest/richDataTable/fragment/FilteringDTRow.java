@@ -21,6 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richDataTable.fragment;
 
+import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.FilteringRowInterface;
@@ -30,6 +31,9 @@ import org.richfaces.tests.metamer.model.Employee;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
 public class FilteringDTRow implements FilteringRowInterface {
+
+    @Root
+    private WebElement rootElement;
 
     @FindBy(css = "td:nth-of-type(2)")
     private WebElement nameColumnElement;
@@ -72,6 +76,10 @@ public class FilteringDTRow implements FilteringRowInterface {
     @Override
     public int getNumberOfKids2ColumnValue() {
         return Integer.parseInt(getNumberOfKids2ColumnElement().getText());
+    }
+
+    public WebElement getRootElement() {
+        return rootElement;
     }
 
     @Override

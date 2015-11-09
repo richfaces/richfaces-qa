@@ -28,7 +28,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.list.AbstractListComponent;
 import org.richfaces.fragment.orderingList.RichFacesOrderingList;
-import org.richfaces.tests.metamer.ftest.abstractions.AbstractColumnClassesTest;
+import org.richfaces.tests.metamer.ftest.abstractions.AbstractColumnAndRowClassesTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -38,7 +38,8 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestOrderingListColumnClasses extends AbstractColumnClassesTest {
+@Templates("plain")
+public class TestOrderingListColumnClasses extends AbstractColumnAndRowClassesTest {
 
     @FindBy(css = "div[id$=orderingList]")
     private OrderingListWithColumns orderingList;
@@ -56,7 +57,6 @@ public class TestOrderingListColumnClasses extends AbstractColumnClassesTest {
 
     @Test
     @CoversAttributes("columnClasses")
-    @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesEqualsToColumns_commaSeparated() {
         super.testColumnClasses_numberOfColumnClassesEqualsToColumns_commaSeparated();
@@ -64,7 +64,6 @@ public class TestOrderingListColumnClasses extends AbstractColumnClassesTest {
 
     @Test
     @CoversAttributes("columnClasses")
-    @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesEqualsToColumns_spaceSeparated() {
         super.testColumnClasses_numberOfColumnClassesEqualsToColumns_spaceSeparated();
@@ -72,7 +71,6 @@ public class TestOrderingListColumnClasses extends AbstractColumnClassesTest {
 
     @Test
     @CoversAttributes("columnClasses")
-    @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesGreaterThanColumns_commaSeparated() {
         super.testColumnClasses_numberOfColumnClassesGreaterThanColumns_commaSeparated();
@@ -80,7 +78,6 @@ public class TestOrderingListColumnClasses extends AbstractColumnClassesTest {
 
     @Test
     @CoversAttributes("columnClasses")
-    @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesLesserThanColumns_commaSeparated() {
         super.testColumnClasses_numberOfColumnClassesLesserThanColumns_commaSeparated();
@@ -88,7 +85,6 @@ public class TestOrderingListColumnClasses extends AbstractColumnClassesTest {
 
     @Test
     @CoversAttributes("columnClasses")
-    @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesLesserThanColumns_spaceSeparated() {
         super.testColumnClasses_numberOfColumnClassesLesserThanColumns_spaceSeparated();
@@ -96,7 +92,6 @@ public class TestOrderingListColumnClasses extends AbstractColumnClassesTest {
 
     @Test
     @CoversAttributes("columnClasses")
-    @Templates(value = "plain")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_oneColumnClass() {
         super.testColumnClasses_oneColumnClass();
@@ -157,6 +152,11 @@ public class TestOrderingListColumnClasses extends AbstractColumnClassesTest {
         @Override
         public int getNumberOfVisibleRows() {
             return visibleRows.getValue();
+        }
+
+        @Override
+        public WebElement getRowWithData(int r) {
+            throw new UnsupportedOperationException("Not supported yet.");
         }
     }
 }

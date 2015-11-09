@@ -28,26 +28,21 @@ import static org.testng.Assert.assertTrue;
 
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
-import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 
 /**
- *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractColumnClassesTest extends AbstractWebDriverTest {
+public abstract class AbstractColumnAndRowClassesTest extends AbstractWebDriverTest {
 
     private static final String CLASS = "class";
-    private static final String COL_CLASSNAME = "col";
+    private static final String CLASSNAME = "cn";
     private static final char SEPARATOR_COMMA = ',';
     private static final char SEPARATOR_SPACE = ' ';
 
-    protected final Attributes<DataTableAttributes> attributes = getAttributes();
-
-    private String generateSeparatedColumnClasses(int count, char separator) {
+    private String generateSeparatedClasses(int count, char separator) {
         StringBuilder sb = new StringBuilder(30);
         for (int i = 1; i <= count; i++) {
-            sb.append(COL_CLASSNAME).append(i).append(separator);
+            sb.append(CLASSNAME).append(i).append(separator);
         }
         return sb.substring(0, sb.length() - 1);// get rid of the last separator
     }
@@ -63,10 +58,10 @@ public abstract class AbstractColumnClassesTest extends AbstractWebDriverTest {
         TableAdapter table = getAdaptedComponent();
 
         int numberOfColumns = table.getNumberOfColumns();
-        final String testedColumnClasses = generateSeparatedColumnClasses(generatedClassNames, separator);
+        final String testedColumnClasses = generateSeparatedClasses(generatedClassNames, separator);
         final String[] testedColumnClassesArray = testedColumnClasses.split(String.valueOf(separator));
 
-        attributes.set(DataTableAttributes.columnClasses, testedColumnClasses);
+        setAttribute("columnClasses", testedColumnClasses);
         performAfterSettingOfAttributes();
         switch (separator) {
             case SEPARATOR_SPACE:
@@ -128,12 +123,81 @@ public abstract class AbstractColumnClassesTest extends AbstractWebDriverTest {
         testColumnClasses(SEPARATOR_SPACE, 1);
     }
 
+    private void testRowClasses(final char separator, final int generatedClassNames) {
+        String expectedRowClass;
+        String retrievedRowClass;
+        TableAdapter table = getAdaptedComponent();
+
+        int numberOfRows = table.getNumberOfVisibleRows();
+        final String testedRowClasses = generateSeparatedClasses(generatedClassNames, separator);
+        final String[] testedRowClassesArray = testedRowClasses.split(String.valueOf(separator));
+
+        setAttribute("rowClasses", testedRowClasses);
+        performAfterSettingOfAttributes();
+        switch (separator) {
+            case SEPARATOR_SPACE:
+                for (int rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
+                    retrievedRowClass = table.getRowWithData(rowIndex).getAttribute(CLASS);
+                    // check row contains all space-separated classes
+                    assertTrue(retrievedRowClass.contains(testedRowClasses),
+                        format("Row at [{0}] should contain all classes <{1}>. It contains <{2}>.", rowIndex, testedRowClasses, retrievedRowClass));
+                }
+                return;
+            case SEPARATOR_COMMA:
+                int mod;
+                for (int rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
+                    mod = rowIndex % generatedClassNames;
+                    expectedRowClass = testedRowClassesArray[mod];
+                    retrievedRowClass = table.getRowWithData(rowIndex).getAttribute(CLASS);
+                    // check that row contains correct class
+                    assertTrue(retrievedRowClass.contains(expectedRowClass),
+                        format("Row at [{0}] should contain class <{1}>. It contains <{2}>.", rowIndex, expectedRowClass, retrievedRowClass));
+                    // check that column does not contain other columnClasses
+                    for (String rowClass : testedRowClassesArray) {
+                        if (!rowClass.equals(expectedRowClass)) {
+                            assertFalse(retrievedRowClass.contains(rowClass),
+                                format("Row at [{0}] should not contain class <{1}>. It contains <{2}>.", rowIndex, rowClass, retrievedRowClass));
+                        }
+                    }
+                }
+                return;
+            default:
+                throw new UnsupportedOperationException(format("not supported separator <{0}>.", separator));
+        }
+    }
+
+    public void testRowClasses_numberOfRowClassesEqualsToRows_commaSeparated() {
+        testRowClasses(SEPARATOR_COMMA, getAdaptedComponent().getNumberOfColumns());
+    }
+
+    public void testRowClasses_numberOfRowClassesEqualsToRows_spaceSeparated() {
+        testRowClasses(SEPARATOR_SPACE, getAdaptedComponent().getNumberOfColumns());
+    }
+
+    public void testRowClasses_numberOfRowClassesGreaterThanRows_commaSeparated() {
+        testRowClasses(SEPARATOR_COMMA, getAdaptedComponent().getNumberOfColumns() + 2);
+    }
+
+    public void testRowClasses_numberOfRowClassesLesserThanRows_commaSeparated() {
+        testRowClasses(SEPARATOR_COMMA, getAdaptedComponent().getNumberOfColumns() - 1);
+    }
+
+    public void testRowClasses_numberOfRowClassesLesserThanRows_spaceSeparated() {
+        testRowClasses(SEPARATOR_SPACE, getAdaptedComponent().getNumberOfColumns() - 1);
+    }
+
+    public void testRowClasses_oneRowClass() {
+        testRowClasses(SEPARATOR_SPACE, 1);
+    }
+
     public interface TableAdapter {
+
+        WebElement getColumnWithData(final int r, final int c);
 
         int getNumberOfColumns();
 
         int getNumberOfVisibleRows();
 
-        WebElement getColumnWithData(final int r, final int c);
+        WebElement getRowWithData(final int r);
     }
 }

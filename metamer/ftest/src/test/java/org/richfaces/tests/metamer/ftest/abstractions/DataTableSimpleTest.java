@@ -27,7 +27,6 @@ import static org.testng.Assert.assertTrue;
 
 import java.util.List;
 
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.dataTable.AbstractTable;
@@ -128,19 +127,6 @@ public abstract class DataTableSimpleTest extends AbstractDataTableTest {
         dataTableAttributes.set(DataTableAttributes.rowClass, "metamer-ftest-class");
         for (int i = 0; i < getTable().advanced().getNumberOfVisibleRows(); i += 2) {
             assertTrue(getTable().getRow(i).getRootElement().getAttribute("class").contains("metamer-ftest-class"));
-        }
-    }
-
-    public void testRowClasses() {
-        dataTableAttributes.set(DataTableAttributes.rows, 13);
-        dataTableAttributes.set(DataTableAttributes.rowClasses, "row1,row2,row3");
-        int rowCount = getTable().advanced().getNumberOfVisibleRows();
-        assertEquals(rowCount, 13);
-        List<WebElement> tableRows = getTable().advanced().getTableRowsElements();
-
-        for (int i = 0; i < rowCount; i++) {
-            WebElement row = tableRows.get(i);
-            assertTrue(row.getAttribute("class").contains("row" + (i % 3 + 1)));
         }
     }
 
