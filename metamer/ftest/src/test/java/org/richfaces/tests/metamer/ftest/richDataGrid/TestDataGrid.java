@@ -27,8 +27,10 @@ import static org.testng.Assert.assertTrue;
 import javax.xml.bind.JAXBException;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
@@ -38,7 +40,6 @@ import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22499 $
  */
 public class TestDataGrid extends AbstractDataGridTest {
 
@@ -52,13 +53,13 @@ public class TestDataGrid extends AbstractDataGridTest {
     }
 
     @Override
-    public GridWithStates getDataGrid() {
-        return dataGrid;
+    public String getComponentTestPagePath() {
+        return "richDataGrid/simple.xhtml";
     }
 
     @Override
-    public String getComponentTestPagePath() {
-        return "richDataGrid/simple.xhtml";
+    public GridWithStates getDataGrid() {
+        return dataGrid;
     }
 
     @Test
@@ -80,6 +81,20 @@ public class TestDataGrid extends AbstractDataGridTest {
     @UseWithField(field = "first", valuesFrom = ValuesFrom.FROM_FIELD, value = "COUNTS2")
     public void testFirstAttribute() {
         verifyGrid();
+    }
+
+    @Test
+    @CoversAttributes("footerClass")
+    @Templates("plain")
+    public void testFooterClass() {
+        testStyleClass(dataGridRoot.findElement(By.className("rf-dg-f")), BasicAttributes.footerClass);
+    }
+
+    @Test
+    @CoversAttributes("headerClass")
+    @Templates("plain")
+    public void testHeaderClass() {
+        testStyleClass(dataGridRoot.findElement(By.className("rf-dg-h")), BasicAttributes.headerClass);
     }
 
     @Test

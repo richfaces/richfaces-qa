@@ -48,11 +48,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </h:panelGroup>
 
             <rich:dataGrid id="richDataGrid"
+                           columnClasses="#{richDataGridBean.attributes['columnClasses'].value}"
                            columns="#{richDataGridBean.attributes['columns'].value}"
                            first="#{richDataGridBean.attributes['first'].value}"
+                           footerClass="#{richDataGridBean.attributes['footerClass'].value}"
+                           headerClass="#{richDataGridBean.attributes['headerClass'].value}"
                            elements="#{richDataGridBean.attributes['elements'].value}"
                            keepSaved="#{richDataGridBean.attributes['keepSaved'].value}"
                            rendered="#{richDataGridBean.attributes['rendered'].value}"
+                           rowClasses="#{richDataGridBean.attributes['rowClasses'].value}"
                            style="#{richDataGridBean.attributes['style'].value}"
                            styleClass="#{richDataGridBean.attributes['styleClass'].value}"
                            title="#{richDataGridBean.attributes['title'].value}"

@@ -58,6 +58,7 @@ public abstract class AbstractColumnAndRowClassesTest extends AbstractWebDriverT
         TableAdapter table = getAdaptedComponent();
 
         int numberOfColumns = table.getNumberOfColumns();
+        int numberOfRows = table.getNumberOfVisibleRows();
         final String testedColumnClasses = generateSeparatedClasses(generatedClassNames, separator);
         final String[] testedColumnClassesArray = testedColumnClasses.split(String.valueOf(separator));
 
@@ -65,7 +66,7 @@ public abstract class AbstractColumnAndRowClassesTest extends AbstractWebDriverT
         performAfterSettingOfAttributes();
         switch (separator) {
             case SEPARATOR_SPACE:
-                for (int rowIndex = 0; rowIndex < table.getNumberOfVisibleRows(); rowIndex++) {
+                for (int rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
                     for (int columnIndex = 0; columnIndex < numberOfColumns; columnIndex++) {
                         retrievedColumnClass = table.getColumnWithData(rowIndex, columnIndex).getAttribute(CLASS);
                         // check column contains all space-separated classes
@@ -76,7 +77,7 @@ public abstract class AbstractColumnAndRowClassesTest extends AbstractWebDriverT
                 return;
             case SEPARATOR_COMMA:
                 int mod;
-                for (int rowIndex = 0; rowIndex < table.getNumberOfVisibleRows(); rowIndex++) {
+                for (int rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
                     for (int columnIndex = 0; columnIndex < numberOfColumns; columnIndex++) {
                         mod = columnIndex % generatedClassNames;
                         expectedColumnClass = testedColumnClassesArray[mod];

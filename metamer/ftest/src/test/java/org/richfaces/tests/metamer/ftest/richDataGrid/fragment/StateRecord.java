@@ -21,6 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richDataGrid.fragment;
 
+import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -30,12 +31,19 @@ import org.openqa.selenium.support.FindBy;
  */
 public class StateRecord implements GridRecordInterface {
 
+    @Root
+    private WebElement rootElement;
+
     @FindBy(tagName = "span")
     private WebElement stateElement;
 
     @Override
     public String getRecordText() {
         return stateElement.getText();
+    }
+
+    public WebElement getRootElement() {
+        return rootElement;
     }
 
 }

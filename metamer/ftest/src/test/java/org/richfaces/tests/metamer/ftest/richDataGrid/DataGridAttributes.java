@@ -26,13 +26,17 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 public enum DataGridAttributes implements AttributeEnum {
 
     binding,
+    columnClasses,
     columns,
     elements,
     first,
+    footerClass,
+    headerClass,
     id,
     iterationStatusVar,
     keepSaved,
     rendered,
+    rowClasses,
     rowKeyConverter,
     rowKeyVar,
     stateVar,
