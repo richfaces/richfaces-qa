@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:rich="http://richfaces.org/rich">
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="component">
+            <h:outputStylesheet>
+                .oddCell {
+                color: blue;
+                }
+                .oddRow {
+                background-color: yellow;
+                }
+                .evenCell {
+                color: green;
+                }
+                .evenRow {
+                background-color: red;
+                }
+            </h:outputStylesheet>
+
+            <p>
+                Reproducer for issue <a href="https://issues.jboss.org/browse/RF-13259">RF-13259: DataTable rowClasses with columnGroup is not rendered</a>.
+                There is a dataTable with specified @rowClasses (and @columnClasses), which should be inherited by the inner columnGroup/columns.
+            </p>
+            <p>
+                Defaultly, the following table should have odd rows with yellow background and even rows with red background.
+                Odd cells with blue text and even cells with green text.
+                Automatized.
+            </p>
+
+            <rich:dataTable id="table"
+                            columnClasses="#{rf13259.attributes['columnClasses'].value}"
+                            rowClasses="#{rf13259.attributes['rowClasses'].value}"
+                            rows="#{rf13259.attributes['rows'].value}"
+                            value="#{model.capitals}"
+                            var="record">
+                <rich:columnGroup>
+                    <rich:column>
+                        <h:outputText value="#{record.state} (#{record.name})" />
+                    </rich:column>
+                    <rich:column>
+                        <h:outputText value="#{record.state}" />
+                    </rich:column>
+                    <rich:column>
+                        <h:outputText value="#{record.name}" />
+                    </rich:column>
+                </rich:columnGroup>
+                <rich:columnGroup>
+                    <rich:column>...</rich:column>
+                    <rich:column>Time zone</rich:column>
+                    <rich:column>
+                        <h:outputText value="#{record.timeZone}" />
+                    </rich:column>
+                </rich:columnGroup>
+            </rich:dataTable>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{rf13259.attributes}" include="columnClasses,rowClasses,rows" exclude="rowClass"/>
+        </ui:define>
+
+    </ui:composition>
+</html>
