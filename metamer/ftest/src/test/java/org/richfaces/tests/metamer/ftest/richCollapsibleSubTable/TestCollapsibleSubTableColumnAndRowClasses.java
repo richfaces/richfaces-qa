@@ -151,7 +151,7 @@ public class TestCollapsibleSubTableColumnAndRowClasses extends AbstractColumnAn
         }
 
         @Override
-        public WebElement getColumnWithData(int r, int c) {
+        public WebElement getCellWithData(int r, int c) {
             EmployeeRecord row = table.getRow(subTableIndex).getRow(r);
             switch (c) {
                 case 0:

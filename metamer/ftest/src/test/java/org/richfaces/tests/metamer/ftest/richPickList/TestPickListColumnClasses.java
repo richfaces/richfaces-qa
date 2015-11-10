@@ -168,7 +168,7 @@ public class TestPickListColumnClasses extends AbstractColumnAndRowClassesTest {
         };
 
         @Override
-        public WebElement getColumnWithData(int r, int c) {
+        public WebElement getCellWithData(int r, int c) {
             // some of the rows are in target list
             return r < visibleSourceListRows.getValue()
                 ? pickList.advanced().getSourceList().getItem(r).getColumn(c)

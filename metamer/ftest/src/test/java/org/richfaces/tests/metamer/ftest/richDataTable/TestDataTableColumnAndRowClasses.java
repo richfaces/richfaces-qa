@@ -141,7 +141,7 @@ public class TestDataTableColumnAndRowClasses extends AbstractColumnAndRowClasse
         };
 
         @Override
-        public WebElement getColumnWithData(int r, int c) {
+        public WebElement getCellWithData(int r, int c) {
             FilteringDTRow row = table.getRow(r);
             switch (c) {
                 case 0:

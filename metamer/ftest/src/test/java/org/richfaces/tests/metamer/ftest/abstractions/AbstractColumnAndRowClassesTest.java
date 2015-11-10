@@ -68,7 +68,7 @@ public abstract class AbstractColumnAndRowClassesTest extends AbstractWebDriverT
             case SEPARATOR_SPACE:
                 for (int rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
                     for (int columnIndex = 0; columnIndex < numberOfColumns; columnIndex++) {
-                        retrievedColumnClass = table.getColumnWithData(rowIndex, columnIndex).getAttribute(CLASS);
+                        retrievedColumnClass = table.getCellWithData(rowIndex, columnIndex).getAttribute(CLASS);
                         // check column contains all space-separated classes
                         assertTrue(retrievedColumnClass.contains(testedColumnClasses),
                             format("Column at [{0}][{1}] should contain all classes <{2}>. It contains <{3}>.", rowIndex, columnIndex, testedColumnClasses, retrievedColumnClass));
@@ -81,7 +81,7 @@ public abstract class AbstractColumnAndRowClassesTest extends AbstractWebDriverT
                     for (int columnIndex = 0; columnIndex < numberOfColumns; columnIndex++) {
                         mod = columnIndex % generatedClassNames;
                         expectedColumnClass = testedColumnClassesArray[mod];
-                        retrievedColumnClass = table.getColumnWithData(rowIndex, columnIndex).getAttribute(CLASS);
+                        retrievedColumnClass = table.getCellWithData(rowIndex, columnIndex).getAttribute(CLASS);
                         // check that column contains correct class
                         assertTrue(retrievedColumnClass.contains(expectedColumnClass),
                             format("Column at [{0}][{1}] should contain class <{2}>. It contains <{3}>.", rowIndex, columnIndex, expectedColumnClass, retrievedColumnClass));
@@ -193,7 +193,7 @@ public abstract class AbstractColumnAndRowClassesTest extends AbstractWebDriverT
 
     public interface TableAdapter {
 
-        WebElement getColumnWithData(final int r, final int c);
+        WebElement getCellWithData(final int r, final int c);
 
         int getNumberOfColumns();
 

@@ -132,7 +132,7 @@ public class TestDataGridColumnAndRowClasses extends AbstractColumnAndRowClasses
     private class DataGridAdapter implements TableAdapter {
 
         @Override
-        public WebElement getColumnWithData(int r, int c) {
+        public WebElement getCellWithData(int r, int c) {
             return dataGrid.getRecordsInRow(r).get(c).getRootElement();
         }
 

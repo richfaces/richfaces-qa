@@ -140,7 +140,7 @@ public class TestOrderingListColumnClasses extends AbstractColumnAndRowClassesTe
         };
 
         @Override
-        public WebElement getColumnWithData(int r, int c) {
+        public WebElement getCellWithData(int r, int c) {
             return orderingList.advanced().getList().getItem(r).getColumn(c);
         }
 
