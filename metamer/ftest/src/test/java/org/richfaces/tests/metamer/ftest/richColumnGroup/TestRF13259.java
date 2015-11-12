@@ -27,6 +27,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractColumnAndRowClassesTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -81,6 +82,7 @@ public class TestRF13259 extends AbstractColumnAndRowClassesTest {
         super.testColumnClasses_oneColumnClass();
     }
 
+    @Skip
     @Test
     public void testRowClasses_numberOfRowClassesEqualsToRows_commaSeparated() {
         super.testRowClasses_numberOfRowClassesEqualsToRows_commaSeparated();
@@ -91,11 +93,13 @@ public class TestRF13259 extends AbstractColumnAndRowClassesTest {
         super.testRowClasses_numberOfRowClassesEqualsToRows_spaceSeparated();
     }
 
+    @Skip
     @Test
     public void testRowClasses_numberOfRowClassesGreaterThanRows_commaSeparated() {
         super.testRowClasses_numberOfRowClassesGreaterThanRows_commaSeparated();
     }
 
+    @Skip
     @Test
     public void testRowClasses_numberOfRowClassesLesserThanRows_commaSeparated() {
         super.testRowClasses_numberOfRowClassesLesserThanRows_commaSeparated();
