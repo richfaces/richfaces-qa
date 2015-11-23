@@ -22,6 +22,7 @@
 package org.richfaces.tests.archetypes.kitchensink.ftest.desktop;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
@@ -57,6 +58,15 @@ public class TestForm extends AbstractKitchensinkTest {
 
         registerForm.clickOnRegisterButton();
         membersTable.waitUntilNumberOfRowsChanged(numberOfRowsBefore);
+    }
+
+    private void switchToSecondWindow(String originalWindow) {
+        for (String window : webDriver.getWindowHandles()) {
+            if (!window.equals(originalWindow)) {
+                webDriver.switchTo().window(window);
+                break;
+            }
+        }
     }
 
     @Test
@@ -114,22 +124,28 @@ public class TestForm extends AbstractKitchensinkTest {
     public void testRestAPI() {
         String originalWindow = webDriver.getWindowHandle();
         try {
-            registerNewMember("diff@de.du");
-            registerNewMember("definitelydifferent@ba.sk");
+            WebElement firstRow = membersTable.getTableRow();
 
-            WebElement fstRow = membersTable.getTableRow();
-            String mailFromFstRow = fstRow.findElement(ByJQuery.selector("td:eq(3)")).getText();
+            String idFromFstRow = firstRow.findElement(ByJQuery.selector("td:eq(1)")).getText();
+            String nameFromFstRow = firstRow.findElement(ByJQuery.selector("td:eq(2)")).getText();
+            String mailFromFstRow = firstRow.findElement(ByJQuery.selector("td:eq(3)")).getText();
+            String phoneFromFstRow = firstRow.findElement(ByJQuery.selector("td:eq(4)")).getText();
 
-            fstRow.findElement(ByJQuery.selector("td:eq(5) a")).click();
-            for (String window : webDriver.getWindowHandles()) {
-                if (!window.equals(originalWindow)) {
-                    webDriver.switchTo().window(window);
-                    break;
-                }
-            }
+            // open REST URL
+            firstRow.findElement(ByJQuery.selector("td:eq(5) a")).click();
+
+            switchToSecondWindow(originalWindow);
+
+            WebElement body = webDriver.findElement(By.xpath("//pre"));
+
             Graphene.waitAjax()
-                .withMessage("The REST api should provide json data with all details about member from first row!")
-                .until().element(By.xpath("//pre")).text().contains(mailFromFstRow);
+                .withMessage("The REST api should provide json data with correct EMAIL of the member from first row!")
+                .until().element(body).text().contains(mailFromFstRow);
+            String bodyText = body.getText();
+            assertTrue(bodyText.contains(idFromFstRow), "The REST api should provide json data with correct ID of the member from first row!");
+            assertTrue(bodyText.contains(nameFromFstRow), "The REST api should provide json data with correct NAME of the member from first row!");
+            assertTrue(bodyText.contains(phoneFromFstRow), "The REST api should provide json data with correct PHONE of the member from first row!");
+
         } finally {
             if (!webDriver.getWindowHandle().equals(originalWindow)) {
                 webDriver.close();

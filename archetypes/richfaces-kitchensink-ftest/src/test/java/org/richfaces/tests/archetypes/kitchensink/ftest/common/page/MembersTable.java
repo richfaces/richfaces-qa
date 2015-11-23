@@ -24,7 +24,6 @@ package org.richfaces.tests.archetypes.kitchensink.ftest.common.page;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -42,7 +41,7 @@ public class MembersTable {
     private WebElement urlAllMembersRestData;
 
     public int getNumberOfRows() {
-        return table.findElements(By.cssSelector(".rf-dt-b tr")).size();
+        return getTableRows().size();
     }
 
     public WebElement getTable() {
