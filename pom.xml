@@ -36,8 +36,8 @@ FSF site: http://www.fsf.org. -->
         <version.wildfly8-0>8.0.0.Final</version.wildfly8-0>
         <version.wildfly8-1>8.1.0.Final</version.wildfly8-1>
         <version.wildfly8-2>8.2.1.Final</version.wildfly8-2>
-        <version.wildfly9-0>9.0.1.Final</version.wildfly9-0>
-        <version.wildfly10-0>10.0.0.CR3</version.wildfly10-0>
+        <version.wildfly9-0>9.0.2.Final</version.wildfly9-0>
+        <version.wildfly10-0>10.0.0.CR4</version.wildfly10-0>
         <eap61Zip>path/to/your/eap/distribution/zip</eap61Zip>
 
         <!-- version of Tomcat containers to use-->
