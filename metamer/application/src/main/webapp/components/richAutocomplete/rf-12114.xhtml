@@ -46,7 +46,7 @@
             <br/>
             <h:panelGrid id="examples" columns="2">
                 rich:autocomplete + a4j:ajax event="blur"
-                <rich:autocomplete id="autocompleteNomeId"
+                <rich:autocomplete id="autocompleteWithAjax"
                                    autocompleteMethod="#{richAutocompleteBean.autocompleteCapital}"
                                    fetchValue="#{capital.state}"
                                    required="true"
@@ -66,7 +66,7 @@
 
                 rich:autocomplete onblur + jsFunction
 
-                <rich:autocomplete id="autocompleteJSId"
+                <rich:autocomplete id="autocompleteWithJSFunction"
                                    autocompleteMethod="#{richAutocompleteBean.autocompleteCapital}"
                                    fetchValue="#{capital.state}"
                                    onblur="blurFunction();"
@@ -88,7 +88,7 @@
             </h:panelGrid>
 
             <a4j:jsFunction name="blurFunction" actionListener="#{rf12114.onblurListener2}" render="out2"
-                            execute="autocompleteJSId" />
+                            execute="autocompleteWithJSFunction" />
         </ui:define>
 
     </ui:composition>
