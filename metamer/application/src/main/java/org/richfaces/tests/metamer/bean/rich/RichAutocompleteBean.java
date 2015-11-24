@@ -32,7 +32,6 @@ import javax.faces.bean.SessionScoped;
 import org.richfaces.component.UIAutocomplete;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.bean.Model;
-import org.richfaces.tests.metamer.bean.RichBean;
 import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBean;
 import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBeanImpl;
 import org.richfaces.tests.metamer.model.Capital;
@@ -145,13 +144,5 @@ public class RichAutocompleteBean extends StringInputValidationBeanImpl implemen
 
     public void setRandomString(String random) {
         this.randomString = random;
-    }
-
-    public void onblurListener1() {
-        RichBean.logToPage("* on blur listener 1");
-    }
-
-    public void onblurListener2() {
-        RichBean.logToPage("* on blur listener 2");
     }
 }
