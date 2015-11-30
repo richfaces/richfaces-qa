@@ -28,9 +28,12 @@ import static org.testng.Assert.assertTrue;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.test.api.ArquillianResource;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Keyboard;
 import org.richfaces.fragment.calendar.DayPicker;
 import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
 import org.richfaces.fragment.calendar.DayPicker.CalendarDay.DayType;
@@ -51,6 +54,17 @@ import com.google.common.collect.Lists;
 public class TestCalendarModel extends AbstractCalendarTest {
 
     private static final String datePattern = "MMM dd, yyyy";
+    private static final DateTimeFormatter DTF = DateTimeFormat.forPattern(datePattern);
+
+    @ArquillianResource
+    private Keyboard keyboard;
+
+    private void checkSelectedDate(DateTime referenceDate) {
+        DateTime selectedDate = DTF.parseDateTime(popupCalendar.getInput().getStringValue());
+        assertEquals(selectedDate.getYear(), referenceDate.getYear());
+        assertEquals(selectedDate.getMonthOfYear(), referenceDate.getMonthOfYear());
+        assertEquals(selectedDate.getDayOfMonth(), referenceDate.getDayOfMonth());
+    }
 
     @Override
     public String getComponentTestPagePath() {
@@ -103,11 +117,63 @@ public class TestCalendarModel extends AbstractCalendarTest {
     }
 
     @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-14199")
+    public void testDisabledDayCannotBePickedByKeyboard() {
+        DateTime referenceDate = new DateTime().withYear(2015).withMonthOfYear(11).withDayOfMonth(2).withHourOfDay(12).withMinuteOfHour(0);
+        // set reference date
+        Graphene.guardAjax(popupCalendar).setDateTime(referenceDate);
+
+        // stabilization wait time, without it the whole popup will disappear right after it is displayed, https://issues.jboss.org/browse/RF-14110
+        waiting(500);
+
+        popupCalendar.openPopup();
+        checkSelectedDate(referenceDate);
+
+        // try to select tuesday (disabled)
+        keyboard.sendKeys(Keys.ARROW_RIGHT);
+        keyboard.sendKeys(Keys.ENTER);
+        assertTrue(popupCalendar.getPopup().isVisible());
+        // check date is still the same (no move through enabled and already not selected days)
+        checkSelectedDate(referenceDate);
+
+        // try to select sunday (disabled)
+        keyboard.sendKeys(Keys.ARROW_LEFT);
+        keyboard.sendKeys(Keys.ARROW_LEFT);
+        keyboard.sendKeys(Keys.ENTER);
+        assertTrue(popupCalendar.getPopup().isVisible());
+        // check date is still the same (no move through enabled and already not selected days)
+        checkSelectedDate(referenceDate);
+
+        // try to select saturday from previous month (disabled)
+        Graphene.guardAjax(keyboard).sendKeys(Keys.ARROW_LEFT);// move to previous month will trigger an ajax request
+        keyboard.sendKeys(Keys.ENTER);
+        assertTrue(popupCalendar.getPopup().isVisible());
+        // check date is still the same (no move through enabled and already not selected days)
+        checkSelectedDate(referenceDate);
+
+        // try to select thursday from previous year (disabled)
+        Graphene.guardAjax(keyboard).sendKeys(Keys.chord(Keys.SHIFT, Keys.PAGE_UP));// move to previous year will trigger an ajax request
+        keyboard.sendKeys(Keys.ARROW_LEFT);
+        keyboard.sendKeys(Keys.ENTER);
+        assertTrue(popupCalendar.getPopup().isVisible());
+        // check selected date has changed (day moved to friday when the year was switched)
+        // 2x to the left and 1x to previous year
+        referenceDate = referenceDate.minusDays(2).minusYears(1);
+        checkSelectedDate(referenceDate);
+
+        // finally, select wednesday (enabled)
+        Graphene.guardAjax(keyboard).sendKeys(Keys.ARROW_LEFT);
+        keyboard.sendKeys(Keys.ENTER);
+        popupCalendar.getPopup().waitUntilIsNotVisible().perform();
+
+        referenceDate = referenceDate.withYear(2014).withMonthOfYear(10).withDayOfMonth(29);
+        checkSelectedDate(referenceDate);
+    }
+
+    @Test
     @CoversAttributes("dataModel")
     @RegressionTest("https://issues.jboss.org/browse/RFPL-1222")
     public void testPickADate() {
-        DateTimeFormatter dtf = DateTimeFormat.forPattern(datePattern);
-        DateTime selectedDate;
         DateTime referenceDate = new DateTime();
 
         DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
@@ -133,10 +199,7 @@ public class TestCalendarModel extends AbstractCalendarTest {
             Graphene.guardAjax(day).select();
             popupCalendar.getPopup().waitUntilIsNotVisible().perform();
 
-            selectedDate = dtf.parseDateTime(popupCalendar.getInput().getStringValue());
-            assertEquals(selectedDate.getYear(), referenceDate.getYear());
-            assertEquals(selectedDate.getMonthOfYear(), referenceDate.getMonthOfYear());
-            assertEquals(selectedDate.getDayOfMonth(), referenceDate.getDayOfMonth());
+            checkSelectedDate(referenceDate);
         }
     }
 }
