@@ -27,18 +27,16 @@ import static org.testng.Assert.assertTrue;
 
 import java.util.List;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.richfaces.fragment.calendar.DayPicker;
 import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
 import org.richfaces.fragment.calendar.DayPicker.CalendarDay.DayType;
-import org.richfaces.fragment.calendar.PopupCalendar;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.model.CalendarModel;
 import org.testng.annotations.Test;
 
@@ -59,28 +57,25 @@ public class TestCalendarModel extends AbstractCalendarTest {
         return "richCalendar/dataModel.xhtml";
     }
 
-    @Override
-    @Test
-    @CoversAttributes("dataModel")
-    @RegressionTest("https://issues.jboss.org/browse/RFPL-1222")
-    public void testApplyButton() {
-        int wednesdays = 4;
-        PopupCalendar popup = popupCalendar.getPopup();
-        DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
+    private List<CalendarDay> getFewDaysFrom(List<CalendarDay> days, int count) {
+        if (count < 1 && count > 10) {
+            throw new IllegalArgumentException("The count can be only from interval <1;9>");
+        }
+        List<CalendarDay> result = Lists.newArrayList();
 
-        List<CalendarDay> wednesdayDays = filterOutBoundaryDays(Lists.newArrayList(dayPicker.getSpecificDays(wednesdays)));
-        wednesdayDays.removeAll(dayPicker.getBoundaryDays());
-        CalendarDay dayToBeSelected = wednesdayDays.get(0);
-        DateTime referenceDate = todayMidday.withDayOfMonth(dayToBeSelected.getDayNumber());
-        MetamerPage.waitRequest(dayToBeSelected, WaitRequestType.XHR).select();
-        popup.waitUntilIsNotVisible().perform();
+        result.add(days.get(0));
+        result.add(days.get(days.size() - 1));
+        result.add(days.get(days.size() / 2));
 
-        assertFalse(popup.isVisible(), "Popup should not be visible now.");
-        DateTimeFormatter dtf = DateTimeFormat.forPattern(datePattern);
-        DateTime selectedDate = dtf.parseDateTime(popupCalendar.getInput().getStringValue());
-        assertEquals(selectedDate.getYear(), referenceDate.getYear());
-        assertEquals(selectedDate.getMonthOfYear(), referenceDate.getMonthOfYear());
-        assertEquals(selectedDate.getDayOfMonth(), referenceDate.getDayOfMonth());
+        result.add(days.get(1));
+        result.add(days.get(days.size() / 2 - 1));
+        result.add(days.get(days.size() - 2));
+
+        result.add(days.get(2));
+        result.add(days.get(days.size() / 2 + 1));
+        result.add(days.get(days.size() - 3));
+
+        return result.subList(0, count);
     }
 
     @Test
@@ -104,6 +99,42 @@ public class TestCalendarModel extends AbstractCalendarTest {
         for (CalendarDay day : busyDays) {
             assertTrue(day.containsStyleClass(CalendarModel.BUSY_DAY_CLASS), "Tuesdays and thursdays should be busy (aqua color).");
             assertFalse(day.is(DayType.selectableDay), "Busy days should not be selectable.");
+        }
+    }
+
+    @Test
+    @CoversAttributes("dataModel")
+    @RegressionTest("https://issues.jboss.org/browse/RFPL-1222")
+    public void testPickADate() {
+        DateTimeFormatter dtf = DateTimeFormat.forPattern(datePattern);
+        DateTime selectedDate;
+        DateTime referenceDate = new DateTime();
+
+        DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
+
+        List<CalendarDay> enabledDays = filterOutBoundaryDays(Lists.newArrayList(dayPicker.getSpecificDays(2, 4, 6)));
+        List<CalendarDay> disabledDays = filterOutBoundaryDays(Lists.newArrayList(dayPicker.getSpecificDays(1, 3, 5, 7)));
+
+        // check disabled days
+        for (CalendarDay day : getFewDaysFrom(disabledDays, 9)) {
+            popupCalendar.getPopup().waitUntilIsVisible().perform();
+            String previousValue = popupCalendar.getInput().getStringValue();
+            day.getDayElement().click();
+            assertEquals(popupCalendar.getInput().getStringValue(), previousValue);
+        }
+
+        // check enabled days
+        for (CalendarDay day : getFewDaysFrom(enabledDays, 5)) {
+            popupCalendar.openPopup();
+            referenceDate = referenceDate.withDayOfMonth(day.getDayNumber());
+
+            Graphene.guardAjax(day).select();
+            popupCalendar.getPopup().waitUntilIsNotVisible().perform();
+
+            selectedDate = dtf.parseDateTime(popupCalendar.getInput().getStringValue());
+            assertEquals(selectedDate.getYear(), referenceDate.getYear());
+            assertEquals(selectedDate.getMonthOfYear(), referenceDate.getMonthOfYear());
+            assertEquals(selectedDate.getDayOfMonth(), referenceDate.getDayOfMonth());
         }
     }
 }
