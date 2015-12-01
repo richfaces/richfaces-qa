@@ -103,8 +103,9 @@
                              title="#{richFileUploadBean.attributes['title'].value}"
                              uploadLabel="#{richFileUploadBean.attributes['uploadLabel'].value}" >
                 <f:facet name="progress">
-                    <rich:progressBar interval="100" mode="ajax"
-                                      minValue="0" maxValue="100" id="customProgressBar" />
+                    <rich:progressBar id="customProgressBar"
+                                      onfinish="#{richProgressBarBean.attributes['onfinish'].value}"
+                                      />
                 </f:facet>
             </rich:fileUpload>
             <br />
@@ -127,7 +128,11 @@
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
+            FileUpload attributes:
             <metamer:attributes value="#{richFileUploadBean.attributes}" id="attributes" render="log" />
+            <br/>
+            ProgressBar attributes:
+            <metamer:attributes value="#{richProgressBarBean.attributes}" id="attributesProgressBar" include="onfinish" />
         </ui:define>
 
     </ui:composition>
