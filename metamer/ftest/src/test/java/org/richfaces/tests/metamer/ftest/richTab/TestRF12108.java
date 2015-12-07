@@ -2,6 +2,7 @@ package org.richfaces.tests.metamer.ftest.richTab;
 
 import static org.jboss.arquillian.graphene.Graphene.waitAjax;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -28,7 +29,7 @@ public class TestRF12108 extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-12108")
     public void testStatusIsClearedWhenRequestCompleted() {
         final String expectedOutput = "Should be rendered aside as well!";
-        inputNotHandledCorrectly.sendKeys(expectedOutput);
+        Graphene.guardAjax(inputNotHandledCorrectly).sendKeys(expectedOutput);
 
         waitAjax(driver).until(new Predicate<WebDriver>() {
 
