@@ -649,6 +649,13 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("title")
+    @Templates(value = "plain")
+    public void testTitle() {
+        testTitle(autocomplete.advanced().getInput().advanced().getInputElement());
+    }
+
+    @Test
     @CoversAttributes("tokens")
     public void testTokens() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "client");

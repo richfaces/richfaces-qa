@@ -77,6 +77,7 @@ public enum AutocompleteAttributes implements AttributeEnum {
     style,
     styleClass,
     tabindex,
+    title,
     tokens,
     validator,
     validatorMessage,

@@ -35,25 +35,24 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </f:viewParam>
             </f:metadata>
         </ui:define>
-        
+
         <ui:define name="head">
             <script type="text/javascript">
                 /* function filtering by string occurence in state and name */
                 function customClientFilterFunction(subString, value) {
-                    
                     if (subString.length >= 2) {
-                    	if(value.indexOf(subString)!=-1) {
+                        if (value.indexOf(subString) != -1) {
                             // console.log(' # ' + subString + ' matches on ' + value);
                             return true;
                         }
-                    } else return false;                    
-                };
-
+                    } else
+                        return false;
+                }
             </script>
         </ui:define>
 
         <ui:define name="component">
-            
+
             <rich:autocomplete id="autocomplete"
                                autocompleteList="#{richAutocompleteBean.capitals}"                               
                                autofill="#{richAutocompleteBean.attributes['autofill'].value}"
@@ -102,13 +101,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                showButton="#{richAutocompleteBean.attributes['showButton'].value}"
                                style="#{richAutocompleteBean.attributes['style'].value}"
                                styleClass="#{richAutocompleteBean.attributes['styleClass'].value}"
+                               tabindex="#{richAutocompleteBean.attributes['tabindex'].value}"
+                               title="#{richAutocompleteBean.attributes['title'].value}"
                                tokens="#{richAutocompleteBean.attributes['tokens'].value}"
                                validatorMessage="#{richAutocompleteBean.attributes['validatorMessage'].value}"
                                value="#{richAutocompleteBean.attributes['value'].value}"
                                valueChangeListener="#{richAutocompleteBean.attributes.valueChangeListener}"
                                var="capital"
                                >
-                    #{capital.name} of #{capital.state}
+                #{capital.name} of #{capital.state}
 
                 <a4j:ajax event="change"
                           render="#{richAutocompleteBean.ajaxAttributes['render'].value}"
@@ -116,8 +117,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                           listener="#{richBean.changeEventListener}" />
 
                 <a4j:ajax event="selectitem" render="output"
-                	listener="#{richBean.actionListener}"
-                />
+                          listener="#{richBean.actionListener}"
+                          />
 
             </rich:autocomplete>
 
