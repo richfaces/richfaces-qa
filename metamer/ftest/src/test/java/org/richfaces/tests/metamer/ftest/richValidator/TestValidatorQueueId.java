@@ -29,6 +29,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.message.RichFacesMessage;
+import org.richfaces.tests.configurator.unstable.annotation.Unstable;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -66,6 +67,7 @@ public class TestValidatorQueueId extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("queueId")
+    @Unstable
     public void testQueueId() {
         assertFalse(message.advanced().isVisible());
 

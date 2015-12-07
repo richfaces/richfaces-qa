@@ -31,6 +31,7 @@ import java.util.concurrent.TimeUnit;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.richfaces.tests.configurator.unstable.annotation.Unstable;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.AjaxRequestHalter;
@@ -227,6 +228,7 @@ public class TestGlobalQueue extends AbstractWebDriverTest {
      * Tests delay between time last event occurs and time when event triggers request (begin).
      */
     @Test
+    @Unstable
     @CoversAttributes("requestDelay")
     @UseWithField(field = "requestDelay", valuesFrom = FROM_FIELD, value = "requestDelays")
     public void testRequestDelay() {

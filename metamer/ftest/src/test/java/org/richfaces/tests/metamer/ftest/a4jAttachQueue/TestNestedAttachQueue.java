@@ -25,6 +25,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
 import org.jboss.arquillian.graphene.page.Page;
+import org.richfaces.tests.configurator.unstable.annotation.Unstable;
 import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.AjaxRequestHalter;
 import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.Halter;
 import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.Halter.HaltedRequest;
@@ -95,6 +96,7 @@ public class TestNestedAttachQueue extends AbstractAttachQueueTest {
     }
 
     @Test
+    @Unstable
     public void testNoRequestDelay() {
         super.testNoRequestDelay();
     }
@@ -110,6 +112,7 @@ public class TestNestedAttachQueue extends AbstractAttachQueueTest {
     }
 
     @Test
+    @Unstable
     public void testRequestDelay() {
         super.testRequestDelay();
     }

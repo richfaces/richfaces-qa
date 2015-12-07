@@ -21,6 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jAttachQueue;
 
+import org.richfaces.tests.configurator.unstable.annotation.Unstable;
 import org.testng.annotations.Test;
 
 /**
@@ -50,6 +51,7 @@ public class TestExtendingAttachQueue extends AbstractAttachQueueTest {
     }
 
     @Test
+    @Unstable
     public void testRequestDelay() {
         super.testRequestDelay();
     }

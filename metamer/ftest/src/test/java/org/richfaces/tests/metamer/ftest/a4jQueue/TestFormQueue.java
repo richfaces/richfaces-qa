@@ -59,10 +59,9 @@ public class TestFormQueue extends AbstractWebDriverTest {
     }
 
     /**
-     * Tests the event handlers producing count of events (count of events, requests and updates).
-     * Uses one form queue, which controls events from two distinct event sources.
-     * When one source waits for delay and another source produces event, events from first source should be immediately
-     * processed.
+     * Tests the event handlers producing count of events (count of events, requests and updates). Uses one form queue, which
+     * controls events from two distinct event sources. When one source waits for delay and another source produces event,
+     * events from first source should be immediately processed.
      */
     @Test
     public void testCountsOneQueueTwoEvents() {
@@ -84,10 +83,9 @@ public class TestFormQueue extends AbstractWebDriverTest {
     }
 
     /**
-     * Tests the event handlers producing count of events (count of events, requests and updates).
-     * Uses two form queues, controlling events from four distinct event sources (two for each queue).
-     * When one source waits for delay and another source produces event, events from first source should be immediately
-     * processed.
+     * Tests the event handlers producing count of events (count of events, requests and updates). Uses two form queues,
+     * controlling events from four distinct event sources (two for each queue). When one source waits for delay and another
+     * source produces event, events from first source should be immediately processed.
      */
     @Test
     public void testCountsTwoQueuesThreeEvents() {
@@ -124,10 +122,8 @@ public class TestFormQueue extends AbstractWebDriverTest {
     }
 
     /**
-     * Tests request delays for one form queue.
-     * Uses one form queue, which controls events from two distinct event sources.
-     * When one source waits for delay and another source produces event, events from first source should be immediately
-     * processed.
+     * Tests request delays for one form queue. Uses one form queue, which controls events from two distinct event sources. When
+     * one source waits for delay and another source produces event, events from first source should be immediately processed.
      */
     @Test
     public void testTimingOneQueueTwoEvents() {
@@ -145,10 +141,9 @@ public class TestFormQueue extends AbstractWebDriverTest {
     }
 
     /**
-     * Tests request delays for two form queues.
-     * Uses two form queues, controlling events from four distinct event sources (two for each queue).
-     * When one source waits for delay and another source produces event, events from first source should be immediately
-     * processed.
+     * Tests request delays for two form queues. Uses two form queues, controlling events from four distinct event sources (two
+     * for each queue). When one source waits for delay and another source produces event, events from first source should be
+     * immediately processed.
      */
     @Test
     public void testTimingTwoQueuesFourEvents() {

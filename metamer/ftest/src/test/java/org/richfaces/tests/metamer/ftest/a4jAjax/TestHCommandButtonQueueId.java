@@ -27,6 +27,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.configurator.unstable.annotation.Unstable;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -62,6 +63,7 @@ public class TestHCommandButtonQueueId extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("queueId")
+    @Unstable
     public void testQueueId() {
         submitText("some text");
         assertEquals(getDelayInMillis(), 0, 500, "The delay should be between 0 and 500 ms without using any queue.");
