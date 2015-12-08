@@ -125,6 +125,8 @@ public class TestCalendarModel extends AbstractCalendarTest {
 
         // check enabled days
         for (CalendarDay day : getFewDaysFrom(enabledDays, 5)) {
+            // stabilization wait time, without it the whole popup will disappear right after it is displayed, https://issues.jboss.org/browse/RF-14110
+            waiting(500);
             popupCalendar.openPopup();
             referenceDate = referenceDate.withDayOfMonth(day.getDayNumber());
 
