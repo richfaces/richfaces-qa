@@ -40,8 +40,8 @@ import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
 
 /**
- * Test listener which provides the methods injected in lifecycle of test case to catch the additional information in
- * context of test failure.
+ * Test listener which provides the methods injected in lifecycle of test case to catch the additional information in context of
+ * test failure.
  *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
@@ -76,12 +76,32 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
         saveScreenshotAndPageSource(result);
     }
 
+    /**
+     * Mark all lines beginning with 'at org.richfaces'
+     */
+    private String markStackTrace(String stackTrace) {
+        StringBuilder sb = new StringBuilder();
+        String toFind = "at org.richfaces";
+        String newLine = "\n";
+        String tabulator = "\t";
+        String mark = "    --> ";
+        for (String line : stackTrace.split(newLine)) {
+            if (line.contains(toFind)) {
+                sb.append(line.replace(tabulator, mark));
+            } else {
+                sb.append(line);
+            }
+            sb.append(newLine);
+        }
+        return sb.toString();
+    }
+
     private void saveStackTrace(ITestResult result) {
         Throwable throwable = result.getThrowable();
         String stacktrace = null;
 
         if (throwable != null) {
-            stacktrace = ExceptionUtils.getStackTrace(throwable);
+            stacktrace = markStackTrace(ExceptionUtils.getStackTrace(throwable));
         }
 
         String filenameIdentification = getFilenameIdentification(result);
@@ -111,7 +131,6 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
         // } catch (SeleniumException e) {
         // traffic = ExceptionUtils.getFullStackTrace(e);
         // }
-
         try {
             File screenshot = null;
             if (((GrapheneProxyInstance) getWebDriver()).unwrap() instanceof TakesScreenshot) {
