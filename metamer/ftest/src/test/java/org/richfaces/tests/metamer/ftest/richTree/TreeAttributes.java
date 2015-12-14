@@ -74,6 +74,7 @@ public enum TreeAttributes implements AttributeEnum {
     toggleListener,
     toggleNodeEvent,
     toggleType,
+    useDefaultNode,
     value,
     var
 }
