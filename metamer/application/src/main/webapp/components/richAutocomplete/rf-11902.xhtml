@@ -6,7 +6,8 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -69,7 +70,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <a4j:queue name="q1000" requestDelay="1000" ignoreDupResponses="true"/>
 
             <h:panelGrid columns="2">
-                Autocomplete with attached queue with @requestDelay=100:
+                <h:outputLabel for="autocompleteUsingAttachedQueueWithRequestDelay"
+                               value="Autocomplete with attached queue with @requestDelay=100:"/>
                 <rich:autocomplete id="autocompleteUsingAttachedQueueWithRequestDelay"
                                    autocompleteMethod="#{richAutocompleteBean.autocomplete}"
                                    minChars="1"
@@ -86,7 +88,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                               listener="#{richBean.actionListener}" />
                 </rich:autocomplete>
 
-                Autocomplete with attached queue using named queue with @requestDelay=1000:
+                <h:outputLabel for="autocompleteUsingAttachedQueueReferencingNamedQueue"
+                               value="Autocomplete with attached queue using named queue with @requestDelay=1000:"/>
                 <rich:autocomplete id="autocompleteUsingAttachedQueueReferencingNamedQueue"
                                    autocompleteMethod="#{richAutocompleteBean.autocomplete}"
                                    minChars="1"
@@ -103,7 +106,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                               listener="#{richBean.actionListener}" />
                 </rich:autocomplete>
 
-                Autocomplete using global queue with @requestDelay=2000:
+                <h:outputLabel for="autocompleteUsingGlobalQueue"
+                               value="Autocomplete using global queue with @requestDelay=2000:"/>
+
                 <rich:autocomplete id="autocompleteUsingGlobalQueue"
                                    autocompleteMethod="#{richAutocompleteBean.autocomplete}"
                                    minChars="1"
