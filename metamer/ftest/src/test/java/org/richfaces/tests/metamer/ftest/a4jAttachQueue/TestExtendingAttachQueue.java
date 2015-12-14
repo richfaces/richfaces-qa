@@ -36,6 +36,7 @@ public class TestExtendingAttachQueue extends AbstractAttachQueueTest {
     }
 
     @Test
+    @Unstable
     public void testNoRequestDelay() {
         super.testNoRequestDelay();
     }
