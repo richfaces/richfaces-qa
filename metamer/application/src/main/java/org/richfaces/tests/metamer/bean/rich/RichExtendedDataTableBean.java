@@ -85,6 +85,7 @@ public class RichExtendedDataTableBean implements Serializable {
 
         attributes.setAttribute("rendered", true);
         attributes.setAttribute("rows", 30);
+        attributes.setAttribute("clientRows", 0);
         attributes.setAttribute("styleClass", "extended-data-table");
         attributes.setAttribute("style", null);
         attributes.setAttribute("sortMode", SortMode.single);
@@ -133,8 +134,7 @@ public class RichExtendedDataTableBean implements Serializable {
     /**
      * Setter for page.
      *
-     * @param page
-     *            page number that will be used by data scroller
+     * @param page page number that will be used by data scroller
      */
     public void setPage(int page) {
         this.page = page;
@@ -168,8 +168,7 @@ public class RichExtendedDataTableBean implements Serializable {
     /**
      * Setter for state.
      *
-     * @param state
-     *            true if data should be displayed in table
+     * @param state true if data should be displayed in table
      */
     public void setState(boolean state) {
         this.state = state;
