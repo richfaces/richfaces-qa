@@ -21,19 +21,27 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jStatus;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
+
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.webdriver.utils.ElementVisibilityObserver;
 import org.testng.annotations.Test;
 
 /**
- * Test for RF-12092
+ * Test for RF-12092.
  *
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestRF12092 extends AbstractStatusTest {
+
+    private static final int TOLERANCE = 1500;
 
     @Override
     public String getComponentTestPagePath() {
@@ -42,17 +50,28 @@ public class TestRF12092 extends AbstractStatusTest {
 
     @Override
     public void setupDelay() {
-        // do not setup the delay
+        // do not setup any additional response delay
     }
 
     @Test
-    @Skip
-    @IssueTracking("https://issues.jboss.org/browse/RFPL-12092")
+    @RegressionTest(value = "https://issues.jboss.org/browse/RF-12092")
     public void testStatusIsClearedWhenRequestCompleted() {
+        // start observing visibility of the STOP element of the a4j:status
+        ElementVisibilityObserver evo = ElementVisibilityObserver.getInstance();
+        evo.watchForVisibilityChangeOfElement(getStatus().advanced().getStopElement());
         // the page should update after 5 seconds
         String requestTimeBefore = getMetamerPage().getRequestTimeElement().getText();
-        Graphene.waitModel().withTimeout(7, TimeUnit.SECONDS).until().element(getMetamerPage().getRequestTimeElement()).text().not().equalTo(requestTimeBefore);
-        // the tested status text should change back to "Done" after request processed and before the next request starts
+        Graphene.waitModel().withTimeout(7, TimeUnit.SECONDS).until().element(
+            getMetamerPage().getRequestTimeElement()).text().not().equalTo(requestTimeBefore);
+        // the tested status text should change back to "Done" after the request is processed and before the next request starts
         getStatus().advanced().waitUntilStatusTextChanges("Done").withTimeout(3, TimeUnit.SECONDS).perform();
+
+        // check the visibility records
+        List<ElementVisibilityObserver.Record> records = evo.getRecords();
+        assertTrue(records.size() >= 2, "There should be at least 2 records");
+        assertFalse(records.get(0).isVisible(), "When the request is beeing processed, the STOP element of the a4j:status should be hidden.");
+        assertTrue(records.get(1).isVisible(), "After the ajax request is processed, the STOP element should be visible again.");
+        // check that delay between STOP element reappearance is in interval <0,2000> ms
+        assertEquals(records.get(1).getTime().getMillis() - records.get(0).getTime().getMillis(), 0, TOLERANCE);
     }
 }
