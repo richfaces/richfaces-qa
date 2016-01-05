@@ -47,12 +47,12 @@
             <p>
                 How to reproduce:
                 <ul>
-                    <li>Click on +1 link/button</li>
+                    <li>Wait for poll @interval [ms]</li>
                     <li>Value in first input is updated</li>
                     <li>Check if in second input is value smaller than 10</li>
                     <li>Click on save button</li>
                     <li>Validation message is shown</li>
-                    <li>Click on +1 link</li>
+                    <li>Wait for another poll @interval [ms]</li>
                     <li>Value in first input should be updated, when @resetValues is 'true'</li>
                 </ul>
             </p>
@@ -61,11 +61,13 @@
             <h:messages id="msgs" />
 
             <h:inputText id="v1" value="#{rf13532.value1}" />
-            <h:commandLink id="increaseElement"
-                           action="#{rf13532.incValue1}"
-                           value="+1">
-                <a4j:ajax render="v1" resetValues="#{a4jAjaxBean.attributes['resetValues'].value}" />
-            </h:commandLink>
+            <a4j:poll action="#{rf13532.incValue1}"
+                      interval="#{a4jPollBean.attributes['interval'].value}"
+                      render="v1"
+                      resetValues="#{a4jPollBean.attributes['resetValues'].value}"
+                      value="+1">
+            </a4j:poll>
+
             <br/>
             <h:inputText id="v2" value="#{rf13532.value2}">
                 <f:validateLongRange minimum="10" />
@@ -78,7 +80,7 @@
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
-            <metamer:attributes value="#{a4jAjaxBean.attributes}" id="attributes" include="resetValues"/>
+            <metamer:attributes value="#{a4jPollBean.attributes}" id="attributes" include="resetValues,interval"/>
         </ui:define>
     </ui:composition>
 </html>

@@ -59,13 +59,12 @@
             <hr />
 
             <h:messages id="msgs" />
-
             <h:inputText id="v1" value="#{rf13532.value1}" />
-            <h:commandLink id="increaseElement"
-                           action="#{rf13532.incValue1}"
-                           value="+1">
-                <a4j:ajax render="v1" resetValues="#{a4jAjaxBean.attributes['resetValues'].value}" />
-            </h:commandLink>
+            <a4j:jsFunction name="customFunction"
+                            action="#{rf13532.incValue1}"
+                            render="v1"
+                            resetValues="#{a4jJSFunctionBean.attributes['resetValues'].value}"/>
+            <a id="increaseElement" href="#callFunctionLink" onclick="customFunction()">+1</a>
             <br/>
             <h:inputText id="v2" value="#{rf13532.value2}">
                 <f:validateLongRange minimum="10" />
@@ -78,7 +77,7 @@
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
-            <metamer:attributes value="#{a4jAjaxBean.attributes}" id="attributes" include="resetValues"/>
+            <metamer:attributes value="#{a4jJSFunctionBean.attributes}" id="attributes" include="resetValues"/>
         </ui:define>
     </ui:composition>
 </html>

@@ -19,40 +19,29 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.metamer.bean.issues;
+package org.richfaces.tests.metamer.ftest.a4jCommandLink;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import org.richfaces.tests.metamer.ftest.abstractions.AbstractResetValuesTest;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.testng.annotations.Test;
 
 /**
- *
- * @author Martin Tomasek ( mtomasek@redhat.com )
- *
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-@ManagedBean(name = "rf13532")
-@SessionScoped
-public class RF13532 {
+@Templates("plain")
+@RegressionTest("https://issues.jboss.org/browse/RF-13532")
+public class TestResetValues extends AbstractResetValuesTest {
 
-    private int value1 = 0;
-    private int value2 = 0;
-
-    public int getValue1() {
-        return value1;
+    @Override
+    public String getComponentTestPagePath() {
+        return "a4jCommandLink/rf-13532.xhtml";
     }
 
-    public int getValue2() {
-        return value2;
-    }
-
-    public void incValue1() {
-        value1++;
-    }
-
-    public void setValue1(int value1) {
-        this.value1 = value1;
-    }
-
-    public void setValue2(int value2) {
-        this.value2 = value2;
+    @Test
+    @CoversAttributes("resetValues")
+    public void testResetValues() {
+        checkResetValues();
     }
 }

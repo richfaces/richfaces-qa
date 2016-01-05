@@ -12,17 +12,17 @@
     Copyright 2010-2016, Red Hat, Inc. and individual contributors
     by the @authors tag. See the copyright.txt in the distribution for a
     full listing of individual contributors.
-    
+
     This is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as
     published by the Free Software Foundation; either version 2.1 of
     the License, or (at your option) any later version.
-    
+
     This software is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
     Lesser General Public License for more details.
-    
+
     You should have received a copy of the GNU Lesser General Public
     License along with this software; if not, write to the Free
     Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
@@ -59,13 +59,14 @@
             <hr />
 
             <h:messages id="msgs" />
-
             <h:inputText id="v1" value="#{rf13532.value1}" />
-            <h:commandLink id="increaseElement"
-                           action="#{rf13532.incValue1}"
-                           value="+1">
-                <a4j:ajax render="v1" resetValues="#{a4jAjaxBean.attributes['resetValues'].value}" />
-            </h:commandLink>
+            <a4j:commandLink id="increaseElement"
+                             action="#{rf13532.incValue1}"
+                             execute="notExisting"
+                             render="v1"
+                             resetValues="#{a4jLinkBean.attributes['resetValues'].value}"
+                             value="+1">
+            </a4j:commandLink>
             <br/>
             <h:inputText id="v2" value="#{rf13532.value2}">
                 <f:validateLongRange minimum="10" />
@@ -74,11 +75,10 @@
             <h:commandButton id="submitButton" value="Save">
                 <a4j:ajax execute="v1 v2" render="msgs v1 v2" />
             </h:commandButton>
-
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
-            <metamer:attributes value="#{a4jAjaxBean.attributes}" id="attributes" include="resetValues"/>
+            <metamer:attributes value="#{a4jLinkBean.attributes}" id="attributes" include="resetValues"/>
         </ui:define>
     </ui:composition>
 </html>

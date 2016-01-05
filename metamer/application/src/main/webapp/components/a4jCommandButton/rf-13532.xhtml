@@ -59,13 +59,14 @@
             <hr />
 
             <h:messages id="msgs" />
-
             <h:inputText id="v1" value="#{rf13532.value1}" />
-            <h:commandLink id="increaseElement"
-                           action="#{rf13532.incValue1}"
-                           value="+1">
-                <a4j:ajax render="v1" resetValues="#{a4jAjaxBean.attributes['resetValues'].value}" />
-            </h:commandLink>
+            <a4j:commandButton id="increaseElement"
+                               action="#{rf13532.incValue1}"
+                               execute="notExisting"
+                               render="v1"
+                               resetValues="#{a4jButtonBean.attributes['resetValues'].value}"
+                               value="+1">
+            </a4j:commandButton>
             <br/>
             <h:inputText id="v2" value="#{rf13532.value2}">
                 <f:validateLongRange minimum="10" />
@@ -78,7 +79,7 @@
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
-            <metamer:attributes value="#{a4jAjaxBean.attributes}" id="attributes" include="resetValues"/>
+            <metamer:attributes value="#{a4jButtonBean.attributes}" id="attributes" include="resetValues"/>
         </ui:define>
     </ui:composition>
 </html>
