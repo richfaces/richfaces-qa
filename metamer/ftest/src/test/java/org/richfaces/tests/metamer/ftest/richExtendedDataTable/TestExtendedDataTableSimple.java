@@ -22,16 +22,26 @@
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
+import static org.testng.Assert.assertEquals;
 
+import java.util.List;
+
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSimpleTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SimpleEDT;
+import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SimpleEDTRow;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.richfaces.tests.metamer.model.Capital;
 import org.testng.annotations.Test;
 
 /**
@@ -41,12 +51,6 @@ import org.testng.annotations.Test;
 public class TestExtendedDataTableSimple extends DataTableSimpleTest {
 
     private final Attributes<ExtendedDataTableAttributes> attributes = getAttributes();
-
-    @FindBy(css = "div.rf-edt[id$=richEDT]")
-    private SimpleEDT table;
-    @FindBy(css = "div.rf-edt[id$=richEDT]")
-    private WebElement tableRoot;
-
     final Action selectFirstRowAction = new Action() {
         @Override
         public void perform() {
@@ -54,14 +58,76 @@ public class TestExtendedDataTableSimple extends DataTableSimpleTest {
         }
     };
 
+    @FindBy(css = "div.rf-edt[id$=richEDT]")
+    private SimpleEDT table;
+    @FindBy(css = "div.rf-edt[id$=richEDT]")
+    private WebElement tableRoot;
+
+    @Override
+    public String getComponentTestPagePath() {
+        return "richExtendedDataTable/simple.xhtml";
+    }
+
     @Override
     protected SimpleEDT getTable() {
         return table;
     }
 
-    @Override
-    public String getComponentTestPagePath() {
-        return "richExtendedDataTable/simple.xhtml";
+    @Test
+    @Templates(exclude = "uirepeat")
+    @CoversAttributes("clientRows")
+    public void testClientRows() {
+        // setup
+        attributes.set(ExtendedDataTableAttributes.rows, 30);
+        List<Capital> capitals = CAPITALS.subList(0, 30);
+        final int clientRows = 18;
+        attributes.set(ExtendedDataTableAttributes.clientRows, clientRows);
+        By loadedRows = ByJQuery.selector("tbody[id$='richEDT:tbn']>tr");
+        // check number of loaded rows equals to number of @clientRows
+        assertEquals(driver.findElements(loadedRows).size(), clientRows);
+
+        // check the last loaded row
+        SimpleEDTRow row = table.getLastRow();
+        String text = row.getStateColumn().getText();
+        assertEquals(text, capitals.get(17).getState());
+
+        // browse to last loaded row, this will load 18 last rows
+        Graphene.guardAjax(row.getRootElement()).click();
+        // check the last loaded row
+        row = table.getLastRow();
+        text = row.getStateColumn().getText();
+        assertEquals(text, capitals.get(29).getState());
+        // check number of loaded rows equals to number of @clientRows
+        assertEquals(driver.findElements(loadedRows).size(), clientRows);
+
+        // check the first loaded row
+        row = table.getFirstRow();
+        text = row.getStateColumn().getText();
+        int firstLoadedRowIndex = 30 - clientRows;
+        assertEquals(text, capitals.get(firstLoadedRowIndex).getState());
+        // check number of loaded rows equals to number of @clientRows
+        assertEquals(driver.findElements(loadedRows).size(), clientRows);
+
+        // repeatedly scroll to the first loaded element, wait for new elements to load and check
+        while ((firstLoadedRowIndex -= 2) >= 0) {
+            // move to first loaded row, this will load few more items before the previous first item
+            Graphene.guardAjax(row.getRootElement()).click();
+            // check the first loaded row
+            row = table.getFirstRow();
+            text = row.getStateColumn().getText();
+            assertEquals(text, capitals.get(firstLoadedRowIndex).getState());
+            // check number of loaded rows equals to number of @clientRows
+            assertEquals(driver.findElements(loadedRows).size(), clientRows);
+        }
+    }
+
+    @Skip
+    @Test
+    @Templates("uirepeat")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14216")
+    @CoversAttributes("clientRows")
+    public void testClientRowsInUIRepeat() {
+        testClientRows();
     }
 
     @Test
