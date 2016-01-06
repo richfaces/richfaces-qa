@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.a4jQueue;
 
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.configurator.unstable.annotation.Unstable;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.a4jQueue.QueueFragment.Input;
 import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.AjaxRequestHalter;
@@ -146,6 +147,7 @@ public class TestFormQueue extends AbstractWebDriverTest {
      * immediately processed.
      */
     @Test
+    @Unstable
     public void testTimingTwoQueuesFourEvents() {
         attributesQueueA.set(QueueAttributes.requestDelay, DELAY_A);
         attributesQueueB.set(QueueAttributes.requestDelay, DELAY_B);
@@ -167,6 +169,5 @@ public class TestFormQueue extends AbstractWebDriverTest {
         queueB.checkDelayAtIndexIs(0, DELAY_B);
         queueB.checkDelayAtIndexIs(1, 0);
         queueB.checkMedian(DELAY_B / 2);
-
     }
 }
