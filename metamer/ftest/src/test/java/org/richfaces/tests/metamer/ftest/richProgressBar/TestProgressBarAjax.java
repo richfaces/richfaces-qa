@@ -235,7 +235,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     private void testOneRunOfProgressBar(WebElement button, int interval) {
         progressBarAttributes.set(ProgressBarAttributes.interval, interval);
 
-        long delta = (long) (interval * 0.3);
+        long delta = (long) (interval * 0.5);
         long maxWaitTime = interval + delta;
 
         List<String> timesString = new ArrayList<String>();
