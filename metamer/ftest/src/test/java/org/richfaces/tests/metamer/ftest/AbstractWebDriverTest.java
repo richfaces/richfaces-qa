@@ -61,6 +61,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.component.Positioning;
 import org.richfaces.component.SwitchType;
+import org.richfaces.fragment.common.Actions;
 import org.richfaces.fragment.common.AdvancedVisibleComponentIteractions;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Locations;
@@ -719,9 +720,16 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     protected <T extends AttributeEnum> void testFireEvent(Attributes<T> attributes, T testedAttribute, Action eventFiringAction) {
         attributes.set(testedAttribute, "metamerEvents += \"" + testedAttribute.toString() + " \"");
         executeJS("metamerEvents = \"\";");
-        eventFiringAction.perform();
-        String returnedString = expectedReturnJS("return metamerEvents", testedAttribute.toString());
-        assertEquals(returnedString, testedAttribute.toString(), "Event " + testedAttribute.toString() + " does not work.");
+        try {
+            eventFiringAction.perform();
+            String returnedString = expectedReturnJS("return metamerEvents", testedAttribute.toString());
+            assertEquals(returnedString, testedAttribute.toString(), "Event " + testedAttribute.toString() + " does not work.");
+        } finally {
+            if (testedAttribute.toString().toLowerCase().endsWith("mousedown")) {
+                tryToReleaseMouseButton();
+            }
+        }
+
     }
 
     /**
@@ -783,10 +791,23 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         // clear/init events
         executeJS("metamerEvents = \"\";");
         // trigger event
-        eventFiringAction.perform();
-        // check
-        assertEquals(expectedReturnJS("return metamerEvents", attributeName), attributeName, "Attribute " + attributeName
-            + " does not work.");
+        try {
+            eventFiringAction.perform();
+            // check
+            assertEquals(expectedReturnJS("return metamerEvents", attributeName), attributeName, "Attribute " + attributeName
+                + " does not work.");
+        } finally {
+            if (attributeName.toLowerCase().endsWith("mousedown")) {
+                tryToReleaseMouseButton();
+            }
+        }
+    }
+
+    private void tryToReleaseMouseButton() {
+        try {
+            new Actions(driver).release().perform();
+        } catch (WebDriverException ignored) {
+        }
     }
 
     /**
