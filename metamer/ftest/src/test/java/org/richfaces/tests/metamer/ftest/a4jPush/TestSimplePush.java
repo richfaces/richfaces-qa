@@ -74,7 +74,7 @@ public class TestSimplePush extends AbstractWebDriverTest {
                 // wait for first received message from server
                 Graphene.waitModel().until().element(timestamp).is().present();
                 // trigger onerror
-                executeJS("$.atmosphere.requests[0].request.onError('Intentional error!');");
+                executeJS("RichFaces.push._errorCallback('Intentional error!');");
             }
         });
     }
