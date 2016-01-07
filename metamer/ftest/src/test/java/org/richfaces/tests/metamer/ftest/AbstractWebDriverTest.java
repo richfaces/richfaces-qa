@@ -194,16 +194,23 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         if (driver == null) {
             throw new SkipException("webDriver isn't initialized");
         }
+        // delete session
         driver.manage().deleteAllCookies();
+        // move mouse to upper left corner of window so it will not stay over tested component
+        moveMouseToUpperLeftCorner();
+        // load page
         if (runInPortalEnv) {
             goToTestInPortal();
         } else {
             driver.get(buildUrl(getTestUrl() + "?templates=" + template.toString()).toExternalForm());
         }
         driverType = DriverType.getCurrentType(driver);
-
         // resize browser window to 1280x1024 or full screen
         driver.manage().window().setSize(new Dimension(1280, 1024));
+    }
+
+    private void moveMouseToUpperLeftCorner() {
+        new Actions(driver).moveToElement(driver.findElement(Utils.BY_BODY), 0, 0).perform();
     }
 
     protected Attributes<BasicAttributes> getBasicAttributes() {
