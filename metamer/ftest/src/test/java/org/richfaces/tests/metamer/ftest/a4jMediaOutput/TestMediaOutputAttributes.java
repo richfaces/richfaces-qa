@@ -52,30 +52,35 @@ public class TestMediaOutputAttributes extends AbstractMediaOutputTest {
 
     @Test
     @CoversAttributes("accesskey")
+    @Templates("plain")
     public void testAccesskey() {
         testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.accesskey, "r");
     }
 
     @Test
     @CoversAttributes("align")
+    @Templates("plain")
     public void testAlign() {
         testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.align, "left");
     }
 
     @Test
     @CoversAttributes("border")
+    @Templates("plain")
     public void testBorder() {
         testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.border, "3");
     }
 
     @Test
     @CoversAttributes("charset")
+    @Templates("plain")
     public void testCharset() {
         testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.charset, "utf-8");
     }
 
     @Test
     @CoversAttributes("coords")
+    @Templates("plain")
     public void testCoords() {
         testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.coords, "circle: 150, 60, 60");
     }
@@ -200,6 +205,7 @@ public class TestMediaOutputAttributes extends AbstractMediaOutputTest {
 
     @Test
     @CoversAttributes("rel")
+    @Templates("plain")
     public void testRel() {
         testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.rel, "metamer");
     }
@@ -214,12 +220,14 @@ public class TestMediaOutputAttributes extends AbstractMediaOutputTest {
 
     @Test
     @CoversAttributes("rev")
+    @Templates("plain")
     public void testRev() {
         testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.rev, "metamer");
     }
 
     @Test
     @CoversAttributes("shape")
+    @Templates("plain")
     public void testShape() {
         testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.shape, "default");
     }
@@ -240,12 +248,14 @@ public class TestMediaOutputAttributes extends AbstractMediaOutputTest {
 
     @Test
     @CoversAttributes("tabindex")
+    @Templates("plain")
     public void testTabindex() {
         testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.tabindex, "50");
     }
 
     @Test
     @CoversAttributes("target")
+    @Templates("plain")
     public void testTarget() {
         testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.target, "_blank");
     }
@@ -259,6 +269,7 @@ public class TestMediaOutputAttributes extends AbstractMediaOutputTest {
 
     @Test
     @CoversAttributes("usemap")
+    @Templates("plain")
     public void testUsemap() {
         testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.usemap, "metamer");
     }
