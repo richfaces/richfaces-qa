@@ -616,7 +616,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     public void testResize() {
         driver.manage().window().setSize(new Dimension(1024, 768));// to stabilize job on Jenkins
         attsSetter()
-            .setAttribute(PopupPanelAttributes.height).toValue(400)
+            .setAttribute(PopupPanelAttributes.height).toValue(450)
             .setAttribute(PopupPanelAttributes.width).toValue(400)
             .setAttribute(PopupPanelAttributes.minHeight).toValue(100)
             .setAttribute(PopupPanelAttributes.minWidth).toValue(100)
