@@ -28,7 +28,6 @@ import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -57,20 +56,14 @@ public class TestEditorWithTyping extends AbstractWebDriverTest {
     }
 
     /**
-     * Method for retrieve text from editor. Editor lives within iFrame, so there are need some additional steps to reach
-     * element containing editor text
-     *
-     * @return
+     * Method for retrieve text from editor.
      */
     private String getTextFromEditor() {
-        try {
-            // driver.switchTo().frame(page.editorFrame);
-            driver.switchTo().frame(0);// must be this way
-            WebElement activeArea = driver.findElement(By.tagName("body"));
-            return activeArea.getText();
-        } finally {
-            driver.switchTo().defaultContent();
-        }
+        return page.getEditor().getText();
+    }
+
+    private void performGuardedSubmit(WebElement submitBtn) {
+        (submitBtn == page.getA4jButton() ? Graphene.guardAjax(submitBtn) : Graphene.guardHttp(submitBtn)).click();
     }
 
     @Test(groups = "smoke")
@@ -132,19 +125,27 @@ public class TestEditorWithTyping extends AbstractWebDriverTest {
      */
     private void verifyValueChangeListener(WebElement submitBtn, final WebElement listener) {
         page.getEditor().type("text1");
-        // and submit typed text
-        submitBtn.submit();
-        Graphene.waitModel().until().element(page.getOutput()).text().contains("text1");
+        performGuardedSubmit(submitBtn);
+        assertEquals(page.getOutput().getText(), "<p>text1</p>");
         page.getEditor().type("text2");
-        // and submit typed text
-        submitBtn.submit();
-        Graphene.waitModel().until(new Predicate<WebDriver>() {
+        performGuardedSubmit(submitBtn);
+        Graphene.waitAjax().until(new Predicate<WebDriver>() {
+
+            private String actual;
+            private final String val1 = format(phaseListenerLogFormat, "text1", "text1text2");
+            private final String val2 = format(phaseListenerLogFormat, "text1", "text2text1");
 
             @Override
             public boolean apply(WebDriver webDriver) {
-                return listener.getText().contains(format(phaseListenerLogFormat, "text1", "text1text2"))
-                    || listener.getText().contains(format(phaseListenerLogFormat, "text1", "text2text1"));
+                actual = listener.getText();
+                return actual.contains(val1) || actual.contains(val2);
             }
+
+            @Override
+            public String toString() {
+                return format("text from listener contains <{0}> or <{1}>. Got: <{2}>.", val1, val2, actual);
+            }
+
         });
     }
 }
