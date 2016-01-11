@@ -447,7 +447,6 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
                 new Actions(driver).clickAndHold(autocomplete.advanced().getSuggestionsElements().get(0)).build().perform();
             }
         });
-        new Actions(driver).release().build().perform();
     }
 
     @Test
@@ -518,7 +517,6 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     public void testOnmousedown() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onmousedown, new Actions(driver).clickAndHold(page
             .getAutocompleteAsWebElement()).build());
-        new Actions(driver).release().build().perform();
     }
 
     @Test

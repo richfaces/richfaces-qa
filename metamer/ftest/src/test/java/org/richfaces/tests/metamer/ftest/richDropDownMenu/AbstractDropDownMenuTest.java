@@ -353,7 +353,6 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
                     .getItemsElements().get(1)).getCoordinates());
             }
         });
-        new Actions(driver).release().perform();
     }
 
     @CoversAttributes("onmousemove")

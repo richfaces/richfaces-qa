@@ -74,7 +74,6 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
         panelMenuGroupAttributes.set(mode, client);
         Action mousedown = new Actions(driver).clickAndHold(getPage().getTopGroup().advanced().getHeaderElement()).build();
         testFireEvent(panelMenuGroupAttributes, onmousedown, mousedown);
-        new Actions(driver).release(getPage().getTopGroup().advanced().getHeaderElement()).perform();
     }
 
     @Test

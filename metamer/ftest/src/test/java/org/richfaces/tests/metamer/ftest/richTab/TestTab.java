@@ -380,7 +380,6 @@ public class TestTab extends AbstractWebDriverTest {
     public void testOnheadermousedown() {
         Action action = new Actions(driver).clickAndHold(page.getTabPanel().advanced().getActiveHeaderElement()).build();
         testFireEvent(tabAttributes, TabAttributes.onheadermousedown, action);
-        new Actions(driver).release().build().perform();
     }
 
     @Test
@@ -415,7 +414,6 @@ public class TestTab extends AbstractWebDriverTest {
     public void testOnmousedown() {
         Action action = new Actions(driver).clickAndHold(page.getItemContents().get(0)).build();
         testFireEvent(tabAttributes, TabAttributes.onmousedown, action);
-        new Actions(driver).release().build().perform();
     }
 
     @Test

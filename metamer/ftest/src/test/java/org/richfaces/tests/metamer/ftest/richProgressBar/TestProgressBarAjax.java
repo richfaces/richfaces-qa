@@ -328,8 +328,6 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     public void testOnmousedown() {
         testFireEvent(progressBarAttributes, ProgressBarAttributes.onmousedown,
             new Actions(driver).clickAndHold(page.getProgressBarElement()).build());
-        // release mouse button (necessary since Selenium 2.35)
-        new Actions(driver).release().perform();
     }
 
     @Test

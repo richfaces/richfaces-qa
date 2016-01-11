@@ -782,8 +782,6 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     public void testOninputmousedown() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputmousedown,
             new Actions(driver).clickAndHold(popupCalendar.getInput().advanced().getInputElement()).build());
-        // cleanup
-        new Actions(driver).release().perform();
     }
 
     @Test

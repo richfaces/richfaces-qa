@@ -321,7 +321,6 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     public void testOnheadermousedown() {
         Action action = new Actions(driver).clickAndHold(page.getItemHeaders().get(0)).build();
         testFireEvent(accordionItemAttributes, AccordionItemAttributes.onheadermousedown, action);
-        new Actions(driver).release().build().perform();
     }
 
     @Test
@@ -361,7 +360,6 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     public void testOnmousedown() {
         Action action = new Actions(driver).clickAndHold(page.getItemHeaders().get(0)).build();
         testFireEvent(accordionItemAttributes, AccordionItemAttributes.onmousedown, action);
-        new Actions(driver).release().build().perform();
     }
 
     @Test

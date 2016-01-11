@@ -314,8 +314,6 @@ public class TestContextMenu extends AbstractWebDriverTest {
                 mouse.mouseDown(((Locatable) page.getContextMenu().advanced().getItemsElements().get(1)).getCoordinates());
             }
         });
-        // release mouse button - necessary since Selenium 2.35
-        new Actions(driver).release().perform();
     }
 
     @Test

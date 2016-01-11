@@ -84,7 +84,6 @@ public class TestPanelMenuItemDOMEventHandlers extends AbstractWebDriverTest {
         panelMenuItemAttributes.set(mode, client);
         Action mousedown = new Actions(driver).clickAndHold(page.getItem().advanced().getRootElement()).build();
         testFireEvent(panelMenuItemAttributes, onmousedown, mousedown);
-        new Actions(driver).release().perform();
     }
 
     @Test
