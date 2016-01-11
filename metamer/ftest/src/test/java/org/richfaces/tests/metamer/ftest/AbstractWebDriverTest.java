@@ -1264,18 +1264,24 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             final String id = menuRootElement.getAttribute("id");
             double tolerance = expectedDelayInMillis == 0 ? 500 : expectedDelayInMillis * 0.5;
             int cycles = 4;
-            getUnsafeAttributes("").set(isHideDelay ? HIDE_DELAY : SHOW_DELAY, expectedDelayInMillis);// set tested attribute
-            getUnsafeAttributes("").set(isHideDelay ? SHOW_DELAY : HIDE_DELAY, 0);// reset not tested attribute
-            getUnsafeAttributes("").set(isHideDelay ? ON_HIDE : ON_SHOW, PREPARATION_SCRIPT);
+            attsSetter()
+                .setAttribute(isHideDelay ? HIDE_DELAY : SHOW_DELAY).toValue(expectedDelayInMillis)// set tested attribute
+                .setAttribute(isHideDelay ? SHOW_DELAY : HIDE_DELAY).toValue(0)// reset not tested attribute
+                .setAttribute(isHideDelay ? ON_HIDE : ON_SHOW).toValue(PREPARATION_SCRIPT)
+                .asSingleAction().perform();
             List<Long> delays = new ArrayList<Long>(cycles);
             String measuringScript = getMeasuringScript(id, isHideDelay, triggerEvent);
             for (int i = 1; i <= cycles; i++) {
                 //This is debug output, to determine in which cycle test could fall.
-                System.out.println(format("Test delay: {0} cycle: {1}", expectedDelayInMillis, i));
+                System.out.println(format("Tested delay: {0} [ms], cycle: {1}", expectedDelayInMillis, i));
                 executor.executeScript(measuringScript, triggerEventOnElement);
                 Graphene.waitGui().withTimeout(expectedDelayInMillis * 2, TimeUnit.MILLISECONDS).until(
-                    new WaitUntilEventTriggeredPredicate(ATTRIBUTE_TRIGGERED_NAME));
+                    new EventTriggeredPredicate(ATTRIBUTE_TRIGGERED_NAME));
                 delays.add(Long.valueOf(executor.executeScript(GET_TIME_SCRIPT).toString()));
+                if (!isHideDelay) {
+                    // hide menu after testing @showDelay
+                    getMetamerPage().getRequestTimeElement().click();
+                }
             }
             Number median = countMedian(delays);
             assertEquals(median.doubleValue(), expectedDelayInMillis, tolerance, "The delay is not in tolerance. Median of"
@@ -1292,17 +1298,17 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             testDelay(Boolean.FALSE, menuRootElement, expectedDelayInMillis, triggerEvent, triggerEventOnElement);
         }
 
-        private class WaitUntilEventTriggeredPredicate implements Predicate<WebDriver> {
+        private class EventTriggeredPredicate implements Predicate<WebDriver> {
 
             private final String eventName;
             private String lastReturnedString;
             private final String valueToEqualTo;
 
-            protected WaitUntilEventTriggeredPredicate(String eventName) {
+            protected EventTriggeredPredicate(String eventName) {
                 this(eventName, "true");
             }
 
-            protected WaitUntilEventTriggeredPredicate(String eventName, String valueToEqualTo) {
+            protected EventTriggeredPredicate(String eventName, String valueToEqualTo) {
                 this.eventName = eventName;
                 this.valueToEqualTo = valueToEqualTo.toLowerCase();
             }
