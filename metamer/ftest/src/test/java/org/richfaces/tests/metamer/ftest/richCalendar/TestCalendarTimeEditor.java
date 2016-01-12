@@ -53,7 +53,10 @@ public class TestCalendarTimeEditor extends AbstractCalendarTest {
     @Templates("plain")
     public void testCancelButton() {
         int plusMinutes = 5;
-        MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
+        Graphene.guardAjax(popupCalendar.openPopup().getFooterControls()).setTodaysDate();
+        clearTimeouts();
+        popupCalendar.openPopup();
+        clearTimeouts();
         TimeEditor openedTimeEditor = popupCalendar.openPopup().getFooterControls().openTimeEditor();
         MetamerPage.waitRequest(openedTimeEditor, WaitRequestType.NONE).setTime(todayMidday.plusMinutes(plusMinutes), SetValueBy.BUTTONS);
         DateTime time1 = openedTimeEditor.getTime();
@@ -108,7 +111,10 @@ public class TestCalendarTimeEditor extends AbstractCalendarTest {
     @Test
     @Templates("plain")
     public void testShowTimeEditor() {
-        MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
+        Graphene.guardAjax(popupCalendar.openPopup().getFooterControls()).setTodaysDate();
+        clearTimeouts();
+        popupCalendar.openPopup();
+        clearTimeouts();
         TimeEditor openedTimeEditor = popupCalendar.openPopup().getFooterControls().openTimeEditor();
         assertTrue(openedTimeEditor.isVisible());
         DateTime time1 = openedTimeEditor.getTime();
@@ -123,6 +129,9 @@ public class TestCalendarTimeEditor extends AbstractCalendarTest {
         boolean firstRun = true;
         for (int value : valuesToTest) {
             MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), (firstRun ? WaitRequestType.XHR : WaitRequestType.NONE)).setTodaysDate();
+            clearTimeouts();
+            popupCalendar.openPopup();
+            clearTimeouts();
             openedTimeEditor = popupCalendar.openPopup().getFooterControls().openTimeEditor();
             changedTime = time.change(todayMidday, value);
             openedTimeEditor.setTime(changedTime, interaction).confirmTime();

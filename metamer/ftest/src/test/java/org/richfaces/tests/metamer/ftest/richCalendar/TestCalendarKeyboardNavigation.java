@@ -79,9 +79,13 @@ public class TestCalendarKeyboardNavigation extends AbstractCalendarTest {
 
     private PopupCalendar setReferenceDate_openPopup_check() {
         // set reference date
+        popupCalendar.openPopup();
+        clearTimeouts();
         Graphene.guardAjax(popupCalendar).setDateTime(firstOfJanuary2012);
+        clearTimeouts();
         //open popup
         PopupCalendar calendarPopup = popupCalendar.openPopup();
+        clearTimeouts();
         // check actual position
         assertYearAndMonth(calendarPopup, firstOfJanuary2012);
         assertHighlightedDay(calendarPopup, 1);
@@ -110,6 +114,7 @@ public class TestCalendarKeyboardNavigation extends AbstractCalendarTest {
         popupCalendar.openPopup();
         // invoke close key
         keyboard.sendKeys(CLOSE_POPUP_KEY);
+        clearTimeouts();
         popupCalendar.getPopup().waitUntilIsNotVisible().perform();
         // calendar value should stay unchanged
         assertCalendarInputEqualsTo("");
@@ -117,8 +122,6 @@ public class TestCalendarKeyboardNavigation extends AbstractCalendarTest {
         // set some date
         setReferenceDate_openPopup_check();
         assertCalendarInputEqualsTo("Jan 1, 2012 12:00");
-        // open popup
-        popupCalendar.openPopup();
         // scroll to previous day
         keyboard.sendKeys(PREVIOUS_DAY_KEY);
         // invoke close key

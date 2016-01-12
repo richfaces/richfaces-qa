@@ -56,6 +56,7 @@ import com.google.common.collect.Lists;
 
 /**
  * Abstract test case for calendar.
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
@@ -133,6 +134,13 @@ public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
         return new WebElementConditionFactory(element).isVisible().apply(driver);
     }
 
+    protected void clearTimeouts() {
+        // When calendar's popup is closed, there is a timeout set which leads to unstability of tests it causes popup to
+        // disappear right after it shows up (RF-14110).
+        // This workaround will try to clear ALL timeouts in window object
+        executeJS("var id=window.setTimeout(function(){},0);while(id--){window.clearTimeout(id);}");
+    }
+
     public void testFooterButtons() {
         PopupCalendar openedPopup = popupCalendar.openPopup();
         assertTrue(openedPopup.getFooterControls().isVisible());
@@ -148,10 +156,11 @@ public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
 
         assertFalse(isVisible(footerControls.getTimeEditorOpenerElement()), "Time button should not be visible.");
 
-        MetamerPage.waitRequest(footerControls, WaitRequestType.XHR).setTodaysDate();
+        Graphene.guardAjax(footerControls).setTodaysDate();
+        clearTimeouts();
         assertFalse(openedPopup.isVisible(), "Popup should not be displayed.");
         footerControls = popupCalendar.openPopup().getFooterControls();
-
+        clearTimeouts();
         assertTrue(isVisible(footerControls.getCleanButtonElement()), "Clean button should be visible.");
         assertEquals(footerControls.getCleanButtonElement().getText(), "Clean", "Button's text");
 

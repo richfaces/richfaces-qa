@@ -134,6 +134,7 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
         CalendarDay selectedDay = popupCalendar.openPopup().getDayPicker().getSelectedDay();
         assertNotNull(selectedDay);
         popupCalendar.openPopup();
+        clearTimeouts();
         executeJSFromElement(resetValue);
         selectedDay = popupCalendar.openPopup().getDayPicker().getSelectedDay();
         assertNull(selectedDay);
@@ -210,8 +211,7 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
     /**
      * Executes script, which is saved in attribute "onclick" or "onmouseover" of chosen element
      *
-     * @param element
-     *            chosen element
+     * @param element chosen element
      * @return
      */
     private Object executeJSFromElement(WebElement element) {
@@ -225,7 +225,7 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
     }
 
     private void setTodaysDate() {
-        MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), MetamerPage.WaitRequestType.XHR)
-            .setTodaysDate();
+        Graphene.guardAjax(popupCalendar.openPopup().getFooterControls()).setTodaysDate();
+        clearTimeouts();
     }
 }

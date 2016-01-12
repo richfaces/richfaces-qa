@@ -387,6 +387,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         calendarAttributes.set(CalendarAttributes.defaultTime, t);
         setCurrentDateWithCalendarsTodayButtonAction.perform();
         String text = popupCalendar.openPopup().getFooterControls().getTimeEditorOpenerElement().getText();
+        clearTimeouts();
         assertTrue(text.equals(t), "Default time");
 
         // another check in time editor
@@ -982,6 +983,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         setCurrentDateWithCalendarsTodayButtonAction.perform();
         calendarAttributes.set(CalendarAttributes.showFooter, booleanValue);
         PopupFooterControls fc = popupCalendar.openPopup().getFooterControls();
+        clearTimeouts();
         if (booleanValue) {
             assertTrue(fc.isVisible(), "Footer elements should be visible, when footer is rendered");
             assertListOfWebElementsVisible(Arrays.asList(fc.getApplyButtonElement(), fc.getCleanButtonElement(),
@@ -1215,7 +1217,8 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
         @Override
         public void perform() {
-            MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
+            Graphene.guardAjax(popupCalendar.openPopup().getFooterControls()).setTodaysDate();
+            clearTimeouts();
         }
     }
 
