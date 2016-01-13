@@ -24,6 +24,8 @@ package org.richfaces.tests.metamer.ftest.a4jCommandButton;
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractResetValuesTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -40,6 +42,7 @@ public class TestResetValues extends AbstractResetValuesTest {
     }
 
     @Test
+    @Skip(On.JSF.VersionLowerThan22.class)
     @CoversAttributes("resetValues")
     public void testResetValues() {
         checkResetValues();
