@@ -122,9 +122,7 @@ public class TestCalendarModel extends AbstractCalendarTest {
         DateTime referenceDate = new DateTime().withYear(2015).withMonthOfYear(11).withDayOfMonth(2).withHourOfDay(12).withMinuteOfHour(0);
         // set reference date
         Graphene.guardAjax(popupCalendar).setDateTime(referenceDate);
-
-        // stabilization wait time, without it the whole popup will disappear right after it is displayed, https://issues.jboss.org/browse/RF-14110
-        waiting(500);
+        performStabilizationWorkaround();
 
         popupCalendar.openPopup();
         checkSelectedDate(referenceDate);
@@ -183,7 +181,6 @@ public class TestCalendarModel extends AbstractCalendarTest {
 
         // check disabled days
         for (CalendarDay day : getFewDaysFrom(disabledDays, 9)) {
-            popupCalendar.getPopup().waitUntilIsVisible().perform();
             String previousValue = popupCalendar.getInput().getStringValue();
             day.getDayElement().click();
             assertEquals(popupCalendar.getInput().getStringValue(), previousValue);
@@ -192,12 +189,11 @@ public class TestCalendarModel extends AbstractCalendarTest {
         // check enabled days
         for (CalendarDay day : getFewDaysFrom(enabledDays, 5)) {
             popupCalendar.openPopup();
-            clearTimeouts();
             referenceDate = referenceDate.withDayOfMonth(day.getDayNumber());
 
             Graphene.guardAjax(day).select();
             popupCalendar.getPopup().waitUntilIsNotVisible().perform();
-            clearTimeouts();
+            performStabilizationWorkaround();
             checkSelectedDate(referenceDate);
         }
     }

@@ -52,8 +52,7 @@ public class TestRF14032 extends AbstractCalendarTest {
     public void testSelectedYearWillChangeOnlyByArrowsPressing() {
         // set some reference date
         Graphene.guardAjax(popupCalendar).setDateTime(firstOfJanuary2012);
-        // stabilization wait time, without it the whole popup will disappear right after it is displayed, https://issues.jboss.org/browse/RF-14110
-        waiting(500);
+        waitUtilNoTimeoutsArePresent();
         PopupCalendar popup = popupCalendar.openPopup();
         // set a different year and month than the reference date
         popup.getHeaderControls().openYearAndMonthEditor().selectDate(todayMidday).confirmDate();

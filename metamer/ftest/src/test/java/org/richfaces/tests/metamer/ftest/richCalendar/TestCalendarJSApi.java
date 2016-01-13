@@ -31,12 +31,12 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.fragment.calendar.DayPicker;
 import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
 import org.richfaces.fragment.calendar.HeaderControls;
 import org.richfaces.fragment.calendar.PopupCalendar;
 import org.richfaces.fragment.calendar.TimeEditor;
 import org.richfaces.fragment.calendar.YearAndMonthEditor;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 /**
@@ -96,14 +96,14 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
     @Test
     public void testGetCurrentMonth() {
         setTodaysDate();
-        MetamerPage.waitRequest(getCurrentMonth, MetamerPage.WaitRequestType.NONE).click();
+        getCurrentMonth.click();
         assertEquals(getGettersValue(), String.valueOf(todayMidday.getMonthOfYear() - 1));
     }
 
     @Test
     public void testGetCurrentYear() {
         setTodaysDate();
-        MetamerPage.waitRequest(getCurrentYear, MetamerPage.WaitRequestType.NONE).click();
+        getCurrentYear.click();
         assertEquals(getGettersValue(), String.valueOf(todayMidday.getYear()));
     }
 
@@ -112,7 +112,7 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
         String datePattern = "EEE MMM d yyyy HH:mm:ss";
         DateTimeFormatter dtf = DateTimeFormat.forPattern(datePattern);
         setTodaysDate();
-        MetamerPage.waitRequest(getValue, MetamerPage.WaitRequestType.NONE).click();
+        getValue.click();
         String date = getGettersValue();
         date = date.substring(0, date.lastIndexOf(":00") + 3);
         DateTime parsedDateTime = dtf.parseDateTime(date);
@@ -124,19 +124,19 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
     @Test
     public void testGetValueAsString() {
         setTodaysDate();
-        MetamerPage.waitRequest(getValueAsString, MetamerPage.WaitRequestType.NONE).click();
+        getValueAsString.click();
         assertEquals(getGettersValue(), popupCalendar.getInput().getStringValue());
     }
 
     @Test
     public void testResetValue() {
         setTodaysDate();
-        CalendarDay selectedDay = popupCalendar.openPopup().getDayPicker().getSelectedDay();
+        PopupCalendar openPopup = popupCalendar.openPopup();
+        DayPicker dayPicker = openPopup.getDayPicker();
+        CalendarDay selectedDay = dayPicker.getSelectedDay();
         assertNotNull(selectedDay);
-        popupCalendar.openPopup();
-        clearTimeouts();
         executeJSFromElement(resetValue);
-        selectedDay = popupCalendar.openPopup().getDayPicker().getSelectedDay();
+        selectedDay = dayPicker.getSelectedDay();
         assertNull(selectedDay);
     }
 
@@ -144,7 +144,7 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
     public void testSetValue() {
         calendarAttributes.set(CalendarAttributes.showApplyButton, Boolean.FALSE);
         // setValue sets the date to 10 Oct of 2012
-        MetamerPage.waitRequest(setValue, MetamerPage.WaitRequestType.XHR).click();
+        Graphene.guardAjax(setValue).click();
         CalendarDay selectedDay = popupCalendar.openPopup().getDayPicker().getSelectedDay();
         assertNotNull(selectedDay);
         assertEquals(selectedDay.getDayNumber().intValue(), 10);
@@ -226,6 +226,6 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
 
     private void setTodaysDate() {
         Graphene.guardAjax(popupCalendar.openPopup().getFooterControls()).setTodaysDate();
-        clearTimeouts();
+        getMetamerPage().getResponseDelayElement().click();
     }
 }

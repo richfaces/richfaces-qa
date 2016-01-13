@@ -94,8 +94,7 @@ public class TestCalendarPreloadedDates extends AbstractCalendarTest {
     @Templates(value = "plain")
     public void testClassesInPreloadedBoundaries() {
         Graphene.guardAjax(popupCalendar.openPopup()).setDateTime(date);
-        // stabilization wait time, without it the whole popup will disappear right after it is displayed, https://issues.jboss.org/browse/RF-14110
-        waiting(500);
+        waitUtilNoTimeoutsArePresent();
         checkClasses(Boolean.TRUE);
     }
 
@@ -105,8 +104,7 @@ public class TestCalendarPreloadedDates extends AbstractCalendarTest {
     @Templates(value = "plain")
     public void testClassesOutOfPreloadedBoundaries() {
         Graphene.guardAjax(popupCalendar.openPopup()).setDateTime(date);
-        // stabilization wait time, without it the whole popup will disappear right after it is displayed, https://issues.jboss.org/browse/RF-14110
-        waiting(500);
+        waitUtilNoTimeoutsArePresent();
         checkClasses(Boolean.FALSE);
     }
 }

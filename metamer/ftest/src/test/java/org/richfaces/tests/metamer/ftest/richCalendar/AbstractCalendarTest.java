@@ -48,8 +48,6 @@ import org.richfaces.fragment.calendar.RichFacesCalendar;
 import org.richfaces.fragment.calendar.YearAndMonthEditor;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.BeforeMethod;
 
 import com.google.common.collect.Lists;
@@ -63,21 +61,16 @@ import com.google.common.collect.Lists;
 public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
 
     protected static final DateTime firstOfJanuary2012 = new DateTime(2012, 1, 1, 12, 0);
+
+    protected final Attributes<CalendarAttributes> calendarAttributes = getAttributes();
     protected DateTime todayMidday = new DateTime().withHourOfDay(12).withMinuteOfHour(0).withSecondOfMinute(0);
 
     @FindBy(css = "div[id$=calendar]")
     protected RichFacesCalendar calendar;
     @FindBy(css = "div[id$=calendar]")
-    protected RichFacesAdvancedPopupCalendar popupCalendar;
-    @FindBy(css = "div[id$=calendar]")
     protected RichFacesAdvancedInlineCalendar inlineCalendar;
-
-    protected final Attributes<CalendarAttributes> calendarAttributes = getAttributes();
-
-    @BeforeMethod
-    public void init() {
-        todayMidday = new DateTime().withHourOfDay(12).withMinuteOfHour(0).withSecondOfMinute(0);
-    }
+    @FindBy(css = "div[id$=calendar]")
+    protected RichFacesAdvancedPopupCalendar popupCalendar;
 
     protected List<CalendarDay> filterOutBoundaryDays(List<CalendarDay> days) {
         List<CalendarDay> result = Lists.newArrayList();
@@ -89,14 +82,66 @@ public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
         return result;
     }
 
-    public void testOpenPopupClickOnInput() {
-        PopupCalendar openedPopup = Graphene.guardNoRequest(popupCalendar).openPopup(INPUT_CLICKING);
-        assertTrue(openedPopup.isVisible(), "Popup should be visible.");
+    @BeforeMethod
+    public void init() {
+        todayMidday = new DateTime().withHourOfDay(12).withMinuteOfHour(0).withSecondOfMinute(0);
     }
 
-    public void testOpenPopupClickOnImage() {
-        PopupCalendar openedPopup = Graphene.guardNoRequest(popupCalendar).openPopup(OPEN_BUTTON_CLICKING);
-        assertTrue(openedPopup.isVisible(), "Popup should be visible.");
+    private boolean isVisible(WebElement element) {
+        return new WebElementConditionFactory(element).isVisible().apply(driver);
+    }
+
+    protected void performStabilizationWorkaround() {
+        getMetamerPage().getResponseDelayElement().click();
+    }
+
+    public void testApplyButton() {
+        String datePattern = calendarAttributes.get(CalendarAttributes.datePattern);
+        DateTimeFormatter formatter = DateTimeFormat.forPattern(datePattern);
+        DateTime today = new DateTime();
+
+        PopupCalendar openedPopup = popupCalendar.openPopup();
+        PopupFooterControls footerControls = openedPopup.getFooterControls();
+
+        Graphene.guardAjax(footerControls).setTodaysDate();
+        performStabilizationWorkaround();
+
+        assertFalse(openedPopup.isVisible(), "Popup should not be displayed.");
+
+        String dateSetInCalendar = popupCalendar.getInput().getStringValue();
+        DateTime setTime = formatter.parseDateTime(dateSetInCalendar);
+
+        assertEquals(setTime.getDayOfMonth(), today.getDayOfMonth());
+        assertEquals(setTime.getMonthOfYear(), today.getMonthOfYear());
+        assertEquals(setTime.getYear(), today.getYear());
+
+        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> " + dateSetInCalendar);
+    }
+
+    public void testFooterButtons() {
+        PopupCalendar openedPopup = popupCalendar.openPopup();
+        assertTrue(openedPopup.getFooterControls().isVisible());
+        PopupFooterControls footerControls = openedPopup.getFooterControls();
+
+        assertTrue(isVisible(footerControls.getTodayButtonElement()), "Today button should be visible.");
+        assertEquals(footerControls.getTodayButtonElement().getText(), "Today", "Button's text");
+
+        assertTrue(isVisible(footerControls.getApplyButtonElement()), "Apply button should be visible.");
+        assertEquals(footerControls.getApplyButtonElement().getText(), "Apply", "Button's text");
+
+        assertFalse(isVisible(footerControls.getCleanButtonElement()), "Clean button should not be visible.");
+
+        assertFalse(isVisible(footerControls.getTimeEditorOpenerElement()), "Time button should not be visible.");
+
+        Graphene.guardAjax(footerControls).setTodaysDate();
+        performStabilizationWorkaround();
+        assertFalse(openedPopup.isVisible(), "Popup should not be displayed.");
+        footerControls = popupCalendar.openPopup().getFooterControls();
+        assertTrue(isVisible(footerControls.getCleanButtonElement()), "Clean button should be visible.");
+        assertEquals(footerControls.getCleanButtonElement().getText(), "Clean", "Button's text");
+
+        assertTrue(isVisible(footerControls.getTimeEditorOpenerElement()), "Time button should be visible.");
+        assertEquals(footerControls.getTimeEditorOpenerElement().getText(), "12:00", "Button's text");
     }
 
     public void testHeaderButtons() {
@@ -120,9 +165,8 @@ public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
         assertEquals(headerControls.getCloseButtonElement().getText(), "x", "Button's text");
 
         YearAndMonthEditor yearAndMonthEditor = headerControls.openYearAndMonthEditor();
+        waitUtilNoTimeoutsArePresent();
         assertTrue(yearAndMonthEditor.isVisible(), "Year and month editor should be visible");
-        // stabilization wait time, without it the whole popup will disappear right after it is displayed, https://issues.jboss.org/browse/RF-14110
-        waiting(500);
         yearAndMonthEditor.cancelDate();// close the year and month editor popup
         assertFalse(yearAndMonthEditor.isVisible(), "Year and month editor should not be visible");
         assertTrue(openedPopup.isVisible(), "Calendar popup should be visible");
@@ -130,63 +174,13 @@ public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
         assertFalse(openedPopup.isVisible(), "Calendar popup should not be visible");
     }
 
-    private boolean isVisible(WebElement element) {
-        return new WebElementConditionFactory(element).isVisible().apply(driver);
+    public void testOpenPopupClickOnImage() {
+        PopupCalendar openedPopup = Graphene.guardNoRequest(popupCalendar).openPopup(OPEN_BUTTON_CLICKING);
+        assertTrue(openedPopup.isVisible(), "Popup should be visible.");
     }
 
-    protected void clearTimeouts() {
-        // When calendar's popup is closed, there is a timeout set which leads to unstability of tests it causes popup to
-        // disappear right after it shows up (RF-14110).
-        // This workaround will try to clear ALL timeouts in window object
-        executeJS("var id=window.setTimeout(function(){},0);while(id--){window.clearTimeout(id);}");
-    }
-
-    public void testFooterButtons() {
-        PopupCalendar openedPopup = popupCalendar.openPopup();
-        assertTrue(openedPopup.getFooterControls().isVisible());
-        PopupFooterControls footerControls = openedPopup.getFooterControls();
-
-        assertTrue(isVisible(footerControls.getTodayButtonElement()), "Today button should be visible.");
-        assertEquals(footerControls.getTodayButtonElement().getText(), "Today", "Button's text");
-
-        assertTrue(isVisible(footerControls.getApplyButtonElement()), "Apply button should be visible.");
-        assertEquals(footerControls.getApplyButtonElement().getText(), "Apply", "Button's text");
-
-        assertFalse(isVisible(footerControls.getCleanButtonElement()), "Clean button should not be visible.");
-
-        assertFalse(isVisible(footerControls.getTimeEditorOpenerElement()), "Time button should not be visible.");
-
-        Graphene.guardAjax(footerControls).setTodaysDate();
-        clearTimeouts();
-        assertFalse(openedPopup.isVisible(), "Popup should not be displayed.");
-        footerControls = popupCalendar.openPopup().getFooterControls();
-        clearTimeouts();
-        assertTrue(isVisible(footerControls.getCleanButtonElement()), "Clean button should be visible.");
-        assertEquals(footerControls.getCleanButtonElement().getText(), "Clean", "Button's text");
-
-        assertTrue(isVisible(footerControls.getTimeEditorOpenerElement()), "Time button should be visible.");
-        assertEquals(footerControls.getTimeEditorOpenerElement().getText(), "12:00", "Button's text");
-    }
-
-    public void testApplyButton() {
-        String datePattern = calendarAttributes.get(CalendarAttributes.datePattern);
-        DateTimeFormatter formatter = DateTimeFormat.forPattern(datePattern);
-        DateTime today = new DateTime();
-
-        PopupCalendar openedPopup = popupCalendar.openPopup();
-        PopupFooterControls footerControls = openedPopup.getFooterControls();
-
-        MetamerPage.waitRequest(footerControls, WaitRequestType.XHR).setTodaysDate();
-
-        assertFalse(openedPopup.isVisible(), "Popup should not be displayed.");
-
-        String dateSetInCalendar = popupCalendar.getInput().getStringValue();
-        DateTime setTime = formatter.parseDateTime(dateSetInCalendar);
-
-        assertEquals(setTime.getDayOfMonth(), today.getDayOfMonth());
-        assertEquals(setTime.getMonthOfYear(), today.getMonthOfYear());
-        assertEquals(setTime.getYear(), today.getYear());
-
-        getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> " + dateSetInCalendar);
+    public void testOpenPopupClickOnInput() {
+        PopupCalendar openedPopup = Graphene.guardNoRequest(popupCalendar).openPopup(INPUT_CLICKING);
+        assertTrue(openedPopup.isVisible(), "Popup should be visible.");
     }
 }

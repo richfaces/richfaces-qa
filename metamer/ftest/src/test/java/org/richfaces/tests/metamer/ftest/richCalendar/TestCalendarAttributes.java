@@ -387,7 +387,6 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         calendarAttributes.set(CalendarAttributes.defaultTime, t);
         setCurrentDateWithCalendarsTodayButtonAction.perform();
         String text = popupCalendar.openPopup().getFooterControls().getTimeEditorOpenerElement().getText();
-        clearTimeouts();
         assertTrue(text.equals(t), "Default time");
 
         // another check in time editor
@@ -537,6 +536,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         // 1.1.2011 starts with saturday => only 1 day in first weak
         DateTime firstOf2011 = firstOfJanuary2012.withYear(2011);
         guardAjax(popupCalendar).setDateTime(firstOf2011);
+        performStabilizationWorkaround();
         CalendarWeek firstDisplayedWeek = popupCalendar.openPopup().getDayPicker().getWeek(1);
         int secondDisplayedWeekNumber = popupCalendar.openPopup().getDayPicker().getWeek(2).getWeekNumber();
         List<CalendarDay> days = filterOutBoundaryDays(Lists.newArrayList(firstDisplayedWeek.getCalendarDays()));
@@ -944,7 +944,8 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         int minutes = 33;
 
         // set yesterday with some minutes
-        MetamerPage.waitRequest(popupCalendar, WaitRequestType.XHR).setDateTime(todayMidday.plusMinutes(minutes).minusDays(1));
+        Graphene.guardAjax(popupCalendar).setDateTime(todayMidday.plusMinutes(minutes).minusDays(1));
+        performStabilizationWorkaround();
         // second time, but without minutes setting, to see if the minutes will reset
         setCurrentDateWithCalendarsTodayButtonAction.perform();
 
@@ -983,7 +984,6 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         setCurrentDateWithCalendarsTodayButtonAction.perform();
         calendarAttributes.set(CalendarAttributes.showFooter, booleanValue);
         PopupFooterControls fc = popupCalendar.openPopup().getFooterControls();
-        clearTimeouts();
         if (booleanValue) {
             assertTrue(fc.isVisible(), "Footer elements should be visible, when footer is rendered");
             assertListOfWebElementsVisible(Arrays.asList(fc.getApplyButtonElement(), fc.getCleanButtonElement(),
@@ -1112,6 +1112,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
             case SELECT:
                 // set date to tomorrow
                 guardAjax(popupCalendar).setDateTime(firstOfJanuary2012);
+                performStabilizationWorkaround();
                 // set date with calendar's 'Today' button,
                 // this will scroll and select todays day
                 popup = popupCalendar.openPopup();
@@ -1127,6 +1128,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
                 break;
             case SCROLL:
                 guardAjax(popupCalendar).setDateTime(firstOfJanuary2012);
+                performStabilizationWorkaround();
                 // set date with calendar's 'Today' button,
                 // this will only scroll to today but will not select it
                 popup = popupCalendar.openPopup();
@@ -1214,7 +1216,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
         @Override
         public void perform() {
-            MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.NONE).todayDate();
+            popupCalendar.openPopup().getFooterControls().todayDate();
             popupCalendar.openPopup().getFooterControls().openTimeEditor()
                 .setTime(todayMidday.plusMinutes(5), SetValueBy.BUTTONS).confirmTime();
         }
@@ -1225,7 +1227,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         @Override
         public void perform() {
             Graphene.guardAjax(popupCalendar.openPopup().getFooterControls()).setTodaysDate();
-            clearTimeouts();
+            performStabilizationWorkaround();
         }
     }
 
@@ -1233,7 +1235,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
         @Override
         public void perform() {
-            MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.NONE).todayDate();
+            popupCalendar.openPopup().getFooterControls().todayDate();
             popupCalendar.openPopup().getHeaderControls().nextMonth();
         }
     }
