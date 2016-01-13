@@ -84,6 +84,36 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                     <h:outputScript target="head" library="script" name="clientTime-refresh.js" />
                     <script type="text/javascript">
+                        (function () {
+                            // extend window functions for setting timeouts
+                            var cache = {};
+                            var _setTimeout = window.setTimeout;
+                            var _clearTimeout = window.clearTimeout;
+                            window.setTimeout = function (fn, delay) {
+                                var id = _setTimeout(function () {
+                                    fn();
+                                    delete cache[id];
+                                }, delay);
+
+                                cache[id] = fn;
+                                return id;
+                            };
+                            window.clearTimeout = function (id) {
+                                delete cache[id];
+                                _clearTimeout(id);
+                            };
+                            window.getTimeout = function (id) {
+                                return cache[id];
+                            };
+                            window.areNoTimeoutsPresent = function () {
+                                var size = 0, key;
+                                for (key in cache) {
+                                    if (cache.hasOwnProperty(key))
+                                        size++;
+                                }
+                                return size === 0;
+                            };
+                        })();
                         function updateStatusChecker() {
                             Metamer.ClientTime.refresh(#{rich:element('statusCheckerOutput')});
                         }
