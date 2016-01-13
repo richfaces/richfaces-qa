@@ -59,7 +59,7 @@ public class RichCollapsibleSubTableBean implements Serializable {
     @ManagedProperty("#{model.employees}")
     private List<Employee> employees;
     // expanded
-    private Map<List<Employee>, Boolean> expanded = new HashMap<List<Employee>, Boolean>();
+    private Map<Sex, Boolean> expanded = new HashMap<Sex, Boolean>();
     // expanded state for employee detail (for RF-11656)
     private Map<Employee, Boolean> expandedEmployee = new HashMap<Employee, Boolean>();
     // facets
@@ -90,7 +90,7 @@ public class RichCollapsibleSubTableBean implements Serializable {
         return employees;
     }
 
-    public Map<List<Employee>, Boolean> getExpanded() {
+    public Map<Sex, Boolean> getExpanded() {
         return expanded;
     }
 
@@ -163,8 +163,8 @@ public class RichCollapsibleSubTableBean implements Serializable {
         lists.add(men);
         lists.add(women);
 
-        expanded.put(men, true);
-        expanded.put(women, true);
+        expanded.put(Sex.MALE, true);
+        expanded.put(Sex.FEMALE, true);
 
         state = true;
 
