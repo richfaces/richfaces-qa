@@ -210,6 +210,18 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         driver.manage().window().setSize(new Dimension(1280, 1024));
     }
 
+    protected void waitUtilNoTimeoutsArePresent() {
+        Graphene.waitAjax().pollingEvery(200, TimeUnit.MILLISECONDS).until(new Predicate<WebDriver>() {
+            int i = 0;
+
+            @Override
+            public boolean apply(WebDriver t) {
+                System.out.println("i = " + ++i);
+                return Boolean.parseBoolean(String.valueOf(executeJS("return window.areNoTimeoutsPresent();")));
+            }
+        });
+    }
+
     private void moveMouseToUpperLeftCorner() {
         new Actions(driver).moveToElement(driver.findElement(Utils.BY_BODY), 0, 0).perform();
     }
