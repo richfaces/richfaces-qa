@@ -56,7 +56,7 @@ FSF site: http://www.fsf.org. -->
 
         <jboss.javaee6.spec.version>3.0.2.Final</jboss.javaee6.spec.version>
 
-        <version.selenium>2.48.2</version.selenium>
+        <version.selenium>2.46.0</version.selenium>
         <version.testng>6.9.6</version.testng>
 
         <!-- these are set as Environmental variables to let Arquillian know where distribution of managed containers are -->
