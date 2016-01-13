@@ -27,7 +27,7 @@ public class TreeRowKeyConverter extends SequenceRowKeyConverter {
 
         @Override
         public Object getAsObject(FacesContext context, UIComponent component, String value) {
-            LOGGER.info("converting <" + value + "> to object");
+            LOGGER.debug("converting <" + value + "> to object");
             if (value.startsWith("[converted] company: ")) {
                 return new Company(value.replace("[converted] company: ", ""));
             } else if (value.startsWith("[converted] state: ")) {
@@ -44,7 +44,7 @@ public class TreeRowKeyConverter extends SequenceRowKeyConverter {
 
         @Override
         public String getAsString(FacesContext context, UIComponent component, Object value) {
-            LOGGER.info("converting <" + value + "> to String");
+            LOGGER.debug("converting <" + value + "> to String");
             if (value instanceof Integer) {
                 return value.toString();
             } else if (value instanceof Company) {
