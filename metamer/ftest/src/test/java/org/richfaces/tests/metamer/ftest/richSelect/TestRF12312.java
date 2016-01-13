@@ -21,6 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.richSelect;
 
+import java.util.List;
+
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -32,19 +34,22 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.google.common.collect.Lists;
+
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestRF12312 extends AbstractWebDriverTest {
 
     private static final String NULL_STRING = "null";
-
-    @FindBy(css = "div[id$=select]")
-    private RichFacesSelect select;
-    @FindBy(css = "[id$=output]")
-    private WebElement output;
+    private static final List<String> VALUES = Lists.newArrayList("value1", "value2", "value3");
 
     private String actualSelectedValue = NULL_STRING;
+
+    @FindBy(css = "[id$=output]")
+    private WebElement output;
+    @FindBy(css = "div[id$=select]")
+    private RichFacesSelect select;
 
     private void checkListenerValue(String value) {
         getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, String.format("value changed: %s -> %s", actualSelectedValue, value));
@@ -71,18 +76,17 @@ public class TestRF12312 extends AbstractWebDriverTest {
         select.advanced().setOpenByInputClick(false);
     }
 
+    private void selectValuesAtIndexesWithCheck(int... indexes) {
+        for (int index : indexes) {
+            Graphene.guardAjax(select.openSelect()).select(index);
+            checkSelectedValue(VALUES.get(index));
+            waitUtilNoTimeoutsArePresent();
+        }
+    }
+
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-12312")
     public void testRF12312() {
-        Graphene.guardAjax(select.openSelect()).select(1);
-        checkSelectedValue("value2");
-        Graphene.guardAjax(select.openSelect()).select(0);
-        checkSelectedValue("value1");
-        Graphene.guardAjax(select.openSelect()).select(2);
-        checkSelectedValue("value3");
-        Graphene.guardAjax(select.openSelect()).select(1);
-        checkSelectedValue("value2");
-        Graphene.guardAjax(select.openSelect()).select(0);
-        checkSelectedValue("value1");
+        selectValuesAtIndexesWithCheck(1, 0, 2, 1, 0);
     }
 }
