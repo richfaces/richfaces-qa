@@ -28,6 +28,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.util.List;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
@@ -53,6 +54,23 @@ public class TestFileUploadProgressFacet extends AbstractFileUploadTest {
     }
 
     @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-14213")
+    public void testCustomProgressBarIsUsedInMultiFileUpload() {
+        Attributes<ProgressBarAttributes> pbAtts = getAttributes("attributesProgressBar");
+        executeJS("window.metamerEvents='';");
+        pbAtts.set(ProgressBarAttributes.onfinish, "window.metamerEvents+='onfinish ';");
+        fileUpload.addFile(createFileFromString(filenames[0]));
+        fileUpload.addFile(createFileFromString(filenames[1]));
+        fileUpload.addFile(createFileFromString(unicodeNameFile));
+        Graphene.guardAjax(fileUpload).upload();
+        String[] events = ((String) executeJS("return window.metamerEvents;")).trim().split(" ");
+        assertEquals(events.length, 3);
+        assertEquals(events[0], "onfinish");
+        assertEquals(events[1], "onfinish");
+        assertEquals(events[2], "onfinish");
+    }
+
+    @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-3503", "https://issues.jboss.org/browse/RFPL-2263" })
     public void testCustomProgressBarOnFinish() {
         Attributes<ProgressBarAttributes> pbAtts = getAttributes("attributesProgressBar");
@@ -60,7 +78,6 @@ public class TestFileUploadProgressFacet extends AbstractFileUploadTest {
             @Override
             public void perform() {
                 sendFileWithWaiting(acceptableFile, true, true);
-
             }
         });
         assertNotVisible(customPB, "Custom progress bar should not be displayed after upload is finished.");
