@@ -48,7 +48,6 @@ public class TestTreeModelAdaptorSelection extends AbstractTreeSelectionTest {
     private List<WebElement> recursiveModelRepresentations;
     @FindByJQuery(":checkbox[id$=recursiveLeafChildrenNullable]")
     private WebElement recursiveLeafChildrenNullableElement;
-
     private PathsCrate path;
     private final PathsCrate[] paths = new PathsCrate[] {
         new PathsCrate("listModel", new Integer[][] { { 1, 0, 2 }, { 2, 2, 1, 1 } }),
@@ -70,6 +69,9 @@ public class TestTreeModelAdaptorSelection extends AbstractTreeSelectionTest {
     public void initPathsAndModelRepresentation() {
         if (path != null) {
             selectionPaths = path.paths;
+        }
+        if (isInPopupTemplate()) {
+            popupTemplate.advanced().moveByOffset(0, -500);
         }
         if (representation == RecursiveModelRepresentation.MAP) {
             MetamerPage.requestTimeChangesWaiting(recursiveModelRepresentations.get(1)).click();

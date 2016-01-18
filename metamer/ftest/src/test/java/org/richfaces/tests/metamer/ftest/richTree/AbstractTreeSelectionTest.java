@@ -33,10 +33,12 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.StringUtils;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.jboss.arquillian.graphene.javascript.JavaScript;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.component.SwitchType;
 import org.richfaces.fragment.tree.Tree.TreeNode;
+import org.richfaces.tests.metamer.ftest.webdriver.utils.MetamerJavascriptUtils;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -57,6 +59,8 @@ public abstract class AbstractTreeSelectionTest extends AbstractTreeTest {
     private WebElement clientId;
     @FindByJQuery(value = "div[id$=richTree] span.rf-trn-sel")
     private List<WebElement> allSelectedItems;
+    @JavaScript
+    private MetamerJavascriptUtils jsUtils;
 
     private SwitchType selectionType;
 
@@ -77,6 +81,7 @@ public abstract class AbstractTreeSelectionTest extends AbstractTreeTest {
                 treeNode = (treeNode == null) ? tree.advanced().getNodes().get(index) : treeNode.advanced().getNodes()
                     .get(index);
                 if (i < path.length - 1) {
+                    jsUtils.scrollToView(treeNode.advanced().getLabelElement());
                     treeNode.advanced().expand();
                 }
             }
@@ -134,6 +139,7 @@ public abstract class AbstractTreeSelectionTest extends AbstractTreeTest {
             }
             String previousSelectionValue = selection.getText();
             assertFalse(treeNode.advanced().isSelected());
+            jsUtils.scrollToView(treeNode.advanced().getLabelElement());
             getGuarded(treeNode.advanced(), selectionType).select();
 
             assertTrue(treeNode.advanced().isSelected());
