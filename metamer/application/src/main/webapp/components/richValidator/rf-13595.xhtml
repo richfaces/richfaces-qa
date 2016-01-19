@@ -26,6 +26,13 @@
     -->
 
     <ui:composition template="/templates/template.xhtml">
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
 
         <ui:define name="component">
             <!-- manually added richfaces-csv.js, because it is not present on page load and cannot be added from ajax update without re-rendering the whole page -->
