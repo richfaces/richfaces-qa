@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich" 
+      xmlns:a4j="http://richfaces.org/a4j">
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="component">
+            <p>
+                This is reproducer for <a href="https://issues.jboss.org/browse/RF-12661">RF-12661: rich:tooltip causes NPE with null value</a>. Automatized.
+                <br/>
+                Tooltip shows up by clicking the panel below and hides after doubleclick on the same panel.
+                <br/>
+                Steps to reproduce:
+                <ul>
+                    <li>Click on the panel below</li>
+                    <li>Tooltip should appear immediately</li>
+                    <li>
+                        Click the button 'Set value to null'. This will set the tooltip value to null. Before the issue was
+                        resolved, this step changed the ajax status to error and you could have also noticed the NPE error in
+                        the a4j:log in the bottom of the page.
+                    </li>
+                </ul>
+            </p>
+            <br/>
+            <a4j:commandButton id="setNullButton" action="#{rf12661.setValueToNull}" render="panelWithTooltip" value="Set value to null"/>
+            <br/>
+            <a4j:commandButton id="resetButton" action="#{rf12661.resetValue}" render="panelWithTooltip" value="Reset value"/>
+            <br/>
+            <div style="padding: 20px">
+                <rich:panel id="panelWithTooltip" style="width: 200px; border: 1px solid black; background: lightblue;">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                        ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                        deserunt mollit anim id est laborum.
+                    </p>
+                    <rich:tooltip id="tooltip" showEvent="click" hideEvent="dblclick" value="#{rf12661.value}"/>
+                </rich:panel>
+            </div>
+            <br/>
+            <a4j:log id="log"/>
+        </ui:define>
+    </ui:composition>
+</html>
