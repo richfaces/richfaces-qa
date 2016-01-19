@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+    <!--
+    JBoss, Home of Professional Open Source
+    Copyright 2010-2016, Red Hat, Inc. and individual contributors
+    by the @authors tag. See the copyright.txt in the distribution for a
+    full listing of individual contributors.
+    
+    This is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as
+    published by the Free Software Foundation; either version 2.1 of
+    the License, or (at your option) any later version.
+    
+    This software is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    Lesser General Public License for more details.
+    
+    You should have received a copy of the GNU Lesser General Public
+    License along with this software; if not, write to the Free
+    Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+    02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="component">
+            <style type="text/css">
+                .changed{
+                    background: yellow !important;
+                }
+                .valid{
+                    border-color: lightgray !important;
+                }
+                .invalid{
+                    border-color: red  !important;
+                }
+            </style>
+            <script>
+                function valueModified(element, valid) {
+                    var $element = $(element);
+                    $element.addClass('changed');
+                    if (valid) {
+                        $element.removeClass('invalid');
+                        $element.addClass('valid');
+                    } else {
+                        $element.removeClass('valid');
+                        $element.addClass('invalid');
+                    }
+                }
+            </script>
+            <p>
+                Page demonstrating issue <a href="https://issues.jboss.org/browse/RF-13127">RF-13127: onvalid and oninvalide pass wrong element when using rich:element with String field</a>. Automatized.
+            </p>
+            <p>
+                Steps to reproduce:
+                <ol>
+                    <li>type 'a' to the third input for 'vin'</li>
+                    <li>before the issue was resolved, the first input for 'vin' was changed instead of the used third 'vin' input.</li>
+                </ol>
+                The inputs validated on server side works correctly (inputs for mileage).
+            </p>
+            <br/>
+            vin (string validator, VIN must be alphanumeric string with length 17, validated on client):
+            <br/>
+            <a4j:repeat value="#{rf13127.cars}" var="car" >
+                <h:inputText id="vin" value="#{car.vin}">
+                    <rich:validator oninvalid="valueModified(#{rich:element('vin')}, false)"
+                                    onvalid="valueModified(#{rich:element('vin')}, true)"/>
+                </h:inputText>
+                <br/>
+            </a4j:repeat>
+            <br/>
+            mileage (number validator, mileage has to be in interval from 0 to 300,000, validated on server):
+            <br/>
+            <a4j:repeat value="#{rf13127.cars}" var="car" >
+                <h:inputText id="mileage" value="#{car.mileage}" >
+                    <rich:validator oninvalid="valueModified(#{rich:element('mileage')}, false)"
+                                    onvalid="valueModified(#{rich:element('mileage')}, true)"/>
+                </h:inputText>
+                <br/>
+            </a4j:repeat>
+
+            <div>
+                <rich:messages id="messages" ajaxRendered="true" showDetail="false" showSummary="true"  />
+            </div>
+
+        </ui:define>
+
+
+    </ui:composition>
+
+</html>
