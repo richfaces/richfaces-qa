@@ -138,7 +138,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
     @Templates("plain")
     public void testHideDelay() {
-        new MenuDelayTester().testHideDelay(page.getContextMenuRoot(), delay, Event.MOUSEOUT, page.getContextMenuRoot());
+        new MenuDelayTester().testHideDelay(page.getContextMenuRoot(), delay, new Event[]{ Event.MOUSEOVER, Event.MOUSEOUT }, page.getContextMenuRoot());
     }
 
     @Test

@@ -48,6 +48,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -1239,9 +1240,6 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      */
     protected class MenuDelayTester {
 
-        public MenuDelayTester() {
-        }
-
         private static final String ATTRIBUTE_TIME_NAME = "delayTime";
         private static final String ATTRIBUTE_TRIGGERED_NAME = "delayAttributeTriggered";
         private static final String HIDE_DELAY = "hideDelay";
@@ -1249,19 +1247,37 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         private static final String ON_SHOW = "onshow";
         private static final String SHOW_DELAY = "showDelay";
         private final String GET_TIME_SCRIPT = format("return window.{0};", ATTRIBUTE_TIME_NAME);
-        private final String MEASURING_SCRIPT_TEMPLATE = String.format("window.%s=false;RichFaces.component(\"{0}\").{1}();"
-            + "window.%s = new Date().getTime();jQuery(arguments[0]).trigger(\"{2}\");", ATTRIBUTE_TRIGGERED_NAME,
+        private final String MEASURING_SCRIPT_TEMPLATE = String.format(
+            "window.%s = false;"
+            + "var event = jQuery.Event(\"click\");"// event type does not matter, but has to be non-empty
+            + "event.pageX = {0};"
+            + "event.pageY = {1};"
+            + "RichFaces.component(\"{2}\").{3}(event);"
+            + "window.%s = new Date().getTime();",
+            ATTRIBUTE_TRIGGERED_NAME,
             ATTRIBUTE_TIME_NAME);
         private final String PREPARATION_SCRIPT = format("window.{0}=new Date().getTime() - window.{0}; window.{1}=true;",
             ATTRIBUTE_TIME_NAME, ATTRIBUTE_TRIGGERED_NAME);
 
-        private String getMeasuringScript(String id, boolean isHideDelay, Event triggerEvent) {
-            return format(MEASURING_SCRIPT_TEMPLATE, id, isHideDelay ? "show" : "hide", triggerEvent);
+        public MenuDelayTester() {
         }
 
-        private void testDelay(boolean isHideDelay, final WebElement menuRootElement, final long expectedDelayInMillis,
-            Event triggerEvent, WebElement triggerEventOnElement) {
-            final String id = menuRootElement.getAttribute("id");
+        private String getMeasuringScript(WebElement rootElement, boolean isHideDelay, Event[] triggerEvents) {
+            Point location = rootElement.getLocation();
+            Locations locations = Utils.getLocations(rootElement);
+            int x = location.x + locations.getWidth() / 2;
+            int y = location.y + locations.getHeight() / 2;
+            String id = rootElement.getAttribute("id");
+            String first = isHideDelay ? "show" : "hide";
+            StringBuilder sb = new StringBuilder(MEASURING_SCRIPT_TEMPLATE);
+            for (Event e : triggerEvents) {
+                sb.append("event = jQuery.Event(\"").append(e)
+                    .append("\");event.pageX={0};event.pageY = {1};jQuery(arguments[0]).trigger(event);");
+            }
+            return format(sb.toString(), x, y, id, first);
+        }
+
+        private void testDelay(boolean isHideDelay, final WebElement menuRootElement, final long expectedDelayInMillis, Event[] triggerEvent, WebElement triggerEventOnElement) {
             double tolerance = expectedDelayInMillis == 0 ? 500 : expectedDelayInMillis * 0.5;
             int cycles = 4;
             attsSetter()
@@ -1270,13 +1286,14 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
                 .setAttribute(isHideDelay ? ON_HIDE : ON_SHOW).toValue(PREPARATION_SCRIPT)
                 .asSingleAction().perform();
             List<Long> delays = new ArrayList<Long>(cycles);
-            String measuringScript = getMeasuringScript(id, isHideDelay, triggerEvent);
+            String measuringScript = getMeasuringScript(menuRootElement, isHideDelay, triggerEvent);
             for (int i = 1; i <= cycles; i++) {
                 //This is debug output, to determine in which cycle test could fall.
                 System.out.println(format("Tested delay: {0} [ms], cycle: {1}", expectedDelayInMillis, i));
                 executor.executeScript(measuringScript, triggerEventOnElement);
-                Graphene.waitGui().withTimeout(expectedDelayInMillis * 2, TimeUnit.MILLISECONDS).until(
-                    new EventTriggeredPredicate(ATTRIBUTE_TRIGGERED_NAME));
+                Graphene.waitGui()
+                    .withTimeout(expectedDelayInMillis * 2, TimeUnit.MILLISECONDS)
+                    .until(new EventTriggeredPredicate(ATTRIBUTE_TRIGGERED_NAME));
                 delays.add(Long.valueOf(executor.executeScript(GET_TIME_SCRIPT).toString()));
                 if (!isHideDelay) {
                     // hide menu after testing @showDelay
@@ -1288,14 +1305,20 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
                 + " delays was " + median);
         }
 
-        public void testHideDelay(final WebElement menuRootElement, final long expectedDelayInMillis, Event triggerEvent,
-            WebElement triggerEventOnElement) {
-            testDelay(Boolean.TRUE, menuRootElement, expectedDelayInMillis, triggerEvent, triggerEventOnElement);
+        public void testHideDelay(final WebElement menuRootElement, final long expectedDelayInMillis, Event[] triggerEvents, WebElement triggerEventOnElement) {
+            testDelay(Boolean.TRUE, menuRootElement, expectedDelayInMillis, triggerEvents, triggerEventOnElement);
         }
 
-        public void testShowDelay(final WebElement menuRootElement, final long expectedDelayInMillis, Event triggerEvent,
-            WebElement triggerEventOnElement) {
-            testDelay(Boolean.FALSE, menuRootElement, expectedDelayInMillis, triggerEvent, triggerEventOnElement);
+        public void testHideDelay(final WebElement menuRootElement, final long expectedDelayInMillis, Event triggerEvent, WebElement triggerEventOnElement) {
+            testHideDelay(menuRootElement, expectedDelayInMillis, new Event[]{ triggerEvent }, triggerEventOnElement);
+        }
+
+        public void testShowDelay(final WebElement menuRootElement, final long expectedDelayInMillis, Event[] triggerEvents, WebElement triggerEventOnElement) {
+            testDelay(Boolean.FALSE, menuRootElement, expectedDelayInMillis, triggerEvents, triggerEventOnElement);
+        }
+
+        public void testShowDelay(final WebElement menuRootElement, final long expectedDelayInMillis, Event triggerEvent, WebElement triggerEventOnElement) {
+            testDelay(Boolean.FALSE, menuRootElement, expectedDelayInMillis, new Event[]{ triggerEvent }, triggerEventOnElement);
         }
 
         private class EventTriggeredPredicate implements Predicate<WebDriver> {
