@@ -27,7 +27,6 @@ import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -471,12 +470,13 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
 
     @CoversAttributes("styleClass")
     public void testStyleClass() {
-        updateDropDownMenuInvoker();
-        String styleClassVal = "test-style-class";
-        dropDownMenuAttributes.set(DropDownMenuAttributes.styleClass, styleClassVal);
-        String styleClass = getCurrentMenu().advanced().getTopLevelElement()
-            .getAttribute("class");
-        assertTrue(styleClass.contains(styleClassVal));
+        testStyleClass(getCurrentMenu().advanced().getTopLevelElement());
+    }
+
+    @CoversAttributes("styleClass")
+    public void testStyleClassWhenDisabled() {
+        setAttribute("disabled", true);
+        testStyleClass();
     }
 
     public void testSubMenuOpening() {

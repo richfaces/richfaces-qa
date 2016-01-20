@@ -448,11 +448,16 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @CoversAttributes("styleClass")
     @Templates("plain")
     public void testStyleClass() {
-        updateShowAction();
-        String styleClassVal = "test-style-class";
-        contextMenuAttributes.set(ContextMenuAttributes.styleClass, styleClassVal);
-        String styleClass = page.getContextMenuRoot().getAttribute("class");
-        assertTrue(styleClass.contains(styleClassVal));
+        testStyleClass(page.getContextMenuRoot());
+    }
+
+    @Test
+    @CoversAttributes("styleClass")
+    @Templates("plain")
+    @RegressionTest("https://issues.jboss.org/browse/RF-13167")
+    public void testStyleClassWhenDisabled() {
+        setAttribute("disabled", true);
+        testStyleClass();
     }
 
     @Test(groups = "smoke")

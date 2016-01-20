@@ -25,6 +25,7 @@ import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annot
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
@@ -220,6 +221,13 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
     @Templates("plain")
     public void testStyleClass() {
         super.testStyleClass();
+    }
+
+    @Test
+    @Templates("plain")
+    @RegressionTest("https://issues.jboss.org/browse/RF-13167")
+    public void testStyleClassWhenDisabled() {
+        super.testStyleClassWhenDisabled();
     }
 
     @Test(groups = "smoke")

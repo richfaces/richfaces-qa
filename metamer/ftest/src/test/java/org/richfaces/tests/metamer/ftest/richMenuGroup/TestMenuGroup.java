@@ -362,6 +362,15 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("styleClass")
+    @Templates("plain")
+    @RegressionTest("https://issues.jboss.org/browse/RF-13167")
+    public void testStyleClassWhenDisabled() {
+        setAttribute("disabled", true);
+        testStyleClass();
+    }
+
+    @Test
     @CoversAttributes("title")
     @Templates("plain")
     public void testTitle() {
