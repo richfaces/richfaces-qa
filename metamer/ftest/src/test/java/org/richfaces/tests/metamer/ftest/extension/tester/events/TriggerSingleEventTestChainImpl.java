@@ -25,6 +25,8 @@ import static java.text.MessageFormat.format;
 
 import static org.testng.Assert.assertEquals;
 
+import java.util.List;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
@@ -45,6 +47,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Predicate;
+import com.google.common.base.Throwables;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -131,9 +134,9 @@ public class TriggerSingleEventTestChainImpl extends BasicTestChainImpl<TriggerS
 
     private String getEventNameFromStackTrace() {
         String methodName;
-        StackTraceElement[] stackTrace = new Throwable().getStackTrace();// faster than Threat.currentThread().getStackTrace()
-        for (StackTraceElement ste : stackTrace) {
-            methodName = ste.getMethodName();
+        List<StackTraceElement> l = Throwables.lazyStackTrace(new Throwable());
+        for (int i = 0; i < 10; i++) {
+            methodName = l.get(i).getMethodName();
             if (methodName.toLowerCase().startsWith(TEST_METHOD_PREFIX)) {
                 return methodName.substring(TEST_METHOD_PREFIX.length());
             }
