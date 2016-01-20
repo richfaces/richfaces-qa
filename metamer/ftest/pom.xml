@@ -53,6 +53,12 @@ FSF site: http://www.fsf.org. -->
             <version>${project.version}</version>
             <classifier>classes</classifier>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jboss.weld.servlet</groupId>
+                    <artifactId>weld-servlet</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- Arquillian dependencies -->
         <dependency>
@@ -142,6 +148,13 @@ FSF site: http://www.fsf.org. -->
             <groupId>org.wildfly</groupId>
             <artifactId>wildfly-cli</artifactId>
             <version>8.2.0.Final</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>19.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

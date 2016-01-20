@@ -36,8 +36,7 @@ import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annota
 import org.richfaces.tests.metamer.ftest.webdriver.utils.LazyLoadedCachedValue;
 import org.testng.annotations.Test;
 
-import com.google.common.collect.BoundType;
-import com.google.common.collect.Ranges;
+import com.google.common.collect.Range;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -63,7 +62,7 @@ public class TestPickListColumnClasses extends AbstractColumnAndRowClassesTest {
     @Override
     public void performAfterSettingOfAttributes() {
         // move some of the items to target list, so the @columnClasses can be also checked there
-        pickList.addMultiple(ChoicePickerHelper.byIndex().fromRange(Ranges.range(0, BoundType.CLOSED, pickList.advanced().getSourceListItemsElements().size() / 2, BoundType.CLOSED)));
+        pickList.addMultiple(ChoicePickerHelper.byIndex().fromRange(Range.closed(0, pickList.advanced().getSourceListItemsElements().size() / 2)));
     }
 
     @Test
