@@ -69,7 +69,9 @@ import org.richfaces.fragment.common.Locations;
 import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.common.VisibleComponent;
+import org.richfaces.fragment.popupPanel.TextualRichFacesPopupPanel;
 import org.richfaces.tests.configurator.unstable.UnstableTestConfigurator;
+import org.richfaces.tests.metamer.Template;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.extension.configurator.Configurator;
 import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config;
@@ -111,6 +113,9 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     @FindBy(css = "input[id$=statusInput]")
     protected TextInputComponentImpl statusInput;
+
+    @FindBy(css = "[id$=containerPopupPanel]")
+    protected TextualRichFacesPopupPanel popupTemplate;
 
     @Page
     private MetamerPage metamerPage;
@@ -208,6 +213,10 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         driverType = DriverType.getCurrentType(driver);
         // resize browser window to 1280x1024 or full screen
         driver.manage().window().setSize(new Dimension(1280, 1024));
+    }
+
+    protected boolean isInPopupTemplate() {
+        return template.contains(Template.RICHPOPUPPANEL);
     }
 
     protected void waitUtilNoTimeoutsArePresent() {
