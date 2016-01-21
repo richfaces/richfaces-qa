@@ -481,6 +481,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
 
     public void testSubMenuOpening() {
         updateDropDownMenuInvokerToClick();
+        jsUtils.scrollToView(getCurrentMenu().advanced().getTopLevelElement());
         Graphene.guardAjax(getCurrentMenu().expandGroup("Save As...", page.getTarget1())).selectItem("Save All");
         assertEquals(page.getOutput().getText(), "Save All");
     }
