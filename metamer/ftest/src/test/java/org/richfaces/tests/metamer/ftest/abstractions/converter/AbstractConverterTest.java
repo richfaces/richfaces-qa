@@ -32,6 +32,7 @@ import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.bean.ConverterBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 
 /**
  * Base for testing of @converter and @converterMessage of input components.
@@ -64,7 +65,7 @@ public abstract class AbstractConverterTest extends AbstractWebDriverTest {
 
     @Override
     public String getComponentTestPagePath() {
-        return "" + getComponentName() + "/converter.xhtml";
+        return getComponentName() + "/converter.xhtml";
     }
 
     protected abstract String getDefaultValue();
@@ -79,15 +80,19 @@ public abstract class AbstractConverterTest extends AbstractWebDriverTest {
     }
 
     private void setFailing(boolean willFail) {
-        Graphene.guardAjax(willFail ? failingConverterTrueButton : failingConverterFalseButton).click();
+        getMetamerPage().performJSClickOnButton(willFail ? failingConverterTrueButton : failingConverterFalseButton, WaitRequestType.XHR);
     }
 
     private void submitAjax() {
+        jsUtils.scrollToView(ajaxSubmitButton);
         Graphene.guardAjax(ajaxSubmitButton).click();
     }
 
     @CoversAttributes({ "converter", "converterMessage" })
     public void testConverterAndConverterMessage() {
+        if (isInPopupTemplate()) {
+            popupTemplate.advanced().moveByOffset(100, 0);
+        }
         assertNotVisible(message.advanced().getRootElement(), "Message should not be visible.");
         assertEquals(getOutputText(), getDefaultValue());
 
