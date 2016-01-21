@@ -21,13 +21,14 @@
  */
 package org.richfaces.tests.metamer.ftest.richPopupPanel;
 
+import static org.testng.Assert.assertEquals;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.richPopupPanel.TestPopupPanel.TestedPopupPanel;
-import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.testng.Assert;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 /**
@@ -37,47 +38,53 @@ import org.testng.annotations.Test;
  */
 public class TestPopupPanelJSApi extends AbstractWebDriverTest {
 
-    private final Attributes<PopupPanelAttributes> popupPanelAttributes = getAttributes();
+    private static final int TOLERANCE = 5; // px
 
-    @FindBy(css = "input[id$=value]")
-    private TextInputComponentImpl value;
-    @FindBy(css = "input[id$=getTop]")
-    private WebElement getTop;
     @FindBy(css = "input[id$=getLeft]")
     private WebElement getLeft;
-    @FindBy(css = "input[id$=moveTo]")
-    private WebElement moveTo;
-    @FindBy(css = "input[id$=resize]")
-    private WebElement resize;
-    @FindBy(css = "input[id$=show]")
-    private WebElement show;
+    @FindBy(css = "input[id$=getTop]")
+    private WebElement getTop;
     @FindBy(css = "input[id$=hide]")
     private WebElement hide;
+    @FindBy(css = "input[id$=moveTo]")
+    private WebElement moveTo;
     @FindBy(css = "input[id$=openPanelButton]")
     private WebElement openButton;
     @FindBy(css = "div.rf-pp-cntr[id$=popupPanel_container]")
     private TestedPopupPanel panel;
-    final int TOLERANCE = 5;// px
+    @FindBy(css = "input[id$=resize]")
+    private WebElement resize;
+    @FindBy(css = "input[id$=show]")
+    private WebElement show;
+    @FindBy(css = "input[id$=value]")
+    private TextInputComponentImpl value;
 
     @Override
     public String getComponentTestPagePath() {
         return "richPopupPanel/simple.xhtml";
     }
 
+    private int getValue() {
+        return Integer.valueOf(value.getStringValue().replaceAll("px", ""));
+    }
+
     private void openPopupPanel() {
-        openButton.click();
+        performJSClickOnButton(openButton);
         panel.advanced().waitUntilPopupIsVisible().perform();
     }
 
-    private int getValue() {
-        return Integer.valueOf(value.getStringValue().replaceAll("px", ""));
+    /**
+     * The button can be hidden by the popup panel and so it cannot be clicked. This method workarounds the problem without a
+     * need of moving the panel.
+     */
+    private void performJSClickOnButton(WebElement button) {
+        getMetamerPage().performJSClickOnButton(button, MetamerPage.WaitRequestType.NONE);
     }
 
     @Test
     public void testHide() {
         openPopupPanel();
-        panel.advanced().moveByOffset(0, 200);// move the panel so the button for hide will be visible
-        hide.click();
+        performJSClickOnButton(hide);
         panel.advanced().waitUntilPopupIsNotVisible().perform();
     }
 
@@ -85,15 +92,16 @@ public class TestPopupPanelJSApi extends AbstractWebDriverTest {
     public void testLeft() {
         openPopupPanel();
         getLeft.click();
-        Assert.assertEquals(getValue(), panel.advanced().getLocations().getTopLeft().x, TOLERANCE);
+        performJSClickOnButton(getLeft);
+        assertEquals(getValue(), panel.advanced().getLocations().getTopLeft().x, TOLERANCE);
     }
 
     @Test
     public void testMoveTo() {
         openPopupPanel();
-        moveTo.click();// moves to [0, 0]
-        Assert.assertEquals(panel.advanced().getLocations().getTopLeft().x, 0, TOLERANCE);
-        Assert.assertEquals(panel.advanced().getLocations().getTopLeft().y, 0, TOLERANCE);
+        performJSClickOnButton(moveTo);// moves to [0, 0]
+        assertEquals(panel.advanced().getLocations().getTopLeft().x, 0, TOLERANCE);
+        assertEquals(panel.advanced().getLocations().getTopLeft().y, 0, TOLERANCE);
     }
 
     @Test
@@ -107,30 +115,30 @@ public class TestPopupPanelJSApi extends AbstractWebDriverTest {
         openPopupPanel();
         int widthBefore = panel.advanced().getLocations().getWidth();
         int heightBefore = panel.advanced().getLocations().getHeight();
-        Assert.assertEquals(widthBefore, 400, TOLERANCE);
-        Assert.assertEquals(heightBefore, 400, TOLERANCE);
-        resize.click();// resizes by 10x10
-        Assert.assertEquals(panel.advanced().getLocations().getWidth(), 410, TOLERANCE);
-        Assert.assertEquals(panel.advanced().getLocations().getHeight(), 410, TOLERANCE);
-        resize.click();// resizes by 10x10
-        Assert.assertEquals(panel.advanced().getLocations().getWidth(), 420, TOLERANCE);
-        Assert.assertEquals(panel.advanced().getLocations().getHeight(), 420, TOLERANCE);
-        resize.click();// resizes by 10x10, resize over max width/height, width/height stays at its maximum
-        Assert.assertEquals(panel.advanced().getLocations().getWidth(), 420, TOLERANCE);
-        Assert.assertEquals(panel.advanced().getLocations().getHeight(), 420, TOLERANCE);
+        assertEquals(widthBefore, 400, TOLERANCE);
+        assertEquals(heightBefore, 400, TOLERANCE);
+        performJSClickOnButton(resize);// resizes by 10x10
+        assertEquals(panel.advanced().getLocations().getWidth(), 410, TOLERANCE);
+        assertEquals(panel.advanced().getLocations().getHeight(), 410, TOLERANCE);
+        performJSClickOnButton(resize);// resizes by 10x10
+        assertEquals(panel.advanced().getLocations().getWidth(), 420, TOLERANCE);
+        assertEquals(panel.advanced().getLocations().getHeight(), 420, TOLERANCE);
+        performJSClickOnButton(resize);// resizes by 10x10, but the maximum h/w is reached
+        assertEquals(panel.advanced().getLocations().getWidth(), 420, TOLERANCE);
+        assertEquals(panel.advanced().getLocations().getHeight(), 420, TOLERANCE);
     }
 
     @Test
     public void testShow() {
         assertNotVisible(panel.advanced().getRootElement(), "Panel should not be visible.");
-        show.click();
+        performJSClickOnButton(show);
         panel.advanced().waitUntilPopupIsVisible().perform();
     }
 
     @Test
     public void testTop() {
         openPopupPanel();
-        getTop.click();
-        Assert.assertEquals(getValue(), panel.advanced().getLocations().getTopLeft().y, TOLERANCE);
+        performJSClickOnButton(getTop);
+        assertEquals(getValue(), panel.advanced().getLocations().getTopLeft().y, TOLERANCE);
     }
 }
