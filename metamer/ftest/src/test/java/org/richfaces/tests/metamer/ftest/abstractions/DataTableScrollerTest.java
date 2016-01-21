@@ -57,6 +57,9 @@ public abstract class DataTableScrollerTest extends AbstractDataTableTest {
         if (rows != null) {
             dataTableAttributes.set(DataTableAttributes.rows, rows);
         }
+        if (isInPopupTemplate() && dataScroller == dataScroller1) {
+            popupTemplate.advanced().moveByOffset(100, 200);
+        }
 
         if (dataScroller.hasPages() && dataScroller.getActivePageNumber() != 1) {
             dataScroller.switchTo(FIRST);
