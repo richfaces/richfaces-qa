@@ -43,6 +43,7 @@ import org.jboss.arquillian.graphene.proxy.GrapheneProxy;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
 import org.jboss.arquillian.graphene.proxy.Interceptor;
 import org.jboss.arquillian.graphene.proxy.InvocationContext;
+import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -73,6 +74,8 @@ public class MetamerPage {
     private WebElement attributesTable;
     @Drone
     protected WebDriver driver;
+    @ArquillianResource
+    private JavascriptExecutor executor;
     @FindBy(css = "[id$=fullPageRefreshImage]")
     private WebElement fullPageRefreshIcon;
     @FindBy(css = "span[id$=jsFunctionChecker]")
@@ -302,7 +305,7 @@ public class MetamerPage {
      * Do a full page refresh (regular HTTP request) by triggering a command with no action bound.
      */
     public void fullPageRefresh() {
-        waitRequest(fullPageRefreshIcon, WaitRequestType.HTTP).click();
+        performJSClickOnButton(fullPageRefreshIcon, WaitRequestType.HTTP);
     }
 
     public WebElement getAttributesTableElement() {
@@ -375,10 +378,31 @@ public class MetamerPage {
     }
 
     /**
+     * The button can be hidden by the popup panel and so it cannot be clicked. This method workarounds the problem without a
+     * need of moving the panel.
+     */
+    public void performJSClickOnButton(WebElement button, WaitRequestType type) {
+        JavascriptExecutor e = executor;
+        switch (type) {
+            case HTTP:
+                e = Graphene.guardHttp(e);
+                break;
+            case XHR:
+                e = Graphene.guardAjax(e);
+                break;
+            case NONE:
+                break;
+            default:
+                throw new UnsupportedOperationException();
+        }
+        e.executeScript("arguments[0].click()", button);
+    }
+
+    /**
      * Rerender all content of the page (AJAX request) by trigerring a command with no action but render bound.
      */
     public void rerenderAll() {
-        waitRequest(rerenderAllIcon, WaitRequestType.XHR).click();
+        performJSClickOnButton(rerenderAllIcon, WaitRequestType.XHR);
     }
 
     private static class RequestTimeChangesWaitingInterceptor implements Interceptor {
