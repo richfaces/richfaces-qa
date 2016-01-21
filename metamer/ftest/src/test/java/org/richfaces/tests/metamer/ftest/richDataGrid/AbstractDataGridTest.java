@@ -31,7 +31,6 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
-import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.richfaces.fragment.dataGrid.RichFacesDataGrid;
@@ -66,11 +65,8 @@ public abstract class AbstractDataGridTest extends AbstractWebDriverTest {
     final Attributes<DataGridAttributes> dataGridAttributes = getAttributes();
 
     Integer columns = 3;
-
     Integer elements;
-
     Integer first;
-
     int expectedFirst;
     int expectedElements;
     int expectedColumns;
@@ -99,11 +95,6 @@ public abstract class AbstractDataGridTest extends AbstractWebDriverTest {
         } else {
             dataGridAttributes.reset(DataGridAttributes.first);
         }
-    }
-
-    private void prepareAttribute(WebElement inputElement, Object value) {
-        String v = value == null ? "" : value.toString();
-        Graphene.guardHttp(inputElement).sendKeys(v);
     }
 
     protected void verifyGrid() {
