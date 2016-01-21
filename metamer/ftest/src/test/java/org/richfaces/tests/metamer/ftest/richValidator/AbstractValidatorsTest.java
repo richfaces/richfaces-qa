@@ -29,8 +29,11 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.richfaces.fragment.message.RichFacesMessage;
+import org.richfaces.fragment.popupPanel.PopupPanel;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.validation.AssertFalseBean;
 import org.richfaces.tests.metamer.validation.AssertTrueBean;
 import org.richfaces.tests.metamer.validation.DecimalMinMaxBean;
@@ -55,7 +58,6 @@ import com.google.common.base.Predicate;
  * Abstract class with selenium test for validators
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision: 22997 $
  */
 public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
@@ -93,7 +95,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
     }
 
     private void clickCorrectButton() {
-        getPage().getSetCorrectBtn().click();
+        getMetamerPage().performJSClickOnButton(getPage().getSetCorrectBtn(), WaitRequestType.NONE);
         if (new WebElementConditionFactory(getPage().getInputFuture()).isPresent().apply(driver)
             && new WebElementConditionFactory(getPage().getInputPast()).isPresent().apply(driver)) {
             getPage().getInputPast().clear();
@@ -104,7 +106,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
     }
 
     private void clickWrongButton() {
-        getPage().getSetWrongBtn().click();
+        getMetamerPage().performJSClickOnButton(getPage().getSetWrongBtn(), WaitRequestType.NONE);
         if (new WebElementConditionFactory(getPage().getInputFuture()).isPresent().apply(driver)
             && new WebElementConditionFactory(getPage().getInputPast()).isPresent().apply(driver)) {
             getPage().getInputPast().clear();
@@ -195,6 +197,14 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         wrongValue.put(ID.size, "B"); // RF-11035
     }
 
+    @BeforeMethod(alwaysRun = true)
+    public void resizePopup() {
+        if (isInPopupTemplate()) {
+            jsUtils.scrollToView(popupTemplate.advanced().getContentElement());
+            popupTemplate.advanced().resizeFromLocation(PopupPanel.ResizerLocation.S, 100, 0);
+        }
+    }
+
     /**
      * Must set the dates this way beacause of problems with other locale than eng.
      */
@@ -214,7 +224,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
     }
 
     protected void submitAjax() {
-        getPage().getA4jCommandBtn().click();
+        getMetamerPage().performJSClickOnButton(getPage().getA4jCommandBtn(), WaitRequestType.XHR);
     }
 
     public void verifyAllWrongWithAjaxSubmit() {
@@ -225,8 +235,8 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
     public void verifyAllWrongWithJSFSubmit() {
         clickWrongButton();
-        waiting(2000);// stabilization wait time, wait for all ajax requests are completed
-        getPage().gethCommandBtn().click();
+        waiting(3000);// stabilization wait time, wait for all ajax requests are completed
+        getMetamerPage().performJSClickOnButton(getPage().gethCommandBtn(), WaitRequestType.HTTP);
         checkAllErrorMessagesAreVisibleAndCorrect();
     }
 
@@ -433,7 +443,9 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         clickCorrectButton();
 
         // many checkBox input selection size
-        getPage().getSelectionItemByLabel(wrongValue.get(ID.size).toString()).click();
+        WebElement selectionItemByLabel = getPage().getSelectionItemByLabel(wrongValue.get(ID.size).toString());
+        jsUtils.scrollToView(selectionItemByLabel);
+        selectionItemByLabel.click();
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.size);
