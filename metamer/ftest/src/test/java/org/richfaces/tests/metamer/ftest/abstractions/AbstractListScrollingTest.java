@@ -26,7 +26,6 @@ import static org.testng.Assert.assertTrue;
 
 import java.util.List;
 
-import org.jboss.arquillian.graphene.javascript.JavaScript;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -34,15 +33,12 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Keyboard;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.webdriver.utils.MetamerJavascriptUtils;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public abstract class AbstractListScrollingTest extends AbstractWebDriverTest {
 
-    @JavaScript
-    private MetamerJavascriptUtils jsUtils;
     @ArquillianResource
     private Keyboard keyboard;
 

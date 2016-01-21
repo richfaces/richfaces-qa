@@ -42,6 +42,7 @@ import org.apache.commons.lang.StringUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
+import org.jboss.arquillian.graphene.javascript.JavaScript;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
@@ -86,6 +87,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.AttributesImpl;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.UnsafeAttributes;
+import org.richfaces.tests.metamer.ftest.webdriver.utils.MetamerJavascriptUtils;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 import org.testng.IHookCallBack;
@@ -110,6 +112,9 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     @ArquillianResource
     protected JavascriptExecutor executor;
+
+    @JavaScript
+    protected MetamerJavascriptUtils jsUtils;
 
     @FindBy(css = "input[id$=statusInput]")
     protected TextInputComponentImpl statusInput;
@@ -1331,7 +1336,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         }
 
         public void testHideDelay(final WebElement menuRootElement, final long expectedDelayInMillis, Event triggerEvent, WebElement triggerEventOnElement) {
-            testHideDelay(menuRootElement, expectedDelayInMillis, new Event[]{ triggerEvent }, triggerEventOnElement);
+            testHideDelay(menuRootElement, expectedDelayInMillis, new Event[] { triggerEvent }, triggerEventOnElement);
         }
 
         public void testShowDelay(final WebElement menuRootElement, final long expectedDelayInMillis, Event[] triggerEvents, WebElement triggerEventOnElement) {
@@ -1339,7 +1344,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         }
 
         public void testShowDelay(final WebElement menuRootElement, final long expectedDelayInMillis, Event triggerEvent, WebElement triggerEventOnElement) {
-            testDelay(Boolean.FALSE, menuRootElement, expectedDelayInMillis, new Event[]{ triggerEvent }, triggerEventOnElement);
+            testDelay(Boolean.FALSE, menuRootElement, expectedDelayInMillis, new Event[] { triggerEvent }, triggerEventOnElement);
         }
 
         private class EventTriggeredPredicate implements Predicate<WebDriver> {

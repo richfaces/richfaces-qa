@@ -24,7 +24,6 @@ package org.richfaces.tests.metamer.ftest.richTooltip;
 import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.javascript.JavaScript;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
@@ -36,7 +35,6 @@ import org.richfaces.tests.configurator.unstable.annotation.Unstable;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
-import org.richfaces.tests.metamer.ftest.webdriver.utils.MetamerJavascriptUtils;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -46,8 +44,6 @@ import org.testng.annotations.Test;
 @Templates("plain")
 public class TestRF12661 extends AbstractWebDriverTest {
 
-    @JavaScript
-    private MetamerJavascriptUtils jsUtils;
     @FindBy(css = "[id$='log']")
     private RichFacesLog log;
     @FindBy(css = ".rf-p[id$='panelWithTooltip']")
