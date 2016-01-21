@@ -49,6 +49,9 @@ public class TestScrollerOutsideTable extends AbstractScrollerTest {
     @Test(groups = "smoke")
     @CoversAttributes("FOR")
     public void testNumberedPages() {
+        if (isInPopupTemplate()) {
+            popupTemplate.advanced().moveByOffset(100, 200);
+        }
         testNumberedPages(page.getScroller(ScrollerPosition.DATA_SCROLLER_OUTSIDE_TABLE));
     }
 }

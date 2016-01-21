@@ -73,6 +73,12 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
         return driver.findElements(By.cssSelector("table[id$=richDataTable].rf-dt tbody tr.rf-dt-r")).size();
     }
 
+    private void movePopupTemplateWhenUsingScrollerOutsideTable() {
+        if (isInPopupTemplate() && scroller.equals(ScrollerPosition.DATA_SCROLLER_OUTSIDE_TABLE)) {
+            popupTemplate.advanced().moveByOffset(100, 200);
+        }
+    }
+
     @Test
     @CoversAttributes("boundaryControls")
     public void testBoundaryControls() {
@@ -95,6 +101,7 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
         testData(new Action() {
             @Override
             public void perform() {
+                movePopupTemplateWhenUsingScrollerOutsideTable();
                 page.getScroller(scroller).switchTo(DataScrollerSwitchButton.FAST_FORWARD);
             }
         });
@@ -111,6 +118,7 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
             .asSingleAction().perform();
         // reset events
         executor.executeScript("metamerEvents = \"\";");
+        movePopupTemplateWhenUsingScrollerOutsideTable();
         // action
         MetamerPage.waitRequest(page.getScroller(scroller), WaitRequestType.XHR).switchTo(
             DataScrollerSwitchButton.FAST_FORWARD);
@@ -130,6 +138,7 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     public void testExecute() {
         // attributes
         attributes.set(DataScrollerAttributes.execute, "executeChecker");
+        movePopupTemplateWhenUsingScrollerOutsideTable();
         // action
         MetamerPage.waitRequest(page.getScroller(scroller), WaitRequestType.XHR).switchTo(
             DataScrollerSwitchButton.FAST_FORWARD);
@@ -163,6 +172,7 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     public void testFastStep() {
         attributes.set(DataScrollerAttributes.fastStep, 3);
 
+        movePopupTemplateWhenUsingScrollerOutsideTable();
         MetamerPage.waitRequest(page.getScroller(scroller), WaitRequestType.XHR).switchTo(
             DataScrollerSwitchButton.FAST_FORWARD);
         assertEquals(page.getScroller(scroller).getActivePageNumber(), 4,
@@ -193,6 +203,7 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("lastPageMode")
     public void testLastPageMode() {
+        movePopupTemplateWhenUsingScrollerOutsideTable();
         MetamerPage.waitRequest(page.getScroller(scroller), WaitRequestType.XHR)
             .switchTo(DataScrollerSwitchButton.LAST);
 
@@ -209,12 +220,14 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     @CoversAttributes("limitRender")
     public void testLimitRender() {
         attributes.set(DataScrollerAttributes.limitRender, false);
+        movePopupTemplateWhenUsingScrollerOutsideTable();
         MetamerPage.waitRequest(page.getScroller(scroller), WaitRequestType.XHR).switchTo(
             DataScrollerSwitchButton.FAST_FORWARD);
         assertEquals(page.getScroller(scroller).getActivePageNumber(), 2,
             "Data scroller's active page with limitRender=false");
 
         attributes.set(DataScrollerAttributes.limitRender, true);
+        movePopupTemplateWhenUsingScrollerOutsideTable();
         String timeBefore = page.getRequestTimeElement().getText();
         Graphene.guardAjax(page.getScroller(scroller)).switchTo(DataScrollerSwitchButton.FAST_FORWARD);
         String timeAfter = page.getRequestTimeElement().getText();
@@ -249,6 +262,7 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     @CoversAttributes("render")
     public void testRender() {
         attributes.set(DataScrollerAttributes.render, "@this renderChecker");
+        movePopupTemplateWhenUsingScrollerOutsideTable();
         String renderCheckerText = getMetamerPage().getRenderCheckerOutputElement().getText();
         String requestTime = getMetamerPage().getRequestTimeElement().getText();
         Graphene.guardAjax(page.getScroller(scroller)).switchTo(DataScrollerSwitchButton.NEXT);
@@ -286,6 +300,7 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("scrollListener")
     public void testScrollListener() {
+        movePopupTemplateWhenUsingScrollerOutsideTable();
         Graphene.guardAjax(page.getScroller(scroller)).switchTo(DataScrollerSwitchButton.NEXT);
         getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "scroll event: 1 -> next");
         Graphene.guardAjax(page.getScroller(scroller)).switchTo(DataScrollerSwitchButton.FAST_FORWARD);
@@ -306,6 +321,7 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     @CoversAttributes("status")
     public void testStatus() {
         attributes.set(DataScrollerAttributes.status, "statusChecker");
+        movePopupTemplateWhenUsingScrollerOutsideTable();
 
         String statusCheckerTime = page.getStatusCheckerOutputElement().getText();
         MetamerPage.waitRequest(page.getScroller(scroller), WaitRequestType.XHR).switchTo(
@@ -316,6 +332,7 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
 
     @Test
     public void testStep() {
+        movePopupTemplateWhenUsingScrollerOutsideTable();
         MetamerPage.waitRequest(page.getScroller(scroller), WaitRequestType.XHR)
             .switchTo(DataScrollerSwitchButton.NEXT);
         assertEquals(page.getScroller(scroller).getActivePageNumber(), 2,
