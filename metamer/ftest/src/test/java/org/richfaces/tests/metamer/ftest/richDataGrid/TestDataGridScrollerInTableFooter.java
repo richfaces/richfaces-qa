@@ -47,6 +47,11 @@ public class TestDataGridScrollerInTableFooter extends AbstractDataGridScrollerT
         return dataScroller2;
     }
 
+    @Override
+    protected boolean isDataScrollerOutsideGrid() {
+        return Boolean.FALSE;
+    }
+
     @Test
     @CoversAttributes("columns")
     @UseWithField(field = "columns", valuesFrom = ValuesFrom.FROM_FIELD, value = "COUNTS1")

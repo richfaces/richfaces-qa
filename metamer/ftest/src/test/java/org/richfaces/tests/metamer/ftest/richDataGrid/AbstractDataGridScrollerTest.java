@@ -39,18 +39,33 @@ public abstract class AbstractDataGridScrollerTest extends AbstractDataGridTest 
     @FindBy(css = ".rf-dg[id$=richDataGrid]")
     private GridWithStates dataGrid;
 
+    private int[] testPages;
+
+    public AbstractDataGridScrollerTest() throws JAXBException {
+        super();
+    }
+
+    @Override
+    public String getComponentTestPagePath() {
+        return "richDataGrid/scroller.xhtml";
+    }
+
     @Override
     public GridWithStates getDataGrid() {
         return dataGrid;
     }
 
-    private int[] testPages;
-
     public abstract RichFacesDataScroller getDataScroller();
 
-    public AbstractDataGridScrollerTest() throws JAXBException {
-        super();
+    public void initializeTestedPages(int lastPage) {
+        int l = lastPage;
+        testPages = new int[] { 3, l, 1, l - 2, l, 2, l - 2, l - 1 };
+        for (int i = 0; i < testPages.length; i++) {
+            testPages[i] = min(l, max(1, testPages[i]));
+        }
     }
+
+    protected abstract boolean isDataScrollerOutsideGrid();
 
     public void setupDataScroller() {
         if (getDataScroller().hasPages()) {
@@ -58,11 +73,6 @@ public abstract class AbstractDataGridScrollerTest extends AbstractDataGridTest 
         } else {
             initializeTestedPages(0);
         }
-    }
-
-    @Override
-    public String getComponentTestPagePath() {
-        return "richDataGrid/scroller.xhtml";
     }
 
     public void testColumnsAttribute() {
@@ -105,6 +115,9 @@ public abstract class AbstractDataGridScrollerTest extends AbstractDataGridTest 
     }
 
     public void testNumberedPages() {
+        if (isInPopupTemplate() && isDataScrollerOutsideGrid()) {
+            popupTemplate.advanced().moveByOffset(100, 200);
+        }
         Integer lastNumber = null;
         for (int pageNumber : testPages) {
             if (lastNumber == (Integer) pageNumber) {
@@ -117,14 +130,6 @@ public abstract class AbstractDataGridScrollerTest extends AbstractDataGridTest 
             lastNumber = pageNumber;
         }
 
-    }
-
-    public void initializeTestedPages(int lastPage) {
-        int l = lastPage;
-        testPages = new int[] { 3, l, 1, l - 2, l, 2, l - 2, l - 1 };
-        for (int i = 0; i < testPages.length; i++) {
-            testPages[i] = min(l, max(1, testPages[i]));
-        }
     }
 
     protected void verifyAfterScrolling() {

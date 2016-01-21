@@ -29,7 +29,6 @@ import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotatio
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
-
 import org.testng.annotations.Test;
 
 /**
@@ -52,6 +51,11 @@ public class TestDataGridScrollerOutsideTable extends AbstractDataGridScrollerTe
     @Override
     public RichFacesDataScroller getDataScroller() {
         return dataScroller1;
+    }
+
+    @Override
+    protected boolean isDataScrollerOutsideGrid() {
+        return Boolean.TRUE;
     }
 
     @Test
