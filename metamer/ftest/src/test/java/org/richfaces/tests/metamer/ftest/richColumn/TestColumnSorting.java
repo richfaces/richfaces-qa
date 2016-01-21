@@ -36,13 +36,13 @@ public class TestColumnSorting extends AbstractColumnSortingTest {
     private ColumnGroupDT table;
 
     @Override
-    protected ColumnGroupDT getTable() {
-        return table;
+    public String getComponentTestPagePath() {
+        return "richColumn/sorting.xhtml";
     }
 
     @Override
-    public String getComponentTestPagePath() {
-        return "richColumn/sorting.xhtml";
+    protected ColumnGroupDT getTable() {
+        return table;
     }
 
     @Test

@@ -50,6 +50,9 @@ public abstract class AbstractColumnSortingTest extends AbstractColumnTest {
     protected SortOrder sortOrder;
 
     public void checkSortingWithSortOrder() {
+        if (isInPopupTemplate()) {
+            popupTemplate.advanced().moveByOffset(100, 200);
+        }
         switch (sortOrder) {
             case ascending:
                 selectOrder(orderAscendingButton);

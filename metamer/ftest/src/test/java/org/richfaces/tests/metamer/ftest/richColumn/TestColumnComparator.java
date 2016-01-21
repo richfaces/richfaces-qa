@@ -40,14 +40,14 @@ public class TestColumnComparator extends AbstractColumnSortingTest {
         return "richColumn/comparator.xhtml";
     }
 
+    @Override
+    protected ColumnGroupDT getTable() {
+        return table;
+    }
+
     @Test
     @CoversAttributes("comparator")
     public void testSortingWithSortOrder() {
         checkSortingWithSortOrder();
-    }
-
-    @Override
-    protected ColumnGroupDT getTable() {
-        return table;
     }
 }
