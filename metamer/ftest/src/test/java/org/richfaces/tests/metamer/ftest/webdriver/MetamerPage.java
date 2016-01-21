@@ -60,114 +60,48 @@ import org.richfaces.fragment.status.RichFacesStatus;
  */
 public class MetamerPage {
 
+    protected static final int MINOR_WAIT_TIME = 50; // ms
     public static final String STRING_ACTIONLISTENER_MSG = "action listener invoked";
     public static final String STRING_ACTION_MSG = "action invoked";
     public static final String STRING_EXECUTE_CHECKER_MSG = "executeChecker";
-
-    protected static final int MINOR_WAIT_TIME = 50;// ms
     protected static final int TRIES = 20;// for guardListSize and expectedReturnJS
-    @FindBy(css = "div[id$=phasesPanel] li")
-    private List<WebElement> phases;
-    @FindBy(css = "span[id$=requestTime]")
-    private WebElement requestTime;
-    @FindBy(css = "span[id$=statusCheckerOutput]")
-    private WebElement statusCheckerOutput;
-    @FindBy(css = "[id$='a4jStatusPanel']")
-    private RichFacesStatus status;
-    @FindBy(css = "span[id$=renderChecker]")
-    private WebElement renderCheckerOutput;
-    @FindBy(css = "span[id$=jsFunctionChecker]")
-    private WebElement jsFunctionChecker;
-    @FindBy(css = "[id$=fullPageRefreshImage]")
-    private WebElement fullPageRefreshIcon;
-    @FindBy(css = "[id$=reRenderAllImage]")
-    private WebElement rerenderAllIcon;
-    /** root element for component attributes area */
-    @FindBy(css = "table[id$='attributes:attributes']")
-    private WebElement attributesTable;
-    /** Delay response by [ms] */
-    @FindBy(css = "input[id$='metamerResponseDelayInput']")
-    private WebElement responseDelay;
-    @Drone
-    protected WebDriver driver;
-    private String reqTime;
-    private Map<PhaseId, Set<String>> map = new LinkedHashMap<PhaseId, Set<String>>();
-
-    public RichFacesStatus getStatus() {
-        return status;
-    }
-
-    public WebElement getStatusCheckerOutputElement() {
-        return statusCheckerOutput;
-    }
-
-    public WebElement getAttributesTableElement() {
-        return attributesTable;
-    }
-
-    public WebElement getRequestTimeElement() {
-        return requestTime;
-    }
-
-    public List<WebElement> getPhasesElements() {
-        return phases;
-    }
-
-    public WebElement getRenderCheckerOutputElement() {
-        return renderCheckerOutput;
-    }
-
-    public WebElement getResponseDelayElement() {
-        return responseDelay;
-    }
-
-    public WebElement getJsFunctionCheckerElement() {
-        return jsFunctionChecker;
-    }
 
     /**
-     * Executes JavaScript script.
-     * Method will execute the script few times until an expected String is returned,
-     * the String is defined in @expectedValue. Returns a single trimmed String with expected
-     * value or what it has found or null.
-     *
-     * @param expectedValue
-     *            expected return value of javaScript
-     * @param script
-     *            whole JavaScript that will be executed
-     * @param args
-     * @return single and trimmed string or null
+     * root element for component attributes area
      */
-    protected String expectedReturnJS(String script, String expectedValue, Object... args) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        String result = null;
-        for (int i = 0; i < TRIES; i++) {
-            Object executedScriptResult = js.executeScript(script, args);
-            if (executedScriptResult != null) {
-                result = ((String) executedScriptResult).trim();
-                if (result.equals(expectedValue)) {
-                    break;
-                }
-            }
-        }
-        return result;
-    }
-
-    public List<String> getPhases() {
-        List<String> result = new ArrayList<String>();
-        for (WebElement webElement : phases) {
-            result.add(webElement.getText());
-        }
-        return result;
-    }
+    @FindBy(css = "table[id$='attributes:attributes']")
+    private WebElement attributesTable;
+    @Drone
+    protected WebDriver driver;
+    @FindBy(css = "[id$=fullPageRefreshImage]")
+    private WebElement fullPageRefreshIcon;
+    @FindBy(css = "span[id$=jsFunctionChecker]")
+    private WebElement jsFunctionChecker;
+    private Map<PhaseId, Set<String>> map = new LinkedHashMap<PhaseId, Set<String>>();
+    @FindBy(css = "div[id$=phasesPanel] li")
+    private List<WebElement> phases;
+    @FindBy(css = "span[id$=renderChecker]")
+    private WebElement renderCheckerOutput;
+    private String reqTime;
+    @FindBy(css = "span[id$=requestTime]")
+    private WebElement requestTime;
+    @FindBy(css = "[id$=reRenderAllImage]")
+    private WebElement rerenderAllIcon;
+    /**
+     * Delay response by [ms]
+     */
+    @FindBy(css = "input[id$='metamerResponseDelayInput']")
+    private WebElement responseDelay;
+    @FindBy(css = "[id$='a4jStatusPanel']")
+    private RichFacesStatus status;
+    @FindBy(css = "span[id$=statusCheckerOutput]")
+    private WebElement statusCheckerOutput;
 
     /**
      * Method for guarding that Metamer's requestTime changes.
      *
-     * @param <T>
-     *            type of the given target
-     * @param target
-     *            object to be guarded
+     * @param <T> type of the given target
+     * @param target object to be guarded
      * @return guarded element
      */
     public static <T> T requestTimeChangesWaiting(T target) {
@@ -177,10 +111,8 @@ public class MetamerPage {
     /**
      * Method for guarding that Metamer's requestTime not changes. Guards for 1 second.
      *
-     * @param <T>
-     *            type of the given target
-     * @param target
-     *            object to be guarded
+     * @param <T> type of the given target
+     * @param target object to be guarded
      * @return guarded element
      */
     public static <T> T requestTimeNotChangesWaiting(T target) {
@@ -190,12 +122,9 @@ public class MetamerPage {
     /**
      * Method for guarding that Metamer's requestTime not changes.
      *
-     * @param <T>
-     *            type of the given target
-     * @param target
-     *            object to be guarded
-     * @param waitTimeInMillis
-     *            time for which will be the target guarded
+     * @param <T> type of the given target
+     * @param target object to be guarded
+     * @param waitTimeInMillis time for which will be the target guarded
      * @return guarded element
      */
     public static <T> T requestTimeNotChangesWaiting(T target, long waitTimeInMillis) {
@@ -214,16 +143,14 @@ public class MetamerPage {
     }
 
     /**
-     * !All requests depends on Metamer`s requestTime! Generates a waiting proxy. The proxy will wait for expected @waitRequestType
-     * which will be launched via interactions with @target and then it waits until Metamer's request time
+     * !All requests depends on Metamer`s requestTime! Generates a waiting proxy. The proxy will wait for expected
+     *
+     * @waitRequestType which will be launched via interactions with @target and then it waits until Metamer's request time
      * changes(@waitRequestType is HTTP or XHR) or not changes(@waitRequestType is NONE).
      *
-     * @param <T>
-     *            type of the given target
-     * @param target
-     *            object to be guarded
-     * @param waitRequestType
-     *            type of expected request which will be launched
+     * @param <T> type of the given target
+     * @param target object to be guarded
+     * @param waitRequestType type of expected request which will be launched
      * @return waiting proxy for target object
      */
     public static <T> T waitRequest(T target, WaitRequestType waitRequestType) {
@@ -240,20 +167,15 @@ public class MetamerPage {
     }
 
     /**
-     * !All requests depends on Metamer`s requestTime! Generates a waiting proxy.
-     * The proxy will wait for expected @waitRequestType which will be launched
-     * via interactions with @target and then it waits until Metamer's request
-     * time changes(@waitRequestType is HTTP or XHR) or not changes
-     * (@waitRequestType is NONE).
+     * !All requests depends on Metamer`s requestTime! Generates a waiting proxy. The proxy will wait for expected
      *
-     * @param <T>
-     *            type of the given target
-     * @param target
-     *            object to be guarded
-     * @param waitRequestType
-     *            type of expected request which will be launched
-     * @param guardTime
-     *            time for which will be the target guarded, applicable only for @waitRequestType = NONE
+     * @waitRequestType which will be launched via interactions with @target and then it waits until Metamer's request time
+     * changes(@waitRequestType is HTTP or XHR) or not changes (@waitRequestType is NONE).
+     *
+     * @param <T> type of the given target
+     * @param target object to be guarded
+     * @param waitRequestType type of expected request which will be launched
+     * @param guardTime time for which will be the target guarded, applicable only for @waitRequestType = NONE
      * @return waiting proxy for target object
      */
     public static <T> T waitRequest(T target, WaitRequestType waitRequestType, long guardTime) {
@@ -281,14 +203,188 @@ public class MetamerPage {
         }
     }
 
-    // /////////////////////////////////////
-    // Helper classes
-    // /////////////////////////////////////
+    /**
+     * Method for checking bypass updates JSF phases cycle for a4j:commandButton and a4j:commandLink. Asserts that phases
+     * contains phases: RESTORE_VIEW, APPLY_REQUEST_VALUES, PROCESS_VALIDATIONS, RENDER_RESPONSE.
+     */
+    public void assertBypassUpdatesPhasesCycle() {
+        initialize();
+        assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
+            PhaseId.RENDER_RESPONSE);
+    }
+
+    /**
+     * Method for checking immediate JSF phases cycle for a4j:commandButton and a4j:commandLink. Asserts that phases contains
+     * phases: RESTORE_VIEW, APPLY_REQUEST_VALUES, RENDER_RESPONSE.
+     */
+    public void assertImmediatePhasesCycle() {
+        initialize();
+        assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.RENDER_RESPONSE);
+    }
+
+    /**
+     * Asserts that in the given phase has occurred the listener or order producer writing the log message to phases list.
+     *
+     * @param phaseId the phase where the listener occurred
+     * @param message the part of the message which it should be looked up
+     */
+    public void assertListener(PhaseId phaseId, String message) {
+        initialize();
+        Set<String> set = map.get(phaseId);
+        String messageWithoutStar = message.startsWith("*") ? message.substring(2) : message;
+        if (set != null && set.size() > 0) {
+            for (String description : set) {
+                if (description.contains(messageWithoutStar)) {
+                    return;
+                }
+            }
+        }
+        throw new AssertionError("The '" + messageWithoutStar + "' wasn't found across messages in phase " + phaseId);
+    }
+
+    /**
+     * Asserts that there is no specified message in phases list.
+     *
+     * @param message the part of the message which it should be looked up
+     */
+    public void assertNoListener(String message) {
+        initialize();
+        String messageWithoutStar = message.startsWith("*") ? message.substring(2) : message;
+        for (Entry<PhaseId, Set<String>> entry : map.entrySet()) {
+            PhaseId phaseId = entry.getKey();
+            Set<String> descriptions = entry.getValue();
+
+            for (String description : descriptions) {
+                if (description.contains(messageWithoutStar)) {
+                    throw new AssertionError("The '" + messageWithoutStar + "' was found across messages in phase " + phaseId);
+                }
+            }
+        }
+    }
+
+    /**
+     * Asserts that the phases has occurred in last request by the specified list.
+     */
+    public void assertPhases(PhaseId... expectedPhases) {
+        initialize();
+        if (ArrayUtils.contains(expectedPhases, PhaseId.ANY_PHASE)) {
+            expectedPhases = new LinkedList<PhaseId>(PhaseId.VALUES).subList(1, 7).toArray(new PhaseId[6]);
+        }
+        PhaseId[] actualPhases = map.keySet().toArray(new PhaseId[map.size()]);
+        assertEquals(actualPhases, expectedPhases);
+    }
+
+    /**
+     * Executes JavaScript script. Method will execute the script few times until an expected String is returned, the String is
+     * defined in @expectedValue. Returns a single trimmed String with expected value or what it has found or null.
+     *
+     * @param expectedValue expected return value of javaScript
+     * @param script whole JavaScript that will be executed
+     * @param args
+     * @return single and trimmed string or null
+     */
+    protected String expectedReturnJS(String script, String expectedValue, Object... args) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String result = null;
+        for (int i = 0; i < TRIES; i++) {
+            Object executedScriptResult = js.executeScript(script, args);
+            if (executedScriptResult != null) {
+                result = ((String) executedScriptResult).trim();
+                if (result.equals(expectedValue)) {
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Do a full page refresh (regular HTTP request) by triggering a command with no action bound.
+     */
+    public void fullPageRefresh() {
+        waitRequest(fullPageRefreshIcon, WaitRequestType.HTTP).click();
+    }
+
+    public WebElement getAttributesTableElement() {
+        return attributesTable;
+    }
+
+    public WebElement getJsFunctionCheckerElement() {
+        return jsFunctionChecker;
+    }
+
+    private PhaseId getPhaseId(String phaseIdentifier) {
+        for (PhaseId phaseId : PhaseId.VALUES) {
+            if (phaseIdentifier.startsWith(phaseId.toString())) {
+                return phaseId;
+            }
+        }
+        throw new IllegalStateException("no such phase '" + phaseIdentifier + "'");
+    }
+
+    public List<String> getPhases() {
+        List<String> result = new ArrayList<String>();
+        for (WebElement webElement : phases) {
+            result.add(webElement.getText());
+        }
+        return result;
+    }
+
+    public List<WebElement> getPhasesElements() {
+        return phases;
+    }
+
+    public WebElement getRenderCheckerOutputElement() {
+        return renderCheckerOutput;
+    }
+
+    public WebElement getRequestTimeElement() {
+        return requestTime;
+    }
+
+    public WebElement getResponseDelayElement() {
+        return responseDelay;
+    }
+
+    public RichFacesStatus getStatus() {
+        return status;
+    }
+
+    public WebElement getStatusCheckerOutputElement() {
+        return statusCheckerOutput;
+    }
+
+    private void initialize() {
+        if (reqTime == null || !reqTime.equals(requestTime.getText())) {
+
+            reqTime = requestTime.getText();
+            map.clear();
+            Set<String> set = null;
+
+            for (WebElement element : phases) {
+                String description = element.getText();
+
+                if (!description.startsWith("*")) {
+                    set = new LinkedHashSet<String>();
+                    map.put(getPhaseId(description), set);
+                } else {
+                    set.add(description.substring(2));
+                }
+            }
+        }
+    }
+
+    /**
+     * Rerender all content of the page (AJAX request) by trigerring a command with no action but render bound.
+     */
+    public void rerenderAll() {
+        waitRequest(rerenderAllIcon, WaitRequestType.XHR).click();
+    }
+
     private static class RequestTimeChangesWaitingInterceptor implements Interceptor {
 
-        protected String time1;
-
         private static final By REQUEST_TIME = By.cssSelector("span[id$='requestTime']");
+        protected String time1;
 
         protected void afterAction(GrapheneContext context) {
             Graphene.waitModel(context.getWebDriver()).until().element(REQUEST_TIME).text().not().equalTo(time1);
@@ -296,6 +392,11 @@ public class MetamerPage {
 
         protected void beforeAction(GrapheneContext context) {
             time1 = getTime(context.getWebDriver());
+        }
+
+        @Override
+        public int getPrecedence() {
+            return 1;
         }
 
         protected String getTime(SearchContext searchContext) {
@@ -310,12 +411,6 @@ public class MetamerPage {
             afterAction(context.getGrapheneContext());
             return o;
         }
-
-        @Override
-        public int getPrecedence() {
-            return 1;
-        }
-
     }
 
     private static class RequestTimeNotChangesWaitingInterceptor extends RequestTimeChangesWaitingInterceptor {
@@ -341,19 +436,18 @@ public class MetamerPage {
     public static class WDWait extends WebDriverWait {
 
         /**
-         * WebDriver wait which ignores StaleElementException and NoSuchElementException and polling every 50 ms with
-         * max wait time of 5 seconds
+         * WebDriver wait which ignores StaleElementException and NoSuchElementException and polling every 50 ms with max wait
+         * time of 5 seconds
          */
         public WDWait(WebDriver browser) {
             this(browser, 5);
         }
 
         /**
-         * WebDriver wait which ignores StaleElementException and NoSuchElementException and polling every 50 ms with
-         * max wait time set in attribute
+         * WebDriver wait which ignores StaleElementException and NoSuchElementException and polling every 50 ms with max wait
+         * time set in attribute
          *
-         * @param seconds
-         *            max wait time
+         * @param seconds max wait time
          */
         public WDWait(WebDriver browser, int seconds) {
             super(browser, seconds);
@@ -365,124 +459,6 @@ public class MetamerPage {
 
     public enum WaitRequestType {
 
-        XHR, HTTP, NONE;
-    }
-
-    /**
-     * Asserts that the phases has occurred in last request by the specified list.
-     */
-    public void assertPhases(PhaseId... expectedPhases) {
-        initialize();
-        if (ArrayUtils.contains(expectedPhases, PhaseId.ANY_PHASE)) {
-            expectedPhases = new LinkedList<PhaseId>(PhaseId.VALUES).subList(1, 7).toArray(new PhaseId[6]);
-        }
-        PhaseId[] actualPhases = map.keySet().toArray(new PhaseId[map.size()]);
-        assertEquals(actualPhases, expectedPhases);
-    }
-
-    /**
-     * Asserts that in the given phase has occurred the listener or order producer writing the log message to phases
-     * list.
-     *
-     * @param phaseId
-     *            the phase where the listener occurred
-     * @param message
-     *            the part of the message which it should be looked up
-     */
-    public void assertListener(PhaseId phaseId, String message) {
-        initialize();
-        Set<String> set = map.get(phaseId);
-        String messageWithoutStar = message.startsWith("*") ? message.substring(2) : message;
-        if (set != null && set.size() > 0) {
-            for (String description : set) {
-                if (description.contains(messageWithoutStar)) {
-                    return;
-                }
-            }
-        }
-        throw new AssertionError("The '" + messageWithoutStar + "' wasn't found across messages in phase " + phaseId);
-    }
-
-    /**
-     * Asserts that there is no specified message in phases list.
-     *
-     * @param message
-     *            the part of the message which it should be looked up
-     */
-    public void assertNoListener(String message) {
-        initialize();
-        String messageWithoutStar = message.startsWith("*") ? message.substring(2) : message;
-        for (Entry<PhaseId, Set<String>> entry : map.entrySet()) {
-            PhaseId phaseId = entry.getKey();
-            Set<String> descriptions = entry.getValue();
-
-            for (String description : descriptions) {
-                if (description.contains(messageWithoutStar)) {
-                    throw new AssertionError("The '" + messageWithoutStar + "' was found across messages in phase " + phaseId);
-                }
-            }
-        }
-    }
-
-    /**
-     * Method for checking immediate JSF phases cycle for a4j:commandButton and a4j:commandLink.
-     * Asserts that phases contains phases: RESTORE_VIEW, APPLY_REQUEST_VALUES, RENDER_RESPONSE.
-     */
-    public void assertImmediatePhasesCycle() {
-        initialize();
-        assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.RENDER_RESPONSE);
-    }
-
-    /**
-     * Method for checking bypass updates JSF phases cycle for a4j:commandButton and a4j:commandLink.
-     * Asserts that phases contains phases: RESTORE_VIEW, APPLY_REQUEST_VALUES, PROCESS_VALIDATIONS, RENDER_RESPONSE.
-     */
-    public void assertBypassUpdatesPhasesCycle() {
-        initialize();
-        assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
-            PhaseId.RENDER_RESPONSE);
-    }
-
-    private void initialize() {
-        if (reqTime == null || !reqTime.equals(requestTime.getText())) {
-
-            reqTime = requestTime.getText();
-            map.clear();
-            Set<String> set = null;
-
-            for (WebElement element : phases) {
-                String description = element.getText();
-
-                if (!description.startsWith("*")) {
-                    set = new LinkedHashSet<String>();
-                    map.put(getPhaseId(description), set);
-                } else {
-                    set.add(description.substring(2));
-                }
-            }
-        }
-    }
-
-    private PhaseId getPhaseId(String phaseIdentifier) {
-        for (PhaseId phaseId : PhaseId.VALUES) {
-            if (phaseIdentifier.startsWith(phaseId.toString())) {
-                return phaseId;
-            }
-        }
-        throw new IllegalStateException("no such phase '" + phaseIdentifier + "'");
-    }
-
-    /**
-     * Do a full page refresh (regular HTTP request) by triggering a command with no action bound.
-     */
-    public void fullPageRefresh() {
-        waitRequest(fullPageRefreshIcon, WaitRequestType.HTTP).click();
-    }
-
-    /**
-     * Rerender all content of the page (AJAX request) by trigerring a command with no action but render bound.
-     */
-    public void rerenderAll() {
-        waitRequest(rerenderAllIcon, WaitRequestType.XHR).click();
+        HTTP, NONE, XHR
     }
 }
