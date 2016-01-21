@@ -1092,6 +1092,13 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @CoversAttributes("title")
+    @Templates("plain")
+    public void testTitle() {
+        testTitle(popupCalendar.getInput().advanced().getInputElement());
+    }
+
+    @Test
     @CoversAttributes("todayControlMode")
     @UseWithField(field = "todayControlMode", valuesFrom = FROM_ENUM, value = "")
     public void testTodayControlMode() {

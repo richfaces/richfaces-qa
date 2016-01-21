@@ -103,6 +103,7 @@ public enum CalendarAttributes implements AttributeEnum {
     styleClass,
     tabindex,
     timeZone,
+    title,
     todayControlMode,
     validator,
     validatorMessage,
