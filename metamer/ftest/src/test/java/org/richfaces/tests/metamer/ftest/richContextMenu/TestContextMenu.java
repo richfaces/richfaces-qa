@@ -138,7 +138,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
     @Templates("plain")
     public void testHideDelay() {
-        new MenuDelayTester().testHideDelay(page.getContextMenuRoot(), delay, new Event[]{ Event.MOUSEOVER, Event.MOUSEOUT }, page.getContextMenuRoot());
+        new MenuDelayTester().testHideDelay(page.getContextMenuRoot(), delay, new Event[] { Event.MOUSEOVER, Event.MOUSEOUT }, page.getContextMenuRoot());
     }
 
     @Test
@@ -173,18 +173,21 @@ public class TestContextMenu extends AbstractWebDriverTest {
         updateShowAction();
         // ajax
         contextMenuAttributes.set(ContextMenuAttributes.mode, "ajax");
+        jsUtils.scrollToView(page.getTargetPanel1());
         page.getContextMenu().advanced().show(page.getTargetPanel1());
         guardAjax(page.getContextMenu().advanced().getItemsElements().get(0)).click();
         assertEquals(page.getOutput().getText(), "Open", "Menu action was not performed.");
 
         // server
         contextMenuAttributes.set(ContextMenuAttributes.mode, "server");
+        jsUtils.scrollToView(page.getTargetPanel1());
         page.getContextMenu().advanced().show(page.getTargetPanel1());
         guardHttp(page.getContextMenu().advanced().getItemsElements().get(8)).click();
         assertEquals(page.getOutput().getText(), "Exit", "Menu action was not performed.");
 
         // client
         contextMenuAttributes.set(ContextMenuAttributes.mode, "client");
+        jsUtils.scrollToView(page.getTargetPanel1());
         page.getContextMenu().advanced().show(page.getTargetPanel1());
         guardNoRequest(page.getContextMenu().advanced().getItemsElements().get(0)).click();
     }
