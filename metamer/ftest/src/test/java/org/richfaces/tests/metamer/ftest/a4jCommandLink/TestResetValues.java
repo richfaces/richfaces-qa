@@ -25,6 +25,7 @@ import org.richfaces.tests.metamer.ftest.abstractions.AbstractResetValuesTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.AndExpression;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
@@ -42,7 +43,10 @@ public class TestResetValues extends AbstractResetValuesTest {
     }
 
     @Test
-    @Skip(On.JSF.VersionLowerThan22.class)
+    @Skip(expressions = {
+        @AndExpression(On.JSF.VersionLowerThan22.class),
+        @AndExpression(On.JSF.MyFaces.class)
+    })
     @CoversAttributes("resetValues")
     public void testResetValues() {
         checkResetValues();
