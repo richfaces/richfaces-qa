@@ -232,6 +232,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
 
         guardAjax(autocomplete.type("haw"));
         autocomplete.advanced().waitForSuggestionsToBeVisible();
+        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
     }
 
     @Test
@@ -257,6 +258,8 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
         // set client mode
         autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
         guardNoRequest(autocomplete.type("f"));
+
+        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
     }
 
     @Test
@@ -264,6 +267,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     public void testOnbeforedomupdate() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onbeforedomupdate, typeHToAutocompleteInputAction);
+        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
     }
 
     @Test
@@ -314,6 +318,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
         // requires ajax mode since it reacts on DOM changes
         autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.oncomplete, typeHToAutocompleteInputAction);
+        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
     }
 
     @Test
@@ -349,6 +354,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     @Templates(value = "plain")
     public void testOnkeypress() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onkeypress, typeHToAutocompleteInputAction);
+        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
     }
 
     @Test
@@ -387,6 +393,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
                 fireEvent(autocomplete.advanced().getSuggestionsElements().get(0), Event.DBLCLICK);
             }
         });
+        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
     }
 
     @Test
@@ -402,6 +409,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
                 fireEvent(autocomplete.advanced().getSuggestionsElements().get(0), Event.KEYDOWN);
             }
         });
+        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
     }
 
     @Test
@@ -417,6 +425,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
                 fireEvent(autocomplete.advanced().getSuggestionsElements().get(0), Event.KEYPRESS);
             }
         });
+        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
     }
 
     @Test
@@ -432,6 +441,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
                 fireEvent(autocomplete.advanced().getSuggestionsElements().get(0), Event.KEYUP);
             }
         });
+        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
     }
 
     @Test
@@ -463,6 +473,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
                     .moveToElement(page.getOutput()).build().perform();
             }
         });
+        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
     }
 
     @Test
@@ -479,6 +490,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
                     .moveToElement(page.getOutput()).build().perform();
             }
         });
+        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
     }
 
     @Test
@@ -494,6 +506,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
                 new Actions(driver).moveToElement(autocomplete.advanced().getSuggestionsElements().get(0)).build().perform();
             }
         });
+        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
     }
 
     @Test
@@ -606,6 +619,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
         for (int i = 1; i < suggestionsElements.size(); i++) {
             assertFalse(suggestionsElements.get(i).getAttribute("class").contains(testedClass));
         }
+        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
     }
 
     @Test

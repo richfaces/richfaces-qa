@@ -102,6 +102,8 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
         Graphene.waitGui().until().element(getSuggestion("[Hartford]")).is().present();
 
         Graphene.waitGui().until().element(getSuggestion("Hawaii")).is().not().present();
+
+        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();// prevent ViewExpiredException
     }
 
     private By getSuggestion(String value) {

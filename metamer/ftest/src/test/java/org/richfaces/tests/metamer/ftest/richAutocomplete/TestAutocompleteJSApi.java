@@ -71,6 +71,8 @@ public class TestAutocompleteJSApi extends AbstractAutocompleteTest {
         keyboard.sendKeys(Keys.ARROW_DOWN);
         Graphene.guardAjax(keyboard).sendKeys(Keys.ENTER);
         checkOutput("Alabama");
+
+        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();// prevent ViewExpiredException
     }
 
     @Test
@@ -88,6 +90,8 @@ public class TestAutocompleteJSApi extends AbstractAutocompleteTest {
         autocomplete.advanced().waitForSuggestionsToBeVisible().perform();
         Utils.triggerJQ("mouseover", hidePopup);
         autocomplete.advanced().waitForSuggestionsToBeNotVisible().perform();
+
+        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();// prevent ViewExpiredException
     }
 
     @Test

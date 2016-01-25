@@ -95,7 +95,11 @@ public class TestAutocompleteFragment extends AbstractAutocompleteTest {
 
     @Test(expectedExceptions = RuntimeException.class)
     public void testSelectingUnknownValue() {
-        Graphene.guardAjax(Graphene.guardAjax(autocomplete).type("ala")).select(ChoicePickerHelper.byVisibleText().endsWith("baster"));
+        try {
+            Graphene.guardAjax(Graphene.guardAjax(autocomplete).type("ala")).select(ChoicePickerHelper.byVisibleText().endsWith("baster"));
+        } finally {
+            Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();// prevent ViewExpiredException
+        }
     }
 
     @Test
