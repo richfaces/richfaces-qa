@@ -73,6 +73,7 @@ public class TestRF12661 extends AbstractWebDriverTest {
     @Test
     // sometimes there is a ClassCastException present with: com.sun.proxy.$Proxy56 cannot be cast to
     // org.openqa.selenium.interactions.HasInputDevices >>> marked as Unstable
+    // RFPL-4154
     @Unstable
     @RegressionTest("https://issues.jboss.org/browse/RF-12661")
     public void testTooltipWithNullValue() {

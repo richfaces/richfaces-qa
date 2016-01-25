@@ -43,7 +43,7 @@ public class TestResetValues extends AbstractResetValuesTest {
     }
 
     @Test
-    @Skip(expressions = {
+    @Skip(expressions = {// RFPL-4155
         @AndExpression(On.JSF.VersionLowerThan22.class),
         @AndExpression(On.JSF.MyFaces.class)
     })
