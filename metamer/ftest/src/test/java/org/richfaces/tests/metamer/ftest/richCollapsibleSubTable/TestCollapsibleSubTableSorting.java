@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 
 import static java.text.MessageFormat.format;
 
-import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.testng.Assert.assertEquals;
 
 import java.util.Collections;
@@ -39,8 +38,11 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.model.SortMode;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.AndExpression;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
-import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
 import org.richfaces.tests.metamer.model.Employee;
 import org.testng.annotations.Test;
@@ -77,11 +79,12 @@ public class TestCollapsibleSubTableSorting extends AbstractCollapsibleSubTableT
         return sample.equals("builtInFilteringAndSorting") ? dataTableWithCSTWithBuiltInSortingHeader : dataTableWithCSTWithSortingHeader;
     }
 
-    @Test
-    @CoversAttributes("sortMode")
-    @UseWithField(field = "sortMode", valuesFrom = FROM_ENUM, value = "")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11302")
-    public void testSorting() {
+    private void testSorting(boolean isSingle) {
+        if (isSingle) {
+            sortMode = SortMode.single;
+        } else {
+            sortMode = SortMode.multi;
+        }
         attsSetter()
             .setAttribute(CollapsibleSubTableAttributes.rows).toValue(rows)
             .setAttribute(CollapsibleSubTableAttributes.sortMode).toValue(sortMode)
@@ -94,6 +97,33 @@ public class TestCollapsibleSubTableSorting extends AbstractCollapsibleSubTableT
         verifySortingInBothSubTables(SortBy.TITLE);
         verifySortingInBothSubTables(SortBy.NAME);
         verifySortingInBothSubTables(SortBy.TITLE);
+    }
+
+    @Test
+    @Templates(exclude = "uiRepeat")
+    @CoversAttributes("sortMode")
+    @RegressionTest("https://issues.jboss.org/browse/RF-11302")
+    public void testSortingMulti() {
+        testSorting(false);
+    }
+
+    @Test
+    @Templates("uiRepeat")// RFPL-4156
+    @Skip(expressions = {
+        @AndExpression({ On.Container.Tomcat7.class, On.JSF.Mojarra.class }),
+        @AndExpression({ On.Container.Tomcat8.class, On.JSF.Mojarra.class })
+    })
+    @CoversAttributes("sortMode")
+    @RegressionTest("https://issues.jboss.org/browse/RF-11302")
+    public void testSortingMultiInUiRepeat() {
+        testSortingMulti();
+    }
+
+    @Test
+    @CoversAttributes("sortMode")
+    @RegressionTest("https://issues.jboss.org/browse/RF-11302")
+    public void testSortingSingle() {
+        testSorting(true);
     }
 
     private void verifySortingInBothSubTables(final SortBy by) {
