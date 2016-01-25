@@ -45,7 +45,6 @@ public class RF13595 implements Serializable {
     private boolean inputVisible;
 
     public void changeInputVisibility(ActionEvent event) {
-        System.out.println("Visibility change event");
         inputVisible = !inputVisible;
     }
 
@@ -64,7 +63,6 @@ public class RF13595 implements Serializable {
     public void validateInput(FacesContext ctx, UIComponent comp, Object value) throws ValidatorException {
         if (value instanceof Date) {
             Date text = (Date) value;
-            System.out.println("Validating input: " + text);
             // create a yesterday Date and validate that selected date is after this new date (the test selects current date)
             Calendar c = new GregorianCalendar();
             c.add(Calendar.DAY_OF_MONTH, -1);

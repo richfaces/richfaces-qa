@@ -39,24 +39,25 @@
             <script src="/metamer/org.richfaces.resources/javax.faces.resource/org.richfaces/richfaces-csv.js" type="text/javascript"/>
 
             <rich:focus preserve="true" />
-            <rich:messages id="globalMessages" ajaxRendered="true" globalOnly="true" />
-            <!-- This triggers input visibility -->
-            <a4j:commandButton id="setInputVisibleButton" actionListener="#{rf13595.changeInputVisibility}"
-                               execute="@this" render="dynamicContent" value="Trigger Visibility Change" />
+            <div style="padding: 20px 20px 250px 20px;">
+                <rich:messages id="globalMessages" ajaxRendered="true" globalOnly="true" />
+                <!-- This triggers input visibility -->
+                <a4j:commandButton id="setInputVisibleButton" actionListener="#{rf13595.changeInputVisibility}"
+                                   execute="@this" render="dynamicContent" value="Trigger Visibility Change" />
 
-            <h:panelGrid id="dynamicContent" columns="3">
+                <h:panelGrid id="dynamicContent" columns="3">
 
-                <h:outputLabel id="inputLabel" for="inputField" rendered="#{rf13595.inputVisible}"
-                               value="The input field:" />
-                <rich:calendar id="inputField" rendered="#{rf13595.inputVisible}" popup="true"
-                               validator="#{rf13595.validateInput}" value="#{rf13595.input}">
-                    <rich:validator />
-                    <a4j:ajax event="change" render="inputField" />
-                </rich:calendar>
+                    <h:outputLabel id="inputLabel" for="inputField" rendered="#{rf13595.inputVisible}"
+                                   value="The input field:" />
+                    <rich:calendar id="inputField" rendered="#{rf13595.inputVisible}" popup="true"
+                                   validator="#{rf13595.validateInput}" value="#{rf13595.input}">
+                        <rich:validator />
+                        <a4j:ajax event="change" render="inputField" />
+                    </rich:calendar>
 
-                <rich:message id="inputMessage" ajaxRendered="true" for="inputField" rendered="#{rf13595.inputVisible}" />
-
-            </h:panelGrid>
+                    <rich:message id="inputMessage" ajaxRendered="true" for="inputField" rendered="#{rf13595.inputVisible}" />
+                </h:panelGrid>
+            </div>
         </ui:define>
 
 
