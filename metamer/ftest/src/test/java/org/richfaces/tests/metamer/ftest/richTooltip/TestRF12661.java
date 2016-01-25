@@ -32,6 +32,7 @@ import org.richfaces.fragment.log.Log.LogEntryLevel;
 import org.richfaces.fragment.log.RichFacesLog;
 import org.richfaces.fragment.status.Status.StatusState;
 import org.richfaces.fragment.tooltip.TextualRichFacesTooltip;
+import org.richfaces.tests.configurator.unstable.annotation.Unstable;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -70,6 +71,9 @@ public class TestRF12661 extends AbstractWebDriverTest {
     }
 
     @Test
+    // sometimes there is a ClassCastException present with: com.sun.proxy.$Proxy56 cannot be cast to
+    // org.openqa.selenium.interactions.HasInputDevices >>> marked as Unstable
+    @Unstable
     @RegressionTest("https://issues.jboss.org/browse/RF-12661")
     public void testTooltipWithNullValue() {
         // scroll to panel with tooltip
