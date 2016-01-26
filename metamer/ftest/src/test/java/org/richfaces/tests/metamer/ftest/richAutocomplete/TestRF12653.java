@@ -21,11 +21,14 @@
  */
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
+import static org.testng.Assert.assertEquals;
+
+import java.util.List;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
 /**
@@ -33,14 +36,22 @@ import org.testng.annotations.Test;
  */
 public class TestRF12653 extends AbstractAutocompleteTest {
 
+    private void checkVisibleSuggestions() {
+        List<WebElement> suggestions = autocomplete.advanced().getSuggestionsElements();
+        assertEquals(suggestions.size(), 4);
+        assertEquals(suggestions.get(0).getText(), "Alabama");
+        assertEquals(suggestions.get(1).getText(), "Alaska");
+        assertEquals(suggestions.get(2).getText(), "Arizona");
+        assertEquals(suggestions.get(3).getText(), "Arkansas");
+    }
+
     @Override
     public String getComponentTestPagePath() {
         return "richAutocomplete/autocomplete.xhtml";
     }
 
     @Test
-    @Skip
-    @IssueTracking("https://issues.jboss.org/browse/RF-12653")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12653")
     public void testClosingSuggestionsPopupByBlur() {
         attsSetter()
             .setAttribute(AutocompleteAttributes.showButton).toValue(true)
@@ -55,16 +66,21 @@ public class TestRF12653 extends AbstractAutocompleteTest {
         autocomplete.advanced().getInput().advanced().getInputElement().click();
         // popup with suggestions will show up
         autocomplete.advanced().waitForSuggestionsToBeVisible().perform();
+        // check
+        checkVisibleSuggestions();
         // blur
         getMetamerPage().getResponseDelayElement().click();
         // popup with suggestions should hide
         autocomplete.advanced().waitForSuggestionsToBeNotVisible().perform();
 
+        // now try the same with the autocomplete button (here is the issue)
         // click the autocomplete button
         WebElement button = autocomplete.advanced().getRootElement().findElement(By.className("rf-au-btn"));
         button.click();
         // popup with suggestions will show up
         autocomplete.advanced().waitForSuggestionsToBeVisible().perform();
+        // check
+        checkVisibleSuggestions();
         // blur
         getMetamerPage().getResponseDelayElement().click();
         // popup with suggestions should hide, HERE is the problem
