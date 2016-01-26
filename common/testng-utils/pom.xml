@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.richfaces.tests</groupId>
         <artifactId>common-parent</artifactId>
-        <version>4.5.13.20160127-Final</version>
+        <version>4.5.14-SNAPSHOT</version>
     </parent>
 
     <artifactId>testng-utils</artifactId>
