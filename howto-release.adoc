@@ -22,7 +22,7 @@ Use following template for a `release-settings.xml` and pass it to all Maven exe
             <id>jboss-staging-repository-group</id>
             <mirrorOf>!jboss-qa-releases,!jboss-public-repository-group,central</mirrorOf>
             <name>JBoss.org Staging Repository Group</name>
-            <url>https://repository.jboss.org/nexus/content/groups/staging</url>
+            <url>https://origin-repository.jboss.org/nexus/content/groups/staging/</url>
         </mirror>
     </mirrors>
 
