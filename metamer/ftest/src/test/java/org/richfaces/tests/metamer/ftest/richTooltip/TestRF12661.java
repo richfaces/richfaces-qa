@@ -25,17 +25,14 @@ import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.log.Log.LogEntryLevel;
 import org.richfaces.fragment.log.RichFacesLog;
 import org.richfaces.fragment.status.Status.StatusState;
-import org.richfaces.fragment.tooltip.TextualRichFacesTooltip;
-import org.richfaces.tests.configurator.unstable.annotation.Unstable;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -51,36 +48,26 @@ public class TestRF12661 extends AbstractWebDriverTest {
     @FindBy(css = "[id$='setNullButton']")
     private WebElement setNullButton;
     @FindBy(className = "rf-tt")
-    private TextualRichFacesTooltip tooltip;
+    private WebElement tooltip;
 
     @Override
     public String getComponentTestPagePath() {
         return "richTooltip/rf-12661.xhtml";
     }
 
-    @BeforeMethod
-    public void setupFragments() {
-        tooltip.advanced().setShowEvent(Event.CLICK);
-        tooltip.advanced().setHideEvent(Event.DBLCLICK);
-        tooltip.advanced().setTarget(panelWithTooltip);
-        log.changeLevel(LogEntryLevel.ERROR);
-    }
-
     @Test
-    // sometimes there is a ClassCastException present with: com.sun.proxy.$Proxy56 cannot be cast to
-    // org.openqa.selenium.interactions.HasInputDevices >>> marked as Unstable
-    // RFPL-4154
-    @Unstable
     @RegressionTest("https://issues.jboss.org/browse/RF-12661")
     public void testTooltipWithNullValue() {
+        log.changeLevel(LogEntryLevel.ERROR);
         // scroll to panel with tooltip
         jsUtils.scrollToView(panelWithTooltip);
         // show tooltip
-        tooltip.show();
+        panelWithTooltip.click();
+        Graphene.waitAjax().until().element(tooltip).is().visible();
         // check initial content text
-        assertEquals(tooltip.getContentText(), "initial value");
+        assertEquals(tooltip.getText(), "initial value");
         // hide tooltip
-        tooltip.hide();
+        new Actions(driver).doubleClick(panelWithTooltip).perform();
 
         // set tooltip value to null, HERE starts the issue
         Graphene.guardAjax(setNullButton).click();
@@ -91,10 +78,10 @@ public class TestRF12661 extends AbstractWebDriverTest {
         // scroll to panel with tooltip
         jsUtils.scrollToView(panelWithTooltip);
         // tooltip can be displayed
-        tooltip.show(panelWithTooltip);
-        // tooltip's content should be empty
-        assertEquals(tooltip.getContentText(), "");
+        panelWithTooltip.click();
+        Graphene.waitAjax().until().element(tooltip).is().visible();        // tooltip's content should be empty
+        assertEquals(tooltip.getText(), "");
         // tooltip can be hidden
-        tooltip.hide();
+        new Actions(driver).doubleClick(panelWithTooltip).perform();
     }
 }
