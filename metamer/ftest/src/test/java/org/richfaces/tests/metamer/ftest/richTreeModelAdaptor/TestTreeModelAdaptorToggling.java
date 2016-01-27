@@ -31,7 +31,7 @@ import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.richfaces.tests.metamer.ftest.richTree.TestTreeToggling;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -60,16 +60,16 @@ public class TestTreeModelAdaptorToggling extends TestTreeToggling {
     @BeforeMethod
     public void initPathsAndModelRepresentation() {
         if (representation == RecursiveModelRepresentation.MAP) {
-            MetamerPage.requestTimeChangesWaiting(recursiveModelRepresentations.get(1)).click();
+            getMetamerPage().performJSClickOnButton(recursiveModelRepresentations.get(1), WaitRequestType.XHR);
         }
         if (recursiveLeafChildrenNullable) {
-            MetamerPage.requestTimeChangesWaiting(recursiveLeafChildrenNullableElement).click();
+            getMetamerPage().performJSClickOnButton(recursiveLeafChildrenNullableElement, WaitRequestType.XHR);
         }
     }
 
     @BeforeClass
     public void setupTreeModelTesting() {
-        paths = new Integer[][] { { 2, 1, 0, 1 }, { 1, 3, 5 } };
+        paths = new Integer[][]{ { 2, 1, 0, 1 }, { 1, 3, 5 } };
     }
 
     @Test
