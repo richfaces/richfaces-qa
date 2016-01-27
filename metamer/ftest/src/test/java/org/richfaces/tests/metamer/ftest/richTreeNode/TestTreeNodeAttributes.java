@@ -220,6 +220,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates("plain")
     public void testOnclick() {
+        treeAttributes.set(TreeAttributes.toggleType, "client");// prevent ViewExpiredException
         testFireEvent(firstNodeAttributes, TreeNodeAttributes.onclick,
             new Actions(driver).triggerEventByWD(Event.CLICK, getFirstNode().advanced().getLabelElement()).build());
     }
@@ -229,6 +230,7 @@ public class TestTreeNodeAttributes extends AbstractTreeTest {
     @Templates("plain")
     @UseWithField(field = "sample", valuesFrom = STRINGS, value = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testOndblclick() {
+        treeAttributes.set(TreeAttributes.toggleType, "client");// prevent ViewExpiredException
         testFireEvent(firstNodeAttributes, TreeNodeAttributes.ondblclick,
             new Actions(driver).doubleClick(getFirstNode().advanced().getLabelElement()).build());
     }
