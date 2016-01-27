@@ -26,8 +26,6 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -47,12 +45,13 @@ public class TestFocusManager extends AbstractWebDriverTest {
     @Test(groups = "smoke")
     @Templates(exclude = { "richCollapsibleSubTable", "richExtendedDataTable", "richDataTable", "richDataGrid", "richList", "a4jRepeat", "uiRepeat" })
     public void testFocusManager() {
-        Assert.assertTrue(new ElementIsFocused(page.getAgeInput().advanced().getInputElement()).apply(driver), "Age input is not focused");
-        //workaround to get the code below working, need to somehow interact with page first
-        MetamerPage.waitRequest(page, WaitRequestType.HTTP).fullPageRefresh();
-
+        // workaround to get the keyboard interface working, need to interact with page first
+        getMetamerPage().getResponseDelayElement().click();
+        getMetamerPage().fullPageRefresh();
+        // age input should be focused after page refresh
         Graphene.waitModel().until(new ElementIsFocused(page.getAgeInput().advanced().getInputElement()));
         page.typeStringAndDoNotCareAboutFocus();
+        // check typed text
         String actual = page.getAgeInput().getStringValue();
         Assert.assertEquals(actual, AbstractFocusPage.EXPECTED_STRING,
             "Age input should be focused by focus manager from backing bean!");
