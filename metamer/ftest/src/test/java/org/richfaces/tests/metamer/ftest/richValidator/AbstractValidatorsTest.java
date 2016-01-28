@@ -32,6 +32,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.fragment.popupPanel.PopupPanel;
+import org.richfaces.fragment.status.Status.StatusState;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.validation.AssertFalseBean;
@@ -49,6 +50,7 @@ import org.richfaces.tests.metamer.validation.PatternBean;
 import org.richfaces.tests.metamer.validation.SizeBean;
 import org.richfaces.tests.metamer.validation.StringSizeBean;
 import org.richfaces.tests.metamer.validator.StringRichFacesValidator;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
@@ -463,6 +465,14 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.stringSize);
+    }
+
+    @AfterMethod
+    public void waitForAllRequestsDone() {
+        // prevent ViewExpiredException
+        getMetamerPage().getResponseDelayElement().click();
+        waiting(500);
+        getMetamerPage().getStatus().advanced().waitUntilStatusStateChanges(StatusState.STOP);
     }
 
     protected void waitUtilMessageWithIDIsVisibleAndCorrect(final ID id) {
