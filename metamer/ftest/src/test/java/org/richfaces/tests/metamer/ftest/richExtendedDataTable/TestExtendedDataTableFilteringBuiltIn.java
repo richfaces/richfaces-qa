@@ -23,10 +23,12 @@ package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.interactions.Action;
+import org.richfaces.fragment.popupPanel.PopupPanel.ResizerLocation;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFilteringTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.FilteringEDT;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class TestExtendedDataTableFilteringBuiltIn extends DataTableFilteringTest {
@@ -49,6 +51,13 @@ public class TestExtendedDataTableFilteringBuiltIn extends DataTableFilteringTes
     @Override
     protected FilteringEDT getTable() {
         return table;
+    }
+
+    @BeforeMethod(dependsOnMethods = { "loadPage", "setup" })
+    public void resizePopupTemplate() {
+        if (isInPopupTemplate()) {
+            popupTemplate.advanced().resizeFromLocation(ResizerLocation.SE, 50, 50);
+        }
     }
 
     @Test
