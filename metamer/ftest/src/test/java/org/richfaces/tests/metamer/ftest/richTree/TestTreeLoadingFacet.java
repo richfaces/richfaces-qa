@@ -36,6 +36,7 @@ import org.richfaces.tests.metamer.ftest.MetamerAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 public class TestTreeLoadingFacet extends AbstractTreeTest {
@@ -48,9 +49,8 @@ public class TestTreeLoadingFacet extends AbstractTreeTest {
     private WebElement loadingFacet;
 
     private void setLoadingFacet(boolean turnOn) {
-        boolean checked = Boolean.valueOf(loadingFacet.isSelected());
-        if (checked != turnOn) {
-            Graphene.guardAjax(loadingFacet).click();
+        if (loadingFacet.isSelected() != turnOn) {
+            getMetamerPage().performJSClickOnButton(loadingFacet, WaitRequestType.XHR);
         }
     }
 
