@@ -69,6 +69,7 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
 
     protected void clearInput1() {
         getInput1().clear();
+        getMetamerPage().getResponseDelayElement().click();// blur
     }
 
     protected void clickOnInput1() {
@@ -91,6 +92,7 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
 
     /**
      * Because of inplace input components
+     *
      * @return
      */
     protected String getInput1EditValue() {
@@ -134,6 +136,7 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
 
     protected void sendKeysToInput1(String keys) {
         getInput1().sendKeys(keys);
+        getMetamerPage().getResponseDelayElement().click();// blur
     }
 
     public void testAjaxSubmit() {

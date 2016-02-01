@@ -90,16 +90,6 @@ public class TestPlaceHolderWithInplaceSelect extends AbstractPlaceholderJSFTest
     }
 
     @Override
-    protected void sendKeysToInput1(String keys) {
-        input1.sendKeys(keys);
-    }
-
-    @Override
-    protected void clearInput1() {
-        input1.clear();
-    }
-
-    @Override
     protected void clickOnInput1() {
         fireEvent(input1, Event.FOCUS);
     }

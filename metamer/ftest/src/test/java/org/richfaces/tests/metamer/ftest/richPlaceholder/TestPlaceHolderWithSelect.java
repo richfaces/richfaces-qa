@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.richPlaceholder;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
@@ -54,20 +53,8 @@ public class TestPlaceHolderWithSelect extends AbstractPlaceholderJSFTest {
     }
 
     @Override
-    protected void clearInput1() {
-        input1.clear();
-    }
-
-    @Override
     protected String getTestedValue() {
         return "Alabama";
-    }
-
-    @Override
-    protected void sendKeysToInput1(String keys) {
-        input1.sendKeys(keys);
-        fireEvent(input1, Event.BLUR);
-        fireEvent(input1, Event.BLUR);
     }
 
     @Test

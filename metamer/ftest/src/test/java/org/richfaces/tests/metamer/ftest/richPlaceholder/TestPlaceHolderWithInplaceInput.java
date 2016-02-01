@@ -90,23 +90,13 @@ public class TestPlaceHolderWithInplaceInput extends AbstractPlaceholderJSFTest 
     }
 
     @Override
-    protected void sendKeysToInput1(String keys) {
-        ii1.type(keys).confirm();
-    }
-
-    @Override
-    protected void clearInput1() {
-        ii1.type("").confirm();
-    }
-
-    @Override
     protected void clickOnInput1() {
         ii1.advanced().getEditInputElement().click();
     }
 
     @Override
     protected void clickOnInput2() {
-        ii2.type(" ");
+        ii2.advanced().getEditInputElement().click();
     }
 
     @Test
