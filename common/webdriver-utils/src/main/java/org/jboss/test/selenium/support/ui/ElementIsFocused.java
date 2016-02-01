@@ -46,7 +46,7 @@ public class ElementIsFocused implements Predicate<WebDriver> {
             if (element == null) {
                 return activeElement == null;
             }
-            return activeElement.equals(element);
+            return activeElement == null ? false : activeElement.equals(element);
         } catch (StaleElementReferenceException e) {
             return false;
         }
