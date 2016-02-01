@@ -78,10 +78,12 @@ public class TestRF14023 extends AbstractWebDriverTest {
 
         // select multiple rows (third row remains selected from previous step)
         for (int index : new Integer[] { 0, 5, 10, 13 }) {
+            jsUtils.scrollToView(edt.getRow(index).getRootElement());
             edt.selectRow(index, Keys.CONTROL);
         }
         checkNoJSErrorsArePresent();
         // show context menu on third row
+        jsUtils.scrollToView(edt.getRow(2).getRootElement());
         menuTarget = edt.getRow(2).getStateColumn();
         PopupMenuGroup expandedGroup = contextMenu.expandGroup(0, menuTarget);
         assertEquals(contextMenu.advanced().getItemsElements().size(), 6);// 5 items + 1 group
