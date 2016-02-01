@@ -21,37 +21,32 @@
  */
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
-import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.richfaces.fragment.autocomplete.SelectOrConfirm;
-import org.richfaces.fragment.common.ClearType;
 import org.richfaces.fragment.common.ScrollingType;
+import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.configurator.unstable.annotation.Unstable;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
-import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
-import org.testng.annotations.BeforeMethod;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
 import org.testng.annotations.Test;
-
-import com.google.common.base.Predicate;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestAutocomplete extends AbstractAutocompleteTest {
 
-    @UseForAllTests(valuesFrom = FROM_FIELD, value = "booleans")
     private Boolean autofill;
-    @UseForAllTests(valuesFrom = FROM_FIELD, value = "booleans")
     private Boolean selectFirst;
 
     @Override
@@ -59,7 +54,6 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
         return "richAutocomplete/autocomplete.xhtml";
     }
 
-    @BeforeMethod(groups = "smoke")
     public void prepareProperties() {
         attsSetter()
             .setAttribute(AutocompleteAttributes.autofill).toValue(autofill)
@@ -68,60 +62,87 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
         autocomplete.clear();
     }
 
-    @Test(groups = "smoke")
-    @Unstable
-    @CoversAttributes({ "autocompleteMethod", "autofill", "selectFirst" })
-    @RegressionTest("https://issues.jboss.org/browse/RF-11323")
-    public void testTypePrefixDeleteAll_typePrefixConfirm() {
-        Graphene.guardAjax(autocomplete).type("ala");
-        autocomplete.advanced().clear(ClearType.BACKSPACE);
-        autocomplete.advanced().waitForSuggestionsToBeNotVisible().perform();
-        assertTrue(autocomplete.advanced().getSuggestionsElements().isEmpty());
-
-        SelectOrConfirm typed = Graphene.guardAjax(autocomplete).type("ala");
-        assertFalse(autocomplete.advanced().getSuggestionsElements().isEmpty());
-        Graphene.guardAjax(typed).confirm();
-        Graphene.waitAjax().until(new Predicate<WebDriver>() {
-            @Override
-            public boolean apply(WebDriver t) {
-                return autocomplete.advanced().getSuggestionsElements().isEmpty();
-            }
-        });
-        String expectedStateForPrefix = getExpectedStateForPrefix("ala", selectFirst);
-        assertEquals(autocomplete.advanced().getInput().getStringValue(), expectedStateForPrefix);
-        checkOutput(expectedStateForPrefix);
-    }
-
     @Test
-    @CoversAttributes({ "autofill", "selectFirst" })
-    public void testSimpleSelectionWithMouse() {
-        SelectOrConfirm typed = Graphene.guardAjax(autocomplete).type("a");
-        Graphene.guardAjax(typed).select(ChoicePickerHelper.byVisibleText().endsWith("na"));
-        checkOutput("Arizona");
-    }
-
-    @Test
-    @CoversAttributes({ "autofill", "selectFirst" })
-    public void testSimpleSelectionWithKeyboard() {
-        autocomplete.advanced().setScrollingType(ScrollingType.BY_KEYS);
-        testSimpleSelectionWithMouse();
-    }
-
-    @IssueTracking("https://issues.jboss.org/browse/RF-14087")
+    @RegressionTest("https://issues.jboss.org/browse/RF-14087")
     @CoversAttributes({ "mode", "minChars", "autofill", "showButton", "value" })
-    @Test
     public void testShowSuggestionsWithButton() {
         // prepare autocomplete attributes
-        autocompleteAttributes.set(AutocompleteAttributes.showButton, Boolean.TRUE);
-        autocompleteAttributes.set(AutocompleteAttributes.autofill, Boolean.FALSE);
-        autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
-        autocompleteAttributes.set(AutocompleteAttributes.minChars, 0);
-        autocompleteAttributes.set(AutocompleteAttributes.value, "Alaska");
+        attsSetter()
+            .setAttribute(AutocompleteAttributes.showButton).toValue(true)
+            .setAttribute(AutocompleteAttributes.autofill).toValue(false)
+            .setAttribute(AutocompleteAttributes.mode).toValue("client")
+            .setAttribute(AutocompleteAttributes.minChars).toValue(0)
+            .setAttribute(AutocompleteAttributes.value).toValue("Alaska")
+            .asSingleAction().perform();
 
         // try to open the suggestions by clicking the button and assert
         WebElement button = driver.findElement(By.cssSelector("span[class$=btn-arrow]"));
         button.click();
         autocomplete.advanced().waitForSuggestionsToBeVisible();
         assertVisible(autocomplete.advanced().getSuggestionsElements().get(0), "Suggestion should be visible");
+    }
+
+    private void testSimpleSelection(boolean withMouse) {
+        prepareProperties();
+        if (!withMouse) {
+            autocomplete.advanced().setScrollingType(ScrollingType.BY_KEYS);
+        }
+        SelectOrConfirm typed = Graphene.guardAjax(autocomplete).type("a");
+        Graphene.guardAjax(typed).select(ChoicePickerHelper.byVisibleText().endsWith("na"));
+        checkOutput("Arizona");
+        if (withMouse) {
+            Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();// prevent ViewExpiredException
+        }
+    }
+
+    @Test
+    @Uses({
+        @UseWithField(field = "autofill", valuesFrom = ValuesFrom.FROM_FIELD, value = "booleans"),
+        @UseWithField(field = "selectFirst", valuesFrom = ValuesFrom.FROM_FIELD, value = "booleans")
+    })
+    @CoversAttributes({ "autofill", "selectFirst" })
+    public void testSimpleSelectionWithKeyboard() {
+        testSimpleSelection(false);
+    }
+
+    @Test
+    @Uses({
+        @UseWithField(field = "autofill", valuesFrom = ValuesFrom.FROM_FIELD, value = "booleans"),
+        @UseWithField(field = "selectFirst", valuesFrom = ValuesFrom.FROM_FIELD, value = "booleans")
+    })
+    @CoversAttributes({ "autofill", "selectFirst" })
+    public void testSimpleSelectionWithMouse() {
+        testSimpleSelection(true);
+    }
+
+    @Test(groups = "smoke")
+    @RegressionTest("https://issues.jboss.org/browse/RF-11323")
+    @Unstable
+    @Uses({
+        @UseWithField(field = "autofill", valuesFrom = ValuesFrom.FROM_FIELD, value = "booleans"),
+        @UseWithField(field = "selectFirst", valuesFrom = ValuesFrom.FROM_FIELD, value = "booleans")
+    })
+    @CoversAttributes({ "autocompleteMethod", "autofill", "selectFirst" })
+    public void testTypePrefixDeleteAll_typePrefixConfirm() {
+        prepareProperties();
+        Graphene.guardAjax(autocomplete).type("ala");
+        TextInputComponentImpl input = autocomplete.advanced().getInput();
+        while (!input.getStringValue().isEmpty()) {
+            input.sendKeys(Keys.BACK_SPACE);
+        }
+        autocomplete.advanced().waitForSuggestionsToBeNotVisible().perform();
+        assertTrue(autocomplete.advanced().getSuggestionsElements().isEmpty());
+
+        SelectOrConfirm typed = Graphene.guardAjax(autocomplete).type("ala");
+        assertFalse(autocomplete.advanced().getSuggestionsElements().isEmpty());
+        Graphene.guardAjax(typed).confirm();
+
+        autocomplete.advanced().waitForSuggestionsToBeNotVisible().perform();
+        String expectedStateForPrefix = getExpectedStateForPrefix("ala", selectFirst);
+        assertEquals(autocomplete.advanced().getInput().getStringValue(), expectedStateForPrefix);
+        checkOutput(expectedStateForPrefix);
+        if (selectFirst) {
+            Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();// prevent ViewExpiredException
+        }
     }
 }
