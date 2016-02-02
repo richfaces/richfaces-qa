@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
     <!--
@@ -9,46 +11,52 @@
     Copyright 2010-2016, Red Hat, Inc. and individual contributors
     by the @authors tag. See the copyright.txt in the distribution for a
     full listing of individual contributors.
-    
+
     This is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as
     published by the Free Software Foundation; either version 2.1 of
     the License, or (at your option) any later version.
-    
+
     This software is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
     Lesser General Public License for more details.
-    
+
     You should have received a copy of the GNU Lesser General Public
     License along with this software; if not, write to the Free
     Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-    <ui:composition template="/templates/list.xhtml">
+    <ui:composition template="/templates/template.xhtml">
 
-        <ui:define name="pageTitle">Skinning</ui:define>
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
 
-        <ui:define name="links">
-            <metamer:testPageLink id="rf-11741" outcome="rf-11741" value="rf-11741">
-                Page demonstrating issue <a href="https://issues.jboss.org/browse/RF-11741">RF-11741</a>.
-            </metamer:testPageLink>
-
-            <metamer:testPageLink id="rf-12362" outcome="rf-12362" value="RF-12362">
-                Reproducer for <a href="https://issues.jboss.org/browse/RF-12362">RF-12362</a>
-            </metamer:testPageLink>
-
-            <metamer:testPageLink id="rf-13241" outcome="rf-13241" value="rf-13241">
-                Page demonstrating issue <a href="https://issues.jboss.org/browse/RF-13241">RF-13241</a>.
-            </metamer:testPageLink>
-
-            <metamer:testPageLink id="rf-14130" outcome="rf-14130" value="rf-14130">
-                Page demonstrating issue <a href="https://issues.jboss.org/browse/RF-14130">RF-14130</a>.
-            </metamer:testPageLink>
-
+        <ui:define name="component">
+            <p>
+                Reproducer for <a href="https://issues.jboss.org/browse/RF-14130">RF-14130: Exception when skin properties replaced</a>. Not automatized.
+            </p>
+            <p>
+                Steps to reproduce:
+                <ol>
+                    <li>before page loads, the skin is set to 'skinWithPt'</li>
+                    <li>
+                        before RF 4.5.10, you would get an exception in server logs: <pre>java.lang.IllegalArgumentException: Width (2000) and height (0) cannot be &le; 0 </pre>
+                    </li>
+                </ol>
+            </p>
+            <br />
+            #{richBean.setSkin('skinWithPt')}
+            <rich:panel>
+                This is a simple panel.
+            </rich:panel>
         </ui:define>
 
     </ui:composition>
-
 </html>
