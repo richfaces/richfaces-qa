@@ -24,6 +24,8 @@ package org.richfaces.tests.metamer.bean;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,6 +94,23 @@ public class RichBean implements Serializable {
         ValueExpression exp = factory.createValueExpression(elContext, "#{phasesBean.phases}", List.class);
         List<String> phases = (List<String>) exp.getValue(elContext);
         phases.add(msg);
+    }
+
+    private static Map<String, String> sortComponents(Map<String, String> map) {
+        Map<String, String> result;
+        ArrayList<Map.Entry<String, String>> entries = Lists.newArrayList(map.entrySet());
+        Collections.sort(entries, new Comparator<Map.Entry<String, String>>() {
+            @Override
+            public int compare(Map.Entry<String, String> a, Map.Entry<String, String> b) {
+                return a.getValue().compareTo(b.getValue());
+            }
+        });
+
+        result = new LinkedHashMap<String, String>();
+        for (Map.Entry<String, String> entry : entries) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return result;
     }
 
     /**
@@ -226,14 +245,15 @@ public class RichBean implements Serializable {
         allComponentsPermanentList.put("richTreeToggleListener", "Rich Tree Toggle Listener");
         allComponentsPermanentList.put("richValidator", "Rich Validator");
 
+        allComponentsPermanentList = sortComponents(allComponentsPermanentList);
+
         allComponentsPermanentList.put("expressionLanguage", "Expression Language");
         allComponentsPermanentList.put("commandButton", "JSF Command Button");
         allComponentsPermanentList.put("hDataTable", "JSF Data Table");
-        allComponentsPermanentList.put("uiRepeat", "UI Repeat");
         allComponentsPermanentList.put("skinning", "Skinning");
+        allComponentsPermanentList.put("uiRepeat", "UI Repeat");
 
         filteredComponents.putAll(allComponentsPermanentList);
-
     }
 
     private void createSkinList() {
