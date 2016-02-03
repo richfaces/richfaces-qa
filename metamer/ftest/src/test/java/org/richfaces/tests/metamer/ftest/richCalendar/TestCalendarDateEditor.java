@@ -55,7 +55,8 @@ public class TestCalendarDateEditor extends AbstractCalendarTest {
     @Test
     @Templates("plain")
     public void testCancelButton() {
-        MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
+        Graphene.guardAjax(popupCalendar.openPopup().getFooterControls()).setTodaysDate();
+        performStabilizationWorkaround();
 
         HeaderControls hc = popupCalendar.openPopup().getHeaderControls();
 
