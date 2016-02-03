@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2016, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <h:body>
+        <composite:interface>
+            <composite:attribute name="issue" type="java.lang.String" required="true" shortDescription="E.g. 'RF-12345', 'rf-12345'"/>
+            <composite:attribute name="issueName" type="java.lang.String" required="false" shortDescription="Name of the issue, E.g. 'JS error when pressing ESC on an open inplaceSelect in IE' (RF-12345)"/>
+            <composite:attribute name="outcome" type="java.lang.String" required="false" shortDescription="The page name. E.g. 'RF-12345', 'rf-12345-1'"/>
+
+            <composite:attribute name="automatized" type="java.lang.Boolean" required="false" default="false" shortDescription="Is the issue covered by a test?"/>
+            <composite:attribute name="resolved" type="java.lang.Boolean" required="false" default="false" shortDescription="Is the issue resolved/closed?"/>
+            <composite:attribute name="demandsAttention" type="java.lang.Boolean" required="false" default="false" shortDescription="Issue needs to be verified manually"/>
+        </composite:interface>
+
+        <composite:implementation>
+            <h:outputStylesheet library="metamer" name="css/testPageLink.ecss" />
+            <c:set var="issue" value="#{cc.attrs.issue}"/>
+            <c:set var="issueName" value="#{empty cc.attrs.issueName ? '' : ': '.concat(cc.attrs.issueName)}"/>
+            <c:set var="resolved" value="#{cc.attrs.resolved}"/>
+
+            <ui:remove><!-- add link to the reproducer, uppercase the value --></ui:remove>
+            <h:link id="link" outcome="#{empty cc.attrs.outcome ? cc.attrs.issue : cc.attrs.outcome }" value="#{fn:toUpperCase(issue)}" styleClass="link" />
+            <span style="padding-left: 10px;"/>
+            <ui:remove><!-- add image representing status of the original issue --></ui:remove>
+            <h:graphicImage width="16px" class="iconOffset" library="images" name="#{resolved ? 'tick' : 'cross'}.png" alt="original issue is #{resolved?'':'not'} resolved" title="original issue is #{resolved ? '' : 'not '}resolved"/>
+            <ui:remove><!-- when the reproducer is covered with test(s), add an image --></ui:remove>
+            <h:graphicImage rendered="#{cc.attrs.automatized}" width="16px" class="iconOffset" library="images" name="gear.png" alt="is covered by test(s)" title="is covered by test(s)"/>
+            <ui:remove><!-- when the issue needs attention, add an image --></ui:remove>
+            <h:graphicImage rendered="#{cc.attrs.demandsAttention}" width="16px" class="iconOffset" library="images" name="magnifier.png" alt="issue demands attention" title="issue demands attention, it needs to be verified manually"/>
+
+            <ui:remove><!-- add default description and text nested inside tags (metamer:reproducerPageLink) --></ui:remove>
+            <h:panelGroup id="desc" layout="block" styleClass="description">
+                Reproducer for issue <a class="smallerLink" target="_blank" href="https://issues.jboss.org/browse/#{fn:toUpperCase(issue)}" title="open a new tab with the issue">#{fn:toUpperCase(issue)}#{issueName}</a>.
+                <composite:insertChildren/>
+            </h:panelGroup>
+
+        </composite:implementation>
+    </h:body>
+</html>

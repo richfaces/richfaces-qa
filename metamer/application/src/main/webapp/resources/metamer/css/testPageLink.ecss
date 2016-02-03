@@ -3,6 +3,15 @@
     font-weight: bold;
 }
 
+.smallerLink {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.iconOffset {
+    padding-left: 5px;
+}
+
 .description {
     padding-top: 5px;
     padding-bottom: 15px;
