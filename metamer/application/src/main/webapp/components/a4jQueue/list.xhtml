@@ -41,14 +41,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             </metamer:testPageLink>
 
-            <metamer:testPageLink id="rf-12132" outcome="rf-12132" value="RF-12132">
-                Page demonstrating issue <a href="https://issues.jboss.org/browse/RF-12132">RF-12132</a>
-            </metamer:testPageLink>
 
-            <metamer:testPageLink id="rf-12268" outcome="rf-12268" value="RF-12268">
-                Simple page that contains <b>a4j:queue</b> outside of any form (<b>global queue</b>) and actions buttons to simulate issue
-                <a href="https://issues.jboss.org/browse/RF-12268">RF-12268</a>
-            </metamer:testPageLink>
+            <metamer:reproducerPageLink issue="rf-12132" issueName="Richfaces queue not cleared after js error in oncomplete attribute" resolved="true" automatized="true"/>
+
+            <metamer:reproducerPageLink issue="rf-12268" issueName="4.1.0.final javascript error : element is null, ajax queue operation" resolved="false">
+                Simple page that contains <b>a4j:queue</b> outside of any form (<b>global queue</b>) and actions buttons.
+            </metamer:reproducerPageLink>
 
         </ui:define>
 

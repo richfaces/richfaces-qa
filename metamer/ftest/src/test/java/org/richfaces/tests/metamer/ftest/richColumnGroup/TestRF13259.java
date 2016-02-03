@@ -49,7 +49,7 @@ public class TestRF13259 extends AbstractColumnAndRowClassesTest {
 
     @Override
     public String getComponentTestPagePath() {
-        return "richColumnGroup/RF-13259-2.xhtml";
+        return "richColumnGroup/rf-13259-2.xhtml";
     }
 
     @Test

@@ -35,15 +35,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 Page containing <b>r:togglePanel</b> and inputs for all its attributes.
             </metamer:testPageLink>
 
-            <metamer:testPageLink id="rf-9013" outcome="rf-9013" value="RF-9013 Toggle panel: not valid markup">
-                Page for issue <h:outputLink value="https://jira.jboss.org/browse/RF-9013">RF-9013</h:outputLink>. The page contains
-                a <b>r:togglePanel</b>. Verify that there are no unnecessary attributes (e.g. styleClass="null" or dir="null") and
-                that the page is W3C compliant.
-            </metamer:testPageLink>
+            <metamer:reproducerPageLink issue="rf-9013" issueName="Toggle panel: not valid markup" resolved="true">
+                The page contains a <b>r:togglePanel</b>. Verify that there are no unnecessary attributes (e.g. styleClass="null" or dir="null") and that the page is W3C compliant.
+            </metamer:reproducerPageLink>
 
-            <metamer:testPageLink id="rf-13372" outcome="rf-13372" value="RF-13372: togglePanel does not work with toggleControl">
-                Page for issue <h:outputLink value="https://jira.jboss.org/browse/RF-13372">RF-13372</h:outputLink>.
-            </metamer:testPageLink>
+            <metamer:reproducerPageLink issue="rf-13372" issueName="togglePanel does not work with toggleControl" resolved="true"/>
+
         </ui:define>
 
     </ui:composition>

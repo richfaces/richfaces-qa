@@ -40,7 +40,7 @@ public class TestRF11606 extends AbstractWebDriverTest {
 
     @Override
     public String getComponentTestPagePath() {
-        return "richSelect/RF-11606.xhtml";
+        return "richSelect/rf-11606.xhtml";
     }
 
     @Test

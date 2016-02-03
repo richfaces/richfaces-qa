@@ -1,50 +1,46 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
-<!--
-JBoss, Home of Professional Open Source
-Copyright 2010-2016, Red Hat, Inc. and individual contributors
-by the @authors tag. See the copyright.txt in the distribution for a
-full listing of individual contributors.
-
-This is free software; you can redistribute it and/or modify it
-under the terms of the GNU Lesser General Public License as
-published by the Free Software Foundation; either version 2.1 of
-the License, or (at your option) any later version.
-
-This software is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public
-License along with this software; if not, write to the Free
-Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    <!--
+    JBoss, Home of Professional Open Source
+    Copyright 2010-2016, Red Hat, Inc. and individual contributors
+    by the @authors tag. See the copyright.txt in the distribution for a
+    full listing of individual contributors.
+    
+    This is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as
+    published by the Free Software Foundation; either version 2.1 of
+    the License, or (at your option) any later version.
+    
+    This software is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    Lesser General Public License for more details.
+    
+    You should have received a copy of the GNU Lesser General Public
+    License along with this software; if not, write to the Free
+    Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+    02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-<ui:composition template="/templates/list.xhtml">
+    <ui:composition template="/templates/list.xhtml">
 
-    <ui:define name="pageTitle">Rich Panel Menu</ui:define>
+        <ui:define name="pageTitle">Rich Panel Menu</ui:define>
 
-    <ui:define name="links">
+        <ui:define name="links">
 
-        <metamer:testPageLink id="simple" outcome="simple" value="Simple">
+            <metamer:testPageLink id="simple" outcome="simple" value="Simple">
                 Simple page containing <b>rich:panelMenu</b> and input boxes for all its attributes.
             </metamer:testPageLink>
 
-        <metamer:testPageLink id="rf-12813" outcome="rf-12813" value="Reproducer for RF-12813">
-                Reproducer for <a href="https://issues.jboss.org/browse/RF-12813">RF-12813</a> rich:panelMenuItem executes action even if disabled attribute evaluates to true
-            </metamer:testPageLink>
+            <metamer:reproducerPageLink issue="rf-12813" issueName="rich:panelMenuItem executes action even if disabled attribute evaluates to true" resolved="true"/>
 
-        <metamer:testPageLink id="rf-13358" outcome="rf-13358" value="Reproducer for RF-13358">
-                Reproducer for <a href="https://issues.jboss.org/browse/RF-13358">RF-13358</a> rich:panelMenuGroup allowing actions executions even if originally disabled
-            </metamer:testPageLink>
+            <metamer:reproducerPageLink issue="rf-13358" issueName="rich:panelMenuGroup allowing actions executions even if originally disabled" resolved="true"/>
 
-    </ui:define>
+        </ui:define>
 
-</ui:composition>
+    </ui:composition>
 
 </html>

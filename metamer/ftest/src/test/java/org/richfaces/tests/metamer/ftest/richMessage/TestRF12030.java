@@ -38,7 +38,7 @@ public class TestRF12030 extends AbstractWebDriverTest {
 
     @Override
     public String getComponentTestPagePath() {
-        return "richMessage/RF-12030.xhtml";
+        return "richMessage/rf-12030.xhtml";
     }
 
     @Test

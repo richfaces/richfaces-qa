@@ -45,7 +45,7 @@ public class TestRF12092 extends AbstractStatusTest {
 
     @Override
     public String getComponentTestPagePath() {
-        return "a4jStatus/RF-12092.xhtml";
+        return "a4jStatus/rf-12092.xhtml";
     }
 
     @Override

@@ -57,37 +57,23 @@
                 Simple JSF 2.2 flow with tabPanel as RF stateful component in it. <b>Automated.</b>
             </metamer:testPageLink>
 
-            <metamer:testPageLink id="rf-11814" outcome="rf-11814" value="Tab switch type">
-                Simple page containing <b>r:tabPanel</b> demonstrating problem with tab switching when switchType set to ajax
-                (<h:outputLink id="JiraRF11814"  value="https://issues.jboss.org/browse/RF-11814">RF-11814</h:outputLink>).
-            </metamer:testPageLink>
+            <metamer:reproducerPageLink issue="rf-11814" issueName="a4j:commandLink in tabPanel disabled if switchtype = ajax" resolved="false">
+                Simple page containing <b>r:tabPanel</b> demonstrating problem with tab switching when switchType set to ajax.
+            </metamer:reproducerPageLink>
 
-            <metamer:testPageLink id="rf-11884" outcome="rf-11884" value="RF-11884">
+            <metamer:reproducerPageLink issue="rf-11884" issueName="Multiple Errors with IE8/9" resolved="true">
                 Simple page that contains <b>r:tabPanel</b> with simple tabs demonstrating unnecessary bottom border in IE8 under tab controls
-                (<a href="https://issues.jboss.org/browse/RF-11884">RF-11884</a>)
-            </metamer:testPageLink>
+            </metamer:reproducerPageLink>
 
-            <metamer:testPageLink id="rf-12054" outcome="rf-12054" value="RF-12054">
-                Page for simulating issue <a href="https://issues.jboss.org/browse/RF-12054">RF-12054</a>.
-            </metamer:testPageLink>
+            <metamer:reproducerPageLink issue="rf-12054" issueName="TabPanel onitemchange of outer tab fired by inner tab" resolved="true" automatized="true"/>
 
-            <metamer:testPageLink id="RF-12108" outcome="rf-12108" value="RF-12108">
-                <b>Issue summary:</b>Components second tab changes are not rendered after performing some ajax action if attribute ajaxRendered="true" inside r:message located on first tab
-                (<a href="https://issues.jboss.org/browse/RF-12108">RF-12108</a>)
-            </metamer:testPageLink>
+            <metamer:reproducerPageLink issue="rf-12108" issueName="Components second tab changes are not rendered after performing some ajax action if attribute ajaxRendered='true' inside rich:message located on first tab" resolved="true"/>
 
-            <metamer:testPageLink id="rf-12291" outcome="rf-12291" value="RF-12291">
-                <b>Issue summary:</b>Tab panel issue when using paginated table in one tab
-                (<a href="https://issues.jboss.org/browse/RF-12291">RF-12291</a>)
-            </metamer:testPageLink>
+            <metamer:reproducerPageLink issue="rf-12291" issueName="Tab panel issue when using paginated table in one tab" resolved="false"/>
 
-            <metamer:testPageLink id="rf-12491" outcome="rf-12491" value="RF-12491">
-                Page for simulating issue <a href="https://issues.jboss.org/browse/RF-12491">RF-12491</a>.
-            </metamer:testPageLink>
+            <metamer:reproducerPageLink issue="rf-12491" issueName="Datatable model is accessed in tab panel which is not rendered using switch type 'server'" resolved="true" automatized="true"/>
 
-            <metamer:testPageLink id="rf-13278" outcome="rf-13278" value="RF-13278">
-                Page for simulating issue <a href="https://issues.jboss.org/browse/RF-13278">RF-13278</a>.
-            </metamer:testPageLink>
+            <metamer:reproducerPageLink issue="rf-13278" issueName="Add support for a 'header' meta-component to the rich:tabPanel" resolved="true" automatized="true"/>
 
         </ui:define>
 

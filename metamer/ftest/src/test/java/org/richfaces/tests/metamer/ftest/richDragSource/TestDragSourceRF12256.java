@@ -35,7 +35,7 @@ public class TestDragSourceRF12256 extends AbstractDragSourceTest {
 
     @Override
     public String getComponentTestPagePath() {
-        return "richDragSource/RF-12256.xhtml";
+        return "richDragSource/rf-12256.xhtml";
     }
 
     @Test

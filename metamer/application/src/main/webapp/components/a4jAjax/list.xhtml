@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -102,17 +104,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 Simple page that contains <b>various components</b> with <b>a4j:ajax</b> with default event handler
             </metamer:testPageLink>
 
-            <metamer:testPageLink id="rf-12084" outcome="rf-12084" value="RF-12084 simulation">
-                Simple page that combine r:ajax and ui:fragment with param to simulate issue <a href="https://issues.jboss.org/browse/RF-12084">RF-12084</a>  
-            </metamer:testPageLink>
+            <metamer:reproducerPageLink issue="rf-12084" issueName="Richfaces 4.2 &lt;a4j:ajax&gt; when inside &lt;ui:fragment&gt; dont work and causes 'identifier resolved to null'" resolved="true"/>
 
-            <metamer:testPageLink id="rf-12185" outcome="rf-12185" value="RF-12185 simulation">
-                Page simulating issue <a href="https://issues.jboss.org/browse/RF-12185">RF-12185</a>  
-            </metamer:testPageLink>
+            <metamer:reproducerPageLink issue="rf-12185" issueName="AJAX rendering is broken for h:commandLink" resolved="true"/>
 
-            <metamer:testPageLink id="rf-13532" outcome="rf-13532" value="RF-13532">
-                Page simulating issue <a href="https://issues.jboss.org/browse/RF-13532">RF-13532</a>  
-            </metamer:testPageLink>
+            <metamer:reproducerPageLink issue="rf-13532" issueName="Support JSF 2.2 resetValues attribute for a4j:ajax" automatized="true" resolved="true"/>
         </ui:define>
 
     </ui:composition>

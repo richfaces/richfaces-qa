@@ -38,7 +38,7 @@ import org.testng.annotations.Test;
  *
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class TestDynamicContentSize extends AbstractWebDriverTest {
+public class TestRF13655 extends AbstractWebDriverTest {
 
     @FindBy(css = "input[id$=openPanelButton]")
     private WebElement callPopupButton;

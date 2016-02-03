@@ -36,15 +36,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <div>Attributes are tied to first of components.</div>
                 <div>After drop to target, details of event appears.</div>
             </metamer:testPageLink>
-            
+
             <metamer:testPageLink id="cc" outcome="cc" value="Composite Component">
                 <div>The 3 simple <b>rich:dragSource</b> components defined in a custom composite component (RF-10992).</div>
             </metamer:testPageLink>
-            
-            <metamer:testPageLink id="RF-12256" outcome="RF-12256" value="RF-12256">
-                <div>The 3 simple <b>r:dragSource</b> components within absolutely positioned div (RF-12256).</div>
-                <a href="https://issues.jboss.org/browse/RF-12256" >RF-12256</a>.
-            </metamer:testPageLink>
+
+            <metamer:reproducerPageLink issue="rf-12256" issueName="DragAndDrop + position: absolute results in broken positioning" resolved="true" automatized="true">
+                The 3 simple <b>r:dragSource</b> components within absolutely positioned div.
+            </metamer:reproducerPageLink>
 
         </ui:define>
 

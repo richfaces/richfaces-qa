@@ -38,18 +38,17 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <metamer:testPageLink id="headerFooterEDT" outcome="headerFooterEDT" value="Header and Footer in extended data table">
                 <b>rich:columnGroup</b> in the header and footer facets of the extended data table
             </metamer:testPageLink>
-            
+
             <metamer:testPageLink id="body" outcome="body" value="Body">
                 <b>rich:columnGroup</b> in the body of the table
             </metamer:testPageLink>
 
-            <metamer:testPageLink id="RF-13259" outcome="RF-13259" value="RF-13259">
-                Page for reproducing issue <a href="https://issues.jboss.org/browse/RF-13259">RF-13259</a>.
-            </metamer:testPageLink>
+            <metamer:reproducerPageLink issue="rf-13259" issueName="DataTable rowClasses with columnGroup is not rendered" resolved="true" automatized="true"/>
 
-            <metamer:testPageLink id="RF-13259-2" outcome="RF-13259-2" value="RF-13259 modified version">
-                Modified version of page for reproducing issue <a href="https://issues.jboss.org/browse/RF-13259">RF-13259</a>.
-            </metamer:testPageLink>
+            <metamer:reproducerPageLink issue="rf-13259" outcome="rf-13259-2" issueName="DataTable rowClasses with columnGroup is not rendered" resolved="true" automatized="true">
+                Modified version.
+            </metamer:reproducerPageLink>
+
         </ui:define>
 
     </ui:composition>

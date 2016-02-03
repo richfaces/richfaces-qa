@@ -43,19 +43,17 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 Simple page containing a toolbar with several <b>rich:dropDownMenu</b>s and inputs for all attributes.
             </metamer:testPageLink>
 
-            <metamer:testPageLink id="RF-11730_1" outcome="RF-11730_1" value="RF-11730 with ui:fragment">
-                Page containing <b>rich:dropDownMenu</b> with dynamic menu groups using ui:fragment and @rendered
-                simulating <a href="https://issues.jboss.org/browse/RF-11730">RF-11730</a>
-            </metamer:testPageLink>
-            
-            <metamer:testPageLink id="RF-11730_2" outcome="RF-11730_2" value="RF-11730 with c:if">
+            <metamer:reproducerPageLink issue="rf-11730" outcome="rf-11730_1" issueName="DropDowm - dynamic menu item is not rendered when using ui:fragment" resolved="false">
+                age containing <b>rich:dropDownMenu</b> with dynamic menu groups using ui:fragment and @rendered.
+            </metamer:reproducerPageLink>
+
+            <metamer:reproducerPageLink issue="rf-11730" outcome="rf-11730_2" issueName="DropDowm - dynamic menu item is not rendered when using ui:fragment" resolved="false">
                 Page containing <b>rich:dropDownMenu</b> with dynamic menu groups using c:if and @test
-                simulating <a href="https://issues.jboss.org/browse/RF-11730">RF-11730</a>
-            </metamer:testPageLink>
-            
-            <metamer:testPageLink id="RF-12298" outcome="RF-12298" value="RF-12298">
-                Page containing <b>rich:dropDownMenu</b> simulating IE issue <a href="https://issues.jboss.org/browse/RF-12298">RF-12298</a>.
-            </metamer:testPageLink>
+            </metamer:reproducerPageLink>
+
+            <metamer:reproducerPageLink issue="rf-12298" issueName="DropDownMenu: overlay problem in IE 9 (compatibility mode)" resolved="true" demandsAttention="true">
+                Page containing <b>rich:dropDownMenu</b> simulating IE issue.
+            </metamer:reproducerPageLink>
 
         </ui:define>
 

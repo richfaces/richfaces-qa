@@ -56,7 +56,7 @@ public class TestRF14023 extends AbstractWebDriverTest {
 
     @Override
     public String getComponentTestPagePath() {
-        return "richContextMenu/RF-14023.xhtml";
+        return "richContextMenu/rf-14023.xhtml";
     }
 
     @Test

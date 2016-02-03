@@ -47,17 +47,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 Page that contains two push components, bound to different topic. Messages are distributed by CDI. Also for issue <a href="https://issues.jboss.org/browse/RF-12096">rf-12096</a>.
             </metamer:testPageLink>
 
-            <metamer:testPageLink id="rf-13592" outcome="rf-13592" value="RF-13592">
-                Page with multiple pushes to reproduce <a href="https://issues.jboss.org/browse/RF-13592">RF-13592</a>.
-            </metamer:testPageLink>
+            <metamer:reproducerPageLink issue="rf-13592" issueName="a4j:push doesn't work after rendering" resolved="true">
+                Page with multiple pushes.
+            </metamer:reproducerPageLink>
 
-            <metamer:testPageLink id="rf-13928" outcome="rf-13928" value="RF-13928">
-                Page demonstrating issue <a href="https://issues.jboss.org/browse/RF-13928">RF-13928</a>.
-            </metamer:testPageLink>
+            <metamer:reproducerPageLink issue="rf-13928" issueName="a4j:push events (dataavailable) do not trigger a4j:ajax listener" resolved="true" automatized="true"/>
 
-            <metamer:testPageLink id="rf-13929" outcome="rf-13929" value="RF-13929 With TopicsContext">
-                Page demonstrating issue <a href="https://issues.jboss.org/browse/RF-13929">RF-13929</a>.
-            </metamer:testPageLink>
+            <metamer:reproducerPageLink issue="rf-13929" issueName="a4j:push does not work with subtopics and JMS" resolved="true" automatized="true"/>
+
         </ui:define>
 
     </ui:composition>
