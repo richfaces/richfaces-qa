@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.ftest.extension.attributes.coverage.saver;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+import org.apache.commons.lang3.math.Fraction;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.result.CoverageResult;
 
 /**
@@ -35,11 +36,20 @@ public class FullReportResultsSaver extends AbstractResultsSaver {
 
     protected void write(BufferedWriter bw) throws IOException {
         try {
+            int covered = 0, notCovered = 0;
             for (CoverageResult result : getResults()) {
                 bw.append(result.getReport());
                 bw.newLine();
                 bw.flush();
+                covered += result.getCovered().size() + result.getIgnored().size();
+                notCovered += result.getNotCovered().size();
             }
+            Fraction f = Fraction.getFraction(covered, covered + notCovered);
+            bw.append("===========================================================");
+            bw.newLine();
+            bw.append("total coverage: ").append(f.toString()).append(" (").append(String.valueOf((int) (f.doubleValue() * 100))).append("%)");
+            bw.newLine();
+            bw.flush();
         } finally {
             if (bw != null) {
                 bw.close();
