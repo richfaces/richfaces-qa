@@ -44,7 +44,7 @@ import org.testng.annotations.Test;
 @Templates("plain")
 public class TestRF14159 extends AbstractWebDriverTest {
 
-    private static final int LINE_SIZE_PX = 12;
+    private static final int LINE_SIZE_PX = 16;
 
     @FindBy(css = "[id$=openPanelButton]")
     private WebElement openPanelButton;
@@ -59,7 +59,7 @@ public class TestRF14159 extends AbstractWebDriverTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-14159")
     public void testAutosizedPanelShouldResizeAfterRerender() {
-        final int tolerance = 3;
+        final int tolerance = 5;
         // open popup panel
         openPanelButton.click();
         panel.advanced().waitUntilPopupIsVisible().perform();
@@ -93,7 +93,7 @@ public class TestRF14159 extends AbstractWebDriverTest {
 
         @Root
         private WebElement root;
-        @FindBy(tagName = "input")
+        @FindBy(css = "[id$=input]")
         private TextInputComponentImpl input;
         @FindBy(css = "[id$='msg']")
         private RichFacesMessage msg;
