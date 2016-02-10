@@ -25,11 +25,13 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import org.jboss.arquillian.graphene.javascript.JavaScript;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator;
+import org.richfaces.tests.metamer.ftest.richSelect.TestRF14018.JSErrorStorage;
 import org.testng.annotations.Test;
 
 /**
@@ -38,6 +40,9 @@ import org.testng.annotations.Test;
  *
  */
 public class TestDragSource extends AbstractDragSourceTest {
+
+    @JavaScript
+    private JSErrorStorage jsErrorStorage;
 
     @Override
     public String getComponentTestPagePath() {
@@ -78,6 +83,39 @@ public class TestDragSource extends AbstractDragSourceTest {
         testMovingOverDifferentStates();
 
         actionQueue.release(getPage().getDrop1Element()).perform();
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-14229")
+    @CoversAttributes("dragOptions")
+    public void testDragOptionsWithoutHelper() {
+        indicator = new Indicator(getPage().getDefaultIndicatorElement());
+        indicator.setDefaultIndicator(true);
+        dragSourceAttributes.set(DragSourceAttributes.dragOptions, "predefinedWithoutHelper");
+
+        // check no errors are present in browser's console
+        assertEquals(jsErrorStorage.getMessages().size(), 0);
+
+        Actions actionQueue = new Actions(driver);
+
+        actionQueue.clickAndHold(getPage().getDrag1Element()).perform();
+        try {
+            assertFalse(getPage().getDefaultIndicatorElement().isPresent());
+
+            actionQueue.moveByOffset(1, 1).perform();
+            assertTrue(getPage().getDefaultIndicatorElement().isPresent());
+
+            // check indicator has predefined properties from @dragOptions (from JavaScript object 'predefinedWithoutHelper')
+            assertEquals(getPage().getDefaultIndicatorElement().getCssValue("opacity"), "0.5");
+            assertEquals(getPage().getDefaultIndicatorElement().getCssValue("cursor"), "move");
+
+            // check it is working
+            testMovingOverDifferentStates();
+        } finally {
+            actionQueue.release(getPage().getDrop1Element()).perform();
+        }
+        // check no errors are present in browser's console
+        assertEquals(jsErrorStorage.getMessages().size(), 0);
     }
 
     @Test
