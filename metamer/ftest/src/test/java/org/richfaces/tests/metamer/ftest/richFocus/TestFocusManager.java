@@ -25,6 +25,8 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -57,8 +59,9 @@ public class TestFocusManager extends AbstractWebDriverTest {
             "Age input should be focused by focus manager from backing bean!");
     }
 
-    @Test(enabled = false)
-    //TODO: fix sample (id problems)
+    @Test
+    @Skip
+    @IssueTracking("https://issues.jboss.org/browse/RF-14231")
     @Templates(value = { "richCollapsibleSubTable", "richExtendedDataTable", "richDataTable", "richDataGrid", "richList", "a4jRepeat", "uiRepeat" })
     public void testFocusManagerInIterationComponents() {
         testFocusManager();
