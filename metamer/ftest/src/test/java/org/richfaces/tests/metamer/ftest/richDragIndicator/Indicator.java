@@ -27,6 +27,7 @@ import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
+import org.jboss.arquillian.graphene.enricher.WebElementUtils;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -47,8 +48,6 @@ public class Indicator {
     private String acceptClass;
     private String rejectClass;
     private String draggingClass;
-
-    WebElement activeIndicator;
 
     public Indicator(GrapheneElement indicator) {
         this.indicator = indicator;
@@ -150,7 +149,7 @@ public class Indicator {
     }
 
     public WebElement getActiveIndicator() {
-        return driver.findElement(By.cssSelector("body > div.rf-ind"));
+        return WebElementUtils.findElementLazily(By.cssSelector("body > div.rf-ind"), driver);
     }
 
     public enum IndicatorState {

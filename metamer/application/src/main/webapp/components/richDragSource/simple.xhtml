@@ -53,19 +53,8 @@
 
             <h:outputScript>
                 // used in @dragOptions
-                predefined1 = {
-                    helper: "clone",
-                    cursor: "crosshair",
-                    opacity: 0.5,
-                    cursorAt: {
-                        left: 5,
-                        top: 5
-                    }
-                };
-                predefinedWithoutHelper = {
-                    cursor: "move",
-                    opacity: 0.5,
-                };
+                predefinedWithHelper = { helper: "clone", cursor: "crosshair", opacity: 0.75, cursorAt: { left: 5, top: 5 } };
+                predefinedWithoutHelper = { cursor: "move", opacity: 0.85 };
             </h:outputScript>
             <table>
                 <tr>
@@ -83,6 +72,7 @@
                                 <c:otherwise>
                                     <rich:dragSource
                                         dragOptions="#{richDragSourceBean.attributes['dragOptions'].value}"
+                                        dragIndicator="#{richDragSourceBean.attributes['dragIndicator'].value}"
                                         dragValue="#{richDragSourceBean.dragValues[0]}"
                                         type="#{richDragSourceBean.attributes['type'].value}"
                                         rendered="#{richDragSourceBean.attributes['rendered'].value}"  />
