@@ -45,7 +45,7 @@ public class TestFocusManager extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
-    @Templates(exclude = { "richCollapsibleSubTable", "richExtendedDataTable", "richDataTable", "richDataGrid", "richList", "a4jRepeat", "uiRepeat" })
+    @Templates(exclude = { "richCollapsibleSubTable" })
     public void testFocusManager() {
         // workaround to get the keyboard interface working, need to interact with page first
         getMetamerPage().getResponseDelayElement().click();
@@ -62,8 +62,8 @@ public class TestFocusManager extends AbstractWebDriverTest {
     @Test
     @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-14231")
-    @Templates(value = { "richCollapsibleSubTable", "richExtendedDataTable", "richDataTable", "richDataGrid", "richList", "a4jRepeat", "uiRepeat" })
-    public void testFocusManagerInIterationComponents() {
+    @Templates(value = { "richCollapsibleSubTable" })
+    public void testFocusManagerInCST() {
         testFocusManager();
     }
 }
