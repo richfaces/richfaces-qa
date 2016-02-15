@@ -61,23 +61,12 @@
                     <td>
                         <a4j:outputPanel id="draggable1" layout="block" styleClass="metamer-draggable" style="border: 3px solid red">
                             <h:outputText value="#1: type=#{richDragSourceBean.attributes['type'].value}" />
-                            <c:choose>
-                                <c:when test="#{empty richDragSourceBean.attributes['dragOptions'].value}">
-                                    <rich:dragSource
-                                        dragValue="#{richDragSourceBean.dragValues[0]}"
-                                        dragIndicator="#{richDragSourceBean.attributes['dragIndicator'].value}"
-                                        type="#{richDragSourceBean.attributes['type'].value}"
-                                        rendered="#{richDragSourceBean.attributes['rendered'].value}"  />
-                                </c:when>
-                                <c:otherwise>
-                                    <rich:dragSource
-                                        dragOptions="#{richDragSourceBean.attributes['dragOptions'].value}"
-                                        dragIndicator="#{richDragSourceBean.attributes['dragIndicator'].value}"
-                                        dragValue="#{richDragSourceBean.dragValues[0]}"
-                                        type="#{richDragSourceBean.attributes['type'].value}"
-                                        rendered="#{richDragSourceBean.attributes['rendered'].value}"  />
-                                </c:otherwise>
-                            </c:choose>
+                            <rich:dragSource
+                                dragOptions="#{richDragSourceBean.attributes['dragOptions'].value}"
+                                dragIndicator="#{richDragSourceBean.attributes['dragIndicator'].value}"
+                                dragValue="#{richDragSourceBean.dragValues[0]}"
+                                type="#{richDragSourceBean.attributes['type'].value}"
+                                rendered="#{richDragSourceBean.attributes['rendered'].value}"  />
                         </a4j:outputPanel>
                     </td>
                     <td>
