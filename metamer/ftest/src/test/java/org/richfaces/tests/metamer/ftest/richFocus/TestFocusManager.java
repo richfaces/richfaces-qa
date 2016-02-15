@@ -25,9 +25,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
-import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -45,7 +43,7 @@ public class TestFocusManager extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
-    @Templates(exclude = { "richCollapsibleSubTable" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-14231")
     public void testFocusManager() {
         // workaround to get the keyboard interface working, need to interact with page first
         getMetamerPage().getResponseDelayElement().click();
@@ -57,13 +55,5 @@ public class TestFocusManager extends AbstractWebDriverTest {
         String actual = page.getAgeInput().getStringValue();
         Assert.assertEquals(actual, AbstractFocusPage.EXPECTED_STRING,
             "Age input should be focused by focus manager from backing bean!");
-    }
-
-    @Test
-    @Skip
-    @IssueTracking("https://issues.jboss.org/browse/RF-14231")
-    @Templates(value = { "richCollapsibleSubTable" })
-    public void testFocusManagerInCST() {
-        testFocusManager();
     }
 }

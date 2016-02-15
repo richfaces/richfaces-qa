@@ -22,6 +22,8 @@
 package org.richfaces.tests.metamer.bean.rich;
 
 import java.io.Serializable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -47,7 +49,7 @@ import org.slf4j.LoggerFactory;
 public class RichFocusBean implements Serializable {
 
     private static final String AGE_STRING = "age";
-    private static final String SEPARATOR_STRING = ":";
+    private static final Pattern PATTERN = Pattern.compile("(:\\d+.*)");
     private static Logger logger;
     private static final long serialVersionUID = 111475400679809L;
 
@@ -70,9 +72,10 @@ public class RichFocusBean implements Serializable {
         String ageId = AGE_STRING;
         String componentPrefix = templateBean.getComponentPrefix();
         if (!componentPrefix.isEmpty()) {
-            String[] split = componentPrefix.split(SEPARATOR_STRING);
-            String last = split[split.length - 1];
-            ageId = SEPARATOR_STRING + last + SEPARATOR_STRING + ageId;
+            Matcher m = PATTERN.matcher(componentPrefix);
+            if (m.find()) {
+                ageId = m.group(0) + ageId;
+            }
         }
         return ageId;
     }
