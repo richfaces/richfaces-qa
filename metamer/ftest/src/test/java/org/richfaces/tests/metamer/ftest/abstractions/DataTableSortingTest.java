@@ -21,7 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.abstractions;
 
-import static java.lang.String.format;
 import static org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton.FIRST;
 import static org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton.LAST;
 import static org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes.sortMode;
@@ -32,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.richfaces.fragment.dataTable.AbstractTable;
@@ -41,228 +41,33 @@ import org.richfaces.tests.metamer.ftest.abstractions.fragments.SortingHeaderInt
 import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.model.Employee;
-import org.richfaces.tests.metamer.model.Employee.Sex;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
 public abstract class DataTableSortingTest extends AbstractDataTableTest {
 
-    int rowIndex;
-    int modelIndex;
-    List<Employee> sortedEmployees;
-    private boolean isBuiltIn = false;
-
-    protected abstract AbstractTable<? extends SortingHeaderInterface, ? extends FilteringRowInterface, ?> getTable();
-
     private final Attributes<DataTableAttributes> dataTableAttributes = getAttributes();
+    private boolean isBuiltIn = false;
+    int modelIndex;
+    int rowIndex;
+    List<Employee> sortedEmployees;
 
-    public void testSortModeSingle() {
-        dataTableAttributes.set(sortMode, SortMode.single);
-
-        sortByColumn(COLUMN_TITLE);
-        verifySortingByColumns("title");
-
-        sortByColumn(COLUMN_SEX);
-        verifySortingByColumns("sex");
-
-        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
-        verifySortingByColumns("numberOfKids");
-
-        sortByColumn(COLUMN_TITLE);
-        verifySortingByColumns("title");
-    }
-
-    public void testSortModeSingleReverse() {
-        dataTableAttributes.set(sortMode, SortMode.single);
-
-        sortByColumn(COLUMN_SEX);
-        sortByColumn(COLUMN_SEX);
-        verifySortingByColumns("sex-");
-
-        sortByColumn(COLUMN_TITLE);
-        sortByColumn(COLUMN_TITLE);
-        verifySortingByColumns("title-");
-
-        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
-        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
-        verifySortingByColumns("numberOfKids-");
-
-        sortByColumn(COLUMN_NAME);
-        sortByColumn(COLUMN_NAME);
-        verifySortingByColumns("name-");
-    }
-
-    public void testSortModeSingleRerenderAll() {
-        dataTableAttributes.set(sortMode, SortMode.single);
-
-        sortByColumn(COLUMN_NAME);
-        verifySortingByColumns("name");
-
-        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
-        verifySortingByColumns("numberOfKids");
-
-        getMetamerPage().rerenderAll();
-        verifySortingByColumns("numberOfKids");
-    }
-
-    public void testSortModeSingleFullPageRefresh() {
-        dataTableAttributes.set(sortMode, SortMode.single);
-
-        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
-        verifySortingByColumns("numberOfKids");
-
-        sortByColumn(COLUMN_TITLE);
-        verifySortingByColumns("title");
-
-        getMetamerPage().fullPageRefresh();
-        verifySortingByColumns("title");
-    }
-
-    public void testSortModeMulti() {
-        dataTableAttributes.set(sortMode, SortMode.multi);
-
-        sortByColumn(COLUMN_TITLE);
-        verifySortingByColumns("title");
-
-        sortByColumn(COLUMN_SEX);
-        verifySortingByColumns("title", "sex");
-
-        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
-        verifySortingByColumns("title", "sex", "numberOfKids");
-
-        sortByColumn(COLUMN_NAME);
-        verifySortingByColumns("title", "sex", "numberOfKids", "name");
-    }
-
-    public void testSortModeMultiReverse() {
-        dataTableAttributes.set(sortMode, SortMode.multi);
-
-        sortByColumn(COLUMN_TITLE);
-        sortByColumn(COLUMN_TITLE);
-        verifySortingByColumns("title-");
-
-        sortByColumn(COLUMN_SEX);
-        sortByColumn(COLUMN_SEX);
-        verifySortingByColumns("title-", "sex-");
-
-        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
-        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
-        verifySortingByColumns("title-", "sex-", "numberOfKids-");
-
-        sortByColumn(COLUMN_NAME);
-        sortByColumn(COLUMN_NAME);
-        verifySortingByColumns("title-", "sex-", "numberOfKids-", "name-");
-    }
-
-    public void testSortModeMultiReplacingOldOccurences() {
-        dataTableAttributes.set(sortMode, SortMode.multi);
-
-        sortByColumn(COLUMN_TITLE);
-        verifySortingByColumns("title");
-
-        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
-        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
-        verifySortingByColumns("title", "numberOfKids-");
-
-        sortByColumn(COLUMN_TITLE);
-        verifySortingByColumns("numberOfKids-", "title-");
-    }
-
-    public void testSortModeMultiRerenderAll() {
-        dataTableAttributes.set(sortMode, SortMode.multi);
-
-        sortByColumn(COLUMN_TITLE);
-        verifySortingByColumns("title");
-
-        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
-        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
-        verifySortingByColumns("title", "numberOfKids-");
-
-        sortByColumn(COLUMN_TITLE);
-        verifySortingByColumns("numberOfKids-", "title-");
-
-        getMetamerPage().rerenderAll();
-        verifySortingByColumns("numberOfKids-", "title-");
-    }
-
-    public void testSortModeMultiFullPageRefresh() {
-        dataTableAttributes.set(sortMode, SortMode.multi);
-
-        sortByColumn(COLUMN_TITLE);
-        verifySortingByColumns("title");
-
-        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
-        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
-        verifySortingByColumns("title", "numberOfKids-");
-
-        sortByColumn(COLUMN_TITLE);
-        verifySortingByColumns("numberOfKids-", "title-");
-
-        getMetamerPage().fullPageRefresh();
-        verifySortingByColumns("numberOfKids-", "title-");
-    }
-
-    public void sortByColumn(int column) {
-        switch (column) {
-            case COLUMN_SEX:
-                getTable().getHeader().sortBySex(isBuiltIn);
-                break;
-            case COLUMN_NAME:
-                getTable().getHeader().sortByName(isBuiltIn);
-                break;
-            case COLUMN_TITLE:
-                getTable().getHeader().sortByTitle(isBuiltIn);
-                break;
-            case COLUMN_NUMBER_OF_KIDS1:
-                getTable().getHeader().sortByNumberOfKids(isBuiltIn);
-                break;
-            default:
-                throw new IllegalArgumentException("Wrong number of column passed! Such does not exist!");
-        }
-    }
-
-    public void verifySortingByColumns(String... columns) {
-        Comparator<Employee> employeeComparator = getPropertyComparator(Employee.class, columns);
-        sortedEmployees = new ArrayList<Employee>(EMPLOYEES);
-        Collections.sort(sortedEmployees, employeeComparator);
-
-        if (dataScroller2.hasPages() && dataScroller2.getActivePageNumber() != 1) {
-            dataScroller2.switchTo(FIRST);
-        }
-
-        int pageRows = getTable().advanced().getNumberOfVisibleRows();
-
-        for (Integer row : getListWithTestPages(pageRows)) {
-            verifyRow(row, row);
-        }
-
-        dataScroller2.switchTo(LAST);
-
-        pageRows = getTable().advanced().getNumberOfVisibleRows();
-
-        for (Integer row : getListWithTestPages(pageRows)) {
-            modelIndex = EMPLOYEES.size() - pageRows + row;
-            verifyRow(row, modelIndex);
-        }
-    }
-
-    public void verifyRow(int rowIndex, int modelIndex) {
-        Employee employee = sortedEmployees.get(modelIndex);
-
-        Sex sex = getTable().getRow(rowIndex).getSexColumnValue();
-        String name = getTable().getRow(rowIndex).getNameColumnValue();
-        String title = getTable().getRow(rowIndex).getTitleColumnValue();
-        int numberOfKids = getTable().getRow(rowIndex).getNumberOfKids1ColumnValue();
-
-        String message = format(
-            "model: {0}; row: {1}; employee: {2}; found: sex '{3}', name '{4}', title '{5}', numberOfKids '{6}'", modelIndex,
-            rowIndex, employee, sex, name, title, numberOfKids);
-
-        assertEquals(sex, employee.getSex(), message);
-        assertEquals(name, employee.getName(), message);
-        assertEquals(title, employee.getTitle(), message);
-        assertEquals(numberOfKids, employee.getNumberOfKids(), message);
+    /**
+     * Created a list containing five number of rows to be tested. These number are relative to the amount of rows visible on
+     * page.
+     *
+     * @param visiblePageRows number of visible table rows on page
+     * @return List containing five numbers (int) of rows to test. These numbers are relative to number of rows on page.
+     */
+    private List<Integer> getListWithTestPages(int visiblePageRows) {
+        List<Integer> rowsToTest = new ArrayList<Integer>();
+        rowsToTest.add(0); // first item
+        rowsToTest.add((int) Math.round((visiblePageRows - 1) / 2 - 0.5 * (visiblePageRows - 1) / 2)); // item in first quarter
+        rowsToTest.add((int) Math.round((visiblePageRows - 1) / 2)); // item in half
+        rowsToTest.add((int) Math.round((visiblePageRows - 1) / 2 + 0.5 * (visiblePageRows - 1) / 2)); // item in third quarter
+        rowsToTest.add(visiblePageRows - 1); // last item
+        return Collections.unmodifiableList(rowsToTest);
     }
 
     public <T> Comparator<T> getPropertyComparator(final Class<T> classT, final String... properties) {
@@ -308,24 +113,233 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
         };
     }
 
-    /**
-     * Created a list containing five number of rows to be tested. These number are relative to the amount of rows visible on
-     * page.
-     *
-     * @param visiblePageRows number of visible table rows on page
-     * @return List containing five numbers (int) of rows to test. These numbers are relative to number of rows on page.
-     */
-    private List<Integer> getListWithTestPages(int visiblePageRows) {
-        List<Integer> rowsToTest = new ArrayList<Integer>();
-        rowsToTest.add(0); // first item
-        rowsToTest.add((int) Math.round((visiblePageRows - 1) / 2 - 0.5 * (visiblePageRows - 1) / 2)); // item in first quarter
-        rowsToTest.add((int) Math.round((visiblePageRows - 1) / 2)); // item in half
-        rowsToTest.add((int) Math.round((visiblePageRows - 1) / 2 + 0.5 * (visiblePageRows - 1) / 2)); // item in third quarter
-        rowsToTest.add(visiblePageRows - 1); // last item
-        return Collections.unmodifiableList(rowsToTest);
-    }
+    protected abstract AbstractTable<? extends SortingHeaderInterface, ? extends FilteringRowInterface, ?> getTable();
 
     public void setBuiltIn(boolean isBuiltIn) {
         this.isBuiltIn = isBuiltIn;
+    }
+
+    public void sortByColumn(int column) {
+        switch (column) {
+            case COLUMN_SEX:
+                getTable().getHeader().sortBySex(isBuiltIn);
+                break;
+            case COLUMN_NAME:
+                getTable().getHeader().sortByName(isBuiltIn);
+                break;
+            case COLUMN_TITLE:
+                getTable().getHeader().sortByTitle(isBuiltIn);
+                break;
+            case COLUMN_NUMBER_OF_KIDS1:
+                getTable().getHeader().sortByNumberOfKids(isBuiltIn);
+                break;
+            default:
+                throw new IllegalArgumentException("Wrong number of column passed! Such does not exist!");
+        }
+    }
+
+    public void testSortModeMulti() {
+        dataTableAttributes.set(sortMode, SortMode.multi);
+
+        sortByColumn(COLUMN_TITLE);
+        verifySortingByColumns("title");
+
+        sortByColumn(COLUMN_SEX);
+        verifySortingByColumns("title", "sex");
+
+        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
+        verifySortingByColumns("title", "sex", "numberOfKids");
+
+        sortByColumn(COLUMN_NAME);
+        verifySortingByColumns("title", "sex", "numberOfKids", "name");
+    }
+
+    public void testSortModeMultiFullPageRefresh() {
+        dataTableAttributes.set(sortMode, SortMode.multi);
+
+        sortByColumn(COLUMN_TITLE);
+        verifySortingByColumns("title");
+
+        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
+        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
+        verifySortingByColumns("title", "numberOfKids-");
+
+        sortByColumn(COLUMN_TITLE);
+        verifySortingByColumns("numberOfKids-", "title-");
+
+        getMetamerPage().fullPageRefresh();
+        verifySortingByColumns("numberOfKids-", "title-");
+    }
+
+    public void testSortModeMultiReplacingOldOccurences() {
+        dataTableAttributes.set(sortMode, SortMode.multi);
+
+        sortByColumn(COLUMN_TITLE);
+        verifySortingByColumns("title");
+
+        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
+        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
+        verifySortingByColumns("title", "numberOfKids-");
+
+        sortByColumn(COLUMN_TITLE);
+        verifySortingByColumns("numberOfKids-", "title-");
+    }
+
+    public void testSortModeMultiRerenderAll() {
+        dataTableAttributes.set(sortMode, SortMode.multi);
+
+        sortByColumn(COLUMN_TITLE);
+        verifySortingByColumns("title");
+
+        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
+        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
+        verifySortingByColumns("title", "numberOfKids-");
+
+        sortByColumn(COLUMN_TITLE);
+        verifySortingByColumns("numberOfKids-", "title-");
+
+        getMetamerPage().rerenderAll();
+        verifySortingByColumns("numberOfKids-", "title-");
+    }
+
+    public void testSortModeMultiReverse() {
+        dataTableAttributes.set(sortMode, SortMode.multi);
+
+        sortByColumn(COLUMN_TITLE);
+        sortByColumn(COLUMN_TITLE);
+        verifySortingByColumns("title-");
+
+        sortByColumn(COLUMN_SEX);
+        sortByColumn(COLUMN_SEX);
+        verifySortingByColumns("title-", "sex-");
+
+        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
+        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
+        verifySortingByColumns("title-", "sex-", "numberOfKids-");
+
+        sortByColumn(COLUMN_NAME);
+        sortByColumn(COLUMN_NAME);
+        verifySortingByColumns("title-", "sex-", "numberOfKids-", "name-");
+    }
+
+    public void testSortModeSingle() {
+        dataTableAttributes.set(sortMode, SortMode.single);
+
+        sortByColumn(COLUMN_TITLE);
+        verifySortingByColumns("title");
+
+        sortByColumn(COLUMN_SEX);
+        verifySortingByColumns("sex");
+
+        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
+        verifySortingByColumns("numberOfKids");
+
+        sortByColumn(COLUMN_TITLE);
+        verifySortingByColumns("title");
+    }
+
+    public void testSortModeSingleFullPageRefresh() {
+        dataTableAttributes.set(sortMode, SortMode.single);
+
+        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
+        verifySortingByColumns("numberOfKids");
+
+        sortByColumn(COLUMN_TITLE);
+        verifySortingByColumns("title");
+
+        getMetamerPage().fullPageRefresh();
+        verifySortingByColumns("title");
+    }
+
+    public void testSortModeSingleRerenderAll() {
+        dataTableAttributes.set(sortMode, SortMode.single);
+
+        sortByColumn(COLUMN_NAME);
+        verifySortingByColumns("name");
+
+        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
+        verifySortingByColumns("numberOfKids");
+
+        getMetamerPage().rerenderAll();
+        verifySortingByColumns("numberOfKids");
+    }
+
+    public void testSortModeSingleReverse() {
+        dataTableAttributes.set(sortMode, SortMode.single);
+
+        sortByColumn(COLUMN_SEX);
+        sortByColumn(COLUMN_SEX);
+        verifySortingByColumns("sex-");
+
+        sortByColumn(COLUMN_TITLE);
+        sortByColumn(COLUMN_TITLE);
+        verifySortingByColumns("title-");
+
+        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
+        sortByColumn(COLUMN_NUMBER_OF_KIDS1);
+        verifySortingByColumns("numberOfKids-");
+
+        sortByColumn(COLUMN_NAME);
+        sortByColumn(COLUMN_NAME);
+        verifySortingByColumns("name-");
+    }
+
+    public void verifyRow(int rowIndex, int modelIndex) {
+        verifyRow(rowIndex, modelIndex, Collections.EMPTY_SET);
+    }
+
+    public void verifyRow(int rowIndex, int modelIndex, Set<Integer> hiddenColumns) {
+        Employee employee = sortedEmployees.get(modelIndex);
+        FilteringRowInterface row = getTable().getRow(rowIndex);
+
+        if (hiddenColumns.contains(0)) {
+            assertNotVisible(row.getSexColumnElement(), "Column should not be visible.");
+        } else {
+            assertEquals(row.getSexColumnValue(), employee.getSex());
+        }
+        if (hiddenColumns.contains(1)) {
+            assertNotVisible(row.getNameColumnElement(), "Column should not be visible.");
+        } else {
+            assertEquals(row.getNameColumnValue(), employee.getName());
+        }
+        if (hiddenColumns.contains(2)) {
+            assertNotVisible(row.getTitleColumnElement(), "Column should not be visible.");
+        } else {
+            assertEquals(row.getTitleColumnValue(), employee.getTitle());
+        }
+        if (hiddenColumns.contains(3)) {
+            assertNotVisible(row.getNumberOfKids1ColumnElement(), "Column should not be visible.");
+        } else {
+            assertEquals(row.getNumberOfKids1ColumnValue(), employee.getNumberOfKids());
+        }
+    }
+
+    public void verifySortingByColumns(String... columns) {
+        verifySortingByColumns(Collections.EMPTY_SET, columns);
+    }
+
+    public void verifySortingByColumns(Set<Integer> hiddenColumns, String... columns) {
+        Comparator<Employee> employeeComparator = getPropertyComparator(Employee.class, columns);
+        sortedEmployees = new ArrayList<Employee>(EMPLOYEES);
+        Collections.sort(sortedEmployees, employeeComparator);
+
+        if (dataScroller2.hasPages() && dataScroller2.getActivePageNumber() != 1) {
+            dataScroller2.switchTo(FIRST);
+        }
+
+        int pageRows = getTable().advanced().getNumberOfVisibleRows();
+
+        for (Integer row : getListWithTestPages(pageRows)) {
+            verifyRow(row, row, hiddenColumns);
+        }
+
+        dataScroller2.switchTo(LAST);
+
+        pageRows = getTable().advanced().getNumberOfVisibleRows();
+
+        for (Integer row : getListWithTestPages(pageRows)) {
+            modelIndex = EMPLOYEES.size() - pageRows + row;
+            verifyRow(row, modelIndex, hiddenColumns);
+        }
     }
 }

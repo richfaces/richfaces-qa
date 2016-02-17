@@ -1,16 +1,14 @@
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
 import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
-import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SortingEDT;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class TestExtendedDataTableSortingBuiltIn extends DataTableSortingTest {
+public class TestExtendedDataTableSortingBuiltIn extends ExtendedDataTableSortingTest {
 
     private final Action ajaxAction = new Action() {
         @Override
@@ -19,17 +17,9 @@ public class TestExtendedDataTableSortingBuiltIn extends DataTableSortingTest {
         }
     };
 
-    @FindBy(css = "div.rf-edt[id$=richEDT]")
-    private SortingEDT table;
-
     @Override
     public String getComponentTestPagePath() {
         return "richExtendedDataTable/builtInFilteringAndSorting.xhtml";
-    }
-
-    @Override
-    protected SortingEDT getTable() {
-        return table;
     }
 
     @BeforeTest
@@ -47,6 +37,18 @@ public class TestExtendedDataTableSortingBuiltIn extends DataTableSortingTest {
     @CoversAttributes("render")
     public void testRender() {
         testRender(ajaxAction);
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-7872")
+    public void testShowColumnControlHideAllColumnsAndScroll() {
+        super.testShowColumnControlHideAllColumnsAndScroll();
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-7872")
+    public void testShowColumnControlWithSorting() {
+        super.testShowColumnControlWithSorting();
     }
 
     @Test

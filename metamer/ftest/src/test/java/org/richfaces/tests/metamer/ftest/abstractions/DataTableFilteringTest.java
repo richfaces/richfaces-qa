@@ -27,7 +27,9 @@ import static org.testng.Assert.assertTrue;
 
 import java.text.MessageFormat;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -240,24 +242,32 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
     }
 
     public void verifyFiltering() {
+        verifyFiltering(Collections.EMPTY_SET);
+    }
+
+    public void verifyFiltering(Set<Integer> hiddenColumns) {
         // prepare expected employees
         expectedEmployees = filter(EMPLOYEES, getFilter());
-        verifyPageContent(1); // verify first page
+        verifyPageContent(1, hiddenColumns); // verify first page
 
         if (dataScroller2.advanced().getCountOfVisiblePages() > 1) {
             dataScroller2.switchTo(LAST);
             int lastPage = dataScroller2.getActivePageNumber();
-            verifyPageContent(lastPage); // verify last page
+            verifyPageContent(lastPage, hiddenColumns); // verify last page
             if (lastPage > 2) {
-                verifyPageContent(lastPage - 1);// verify a page before last page
+                verifyPageContent(lastPage - 1, hiddenColumns);// verify a page before last page
             }
             if (lastPage > 3) {
-                verifyPageContent(lastPage / 2);// verify some page in the middle
+                verifyPageContent(lastPage / 2, hiddenColumns);// verify some page in the middle
             }
         }
     }
 
     public void verifyPageContent(int page) {
+        verifyPageContent(page, Collections.EMPTY_SET);
+    }
+
+    public void verifyPageContent(int page, Set<Integer> hiddenColumns) {
         if (dataScroller2.advanced().getCountOfVisiblePages() > 0) {
             dataScroller2.switchTo(page);
         }
@@ -286,12 +296,12 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
         } else {
             // check all visible rows
             for (int rowNumber = 0; rowNumber < numberOfVisibleRows; rowNumber++) {
-                verifyRow(expectedEmployees.get((page - 1) * MAX_VISIBLE_ROWS + rowNumber), rowNumber);
+                verifyRow(expectedEmployees.get((page - 1) * MAX_VISIBLE_ROWS + rowNumber), rowNumber, hiddenColumns);
             }
         }
     }
 
-    protected void verifyRow(final Employee expectedEmployee, final int rowNumber) {
+    protected void verifyRow(final Employee expectedEmployee, final int rowNumber, final Set<Integer> hiddenColumns) {
         Graphene.waitModel().until(new Predicate<WebDriver>() {
             private Throwable lastException;
 
@@ -299,11 +309,31 @@ public abstract class DataTableFilteringTest extends AbstractDataTableTest {
             public boolean apply(WebDriver t) {
                 FilteringRowInterface actualRow = getTable().getRow(rowNumber);
                 try {
-                    assertEquals(actualRow.getSexColumnValue(), expectedEmployee.getSex());
-                    assertEquals(actualRow.getNameColumnValue(), expectedEmployee.getName());
-                    assertEquals(actualRow.getTitleColumnValue(), expectedEmployee.getTitle());
-                    assertEquals(actualRow.getNumberOfKids1ColumnValue(), expectedEmployee.getNumberOfKids());
-                    assertEquals(actualRow.getNumberOfKids2ColumnValue(), expectedEmployee.getNumberOfKids());
+                    if (hiddenColumns.contains(0)) {
+                        assertNotVisible(actualRow.getSexColumnElement(), "Column should not be visible");
+                    } else {
+                        assertEquals(actualRow.getSexColumnValue(), expectedEmployee.getSex());
+                    }
+                    if (hiddenColumns.contains(1)) {
+                        assertNotVisible(actualRow.getNameColumnElement(), "Column should not be visible");
+                    } else {
+                        assertEquals(actualRow.getNameColumnValue(), expectedEmployee.getName());
+                    }
+                    if (hiddenColumns.contains(2)) {
+                        assertNotVisible(actualRow.getTitleColumnElement(), "Column should not be visible");
+                    } else {
+                        assertEquals(actualRow.getTitleColumnValue(), expectedEmployee.getTitle());
+                    }
+                    if (hiddenColumns.contains(3)) {
+                        assertNotVisible(actualRow.getNumberOfKids1ColumnElement(), "Column should not be visible");
+                    } else {
+                        assertEquals(actualRow.getNumberOfKids1ColumnValue(), expectedEmployee.getNumberOfKids());
+                    }
+                    if (hiddenColumns.contains(4)) {
+                        assertNotVisible(actualRow.getNumberOfKids2ColumnElement(), "Column should not be visible");
+                    } else {
+                        assertEquals(actualRow.getNumberOfKids2ColumnValue(), expectedEmployee.getNumberOfKids());
+                    }
                 } catch (Throwable exc) {
                     lastException = exc;
                     return false;

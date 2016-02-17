@@ -21,14 +21,11 @@
  */
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
-import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SortingEDT;
 import org.testng.annotations.Test;
 
 /**
@@ -38,19 +35,23 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22664 $
  */
-public class TestExtendedDataTableSortingUsingColumn extends DataTableSortingTest {
-
-    @FindByJQuery("div.rf-edt[id$=richEDT]")
-    private SortingEDT table;
+public class TestExtendedDataTableSortingUsingColumn extends ExtendedDataTableSortingTest {
 
     @Override
     public String getComponentTestPagePath() {
         return "richExtendedDataTable/sorting-using-column.xhtml";
     }
 
-    @Override
-    protected SortingEDT getTable() {
-        return table;
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-7872")
+    public void testShowColumnControlHideAllColumnsAndScroll() {
+        super.testShowColumnControlHideAllColumnsAndScroll();
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-7872")
+    public void testShowColumnControlWithSorting() {
+        super.testShowColumnControlWithSorting();
     }
 
     @Test

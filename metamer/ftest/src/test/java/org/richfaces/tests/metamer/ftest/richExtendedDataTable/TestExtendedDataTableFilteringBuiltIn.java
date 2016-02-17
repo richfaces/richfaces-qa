@@ -21,36 +21,25 @@
  */
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.popupPanel.PopupPanel.ResizerLocation;
-import org.richfaces.tests.metamer.ftest.abstractions.DataTableFilteringTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
-import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.FilteringEDT;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class TestExtendedDataTableFilteringBuiltIn extends DataTableFilteringTest {
+public class TestExtendedDataTableFilteringBuiltIn extends ExtendedDataTableFilteringTest {
 
     private final Action ajaxAction = new Action() {
         @Override
         public void perform() {
-            table.getHeader().filterNameBuiltIn("a");
+            getTable().getHeader().filterNameBuiltIn("a");
         }
     };
-
-    @FindByJQuery("div.rf-edt[id$=richEDT]")
-    private FilteringEDT table;
 
     @Override
     public String getComponentTestPagePath() {
         return "richExtendedDataTable/builtInFilteringAndSorting.xhtml";
-    }
-
-    @Override
-    protected FilteringEDT getTable() {
-        return table;
     }
 
     @BeforeMethod(dependsOnMethods = { "loadPage", "setup" })
@@ -139,5 +128,17 @@ public class TestExtendedDataTableFilteringBuiltIn extends DataTableFilteringTes
     @CoversAttributes("render")
     public void testRender() {
         testRender(ajaxAction);
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-7872")
+    public void testShowColumnControlHideAllColumnsAndScroll() {
+        super.testShowColumnControlHideAllColumnsAndScroll();
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-7872")
+    public void testShowColumnControlWithFiltering() {
+        super.testShowColumnControlWithFiltering(true);
     }
 }

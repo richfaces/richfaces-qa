@@ -23,38 +23,59 @@ package org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.jboss.arquillian.graphene.javascript.JavaScript;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SortingHeaderInterface;
+import org.richfaces.tests.metamer.ftest.webdriver.utils.MetamerJavascriptUtils;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
 public class SortingEDTHeader implements SortingHeaderInterface {
 
-    @FindByJQuery(".rf-edt-hdr-c-cnt:eq(0) a")
-    private WebElement sexSortingAnchor;
+    @ArquillianResource
+    private WebDriver browser;
+
+    private ColumnControl cc;
+    @FindBy(className = "rf-edt-colctrl-btn")
+    private WebElement columnControlButton;
+    @JavaScript
+    protected MetamerJavascriptUtils jsUtils;
     @FindByJQuery(".rf-edt-hdr-c-cnt:eq(1) a")
     private WebElement nameSortingAnchor;
-    @FindByJQuery(".rf-edt-hdr-c-cnt:eq(2) a")
-    private WebElement titleSortingAnchor;
-    @FindByJQuery(".rf-edt-hdr-c-cnt:eq(3) a")
-    private WebElement numberOfKidsSortingAnchor;
-    @FindByJQuery(".rf-edt-c-srt:eq(0)")
-    private WebElement sexSortingBuiltIn;
     @FindByJQuery(".rf-edt-c-srt:eq(1)")
     private WebElement nameSortingBuiltIn;
+    @FindByJQuery(".rf-edt-hdr-c-cnt:eq(3) a")
+    private WebElement numberOfKidsSortingAnchor;
+    @FindByJQuery(value = ".rf-edt-c-srt:eq(3)")
+    private WebElement numberOfKidsSortingBuiltIn;
+    @FindByJQuery(value = ".rf-edt-hdr-c-cnt:eq(0) a")
+    private WebElement sexSortingAnchor;
+    @FindByJQuery(".rf-edt-c-srt:eq(0)")
+    private WebElement sexSortingBuiltIn;
+    @FindByJQuery(".rf-edt-hdr-c-cnt:eq(2) a")
+    private WebElement titleSortingAnchor;
     @FindByJQuery(".rf-edt-c-srt:eq(2)")
     private WebElement titleSortingBuiltIn;
-    @FindByJQuery(".rf-edt-c-srt:eq(3)")
-    private WebElement numberOfKidsSortingBuiltIn;
 
-    @Override
-    public void sortBySex(boolean isBuiltIn) {
-        if (isBuiltIn) {
-            sortByColumn(sexSortingBuiltIn);
-        } else {
-            sortByColumn(sexSortingAnchor);
+    public ColumnControl openColumnControl() {
+        if (cc == null) {
+            cc = Graphene.createPageFragment(ColumnControl.class, browser.findElement(By.className("rf-edt-colctrl")));
         }
+        if (!cc.isVisible()) {
+            jsUtils.scrollToView(columnControlButton);
+            columnControlButton.click();
+            cc.waitUntilIsVisible();
+        }
+        return cc;
+    }
+
+    private void sortByColumn(WebElement sortingTrigger) {
+        Graphene.guardAjax(sortingTrigger).click();
     }
 
     @Override
@@ -67,15 +88,6 @@ public class SortingEDTHeader implements SortingHeaderInterface {
     }
 
     @Override
-    public void sortByTitle(boolean isBuiltIn) {
-        if (isBuiltIn) {
-            sortByColumn(titleSortingBuiltIn);
-        } else {
-            sortByColumn(titleSortingAnchor);
-        }
-    }
-
-    @Override
     public void sortByNumberOfKids(boolean isBuiltIn) {
         if (isBuiltIn) {
             sortByColumn(numberOfKidsSortingBuiltIn);
@@ -84,7 +96,21 @@ public class SortingEDTHeader implements SortingHeaderInterface {
         }
     }
 
-    private void sortByColumn(WebElement sortingTrigger) {
-        Graphene.guardAjax(sortingTrigger).click();
+    @Override
+    public void sortBySex(boolean isBuiltIn) {
+        if (isBuiltIn) {
+            sortByColumn(sexSortingBuiltIn);
+        } else {
+            sortByColumn(sexSortingAnchor);
+        }
+    }
+
+    @Override
+    public void sortByTitle(boolean isBuiltIn) {
+        if (isBuiltIn) {
+            sortByColumn(titleSortingBuiltIn);
+        } else {
+            sortByColumn(titleSortingAnchor);
+        }
     }
 }

@@ -21,30 +21,20 @@
  */
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.richfaces.tests.metamer.ftest.abstractions.DataTableFilteringTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
-import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.FilteringEDT;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22664 $
  */
-public class TestExtendedDataTableFiltering extends DataTableFilteringTest {
-
-    @FindByJQuery("div.rf-edt[id$=richEDT]")
-    private FilteringEDT table;
+public class TestExtendedDataTableFiltering extends ExtendedDataTableFilteringTest {
 
     @Override
     public String getComponentTestPagePath() {
         return "richExtendedDataTable/filtering.xhtml";
-    }
-
-    @Override
-    protected FilteringEDT getTable() {
-        return table;
     }
 
     @Test
@@ -82,5 +72,17 @@ public class TestExtendedDataTableFiltering extends DataTableFilteringTest {
     @IssueTracking("https://issues.jboss.org/browse/RF-9932 http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790")
     public void testRerenderAll() {
         super.testRerenderAll(false);
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-7872")
+    public void testShowColumnControlHideAllColumnsAndScroll() {
+        super.testShowColumnControlHideAllColumnsAndScroll();
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-7872")
+    public void testShowColumnControlWithFiltering() {
+        super.testShowColumnControlWithFiltering(false);
     }
 }

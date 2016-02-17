@@ -21,17 +21,32 @@
  */
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment;
 
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.javascript.JavaScript;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.fragment.inputNumberSpinner.RichFacesInputNumberSpinner;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.AbstractFilteringHeader;
+import org.richfaces.tests.metamer.ftest.webdriver.utils.MetamerJavascriptUtils;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
 public class FilteringEDTHeader extends AbstractFilteringHeader {
 
+    @ArquillianResource
+    private WebDriver browser;
+
+    private ColumnControl cc;
+    @FindBy(className = "rf-edt-colctrl-btn")
+    private WebElement columnControlButton;
+    @JavaScript
+    protected MetamerJavascriptUtils jsUtils;
     @FindBy(css = "[id$='columnName:flt']")
     private TextInputComponentImpl nameBuiltInInput;
     @FindBy(css = "[id$='columnHeaderNameInput']")
@@ -82,5 +97,18 @@ public class FilteringEDTHeader extends AbstractFilteringHeader {
     @Override
     public TextInputComponentImpl getTitleInput() {
         return titleInput;
+    }
+
+    public ColumnControl openColumnControl() {
+        if (cc == null) {
+            cc = Graphene.createPageFragment(ColumnControl.class, browser.findElement(By.className("rf-edt-colctrl")));
+        }
+        if (!cc.isVisible()) {
+            jsUtils.scrollToView(columnControlButton);
+
+            columnControlButton.click();
+            cc.waitUntilIsVisible();
+        }
+        return cc;
     }
 }
