@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:rich="http://richfaces.org/rich"
       xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
     <!--
@@ -125,6 +129,7 @@
                                     rows="#{richExtendedDataTableBean.attributes['rows'].value}"
                                     selection="#{richExtendedDataTableBean.attributes['selection'].value}"
                                     selectionMode="#{richExtendedDataTableBean.attributes['selectionMode'].value}"
+                                    showColumnControl="#{richExtendedDataTableBean.attributes['showColumnControl'].value}"
                                     sortMode="#{richExtendedDataTableBean.attributes['sortMode'].value}"
                                     sortPriority="#{richExtendedDataTableBean.attributes['sortPriority'].value}"
                                     style="#{richExtendedDataTableBean.attributes['style'].value}"
@@ -136,7 +141,12 @@
                     <h:outputText value="There is no data." style="color: red;" />
                 </f:facet>
 
+                <f:facet name="header">
+                    <h:outputText value="header"/>
+                </f:facet>
+
                 <rich:column id="columnSex"
+                             name="sex"
                              sortBy="#{record.sex}"
                              sortOrder="#{richExtendedDataTableBean.sorting['columnSex'].order}">
                     <f:facet name="header">
@@ -154,6 +164,7 @@
                 <rich:column id="columnName"
                              filterValue="#{richExtendedDataTableBean.filtering['name']}"
                              filterExpression="#{empty filterValue or fn:containsIgnoreCase(record.name, filterValue)}"
+                             name="name"
                              sortBy="#{record.name}"
                              sortOrder="#{richExtendedDataTableBean.sorting['columnName'].order}">
                     <f:facet name="header">
@@ -171,6 +182,7 @@
                 <rich:column id="columnTitle"
                              filterValue="#{richExtendedDataTableBean.filtering['title']}"
                              filterExpression="#{empty filterValue or record.title eq filterValue}"
+                             name="title"
                              sortBy="#{record.title}"
                              sortOrder="#{richExtendedDataTableBean.sorting['columnTitle'].order}">
                     <f:facet name="header">
@@ -188,6 +200,7 @@
                 <rich:column id="columnNumberOfKids1"
                              filterValue="#{richExtendedDataTableBean.filtering['numberOfKids1']}"
                              filterExpression="#{empty filterValue or record.numberOfKids ge filterValue}"
+                             name="number of kids"
                              sortBy="#{record.numberOfKids}"
                              sortOrder="#{richExtendedDataTableBean.sorting['columnNumberOfKids'].order}">
                     <f:facet name="header">
@@ -204,6 +217,7 @@
                 <rich:column id="columnNumberOfKids2"
                              filterValue="#{richExtendedDataTableBean.filtering['numberOfKids2']}"
                              filterExpression="#{empty filterValue or record.numberOfKids le filterValue}"
+                             name="number of kids #2"
                              sortBy="#{record.numberOfKids}"
                              sortOrder="#{richExtendedDataTableBean.sorting['columnNumberOfKids2'].order}">
                     <f:facet name="header">

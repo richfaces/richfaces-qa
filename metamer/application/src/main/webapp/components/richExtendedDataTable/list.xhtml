@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
     <!--
@@ -65,16 +66,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <b>rich:extendedDataTable</b> (with model containing employees) custom sorting by <b>rich:column</b>'s attribute @sortBy, @sortOrder.
             </metamer:testPageLink>
 
-            <metamer:testPageLink id="sorting-using-column-with-colum-control" outcome="sorting-using-column-with-colum-control" value="Table Sorting - Column based, with column control">
-                <b>rich:extendedDataTable</b> (with model containing employees) custom sorting by <b>rich:column</b>'s attribute @sortBy, @sortOrder. Table contains column control.
-            </metamer:testPageLink>
-
             <metamer:testPageLink id="filtering" outcome="filtering" value="Table Filtering">
                 Page that contains filterable <b>rich:extendedDataTable</b> (with model containing employees) and input boxes for all its attributes.
-            </metamer:testPageLink>
-
-            <metamer:testPageLink id="filteringWithColumnControl" outcome="filteringWithColumnControl" value="Table Filtering with column controls">
-                Page that contains filterable <b>rich:extendedDataTable</b> (with model containing employees) with column controls (RF-7872) and input boxes for all its attributes. Table contains column control.
             </metamer:testPageLink>
 
             <metamer:testPageLink id="selection" outcome="selection" value="Selection">
@@ -95,10 +88,6 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             <metamer:testPageLink id="builtInFilteringAndSorting" outcome="builtInFilteringAndSorting" value="Built-in filtering and sorting">
                 Page for testing built-in filtering and sorting features.
-            </metamer:testPageLink>
-
-            <metamer:testPageLink id="builtInFilteringAndSortingWithColumnControl" outcome="builtInFilteringAndSortingWithColumnControl" value="Built-in filtering and sorting with column control">
-                Page for testing built-in filtering and sorting features. Table contains column control.
             </metamer:testPageLink>
 
             <metamer:reproducerPageLink issue="rf-11679" issueName="rich:extendedDataTable window resize problem when placed in absolute positioned container" resolved="true" automatized="true"/>

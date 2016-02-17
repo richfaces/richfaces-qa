@@ -117,7 +117,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="outOfTemplateAfter">
             EDT attributes:
-            <metamer:attributes value="#{richExtendedDataTableBean.attributes}" id="attributesEDT" />
+            <metamer:attributes value="#{richExtendedDataTableBean.attributes}" id="attributesEDT" exclude="showColumnControl" />
             <br/>
             AttachQueue attributes:
             <metamer:attributes value="#{a4jAttachQueueBean.attributes}" id="attributesAttachQueue" include="onrequestqueue,rendered,requestDelay"/>

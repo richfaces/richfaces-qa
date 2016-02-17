@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:rich="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -121,6 +125,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                     rows="#{richExtendedDataTableBean.attributes['rows'].value}"
                                     selection="#{richExtendedDataTableBean.attributes['selection'].value}"
                                     selectionMode="#{richExtendedDataTableBean.attributes['selectionMode'].value}"
+                                    showColumnControl="#{richExtendedDataTableBean.attributes['showColumnControl'].value}"
                                     sortMode="#{richExtendedDataTableBean.attributes['sortMode'].value}"
                                     sortPriority="#{richExtendedDataTableBean.attributes['sortPriority'].value}"
                                     style="#{richExtendedDataTableBean.attributes['style'].value}"
@@ -133,7 +138,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:outputText value="There is no data." style="color: red;"/>
                 </f:facet>
 
+                <f:facet name="header">
+                    <h:outputText value="header"/>
+                </f:facet>
+
                 <rich:column id="columnSex"
+                             name="sex"
                              sortBy="#{record.sex}"
                              sortOrder="#{richExtendedDataTableBean.sorting['columnSex'].order}"
                              sortType="custom">
@@ -145,6 +155,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
 
                 <rich:column id="columnName"
+                             name="name"
                              sortBy="#{record.name}"
                              sortOrder="#{richExtendedDataTableBean.sorting['columnName'].order}"
                              sortType="custom">
@@ -155,6 +166,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </rich:column>
 
                 <rich:column id="columnTitle"
+                             name="title"
                              sortBy="#{record.title}"
                              sortOrder="#{richExtendedDataTableBean.sorting['columnTitle'].order}"
                              sortType="custom">
@@ -165,6 +177,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </rich:column>
 
                 <rich:column id="columnNumberOfKids"
+                             name="number of kids"
                              sortBy="#{record.numberOfKids}"
                              sortOrder="#{richExtendedDataTableBean.sorting['columnNumberOfKids'].order}"
                              sortType="custom">
