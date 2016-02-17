@@ -170,7 +170,7 @@
 
                 <rich:column id="columnTitle"
                              filterValue="#{richExtendedDataTableBean.filtering['title']}"
-                             filterExpression="#{empty filterValue or record.title == filterValue}"
+                             filterExpression="#{empty filterValue or record.title eq filterValue}"
                              sortBy="#{record.title}"
                              sortOrder="#{richExtendedDataTableBean.sorting['columnTitle'].order}">
                     <f:facet name="header">
@@ -187,7 +187,7 @@
 
                 <rich:column id="columnNumberOfKids1"
                              filterValue="#{richExtendedDataTableBean.filtering['numberOfKids1']}"
-                             filterExpression="#{empty filterValue or record.numberOfKids gt filterValue or record.numberOfKids eq filterValue}"
+                             filterExpression="#{empty filterValue or record.numberOfKids ge filterValue}"
                              sortBy="#{record.numberOfKids}"
                              sortOrder="#{richExtendedDataTableBean.sorting['columnNumberOfKids'].order}">
                     <f:facet name="header">
@@ -203,7 +203,7 @@
 
                 <rich:column id="columnNumberOfKids2"
                              filterValue="#{richExtendedDataTableBean.filtering['numberOfKids2']}"
-                             filterExpression="#{empty filterValue or record.numberOfKids lt filterValue or record.numberOfKids eq filterValue}"
+                             filterExpression="#{empty filterValue or record.numberOfKids le filterValue}"
                              sortBy="#{record.numberOfKids}"
                              sortOrder="#{richExtendedDataTableBean.sorting['columnNumberOfKids2'].order}">
                     <f:facet name="header">

@@ -57,6 +57,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                             captionClass="#{richDataTableBean.attributes['captionClass'].value}"
                             columnClasses="#{richDataTableBean.attributes['columnClasses'].value}"
                             data="#{richDataTableBean.attributes['data'].value}"
+                            filterVar="filterValue"
                             first="#{richDataTableBean.attributes['first'].value}"
                             footerClass="#{richDataTableBean.attributes['footerClass'].value}"
                             headerClass="#{richDataTableBean.attributes['headerClass'].value}"
@@ -92,7 +93,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:outputText value="There is no data." style="color: red;"/>
                 </f:facet>
 
-                <rich:column id="columnSex" filter="#{richDataTableBean.filterSexImpl}" filterType="custom">
+                <rich:column id="columnSex"
+                             filter="#{richDataTableBean.filterSexImpl}" 
+                             filterType="custom">
                     <f:facet name="header">
                         <h:panelGroup>
                             <h:outputText id="columnHeaderSex" value="Sex"  />
@@ -116,7 +119,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </rich:column>
 
 
-                <rich:column id="columnName" filterExpression="#{fn:containsIgnoreCase(record.name, richDataTableBean.filtering['name'])}" filterType="custom">
+                <rich:column id="columnName"
+                             filterExpression="#{fn:containsIgnoreCase(record.name, filterValue)}"
+                             filterType="custom"
+                             filterValue="#{richDataTableBean.filtering['name']}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderName" value="Name" />
                         <br/>
@@ -133,7 +139,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </f:facet>
                 </rich:column>
 
-                <rich:column id="columnTitle" filterExpression="#{richDataTableBean.filtering['title'] == null || richDataTableBean.filtering['title'] == '' || record.title == richDataTableBean.filtering['title']}" filterType="custom">
+                <rich:column id="columnTitle"
+                             filterExpression="#{empty filterValue or record.title eq filterValue}"
+                             filterType="custom"
+                             filterValue="#{richDataTableBean.filtering['title']}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderTitle" value="Title" />
                         <br/>
@@ -150,11 +159,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </f:facet>
                 </rich:column>
 
-                <rich:column id="columnNumberOfKids1" filterExpression="#{empty richDataTableBean.filtering['numberOfKids1'] || record.numberOfKids >= richDataTableBean.filtering['numberOfKids1']}" filterType="custom">
+                <rich:column id="columnNumberOfKids1"
+                             filterExpression="#{empty filterValue or record.numberOfKids ge filterValue}"
+                             filterType="custom"
+                             filterValue="#{richDataTableBean.filtering['numberOfKids1']}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderNumberOfKids" value="Number of Kids" />
                         <br/>
-                        <h:outputText id="columnHeaderNumberOfKidsType" value="(expression &gt;=)" />
+                        <h:outputText id="columnHeaderNumberOfKidsType" value="(expression &ge;)" />
                         <br/>
                         <rich:inputNumberSpinner id="spinnerFilter" minValue="0" maxValue="6" cycled="false" value="#{richDataTableBean.filtering['numberOfKids1']}">
                             <a4j:ajax event="change" render="commonGrid" />
@@ -167,17 +179,18 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </f:facet>
                 </rich:column>
 
-                <rich:column id="columnNumberOfKids2" filterType="custom">
+                <rich:column id="columnNumberOfKids2"
+                             filterExpression="#{empty filterValue or record.numberOfKids le filterValue}"
+                             filterType="custom"
+                             filterValue="#{richDataTableBean.filtering['numberOfKids2']}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderNumberOfKids2" value="Number of Kids" />
                         <br/>
-                        <h:outputText id="columnHeaderNumberOfKids2Type" value="(expression &lt;)" />
+                        <h:outputText id="columnHeaderNumberOfKids2Type" value="(expression &le;)" />
                         <br/>
                         <rich:inputNumberSlider id="sliderFilter" minValue="0" maxValue="6" value="#{richDataTableBean.filtering['numberOfKids2']}">
-                            <!-- <a4j:ajax render="commonGrid" /> -->
+                            <a4j:ajax render="commonGrid" /> 
                         </rich:inputNumberSlider>
-                        <br />
-                        (a4j:ajax disabled - RF-9900)
                     </f:facet>
 
                     <h:outputText value="#{record.numberOfKids}" />

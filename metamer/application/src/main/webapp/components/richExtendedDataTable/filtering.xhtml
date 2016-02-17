@@ -93,6 +93,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <rich:extendedDataTable id="richEDT"
                                     columnClasses="#{richExtendedDataTableBean.attributes['columnClasses'].value}"
                                     data="#{richExtendedDataTableBean.attributes['data'].value}"
+                                    filterVar="filterValue"
                                     first="#{richExtendedDataTableBean.attributes['first'].value}"
                                     footerClass="#{richExtendedDataTableBean.attributes['footerClass'].value}"
                                     frozenColumns="#{richExtendedDataTableBean.attributes['frozenColumns'].value}"
@@ -161,8 +162,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
 
                 <rich:column id="columnName"
+                             filterExpression="#{fn:containsIgnoreCase(record.name, filterValue)}"
                              filterType="custom"
-                             filterExpression="#{fn:containsIgnoreCase(record.name, richExtendedDataTableBean.filtering['name'])}">
+                             filterValue="#{richExtendedDataTableBean.filtering['name']}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderName" value="Name" />
                         <br/>
@@ -181,7 +183,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                 <rich:column id="columnTitle"
                              filterType="custom"
-                             filterExpression="#{richExtendedDataTableBean.filtering['title'] == null || richExtendedDataTableBean.filtering['title'] == '' || record.title == richExtendedDataTableBean.filtering['title']}">
+                             filterExpression="#{empty filterValue or record.title eq filterValue}"
+                             filterValue="#{richExtendedDataTableBean.filtering['title']}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderTitle" value="Title" />
                         <br/>
@@ -200,11 +203,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                 <rich:column id="columnNumberOfKids1"
                              filterType="custom"
-                             filterExpression="#{empty richExtendedDataTableBean.filtering['numberOfKids1'] || record.numberOfKids >= richExtendedDataTableBean.filtering['numberOfKids1']}">
+                             filterExpression="#{empty filterValue or record.numberOfKids ge filterValue}"
+                             filterValue="#{richExtendedDataTableBean.filtering['numberOfKids1']}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderNumberOfKids" value="Number of Kids" />
                         <br/>
-                        <h:outputText id="columnHeaderNumberOfKidsType" value="(expression &gt;=)" />
+                        <h:outputText id="columnHeaderNumberOfKidsType" value="(expression &ge;)" />
                         <br/>
                         <rich:inputNumberSpinner id="spinnerFilter" minValue="0" maxValue="6" cycled="false" value="#{richExtendedDataTableBean.filtering['numberOfKids1']}">
                             <a4j:ajax event="change" render="commonGrid" />
@@ -217,17 +221,18 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </f:facet>
                 </rich:column>
 
-                <rich:column id="columnNumberOfKids2">
+                <rich:column id="columnNumberOfKids2"
+                             filterExpression="#{empty filterValue or record.numberOfKids le filterValue}"
+                             filterType="custom"
+                             filterValue="#{richExtendedDataTableBean.filtering['numberOfKids2']}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderNumberOfKids2" value="Number of Kids" />
                         <br/>
-                        <h:outputText id="columnHeaderNumberOfKids2Type" value="(expression &lt;)" />
+                        <h:outputText id="columnHeaderNumberOfKids2Type" value="(expression &le;)" />
                         <br/>
                         <rich:inputNumberSlider id="sliderFilter" minValue="0" maxValue="6" value="#{richExtendedDataTableBean.filtering['numberOfKids2']}">
-                            <!-- <a4j:ajax render="commonGrid" /> -->
+                            <a4j:ajax render="commonGrid" /> 
                         </rich:inputNumberSlider>
-                        <br />
-                        (a4j:ajax disabled - RF-9900)
                     </f:facet>
 
                     <h:outputText value="#{record.numberOfKids}" />

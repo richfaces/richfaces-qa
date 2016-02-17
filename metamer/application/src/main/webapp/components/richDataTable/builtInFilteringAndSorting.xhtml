@@ -59,6 +59,7 @@
                             captionClass="#{richDataTableBean.attributes['captionClass'].value}"
                             columnClasses="#{richDataTableBean.attributes['columnClasses'].value}"
                             data="#{richDataTableBean.attributes['data'].value}"
+                            filterVar="filterValue"
                             first="#{richDataTableBean.attributes['first'].value}"
                             footerClass="#{richDataTableBean.attributes['footerClass'].value}"
                             headerClass="#{richDataTableBean.attributes['headerClass'].value}"
@@ -125,7 +126,7 @@
 
                 <rich:column id="columnTitle"
                              filterValue="#{richDataTableBean.filtering['title']}"
-                             filterExpression="#{empty filterValue or record.title == filterValue}"
+                             filterExpression="#{empty filterValue or record.title eq filterValue}"
                              sortBy="#{record.title}"
                              sortOrder="#{richDataTableBean.sorting['columnTitle'].order}">
                     <f:facet name="header">
@@ -142,7 +143,7 @@
 
                 <rich:column id="columnNumberOfKids1"
                              filterValue="#{richDataTableBean.filtering['numberOfKids1']}"
-                             filterExpression="#{empty filterValue or record.numberOfKids gt filterValue or record.numberOfKids eq filterValue}"
+                             filterExpression="#{empty filterValue or record.numberOfKids ge filterValue}"
                              sortBy="#{record.numberOfKids}"
                              sortOrder="#{richDataTableBean.sorting['numberOfKids1'].order}">
                     <f:facet name="header">
@@ -158,7 +159,7 @@
                 </rich:column>
                 <rich:column id="columnNumberOfKids2"
                              filterValue="#{richDataTableBean.filtering['numberOfKids2']}"
-                             filterExpression="#{empty filterValue or record.numberOfKids lt filterValue or record.numberOfKids eq filterValue}"
+                             filterExpression="#{empty filterValue or record.numberOfKids le filterValue}"
                              sortBy="#{record.numberOfKids}"
                              sortOrder="#{richDataTableBean.sorting['numberOfKids2'].order}">
                     <f:facet name="header">

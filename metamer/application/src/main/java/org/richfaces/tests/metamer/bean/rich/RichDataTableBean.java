@@ -68,6 +68,7 @@ public class RichDataTableBean implements Serializable {
     private Map<String, Object> filtering = new HashMap<String, Object>();
     // facets
     private Map<String, String> facets = new HashMap<String, String>();
+
     /**
      * Initializes the managed bean.
      */
@@ -101,6 +102,8 @@ public class RichDataTableBean implements Serializable {
         attributes.remove("iterationStatusVar");
         attributes.remove("rowKeyVar");
         attributes.remove("stateVar");
+
+        filtering.put("numberOfKids2", 6);
     }
 
     public Attributes getAttributes() {
@@ -148,11 +151,11 @@ public class RichDataTableBean implements Serializable {
     }
 
     public void setEmptyModelCalled(boolean isCalled) {
-       emptyModelCalled = isCalled;
+        emptyModelCalled = isCalled;
     }
 
     public boolean getEmptyModelCalled() {
-       return emptyModelCalled;
+        return emptyModelCalled;
     }
 
     public Map<String, String> getFacets() {
@@ -179,9 +182,9 @@ public class RichDataTableBean implements Serializable {
     }
 
     public Collection<Object> getEmptyModel() {
-       setEmptyModelCalled(true);
-       logger.info("empty model called");
-       return new ArrayList<Object>();
+        setEmptyModelCalled(true);
+        logger.info("empty model called");
+        return new ArrayList<Object>();
     }
 
     private class CustomColumnSortingMap extends ColumnSortingMap {

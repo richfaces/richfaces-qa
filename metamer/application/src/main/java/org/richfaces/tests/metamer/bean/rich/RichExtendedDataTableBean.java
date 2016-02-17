@@ -112,6 +112,8 @@ public class RichExtendedDataTableBean implements Serializable {
         facets.put("columnStateFooter", "State Footer");
         facets.put("columnCapitalHeader", "Capital Header");
         facets.put("columnCapitalFooter", "Capital Footer");
+
+        filtering.put("numberOfKids2", 6);
     }
 
     public Attributes getAttributes() {
