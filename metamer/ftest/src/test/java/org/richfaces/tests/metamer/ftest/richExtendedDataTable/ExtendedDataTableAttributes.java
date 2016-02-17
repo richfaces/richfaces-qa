@@ -64,6 +64,7 @@ public enum ExtendedDataTableAttributes implements AttributeEnum {
     rows,
     selection,
     selectionMode,
+    showColumnControl,
     sortMode,
     sortPriority,
     stateVar,

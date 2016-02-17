@@ -37,6 +37,7 @@ public enum ColumnAttributes implements AttributeEnum {
     footerClass,
     headerClass,
     id,
+    name,
     rendered,
     rowspan,
     sortBy,
