@@ -21,6 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richTree;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -42,6 +43,7 @@ import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
+import org.richfaces.tests.metamer.ftest.extension.tester.attributes.MultipleAttributesSetter;
 import org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes;
 import org.testng.annotations.Test;
 
@@ -54,6 +56,31 @@ import com.google.common.collect.Lists;
  */
 @RegressionTest("https://issues.jboss.org/browse/RF-11766")
 public class TestTreeAttributes extends AbstractTreeTest {
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-10265")
+    @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
+    public void testAjaxAndToggleEventsOrder() {
+        final String[] expected = { "onbeforenodetoggle", "onbegin", "onbeforedomupdate", "oncomplete", "onnodetoggle" };
+        // setup
+        MultipleAttributesSetter attsSetter = attsSetter();
+        for (String s : expected) {
+            attsSetter.setAttribute(s).toValue("metamerEvents += \"" + s + " \"");
+        }
+        attsSetter.asSingleAction().perform();
+        executeJS("metamerEvents = \"\"");
+
+        // toggle
+        expandFirstNodeAjaxAction.perform();
+
+        // check
+        String[] events = executeJS("return metamerEvents").toString().split(" ");
+        assertEquals(events.length, expected.length, "Number of events triggered does not match.");
+        final String msg = "Expected order: " + Lists.newArrayList(expected) + ". Actual order: " + Lists.newArrayList(events);
+        for (int i = 0; i < events.length; i++) {
+            assertEquals(events[i], expected[i], "Event <" + events[i] + "> did not come in the right order. " + msg);
+        }
+    }
 
     @Test
     @CoversAttributes("data")
