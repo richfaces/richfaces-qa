@@ -88,8 +88,7 @@
                             style="#{richDataTableBean.attributes['style'].value}"
                             styleClass="#{richDataTableBean.attributes['styleClass'].value}"
                             value="#{richDataTableBean.state ? model.employees : null}"
-                            var="record"
-                            filterVar="filterValue">
+                            var="record">
 
                 <f:facet name="noData">
                     <h:outputText value="There is no data." style="color: red;" />
