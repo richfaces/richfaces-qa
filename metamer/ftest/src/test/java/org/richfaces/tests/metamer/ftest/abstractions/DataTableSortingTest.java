@@ -324,6 +324,7 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
         Collections.sort(sortedEmployees, employeeComparator);
 
         if (dataScroller2.hasPages() && dataScroller2.getActivePageNumber() != 1) {
+            jsUtils.scrollToView(dataScroller2.advanced().getButtonElement(FIRST));
             dataScroller2.switchTo(FIRST);
         }
 
@@ -333,6 +334,7 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
             verifyRow(row, row, hiddenColumns);
         }
 
+        jsUtils.scrollToView(dataScroller2.advanced().getButtonElement(LAST));
         dataScroller2.switchTo(LAST);
 
         pageRows = getTable().advanced().getNumberOfVisibleRows();
