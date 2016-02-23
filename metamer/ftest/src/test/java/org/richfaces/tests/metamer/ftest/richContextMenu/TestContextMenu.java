@@ -33,6 +33,8 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
+import java.util.concurrent.TimeUnit;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.TimeoutException;
@@ -119,15 +121,20 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @CoversAttributes({ "attached",// whole test class uses @attached=true (default value)
         "disabled" })
     public void testDisabled() {
+        contextMenuAttributes.set(ContextMenuAttributes.disabled, false);
+        // the context menu content should be present
+        Graphene.waitGui().until().element(page.getContextMenuContent()).is().present();
+
         updateShowAction();
         page.getContextMenu().advanced().show(page.getTargetPanel1());
         assertTrue(page.getContextMenuContent().isDisplayed());
 
         contextMenuAttributes.set(ContextMenuAttributes.disabled, true);
-
+        // the context menu content should not be present
+        Graphene.waitGui().until().element(page.getContextMenuContent()).is().not().present();
         try {
             page.getContextMenu().advanced().show(page.getTargetPanel1());
-            fail("The context menu should not be showd when disabled!");
+            fail("The context menu cannot be displayed when disabled!");
         } catch (TimeoutException ex) {
             // OK
         }
@@ -138,7 +145,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
     @Templates("plain")
     public void testHideDelay() {
-        new MenuDelayTester().testHideDelay(page.getContextMenuRoot(), delay, new Event[] { Event.MOUSEOVER, Event.MOUSEOUT }, page.getContextMenuRoot());
+        new MenuDelayTester().testHideDelay(page.getContextMenuRoot(), delay, new Event[]{ Event.MOUSEOVER, Event.MOUSEOUT }, page.getContextMenuContent());
     }
 
     @Test
@@ -401,14 +408,9 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @CoversAttributes("rendered")
     @Templates("plain")
     public void testRendered() {
-        updateShowAction();
+        Graphene.waitGui().withTimeout(1, TimeUnit.SECONDS).until().element(page.getContextMenuRoot()).is().present();
         contextMenuAttributes.set(ContextMenuAttributes.rendered, Boolean.FALSE);
-        try {
-            page.getContextMenu().advanced().show(page.getTargetPanel1());
-            fail("The context menu should not be invoked when rendered == false!");
-        } catch (TimeoutException ex) {
-            // OK
-        }
+        Graphene.waitGui().withTimeout(1, TimeUnit.SECONDS).until().element(page.getContextMenuRoot()).is().not().present();
     }
 
     @Test
@@ -441,7 +443,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         String styleVal = "background-color: " + color + ";";
         contextMenuAttributes.set(ContextMenuAttributes.style, styleVal);
         page.getContextMenu().advanced().show(page.getTargetPanel1());
-        String backgroundColor = page.getContextMenuRoot().getCssValue("background-color");
+        String backgroundColor = page.getContextMenu().advanced().getMenuPopup().getCssValue("background-color");
         // webdriver retrieves the color in rgba format
         assertEquals(ContextMenuSimplePage.trimTheRGBAColor(backgroundColor), "rgba(255,255,0,1)",
             "The style was not applied correctly!");
@@ -451,7 +453,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @CoversAttributes("styleClass")
     @Templates("plain")
     public void testStyleClass() {
-        testStyleClass(page.getContextMenuRoot());
+        testStyleClass(page.getContextMenu().advanced().getMenuPopup());
     }
 
     @Test
@@ -503,7 +505,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         updateShowAction();
         String titleVal = "test title";
         contextMenuAttributes.set(ContextMenuAttributes.title, titleVal);
-        assertEquals(page.getContextMenuRoot().getAttribute("title"), titleVal);
+        assertEquals(page.getContextMenu().advanced().getMenuPopup().getAttribute("title"), titleVal);
     }
 
     @Test
