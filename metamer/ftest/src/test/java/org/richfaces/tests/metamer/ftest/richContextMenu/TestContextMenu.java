@@ -37,6 +37,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
+import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -76,6 +77,11 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @Page
     private ContextMenuSimplePage page;
 
+    @Override
+    public String getComponentTestPagePath() {
+        return "richContextMenu/simple.xhtml";
+    }
+
     public Locations getContextMenuLocationsWhenPosition(Positioning positioning) {
         contextMenuAttributes.set(ContextMenuAttributes.direction, positioning);
         page.getContextMenu().advanced().show(page.getTargetPanel2());
@@ -84,11 +90,26 @@ public class TestContextMenu extends AbstractWebDriverTest {
         return contextMenuLocations;
     }
 
-    @Override
-    public String getComponentTestPagePath() {
-        return "richContextMenu/simple.xhtml";
-    }
+    @Test
+    @Templates("richAccordion")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12979")
+    public void testContextMenuIsNotHiddenUnderAccordion() {
+        // set direction to force menu to show in the needed position (under/over accordion)
+        contextMenuAttributes.set(ContextMenuAttributes.direction, Positioning.topRight);
+        // remove default padding to verify issue
+        Utils.jQ("css('padding','0')", driver.findElement(By.cssSelector("[id$=padding]")));
+        // check, the item cannot be clicked when it is under the accordion
+        Graphene.guardHttp(page.getContextMenu()).selectItem("Open", page.getTargetPanel1());
+        assertEquals(page.getOutput().getText(), "Open");
 
+        // perform another check
+        // remove default padding to verify issue
+        Utils.jQ("css('padding','0')", driver.findElement(By.cssSelector("[id$=padding]")));
+        // check, the item cannot be clicked when it is under the accordion
+        Graphene.guardHttp(page.getContextMenu()).selectItem("Close", page.getTargetPanel1());
+        assertEquals(page.getOutput().getText(), "Close");
+    }
+    
     @Test
     @CoversAttributes("dir")
     @Templates("plain")
@@ -96,7 +117,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         updateShowAction();
         String expected = "rtl";
         contextMenuAttributes.set(ContextMenuAttributes.dir, expected);
-
+        
         page.getContextMenu().advanced().show(page.getTargetPanel1());
         String directionCSS = page.getContextMenu().advanced().getItemsElements().get(0).getCssValue("direction");
         assertEquals(directionCSS, expected, "The direction attribute was not applied correctly!");
