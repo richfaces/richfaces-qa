@@ -456,15 +456,6 @@ public class TestContextMenu extends AbstractWebDriverTest {
         testStyleClass(page.getContextMenu().advanced().getMenuPopup());
     }
 
-    @Test
-    @CoversAttributes("styleClass")
-    @Templates("plain")
-    @RegressionTest("https://issues.jboss.org/browse/RF-13167")
-    public void testStyleClassWhenDisabled() {
-        setAttribute("disabled", true);
-        testStyleClass();
-    }
-
     @Test(groups = "smoke")
     public void testSubMenuOpening() {
         updateShowAction();
