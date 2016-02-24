@@ -109,7 +109,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         Graphene.guardHttp(page.getContextMenu()).selectItem("Close", page.getTargetPanel1());
         assertEquals(page.getOutput().getText(), "Close");
     }
-    
+
     @Test
     @CoversAttributes("dir")
     @Templates("plain")
@@ -117,7 +117,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         updateShowAction();
         String expected = "rtl";
         contextMenuAttributes.set(ContextMenuAttributes.dir, expected);
-        
+
         page.getContextMenu().advanced().show(page.getTargetPanel1());
         String directionCSS = page.getContextMenu().advanced().getItemsElements().get(0).getCssValue("direction");
         assertEquals(directionCSS, expected, "The direction attribute was not applied correctly!");
