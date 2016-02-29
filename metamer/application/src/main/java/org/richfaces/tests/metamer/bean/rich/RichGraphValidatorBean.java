@@ -122,7 +122,7 @@ public class RichGraphValidatorBean implements Serializable, Cloneable {
 
     @PostConstruct
     public void init() {
-        LOGGER.info("initializing bean " + getClass().getName());
+        LOGGER.debug("initializing bean " + getClass().getName());
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIGraphValidator.class, getClass());
 
         attributes.setAttribute("rendered", true);
