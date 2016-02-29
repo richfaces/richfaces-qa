@@ -137,6 +137,7 @@ public abstract class AbstractMessageComponentCommonTest extends AbstractWebDriv
 
     protected void generateValidationMessages() {
         executeJS("window.valuesSettingState=''");
+        jsUtils.scrollToView(getPage().getWrongValuesButton());
         getPage().getWrongValuesButton().click();
         waitForValuesSetting();
     }
@@ -153,10 +154,10 @@ public abstract class AbstractMessageComponentCommonTest extends AbstractWebDriv
     protected abstract Action getGenerateMessagesAction();
 
     /**
-     * Sets correct values by clicking button and wait for the client update.
-     * !Does not do any request!.
+     * Sets correct values by clicking button and wait for the client update. !Does not do any request!.
      */
     protected void setCorrectValues() {
+        jsUtils.scrollToView(getPage().getCorrectValuesButton());
         getPage().getCorrectValuesButton().click();
         waitForValuesSetting();
     }
@@ -183,14 +184,14 @@ public abstract class AbstractMessageComponentCommonTest extends AbstractWebDriv
     }
 
     /**
-     * Implement at lowest level. This should wait for message(s) component to hide.
-     * It should hide them (submit the form) if needed.
+     * Implement at lowest level. This should wait for message(s) component to hide. It should hide them (submit the form) if
+     * needed.
      */
     protected abstract void waitingForValidationMessagesToHide();
 
     /**
-     * Implement at lowest level. This should wait for message(s) component to show.
-     * It should generate them (submit the form) if needed.
+     * Implement at lowest level. This should wait for message(s) component to show. It should generate them (submit the form)
+     * if needed.
      */
     protected abstract void waitingForValidationMessagesToShow();
 }
