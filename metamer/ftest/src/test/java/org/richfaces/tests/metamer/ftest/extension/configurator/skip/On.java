@@ -158,6 +158,18 @@ public class On {
         }
 
         /**
+         * Skip test when use of EAP 6.3.4 is detected (when <code>activated.maven.profiles</code> are containing
+         * <code>jbosseap-managed-6-3</code> or <code>jbosseap-remote-6-3</code> and <code>version.eap=6.3.4*</code>).
+         */
+        public static class EAP634 implements SkipOn {
+
+            @Override
+            public boolean apply() {
+                return containerProfileActivated("jbosseap-managed-6-3", "jbosseap-remote-6-3") && eapVersionSetTo("6.3.4");
+            }
+        }
+
+        /**
          * Skip test when use of EAP 6.4.0 is detected (when <code>activated.maven.profiles</code> are containing
          * <code>jbosseap-managed-6-4</code> or <code>jbosseap-remote-6-4</code> and <code>version.eap=6.4.0*</code>).
          */
@@ -216,6 +228,7 @@ public class On {
                 return containerProfileActivated("jbosseap-managed-6-4", "jbosseap-remote-6-4") && eapVersionSetTo("6.4.5");
             }
         }
+
         /**
          * Skip test when use of EAP 6.4.6 is detected (when <code>activated.maven.profiles</code> are containing
          * <code>jbosseap-managed-6-4</code> or <code>jbosseap-remote-6-4</code> and <code>version.eap=6.4.6*</code>).
@@ -225,6 +238,18 @@ public class On {
             @Override
             public boolean apply() {
                 return containerProfileActivated("jbosseap-managed-6-4", "jbosseap-remote-6-4") && eapVersionSetTo("6.4.6");
+            }
+        }
+
+        /**
+         * Skip test when use of EAP 6.4.7 is detected (when <code>activated.maven.profiles</code> are containing
+         * <code>jbosseap-managed-6-4</code> or <code>jbosseap-remote-6-4</code> and <code>version.eap=6.4.7*</code>).
+         */
+        public static class EAP647 implements SkipOn {
+
+            @Override
+            public boolean apply() {
+                return containerProfileActivated("jbosseap-managed-6-4", "jbosseap-remote-6-4") && eapVersionSetTo("6.4.7");
             }
         }
 
