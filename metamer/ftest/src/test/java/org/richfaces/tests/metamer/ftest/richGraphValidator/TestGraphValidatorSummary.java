@@ -21,8 +21,12 @@
  */
 package org.richfaces.tests.metamer.ftest.richGraphValidator;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
+
+import org.richfaces.fragment.messages.RichFacesMessages;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
@@ -48,9 +52,10 @@ public class TestGraphValidatorSummary extends AbstractGraphValidatorTest {
         setWrongSettingForGroup(Group.ValidationGroupAllComponents);
         applyChanges();
 
-        Assert.assertFalse(graphValidatorGlobalMessages.advanced().isVisible(), "Global messages should not be visible.");
-        Assert.assertTrue(graphValidatorMessages.advanced().isVisible(), "Graph validator messages should be visible.");
-        Assert.assertEquals(graphValidatorMessages.size(), 1, "There should be one message.");
-        Assert.assertEquals(graphValidatorMessages.getItem(0).getSummary(), msg, "Summary of message.");
+        assertFalse(getPage().getGraphValidatorGlobalMessages().advanced().isVisible(), "Global messages should not be visible.");
+        RichFacesMessages msgs = getPage().getGraphValidatorMessages();
+        assertTrue(msgs.advanced().isVisible(), "Graph validator messages should be visible.");
+        assertEquals(msgs.size(), 1, "There should be one message.");
+        assertEquals(msgs.getItem(0).getSummary(), msg, "Summary of message.");
     }
 }

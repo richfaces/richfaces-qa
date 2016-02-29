@@ -21,21 +21,17 @@
  */
 package org.richfaces.tests.metamer.ftest.richGraphValidator;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.fragment.common.CheckboxInputComponentImpl;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
+
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.fragment.common.ClearType;
-import org.richfaces.fragment.common.TextInputComponentImpl;
-import org.richfaces.fragment.inputNumberSlider.RichFacesInputNumberSlider;
-import org.richfaces.fragment.inputNumberSpinner.RichFacesInputNumberSpinner;
-import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.fragment.messages.RichFacesMessages;
 import org.richfaces.tests.metamer.bean.rich.RichGraphValidatorBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.testng.Assert;
 
 /**
  * Test for page /faces/components/richGraphValidator/all.xhtml
@@ -45,76 +41,30 @@ import org.testng.Assert;
  */
 public abstract class AbstractGraphValidatorTest extends AbstractWebDriverTest {
 
-    final Attributes<GraphValidatorAttributes> graphValidatorAttributes = getAttributes();
+    private static final String CORRECT_INT_VALUE = "10";
+    private static final String CORRECT_STRING_VALUE = ":-)";
+    private static final String WRONG_INT_VALUE = "11";
+    private static final String WRONG_STRING_VALUE = ":-(";
 
-    static final String CORRECT_STRING_VALUE = ":-)";
-    static final String CORRECT_INT_VALUE = "10";
-    static final String WRONG_STRING_VALUE = ":-(";
-    static final String WRONG_INT_VALUE = "11";
+    protected final Attributes<GraphValidatorAttributes> graphValidatorAttributes = getAttributes();
 
-    @FindBy(css = "input[id$=applyChanges]")
-    WebElement applyChangesBtn;
-    @FindBy(css = "[id$=graphValidatorPanel]")
-    WebElement panel;
+    private Group group;
 
-    @FindBy(css = "input[id$=autocompleteInput]")
-    TextInputComponentImpl autocomplete;
-    @FindBy(css = "[id$=selectBooleanCheckbox]")
-    CheckboxInputComponentImpl booleanCheckbox;
-    @FindBy(css = "input[id$=inputSecret]")
-    TextInputComponentImpl inputSecret;
-    @FindBy(css = "input[id$=inputText]")
-    TextInputComponentImpl inputText;
-    @FindBy(css = "textarea[id$=inputTextarea]")
-    TextInputComponentImpl inputTextarea;
-    @FindBy(css = "span[id$=inputNumberSlider]")
-    RichFacesInputNumberSlider slider;
-    @FindBy(css = "span[id$=inputNumberSpinner]")
-    RichFacesInputNumberSpinner spinner;
-
-    @FindBy(css = "span[id$=inputSecret]")
-    RichFacesMessage inputSecretMsg;
-    @FindBy(css = "span[id$=graphValidatorGlobalMessages]")
-    RichFacesMessages graphValidatorGlobalMessages;
-    @FindBy(css = "span[id$=graphValidatorMessages]")
-    RichFacesMessages graphValidatorMessages;
-
-    Group group;
-
-    enum Group {
-
-        DEFAULT("Default"), NULL("null"),
-        ValidationGroupAllComponents,
-        ValidationGroupBooleanInputs,
-        ValidationGroupNumericInputs;
-        private final String group;
-
-        private Group(String group) {
-            this.group = group;
-        }
-
-        private Group() {
-            this.group = name();
-        }
-
-        @Override
-        public String toString() {
-            return group;
-        }
-    }
+    @Page
+    private GraphValidatorPage page;
 
     protected void applyChanges() {
-        MetamerPage.waitRequest(applyChangesBtn, WaitRequestType.XHR).click();
+        Graphene.guardAjax(page.getApplyChangesBtn()).click();
     }
 
     protected void checkGraphValidatorSuccessMessage() {
         //now all inputs are correct
         //there should be graph validator successfull message, which is not bound to any input > will be global
-        Assert.assertFalse(graphValidatorMessages.advanced().isVisible(), "Graph validator messages should not be visible.");
-        Assert.assertTrue(graphValidatorGlobalMessages.advanced().isVisible(), "Global messages should be visible.");
-        Assert.assertEquals(graphValidatorGlobalMessages.size(), 1, "There should be one message.");
-        Assert.assertEquals(graphValidatorGlobalMessages.getItem(0).getSummary(),
-            RichGraphValidatorBean.SUCCESSFULL_ACTION_MSG, "Summary of message.");
+        assertFalse(page.getGraphValidatorMessages().advanced().isVisible(), "Graph validator messages should not be visible.");
+        RichFacesMessages gMsgs = page.getGraphValidatorGlobalMessages();
+        assertTrue(gMsgs.advanced().isVisible(), "Global messages should be visible.");
+        assertEquals(gMsgs.size(), 1, "There should be one message.");
+        assertEquals(gMsgs.getItem(0).getSummary(), RichGraphValidatorBean.SUCCESSFULL_ACTION_MSG, "Summary of message.");
     }
 
     protected String getMessageForGroup(Group g) {
@@ -132,21 +82,25 @@ public abstract class AbstractGraphValidatorTest extends AbstractWebDriverTest {
         }
     }
 
+    public GraphValidatorPage getPage() {
+        return page;
+    }
+
     protected void setCorrectSettingForGroup(Group g) {
         switch (g) {
             case DEFAULT:
             case NULL:
             case ValidationGroupAllComponents:
-                autocomplete.advanced().clear(ClearType.JS).sendKeys(CORRECT_STRING_VALUE);
-                inputText.advanced().clear(ClearType.JS).sendKeys(CORRECT_STRING_VALUE);
-                inputTextarea.advanced().clear(ClearType.JS).sendKeys(CORRECT_STRING_VALUE);
+                page.getAutocomplete().advanced().clear(ClearType.JS).sendKeys(CORRECT_STRING_VALUE);
+                page.getInputText().advanced().clear(ClearType.JS).sendKeys(CORRECT_STRING_VALUE);
+                page.getInputTextarea().advanced().clear(ClearType.JS).sendKeys(CORRECT_STRING_VALUE);
                 break;
             case ValidationGroupBooleanInputs:
-                booleanCheckbox.check();
+                page.getBooleanCheckbox().check();
                 break;
             case ValidationGroupNumericInputs:
-                spinner.advanced().getInput().advanced().clear(ClearType.JS).sendKeys(CORRECT_INT_VALUE);
-                slider.advanced().getInput().advanced().clear(ClearType.JS).sendKeys(CORRECT_INT_VALUE);
+                page.getSpinner().advanced().getInput().advanced().clear(ClearType.JS).sendKeys(CORRECT_INT_VALUE);
+                page.getSlider().advanced().getInput().advanced().clear(ClearType.JS).sendKeys(CORRECT_INT_VALUE);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown group " + group);
@@ -156,7 +110,7 @@ public abstract class AbstractGraphValidatorTest extends AbstractWebDriverTest {
 
     protected void setInputSecretCorrect() {
         // only inputSecret doesn't keep entered value after submit
-        inputSecret.advanced().clear(ClearType.JS).sendKeys(RichGraphValidatorBean.SMILE);
+        page.getInputSecret().advanced().clear(ClearType.JS).sendKeys(RichGraphValidatorBean.SMILE);
     }
 
     protected void setWrongSettingForGroup(Group g) {
@@ -164,20 +118,40 @@ public abstract class AbstractGraphValidatorTest extends AbstractWebDriverTest {
             case DEFAULT:
             case NULL:
             case ValidationGroupAllComponents:
-                autocomplete.advanced().clear(ClearType.JS).sendKeys(WRONG_STRING_VALUE);
-                inputText.advanced().clear(ClearType.JS).sendKeys(WRONG_STRING_VALUE);
-                inputTextarea.advanced().clear(ClearType.JS).sendKeys(WRONG_STRING_VALUE);
+                page.getAutocomplete().advanced().clear(ClearType.JS).sendKeys(WRONG_STRING_VALUE);
+                page.getInputText().advanced().clear(ClearType.JS).sendKeys(WRONG_STRING_VALUE);
+                page.getInputTextarea().advanced().clear(ClearType.JS).sendKeys(WRONG_STRING_VALUE);
                 break;
             case ValidationGroupBooleanInputs:
-                booleanCheckbox.uncheck();
+                page.getBooleanCheckbox().uncheck();
                 break;
             case ValidationGroupNumericInputs:
-                spinner.advanced().getInput().advanced().clear(ClearType.JS).sendKeys(WRONG_INT_VALUE);
-                slider.advanced().getInput().advanced().clear(ClearType.JS).sendKeys(WRONG_INT_VALUE);
+                page.getSpinner().advanced().getInput().advanced().clear(ClearType.JS).sendKeys(WRONG_INT_VALUE);
+                page.getSlider().advanced().getInput().advanced().clear(ClearType.JS).sendKeys(WRONG_INT_VALUE);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown group " + group);
         }
         applyChanges();
+    }
+
+    protected enum Group {
+
+        DEFAULT("Default"), NULL("null"), ValidationGroupAllComponents, ValidationGroupBooleanInputs, ValidationGroupNumericInputs;
+
+        private final String group;
+
+        private Group(String group) {
+            this.group = group;
+        }
+
+        private Group() {
+            this.group = name();
+        }
+
+        @Override
+        public String toString() {
+            return group;
+        }
     }
 }

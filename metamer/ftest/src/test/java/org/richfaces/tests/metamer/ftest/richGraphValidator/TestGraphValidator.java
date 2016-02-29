@@ -22,7 +22,11 @@
 package org.richfaces.tests.metamer.ftest.richGraphValidator;
 
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
+import org.richfaces.fragment.messages.RichFacesMessages;
 import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBean;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -50,15 +54,15 @@ public class TestGraphValidator extends AbstractGraphValidatorTest {
     @UseWithField(field = "group", valuesFrom = FROM_ENUM, value = "")
     public void testGroups() {
         graphValidatorAttributes.set(GraphValidatorAttributes.groups, group.toString());
-        Assert.assertFalse(graphValidatorGlobalMessages.advanced().isVisible(),
+        assertFalse(getPage().getGraphValidatorGlobalMessages().advanced().isVisible(),
             "Global messages should not be visible.");
-        Assert.assertFalse(graphValidatorMessages.advanced().isVisible(), "Messages should be visible.");
+        assertFalse(getPage().getGraphValidatorMessages().advanced().isVisible(), "Messages should be visible.");
         applyChanges();
 
         if (group == Group.DEFAULT || group == Group.NULL) {
             // a message for empty input secret should be displayed, it is validated by @NotNull
-            Assert.assertTrue(inputSecretMsg.advanced().isVisible(), "Messages for input secret should be visible.");
-            String summary = inputSecretMsg.getDetail();
+            Assert.assertTrue(getPage().getInputSecretMsg().advanced().isVisible(), "Messages for input secret should be visible.");
+            String summary = getPage().getInputSecretMsg().getDetail();
             if (!summary.equals(StringInputValidationBean.NOT_EMPTY_VALIDATION_MSG)
                 && summary.equals(StringInputValidationBean.NOT_EMPTY_VALIDATION_MSG2)
                 && summary.equals(StringInputValidationBean.NOT_EMPTY_VALIDATION_MSG3)) {
@@ -70,12 +74,12 @@ public class TestGraphValidator extends AbstractGraphValidatorTest {
         // set some of group inputs to bad value
         setWrongSettingForGroup(group);
         // graph validator message should be displayed, validation of group should fail
-        Assert.assertFalse(graphValidatorGlobalMessages.advanced().isVisible(),
+        assertFalse(getPage().getGraphValidatorGlobalMessages().advanced().isVisible(),
             "Global messages should not be visible.");
-        Assert.assertTrue(graphValidatorMessages.advanced().isVisible(), "Graph validator messages should be visible.");
-        Assert.assertEquals(graphValidatorMessages.size(), 1, "There should be one message.");
-        Assert.assertEquals(graphValidatorMessages.getItem(0).getSummary(), getMessageForGroup(group),
-            "Summary of message.");
+        RichFacesMessages msgs = getPage().getGraphValidatorMessages();
+        assertTrue(msgs.advanced().isVisible(), "Graph validator messages should be visible.");
+        assertEquals(msgs.size(), 1, "There should be one message.");
+        assertEquals(msgs.getItem(0).getSummary(), getMessageForGroup(group), "Summary of message.");
         setCorrectSettingForGroup(group);
         checkGraphValidatorSuccessMessage();
 
@@ -107,8 +111,8 @@ public class TestGraphValidator extends AbstractGraphValidatorTest {
     @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {
-        assertPresent(panel, "Panel should be present.");
+        assertPresent(getPage().getPanel(), "Panel should be present.");
         graphValidatorAttributes.set(GraphValidatorAttributes.rendered, Boolean.FALSE);
-        assertNotPresent(panel, "Panel should not be present.");
+        assertNotPresent(getPage().getPanel(), "Panel should not be present.");
     }
 }
