@@ -30,6 +30,8 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.CheckboxInputComponentImpl;
 import org.richfaces.fragment.common.picker.ChoicePicker;
 
+import com.google.common.collect.Lists;
+
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
@@ -46,6 +48,14 @@ public class ColumnControl {
             throw new NullPointerException("There is no such option!");
         }
         return Graphene.createPageFragment(LabelWithCheckBox.class, picked);
+    }
+
+    public List<String> getOptionsLabels() {
+        List<String> result = Lists.newArrayList();
+        for (WebElement option : optionsElements) {
+            result.add(option.getText());
+        }
+        return result;
     }
 
     public void hideAllColumns() {

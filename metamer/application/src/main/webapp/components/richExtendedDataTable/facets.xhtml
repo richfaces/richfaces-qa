@@ -93,6 +93,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                     rows="#{richExtendedDataTableBean.attributes['rows'].value}"
                                     selection="#{richExtendedDataTableBean.attributes['selection'].value}"
                                     selectionMode="#{richExtendedDataTableBean.attributes['selectionMode'].value}"
+                                    showColumnControl="#{richExtendedDataTableBean.attributes['showColumnControl'].value}"
                                     sortMode="#{richExtendedDataTableBean.attributes['sortMode'].value}"
                                     sortPriority="#{richExtendedDataTableBean.attributes['sortPriority'].value}"
                                     style="#{richExtendedDataTableBean.attributes['style'].value}"
@@ -111,7 +112,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                   rendered="#{not empty richExtendedDataTableBean.facets['header']}"/>
                 </f:facet>
 
-                <rich:column id="columnState" sortBy="#{record.state}">
+                <rich:column id="columnState" name="#{richColumnBean.attributes['name'].value}" sortBy="#{record.state}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderState" value="#{richExtendedDataTableBean.facets['columnStateHeader']}"
                                       rendered="#{not empty richExtendedDataTableBean.facets['columnStateHeader']}"/>
@@ -162,6 +163,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:outputLabel value="State Column Footer:" />
                     <h:inputText id="stateFooterInput" value="#{richExtendedDataTableBean.facets['columnStateFooter']}" />
 
+                    <h:outputLabel value="State Column Name:" />
+                    <h:inputText id="stateColumnNameInput" value="#{richColumnBean.attributes['name'].value}" />
+
                     <h:outputLabel value="Capital Column Header:" />
                     <h:inputText id="capitalHeaderInput" value="#{richExtendedDataTableBean.facets['columnCapitalHeader']}" />
 
@@ -171,8 +175,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </a4j:ajax>
 
             <br/><br/>
-
-            <metamer:attributes value="#{richExtendedDataTableBean.attributes}" id="attributes" exclude="showColumnControl"/>
+            <metamer:attributes value="#{richExtendedDataTableBean.attributes}" id="attributes"/>
         </ui:define>
 
     </ui:composition>

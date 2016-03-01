@@ -21,23 +21,36 @@
  */
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
+import static org.testng.Assert.assertEquals;
+
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFacetsTest;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.MultipleCoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
-import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SimpleEDT;
+import org.richfaces.tests.metamer.ftest.richColumn.ColumnAttributes;
+import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SimpleEDTWithColumnControl;
 import org.testng.annotations.Test;
+
+import com.google.common.collect.Lists;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22407 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @Templates(value = "plain")
 public class TestExtendedDataTableFacets extends DataTableFacetsTest {
 
+    private static final int NUMBER_OF_COMBINATIONS = 32;
+
     @FindBy(css = "div.rf-edt[id$=richEDT]")
-    private SimpleEDT table;
+    private SimpleEDTWithColumnControl table;
+
+    private void checkColumnControlsLabels(String firstLabel, String secondLabel) {
+        assertEquals(getTable().getHeader().openColumnControl().getOptionsLabels(), Lists.newArrayList(firstLabel, secondLabel));
+    }
 
     @Override
     public String getComponentTestPagePath() {
@@ -45,7 +58,7 @@ public class TestExtendedDataTableFacets extends DataTableFacetsTest {
     }
 
     @Override
-    protected SimpleEDT getTable() {
+    protected SimpleEDTWithColumnControl getTable() {
         return table;
     }
 
@@ -79,6 +92,44 @@ public class TestExtendedDataTableFacets extends DataTableFacetsTest {
     @Test
     public void testNoDataFacet() {
         super.testNoDataFacet();
+    }
+
+    @Test
+    @MultipleCoversAttributes({
+        @CoversAttributes("showColumnControl"),
+        @CoversAttributes(value = "name", attributeEnumClass = ColumnAttributes.class)
+    })
+    @RegressionTest("https://issues.jboss.org/browse/RF-7872")
+    public void testShowColumnControlsLabels() {
+        setAttribute("showColumnControl", true);
+        boolean hasColumnName = false, hasStateHeader = false, hasStateFooter = false, hasCapitalHeader = false,
+            hasCapitalFooter = false;
+        String columnName, stateHeader, stateFooter, capitalHeader, capitalFooter;
+        for (int i = 0; i < NUMBER_OF_COMBINATIONS; i++) {
+            hasColumnName = !hasColumnName;
+            hasStateHeader = i % 2 == 0 ? !hasStateHeader : hasStateHeader;
+            hasStateFooter = i % 4 == 0 ? !hasStateFooter : hasStateFooter;
+            hasCapitalHeader = i % 8 == 0 ? !hasCapitalHeader : hasCapitalHeader;
+            hasCapitalFooter = i % 16 == 0 ? !hasCapitalFooter : hasCapitalFooter;
+            columnName = hasColumnName ? "name-" + SAMPLE_STRING : "";
+            stateHeader = hasStateHeader ? "header1-" + SAMPLE_STRING : "";
+            stateFooter = hasStateFooter ? "footer1-" + SAMPLE_STRING : "";
+            capitalHeader = hasCapitalHeader ? "header2-" + SAMPLE_STRING : "";
+            capitalFooter = hasCapitalFooter ? "footer2-" + SAMPLE_STRING : "";
+
+            attsSetter()
+                .setAttribute("stateColumnName").toValue(columnName)
+                .setAttribute("stateHeader").toValue(stateHeader)
+                .setAttribute("stateFooter").toValue(stateFooter)
+                .setAttribute("capitalHeader").toValue(capitalHeader)
+                .setAttribute("capitalFooter").toValue(capitalFooter)
+                .asSingleAction().perform();
+
+            checkColumnControlsLabels(
+                hasColumnName ? columnName : hasStateHeader ? stateHeader : (hasStateFooter && !hasCapitalHeader) ? stateFooter : "#columnState",
+                hasCapitalHeader ? capitalHeader : (hasCapitalFooter && !hasStateHeader) ? capitalFooter : "#columnCapital"
+            );
+        }
     }
 
     @Test
