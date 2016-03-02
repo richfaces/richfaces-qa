@@ -59,8 +59,14 @@ public class TestRF12653 extends AbstractAutocompleteTest {
             .asSingleAction().perform();
         // fill in 'a', so there will be some suggestions available
         Graphene.guardAjax(autocomplete).type("a");
+        // popup with suggestions will show up
+        autocomplete.advanced().waitForSuggestionsToBeVisible().perform();
+        // check
+        checkVisibleSuggestions();
         // blur
         Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();
+        // popup with suggestions should hide
+        autocomplete.advanced().waitForSuggestionsToBeNotVisible().perform();
 
         // focus the input element with attached @onclick
         autocomplete.advanced().getInput().advanced().getInputElement().click();
@@ -75,8 +81,7 @@ public class TestRF12653 extends AbstractAutocompleteTest {
 
         // now try the same with the autocomplete button (here is the issue)
         // click the autocomplete button
-        WebElement button = autocomplete.advanced().getRootElement().findElement(By.className("rf-au-btn"));
-        button.click();
+        autocomplete.advanced().getRootElement().findElement(By.className("rf-au-btn")).click();
         // popup with suggestions will show up
         autocomplete.advanced().waitForSuggestionsToBeVisible().perform();
         // check
