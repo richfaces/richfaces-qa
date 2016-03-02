@@ -224,7 +224,7 @@ FSF site: http://www.fsf.org. -->
         <profile>
             <id>jbossportal-remote-7-1</id>
             <properties>
-                <metamer.classifier>jbas71</metamer.classifier>
+                <metamer.classifier>jee6</metamer.classifier>
             </properties>
             <dependencies>
                 <dependency>
@@ -360,7 +360,7 @@ FSF site: http://www.fsf.org. -->
                 </property>
             </activation>
             <properties>
-                <metamer.classifier>tomcat7-myfaces</metamer.classifier>
+                <metamer.classifier>tomcat-myfaces</metamer.classifier>
             </properties>
         </profile>
     </profiles>

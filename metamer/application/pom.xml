@@ -28,9 +28,9 @@ FSF site: http://www.fsf.org. -->
         <jetty.port>8080</jetty.port>
         <version.hornetq>2.2.13.Final</version.hornetq>
         <version.jstlapi>1.2-rev-1</version.jstlapi>
-        <jbas71.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*,WEB-INF/lib/jboss-as-controller-client*,WEB-INF/lib/jstl-api-*</jbas71.excluded.libraries>
-        <tomcat7-mojarra.excluded.libraries>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/jboss-as-controller-client*</tomcat7-mojarra.excluded.libraries>
-        <tomcat7-myfaces.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/jboss-as-controller-client*</tomcat7-myfaces.excluded.libraries>
+        <jee6.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*,WEB-INF/lib/jboss-as-controller-client*,WEB-INF/lib/jstl-api-*</jee6.excluded.libraries>
+        <tomcat-mojarra.excluded.libraries>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/jboss-as-controller-client*</tomcat-mojarra.excluded.libraries>
+        <tomcat-myfaces.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/jboss-as-controller-client*</tomcat-myfaces.excluded.libraries>
         <prepareExplodedWar.filesToDelete />
     </properties>
 
@@ -190,7 +190,7 @@ FSF site: http://www.fsf.org. -->
                     </archive>
                 </configuration>
                 <executions>
-                    <!-- disable default war execution (use jbas71 profile instead) -->
+                    <!-- disable default war execution (use jee6 profile instead) -->
                     <execution>
                         <id>default-war</id>
                         <phase>none</phase>
@@ -222,15 +222,15 @@ FSF site: http://www.fsf.org. -->
                 </property>
             </activation>
             <properties>
-                <prepareExplodedWar.filesToDelete>${jbas71.excluded.libraries}</prepareExplodedWar.filesToDelete>
+                <prepareExplodedWar.filesToDelete>${jee6.excluded.libraries}</prepareExplodedWar.filesToDelete>
             </properties>
             <build>
                 <plugins>
                     <plugin>
                         <artifactId>maven-war-plugin</artifactId>
                         <configuration>
-                            <classifier>jbas71</classifier>
-                            <packagingExcludes>${jbas71.excluded.libraries}</packagingExcludes>
+                            <classifier>jee6</classifier>
+                            <packagingExcludes>${jee6.excluded.libraries}</packagingExcludes>
                             <attachClasses>true</attachClasses>
                         </configuration>
                         <executions>
@@ -247,9 +247,9 @@ FSF site: http://www.fsf.org. -->
             </build>
         </profile>
         <profile>
-            <id>war-tomcat7-mojarra</id>
+            <id>war-tomcat-mojarra</id>
             <properties>
-                <prepareExplodedWar.filesToDelete>${tomcat7-mojarra.excluded.libraries}</prepareExplodedWar.filesToDelete>
+                <prepareExplodedWar.filesToDelete>${tomcat-mojarra.excluded.libraries}</prepareExplodedWar.filesToDelete>
             </properties>
             <build>
                 <plugins>
@@ -257,17 +257,17 @@ FSF site: http://www.fsf.org. -->
                         <artifactId>maven-war-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>tomcat7-mojarra</id>
+                                <id>tomcat-mojarra</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>war</goal>
                                 </goals>
                                 <configuration>
                                     <filters>
-                                        <filter>${basedir}/src/main/filters/tomcat7.properties</filter>
+                                        <filter>${basedir}/src/main/filters/tomcat.properties</filter>
                                     </filters>
-                                    <classifier>tomcat7-mojarra</classifier>
-                                    <packagingExcludes>${tomcat7-mojarra.excluded.libraries}</packagingExcludes>
+                                    <classifier>tomcat-mojarra</classifier>
+                                    <packagingExcludes>${tomcat-mojarra.excluded.libraries}</packagingExcludes>
                                 </configuration>
                             </execution>
                         </executions>
@@ -276,9 +276,9 @@ FSF site: http://www.fsf.org. -->
             </build>
         </profile>
         <profile>
-            <id>war-tomcat7-myfaces</id>
+            <id>war-tomcat-myfaces</id>
             <properties>
-                <prepareExplodedWar.filesToDelete>${tomcat7-myfaces.excluded.libraries}</prepareExplodedWar.filesToDelete>
+                <prepareExplodedWar.filesToDelete>${tomcat-myfaces.excluded.libraries}</prepareExplodedWar.filesToDelete>
             </properties>
             <build>
                 <plugins>
@@ -286,17 +286,17 @@ FSF site: http://www.fsf.org. -->
                         <artifactId>maven-war-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>tomcat7-myfaces</id>
+                                <id>tomcat-myfaces</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>war</goal>
                                 </goals>
                                 <configuration>
                                     <filters>
-                                        <filter>${basedir}/src/main/filters/tomcat7.properties</filter>
+                                        <filter>${basedir}/src/main/filters/tomcat.properties</filter>
                                     </filters>
-                                    <classifier>tomcat7-myfaces</classifier>
-                                    <packagingExcludes>${tomcat7-myfaces.excluded.libraries}</packagingExcludes>
+                                    <classifier>tomcat-myfaces</classifier>
+                                    <packagingExcludes>${tomcat-myfaces.excluded.libraries}</packagingExcludes>
                                 </configuration>
                             </execution>
                         </executions>
@@ -418,32 +418,32 @@ FSF site: http://www.fsf.org. -->
                         <artifactId>maven-war-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>tomcat7-mojarra</id>
+                                <id>tomcat-mojarra</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>war</goal>
                                 </goals>
                                 <configuration>
                                     <filters>
-                                        <filter>${basedir}/src/main/filters/tomcat7.properties</filter>
+                                        <filter>${basedir}/src/main/filters/tomcat.properties</filter>
                                     </filters>
-                                    <classifier>tomcat7-mojarra</classifier>
-                                    <packagingExcludes>${tomcat7-mojarra.excluded.libraries}</packagingExcludes>
+                                    <classifier>tomcat-mojarra</classifier>
+                                    <packagingExcludes>${tomcat-mojarra.excluded.libraries}</packagingExcludes>
                                     <attachClasses>false</attachClasses>
                                 </configuration>
                             </execution>
                             <execution>
-                                <id>tomcat7-myfaces</id>
+                                <id>tomcat-myfaces</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>war</goal>
                                 </goals>
                                 <configuration>
                                     <filters>
-                                        <filter>${basedir}/src/main/filters/tomcat7.properties</filter>
+                                        <filter>${basedir}/src/main/filters/tomcat.properties</filter>
                                     </filters>
-                                    <classifier>tomcat7-myfaces</classifier>
-                                    <packagingExcludes>${tomcat7-myfaces.excluded.libraries}</packagingExcludes>
+                                    <classifier>tomcat-myfaces</classifier>
+                                    <packagingExcludes>${tomcat-myfaces.excluded.libraries}</packagingExcludes>
                                     <attachClasses>false</attachClasses>
                                 </configuration>
                             </execution>

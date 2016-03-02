@@ -11,20 +11,15 @@ Firstly you need generate tested application. Go into `apps` folder:
 Executing Tests
 ====================
 
-Just type into to command line:
-	
-	$ mvn clean verify -P<profile>[,deploy-and-test]
+The tests are run the same way as tests in Metamer (see its README for more details):
+
+	$ mvn clean verify -P<profile> -Dbrowser=<firefox|chrome|ie>
+
+E.g. on WildFly 10 with Firefox browser:
+
+	$ mvn clean verify -Pwildfly-managed-10-0 -Dbrowser=firefox
 	
 Available Profiles
 --------------------
- 
- * `jbossas-managed-7`
- * `tomcat-managed-6`
- * `tomcat-maneged-7`
- * use profile `deploy-and-test` if you want to deploy the tested application via arquillian
 
-Options
---------------------
-
- * `application.target.directory` - path to the WAR file which is deployed via arquillian
- * `context.root` - URL of tested application
+See profiles section in parent pom (richfaces-qa/pom.xml). All managed profiles are available with exception for the kitchensink application, where it cannot run on Tomcat (no internal DB).

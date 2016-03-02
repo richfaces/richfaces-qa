@@ -77,9 +77,9 @@ Source code is available at https://github.com/richfaces/richfaces-qa/tree/maste
 === Building Metamer
 Metamer can be built in several profiles to satisfy compatibility with various runtimes and JSF implementations. To build the application, run bash script `build.sh` in root directory of Metamer. This script generates several WAR archives with application in directory `application/target` which can be used in various scenarios:
 
-* metamer-jbas71.war - to deploy on Wildfly 8
-* metamer-tomcat7-mojarra.war - with bundled JSF Mojarra reference implementation to deploy on Tomcat 7
-* metamer-tomcat7-myfaces.war - with bundled JSF MyFaces to deploy on Tomcat 7
+* metamer-jee6.war - to deploy on Wildfly, EAP
+* metamer-tomcat-mojarra.war - with bundled JSF Mojarra reference implementation to deploy on Tomcat 7
+* metamer-tomcat-myfaces.war - with bundled JSF MyFaces to deploy on Tomcat 7
 
 To build the application with one specific profile run `mvn clean install -DskipTests -P{profileName}` where `profileName` can be found in https://github.com/richfaces/richfaces-qa/blob/master/pom.xml[pom.xml] in root directory. Created WAR file will be located in `application/target` folder.
 
@@ -89,14 +89,14 @@ To deploy the application just copy the WAR file into server deployment folder. 
 
 === Changing JSF implementation
 
-To change the JSF implementation you can build Metamer with either a script mentioned above or a pre-set profile named `war-tomcat7-myfaces`
+To change the JSF implementation you can build Metamer with either a script mentioned above or a pre-set profile named `war-tomcat-myfaces`
 
 == Functional Test Development
 
 === Running a test
 * switch to metamer/ftest directory and run `mvn clean verify -PprofileName -Dtest=testName -Dtemplates=templateName [-Dbrowser=browserName] [-Drepeats=numberOfRepeats] [-Dconfigurator.skip.reverse] [-Dconfigurator.skip.case=caseName]`
 ** profileName is a name of a container you want to use, see pom.xml in parent for their names
-*** e.g. `-Pwildfly-remote-8-1`
+*** e.g. `-Pwildfly-remote-10-0`
 ** testName is a name of a specific test to run
 *** e.g. `-Dtest=TestEditor` for all tests in TestEditor class or `-Dtest=TestEditor#testRendered` to run just one method
 *** regular expression can be used, for instance `-Dtest=TestA*` will run all test classes which name begins with 'TestA'
@@ -118,7 +118,7 @@ To change the JSF implementation you can build Metamer with either a script ment
 ***** `-Dbrowser=ff30` or `-Dbrowser=ff-30` to run tests with Firefox 30. If working in non-Jenkins environment, then the browser binary will be downloaded and stored at `{user.home}/selenium`, otherwise the binary will be linked from network drive.
 ** repeats will invoke each test multiple times (set by this property value)
 ** configurator.skip.reverse will run only those tests, which are marked with @Skip annotation and its condition is met (can depend on current OS, used container, JSF implementation...)
-** configurator.skip.case=caseName will run only those tests, which are marked with @Skip annotation with case-sensitive value equal to the choosed `caseName` class name. Use e.g. `-Dconfigurator.skip.case=MyFaces` to run only tests with annotation `@Skip(On.JSF.MyFaces.class)`, `-Dconfigurator.skip.case=UIRepeatSetIndexIssue` to run only tests with annotation `@Skip(BecauseOf.UIRepeatSetIndexIssue.class)`
+** configurator.skip.case=caseName will run only those tests, which are marked with @Skip annotation with case-sensitive value equal to the selected `caseName` class name. Use e.g. `-Dconfigurator.skip.case=MyFaces` to run only tests with annotation `@Skip(On.JSF.MyFaces.class)`, `-Dconfigurator.skip.case=UIRepeatSetIndexIssue` to run only tests with annotation `@Skip(BecauseOf.UIRepeatSetIndexIssue.class)`
 
 === Debugging a test
 * set a breakpoint in code
