@@ -41,8 +41,8 @@ FSF site: http://www.fsf.org. -->
         <eap61Zip>path/to/your/eap/distribution/zip</eap61Zip>
 
         <!-- version of Tomcat containers to use-->
-        <version.tomcat7>7.0.64</version.tomcat7>
-        <version.tomcat8>8.0.26</version.tomcat8>
+        <version.tomcat7>7.0.68</version.tomcat7>
+        <version.tomcat8>8.0.32</version.tomcat8>
 
         <!-- arquillian versions -->
         <arquillian.bom.version>1.1.10.Final</arquillian.bom.version>
