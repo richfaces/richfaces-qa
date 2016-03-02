@@ -50,7 +50,7 @@ public abstract class AbstractWebDriverTest extends Arquillian {
     protected URL contextRoot;
 
     static {
-        if (System.getProperty("browser") == null) {
+        if (!System.getProperty("activated.maven.profiles").contains("browser")) {
             throw new RuntimeException("The tests depends on property 'browser'. Use e.g. '-Dbrowser=ff', '-Dbrowser=cr', '-Dbrowser=ie'");
         }
     }

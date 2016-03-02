@@ -13,11 +13,11 @@ Executing Tests
 
 The tests are run the same way as tests in Metamer (see its README for more details):
 
-	$ mvn clean verify -P<profile> -Dbrowser=<firefox|chrome|ie>
+	$ mvn clean verify -P<profile> [-Dbrowser=<firefox|chrome|ie>]
 
-E.g. on WildFly 10 with Firefox browser:
+E.g. on WildFly 10 with Chrome browser:
 
-	$ mvn clean verify -Pwildfly-managed-10-0 -Dbrowser=firefox
+	$ mvn clean verify -Pwildfly-managed-10-0 -Dbrowser=cr
 	
 Available Profiles
 --------------------

@@ -125,7 +125,6 @@
                     <systemPropertyVariables>
                         <activated.maven.profiles>${qa.activated.profiles}</activated.maven.profiles>
                         <logging.props.dir>${project.basedir}/src/test/resources</logging.props.dir>
-                        <arquillian.webdriver.browser>firefox</arquillian.webdriver.browser>
                         <project.build.directory>${project.build.directory}</project.build.directory>
                         <arquillian.container.jbossas.7-1.node0>${arquillian.container.jbossas.7-1.node0}</arquillian.container.jbossas.7-1.node0>
                         <arquillian.container.jbossas.7-1.jvm.args>${arquillian.container.jbossas.7-1.jvm.args}</arquillian.container.jbossas.7-1.jvm.args>

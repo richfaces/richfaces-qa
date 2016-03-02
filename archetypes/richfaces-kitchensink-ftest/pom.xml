@@ -80,6 +80,19 @@
 
     <build>
         <plugins>
+            <!-- saves all activated maven profiles to project property qa.activated.profiles --> 
+            <plugin>
+                <groupId>org.richfaces.tests</groupId>
+                <artifactId>richfaces-qa-maven-plugin</artifactId>
+                <version>${project.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>profiles</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
@@ -90,7 +103,7 @@
                     </systemProperties>
                     <!-- Variables accessible e.g. from arquillian.xml -->
                     <systemPropertyVariables>
-                        <arquillian.webdriver.browser>firefox</arquillian.webdriver.browser>
+                        <activated.maven.profiles>${qa.activated.profiles}</activated.maven.profiles>
                         <project.build.directory>${project.build.directory}</project.build.directory>
                         <arquillian.container.jbossas.7-1.node0>${arquillian.container.jbossas.7-1.node0}</arquillian.container.jbossas.7-1.node0>
                         <arquillian.container.jbossas.7-1.jvm.args>${arquillian.container.jbossas.7-1.jvm.args}</arquillian.container.jbossas.7-1.jvm.args>

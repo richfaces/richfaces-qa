@@ -63,8 +63,8 @@ public class AbstractKitchensinkTest extends Arquillian {
     protected WebDriver webDriver;
 
     static {
-        if (System.getProperty("browser") == null) {
-            throw new RuntimeException("The tests depends on property 'browser'. Use e.g. '-Dbrowser=ff', '-Dbrowser=cr', '-Dbrowser=ie'");
+        if (!System.getProperty("activated.maven.profiles").contains("browser")) {
+            throw new RuntimeException("The tests depends on profile 'browser'. Use e.g. '-Dbrowser=ff', '-Dbrowser=cr', '-Dbrowser=ie'");
         }
     }
 
