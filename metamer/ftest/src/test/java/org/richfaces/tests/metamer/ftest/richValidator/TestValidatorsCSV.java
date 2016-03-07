@@ -63,6 +63,7 @@ public class TestValidatorsCSV extends AbstractValidatorsTest {
 
     @Test
     public void testAllWrong() {
+        executeJS("console.log('hi');arguments[0].click();", getPage().getA4jCommandBtn());
         verifyAllWrongWithAjaxSubmit();
     }
 

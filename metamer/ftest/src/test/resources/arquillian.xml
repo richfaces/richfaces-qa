@@ -163,6 +163,7 @@ http://www.fsf.org. -->
     <extension qualifier="webdriver">
         <property name="browser">firefox</property>
         <property name="nativeEvents">false</property>
+        <property name="javascriptEnabled">true</property>
     </extension>
 
 </arquillian>

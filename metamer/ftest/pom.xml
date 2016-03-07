@@ -376,5 +376,33 @@ FSF site: http://www.fsf.org. -->
                 <metamer.classifier>tomcat-myfaces</metamer.classifier>
             </properties>
         </profile>
+        <profile>
+            <id>reusable-browser</id>
+            <activation>
+                <property>
+                    <name>!reusable.browser.disabled</name>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.seleniumhq.selenium</groupId>
+                    <artifactId>selenium-server</artifactId>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemPropertyVariables>
+                                <arq.extension.webdriver.remoteReusable>true</arq.extension.webdriver.remoteReusable>
+                                <arq.extension.webdriver.remoteAddress>http://localhost:4444/wd/hub/</arq.extension.webdriver.remoteAddress>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 </project>

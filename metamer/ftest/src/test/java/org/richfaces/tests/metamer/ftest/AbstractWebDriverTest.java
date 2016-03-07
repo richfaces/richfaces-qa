@@ -94,7 +94,9 @@ import org.testng.IHookCallBack;
 import org.testng.ITestResult;
 import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
 
 import com.google.common.base.Predicate;
@@ -144,6 +146,44 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, FACES_COMPONENTS_PATH + getComponentTestPagePath());
+    }
+
+    private Object instance;
+
+    @BeforeSuite
+    public void startSeleniumServer() {
+        if (System.getProperty("activated.maven.profiles", "").contains("reusable-browser")) {
+            try {
+                org.openqa.selenium.server.RemoteControlConfiguration rcc = new org.openqa.selenium.server.RemoteControlConfiguration();
+//                rcc.setBrowserSideLogEnabled(true);
+                rcc.setInteractive(true);
+                rcc.setEnsureCleanSession(true);
+                rcc.setUserJSInjection(true);
+                rcc.setDontTouchLogging(true);
+                org.openqa.selenium.server.SeleniumServer s = new org.openqa.selenium.server.SeleniumServer(rcc);
+
+                s.start();
+                System.out.println("###############  REUSABLE BROWSER ACTIVATED");
+                instance = s;
+            } catch (Exception ex) {
+                System.err.println(ex);
+                System.exit(-1);
+            }
+        }
+    }
+
+    @AfterSuite
+    public void stopSeleniumServer() {
+        if (System.getProperty("activated.maven.profiles", "").contains("reusable-browser")) {
+            try {
+                org.openqa.selenium.server.SeleniumServer s = (org.openqa.selenium.server.SeleniumServer) instance;
+                s.stop();
+                System.out.println("###############  REUSABLE BROWSER DEACTIVATED");
+            } catch (Exception ex) {
+                System.err.println(ex);
+                System.exit(-1);
+            }
+        }
     }
 
     public enum DriverType {

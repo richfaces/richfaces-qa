@@ -382,6 +382,9 @@ public class MetamerPage {
      * need of moving the panel.
      */
     public void performJSClickOnButton(WebElement button, WaitRequestType type) {
+        System.out.println("is driver null " + driver == null);
+        System.out.println("is je null " + executor == null);
+        System.out.println("is button null " + button == null);
         JavascriptExecutor e = executor;
         switch (type) {
             case HTTP:
