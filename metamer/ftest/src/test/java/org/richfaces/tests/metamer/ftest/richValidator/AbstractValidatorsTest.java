@@ -50,7 +50,6 @@ import org.richfaces.tests.metamer.validation.PatternBean;
 import org.richfaces.tests.metamer.validation.SizeBean;
 import org.richfaces.tests.metamer.validation.StringSizeBean;
 import org.richfaces.tests.metamer.validator.StringRichFacesValidator;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
@@ -183,6 +182,12 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         wrongValue.put(ID.size, "B"); // RF-11035
     }
 
+    protected void preventViewExpiredException() {
+        getMetamerPage().getResponseDelayElement().click();
+        waiting(500);
+        getMetamerPage().getStatus().advanced().waitUntilStatusStateChanges(StatusState.STOP).perform();
+    }
+
     @BeforeMethod(alwaysRun = true)
     public void resizePopup() {
         if (isInPopupTemplate()) {
@@ -247,6 +252,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.custom);
+        preventViewExpiredException();
     }
 
     /**
@@ -260,6 +266,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         getPage().getInputFuture().sendKeys(wrongValue.get(ID.future));
         submitAjax();
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.future);
+        preventViewExpiredException();
     }
 
     /**
@@ -274,6 +281,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.past);
+        preventViewExpiredException();
     }
 
     /**
@@ -302,6 +310,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.decimalMinMax);
+        preventViewExpiredException();
     }
 
     /**
@@ -432,14 +441,6 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.stringSize);
-    }
-
-    @AfterMethod
-    public void waitForAllRequestsDone() {
-        // prevent ViewExpiredException
-        getMetamerPage().getResponseDelayElement().click();
-        waiting(500);
-        getMetamerPage().getStatus().advanced().waitUntilStatusStateChanges(StatusState.STOP).perform();
     }
 
     protected void waitUtilMessageWithIDIsVisibleAndCorrect(final ID id) {
