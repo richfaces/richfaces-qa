@@ -63,15 +63,11 @@ import com.google.common.base.Predicate;
  */
 public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
-    private boolean firstRun = true;
-    private String future;
-    protected Map<ID, String[]> messages = new EnumMap<AbstractValidatorsTest.ID, String[]>(AbstractValidatorsTest.ID.class);
+    private final Map<ID, String[]> messages = new EnumMap<AbstractValidatorsTest.ID, String[]>(AbstractValidatorsTest.ID.class);
+    private final Map<ID, String> wrongValue = new EnumMap<AbstractValidatorsTest.ID, String>(AbstractValidatorsTest.ID.class);
 
     @Page
     private ValidatorSimplePage page;
-
-    private String past;
-    private final Map<ID, Object> wrongValue = new EnumMap<AbstractValidatorsTest.ID, Object>(AbstractValidatorsTest.ID.class);
 
     private void checkAllErrorMessagesAreVisibleAndCorrect() {
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.assertFalse);
@@ -98,24 +94,10 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
     private void clickCorrectButton() {
         getMetamerPage().performJSClickOnButton(getPage().getSetCorrectBtn(), WaitRequestType.NONE);
-        if (new WebElementConditionFactory(getPage().getInputFuture()).isPresent().apply(driver)
-            && new WebElementConditionFactory(getPage().getInputPast()).isPresent().apply(driver)) {
-            getPage().getInputPast().clear();
-            getPage().getInputPast().sendKeys(past);
-            getPage().getInputFuture().clear();
-            getPage().getInputFuture().sendKeys(future);
-        }
     }
 
     private void clickWrongButton() {
         getMetamerPage().performJSClickOnButton(getPage().getSetWrongBtn(), WaitRequestType.NONE);
-        if (new WebElementConditionFactory(getPage().getInputFuture()).isPresent().apply(driver)
-            && new WebElementConditionFactory(getPage().getInputPast()).isPresent().apply(driver)) {
-            getPage().getInputPast().clear();
-            getPage().getInputPast().sendKeys(future);
-            getPage().getInputFuture().clear();
-            getPage().getInputFuture().sendKeys(past);
-        }
     }
 
     protected RichFacesMessage getMessageForID(ID id) {
@@ -170,28 +152,30 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         messages.put(ID.assertFalse, new String[] { AssertFalseBean.VALIDATION_MSG });
         messages.put(ID.decimalMinMax, new String[] { DecimalMinMaxBean.VALIDATION_MSG });
         messages.put(ID.digits, new String[] { DigitsBean.VALIDATION_MSG });
+        messages.put(ID.future, new String[] { FutureBean.VALIDATION_MSG });
         messages.put(ID.max, new String[] { MaxBean.VALIDATION_MSG });
         messages.put(ID.min, new String[] { MinBean.VALIDATION_MSG });
         messages.put(ID.minMax, new String[] { MinMaxBean.VALIDATION_MSG });
         messages.put(ID.notEmpty, new String[] { NotEmptyBean.VALIDATION_MSG });
         messages.put(ID.notNull, new String[] { NotNullBean.VALIDATION_MSG });
+        messages.put(ID.past, new String[] { PastBean.VALIDATION_MSG });
         messages.put(ID.pattern, new String[] { PatternBean.VALIDATION_MSG });
         messages.put(ID.custom, new String[] { StringRichFacesValidator.VALIDATION_ERROR_MSG });
         messages.put(ID.regexp, new String[] { "Regex pattern of '\\d{3}' not matched", "Validation Error: Value not according to pattern '\\d{3}'" });
-        messages.put(ID.past, new String[] { PastBean.VALIDATION_MSG });
-        messages.put(ID.future, new String[] { FutureBean.VALIDATION_MSG });
         messages.put(ID.stringSize, new String[] { StringSizeBean.VALIDATION_MSG });
         messages.put(ID.size, new String[] { SizeBean.VALIDATION_MSG }); // RF-11035
 
-        wrongValue.put(ID.assertTrue, Boolean.FALSE);
-        wrongValue.put(ID.assertFalse, Boolean.TRUE);
+        wrongValue.put(ID.assertTrue, "false");
+        wrongValue.put(ID.assertFalse, "true");
         wrongValue.put(ID.decimalMinMax, "10.688");
         wrongValue.put(ID.digits, "15.627123");
+        wrongValue.put(ID.future, "1 Jan 2013");
         wrongValue.put(ID.max, "122");
         wrongValue.put(ID.min, "-544");
         wrongValue.put(ID.minMax, "-5");
         wrongValue.put(ID.notEmpty, "");
         wrongValue.put(ID.notNull, null);
+        wrongValue.put(ID.past, "1 Jan 3013");
         wrongValue.put(ID.pattern, "@@@");
         wrongValue.put(ID.custom, "@@@");
         wrongValue.put(ID.regexp, "@@@");
@@ -204,24 +188,6 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         if (isInPopupTemplate()) {
             jsUtils.scrollToView(popupTemplate.advanced().getContentElement());
             popupTemplate.advanced().resizeFromLocation(PopupPanel.ResizerLocation.S, 100, 0);
-        }
-    }
-
-    /**
-     * Must set the dates this way beacause of problems with other locale than eng.
-     */
-    @BeforeMethod(alwaysRun = true)
-    public void setDates() {
-        if (firstRun) {
-            if (new WebElementConditionFactory(getPage().getInputFuture()).isPresent().apply(driver)
-                && new WebElementConditionFactory(getPage().getInputPast()).isPresent().apply(driver)) {
-                past = getPage().getInputPast().getAttribute("value"); // sendKeys(past);
-                future = getPage().getInputFuture().getAttribute("value"); // sendKeys(future);
-
-                wrongValue.put(AbstractValidatorsTest.ID.past, future);
-                wrongValue.put(AbstractValidatorsTest.ID.future, past);
-                firstRun = false;
-            }
         }
     }
 
@@ -238,6 +204,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
     public void verifyAllWrongWithJSFSubmit() {
         clickWrongButton();
         waiting(3000);// stabilization wait time, wait for all ajax requests are completed
+        getMetamerPage().getStatus().advanced().waitUntilStatusStateChanges(StatusState.STOP).perform();
         getMetamerPage().performJSClickOnButton(getPage().gethCommandBtn(), WaitRequestType.HTTP);
         checkAllErrorMessagesAreVisibleAndCorrect();
     }
@@ -276,7 +243,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
         // string input custom string
         getPage().getInputCustom().clear();
-        getPage().getInputCustom().sendKeys(wrongValue.get(ID.custom).toString());
+        getPage().getInputCustom().sendKeys(wrongValue.get(ID.custom));
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.custom);
@@ -290,7 +257,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
         // date input future
         getPage().getInputFuture().clear();
-        getPage().getInputFuture().sendKeys(wrongValue.get(ID.future).toString());
+        getPage().getInputFuture().sendKeys(wrongValue.get(ID.future));
         submitAjax();
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.future);
     }
@@ -303,7 +270,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
         // date input past
         getPage().getInputPast().clear();
-        getPage().getInputPast().sendKeys(wrongValue.get(ID.past).toString());
+        getPage().getInputPast().sendKeys(wrongValue.get(ID.past));
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.past);
@@ -317,7 +284,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
         // decimal input digits
         getPage().getInputDigits().clear();
-        getPage().getInputDigits().sendKeys(wrongValue.get(ID.digits).toString());
+        getPage().getInputDigits().sendKeys(wrongValue.get(ID.digits));
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.digits);
@@ -331,7 +298,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
         // Decimal input
         getPage().getInputDecimalMinMax().clear();
-        getPage().getInputDecimalMinMax().sendKeys(wrongValue.get(ID.decimalMinMax).toString());
+        getPage().getInputDecimalMinMax().sendKeys(wrongValue.get(ID.decimalMinMax));
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.decimalMinMax);
@@ -345,7 +312,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
         // integer input max
         getPage().getInputMax().clear();
-        getPage().getInputMax().sendKeys(wrongValue.get(ID.max).toString());
+        getPage().getInputMax().sendKeys(wrongValue.get(ID.max));
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.max);
@@ -358,9 +325,9 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         clickCorrectButton();
 
         // integer input min
-        // selenium.type(inputFormat.format(ID.min), wrongValue.get(ID.min).toString());
+        // selenium.type(inputFormat.format(ID.min), wrongValue.get(ID.min));
         getPage().getInputMin().clear();
-        getPage().getInputMin().sendKeys(wrongValue.get(ID.min).toString());
+        getPage().getInputMin().sendKeys(wrongValue.get(ID.min));
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.min);
@@ -373,9 +340,9 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         clickCorrectButton();
 
         // integer input min and max
-        // selenium.type(inputFormat.format(ID.minMax), wrongValue.get(ID.minMax).toString());
+        // selenium.type(inputFormat.format(ID.minMax), wrongValue.get(ID.minMax));
         getPage().getInputMinMax().clear();
-        getPage().getInputMinMax().sendKeys(wrongValue.get(ID.minMax).toString());
+        getPage().getInputMinMax().sendKeys(wrongValue.get(ID.minMax));
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.minMax);
@@ -388,9 +355,9 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         clickCorrectButton();
 
         // string input not empty
-        // selenium.type(inputFormat.format(ID.notEmpty), wrongValue.get(ID.notEmpty).toString());
+        // selenium.type(inputFormat.format(ID.notEmpty), wrongValue.get(ID.notEmpty));
         getPage().getInputNotEmpty().clear();
-        getPage().getInputNotEmpty().sendKeys(wrongValue.get(ID.notEmpty).toString());
+        getPage().getInputNotEmpty().sendKeys(wrongValue.get(ID.notEmpty));
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.notEmpty);
@@ -418,7 +385,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
         // string input custom pattern
         getPage().getInputPattern().clear();
-        getPage().getInputPattern().sendKeys(wrongValue.get(ID.pattern).toString());
+        getPage().getInputPattern().sendKeys(wrongValue.get(ID.pattern));
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.pattern);
@@ -432,7 +399,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
         // string input regExp pattern
         getPage().getInputRegexp().clear();
-        getPage().getInputRegexp().sendKeys(wrongValue.get(ID.regexp).toString());
+        getPage().getInputRegexp().sendKeys(wrongValue.get(ID.regexp));
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.regexp);
@@ -445,7 +412,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         clickCorrectButton();
 
         // many checkBox input selection size
-        WebElement selectionItemByLabel = getPage().getSelectionItemByLabel(wrongValue.get(ID.size).toString());
+        WebElement selectionItemByLabel = getPage().getSelectionItemByLabel(wrongValue.get(ID.size));
         jsUtils.scrollToView(selectionItemByLabel);
         selectionItemByLabel.click();
         submitAjax();
@@ -461,7 +428,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
         // string input string size
         getPage().getInputStringSize().clear();
-        getPage().getInputStringSize().sendKeys(wrongValue.get(ID.stringSize).toString());
+        getPage().getInputStringSize().sendKeys(wrongValue.get(ID.stringSize));
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.stringSize);
@@ -472,7 +439,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         // prevent ViewExpiredException
         getMetamerPage().getResponseDelayElement().click();
         waiting(500);
-        getMetamerPage().getStatus().advanced().waitUntilStatusStateChanges(StatusState.STOP);
+        getMetamerPage().getStatus().advanced().waitUntilStatusStateChanges(StatusState.STOP).perform();
     }
 
     protected void waitUtilMessageWithIDIsVisibleAndCorrect(final ID id) {

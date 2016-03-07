@@ -146,13 +146,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                 <h:outputLabel for="past" value="#{pastBean.description}" />
                 <h:inputText id="past" value="#{pastBean.value}" label="#{pastBean.label}" >
-                    <f:convertDateTime pattern="d MMM yyyy"/>
+                    <f:convertDateTime pattern="d MMM yyyy" locale="en"/>
                 </h:inputText>
                 <rich:message id="pastMsg" for="past" />
 
                 <h:outputLabel for="future" value="#{futureBean.description}" />
                 <h:inputText id="future" value="#{futureBean.value}" label="#{futureBean.label}" >
-                    <f:convertDateTime pattern="d MMM yyyy"/>
+                    <f:convertDateTime pattern="d MMM yyyy" locale="en"/>
                 </h:inputText>
                 <rich:message id="futureMsg" for="future" />
 
