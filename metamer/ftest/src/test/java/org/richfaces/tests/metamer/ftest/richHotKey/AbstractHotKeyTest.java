@@ -43,28 +43,24 @@ import org.testng.annotations.BeforeMethod;
  */
 public abstract class AbstractHotKeyTest extends AbstractWebDriverTest {
 
-    @FindBy(css = "input.first-input")
-    protected TextInputComponentImpl firstInput;
-    @FindBy(css = "input.second-input")
-    protected TextInputComponentImpl secondInput;
-    @FindBy(css = "span[id$=richHotKey1]")
-    protected RichFacesHotkey hotkey1;
-    @FindBy(css = "span[id$=richHotKey2]")
-    protected RichFacesHotkey hotkey2;
-    @FindBy(css = "div[id='richfaces.log']")
-    protected RichFacesLog log;
-    @FindBy(tagName = "body")
-    protected WebElement body;
-    //
-    protected Attributes<HotKeyAttributes> firstHotkeyAttributes = getAttributes("attributes1");
-    protected Attributes<HotKeyAttributes> secondHotkeyAttributes = getAttributes("attributes2");
-    //
     private static final String ONKEYDOWN_TEMPLATE = "hotkey %d : onkeydown";
     private static final String ONKEYUP_TEMPLATE = "hotkey %d : onkeyup";
 
-    protected void clearHotKeyEvents() {
-        log.clear();
-    }
+    protected Attributes<HotKeyAttributes> firstHotkeyAttributes = getAttributes("attributes1");
+    protected Attributes<HotKeyAttributes> secondHotkeyAttributes = getAttributes("attributes2");
+
+    @FindBy(tagName = "body")
+    private WebElement bodyElement;
+    @FindBy(css = "input.first-input")
+    private TextInputComponentImpl firstInput;
+    @FindBy(css = "span[id$=richHotKey1]")
+    private RichFacesHotkey hotkey1;
+    @FindBy(css = "span[id$=richHotKey2]")
+    private RichFacesHotkey hotkey2;
+    @FindBy(css = "div[id='richfaces.log']")
+    private RichFacesLog log;
+    @FindBy(css = "input.second-input")
+    private TextInputComponentImpl secondInput;
 
     protected void checkEvent(String text, int number) {
         List<? extends LogEntry> items = log.getLogEntries().getItems(ChoicePickerHelper.byVisibleText().contains(text));
@@ -78,9 +74,37 @@ public abstract class AbstractHotKeyTest extends AbstractWebDriverTest {
         checkEvent(String.format(ONKEYUP_TEMPLATE, 2), expectedCountOfEvents2);
     }
 
+    protected void clearHotKeyEvents() {
+        log.clear();
+    }
+
+    public WebElement getBodyElement() {
+        return bodyElement;
+    }
+
     @Override
     public String getComponentTestPagePath() {
         return "richHotKey/simple.xhtml";
+    }
+
+    public TextInputComponentImpl getFirstInput() {
+        return firstInput;
+    }
+
+    public RichFacesHotkey getHotkey1() {
+        return hotkey1;
+    }
+
+    public RichFacesHotkey getHotkey2() {
+        return hotkey2;
+    }
+
+    public RichFacesLog getLog() {
+        return log;
+    }
+
+    public TextInputComponentImpl getSecondInput() {
+        return secondInput;
     }
 
     @BeforeMethod(groups = "smoke")

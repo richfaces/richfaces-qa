@@ -70,8 +70,8 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
         String originalWindow = driver.getWindowHandle();
         firstHotkeyAttributes.set(HotKeyAttributes.preventDefault, preventDefault);
         firstHotkeyAttributes.set(HotKeyAttributes.key, "ctrl+n");
-        hotkey1.setHotkey("ctrl+n");
-        hotkey1.invoke();
+        getHotkey1().setHotkey("ctrl+n");
+        getHotkey1().invoke();
         try {
             if (!preventDefault) {
                 Graphene.waitModel().until(new Predicate<WebDriver>() {
@@ -123,12 +123,12 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
     @CoversAttributes("enabledInInput")
     public void enabledInInput() {
         // true
-        hotkey1.invoke(firstInput.advanced().getInputElement());
+        getHotkey1().invoke(getFirstInput().advanced().getInputElement());
         checkEvents(1, 0);
         clearHotKeyEvents();
         // false
         firstHotkeyAttributes.set(HotKeyAttributes.enabledInInput, false);
-        hotkey1.invoke(firstInput.advanced().getInputElement());
+        getHotkey1().invoke(getFirstInput().advanced().getInputElement());
         checkEvents(0, 0);
     }
 
@@ -137,8 +137,8 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
     @UseWithField(field = "key", valuesFrom = FROM_ENUM, value = "")
     public void testKey() {
         firstHotkeyAttributes.set(HotKeyAttributes.key, key.keysString);
-        hotkey1.setHotkey(key.toString());
-        hotkey1.invoke();
+        getHotkey1().setHotkey(key.toString());
+        getHotkey1().invoke();
         checkEvents(1, 0);
         clearHotKeyEvents();
     }
@@ -147,9 +147,9 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
     @CoversAttributes({ "onkeydown", "onkeyup" })
     public void testOnkeydownOnkeyup() {
         // these events are already binded, they add message to a4j:log on the page
-        hotkey1.invoke();
+        getHotkey1().invoke();
         checkEvents(1, 0);
-        hotkey2.invoke();
+        getHotkey2().invoke();
         checkEvents(1, 1);
     }
 
@@ -170,20 +170,20 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
     @Templates(value = "plain")
     public void testRendered() {
         firstHotkeyAttributes.set(HotKeyAttributes.rendered, false);
-        assertNotPresent(hotkey1.advanced().getRootElement(), "Hotkey 1 should not be present on page.");
-        assertPresent(hotkey2.advanced().getRootElement(), "Hotkey 2 should be present on page.");
+        assertNotPresent(getHotkey1().advanced().getRootElement(), "Hotkey 1 should not be present on page.");
+        assertPresent(getHotkey2().advanced().getRootElement(), "Hotkey 2 should be present on page.");
     }
 
     @Test
     @CoversAttributes("selector")
     public void testSelector() {
         firstHotkeyAttributes.set(HotKeyAttributes.selector, "input.first-input");
-        hotkey1.setSelector("input.first-input");
-        hotkey1.invoke();// invoke on element found by selector
+        getHotkey1().setSelector("input.first-input");
+        getHotkey1().invoke();// invoke on element found by selector
         checkEvents(1, 0);
-        hotkey1.invoke(secondInput.advanced().getInputElement());
+        getHotkey1().invoke(getSecondInput().advanced().getInputElement());
         checkEvents(1, 0);// no change
-        hotkey1.invoke();// invoke on element found by selector
+        getHotkey1().invoke();// invoke on element found by selector
         checkEvents(2, 0);
     }
 }
