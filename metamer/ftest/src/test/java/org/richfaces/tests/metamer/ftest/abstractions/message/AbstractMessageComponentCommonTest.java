@@ -31,7 +31,6 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.richMessage.MessageAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.Assert;
 
@@ -168,11 +167,11 @@ public abstract class AbstractMessageComponentCommonTest extends AbstractWebDriv
     }
 
     protected void submitWithA4jBtn() {
-        MetamerPage.waitRequest(getPage().getA4jCommandButton(), WaitRequestType.XHR).click();
+        getMetamerPage().performJSClickOnButton(getPage().getA4jCommandButton(), WaitRequestType.XHR);
     }
 
     protected void submitWithHBtn() {
-        MetamerPage.waitRequest(getPage().gethCommandButton(), WaitRequestType.HTTP).click();
+        getMetamerPage().performJSClickOnButton(getPage().gethCommandButton(), WaitRequestType.HTTP);
     }
 
     protected void waitForValuesSetting() {
