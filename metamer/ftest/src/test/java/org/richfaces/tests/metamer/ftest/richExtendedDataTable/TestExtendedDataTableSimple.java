@@ -70,10 +70,12 @@ public class TestExtendedDataTableSimple extends DataTableSimpleTest {
 
     private void checkClientRows(int clientRows) {
         final int ROWS = 30;
-        // setup
-        attributes.set(ExtendedDataTableAttributes.rows, ROWS);
         List<Capital> capitals = CAPITALS.subList(0, ROWS);
-        attributes.set(ExtendedDataTableAttributes.clientRows, clientRows);
+        // setup
+        attsSetter()
+            .setAttribute(ExtendedDataTableAttributes.rows).toValue(ROWS)
+            .setAttribute(ExtendedDataTableAttributes.clientRows).toValue(clientRows)
+            .asSingleAction().perform();
         By loadedRows = ByJQuery.selector("tbody[id$='richEDT:tbn']>tr");
         // check number of loaded rows equals to number of @clientRows
         assertEquals(driver.findElements(loadedRows).size(), clientRows);
@@ -88,7 +90,7 @@ public class TestExtendedDataTableSimple extends DataTableSimpleTest {
         while (lastLoadedRowIndex != (ROWS - 1)) {
             lastLoadedRowIndex = Math.min(lastLoadedRowIndex + clientRows, ROWS) - 1;
             // browse to last loaded row, this will load following # of rows equal to @clientRows
-            Graphene.guardAjax(row.getRootElement()).click();
+            Graphene.guardAjax(new ScrollAction(row.getRootElement())).perform();
             // check the last loaded row
             row = table.getLastRow();
             text = row.getStateColumn().getText();
@@ -125,13 +127,13 @@ public class TestExtendedDataTableSimple extends DataTableSimpleTest {
     }
 
     @Override
-    protected SimpleEDT getTable() {
-        return table;
+    public String getComponentTestPagePath() {
+        return "richExtendedDataTable/simple.xhtml";
     }
 
     @Override
-    public String getComponentTestPagePath() {
-        return "richExtendedDataTable/simple.xhtml";
+    protected SimpleEDT getTable() {
+        return table;
     }
 
     @Test
@@ -282,5 +284,19 @@ public class TestExtendedDataTableSimple extends DataTableSimpleTest {
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(tableRoot);
+    }
+
+    public class ScrollAction implements Action {
+
+        private final WebElement element;
+
+        public ScrollAction(WebElement element) {
+            this.element = element;
+        }
+
+        @Override
+        public void perform() {
+            jsUtils.scrollToView(element);
+        }
     }
 }
