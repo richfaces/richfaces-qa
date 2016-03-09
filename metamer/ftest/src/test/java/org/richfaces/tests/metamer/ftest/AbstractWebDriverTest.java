@@ -210,14 +210,18 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         // move mouse to upper left corner of window so it will not stay over tested component
         moveMouseToUpperLeftCorner();
         // load page
+        openPageWithCurrentConfiguration();
+        driverType = DriverType.getCurrentType(driver);
+        // resize browser window to 1280x1024 or full screen
+        driver.manage().window().setSize(new Dimension(1280, 1024));
+    }
+
+    protected void openPageWithCurrentConfiguration() {
         if (runInPortalEnv) {
             goToTestInPortal();
         } else {
             driver.get(buildUrl(getTestUrl() + "?templates=" + template.toString()).toExternalForm());
         }
-        driverType = DriverType.getCurrentType(driver);
-        // resize browser window to 1280x1024 or full screen
-        driver.manage().window().setSize(new Dimension(1280, 1024));
     }
 
     protected boolean isInPopupTemplate() {
@@ -609,17 +613,30 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     private void testPositioning(ShowElementAndReturnAction showAction, int maxOffSetX, int maxOffsetY) {
         int tolerance = 10;
         boolean isDirectionTest = (maxOffsetY == 0 && maxOffSetX == 0);
-        getUnsafeAttributes("").set("direction", Positioning.bottomRight);
-        try {
-            getUnsafeAttributes("").set("jointPoint", Positioning.bottomRight);
-        } catch (AttributeNotSetException ex) {
-            if (!isDirectionTest) {// == jointPoint test, but no jointPoint attribute found
-                throw ex;
-            }
+        UnsafeAttributes atts = getUnsafeAttributes("");
+
+        // determine tested attribute
+        String testedAtt = isDirectionTest ? "direction" : "jointPoint";
+
+        // set reference values
+        if (atts.hasAttribute("jointPoint")) {
+            attsSetter()
+                .setAttribute("direction").toValue(Positioning.bottomRight)
+                .setAttribute("jointPoint").toValue(Positioning.bottomRight)
+                .asSingleAction().perform();
+        } else {// no @jointPoint attribute, set direction only
+            atts.set("direction", Positioning.bottomRight);
         }
+        // get reference locations
         Locations locationsBottomRight = Utils.getLocations(showAction.perform());
 
-        getUnsafeAttributes("").set((isDirectionTest ? "direction" : "jointPoint"), positioning);
+        // setup tested attribute
+        atts.set(testedAtt, positioning);
+        if (atts.get(testedAtt).equals(Positioning.bottomRight.toString())) {
+            // reload the page to dismiss the popup
+            openPageWithCurrentConfiguration();
+        }
+        // get new locations, with tested value of @direction/@jointPoint
         Locations locationsAfterReposition = Utils.getLocations(showAction.perform());
 
         int widthChange = maxOffSetX;
@@ -629,6 +646,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             heightChange = locationsBottomRight.getHeight();
         }
 
+        // check
         if (STRICT_POSITIONING.contains(positioning)) {
             Utils.tolerantAssertLocationsEquals(getLocationsOfBottomRightAfterPositioningChanges(locationsBottomRight, positioning, widthChange, heightChange), locationsAfterReposition, tolerance, tolerance, "");
         } else {// some '*auto*' option
