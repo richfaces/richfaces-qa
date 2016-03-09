@@ -30,7 +30,7 @@ import org.richfaces.tests.metamer.ftest.extension.tester.basic.TestResourcesPro
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @param <T>
  */
-public class AttributesImpl<T extends AttributeEnum> implements Attributes<T>, UnsafeAttributes {
+public class AttributesImpl<T extends AttributeEnum> implements Attributes<T> {
 
     private final AttributesHandler attributesHandler;
     private final String attributesID;
@@ -62,6 +62,16 @@ public class AttributesImpl<T extends AttributeEnum> implements Attributes<T>, U
     @Override
     public String get(String attribute) {
         return attributesHandler.getAttribute(attribute, attributesID);
+    }
+
+    @Override
+    public boolean hasAttribute(T attribute) {
+        return hasAttribute(attribute.toString());
+    }
+
+    @Override
+    public boolean hasAttribute(String attributeName) {
+        return attributesHandler.hasAttribute(attributeName, attributesID);
     }
 
     @Override

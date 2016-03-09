@@ -49,4 +49,25 @@ public interface AttributesGetter {
      * text inputs are returned as empty String .
      */
     String getAttribute(Object name, String attributeTableID);
+
+    /**
+     * Returns true if attribute is found on the page.
+     */
+    boolean hasAttribute(String name);
+
+    /**
+     * Returns true if attribute is found on the page.
+     */
+    boolean hasAttribute(String name, String attributeTableID);
+
+    /**
+     * Returns true if attribute is found on the page.
+     */
+    boolean hasAttribute(Object name);
+
+    /**
+     * Returns true if attribute is found on the page.
+     */
+    boolean hasAttribute(Object name, String attributeTableID);
+
 }

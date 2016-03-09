@@ -28,7 +28,7 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @param <T>
  */
-public interface Attributes<T extends AttributeEnum> {
+public interface Attributes<T extends AttributeEnum> extends UnsafeAttributes {
 
     /**
      * Retrieve current attribute value
@@ -37,6 +37,8 @@ public interface Attributes<T extends AttributeEnum> {
      * @return current attribute value
      */
     String get(T attribute);
+
+    boolean hasAttribute(T attribute);
 
     void reset(T attribute);
 

@@ -139,6 +139,26 @@ public class AttributesHandler implements AttributesGetter, MultipleAttributesSe
     }
 
     @Override
+    public boolean hasAttribute(String attributeName) {
+        return hasAttribute(attributeName, EMPTY_STRING);
+    }
+
+    @Override
+    public boolean hasAttribute(String attributeName, String attributeTableID) {
+        return getJsInterface().hasAttribute(format("{0}:{1}", attributeTableID, lowerCaseForIfDetected(attributeName)));
+    }
+
+    @Override
+    public boolean hasAttribute(Object attributeName) {
+        return hasAttribute(String.valueOf(attributeName), EMPTY_STRING);
+    }
+
+    @Override
+    public boolean hasAttribute(Object attributeName, String attributeTableID) {
+        return hasAttribute(String.valueOf(attributeName), attributeTableID);
+    }
+
+    @Override
     public void perform() {
         Throwable t = null;
         for (int i = 0; i < TRIES; i++) {
@@ -197,6 +217,8 @@ public class AttributesHandler implements AttributesGetter, MultipleAttributesSe
         boolean checkAttributesAreSetToValues(String[] names, String[] values);
 
         String getAttribute(String name);
+
+        boolean hasAttribute(String name);
 
         boolean isDirty();
 

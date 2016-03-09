@@ -93,8 +93,11 @@ window.Metamer.AttributesSetter = window.Metamer.AttributesSetter || (function (
                         return checkedOptions.next('label').text().trim();
                     }
             }
-        }
-        ,
+        },
+        hasAttribute: function (name) {
+            var input = $('[id$=\'' + getCorrectIdOfInput(name) + 'Input\']:first');
+            return input.length > 0;
+        },
         isDirty: function () {
             return dirty;
         },

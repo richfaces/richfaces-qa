@@ -29,4 +29,6 @@ public interface UnsafeAttributes {
     String get(String attribute);
 
     void set(String attribute, Object value);
+
+    boolean hasAttribute(String attributeName);
 }
