@@ -226,11 +226,9 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     protected void waitUtilNoTimeoutsArePresent() {
         Graphene.waitAjax().pollingEvery(200, TimeUnit.MILLISECONDS).until(new Predicate<WebDriver>() {
-            int i = 0;
 
             @Override
             public boolean apply(WebDriver t) {
-                System.out.println("i = " + ++i);
                 return Boolean.parseBoolean(String.valueOf(executeJS("return window.areNoTimeoutsPresent();")));
             }
         });
@@ -1336,7 +1334,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         }
 
         public void testHideDelay(final WebElement menuRootElement, final long expectedDelayInMillis, Event triggerEvent, WebElement triggerEventOnElement) {
-            testHideDelay(menuRootElement, expectedDelayInMillis, new Event[] { triggerEvent }, triggerEventOnElement);
+            testHideDelay(menuRootElement, expectedDelayInMillis, new Event[]{ triggerEvent }, triggerEventOnElement);
         }
 
         public void testShowDelay(final WebElement menuRootElement, final long expectedDelayInMillis, Event[] triggerEvents, WebElement triggerEventOnElement) {
@@ -1344,7 +1342,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         }
 
         public void testShowDelay(final WebElement menuRootElement, final long expectedDelayInMillis, Event triggerEvent, WebElement triggerEventOnElement) {
-            testDelay(Boolean.FALSE, menuRootElement, expectedDelayInMillis, new Event[] { triggerEvent }, triggerEventOnElement);
+            testDelay(Boolean.FALSE, menuRootElement, expectedDelayInMillis, new Event[]{ triggerEvent }, triggerEventOnElement);
         }
 
         private class EventTriggeredPredicate implements Predicate<WebDriver> {
