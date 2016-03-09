@@ -37,6 +37,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
 import org.richfaces.fragment.calendar.PopupCalendar;
@@ -175,11 +176,13 @@ public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
     }
 
     public void testOpenPopupClickOnImage() {
+        new Actions(driver).moveToElement(popupCalendar.getPopupButtonElement()).perform();
         PopupCalendar openedPopup = Graphene.guardNoRequest(popupCalendar).openPopup(OPEN_BUTTON_CLICKING);
         assertTrue(openedPopup.isVisible(), "Popup should be visible.");
     }
 
     public void testOpenPopupClickOnInput() {
+        new Actions(driver).moveToElement(popupCalendar.getInput().advanced().getInputElement()).perform();
         PopupCalendar openedPopup = Graphene.guardNoRequest(popupCalendar).openPopup(INPUT_CLICKING);
         assertTrue(openedPopup.isVisible(), "Popup should be visible.");
     }
