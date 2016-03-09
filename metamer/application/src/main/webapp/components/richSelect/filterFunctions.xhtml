@@ -27,10 +27,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         /* function filtering by string occurence in state and name */
         function filterValuesByContains(subString, value) {
             if (subString.length > 0) {
-                if (value.contains(subString)) {
-                    // console.log(' # ' + subString + ' matches on ' + value);
-                    return true;
-                }
+                return value.indexOf(subString) !== -1;
             } else
                 return false;
         }
