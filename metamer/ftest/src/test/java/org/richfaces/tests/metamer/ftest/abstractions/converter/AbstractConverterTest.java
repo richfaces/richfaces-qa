@@ -50,8 +50,6 @@ public abstract class AbstractConverterTest extends AbstractWebDriverTest {
 
     @FindBy(css = "[id$=a4jButton]")
     private WebElement ajaxSubmitButton;
-    @FindBy(css = "[id$='converterMessageInput']")
-    private WebElement converterMessageInput;
     @FindBy(css = "[id$='failingConverterInput:1']")
     private WebElement failingConverterFalseButton;
     @FindBy(css = "[id$='failingConverterInput:0']")
@@ -75,8 +73,7 @@ public abstract class AbstractConverterTest extends AbstractWebDriverTest {
     }
 
     private void setConverterMessage(String message) {
-        converterMessageInput.sendKeys(message);
-        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();
+        setAttribute("converterMessage", message);
     }
 
     private void setFailing(boolean willFail) {
@@ -90,9 +87,6 @@ public abstract class AbstractConverterTest extends AbstractWebDriverTest {
 
     @CoversAttributes({ "converter", "converterMessage" })
     public void testConverterAndConverterMessage() {
-        if (isInPopupTemplate()) {
-            popupTemplate.advanced().moveByOffset(100, 0);
-        }
         assertNotVisible(message.advanced().getRootElement(), "Message should not be visible.");
         assertEquals(getOutputText(), getDefaultValue());
 
