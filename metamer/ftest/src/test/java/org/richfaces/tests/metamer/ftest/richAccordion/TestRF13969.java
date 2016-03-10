@@ -21,7 +21,11 @@
  */
 package org.richfaces.tests.metamer.ftest.richAccordion;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotEquals;
+
 import org.jboss.arquillian.graphene.page.Page;
+import org.richfaces.fragment.accordion.RichFacesAccordion;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.switchable.SwitchType;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -29,7 +33,6 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
@@ -59,29 +62,33 @@ public class TestRF13969 extends AbstractWebDriverTest {
     @RegressionTest({ "https://issues.jboss.org/browse/RF-12574", "https://issues.jboss.org/browse/RF-13969" })
     @UseWithField(field = "switchType", valuesFrom = ValuesFrom.FROM_ENUM, value = "")
     public void testHeightIsComputedCorrectlyWhenSwitched() {
-        final int testedHeight = 500;
+        final int testedHeight = 500;// px
         int tolerance = 40;// px
-        int headersHeight = Utils.getLocations(page.getAccordion().advanced().getAccordionHeaders().get(0)).getHeight();
-        headersHeight *= page.getAccordion().getNumberOfAccordionItems();
+        RichFacesAccordion accordion = page.getAccordion();
+        int headersHeight = Utils.getLocations(accordion.advanced().getAccordionHeaders().get(0)).getHeight();
+        headersHeight *= accordion.getNumberOfAccordionItems();
         int heightBefore = getActualItemContentHeight();
 
         attsSetter()
             .setAttribute(AccordionAttributes.switchType).toValue(switchType.toString().toLowerCase())
             .setAttribute(AccordionAttributes.height).toValue(testedHeight + "px")
             .asSingleAction().perform();
-        page.getAccordion().advanced().setSwitchType(switchType);
+        accordion.advanced().setSwitchType(switchType);
 
         int heightAfter = getActualItemContentHeight();
-        Assert.assertNotEquals(heightAfter, heightBefore, tolerance);
-        Assert.assertEquals(heightAfter + headersHeight, testedHeight, tolerance);
+        assertNotEquals(heightAfter, heightBefore, tolerance);
+        assertEquals(heightAfter + headersHeight, testedHeight, tolerance);
 
-        page.getAccordion().switchTo(1);
-        Assert.assertEquals(getActualItemContentHeight() + headersHeight, testedHeight, tolerance);
-        page.getAccordion().switchTo(0);
-        Assert.assertEquals(getActualItemContentHeight() + headersHeight, testedHeight, tolerance);
-        page.getAccordion().switchTo(0);
-        Assert.assertEquals(getActualItemContentHeight() + headersHeight, testedHeight, tolerance);
-        page.getAccordion().switchTo(2);
-        Assert.assertEquals(getActualItemContentHeight() + headersHeight, testedHeight, tolerance);
+        jsUtils.scrollToView(accordion.advanced().getAccordionHeaders().get(1));
+        accordion.switchTo(1);
+        assertEquals(getActualItemContentHeight() + headersHeight, testedHeight, tolerance);
+        jsUtils.scrollToView(accordion.advanced().getAccordionHeaders().get(0));
+        accordion.switchTo(0);
+        assertEquals(getActualItemContentHeight() + headersHeight, testedHeight, tolerance);
+        accordion.switchTo(0);
+        assertEquals(getActualItemContentHeight() + headersHeight, testedHeight, tolerance);
+        jsUtils.scrollToView(accordion.advanced().getAccordionHeaders().get(2));
+        accordion.switchTo(2);
+        assertEquals(getActualItemContentHeight() + headersHeight, testedHeight, tolerance);
     }
 }
