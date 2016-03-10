@@ -482,16 +482,8 @@ public class RichBean implements Serializable {
         return log;
     }
 
-    public boolean isReComponent() {
-        return reComponent;
-    }
-
     public boolean isReDefault() {
         return reDefault;
-    }
-
-    public boolean isReTests() {
-        return reTests;
     }
 
     public boolean isStateless() {
