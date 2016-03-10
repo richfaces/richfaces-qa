@@ -86,6 +86,7 @@ import org.richfaces.tests.metamer.ftest.extension.tester.basic.TestResourcesPro
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.AttributesImpl;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.ftest.webdriver.UnsafeAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.MetamerJavascriptUtils;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
@@ -144,6 +145,10 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, FACES_COMPONENTS_PATH + getComponentTestPagePath());
+    }
+
+    protected void blur(WaitRequestType g) {
+        getMetamerPage().blur(g);
     }
 
     public enum DriverType {
@@ -1352,7 +1357,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         }
 
         public void testHideDelay(final WebElement menuRootElement, final long expectedDelayInMillis, Event triggerEvent, WebElement triggerEventOnElement) {
-            testHideDelay(menuRootElement, expectedDelayInMillis, new Event[]{ triggerEvent }, triggerEventOnElement);
+            testHideDelay(menuRootElement, expectedDelayInMillis, new Event[] { triggerEvent }, triggerEventOnElement);
         }
 
         public void testShowDelay(final WebElement menuRootElement, final long expectedDelayInMillis, Event[] triggerEvents, WebElement triggerEventOnElement) {
@@ -1360,7 +1365,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         }
 
         public void testShowDelay(final WebElement menuRootElement, final long expectedDelayInMillis, Event triggerEvent, WebElement triggerEventOnElement) {
-            testDelay(Boolean.FALSE, menuRootElement, expectedDelayInMillis, new Event[]{ triggerEvent }, triggerEventOnElement);
+            testDelay(Boolean.FALSE, menuRootElement, expectedDelayInMillis, new Event[] { triggerEvent }, triggerEventOnElement);
         }
 
         private class EventTriggeredPredicate implements Predicate<WebDriver> {

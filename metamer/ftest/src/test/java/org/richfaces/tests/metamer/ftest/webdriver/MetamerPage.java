@@ -72,6 +72,8 @@ public class MetamerPage {
      */
     @FindBy(css = "table[id$='attributes:attributes']")
     private WebElement attributesTable;
+    @FindBy(id = "blurButtonFooter")
+    private WebElement blurButton;
     @Drone
     protected WebDriver driver;
     @ArquillianResource
@@ -90,6 +92,7 @@ public class MetamerPage {
     private WebElement requestTime;
     @FindBy(css = "[id$=reRenderAllImage]")
     private WebElement rerenderAllIcon;
+
     /**
      * Delay response by [ms]
      */
@@ -277,6 +280,23 @@ public class MetamerPage {
         assertEquals(actualPhases, expectedPhases);
     }
 
+    public void blur(WaitRequestType g) {
+        WebElement button = getBlurButton();
+        switch (g) {
+            case XHR:
+                button = Graphene.guardAjax(button);
+                break;
+            case HTTP:
+                button = Graphene.guardHttp(button);
+                break;
+            case NONE:
+                break;
+            default:
+                throw new UnsupportedOperationException("unknown switch: " + g);
+        }
+        button.click();
+    }
+
     /**
      * Executes JavaScript script. Method will execute the script few times until an expected String is returned, the String is
      * defined in @expectedValue. Returns a single trimmed String with expected value or what it has found or null.
@@ -310,6 +330,10 @@ public class MetamerPage {
 
     public WebElement getAttributesTableElement() {
         return attributesTable;
+    }
+
+    public WebElement getBlurButton() {
+        return blurButton;
     }
 
     public WebElement getJsFunctionCheckerElement() {
