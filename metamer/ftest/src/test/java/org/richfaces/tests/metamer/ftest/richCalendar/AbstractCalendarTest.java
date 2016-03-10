@@ -177,7 +177,7 @@ public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
     }
 
     public void testOpenPopupClickOnImage() {
-        new Actions(driver).moveToElement(popupCalendar.getPopupButtonElement()).perform();
+        jsUtils.scrollToView(popupCalendar.getPopupButtonElement());
         PopupCalendar openedPopup = Graphene.guardNoRequest(popupCalendar).openPopup(OPEN_BUTTON_CLICKING);
         assertTrue(openedPopup.isVisible(), "Popup should be visible.");
     }
