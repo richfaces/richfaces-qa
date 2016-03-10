@@ -32,6 +32,7 @@ import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.contextMenu.RichFacesContextMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -78,7 +79,7 @@ public class TestRF12488 extends AbstractWebDriverTest {
             .withMessage("Detached menu should stay displayed after 1.5 s.")
             .perform();
         // hide attached menu
-        getMetamerPage().getResponseDelayElement().click();
+        blur(WaitRequestType.NONE);
         contextMenu2.advanced().waitUntilIsNotVisible().perform();
     }
 }

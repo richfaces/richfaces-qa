@@ -33,6 +33,7 @@ import org.richfaces.fragment.dropDownMenu.RichFacesDropDownMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.richSelect.TestRF14018.JSErrorStorage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -68,7 +69,7 @@ public class TestRF11915 extends AbstractWebDriverTest {
         // show the menu group with disabled-only items, this should throw the JS Error
         fileDropDownMenu.expandGroup("Save As...", target1);
         // blur to hide menu
-        getMetamerPage().getResponseDelayElement().click();
+        blur(WaitRequestType.NONE);
         fileDropDownMenu.advanced().waitUntilIsNotVisible().perform();
         chechNoJSErrorsArePresent();
         // select some item to check menu is working

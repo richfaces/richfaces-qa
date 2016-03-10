@@ -37,6 +37,7 @@ import org.richfaces.fragment.calendar.HeaderControls;
 import org.richfaces.fragment.calendar.PopupCalendar;
 import org.richfaces.fragment.calendar.TimeEditor;
 import org.richfaces.fragment.calendar.YearAndMonthEditor;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -226,6 +227,6 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
 
     private void setTodaysDate() {
         Graphene.guardAjax(popupCalendar.openPopup().getFooterControls()).setTodaysDate();
-        getMetamerPage().getResponseDelayElement().click();
+        blur(WaitRequestType.NONE);
     }
 }

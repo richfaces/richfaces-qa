@@ -69,7 +69,7 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
 
     protected void clearInput1() {
         getInput1().clear();
-        getMetamerPage().getResponseDelayElement().click();// blur
+        blur(WaitRequestType.NONE);
     }
 
     protected void clickOnInput1() {
@@ -136,7 +136,7 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
 
     protected void sendKeysToInput1(String keys) {
         getInput1().sendKeys(keys);
-        getMetamerPage().getResponseDelayElement().click();// blur
+        blur(WaitRequestType.NONE);
     }
 
     public void testAjaxSubmit() {

@@ -23,7 +23,8 @@ package org.richfaces.tests.metamer.ftest.abstractions.fragments;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 
-import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.richfaces.fragment.common.ClearType;
@@ -34,8 +35,8 @@ import com.google.common.base.Strings;
 
 public abstract class AbstractFilteringHeader implements FilteringHeaderInterface {
 
-    @Drone
-    private WebDriver browser;
+    @ArquillianResource
+    private WebDriver driver;
 
     private void fillInAndBlur(TextInputComponentImpl input, String text) {
         if (Strings.isNullOrEmpty(text)) {
@@ -103,8 +104,8 @@ public abstract class AbstractFilteringHeader implements FilteringHeaderInterfac
 
     public void makeBlur() {
         try {
-            guardAjax(browser.findElement(By.cssSelector("input[id$=metamerResponseDelayInput]"))).click();
-        } catch (Exception ex) {
+            Graphene.guardAjax(driver.findElement(By.id("blurButtonFooter"))).click();
+        } catch (Exception ignored) {
             // if no ajax then it has been already done
         }
     }

@@ -49,6 +49,7 @@ import org.richfaces.fragment.calendar.RichFacesCalendar;
 import org.richfaces.fragment.calendar.YearAndMonthEditor;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.BeforeMethod;
 
 import com.google.common.collect.Lists;
@@ -93,7 +94,7 @@ public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
     }
 
     protected void performStabilizationWorkaround() {
-        getMetamerPage().getResponseDelayElement().click();
+        blur(WaitRequestType.NONE);
     }
 
     public void testApplyButton() {

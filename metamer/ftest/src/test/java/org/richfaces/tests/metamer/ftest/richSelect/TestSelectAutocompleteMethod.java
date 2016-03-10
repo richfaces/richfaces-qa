@@ -36,6 +36,7 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -142,7 +143,7 @@ public class TestSelectAutocompleteMethod extends AbstractWebDriverTest {
         select.advanced().getSuggestionsElements().get(3).click();
         select.advanced().waitUntilSuggestionsAreNotVisible();
         // blur >>> trigger onchange event
-        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();
+        blur(WaitRequestType.XHR);
         waitUntilOutputEqualsTo("Arkansas");
     }
 

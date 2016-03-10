@@ -21,10 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.richEditor;
 
-import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.editor.RichFacesEditor;
 import org.richfaces.tests.metamer.ftest.abstractions.validator.AbstractInputComponentValidatorTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -49,16 +49,14 @@ public class TestEditorValidator extends AbstractInputComponentValidatorTest {
     protected void setCorrectValue() {
         editor.clear();
         editor.type(PHOENIX);
-        // blur
-        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();
+        blur(WaitRequestType.XHR);
     }
 
     @Override
     protected void setIncorrectValue() {
         editor.clear();
         editor.type(NOT_PHOENIX);
-        // blur
-        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();
+        blur(WaitRequestType.XHR);
     }
 
     @Test

@@ -31,6 +31,7 @@ import org.richfaces.fragment.autocomplete.SelectOrConfirm;
 import org.richfaces.fragment.common.ClearType;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -98,7 +99,7 @@ public class TestAutocompleteFragment extends AbstractAutocompleteTest {
         try {
             Graphene.guardAjax(Graphene.guardAjax(autocomplete).type("ala")).select(ChoicePickerHelper.byVisibleText().endsWith("baster"));
         } finally {
-            Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();// prevent ViewExpiredException
+            blur(WaitRequestType.XHR);// prevent ViewExpiredException
         }
     }
 

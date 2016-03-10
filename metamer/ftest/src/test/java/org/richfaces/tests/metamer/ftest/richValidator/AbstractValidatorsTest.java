@@ -183,7 +183,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
     }
 
     protected void preventViewExpiredException() {
-        getMetamerPage().getResponseDelayElement().click();
+        blur(WaitRequestType.NONE);
         waiting(500);
         getMetamerPage().getStatus().advanced().waitUntilStatusStateChanges(StatusState.STOP).perform();
     }

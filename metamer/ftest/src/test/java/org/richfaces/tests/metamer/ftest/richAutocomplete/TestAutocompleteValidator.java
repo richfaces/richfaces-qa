@@ -25,6 +25,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.autocomplete.RichFacesAutocomplete;
 import org.richfaces.tests.metamer.ftest.abstractions.validator.AbstractInputComponentValidatorTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -49,16 +50,14 @@ public class TestAutocompleteValidator extends AbstractInputComponentValidatorTe
     protected void setCorrectValue() {
         autocomplete.clear();
         Graphene.guardAjax(autocomplete).type(PHOENIX);
-        // blur
-        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();
+        blur(WaitRequestType.XHR);
     }
 
     @Override
     protected void setIncorrectValue() {
         autocomplete.clear();
         Graphene.guardAjax(autocomplete).type(NOT_PHOENIX);
-        // blur
-        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();
+        blur(WaitRequestType.XHR);
     }
 
     @Test

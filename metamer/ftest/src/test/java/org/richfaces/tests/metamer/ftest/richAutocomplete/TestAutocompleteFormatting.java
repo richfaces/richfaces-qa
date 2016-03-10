@@ -34,6 +34,7 @@ import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotatio
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -103,7 +104,7 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
 
         Graphene.waitGui().until().element(getSuggestion("Hawaii")).is().not().present();
 
-        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();// prevent ViewExpiredException
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     private By getSuggestion(String value) {

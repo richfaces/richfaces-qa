@@ -23,13 +23,13 @@ package org.richfaces.tests.metamer.ftest.richValidator;
 
 import javax.faces.event.PhaseId;
 
-import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -269,8 +269,7 @@ public class TestValidatorsCSV extends AbstractValidatorsTest {
             // set value
             input.sendKeys(value);
             // blur >>> validation will be triggered
-            WebElement blurElement = getMetamerPage().getResponseDelayElement();
-            (isAjax ? Graphene.guardAjax(blurElement) : blurElement).click();
+            blur(isAjax ? WaitRequestType.XHR : WaitRequestType.NONE);
         }
     }
 }

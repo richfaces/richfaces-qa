@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 
 import static java.text.MessageFormat.format;
 
-import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.testng.Assert.assertEquals;
 
 import java.util.LinkedList;
@@ -171,9 +170,9 @@ public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTabl
         public void filterBy(boolean byName, String value) {
             // the built-in filtering input creates for each sub table, we have to fill in the values for both inputs
             (byName ? nameInput : titleInput).clear().sendKeys(value);
-            makeBlur();
+            blurAjaxGuarded();
             (byName ? nameInput2 : titleInput2).clear().sendKeys(value);
-            makeBlur();
+            blurAjaxGuarded();
         }
 
         public String getNameFilterText() {
@@ -213,7 +212,7 @@ public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTabl
 
         public void filterBy(boolean byName, String value) {
             (byName ? nameInput : titleInput).clear().sendKeys(value);
-            makeBlur();
+            blurAjaxGuarded();
         }
 
         public String getNameFilterText() {
@@ -262,8 +261,8 @@ public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTabl
 
         public abstract TextInputComponentImpl getTitleInput2();
 
-        public void makeBlur() {
-            guardAjax(driver.findElement(By.cssSelector("input[id$=metamerResponseDelayInput]"))).click();
+        public void blurAjaxGuarded() {
+            Graphene.guardAjax(driver.findElement(By.id("blurButtonFooter"))).click();
         }
     }
 }

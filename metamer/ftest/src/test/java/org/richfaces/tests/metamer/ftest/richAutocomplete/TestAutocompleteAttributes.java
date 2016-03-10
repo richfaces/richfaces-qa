@@ -50,6 +50,7 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -116,7 +117,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
         autocompleteAttributes.set(AutocompleteAttributes.selectFirst, true);
         autocomplete.clear();
         // focus mouse out of the autocomplete suggestions
-        getMetamerPage().getResponseDelayElement().click();
+        blur(WaitRequestType.NONE);
 
         SelectOrConfirm typed;
 
@@ -146,6 +147,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
         Graphene.guardAjax(typed).confirm();
         assertEquals(autocomplete.advanced().getInput().getStringValue(), "Michigan");
         checkOutput("Michigan");
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -178,6 +180,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
         } catch (RuntimeException e) {
             page.assertListener(PhaseId.APPLY_REQUEST_VALUES, SECOND_LISTENER_MSG);
         }
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -199,7 +202,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
             autocompleteAttributes.set(AutocompleteAttributes.layout, layout);
             autocomplete.clear();
             // move mouse out of the autocomplete suggestions
-            getMetamerPage().getResponseDelayElement().click();
+            blur(WaitRequestType.NONE);
 
             SelectOrConfirm typed = Graphene.guardAjax(autocomplete).type("m");
             List<WebElement> suggestionsElements = autocomplete.advanced().getSuggestionsElements();
@@ -217,6 +220,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
             Graphene.guardAjax(typed).select(7);
             checkOutput("Montana");
         }
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -232,7 +236,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
 
         guardAjax(autocomplete.type("haw"));
         autocomplete.advanced().waitForSuggestionsToBeVisible();
-        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -259,7 +263,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
         guardNoRequest(autocomplete.type("f"));
 
-        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -267,7 +271,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     public void testOnbeforedomupdate() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onbeforedomupdate, typeHToAutocompleteInputAction);
-        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -286,7 +290,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
             @Override
             public void perform() {
                 autocomplete.advanced().getInput().advanced().focus();
-                page.blur();
+                blur(WaitRequestType.NONE);
             }
         });
     }
@@ -299,7 +303,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
             @Override
             public void perform() {
                 selectHawaii();
-                Graphene.guardAjax(page).blur();
+                blur(WaitRequestType.XHR);
             }
         });
     }
@@ -318,7 +322,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
         // requires ajax mode since it reacts on DOM changes
         autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.oncomplete, typeHToAutocompleteInputAction);
-        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -354,7 +358,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     @Templates(value = "plain")
     public void testOnkeypress() {
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onkeypress, typeHToAutocompleteInputAction);
-        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -393,7 +397,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
                 fireEvent(autocomplete.advanced().getSuggestionsElements().get(0), Event.DBLCLICK);
             }
         });
-        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -409,7 +413,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
                 fireEvent(autocomplete.advanced().getSuggestionsElements().get(0), Event.KEYDOWN);
             }
         });
-        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -425,7 +429,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
                 fireEvent(autocomplete.advanced().getSuggestionsElements().get(0), Event.KEYPRESS);
             }
         });
-        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -441,7 +445,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
                 fireEvent(autocomplete.advanced().getSuggestionsElements().get(0), Event.KEYUP);
             }
         });
-        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -473,7 +477,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
                     .moveToElement(page.getOutput()).build().perform();
             }
         });
-        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -490,7 +494,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
                     .moveToElement(page.getOutput()).build().perform();
             }
         });
-        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -506,7 +510,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
                 new Actions(driver).moveToElement(autocomplete.advanced().getSuggestionsElements().get(0)).build().perform();
             }
         });
-        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -574,6 +578,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
                 Graphene.guardAjax(autocomplete.type("h")).select(ChoicePickerHelper.byIndex().first());
             }
         });
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -619,7 +624,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
         for (int i = 1; i < suggestionsElements.size(); i++) {
             assertFalse(suggestionsElements.get(i).getAttribute("class").contains(testedClass));
         }
-        Graphene.guardAjax(page).blur();// prevent ViewExpiredException
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -682,6 +687,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
         autocompleteAttributes.set(AutocompleteAttributes.tokens, "- ");
         Graphene.guardAjax(autocomplete.type("Hawaii- w")).select(ChoicePickerHelper.byIndex().first());
         checkOutput("Hawaii- Washington");
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -704,7 +710,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
         page.assertListener(PhaseId.PROCESS_VALIDATIONS, String.format(FIRST_LISTENER_MSG_FORMAT, "null", "Hawaii"));
         page.assertListener(PhaseId.INVOKE_APPLICATION, THIRD_LISTENER_MSG);
 
-        Graphene.guardAjax(page).blur();
+        blur(WaitRequestType.XHR);
         page.assertListener(PhaseId.INVOKE_APPLICATION, SECOND_LISTENER_MSG);
 
         autocomplete.clear();
@@ -714,12 +720,12 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
         page.assertListener(PhaseId.PROCESS_VALIDATIONS, String.format(FIRST_LISTENER_MSG_FORMAT, "Hawaii", "Kansas"));
         page.assertListener(PhaseId.INVOKE_APPLICATION, THIRD_LISTENER_MSG);
 
-        Graphene.guardAjax(page).blur();
+        blur(WaitRequestType.XHR);
         page.assertListener(PhaseId.INVOKE_APPLICATION, SECOND_LISTENER_MSG);
 
         autocomplete.clear();
         Graphene.guardAjax(autocomplete).type("nonexisting");
-        Graphene.guardAjax(page).blur();
+        blur(WaitRequestType.XHR);
         checkOutput("nonexisting");
 
         page.assertListener(PhaseId.PROCESS_VALIDATIONS, String.format(FIRST_LISTENER_MSG_FORMAT, "Kansas", "nonexisting"));

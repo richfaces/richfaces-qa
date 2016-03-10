@@ -32,6 +32,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Keyboard;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Utils;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -72,7 +73,7 @@ public class TestAutocompleteJSApi extends AbstractAutocompleteTest {
         Graphene.guardAjax(keyboard).sendKeys(Keys.ENTER);
         checkOutput("Alabama");
 
-        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();// prevent ViewExpiredException
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -91,7 +92,7 @@ public class TestAutocompleteJSApi extends AbstractAutocompleteTest {
         Utils.triggerJQ("mouseover", hidePopup);
         autocomplete.advanced().waitForSuggestionsToBeNotVisible().perform();
 
-        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();// prevent ViewExpiredException
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -110,7 +111,7 @@ public class TestAutocompleteJSApi extends AbstractAutocompleteTest {
 
         Graphene.guardAjax(autocomplete).type("ala");
         // blur to close the popup
-        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();
+        blur(WaitRequestType.XHR);
         autocomplete.advanced().waitForSuggestionsToBeNotVisible().perform();
 
         Utils.triggerJQ("mouseover", showPopup);

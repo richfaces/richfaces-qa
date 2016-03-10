@@ -32,6 +32,7 @@ import org.openqa.selenium.interactions.Keyboard;
 import org.richfaces.fragment.calendar.PopupCalendar;
 import org.richfaces.fragment.calendar.TimeEditor;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -116,7 +117,7 @@ public class TestCalendarKeyboardNavigation extends AbstractCalendarTest {
         // calendar value should stay unchanged
         assertCalendarInputEqualsTo("");
         // stabilization
-        getMetamerPage().getResponseDelayElement().click();
+        blur(WaitRequestType.NONE);
         waitUtilNoTimeoutsArePresent();
 
         // set some date

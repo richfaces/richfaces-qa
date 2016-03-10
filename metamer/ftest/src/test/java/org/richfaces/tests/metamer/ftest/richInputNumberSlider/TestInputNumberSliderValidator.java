@@ -21,10 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.richInputNumberSlider;
 
-import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.inputNumberSlider.RichFacesInputNumberSlider;
 import org.richfaces.tests.metamer.ftest.abstractions.validator.AbstractInputComponentValidatorTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -48,15 +48,13 @@ public class TestInputNumberSliderValidator extends AbstractInputComponentValida
     @Override
     protected void setCorrectValue() {
         slider.setValue(VALID);
-        // blur
-        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();
+        blur(WaitRequestType.XHR);
     }
 
     @Override
     protected void setIncorrectValue() {
         slider.setValue(NOT_VALID);
-        // blur
-        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();
+        blur(WaitRequestType.XHR);
     }
 
     @Test

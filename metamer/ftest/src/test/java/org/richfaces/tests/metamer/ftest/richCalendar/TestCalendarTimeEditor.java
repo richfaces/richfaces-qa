@@ -33,6 +33,7 @@ import org.richfaces.fragment.calendar.PopupCalendar;
 import org.richfaces.fragment.calendar.TimeEditor;
 import org.richfaces.fragment.calendar.TimeEditor.SetValueBy;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -118,7 +119,7 @@ public class TestCalendarTimeEditor extends AbstractCalendarTest {
 
     private void setTodaysDate() {
         Graphene.guardAjax(popupCalendar.openPopup().getFooterControls()).setTodaysDate();
-        getMetamerPage().getResponseDelayElement().click();
+        blur(WaitRequestType.NONE);
     }
 
     private void testTimeSet(int[] valuesToTest, Time time, SetValueBy interaction) {
@@ -131,7 +132,7 @@ public class TestCalendarTimeEditor extends AbstractCalendarTest {
                 setTodaysDate();
             } else {
                 popupCalendar.openPopup().getFooterControls().setTodaysDate();
-                getMetamerPage().getResponseDelayElement().click();
+                blur(WaitRequestType.NONE);
             }
             PopupCalendar openedPopup = popupCalendar.openPopup();
             openedTimeEditor = openedPopup.getFooterControls().openTimeEditor();
@@ -143,7 +144,7 @@ public class TestCalendarTimeEditor extends AbstractCalendarTest {
             time.checkTimeChanged(changedTime, collectedTime);
             openedTimeEditor.cancelTime();// close the timeditor popup
             Graphene.guardAjax(openedPopup.getFooterControls()).applyDate();
-            getMetamerPage().getResponseDelayElement().click();
+            blur(WaitRequestType.NONE);
             // check time in calendar input
             collectedTime = formatter.parseDateTime(popupCalendar.getInput().getStringValue());
             time.checkTimeChanged(changedTime, collectedTime);

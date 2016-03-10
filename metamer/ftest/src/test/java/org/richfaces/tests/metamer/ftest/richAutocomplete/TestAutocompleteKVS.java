@@ -25,11 +25,11 @@ import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
- * Test for keeping visual state (KVS) for autocomplete on page:
- * faces/components/richAutocomplete/autocomplete.xhtml
+ * Test for keeping visual state (KVS) for autocomplete on page: faces/components/richAutocomplete/autocomplete.xhtml
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -57,17 +57,17 @@ public class TestAutocompleteKVS extends AbstractAutocompleteTest {
         public void doRequest(String inputValue) {
             Graphene.guardAjax(autocomplete).type(inputValue.substring(0, 3)).select(inputValue);
             // trigger the change event >>> the value will be saved
-            Graphene.guardAjax(autocomplete.advanced().getInput().advanced()).trigger("blur");
-        }
-
-        @Override
-        public void verifyResponse(String inputValue) {
-            assertEquals(autocomplete.advanced().getInput().getStringValue(), inputValue);
+            blur(WaitRequestType.XHR);
         }
 
         @Override
         public String[] getInputValues() {
             return new String[] { "Hawaii" };
+        }
+
+        @Override
+        public void verifyResponse(String inputValue) {
+            assertEquals(autocomplete.advanced().getInput().getStringValue(), inputValue);
         }
     }
 }

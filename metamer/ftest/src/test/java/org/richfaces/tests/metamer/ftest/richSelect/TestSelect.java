@@ -47,6 +47,7 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -92,7 +93,7 @@ public class TestSelect extends AbstractWebDriverTest {
     public void closeSelectPopupIfVisible() {
         if (select.advanced().isPopupPresent()) {
             // focus somewhere else
-            getMetamerPage().getResponseDelayElement().click();
+            blur(WaitRequestType.NONE);
             // wait for popup to close
             select.advanced().waitUntilSuggestionsAreNotVisible().perform();
         }

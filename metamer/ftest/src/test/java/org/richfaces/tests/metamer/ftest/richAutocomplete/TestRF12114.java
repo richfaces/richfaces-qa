@@ -31,6 +31,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.autocomplete.RichFacesAutocomplete;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -62,14 +63,11 @@ public class TestRF12114 extends AbstractWebDriverTest {
         assertEquals(output.getText().trim(), to);
     }
 
-    private void blur() {
-        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();
-    }
 
     private void checkIssue(RichFacesAutocomplete tested, RichFacesAutocomplete other) {
         // focus + blur autocomplete with empty value
         focusOnAutocomplete(tested);
-        blur();
+        blur(WaitRequestType.XHR);
         getMetamerPage().assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS, PhaseId.RENDER_RESPONSE);
         assertListenerForAutocompleteWasNotInvoked(tested);
         assertListenerForAutocompleteWasNotInvoked(other);
@@ -78,7 +76,7 @@ public class TestRF12114 extends AbstractWebDriverTest {
 
         // choose first option beginning with 'a' and blur
         Graphene.guardAjax(tested).type("a").confirm();
-        blur();
+        blur(WaitRequestType.XHR);
         getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
         assertListenerForAutocompleteWasInvoked(tested);
         assertListenerForAutocompleteWasNotInvoked(other);
@@ -87,7 +85,7 @@ public class TestRF12114 extends AbstractWebDriverTest {
 
         // focus + blur autocomplete with non-empty value
         focusOnAutocomplete(tested);
-        blur();
+        blur(WaitRequestType.XHR);
         getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
         assertListenerForAutocompleteWasInvoked(tested);
         assertListenerForAutocompleteWasNotInvoked(other);

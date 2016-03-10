@@ -37,6 +37,7 @@ import org.richfaces.fragment.select.RichFacesSelect;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -132,7 +133,7 @@ public class TestValidatorEvent extends AbstractWebDriverTest {
         setInvalidValue(blurInput);
         assertMessageIsNotVisible(blurMsg);
         // trigger the event
-        getMetamerPage().getResponseDelayElement().click();
+        blur(WaitRequestType.NONE);
         assertMessageIsVisible(blurMsg);
     }
 
@@ -142,7 +143,7 @@ public class TestValidatorEvent extends AbstractWebDriverTest {
         setInvalidValue(changeInput);
         assertMessageIsNotVisible(changeMsg);
         // trigger the event
-        getMetamerPage().getResponseDelayElement().click();
+        blur(WaitRequestType.NONE);
         assertMessageIsVisible(changeMsg);
     }
 
@@ -152,7 +153,7 @@ public class TestValidatorEvent extends AbstractWebDriverTest {
         setInvalidValue(clickInput);
         assertMessageIsNotVisible(clickMsg);
         // blur/change
-        getMetamerPage().getResponseDelayElement().click();
+        blur(WaitRequestType.NONE);
         assertMessageIsNotVisible(clickMsg);
         // trigger the event
         clickInput.advanced().getInputElement().click();
@@ -165,7 +166,7 @@ public class TestValidatorEvent extends AbstractWebDriverTest {
         setInvalidValue(dblclickInput);
         assertMessageIsNotVisible(dblclickMsg);
         // blur/change
-        getMetamerPage().getResponseDelayElement().click();
+        blur(WaitRequestType.NONE);
         assertMessageIsNotVisible(dblclickMsg);
         // click should not trigger the validation
         dblclickInput.advanced().getInputElement().click();
@@ -181,7 +182,7 @@ public class TestValidatorEvent extends AbstractWebDriverTest {
         setInvalidValue(focusInput);
         assertMessageIsNotVisible(focusMsg);
         // blur/change
-        getMetamerPage().getResponseDelayElement().click();
+        blur(WaitRequestType.NONE);
         assertMessageIsNotVisible(focusMsg);
 
         // trigger the event

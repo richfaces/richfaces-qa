@@ -29,6 +29,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -64,7 +65,7 @@ public class TestRF12653 extends AbstractAutocompleteTest {
         // check
         checkVisibleSuggestions();
         // blur
-        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();
+        blur(WaitRequestType.XHR);
         // popup with suggestions should hide
         autocomplete.advanced().waitForSuggestionsToBeNotVisible().perform();
 
@@ -75,7 +76,7 @@ public class TestRF12653 extends AbstractAutocompleteTest {
         // check
         checkVisibleSuggestions();
         // blur
-        getMetamerPage().getResponseDelayElement().click();
+        blur(WaitRequestType.NONE);
         // popup with suggestions should hide
         autocomplete.advanced().waitForSuggestionsToBeNotVisible().perform();
 
@@ -87,7 +88,7 @@ public class TestRF12653 extends AbstractAutocompleteTest {
         // check
         checkVisibleSuggestions();
         // blur
-        getMetamerPage().getResponseDelayElement().click();
+        blur(WaitRequestType.NONE);
         // popup with suggestions should hide, HERE is the problem
         autocomplete.advanced().waitForSuggestionsToBeNotVisible().perform();
     }

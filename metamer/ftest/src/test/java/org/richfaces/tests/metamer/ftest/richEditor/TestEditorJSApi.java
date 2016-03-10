@@ -37,6 +37,7 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 public class TestEditorJSApi extends AbstractWebDriverTest {
@@ -159,14 +160,14 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
         page.getEditor().type("Some text");
         assertTrue(Utils.<Boolean>invokeRichFacesJSAPIFunction(getEditorRootElement(), "isDirty()"));
         // trigger change event, to invoke ajax request
-        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();
+        blur(WaitRequestType.XHR);
         assertEquals(page.getOutput().getText(), "<p>Some text</p>");
         assertFalse(Utils.<Boolean>invokeRichFacesJSAPIFunction(getEditorRootElement(), "isDirty()"));
 
         page.getEditor().type(". Even more text!");
         assertTrue(Utils.<Boolean>invokeRichFacesJSAPIFunction(getEditorRootElement(), "isDirty()"));
         // trigger change event, to invoke ajax request
-        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();
+        blur(WaitRequestType.XHR);
         assertEquals(page.getOutput().getText(), "<p>Some text. Even more text!</p>");
         assertFalse(Utils.<Boolean>invokeRichFacesJSAPIFunction(getEditorRootElement(), "isDirty()"));
 

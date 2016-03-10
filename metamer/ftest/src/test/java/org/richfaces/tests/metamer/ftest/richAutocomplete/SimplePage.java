@@ -33,16 +33,10 @@ public class SimplePage extends MetamerPage {
 
     @FindBy(css = "span[id$=output]")
     private WebElement output;
-    @FindBy(id = "locale")
-    private WebElement locale;
     @FindByJQuery("span[id$=autocompleteButton]")
     private WebElement autocompleteButton;
     @FindByJQuery(value = "span[id$=autocomplete]")
     private WebElement autocompleteWebElement;
-
-    public void blur() {
-        locale.click();
-    }
 
     public WebElement getOutput() {
         return output;

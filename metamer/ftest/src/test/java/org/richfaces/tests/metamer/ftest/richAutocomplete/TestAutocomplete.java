@@ -39,6 +39,7 @@ import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotatio
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -91,7 +92,7 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
         Graphene.guardAjax(typed).select(ChoicePickerHelper.byVisibleText().endsWith("na"));
         checkOutput("Arizona");
         if (withMouse) {
-            Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();// prevent ViewExpiredException
+            blur(WaitRequestType.XHR);// prevent ViewExpiredException
         }
     }
 
@@ -142,7 +143,7 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
         assertEquals(autocomplete.advanced().getInput().getStringValue(), expectedStateForPrefix);
         checkOutput(expectedStateForPrefix);
         if (selectFirst) {
-            Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();// prevent ViewExpiredException
+            blur(WaitRequestType.XHR);// prevent ViewExpiredException
         }
     }
 }

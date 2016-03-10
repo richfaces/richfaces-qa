@@ -51,6 +51,7 @@ import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.model.Capital;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -670,7 +671,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         MetamerPage.requestTimeNotChangesWaiting(select, GUARD_TIME).select(10);// Graphene.guardNoRequest waits too long
         assertEquals(getOutputText(), "", "Output should be empty.");
         // blur
-        MetamerPage.requestTimeNotChangesWaiting(getMetamerPage().getResponseDelayElement(), GUARD_TIME).click();// Graphene.guardNoRequest waits too long
+        MetamerPage.requestTimeNotChangesWaiting(getMetamerPage().getBlurButton(), GUARD_TIME).click();// Graphene.guardNoRequest waits too long
         assertEquals(getOutputText(), "", "Output should be empty.");
         // with confirmation
         guardAjax(select.select(10)).confirm();
@@ -694,8 +695,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         // select
         MetamerPage.requestTimeNotChangesWaiting(select, GUARD_TIME).select(10);// Graphene.guardNoRequest waits too long
         assertEquals(getOutputText(), "", "Output should be empty.");
-        // blur
-        Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();
+        blur(WaitRequestType.XHR);
         assertEquals(getOutputText(), "Hawaii", "Output should contain selected value.");
     }
 

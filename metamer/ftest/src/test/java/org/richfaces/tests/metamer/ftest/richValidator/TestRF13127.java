@@ -29,12 +29,12 @@ import static org.testng.Assert.assertTrue;
 import java.util.List;
 import java.util.Set;
 
-import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.Sets;
@@ -50,11 +50,7 @@ public class TestRF13127 extends AbstractWebDriverTest {
     private List<WebElement> vinInputs;
 
     private void blurCurrentInput(boolean willSendAjax) {
-        if (willSendAjax) {
-            Graphene.guardAjax(getMetamerPage().getResponseDelayElement()).click();
-        } else {
-            getMetamerPage().getResponseDelayElement().click();
-        }
+        blur(willSendAjax ? WaitRequestType.XHR : WaitRequestType.NONE);
     }
 
     private void checkInputsValidation(List<WebElement> inputs, boolean sendsAjaxOnBlur) {
