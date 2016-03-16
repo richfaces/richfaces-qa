@@ -34,14 +34,14 @@ public class TestHotKey extends AbstractHotKeyTest {
 
     @Test
     public void testFirstAndSecondPair() {
-        for (int i = 1; i <= NUMBER_OF_TESTS; i++) {
-            for (int j = 0; j < i; j++) {
-                getHotkey1().invoke();
-                getHotkey2().invoke();
-            }
-            checkEvents(i, i);
-            clearHotKeyEvents();
-        }
+        getHotkey1().invoke();
+        checkEvents(1, 0);
+        getHotkey2().invoke();
+        checkEvents(1, 1);
+        getHotkey2().invoke();
+        checkEvents(1, 2);
+        getHotkey1().invoke();
+        checkEvents(2, 2);
     }
 
     @Test(groups = "smoke")
