@@ -278,6 +278,21 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11932")
+    @CoversAttributes({ "selection", "selectionMode" })
+    public void testSelectionModeSingleDeselectWithControl() {
+        tableAttributes.set(ExtendedDataTableAttributes.selectionMode, "single");
+
+        page.selectRow(2);
+        assertEquals(page.getActualPreviousSelection(), expectedSelection());
+        assertEquals(page.getActualCurrentSelection(), expectedSelection(2));
+
+        page.deselectRow(2, Keys.CONTROL);
+        assertEquals(page.getActualPreviousSelection(), expectedSelection(2));
+        assertEquals(page.getActualCurrentSelection(), expectedSelection());
+    }
+
+    @Test
     @CoversAttributes("selection")
     public void testSimpleSelection() {
         page.selectRow(2);
