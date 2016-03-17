@@ -181,11 +181,19 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     @CoversAttributes("hideEvent")
     @Templates(value = "plain")
     public void testHideEvent() {
-        for (Event event : new Event[] { Event.MOUSEOUT, Event.DBLCLICK }) {
-            tooltipAttributes.set(TooltipAttributes.hideEvent, event.toString());
-            tooltip().advanced().setHideEvent(event);
-            tooltip().show().hide();
-        }
+        tooltipAttributes.set(TooltipAttributes.followMouse, "false");// for stabilization
+
+        Event event = Event.MOUSEOUT;
+        tooltipAttributes.set(TooltipAttributes.hideEvent, event.toString());
+        tooltip().advanced().setHideEvent(event);
+        tooltip().show().hide();
+
+        event = Event.DBLCLICK;
+        tooltipAttributes.set(TooltipAttributes.hideEvent, event.toString());
+        tooltip().advanced().setHideEvent(event);
+        tooltip().show();
+        new Actions(driver).moveToElement(page.getPanel(), 0, 0).doubleClick().perform();// hide
+        tooltip().advanced().waitUntilTooltipIsNotVisible().perform();
     }
 
     @Test
@@ -481,7 +489,7 @@ public class TestTooltipAttributes extends AbstractWebDriverTest {
     @CoversAttributes("showEvent")
     @Templates(value = "plain")
     public void testShowEvent() {
-        for (Event event : new Event[] { Event.CLICK, Event.DBLCLICK }) {
+        for (Event event : new Event[]{ Event.CLICK, Event.DBLCLICK }) {
             tooltipAttributes.set(TooltipAttributes.showEvent, event.toString());
             tooltip().advanced().setShowEvent(event);
             tooltip().show().hide();
