@@ -19,9 +19,11 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.qa.plugin.ensurer.taskkill;
+package org.richfaces.tests.qa.plugin.ensurer.taskkill.killer;
 
-import org.richfaces.tests.qa.plugin.ensurer.taskkill.killer.TaskKiller;
+import java.io.IOException;
+
+import org.richfaces.tests.qa.plugin.ensurer.taskkill.builder.KillCommandBuilder;
 import org.richfaces.tests.qa.plugin.properties.PropertiesProvider;
 
 import com.google.inject.Inject;
@@ -29,40 +31,55 @@ import com.google.inject.Inject;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class SimpleTaskKillEnsurer implements TaskKillEnsurer {
+public class SimpleTaskKiller implements TaskKiller {
 
+    private final KillCommandBuilder kcb;
     private final PropertiesProvider pp;
-    private final TaskKiller tk;
 
     @Inject
-    public SimpleTaskKillEnsurer(PropertiesProvider pp, TaskKiller tk) {
+    public SimpleTaskKiller(PropertiesProvider pp, KillCommandBuilder kcb) {
         this.pp = pp;
-        this.tk = tk;
+        this.kcb = kcb;
     }
 
     @Override
-    public void ensure() {
-        // is some container profile activated?
-        if (pp.isGlassFishProfileActivated() || pp.isTomcatProfileActivated() || pp.isJBossASProfileActivated()) {
-            tk.killIEDriver();
-            tk.killChromeDriver();
-            if (pp.isRemoteProfileActivated()) {
-                if (!pp.isJBossASProfileActivated()) {
-                    tk.killJBossAS();
-                }
-                if (!pp.isTomcatProfileActivated()) {
-                    tk.killTomcat();
-                }
-                if (!pp.isGlassFishProfileActivated()) {
-                    tk.killGlassFish();
-                }
-            } else {
-                tk.killGlassFish();
-                tk.killJBossAS();
-                tk.killTomcat();
+    public void execute(String... args) {
+        if (args.length > 0) {
+            for (String string : args) {
+                kcb.addSearchArgument(string);
+            }
+            try {
+                kcb.searchAndKill();
+            } catch (IOException ex) {
+                pp.getLog().error(ex);
             }
         } else {
-            pp.getLog().info("No container profile activated. Skipping tasks cleanup.");
+            pp.getLog().info("no arguments specified, skipping");
         }
+    }
+
+    @Override
+    public void killChromeDriver() {
+        execute("chromedriver");
+    }
+
+    @Override
+    public void killGlassFish() {
+        execute("java", "felix.fileinstall");
+    }
+
+    @Override
+    public void killIEDriver() {
+        execute("IEDriverServer");
+    }
+
+    @Override
+    public void killJBossAS() {
+        execute("java", "org.jboss");
+    }
+
+    @Override
+    public void killTomcat() {
+        execute("java", "catalina.home");
     }
 }

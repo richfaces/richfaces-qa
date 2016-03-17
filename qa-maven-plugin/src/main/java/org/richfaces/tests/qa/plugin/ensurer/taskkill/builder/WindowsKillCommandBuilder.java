@@ -19,9 +19,11 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.qa.plugin.ensurer.taskkill;
+package org.richfaces.tests.qa.plugin.ensurer.taskkill.builder;
 
-import org.richfaces.tests.qa.plugin.ensurer.taskkill.killer.TaskKiller;
+import java.io.IOException;
+import java.text.MessageFormat;
+
 import org.richfaces.tests.qa.plugin.properties.PropertiesProvider;
 
 import com.google.inject.Inject;
@@ -29,40 +31,33 @@ import com.google.inject.Inject;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class SimpleTaskKillEnsurer implements TaskKillEnsurer {
+public class WindowsKillCommandBuilder implements KillCommandBuilder {
 
+    private final String SEARCH_TEMPLATE_END = "'\" Call Terminate";
+    private final String SEARCH_TEMPLATE_START = "wmic PROCESS where \"commandline like '";
+    private String arg = "";
     private final PropertiesProvider pp;
-    private final TaskKiller tk;
 
     @Inject
-    public SimpleTaskKillEnsurer(PropertiesProvider pp, TaskKiller tk) {
+    public WindowsKillCommandBuilder(PropertiesProvider pp) {
         this.pp = pp;
-        this.tk = tk;
+    }
+
+    private void addArgument(String argument) {
+        arg += "%" + argument + "% ";
     }
 
     @Override
-    public void ensure() {
-        // is some container profile activated?
-        if (pp.isGlassFishProfileActivated() || pp.isTomcatProfileActivated() || pp.isJBossASProfileActivated()) {
-            tk.killIEDriver();
-            tk.killChromeDriver();
-            if (pp.isRemoteProfileActivated()) {
-                if (!pp.isJBossASProfileActivated()) {
-                    tk.killJBossAS();
-                }
-                if (!pp.isTomcatProfileActivated()) {
-                    tk.killTomcat();
-                }
-                if (!pp.isGlassFishProfileActivated()) {
-                    tk.killGlassFish();
-                }
-            } else {
-                tk.killGlassFish();
-                tk.killJBossAS();
-                tk.killTomcat();
-            }
-        } else {
-            pp.getLog().info("No container profile activated. Skipping tasks cleanup.");
-        }
+    public KillCommandBuilder addSearchArgument(String arg) {
+        addArgument(arg);
+        return this;
+    }
+
+    @Override
+    public void searchAndKill() throws IOException {
+        String cmd = SEARCH_TEMPLATE_START + arg.trim() + SEARCH_TEMPLATE_END;
+        pp.getLog().info(MessageFormat.format("Executing command: <{0}>", cmd));
+        Runtime.getRuntime().exec(cmd);
+        arg = "";
     }
 }

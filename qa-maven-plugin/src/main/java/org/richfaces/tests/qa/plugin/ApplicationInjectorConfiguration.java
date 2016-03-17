@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-*/
+ */
 package org.richfaces.tests.qa.plugin;
 
 import org.apache.maven.plugin.logging.Log;
@@ -32,6 +32,10 @@ import org.richfaces.tests.qa.plugin.ensurer.eap.EAPEnsurer;
 import org.richfaces.tests.qa.plugin.ensurer.eap.EAPEnsurerProvider;
 import org.richfaces.tests.qa.plugin.ensurer.taskkill.SimpleTaskKillEnsurer;
 import org.richfaces.tests.qa.plugin.ensurer.taskkill.TaskKillEnsurer;
+import org.richfaces.tests.qa.plugin.ensurer.taskkill.builder.KillCommandBuilder;
+import org.richfaces.tests.qa.plugin.ensurer.taskkill.builder.KillCommandBuilderProvider;
+import org.richfaces.tests.qa.plugin.ensurer.taskkill.killer.SimpleTaskKiller;
+import org.richfaces.tests.qa.plugin.ensurer.taskkill.killer.TaskKiller;
 import org.richfaces.tests.qa.plugin.executor.Executor;
 import org.richfaces.tests.qa.plugin.executor.SimpleExecutor;
 import org.richfaces.tests.qa.plugin.properties.PropertiesProvider;
@@ -69,6 +73,9 @@ public class ApplicationInjectorConfiguration extends AbstractModule {
         bind(EAPProperties.class).to(SimpleEAPProperties.class);
 
         bind(TaskKillEnsurer.class).to(SimpleTaskKillEnsurer.class);
+        bind(TaskKiller.class).to(SimpleTaskKiller.class);
+        bind(KillCommandBuilder.class).toProvider(KillCommandBuilderProvider.class);
+
         bind(EAPEnsurer.class).toProvider(EAPEnsurerProvider.class);
         bind(BrowserEnsurer.class).toProvider(BrowserEnsurerProvider.class);
 

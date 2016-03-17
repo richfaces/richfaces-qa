@@ -19,50 +19,32 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.qa.plugin.ensurer.taskkill;
+package org.richfaces.tests.qa.plugin.ensurer.taskkill.builder;
 
-import org.richfaces.tests.qa.plugin.ensurer.taskkill.killer.TaskKiller;
 import org.richfaces.tests.qa.plugin.properties.PropertiesProvider;
 
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class SimpleTaskKillEnsurer implements TaskKillEnsurer {
+public class KillCommandBuilderProvider implements Provider<KillCommandBuilder> {
 
     private final PropertiesProvider pp;
-    private final TaskKiller tk;
+    private final KillCommandBuilder unixKCB;
+    private final KillCommandBuilder winKCB;
 
     @Inject
-    public SimpleTaskKillEnsurer(PropertiesProvider pp, TaskKiller tk) {
+    public KillCommandBuilderProvider(PropertiesProvider pp, WindowsKillCommandBuilder wkcb, UnixKillCommandBuilder lkcb) {
         this.pp = pp;
-        this.tk = tk;
+        this.winKCB = wkcb;
+        this.unixKCB = lkcb;
     }
 
     @Override
-    public void ensure() {
-        // is some container profile activated?
-        if (pp.isGlassFishProfileActivated() || pp.isTomcatProfileActivated() || pp.isJBossASProfileActivated()) {
-            tk.killIEDriver();
-            tk.killChromeDriver();
-            if (pp.isRemoteProfileActivated()) {
-                if (!pp.isJBossASProfileActivated()) {
-                    tk.killJBossAS();
-                }
-                if (!pp.isTomcatProfileActivated()) {
-                    tk.killTomcat();
-                }
-                if (!pp.isGlassFishProfileActivated()) {
-                    tk.killGlassFish();
-                }
-            } else {
-                tk.killGlassFish();
-                tk.killJBossAS();
-                tk.killTomcat();
-            }
-        } else {
-            pp.getLog().info("No container profile activated. Skipping tasks cleanup.");
-        }
+    public KillCommandBuilder get() {
+        return pp.isOnWindows() ? winKCB : unixKCB;
     }
+
 }
