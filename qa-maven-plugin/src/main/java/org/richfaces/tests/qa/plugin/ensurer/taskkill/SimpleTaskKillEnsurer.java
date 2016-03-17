@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-*/
+ */
 package org.richfaces.tests.qa.plugin.ensurer.taskkill;
 
 import org.richfaces.tests.qa.plugin.properties.PropertiesProvider;
@@ -39,22 +39,27 @@ public class SimpleTaskKillEnsurer implements TaskKillEnsurer {
 
     @Override
     public void ensure() {
-        TaskKiller.killIEDriver();
-        TaskKiller.killChromeDriver();
-        if (pp.isRemoteProfileActivated()) {
-            if (!pp.isJBossASProfileActivated()) {
+        // is some container profile activated?
+        if (pp.isGlassFishProfileActivated() || pp.isTomcatProfileActivated() || pp.isJBossASProfileActivated()) {
+            TaskKiller.killIEDriver();
+            TaskKiller.killChromeDriver();
+            if (pp.isRemoteProfileActivated()) {
+                if (!pp.isJBossASProfileActivated()) {
+                    TaskKiller.killJBossAS();
+                }
+                if (!pp.isTomcatProfileActivated()) {
+                    TaskKiller.killTomcat();
+                }
+                if (!pp.isGlassFishProfileActivated()) {
+                    TaskKiller.killGlassFish();
+                }
+            } else {
+                TaskKiller.killGlassFish();
                 TaskKiller.killJBossAS();
-            }
-            if (!pp.isTomcatProfileActivated()) {
                 TaskKiller.killTomcat();
             }
-            if (!pp.isGlassFishProfileActivated()) {
-                TaskKiller.killGlassFish();
-            }
         } else {
-            TaskKiller.killGlassFish();
-            TaskKiller.killJBossAS();
-            TaskKiller.killTomcat();
+            pp.getLog().info("No container profile activated. Skipping tasks cleanup.");
         }
     }
 }
