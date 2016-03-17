@@ -1496,11 +1496,11 @@
                   qa.firefox.bin, qa.chrome.driver.bin, qa.ie.driver.bin. The chosen browser used for ARQ Drone is stored in
                   qa.webdriver.browser.
                 -->
-                <ensure.browser>true</ensure.browser>
+                <ensure.browser>false</ensure.browser>
                 <!-- download and extract EAP to project build directory -->
-                <ensure.eap>true</ensure.eap>
+                <ensure.eap>false</ensure.eap>
                 <!-- tasks cleanup, should kill containers' processes before running the tests -->
-                <ensure.cleanup>true</ensure.cleanup>
+                <ensure.cleanup>false</ensure.cleanup>
             </properties>
             <build>
                 <plugins>

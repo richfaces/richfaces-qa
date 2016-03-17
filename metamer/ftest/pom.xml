@@ -44,6 +44,18 @@ FSF site: http://www.fsf.org. -->
         <jboss-portal.version>7.1.3.Final</jboss-portal.version>
         <!-- enable WS on EAP -->
         <eap.ws.enabled>true</eap.ws.enabled>
+
+        <!-- setup properties for QA maven plugin -->
+        <!--
+          download and extract needed drivers and browser and set path to them using properties
+          qa.firefox.bin, qa.chrome.driver.bin, qa.ie.driver.bin. The chosen browser used for ARQ Drone is stored in
+          qa.webdriver.browser.
+        -->
+        <ensure.browser>true</ensure.browser>
+        <!-- download and extract EAP to project build directory -->
+        <ensure.eap>true</ensure.eap>
+        <!-- tasks cleanup, should kill containers' processes before running the tests -->
+        <ensure.cleanup>true</ensure.cleanup>
     </properties>
 
     <dependencies>
