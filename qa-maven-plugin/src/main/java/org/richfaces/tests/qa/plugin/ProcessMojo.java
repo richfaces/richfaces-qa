@@ -55,7 +55,6 @@ import com.google.inject.Guice;
 @Mojo(name = "process")
 public class ProcessMojo extends AbstractMojo implements PropertiesProvider {
 
-    private static final String AS = "as";
     private static final String BROWSER = "browser";
     private static final String EAP = "eap";
     private static final String GLASSFISH = "glassfish";
@@ -63,7 +62,6 @@ public class ProcessMojo extends AbstractMojo implements PropertiesProvider {
     private static final File HUDSON_LINUX_DIRECTORY = new File("/home/hudson/static_build_env/");
     private static final File HUDSON_WINDOWS_DIRECTORY = new File("h:/hudson/static_build_env/");
     private static final String INJECTED_PROFILE_IDS_FIELDNAME = "getInjectedProfileIds";
-    private static final String JBOSS = "jboss";
     private static final String LINUX = "linux";
     private static final String MAC = "mac";
     private static final String OS_ARCH = "os.arch";
@@ -72,11 +70,13 @@ public class ProcessMojo extends AbstractMojo implements PropertiesProvider {
     private static final String REMOTE = "remote";
     private static final String SELENIUM_BROWSER_DIR = "selenium/browser/";
     private static final String SELENIUM_DRIVER_DIR = "selenium/driver/";
+    private static final String SKIP_TESTS = "skipTests";
     private static final String STRING_64 = "64";
     private static final String SUNOS = "sunos";
     private static final String TOMCAT = "tomcat";
     private static final String USER_HOME = "user.home";
     private static final String USER_NAME = "user.name";
+    private static final String WILDFLY = "wildfly";
     private static final String WIN = "win";
 
     private LazyLoadedCachedValue<List<String>> activatedProfiles = new LazyLoadedCachedValue<List<String>>() {
@@ -113,6 +113,8 @@ public class ProcessMojo extends AbstractMojo implements PropertiesProvider {
 
     @Parameter(defaultValue = "qa.webdriver.browser")
     private String browserPropertyName;
+    @Parameter(property = "browser")
+    private String browserString;
 
     private final LazyLoadedCachedValue<Version> cachedEAPVersion = new LazyLoadedCachedValue<Version>() {
         @Override
@@ -139,9 +141,6 @@ public class ProcessMojo extends AbstractMojo implements PropertiesProvider {
             return Version.parseVersion(seleniumVersion);
         }
     };
-
-    @Parameter(property = "browser")
-    private String browserString;
 
     private final URL chromeDriverBaseURL = Utils.createURLSilently("http://chromedriver.storage.googleapis.com");
     @Parameter(defaultValue = "qa.chrome.driver.bin")
@@ -199,6 +198,12 @@ public class ProcessMojo extends AbstractMojo implements PropertiesProvider {
     @Parameter(property = "seleniumVersion")
     private String seleniumVersion;
 
+    private final LazyLoadedCachedValue<Boolean> skipTests = new LazyLoadedCachedValue<Boolean>() {
+        @Override
+        protected Boolean initValue() {
+            return Boolean.valueOf(System.getProperty(SKIP_TESTS));
+        }
+    };
     private final LazyLoadedCachedValue<String> userHome = new LazyLoadedCachedSystemProperty(USER_HOME);
     private final LazyLoadedCachedValue<String> userName = new LazyLoadedCachedSystemProperty(USER_NAME);
 
@@ -379,7 +384,7 @@ public class ProcessMojo extends AbstractMojo implements PropertiesProvider {
 
     @Override
     public boolean isJBossASProfileActivated() {
-        return getAllActivatedProfiles().contains(JBOSS) || isEAPProfileActivated() || getAllActivatedProfiles().contains(AS);
+        return getAllActivatedProfiles().contains(WILDFLY) || isEAPProfileActivated();
     }
 
     @Override
@@ -410,6 +415,11 @@ public class ProcessMojo extends AbstractMojo implements PropertiesProvider {
     @Override
     public boolean isRemoteProfileActivated() {
         return getAllActivatedProfiles().contains(REMOTE);
+    }
+
+    @Override
+    public boolean isSkipTests() {
+        return skipTests.getValue();
     }
 
     @Override

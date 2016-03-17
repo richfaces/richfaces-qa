@@ -143,4 +143,12 @@ public class EnsurerProviderTest {
         assertFalse(ensurers.contains(tke));
         verify(log, Mockito.times(1)).info(Matchers.any(String.class));// 1 message should be logged
     }
+
+    @Test
+    public void testGet_skipTestsIsTrue_returnsNoEnsurersLogs1Message() {
+        when(pp.isSkipTests()).thenReturn(true);
+
+        assertEquals(0, provider.get().size());
+        verify(log, Mockito.times(1)).info(Matchers.any(String.class));// 1 message should be logged
+    }
 }

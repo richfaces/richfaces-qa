@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-*/
+ */
 package org.richfaces.tests.qa.plugin.ensurer;
 
 import java.util.ArrayList;
@@ -55,20 +55,24 @@ public class SimpleEnsurersProvider implements EnsurersProvider {
     @Override
     public Collection<Ensurer> get() {
         ArrayList<Ensurer> list = Lists.newArrayList();
-        if (pp.isEnsureTasksCleanup() && taskKillEnsurer != null) {
-            list.add(taskKillEnsurer);
+        if (!pp.isSkipTests()) {
+            if (pp.isEnsureTasksCleanup() && taskKillEnsurer != null) {
+                list.add(taskKillEnsurer);
+            } else {
+                pp.getLog().info("Skipping tasks cleanup.");
+            }
+            if (pp.isEnsureEAP() && eapEnsurer != null) {
+                list.add(eapEnsurer);
+            } else {
+                pp.getLog().info("Skipping ensuring of EAP.");
+            }
+            if (pp.isEnsureBrowser() && browserEnsurer != null) {
+                list.add(browserEnsurer);
+            } else {
+                pp.getLog().info("Skipping ensuring of browser.");
+            }
         } else {
-            pp.getLog().info("Skipping tasks cleanup.");
-        }
-        if (pp.isEnsureEAP() && eapEnsurer != null) {
-            list.add(eapEnsurer);
-        } else {
-            pp.getLog().info("Skipping ensuring of EAP.");
-        }
-        if (pp.isEnsureBrowser() && browserEnsurer != null) {
-            list.add(browserEnsurer);
-        } else {
-            pp.getLog().info("Skipping ensuring of browser.");
+            pp.getLog().info("Property 'skipTests' is true. Skipping all tasks.");
         }
         return list;
     }
