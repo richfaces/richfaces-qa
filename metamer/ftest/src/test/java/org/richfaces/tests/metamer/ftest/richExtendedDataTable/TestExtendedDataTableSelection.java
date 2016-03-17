@@ -82,10 +82,9 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
-    @CoversAttributes({ "selectionMode", // multiple (default value, same as 'null')
-        "selection" })
-    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat", "a4jRegion" })
+    @CoversAttributes({ "selectionMode"/*multiple*/, "selection" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-10256")
+    @Templates(exclude = "a4jRegion")
     public void testMultiSelectionRemovingUsingCtrl() {
         IntRange range1 = new IntRange(2, 14);
 
@@ -105,19 +104,10 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
 
     @Test
     @CoversAttributes("selection")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10256")
-    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat" })
-    public void testMultiSelectionRemovingUsingCtrlIterationComponents() {
-        testMultiSelectionRemovingUsingCtrl();
-    }
-
-    @Test
-    @CoversAttributes("selection")
     @Skip
     @IssueTracking("https://issues.jboss.org/browse/RF-13474")
     @Templates("a4jRegion")
-    public void testMultiSelectionRemovingUsingCtrlRegion() {
+    public void testMultiSelectionRemovingUsingCtrlInRegion() {
         // select row on second page, then select row on first page with shift
         IntRange range = new IntRange(3, 34);
         page.selectRow(range.getMaximumInteger());
@@ -136,9 +126,8 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-10256")
     @CoversAttributes("selection")
-    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat" })
     public void testMultiSelectionUsingControl() {
         Collection<Integer> forSelection = order(2, 5, 29, 16, 13, 21);
 
@@ -149,15 +138,6 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
             selected.add(s);
             assertEquals(page.getActualCurrentSelection(), selected);
         }
-    }
-
-    @Test
-    @CoversAttributes("selection")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10256")
-    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat" })
-    public void testMultiSelectionUsingControlIterationComponents() {
-        testMultiSelectionUsingControl();
     }
 
     @Test
@@ -184,8 +164,8 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
 
     @Test
     @CoversAttributes("selection")
-    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat", "uiRepeat" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-10256")
+    @Templates(exclude = "uiRepeat")
     public void testMultiSelectionUsingShiftBetweenPagesInReversedOrder() {
         IntRange range = new IntRange(12, 35);
 
@@ -202,15 +182,6 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     @IssueTracking("https://issues.jboss.org/browse/RF-13973")
     @Templates(value = "uiRepeat")
     public void testMultiSelectionUsingShiftBetweenPagesInReversedOrderInUiRepeat() {
-        testMultiSelectionUsingShiftBetweenPagesInReversedOrder();
-    }
-
-    @Test
-    @CoversAttributes("selection")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10256")
-    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat" })
-    public void testMultiSelectionUsingShiftBetweenPagesInReversedOrderIterationComponents() {
         testMultiSelectionUsingShiftBetweenPagesInReversedOrder();
     }
 
