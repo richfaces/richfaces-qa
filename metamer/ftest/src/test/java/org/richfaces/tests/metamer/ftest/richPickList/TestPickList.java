@@ -825,6 +825,22 @@ public class TestPickList extends AbstractListScrollingTest {
     }
 
     @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12061")
+    public void testPickListWontShiftPageWhenBodyHasDirection() {
+        final int delta = 10;
+        final Long originalWidth = (Long) executeJS("return jQuery(document).width();");
+        for (String direction : new String[] { "rtl", "ltr" }) {
+            // set body direction
+            executeJS("jQuery('body').attr('dir','" + direction + "');");
+            // interact with pickList
+            pickList.add(0);
+            // check page did not shift
+            Long actualWidth = (Long) executeJS("return jQuery(document).width();");
+            assertEquals(actualWidth, originalWidth, delta);
+        }
+    }
+
+    @Test
     @CoversAttributes("removeAllText")
     @Templates(value = "plain")
     public void testRemoveAllText() {
