@@ -97,6 +97,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
         selected.remove(4);
         verifySelected();
 
+        jsUtils.scrollToView(page.getDataScroller().advanced().getRootElement());
         page.deselectRow(12, CONTROL);
         selected.remove(12);
         verifySelected();
