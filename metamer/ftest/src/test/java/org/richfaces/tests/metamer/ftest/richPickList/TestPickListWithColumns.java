@@ -26,6 +26,7 @@ import org.richfaces.fragment.pickList.RichFacesPickList;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
 /**
@@ -43,6 +44,7 @@ public class TestPickListWithColumns extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
     @CoversAttributes("headerClass")
     public void testHeaderClass() {
         testStyleClass(picklist.advanced().getSourceHeaderElement(), BasicAttributes.headerClass);
