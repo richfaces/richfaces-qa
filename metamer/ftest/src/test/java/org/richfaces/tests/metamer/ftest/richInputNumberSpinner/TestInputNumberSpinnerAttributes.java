@@ -87,20 +87,20 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
         assertEquals(getOutputText(), "10");
 
         // type valid value and decrease
-        input.clear().sendKeys("3");
+        input.clear().sendKeys("-3");
         Graphene.guardAjax(spinner).decrease();
         Graphene.guardAjax(spinner).decrease();
-        assertEquals(getOutputText(), "1");
+        assertEquals(getOutputText(), "-5");
 
         // type invalid value and increase
         input.clear().sendKeys("INVALID");
         Graphene.guardAjax(spinner).increase();
-        assertEquals(getOutputText(), "2");// value from previous step increased by one
+        assertEquals(getOutputText(), "-4");// value from previous step increased by one
 
         // type invalid value and decrease
         input.clear().sendKeys("INVALID");
         Graphene.guardAjax(spinner).decrease();
-        assertEquals(getOutputText(), "1");// value from previous step decreased by one
+        assertEquals(getOutputText(), "-5");// value from previous step decreased by one
 
         // type valid value, but greater than max value (10) and decrease
         input.clear().sendKeys("40");
