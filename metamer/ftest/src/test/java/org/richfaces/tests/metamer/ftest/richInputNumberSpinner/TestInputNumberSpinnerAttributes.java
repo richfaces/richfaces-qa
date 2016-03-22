@@ -28,12 +28,14 @@ import static org.testng.Assert.assertTrue;
 
 import javax.faces.event.PhaseId;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.ClearType;
 import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
@@ -71,6 +73,40 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     public void testAccesskey() {
         testHTMLAttribute(spinner.advanced().getInput().advanced().getInputElement(), inputNumberSpinnerAttributes,
             InputNumberSpinnerAttributes.accesskey, "x");
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11628")
+    public void testChangeValueByTypingThenByArrows() {
+        TextInputComponentImpl input = spinner.advanced().getInput();
+        assertEquals(getOutputText(), "2");// default value
+
+        // type valid value and increase
+        input.clear().sendKeys("9");
+        Graphene.guardAjax(spinner).increase();
+        assertEquals(getOutputText(), "10");
+
+        // type valid value and decrease
+        input.clear().sendKeys("3");
+        Graphene.guardAjax(spinner).decrease();
+        Graphene.guardAjax(spinner).decrease();
+        assertEquals(getOutputText(), "1");
+
+        // type invalid value and increase
+        input.clear().sendKeys("INVALID");
+        Graphene.guardAjax(spinner).increase();
+        assertEquals(getOutputText(), "2");// value from previous step increased by one
+
+        // type invalid value and decrease
+        input.clear().sendKeys("INVALID");
+        Graphene.guardAjax(spinner).decrease();
+        assertEquals(getOutputText(), "1");// value from previous step decreased by one
+
+        // type valid value, but greater than max value (10) and decrease
+        input.clear().sendKeys("40");
+        Graphene.guardAjax(spinner).decrease();
+        // decrease/increase with arrows will set the number to the max value
+        assertEquals(getOutputText(), "10");
     }
 
     @Test(groups = "smoke")
