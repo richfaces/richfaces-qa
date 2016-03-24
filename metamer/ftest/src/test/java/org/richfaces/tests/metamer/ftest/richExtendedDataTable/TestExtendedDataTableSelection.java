@@ -82,7 +82,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
-    @CoversAttributes({ "selectionMode"/*multiple*/, "selection" })
+    @CoversAttributes({ "selectionMode", "selection" })
     @RegressionTest("https://issues.jboss.org/browse/RF-10256")
     @Templates(exclude = "a4jRegion")
     public void testMultiSelectionRemovingUsingCtrl() {
@@ -258,6 +258,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11932")
     @CoversAttributes({ "selection", "selectionMode" })
     public void testSelectionModeSingle() {
         tableAttributes.set(ExtendedDataTableAttributes.selectionMode, "single");
@@ -275,20 +276,15 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
         page.selectRow(7, Keys.SHIFT);
         assertEquals(page.getActualPreviousSelection(), expectedSelection(4));
         assertEquals(page.getActualCurrentSelection(), expectedSelection(7));
-    }
 
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11932")
-    @CoversAttributes({ "selection", "selectionMode" })
-    public void testSelectionModeSingleDeselectWithControl() {
-        tableAttributes.set(ExtendedDataTableAttributes.selectionMode, "single");
+        // select another record using CONTROL+SHIFT, only one record is selected
+        page.selectRow(3, Keys.CONTROL, Keys.SHIFT);
+        assertEquals(page.getActualPreviousSelection(), expectedSelection(7));
+        assertEquals(page.getActualCurrentSelection(), expectedSelection(3));
 
-        page.selectRow(2);
-        assertEquals(page.getActualPreviousSelection(), expectedSelection());
-        assertEquals(page.getActualCurrentSelection(), expectedSelection(2));
-
-        page.deselectRow(2, Keys.CONTROL);
-        assertEquals(page.getActualPreviousSelection(), expectedSelection(2));
+        // deselect row
+        page.deselectRow(3, Keys.CONTROL);
+        assertEquals(page.getActualPreviousSelection(), expectedSelection(3));
         assertEquals(page.getActualCurrentSelection(), expectedSelection());
     }
 
