@@ -36,6 +36,9 @@ import org.jboss.arquillian.graphene.javascript.JavaScript;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.AndExpression;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
@@ -130,6 +133,23 @@ public class TestDragSource extends AbstractDragSourceTest {
     @Test
     public void testDragValue() {
         super.testDragValue();
+    }
+
+    @Test
+    @Skip(expressions = {
+        @AndExpression(On.Container.Tomcat8.class),
+        @AndExpression(On.Container.Tomcat7.class)
+    })
+    @RegressionTest("https://issues.jboss.org/browse/RF-10967")
+    public void testDragValueWithPartialStateSavingOff() {
+        disablePartialStateSavingAndRedeploy();
+        openPageWithCurrentConfiguration();
+        try {
+            testDragValue();
+        } finally {
+            undeployMetamerWars();
+            deployMetamerWar();
+        }
     }
 
     @Test
