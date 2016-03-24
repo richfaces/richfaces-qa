@@ -49,6 +49,7 @@ import org.jboss.as.cli.CommandLineException;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.api.importer.ArchiveImportException;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.descriptor.api.Descriptors;
@@ -75,7 +76,9 @@ public abstract class AbstractMetamerTest extends Arquillian {
     private static final String EAP_70_AND_UP_REGEX = ".*jbosseap-(managed|remote)-(7-[0-9]).*";
     // Key to enable WS on EAP
     public static final String EAP_WS_ENABLED = "eap.ws.enabled";
-    /** Keys to manage resources optimization (in previous releases named mapping), compression and packaging, used in web.xml */
+    /**
+     * Keys to manage resources optimization (in previous releases named mapping), compression and packaging, used in web.xml
+     */
     public static final String RESOURCE_OPTIMIZATION_COMPRESSION_STAGES = "org.richfaces.resourceOptimization.compressionStages";
     public static final String RESOURCE_OPTIMIZATION_ENABLED = "org.richfaces.resourceOptimization.enabled";
     public static final String RESOURCE_OPTIMIZATION_PACKAGING_STAGES = "org.richfaces.resourceOptimization.packagingStages";
@@ -83,6 +86,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
     public static final String RESOURCE_OPTIMIZATION_PARAM_NONE = "None";
 
     private static final String activatedMavenProfiles = System.getProperty("activated.maven.profiles", "");
+    private static WebArchive deployedWar;
     protected static final Boolean runInPortalEnv = Boolean.getBoolean("runInPortalEnv");
 
     @ArquillianResource
@@ -111,8 +115,8 @@ public abstract class AbstractMetamerTest extends Arquillian {
     public static WebArchive createTestArchive() throws IOException, URISyntaxException {
         WebArchive war = createWarFromZipFile();
         /*
-         * If value on system property "org.richfaces.resourceOptimization.enabled" is set to true, modify context-params in web.xml.
-         * For more info see https://issues.jboss.org/browse/RFPL-1682
+         * If value on system property "org.richfaces.resourceOptimization.enabled" is set to true, modify context-params in
+         * web.xml. For more info see https://issues.jboss.org/browse/RFPL-1682
          */
         if (Boolean.getBoolean(RESOURCE_OPTIMIZATION_ENABLED)) {
             enableResourceOptimization(war);
@@ -132,7 +136,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
 
             // undeploy all metamer WARs if using a JBoss container
             if (isUsingJBossContainer()) {
-                runCLICommand("undeploy *metamer*");
+                undeployMetamerWars();
             }
 
             // enable WS in EAP 6.3 and up
@@ -150,12 +154,49 @@ public abstract class AbstractMetamerTest extends Arquillian {
             }
             temporaryJBossWebXML.deleteOnExit();
         }
+
+        // save actual war to target/metamer-UPDATED.war
+        File updatedWar = new File("target/metamer-UPDATED.war");
+        war.as(ZipExporter.class).exportTo(updatedWar);
+        deployedWar = war;
+
         return war;
     }
 
     private static WebArchive createWarFromZipFile() throws IOException, IllegalArgumentException, ArchiveImportException {
         return ShrinkWrap.createFromZipFile(WebArchive.class, runInPortalEnv ? new File("target/metamer-portlet.war")
             : new File("target/metamer.war"));
+    }
+
+    /**
+     * Deploys target/metamer-UPDATED.war file on current JBoss container.
+     */
+    public static void deployMetamerWar() {
+        if (isUsingJBossContainer()) {
+            runCLICommand("deploy target/metamer-UPDATED.war");
+        } else {
+            System.err.println("Not using any JBoss container. War cannot be deployed.");
+        }
+    }
+
+    /**
+     * Sets javax.faces.PARTIAL_STATE_SAVING to false in web.xml and redeploys the current war. Can only be used with JBoss
+     * containers.
+     */
+    public static void disablePartialStateSavingAndRedeploy() {
+        modifyAndDeployWar(new WARModifyAction() {
+            @Override
+            public WebArchive modify(WebArchive war) {
+                WebArchive newWar = (WebArchive) war.shallowCopy();
+                // 1. load existing web.xml from WebArchive
+                WebAppDescriptor webXML = Descriptors.importAs(WebAppDescriptor.class).fromStream(
+                    newWar.get("WEB-INF/web.xml").getAsset().openStream());
+                webXML.getOrCreateContextParam().paramName("javax.faces.PARTIAL_STATE_SAVING").paramValue("false");
+                // 3. save the params to web.xml
+                newWar.setWebXML(new StringAsset(webXML.exportAsString()));
+                return newWar;
+            }
+        });
     }
 
     /*
@@ -239,6 +280,25 @@ public abstract class AbstractMetamerTest extends Arquillian {
     }
 
     /**
+     * Creates a copy of target/metamer-UPDATED.war, updates it according to WARModifyAction and saves it to
+     * target/metamerModfied.war. Undeploys all *metamer* wars, deploys the modified one and deletes it in the target directory.
+     * Can be used only with JBoss containers,
+     */
+    public static void modifyAndDeployWar(WARModifyAction a) {
+        if (isUsingJBossContainer()) {
+            undeployMetamerWars();
+            WebArchive modifiedWar = a.modify(deployedWar);
+            File modifiedWarFile = new File("target/metamerModified.war");
+            modifiedWarFile.delete();
+            modifiedWar.as(ZipExporter.class).exportTo(modifiedWarFile);
+            runCLICommand("deploy target/metamerModified.war");
+            modifiedWarFile.delete();
+        } else {
+            System.err.println("Not using any JBoss container. War will not be modified.");
+        }
+    }
+
+    /**
      * If not removed and using EAP, you get: <code>
      * Caused by: java.lang.Exception: {"JBAS014671: Failed services" => {"jboss.deployment.unit.\"metamer.war\".PARSE" => "org.jboss.msc.service.StartException in service jboss.deployment.unit.\"metamer.war\".PARSE: JBAS018733: Failed to process phase PARSE of deployment \"metamer.war\"
      * Caused by: org.jboss.as.server.deployment.DeploymentUnitProcessingException: JBAS018014: Failed to parse XML descriptor \"/content/metamer.war/WEB-INF/jboss-web.xml\" at [4,3]
@@ -294,8 +354,19 @@ public abstract class AbstractMetamerTest extends Arquillian {
     }
 
     /**
-     * Workaround works only for container placed in project's target directory.
-     * Workaround the exception during parsing the jboss-cli.xml. Change the urn:jboss:cli:1.3 to *1.2
+     * Undeploys all metamer wars from current JBoss container.
+     */
+    public static void undeployMetamerWars() {
+        if (isUsingJBossContainer()) {
+            runCLICommand("undeploy *metamer*");
+        } else {
+            System.err.println("Not using any JBoss container. War cannot be undeployed.");
+        }
+    }
+
+    /**
+     * Workaround works only for container placed in project's target directory. Workaround the exception during parsing the
+     * jboss-cli.xml. Change the urn:jboss:cli:1.3 to *1.2
      */
     private static void workaroundCLIVersionInEAP63And64() throws URISyntaxException, IOException {
         File[] jbossContainersDirs = new File(System.getProperty("project.build.directory")).listFiles(new FileFilter() {
@@ -319,4 +390,9 @@ public abstract class AbstractMetamerTest extends Arquillian {
      * @return absolute url to the test page to be opened by Selenium
      */
     public abstract URL getTestUrl();
+
+    public interface WARModifyAction {
+
+        WebArchive modify(WebArchive war);
+    }
 }
