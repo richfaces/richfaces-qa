@@ -589,6 +589,25 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("popupClass")
+    @RegressionTest("https://issues.jboss.org/browse/RF-11079")
+    @Templates(value = "plain")
+    public void testPopupClassWidthInfluencesItemsWidth() {
+        final int tolerance = 10;
+
+        Graphene.guardAjax(autocomplete).type("a");
+        autocomplete.advanced().waitForSuggestionsToBeVisible().perform();
+        int width = Integer.parseInt(autocomplete.advanced().getSuggestionsElements().get(0).getCssValue("width").replaceAll("px", ""));
+        assertEquals(width, 200, tolerance, "The default width of a suggestion item should be around 200 px.");
+
+        autocompleteAttributes.set(AutocompleteAttributes.popupClass, "width500");
+        Graphene.guardAjax(autocomplete).type("a");
+        autocomplete.advanced().waitForSuggestionsToBeVisible().perform();
+        width = Integer.parseInt(autocomplete.advanced().getSuggestionsElements().get(0).getCssValue("width").replaceAll("px", ""));
+        assertEquals(width, 500, tolerance, "The width of a suggestion item should be around 500 px.");
+    }
+
+    @Test
     @CoversAttributes("rendered")
     @Templates(value = "plain")
     public void testRendered() {

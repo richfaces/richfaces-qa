@@ -124,6 +124,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <input id="getValue" name="getValue" type="button" value="getValue()" onclick="$('[id$=value]').val(String(#{rich:component('autocomplete')}.getValue()));" />
                 <br/>
             </fieldset>
+
+            <style type="text/css">
+                .width500{
+                    width: 500px;
+                }
+            </style>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
