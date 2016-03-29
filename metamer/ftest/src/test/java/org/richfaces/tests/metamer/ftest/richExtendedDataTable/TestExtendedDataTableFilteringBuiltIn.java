@@ -21,7 +21,12 @@
  */
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
+import static org.testng.Assert.assertEquals;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
+import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.popupPanel.PopupPanel.ResizerLocation;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
@@ -128,6 +133,53 @@ public class TestExtendedDataTableFilteringBuiltIn extends ExtendedDataTableFilt
     @CoversAttributes("render")
     public void testRender() {
         testRender(ajaxAction);
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11171")
+    public void testScrollingPositionIsPerservedAfterFiltering() {
+        final int tolerance = 10;
+        // setup frozen columns and decrease the size of the EDT so the table's scroller will be displayed
+        attsSetter()
+            .setAttribute("frozenColumns").toValue(1)
+            .setAttribute("style").toValue("width: 500px !important;")
+            .asSingleAction().perform();
+
+        WebElement scroller = getTable().advanced().getRootElement().findElement(By.className("rf-edt-scrl"));
+        // get scroller position
+        long l = Long.parseLong(Utils.returningJQ("scrollLeft()", scroller));
+        assertEquals(l, 0, "Default position of the scroller should be 0.");
+
+        // filter by name
+        getTable().getHeader().filterName("alex", true);
+        l = Long.parseLong(Utils.returningJQ("scrollLeft()", scroller));
+        assertEquals(l, 0, tolerance, "Position of the scroller should be same as before filtering.");
+
+        // reset filtering by name
+        getTable().getHeader().filterName("", true);
+        l = Long.parseLong(Utils.returningJQ("scrollLeft()", scroller));
+        assertEquals(l, 0, tolerance, "Position of the scroller should be same as before filtering.");
+
+        // scroll to the last column
+        jsUtils.scrollToView(getTable().getFirstRow().getNumberOfKids1ColumnElement());
+        l = Long.parseLong(Utils.returningJQ("scrollLeft()", scroller));
+        assertEquals(l, 200, tolerance, "Position of the scroller should be around maximum -- 200px.");
+
+        // filter by number of kids
+        getTable().getHeader().filterNumberOfKidsBuiltIn(2);
+        l = Long.parseLong(Utils.returningJQ("scrollLeft()", scroller));
+        assertEquals(l, 200, tolerance, "Position of the scroller should be same as before filtering.");
+
+        // scroll to the second column
+        jsUtils.scrollToView(getTable().getFirstRow().getNameColumnElement());
+        jsUtils.scrollToView(getTable().advanced().getHeaderElement());
+        l = Long.parseLong(Utils.returningJQ("scrollLeft()", scroller));
+        assertEquals(l, 150, tolerance, "Position of the scroller should be around 150 px.");
+
+        // filter by title
+        getTable().getHeader().filterTitle("Director", true);
+        l = Long.parseLong(Utils.returningJQ("scrollLeft()", scroller));
+        assertEquals(l, 150, tolerance, "Position of the scroller should be same as before filtering.");
     }
 
     @Test
