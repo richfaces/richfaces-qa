@@ -26,8 +26,10 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.graphene.page.Page;
+import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -43,10 +45,14 @@ import org.testng.annotations.Test;
  */
 public class TestProgressBarStatic extends AbstractWebDriverTest {
 
-    private final Attributes<ProgressBarAttributes> progressBarAttributes = getAttributes();
-
     @Page
     private ProgressBarPage page;
+    private final Attributes<ProgressBarAttributes> progressBarAttributes = getAttributes();
+
+    @Override
+    public String getComponentTestPagePath() {
+        return "richProgressBar/static.xhtml";
+    }
 
     /**
      * @return progress size in %
@@ -60,11 +66,6 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
             // round the decimal number to integer and divide by 2 to obtain per cents because progress bar width is 200px
             return Math.round(widthInPixels);
         }
-    }
-
-    @Override
-    public String getComponentTestPagePath() {
-        return "richProgressBar/static.xhtml";
     }
 
     @Test
@@ -227,5 +228,28 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
         assertEquals(getProgress(), 100, "Progress when value=456.");
         assertFalse(page.getInitialOutputElement().isDisplayed(), "Initial output should not be visible on the page.");
         assertTrue(page.getFinishOutputElement().isDisplayed(), "Finish output should be visible on the page.");
+    }
+
+    @Test
+    @CoversAttributes("style")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10969")
+    @Templates(value = "plain")
+    public void testWidthInStyleInfluencesProgressBarWidth() {
+        final int tolerance = 10;
+        final int minimalAndDefaultWidth = 200;
+        progressBarAttributes.set(ProgressBarAttributes.value, 1);// set some value to show the progress bar
+
+        // get actual width
+        int width = Integer.parseInt(Utils.returningJQ("width()", page.getRemainElement()).replaceAll("px", ""));
+        // check default width
+        assertEquals(width, minimalAndDefaultWidth, tolerance, "The default width of a progress bar should be around " + minimalAndDefaultWidth + " px.");
+
+        for (int testedWidth : new int[] { 500, 100 }) {
+            // change width value through @style attribute
+            progressBarAttributes.set(ProgressBarAttributes.style, "width: " + testedWidth + "px;");
+            // get and check actual width
+            width = Integer.parseInt(Utils.returningJQ("width()", page.getRemainElement()).replaceAll("px", ""));
+            assertEquals(width, Math.max(testedWidth, minimalAndDefaultWidth), tolerance);
+        }
     }
 }
