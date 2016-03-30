@@ -34,7 +34,6 @@ import org.jboss.test.selenium.utils.testng.TestLoggingUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
@@ -147,9 +146,7 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
             File directory = imageOutputFile.getParentFile();
             FileUtils.forceMkdir(directory);
 
-            if (!HtmlUnitDriver.class.isInstance(getWebDriver())) {
-                FileUtils.copyFile(screenshot, imageOutputFile);
-            }
+            FileUtils.copyFile(screenshot, imageOutputFile);
 
             // FileUtils.writeStringToFile(trafficOutputFile, traffic);
             // FileUtils.writeLines(logOutputFile, methodLog);

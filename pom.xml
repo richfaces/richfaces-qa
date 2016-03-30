@@ -57,18 +57,18 @@
         <version.tomcat8>8.0.32</version.tomcat8>
 
         <!-- arquillian versions -->
-        <arquillian.bom.version>1.1.10.Final</arquillian.bom.version>
+        <arquillian.bom.version>1.1.11.Final</arquillian.bom.version>
         <arquillian.wildfly.container>1.0.1.Final</arquillian.wildfly.container>
         <arquillian.tomcat.version>1.0.0.CR7</arquillian.tomcat.version>
-        <arquillian.drone.version>2.0.0.Alpha5</arquillian.drone.version>
-        <arquillian.graphene.version>2.1.0.Alpha3</arquillian.graphene.version>
+        <arquillian.drone.version>2.0.0.Final</arquillian.drone.version>
+        <arquillian.graphene.version>2.1.0.CR1</arquillian.graphene.version>
         <screenshooter.version>${arquillian.graphene.version}</screenshooter.version>
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
         <shrinkwrap.descriptors.version>2.0.0-alpha-6</shrinkwrap.descriptors.version>
 
         <jboss.javaee6.spec.version>3.0.2.Final</jboss.javaee6.spec.version>
 
-        <version.selenium>2.52.0</version.selenium>
+        <version.selenium>2.53.0</version.selenium>
         <version.testng>6.9.10</version.testng>
 
         <!-- these are set as Environmental variables to let Arquillian know where distribution of managed containers are -->
@@ -400,15 +400,15 @@
             </dependency>
             <dependency>
                 <groupId>org.jboss.arquillian.graphene</groupId>
-                <artifactId>arquillian-graphene</artifactId>
+                <artifactId>graphene-webdriver</artifactId>
                 <version>${arquillian.graphene.version}</version>
                 <type>pom</type>
             </dependency>
-	    <dependency>
-	    	<groupId>org.jboss.arquillian.graphene</groupId>
-		<artifactId>arquillian-browser-screenshooter</artifactId>
-	        <version>${screenshooter.version}</version>
-	    </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.graphene</groupId>
+                <artifactId>arquillian-browser-screenshooter</artifactId>
+                <version>${screenshooter.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.jboss.arquillian.selenium</groupId>
                 <artifactId>selenium-bom</artifactId>
@@ -518,11 +518,6 @@
             </dependency>
             <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>
-                <artifactId>selenium-htmlunit-driver</artifactId>
-                <version>${version.selenium}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-ie-driver</artifactId>
                 <version>${version.selenium}</version>
             </dependency>
@@ -530,12 +525,6 @@
                 <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-remote-driver</artifactId>
                 <version>${version.selenium}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.arquillian.graphene</groupId>
-                <artifactId>graphene-webdriver</artifactId>
-                <version>${arquillian.graphene.version}</version>
-                <type>pom</type>
             </dependency>
 
             <!-- Page Fragments dependencies -->

@@ -56,14 +56,12 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.component.Positioning;
 import org.richfaces.component.SwitchType;
-import org.richfaces.fragment.common.Actions;
 import org.richfaces.fragment.common.AdvancedVisibleComponentIteractions;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Locations;
@@ -159,10 +157,8 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
         FireFox(FirefoxDriver.class),
         InternetExplorer(InternetExplorerDriver.class),
-        Chrome(ChromeDriver.class),
-        HTMLUnit(HtmlUnitDriver.class),
-        // Opera(OperaDriver.class),
-        Remote(RemoteWebDriver.class);
+        Chrome(ChromeDriver.class);
+
         private final Class<?> clazz;
 
         private DriverType(Class<?> clazz) {

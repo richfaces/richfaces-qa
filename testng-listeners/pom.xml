@@ -29,7 +29,7 @@
         <!-- Graphene dependency chain - imports all other dependencies required -->
         <dependency>
             <groupId>org.jboss.arquillian.graphene</groupId>
-            <artifactId>arquillian-graphene</artifactId>
+            <artifactId>graphene-webdriver</artifactId>
             <type>pom</type>
         </dependency>
         <dependency>
