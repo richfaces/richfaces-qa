@@ -718,7 +718,7 @@
             <id>jbosseap-managed-6-4</id>
             <properties>
                 <metamer.classifier>jee6</metamer.classifier>
-                <version.eap>6.4.5</version.eap>
+                <version.eap>6.4.6</version.eap>
             </properties>
             <dependencies>
                 <dependency>
