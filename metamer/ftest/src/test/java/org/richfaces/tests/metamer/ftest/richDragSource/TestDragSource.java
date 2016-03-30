@@ -34,6 +34,7 @@ import java.util.Map.Entry;
 import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.javascript.JavaScript;
 import org.openqa.selenium.interactions.Actions;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
@@ -137,9 +138,15 @@ public class TestDragSource extends AbstractDragSourceTest {
 
     @Test
     @Skip(expressions = {
-        @AndExpression(On.Container.Tomcat8.class),
-        @AndExpression(On.Container.Tomcat7.class)
+        @AndExpression(On.Container.Tomcat8.class),// not tested, needs a JBoss container due to war redeployment through CLI
+        @AndExpression(On.Container.Tomcat7.class),// not tested, needs a JBoss container due to war redeployment through CLI
+        @AndExpression(On.Container.EAP633.class),
+        @AndExpression(On.Container.EAP634.class),
+        @AndExpression(On.Container.EAP645.class),
+        @AndExpression(On.Container.EAP646.class),
+        @AndExpression(On.Container.EAP647.class),
     })
+    @IssueTracking("https://issues.jboss.org/browse/RF-14251")
     @RegressionTest("https://issues.jboss.org/browse/RF-10967")
     public void testDragValueWithPartialStateSavingOff() {
         disablePartialStateSavingAndRedeploy();
