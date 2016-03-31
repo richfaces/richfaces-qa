@@ -244,8 +244,8 @@
             <plugin>
                 <artifactId>maven-release-plugin</artifactId>
                 <configuration>
-                    <preparationGoals>clean verify -Prelease -DskipTests=true</preparationGoals>
-                    <goals>clean deploy -Prelease -DskipTests=true</goals>
+                    <preparationGoals>clean verify -Prelease -DskipTests=true -Dbrowser.disabled</preparationGoals>
+                    <goals>clean deploy -Prelease -DskipTests=true -Dbrowser.disabled</goals>
                 </configuration>
             </plugin>
         </plugins>
