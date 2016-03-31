@@ -26,7 +26,7 @@
 
     <groupId>org.richfaces.tests</groupId>
     <artifactId>richfaces-qa-parent</artifactId>
-    <version>4.5.15.20160331-Final</version>
+    <version>4.5.16-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>RichFaces QA Parent</name>
@@ -388,7 +388,7 @@
         <connection>scm:git:git://github.com/richfaces/qa.git</connection>
         <developerConnection>scm:git:git@github.com:richfaces/qa.git</developerConnection>
         <url>https://github.com/richfaces/qa</url>
-        <tag>4.5.15.20160331-Final</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <dependencyManagement>
