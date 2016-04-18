@@ -35,6 +35,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
@@ -159,6 +160,13 @@ public class TestToolbar extends AbstractWebDriverTest {
         for (By itemBy : itemsBy) {
             testStyle(driver.findElement(itemBy), itemStyle);
         }
+    }
+
+    @Test
+    @Templates("plain")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12415")
+    public void testNoResourceErrorPresent() {
+        checkNoResourceErrorPresent(null);
     }
 
     @Test

@@ -117,7 +117,7 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
     @CoversAttributes("hideDelay")
     public void testHideDelay(int delay) {
         WebElement menuRoot = driver.findElement(By.cssSelector("[id$='menu1']"));
-        new MenuDelayTester().testHideDelay(menuRoot, delay, new Event[]{ Event.MOUSEOVER, Event.MOUSEOUT }, menuRoot);
+        new MenuDelayTester().testHideDelay(menuRoot, delay, new Event[] { Event.MOUSEOVER, Event.MOUSEOUT }, menuRoot);
     }
 
     @CoversAttributes("horizontalOffset")
@@ -222,6 +222,17 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
         getCurrentMenu().advanced().show(page.getTarget1());
         guardHttp(getCurrentMenu().advanced().getItemsElements().get(1)).click();
         assertEquals(page.getOutput().getText(), "Open", "Menu action was not performed.");
+    }
+
+    public void testNoResourceErrorPresent() {
+        checkNoResourceErrorPresent(new Action() {
+
+            @Override
+            public void perform() {
+                updateDropDownMenuInvoker();
+                getCurrentMenu().advanced().show(page.getTarget1());
+            }
+        });
     }
 
     @CoversAttributes("onclick")

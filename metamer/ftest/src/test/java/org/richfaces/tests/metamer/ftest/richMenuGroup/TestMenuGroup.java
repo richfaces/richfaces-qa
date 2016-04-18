@@ -77,6 +77,11 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     @FindByJQuery(value = ".rf-ddm-lbl-dec:eq(0)")
     private WebElement target1;
 
+    @Override
+    public String getComponentTestPagePath() {
+        return "richMenuGroup/simple.xhtml";
+    }
+
     private void openMenu() {
         fileDropDownMenu.advanced().show(target1);
     }
@@ -85,16 +90,6 @@ public class TestMenuGroup extends AbstractWebDriverTest {
         openMenu();
         new Actions(driver).click(group).perform();
         Graphene.waitGui().until().element(groupList).is().visible();
-    }
-
-    @BeforeMethod(groups = "smoke")
-    private void updateDropDownMenuInvoker() {
-        fileDropDownMenu.advanced().setShowEvent(Event.MOUSEOVER);
-    }
-
-    @Override
-    public String getComponentTestPagePath() {
-        return "richMenuGroup/simple.xhtml";
     }
 
     @Test
@@ -246,6 +241,19 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12415")
+    public void testNoResourceErrorPresent() {
+        checkNoResourceErrorPresent(new Action() {
+
+            @Override
+            public void perform() {
+                openMenuAndSubMenu();
+            }
+        });
+    }
+
+    @Test
     @CoversAttributes("onclick")
     @Templates(value = "plain")
     public void testOnclick() {
@@ -389,5 +397,10 @@ public class TestMenuGroup extends AbstractWebDriverTest {
                 return groupList;
             }
         });
+    }
+
+    @BeforeMethod(groups = "smoke")
+    private void updateDropDownMenuInvoker() {
+        fileDropDownMenu.advanced().setShowEvent(Event.MOUSEOVER);
     }
 }

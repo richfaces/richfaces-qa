@@ -28,6 +28,7 @@ import java.util.List;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -49,6 +50,13 @@ public class TestMenuSeparator extends AbstractWebDriverTest {
     @Override
     public String getComponentTestPagePath() {
         return "richMenuSeparator/simple.xhtml";
+    }
+
+    @Test
+    @Templates("plain")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12415")
+    public void testNoResourceErrorPresent() {
+        checkNoResourceErrorPresent(null);
     }
 
     @Test(groups = "smoke")

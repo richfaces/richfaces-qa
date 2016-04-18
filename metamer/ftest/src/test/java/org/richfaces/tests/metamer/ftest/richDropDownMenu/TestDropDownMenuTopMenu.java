@@ -100,6 +100,13 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
 
     @Test
     @Templates("plain")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12415")
+    public void testNoResourceErrorPresent() {
+        super.testNoResourceErrorPresent();
+    }
+
+    @Test
+    @Templates("plain")
     public void testOnclick() {
         super.testOnclick();
     }

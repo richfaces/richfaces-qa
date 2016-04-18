@@ -73,6 +73,7 @@ import org.richfaces.fragment.common.VisibleComponent;
 import org.richfaces.fragment.popupPanel.TextualRichFacesPopupPanel;
 import org.richfaces.tests.configurator.unstable.UnstableTestConfigurator;
 import org.richfaces.tests.metamer.Template;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.JSErrorStorage;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.extension.configurator.Configurator;
 import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config;
@@ -1006,6 +1007,22 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         assertEquals(elems.size(), expectedCount);
         for (WebElement elem : elems) {
             assertTrue(elem.getAttribute("class").contains(klass));
+        }
+    }
+
+    /**
+     * Checks that there is no 404 error in browser's console.
+     *
+     * @param beforeCheckAction action berformed before checking. Can be null (no action will be performed).
+     */
+    protected void checkNoResourceErrorPresent(Action beforeCheckAction) {
+        // perform action
+        if (beforeCheckAction != null) {
+            beforeCheckAction.perform();
+        }
+        final String errMsg = "failed to load resource";
+        for (String msg : jsErrorStorage.getMessages()) {
+            assertFalse(msg.contains(errMsg), "There should be no resource error message in browser's console. Had: <" + msg + ">.");
         }
     }
 

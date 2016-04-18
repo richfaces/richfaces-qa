@@ -69,8 +69,6 @@ public class TestMenuItem extends AbstractWebDriverTest {
     private WebElement label;
     @FindBy(css = "div[id$=menuItem1]")
     private WebElement menuItem1;
-    @FindByJQuery(value = ".rf-ddm-lbl-dec:eq(0)")
-    private WebElement target1;
 
     private final Action openMenuAndClickOnTheMenuItemAction = new Action() {
         @Override
@@ -78,6 +76,8 @@ public class TestMenuItem extends AbstractWebDriverTest {
             openMenuAndClickOnTheItem();
         }
     };
+    @FindByJQuery(value = ".rf-ddm-lbl-dec:eq(0)")
+    private WebElement target1;
 
     @Override
     public String getComponentTestPagePath() {
@@ -266,6 +266,19 @@ public class TestMenuItem extends AbstractWebDriverTest {
         getMetamerPage().assertPhases(PhaseId.ANY_PHASE);
         getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "action invoked");
         getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "action listener invoked");
+    }
+
+    @Test
+    @Templates("plain")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12415")
+    public void testNoResourceErrorPresent() {
+        checkNoResourceErrorPresent(new Action() {
+
+            @Override
+            public void perform() {
+                openMenu();
+            }
+        });
     }
 
     @Test

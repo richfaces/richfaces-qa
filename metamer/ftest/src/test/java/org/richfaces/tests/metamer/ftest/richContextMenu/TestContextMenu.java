@@ -166,7 +166,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @UseWithField(field = "delay", valuesFrom = FROM_FIELD, value = "delays")
     @Templates("plain")
     public void testHideDelay() {
-        new MenuDelayTester().testHideDelay(page.getContextMenuRoot(), delay, new Event[]{ Event.MOUSEOVER, Event.MOUSEOUT }, page.getContextMenuContent());
+        new MenuDelayTester().testHideDelay(page.getContextMenuRoot(), delay, new Event[] { Event.MOUSEOVER, Event.MOUSEOUT }, page.getContextMenuContent());
     }
 
     @Test
@@ -218,6 +218,18 @@ public class TestContextMenu extends AbstractWebDriverTest {
         jsUtils.scrollToView(page.getTargetPanel1());
         page.getContextMenu().advanced().show(page.getTargetPanel1());
         guardNoRequest(page.getContextMenu().advanced().getItemsElements().get(0)).click();
+    }
+
+    @Test
+    @Templates("plain")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12415")
+    public void testNoResourceErrorPresent() {
+        checkNoResourceErrorPresent(new Action() {
+            @Override
+            public void perform() {
+                page.getContextMenu().advanced().show(page.getTargetPanel1());
+            }
+        });
     }
 
     @Test

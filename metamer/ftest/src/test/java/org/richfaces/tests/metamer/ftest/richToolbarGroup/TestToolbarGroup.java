@@ -187,6 +187,13 @@ public class TestToolbarGroup extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates("plain")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12415")
+    public void testNoResourceErrorPresent() {
+        checkNoResourceErrorPresent(null);
+    }
+
+    @Test
     @CoversAttributes("onitemclick")
     @Templates(value = "plain")
     public void testOnitemclick() {
