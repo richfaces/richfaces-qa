@@ -23,20 +23,15 @@ package org.richfaces.tests.metamer.ftest.richNotifyStack;
 
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.graphene.javascript.JavaScript;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
-import org.richfaces.tests.metamer.ftest.richSelect.TestRF14018.JSErrorStorage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestRF12658 extends AbstractWebDriverTest {
-
-    @JavaScript
-    private JSErrorStorage jsErrorStorage;
 
     @Override
     public String getComponentTestPagePath() {

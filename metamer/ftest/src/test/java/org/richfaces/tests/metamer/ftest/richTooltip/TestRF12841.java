@@ -27,13 +27,11 @@ import static org.testng.Assert.assertTrue;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.javascript.JavaScript;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.tooltip.TextualRichFacesTooltip;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.richSelect.TestRF14018.JSErrorStorage;
 import org.testng.annotations.Test;
 
 /**
@@ -43,8 +41,6 @@ public class TestRF12841 extends AbstractWebDriverTest {
 
     @FindBy(css = "[id$='commandLink']")
     private WebElement commandLink;
-    @JavaScript
-    private JSErrorStorage jsErrorStorage;
     @FindBy(className = "rf-tt")
     private TextualRichFacesTooltip tooltip;
 

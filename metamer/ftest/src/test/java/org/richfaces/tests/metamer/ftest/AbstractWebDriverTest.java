@@ -117,6 +117,9 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     @JavaScript
     protected MetamerJavascriptUtils jsUtils;
 
+    @JavaScript
+    protected JSErrorStorage jsErrorStorage;
+
     @FindBy(css = "input[id$=statusInput]")
     protected TextInputComponentImpl statusInput;
 
@@ -1417,5 +1420,11 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     public MultipleAttributesSetter attsSetter() {
         return new AttributesHandler(testResourcesProvider);
+    }
+
+    @JavaScript("window.JSErrorStorage")
+    public interface JSErrorStorage {
+
+        List<String> getMessages();
     }
 }

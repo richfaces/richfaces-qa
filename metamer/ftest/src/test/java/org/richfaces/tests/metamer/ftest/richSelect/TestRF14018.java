@@ -25,8 +25,6 @@ import static org.testng.Assert.assertTrue;
 
 import java.util.List;
 
-import org.jboss.arquillian.graphene.javascript.Dependency;
-import org.jboss.arquillian.graphene.javascript.JavaScript;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.select.RichFacesSelect;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -43,8 +41,6 @@ public class TestRF14018 extends AbstractWebDriverTest {
 
     private final Attributes<SelectAttributes> attributes = getAttributes();
 
-    @JavaScript
-    private JSErrorStorage jsErrorStorage;
     @FindBy(css = "div[id$=select]")
     private RichFacesSelect select;
 
@@ -68,12 +64,5 @@ public class TestRF14018 extends AbstractWebDriverTest {
         waiting(1000);
         errorMessages = jsErrorStorage.getMessages();
         assertTrue(errorMessages.isEmpty());
-    }
-
-    @JavaScript("window.JSErrorStorage")
-    @Dependency(sources = "javascript/JSErrorStorage.js")
-    public interface JSErrorStorage {
-
-        List<String> getMessages();
     }
 }

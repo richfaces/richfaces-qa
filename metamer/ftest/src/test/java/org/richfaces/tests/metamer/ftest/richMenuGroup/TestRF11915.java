@@ -25,14 +25,12 @@ import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
-import org.jboss.arquillian.graphene.javascript.JavaScript;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.dropDownMenu.RichFacesDropDownMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.richSelect.TestRF14018.JSErrorStorage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
@@ -43,8 +41,6 @@ public class TestRF11915 extends AbstractWebDriverTest {
 
     @FindByJQuery(".rf-tb-itm:eq(0)")
     private RichFacesDropDownMenu fileDropDownMenu;
-    @JavaScript
-    private JSErrorStorage jsErrorStorage;
     @FindBy(css = "[id$=output]")
     private WebElement output;
     @FindByJQuery(value = ".rf-ddm-lbl-dec:eq(0)")

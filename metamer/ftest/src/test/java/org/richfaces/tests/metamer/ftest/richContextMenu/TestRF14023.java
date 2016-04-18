@@ -24,7 +24,6 @@ package org.richfaces.tests.metamer.ftest.richContextMenu;
 import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.javascript.JavaScript;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -33,7 +32,6 @@ import org.richfaces.fragment.contextMenu.RichFacesContextMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SimpleEDT;
-import org.richfaces.tests.metamer.ftest.richSelect.TestRF14018.JSErrorStorage;
 import org.testng.annotations.Test;
 
 /**
@@ -45,8 +43,6 @@ public class TestRF14023 extends AbstractWebDriverTest {
     private RichFacesContextMenu contextMenu;
     @FindBy(css = "div.rf-edt[id$=edt]")
     private SimpleEDT edt;
-    @JavaScript
-    private JSErrorStorage jsErrorStorage;
     @FindBy(css = "[id$=output]")
     private WebElement output;
 

@@ -32,7 +32,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.jboss.arquillian.graphene.GrapheneElement;
-import org.jboss.arquillian.graphene.javascript.JavaScript;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
@@ -45,7 +44,6 @@ import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.U
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator;
-import org.richfaces.tests.metamer.ftest.richSelect.TestRF14018.JSErrorStorage;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.Lists;
@@ -61,9 +59,6 @@ public class TestDragSource extends AbstractDragSourceTest {
     private String dragOptionsValue;
     private Map<String, List<? extends Entry<String, String>>> dragOptionsValueMap;
     private String indicatorValue;
-
-    @JavaScript
-    private JSErrorStorage jsErrorStorage;
 
     {
         dragOptionsValueMap = new HashMap<String, List<? extends Entry<String, String>>>(3);
