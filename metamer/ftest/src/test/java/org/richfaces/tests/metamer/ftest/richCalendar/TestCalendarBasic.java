@@ -219,6 +219,7 @@ public class TestCalendarBasic extends AbstractCalendarTest {
 
     @Test
     public void testWeekNumbers() {
+        jsUtils.scrollToView(popupCalendar.getPopupButtonElement());
         MetamerPage.waitRequest(popupCalendar, WaitRequestType.XHR).setDateTime(firstOfJanuary2012);
 
         DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
