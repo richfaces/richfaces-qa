@@ -31,6 +31,7 @@ import java.util.List;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -675,6 +676,55 @@ public class TestSelect extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testTitle() {
         testTitle(select.advanced().getInput().advanced().getInputElement());
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-14254")
+    public void testTypingUnknownWillNotShowSuggestions() {
+        selectAttributes.set(SelectAttributes.enableManualInput, Boolean.TRUE);
+        WebElement spanElement = select.advanced().getRootElement().findElement(By.tagName("span"));
+        // the input has not error styleClass
+        assertFalse(spanElement.getAttribute("class").contains("rf-sel-fld-err"));
+
+        // type 'q' (unknown)
+        select.type("q");
+        // no suggestions will be available
+        assertEquals(select.advanced().getSuggestionsElements().size(), 0);
+        spanElement = select.advanced().getRootElement().findElement(By.tagName("span"));
+        // the input has error styleClass
+        assertTrue(spanElement.getAttribute("class").contains("rf-sel-fld-err"));
+
+        // delete
+        select.advanced().getInput().sendKeys(Keys.BACK_SPACE);
+        // all suggestions will be available
+        assertEquals(select.advanced().getSuggestionsElements().size(), 50);
+        spanElement = select.advanced().getRootElement().findElement(By.tagName("span"));
+        // the input has not error styleClass
+        assertFalse(spanElement.getAttribute("class").contains("rf-sel-fld-err"));
+
+        // type 'q' (unknown)
+        select.type("q");
+        // no suggestions will be available
+        assertEquals(select.advanced().getSuggestionsElements().size(), 0);
+        spanElement = select.advanced().getRootElement().findElement(By.tagName("span"));
+        // the input has error styleClass
+        assertTrue(spanElement.getAttribute("class").contains("rf-sel-fld-err"));
+
+        // type 'a'
+        select.type("a");
+        // 4 suggestions will be available
+        assertEquals(select.advanced().getSuggestionsElements().size(), 4);
+        spanElement = select.advanced().getRootElement().findElement(By.tagName("span"));
+        // the input has not error styleClass
+        assertFalse(spanElement.getAttribute("class").contains("rf-sel-fld-err"));
+
+        // type 'aq' (unknown)
+        select.type("aq");
+        // no suggestions will be available
+        assertEquals(select.advanced().getSuggestionsElements().size(), 0);
+        spanElement = select.advanced().getRootElement().findElement(By.tagName("span"));
+        // the input has not error styleClass
+        assertTrue(spanElement.getAttribute("class").contains("rf-sel-fld-err"));
     }
 
     @Test
