@@ -1080,6 +1080,36 @@ public class TestPickList extends AbstractListScrollingTest {
         getMetamerPage().assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: [Alabama] -> [Alabama, Alaska]");
     }
 
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-14256")
+    @CoversAttributes({ "keepSourceOrder", "onadditems", "onremoveitems" })
+    public void testWhenUsingKeepSourceOrder_addAndRemoveItemsEventsAreFired() {
+        pickListAttributes.set(PickListAttributes.keepSourceOrder, Boolean.TRUE);
+        // check @onadditems
+        testFireEvent("onadditems", new Action() {
+            @Override
+            public void perform() {
+                pickList.add(0);
+            }
+        });
+        // reset @onadditems
+        pickListAttributes.set(PickListAttributes.onadditems, "");
+        // check @onremoveitems removing single item
+        testFireEvent("onremoveitems", new Action() {
+            @Override
+            public void perform() {
+                pickList.add(0).remove(0);
+            }
+        });
+        // check @onremoveitems removing all items
+        testFireEvent("onremoveitems", new Action() {
+            @Override
+            public void perform() {
+                pickList.addMultiple(ChoicePickerHelper.byIndex().indexes(1, 5, 20)).removeAll();
+            }
+        });
+    }
+
     public static class PickListButton {
 
         private static final String[] disabledClasses = { "rf-pick-btn-dis", "rf-ord-btn-dis" };
