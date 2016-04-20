@@ -21,6 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richFileUpload;
 
+import static org.richfaces.tests.metamer.ftest.richFileUpload.AbstractFileUploadTest.acceptableFile;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotEquals;
@@ -185,6 +186,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
     @Test
     @Skip(expressions = {// bug in UnderTow, see IssueTracking below
+
         @AndExpression(On.Container.EAP70.class),
         @AndExpression(On.Container.WildFly100.class)
     })
@@ -378,6 +380,22 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @CoversAttributes("onerror")
+    @Templates("plain")
+    @RegressionTest("https://issues.jboss.org/browse/RF-14258")
+    public void testOnerrorIsFiredWhenSendingTheSameFileRepeatedly() {
+        for (int i = 0; i < 3; i++) {
+            testFireEvent("onerror", new Action() {
+                @Override
+                public void perform() {
+                    // sending a bigger file than upload limit will trigger the onerror event
+                    sendFileWithWaiting(bigFile, true, false);
+                }
+            });
+        }
+    }
+
+    @Test
     @CoversAttributes("onfileselect")
     public void testOnfileselect() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onfileselect, new Action() {
@@ -465,6 +483,23 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @CoversAttributes("onsizerejected")
+    @Templates("plain")
+    @RegressionTest("https://issues.jboss.org/browse/RF-14258")
+    public void testOnsizerejectedIsFiredWhenSelectingTheSameFileRepeatedly() {
+        fileUploadAttributes.set(FileUploadAttributes.maxFileSize, 1);
+        for (int i = 0; i < 3; i++) {
+            testFireEvent(fileUploadAttributes, FileUploadAttributes.onsizerejected, new Action() {
+                @Override
+                public void perform() {
+                    sendFileToInputWithWaiting(acceptableFile, false);
+                }
+            });
+        }
+    }
+
+    @Test
+    @Templates("plain")
     @CoversAttributes("ontyperejected")
     public void testOntyperejected() {
         String acceptable = "txt";
@@ -475,6 +510,23 @@ public class TestFileUpload extends AbstractFileUploadTest {
                 sendFileToInputWithWaiting(notAcceptableFile, false);
             }
         });
+    }
+
+    @Test
+    @CoversAttributes("ontyperejected")
+    @Templates("plain")
+    @RegressionTest("https://issues.jboss.org/browse/RF-14258")
+    public void testOntyperejectedIsFiredWhenSelectingTheSameFileRepeatedly() {
+        String acceptable = "txt";
+        fileUploadAttributes.set(FileUploadAttributes.acceptedTypes, acceptable);
+        for (int i = 0; i < 3; i++) {
+            testFireEvent(fileUploadAttributes, FileUploadAttributes.ontyperejected, new Action() {
+                @Override
+                public void perform() {
+                    sendFileToInputWithWaiting(notAcceptableFile, false);
+                }
+            });
+        }
     }
 
     @Test
