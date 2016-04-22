@@ -54,6 +54,22 @@ public class TestOrderingList extends AbstractOrderingListTest {
     }
 
     @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-14261")
+    public void testOrderingListWontShiftPageWhenBodyHasDirection() {
+        final int delta = 10;
+        final Long originalWidth = (Long) executeJS("return jQuery(document).width();");
+        for (String direction : new String[] { "rtl", "ltr" }) {
+            // set body direction
+            executeJS("jQuery('body').attr('dir','" + direction + "');");
+            // interact with pickList
+            orderingList.select(0).putItAfter(5);
+            // check page did not shift
+            Long actualWidth = (Long) executeJS("return jQuery(document).width();");
+            assertEquals(actualWidth, originalWidth, delta);
+        }
+    }
+
+    @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-13558")
     public void testScrollingWithKeyboard() {
         final Action workaround = new Action() {
