@@ -481,14 +481,24 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     @CoversAttributes("showControls")
     @RegressionTest("https://issues.jboss.org/browse/RF-12609")
     public void testShowControls() {
-        assertNotVisible(inplaceInput.advanced().getCancelButtonElement(), "Cancel button should not be visible.");
-        assertNotVisible(inplaceInput.advanced().getConfirmButtonElement(), "Ok button should not be visible.");
-
-        inplaceInputAttributes.set(InplaceInputAttributes.showControls, Boolean.TRUE);
-
+        // check initial state
+        assertNotVisible(inplaceInput.advanced().getCancelButtonElement(), "Cancel button should not be displayed.");
+        assertNotVisible(inplaceInput.advanced().getConfirmButtonElement(), "Confirm button should not be displayed.");
+        // switch to editing state
         inplaceInput.type(" ");
-        assertVisible(inplaceInput.advanced().getCancelButtonElement(), "Cancel button is not visible.");
-        assertVisible(inplaceInput.advanced().getCancelButtonElement(), "Ok button is not visible.");
+        assertNotVisible(inplaceInput.advanced().getCancelButtonElement(), "Cancel button should not be displayed.");
+        assertNotVisible(inplaceInput.advanced().getConfirmButtonElement(), "Confirm button should not be displayed.");
+
+        // set @showControls=true
+        inplaceInputAttributes.set(InplaceInputAttributes.showControls, Boolean.TRUE);
+        // check initial state, RF-12609
+        assertNotVisible(inplaceInput.advanced().getCancelButtonElement(), "Cancel button should not be displayed.");
+        assertNotVisible(inplaceInput.advanced().getConfirmButtonElement(), "Confirm button should not be displayed.");
+
+        // switch to editing state
+        inplaceInput.type(" ");
+        assertVisible(inplaceInput.advanced().getCancelButtonElement(), "Cancel button should be displayed.");
+        assertVisible(inplaceInput.advanced().getConfirmButtonElement(), "Confirm button should be displayed.");
     }
 
     @Test

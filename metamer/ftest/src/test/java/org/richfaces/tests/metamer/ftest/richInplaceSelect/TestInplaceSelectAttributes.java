@@ -729,13 +729,25 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("showControls")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12609")
     public void testShowControls() {
+        // check initial state
+        assertNotVisible(select.advanced().getConfirmButtonElement(), "Confirm button should not be displayed");
+        assertNotVisible(select.advanced().getCancelButtonElement(), "Cancel button should not be displayed");
+        // switch to editing state
         select.advanced().switchToEditingState();
-        assertFalse(new WebElementConditionFactory(select.advanced().getConfirmButtonElement()).isVisible().apply(driver));
+        assertNotVisible(select.advanced().getConfirmButtonElement(), "Confirm button should not be displayed");
+        assertNotVisible(select.advanced().getCancelButtonElement(), "Cancel button should not be displayed");
 
+        // set @showControls=true
         inplaceSelectAttributes.set(InplaceSelectAttributes.showControls, Boolean.TRUE);
+        // check initial state, RF-12609
+        assertNotVisible(select.advanced().getConfirmButtonElement(), "Confirm button should not be displayed");
+        assertNotVisible(select.advanced().getCancelButtonElement(), "Cancel button should not be displayed");
+        // switch to editing state
         select.advanced().switchToEditingState();
-        assertTrue(new WebElementConditionFactory(select.advanced().getConfirmButtonElement()).isVisible().apply(driver));
+        assertVisible(select.advanced().getConfirmButtonElement(), "Confirm button should be displayed");
+        assertVisible(select.advanced().getCancelButtonElement(), "Cancel button should be displayed");
     }
 
     @Test
