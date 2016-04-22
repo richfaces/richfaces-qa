@@ -605,6 +605,39 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-14259")
+    public void testSelectTypeDelete_errorStyleClassWillBeRemoved() {
+        selectAttributes.set(SelectAttributes.enableManualInput, Boolean.TRUE);
+        WebElement spanElement = select.advanced().getRootElement().findElement(By.tagName("span"));
+        // the input has not the error styleClass
+        assertFalse(spanElement.getAttribute("class").contains("rf-sel-fld-err"));
+
+        // open select and select the first option
+        Graphene.guardAjax(select.openSelect()).select(0);
+        assertEquals(output.getText(), "Alabama", "Output should be Alabama");
+
+        // type 'a'
+        select.advanced().getInput().sendKeys("a");
+        // the input has the error styleClass
+        assertTrue(spanElement.getAttribute("class").contains("rf-sel-fld-err"));
+        // no suggestions will be available
+        assertEquals(select.advanced().getSuggestionsElements().size(), 0);
+
+        // remove the last character
+        select.advanced().getInput().sendKeys(Keys.BACK_SPACE);
+        // the input has not the error styleClass
+        assertFalse(spanElement.getAttribute("class").contains("rf-sel-fld-err"));
+        // all suggestions will be available
+        assertEquals(select.advanced().getSuggestionsElements().size(), 50);
+
+        // select the second suggestion
+        Graphene.guardAjax(select.openSelect()).select(1);
+        assertEquals(output.getText(), "Alaska", "Output should be Alaska");
+        // the input has not the error styleClass
+        assertFalse(spanElement.getAttribute("class").contains("rf-sel-fld-err"));
+    }
+
+    @Test
     public void testSelectWithKeyboard() {
         selectHawaiiWithKeyboardGuardedAction.perform();
         assertTrue(item10.getAttribute("class").contains("rf-sel-sel"),
