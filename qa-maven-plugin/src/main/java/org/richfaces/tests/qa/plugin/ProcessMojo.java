@@ -31,6 +31,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Component;
@@ -41,6 +45,7 @@ import org.richfaces.tests.qa.plugin.executor.Executor;
 import org.richfaces.tests.qa.plugin.properties.PropertiesProvider;
 import org.richfaces.tests.qa.plugin.utils.Browser;
 import org.richfaces.tests.qa.plugin.utils.JenkinsFirefoxConfiguration;
+import org.richfaces.tests.qa.plugin.utils.JenkinsFirefoxConfigurations;
 import org.richfaces.tests.qa.plugin.utils.TolerantContainsList;
 import org.richfaces.tests.qa.plugin.utils.Utils;
 import org.richfaces.tests.qa.plugin.utils.Version;
@@ -178,8 +183,8 @@ public class ProcessMojo extends AbstractMojo implements PropertiesProvider {
     @Parameter(defaultValue = "qa.ie.driver.bin")
     private String ieDriverBinPropertyName;
 
-    @Parameter
-    private List<JenkinsFirefoxConfiguration> jenkinsFirefoxConfigurations;
+    @Parameter(property = "jenkinsFirefoxConfigurationFile")
+    private File jenkinsFirefoxConfigurationFile;
     @Parameter(property = "jenkinsFirefoxVersionMinimal")
     private String jenkinsFirefoxVersionMinimal;
     @Parameter(property = "jenkinsFirefoxVersionOptimal")
@@ -282,9 +287,21 @@ public class ProcessMojo extends AbstractMojo implements PropertiesProvider {
         return ieDriverBinPropertyName;
     }
 
+    public File getJenkinsFirefoxConfigurationFile() {
+        return jenkinsFirefoxConfigurationFile;
+    }
+
     @Override
     public List<JenkinsFirefoxConfiguration> getJenkinsFirefoxConfigurations() {
-        return jenkinsFirefoxConfigurations;
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance(JenkinsFirefoxConfigurations.class);
+            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            JenkinsFirefoxConfigurations c = (JenkinsFirefoxConfigurations) jaxbUnmarshaller.unmarshal(getJenkinsFirefoxConfigurationFile());
+            return c.getJenkinsFirefoxConfigurations();
+        } catch (JAXBException ex) {
+            getLog().error(ex);
+            throw new RuntimeException(ex);
+        }
     }
 
     @Override

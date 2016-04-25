@@ -1,0 +1,104 @@
+<jenkinsFirefoxConfigurations>
+    <!-- when firefox version is not specified, use one of the following configurations -->
+    <!--
+    The osName/version/arch values are case insensitive and the detected system has to
+    contain them to use the configuration. When a configuration is not present, e.g. when
+    osVersion is missing, then it does not depend on this value (see configuration for Windows
+    or Mac). The firefoxBin or firefoxVersion is mandatory.
+    -->
+    <!-- SOLARIS 10 SPARC -->
+    <jenkinsFirefoxConfiguration>
+        <osName>sunos</osName>
+        <osVersion>10</osVersion>
+        <osArch>sparc</osArch>
+        <firefoxBin>/qa/tools/opt/solaris10_sparc/firefox-24esr/firefox</firefoxBin>
+    </jenkinsFirefoxConfiguration>
+    <!-- SOLARIS 10 64bit -->
+    <jenkinsFirefoxConfiguration>
+        <osName>sunos</osName>
+        <osVersion>10</osVersion>
+        <osArch>64</osArch>
+        <firefoxBin>/qa/tools/opt/solaris10_x86_64/firefox-24esr/firefox</firefoxBin>
+    </jenkinsFirefoxConfiguration>
+    <!-- SOLARIS 10 else -->
+    <jenkinsFirefoxConfiguration>
+        <osName>sunos</osName>
+        <osVersion>10</osVersion>
+        <firefoxBin>/qa/tools/opt/solaris10_x86/firefox-24esr/firefox</firefoxBin>
+    </jenkinsFirefoxConfiguration>
+
+    <!-- SOLARIS 11 SPARC -->
+    <jenkinsFirefoxConfiguration>
+        <osName>sunos</osName>
+        <osVersion>11</osVersion>
+        <osArch>sparc</osArch>
+        <firefoxBin>/qa/tools/opt/solaris11_sparc/firefox-24esr/firefox</firefoxBin>
+    </jenkinsFirefoxConfiguration>
+    <!-- SOLARIS 11 64bit -->
+    <jenkinsFirefoxConfiguration>
+        <osName>sunos</osName>
+        <osVersion>11</osVersion>
+        <osArch>64</osArch>
+        <firefoxBin>/qa/tools/opt/solaris11_x86_64/firefox-24esr/firefox</firefoxBin>
+    </jenkinsFirefoxConfiguration>
+    <!-- SOLARIS 11 else -->
+    <jenkinsFirefoxConfiguration>
+        <osName>sunos</osName>
+        <osVersion>11</osVersion>
+        <firefoxBin>/qa/tools/opt/solaris11_x86/firefox-24esr/firefox</firefoxBin>
+    </jenkinsFirefoxConfiguration>
+
+    <!-- RHEL5 64bit -->
+    <jenkinsFirefoxConfiguration>
+        <osVersion>el5</osVersion>
+        <osArch>amd64</osArch>
+        <firefoxBin>/qa/tools/opt/x86_64/firefox-17esr/firefox</firefoxBin>
+    </jenkinsFirefoxConfiguration>
+    <!-- RHEL5 else -->
+    <jenkinsFirefoxConfiguration>
+        <osVersion>el5</osVersion>
+        <firefoxBin>/qa/tools/opt/firefox-17esr/firefox</firefoxBin>
+    </jenkinsFirefoxConfiguration>
+
+    <!-- RHEL6 ppc64 -->
+    <jenkinsFirefoxConfiguration>
+        <osVersion>el6</osVersion>
+        <osArch>ppc64</osArch>
+        <firefoxBin>/qa/tools/opt/ppc64/firefox-17.0.1-RHEL6/firefox</firefoxBin>
+    </jenkinsFirefoxConfiguration>
+    <!-- RHEL6 64bit -->
+    <jenkinsFirefoxConfiguration>
+        <osVersion>el6</osVersion>
+        <osArch>amd64</osArch>
+        <firefoxBin>/qa/tools/opt/x86_64/firefox-31esr/firefox</firefoxBin>
+    </jenkinsFirefoxConfiguration>
+    <!-- RHEL6 else -->
+    <jenkinsFirefoxConfiguration>
+        <osVersion>el6</osVersion>
+        <firefoxBin>/qa/tools/opt/firefox-31esr/firefox</firefoxBin>
+    </jenkinsFirefoxConfiguration>
+
+    <!-- RHEL7 ppc64 -->
+    <jenkinsFirefoxConfiguration>
+        <osVersion>el7</osVersion>
+        <osArch>ppc64</osArch>
+        <firefoxBin>/qa/tools/opt/ppc64/firefox-24.0-RHEL7/firefox</firefoxBin>
+    </jenkinsFirefoxConfiguration>
+    <!-- RHEL7 else -->
+    <jenkinsFirefoxConfiguration>
+        <osVersion>el7</osVersion>
+        <firefoxBin>/usr/bin/firefox</firefoxBin>
+    </jenkinsFirefoxConfiguration>
+
+    <!-- WINDOWS all -->
+    <jenkinsFirefoxConfiguration>
+        <osName>win</osName>
+        <firefoxBin>t:/opt/windows/firefox-31esr/firefox.exe</firefoxBin>
+    </jenkinsFirefoxConfiguration>
+
+    <!-- MAC all -->
+    <jenkinsFirefoxConfiguration>
+        <osName>mac</osName>
+        <firefoxBin>/qa/tools/opt/osx/firefox-31esr/Contents/MacOS/firefox</firefoxBin>
+    </jenkinsFirefoxConfiguration>
+</jenkinsFirefoxConfigurations>

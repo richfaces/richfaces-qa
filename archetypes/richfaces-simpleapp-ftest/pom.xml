@@ -55,18 +55,6 @@
 
         <!-- testng listeners for better console output -->
         <testng.listeners>org.jboss.test.selenium.listener.ConsoleStatusTestListener,org.jboss.test.selenium.listener.FailureLoggingTestListener</testng.listeners>
-
-        <!-- setup properties for QA maven plugin -->
-        <!--
-          download and extract needed drivers and browser and set path to them using properties
-          qa.firefox.bin, qa.chrome.driver.bin, qa.ie.driver.bin. The chosen browser used for ARQ Drone is stored in
-          qa.webdriver.browser.
-        -->      
-        <ensure.browser>true</ensure.browser>
-        <!-- download and extract EAP to project build directory -->
-        <ensure.eap>true</ensure.eap>
-        <!-- tasks cleanup, should kill containers' processes before running the tests -->
-        <ensure.cleanup>true</ensure.cleanup>    
     </properties>
 
     <dependencies>
@@ -155,5 +143,96 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <!--
+        Tasks:
+            * kill containers (GlassFish, Tomcat, AS) and Drivers (IEDriver, ChromeDriver) processes before running tests
+            * download + unpack drivers (only locally to ${user.home}/selenium/driver)
+            * download + unpack EAP if some EAP profile activated (locally to ${user.home}/selenium/eap)
+            * download + unpack Firefox binary if Firefox version specified (only locally, to ${user.home}/selenium/browser)
+            * set paths to EAP, drivers (IEDriver, ChromeDriver), browser binaries (Firefox)
+            * fail the build before testing when misconfigured (e.g. when path does not exist)
+            * on jenkins use specified version of Firefox (version is specified in configuration of the RichFaces QA Maven Plugin)
+
+        The profile is activated by default. To disable it, use system property -Dbrowser.disabled
+        To change the default browser, set property 'browser' to (case insensitive options):
+            a) for firefox: *firefox* or *ff*
+            b) for chrome: *chrome*, *cr*
+            c) for ie: *ie*, *explorer*, *internetExplorer*
+
+        e.g.: -Dbrowser=FF, -Dbrowser=cr, -Dbrowser=internetExplorer, -Dbrowser=ff30
+
+        All properties beginning with prefix 'qa.' (e.g. 'qa.eap.home' ) are returned from the qa-maven-plugin.
+        -->
+        <profile>
+            <id>browser</id>
+            <activation>
+                <property>
+                    <name>!browser.disabled</name>
+                </property>
+            </activation>
+            <properties>
+                <jbossEAP61Home>${qa.eap.home}</jbossEAP61Home>
+                <jbossEAP62Home>${qa.eap.home}</jbossEAP62Home>
+                <jbossEAP63Home>${qa.eap.home}</jbossEAP63Home>
+                <jbossEAP64Home>${qa.eap.home}</jbossEAP64Home>
+                <jbossEAP70Home>${qa.eap.home}</jbossEAP70Home>
+
+                <!-- All following properties are used by the qa-maven-plugin.
+                     All default values of propeties can be replaced by setting system property (e.g. -Dbrowser=cr)
+                -->
+                <eapVersion>${version.eap}</eapVersion>
+                <jenkinsFirefoxVersionMinimal>24esr</jenkinsFirefoxVersionMinimal>
+                <jenkinsFirefoxVersionOptimal>31esr</jenkinsFirefoxVersionOptimal>
+                <chromeDriverVersion>2.21</chromeDriverVersion>
+                <seleniumVersion>${version.selenium}</seleniumVersion>
+                <browser>firefox</browser>
+
+                <!-- following properties can disable some parts of the plugin -->
+                <!--
+                  download and extract needed drivers and browser and set path to them using properties
+                  qa.firefox.bin, qa.chrome.driver.bin, qa.ie.driver.bin. The chosen browser used for ARQ Drone is stored in
+                  qa.webdriver.browser.
+                -->
+                <ensure.browser>true</ensure.browser>
+                <!-- download and extract EAP to project build directory -->
+                <ensure.eap>true</ensure.eap>
+                <!-- tasks cleanup, should kill containers' processes before running the tests -->
+                <ensure.cleanup>true</ensure.cleanup>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.richfaces.tests</groupId>
+                        <artifactId>richfaces-qa-maven-plugin</artifactId>
+                        <version>${project.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>process</goal>
+                                </goals>
+                                <configuration>
+                                    <jenkinsFirefoxConfigurationFile>../../jenkins-firefox-config.xml</jenkinsFirefoxConfigurationFile>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <webdriver.firefox.bin>${qa.firefox.bin}</webdriver.firefox.bin>
+                                <webdriver.chrome.driver>${qa.chrome.driver.bin}</webdriver.chrome.driver>
+                                <webdriver.ie.driver>${qa.ie.driver.bin}</webdriver.ie.driver>
+                                <arq.extension.webdriver.browser>${qa.webdriver.browser}</arq.extension.webdriver.browser>
+                            </systemProperties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
