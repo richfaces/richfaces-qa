@@ -50,10 +50,14 @@ public class TestForm extends AbstractKitchensinkTest {
     @Page
     private RegisterForm registerForm;
 
+    private int id = 0;
+
     private void registerNewMember(String email) {
+        id++;// because test is unstable, make the inserted emails unique
+        String uniqueEmail = email + id;
         final int numberOfRowsBefore = membersTable.getNumberOfRows();
         registerForm.setCorrectName();
-        registerForm.setEmail(email);
+        registerForm.setEmail(uniqueEmail);
         registerForm.setCorrectPhone();
 
         registerForm.clickOnRegisterButton();

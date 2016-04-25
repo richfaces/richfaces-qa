@@ -54,6 +54,8 @@ public class TestFormTwoBrowsers extends AbstractKitchensinkTest {
     @SecondWindow
     private WebDriver secondWindow;
 
+    private int id = 0;
+
     private void registerNewMember(String email, MembersTable membersTable, RegisterForm registerForm) {
         final int numberOfRowsBefore = membersTable.getNumberOfRows();
         registerForm.setCorrectName();
@@ -65,18 +67,19 @@ public class TestFormTwoBrowsers extends AbstractKitchensinkTest {
     }
 
     private void registerNewMemberAndCheckPush(String email, MembersTable membersTable, RegisterForm registerForm) {
-        registerNewMember(email, membersTable, registerForm);
+        id++;// because test is unstable, make the inserted emails unique
+        String uniqueEmail = email + id;
+        registerNewMember(uniqueEmail, membersTable, registerForm);
 
-        assertTrue(membersTable.getTable().getText().contains(email),
+        assertTrue(membersTable.getTable().getText().contains(uniqueEmail),
             "The table from first window should contain the added member!");
-        assertTrue((membersTable == membersTable1 ? membersTable2 : membersTable1).getTable().getText().contains(email),
+        assertTrue((membersTable == membersTable1 ? membersTable2 : membersTable1).getTable().getText().contains(uniqueEmail),
             "The table from second window should contain the added member!");
     }
 
     @Test
     public void testPushFunctionality() {
         secondWindow.get(getDeployedURL().toExternalForm());
-
         registerNewMemberAndCheckPush("robino@ba.sk", membersTable1, registerForm1);
         registerNewMemberAndCheckPush("juraj@gmaul.for", membersTable2, registerForm1);
         registerNewMemberAndCheckPush("michal@lala.ru", membersTable1, registerForm2);
