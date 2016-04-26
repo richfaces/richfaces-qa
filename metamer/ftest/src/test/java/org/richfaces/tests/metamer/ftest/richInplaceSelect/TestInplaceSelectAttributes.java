@@ -271,14 +271,16 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     @CoversAttributes("inputWidth")
     @Templates(value = "plain")
     public void testInputWidth() {
+        int tolerance = 10;
         inplaceSelectAttributes.set(InplaceSelectAttributes.inputWidth, "300px");
-        String width = select.advanced().getEditInputElement().getCssValue("width");
-        assertEquals(width, "300px", "Width of input did not change.");
+        select.advanced().switchToEditingState();
+        int width = Utils.getLocations(select.advanced().getEditInputElement()).getWidth();
+        assertEquals(width, 300, tolerance, "Width of input did not change.");
 
         inplaceSelectAttributes.set(InplaceSelectAttributes.inputWidth, "");
-
-        assertEquals(select.advanced().getEditInputElement().getAttribute("style"), "",
-            "Input should not have attribute style.");
+        select.advanced().switchToEditingState();
+        width = Utils.getLocations(select.advanced().getEditInputElement()).getWidth();
+        assertEquals(width, 80, tolerance, "Default width of input should be around 80px.");
     }
 
     @Test

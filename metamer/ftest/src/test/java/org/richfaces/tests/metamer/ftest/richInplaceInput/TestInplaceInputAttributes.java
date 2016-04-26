@@ -36,6 +36,7 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.inplaceInput.ConfirmOrCancel;
 import org.richfaces.fragment.inplaceInput.InplaceComponentState;
 import org.richfaces.fragment.inplaceInput.RichFacesInplaceInput;
@@ -220,17 +221,16 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     @RegressionTest("http://java.net/jira/browse/JAVASERVERFACES-1805")
     @Templates(value = "plain")
     public void testInputWidth() {
-        final int defaultWidth = 66;
-        final int tolerance = 20;
-        final int testedWidth = 300;
-
-        inplaceInputAttributes.set(InplaceInputAttributes.inputWidth, testedWidth);
-        int actualWidth = Double.valueOf(inplaceInput.advanced().getEditInputElement().getCssValue("width").replace("px", "")).intValue();
-        assertEquals(actualWidth, testedWidth, tolerance, "Width of input did not change.");
+        int tolerance = 10;
+        inplaceInputAttributes.set(InplaceInputAttributes.inputWidth, "300px");
+        inplaceInput.advanced().switchToEditingState();
+        int width = Utils.getLocations(inplaceInput.advanced().getEditInputElement()).getWidth();
+        assertEquals(width, 300, tolerance, "Width of input did not change.");
 
         inplaceInputAttributes.set(InplaceInputAttributes.inputWidth, "");
-        actualWidth = Double.valueOf(inplaceInput.advanced().getEditInputElement().getCssValue("width").replace("px", "")).intValue();
-        assertEquals(actualWidth, defaultWidth, tolerance, "Default width of input was not set.");
+        inplaceInput.advanced().switchToEditingState();
+        width = Utils.getLocations(inplaceInput.advanced().getEditInputElement()).getWidth();
+        assertEquals(width, 66, tolerance, "Default width of input should be around 66px.");
     }
 
     @Test
