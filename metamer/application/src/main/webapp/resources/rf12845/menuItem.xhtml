@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:rich="http://richfaces.org/rich">
+
+    <h:body>
+        <composite:interface>
+            <composite:attribute name="itemLabel" type="java.lang.String" required="true" />
+        </composite:interface>
+
+        <composite:implementation>
+            <rich:menuItem label="#{cc.attrs.itemLabel}" action="#{rf12845.setActual(cc.attrs.itemLabel)}" />
+        </composite:implementation>
+    </h:body>
+</html>

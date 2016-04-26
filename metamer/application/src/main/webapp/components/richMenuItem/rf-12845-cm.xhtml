@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:rf12845="http://xmlns.jcp.org/jsf/composite/rf12845"
+      xmlns:a4j="http://richfaces.org/a4j">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2016, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="head" />
+
+        <ui:define name="component">
+            <p>Reproducer for issue <a href="https://issues.jboss.org/browse/RF-12845">RF-12845: rich:menuItem does not work as composite component</a></p>
+            Steps to reproduce:
+            <ol>
+                <li>open menu</li>
+                <li>item 1 should be visible in root menu</li>
+                <li>open sub menu</li>
+                <li>item 3 should be visible in submenu</li>
+            </ol>
+
+            <!-- The following padding helps to stabilize automated tests -->
+            <div style="padding: 200px">
+                <h:panelGroup id="targetPanel" layout="block" style="width:400px; background-color: lightgreen; padding: 15px">
+                    Left click here for a contextMenu (targetPanel).
+                </h:panelGroup>
+                <rich:contextMenu id="menu" mode="ajax" target="targetPanel" showEvent="click">
+                    <f:facet name="label">
+                        <h:outputText value="Test" />
+                    </f:facet>
+                    <rf12845:menuItem itemLabel="Item 1" />
+                    <rich:menuItem label="Item 2" action="#{rf12845.setActual('Item 2')}"/>
+                    <rich:menuGroup label="Group">
+                        <rf12845:menuItem itemLabel="Item 3"/>
+                        <rich:menuItem label="Item 4" action="#{rf12845.setActual('Item 4')}"/>
+                    </rich:menuGroup>
+                </rich:contextMenu>
+            </div>
+            <br/>
+            <a4j:outputPanel ajaxRendered="true">
+                Current Selection: 
+                <h:outputText id="output" style="font-weight:bold" value="#{rf12845.actual}"/>
+            </a4j:outputPanel>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter"/>
+
+    </ui:composition>
+</html>
