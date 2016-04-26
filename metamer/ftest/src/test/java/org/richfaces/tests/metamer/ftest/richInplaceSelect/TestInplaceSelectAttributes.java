@@ -38,6 +38,7 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Actions;
 import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.inplaceInput.ConfirmOrCancel;
 import org.richfaces.fragment.inplaceInput.InplaceComponentState;
 import org.richfaces.fragment.inplaceSelect.RichFacesInplaceSelect;
@@ -234,15 +235,13 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("editEvent")
     public void testEditEvent() {
-        inplaceSelectAttributes.set(InplaceSelectAttributes.editEvent, Event.MOUSEUP);
-        // trigger mouse down, move and then mouse up on different element, using page fragment results in click
-        new Actions(driver).clickAndHold(select.advanced().getRootElement())
-            .moveToElement(driver.findElement(By.id("showUiDebug"))).release().build().perform();
-
-        assertNotVisible(globalPopup, "Popup should not be displayed.");
-        select.advanced().setEditByEvent(Event.CLICK);
-        select.advanced().switchToEditingState();
-        assertVisible(globalPopup, "Popup should be displayed.");
+        for (Event event : new Event[] { Event.MOUSEUP, Event.DBLCLICK, Event.CLICK }) {
+            inplaceSelectAttributes.set(InplaceSelectAttributes.editEvent, event);
+            select.advanced().setEditByEvent(event);
+            select.advanced().switchToEditingState();
+            assertVisible(globalPopup, "Popup should be displayed.");
+            Utils.performUniversalBlur(driver);
+        }
     }
 
     @Test
