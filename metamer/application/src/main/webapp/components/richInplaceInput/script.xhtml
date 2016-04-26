@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2016, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+    <script type="text/javascript">
+        function setCorrectValues(id) {
+            if (!!id) {
+                var label = $('[id$=' + id + 'Label]');
+                var input = $('[id$=' + id + 'Input]');
+                var component = RichFaces.component($('[id$=' + id + ']'));
+            }
+            switch (id) {
+                case 'notEmpty':
+                    label.click();
+                    component.setValue('not empty');
+                    input.blur();
+                    break;
+                case 'custom':
+                    label.click();
+                    component.setValue('richfaces');
+                    input.blur();
+                    break;
+                case 'size':
+                    label.click();
+                    component.setValue('123');
+                    input.blur();
+                    break;
+                case 'pattern':
+                    label.click();
+                    component.setValue('abcd');
+                    input.blur();
+                    break;
+                case 'required':
+                    label.click();
+                    component.setValue('required 2');
+                    input.blur();
+                    break;
+                default:
+                    setCorrectValues('notEmpty');
+                    setCorrectValues('custom');
+                    setCorrectValues('size');
+                    setCorrectValues('pattern');
+                    setCorrectValues('required');
+                    break;
+            }
+        }
+        function setWrongValues(id) {
+            if (!!id) {
+                var label = $('[id$=' + id + 'Label]');
+                var input = $('[id$=' + id + 'Input]');
+                var component = RichFaces.component($('[id$=' + id + ']'));
+            }
+            switch (id) {
+                case 'notEmpty':
+                    label.click();
+                    component.setValue('');
+                    input.blur();
+                    break;
+                case 'custom':
+                    label.click();
+                    component.setValue('rich faces');
+                    input.change().blur();
+                    break;
+                case 'size':
+                    label.click();
+                    component.setValue('12');
+                    input.blur();
+                    break;
+                case 'pattern':
+                    label.click();
+                    component.setValue('^(%1');
+                    input.blur();
+                    break;
+                case 'required':
+                    label.click();
+                    component.setValue('');
+                    input.blur();
+                    break;
+                default:
+                    setWrongValues('notEmpty');
+                    setWrongValues('custom');
+                    setWrongValues('size');
+                    setWrongValues('pattern');
+                    setWrongValues('required');
+                    break;
+            }
+        }
+    </script>
+</html>
