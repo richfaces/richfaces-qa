@@ -374,10 +374,15 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("onfocus")
-    @IssueTracking("https://issues.jboss.org/browse/RF-9849")
+    @RegressionTest("https://issues.jboss.org/browse/RF-9849")
     @Templates(value = "plain")
     public void testOnfocus() {
-        testFireEvent(Event.FOCUS, select.advanced().getEditInputElement());
+        testFireEvent("focus", new Action() {
+            @Override
+            public void perform() {
+                select.advanced().getLabelInputElement().click();
+            }
+        });
     }
 
     @Test
