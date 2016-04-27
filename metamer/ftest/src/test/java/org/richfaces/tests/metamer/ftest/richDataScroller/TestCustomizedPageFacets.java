@@ -82,15 +82,9 @@ public class TestCustomizedPageFacets extends AbstractWebDriverTest {
     @IssueTracking("https://issues.jboss.org/browse/RF-13974")
     @Templates("uiRepeat")
     @Skip(expressions = {
-        @AndExpression(On.Container.EAP624.class),
-        @AndExpression(On.Container.EAP633.class),
-        @AndExpression(On.Container.EAP634.class),
-        @AndExpression(On.Container.EAP642.class),
-        @AndExpression(On.Container.EAP643.class),
-        @AndExpression(On.Container.EAP644.class),
-        @AndExpression(On.Container.EAP645.class),
-        @AndExpression(On.Container.EAP646.class),
-        @AndExpression(On.Container.EAP647.class)
+        @AndExpression(On.Container.EAP62x.class),
+        @AndExpression(On.Container.EAP63x.class),
+        @AndExpression(On.Container.EAP64x.class)
     })
     public void testTopCustomizedPageFacetInUiRepeat() {
         testTopCustomizedPageFacet();

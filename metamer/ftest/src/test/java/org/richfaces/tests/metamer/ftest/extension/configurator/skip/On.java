@@ -146,6 +146,18 @@ public class On {
         }
 
         /**
+         * Skip test when use of EAP 6.2.x is detected (when <code>activated.maven.profiles</code> are containing
+         * <code>jbosseap-managed-6-2</code> or <code>jbosseap-remote-6-2</code>).
+         */
+        public static class EAP62x implements SkipOn {
+
+            @Override
+            public boolean apply() {
+                return containerProfileActivated("jbosseap-managed-6-2", "jbosseap-remote-6-2");
+            }
+        }
+
+        /**
          * Skip test when use of EAP 6.3.3 is detected (when <code>activated.maven.profiles</code> are containing
          * <code>jbosseap-managed-6-3</code> or <code>jbosseap-remote-6-3</code> and <code>version.eap=6.3.3*</code>).
          */
@@ -166,6 +178,18 @@ public class On {
             @Override
             public boolean apply() {
                 return containerProfileActivated("jbosseap-managed-6-3", "jbosseap-remote-6-3") && eapVersionSetTo("6.3.4");
+            }
+        }
+
+        /**
+         * Skip test when use of EAP 6.3.x is detected (when <code>activated.maven.profiles</code> are containing
+         * <code>jbosseap-managed-6-3</code> or <code>jbosseap-remote-6-3</code>).
+         */
+        public static class EAP63x implements SkipOn {
+
+            @Override
+            public boolean apply() {
+                return containerProfileActivated("jbosseap-managed-6-3", "jbosseap-remote-6-3");
             }
         }
 
@@ -250,6 +274,18 @@ public class On {
             @Override
             public boolean apply() {
                 return containerProfileActivated("jbosseap-managed-6-4", "jbosseap-remote-6-4") && eapVersionSetTo("6.4.7");
+            }
+        }
+
+        /**
+         * Skip test when use of EAP 6.4 is detected (when <code>activated.maven.profiles</code> are containing
+         * <code>jbosseap-managed-6-4</code> or <code>jbosseap-remote-6-4</code>).
+         */
+        public static class EAP64x implements SkipOn {
+
+            @Override
+            public boolean apply() {
+                return containerProfileActivated("jbosseap-managed-6-4", "jbosseap-remote-6-4");
             }
         }
 

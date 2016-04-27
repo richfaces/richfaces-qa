@@ -135,12 +135,9 @@ public class TestDragSource extends AbstractDragSourceTest {
     @Skip(expressions = {
         @AndExpression(On.Container.Tomcat8.class),// not tested, needs a JBoss container due to war redeployment through CLI
         @AndExpression(On.Container.Tomcat7.class),// not tested, needs a JBoss container due to war redeployment through CLI
-        @AndExpression(On.Container.EAP624.class),
-        @AndExpression(On.Container.EAP633.class),
-        @AndExpression(On.Container.EAP634.class),
-        @AndExpression(On.Container.EAP645.class),
-        @AndExpression(On.Container.EAP646.class),
-        @AndExpression(On.Container.EAP647.class),
+        @AndExpression(On.Container.EAP62x.class),
+        @AndExpression(On.Container.EAP63x.class),
+        @AndExpression(On.Container.EAP64x.class),
     })
     @IssueTracking("https://issues.jboss.org/browse/RF-14251")
     @RegressionTest("https://issues.jboss.org/browse/RF-10967")
