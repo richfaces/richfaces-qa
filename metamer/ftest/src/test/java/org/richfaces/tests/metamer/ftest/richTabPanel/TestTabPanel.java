@@ -42,6 +42,8 @@ import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -56,6 +58,8 @@ public class TestTabPanel extends AbstractWebDriverTest {
 
     @FindBy(xpath = "//input[contains(@id, 'switchButton1')]")
     private WebElement moveTo;
+
+    private Boolean immediate;
 
     @Page
     private TabPanelSimplePage page;
@@ -76,6 +80,20 @@ public class TestTabPanel extends AbstractWebDriverTest {
             tabPanelAttributes.set(TabPanelAttributes.activeItem, "tab" + i);
             WebElement active = page.getTabPanel().advanced().getActiveHeaderElement();
             assertEquals(active.getText(), "tab" + i + " header");
+        }
+    }
+
+    @Test
+    @CoversAttributes({ "activeItem", "immediate" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-11735")
+    @UseWithField(field = "immediate", valuesFrom = ValuesFrom.FROM_FIELD, value = "booleans")
+    public void testActiveItemWithImmediate() {
+        tabPanelAttributes.set(TabPanelAttributes.immediate, immediate);
+        for (int i : new int[] { 2, 0, 4, 1 }) {// all enabled items indexes (shuffled)
+            // switch to tab
+            page.getTabPanel().switchTo(i);
+            // check @activeItem has changed
+            assertEquals(tabPanelAttributes.get(TabPanelAttributes.activeItem), "tab" + (i + 1));
         }
     }
 
