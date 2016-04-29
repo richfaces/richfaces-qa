@@ -25,7 +25,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.contextMenu.AbstractPopupMenu;
 import org.richfaces.fragment.dropDownMenu.RichFacesDropDownMenu;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.testng.annotations.Test;
 
 /**
@@ -54,6 +57,8 @@ public class TestRF12845WithDropDownMenu extends TestRF12845WithContextMenu {
     }
 
     @Test
+    @Skip(On.JSF.VersionLowerThan22.class)
+    @IssueTracking("https://issues.jboss.org/browse/RF-14266")
     @RegressionTest("https://issues.jboss.org/browse/RF-12845")
     public void testMenuItemsCanBeCompositeComponents() {
         super.testMenuItemsCanBeCompositeComponents();
