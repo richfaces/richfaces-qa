@@ -26,7 +26,7 @@ import static org.testng.Assert.assertEquals;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.fragment.common.Event;
+import org.richfaces.fragment.inplaceSelect.RichFacesInplaceSelect;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
@@ -39,64 +39,60 @@ import org.testng.annotations.Test;
  */
 public class TestPlaceHolderWithInplaceSelect extends AbstractPlaceholderJSFTest {
 
-    @FindBy(css = INPUT1_ID + " [id$=Input]")
-    private WebElement input1;
+    @FindBy(css = INPUT1_ID)
+    private RichFacesInplaceSelect is1;
+    @FindBy(css = INPUT2_ID)
+    private RichFacesInplaceSelect is2;
     @FindBy(css = "span" + INPUT1_ID)
     private WebElement spanElementWithStyleClass;
-    @FindBy(css = INPUT2_ID + " [id$=Input]")
-    private WebElement input2;
-    @FindBy(css = INPUT1_ID + " [id$=Label]")
-    private WebElement input1Label;
-    @FindBy(css = INPUT2_ID + " [id$=Label]")
-    private WebElement input2Label;
 
     public TestPlaceHolderWithInplaceSelect() {
         super("inplaceSelect");
     }
 
     @Override
-    WebElement getInput1() {
-        return input1;
+    protected void focusOnInput1() {
+        is1.advanced().switchToEditingState();
     }
 
     @Override
-    WebElement getInput2() {
-        return input2;
+    protected void focusOnInput2() {
+        is2.advanced().switchToEditingState();
+    }
+
+    @Override
+    WebElement getInput1() {
+        return is1.advanced().getEditInputElement();
     }
 
     @Override
     protected String getInput1EditValue() {
-        return input1.getAttribute("value");
-    }
-
-    @Override
-    protected String getInput1Value() {
-        return input1Label.getText();
-    }
-
-    @Override
-    protected String getInput2Value() {
-        return input2Label.getText().trim();
+        return getInput1().getAttribute("value");
     }
 
     @Override
     protected String getInput1StyleClass() {
-        return input1Label.getAttribute("class");
+        return is1.advanced().getLabelInputElement().getAttribute("class");
+    }
+
+    @Override
+    protected String getInput1Value() {
+        return is1.advanced().getLabelInputElement().getText().trim();
+    }
+
+    @Override
+    WebElement getInput2() {
+        return is2.advanced().getEditInputElement();
     }
 
     @Override
     protected String getInput2StyleClass() {
-        return input2Label.getAttribute("class");
+        return is2.advanced().getLabelInputElement().getAttribute("class");
     }
 
     @Override
-    protected void clickOnInput1() {
-        fireEvent(input1, Event.FOCUS);
-    }
-
-    @Override
-    protected void clickOnInput2() {
-        fireEvent(input2, Event.FOCUS);
+    protected String getInput2Value() {
+        return is2.advanced().getLabelInputElement().getText().trim();
     }
 
     @Test
@@ -143,6 +139,7 @@ public class TestPlaceHolderWithInplaceSelect extends AbstractPlaceholderJSFTest
     @RegressionTest({ "https://issues.jboss.org/browse/RF-12623", "https://issues.jboss.org/browse/RF-12651",
         "https://issues.jboss.org/browse/RF-13783" })
     @Templates(value = "plain")
+    @Override
     public void testStyleClass() {
         assertEquals(getInput1Value(), DEFAULT_PLACEHOLDER_TEXT, "Input 1 value");
         testStyleClass(spanElementWithStyleClass);

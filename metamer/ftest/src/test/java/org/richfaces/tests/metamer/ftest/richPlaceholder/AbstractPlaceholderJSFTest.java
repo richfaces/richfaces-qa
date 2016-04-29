@@ -72,12 +72,17 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
         blur(WaitRequestType.NONE);
     }
 
-    protected void clickOnInput1() {
+    protected void focusOnInput1() {
         getInput1().click();
     }
 
-    protected void clickOnInput2() {
+    protected void focusOnInput2() {
         getInput2().click();
+    }
+
+    @Override
+    public String getComponentTestPagePath() {
+        return "richPlaceholder/" + componentName + ".xhtml";
     }
 
     Color getDefaultInputColor() {
@@ -125,11 +130,6 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
         return output2.getText();
     }
 
-    @Override
-    public String getComponentTestPagePath() {
-        return "richPlaceholder/" + componentName + ".xhtml";
-    }
-
     protected String getTestedValue() {
         return "abcd";
     }
@@ -151,7 +151,7 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
 
     public void testClickOnInputWithPlaceholder() {
         assertEquals(getInput1Value(), DEFAULT_PLACEHOLDER_TEXT, "Input 1 value");
-        clickOnInput1();
+        focusOnInput1();
         assertEquals(getInput1EditValue(), "", "Input 1 value");
     }
 
@@ -166,7 +166,7 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
         assertEquals(getInput1Color(), getDefaultInputColor(), "Input 1 text color");
 
         clearInput1();
-        clickOnInput2();
+        focusOnInput2();
 
         assertEquals(getInput1Value(), DEFAULT_PLACEHOLDER_TEXT, "Input 1 value");
         assertTrue(getInput1StyleClass().contains(DEFAULT_PLACEHOLDER_CLASS), "Input 1 styleClass");

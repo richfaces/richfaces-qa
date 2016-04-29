@@ -39,29 +39,30 @@ import org.testng.annotations.Test;
  */
 public class TestPlaceHolderWithInplaceInput extends AbstractPlaceholderJSFTest {
 
-    @FindBy(css = INPUT1_ID + " [id$=Input]")
-    private WebElement input1;
-    @FindBy(css = "span" + INPUT1_ID)
-    private WebElement spanElementWithStyleClass;
-    @FindBy(css = INPUT2_ID + " [id$=Input]")
-    private WebElement input2;
     @FindBy(css = INPUT1_ID)
     private RichFacesInplaceInput ii1;
     @FindBy(css = INPUT2_ID)
     private RichFacesInplaceInput ii2;
+    @FindBy(css = "span" + INPUT1_ID)
+    private WebElement spanElementWithStyleClass;
 
     public TestPlaceHolderWithInplaceInput() {
         super("inplaceInput");
     }
 
     @Override
-    WebElement getInput1() {
-        return input1;
+    protected void focusOnInput1() {
+        ii1.advanced().switchToEditingState();
     }
 
     @Override
-    WebElement getInput2() {
-        return input2;
+    protected void focusOnInput2() {
+        ii2.advanced().switchToEditingState();
+    }
+
+    @Override
+    WebElement getInput1() {
+        return ii1.advanced().getEditInputElement();
     }
 
     @Override
@@ -70,18 +71,18 @@ public class TestPlaceHolderWithInplaceInput extends AbstractPlaceholderJSFTest 
     }
 
     @Override
+    protected String getInput1StyleClass() {
+        return ii1.advanced().getLabelInputElement().getAttribute("class");
+    }
+
+    @Override
     protected String getInput1Value() {
         return ii1.advanced().getLabelValue();
     }
 
     @Override
-    protected String getInput2Value() {
-        return ii2.advanced().getLabelValue().trim();
-    }
-
-    @Override
-    protected String getInput1StyleClass() {
-        return ii1.advanced().getLabelInputElement().getAttribute("class");
+    WebElement getInput2() {
+        return ii2.advanced().getEditInputElement();
     }
 
     @Override
@@ -90,13 +91,8 @@ public class TestPlaceHolderWithInplaceInput extends AbstractPlaceholderJSFTest 
     }
 
     @Override
-    protected void clickOnInput1() {
-        ii1.advanced().getEditInputElement().click();
-    }
-
-    @Override
-    protected void clickOnInput2() {
-        ii2.advanced().getEditInputElement().click();
+    protected String getInput2Value() {
+        return ii2.advanced().getLabelValue().trim();
     }
 
     @Test
