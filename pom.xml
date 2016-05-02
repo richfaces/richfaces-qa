@@ -42,7 +42,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
 
-        <version.richfaces>4.5.16.Final</version.richfaces>
+        <version.richfaces>4.5.16-SNAPSHOT</version.richfaces>
 
         <!-- version of JBoss containers to use and download -->
         <version.wildfly8-0>8.0.0.Final</version.wildfly8-0>
