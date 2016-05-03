@@ -135,34 +135,53 @@
         <ui:define name="outOfTemplateAfter">
             <fieldset>
                 <legend>JavaScript API - scroller1</legend>
-                <h:commandButton id="buttonStpFirst1" value="«« first">
+                Using componentControl + switchToPage operation + param:
+                <br />
+                <h:commandButton id="buttonStpFirst1" value="««« first">
                     <rich:componentControl event="click" target="scroller1" operation="switchToPage">
                         <f:param value="first" />
                     </rich:componentControl>
                 </h:commandButton>
 
-                <h:commandButton id="buttonStpPrev1" value="« previous">
+                <h:commandButton id="buttonStpFastRewind1" value="«« fast rewind">
                     <rich:componentControl event="click" target="scroller1" operation="switchToPage">
                         <f:param value="fastRewind" />
                     </rich:componentControl>
                 </h:commandButton>
 
+                <h:commandButton id="buttonStpPrev1" value="« previous">
+                    <rich:componentControl event="click" target="scroller1" operation="switchToPage">
+                        <f:param value="previous" />
+                    </rich:componentControl>
+                </h:commandButton>
+
                 <h:commandButton id="buttonStpNext1" value="next »">
+                    <rich:componentControl event="click" target="scroller1" operation="switchToPage">
+                        <f:param value="next" />
+                    </rich:componentControl>
+                </h:commandButton>
+
+                <h:commandButton id="buttonStpFastForward1" value="fast forward »»">
                     <rich:componentControl event="click" target="scroller1" operation="switchToPage">
                         <f:param value="fastForward" />
                     </rich:componentControl>
                 </h:commandButton>
 
-                <h:commandButton id="buttonStpLast1" value="last »»">
+                <h:commandButton id="buttonStpLast1" value="last »»»">
                     <rich:componentControl event="click" target="scroller1" operation="switchToPage">
                         <f:param value="last" />
                     </rich:componentControl>
                 </h:commandButton>
 
                 <br />
-
-                <h:commandButton id="buttonFirst1" value="«« first">
+                Using componentControl + operation:
+                <br />
+                <h:commandButton id="buttonFirst1" value="««« first">
                     <rich:componentControl event="click" target="scroller1" operation="first" />
+                </h:commandButton>
+
+                <h:commandButton id="buttonFastRewind1" value="«« fast rewind">
+                    <rich:componentControl event="click" target="scroller1" operation="fastRewind" />
                 </h:commandButton>
 
                 <h:commandButton id="buttonPrev1" value="« previous">
@@ -173,7 +192,11 @@
                     <rich:componentControl event="click" target="scroller1" operation="next" />
                 </h:commandButton>
 
-                <h:commandButton id="buttonLast1" value="last »»">
+                <h:commandButton id="buttonFastForward1" value="fast forward »»">
+                    <rich:componentControl event="click" target="scroller1" operation="fastForward" />
+                </h:commandButton>
+
+                <h:commandButton id="buttonLast1" value="last »»»">
                     <rich:componentControl event="click" target="scroller1" operation="last" />
                 </h:commandButton>
             </fieldset>
@@ -182,28 +205,44 @@
 
             <fieldset>
                 <legend>JavaScript API - scroller2</legend>
-                <h:commandButton id="buttonStpFirst2" value="«« first">
+                Using componentControl + switchToPage operation + param:
+                <br />
+                <h:commandButton id="buttonStpFirst2" value="««« first">
                     <rich:componentControl event="click" target="#{templateBean.componentPrefix}richDataTable:scroller2"
                                            operation="switchToPage">
                         <f:param value="first" />
                     </rich:componentControl>
                 </h:commandButton>
 
+                <h:commandButton id="buttonStpFastRewind2" value="«« fast rewind">
+                    <rich:componentControl event="click" target="#{templateBean.componentPrefix}richDataTable:scroller2"
+                                           operation="switchToPage" >
+                        <f:param value="fastRewind" />
+                    </rich:componentControl>
+                </h:commandButton>
+
                 <h:commandButton id="buttonStpPrev2" value="« previous">
                     <rich:componentControl event="click" target="#{templateBean.componentPrefix}richDataTable:scroller2"
                                            operation="switchToPage">
-                        <f:param value="fastRewind" />
+                        <f:param value="previous" />
                     </rich:componentControl>
                 </h:commandButton>
 
                 <h:commandButton id="buttonStpNext2" value="next »">
                     <rich:componentControl event="click" target="#{templateBean.componentPrefix}richDataTable:scroller2"
                                            operation="switchToPage">
+                        <f:param value="next" />
+                    </rich:componentControl>
+                </h:commandButton>
+
+                <h:commandButton id="buttonStpFastForward2" value="fast forward »»">
+                    <rich:componentControl event="click" target="#{templateBean.componentPrefix}richDataTable:scroller2"
+                                           operation="switchToPage">
                         <f:param value="fastForward" />
                     </rich:componentControl>
                 </h:commandButton>
 
-                <h:commandButton id="buttonStpLast2" value="last »»">
+                <h:commandButton id="buttonStpLast2" value="last »»»">
                     <rich:componentControl event="click" target="#{templateBean.componentPrefix}richDataTable:scroller2"
                                            operation="switchToPage">
                         <f:param value="last" />
@@ -211,10 +250,16 @@
                 </h:commandButton>
 
                 <br />
-
+                Using componentControl + operation:
+                <br />
                 <h:commandButton id="buttonFirst2" value="«« first">
                     <rich:componentControl event="click" target="#{templateBean.componentPrefix}richDataTable:scroller2"
                                            operation="first" />
+                </h:commandButton>
+
+                <h:commandButton id="buttonFastRewind2" value="«« fast rewind">
+                    <rich:componentControl event="click" target="#{templateBean.componentPrefix}richDataTable:scroller2"
+                                           operation="fastRewind" />
                 </h:commandButton>
 
                 <h:commandButton id="buttonPrev2" value="« previous">
@@ -227,7 +272,12 @@
                                            operation="next" />
                 </h:commandButton>
 
-                <h:commandButton id="buttonLast2" value="last »»">
+                <h:commandButton id="buttonFastForward2" value="fast forward »»">
+                    <rich:componentControl event="click" target="#{templateBean.componentPrefix}richDataTable:scroller2"
+                                           operation="fastForward" />
+                </h:commandButton>
+
+                <h:commandButton id="buttonLast2" value="last »»»">
                     <rich:componentControl event="click" target="#{templateBean.componentPrefix}richDataTable:scroller2"
                                            operation="last" />
                 </h:commandButton>

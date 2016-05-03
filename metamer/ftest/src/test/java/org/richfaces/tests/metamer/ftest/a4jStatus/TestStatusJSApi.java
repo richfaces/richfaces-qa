@@ -53,7 +53,7 @@ public class TestStatusJSApi extends AbstractStatusTest {
 
     @Test
     @Templates(value = { "plain" })
-    public void testJsError() {
+    public void testError() {
         testFireEvent(statusAttributes, StatusAttributes.onerror, new Action() {
             @Override
             public void perform() {
@@ -64,7 +64,7 @@ public class TestStatusJSApi extends AbstractStatusTest {
 
     @Test
     @Templates(value = { "plain" })
-    public void testJsStart() {
+    public void testStart() {
         testFireEvent(statusAttributes, StatusAttributes.onstart, new Action() {
             @Override
             public void perform() {
@@ -75,7 +75,7 @@ public class TestStatusJSApi extends AbstractStatusTest {
 
     @Test
     @Templates(value = { "plain" })
-    public void testJsStop() {
+    public void testStop() {
         testFireEvent(statusAttributes, StatusAttributes.onstop, new Action() {
             @Override
             public void perform() {

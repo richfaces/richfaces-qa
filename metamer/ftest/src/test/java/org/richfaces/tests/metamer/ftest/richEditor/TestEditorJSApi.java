@@ -87,7 +87,7 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
      */
     @Test
     @Templates(value = { "plain" })
-    public void testJsBlur() {
+    public void testBlur() {
         testFireEvent(editorAttributes, EditorAttributes.onblur, new Action() {
             @Override
             public void perform() {
@@ -105,7 +105,7 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
      */
     @Test
     @Templates(value = { "plain" })
-    public void testJsFocus() {
+    public void testFocus() {
         testFireEvent(editorAttributes, EditorAttributes.onfocus, new Action() {
             @Override
             public void perform() {
@@ -120,7 +120,7 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
      */
     @Test
     @Templates(value = { "plain" })
-    public void testJsGetEditor() {
+    public void testGetEditor() {
         String someText = "some text";
         Utils.invokeRichFacesJSAPIFunction(getEditorRootElement(), "getEditor().setReadOnly(true)");
         try {
@@ -139,14 +139,14 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
 
     @Test
     @Templates(value = { "plain" })
-    public void testJsGetInput() {
+    public void testGetInput() {
         RemoteWebElement textArea = Utils.invokeRichFacesJSAPIFunction(getEditorRootElement(), "getInput()");
         assertEquals(textArea.getAttribute("id"), getEditorTextArea().getAttribute("id"));
     }
 
     @Test
     @Templates(value = { "plain" })
-    public void testJsGetValue() {
+    public void testGetValue() {
         String testText = "Some nice and cool text";
         page.getEditor().type(testText);
         assertTrue(jsGetValue().contains(testText));
@@ -154,7 +154,7 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
 
     @Test
     @Templates(value = { "plain" })
-    public void testJsIsDirty() {
+    public void testIsDirty() {
         assertFalse(Utils.<Boolean>invokeRichFacesJSAPIFunction(getEditorRootElement(), "isDirty()"));
 
         page.getEditor().type("Some text");
@@ -177,7 +177,7 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
 
     @Test
     @Templates(value = { "plain" })
-    public void testJsIsFocused() {
+    public void testIsFocused() {
         // refresh page to make sure focus is lost and assert initially false
         page.fullPageRefresh();
         assertFalse(jsIsFocused());
@@ -193,7 +193,7 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
 
     @Test
     @Templates(value = { "plain" })
-    public void testJsIsReadOnly() {
+    public void testIsReadOnly() {
         // initially false
 
         assertFalse(Utils.<Boolean>invokeRichFacesJSAPIFunction(getEditorRootElement(), "isReadOnly()"));
@@ -205,7 +205,7 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
 
     @Test
     @Templates(value = { "plain" })
-    public void testJsIsValueChanged() {
+    public void testIsValueChanged() {
         // edit, submit changes and assert
         page.getEditor().type("Hello");
         assertTrue(Utils.<Boolean>invokeRichFacesJSAPIFunction(getEditorRootElement(), "isValueChanged()"));
@@ -218,7 +218,7 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-14120")
     @Templates(value = { "plain" })
-    public void testJsSetReadOnly() {
+    public void testSetReadOnly() {
         String testText = "Some random text";
         // initially editable
         page.getEditor().type(testText);
@@ -242,7 +242,7 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
 
     @Test
     @Templates(value = { "plain" })
-    public void testJsSetValue() {
+    public void testSetValue() {
         // should be empty
         assertEquals(page.getEditor().getText(), "");
         String testText = "NEW VALUE SET BY JS!";

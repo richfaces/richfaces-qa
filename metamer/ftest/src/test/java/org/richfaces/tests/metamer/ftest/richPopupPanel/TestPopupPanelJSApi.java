@@ -82,18 +82,25 @@ public class TestPopupPanelJSApi extends AbstractWebDriverTest {
     }
 
     @Test
-    public void testHide() {
-        openPopupPanel();
-        performJSClickOnButton(hide);
-        panel.advanced().waitUntilPopupIsNotVisible().perform();
-    }
-
-    @Test
-    public void testLeft() {
+    public void testGetLeft() {
         openPopupPanel();
         getLeft.click();
         performJSClickOnButton(getLeft);
         assertEquals(getValue(), panel.advanced().getLocations().getTopLeft().x, TOLERANCE);
+    }
+
+    @Test
+    public void testGetTop() {
+        openPopupPanel();
+        performJSClickOnButton(getTop);
+        assertEquals(getValue(), panel.advanced().getLocations().getTopLeft().y, TOLERANCE);
+    }
+
+    @Test
+    public void testHide() {
+        openPopupPanel();
+        performJSClickOnButton(hide);
+        panel.advanced().waitUntilPopupIsNotVisible().perform();
     }
 
     @Test
@@ -133,12 +140,5 @@ public class TestPopupPanelJSApi extends AbstractWebDriverTest {
         assertNotVisible(panel.advanced().getRootElement(), "Panel should not be visible.");
         performJSClickOnButton(show);
         panel.advanced().waitUntilPopupIsVisible().perform();
-    }
-
-    @Test
-    public void testTop() {
-        openPopupPanel();
-        performJSClickOnButton(getTop);
-        assertEquals(getValue(), panel.advanced().getLocations().getTopLeft().y, TOLERANCE);
     }
 }

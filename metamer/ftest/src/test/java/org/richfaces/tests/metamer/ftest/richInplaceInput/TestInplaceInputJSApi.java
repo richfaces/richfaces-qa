@@ -120,7 +120,7 @@ public class TestInplaceInputJSApi extends AbstractWebDriverTest {
     }
 
     @Test
-    public void isValueChangedButton() {
+    public void isValueChanged() {
         isValueChangedButton.click();
         assertEquals(getValueFromOutput(), "false");
         MetamerPage.waitRequest(inplaceInput.type(SOME_TEXT),

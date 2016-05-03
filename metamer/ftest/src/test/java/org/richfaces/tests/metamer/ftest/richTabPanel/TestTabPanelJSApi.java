@@ -35,7 +35,6 @@ import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -53,24 +52,115 @@ public class TestTabPanelJSApi extends AbstractWebDriverTest {
     @FindByJQuery("input[id*=switchButton]")
     private List<WebElement> switchToButtons;
 
+    private String jsNextItem() {
+        return (String) executeJS("return RichFaces.component('" + page.getPanelTabAsWebElement().getAttribute("id")
+            + "').nextItem()");
+    }
+
+    private String jsPrevItem() {
+        return (String) executeJS("return RichFaces.component('" + page.getPanelTabAsWebElement().getAttribute("id")
+            + "').prevItem()");
+    }
+
     @Override
     public String getComponentTestPagePath() {
         return "richTabPanel/addTab2.xhtml";
     }
 
-    private String JsPrevItem() {
-        return (String) executeJS("return RichFaces.component('" + page.getPanelTabAsWebElement().getAttribute("id")
-            + "').prevItem()");
-    }
-
-    private String JsNextItem() {
-        return (String) executeJS("return RichFaces.component('" + page.getPanelTabAsWebElement().getAttribute("id")
-            + "').nextItem()");
+    @Test
+    public void testFirstItem() {
+        String result = (String) executeJS("return RichFaces.component('" + page.getPanelTabAsWebElement().getAttribute("id")
+            + "').firstItem()");
+        assertEquals("tab1", result);
     }
 
     @Test
-    @Templates(value = { "plain" })
-    public void testJsSwitchTo() {
+    public void testGetItems() {
+        // Using JS API get IDs and isSelected attributes and assert
+        for (int i = 0; i < 5; i++) {
+            String id = (String) executeJS("return RichFaces.component('" + page.getPanelTabAsWebElement().getAttribute("id")
+                + "').getItems()['" + i + "'].id");
+            Boolean selected = (Boolean) executeJS("return RichFaces.component('"
+                + page.getPanelTabAsWebElement().getAttribute("id") + "').getItems()['" + i + "'].isSelected()");
+
+            assertTrue(page.getTabPanel().advanced().getAllVisibleHeadersElements().get(i).getAttribute("id").contains(id));
+            if (i == 0) {
+                // first tab is selected
+                assertTrue(selected);
+            } else {
+                assertFalse(selected);
+            }
+        }
+    }
+
+    @Test
+    public void testGetItemsNames() {
+        @SuppressWarnings("unchecked")
+        List<String> result = (ArrayList<String>) executeJS("return RichFaces.component('"
+            + page.getPanelTabAsWebElement().getAttribute("id") + "').getItemsNames()");
+        assertTrue(result.size() == 5);
+        assertEquals("tab1, tab2, tab3, tab4, tab5", result.toString().substring(1, result.toString().length() - 1));
+    }
+
+    @Test
+    public void testLastItem() {
+        String result = (String) executeJS("return RichFaces.component('" + page.getPanelTabAsWebElement().getAttribute("id")
+            + "').lastItem()");
+        assertEquals("tab5", result);
+    }
+
+    @Test
+    public void testNextItem() {
+        if (!page.getTabPanel().advanced().getActiveHeaderElement().getText().equals("tab1 header")) {
+            page.getTabPanel().switchTo(0);
+        }
+        String result = jsNextItem();
+        assertEquals("tab2", result);
+
+        page.getTabPanel().switchTo(4);
+        result = jsNextItem();
+        assertNull(result);
+
+        // turn on cycled switching
+        tabPanelAttributes.set(TabPanelAttributes.cycledSwitching, true);
+
+        result = jsNextItem();
+        assertEquals("tab1", result);
+
+        page.getTabPanel().switchTo(1);
+        result = jsNextItem();
+        assertEquals("tab3", result);
+    }
+
+    @Test
+    public void testPrevItem() {
+        // switch to first, use JS function and assert its null
+        if (!page.getTabPanel().advanced().getActiveHeaderElement().getText().equals("tab1 header")) {
+            page.getTabPanel().switchTo(0);
+        }
+        String result = jsPrevItem();
+        assertNull(result);
+
+        // move to second tab and assert tab1 is previous
+        page.getTabPanel().switchTo(1);
+        result = jsPrevItem();
+        assertEquals("tab1", result);
+
+        // turn on cycled switching
+        tabPanelAttributes.set(TabPanelAttributes.cycledSwitching, true);
+
+        // assert with cycled switching
+        page.getTabPanel().switchTo(0);
+        result = jsPrevItem();
+        assertEquals("tab5", result);
+
+        page.getTabPanel().switchTo(2);
+        result = jsPrevItem();
+        assertEquals("tab2", result);
+    }
+
+    @Test
+    public void testSwitchToItem() {
         // assert initial settings - 5 tabs, so 5 elements in list should be present
         assertEquals(switchToButtons.size(), page.getTabPanel().getNumberOfTabs());
 
@@ -90,103 +180,5 @@ public class TestTabPanelJSApi extends AbstractWebDriverTest {
         guardNoRequest(switchToButtons.get(3)).click();
         assertNotVisible(page.getTabPanel().advanced().getAllTabContentsElements().get(3),
             "Content of the fourth tab should not be visible");
-    }
-
-    @Test
-    @Templates(value = { "plain" })
-    public void testJsGetItems() {
-        // Using JS API get IDs and isSelected attributes and assert
-        for (int i = 0; i < 5; i++) {
-            String id = (String) executeJS("return RichFaces.component('" + page.getPanelTabAsWebElement().getAttribute("id")
-                + "').getItems()['" + i + "'].id");
-            Boolean selected = (Boolean) executeJS("return RichFaces.component('"
-                + page.getPanelTabAsWebElement().getAttribute("id") + "').getItems()['" + i + "'].isSelected()");
-
-            assertTrue(page.getTabPanel().advanced().getAllVisibleHeadersElements().get(i).getAttribute("id").contains(id));
-            if (i == 0) {
-                // first tab is selected
-                assertTrue(selected);
-            } else {
-                assertFalse(selected);
-            }
-        }
-    }
-
-    @Test
-    @Templates(value = { "plain" })
-    public void testJsGetItemsNames() {
-        @SuppressWarnings("unchecked")
-        List<String> result = (ArrayList<String>) executeJS("return RichFaces.component('"
-            + page.getPanelTabAsWebElement().getAttribute("id") + "').getItemsNames()");
-        assertTrue(result.size() == 5);
-        assertEquals("tab1, tab2, tab3, tab4, tab5", result.toString().substring(1, result.toString().length() - 1));
-    }
-
-    @Test
-    @Templates(value = { "plain" })
-    public void testJsFirstItem() {
-        String result = (String) executeJS("return RichFaces.component('" + page.getPanelTabAsWebElement().getAttribute("id")
-            + "').firstItem()");
-        assertEquals("tab1", result);
-    }
-
-    @Test
-    @Templates(value = { "plain" })
-    public void testJsPrevItem() {
-        // switch to first, use JS function and assert its null
-        if (!page.getTabPanel().advanced().getActiveHeaderElement().getText().equals("tab1 header")) {
-            page.getTabPanel().switchTo(0);
-        }
-        String result = JsPrevItem();
-        assertNull(result);
-
-        // move to second tab and assert tab1 is previous
-        page.getTabPanel().switchTo(1);
-        result = JsPrevItem();
-        assertEquals("tab1", result);
-
-        // turn on cycled switching
-        tabPanelAttributes.set(TabPanelAttributes.cycledSwitching, true);
-
-        // assert with cycled switching
-        page.getTabPanel().switchTo(0);
-        result = JsPrevItem();
-        assertEquals("tab5", result);
-
-        page.getTabPanel().switchTo(2);
-        result = JsPrevItem();
-        assertEquals("tab2", result);
-    }
-
-    @Test
-    @Templates(value = { "plain" })
-    public void testJsNextItem() {
-        if (!page.getTabPanel().advanced().getActiveHeaderElement().getText().equals("tab1 header")) {
-            page.getTabPanel().switchTo(0);
-        }
-        String result = JsNextItem();
-        assertEquals("tab2", result);
-
-        page.getTabPanel().switchTo(4);
-        result = JsNextItem();
-        assertNull(result);
-
-        // turn on cycled switching
-        tabPanelAttributes.set(TabPanelAttributes.cycledSwitching, true);
-
-        result = JsNextItem();
-        assertEquals("tab1", result);
-
-        page.getTabPanel().switchTo(1);
-        result = JsNextItem();
-        assertEquals("tab3", result);
-    }
-
-    @Test
-    @Templates(value = { "plain" })
-    public void testJsLastItem() {
-        String result = (String) executeJS("return RichFaces.component('" + page.getPanelTabAsWebElement().getAttribute("id")
-            + "').lastItem()");
-        assertEquals("tab5", result);
     }
 }

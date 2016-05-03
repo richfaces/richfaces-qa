@@ -158,7 +158,7 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
     }
 
     @Test
-    public void isValueChangedButton() {
+    public void isValueChanged() {
         inplaceSelect.advanced().setSaveOnSelect(Boolean.TRUE);
 
         isValueChangedButton.click();

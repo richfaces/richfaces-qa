@@ -31,89 +31,74 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
  */
 public class SimplePage extends MetamerPage {
 
-    public enum ScrollerPosition {
-
-        DATA_SCROLLER_OUTSIDE_TABLE, DATA_SCROLLER_IN_TABLE_FOOTER;
-    }
-
-    @FindBy(css = "span.rf-ds[id$=scroller1]")
-    private RichFacesDataScroller scrollerOutsideTable;
-    @FindBy(css = "span.rf-ds[id$=scroller2]")
-    private RichFacesDataScroller scrollerInTableFooter;
-
-    @FindBy(css = "input[id$=buttonStpFirst1]")
-    private GrapheneElement jsApiButtonSwitchToFirst1;
-    @FindBy(css = "input[id$=buttonStpPrev1]")
-    private GrapheneElement jsApiButtonSwitchToPrev1;
-    @FindBy(css = "input[id$=buttonStpNext1]")
-    private GrapheneElement jsApiButtonSwitchToNext1;
-    @FindBy(css = "input[id$=buttonStpLast1]")
-    private GrapheneElement jsApiButtonSwitchToLast1;
-
+    @FindBy(css = "input[id$=buttonFastForward1]")
+    private GrapheneElement jsApiButtonFastForward1;
+    @FindBy(css = "input[id$=buttonFastForward2]")
+    private GrapheneElement jsApiButtonFastForward2;
+    @FindBy(css = "input[id$=buttonFastRewind1]")
+    private GrapheneElement jsApiButtonFastRewind1;
+    @FindBy(css = "input[id$=buttonFastRewind2]")
+    private GrapheneElement jsApiButtonFastRewind2;
     @FindBy(css = "input[id$=buttonFirst1]")
     private GrapheneElement jsApiButtonFirst1;
-    @FindBy(css = "input[id$=buttonPrev1]")
-    private GrapheneElement jsApiButtonPrev1;
-    @FindBy(css = "input[id$=buttonNext1]")
-    private GrapheneElement jsApiButtonNext1;
-    @FindBy(css = "input[id$=buttonLast1]")
-    private GrapheneElement jsApiButtonLast1;
-
-    @FindBy(css = "input[id$=buttonStpFirst2]")
-    private GrapheneElement jsApiButtonSwitchToFirst2;
-    @FindBy(css = "input[id$=buttonStpPrev2]")
-    private GrapheneElement jsApiButtonSwitchToPrev2;
-    @FindBy(css = "input[id$=buttonStpNext2]")
-    private GrapheneElement jsApiButtonSwitchToNext2;
-    @FindBy(css = "input[id$=buttonStpLast2]")
-    private GrapheneElement jsApiButtonSwitchToLast2;
-
     @FindBy(css = "input[id$=buttonFirst2]")
     private GrapheneElement jsApiButtonFirst2;
-    @FindBy(css = "input[id$=buttonPrev2]")
-    private GrapheneElement jsApiButtonPrev2;
-    @FindBy(css = "input[id$=buttonNext2]")
-    private GrapheneElement jsApiButtonNext2;
+    @FindBy(css = "input[id$=buttonLast1]")
+    private GrapheneElement jsApiButtonLast1;
     @FindBy(css = "input[id$=buttonLast2]")
     private GrapheneElement jsApiButtonLast2;
+    @FindBy(css = "input[id$=buttonNext1]")
+    private GrapheneElement jsApiButtonNext1;
+    @FindBy(css = "input[id$=buttonNext2]")
+    private GrapheneElement jsApiButtonNext2;
+    @FindBy(css = "input[id$=buttonPrev1]")
+    private GrapheneElement jsApiButtonPrev1;
+    @FindBy(css = "input[id$=buttonPrev2]")
+    private GrapheneElement jsApiButtonPrev2;
 
-    public RichFacesDataScroller getScroller(ScrollerPosition scrollerPosition) {
-        if (scrollerPosition == ScrollerPosition.DATA_SCROLLER_IN_TABLE_FOOTER) {
-            return scrollerInTableFooter;
+    @FindBy(css = "input[id$=buttonStpFastForward1]")
+    private GrapheneElement jsApiButtonSwitchToFastForward1;
+    @FindBy(css = "input[id$=buttonStpFastForward2]")
+    private GrapheneElement jsApiButtonSwitchToFastForward2;
+    @FindBy(css = "input[id$=buttonStpFastRewind1]")
+    private GrapheneElement jsApiButtonSwitchToFastRewind1;
+    @FindBy(css = "input[id$=buttonStpFastRewind2]")
+    private GrapheneElement jsApiButtonSwitchToFastRewind2;
+    @FindBy(css = "input[id$=buttonStpFirst1]")
+    private GrapheneElement jsApiButtonSwitchToFirst1;
+    @FindBy(css = "input[id$=buttonStpFirst2]")
+    private GrapheneElement jsApiButtonSwitchToFirst2;
+    @FindBy(css = "input[id$=buttonStpLast1]")
+    private GrapheneElement jsApiButtonSwitchToLast1;
+    @FindBy(css = "input[id$=buttonStpLast2]")
+    private GrapheneElement jsApiButtonSwitchToLast2;
+    @FindBy(css = "input[id$=buttonStpNext1]")
+    private GrapheneElement jsApiButtonSwitchToNext1;
+    @FindBy(css = "input[id$=buttonStpNext2]")
+    private GrapheneElement jsApiButtonSwitchToNext2;
+    @FindBy(css = "input[id$=buttonStpPrev1]")
+    private GrapheneElement jsApiButtonSwitchToPrev1;
+    @FindBy(css = "input[id$=buttonStpPrev2]")
+    private GrapheneElement jsApiButtonSwitchToPrev2;
+
+    @FindBy(css = "span.rf-ds[id$=scroller2]")
+    private RichFacesDataScroller scrollerInTableFooter;
+    @FindBy(css = "span.rf-ds[id$=scroller1]")
+    private RichFacesDataScroller scrollerOutsideTable;
+
+    public GrapheneElement getJsApiButtonFastForward(ScrollerPosition scrollerPosition) {
+        if (scrollerPosition == ScrollerPosition.DATA_SCROLLER_OUTSIDE_TABLE) {
+            return jsApiButtonFastForward1;
         } else {
-            return scrollerOutsideTable;
+            return jsApiButtonFastForward2;
         }
     }
 
-    public GrapheneElement getJsApiButtonSwitchToFirst(ScrollerPosition scrollerPosition) {
+    public GrapheneElement getJsApiButtonFastRewind(ScrollerPosition scrollerPosition) {
         if (scrollerPosition == ScrollerPosition.DATA_SCROLLER_OUTSIDE_TABLE) {
-            return jsApiButtonSwitchToFirst1;
+            return jsApiButtonFastRewind1;
         } else {
-            return jsApiButtonSwitchToFirst2;
-        }
-    }
-
-    public GrapheneElement getJsApiButtonSwitchToPrev(ScrollerPosition scrollerPosition) {
-        if (scrollerPosition == ScrollerPosition.DATA_SCROLLER_OUTSIDE_TABLE) {
-            return jsApiButtonSwitchToPrev1;
-        } else {
-            return jsApiButtonSwitchToPrev2;
-        }
-    }
-
-    public GrapheneElement getJsApiButtonSwitchToNext(ScrollerPosition scrollerPosition) {
-        if (scrollerPosition == ScrollerPosition.DATA_SCROLLER_OUTSIDE_TABLE) {
-            return jsApiButtonSwitchToNext1;
-        } else {
-            return jsApiButtonSwitchToNext2;
-        }
-    }
-
-    public GrapheneElement getJsApiButtonSwitchToLast(ScrollerPosition scrollerPosition) {
-        if (scrollerPosition == ScrollerPosition.DATA_SCROLLER_OUTSIDE_TABLE) {
-            return jsApiButtonSwitchToLast1;
-        } else {
-            return jsApiButtonSwitchToLast2;
+            return jsApiButtonFastRewind2;
         }
     }
 
@@ -125,11 +110,11 @@ public class SimplePage extends MetamerPage {
         }
     }
 
-    public GrapheneElement getJsApiButtonPrev(ScrollerPosition scrollerPosition) {
+    public GrapheneElement getJsApiButtonLast(ScrollerPosition scrollerPosition) {
         if (scrollerPosition == ScrollerPosition.DATA_SCROLLER_OUTSIDE_TABLE) {
-            return jsApiButtonPrev1;
+            return jsApiButtonLast1;
         } else {
-            return jsApiButtonPrev2;
+            return jsApiButtonLast2;
         }
     }
 
@@ -141,11 +126,72 @@ public class SimplePage extends MetamerPage {
         }
     }
 
-    public GrapheneElement getJsApiButtonLast(ScrollerPosition scrollerPosition) {
+    public GrapheneElement getJsApiButtonPrev(ScrollerPosition scrollerPosition) {
         if (scrollerPosition == ScrollerPosition.DATA_SCROLLER_OUTSIDE_TABLE) {
-            return jsApiButtonLast1;
+            return jsApiButtonPrev1;
         } else {
-            return jsApiButtonLast2;
+            return jsApiButtonPrev2;
         }
+    }
+
+    public GrapheneElement getJsApiButtonSwitchToFastForward(ScrollerPosition scrollerPosition) {
+        if (scrollerPosition == ScrollerPosition.DATA_SCROLLER_OUTSIDE_TABLE) {
+            return jsApiButtonSwitchToFastForward1;
+        } else {
+            return jsApiButtonSwitchToFastForward2;
+        }
+    }
+
+    public GrapheneElement getJsApiButtonSwitchToFastRewind(ScrollerPosition scrollerPosition) {
+        if (scrollerPosition == ScrollerPosition.DATA_SCROLLER_OUTSIDE_TABLE) {
+            return jsApiButtonSwitchToFastRewind1;
+        } else {
+            return jsApiButtonSwitchToFastRewind2;
+        }
+    }
+
+    public GrapheneElement getJsApiButtonSwitchToFirst(ScrollerPosition scrollerPosition) {
+        if (scrollerPosition == ScrollerPosition.DATA_SCROLLER_OUTSIDE_TABLE) {
+            return jsApiButtonSwitchToFirst1;
+        } else {
+            return jsApiButtonSwitchToFirst2;
+        }
+    }
+
+    public GrapheneElement getJsApiButtonSwitchToLast(ScrollerPosition scrollerPosition) {
+        if (scrollerPosition == ScrollerPosition.DATA_SCROLLER_OUTSIDE_TABLE) {
+            return jsApiButtonSwitchToLast1;
+        } else {
+            return jsApiButtonSwitchToLast2;
+        }
+    }
+
+    public GrapheneElement getJsApiButtonSwitchToNext(ScrollerPosition scrollerPosition) {
+        if (scrollerPosition == ScrollerPosition.DATA_SCROLLER_OUTSIDE_TABLE) {
+            return jsApiButtonSwitchToNext1;
+        } else {
+            return jsApiButtonSwitchToNext2;
+        }
+    }
+
+    public GrapheneElement getJsApiButtonSwitchToPrev(ScrollerPosition scrollerPosition) {
+        if (scrollerPosition == ScrollerPosition.DATA_SCROLLER_OUTSIDE_TABLE) {
+            return jsApiButtonSwitchToPrev1;
+        } else {
+            return jsApiButtonSwitchToPrev2;
+        }
+    }
+
+    public RichFacesDataScroller getScroller(ScrollerPosition scrollerPosition) {
+        if (scrollerPosition == ScrollerPosition.DATA_SCROLLER_IN_TABLE_FOOTER) {
+            return scrollerInTableFooter;
+        } else {
+            return scrollerOutsideTable;
+        }
+    }
+
+    public enum ScrollerPosition {
+
+        DATA_SCROLLER_OUTSIDE_TABLE, DATA_SCROLLER_IN_TABLE_FOOTER
     }
 }

@@ -1,0 +1,136 @@
+/*
+ * JBoss, Home of Professional Open Source
+ * Copyright 2010-2016, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+package org.richfaces.tests.metamer.ftest.richDataScroller;
+
+import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
+import static org.testng.Assert.assertEquals;
+
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.page.Page;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
+import org.richfaces.tests.metamer.ftest.richDataScroller.SimplePage.ScrollerPosition;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.testng.annotations.Test;
+
+/**
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
+ */
+public class TestDataScrollerJSApi extends AbstractWebDriverTest {
+
+    private final Attributes<DataScrollerAttributes> attributes = getAttributes("attributes");
+
+    @Page
+    private SimplePage page;
+
+    @UseForAllTests(valuesFrom = FROM_ENUM, value = "")
+    private ScrollerPosition scroller;
+
+    @Override
+    public String getComponentTestPagePath() {
+        return "richDataScroller/simple.xhtml";
+    }
+
+    @Test
+    public void testFastRewindFastForward() {
+        attributes.set(DataScrollerAttributes.fastStep, 2);
+
+        Graphene.guardAjax(page.getJsApiButtonFastForward(scroller)).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 3,
+            "After clicking on the step fast forward button (JS API), the current page doesn't match.");
+
+        Graphene.guardAjax(page.getJsApiButtonFastForward(scroller)).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 5,
+            "After clicking on the step fast forward button (JS API), the current page doesn't match.");
+
+        Graphene.guardAjax(page.getJsApiButtonFastRewind(scroller)).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 3,
+            "After clicking on the step fast rewind button (JS API), the current page doesn't match.");
+
+        Graphene.guardAjax(page.getJsApiButtonFastRewind(scroller)).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 1,
+            "After clicking on the step fast rewind button (JS API), the current page doesn't match.");
+    }
+
+    @Test
+    public void testFirstLastNextPrevious() {
+        Graphene.guardAjax(page.getJsApiButtonLast(scroller)).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 6,
+            "After clicking on the step last button (JS API), the current page doesn't match.");
+
+        Graphene.guardAjax(page.getJsApiButtonFirst(scroller)).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 1,
+            "After clicking on the step first button (JS API), the current page doesn't match.");
+
+        Graphene.guardAjax(page.getJsApiButtonNext(scroller)).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 2,
+            "After clicking on the step next button (JS API), the current page doesn't match.");
+
+        Graphene.guardAjax(page.getJsApiButtonPrev(scroller)).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 1,
+            "After clicking on the step previous button (JS API), the current page doesn't match.");
+    }
+
+    @Test
+    public void testSwitchToFastRewindFastForward() {
+        attributes.set(DataScrollerAttributes.fastStep, 2);
+
+        Graphene.guardAjax(page.getJsApiButtonSwitchToFastForward(scroller)).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 3,
+            "After clicking on the step fast forward button (JS API), the current page doesn't match.");
+
+        Graphene.guardAjax(page.getJsApiButtonSwitchToFastForward(scroller)).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 5,
+            "After clicking on the step fast forward button (JS API), the current page doesn't match.");
+
+        Graphene.guardAjax(page.getJsApiButtonSwitchToFastRewind(scroller)).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 3,
+            "After clicking on the step fast rewind button (JS API), the current page doesn't match.");
+
+        Graphene.guardAjax(page.getJsApiButtonSwitchToFastRewind(scroller)).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 1,
+            "After clicking on the step fast rewind button (JS API), the current page doesn't match.");
+    }
+
+    /**
+     * Test buttons with scroller JS API binding, using switchToPage operation
+     */
+    @Test
+    public void testSwitchToPage() {
+        Graphene.guardAjax(page.getJsApiButtonSwitchToLast(scroller)).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 6,
+            "After clicking on the step last button (JS API), the current page doesn't match.");
+
+        Graphene.guardAjax(page.getJsApiButtonSwitchToFirst(scroller)).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 1,
+            "After clicking on the step first button (JS API), the current page doesn't match.");
+
+        Graphene.guardAjax(page.getJsApiButtonSwitchToNext(scroller)).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 2,
+            "After clicking on the step next button (JS API), the current page doesn't match.");
+
+        Graphene.guardAjax(page.getJsApiButtonSwitchToPrev(scroller)).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 1,
+            "After clicking on the step previous button (JS API), the current page doesn't match.");
+    }
+}

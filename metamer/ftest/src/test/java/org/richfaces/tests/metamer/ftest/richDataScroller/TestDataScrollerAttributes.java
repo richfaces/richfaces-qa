@@ -184,22 +184,6 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
             "After clicking on the fast rewind button, the current page doesn't match.");
     }
 
-    /**
-     * Test buttons with scroller JS API binding
-     */
-    @Test
-    public void testJsApi() {
-        verifyJsApi();
-    }
-
-    /**
-     * Test buttons with scroller JS API binding, using switchToPage operation
-     */
-    @Test
-    public void testJsApiStp() {
-        verifyJsApiStp();
-    }
-
     @Test
     @CoversAttributes("lastPageMode")
     public void testLastPageMode() {
@@ -390,41 +374,5 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     @Templates("plain")
     public void testTitle() {
         super.testTitle(page.getScroller(scroller).advanced().getRootElement());
-    }
-
-    private void verifyJsApi() {
-        MetamerPage.waitRequest(page.getJsApiButtonLast(scroller), WaitRequestType.XHR).click();
-        assertEquals(page.getScroller(scroller).getActivePageNumber(), 6,
-            "After clicking on the step last button (JS API), the current page doesn't match.");
-
-        MetamerPage.waitRequest(page.getJsApiButtonFirst(scroller), WaitRequestType.XHR).click();
-        assertEquals(page.getScroller(scroller).getActivePageNumber(), 1,
-            "After clicking on the step first button (JS API), the current page doesn't match.");
-
-        MetamerPage.waitRequest(page.getJsApiButtonNext(scroller), WaitRequestType.XHR).click();
-        assertEquals(page.getScroller(scroller).getActivePageNumber(), 2,
-            "After clicking on the step next button (JS API), the current page doesn't match.");
-
-        MetamerPage.waitRequest(page.getJsApiButtonPrev(scroller), WaitRequestType.XHR).click();
-        assertEquals(page.getScroller(scroller).getActivePageNumber(), 1,
-            "After clicking on the step previous button (JS API), the current page doesn't match.");
-    }
-
-    private void verifyJsApiStp() {
-        MetamerPage.waitRequest(page.getJsApiButtonSwitchToLast(scroller), WaitRequestType.XHR).click();
-        assertEquals(page.getScroller(scroller).getActivePageNumber(), 6,
-            "After clicking on the step last button (JS API), the current page doesn't match.");
-
-        MetamerPage.waitRequest(page.getJsApiButtonSwitchToFirst(scroller), WaitRequestType.XHR).click();
-        assertEquals(page.getScroller(scroller).getActivePageNumber(), 1,
-            "After clicking on the step first button (JS API), the current page doesn't match.");
-
-        MetamerPage.waitRequest(page.getJsApiButtonSwitchToNext(scroller), WaitRequestType.XHR).click();
-        assertEquals(page.getScroller(scroller).getActivePageNumber(), 2,
-            "After clicking on the step next button (JS API), the current page doesn't match.");
-
-        MetamerPage.waitRequest(page.getJsApiButtonSwitchToPrev(scroller), WaitRequestType.XHR).click();
-        assertEquals(page.getScroller(scroller).getActivePageNumber(), 1,
-            "After clicking on the step previous button (JS API), the current page doesn't match.");
     }
 }

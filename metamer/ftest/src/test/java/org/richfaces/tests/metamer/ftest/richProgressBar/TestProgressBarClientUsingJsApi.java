@@ -49,7 +49,7 @@ import org.testng.annotations.Test;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @since 4.3.0.M3
  */
-public class TestProgressBarClient extends AbstractWebDriverTest {
+public class TestProgressBarClientUsingJsApi extends AbstractWebDriverTest {
 
     private final Attributes<ProgressBarAttributes> progressBarAttributes = getAttributes();
 

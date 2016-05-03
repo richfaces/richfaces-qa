@@ -159,7 +159,7 @@ public class TestAccordionJSApi extends AbstractWebDriverTest {
 
     @Test
     @Templates(value = { "plain" })
-    public void testSwitchTo() {
+    public void testSwitchToItem() {
         List<WebElement> buttons = Lists.newArrayList(switchTo1Button, switchTo2Button, switchTo3Button, switchTo5Button);
         List<String> headers = Lists.newArrayList("Item 1", "Item 2", "Item 3", "Item 5");
         for (int i = 0; i < buttons.size(); i++) {
