@@ -4,7 +4,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:r="http://richfaces.org/rich"
+      xmlns:rich="http://richfaces.org/rich"
       xmlns:a4j="http://richfaces.org/a4j"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
@@ -44,7 +44,7 @@
 
         <ui:define name="component">
 
-            <r:focus
+            <rich:focus
                 ajaxRendered="#{richFocusBean.attributes['ajaxRendered'].value}"
                 delayed="#{richFocusBean.attributes['delayed'].value}"
                 preserve="#{richFocusBean.attributes['preserve'].value}"
@@ -57,20 +57,20 @@
                     <f:validateRequired />
                     <f:validateLength minimum="3" />
                 </h:inputText>
-                <r:message for="name" ajaxRendered="true" />
+                <rich:message for="name" ajaxRendered="true" />
 
                 <h:outputText value="Age:" />
                 <h:inputText value="${richFocusBean.age}" id="age" label="age"  tabindex="2">
                     <f:validateLongRange minimum="6" />
                 </h:inputText>
-                <r:message for="age" ajaxRendered="true" />
+                <rich:message for="age" ajaxRendered="true" />
 
                 <h:outputText value="Address" />
                 <h:inputText value="${richFocusBean.address}" id="address"
                              label="address"  tabindex="3">
                     <f:validateLength minimum="7" maximum="20" />
                 </h:inputText>
-                <r:message for="address" ajaxRendered="true" />
+                <rich:message for="address" ajaxRendered="true" />
             </h:panelGrid>
 
             <a4j:commandButton id="validateButton" value="Ajax Validate" tabindex="4"/>

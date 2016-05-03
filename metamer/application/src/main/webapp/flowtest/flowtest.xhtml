@@ -22,28 +22,28 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:r="http://richfaces.org/rich">
+      xmlns:rich="http://richfaces.org/rich">
     <h:head>
         <title>flowtest - Give Input Into Flow</title>
     </h:head>
     <h:body>
         <h:form>
-            <r:tabPanel id="tabPanel"
+            <rich:tabPanel id="tabPanel"
                         activeItem="#{flowScopedBean.activeItem}"
                         switchType="ajax">
 
-                <r:tab id="tab1"
+                <rich:tab id="tab1"
                        name="tab1"
                        header="First tab"
                        >
                     Switch to the other tab to give some input!
-                </r:tab>
-                <r:tab id="tab2" name="tab2" header="Second tab">
+                </rich:tab>
+                <rich:tab id="tab2" name="tab2" header="Second tab">
                     <h:outputText value="Input any string: " />
                     <br />
                     <h:inputText id='tabInput' value="#{flowScopedBean.firstInput}" />
-                </r:tab>
-            </r:tabPanel>
+                </rich:tab>
+            </rich:tabPanel>
             <h:commandButton id='tabPageButton' value="Next Flow Page" action="flowtest-second" />
         </h:form>
     </h:body>

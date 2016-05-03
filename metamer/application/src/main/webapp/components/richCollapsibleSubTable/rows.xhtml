@@ -5,7 +5,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:a4j="http://richfaces.org/a4j"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:r="http://richfaces.org/rich">
+      xmlns:rich="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -38,21 +38,21 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </f:metadata>
         </ui:define>
         <ui:define name="testedComponent">
-            <r:dataTable id="richDataTable" value="#{rowsBean.subTables}">
-                <r:collapsibleSubTable id="componentWithRowsFunction"
+            <rich:dataTable id="richDataTable" value="#{rowsBean.subTables}">
+                <rich:collapsibleSubTable id="componentWithRowsFunction"
                                           value="#{rowsBean.values}"
                                           var="item"
                                           rowKeyVar="rowKeyVar"
                                           >
-                    <r:column>
+                    <rich:column>
                         <h:outputText id="output" value="value = #{item.toString()}"/>
-                    </r:column>
-                </r:collapsibleSubTable>
-                <r:column>
+                    </rich:column>
+                </rich:collapsibleSubTable>
+                <rich:column>
                     <a4j:commandButton id="incrementFirstLast" value="increment all, but update only the first and last item"  action="#{rowsBean.incrementAll()}"  render="componentWithRowsFunction:@rows(rowsBean.firstAndLastItemIndexes):output"/>
                     <a4j:commandButton id="incrementExceptFirstLast" value="increment all, but update all except first and last item"  action="#{rowsBean.incrementAll()}"  render="componentWithRowsFunction:@rows(rowsBean.exceptFirstAndLastItemIndexes):output"/>
-                </r:column> 
-            </r:dataTable>
+                </rich:column> 
+            </rich:dataTable>
         </ui:define>
         <ui:define name="incrementButtons" />
     </ui:composition>

@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:r="http://richfaces.org/rich"
+	xmlns:rich="http://richfaces.org/rich"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
@@ -39,64 +39,64 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 		<li><b>Also notice that the calendar invoked from in other
 				similar situations is not clipped!</b></li>
 	</ol>
-	<r:panel header="Acordion example">
-		<r:accordion id="acrdion" switchType="client" style="z-index: 10">
-			<r:accordionItem id="acdItm" header="Overview:" style="z-index: 10;">
-				<r:calendar datePattern="dd/M/yy" id="calendar" zindex="100" />
-			</r:accordionItem>
-		</r:accordion>
-	</r:panel>
-	<r:panel header="Popup panel example">
+	<rich:panel header="Acordion example">
+		<rich:accordion id="acrdion" switchType="client" style="z-index: 10">
+			<rich:accordionItem id="acdItm" header="Overview:" style="z-index: 10;">
+				<rich:calendar datePattern="dd/M/yy" id="calendar" zindex="100" />
+			</rich:accordionItem>
+		</rich:accordion>
+	</rich:panel>
+	<rich:panel header="Popup panel example">
 		<h:commandButton value="show popup">
-			<r:componentControl target="popup" operation="show" />
+			<rich:componentControl target="popup" operation="show" />
 		</h:commandButton>
-		<r:popupPanel id="popup" width="250" height="150" modal="false">
+		<rich:popupPanel id="popup" width="250" height="150" modal="false">
 			<f:facet name="controls">
 				<h:outputLink value="#"
-					onclick="#{r:component('popup')}.hide(); return false;">
+					onclick="#{rich:component('popup')}.hide(); return false;">
                 X
             </h:outputLink>
 			</f:facet>
-			<r:calendar datePattern="dd/M/yy" id="calendar2" zindex="100" />
-		</r:popupPanel>
-	</r:panel>
-	<r:panel header="Datatable example">
-		<r:dataTable id="table" value="#{model.capitals}" var="capital"
+			<rich:calendar datePattern="dd/M/yy" id="calendar2" zindex="100" />
+		</rich:popupPanel>
+	</rich:panel>
+	<rich:panel header="Datatable example">
+		<rich:dataTable id="table" value="#{model.capitals}" var="capital"
 			rows="10">
-			<r:column>
+			<rich:column>
 				<f:facet name="header">Calendar</f:facet>
-				<r:calendar id="calendar3" />
-			</r:column>
-			<r:column>
+				<rich:calendar id="calendar3" />
+			</rich:column>
+			<rich:column>
 				<f:facet name="header">FooBar</f:facet>
 				<h:outputText value="#{capital}" />
-			</r:column>
-		</r:dataTable>
-	</r:panel>
-	<r:panel header="Collapsible panel example">
-		<r:collapsiblePanel switchType="client" expanded="false">
-			<r:calendar id="calendar4" />
-		</r:collapsiblePanel>
-	</r:panel>
-	<r:panel header="Tab panel example">
-		<r:tabPanel switchType="client">
-			<r:tab header="Calendar">
-				<r:calendar />
-			</r:tab>
-		</r:tabPanel>
-	</r:panel>
-	<r:panel header="Extended Data table">
-		<r:extendedDataTable id="extTable" value="#{model.capitals}"
+			</rich:column>
+		</rich:dataTable>
+	</rich:panel>
+	<rich:panel header="Collapsible panel example">
+		<rich:collapsiblePanel switchType="client" expanded="false">
+			<rich:calendar id="calendar4" />
+		</rich:collapsiblePanel>
+	</rich:panel>
+	<rich:panel header="Tab panel example">
+		<rich:tabPanel switchType="client">
+			<rich:tab header="Calendar">
+				<rich:calendar />
+			</rich:tab>
+		</rich:tabPanel>
+	</rich:panel>
+	<rich:panel header="Extended Data table">
+		<rich:extendedDataTable id="extTable" value="#{model.capitals}"
 			var="capital" rows="10">
-			<r:column>
+			<rich:column>
 				<f:facet name="header">Calendar</f:facet>
-				<r:calendar id="calendar3" />
-			</r:column>
-			<r:column>
+				<rich:calendar id="calendar3" />
+			</rich:column>
+			<rich:column>
 				<f:facet name="header">FooBar</f:facet>
 				<h:outputText value="#{capital}" />
-			</r:column>
-		</r:extendedDataTable>
-	</r:panel>
+			</rich:column>
+		</rich:extendedDataTable>
+	</rich:panel>
 </h:body>
 </html>

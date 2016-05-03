@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:r="http://richfaces.org/rich">
+      xmlns:rich="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -44,10 +44,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
 
             <h:commandButton id="openPanelButton" value="Call the popup">
-                <r:componentControl target="popupPanel" operation="show" />
+                <rich:componentControl target="popupPanel" operation="show" />
             </h:commandButton>
 
-            <r:popupPanel id="popupPanel"
+            <rich:popupPanel id="popupPanel"
                           autosized="#{richPopupPanelBean.attributes['autosized'].value}"
                           controlsClass="#{richPopupPanelBean.attributes['controlsClass'].value}"
                           domElementAttachment="#{richPopupPanelBean.attributes['domElementAttachment'].value}"
@@ -90,16 +90,16 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                           zindex="#{richPopupPanelBean.attributes['zindex'].value}"
                           >
                 <f:facet name="controls">
-                    <h:outputLink id="controlsHideLink" value="#" onclick="#{r:component('popupPanel')}.hide();
+                    <h:outputLink id="controlsHideLink" value="#" onclick="#{rich:component('popupPanel')}.hide();
                             return false;">X</h:outputLink>
                 </f:facet>
-                <r:panel id="panel">
+                <rich:panel id="panel">
                     <p>Mouseover to show tooltip.</p>
-                    <r:tooltip>
+                    <rich:tooltip>
                         Tooltip content.
-                    </r:tooltip>
-                </r:panel>
-            </r:popupPanel>
+                    </rich:tooltip>
+                </rich:panel>
+            </rich:popupPanel>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

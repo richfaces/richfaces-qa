@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a="http://richfaces.org/a4j"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
     <!--
@@ -40,7 +40,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="component">
 
             Status outside form &gt;&gt;&gt;
-            <a:status id="status"
+            <a4j:status id="status"
                       errorStyle="#{a4jStatusBean.attributes['errorStyle'].value}"
                       errorStyleClass="#{a4jStatusBean.attributes['errorStyleClass'].value}"
                       errorText="#{a4jStatusBean.attributes['errorText'].value}"
@@ -68,27 +68,27 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <f:facet name="error">
                     <h:outputText id="statusTextError" style="font-size: large; color: red;" value="ERROR" />
                 </f:facet>
-            </a:status>
+            </a4j:status>
             &lt;&lt;&lt;
 
             <fieldset>
                 <legend>form1</legend>
                 <h:form id="form1">
-                    <a:commandButton id="button1" value="Send Ajax Request"/>
+                    <a4j:commandButton id="button1" value="Send Ajax Request"/>
                 </h:form>
             </fieldset>
 
             <fieldset>
                 <legend>form2</legend>
                 <h:form id="form2">
-                    <a:commandButton id="button2" value="Send Ajax Request"/>
+                    <a4j:commandButton id="button2" value="Send Ajax Request"/>
                 </h:form>
             </fieldset>
 
             <fieldset>
                 <legend>form3</legend>
                 <h:form id="form3">
-                    <a:commandButton id="button3" value="Send Ajax Request Causing Error" action="#{richBean.causeAjaxErrorAction}"/>
+                    <a4j:commandButton id="button3" value="Send Ajax Request Causing Error" action="#{richBean.causeAjaxErrorAction}"/>
                 </h:form>
             </fieldset>
 

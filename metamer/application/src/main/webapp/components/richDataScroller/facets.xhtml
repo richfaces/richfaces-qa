@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich" xmlns:a="http://richfaces.org/a4j"
+    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j"
     xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
 <!--
@@ -44,7 +44,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <h:outputText value="Show data in table: " />
         <h:selectBooleanCheckbox id="noDataCheckbox" value="#{richDataScrollerBean.state}">
-            <a:ajax render="scroller1 #{nestedComponentId}" />
+            <a4j:ajax render="scroller1 #{nestedComponentId}" />
         </h:selectBooleanCheckbox>
         <br />
         <br />
@@ -79,12 +79,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             </h:panelGrid>
 
-            <a:commandButton id="applyFacets" value="ApplyFacets" render="scroller1 #{nestedComponentId}"
+            <a4j:commandButton id="applyFacets" value="ApplyFacets" render="scroller1 #{nestedComponentId}"
                 execute="facetsSettings" />
         </fieldset>
         <br />
         <br />
-        <r:dataScroller id="scroller1" for="richDataTable" render="#{nestedComponentId}"
+        <rich:dataScroller id="scroller1" for="richDataTable" render="#{nestedComponentId}"
             page="#{richDataScrollerBean.attributes['page'].value}">
             <f:facet name="first">#{richDataScrollerBean.facets['first']}</f:facet>
             <f:facet name="fastRewind">#{richDataScrollerBean.facets['fastRewind']}</f:facet>
@@ -99,19 +99,19 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <f:facet name="next_disabled">#{richDataScrollerBean.facets['next_disabled']}</f:facet>
             <f:facet name="fastForward_disabled">#{richDataScrollerBean.facets['fastForward_disabled']}</f:facet>
             <f:facet name="last_disabled">#{richDataScrollerBean.facets['last_disabled']}</f:facet>
-        </r:dataScroller>
+        </rich:dataScroller>
     </ui:define>
 
     <ui:define name="component">
 
-        <r:dataTable id="richDataTable" rows="#{richDataScrollerBean.tableAttributes['rows'].value}"
+        <rich:dataTable id="richDataTable" rows="#{richDataScrollerBean.tableAttributes['rows'].value}"
             value="#{richDataScrollerBean.state ? model.capitals : null}" var="record">
 
             <f:facet name="noData">
                 <h:outputText value="There is no data." style="color: red;" />
             </f:facet>
 
-            <r:column id="columnState" sortBy="#{record.state}">
+            <rich:column id="columnState" sortBy="#{record.state}">
                 <f:facet name="header">
                     <h:outputText id="columnHeaderState" value="State" />
                 </f:facet>
@@ -120,9 +120,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <f:facet name="footer">
                     <h:outputText id="columnFooterState" value="State" />
                 </f:facet>
-            </r:column>
+            </rich:column>
 
-            <r:column id="columnCapital" sortBy="#{record.name}">
+            <rich:column id="columnCapital" sortBy="#{record.name}">
                 <f:facet name="header">
                     <h:outputText id="columnHeaderCapital" value="Capital" />
                 </f:facet>
@@ -131,10 +131,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <f:facet name="footer">
                     <h:outputText id="columnFooterCapital" value="Capital" />
                 </f:facet>
-            </r:column>
+            </rich:column>
 
             <f:facet name="footer">
-                <r:dataScroller id="scroller2" render="scroller1" page="#{richDataScrollerBean.attributes['page'].value}">
+                <rich:dataScroller id="scroller2" render="scroller1" page="#{richDataScrollerBean.attributes['page'].value}">
 
                     <f:facet name="first">#{richDataScrollerBean.facets['first']}</f:facet>
                     <f:facet name="fastRewind">#{richDataScrollerBean.facets['fastRewind']}</f:facet>
@@ -150,10 +150,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <f:facet name="fastForward_disabled">#{richDataScrollerBean.facets['fastForward_disabled']}</f:facet>
                     <f:facet name="last_disabled">#{richDataScrollerBean.facets['last_disabled']}</f:facet>
 
-                </r:dataScroller>
+                </rich:dataScroller>
             </f:facet>
 
-        </r:dataTable>
+        </rich:dataTable>
     </ui:define>
 
     <ui:define name="outOfTemplateAfter" />

@@ -4,8 +4,8 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:a="http://richfaces.org/a4j"
-      xmlns:r="http://richfaces.org/rich">
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
 
     <!--
     JBoss, Home of Professional Open Source
@@ -57,7 +57,7 @@
         </ui:define>
 
         <ui:define name="component">
-            <r:fileUpload id="fileUpload"
+            <rich:fileUpload id="fileUpload"
                           acceptedTypes="#{richFileUploadBean.attributes['acceptedTypes'].value}"
                           addLabel="#{richFileUploadBean.attributes['addLabel'].value}"
                           clearAllLabel="#{richFileUploadBean.attributes['clearAllLabel'].value}"
@@ -108,18 +108,18 @@
             <br />
             <fieldset style="width: 376px;">
                 <legend>Uploaded Files</legend>
-                <a:outputPanel id="uploadedFilesPanel" ajaxRendered="true">
+                <a4j:outputPanel id="uploadedFilesPanel" ajaxRendered="true">
                     <ul>
-                        <a:repeat value="#{richFileUploadBean.items}" var="item">
+                        <a4j:repeat value="#{richFileUploadBean.items}" var="item">
                             <li>#{item.name}</li>
-                        </a:repeat>
+                        </a4j:repeat>
                     </ul>
 
                     <br />
 
-                    <a:commandButton id="clearUploadedDataButton" action="#{richFileUploadBean.clearUploadedData}"
+                    <a4j:commandButton id="clearUploadedDataButton" action="#{richFileUploadBean.clearUploadedData}"
                                      value="Clear Uploaded Data" rendered="#{richFileUploadBean.renderButton}" />
-                </a:outputPanel>
+                </a4j:outputPanel>
             </fieldset>
 
         </ui:define>

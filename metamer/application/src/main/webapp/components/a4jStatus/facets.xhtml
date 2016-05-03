@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a="http://richfaces.org/a4j"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
     <!--
@@ -51,14 +51,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:inputText id="facetErrorTextInput" value="#{a4jStatusBean.facetErrorValue}" />
                 </h:panelGrid>
 
-                <a:commandButton id="applyFacets" value="ApplyFacets" render="#{nestedComponentId}" execute="facetsSettings" />
+                <a4j:commandButton id="applyFacets" value="ApplyFacets" render="#{nestedComponentId}" execute="facetsSettings" />
             </fieldset>
         </ui:define>
 
         <ui:define name="component">
             
             Status inside form &gt;&gt;&gt;
-            <a:status id="status"
+            <a4j:status id="status"
                       errorStyle="#{a4jStatusBean.attributes['errorStyle'].value}"
                       errorStyleClass="#{a4jStatusBean.attributes['errorStyleClass'].value}"
                       errorText="#{a4jStatusBean.attributes['errorText'].value}"
@@ -90,14 +90,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:outputText id="statusTextError" style="font-size: large; color: red;"
                                   value="#{a4jStatusBean.facetErrorValue}" rendered="#{not empty a4jStatusBean.facetErrorValue}" />
                 </f:facet>
-            </a:status>
+            </a4j:status>
             &lt;&lt;&lt;
             <br/><br/>
-            <a:commandButton id="button1" value="Send Ajax Request"/>
+            <a4j:commandButton id="button1" value="Send Ajax Request"/>
             <br/>
-            <a:commandButton id="button2" value="Send Ajax Request"/>
+            <a4j:commandButton id="button2" value="Send Ajax Request"/>
             <br/>
-            <a:commandButton id="button3" value="Send Ajax Request Causing Error" action="#{richBean.causeAjaxErrorAction}"/>
+            <a4j:commandButton id="button3" value="Send Ajax Request Causing Error" action="#{richBean.causeAjaxErrorAction}"/>
 
         </ui:define>
 

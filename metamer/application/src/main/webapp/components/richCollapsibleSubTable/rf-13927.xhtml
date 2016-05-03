@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:r="http://richfaces.org/rich"
+      xmlns:rich="http://richfaces.org/rich"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html">
@@ -44,29 +44,29 @@
                 and for <a href="https://issues.jboss.org/browse/RF-13958">RF-13958: collapsibleSubTable: the most nested CST remains collapsed after parent CST re-expands</a>.
                 Automatized.
             </p>
-            <r:dataTable id="table" value="#{rf13927.level0}" var="level1" iterationStatusVar="i">
-                <r:column>
-                    <r:collapsibleSubTableToggler id="level1Toggler" for="table1"/>
+            <rich:dataTable id="table" value="#{rf13927.level0}" var="level1" iterationStatusVar="i">
+                <rich:column>
+                    <rich:collapsibleSubTableToggler id="level1Toggler" for="table1"/>
                     <h:outputText value="#{level1.name}"/>
-                </r:column>
-                <r:collapsibleSubTable id="table1" value="#{level1.levels}" var="level2" iterationStatusVar="j">
-                    <r:column>
-                        <r:collapsibleSubTableToggler id="level2Toggler" for="table2"/>
+                </rich:column>
+                <rich:collapsibleSubTable id="table1" value="#{level1.levels}" var="level2" iterationStatusVar="j">
+                    <rich:column>
+                        <rich:collapsibleSubTableToggler id="level2Toggler" for="table2"/>
                         <h:outputText value="#{level2.name}"/>
-                    </r:column>
-                    <r:collapsibleSubTable id="table2" value="#{level2.levels}" var="level3" iterationStatusVar="k">
-                        <r:column>
-                            <r:collapsibleSubTableToggler id="level3Toggler" for="table3"/>
+                    </rich:column>
+                    <rich:collapsibleSubTable id="table2" value="#{level2.levels}" var="level3" iterationStatusVar="k">
+                        <rich:column>
+                            <rich:collapsibleSubTableToggler id="level3Toggler" for="table3"/>
                             <h:outputText value="#{level3.name}"/>
-                        </r:column>
-                        <r:collapsibleSubTable id="table3" value="#{level3.data}" var="data">
-                            <r:column>
+                        </rich:column>
+                        <rich:collapsibleSubTable id="table3" value="#{level3.data}" var="data">
+                            <rich:column>
                                 <h:outputText id="data" class="data-#{i.count + j.count + k.count - 2}" value="#{data}"/>
-                            </r:column>
-                        </r:collapsibleSubTable>
-                    </r:collapsibleSubTable>
-                </r:collapsibleSubTable>
-            </r:dataTable>
+                            </rich:column>
+                        </rich:collapsibleSubTable>
+                    </rich:collapsibleSubTable>
+                </rich:collapsibleSubTable>
+            </rich:dataTable>
         </ui:define>
         <ui:define name="outOfTemplateAfter">
         </ui:define>

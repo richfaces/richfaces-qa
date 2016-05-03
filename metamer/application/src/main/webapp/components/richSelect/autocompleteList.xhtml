@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:r="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -41,7 +41,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <r:select id="select"
+            <rich:select id="select"
                       autocompleteList="${richSelectBean.capitals}"
                       clientFilterFunction="#{richSelectBean.attributes['clientFilterFunction'].value}"
                       itemLabel="${capital.state}"
@@ -102,7 +102,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                 <f:ajax event="change" execute="@form" render="output"/>
                 <f:converter converterId="capitalConverterSelect" />
-            </r:select>
+            </rich:select>
 
             <br/>
             <br/>

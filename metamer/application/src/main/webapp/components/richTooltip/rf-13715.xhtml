@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:r="http://richfaces.org/rich" xmlns:h="http://java.sun.com/jsf/html">
+    xmlns:rich="http://richfaces.org/rich" xmlns:h="http://java.sun.com/jsf/html">
 <!--
 JBoss, Home of Professional Open Source
 Copyright 2010-2016, Red Hat, Inc. and individual contributors
@@ -39,19 +39,19 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             There should be visible tooltip with text: some tooltip, after mouse over event on text: myTab. This is reproduction
             of bug <a href="https://issues.jboss.org/browse/RF-13715">RF-13715</a>.
         </p>
-        <r:tabPanel>
-            <r:tab>
+        <rich:tabPanel>
+            <rich:tab>
                 <f:facet name="header">
                     <h:panelGroup id="foo">
                         myTab
-                        <r:tooltip>
+                        <rich:tooltip>
                             some tooltip
-                        </r:tooltip>
+                        </rich:tooltip>
                     </h:panelGroup>
                 </f:facet>
                 tab content
-            </r:tab>
-        </r:tabPanel>
+            </rich:tab>
+        </rich:tabPanel>
     </ui:define>
 </ui:composition>
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:r="http://richfaces.org/rich">
+      xmlns:rich="http://richfaces.org/rich">
     <h:head>
 	<title>Test</title>
 </h:head>
@@ -17,24 +17,24 @@
 }
 </h:outputStylesheet>
 	<h:form>
-		<r:dataTable id="postsList"
+		<rich:dataTable id="postsList"
 			value="#{richDataTableBean.state ? model.capitals : null}"
 			rowClasses="oddRow,noStyle" var="record">
-			<r:columnGroup>
-				<r:column styleClass="forumpostleftcolumn">
+			<rich:columnGroup>
+				<rich:column styleClass="forumpostleftcolumn">
 					<h:outputText value="#{record.state}" />
-				</r:column>
-				<r:column>
+				</rich:column>
+				<rich:column>
 					<h:outputText value="#{record.name}" />
-				</r:column>
-			</r:columnGroup>
-			<r:columnGroup>
-				<r:column styleClass="forumpostleftcolumn">...</r:column>
-				<r:column>
+				</rich:column>
+			</rich:columnGroup>
+			<rich:columnGroup>
+				<rich:column styleClass="forumpostleftcolumn">...</rich:column>
+				<rich:column>
 					<h:outputText value="#{record.timeZone}" />
-				</r:column>
-			</r:columnGroup>
-		</r:dataTable>
+				</rich:column>
+			</rich:columnGroup>
+		</rich:dataTable>
 	</h:form>
 </h:body>
 </html>

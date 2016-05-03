@@ -5,8 +5,8 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:r="http://richfaces.org/rich"
-      xmlns:a="http://richfaces.org/a4j">
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
 
     <!--
     JBoss, Home of Professional Open Source
@@ -50,14 +50,14 @@
                 <li>After fix: If you double-click the link, it will open the popup panel, the panel will be immmediately destroyed and a new panel will replace it (second click). Panel can be closed and reopened normally.</li>
             </ul>
 
-            <a:commandLink id="openPanelLink"
+            <a4j:commandLink id="openPanelLink"
                            value="open panel link"
                            render="popupWrapper"
-                           oncomplete="#{r:component('popupPanel')}.show();"
+                           oncomplete="#{rich:component('popupPanel')}.show();"
                            action="#{richPopupPanelBean.waitingAction}" />
 
             <h:panelGroup id="popupWrapper">
-                <r:popupPanel id="popupPanel" autosized="#{richPopupPanelBean.attributes['autosized'].value}"
+                <rich:popupPanel id="popupPanel" autosized="#{richPopupPanelBean.attributes['autosized'].value}"
                               controlsClass="#{richPopupPanelBean.attributes['controlsClass'].value}"
                               domElementAttachment="#{richPopupPanelBean.attributes['domElementAttachment'].value}"
                               followByScroll="#{richPopupPanelBean.attributes['followByScroll'].value}"
@@ -99,7 +99,7 @@
                               zindex="#{richPopupPanelBean.attributes['zindex'].value}">
                     <f:facet name="controls">
                         <h:outputLink id="controlsHideLink" value="#"
-                                      onclick="#{r:component('popupPanel')}.hide();
+                                      onclick="#{rich:component('popupPanel')}.hide();
                                               return false;">X</h:outputLink>
                     </f:facet>
 
@@ -120,9 +120,9 @@
                         accumsan elit. Donec vitae lorem ac diam molestie condimentum. Suspendisse tempor orci a ligula condimentum
                         non congue urna facilisis. <br />
                         <h:commandButton id="submitButton" value="Submit" />
-                        <br /> <a id="contentHideLink" href="#" onclick="#{r:component('popupPanel')}.hide()">hide this panel</a>
+                        <br /> <a id="contentHideLink" href="#" onclick="#{rich:component('popupPanel')}.hide()">hide this panel</a>
                     </p>
-                </r:popupPanel>
+                </rich:popupPanel>
             </h:panelGroup>
 
         </ui:define>

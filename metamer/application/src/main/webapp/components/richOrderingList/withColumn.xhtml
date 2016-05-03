@@ -5,7 +5,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:r="http://richfaces.org/rich"
+      xmlns:rich="http://richfaces.org/rich"
       >
 
     <!--
@@ -43,7 +43,7 @@
         <ui:define name="component">
             <h:commandButton id="submitButton" value="submit" />
             <hr />
-            <r:orderingList id="orderingList"
+            <rich:orderingList id="orderingList"
                             caption="#{richOrderingListBean.attributes['caption'].value}"
                             collectionType="#{richOrderingListBean.collectionType}"
                             columnClasses="#{richOrderingListBean.attributes['columnClasses'].value}"
@@ -95,19 +95,19 @@
                             valueChangeListener="#{richOrderingListBean.attributes.valueChangeListener}"
                             var="capital">
                 <f:converter converterId="capitalConverter" />
-                <r:column>
+                <rich:column>
                     <f:facet name="header">State</f:facet>
                         #{capital.state}
-                </r:column>
-                <r:column>
+                </rich:column>
+                <rich:column>
                     <f:facet name="header">Name</f:facet>
                         #{capital.name}
-                </r:column>
-            </r:orderingList>
+                </rich:column>
+            </rich:orderingList>
             <hr />
-            <r:list id="output" value="#{richOrderingListBean.capitals}" var="capital">
+            <rich:list id="output" value="#{richOrderingListBean.capitals}" var="capital">
                 <h:outputText value="#{capital.state}, #{capital.name}" />
-            </r:list>
+            </rich:list>
             <hr />
         </ui:define>
 
@@ -115,9 +115,9 @@
             <p>
                 Following attributes are hidden:
             </p>
-            <r:list id="hiddenAttributes" value="#{richOrderingListBean.hiddenAttributes}" var="attribute">
+            <rich:list id="hiddenAttributes" value="#{richOrderingListBean.hiddenAttributes}" var="attribute">
                 <h:outputText value="#{attribute}" />
-            </r:list>
+            </rich:list>
             <br/>
             <metamer:attributes value="#{richOrderingListBean.attributes}" id="attributes" />        </ui:define>
 

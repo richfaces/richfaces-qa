@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:r="http://richfaces.org/rich">
+      xmlns:rich="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -37,7 +37,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <r:progressBar id="progressBar"
+            <rich:progressBar id="progressBar"
                            data="#{richProgressBarBean.attributes['data'].value}"
                            enabled="#{richProgressBarBean.attributes['enabled'].value}"
                            finishClass="#{richProgressBarBean.attributes['finishClass'].value}"
@@ -72,7 +72,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:outputText id="completeOutput" value="Process Done"/>
                 </f:facet>
                 <span id="progress"/>
-            </r:progressBar>
+            </rich:progressBar>
 
             <br/>
             isEnabled: <span id="isEnabled"/>
@@ -85,35 +85,35 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
 
             <script type="text/javascript">
-                var counter = #{r:component('progressBar')}.getMinValue();
+                var counter = #{rich:component('progressBar')}.getMinValue();
                 var intervalID;
-                    $("#isEnabled").text(#{r:component('progressBar')}.isEnabled());
+                    $("#isEnabled").text(#{rich:component('progressBar')}.isEnabled());
                     $("#progress").text(counter);
                 function updateProgress(i) {
-                    #{r:component('progressBar')}.setValue(counter++);
-                    $("#isEnabled").text(#{r:component('progressBar')}.isEnabled());
-                    $("#progress").text(#{r:component('progressBar')}.getValue());
-                    if (counter > #{r:component('progressBar')}.getMaxValue()) {
+                    #{rich:component('progressBar')}.setValue(counter++);
+                    $("#isEnabled").text(#{rich:component('progressBar')}.isEnabled());
+                    $("#progress").text(#{rich:component('progressBar')}.getValue());
+                    if (counter > #{rich:component('progressBar')}.getMaxValue()) {
                         clearInterval(intervalID);
-                        counter = #{r:component('progressBar')}.getMinValue()
-                        #{r:element('startButton')}.disabled = false;
-                        #{r:element('pauseButton')}.disabled = true;
+                        counter = #{rich:component('progressBar')}.getMinValue()
+                        #{rich:element('startButton')}.disabled = false;
+                        #{rich:element('pauseButton')}.disabled = true;
                     }
 
                 }
 
                 function startProgress() {
-                    #{r:element('startButton')}.disabled = true;
-                    #{r:element('pauseButton')}.disabled = false;
-                    #{r:component('progressBar')}.enable();
-                    #{r:component('progressBar')}.setValue(counter);
+                    #{rich:element('startButton')}.disabled = true;
+                    #{rich:element('pauseButton')}.disabled = false;
+                    #{rich:component('progressBar')}.enable();
+                    #{rich:component('progressBar')}.setValue(counter);
                     intervalID = setInterval(updateProgress, #{richProgressBarBean.attributes['interval'].value});
                 }
 
                 function pauseProgress() {
-                    #{r:element('startButton')}.disabled = false;
-                    #{r:element('pauseButton')}.disabled = true;
-                    #{r:component('progressBar')}.disable();
+                    #{rich:element('startButton')}.disabled = false;
+                    #{rich:element('pauseButton')}.disabled = true;
+                    #{rich:component('progressBar')}.disable();
                     clearInterval(intervalID);
                 }
             </script>

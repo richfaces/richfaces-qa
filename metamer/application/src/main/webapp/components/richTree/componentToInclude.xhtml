@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:r="http://richfaces.org/rich">
+      xmlns:rich="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -28,7 +28,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     <h3><b>r:tree</b></h3>
 
     <p>
-        <r:tree id="richTree"
+        <rich:tree id="richTree"
                 nodeType="#{node.type}"
                 var="node"
                 value="#{treeRoot}"
@@ -78,7 +78,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 toggleType="#{richTreeBean.attributes['toggleType'].value}"
                 >
 
-            <r:treeNode type="country"
+            <rich:treeNode type="country"
                         expanded="#{richTreeBean.expanded[node]}"
                         toggleListener="#{richTreeListenerBean.processNodeToggle}"
 
@@ -112,9 +112,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:graphicImage value="/resources/images/loading.gif" rendered="#{richTreeBean.testLoadingFacet}" />
                 </f:facet>
                 #{node.content.label}
-            </r:treeNode>
+            </rich:treeNode>
 
-            <r:treeNode type="company"
+            <rich:treeNode type="company"
                         expanded="#{richTreeBean.expanded[node]}"
 
                         dir="#{richTreeNodeBean.attributes[1]['dir'].value}"
@@ -148,9 +148,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </f:facet>
 
                 #{node.content.label}
-            </r:treeNode>
+            </rich:treeNode>
 
-            <r:treeNode type="cd"
+            <rich:treeNode type="cd"
                         expanded="#{richTreeBean.expanded[node]}"
 
                         dir="#{richTreeNodeBean.attributes[2]['dir'].value}"
@@ -180,8 +180,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         title="#{richTreeNodeBean.attributes[2]['title'].value}"
                         >
                 #{node.content.label}
-            </r:treeNode>
-        </r:tree>
+            </rich:treeNode>
+        </rich:tree>
     </p>
 
     <h3><b>r:tree</b> - with default tree nodes</h3>
@@ -190,7 +190,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     <p>
 
 
-        <r:tree id="richTreeDefaultNodes"
+        <rich:tree id="richTreeDefaultNodes"
                 var="node"
                 value="#{treeRoot}"
 
@@ -233,6 +233,6 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 execute="#{richTreeBean.attributes['execute'].value}"
                 toggleNodeEvent="#{richTreeBean.attributes['toggleNodeEvent'].value}"
                 >
-        </r:tree>
+        </rich:tree>
     </p>
 </html>

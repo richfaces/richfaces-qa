@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a="http://richfaces.org/a4j"
+      xmlns:a4j="http://richfaces.org/a4j"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
@@ -48,43 +48,43 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 even for other push components on the page, which are not conditionally rendered.<br/>
             </p>
 
-            <a:commandButton id="performPushEvent1" value="Push 1!" action="#{a4jPushBean.pushWithCDI1}" />
+            <a4j:commandButton id="performPushEvent1" value="Push 1!" action="#{a4jPushBean.pushWithCDI1}" />
             <!--  PUSH 1 -->
-            <a:outputPanel id="pushPanel">
-                <a:push id="push"
+            <a4j:outputPanel id="pushPanel">
+                <a4j:push id="push"
                         rendered="#{a4jPushBean.attributes['rendered'].value}"
                         address="#{a4jPushBean.CDIAddress1}"
                         ondataavailable="$('[id$=outputDate]').text(event.rf.data)"
                         onsubscribed="#{a4jPushBean.attributes['onsubscribed'].value}" />
-            </a:outputPanel>
+            </a4j:outputPanel>
 
-            <a:outputPanel id="pushDisablementPanel">
+            <a4j:outputPanel id="pushDisablementPanel">
                 <h:selectBooleanCheckbox id="enablePush1" value="#{a4jPushBean.attributes['rendered'].value}">
-                    <a:ajax render="pushPanel" />
+                    <a4j:ajax render="pushPanel" />
                 </h:selectBooleanCheckbox>
                 <h:outputLabel value="enabled" for="enablePush1" />
-            </a:outputPanel>
+            </a4j:outputPanel>
 
             <br />
 
-            <a:outputPanel id="outputDate">
+            <a4j:outputPanel id="outputDate">
                 #{a4jPushBean.date}
-            </a:outputPanel>
+            </a4j:outputPanel>
 
             <br />
 
             <!--  PUSH 2 -->
-            <a:commandButton id="performPushEvent2" value="Push 2!" action="#{a4jPushBean.pushWithCDI2}" />
-            <a:push id="push2"
+            <a4j:commandButton id="performPushEvent2" value="Push 2!" action="#{a4jPushBean.pushWithCDI2}" />
+            <a4j:push id="push2"
                     address="#{a4jPushBean.CDIAddress2}"
                     ondataavailable="$('[id$=outputDate2]').text(event.rf.data)"
                     onsubscribed="#{a4jPushBean.attributes['onsubscribed'].value}" />
 
             <br />
 
-            <a:outputPanel id="outputDate2">
+            <a4j:outputPanel id="outputDate2">
                 #{a4jPushBean.date}
-            </a:outputPanel>
+            </a4j:outputPanel>
 
             <br/>
 

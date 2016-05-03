@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:r="http://richfaces.org/rich"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich"
       xmlns:h="http://java.sun.com/jsf/html">
 
     <!--
@@ -55,8 +55,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="component">
             <!-- The following padding helps to stabilise automated tests -->
             <div style="padding: 200px">
-                <r:toolbar id="toolbar" height="26px" width="500px;">
-                    <r:dropDownMenu id="menu1" mode="ajax">
+                <rich:toolbar id="toolbar" height="26px" width="500px;">
+                    <rich:dropDownMenu id="menu1" mode="ajax">
                         <f:facet name="label">
                             <h:panelGroup>
                                 <h:graphicImage library="images" name="icons/copy.gif" styleClass="pic" />
@@ -64,22 +64,22 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                             </h:panelGroup>
                         </f:facet>
 
-                        <r:menuItem id="menuItem1" label="New" icon="/resources/images/icons/create_doc.gif"/>
+                        <rich:menuItem id="menuItem1" label="New" icon="/resources/images/icons/create_doc.gif"/>
 
-                        <r:menuItem id="menuItem2" label="Open" icon="/resources/images/icons/open.gif" />
+                        <rich:menuItem id="menuItem2" label="Open" icon="/resources/images/icons/open.gif" />
 
-                        <r:menuGroup id="menuGroup3" label="Open Recent..." disabled="true">
-                            <r:menuItem id="menuItem31" label="Save" icon="/resources/images/icons/save.gif" />
-                            <r:menuItem id="menuItem32" label="Save All">
+                        <rich:menuGroup id="menuGroup3" label="Open Recent..." disabled="true">
+                            <rich:menuItem id="menuItem31" label="Save" icon="/resources/images/icons/save.gif" />
+                            <rich:menuItem id="menuItem32" label="Save All">
                                 <f:facet name="icon">
                                     <h:graphicImage library="images" name="icons/save_all.gif" />
                                 </f:facet>
-                            </r:menuItem>
-                        </r:menuGroup>
+                            </rich:menuItem>
+                        </rich:menuGroup>
 
-                        <r:menuSeparator id="menuSeparator11" />
+                        <rich:menuSeparator id="menuSeparator11" />
 
-                        <r:menuGroup id="menuGroup4"
+                        <rich:menuGroup id="menuGroup4"
                                      dir="#{richMenuGroupBean.attributes['dir'].value}"
                                      direction="#{richMenuGroupBean.attributes['direction'].value}"
                                      disabled="#{richMenuGroupBean.attributes['disabled'].value}"
@@ -107,28 +107,28 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                      title="#{richMenuGroupBean.attributes['title'].value}"
                                      verticalOffset="#{richMenuGroupBean.attributes['verticalOffset'].value}"
                                      >
-                            <r:menuItem id="menuItem41" label="Save" icon="/resources/images/icons/save.gif" />
-                            <r:menuItem id="menuItem42" label="Save All" >
+                            <rich:menuItem id="menuItem41" label="Save" icon="/resources/images/icons/save.gif" />
+                            <rich:menuItem id="menuItem42" label="Save All" >
                                 <f:facet name="icon">
                                     <h:graphicImage library="images" name="icons/save_all.gif" />
                                 </f:facet>
-                            </r:menuItem>
-                            <r:menuItem id="menuItem43" label="Send Online" icon="/resources/images/icons/save.gif" disabled="true" />
-                        </r:menuGroup>
+                            </rich:menuItem>
+                            <rich:menuItem id="menuItem43" label="Send Online" icon="/resources/images/icons/save.gif" disabled="true" />
+                        </rich:menuGroup>
 
-                        <r:menuItem id="menuItem5" label="Print" disabled="true"/>
+                        <rich:menuItem id="menuItem5" label="Print" disabled="true"/>
 
-                        <r:menuItem id="menuItem6" label="Close" />
+                        <rich:menuItem id="menuItem6" label="Close" />
 
-                        <r:menuSeparator id="menuSeparator12" />
+                        <rich:menuSeparator id="menuSeparator12" />
 
-                        <r:menuItem id="menuItem7" label="Exit" />
+                        <rich:menuItem id="menuItem7" label="Exit" />
 
-                    </r:dropDownMenu>
-                    <input id="show" type="button" name="show" value="JS API: open menu and show group" onclick="#{r:component('menu1')}.show();#{r:component('menuGroup4')}.show();" />
-                    <input id="hide" type="button" name="hide" value="JS API: open menu and hide group" onclick="#{r:component('menu1')}.show();#{r:component('menuGroup4')}.hide();" />
+                    </rich:dropDownMenu>
+                    <input id="show" type="button" name="show" value="JS API: open menu and show group" onclick="#{rich:component('menu1')}.show();#{rich:component('menuGroup4')}.show();" />
+                    <input id="hide" type="button" name="hide" value="JS API: open menu and hide group" onclick="#{rich:component('menu1')}.show();#{rich:component('menuGroup4')}.hide();" />
 
-                </r:toolbar>
+                </rich:toolbar>
             </div>
             <br /><br />
         </ui:define>

@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:r="http://richfaces.org/rich"
+      xmlns:rich="http://richfaces.org/rich"
       xmlns:a4j="http://richfaces.org/a4j"
       xmlns:h="http://java.sun.com/jsf/html">
 
@@ -43,61 +43,61 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="notEmpty">
-            <r:select id="notEmpty"
+            <rich:select id="notEmpty"
                          value="#{richSelectBean.notEmptyValue}"
                          >
                 <f:selectItems value="#{richSelectBean.validationOptionsNotEmpty}" />
                 <a4j:ajax event="blur" render="notEmptyMsg"/>
-            </r:select>
+            </rich:select>
         </ui:define>
         <ui:define name="notEmptyOutput">
             <h:outputText id="notEmptyOutput" value="#{richSelectBean.notEmptyValue}"/>
         </ui:define>
 
         <ui:define name="pattern">
-            <r:select id="pattern"
+            <rich:select id="pattern"
                          value="#{richSelectBean.patternValue}"
                          >
                 <f:selectItems value="#{richSelectBean.validationOptionsPattern}" />
                 <a4j:ajax event="change" render="patternMsg"/>
-            </r:select>
+            </rich:select>
         </ui:define>
         <ui:define name="patternOutput">
             <h:outputText id="patternOutput" value="#{richSelectBean.patternValue}"/>
         </ui:define>
 
         <ui:define name="size">
-            <r:select id="size"
+            <rich:select id="size"
                          value="#{richSelectBean.sizeValue}"
                          >
                 <f:selectItems value="#{richSelectBean.validationOptionsSize}" />
                 <a4j:ajax event="change" render="sizeMsg"/>
-            </r:select>
+            </rich:select>
         </ui:define>
         <ui:define name="sizeOutput">
             <h:outputText id="sizeOutput" value="#{richSelectBean.sizeValue}"/>
         </ui:define>
 
         <ui:define name="custom">
-            <r:select id="custom"
+            <rich:select id="custom"
                          value="#{richSelectBean.customValue}"
                          >
                 <f:validator validatorId="org.richfaces.StringRichFacesValidator"/>
                 <f:selectItems value="#{richSelectBean.validationOptionsCustom}" />
                 <a4j:ajax event="change" render="customMsg"/>
-            </r:select>
+            </rich:select>
         </ui:define>
         <ui:define name="customOutput">
             <h:outputText id="customOutput" value="#{richSelectBean.customValue}"/>
         </ui:define>
 
         <ui:define name="required" >
-            <r:select id="required" required="true"
+            <rich:select id="required" required="true"
                          requiredMessage="#{richSelectBean.attributes['requiredMessage'].value}"
                          value="#{richSelectBean.requiredValue}">
                 <f:selectItems value="#{richSelectBean.validationOptionsRequired}" />
                 <a4j:ajax event="change" render="requiredMsg"/>
-            </r:select>
+            </rich:select>
         </ui:define>
         <ui:define name="requiredOutput">
             <h:outputText id="requiredOutput" value="#{richSelectBean.requiredValue}"/>

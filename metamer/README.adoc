@@ -135,7 +135,7 @@ To change the JSF implementation you can build Metamer with either a script ment
 === Creating issue reproducers in Metamer
 
 * when creating new facelet for the issue, create it under affected component with the name of issue number (e.g. `rf-15422.xhtml`)
-** the newly created issue should also contain a steps to reproduce the issue, e.g. `<r:panel header="steps to reproduce">1. blah blah <br /> 2. blah blah</r:panel>`
+** the newly created issue should also contain a steps to reproduce the issue, e.g. `<rich:panel header="steps to reproduce">1. blah blah <br /> 2. blah blah</rich:panel>`
 ** list the newly created facelet also in the list.xhtml, together with the issue description and reference
 * create also a test class with the same name (e.g. `TestRF15422.java`) under the package for the affected component
 * annotate test method with:

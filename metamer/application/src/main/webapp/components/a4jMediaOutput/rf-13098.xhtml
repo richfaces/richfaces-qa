@@ -1,13 +1,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a="http://richfaces.org/a4j">
+      xmlns:a4j="http://richfaces.org/a4j">
     <h:head>
         <title>Test</title>
     </h:head>
 
     <h:body>
-        <a:mediaOutput id="img1" element="img" cacheable="true" createContent="#{a4jMediaOutputBeanTest.createContentImagePng}" value="#{cdiBean}" mimeType="image/jpeg"/>
+        <a4j:mediaOutput id="img1" element="img" cacheable="true" createContent="#{a4jMediaOutputBeanTest.createContentImagePng}" value="#{cdiBean}" mimeType="image/jpeg"/>
         <hr/>
         #{a4j.version}
     </h:body>

@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:r="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -41,7 +41,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <r:select id="select"
+            <rich:select id="select"
                       clientFilterFunction="#{richSelectBean.attributes['clientFilterFunction'].value}"
                       converterMessage="#{richSelectBean.attributes['converterMessage'].value}"
                       defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
@@ -98,7 +98,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <f:selectItems value="#{richSelectBean.capitalsOptions}" />
                 <a4j:ajax event="change" render="output"/>
 
-            </r:select>
+            </rich:select>
 
 
             <br/>
@@ -112,15 +112,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <br/><br/>
                 On click:
                 <br/>
-                <input id="focus" type="button" name="focus" value="focus()" onclick="#{r:component('select')}.focus();" />
-                <input id="getValue" type="button" name="getValue" value="getValue()" onclick="$('[id$=value]').val(#{r:component('select')}.getValue())" />
-                <input id="setValue" type="button" name="setValue" value="setValue('Arizona')" onclick="#{r:component('select')}.setValue('Arizona')" />
-                <input id="getLabel" type="button" name="getLabel" value="getLabel()" onclick="$('[id$=value]').val(#{r:component('select')}.getLabel())" />
+                <input id="focus" type="button" name="focus" value="focus()" onclick="#{rich:component('select')}.focus();" />
+                <input id="getValue" type="button" name="getValue" value="getValue()" onclick="$('[id$=value]').val(#{rich:component('select')}.getValue())" />
+                <input id="setValue" type="button" name="setValue" value="setValue('Arizona')" onclick="#{rich:component('select')}.setValue('Arizona')" />
+                <input id="getLabel" type="button" name="getLabel" value="getLabel()" onclick="$('[id$=value]').val(#{rich:component('select')}.getLabel())" />
                 <br/>
                 On mouseover:
                 <br/>
-                <input id="showPopup" type="button" name="showPopup" value="showPopup()" onmouseover="#{r:component('select')}.showPopup()" />
-                <input id="hidePopup" type="button" name="hidePopup" value="hidePopup()" onmouseover="#{r:component('select')}.hidePopup()" />
+                <input id="showPopup" type="button" name="showPopup" value="showPopup()" onmouseover="#{rich:component('select')}.showPopup()" />
+                <input id="hidePopup" type="button" name="hidePopup" value="hidePopup()" onmouseover="#{rich:component('select')}.hidePopup()" />
             </fieldset>
         </ui:define>
 

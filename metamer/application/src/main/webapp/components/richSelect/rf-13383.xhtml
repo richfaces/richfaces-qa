@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:r="http://richfaces.org/rich" xmlns:validationMessages="http://java.sun.com/jsf/composite/validationMessages"
+    xmlns:rich="http://richfaces.org/rich" xmlns:validationMessages="http://java.sun.com/jsf/composite/validationMessages"
       xmlns:h="http://java.sun.com/jsf/html">
 
 <!--
@@ -37,15 +37,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     <ui:define name="component">
 
         <h:panelGrid columns="3">
-            <r:validator>
+            <rich:validator>
                 <h:outputLabel for="csv-inBean" value="Validation messages set in bean:" />
-                <r:select id="csv-inBean" value="#{validationMessagesBean.valueWithMessagesCSV}"
+                <rich:select id="csv-inBean" value="#{validationMessagesBean.valueWithMessagesCSV}"
                     converter="#{validationMessagesBean.converter}">
                     <f:selectItems value="#{validationMessagesBean.validationOptions}" />
-                </r:select>
-                <r:message id="csv-inBean-msg" for="csv-inBean" />
+                </rich:select>
+                <rich:message id="csv-inBean-msg" for="csv-inBean" />
 
-            </r:validator>
+            </rich:validator>
         </h:panelGrid>
 
     </ui:define>

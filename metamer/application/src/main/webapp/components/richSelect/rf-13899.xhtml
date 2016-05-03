@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:r="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -51,14 +51,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         			<li>Click on button in r:select and verify that "Colorado" is highlighted</li>
         		</ul>
     		</p>
-            <r:select id="select"
+            <rich:select id="select"
                       value="#{richSelectBean.attributes['value'].value}"
                       valueChangeListener="#{richSelectBean.attributes.valueChangeListener}">
 
                 <f:selectItems value="#{richSelectBean.capitalsOptions}" />
                 <a4j:ajax event="change" render="output select"/>
 
-            </r:select>
+            </rich:select>
 
 
             <br/>
@@ -80,7 +80,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         			<li>Click on button in r:select and verify that second "label1" is highlighted</li>
         		</ul>
     		</p>
-            <r:select id="select2"
+            <rich:select id="select2"
                       value="#{richSelectBean.attributes['value'].value}"
                       valueChangeListener="#{richSelectBean.attributes.valueChangeListener}">
 
@@ -89,7 +89,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 				<f:selectItem itemLabel="label1" itemValue="value3"/>
                 <a4j:ajax event="change" render="output2 select2"/>
 
-            </r:select>
+            </rich:select>
 
 
             <br/>
@@ -112,7 +112,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <li>This is really expected behavior, because this use case doesn't follow JSF specification.</li>
         		</ul>
     		</p>
-            <r:select id="select3"
+            <rich:select id="select3"
                       value="#{richSelectBean.attributes['value'].value}"
                       valueChangeListener="#{richSelectBean.attributes.valueChangeListener}">
 
@@ -121,7 +121,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 				<f:selectItem itemLabel="label3" itemValue="value1"/>
                 <a4j:ajax event="change" render="output3 select3"/>
 
-            </r:select>
+            </rich:select>
 
 
             <br/>

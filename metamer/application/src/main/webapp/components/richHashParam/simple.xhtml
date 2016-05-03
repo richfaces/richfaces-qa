@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"  xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:r="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" xmlns:h="http://java.sun.com/jsf/html"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <!--
@@ -38,10 +38,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <r:popupPanel id="popupPanel" resizeable="true"
+            <rich:popupPanel id="popupPanel" resizeable="true"
                           header="Popup panel shown using r:componentControl and r:hashParam">
                 <f:facet name="controls">
-                    <h:outputLink value="#" onclick="#{r:component('popupPanel')}.hide();
+                    <h:outputLink value="#" onclick="#{rich:component('popupPanel')}.hide();
                             return false;">
                         X
                     </h:outputLink>
@@ -68,12 +68,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     hashParam.
 
                 </fieldset>
-            </r:popupPanel>
+            </rich:popupPanel>
 
             <h:commandButton id="openPanelButton" value="Show popup">
-                <r:componentControl target="popupPanel" operation="show">
+                <rich:componentControl target="popupPanel" operation="show">
                     <a4j:param noEscape="true" value="event" />
-                    <r:hashParam id="hashParam"
+                    <rich:hashParam id="hashParam"
                                  rendered="#{richHashParamBean.attributes['rendered'].value}"
                                  >
                         <f:param name="width" value="543" />
@@ -82,20 +82,20 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         <f:param name="minHeight" value="150" />
                         <a4j:param noEscape="true" name="left" value="33+44" />
                         <a4j:param noEscape="true" name="top" value="55-33" />
-                    </r:hashParam>
-                </r:componentControl>
+                    </rich:hashParam>
+                </rich:componentControl>
             </h:commandButton>
 
             <h:commandLink id="hiddenLink">
-                <r:componentControl target="popupPanel" operation="show">
-                    <r:hashParam id="hashParam"
+                <rich:componentControl target="popupPanel" operation="show">
+                    <rich:hashParam id="hashParam"
                                  name="#{richHashParamBean.attributes['name'].value}"
                                  rendered="#{richHashParamBean.attributes['rendered'].value}"
                                  >
                         <f:param name="param1" value="1" />
                         <f:param name="param2" value="2" />
-                    </r:hashParam>
-                </r:componentControl>
+                    </rich:hashParam>
+                </rich:componentControl>
             </h:commandLink>
 
         </ui:define>

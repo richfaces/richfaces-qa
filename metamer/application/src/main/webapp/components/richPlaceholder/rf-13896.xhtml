@@ -5,7 +5,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:r="http://richfaces.org/rich"
+      xmlns:rich="http://richfaces.org/rich"
       xmlns:a4j="http://richfaces.org/a4j">
 
     <!--
@@ -70,9 +70,9 @@
             </ol>
             <br/>
             <h:inputText id="input" required="true" value="#{rf13896.name}" >
-                <r:placeholder id="placeholder" value="Type a name" />
+                <rich:placeholder id="placeholder" value="Type a name" />
             </h:inputText>
-            <r:message id="message" for="input" />
+            <rich:message id="message" for="input" />
             <br/>
             <a4j:commandButton id="addButton"
                                value="Add"
@@ -80,14 +80,14 @@
                                actionListener="#{rf13896.addName}"
                                render="input,table"/>
             <br/>
-            <r:dataTable id="table" value="#{rf13896.names}" var="n" >
-                <r:column>
+            <rich:dataTable id="table" value="#{rf13896.names}" var="n" >
+                <rich:column>
                     <f:facet name="header">
                         Names
                     </f:facet>
                     <h:outputText value="#{n}" />
-                </r:column>
-            </r:dataTable>
+                </rich:column>
+            </rich:dataTable>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter" />

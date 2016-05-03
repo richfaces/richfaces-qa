@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:r="http://richfaces.org/rich"
+      xmlns:rich="http://richfaces.org/rich"
       xmlns:f="http://java.sun.com/jsf/core">
 
     <!--
@@ -37,15 +37,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </f:metadata>
         </ui:define>
         <ui:define name="testedComponent">
-            <r:dataTable id="componentWithRowsFunction"
+            <rich:dataTable id="componentWithRowsFunction"
                             value="#{rowsBean.values}"
                             var="item"
                             rowKeyVar="rowKeyVar"
                             >
-                <r:column>
+                <rich:column>
                     <h:outputText id="output" value="value = #{item.toString()}"/>
-                </r:column>
-            </r:dataTable>
+                </rich:column>
+            </rich:dataTable>
         </ui:define>
     </ui:composition>
 </html>

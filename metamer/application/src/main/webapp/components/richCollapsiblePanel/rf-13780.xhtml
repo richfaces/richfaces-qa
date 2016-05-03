@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:r="http://richfaces.org/rich"
+      xmlns:rich="http://richfaces.org/rich"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -51,15 +51,15 @@
                 <li>RF-13780: No error in the a4j:log is present</li>
                 <li>RF-13988: Output will be updated.</li>
             </ul>
-            <r:inplaceInput id="input" value="#{rf13780.data}">
+            <rich:inplaceInput id="input" value="#{rf13780.data}">
                 <a4j:ajax event="change" render="output"/>
-            </r:inplaceInput>
+            </rich:inplaceInput>
             <br/>
-            <r:collapsiblePanel id="panel" switchType="ajax" expanded="#{richCollapsiblePanelBean.attributes['expanded'].value}">
+            <rich:collapsiblePanel id="panel" switchType="ajax" expanded="#{richCollapsiblePanelBean.attributes['expanded'].value}">
                 rich:messages component:
                 <br/>
-                <r:messages id="messages"/>
-            </r:collapsiblePanel>
+                <rich:messages id="messages"/>
+            </rich:collapsiblePanel>
             <br/>
             <br/>
             output:

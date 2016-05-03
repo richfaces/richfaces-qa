@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:r="http://richfaces.org/rich"
+      xmlns:rich="http://richfaces.org/rich"
       xmlns:f="http://java.sun.com/jsf/core">
 
     <!--
@@ -37,10 +37,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </f:metadata>
         </ui:define>
         <ui:define name="testedComponent">
-            <r:list keepSaved="#{keepSavedBean.keepSaved}"
+            <rich:list keepSaved="#{keepSavedBean.keepSaved}"
                     value="#{keepSavedBean.dataList}" var="item">
                 <h:inputText id="input" validator="org.richfaces.PositiveNumberValidator" value="#{item.data}" converter="javax.faces.Integer"/>
-            </r:list>
+            </rich:list>
         </ui:define>
     </ui:composition>
 </html>
