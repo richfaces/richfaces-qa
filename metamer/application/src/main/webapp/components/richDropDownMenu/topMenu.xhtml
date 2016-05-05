@@ -166,6 +166,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </a4j:outputPanel>
 
             <br /><br />
+            <fieldset>
+                <legend>JavaScript API</legend>
+                On click:
+                <br/>
+                <input id="show" type="button" name="show" value="show()" onclick="#{rich:component('menu1')}.show()" />
+                <input id="hide" type="button" name="hide" value="hide()" onclick="#{rich:component('menu1')}.hide()" />
+                <input id="activateItem1" type="button" name="activateItem1" value="activateItem('#{rich:clientId('menuItem1')}')" onclick="#{rich:component('menu1')}.activateItem('#{rich:clientId('menuItem1')}')" />
+                <input id="activateItem42" type="button" name="activateItem42" value="activateItem('#{rich:clientId('menuItem42')}')" onclick="#{rich:component('menu1')}.activateItem('#{rich:clientId('menuItem42')}')" />
+            </fieldset>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
