@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -129,7 +133,20 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                 </rich:collapsibleSubTable>
             </rich:dataTable>
-
+            <br/><br/>
+            <script>
+                var $subtable1 = $("[id$=':0:richSubTable']");
+                var $subtable2 = $("[id$=':1:richSubTable']");
+            </script>
+            <fieldset>
+                <legend>JavaScript API</legend>
+                On click:
+                <br/>
+                <input id="expandAllSubTables" type="button" name="expandAllSubTables" value="expandAllSubTables()" onclick="#{rich:component('richDataTable')}.expandAllSubTables()" />
+                <input id="collapseAllSubTables" type="button" name="collapseAllSubTables" value="collapseAllSubTables()" onclick="#{rich:component('richDataTable')}.collapseAllSubTables()" />
+                <input id="switchSubTableMen" type="button" name="switchSubTableMen" value="switchSubTable($subtable1)" onclick="#{rich:component('richDataTable')}.switchSubTable($subtable1)" />
+                <input id="switchSubTableWomen" type="button" name="switchSubTableWomen" value="switchSubTable($subtable2)" onclick="#{rich:component('richDataTable')}.switchSubTable($subtable2)" />
+            </fieldset>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

@@ -49,9 +49,8 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
 
     private final Attributes<DataTableAttributes> dataTableAttributes = getAttributes();
     private boolean isBuiltIn = false;
-    int modelIndex;
-    int rowIndex;
-    List<Employee> sortedEmployees;
+    private int modelIndex;
+    private List<Employee> sortedEmployees;
 
     /**
      * Created a list containing five number of rows to be tested. These number are relative to the amount of rows visible on
@@ -64,7 +63,7 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
         List<Integer> rowsToTest = new ArrayList<Integer>();
         rowsToTest.add(0); // first item
         rowsToTest.add((int) Math.round((visiblePageRows - 1) / 2 - 0.5 * (visiblePageRows - 1) / 2)); // item in first quarter
-        rowsToTest.add((int) Math.round((visiblePageRows - 1) / 2)); // item in half
+        rowsToTest.add(Math.round((visiblePageRows - 1) / 2)); // item in half
         rowsToTest.add((int) Math.round((visiblePageRows - 1) / 2 + 0.5 * (visiblePageRows - 1) / 2)); // item in third quarter
         rowsToTest.add(visiblePageRows - 1); // last item
         return Collections.unmodifiableList(rowsToTest);
@@ -285,7 +284,7 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
     }
 
     public void verifyRow(int rowIndex, int modelIndex) {
-        verifyRow(rowIndex, modelIndex, Collections.EMPTY_SET);
+        verifyRow(rowIndex, modelIndex, Collections.<Integer>emptySet());
     }
 
     public void verifyRow(int rowIndex, int modelIndex, Set<Integer> hiddenColumns) {
@@ -315,7 +314,7 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
     }
 
     public void verifySortingByColumns(String... columns) {
-        verifySortingByColumns(Collections.EMPTY_SET, columns);
+        verifySortingByColumns(Collections.<Integer>emptySet(), columns);
     }
 
     public void verifySortingByColumns(Set<Integer> hiddenColumns, String... columns) {
