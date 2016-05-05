@@ -123,6 +123,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <h:outputText id="output" style="font-weight:bold" value="#{richContextMenuBean.current}"></h:outputText>
             </a4j:outputPanel>
 
+            <fieldset>
+                <legend>JavaScript API</legend>
+                On click:
+                <br/>
+                <input id="show" type="button" name="show" value="show()" onclick="#{rich:component('ctxMenu')}.show()" />
+                <input id="hide" type="button" name="hide" value="hide()" onclick="#{rich:component('ctxMenu')}.hide()" />
+                <input id="activateItem2" type="button" name="activateItem2" value="activateItem('#{rich:clientId('menuItem2')}')" onclick="#{rich:component('ctxMenu')}.activateItem('#{rich:clientId('menuItem2')}')" />
+                <input id="activateItem42" type="button" name="activateItem42" value="activateItem('#{rich:clientId('menuItem42')}')" onclick="#{rich:component('ctxMenu')}.activateItem('#{rich:clientId('menuItem42')}')" />
+            </fieldset>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
