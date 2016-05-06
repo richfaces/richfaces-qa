@@ -181,7 +181,18 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:outputText id="expandedGroups" value="#{richPanelMenuGroupBean.expanded}" />
                 </a4j:outputPanel>
             </fieldset>
-
+            <fieldset>
+                <legend>JavaScript API</legend>
+                All functions are invoked on group23.
+                On click:
+                <br/>
+                <input type="button" id="expand" name="expand" value="expand()" onclick="#{rich:component('group23')}.expand()" />
+                <br/>
+                <input type="button" id="collapse" name="collapse" value="collapse()" onclick="#{rich:component('group23')}.collapse()" />
+                <br/>
+                <input type="button" id="select" name="select" value="select('#{rich:clientId('item232')}')"
+                       onclick="#{rich:component('group23')}.select('item232')" />
+            </fieldset>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
