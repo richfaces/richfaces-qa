@@ -64,7 +64,7 @@
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
         <shrinkwrap.descriptors.version>2.0.0-alpha-9</shrinkwrap.descriptors.version>
 
-        <jboss.javaee6.spec.version>3.0.2.Final</jboss.javaee6.spec.version>
+        <jboss.javaee6.spec.version>3.0.3.Final</jboss.javaee6.spec.version>
 
         <version.selenium>2.53.0</version.selenium>
         <version.testng>6.9.10</version.testng>
