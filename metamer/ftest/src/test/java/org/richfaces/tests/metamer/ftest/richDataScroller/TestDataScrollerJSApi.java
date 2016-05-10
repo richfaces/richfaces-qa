@@ -27,6 +27,8 @@ import static org.testng.Assert.assertEquals;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
 import org.richfaces.tests.metamer.ftest.richDataScroller.SimplePage.ScrollerPosition;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -52,6 +54,8 @@ public class TestDataScrollerJSApi extends AbstractWebDriverTest {
     }
 
     @Test
+    @Skip
+    @IssueTracking("https://issues.jboss.org/browse/RF-14275")
     public void testFastRewindFastForward() {
         attributes.set(DataScrollerAttributes.fastStep, 2);
 
