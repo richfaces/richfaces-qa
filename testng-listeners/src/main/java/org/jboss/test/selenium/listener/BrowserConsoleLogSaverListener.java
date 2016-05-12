@@ -75,7 +75,7 @@ public class BrowserConsoleLogSaverListener extends TestListenerAdapter {
         if (errorsCount > 0) {
             System.out.println();
             System.out.println(format("Encountered <{0}> {1} in browser console during testing. You can check the log at <{2}>.",
-                errorsCount, errorsCount > 1 ? "errors" : "error", OUTPUT_FILE.getAbsolutePath()));
+                errorsCount, errorsCount > 1 ? "errors" : "error", "file://" + OUTPUT_FILE.getAbsolutePath()));
             System.out.println();
         }
     }
