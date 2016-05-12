@@ -35,7 +35,7 @@ import org.testng.annotations.Test;
 public class TestLineChart extends AbstractChartTest {
 
     @JavaScript
-    protected ChartJs chartJS;
+    private ChartJs chartJS;
 
     @Override
     public String getComponentTestPagePath() {

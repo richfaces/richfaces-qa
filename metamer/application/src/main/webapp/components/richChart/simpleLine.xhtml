@@ -70,6 +70,18 @@
                 <li><span id='hoverInfo'/> (on hover)</li>
                 <li><span id='clickInfo'/> (on click)</li>
             </ul>
+            <br /><br />
+            <fieldset>
+                <legend>JavaScript API</legend>
+                Output:
+                <input id="output" name="output" type="text" value=""/>
+                <br/>
+                <br/>
+                On click:
+                <br/>
+                <input id="resetZoom" type="button" name="resetZoom" value="resetZoom()" onclick="#{rich:component('chart')}.resetZoom()" />
+                <input id="getPlotObject" type="button" name="getPlotObject" value="getPlotObject().getXAxes()[0].max" onclick="$('#output').val(#{rich:component('chart')}.getPlotObject().getXAxes()[0].max)" />
+            </fieldset>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
