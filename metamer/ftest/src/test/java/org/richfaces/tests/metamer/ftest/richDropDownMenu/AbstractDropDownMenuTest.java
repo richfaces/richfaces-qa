@@ -65,8 +65,12 @@ public abstract class AbstractDropDownMenuTest extends AbstractWebDriverTest {
     @Page
     private DropDownMenuPage page;
 
-    private RichFacesDropDownMenu getCurrentMenu() {
+    protected RichFacesDropDownMenu getCurrentMenu() {
         return page.getFileDropDownMenu(driver.getCurrentUrl());
+    }
+
+    public DropDownMenuPage getPage() {
+        return page;
     }
 
     public String returnPopupWidth(String minWidth, RichFacesDropDownMenu dropDownMenu) {
