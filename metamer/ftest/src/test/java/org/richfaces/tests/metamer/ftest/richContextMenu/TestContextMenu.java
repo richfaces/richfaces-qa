@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.richContextMenu;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
-import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
@@ -202,22 +201,20 @@ public class TestContextMenu extends AbstractWebDriverTest {
         // ajax
         contextMenuAttributes.set(ContextMenuAttributes.mode, "ajax");
         jsUtils.scrollToView(page.getTargetPanel1());
-        page.getContextMenu().advanced().show(page.getTargetPanel1());
-        guardAjax(page.getContextMenu().advanced().getItemsElements().get(0)).click();
-        assertEquals(page.getOutput().getText(), "Open", "Menu action was not performed.");
+        guardAjax(page.getContextMenu()).selectItem("New", page.getTargetPanel1());
+        assertEquals(page.getOutput().getText(), "New", "Menu action was not performed.");
 
         // server
         contextMenuAttributes.set(ContextMenuAttributes.mode, "server");
         jsUtils.scrollToView(page.getTargetPanel1());
-        page.getContextMenu().advanced().show(page.getTargetPanel1());
-        guardHttp(page.getContextMenu().advanced().getItemsElements().get(8)).click();
+        guardHttp(page.getContextMenu()).selectItem("Exit", page.getTargetPanel1());
         assertEquals(page.getOutput().getText(), "Exit", "Menu action was not performed.");
 
         // client
         contextMenuAttributes.set(ContextMenuAttributes.mode, "client");
         jsUtils.scrollToView(page.getTargetPanel1());
         page.getContextMenu().advanced().show(page.getTargetPanel1());
-        guardNoRequest(page.getContextMenu().advanced().getItemsElements().get(0)).click();
+        page.getContextMenu().selectItem("Open", page.getTargetPanel1());
     }
 
     @Test
@@ -241,7 +238,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 page.getContextMenu().advanced().show(page.getTargetPanel1());
-                page.getContextMenu().advanced().getItemsElements().get(1).click();
+                page.getContextMenu().advanced().getItemsElements().get(2).click();
             }
         });
     }
@@ -255,7 +252,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 page.getContextMenu().advanced().show(page.getTargetPanel1());
-                new Actions(driver).doubleClick(page.getContextMenu().advanced().getItemsElements().get(1)).build().perform();
+                new Actions(driver).doubleClick(page.getContextMenu().advanced().getItemsElements().get(2)).build().perform();
             }
         });
     }
@@ -268,9 +265,9 @@ public class TestContextMenu extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 page.getContextMenu().advanced().show(page.getTargetPanel1());
-                new Actions(driver).moveToElement(page.getContextMenu().advanced().getItemsElements().get(2)).build().perform();
+                new Actions(driver).moveToElement(page.getContextMenu().advanced().getItemsElements().get(3)).build().perform();
                 waitGui().until().element(page.getGroupList()).is().visible();
-                new Actions(driver).click(page.getContextMenu().advanced().getItemsElements().get(1)).build().perform();
+                new Actions(driver).moveToElement(page.getContextMenu().advanced().getItemsElements().get(0)).build().perform();
                 waitGui().until().element(page.getGroupList()).is().not().visible();
             }
         });
@@ -284,7 +281,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 page.getContextMenu().advanced().show(page.getTargetPanel1());
-                new Actions(driver).moveToElement(page.getContextMenu().advanced().getItemsElements().get(2)).build().perform();
+                new Actions(driver).moveToElement(page.getContextMenu().advanced().getItemsElements().get(3)).build().perform();
                 waitGui().until().element(page.getGroupList()).is().visible();
             }
         });
@@ -354,7 +351,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
             public void perform() {
                 page.getContextMenu().advanced().show(page.getTargetPanel1());
                 Mouse mouse = ((HasInputDevices) driver).getMouse();
-                mouse.mouseDown(((Locatable) page.getContextMenu().advanced().getItemsElements().get(1)).getCoordinates());
+                mouse.mouseDown(((Locatable) page.getContextMenu().advanced().getItemsElements().get(2)).getCoordinates());
             }
         });
     }
@@ -410,7 +407,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
             public void perform() {
                 page.getContextMenu().advanced().show(page.getTargetPanel1());
                 Mouse mouse = ((HasInputDevices) driver).getMouse();
-                Coordinates coords = ((Locatable) page.getContextMenu().advanced().getItemsElements().get(1)).getCoordinates();
+                Coordinates coords = ((Locatable) page.getContextMenu().advanced().getItemsElements().get(2)).getCoordinates();
                 mouse.mouseDown(coords);
                 mouse.mouseUp(coords);
             }

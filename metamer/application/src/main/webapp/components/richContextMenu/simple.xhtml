@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
       xmlns:rich="http://richfaces.org/rich"
       xmlns:a4j="http://richfaces.org/a4j" >
 
@@ -85,11 +88,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                               title="#{richContextMenuBean.attributes['title'].value}"
                               verticalOffset="#{richContextMenuBean.attributes['verticalOffset'].value}"
                               >
+                <rich:menuItem id="menuItem1" label="New" action="#{richContextMenuBean.doNew}" icon="/resources/images/icons/create_doc.gif"/>
+
                 <rich:menuItem id="menuItem2" label="Open" action="#{richContextMenuBean.doOpen}" icon="/resources/images/icons/open.gif" />
 
                 <rich:menuGroup id="menuGroup3" label="Open Recent..." disabled="true">
-                    <rich:menuItem id="menuItem31"  label="Save" action="#{richContextMenuBean.doSave}" icon="/resources/images/icons/save.gif" />
-                    <rich:menuItem id="menuItem32" label="Save All" action="#{richContextMenuBean.doSaveAll}">
+                    <rich:menuItem id="menuItem31" label="Save" action="#{richContextMenuBean.doSave}" icon="/resources/images/icons/save.gif" />
+                    <rich:menuItem id="menuItem32"  label="Save All" action="#{richContextMenuBean.doSaveAll}">
                         <f:facet name="icon">
                             <h:graphicImage library="images" name="icons/save_all.gif" />
                         </f:facet>
@@ -100,7 +105,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                 <rich:menuGroup id="menuGroup4" label="Save As...">
                     <rich:menuItem id="menuItem41" label="Save" action="#{richContextMenuBean.doSave}" icon="/resources/images/icons/save.gif" />
-                    <rich:menuItem id="menuItem42" label="Save All" action="#{richContextMenuBean.doSaveAll}" >
+                    <rich:menuItem id="menuItem42" label="Save All" action="#{richContextMenuBean.doSaveAll}">
                         <f:facet name="icon">
                             <h:graphicImage library="images" name="icons/save_all.gif" />
                         </f:facet>
@@ -129,7 +134,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <br/>
                 <input id="show" type="button" name="show" value="show()" onclick="#{rich:component('ctxMenu')}.show()" />
                 <input id="hide" type="button" name="hide" value="hide()" onclick="#{rich:component('ctxMenu')}.hide()" />
-                <input id="activateItem2" type="button" name="activateItem2" value="activateItem('#{rich:clientId('menuItem2')}')" onclick="#{rich:component('ctxMenu')}.activateItem('#{rich:clientId('menuItem2')}')" />
+                <input id="activateItem1" type="button" name="activateItem1" value="activateItem('#{rich:clientId('menuItem1')}')" onclick="#{rich:component('ctxMenu')}.activateItem('#{rich:clientId('menuItem1')}')" />
                 <input id="activateItem42" type="button" name="activateItem42" value="activateItem('#{rich:clientId('menuItem42')}')" onclick="#{rich:component('ctxMenu')}.activateItem('#{rich:clientId('menuItem42')}')" />
             </fieldset>
         </ui:define>
