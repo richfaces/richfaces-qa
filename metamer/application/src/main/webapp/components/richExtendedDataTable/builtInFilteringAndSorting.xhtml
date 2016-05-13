@@ -237,6 +237,16 @@
                                        render="richEDT scroller1" />
                 </f:facet>
             </rich:extendedDataTable>
+            <fieldset>
+                <legend>JavaScript API</legend>
+                On click:
+                <br/>
+                <input id="clearFiltering" type="button" name="clearFiltering" value="clearFiltering()" onclick="#{rich:component('richEDT')}.clearFiltering()" />
+                <input id="clearSorting" type="button" name="clearSorting" value="clearSorting()" onclick="#{rich:component('richEDT')}.clearSorting()" />
+                <input id="filter" type="button" name="filter" value="filter('columnName', 'Milan')" onclick="#{rich:component('richEDT')}.filter('columnName', 'Milan')" />
+                <input id="sortDescendingKids" type="button" name="sortDescendingKids" value="sort('columnNumberOfKids1','descending', false)" onclick="#{rich:component('richEDT')}.sort('columnNumberOfKids1', 'descending', false)" />
+                <input id="sortDescendingName" type="button" name="sortDescendingName" value="sort('columnName','descending', true)" onclick="#{rich:component('richEDT')}.sort('columnName', 'descending', true)" />
+            </fieldset>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
