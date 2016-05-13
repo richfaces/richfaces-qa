@@ -181,6 +181,8 @@
                 <legend>JavaScript API</legend>
                 On click:
                 <br/>
+                <input id="clearFiltering" type="button" name="clearFiltering" value="clearFiltering()" onclick="#{rich:component('richDataTable')}.clearFiltering()" />
+                <input id="clearSorting" type="button" name="clearSorting" value="clearSorting()" onclick="#{rich:component('richDataTable')}.clearSorting()" />
                 <input id="filter" type="button" name="filter" value="filter('columnName', 'Milan')" onclick="#{rich:component('richDataTable')}.filter('columnName', 'Milan')" />
                 <input id="sortDescendingKids" type="button" name="sortDescendingKids" value="sort('columnNumberOfKids1','descending', false)" onclick="#{rich:component('richDataTable')}.sort('columnNumberOfKids1', 'descending', false)" />
                 <input id="sortDescendingName" type="button" name="sortDescendingName" value="sort('columnName','descending', true)" onclick="#{rich:component('richDataTable')}.sort('columnName', 'descending', true)" />

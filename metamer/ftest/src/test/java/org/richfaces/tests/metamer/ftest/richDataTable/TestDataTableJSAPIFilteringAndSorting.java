@@ -39,6 +39,10 @@ public class TestDataTableJSAPIFilteringAndSorting extends DataTableSortingTest 
 
     private final Attributes<DataTableAttributes> attributes = getAttributes();
 
+    @FindBy(css = "[id$=clearFiltering]")
+    private WebElement clearFilteringButton;
+    @FindBy(css = "[id$=clearSorting]")
+    private WebElement clearSortingButton;
     @FindBy(css = "[id$=filter]")
     private WebElement filterButton;
     @FindBy(css = "[id$=sortDescendingKids]")
@@ -59,16 +63,19 @@ public class TestDataTableJSAPIFilteringAndSorting extends DataTableSortingTest 
     }
 
     @Test
-    public void testFilter() {
+    public void testFilterAndClearFiltering() {
         assertEquals(getTable().getAllRows().size(), 10);
         getMetamerPage().performJSClickOnButton(filterButton, WaitRequestType.XHR);
         assertEquals(getTable().getAllRows().size(), 1);
         assertEquals(getTable().getFirstRow().getNameColumnValue(), "Milan Rastislav Štefánik");
+
+        getMetamerPage().performJSClickOnButton(clearFilteringButton, WaitRequestType.XHR);
+        assertEquals(getTable().getAllRows().size(), 10);
     }
 
     @Test
     @Templates("plain")// similar tests in TestDataTableSortingBuiltIn
-    public void testSorting() {
+    public void testSortAndClearSorting() {
         attributes.set(DataTableAttributes.sortMode, "single");
         getMetamerPage().performJSClickOnButton(sortDescendingKidsButton, WaitRequestType.XHR);
         verifySortingByColumns("numberOfKids-");
@@ -82,6 +89,8 @@ public class TestDataTableJSAPIFilteringAndSorting extends DataTableSortingTest 
         getMetamerPage().performJSClickOnButton(sortDescendingNameResetSortingButton, WaitRequestType.XHR);
         getMetamerPage().performJSClickOnButton(sortDescendingKidsButton, WaitRequestType.XHR);
         verifySortingByColumns("name-", "numberOfKids-");
-    }
 
+        getMetamerPage().performJSClickOnButton(clearSortingButton, WaitRequestType.XHR);
+        verifySortingByColumns();
+    }
 }
