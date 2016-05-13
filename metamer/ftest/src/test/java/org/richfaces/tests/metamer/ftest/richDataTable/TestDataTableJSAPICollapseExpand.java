@@ -26,6 +26,8 @@ import static org.testng.Assert.assertTrue;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.richCollapsibleSubTable.AbstractCollapsibleSubTableTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
@@ -33,6 +35,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
+@IssueTracking("https://issues.jboss.org/browse/RF-14281")
 public class TestDataTableJSAPICollapseExpand extends AbstractCollapsibleSubTableTest {
 
     private static final boolean FEMALE = Boolean.FALSE;
@@ -53,6 +56,7 @@ public class TestDataTableJSAPICollapseExpand extends AbstractCollapsibleSubTabl
     }
 
     @Test
+    @Skip // RF-14281
     public void testCollapseAllExpandAll() {
         assertTrue(getSubTable(MALE).advanced().isExpanded());
         assertTrue(getSubTable(FEMALE).advanced().isExpanded());
@@ -65,6 +69,7 @@ public class TestDataTableJSAPICollapseExpand extends AbstractCollapsibleSubTabl
     }
 
     @Test
+    @Skip // RF-14281
     public void testSwitchSubTable() {
         assertTrue(getSubTable(MALE).advanced().isExpanded());
         assertTrue(getSubTable(FEMALE).advanced().isExpanded());
