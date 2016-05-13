@@ -27,22 +27,21 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision: 22749 $
  */
 public class AbstractPanelMenuTest extends AbstractWebDriverTest {
 
     @Page
     private PanelMenuPage page;
 
+    @Override
+    public String getComponentTestPagePath() {
+        return "richPanelMenu/simple.xhtml";
+    }
+
     /**
      * @return the page
      */
     public PanelMenuPage getPage() {
         return page;
-    }
-
-    @Override
-    public String getComponentTestPagePath() {
-        return "richPanelMenu/simple.xhtml";
     }
 }
