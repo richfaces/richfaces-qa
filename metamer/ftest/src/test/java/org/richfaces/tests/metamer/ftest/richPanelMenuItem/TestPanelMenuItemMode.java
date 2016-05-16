@@ -30,8 +30,9 @@ import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
-import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 import java.util.LinkedList;
 
@@ -41,7 +42,8 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
-import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
+import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -52,21 +54,22 @@ import org.testng.annotations.Test;
  */
 public class TestPanelMenuItemMode extends AbstractWebDriverTest {
 
-    @UseForAllTests(valuesFrom = FROM_FIELD, value = "booleans")
     private Boolean bypassUpdates;
-
-    @UseForAllTests(valuesFrom = FROM_FIELD, value = "booleans")
     private Boolean immediate;
-    @UseForAllTests(valuesFrom = FROM_FIELD, value = "listeners")
-    private String listener;
-
     private final String[] listeners = new String[] { "phases", "action invoked", "action listener invoked", "executeChecker",
         "item changed" };
-    @UseForAllTests(valuesFrom = FROM_ENUM, value = "")
     private Mode mode;
+
     @Page
     private PanelMenuItemPage page;
+
     private final Attributes<PanelMenuItemAttributes> panelMenuItemAttributes = getAttributes();
+    private final Mode[] requestModes = new Mode[] { Mode.ajax, Mode.server };
+
+    @Override
+    public String getComponentTestPagePath() {
+        return "richPanelMenuItem/simple.xhtml";
+    }
 
     private PhaseId[] getExpectedPhases() {
         LinkedList<PhaseId> list = new LinkedList<PhaseId>();
@@ -83,7 +86,7 @@ public class TestPanelMenuItemMode extends AbstractWebDriverTest {
         return list.toArray(new PhaseId[list.size()]);
     }
 
-    private PhaseId getListenerInvocationPhase() {
+    private PhaseId getListenerInvocationPhase(String listener) {
         PhaseId[] phases = getExpectedPhases();
         PhaseId phase = phases[phases.length - 2];
 
@@ -104,14 +107,14 @@ public class TestPanelMenuItemMode extends AbstractWebDriverTest {
         return phase;
     }
 
-    @Override
-    public String getComponentTestPagePath() {
-        return "richPanelMenuItem/simple.xhtml";
-    }
-
     @Test
     @CoversAttributes({ "bypassUpdates", "execute", "immediate", "mode" })
-    public void testMode() {
+    @Uses({
+        @UseWithField(field = "immediate", valuesFrom = FROM_FIELD, value = "booleans"),
+        @UseWithField(field = "bypassUpdates", valuesFrom = FROM_FIELD, value = "booleans"),
+        @UseWithField(field = "mode", valuesFrom = FROM_FIELD, value = "requestModes")
+    })
+    public void testModeAjaxAndServer() {
         attsSetter()
             .setAttribute(PanelMenuItemAttributes.immediate).toValue(immediate)
             .setAttribute(PanelMenuItemAttributes.bypassUpdates).toValue(bypassUpdates)
@@ -119,6 +122,7 @@ public class TestPanelMenuItemMode extends AbstractWebDriverTest {
             .setAttribute(PanelMenuItemAttributes.execute).toValue("@this executeChecker")
             .asSingleAction().perform();
 
+        assertFalse(page.getItem().advanced().isSelected());
         switch (mode) {
             case ajax:
                 guardAjax(page.getItem()).select();
@@ -130,12 +134,13 @@ public class TestPanelMenuItemMode extends AbstractWebDriverTest {
                 page.getItem().select();
                 break;
         }
+        assertTrue(page.getItem().advanced().isSelected());
 
-        if (mode != Mode.client) {
+        for (String listener : listeners) {
             if ("phases".equals(listener)) {
                 page.assertPhases(getExpectedPhases());
             } else {
-                PhaseId listenerInvocationPhase = getListenerInvocationPhase();
+                PhaseId listenerInvocationPhase = getListenerInvocationPhase(listener);
                 if (listenerInvocationPhase == null) {
                     page.assertNoListener(listener);
                 } else {
@@ -143,5 +148,15 @@ public class TestPanelMenuItemMode extends AbstractWebDriverTest {
                 }
             }
         }
+    }
+
+    @Test
+    @CoversAttributes("mode")
+    public void testModeClient() {
+        panelMenuItemAttributes.set(PanelMenuItemAttributes.mode, Mode.client);
+
+        assertFalse(page.getItem().advanced().isSelected());
+        page.getItem().select();
+        assertTrue(page.getItem().advanced().isSelected());
     }
 }
