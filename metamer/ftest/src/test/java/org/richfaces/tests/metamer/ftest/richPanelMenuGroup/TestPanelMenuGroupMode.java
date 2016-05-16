@@ -99,7 +99,7 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
         @UseWithField(field = "bypassUpdates", valuesFrom = FROM_FIELD, value = "booleans"),
         @UseWithField(field = "mode", valuesFrom = FROM_FIELD, value = "requestModes")
     })
-    public void testAjaxAndServerMode() {
+    public void testModeAjaxAndServer() {
         attsSetter()
             .setAttribute(PanelMenuGroupAttributes.immediate).toValue(immediate)
             .setAttribute(PanelMenuGroupAttributes.bypassUpdates).toValue(bypassUpdates)
@@ -136,7 +136,7 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
 
     @Test(groups = "smoke")
     @CoversAttributes("mode")
-    public void testClientMode() {
+    public void testModeClient() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, Mode.client);
 
         assertTrue(getPage().getTopGroup().advanced().isExpanded());
