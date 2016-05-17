@@ -153,6 +153,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </f:facet>
 
             </rich:extendedDataTable>
+            <fieldset>
+                <legend>JavaScript API</legend>
+                On click:
+                <br/>
+                <input id="selectRowsUsingIndex" type="button" name="selectRowsUsingIndex" value="selectRows(2)" onclick="#{rich:component('richEDT')}.selectRows(2)" />
+                <input id="selectRowsUsingRange" type="button" name="selectRowsUsingRange" value="selectRows([1,5])" onclick="#{rich:component('richEDT')}.selectRows([1,5])" />
+                <input id="deselectRow" type="button" name="deselectRow" value="deselectRow(2)" onclick="#{rich:component('richEDT')}.deselectRow(2)" />
+            </fieldset>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
