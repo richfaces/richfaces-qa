@@ -1,6 +1,5 @@
 #!/bin/bash
-SCRIPT_DIR=`dirname $BASH_SOURCE`;
-SCRIPT_DIR=`readlink -f $SCRIPT_DIR`;
+SCRIPT_DIR=$( cd "$( dirname "$0" )" && pwd );
 
 rm -rf $SCRIPT_DIR/richfaces-simpleapp;
 rm -rf $SCRIPT_DIR/richfaces-gae;

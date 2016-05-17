@@ -2,8 +2,8 @@
 if [ "$MAVEN"  == "" ]; then
     if [ -f "/qa/tools/opt/apache-maven-3.2.5/bin/mvn" ]; then
 	    MAVEN="/qa/tools/opt/apache-maven-3.2.5/bin/mvn"
-    elif [ -f "t:/opt/apache-maven-3.2.5/bin/mvn" ]; then
-	    MAVEN="t:/opt/apache-maven-3.2.5/bin/mvn"
+    elif [ -f "t:/opt/apache-maven-3.2.5/bin/mvn.bat" ]; then
+	    MAVEN="t:/opt/apache-maven-3.2.5/bin/mvn.bat"
     else
         MAVEN="mvn"
     fi

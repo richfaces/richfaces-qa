@@ -1,9 +1,10 @@
 #!/bin/bash
-SCRIPT_DIR=`dirname $BASH_SOURCE`;
-SCRIPT_DIR=`readlink -f $SCRIPT_DIR`;
+SCRIPT_DIR=$( cd "$( dirname "$0" )" && pwd );
 WORKING_DIR=`pwd`;
-source "$SCRIPT_DIR/version.sh";
-source "$SCRIPT_DIR/config.sh";
+# add additional functions/variables
+# 'source' is not working on Solaris, using '.' instead.
+. $SCRIPT_DIR/version.sh;
+. $SCRIPT_DIR/config.sh;
 
 if [ -d "$SCRIPT_DIR/richfaces-kitchensink" ]; then
     rm -rf "$SCRIPT_DIR/richfaces-kitchensink";
