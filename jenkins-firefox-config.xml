@@ -70,12 +70,12 @@
     <jenkinsFirefoxConfiguration>
         <osVersion>el6</osVersion>
         <osArch>amd64</osArch>
-        <firefoxBin>/qa/tools/opt/x86_64/firefox-31esr/firefox</firefoxBin>
+        <firefoxBin>/qa/tools/opt/x86_64/firefox-45esr/firefox</firefoxBin>
     </jenkinsFirefoxConfiguration>
     <!-- RHEL6 else -->
     <jenkinsFirefoxConfiguration>
         <osVersion>el6</osVersion>
-        <firefoxBin>/qa/tools/opt/firefox-31esr/firefox</firefoxBin>
+        <firefoxBin>/qa/tools/opt/firefox-45esr/firefox</firefoxBin>
     </jenkinsFirefoxConfiguration>
 
     <!-- RHEL7 ppc64 -->
@@ -93,12 +93,12 @@
     <!-- WINDOWS all -->
     <jenkinsFirefoxConfiguration>
         <osName>win</osName>
-        <firefoxBin>t:/opt/windows/firefox-31esr/firefox.exe</firefoxBin>
+        <firefoxBin>t:/opt/windows/firefox-45esr/firefox.exe</firefoxBin>
     </jenkinsFirefoxConfiguration>
 
     <!-- MAC all -->
     <jenkinsFirefoxConfiguration>
         <osName>mac</osName>
-        <firefoxBin>/qa/tools/opt/osx/firefox-31esr/Contents/MacOS/firefox</firefoxBin>
+        <firefoxBin>/qa/tools/opt/osx/firefox-45esr/Contents/MacOS/firefox</firefoxBin>
     </jenkinsFirefoxConfiguration>
 </jenkinsFirefoxConfigurations>
