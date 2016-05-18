@@ -29,14 +29,15 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestAccordionKVS extends AbstractWebDriverTest {
+
+    private final AccordionReloadTester accordionReloadTester = new AccordionReloadTester();
 
     @Page
     private AccordionPage page;
@@ -48,21 +49,20 @@ public class TestAccordionKVS extends AbstractWebDriverTest {
 
     @Test(groups = { "keepVisualStateTesting" })
     public void testRefreshFullPage() {
-        new AccordionReloadTester().testFullPageRefresh();
+        accordionReloadTester.testFullPageRefresh();
     }
 
     @Test(groups = { "keepVisualStateTesting" })
-    @Skip
-    @IssueTracking("https://issues.jboss.org/browse/RF-12035")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12035")
     public void testRenderAll() {
-        new AccordionReloadTester().testRerenderAll();
+        accordionReloadTester.testRerenderAll();
     }
 
     private class AccordionReloadTester extends ReloadTester<Integer> {
 
         @Override
         public void doRequest(Integer accordionIndex) {
-            page.getAccordion().switchTo(accordionIndex.intValue());
+            page.getAccordion().switchTo(accordionIndex);
         }
 
         @Override

@@ -27,9 +27,7 @@ import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.testng.annotations.Test;
 
 /**
@@ -39,22 +37,23 @@ import org.testng.annotations.Test;
  */
 public class TestAccordionItemKVS extends AbstractWebDriverTest {
 
+    private final AccordionReloadTester accordionReloadTester = new AccordionReloadTester();
+
     @Override
     public String getComponentTestPagePath() {
         return "richAccordionItem/simple.xhtml";
     }
 
     @Test(groups = { "keepVisualStateTesting" })
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-12131", "https://issues.jboss.org/browse/RF-13727" })
+    @RegressionTest(value = { "https://issues.jboss.org/browse/RF-12131", "https://issues.jboss.org/browse/RF-13727" })
     public void testRefreshFullPage() {
-        new AccordionReloadTester().testFullPageRefresh();
+        accordionReloadTester.testFullPageRefresh();
     }
 
     @Test(groups = { "keepVisualStateTesting" })
-    @Skip
-    @IssueTracking("https://issues.jboss.org/browse/RF-12035")
+    @RegressionTest(value = "https://issues.jboss.org/browse/RF-12035")
     public void testRenderAll() {
-        new AccordionReloadTester().testRerenderAll();
+        accordionReloadTester.testRerenderAll();
     }
 
     private class AccordionReloadTester extends ReloadTester<String> {
