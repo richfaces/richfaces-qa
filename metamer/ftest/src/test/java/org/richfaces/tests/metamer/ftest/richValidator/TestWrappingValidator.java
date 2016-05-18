@@ -24,7 +24,6 @@ package org.richfaces.tests.metamer.ftest.richValidator;
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
-import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -85,7 +84,6 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
     @Test
     @CoversAttributes("disabled")
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-12154")
-    @Templates(exclude = { "richPopupPanel" })
     public void testDisabled() {
         String invalidValue = "11";
         // set disabled to false
