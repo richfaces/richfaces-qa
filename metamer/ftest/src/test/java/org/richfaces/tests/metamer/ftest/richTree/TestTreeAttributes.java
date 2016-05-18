@@ -460,19 +460,6 @@ public class TestTreeAttributes extends AbstractTreeTest {
     }
 
     @Test
-    @Skip
-    @CoversAttributes({ "onbeforenodetoggle", "onbegin", "onbeforedomupdate", "oncomplete", "onnodetoggle" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-10265")
-    @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
-    public void testToggleClientSideEventsOrder() {
-        treeAttributes.set(TreeAttributes.toggleType, SwitchType.ajax.toString().toLowerCase());
-        String[] events = new String[] { "beforenodetoggle", "begin", "beforedomupdate", "complete", "nodetoggle" };
-        testRequestEventsBefore(events);
-        expandFirstNodeAjaxAction.perform();
-        testRequestEventsAfter(events);
-    }
-
-    @Test
     @CoversAttributes("toggleListener")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     public void testToggleListener() {
