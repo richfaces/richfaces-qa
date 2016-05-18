@@ -126,9 +126,7 @@ public class TestPlaceHolderWithInplaceSelect extends AbstractPlaceholderJSFTest
     }
 
     @Test
-    @Skip
-    @IssueTracking("https://issues.jboss.org/browse/RF-12650")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
+    @RegressionTest({ "https://issues.jboss.org/browse/RF-12623", "https://issues.jboss.org/browse/RF-12650" })
     @Override
     @Templates(value = "plain")
     public void testRendered() {
