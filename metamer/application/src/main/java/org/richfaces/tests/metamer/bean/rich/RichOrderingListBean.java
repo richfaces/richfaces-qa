@@ -30,6 +30,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.model.SelectItem;
 
 import org.richfaces.component.UIOrderingList;
 import org.richfaces.tests.metamer.Attributes;
@@ -66,6 +67,7 @@ public class RichOrderingListBean implements Serializable {
     private List<Capital> emptyCapitals = Lists.newArrayList();
     private Collection<String> hiddenAttributes = new ArrayList<String>();
     private String validatorMessage;
+    private List<SelectItem> value = null;
 
     public static Object extractCollectionType(Attributes attributes) {
         String collectionString = attributes.get(COLLECTION_TYPE).getValue().toString();
@@ -93,6 +95,7 @@ public class RichOrderingListBean implements Serializable {
     }
 
     public List<Capital> getCapitals() {
+        System.out.println("capitals = " + capitals);
         return capitals;
     }
 
@@ -114,6 +117,23 @@ public class RichOrderingListBean implements Serializable {
 
     public String getValidatorMessage() {
         return validatorMessage;
+    }
+
+    public List<SelectItem> getValue() {
+        return value;
+    }
+
+    public String getValueAsString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (SelectItem value1 : getValue()) {
+            sb.append(value1.getLabel()).append(", ");
+        }
+        if (sb.charAt(sb.length() - 1) == ' ') {
+            sb.delete(sb.length() - 2, sb.length());
+        }
+        sb.append("]");
+        return sb.toString();
     }
 
     @PostConstruct
@@ -141,6 +161,13 @@ public class RichOrderingListBean implements Serializable {
             hiddenAttributes.add(attribute);
             attributes.remove(attribute);
         }
+        value = Lists.newArrayList(
+            new SelectItem("first", "first", "", true),
+            new SelectItem("second", "second", "", false),
+            new SelectItem("third", "third", "", true),
+            new SelectItem("fourth", "fourth", "", false),
+            new SelectItem("fifth", "fifth", "", true)
+        );
     }
 
     public void setAttributes(Attributes attributes) {
@@ -166,5 +193,4 @@ public class RichOrderingListBean implements Serializable {
     public void setValidatorMessage(String validatorMessage) {
         this.validatorMessage = validatorMessage;
     }
-
 }

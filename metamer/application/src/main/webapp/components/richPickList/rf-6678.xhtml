@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+
+    <!--
+    JBoss, Home of Professional Open Source
+    Copyright 2010-2016, Red Hat, Inc. and individual contributors
+    by the @authors tag. See the copyright.txt in the distribution for a
+    full listing of individual contributors.
+    
+    This is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as
+    published by the Free Software Foundation; either version 2.1 of
+    the License, or (at your option) any later version.
+    
+    This software is distributed in the hope that it will be useful,
+    but inAtt ANY WARRANTY; inAtt even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    Lesser General Public License for more details.
+    
+    You should have received a copy of the GNU Lesser General Public
+    License along inBean this software; if not, write to the Free
+    Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+    02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="component">
+            <p>
+                Page simulating issue <a href="https://issues.jboss.org/browse/RF-6678">RF-6678: RichFaces Select components: implement disabled state support for selectItem</a>.
+            </p>
+            <p>
+                The following component uses multiple <b>f:selectItem</b>s and every odd item is disabled. Before RF 4.5.17 such item was selectable with mouse/keyboard.
+            </p>
+            <br/>
+            <rich:pickList id="list"
+                           value="#{richPickListBean.value}">
+                <f:selectItem itemLabel="first" itemValue="first" itemDisabled="true"/>
+                <f:selectItem itemLabel="second" itemValue="second"/>
+                <f:selectItem itemLabel="third" itemValue="third" itemDisabled="true"/>
+                <f:selectItem itemLabel="fourth" itemValue="fourth"/>
+                <f:selectItem itemLabel="fifth" itemValue="fifth" itemDisabled="true"/>
+                <a4j:ajax event="change" render="output"/>
+            </rich:pickList>
+            <br/>
+            <br/>
+            output: <h:outputText id="output" value="#{richPickListBean.value}"/>
+            <br/>
+            <br/>
+            <fieldset>
+                <legend>JavaScript API</legend>
+                On click:
+                <br/>
+                <input id="add" type="button" name="add" value="add()" onclick="#{rich:component('list')}.add()" />
+                <input id="addAll" type="button" name="addAll" value="addAll()" onclick="#{rich:component('list')}.addAll()" />
+                <input id="remove" type="button" name="remove" value="remove()" onclick="#{rich:component('list')}.remove()" />
+                <input id="removeAll" type="button" name="removeAll" value="removeAll()" onclick="#{rich:component('list')}.removeAll()" />
+            </fieldset>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+        </ui:define>
+    </ui:composition>
+</html>
