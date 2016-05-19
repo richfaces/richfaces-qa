@@ -628,6 +628,15 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
+    @CoversAttributes("style")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10782")
+    @Templates(value = "plain")
+    public void testStyleWidth() {
+        setAttribute("style", "width: 700px");
+        assertEquals(fileUpload.advanced().getRootElement().getCssValue("width"), "700px");
+    }
+
+    @Test
     @CoversAttributes("title")
     @Templates("plain")
     public void testTitle() {

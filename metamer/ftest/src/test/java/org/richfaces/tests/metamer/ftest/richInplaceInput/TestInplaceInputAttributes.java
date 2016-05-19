@@ -516,6 +516,15 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("style")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10782")
+    @Templates(value = "plain")
+    public void testStyleWidth() {
+        setAttribute("style", "width: 700px");
+        assertEquals(inplaceInput.advanced().getRootElement().getCssValue("width"), "700px");
+    }
+
+    @Test
     @CoversAttributes("tabindex")
     @RegressionTest("https://issues.jboss.org/browse/RF-10980")
     @Templates(value = "plain")

@@ -677,6 +677,15 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("style")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10782")
+    @Templates(value = "plain")
+    public void testStyleWidth() {
+        setAttribute("style", "width: 700px");
+        assertEquals(autocomplete.advanced().getRootElement().getCssValue("width"), "700px");
+    }
+
+    @Test
     @CoversAttributes("tabindex")
     @Templates(value = "plain")
     public void testTabindex() {
