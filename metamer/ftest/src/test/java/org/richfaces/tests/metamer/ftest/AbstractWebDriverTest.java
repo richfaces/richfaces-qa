@@ -1088,14 +1088,17 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     public void testRequestEventsBefore(String... events) {
         String testedEventTrueName;
+        MultipleAttributesSetter attsSetter = attsSetter();
         for (String event : events) {
             testedEventTrueName = event;
             if (!testedEventTrueName.startsWith("on")) {
                 testedEventTrueName = format("on{0}", testedEventTrueName);
             }
-            getUnsafeAttributes("").set(testedEventTrueName,
-                format("sessionStorage.setItem(\"metamerEvents\", sessionStorage.getItem(\"metamerEvents\") + \"{0} \")", event));
+            attsSetter
+                .setAttribute(testedEventTrueName)
+                .toValue(format("sessionStorage.setItem(\"metamerEvents\", sessionStorage.getItem(\"metamerEvents\") + \"{0} \")", event));
         }
+        attsSetter.asSingleAction().perform();
         cleanMetamerEventsVariable();
     }
 
