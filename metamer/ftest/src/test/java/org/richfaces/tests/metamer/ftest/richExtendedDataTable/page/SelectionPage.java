@@ -46,10 +46,16 @@ public class SelectionPage {
     private WebElement currentSelection;
     @FindBy(css = "span.rf-ds[id$=scroller2]")
     private RichFacesDataScroller dataScroller2;
+    @FindBy(css = "[id$=deselectRow]")
+    private WebElement deselectRowJSAPIButton;
     @JavaScript
     private MetamerJavascriptUtils jsUtils;
     @FindBy(css = "span.previousSelection")
     private WebElement previousSelection;
+    @FindBy(css = "[id$=selectRowsUsingIndex]")
+    private WebElement selectRowsUsingIndexJSAPIButton;
+    @FindBy(css = "[id$=selectRowsUsingRange]")
+    private WebElement selectRowsUsingRangeJSAPIButton;
     @FindBy(css = "div.rf-edt[id$=richEDT]")
     private SimpleEDT table;
 
@@ -74,15 +80,27 @@ public class SelectionPage {
         return dataScroller2;
     }
 
+    public WebElement getDeselectRowJSAPIButton() {
+        return deselectRowJSAPIButton;
+    }
+
     private int getPageForIndex(int index) {
         return (index / Integer.parseInt(tableAttributes.get(ExtendedDataTableAttributes.rows)))
             + 1;
     }
 
-    private int getRowForIndex(int index) {
+    public int getRowForIndex(int index) {
         return index
             - ((dataScroller2.getActivePageNumber() - 1)
             * Integer.parseInt(tableAttributes.get(ExtendedDataTableAttributes.rows)));
+    }
+
+    public WebElement getSelectRowsUsingIndexJSAPIButton() {
+        return selectRowsUsingIndexJSAPIButton;
+    }
+
+    public WebElement getSelectRowsUsingRangeJSAPIButton() {
+        return selectRowsUsingRangeJSAPIButton;
     }
 
     private Collection<Integer> getSelection(String selectionString) {
@@ -92,6 +110,10 @@ public class SelectionPage {
             result.add(Integer.valueOf(selectedRow));
         }
         return result;
+    }
+
+    public SimpleEDT getTable() {
+        return table;
     }
 
     private void scrollRowElementToView(int rowIndex) {

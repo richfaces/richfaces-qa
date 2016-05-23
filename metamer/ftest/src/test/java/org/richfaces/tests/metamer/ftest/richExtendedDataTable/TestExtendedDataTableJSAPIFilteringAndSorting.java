@@ -26,6 +26,7 @@ import static org.testng.Assert.assertEquals;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SortingEDT;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -35,6 +36,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
+@RegressionTest("https://issues.jboss.org/browse/RF-14277")
 public class TestExtendedDataTableJSAPIFilteringAndSorting extends DataTableSortingTest {
 
     private final Attributes<ExtendedDataTableAttributes> attributes = getAttributes();
