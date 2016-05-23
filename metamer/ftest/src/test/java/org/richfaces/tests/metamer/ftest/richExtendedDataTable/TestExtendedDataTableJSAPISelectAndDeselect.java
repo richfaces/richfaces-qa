@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.util.List;
@@ -30,8 +31,12 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SimpleEDTRow;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.page.SelectionPage;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -67,6 +72,7 @@ public class TestExtendedDataTableJSAPISelectAndDeselect extends AbstractWebDriv
     }
 
     @Test
+    @Templates("plain")
     public void testOnselectionEventsAreTriggered() {
         testRequestEventsBefore("onbeforeselectionchange", "onselectionchange");
         Graphene.guardAjax(page.getSelectRowsUsingIndexJSAPIButton()).click();
@@ -82,6 +88,7 @@ public class TestExtendedDataTableJSAPISelectAndDeselect extends AbstractWebDriv
     }
 
     @Test
+    @Templates("plain")
     public void testSelectRowsAndDeselectRow() {
         final int rows = Integer.parseInt(tableAttributes.get(ExtendedDataTableAttributes.rows));
         for (int p : new int[] { 1, 2 }) {
@@ -115,14 +122,41 @@ public class TestExtendedDataTableJSAPISelectAndDeselect extends AbstractWebDriv
         }
     }
 
+    @Test
+    @Templates("plain")
+    public void testSelectionModeIsRespected() {
+        tableAttributes.set(ExtendedDataTableAttributes.selectionMode, "none");
+        MetamerPage.waitRequest(page.getSelectRowsUsingRangeJSAPIButton(), WaitRequestType.NONE, 1000).click();
+        MetamerPage.waitRequest(page.getDeselectRowJSAPIButton(), WaitRequestType.NONE, 1000).click();
+
+        tableAttributes.set(ExtendedDataTableAttributes.selectionMode, "single");
+        Graphene.guardAjax(page.getSelectRowsUsingRangeJSAPIButton()).click();
+        verifySelectedBefore();
+        verifySelectedNow(1);
+    }
+
     private void verifySelectedBefore(int... indexes) {
         assertEquals(page.getActualPreviousSelection(), arrayToList(indexes));
     }
 
     private void verifySelectedNow(int... indexes) {
-        assertEquals(page.getActualCurrentSelection(), arrayToList(indexes));
-        for (int i : indexes) {
-            assertTrue(page.getTable().getRow(page.getRowForIndex(i)).getRootElement().getAttribute("class").contains("rf-edt-r-sel"));
+        final int rows = Integer.parseInt(tableAttributes.get(ExtendedDataTableAttributes.rows));
+
+        // check selected indexes in output
+        List<Integer> listOfIndexes = arrayToList(indexes);
+        assertEquals(page.getActualCurrentSelection(), listOfIndexes);
+
+        // check rows contains correct classes
+        if (indexes != null && indexes.length > 0) {
+            final int secondPageConstant = (indexes[0] >= rows ? rows : 0);
+            List<SimpleEDTRow> allRows = page.getTable().getAllRows();
+            for (int i = 0; i < allRows.size(); i++) {
+                if (listOfIndexes.contains(i + secondPageConstant)) {
+                    assertTrue(page.getTable().getRow(i).getRootElement().getAttribute("class").contains("rf-edt-r-sel"));
+                } else {
+                    assertFalse(page.getTable().getRow(i).getRootElement().getAttribute("class").contains("rf-edt-r-sel"));
+                }
+            }
         }
     }
 }
