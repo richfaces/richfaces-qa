@@ -28,6 +28,8 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
@@ -51,9 +53,10 @@ public class TestRF12031 extends AbstractWebDriverTest {
     }
 
     @Test
+    @Skip(On.JSF.MyFaces.class)
     @RegressionTest({ "https://issues.jboss.org/browse/RF-12031", "https://issues.jboss.org/browse/RF-12536" })
     public void testCSVOnConditionallyRenderedInput() {
-        toggleButton.click();
+        Graphene.guardAjax(toggleButton).click();
         Graphene.waitGui().until().element(inputRF12031).is().present();
 
         inputRF12031.sendKeys("RichFaces 4");
