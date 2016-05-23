@@ -35,6 +35,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.richfaces.tests.qa.plugin.properties.PropertiesProvider;
+import org.richfaces.tests.qa.plugin.utils.Utils;
 import org.richfaces.tests.qa.plugin.utils.Version;
 
 /**
@@ -259,4 +260,27 @@ public class SimpleEAPPropertiesTest {
         assertEquals(new File(format("{0}/eap/{1}/jboss-eap-{1}-full-build.zip", pathMac, actualVersion)), getZipFile());
     }
 
+    @Test
+    public void testPathToEAPZipSpecifiedWithSystemProperty_url() {
+        System.setProperty("pathToEAPZip", "/home/someUser/somePath/eap.zip");
+        try {
+            setupMockVersion(version631);
+            props = new SimpleEAPProperties(providerLinux);
+            assertEquals(Utils.createURLSilently(new File("/home/someUser/somePath/eap.zip")), getZipURL());
+        } finally {
+            System.setProperty("pathToEAPZip", "");
+        }
+    }
+
+    @Test
+    public void testPathToEAPZipSpecifiedWithSystemProperty_file() {
+        System.setProperty("pathToEAPZip", "/home/someUser/somePath/eap.zip");
+        try {
+            setupMockVersion(version631);
+            props = new SimpleEAPProperties(providerLinux);
+            assertEquals(new File("/home/someUser/somePath/eap.zip"), getZipFile());
+        } finally {
+            System.setProperty("pathToEAPZip", "");
+        }
+    }
 }

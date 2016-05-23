@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-*/
+ */
 package org.richfaces.tests.qa.plugin.properties.eap;
 
 import java.io.File;
@@ -49,6 +49,10 @@ public class SimpleEAPProperties implements EAPProperties {
     private final LazyLoadedCachedValue<File> cachedJenkinsEapZipFile = new LazyLoadedCachedValue<File>() {
         @Override
         protected File initValue() {
+            String pathToEAPZip = System.getProperty("pathToEAPZip");
+            if (pathToEAPZip != null && !pathToEAPZip.isEmpty()) {
+                return new File(pathToEAPZip);
+            }
             return new File(MessageFormat.format("{0}/eap/{1}/{2}.zip", pp.isOnWindows() ? hudsonStaticWin : pp.isOnMac() ? hudsonStaticOSx : hudsonStaticUnix,
                 getVersion().getMajorMinorMicroSpecifierFormat(), getEAPZipName()));
         }
@@ -56,6 +60,10 @@ public class SimpleEAPProperties implements EAPProperties {
     private final LazyLoadedCachedValue<URL> cachedURLToEapZip = new LazyLoadedCachedValue<URL>() {
         @Override
         protected URL initValue() {
+            String pathToEAPZip = System.getProperty("pathToEAPZip", "");
+            if (pathToEAPZip != null && !pathToEAPZip.isEmpty()) {
+                return Utils.createURLSilently(new File(pathToEAPZip));
+            }
             return Utils.createURLSilently(MessageFormat.format("{0}/{1}/{2}.zip", getURLPart1(), getURLPart2(), getURLPart3()));
         }
     };

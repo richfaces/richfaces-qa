@@ -18,9 +18,10 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-*/
+ */
 package org.richfaces.tests.qa.plugin.utils;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -32,6 +33,14 @@ public class Utils {
     public static URL createURLSilently(String url) {
         try {
             return new URL(url);
+        } catch (MalformedURLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public static URL createURLSilently(File file) {
+        try {
+            return file.toURI().toURL();
         } catch (MalformedURLException ex) {
             throw new RuntimeException(ex);
         }
