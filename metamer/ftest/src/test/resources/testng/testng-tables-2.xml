@@ -1,0 +1,18 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Tables components suite">
+
+    <test name="Table Components part 2" preserve-order="true">
+        <groups>
+            <run>
+                <exclude name="extended" />
+            </run>
+        </groups>
+
+        <packages>
+            <package name="org.richfaces.tests.metamer.ftest.richDataGrid" />
+            <package name="org.richfaces.tests.metamer.ftest.richExtendedDataTable" />        
+        </packages>
+    </test>
+
+</suite>
+
