@@ -45,6 +45,7 @@ import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactor
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -499,7 +500,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @Templates("plain")
     @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "")
     public void testJointPoint() {
-        Locations l = Utils.getLocations(popupCalendar.getRootElement());
+        Locations l = Utils.getLocations(popupCalendar.getRootElement().findElement(By.cssSelector("span[id$=Popup]")));
         testJointPoint(l.getWidth(), l.getHeight(), new ShowElementAndReturnAction() {
             @Override
             public WebElement perform() {
