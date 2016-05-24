@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.ftest.a4jPush;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.configurator.unstable.annotation.Unstable;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
@@ -31,6 +32,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
+@Unstable
 public class TestRF14255 extends AbstractWebDriverTest {
 
     @FindBy(css = "input[id$=checkButton]")
