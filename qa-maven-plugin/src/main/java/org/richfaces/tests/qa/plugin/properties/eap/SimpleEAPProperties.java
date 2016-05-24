@@ -44,7 +44,7 @@ public class SimpleEAPProperties implements EAPProperties {
     private static final String hudsonStaticUnix = "/home/hudson/static_build_env/";
     private static final String hudsonStaticWin = "h:/hudson/static_build_env/";
     private static final String urlPart1Candidates = "http://download.englab.brq.redhat.com/devel/candidates/JBEAP";
-    private static final String urlPart1Released = "http://download.englab.brq.redhat.com/released/JBEAP-6";
+    private static final String urlPart1Released = "http://download.englab.brq.redhat.com/released/JBEAP-";
 
     private final LazyLoadedCachedValue<File> cachedJenkinsEapZipFile = new LazyLoadedCachedValue<File>() {
         @Override
@@ -90,7 +90,7 @@ public class SimpleEAPProperties implements EAPProperties {
     }
 
     protected String getURLPart1() {
-        return isInReleasedRepository() ? urlPart1Released : urlPart1Candidates;
+        return isInReleasedRepository() ? urlPart1Released + getVersion().getMajor() : urlPart1Candidates;
     }
 
     protected String getURLPart2() {
