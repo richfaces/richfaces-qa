@@ -54,6 +54,7 @@ public enum ContextMenuAttributes implements AttributeEnum {
     rendered,
     showDelay,
     showEvent,
+    sticky,
     style,
     styleClass,
     target,

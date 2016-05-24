@@ -49,6 +49,7 @@ import org.richfaces.component.Positioning;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Locations;
 import org.richfaces.fragment.common.Utils;
+import org.richfaces.fragment.contextMenu.RichFacesContextMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
@@ -57,6 +58,7 @@ import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -462,6 +464,52 @@ public class TestContextMenu extends AbstractWebDriverTest {
         contextMenuAttributes.set(ContextMenuAttributes.showEvent, "click");
         page.getContextMenu().advanced().setShowEvent(Event.CLICK);
         page.getContextMenu().advanced().show(page.getTargetPanel1());
+    }
+
+    @Test
+    @CoversAttributes("sticky")
+    @Templates("plain")
+    public void testSticky() {
+        updateShowAction();
+        // test @sticky=true
+        // setup (also set @hideDelay to 0, so we do not need to wait)
+        attsSetter()
+            .setAttribute(ContextMenuAttributes.hideDelay).toValue(0)
+            .setAttribute(ContextMenuAttributes.sticky).toValue(true)
+            .asSingleAction().perform();
+
+        final RichFacesContextMenu contextMenu = page.getContextMenu();
+        // show the menu
+        contextMenu.advanced().show(page.getTargetPanel1());
+        // move to some items in the displayed context menu, then move outside
+        new Actions(driver)
+            .moveToElement(contextMenu.advanced().getMenuItemElements().get(0))
+            .moveToElement(contextMenu.advanced().getMenuItemElements().get(5))
+            .moveToElement(getMetamerPage().getBlurButton())
+            .perform();
+        // wait some time
+        waiting(1000);
+        // the menu should be still displayed
+        contextMenu.advanced().waitUntilIsVisible().perform();
+        // click outside of the menu
+        getMetamerPage().blur(WaitRequestType.NONE);
+        // the menu should disappear
+        contextMenu.advanced().waitUntilIsNotVisible().perform();
+
+        // test @sticky=false
+        contextMenuAttributes.set(ContextMenuAttributes.sticky, false);
+        // show the menu
+        contextMenu.advanced().show(page.getTargetPanel1());
+        // move to some items in the displayed context menu, then move outside
+        new Actions(driver)
+            .moveToElement(contextMenu.advanced().getMenuItemElements().get(0))
+            .moveToElement(contextMenu.advanced().getMenuItemElements().get(5))
+            .moveToElement(getMetamerPage().getBlurButton())
+            .perform();
+        // wait some time
+        waiting(1000);
+        // the menu should disappear
+        contextMenu.advanced().waitUntilIsNotVisible().perform();
     }
 
     @Test
