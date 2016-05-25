@@ -25,8 +25,15 @@ getLatestMavenRepository(){
   download ${URL}
 
   if [ $? -gt 0 ];then
-    echo "downloading was unsuccessful. Exiting."
-    exit 1;
+    echo "Downloading was unsuccessful. Will delete the downloaded file and retry the download from scratch."
+    rm -rf maven-repository.zip
+
+    download ${URL}
+
+    if [ $? -gt 0 ];then
+      echo "Downloading was unsuccessful. Exiting."
+      exit 1;
+    fi
   fi
 
   extract maven-repository.zip
