@@ -93,7 +93,6 @@ public class RichOrderingListBean implements Serializable {
     }
 
     public List<Capital> getCapitals() {
-        System.out.println("capitals = " + capitals);
         return capitals;
     }
 
