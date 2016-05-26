@@ -142,8 +142,10 @@ http://www.fsf.org. -->
         <property name="seleniumMaximize">true</property>
         <property name="seleniumPort">8444</property>
         <property name="seleniumHost">localhost</property>
-        <property name="waitAjaxInterval">4</property>
-        <property name="waitGuardInterval">4</property>
+        <property name="waitGuiInterval">${graphene.waitGuiInterval}</property>
+        <property name="waitAjaxInterval">${graphene.waitAjaxInterval}</property>
+        <property name="waitModelInterval">${graphene.waitModelInterval}</property>
+        <property name="waitGuardInterval">${graphene.waitGuardInterval}</property>
     </extension>
 
     <!-- see https://github.com/arquillian/arquillian-recorder/wiki -->
