@@ -42,7 +42,6 @@ import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotatio
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
@@ -645,8 +644,8 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     }
 
     private void typeToInput(String value, WaitRequestType type) {
-        MetamerPage.waitRequest(spinner.advanced().getInput().advanced().clear(ClearType.JS).sendKeys(value).advanced(), type)
-            .trigger("blur");
+        spinner.advanced().getInput().advanced().clear(ClearType.JS).sendKeys(value);
+        blur(type);
     }
 
     private void typeToInput(String value) {

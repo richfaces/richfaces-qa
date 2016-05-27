@@ -84,14 +84,14 @@ public abstract class AbstractInputNumberSpinnerTest extends AbstractWebDriverTe
     }
 
     protected void increase(int count) {
-        Double maxValue = Double.parseDouble(inputNumberSpinnerAttributes
+        Double maxValue = Double.valueOf(inputNumberSpinnerAttributes
             .get(InputNumberSpinnerAttributes.maxValue));
-        Boolean cycled = Boolean.parseBoolean(inputNumberSpinnerAttributes
+        Boolean cycled = Boolean.valueOf(inputNumberSpinnerAttributes
             .get(InputNumberSpinnerAttributes.cycled));
         Double actValue;
         WaitRequestType type;
         for (int i = 0; i < count; i++) {
-            actValue = Double.parseDouble(spinner.advanced().getInput().getStringValue());
+            actValue = Double.valueOf(spinner.advanced().getInput().getStringValue());
             type = (actValue < maxValue || cycled ? WaitRequestType.XHR : WaitRequestType.NONE);
             MetamerPage.waitRequest(spinner, type).increase();
         }
