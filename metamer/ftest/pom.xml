@@ -465,21 +465,12 @@ FSF site: http://www.fsf.org. -->
         </profile>
         <profile>
             <id>increasedWaitIntervals</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <systemProperties>
-                                <graphene.waitGuiInterval>10</graphene.waitGuiInterval>
-                                <graphene.waitAjaxInterval>16</graphene.waitAjaxInterval>
-                                <graphene.waitModelInterval>20</graphene.waitModelInterval>
-                                <graphene.waitGuardInterval>16</graphene.waitGuardInterval>
-                            </systemProperties>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
+            <properties>
+                <graphene.waitGuiInterval>10</graphene.waitGuiInterval>
+                <graphene.waitAjaxInterval>16</graphene.waitAjaxInterval>
+                <graphene.waitModelInterval>20</graphene.waitModelInterval>
+                <graphene.waitGuardInterval>16</graphene.waitGuardInterval>
+            </properties>
         </profile>
     </profiles>
 </project>
