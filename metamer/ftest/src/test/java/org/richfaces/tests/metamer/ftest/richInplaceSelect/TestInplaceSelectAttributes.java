@@ -136,6 +136,9 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     @Test(groups = { "smoke" })
     @RegressionTest("https://issues.jboss.org/browse/RF-11227")
     public void testClick() {
+        inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, "true");
+        select.advanced().setSaveOnSelect(true);
+
         select.advanced().switchToEditingState();
         List<WebElement> options = select.advanced().getOptions();
 
