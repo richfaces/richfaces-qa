@@ -37,6 +37,7 @@ import org.richfaces.fragment.calendar.DayPicker;
 import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
 import org.richfaces.fragment.calendar.PopupCalendar;
 import org.richfaces.fragment.calendar.PopupCalendar.PopupHeaderControls;
+import org.richfaces.fragment.calendar.RichFacesAdvancedPopupCalendar.OpenedBy;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -70,9 +71,12 @@ public class TestCalendarBasic extends AbstractCalendarTest {
 
     @Test(groups = "smoke")
     public void testCleanButton() {
-        DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
-        dayPicker.getWeek(3).getCalendarDays().get(3).select();
-        MetamerPage.waitRequest(popupCalendar.openPopup().getFooterControls(), WaitRequestType.NONE).cleanDate();
+        PopupCalendar openedPopup = popupCalendar.openPopup(OpenedBy.OPEN_BUTTON_CLICKING);
+        DayPicker dayPicker = openedPopup.getDayPicker();
+        CalendarDay day = dayPicker.getWeek(3).getCalendarDays().get(3);
+        jsUtils.scrollToView(day.getDayElement());
+        day.select();
+        MetamerPage.requestTimeNotChangesWaiting(openedPopup.getFooterControls(), 3000).cleanDate();
 
         CalendarDay selectedDay = dayPicker.getSelectedDay();
         assertNull(selectedDay);

@@ -36,6 +36,7 @@ import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactor
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -45,6 +46,7 @@ import org.richfaces.fragment.calendar.PopupCalendar.PopupFooterControls;
 import org.richfaces.fragment.calendar.PopupCalendar.PopupHeaderControls;
 import org.richfaces.fragment.calendar.RichFacesAdvancedInlineCalendar;
 import org.richfaces.fragment.calendar.RichFacesAdvancedPopupCalendar;
+import org.richfaces.fragment.calendar.RichFacesAdvancedPopupCalendar.OpenedBy;
 import org.richfaces.fragment.calendar.RichFacesCalendar;
 import org.richfaces.fragment.calendar.YearAndMonthEditor;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -52,6 +54,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.BeforeMethod;
 
+import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
 /**
@@ -102,13 +105,18 @@ public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
         DateTimeFormatter formatter = DateTimeFormat.forPattern(datePattern);
         DateTime today = new DateTime();
 
-        PopupCalendar openedPopup = popupCalendar.openPopup();
+        final PopupCalendar openedPopup = popupCalendar.openPopup(OpenedBy.OPEN_BUTTON_CLICKING);
         PopupFooterControls footerControls = openedPopup.getFooterControls();
 
         Graphene.guardAjax(footerControls).setTodaysDate();
         performStabilizationWorkaround();
 
-        assertFalse(openedPopup.isVisible(), "Popup should not be displayed.");
+        Graphene.waitGui().withMessage("Popup should not be displayed.").until(new Predicate<WebDriver>() {
+            @Override
+            public boolean apply(WebDriver t) {
+                return !openedPopup.isVisible();
+            }
+        });
 
         String dateSetInCalendar = popupCalendar.getInput().getStringValue();
         DateTime setTime = formatter.parseDateTime(dateSetInCalendar);
