@@ -8,7 +8,7 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
-public class TestRefactoredInplaceInputShowcase extends AbstractWebDriverTest {
+public class TestInplaceInput extends AbstractWebDriverTest {
 
     private final Attributes<InplaceInputAttributes> inplaceInputAttributes = getAttributes();
 
@@ -20,8 +20,8 @@ public class TestRefactoredInplaceInputShowcase extends AbstractWebDriverTest {
         return "richInplaceInput/simple.xhtml";
     }
 
-    @Test
-    public void showcase1() {
+    @Test(groups = "smoke")
+    public void testTypingAndConfirming() {
         String expected = "RichFaces 4";
         inplaceInputAttributes.set(InplaceInputAttributes.showControls, true);
         inplaceInput.type(expected).cancelByControlls();

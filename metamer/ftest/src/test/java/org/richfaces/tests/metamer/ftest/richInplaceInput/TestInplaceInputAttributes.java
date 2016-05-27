@@ -108,7 +108,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
 
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void testClick() {
         inplaceInput.type(" ");
         assertTrue(inplaceInput.advanced().isInState(InplaceComponentState.ACTIVE), "Input should be active.");
@@ -455,7 +455,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
         assertFalse(requiredMessage.advanced().isVisible());
     }
 
-    @Test
+    @Test(groups = "smoke")
     @CoversAttributes("requiredMessage")
     public void testRequiredMessage() {
         String reqMsg = "Another new and completely different required message.";

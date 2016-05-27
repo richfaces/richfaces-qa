@@ -39,7 +39,7 @@ public class TestInplaceInputConverter extends AbstractConverterTest {
         return DEFAULT_VALUE_SINGLE;
     }
 
-    @Test(groups = "smoke")
+    @Test
     public void testConverterAndConverterMessage() {
         super.testConverterAndConverterMessage();
     }
