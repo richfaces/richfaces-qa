@@ -167,4 +167,7 @@ http://www.fsf.org. -->
         <property name="nativeEvents">false</property>
     </extension>
 
+    <extension qualifier="drone">
+        <property name="instantiationTimeoutInSeconds">150</property>
+    </extension>
 </arquillian>
