@@ -22,9 +22,9 @@
 package org.richfaces.tests.metamer.ftest.richValidator;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -72,7 +72,7 @@ public class TestWrappingValidatorSingle extends AbstractValidatorsTest {
         getPage().getInputMin().sendKeys("1");
 
         // no request (HTTP neither XHR) should be sent if validation fails
-        fireEvent(Graphene.guardNoRequest(getPage().getInputMin()), Event.BLUR);
+        blur(WaitRequestType.NONE);
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.min);
     }
