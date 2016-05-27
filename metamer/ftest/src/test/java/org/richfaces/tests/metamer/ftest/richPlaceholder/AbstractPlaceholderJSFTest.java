@@ -27,15 +27,18 @@ import static org.testng.Assert.assertTrue;
 
 import java.awt.Color;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.test.selenium.support.color.ColorUtils;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
+
+import com.google.common.base.Predicate;
 
 /**
  *
@@ -142,7 +145,7 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
     public void testAjaxSubmit() {
         assertEquals(getInput1Value(), DEFAULT_PLACEHOLDER_TEXT, "Input 1 value");
         assertEquals(getInput2Value(), "", "Input 2 value");
-        MetamerPage.waitRequest(a4jSubmitBtn, WaitRequestType.XHR).click();
+        Graphene.guardAjax(a4jSubmitBtn).click();
         assertEquals(getInput1Value(), DEFAULT_PLACEHOLDER_TEXT, "Input 1 value");
         assertEquals(getInput2Value(), "", "Input 2 value");
         assertEquals(getOutput1Value(), "", "Output 1 value");
@@ -152,7 +155,12 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
     public void testClickOnInputWithPlaceholder() {
         assertEquals(getInput1Value(), DEFAULT_PLACEHOLDER_TEXT, "Input 1 value");
         focusOnInput1();
-        assertEquals(getInput1EditValue(), "", "Input 1 value");
+        Graphene.waitGui().withMessage("Input 1 value should not contain placeholder text.").until(new Predicate<WebDriver>() {
+            @Override
+            public boolean apply(WebDriver t) {
+                return getInput1EditValue().isEmpty();
+            }
+        });
     }
 
     public void testDeleteTextFromInputWithPlaceholder() {
@@ -161,14 +169,25 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
 
         clearInput1();
         sendKeysToInput1(getTestedValue());
-        assertEquals(getInput1EditValue(), getTestedValue(), "Input 1 value");
+
+        Graphene.waitGui().withMessage("Input 1 value should equal to the tested value.").until(new Predicate<WebDriver>() {
+            @Override
+            public boolean apply(WebDriver t) {
+                return getInput1EditValue().equals(getTestedValue());
+            }
+        });
         assertFalse(getInput1StyleClass().contains(DEFAULT_PLACEHOLDER_CLASS), "Input 1 styleClass");
         assertEquals(getInput1Color(), getDefaultInputColor(), "Input 1 text color");
 
         clearInput1();
         focusOnInput2();
 
-        assertEquals(getInput1Value(), DEFAULT_PLACEHOLDER_TEXT, "Input 1 value");
+        Graphene.waitGui().withMessage("Input 1 value should not contain placeholder text.").until(new Predicate<WebDriver>() {
+            @Override
+            public boolean apply(WebDriver t) {
+                return getInput1Value().equals(DEFAULT_PLACEHOLDER_TEXT);
+            }
+        });
         assertTrue(getInput1StyleClass().contains(DEFAULT_PLACEHOLDER_CLASS), "Input 1 styleClass");
         assertEquals(getInput1Color(), Color.blue, "Input 1 text color");
     }
@@ -176,7 +195,7 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
     public void testHTTPSubmit() {
         assertEquals(getInput1Value(), DEFAULT_PLACEHOLDER_TEXT, "Input 1 value");
         assertEquals(getInput2Value(), "", "Input 2 value");
-        MetamerPage.waitRequest(hSubmitBtn, WaitRequestType.HTTP).click();
+        Graphene.guardHttp(hSubmitBtn).click();
         assertEquals(getOutput1Value(), "", "Output 1 value");
         assertEquals(getOutput2Value(), "", "Output 2 value");
     }
@@ -192,9 +211,10 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
 
     @CoversAttributes("selector")
     public void testSelector() {
-        //default selector = input1
+        // default selector = input1
         assertEquals(getInput1Value(), DEFAULT_PLACEHOLDER_TEXT, "Input 1 value");
         assertEquals(getInput2Value(), "", "Input 2 value");
+
         placeholderAttributes.set(PlaceholderAttributes.selector, INPUT2_ID);
         assertEquals(getInput1Value(), "", "Input 1 value");
         assertEquals(getInput2Value(), DEFAULT_PLACEHOLDER_TEXT, "Input 2 value");
@@ -202,7 +222,7 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
 
     @CoversAttributes("selector")
     public void testSelectorEmpty() {
-        //Placeholder is in first component, without selector, it should work for the first input
+        // Placeholder is in first component, without selector, it should work for the first input
         placeholderAttributes.set(PlaceholderAttributes.selector, "");
         assertEquals(getInput1Value(), DEFAULT_PLACEHOLDER_TEXT, "Input 1 value");
         assertEquals(getInput2Value(), "", "Input 2 value");
@@ -223,7 +243,12 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
         clearInput1();
         sendKeysToInput1(getTestedValue());
 
-        assertEquals(getInput1EditValue(), getTestedValue(), "Input 1 value");
+        Graphene.waitGui().withMessage("Input 1 value should equal to the tested value.").until(new Predicate<WebDriver>() {
+            @Override
+            public boolean apply(WebDriver t) {
+                return getInput1EditValue().equals(getTestedValue());
+            }
+        });
         assertFalse(getInput1StyleClass().contains(DEFAULT_PLACEHOLDER_CLASS), "Input 1 styleClass");
         assertEquals(getInput1Color(), getDefaultInputColor());
     }
