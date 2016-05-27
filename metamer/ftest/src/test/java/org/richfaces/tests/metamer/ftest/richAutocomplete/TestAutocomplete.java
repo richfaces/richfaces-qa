@@ -42,6 +42,7 @@ import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.V
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
+
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
@@ -135,6 +136,7 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
         assertTrue(autocomplete.advanced().getSuggestionsElements().isEmpty());
 
         SelectOrConfirm typed = Graphene.guardAjax(autocomplete).type("ala");
+        autocomplete.advanced().waitForSuggestionsToBeVisible().perform();
         assertFalse(autocomplete.advanced().getSuggestionsElements().isEmpty());
         Graphene.guardAjax(typed).confirm();
 
