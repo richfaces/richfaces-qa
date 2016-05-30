@@ -214,8 +214,14 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         driver.manage().deleteAllCookies();
         // move mouse to upper left corner of window so it will not stay over tested component
         moveMouseToUpperLeftCorner();
-        // load page
-        openPageWithCurrentConfiguration();
+        // try to load the page
+        for (int i = 0; i < 3; i++) {
+            openPageWithCurrentConfiguration();
+            // check page is correctlu loaded or repeat
+            if (checkPageIsLoadedCorrectly()) {
+                break;
+            }
+        }
         driverType = DriverType.getCurrentType(driver);
         // resize browser window to 1280x1024 or full screen
         driver.manage().window().setSize(new Dimension(1280, 1024));
@@ -227,6 +233,14 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         } else {
             driver.get(buildUrl(getTestUrl() + "?templates=" + template.toString()).toExternalForm());
         }
+    }
+
+    /**
+     * During opening of a page with templates set up, one can face IndexOutOfBoundsException.
+     */
+    private boolean checkPageIsLoadedCorrectly() {
+        String pageSource = driver.getPageSource();
+        return !pageSource.contains("java.lang.IndexOutOfBoundsException");
     }
 
     protected boolean isInPopupTemplate() {
