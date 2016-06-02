@@ -35,50 +35,40 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
  */
 public class DropDownMenuPage extends MetamerPage {
 
-    @FindByJQuery(".rf-tb-itm:eq(0)")
-    private RichFacesDropDownMenu fileDropDownMenuTop;
-
-    @FindByJQuery(".optionList:eq(0)")
-    private RichFacesDropDownMenu fileDropDownMenuSide;
-
-    @FindByJQuery(".rf-ddm-lbl-dec:eq(0)")
-    private WebElement target1;
-
-    @FindByJQuery("span[id$=output]")
-    private WebElement output;
-
-    @FindBy(css = "div.rf-ddm-lst")
-    private WebElement dropDownMenuContent;
-
-    @FindByJQuery("img:contains('File')")
-    private WebElement fileMenuLabel;
-
-    @FindByJQuery("div[id$=menu1]")
-    private WebElement fileMenu;
-
-    @FindByJQuery("div[id$=menu1_list]")
-    private WebElement fileMenuList;
-
-    @FindByJQuery("div[id$=menuGroup4]")
-    private WebElement group;
-
-    @FindByJQuery("div[id$=menuGroup4_list]")
-    private WebElement groupList;
-
-    @FindByJQuery("div[id$=menu1] img.pic")
-    private WebElement icon;
-
-    @FindByJQuery("div[id$=menu1] span.rf-ddm-itm-ic > div.rf-ddm-emptyIcon")
-    private WebElement emptyIcon;
-
-    @FindByJQuery("div[id$=menuItem41]")
-    private WebElement menuItem41;
-
-    @FindByJQuery(" div[id$=menu1] div.rf-ddm-lbl-dec")
-    private WebElement fileMenuLabelOriginal;
-
     @FindBy(tagName = "body")
     private WebElement body;
+    @FindBy(css = "div.rf-ddm-lst")
+    private WebElement dropDownMenuContent;
+    @FindBy(css = "div[id$=menu1] span.rf-ddm-itm-ic > div.rf-ddm-emptyIcon")
+    private WebElement emptyIcon;
+    @FindByJQuery(value = ".optionList:eq(0)")
+    private RichFacesDropDownMenu fileDropDownMenuSide;
+    @FindByJQuery(value = ".rf-tb-itm:eq(0)")
+    private RichFacesDropDownMenu fileDropDownMenuTop;
+    @FindBy(css = "div[id$=menu1]")
+    private WebElement fileMenu;
+    @FindBy(css = "div[id$=menu1] img")
+    private WebElement fileMenuImage;
+    @FindByJQuery(value = "img:contains('File')")
+    private WebElement fileMenuLabel;
+    @FindBy(css = " div[id$=menu1] div.rf-ddm-lbl-dec")
+    private WebElement fileMenuLabelOriginal;
+    @FindBy(css = "div[id$=menu1_list]")
+    private WebElement fileMenuList;
+    @FindBy(css = "div[id$=menuGroup4]")
+    private WebElement group;
+    @FindBy(css = "div[id$=menuGroup4_list]")
+    private WebElement groupList;
+    @FindBy(css = "div[id$=menu1] img.pic")
+    private WebElement icon;
+    @FindBy(css = "div[id$=menu2]")
+    private WebElement linksMenu;
+    @FindBy(css = "div[id$=menuItem41]")
+    private WebElement menuItem41;
+    @FindBy(css = "span[id$=output]")
+    private WebElement output;
+    @FindByJQuery(".rf-ddm-lbl-dec:eq(0)")
+    private WebElement target1;
 
     public WebElement getBody() {
         return body;
@@ -110,6 +100,10 @@ public class DropDownMenuPage extends MetamerPage {
         return fileMenu;
     }
 
+    public WebElement getFileMenuImage() {
+        return fileMenuImage;
+    }
+
     public WebElement getFileMenuLabel() {
         return fileMenuLabel;
     }
@@ -132,6 +126,10 @@ public class DropDownMenuPage extends MetamerPage {
 
     public WebElement getIcon() {
         return icon;
+    }
+
+    public WebElement getLinksMenu() {
+        return linksMenu;
     }
 
     public WebElement getMenuItem41() {

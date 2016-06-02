@@ -23,7 +23,9 @@ package org.richfaces.tests.metamer.ftest.richDropDownMenu;
 
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_ENUM;
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
+import static org.testng.Assert.assertFalse;
 
+import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
@@ -98,6 +100,25 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
         super.testMode();
     }
 
+    /**
+     * @since 4.5.17
+     */
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12242")
+    public void testMenuWillNotShowUp_whenMouseoverChildElementAndOutWithShowDelay() {
+        setAttribute("showDelay", 2000);
+        // move to menu label child element and then move out
+        new Actions(driver)
+            .moveToElement(getPage().getFileMenu())
+            .moveToElement(getPage().getFileMenuImage())
+            .moveToElement(getPage().getLinksMenu())
+            .perform();
+        // wait for @showDelay + reserve
+        waiting(2500);
+        // check menu is not displayed
+        assertFalse(getCurrentMenu().advanced().isVisible());
+    }
+
     @Test
     @Templates("plain")
     @RegressionTest("https://issues.jboss.org/browse/RF-12415")
@@ -152,13 +173,13 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
     }
 
     @Test
-    @Templates("plain")
+    @Templates(value = "plain")
     public void testOnkeyup() {
         super.testOnkeyup();
     }
 
     @Test
-    @Templates(value = "plain")
+    @Templates("plain")
     public void testOnmousedown() {
         super.testOnmousedown();
     }
@@ -195,7 +216,7 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
     }
 
     @Test
-    @Templates(value = "plain")
+    @Templates("plain")
     public void testPopupWidth() {
         super.testPopupWidth();
     }
