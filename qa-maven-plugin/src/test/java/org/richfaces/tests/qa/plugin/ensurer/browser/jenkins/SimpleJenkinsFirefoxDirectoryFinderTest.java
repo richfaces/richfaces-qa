@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 */
-package org.richfaces.tests.qa.plugin.command.ensurer.browser.jenkins;
+package org.richfaces.tests.qa.plugin.ensurer.browser.jenkins;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -30,8 +30,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.richfaces.tests.qa.plugin.ensurer.browser.jenkins.JenkinsFirefoxDirectoryFinder;
-import org.richfaces.tests.qa.plugin.ensurer.browser.jenkins.SimpleJenkinsFirefoxDirectoryFinder;
 import org.richfaces.tests.qa.plugin.utils.Version;
 
 /**

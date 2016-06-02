@@ -39,30 +39,14 @@ import com.google.inject.Inject;
  */
 public class JenkinsFirefoxEnsurer implements BrowserEnsurer {
 
-    private static final String AMD64 = "amd64";
     private static final String FIREFOX = "firefox";
     private static final String FIREFOX_EXE = "firefox.exe";
     private static final String FIREFOX_JENKINS_VERSION_MINIMAL = "firefoxJenkinsVersionMinimal";
     private static final String FIREFOX_JENKINS_VERSION_OPTIMAL = "firefoxJenkinsVersionOptimal";
     private static final String MAC_FIREFOX_SUBDIR = "Contents/MacOS/firefox";
-    private static final String PPC64 = "ppc64";
-    private static final String SOLARIS10_SPARC = "solaris10_sparc";
-    private static final String SOLARIS10_X86 = "solaris10_x86";
-    private static final String SOLARIS10_X86_64 = "solaris10_x86_64";
-    private static final String SOLARIS11_SPARC = "solaris11_sparc";
-    private static final String SOLARIS11_X86 = "solaris11_x86";
-    private static final String SOLARIS11_X86_64 = "solaris11_x86_64";
-    private static final String SPARC = "sparc";
-    private static final String STRING_10 = "10";
-    private static final String STRING_11 = "11";
-    private static final String STRING_64 = "64";
-    private static final String X86_64 = "x86_64";
     private final JenkinsFirefoxDirectoryFinder finder;
-    private final File macFirefoxBaseDirectory = new File("/qa/tools/opt/osx");
     private final PropertiesProvider pp;
     private final Servant servant;
-    private final File unixFirefoxBaseDirectory = new File("/qa/tools/opt");
-    private final File winFirefoxBaseDirectory = new File("t:/opt/windows");
 
     @Inject
     public JenkinsFirefoxEnsurer(PropertiesProvider pp, Servant servant, JenkinsFirefoxDirectoryFinder finder) {
@@ -80,40 +64,12 @@ public class JenkinsFirefoxEnsurer implements BrowserEnsurer {
         servant.setProjectProperty(pp.getFirefoxBinPropertyName(), firefoxBin);
     }
 
-    protected File getFirefoxBaseDirectory(Servant servant) {
-        String osVersion = pp.getOSVersion();
-        String osArch = pp.getOsArch();
-        if (pp.isOnWindows()) {
-            return winFirefoxBaseDirectory;
-        } else if (pp.isOnLinux()) {
-            if (osArch.contains(AMD64)) {
-                return new File(unixFirefoxBaseDirectory, X86_64);
-            }
-            if (osArch.contains(PPC64)) {
-                return new File(unixFirefoxBaseDirectory, PPC64);
-            }
-            return unixFirefoxBaseDirectory;
-        } else if (pp.isOnSolaris()) {
-            if (osVersion.endsWith(STRING_10)) {
-                if (osArch.contains(SPARC)) {
-                    return new File(unixFirefoxBaseDirectory, SOLARIS10_SPARC);
-                } else if (osArch.contains(STRING_64)) {
-                    return new File(unixFirefoxBaseDirectory, SOLARIS10_X86_64);
-                }
-                return new File(unixFirefoxBaseDirectory, SOLARIS10_X86);
-            } else if (osVersion.endsWith(STRING_11)) {
-                if (osArch.contains(SPARC)) {
-                    return new File(unixFirefoxBaseDirectory, SOLARIS11_SPARC);
-                } else if (osArch.contains(STRING_64)) {
-                    return new File(unixFirefoxBaseDirectory, SOLARIS11_X86_64);
-                }
-                return new File(unixFirefoxBaseDirectory, SOLARIS11_X86);
-            }
-        } else if (pp.isOnMac()) {
-            return macFirefoxBaseDirectory;
+    protected File getFirefoxBaseDirectory() {
+        String toolsDirectory = System.getenv("NATIVE_TOOLS");
+        if (toolsDirectory != null && !toolsDirectory.isEmpty() && new File(toolsDirectory).exists()) {
+            return new File(toolsDirectory);
         }
-        throw new UnsupportedOperationException(MessageFormat.format("Not supported OS with: name={0}, version={1}, arch={2}.",
-            pp.getOSName(), pp.getOSVersion(), pp.getOsArch()));
+        throw new UnsupportedOperationException("Variable <NATIVE_TOOLS> was not specified!");
     }
 
     protected File getFirefoxBin() {
@@ -133,11 +89,11 @@ public class JenkinsFirefoxEnsurer implements BrowserEnsurer {
                 pp.getJenkinsFirefoxVersionMinimal())
             );
 
-            firefoxDir = finder.getOptimalOrMinimalVersion(getFirefoxBaseDirectory(servant).listFiles(),
+            firefoxDir = finder.getOptimalOrMinimalVersion(getFirefoxBaseDirectory().listFiles(),
                 pp.getJenkinsFirefoxVersionOptimal(), pp.getJenkinsFirefoxVersionMinimal());
         } else {
             pp.getLog().info(MessageFormat.format("Firefox version specified <{0}>.", pp.getBrowser().getVersion().getMajorMinorMicroSpecifierFormat()));
-            firefoxDir = finder.getSpecificVersion(getFirefoxBaseDirectory(servant).listFiles(), pp.getBrowser().getVersion());
+            firefoxDir = finder.getSpecificVersion(getFirefoxBaseDirectory().listFiles(), pp.getBrowser().getVersion());
         }
         return new File(firefoxDir, pp.isOnWindows() ? FIREFOX_EXE : pp.isOnLinux() || pp.isOnSolaris() ? FIREFOX : MAC_FIREFOX_SUBDIR);
     }
@@ -154,7 +110,7 @@ public class JenkinsFirefoxEnsurer implements BrowserEnsurer {
         if (!Strings.isNullOrEmpty(firefoxVersion)) {
             Version v = Version.parseVersion(firefoxVersion);
             if (!v.equals(Version.UNKNOWN_VERSION)) {
-                return new File(finder.getSpecificVersion(getFirefoxBaseDirectory(servant).listFiles(), v),
+                return new File(finder.getSpecificVersion(getFirefoxBaseDirectory().listFiles(), v),
                     pp.isOnWindows() ? FIREFOX_EXE : FIREFOX);
             }
         }
