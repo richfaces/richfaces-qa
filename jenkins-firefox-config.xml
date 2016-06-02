@@ -90,7 +90,13 @@
         <firefoxBin>/usr/bin/firefox</firefoxBin>
     </jenkinsFirefoxConfiguration>
 
-    <!-- WINDOWS all -->
+    <!-- WINDOWS 64bit -->
+    <jenkinsFirefoxConfiguration>
+        <osName>win</osName>
+        <osArch>amd64</osArch>
+        <firefoxBin>t:/opt/windows/amd64/firefox-45esr/firefox.exe</firefoxBin>
+    </jenkinsFirefoxConfiguration>
+    <!-- WINDOWS else -->
     <jenkinsFirefoxConfiguration>
         <osName>win</osName>
         <firefoxBin>t:/opt/windows/firefox-45esr/firefox.exe</firefoxBin>
