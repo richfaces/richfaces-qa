@@ -42,7 +42,6 @@ import org.jboss.arquillian.container.test.api.OverProtocol;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.arquillian.testng.Arquillian;
-import org.jboss.as.cli.CliInitializationException;
 import org.jboss.as.cli.CommandContext;
 import org.jboss.as.cli.CommandContextFactory;
 import org.jboss.as.cli.CommandLineException;
@@ -130,31 +129,33 @@ public abstract class AbstractMetamerTest extends Arquillian {
                 if (!isUsingEAP70AndUp()) {
                     removeDefaultEncodingFromJbossWebXML(war, temporaryJBossWebXML);
                 }
-                // workaround to enable running commands through JBoss CLI in EAP 6.3 and up
-                workaroundCLIVersionInEAP63And64();
+                // workaround to enable running commands through JBoss CLI in EAP 6.3 or 6.4
+                workaroundCLIVersionInEAP63_or_64();
             }
 
             // undeploy all metamer WARs if using a JBoss container
             if (isUsingJBossContainer()) {
-                undeployMetamerWars();
-            }
+                try {
+                    undeployMetamerWars();
+                } catch (CommandLineException ignored) {// no metamer war was deployed
+                }
 
-            // enable WS in EAP 6.3 and up
-            if (isUsingEAP63AndUp()) {
-                if (Boolean.getBoolean(EAP_WS_ENABLED)) {
-                    try {
-                        System.out.println("### Enabling WebSockets in EAP ###");
-                        enableWebSocketsInEAP63AndUp(war, temporaryJBossWebXML);
-                        System.out.println("### Enabling of WebSockets in EAP was successful ###");
-                    } catch (Throwable t) {
-                        t.printStackTrace(System.err);
-                        System.out.println("### Enabling of WebSockets in EAP was NOT successful ###");
+                if (isUsingEAP63_or_64()) {
+                    // enable WS in EAP 6.3 or 6.4
+                    if (Boolean.getBoolean(EAP_WS_ENABLED)) {
+                        try {
+                            System.out.println("### Enabling WebSockets in EAP ###");
+                            enableWebSocketsInEAP63_or_64(war, temporaryJBossWebXML);
+                            System.out.println("### Enabling of WebSockets in EAP was successful ###");
+                        } catch (CommandLineException t) {
+                            t.printStackTrace(System.err);
+                            System.out.println("### Enabling of WebSockets in EAP was NOT successful ###");
+                        }
                     }
                 }
             }
             temporaryJBossWebXML.deleteOnExit();
         }
-
         // save actual war to target/metamer-UPDATED.war
         File updatedWar = new File("target/metamer-UPDATED.war");
         war.as(ZipExporter.class).exportTo(updatedWar);
@@ -171,9 +172,9 @@ public abstract class AbstractMetamerTest extends Arquillian {
     /**
      * Deploys target/metamer-UPDATED.war file on current JBoss container.
      */
-    public static void deployMetamerWar() {
+    public static void deployMetamerWar() throws CommandLineException {
         if (isUsingJBossContainer()) {
-            runCLICommand("deploy target/metamer-UPDATED.war");
+            runCLICommandWithWait("deploy target/metamer-UPDATED.war");
         } else {
             System.err.println("Not using any JBoss container. War cannot be deployed.");
         }
@@ -235,8 +236,8 @@ public abstract class AbstractMetamerTest extends Arquillian {
     /**
      * Runs a command through JBoss CLI for enabling WebSockets and restarting the server.
      */
-    private static void enableWSInJBossCLI() throws IllegalStateException {
-        runCLICommand(
+    private static void enableWSInJBossCLI() throws CommandLineException {
+        runCLICommandWithWait(
             "/subsystem=web/connector=http/:write-attribute(name=protocol,value=org.apache.coyote.http11.Http11NioProtocol)",
             ":reload");
     }
@@ -249,7 +250,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
         return jbossWebXMLFile;
     }
 
-    private static void enableWebSocketsInEAP63AndUp(WebArchive war, File jBossWebXML) {
+    private static void enableWebSocketsInEAP63_or_64(WebArchive war, File jBossWebXML) throws CommandLineException {
         System.out.println(" * adding  <enable-websockets>true</enable-websockets> to jboss-web.xml");
         replaceJBossWebXMLInWar(war, enableWSInJbossWebXML(jBossWebXML));
         enableWSInJBossCLI();
@@ -263,7 +264,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
         return activatedMavenProfiles.contains("jbosseap");
     }
 
-    private static boolean isUsingEAP63AndUp() {
+    private static boolean isUsingEAP63_or_64() {
         return activatedMavenProfiles.matches(EAP_63_AND_UP_REGEX);
     }
 
@@ -286,12 +287,24 @@ public abstract class AbstractMetamerTest extends Arquillian {
      */
     public static void modifyAndDeployWar(WARModifyAction a) {
         if (isUsingJBossContainer()) {
-            undeployMetamerWars();
+            try {
+                undeployMetamerWars();
+            } catch (CommandLineException t) {
+                System.err.println(t);
+                System.err.println("Undeployment of war was not successful. Exiting.");
+                System.exit(1);
+            }
             WebArchive modifiedWar = a.modify(deployedWar);
             File modifiedWarFile = new File("target/metamerModified.war");
             modifiedWarFile.delete();
             modifiedWar.as(ZipExporter.class).exportTo(modifiedWarFile);
-            runCLICommand("deploy target/metamerModified.war");
+            try {
+                runCLICommandWithWait("deploy target/metamerModified.war");
+            } catch (CommandLineException t) {
+                System.err.println(t);
+                System.err.println("Modification of war and redeployment was not successful. Exiting.");
+                System.exit(1);
+            }
             modifiedWarFile.delete();
         } else {
             System.err.println("Not using any JBoss container. War will not be modified.");
@@ -329,23 +342,39 @@ public abstract class AbstractMetamerTest extends Arquillian {
     /**
      * Runs a command through JBoss CLI.
      */
-    private static void runCLICommand(String... commands) throws IllegalStateException {
-        final CommandContext ctx;
-        try {
-            ctx = CommandContextFactory.getInstance().newCommandContext();
-        } catch (CliInitializationException e) {
-            throw new IllegalStateException("Failed to initialize CLI context", e);
+    private static void runCLICommand(String... commands) throws CommandLineException {
+        if (commands == null || commands.length == 0) {
+            return;
         }
+        final CommandContext ctx;
+        ctx = CommandContextFactory.getInstance().newCommandContext();
+        int MAX_RETRY_COUNT = 20;
         try {
-            // connect to the server controller
-            ctx.connectController();
-            // execute commands and operations
-            for (String cmd : commands) {
-                ctx.handle(cmd);
+            String cmd;
+            int i = 0;
+            int retryCount = 0;
+            while (i < commands.length) {
+                cmd = commands[i];
+                try {
+                    // connect to the server controller
+                    ctx.connectController();
+                    // execute the command
+                    ctx.handle(cmd);
+                    retryCount = 0;
+                    i++;
+                } catch (CommandLineException e) {
+                    if (e.getMessage().contains("The controller is not available")) {
+                        retryCount++;
+                        if (retryCount >= MAX_RETRY_COUNT) {
+                            throw e;
+                        }
+                        // wait and repeat
+                        waiting(1000);
+                    } else {
+                        throw e;
+                    }
+                }
             }
-        } catch (CommandLineException e) {
-            System.err.println(e);
-            // the operation or the command has failed
         } finally {
             // terminate the session and
             // close the connection to the controller
@@ -354,13 +383,28 @@ public abstract class AbstractMetamerTest extends Arquillian {
     }
 
     /**
+     * Runs all CLI commands and then runs an empty command to wait until the container is ready again
+     */
+    protected static void runCLICommandWithWait(String... commands) throws CommandLineException {
+        runCLICommand(commands);
+        runCLICommand("");// wait for EAP to be ready, e.g. after restart
+    }
+
+    /**
      * Undeploys all metamer wars from current JBoss container.
      */
-    public static void undeployMetamerWars() {
+    public static void undeployMetamerWars() throws CommandLineException {
         if (isUsingJBossContainer()) {
-            runCLICommand("undeploy *metamer*");
+            runCLICommandWithWait("undeploy *metamer*");
         } else {
             System.err.println("Not using any JBoss container. War cannot be undeployed.");
+        }
+    }
+
+    private static void waiting(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException ex) {
         }
     }
 
@@ -368,7 +412,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
      * Workaround works only for container placed in project's target directory. Workaround the exception during parsing the
      * jboss-cli.xml. Change the urn:jboss:cli:1.3 to *1.2
      */
-    private static void workaroundCLIVersionInEAP63And64() throws URISyntaxException, IOException {
+    private static void workaroundCLIVersionInEAP63_or_64() throws URISyntaxException, IOException {
         File[] jbossContainersDirs = new File(System.getProperty("project.build.directory")).listFiles(new FileFilter() {
             @Override
             public boolean accept(File file) {
@@ -378,8 +422,10 @@ public abstract class AbstractMetamerTest extends Arquillian {
         });
         for (File containerDir : jbossContainersDirs) {
             File jbossCliFile = new File(containerDir, "bin/jboss-cli.xml");
-            File workaroundedJBossCliFile = new File(AbstractMetamerTest.class.getResource("eap/jboss-cli.xml").toURI());
+            File workaroundedJBossCliFile = new File(AbstractMetamerTest.class
+                .getResource("eap/jboss-cli.xml").toURI());
             jbossCliFile.delete();
+
             Files.copy(workaroundedJBossCliFile, jbossCliFile);
         }
     }
@@ -389,7 +435,8 @@ public abstract class AbstractMetamerTest extends Arquillian {
      *
      * @return absolute url to the test page to be opened by Selenium
      */
-    public abstract URL getTestUrl();
+    public abstract URL
+        getTestUrl();
 
     public interface WARModifyAction {
 

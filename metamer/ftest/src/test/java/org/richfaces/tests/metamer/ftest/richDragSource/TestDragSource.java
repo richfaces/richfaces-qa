@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.jboss.arquillian.graphene.GrapheneElement;
+import org.jboss.as.cli.CommandLineException;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
@@ -137,7 +138,7 @@ public class TestDragSource extends AbstractDragSourceTest {
         @AndExpression(On.Container.Tomcat7.class),// not tested, needs a JBoss container due to war redeployment through CLI
         @AndExpression(On.Container.EAP62x.class),
         @AndExpression(On.Container.EAP63x.class),
-        @AndExpression(On.Container.EAP64x.class),
+        @AndExpression(On.Container.EAP64x.class)
     })
     @IssueTracking("https://issues.jboss.org/browse/RF-14251")
     @RegressionTest("https://issues.jboss.org/browse/RF-10967")
@@ -147,8 +148,14 @@ public class TestDragSource extends AbstractDragSourceTest {
         try {
             testDragValue();
         } finally {
-            undeployMetamerWars();
-            deployMetamerWar();
+            try {
+                undeployMetamerWars();
+                deployMetamerWar();
+            } catch (CommandLineException ex) {
+                System.err.println(ex);
+                System.err.println("Was not able to deploy the original WAR. Exiting.");
+                System.exit(1);
+            }
         }
     }
 
