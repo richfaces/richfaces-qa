@@ -569,6 +569,8 @@
                         <configuration>
                             <systemProperties>
                                 <arquillian.launch>jbosseap-managed-6-1</arquillian.launch>
+                                <!-- following is used in tests -->
+                                <JBOSS_HOME>${jbossEAP61Home}</JBOSS_HOME>
                             </systemProperties>
                             <environmentVariables>
                                 <JBOSS_HOME>${jbossEAP61Home}</JBOSS_HOME>
@@ -609,6 +611,8 @@
                         <configuration>
                             <systemProperties>
                                 <arquillian.launch>jbosseap-managed-6-2</arquillian.launch>
+                                <!-- following is used in tests -->
+                                <JBOSS_HOME>${jbossEAP62Home}</JBOSS_HOME>
                             </systemProperties>
                             <environmentVariables>
                                 <JBOSS_HOME>${jbossEAP62Home}</JBOSS_HOME>
@@ -649,6 +653,8 @@
                         <configuration>
                             <systemProperties>
                                 <arquillian.launch>jbosseap-managed-6-3</arquillian.launch>
+                                <!-- following is used in tests -->
+                                <JBOSS_HOME>${jbossEAP63Home}</JBOSS_HOME>
                             </systemProperties>
                             <environmentVariables>
                                 <JBOSS_HOME>${jbossEAP63Home}</JBOSS_HOME>
@@ -689,6 +695,8 @@
                         <configuration>
                             <systemProperties>
                                 <arquillian.launch>jbosseap-managed-6-4</arquillian.launch>
+                                <!-- following is used in tests -->
+                                <JBOSS_HOME>${jbossEAP64Home}</JBOSS_HOME>
                             </systemProperties>
                             <environmentVariables>
                                 <JBOSS_HOME>${jbossEAP64Home}</JBOSS_HOME>
@@ -719,6 +727,8 @@
                         <configuration>
                             <systemProperties>
                                 <arquillian.launch>jbosseap-managed-7-0</arquillian.launch>
+                                <!-- following is used in tests -->
+                                <JBOSS_HOME>${jbossEAP70Home}</JBOSS_HOME>
                             </systemProperties>
                             <environmentVariables>
                                 <JBOSS_HOME>${jbossEAP70Home}</JBOSS_HOME>
@@ -772,6 +782,8 @@
                         <configuration>
                             <systemProperties>
                                 <arquillian.launch>wildfly-managed-8-1</arquillian.launch>
+                                <!-- following is used in tests -->
+                                <JBOSS_HOME>${wildfly8-1Home}</JBOSS_HOME>
                             </systemProperties>
                             <environmentVariables>
                                 <JBOSS_HOME>${wildfly8-1Home}</JBOSS_HOME>
@@ -825,6 +837,8 @@
                         <configuration>
                             <systemProperties>
                                 <arquillian.launch>wildfly-managed-8-2</arquillian.launch>
+                                <!-- following is used in tests -->
+                                <JBOSS_HOME>${wildfly8-1Home}</JBOSS_HOME>
                             </systemProperties>
                             <environmentVariables>
                                 <JBOSS_HOME>${wildfly8-2Home}</JBOSS_HOME>
@@ -916,6 +930,8 @@
                         <configuration>
                             <systemProperties>
                                 <arquillian.launch>wildfly-managed-8-1-https</arquillian.launch>
+                                <!-- following is used in tests -->
+                                <JBOSS_HOME>${wildfly8-1Home}</JBOSS_HOME>
                             </systemProperties>
                             <environmentVariables>
                                 <HTTPStesting>true</HTTPStesting>
@@ -976,6 +992,8 @@
                         <configuration>
                             <systemProperties>
                                 <arquillian.launch>wildfly-managed-10-0</arquillian.launch>
+                                <!-- following is used in tests -->
+                                <JBOSS_HOME>${wildfly10-0Home}</JBOSS_HOME>
                             </systemProperties>
                             <environmentVariables>
                                 <JBOSS_HOME>${wildfly10-0Home}</JBOSS_HOME>
@@ -1035,6 +1053,8 @@
                         <configuration>
                             <systemProperties>
                                 <arquillian.launch>wildfly-managed-9-0</arquillian.launch>
+                                <!-- following is used in tests -->
+                                <JBOSS_HOME>${wildfly9-0Home}</JBOSS_HOME>
                             </systemProperties>
                             <environmentVariables>
                                 <JBOSS_HOME>${wildfly9-0Home}</JBOSS_HOME>
