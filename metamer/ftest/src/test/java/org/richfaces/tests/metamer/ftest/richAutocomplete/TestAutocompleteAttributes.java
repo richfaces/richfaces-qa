@@ -661,6 +661,14 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
+    @CoversAttributes("status")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10966")
+    public void testStatus() {
+        testStatus(typeHToAutocompleteInputAction);
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
+    }
+
+    @Test
     @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
