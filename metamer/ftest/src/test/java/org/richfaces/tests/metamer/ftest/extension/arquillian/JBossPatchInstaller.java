@@ -97,6 +97,8 @@ public class JBossPatchInstaller {
             } else {
                 cmdArray = new String[] { "/bin/sh", "-c", cmd };
             }
+
+            logInfo("Applying patch " + patchCopy.getName());
             // apply patch by running jboss-cli.sh with parameters
             Process p = Runtime.getRuntime().exec(cmdArray);
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
