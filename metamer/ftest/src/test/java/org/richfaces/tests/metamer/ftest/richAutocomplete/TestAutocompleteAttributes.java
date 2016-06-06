@@ -278,6 +278,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     public void testOnbegin() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onbegin, typeHToAutocompleteInputAction);
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
