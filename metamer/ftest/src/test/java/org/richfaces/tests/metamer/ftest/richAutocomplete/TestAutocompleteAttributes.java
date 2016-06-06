@@ -45,10 +45,8 @@ import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
-import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.Assert;
@@ -275,9 +273,8 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
-    @Skip
     @CoversAttributes("onbegin")
-    @IssueTracking(value = "https://issues.jboss.org/browse/RF-13537")
+    @RegressionTest("https://issues.jboss.org/browse/RF-13537")
     public void testOnbegin() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onbegin, typeHToAutocompleteInputAction);
