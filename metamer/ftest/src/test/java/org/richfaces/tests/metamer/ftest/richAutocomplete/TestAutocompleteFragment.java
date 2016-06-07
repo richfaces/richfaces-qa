@@ -76,6 +76,7 @@ public class TestAutocompleteFragment extends AbstractAutocompleteTest {
             ).type("k")
         ).select();// selects the first one
         checkOutput("Massachusetts; Wisconsin; Kansas");
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -92,6 +93,7 @@ public class TestAutocompleteFragment extends AbstractAutocompleteTest {
             ).type("i")
         ).select(1);
         checkOutput("notInListValue, alabama, Illinois");
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test(expectedExceptions = RuntimeException.class)
@@ -107,6 +109,7 @@ public class TestAutocompleteFragment extends AbstractAutocompleteTest {
     public void testTypingPrefixAndThenSelectChoiceThatContainsAndEndsWith() {
         Graphene.guardAjax(Graphene.guardAjax(autocomplete).type("a")).select(ChoicePickerHelper.byVisibleText().contains("b").endsWith("ama"));
         checkOutput("Alabama");
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -119,5 +122,6 @@ public class TestAutocompleteFragment extends AbstractAutocompleteTest {
         String expectedStateForPrefix = getExpectedStateForPrefix("ala", true);
         assertEquals(autocomplete.advanced().getInput().getStringValue().toLowerCase(), expectedStateForPrefix.toLowerCase());
         checkOutput(expectedStateForPrefix);
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 }
