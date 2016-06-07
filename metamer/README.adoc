@@ -108,6 +108,7 @@ To change the JSF implementation you can build Metamer with either a script ment
 *** the pathToSuite configuration will be ignored, when you specify the `-Dtest` property
 *** the suites are (usually) defined by the focus of individual components in RichFaces (e.g. output, input, dnd)
 ** templateName is one or more of the templates such as plain, richPanel, a4jRepeat, uiRepeat
+*** the template is wrapper in which will be the tested component placed. It is used for checking the correct behavior between components (RichFaces component inside of other/same RichFaces component or inside of a JSF component).
 *** list of all templates used in tests can be found in `AbstractMetamerTest` in the annotation `@Templates` over the field *template*
 *** all templates are case insensitive and have aliases (can be found/edited in `org.richfaces.tests.metamer.Template`)
 *** to run tests in:
