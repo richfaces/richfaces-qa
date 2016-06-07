@@ -74,6 +74,7 @@ public enum AutocompleteAttributes implements AttributeEnum {
     selectFirst,
     selectedItemClass,
     showButton,
+    status,
     style,
     styleClass,
     tabindex,
