@@ -90,6 +90,14 @@
         <firefoxBin>/usr/bin/firefox</firefoxBin>
     </jenkinsFirefoxConfiguration>
 
+    <!-- Windows Server 2008 64bit -->
+    <!-- The 64bit version of Firefox is not working, use 32bit. Ticket #406517 -->
+    <jenkinsFirefoxConfiguration>
+        <osName>Windows Server 2008</osName>
+        <osArch>amd64</osArch>
+        <firefoxBin>t:/opt/windows/firefox-45esr/firefox.exe</firefoxBin>
+    </jenkinsFirefoxConfiguration>
+
     <!-- WINDOWS 64bit -->
     <jenkinsFirefoxConfiguration>
         <osName>win</osName>
