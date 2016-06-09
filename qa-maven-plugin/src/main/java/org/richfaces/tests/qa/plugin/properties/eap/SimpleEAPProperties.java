@@ -76,7 +76,7 @@ public class SimpleEAPProperties implements EAPProperties {
 
     protected String getEAPZipName() {
         // version 6.x.y, if x > 1 && y > 0  => *-full-build.zip
-        return getVersion().getMinor() > 1 && getVersion().getMicro() > 0 ? getVersion().getFullFormat() + "-full-build" : getVersion().getFullFormat();
+        return JBOSS_EAP_PREFIX + (getVersion().getMinor() > 1 && getVersion().getMicro() > 0 ? getVersion().getFullFormat() + "-full-build" : getVersion().getFullFormat());
     }
 
     @Override
@@ -88,6 +88,7 @@ public class SimpleEAPProperties implements EAPProperties {
     public File getJenkinsEapZipFile() {
         return cachedJenkinsEapZipFile.getValue();
     }
+    private static final String JBOSS_EAP_PREFIX = "jboss-eap-";
 
     protected String getURLPart1() {
         return isInReleasedRepository() ? urlPart1Released + getVersion().getMajor() : urlPart1Candidates;

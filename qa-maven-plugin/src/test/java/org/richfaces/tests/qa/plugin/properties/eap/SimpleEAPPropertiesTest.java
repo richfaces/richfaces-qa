@@ -95,7 +95,7 @@ public class SimpleEAPPropertiesTest {
     }
 
     private void setupMockVersion(String version) {
-        actualVersion = Version.parseEapVersion(version);
+        actualVersion = Version.parseVersion(version);
         when(providerLinux.getEapVersion()).thenReturn(actualVersion);
         when(providerWin.getEapVersion()).thenReturn(actualVersion);
         when(providerMac.getEapVersion()).thenReturn(actualVersion);

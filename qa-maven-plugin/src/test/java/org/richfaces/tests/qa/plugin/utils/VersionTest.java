@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-*/
+ */
 package org.richfaces.tests.qa.plugin.utils;
 
 import static org.junit.Assert.assertEquals;
@@ -114,7 +114,8 @@ public class VersionTest {
         assertEquals("", v.getFormat(EnumSet.of(Format.prefix)));
 
         versionSttring = "prefix-3.2.1abc";
-        v = Version.parseVersion(versionSttring, "prefix-");
+        v = Version.parseVersion(versionSttring);
+        assertEquals("prefix-", v.getPrefix());
         assertEquals("3.2", v.getMajorMinorFormat());
         assertEquals("3.2.1", v.getMajorMinorMicroFormat());
         assertEquals(versionSttring, v.getFullFormat());
@@ -125,30 +126,32 @@ public class VersionTest {
 
     @Test
     public void testParseEAPVersion() {
-        v = Version.parseEapVersion("jboss-eap-6.3.1");
+        v = Version.parseVersion("jboss-eap-6.3.1");
         assertEquals(6, v.getMajor());
         assertEquals(3, v.getMinor());
         assertEquals(1, v.getMicro());
+        assertEquals("jboss-eap-", v.getPrefix());
 
-        v = Version.parseEapVersion("jboss-eap-6.3.1-patched");
+        v = Version.parseVersion("jboss-eap-6.3.1-patched");
+        assertEquals(6, v.getMajor());
+        assertEquals(3, v.getMinor());
+        assertEquals(1, v.getMicro());
+        assertEquals("-patched", v.getSpecifier());
+        assertEquals("jboss-eap-", v.getPrefix());
+
+        v = Version.parseVersion("6.3.1-patched");
         assertEquals(6, v.getMajor());
         assertEquals(3, v.getMinor());
         assertEquals(1, v.getMicro());
         assertEquals("-patched", v.getSpecifier());
 
-        v = Version.parseEapVersion("6.3.1-patched");
-        assertEquals(6, v.getMajor());
-        assertEquals(3, v.getMinor());
-        assertEquals(1, v.getMicro());
-        assertEquals("-patched", v.getSpecifier());
-
-        v = Version.parseEapVersion("6.3.1-DR1");
+        v = Version.parseVersion("6.3.1-DR1");
         assertEquals(6, v.getMajor());
         assertEquals(3, v.getMinor());
         assertEquals(1, v.getMicro());
         assertEquals("-DR1", v.getSpecifier());
 
-        v = Version.parseEapVersion("6.3.1.DR2");
+        v = Version.parseVersion("6.3.1.DR2");
         assertEquals(6, v.getMajor());
         assertEquals(3, v.getMinor());
         assertEquals(1, v.getMicro());
@@ -157,59 +160,61 @@ public class VersionTest {
 
     @Test
     public void testParseFirefoxVersion() {
-        v = Version.parseFirefoxVersion("firefox-35");
+        v = Version.parseVersion("firefox-35");
         assertEquals(35, v.getMajor());
         assertEquals(0, v.getMinor());
         assertEquals(0, v.getMicro());
         assertEquals("", v.getSpecifier());
+        assertEquals("firefox-", v.getPrefix());
 
-        v = Version.parseFirefoxVersion("firefox-35.1esr");
+        v = Version.parseVersion("firefox-35.1esr");
         assertEquals(35, v.getMajor());
         assertEquals(1, v.getMinor());
         assertEquals(0, v.getMicro());
         assertEquals("esr", v.getSpecifier());
+        assertEquals("firefox-", v.getPrefix());
 
-        v = Version.parseFirefoxVersion("firefox-35.1.2esr");
+        v = Version.parseVersion("firefox-35.1.2esr");
         assertEquals(35, v.getMajor());
         assertEquals(1, v.getMinor());
         assertEquals(2, v.getMicro());
         assertEquals("esr", v.getSpecifier());
+        assertEquals("firefox-", v.getPrefix());
 
-        v = Version.parseFirefoxVersion("firefox-35.12esr.old");
+        v = Version.parseVersion("firefox-35.12esr.old");
         assertEquals(35, v.getMajor());
         assertEquals(12, v.getMinor());
         assertEquals(0, v.getMicro());
         assertEquals("esr.old", v.getSpecifier());
+        assertEquals("firefox-", v.getPrefix());
 
-        v = Version.parseFirefoxVersion("firefox-24.2esr.old.2");
+        v = Version.parseVersion("firefox-24.2esr.old.2");
         assertEquals(24, v.getMajor());
         assertEquals(2, v.getMinor());
         assertEquals(0, v.getMicro());
         assertEquals("esr.old.2", v.getSpecifier());
+        assertEquals("firefox-", v.getPrefix());
 
-        v = Version.parseFirefoxVersion("firefox-24.2.1.1.esr");
+        v = Version.parseVersion("firefox-24.2.1.1.esr");
         assertEquals(24, v.getMajor());
         assertEquals(2, v.getMinor());
         assertEquals(1, v.getMicro());
         assertEquals(".1.esr", v.getSpecifier());
+        assertEquals("firefox-", v.getPrefix());
 
-        v = Version.parseFirefoxVersion("firefox-24esr");
+        v = Version.parseVersion("firefox-24esr");
         assertEquals(24, v.getMajor());
         assertEquals(0, v.getMinor());
         assertEquals(0, v.getMicro());
         assertEquals("esr", v.getSpecifier());
+        assertEquals("firefox-", v.getPrefix());
 
-        v = Version.parseFirefoxVersion("firefox-24esr.1");
+        v = Version.parseVersion("firefox-24esr.1");
         assertEquals(24, v.getMajor());
         assertEquals(0, v.getMinor());
         assertEquals(0, v.getMicro());
         assertEquals("esr.1", v.getSpecifier());
-
-        v = Version.parseFirefoxVersion("24esr.1");
-        assertEquals(24, v.getMajor());
-        assertEquals(0, v.getMinor());
-        assertEquals(0, v.getMicro());
-        assertEquals("esr.1", v.getSpecifier());
+        assertEquals("firefox-", v.getPrefix());
     }
 
     @Test

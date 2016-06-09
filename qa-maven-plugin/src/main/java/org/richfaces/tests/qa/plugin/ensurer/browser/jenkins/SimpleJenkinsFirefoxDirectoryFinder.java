@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-*/
+ */
 package org.richfaces.tests.qa.plugin.ensurer.browser.jenkins;
 
 import java.io.File;
@@ -150,7 +150,7 @@ public class SimpleJenkinsFirefoxDirectoryFinder implements JenkinsFirefoxDirect
         }
 
         public static Version parseVersion(File f) {
-            return Version.parseFirefoxVersion(f.getName());
+            return Version.parseVersion(f.getName());
         }
 
         @Override

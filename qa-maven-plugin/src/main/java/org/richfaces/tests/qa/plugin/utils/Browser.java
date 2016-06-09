@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-*/
+ */
 package org.richfaces.tests.qa.plugin.utils;
 
 import java.util.Collections;
@@ -39,25 +39,13 @@ public class Browser {
         this.version = version;
     }
 
-    private static String createRegExpForPossibleCharactersStrings(String[] strings) {
-        StringBuilder sb = new StringBuilder("[");
-        for (String string : strings) {
-            sb.append(string);
-        }
-        return sb.append("]").toString();
-    }
-
     public static Browser parseFromString(String name) {
-        String browser = name.split(createRegExpForPossibleCharactersStrings(BROWSER_NAME_VERSION_SEPARATORS) + "?(\\d{1})")[0];
-        String version = name.replace(browser, "");
-        String prefix = "";
-        for (String separator : BROWSER_NAME_VERSION_SEPARATORS) {
-            if (version.startsWith(separator)) {
-                prefix = separator;
-                break;
-            }
+        Version v = Version.parseVersion(name);
+        String browser = v.getPrefix();
+        for (String s : BROWSER_NAME_VERSION_SEPARATORS) {
+            browser = browser.replaceAll(s, "");
         }
-        return new Browser(BrowserName.getNameFor(browser), Version.parseVersion(version, prefix));
+        return new Browser(BrowserName.getNameFor(browser), Version.parseVersion(name));
     }
 
     public BrowserName getName() {

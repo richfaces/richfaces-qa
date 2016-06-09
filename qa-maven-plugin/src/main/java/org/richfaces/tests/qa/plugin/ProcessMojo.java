@@ -124,19 +124,19 @@ public class ProcessMojo extends AbstractMojo implements PropertiesProvider {
     private final LazyLoadedCachedValue<Version> cachedEAPVersion = new LazyLoadedCachedValue<Version>() {
         @Override
         protected Version initValue() {
-            return Version.parseEapVersion(eapVersion);
+            return Version.parseVersion(eapVersion);
         }
     };
     private final LazyLoadedCachedValue<Version> cachedJenkinsFirefoxVersionMinimal = new LazyLoadedCachedValue<Version>() {
         @Override
         protected Version initValue() {
-            return Version.parseFirefoxVersion(jenkinsFirefoxVersionMinimal);
+            return Version.parseVersion(jenkinsFirefoxVersionMinimal);
         }
     };
     private final LazyLoadedCachedValue<Version> cachedJenkinsFirefoxVersionOptimal = new LazyLoadedCachedValue<Version>() {
         @Override
         protected Version initValue() {
-            return Version.parseFirefoxVersion(jenkinsFirefoxVersionOptimal);
+            return Version.parseVersion(jenkinsFirefoxVersionOptimal);
         }
     };
 
