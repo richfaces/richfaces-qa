@@ -55,14 +55,38 @@ import com.google.common.collect.Collections2;
 @SessionScoped
 public class RichSelectBean extends SelectValidationBean implements Serializable {
 
-    private static final long serialVersionUID = -1L;
     private static final Logger LOGGER = LoggerFactory.getLogger(RichSelectBean.class);
+    private static final long serialVersionUID = -1L;
+
+    private final String ajaxAttributes = "onbeforedomupdate,onbegin,oncomplete,status";// https://issues.jboss.org/browse/RF-10966
+    private Capital capital;
     @ManagedProperty("#{model.capitals}")
     private List<Capital> capitals;
     private List<SelectItem> capitalsOptions = null;
     private String validatorMessage;
 
-    private Capital capital;
+    /**
+     * https://issues.jboss.org/browse/RF-10966
+     */
+    public String getAjaxAttributes() {
+        return ajaxAttributes;
+    }
+
+    public Capital getCapital() {
+        return capital;
+    }
+
+    public List<Capital> getCapitals() {
+        return capitals;
+    }
+
+    public List<SelectItem> getCapitalsOptions() {
+        return capitalsOptions;
+    }
+
+    public String getValidatorMessage() {
+        return validatorMessage;
+    }
 
     /**
      * Initializes the managed bean.
@@ -98,36 +122,20 @@ public class RichSelectBean extends SelectValidationBean implements Serializable
         attributes.remove("autocompleteList");
     }
 
-    public String getValidatorMessage() {
-        return validatorMessage;
-    }
-
-    public void setValidatorMessage(String validatorMessage) {
-        this.validatorMessage = validatorMessage;
-    }
-
-    public List<Capital> getCapitals() {
-        return capitals;
+    public void setCapital(Capital capital) {
+        this.capital = capital;
     }
 
     public void setCapitals(List<Capital> capitals) {
         this.capitals = capitals;
     }
 
-    public List<SelectItem> getCapitalsOptions() {
-        return capitalsOptions;
-    }
-
     public void setCapitalsOptions(List<SelectItem> capitalsOptions) {
         this.capitalsOptions = capitalsOptions;
     }
 
-    public Capital getCapital() {
-        return capital;
-    }
-
-    public void setCapital(Capital capital) {
-        this.capital = capital;
+    public void setValidatorMessage(String validatorMessage) {
+        this.validatorMessage = validatorMessage;
     }
 
     public Collection<Capital> suggest(FacesContext facesContext, UIComponent component, final String prefix) {
