@@ -31,6 +31,7 @@ import java.util.Set;
 
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 /**
@@ -70,5 +71,6 @@ public class TestAutocompleteFiltering extends AbstractAutocompleteTest {
         for (String text : expected) {
             assertTrue(suggestions.contains(text), "Suggestions should contain '" + text + "', found " + suggestions + ".");
         }
+        blur(MetamerPage.WaitRequestType.XHR);// prevent ViewExpiredException
     }
 }

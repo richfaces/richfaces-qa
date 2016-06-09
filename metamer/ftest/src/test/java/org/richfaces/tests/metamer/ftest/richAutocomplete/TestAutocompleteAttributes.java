@@ -380,6 +380,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
                 new Actions(driver).click(autocomplete.advanced().getSuggestionsElements().get(0)).build().perform();
             }
         });
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -459,6 +460,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
                 new Actions(driver).clickAndHold(autocomplete.advanced().getSuggestionsElements().get(0)).build().perform();
             }
         });
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -524,6 +526,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
                 new Actions(driver).click(autocomplete.advanced().getSuggestionsElements().get(0)).build().perform();
             }
         });
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test
@@ -603,6 +606,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
         autocomplete.advanced().waitForSuggestionsToBeVisible().perform();
         width = Integer.parseInt(autocomplete.advanced().getSuggestionsElements().get(0).getCssValue("width").replaceAll("px", ""));
         assertEquals(width, 500, tolerance, "The width of a suggestion item should be around 500 px.");
+        blur(WaitRequestType.XHR);// prevent ViewExpiredException
     }
 
     @Test

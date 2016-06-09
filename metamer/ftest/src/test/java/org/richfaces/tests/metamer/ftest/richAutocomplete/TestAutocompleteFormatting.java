@@ -90,6 +90,9 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
         String found = autocomplete.advanced().getInput().getStringValue().toLowerCase();
         assertTrue(found.startsWith(expected), "The input value should start with '" + expected + "', but '" + found
             + "' found.");
+        if (selectFirst) {
+            blur(WaitRequestType.XHR);// prevent ViewExpiredException
+        }
     }
 
     @Test
