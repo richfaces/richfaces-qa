@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.ClearType;
 import org.richfaces.fragment.common.TextInputComponentImpl;
@@ -47,11 +48,18 @@ import org.testng.annotations.Test;
 public class TestSelectAutocompleteMethod extends AbstractWebDriverTest {
 
     private final Attributes<SelectAttributes> attributes = getAttributes();
+
     @FindBy(css = "span[id$=output]")
     private WebElement output;
-
     @FindBy(css = "div[id$=select]")
     private RichFacesSelect select;
+
+    private final Action typeAToTheSelectInputAction = new Action() {
+        @Override
+        public void perform() {
+            select.type("a");
+        }
+    };
 
     @Override
     public String getComponentTestPagePath() {
@@ -128,6 +136,27 @@ public class TestSelectAutocompleteMethod extends AbstractWebDriverTest {
     }
 
     @Test
+    @CoversAttributes("onbeforedomupdate")
+    public void testOnbeforedomupdate() {
+        attributes.set(SelectAttributes.mode, "ajax");
+        testFireEvent("onbeforedomupdate", typeAToTheSelectInputAction);
+    }
+
+    @Test
+    @CoversAttributes("onbegin")
+    public void testOnbegin() {
+        attributes.set(SelectAttributes.mode, "ajax");
+        testFireEvent("onbegin", typeAToTheSelectInputAction);
+    }
+
+    @Test
+    @CoversAttributes("oncomplete")
+    public void testOncomplete() {
+        attributes.set(SelectAttributes.mode, "ajax");
+        testFireEvent("oncomplete", typeAToTheSelectInputAction);
+    }
+
+    @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-13965")
     public void testPopupWillShowAfterWholeInputClearedAtOnce() {
         attributes.set(SelectAttributes.mode, Mode.ajax);
@@ -145,6 +174,13 @@ public class TestSelectAutocompleteMethod extends AbstractWebDriverTest {
         // blur >>> trigger onchange event
         blur(WaitRequestType.XHR);
         waitUntilOutputEqualsTo("Arkansas");
+    }
+
+    @Test
+    @CoversAttributes("status")
+    public void testStatus() {
+        attributes.set(SelectAttributes.mode, "ajax");
+        testStatus(typeAToTheSelectInputAction);
     }
 
     @Test

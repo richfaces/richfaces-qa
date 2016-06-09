@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.select.RichFacesSelect;
 import org.richfaces.fragment.select.SelectSuggestions;
@@ -43,12 +44,19 @@ import org.testng.annotations.Test;
  */
 public class TestSelectAutocompleteList extends AbstractWebDriverTest {
 
-    @FindBy(css = "div[id$=select]")
-    private RichFacesSelect select;
+    private final Attributes<SelectAttributes> attributes = getAttributes();
+
     @FindBy(css = "span[id$=output]")
     private WebElement output;
+    @FindBy(css = "div[id$=select]")
+    private RichFacesSelect select;
 
-    private final Attributes<SelectAttributes> attributes = getAttributes();
+    private final Action typeAToTheSelectInputAction = new Action() {
+        @Override
+        public void perform() {
+            select.type("a");
+        }
+    };
 
     @Override
     public String getComponentTestPagePath() {
@@ -69,5 +77,33 @@ public class TestSelectAutocompleteList extends AbstractWebDriverTest {
         assertEquals(suggestions.get(1).getText(), "Hawaii");
         Graphene.guardAjax(selectState).select(1);// select Hawaii
         Graphene.waitAjax().until().element(output).text().equalTo("Hawaii");
+    }
+
+    @Test
+    @CoversAttributes("onbeforedomupdate")
+    public void testOnbeforedomupdate() {
+        attributes.set(SelectAttributes.mode, "ajax");
+        testFireEvent("onbeforedomupdate", typeAToTheSelectInputAction);
+    }
+
+    @Test
+    @CoversAttributes("onbegin")
+    public void testOnbegin() {
+        attributes.set(SelectAttributes.mode, "ajax");
+        testFireEvent("onbegin", typeAToTheSelectInputAction);
+    }
+
+    @Test
+    @CoversAttributes("oncomplete")
+    public void testOncomplete() {
+        attributes.set(SelectAttributes.mode, "ajax");
+        testFireEvent("oncomplete", typeAToTheSelectInputAction);
+    }
+
+    @Test
+    @CoversAttributes("status")
+    public void testStatus() {
+        attributes.set(SelectAttributes.mode, "ajax");
+        testStatus(typeAToTheSelectInputAction);
     }
 }
