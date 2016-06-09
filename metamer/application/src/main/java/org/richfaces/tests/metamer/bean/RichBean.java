@@ -250,6 +250,7 @@ public class RichBean implements Serializable {
         allComponentsPermanentList.put("expressionLanguage", "Expression Language");
         allComponentsPermanentList.put("commandButton", "JSF Command Button");
         allComponentsPermanentList.put("hDataTable", "JSF Data Table");
+        allComponentsPermanentList.put("jsfReproducers", "JSF Issues Reproducers");
         allComponentsPermanentList.put("skinning", "Skinning");
         allComponentsPermanentList.put("uiRepeat", "UI Repeat");
 

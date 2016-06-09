@@ -115,6 +115,13 @@ FSF site: http://www.fsf.org. -->
             <scope>test</scope>
             <version>${project.version}</version>
         </dependency>
+        <!-- Utilities from qa-maven-plugin-->
+        <dependency>
+            <groupId>org.richfaces.tests</groupId>
+            <artifactId>richfaces-qa-maven-plugin</artifactId>
+            <scope>test</scope>
+            <version>${project.version}</version>
+        </dependency>
         <!-- see the https://community.jboss.org/wiki/WhatsTheCauseOfThisExceptionJavalangClassFormatErrorAbsentCode -->
         <dependency>
             <groupId>org.jboss.spec</groupId>

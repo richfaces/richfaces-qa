@@ -44,20 +44,23 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <c:set var="issue" value="#{cc.attrs.issue}"/>
             <c:set var="issueName" value="#{empty cc.attrs.issueName ? '' : ': '.concat(cc.attrs.issueName)}"/>
             <c:set var="resolved" value="#{cc.attrs.resolved}"/>
+            <c:set var="isJSFIssue" value="#{cc.attrs.issue.toUpperCase().startsWith('JAVASERVERFACES')}"/>
+            <c:set var="isJBossIssue" value="#{cc.attrs.issue.toLowerCase().startsWith('rf')}"/>
+            <c:set var="issueLink" value="#{isJBossIssue?'https://issues.jboss.org/browse/':isJSFIssue?'https://java.net/jira/browse/':'unknown'}"/>
 
             <ui:remove><!-- add link to the reproducer, uppercase the value --></ui:remove>
-            <h:link id="link" outcome="#{empty cc.attrs.outcome ? cc.attrs.issue : cc.attrs.outcome }" value="#{fn:toUpperCase(issue)}" styleClass="link" />
+            <h:link id="link" outcome="#{empty cc.attrs.outcome ? cc.attrs.issue : cc.attrs.outcome }" value="#{fn:toUpperCase(issue)}" styleClass="link" title="Open reproducer in this tab" />
             <span style="padding-left: 10px;"/>
             <ui:remove><!-- add image representing status of the original issue --></ui:remove>
-            <h:graphicImage width="16px" class="iconOffset" library="images" name="#{resolved ? 'tick' : 'cross'}.png" alt="original issue is #{resolved?'':'not'} resolved" title="original issue is #{resolved ? '' : 'not '}resolved"/>
+            <h:graphicImage width="16px" class="iconOffset" library="images" name="#{resolved ? 'tick' : 'cross'}.png" alt="original issue is #{resolved?'':'not'} resolved" title="Original issue is #{resolved ? '' : 'not '}resolved"/>
             <ui:remove><!-- when the reproducer is covered with test(s), add an image --></ui:remove>
-            <h:graphicImage rendered="#{cc.attrs.automatized}" width="16px" class="iconOffset" library="images" name="gear.png" alt="is covered by test(s)" title="is covered by test(s)"/>
+            <h:graphicImage rendered="#{cc.attrs.automatized}" width="16px" class="iconOffset" library="images" name="gear.png" alt="is covered by test(s)" title="Is covered by test(s)"/>
             <ui:remove><!-- when the issue needs attention, add an image --></ui:remove>
-            <h:graphicImage rendered="#{cc.attrs.demandsAttention}" width="16px" class="iconOffset" library="images" name="magnifier.png" alt="issue demands attention" title="issue demands attention, it needs to be verified manually"/>
+            <h:graphicImage rendered="#{cc.attrs.demandsAttention}" width="16px" class="iconOffset" library="images" name="magnifier.png" alt="issue demands attention" title="Issue demands attention, it needs to be verified manually"/>
 
             <ui:remove><!-- add default description and text nested inside tags (metamer:reproducerPageLink) --></ui:remove>
             <h:panelGroup id="desc" layout="block" styleClass="description">
-                Reproducer for issue <a class="smallerLink" target="_blank" href="https://issues.jboss.org/browse/#{fn:toUpperCase(issue)}" title="open a new tab with the issue">#{fn:toUpperCase(issue)}#{issueName}</a>.
+                Reproducer for issue <a class="smallerLink" target="_blank" href="#{issueLink}#{fn:toUpperCase(issue)}" title="Open a new tab with the issue">#{fn:toUpperCase(issue)}#{issueName}</a>.
                 <composite:insertChildren/>
             </h:panelGroup>
 

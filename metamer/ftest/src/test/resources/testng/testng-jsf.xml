@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="JSF reproducers suite">
+    <test name="JSF reproducers" preserve-order="true">
+        <groups>
+            <run>
+            </run>
+        </groups>
+        <packages>
+            <package name="org.richfaces.tests.metamer.ftest.jsfReproducers" />
+        </packages>
+    </test>
+</suite>
+
