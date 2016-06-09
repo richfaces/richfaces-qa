@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:j="http://jsf.reproducers/jsf3545">
+    <f:view>
+        <h:head/>
+        <h:body>
+            <p>Summary: Switch between the tabs. The input should contain actually expanded tab's text.</p>
+            <br/>
+            Steps to reproduce:
+            <ol>
+                <li>click on the link 'switch to tab 1'</li>
+                <li>check the following input value changes to 'Tab 1 value'</li>
+                <li>click on the link 'switch to tab 0'</li>
+                <li>check the following input value changes to 'Tab 0 value' (does not stay with 'Tab 1 value')</li>
+            </ol>
+
+            <h:form id="form">
+                <h:panelGroup layout="block">
+                    <h:commandLink id="switchToTab0"
+                                   value="switch to tab 0"
+                                   style="margin-right: 10px;">
+                        <f:ajax event="click"
+                                execute="@form"
+                                render="@form"
+                                listener="#{JSF3545Bean.tab0Click}" />
+                    </h:commandLink>
+                    <h:commandLink id="switchToTab1"
+                                   value="switch to tab 1">
+                        <f:ajax event="click"
+                                execute="@form"
+                                render="@form"
+                                listener="#{JSF3545Bean.tab1Click}" />
+                    </h:commandLink>
+                    <br/>
+                    <f:subview id="tab1">
+                        <c:if test="#{JSF3545Bean.tab0Expanded}">
+                            Tab 0:
+                            <j:inputText id="tab0txt" bean="#{JSF3545Bean.bean0}" />
+                        </c:if>
+                    </f:subview>
+                    <f:subview id="tab2">
+                        <c:if test="#{JSF3545Bean.tab1Expanded}">
+                            Tab 1:
+                            <j:inputText id="tab1txt" bean="#{JSF3545Bean.bean1}" />
+                        </c:if>
+                    </f:subview>
+                </h:panelGroup>
+            </h:form>
+        </h:body>
+    </f:view>
+</html>

@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.extension.configurator.skip;
 
 import org.richfaces.tests.metamer.ftest.extension.utils.JSFDetectionUtils;
+import org.richfaces.tests.qa.plugin.utils.Version;
 
 /**
  * For examples see javadoc of
@@ -43,6 +44,10 @@ public class On {
         return systemPropertyIsContaing("version.eap", "", version);
     }
 
+    private static boolean getResultFor(Class<? extends SkipOn> caseClass) {
+        return SkipOnResultsCache.getInstance().getResultFor(caseClass);
+    }
+
     private static boolean osNamePropertyIsContaining(String... possibleOSName) {
         return systemPropertyIsContaing("os.name", "", possibleOSName);
     }
@@ -58,6 +63,17 @@ public class On {
             }
         }
         return Boolean.FALSE;
+    }
+
+    /**
+     * Skip test in each case. To mark always failing test.
+     */
+    public static class EachCase implements SkipOn {
+
+        @Override
+        public boolean apply() {
+            return Boolean.TRUE;
+        }
     }
 
     /**
@@ -165,7 +181,7 @@ public class On {
 
             @Override
             public boolean apply() {
-                return containerProfileActivated("jbosseap-managed-6-3", "jbosseap-remote-6-3") && eapVersionSetTo("6.3.3");
+                return getResultFor(EAP63x.class) && eapVersionSetTo("6.3.3");
             }
         }
 
@@ -177,7 +193,7 @@ public class On {
 
             @Override
             public boolean apply() {
-                return containerProfileActivated("jbosseap-managed-6-3", "jbosseap-remote-6-3") && eapVersionSetTo("6.3.4");
+                return getResultFor(EAP63x.class) && eapVersionSetTo("6.3.4");
             }
         }
 
@@ -201,7 +217,7 @@ public class On {
 
             @Override
             public boolean apply() {
-                return containerProfileActivated("jbosseap-managed-6-4", "jbosseap-remote-6-4") && eapVersionSetTo("6.4.0");
+                return getResultFor(EAP64x.class) && eapVersionSetTo("6.4.0");
             }
         }
 
@@ -213,7 +229,7 @@ public class On {
 
             @Override
             public boolean apply() {
-                return containerProfileActivated("jbosseap-managed-6-4", "jbosseap-remote-6-4") && eapVersionSetTo("6.4.2");
+                return getResultFor(EAP64x.class) && eapVersionSetTo("6.4.2");
             }
         }
 
@@ -225,7 +241,7 @@ public class On {
 
             @Override
             public boolean apply() {
-                return containerProfileActivated("jbosseap-managed-6-4", "jbosseap-remote-6-4") && eapVersionSetTo("6.4.3");
+                return getResultFor(EAP64x.class) && eapVersionSetTo("6.4.3");
             }
         }
 
@@ -237,7 +253,7 @@ public class On {
 
             @Override
             public boolean apply() {
-                return containerProfileActivated("jbosseap-managed-6-4", "jbosseap-remote-6-4") && eapVersionSetTo("6.4.4");
+                return getResultFor(EAP64x.class) && eapVersionSetTo("6.4.4");
             }
         }
 
@@ -249,7 +265,7 @@ public class On {
 
             @Override
             public boolean apply() {
-                return containerProfileActivated("jbosseap-managed-6-4", "jbosseap-remote-6-4") && eapVersionSetTo("6.4.5");
+                return getResultFor(EAP64x.class) && eapVersionSetTo("6.4.5");
             }
         }
 
@@ -261,7 +277,7 @@ public class On {
 
             @Override
             public boolean apply() {
-                return containerProfileActivated("jbosseap-managed-6-4", "jbosseap-remote-6-4") && eapVersionSetTo("6.4.6");
+                return getResultFor(EAP64x.class) && eapVersionSetTo("6.4.6");
             }
         }
 
@@ -273,7 +289,31 @@ public class On {
 
             @Override
             public boolean apply() {
-                return containerProfileActivated("jbosseap-managed-6-4", "jbosseap-remote-6-4") && eapVersionSetTo("6.4.7");
+                return getResultFor(EAP64x.class) && eapVersionSetTo("6.4.7");
+            }
+        }
+
+        /**
+         * Skip test when use of EAP 6.4.8 is detected (when <code>activated.maven.profiles</code> are containing
+         * <code>jbosseap-managed-6-4</code> or <code>jbosseap-remote-6-4</code> and <code>version.eap=6.4.8*</code>).
+         */
+        public static class EAP648 implements SkipOn {
+
+            @Override
+            public boolean apply() {
+                return getResultFor(EAP64x.class) && eapVersionSetTo("6.4.8");
+            }
+        }
+
+        /**
+         * Skip test when use of EAP 6.4.9 is detected (when <code>activated.maven.profiles</code> are containing
+         * <code>jbosseap-managed-6-4</code> or <code>jbosseap-remote-6-4</code> and <code>version.eap=6.4.9*</code>).
+         */
+        public static class EAP649 implements SkipOn {
+
+            @Override
+            public boolean apply() {
+                return getResultFor(EAP64x.class) && eapVersionSetTo("6.4.9");
             }
         }
 
@@ -348,21 +388,43 @@ public class On {
                 return containerProfileActivated("wildfly-managed-10-0", "wildfly-remote-10-0");
             }
         }
-    }
 
-    /**
-     * Skip test in each case. To mark always failing test.
-     */
-    public static class EachCase implements SkipOn {
+        public static class OtherThanEAP64WithVersion {
 
-        @Override
-        public boolean apply() {
-            return Boolean.TRUE;
+            private static final String actEapVersion = System.getProperty("version.eap");
+
+            private static boolean isEAPVersionUnder(Version other) {
+                if (actEapVersion == null || actEapVersion.isEmpty()) {
+                    return false;
+                }
+                return Version.parseVersion(actEapVersion).compareTo(other) < 0;
+            }
+
+            private static boolean isUsingEAP64() {
+                return getResultFor(EAP64x.class);
+            }
+
+            /**
+             * Skip test when not using profile <code>jbosseap-managed-6-4</code> or <code>jbosseap-remote-6-4</code> and skip
+             * test when using profile <code>jbosseap-managed-6-4</code> or <code>jbosseap-remote-6-4</code>, but the
+             * <code>version.eap</code> is under 6.4.9.
+             */
+            public static class Under649 implements SkipOn {
+
+                @Override
+                public boolean apply() {
+                    if (isUsingEAP64()) {
+                        return isEAPVersionUnder(Version.parseVersion("6.4.9"));
+                    } else {
+                        return true;
+                    }
+                }
+            }
         }
     }
 
     /**
-     * Skip test when use of specific JSF implementation is detected (using property <code>metamer.classifier</code>).
+     * Skip test when use of specific JSF implementation is detected from Metamer page.
      */
     public interface JSF {
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<facelet-taglib id="base" version="2.0"
+                xmlns="http://java.sun.com/xml/ns/javaee"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd">
+    <namespace>http://jsf.reproducers/jsf3545</namespace>
+    <tag>
+        <tag-name>inputText</tag-name>
+        <source>taglibs/jsfReproducers/jsf3545/inputText.xhtml</source>
+    </tag>
+</facelet-taglib>
