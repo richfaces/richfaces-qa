@@ -112,8 +112,7 @@ public class Model implements Serializable {
      * Unmarshalls the list of capitals
      *
      * @return the list of capitals
-     * @throws JAXBException
-     *             if any unexpected errors occurs during unmarshalling
+     * @throws JAXBException if any unexpected errors occurs during unmarshalling
      */
     public static final List<Capital> unmarshallCapitals() {
         try {
@@ -150,6 +149,7 @@ public class Model implements Serializable {
     }
 
     private interface ListHolder<T> {
+
         List<T> getList();
 
         void setList(List<T> list);

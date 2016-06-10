@@ -35,6 +35,7 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Locale;
 
 import org.eu.ingwar.tools.arquillian.extension.suite.annotations.ArquillianSuiteDeployment;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -93,6 +94,10 @@ public abstract class AbstractMetamerTest extends Arquillian {
     @Templates(value = { "plain", "richAccordion", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richCollapsiblePanel", "richTabPanel", "richPopupPanel", "a4jRegion", "a4jRepeat", "uiRepeat" })
     protected TemplatesList template;
+
+    public AbstractMetamerTest() {
+        Locale.setDefault(Locale.US);
+    }
 
     private static void checkValueIsValidForResourceOptimizationParam(String value) {
         assertNotNull(value, "The parameter for resource optimization can only be <None> or <All>, not null!");
