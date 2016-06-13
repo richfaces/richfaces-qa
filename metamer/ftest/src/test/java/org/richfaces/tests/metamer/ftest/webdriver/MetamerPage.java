@@ -21,16 +21,16 @@
  */
 package org.richfaces.tests.metamer.ftest.webdriver;
 
+import static java.lang.String.format;
+
 import static org.testng.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import javax.faces.event.PhaseId;
@@ -82,7 +82,7 @@ public class MetamerPage {
     private WebElement fullPageRefreshIcon;
     @FindBy(css = "span[id$=jsFunctionChecker]")
     private WebElement jsFunctionChecker;
-    private Map<PhaseId, Set<String>> map = new LinkedHashMap<PhaseId, Set<String>>();
+    private Map<PhaseId, List<String>> map = new LinkedHashMap<PhaseId, List<String>>();
     @FindBy(css = "div[id$=phasesPanel] li")
     private List<WebElement> phases;
     @FindBy(css = "span[id$=renderChecker]")
@@ -229,23 +229,36 @@ public class MetamerPage {
     }
 
     /**
-     * Asserts that in the given phase has occurred the listener or order producer writing the log message to phases list.
+     * Asserts that the listener occurred in given phase for a number of times.
+     *
+     * @param inPhase the phase where the listener occurred
+     * @param listenerMessage the part of the message which it should be looked up
+     * @param expectedInvocationCount number of the same messages which should be looked up
+     */
+    public void assertListener(PhaseId inPhase, String listenerMessage, int expectedInvocationCount) {
+        initialize();
+        List<String> list = map.get(inPhase);
+        String messageWithoutStar = listenerMessage.startsWith("*") ? listenerMessage.substring(2) : listenerMessage;
+        int invocationCount = 0;
+        if (list != null && list.size() > 0) {
+            for (String description : list) {
+                if (description.contains(messageWithoutStar)) {
+                    invocationCount++;
+                }
+            }
+        }
+        assertEquals(invocationCount, expectedInvocationCount,
+            format("The count of listener's invocations does not match. Expected <%s> invocation(s),  but had: <%s> invocation(s).", expectedInvocationCount, invocationCount));
+    }
+
+    /**
+     * Asserts that the listener occurred in given phase only once.
      *
      * @param phaseId the phase where the listener occurred
      * @param message the part of the message which it should be looked up
      */
     public void assertListener(PhaseId phaseId, String message) {
-        initialize();
-        Set<String> set = map.get(phaseId);
-        String messageWithoutStar = message.startsWith("*") ? message.substring(2) : message;
-        if (set != null && set.size() > 0) {
-            for (String description : set) {
-                if (description.contains(messageWithoutStar)) {
-                    return;
-                }
-            }
-        }
-        throw new AssertionError("The '" + messageWithoutStar + "' wasn't found across messages in phase " + phaseId);
+        assertListener(phaseId, message, 1);
     }
 
     /**
@@ -256,9 +269,9 @@ public class MetamerPage {
     public void assertNoListener(String message) {
         initialize();
         String messageWithoutStar = message.startsWith("*") ? message.substring(2) : message;
-        for (Entry<PhaseId, Set<String>> entry : map.entrySet()) {
+        for (Entry<PhaseId, List<String>> entry : map.entrySet()) {
             PhaseId phaseId = entry.getKey();
-            Set<String> descriptions = entry.getValue();
+            List<String> descriptions = entry.getValue();
 
             for (String description : descriptions) {
                 if (description.contains(messageWithoutStar)) {
@@ -383,19 +396,17 @@ public class MetamerPage {
 
     private void initialize() {
         if (reqTime == null || !reqTime.equals(requestTime.getText())) {
-
             reqTime = requestTime.getText();
             map.clear();
-            Set<String> set = null;
-
+            List<String> list = null;
             for (WebElement element : phases) {
                 String description = element.getText();
 
                 if (!description.startsWith("*")) {
-                    set = new LinkedHashSet<String>();
-                    map.put(getPhaseId(description), set);
+                    list = new LinkedList<String>();
+                    map.put(getPhaseId(description), list);
                 } else {
-                    set.add(description.substring(2));
+                    list.add(description.substring(2));
                 }
             }
         }
