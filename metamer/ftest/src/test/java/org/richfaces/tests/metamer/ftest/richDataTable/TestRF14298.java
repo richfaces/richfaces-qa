@@ -46,9 +46,13 @@ public class TestRF14298 extends AbstractWebDriverTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-14298")
     public void testRowClick() {
+        // click on some row
         Graphene.guardAjax(dt.getRow(1).getCapitalColumn()).click();
+        // check listener was invoked only once
         getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "action listener invoked");
+        // click on some row
         Graphene.guardAjax(dt.getRow(5).getStateColumn()).click();
+        // check listener was invoked only once
         getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "action listener invoked");
     }
 }
