@@ -46,7 +46,7 @@ import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.panelMenu.RichFacesPanelMenuGroup;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.checker.IconsChecker;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -289,7 +289,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
 
     @Test
     @CoversAttributes("selectable")
-    @RegressionTest("https://issues.jboss.org/browse/RF-13727")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13727")
     public void testSelectable() {
         panelMenuGroupAttributes.set(selectable, false);
         guardAjax(getPage().getMenu()).collapseGroup(1);
@@ -315,7 +315,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
 
     @Test
     @CoversAttributes("styleClass")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10485")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10485")
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(getPage().getTopGroup().advanced().getRootElement());

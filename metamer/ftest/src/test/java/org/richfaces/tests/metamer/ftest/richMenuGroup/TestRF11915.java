@@ -30,7 +30,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.dropDownMenu.RichFacesDropDownMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
@@ -56,7 +56,7 @@ public class TestRF11915 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11915")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11915")
     public void testOpeningOfDisabledOnlyGroupWontThrowJSErrors() {
         // there should be no JS errors present on page load
         chechNoJSErrorsArePresent();

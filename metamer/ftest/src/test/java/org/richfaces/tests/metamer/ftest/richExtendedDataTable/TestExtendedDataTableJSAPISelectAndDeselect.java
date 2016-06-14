@@ -30,7 +30,7 @@ import java.util.List;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SimpleEDTRow;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.page.SelectionPage;
@@ -45,7 +45,7 @@ import com.google.common.collect.Lists;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-@RegressionTest("https://issues.jboss.org/browse/RF-14277")
+@IssueTracking("https://issues.jboss.org/browse/RF-14277")
 public class TestExtendedDataTableJSAPISelectAndDeselect extends AbstractWebDriverTest {
 
     @Page

@@ -25,7 +25,7 @@ import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -99,7 +99,7 @@ public class TestMatrix extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12512")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12512")
     public void testClear() {
         page.changeValue(0, 3, 42);
         page.changeValue(3, 2, -127);

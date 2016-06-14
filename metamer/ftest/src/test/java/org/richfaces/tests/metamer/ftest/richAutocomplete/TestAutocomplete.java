@@ -34,7 +34,7 @@ import org.richfaces.fragment.common.ScrollingType;
 import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.configurator.unstable.annotation.Unstable;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
@@ -65,7 +65,7 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14087")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14087")
     @CoversAttributes({ "mode", "minChars", "autofill", "showButton", "value" })
     public void testShowSuggestionsWithButton() {
         // prepare autocomplete attributes
@@ -118,7 +118,7 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
     }
 
     @Test(groups = "smoke")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11323")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11323")
     @Unstable
     @Uses({
         @UseWithField(field = "autofill", valuesFrom = ValuesFrom.FROM_FIELD, value = "booleans"),

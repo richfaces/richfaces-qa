@@ -34,13 +34,13 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.select.RichFacesSelect;
 import org.richfaces.fragment.select.SelectSuggestions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-@RegressionTest("https://issues.jboss.org/browse/RF-6678")
+@IssueTracking("https://issues.jboss.org/browse/RF-6678")
 public class TestRF6678 extends AbstractWebDriverTest {
 
     private static final String DISABLED_CLASS = "rf-sel-opt-dis";

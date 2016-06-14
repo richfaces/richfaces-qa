@@ -26,7 +26,7 @@ import javax.faces.event.PhaseId;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.richDataTable.fragment.SimpleDT;
 import org.testng.annotations.Test;
 
@@ -44,7 +44,7 @@ public class TestRF14298 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14298")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14298")
     public void testRowClick() {
         // click on some row
         Graphene.guardAjax(dt.getRow(1).getCapitalColumn()).click();

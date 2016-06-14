@@ -22,7 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richValidator;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -48,7 +48,7 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11035")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11035")
     public void testAllWrongJSF() {
         verifyAllWrongWithJSFSubmit();
     }
@@ -83,7 +83,7 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
      */
     @Test
     @CoversAttributes("disabled")
-    @RegressionTest(value = "https://issues.jboss.org/browse/RF-12154")
+    @IssueTracking(value = "https://issues.jboss.org/browse/RF-12154")
     public void testDisabled() {
         String invalidValue = "11";
         // set disabled to false
@@ -121,7 +121,7 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11035")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11035")
     public void testSelectionSize() {
         verifySelectionSize();
     }

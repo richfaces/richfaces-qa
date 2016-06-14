@@ -25,7 +25,6 @@ import org.openqa.selenium.TimeoutException;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -54,7 +53,7 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
 
     @Test
     @CoversAttributes("dir")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12923")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12923")
     @Templates("plain")
     public void testDir() {
         checkDir();
@@ -74,7 +73,7 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
 
     @Test
     @CoversAttributes("lang")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12923")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12923")
     @Templates("plain")
     public void testLang() {
         checkLang();
@@ -220,7 +219,7 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
 
     @Test
     @CoversAttributes("showShadow")
-    @RegressionTest("https://issues.jboss.org/browse/RF-13792")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13792")
     public void testShowShadow() {
         notifyMessageAttributes.set(NotifyMessageAttributes.showShadow, Boolean.TRUE);
         generateValidationMessagesWithWait();
@@ -275,7 +274,7 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
 
     @Test
     @CoversAttributes("sticky")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11558")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11558")
     public void testSticky() {
         attsSetter()
             .setAttribute(NotifyMessageAttributes.stayTime).toValue(1000)
@@ -300,7 +299,7 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
     }
 
     @Test
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-12923", "https://issues.jboss.org/browse/RF-14164" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-12923", "https://issues.jboss.org/browse/RF-14164" })
     @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
@@ -315,7 +314,7 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
     }
 
     @Test
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-12923", "https://issues.jboss.org/browse/RF-14164" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-12923", "https://issues.jboss.org/browse/RF-14164" })
     @CoversAttributes("title")
     @Templates("plain")
     public void testTitle() {

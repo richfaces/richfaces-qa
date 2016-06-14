@@ -27,7 +27,7 @@ import static org.testng.Assert.assertNotEquals;
 
 import org.jboss.arquillian.graphene.javascript.JavaScript;
 import org.openqa.selenium.interactions.Actions;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
@@ -90,7 +90,7 @@ public class TestLineChart extends AbstractChartTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14176")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14176")
     @Templates("plain")
     public void testStyle() {
         super.testStyle();

@@ -32,7 +32,7 @@ import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.fragment.orderingList.RichFacesOrderingList;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -53,7 +53,7 @@ public class TestRF12098 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12098")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12098")
     public void testListCanHandleItemsWithCommas() {
         String listElementsBefore = list.advanced().getContentAreaElement().getText();
         // reorganize elements in list

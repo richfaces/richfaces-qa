@@ -34,7 +34,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.common.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
@@ -74,7 +74,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9665")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9665")
     public void testSimpleClickUnicode() {
         page.typeToInput(CommandButtonLinkPage.STRING_UNICODE1);
         page.submitByButton();
@@ -342,7 +342,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("render")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10555")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10555")
     public void testRender() {
         commandButtonAttributes.set(CommandButtonAttributes.action, "doubleStringAction");
         commandButtonAttributes.set(CommandButtonAttributes.actionListener, "doubleStringActionListener");
@@ -391,7 +391,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("styleClass")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9307")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9307")
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(page.getButtonElement());
@@ -420,7 +420,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("type")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10115")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10115")
     public void testTypeNull() {
         testHTMLAttribute(page.getButtonElement(), commandButtonAttributes, CommandButtonAttributes.type, "null", "submit");
     }

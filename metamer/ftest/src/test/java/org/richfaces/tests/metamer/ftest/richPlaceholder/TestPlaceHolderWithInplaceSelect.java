@@ -28,7 +28,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.inplaceSelect.RichFacesInplaceSelect;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
@@ -96,14 +95,14 @@ public class TestPlaceHolderWithInplaceSelect extends AbstractPlaceholderJSFTest
     }
 
     @Test
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-12625", "https://issues.jboss.org/browse/RF-12623" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-12625", "https://issues.jboss.org/browse/RF-12623" })
     @Override
     public void testAjaxSubmit() {
         super.testAjaxSubmit();
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12623")
     @Override
     public void testClickOnInputWithPlaceholder() {
         super.testClickOnInputWithPlaceholder();
@@ -111,22 +110,24 @@ public class TestPlaceHolderWithInplaceSelect extends AbstractPlaceholderJSFTest
 
     @Test
     @Skip
-    @IssueTracking("https://issues.jboss.org/browse/RF-12651")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
+    @IssueTracking({
+        "https://issues.jboss.org/browse/RF-12651",
+        "https://issues.jboss.org/browse/RF-12623"
+    })
     @Override
     public void testDeleteTextFromInputWithPlaceholder() {
         super.testDeleteTextFromInputWithPlaceholder();
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12623")
     @Override
     public void testHTTPSubmit() {
         super.testHTTPSubmit();
     }
 
     @Test
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-12623", "https://issues.jboss.org/browse/RF-12650" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-12623", "https://issues.jboss.org/browse/RF-12650" })
     @Override
     @Templates(value = "plain")
     public void testRendered() {
@@ -134,7 +135,7 @@ public class TestPlaceHolderWithInplaceSelect extends AbstractPlaceholderJSFTest
     }
 
     @Test
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-12623", "https://issues.jboss.org/browse/RF-12651",
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-12623", "https://issues.jboss.org/browse/RF-12651",
         "https://issues.jboss.org/browse/RF-13783" })
     @Templates(value = "plain")
     @Override
@@ -145,8 +146,10 @@ public class TestPlaceHolderWithInplaceSelect extends AbstractPlaceholderJSFTest
 
     @Test
     @Skip
-    @IssueTracking("https://issues.jboss.org/browse/RF-12651")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
+    @IssueTracking({
+        "https://issues.jboss.org/browse/RF-12651",
+        "https://issues.jboss.org/browse/RF-12623"
+    })
     @Override
     public void testTypeToInputWithPlaceholder() {
         super.testTypeToInputWithPlaceholder();

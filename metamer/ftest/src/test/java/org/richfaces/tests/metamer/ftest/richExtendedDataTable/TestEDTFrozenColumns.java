@@ -37,7 +37,7 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
@@ -109,7 +109,7 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes({ "frozenColumns", "columnClasses" })
-    @RegressionTest("https://issues.jboss.org/browse/RF-12351")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12351")
     public void testColumnClassesAreInSyncInBothFrozenAndNotFrozenPartOfTable() {
         extendedDataTableAttributes.set(ExtendedDataTableAttributes.frozenColumns, 1);
         extendedDataTableAttributes.set(ExtendedDataTableAttributes.columnClasses, "metamer-ftest-class,column2");
@@ -165,7 +165,7 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
     @CoversAttributes("frozenColumns")
     @UseWithField(field = "numberOfColumns", valuesFrom = FROM_FIELD, value = "ints")
     @Templates(value = "richExtendedDataTable")
-    @RegressionTest("https://issues.jboss.org/browse/RF-13046")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13046")
     public void testFrozenColumnsShowInEDT() {
         testFrozenColumnsShow();
     }
@@ -179,7 +179,7 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes({ "frozenColumns", "rowClasses" })
-    @RegressionTest("https://issues.jboss.org/browse/RF-12351")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12351")
     public void testRowClassesAreInSyncInBothFrozenAndNotFrozenPartOfTable() {
         extendedDataTableAttributes.set(ExtendedDataTableAttributes.frozenColumns, 1);
         extendedDataTableAttributes.set(ExtendedDataTableAttributes.rowClasses, "metamer-ftest-class,row2");
@@ -232,7 +232,7 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
     @CoversAttributes("frozenColumns")
     @UseWithField(field = "numberOfColumns", valuesFrom = FROM_FIELD, value = "ints2")
     @Templates(value = "richExtendedDataTable")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12278")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12278")
     // TODO https://issues.jboss.org/browse/RF-12236 , when numberOfColumns=4
     public void testScrollerForNotFrozenColumnsInRichExtendedDataTable() {
         testScrollerForNotFrozenColumns();

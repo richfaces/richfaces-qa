@@ -9,7 +9,7 @@ import org.richfaces.fragment.common.NullFragment;
 import org.richfaces.fragment.dataTable.RichFacesDataTable;
 import org.richfaces.fragment.tabPanel.RichFacesTabPanel;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -42,7 +42,7 @@ public class TestRF12491 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12491")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12491")
     public void testGetterForOtherDataTableIsNotInvoked_switchTypeAjax() {
         attributes.set(TabPanelAttributes.switchType, "ajax");
         refreshCounts();
@@ -51,7 +51,7 @@ public class TestRF12491 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12491")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12491")
     public void testGetterForOtherDataTableIsNotInvoked_switchTypeServer() {
         attributes.set(TabPanelAttributes.switchType, "server");
         refreshCounts();

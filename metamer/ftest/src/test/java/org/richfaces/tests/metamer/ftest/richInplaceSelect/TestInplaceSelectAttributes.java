@@ -46,7 +46,6 @@ import org.richfaces.tests.metamer.bean.Model;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -97,7 +96,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("activeClass")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11227")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11227")
     @Templates(value = "plain")
     public void testActiveClass() {
         String testedClass = "metamer-ftest-class";
@@ -119,7 +118,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("changedClass")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11227")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11227")
     @Templates(value = "plain")
     public void testChangedClass() {
         String testedClass = "metamer-ftest-class";
@@ -134,7 +133,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     }
 
     @Test(groups = { "smoke" })
-    @RegressionTest("https://issues.jboss.org/browse/RF-11227")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11227")
     public void testClick() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, "true");
         select.advanced().setSaveOnSelect(true);
@@ -196,7 +195,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("defaultLabel")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10739")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10739")
     @Templates("plain")
     public void testDefaultLabel() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.defaultLabel, "new label");
@@ -249,7 +248,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("immediate")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11227")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11227")
     public void testImmediate() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.immediate, Boolean.TRUE);
 
@@ -301,7 +300,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("listClass")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9845")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9845")
     @Templates(value = "plain")
     public void testListClass() {
         testStyleClass(driver.findElement(listBy), BasicAttributes.listClass);
@@ -309,7 +308,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("listHeight")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9647")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9647")
     @Templates(value = "plain")
     public void testListHeight() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.listHeight, "300px");
@@ -323,7 +322,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("listWidth")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9647")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9647")
     @Templates(value = "plain")
     public void testListWidth() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.listWidth, "300px");
@@ -338,7 +337,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("onblur")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11227")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11227")
     public void testOnblur() {
         testFireEvent("blur", new Action() {
             @Override
@@ -351,7 +350,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("onchange")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11227")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11227")
     public void testOnchange() {
         testFireEvent("change", new Action() {
             @Override
@@ -377,7 +376,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("onfocus")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9849")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9849")
     @Templates(value = "plain")
     public void testOnfocus() {
         testFireEvent("focus", new Action() {
@@ -669,7 +668,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes({ "saveOnBlur", "saveOnSelect" })
-    @RegressionTest("https://issues.jboss.org/browse/RF-10739")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10739")
     public void testSaveOnBlurSelectFalseFalse() {
         attsSetter()
             .setAttribute(InplaceSelectAttributes.saveOnSelect).toValue(false)
@@ -718,7 +717,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("selectItemClass")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9896")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9896")
     @Templates(value = "plain")
     public void testSelectItemClass() {
         String testedStyleClass = "metamer-ftest-class";
@@ -738,7 +737,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("showControls")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12609")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12609")
     public void testShowControls() {
         // check initial state
         assertNotVisible(select.advanced().getConfirmButtonElement(), "Confirm button should not be displayed");
@@ -775,7 +774,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("style")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10782")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10782")
     @Templates(value = "plain")
     public void testStyleWidth() {
         setAttribute("style", "width: 700px");
@@ -784,7 +783,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("tabindex")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10980")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10980")
     @Templates(value = "plain")
     public void testTabindex() {
         String testedIndex = "47";

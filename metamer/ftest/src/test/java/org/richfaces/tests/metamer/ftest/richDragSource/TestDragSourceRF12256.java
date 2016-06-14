@@ -21,7 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richDragSource;
 
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -44,7 +44,7 @@ public class TestDragSourceRF12256 extends AbstractDragSourceTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12441")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12441")
     public void testDefaultIndicator() {
         super.testDefaultIndicator();
     }

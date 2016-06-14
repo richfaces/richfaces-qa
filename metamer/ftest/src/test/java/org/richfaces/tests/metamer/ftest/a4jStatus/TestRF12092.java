@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.ElementVisibilityObserver;
 import org.testng.annotations.Test;
 
@@ -54,7 +54,7 @@ public class TestRF12092 extends AbstractStatusTest {
     }
 
     @Test
-    @RegressionTest(value = "https://issues.jboss.org/browse/RF-12092")
+    @IssueTracking(value = "https://issues.jboss.org/browse/RF-12092")
     public void testStatusIsClearedWhenRequestCompleted() {
         // start observing visibility of the STOP element of the a4j:status
         ElementVisibilityObserver evo = ElementVisibilityObserver.getInstance();

@@ -30,7 +30,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.status.Status;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.richPopupPanel.TestPopupPanel.TestedPopupPanel;
 import org.testng.annotations.Test;
 
@@ -59,7 +59,7 @@ public class TestRF13139 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13139")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13139")
     public void testPanelIsNotOpenedTwice() {
         check();
         // close the panel

@@ -26,7 +26,7 @@ import static org.testng.Assert.assertEquals;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -45,7 +45,7 @@ public class TestRF11091 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11091")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11091")
     public void testAutocompleteIsAlignedVerticallyAsHInputText() {
         final int tolerance = 3;// px
         // check the top left location of inputs

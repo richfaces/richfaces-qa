@@ -149,7 +149,7 @@ To change the JSF implementation you can build Metamer with either a script ment
 * annotate test method with:
 
 ** `@Skip` (the skip condition can be specified, see @Skip annotation below)
-** `@IssueTracking(value = { "https://issues.jboss.org/browse/RF-15422" })`
+** `@IssueTracking("https://issues.jboss.org/browse/RF-15422")`
 
 * try to reuse existing backing beans, otherwise create new ones in the package `application/src/main/java/org/richfaces/tests/metamer/bean/issues`
 * make a comment in the JIRA issue what facelet reproduce the issue, and also steps to reproduce it
@@ -163,12 +163,9 @@ In tests there are several important annotations we use:
 ** once a test passing, change this to `@Test` only
 
 * `@IssueTracking("https://issues.jboss.org/browse/RF-007")`
-** IssueTracking means the test is tracking an issue and is usually used along with future tests
-** this helps us to determine why the test marked as future fails, once the test is all right this annotation changes to `@RegressionTest("https://issues.jboss.org/browse/RF-007")`
-
-* `@RegressionTest("https://issues.jboss.org/browse/RF-007")`
-** this indicates that the test was once tracking some issue and that issue was already resolved
-** if such a test fails we know that it is a regression problem immediately
+** IssueTracking is a marker annotation for test methods and classes
+** it is used to define, that the test is somehow connected with a tracked issue (e.g. tests it, is blocked by)
+** if such issue is resolved (the test method is not marked with `@Skip`) and the test fails, we now it is a regression problem
 
 * `@Templates(value = {"templateName"}, exclude = {"anotherTemplateName"})`
 ** this indicates in which templates you want or you do not want the test to be execute

@@ -24,7 +24,7 @@ package org.richfaces.tests.metamer.ftest.a4jAjax;
 import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
@@ -143,7 +143,7 @@ public class TestHGraphicImage extends AbstractAjaxTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-9665")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9665")
     public void testSimpleClickUnicode() {
         page.getInputElement().sendKeys("ľščťžýáíéúôň фывацукйешгщь");
         MetamerPage.waitRequest(page.getImageElement(), WaitRequestType.XHR).click();

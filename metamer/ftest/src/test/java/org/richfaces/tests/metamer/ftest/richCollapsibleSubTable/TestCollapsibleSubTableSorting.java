@@ -36,7 +36,7 @@ import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.model.SortMode;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.AndExpression;
@@ -102,7 +102,7 @@ public class TestCollapsibleSubTableSorting extends AbstractCollapsibleSubTableT
     @Test
     @Templates(exclude = "uiRepeat")
     @CoversAttributes("sortMode")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11302")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11302")
     public void testSortingMulti() {
         testSorting(false);
     }
@@ -114,14 +114,14 @@ public class TestCollapsibleSubTableSorting extends AbstractCollapsibleSubTableT
         @AndExpression({ On.Container.Tomcat8.class, On.JSF.Mojarra.class })
     })
     @CoversAttributes("sortMode")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11302")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11302")
     public void testSortingMultiInUiRepeat() {
         testSortingMulti();
     }
 
     @Test
     @CoversAttributes("sortMode")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11302")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11302")
     public void testSortingSingle() {
         testSorting(true);
     }

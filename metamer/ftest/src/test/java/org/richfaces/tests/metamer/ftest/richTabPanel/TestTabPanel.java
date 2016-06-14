@@ -39,7 +39,6 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.switchable.SwitchType;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
@@ -71,7 +70,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("activeItem")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10351")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10351")
     public void testActiveItem() {
         // assert tab panel is visible
         assertVisible(page.getPanelTabAsWebElement(), "Panel Tab is not visible!");
@@ -85,7 +84,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes({ "activeItem", "immediate" })
-    @RegressionTest("https://issues.jboss.org/browse/RF-11735")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11735")
     @UseWithField(field = "immediate", valuesFrom = ValuesFrom.FROM_FIELD, value = "booleans")
     public void testActiveItemWithImmediate() {
         tabPanelAttributes.set(TabPanelAttributes.immediate, immediate);
@@ -147,7 +146,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("headerAlignment")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11550")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11550")
     @Templates(value = { "hDataTable", "richCollapsibleSubTable", "richDataGrid", "richDataTable" })
     public void testHeaderAlignmentIterationComponents() {
         testHeaderAlignment();
@@ -174,7 +173,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("immediate")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10054")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10054")
     public void testImmediate() {
         tabPanelAttributes.set(TabPanelAttributes.immediate, Boolean.TRUE);
         page.getTabPanel().switchTo(2);
@@ -200,7 +199,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("itemChangeListener")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10523")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10523")
     public void testItemChangeListener() {
         page.getTabPanel().switchTo(2);
         page.assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: tab1 -> tab3");
@@ -208,7 +207,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes({ "onbeforeitemchange", "onitemchange" })
-    @RegressionTest("https://issues.jboss.org/browse/RF-10165")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10165")
     public void testItemchangeEvents() {
         attsSetter()
             .setAttribute(TabPanelAttributes.onbeforeitemchange).toValue("metamerEvents += \"beforeitemchange \"")
@@ -391,7 +390,7 @@ public class TestTabPanel extends AbstractWebDriverTest {
 
     @Test(groups = "smoke")
     @CoversAttributes("switchType")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10040")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10040")
     public void testSwitchTypeServer() {
         tabPanelAttributes.set(TabPanelAttributes.switchType, "server");
         page.getTabPanel().advanced().setSwitchType(SwitchType.SERVER);

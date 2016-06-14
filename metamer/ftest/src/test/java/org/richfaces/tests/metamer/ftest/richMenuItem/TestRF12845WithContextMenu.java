@@ -28,7 +28,7 @@ import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.contextMenu.AbstractPopupMenu;
 import org.richfaces.fragment.contextMenu.RichFacesContextMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -65,7 +65,7 @@ public class TestRF12845WithContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12845")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12845")
     public void testMenuItemsCanBeCompositeComponents() {
         // setup
         getMenu().advanced().setShowEvent(Event.CLICK);

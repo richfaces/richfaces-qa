@@ -9,7 +9,7 @@ import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.fragment.dataScroller.DataScroller;
 import org.richfaces.model.SortMode;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableSortingTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SortingEDT;
 import org.testng.annotations.Test;
 
@@ -26,7 +26,7 @@ public abstract class ExtendedDataTableSortingTest extends DataTableSortingTest 
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-7872")
+    @IssueTracking("https://issues.jboss.org/browse/RF-7872")
     public void testShowColumnControlHideAllColumnsAndScroll() {
         setAttribute("showColumnControl", true);
         getTable().getHeader().openColumnControl().hideAllColumns();
@@ -49,7 +49,7 @@ public abstract class ExtendedDataTableSortingTest extends DataTableSortingTest 
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-7872")
+    @IssueTracking("https://issues.jboss.org/browse/RF-7872")
     public void testShowColumnControlWithSorting() {
         setAttribute("showColumnControl", true);
         setAttribute("style", "z-index: 50;");

@@ -27,7 +27,7 @@ import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.tooltip.TextualRichFacesTooltip;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -75,7 +75,7 @@ public class TestRF10971 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-10971")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10971")
     public void testTooltipWillShowInEDT() {
         setupTooltips();
 

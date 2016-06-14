@@ -21,7 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richPlaceholder;
 
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -45,7 +45,7 @@ public class TestPlaceholderWithTextarea extends AbstractPlaceholderNonJSFTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12650")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12650")
     @Templates(value = "plain")
     public void testRendered() {
         super.testRendered();

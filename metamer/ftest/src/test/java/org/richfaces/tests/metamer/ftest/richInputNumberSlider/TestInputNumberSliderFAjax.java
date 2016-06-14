@@ -23,7 +23,7 @@ package org.richfaces.tests.metamer.ftest.richInputNumberSlider;
 
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.annotations.Test;
 
@@ -53,7 +53,7 @@ public class TestInputNumberSliderFAjax extends AbstractSliderTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11314")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11314")
     @Override
     public void testMoveWithSlider() {
         super.testMoveWithSlider();

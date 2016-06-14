@@ -31,7 +31,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.tooltip.TextualRichFacesTooltip;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -50,7 +50,7 @@ public class TestRF12841 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12841")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12841")
     public void testDestroyedTooltipWillNotThrowJavaScriptErrors() {
         // assert no JS errors in console
         assertTrue(jsErrorStorage.getMessages().isEmpty());

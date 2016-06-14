@@ -30,7 +30,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.autocomplete.RichFacesAutocomplete;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
@@ -103,7 +103,7 @@ public class TestRF12114 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12114")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12114")
     public void testAutocompleteAjaxOnBlur() {
         // check the first autocomplete (issue RF-12114)
         checkIssue(autocompleteWithAjax, autocompleteWithJSFunction);

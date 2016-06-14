@@ -21,7 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richDropTarget;
 
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -29,7 +29,7 @@ import org.testng.annotations.Test;
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
  * @since 4.3.0.CR1
  */
-@RegressionTest("https://issues.jboss.org/browse/RFPL-2751")
+@IssueTracking("https://issues.jboss.org/browse/RFPL-2751")
 @Templates(value = { "richCollapsibleSubTable" })
 public class TestDropTargetInCollapsibleSubTable extends TestDropTarget {
 
@@ -39,7 +39,7 @@ public class TestDropTargetInCollapsibleSubTable extends TestDropTarget {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-10535")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10535")
     public void testBypassUpdates() {
         super.testBypassUpdates();
     }
@@ -65,7 +65,7 @@ public class TestDropTargetInCollapsibleSubTable extends TestDropTarget {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-10535")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10535")
     public void testImmediate() {
         super.testImmediate();
     }

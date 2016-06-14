@@ -23,7 +23,7 @@ package org.richfaces.tests.metamer.ftest.richTree;
 
 import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom.FROM_FIELD;
 
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.Uses;
@@ -34,7 +34,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  */
-@RegressionTest("https://issues.jboss.org/browse/RF-11766")
+@IssueTracking("https://issues.jboss.org/browse/RF-11766")
 public class TestTreeSelection extends AbstractTreeSelectionTest {
 
     @Test(groups = "smoke")

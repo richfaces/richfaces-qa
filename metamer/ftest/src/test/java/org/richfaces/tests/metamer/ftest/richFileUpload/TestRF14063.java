@@ -23,7 +23,7 @@ package org.richfaces.tests.metamer.ftest.richFileUpload;
 
 import static org.testng.Assert.assertEquals;
 
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -37,7 +37,7 @@ public class TestRF14063 extends AbstractFileUploadTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14063")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14063")
     public void testFormContentIsOmittedDuringFileUpload() {
         String expectedDoneLabel = "done";
         sendFileWithWaiting(filenames[0], true, true);

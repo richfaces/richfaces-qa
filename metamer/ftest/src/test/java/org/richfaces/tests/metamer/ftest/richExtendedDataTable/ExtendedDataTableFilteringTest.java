@@ -29,7 +29,7 @@ import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFilteringTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.MultipleCoversAttributes;
 import org.richfaces.tests.metamer.ftest.richColumn.ColumnAttributes;
@@ -50,7 +50,7 @@ public abstract class ExtendedDataTableFilteringTest extends DataTableFilteringT
         return table;
     }
 
-    @RegressionTest("https://issues.jboss.org/browse/RF-7872")
+    @IssueTracking("https://issues.jboss.org/browse/RF-7872")
     @MultipleCoversAttributes({
         @CoversAttributes("showColumnControl"),
         @CoversAttributes(value = "name", attributeEnumClass = ColumnAttributes.class)
@@ -76,7 +76,7 @@ public abstract class ExtendedDataTableFilteringTest extends DataTableFilteringT
         assertTrue(getTable().getHeader().openColumnControl().areAllColumnsHidden());
     }
 
-    @RegressionTest("https://issues.jboss.org/browse/RF-7872")
+    @IssueTracking("https://issues.jboss.org/browse/RF-7872")
     @MultipleCoversAttributes({
         @CoversAttributes("showColumnControl"),
         @CoversAttributes(value = "name", attributeEnumClass = ColumnAttributes.class)

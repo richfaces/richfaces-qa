@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.testng.annotations.Test;
 
@@ -75,13 +74,13 @@ public class TestExtendedDataTableFiltering extends ExtendedDataTableFilteringTe
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-7872")
+    @IssueTracking("https://issues.jboss.org/browse/RF-7872")
     public void testShowColumnControlHideAllColumnsAndScroll() {
         super.testShowColumnControlHideAllColumnsAndScroll();
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-7872")
+    @IssueTracking("https://issues.jboss.org/browse/RF-7872")
     public void testShowColumnControlWithFiltering() {
         super.testShowColumnControlWithFiltering(false);
     }

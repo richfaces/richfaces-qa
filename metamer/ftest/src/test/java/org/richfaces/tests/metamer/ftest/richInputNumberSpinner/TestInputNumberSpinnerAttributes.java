@@ -37,7 +37,7 @@ import org.richfaces.fragment.common.ClearType;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
@@ -51,7 +51,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  */
-@RegressionTest("https://issues.jboss.org/browse/RF-12365")
+@IssueTracking("https://issues.jboss.org/browse/RF-12365")
 public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinnerTest {
 
     @FindBy(css = "span.rf-insp-dec-dis")
@@ -67,7 +67,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
 
     @Test
     @CoversAttributes("accesskey")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11315")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11315")
     @Templates(value = "plain")
     public void testAccesskey() {
         testHTMLAttribute(spinner.advanced().getInput().advanced().getInputElement(), inputNumberSpinnerAttributes,
@@ -75,7 +75,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11628")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11628")
     public void testChangeValueByTypingThenByArrows() {
         TextInputComponentImpl input = spinner.advanced().getInput();
         assertEquals(getOutputText(), "2");// default value
@@ -325,7 +325,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
 
     @Test
     @CoversAttributes("ondownclick")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10581")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10581")
     @Templates(value = "plain")
     public void testOndownclick() {
         testFireEvent(inputNumberSpinnerAttributes, InputNumberSpinnerAttributes.ondownclick, new Action() {
@@ -354,7 +354,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
 
     @Test
     @CoversAttributes("oninputdblclick")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9568")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9568")
     @Templates(value = "plain")
     public void testOninputdblclick() {
         testFireEvent(inputNumberSpinnerAttributes, InputNumberSpinnerAttributes.oninputdblclick, new Actions(driver)
@@ -551,7 +551,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
 
     @Test
     @CoversAttributes("style")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10782")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10782")
     @Templates(value = "plain")
     public void testStyleWidth() {
         setAttribute("style", "width: 700px");
@@ -560,7 +560,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
 
     @Test
     @CoversAttributes("tabindex")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10980")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10980")
     @Templates(value = "plain")
     public void testTabindex() {
         testHTMLAttribute(spinner.advanced().getInput().advanced().getInputElement(), inputNumberSpinnerAttributes,

@@ -25,7 +25,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.contextMenu.AbstractPopupMenu;
 import org.richfaces.fragment.dropDownMenu.RichFacesDropDownMenu;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -54,7 +54,7 @@ public class TestRF12845WithDropDownMenu extends TestRF12845WithContextMenu {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12845")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12845")
     public void testMenuItemsCanBeCompositeComponents() {
         super.testMenuItemsCanBeCompositeComponents();
     }

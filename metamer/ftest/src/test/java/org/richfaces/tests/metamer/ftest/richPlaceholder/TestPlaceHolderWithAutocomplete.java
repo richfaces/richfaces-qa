@@ -24,7 +24,7 @@ package org.richfaces.tests.metamer.ftest.richPlaceholder;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.autocomplete.RichFacesAutocomplete;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -54,35 +54,35 @@ public class TestPlaceHolderWithAutocomplete extends AbstractPlaceholderJSFTest 
     }
 
     @Test
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-12623", "https://issues.jboss.org/browse/RF-12625" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-12623", "https://issues.jboss.org/browse/RF-12625" })
     @Override
     public void testAjaxSubmit() {
         super.testAjaxSubmit();
     }
 
     @Test(groups = "smoke")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12623")
     @Override
     public void testClickOnInputWithPlaceholder() {
         super.testClickOnInputWithPlaceholder();
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12623")
     @Override
     public void testDeleteTextFromInputWithPlaceholder() {
         super.testDeleteTextFromInputWithPlaceholder();
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12623")
     @Override
     public void testHTTPSubmit() {
         super.testHTTPSubmit();
     }
 
     @Test
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-12623", "https://issues.jboss.org/browse/RF-12650" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-12623", "https://issues.jboss.org/browse/RF-12650" })
     @Override
     @Templates(value = "plain")
     public void testRendered() {
@@ -96,21 +96,21 @@ public class TestPlaceHolderWithAutocomplete extends AbstractPlaceholderJSFTest 
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12621")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12621")
     @Override
     public void testSelectorEmpty() {
         super.testSelectorEmpty();
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12623")
     @Templates(value = "plain")
     public void testStyleClass() {
         super.testStyleClass();
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12623")
     @Override
     public void testTypeToInputWithPlaceholder() {
         super.testTypeToInputWithPlaceholder();

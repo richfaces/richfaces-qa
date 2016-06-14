@@ -22,7 +22,7 @@
 package org.richfaces.tests.metamer.ftest.a4jCommandLink;
 
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractResetValuesTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
@@ -33,7 +33,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @Templates("plain")
-@RegressionTest("https://issues.jboss.org/browse/RF-13532")
+@IssueTracking("https://issues.jboss.org/browse/RF-13532")
 public class TestResetValues extends AbstractResetValuesTest {
 
     @Override

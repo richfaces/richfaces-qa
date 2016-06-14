@@ -38,7 +38,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
@@ -93,7 +93,7 @@ public class TestToolbarGroup extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("itemClass")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9976")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9976")
     @Templates(value = "plain")
     public void testItemClass() {
         for (By itemBy : itemsBy) {
@@ -155,7 +155,7 @@ public class TestToolbarGroup extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("itemStyle")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9976")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9976")
     @Templates(value = "plain")
     public void testItemStyle() {
         for (By itemBy : itemsBy) {
@@ -188,7 +188,7 @@ public class TestToolbarGroup extends AbstractWebDriverTest {
 
     @Test
     @Templates("plain")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12415")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12415")
     public void testNoResourceErrorPresent() {
         checkNoResourceErrorPresent(null);
     }

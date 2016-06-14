@@ -45,7 +45,6 @@ import org.richfaces.fragment.popupPanel.RichFacesPopupPanel;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -200,7 +199,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
 
     @Test(groups = "smoke")
     @CoversAttributes("domElementAttachment")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10249")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10249")
     public void testDomElementAttachment() {
         popupPanelAttributes.set(PopupPanelAttributes.domElementAttachment, "");
         openPopupPanel();
@@ -640,7 +639,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("shadowDepth")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10504")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10504")
     public void testShadowDepth() {
         int tolerance = 5;
 
@@ -661,7 +660,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("shadowOpacity")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10504")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10504")
     public void testShadowOpacity() {
         openPopupPanel();
         checkCssValueOfPanelShadow("opacity", 0.1);
@@ -682,7 +681,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("style")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10245")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10245")
     @Templates(value = "plain")
     public void testStyle() {
         testStyle(panel.advanced().getRootElement());
@@ -690,7 +689,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("styleClass")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10245")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10245")
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(panel.advanced().getRootElement());

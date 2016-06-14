@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -43,13 +42,13 @@ public class TestExtendedDataTableSortingUsingColumn extends ExtendedDataTableSo
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-7872")
+    @IssueTracking("https://issues.jboss.org/browse/RF-7872")
     public void testShowColumnControlHideAllColumnsAndScroll() {
         super.testShowColumnControlHideAllColumnsAndScroll();
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-7872")
+    @IssueTracking("https://issues.jboss.org/browse/RF-7872")
     public void testShowColumnControlWithSorting() {
         super.testShowColumnControlWithSorting();
     }
@@ -72,7 +71,7 @@ public class TestExtendedDataTableSortingUsingColumn extends ExtendedDataTableSo
 
     @Test
     @CoversAttributes("sortMode")
-    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13881")
     @Templates(value = "richExtendedDataTable")
     public void testSortModeMultiFullPageRefreshInEDT() {
         super.testSortModeMultiFullPageRefresh();
@@ -80,7 +79,7 @@ public class TestExtendedDataTableSortingUsingColumn extends ExtendedDataTableSo
 
     @Test
     @CoversAttributes("sortMode")
-    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13881")
     @Templates(value = "richExtendedDataTable")
     public void testSortModeMultiInEDT() {
         super.testSortModeMulti();
@@ -96,7 +95,7 @@ public class TestExtendedDataTableSortingUsingColumn extends ExtendedDataTableSo
 
     @Test
     @CoversAttributes("sortMode")
-    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13881")
     @Templates(value = "richExtendedDataTable")
     public void testSortModeMultiReplacingOldOccurencesInEDT() {
         super.testSortModeMultiReplacingOldOccurences();
@@ -121,7 +120,7 @@ public class TestExtendedDataTableSortingUsingColumn extends ExtendedDataTableSo
 
     @Test
     @CoversAttributes("sortMode")
-    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13881")
     @Templates(value = "richExtendedDataTable")
     public void testSortModeMultiReverseInEDT() {
         super.testSortModeMultiReverse();
@@ -145,7 +144,7 @@ public class TestExtendedDataTableSortingUsingColumn extends ExtendedDataTableSo
 
     @Test
     @CoversAttributes("sortMode")
-    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13881")
     @Templates(value = "richExtendedDataTable")
     public void testSortModeSingleFullPageRefreshInEDT() {
         super.testSortModeSingleFullPageRefresh();
@@ -153,7 +152,7 @@ public class TestExtendedDataTableSortingUsingColumn extends ExtendedDataTableSo
 
     @Test
     @CoversAttributes("sortMode")
-    @RegressionTest("https://issues.jboss.org/browse/RF-13881")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13881")
     @Templates(value = "richExtendedDataTable")
     public void testSortModeSingleInEDT() {
         super.testSortModeSingle();
@@ -178,7 +177,7 @@ public class TestExtendedDataTableSortingUsingColumn extends ExtendedDataTableSo
 
     @Test
     @CoversAttributes("sortMode")
-    @RegressionTest(value = "https://issues.jboss.org/browse/RF-13881")
+    @IssueTracking(value = "https://issues.jboss.org/browse/RF-13881")
     @Templates(value = "richExtendedDataTable")
     public void testSortModeSingleReverseInEDT() {
         super.testSortModeSingleReverse();

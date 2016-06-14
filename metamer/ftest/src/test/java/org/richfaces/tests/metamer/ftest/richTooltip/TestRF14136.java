@@ -32,7 +32,7 @@ import org.richfaces.fragment.common.Actions;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.tooltip.TextualRichFacesTooltip;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
 import org.testng.annotations.Test;
 
@@ -55,7 +55,7 @@ public class TestRF14136 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14136")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14136")
     public void testTooltipHideDelayOnGraphicImage() {
         // show tooltip
         new Actions(driver)

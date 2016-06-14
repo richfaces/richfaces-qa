@@ -68,7 +68,7 @@ import org.richfaces.fragment.common.Locations;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
@@ -246,7 +246,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     @CoversAttributes("buttonDisabledIcon")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10255")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10255")
     @Templates(value = "plain")
     public void testButtonDisabledIcon() {
         attsSetter()
@@ -280,7 +280,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     @CoversAttributes("converterMessage")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11313")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11313")
     public void testConverterMessage() {
         String errorMsg = "conversion error";
         attsSetter()
@@ -382,7 +382,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     @CoversAttributes("defaultTime")
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-9837", "https://issues.jboss.org/browse/RF-10085" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-9837", "https://issues.jboss.org/browse/RF-10085" })
     public void testDefaultTime() {
         final String t = "06:06";
         calendarAttributes.set(CalendarAttributes.defaultTime, t);
@@ -432,7 +432,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     @CoversAttributes("firstWeekDay")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9646")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9646")
     public void testFirstWeekDay() {
         DayPicker dayPicker = popupCalendar.openPopup().getDayPicker();
         List<String> weekDays = Arrays.asList("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
@@ -464,7 +464,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     @CoversAttributes("immediate")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10821")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10821")
     public void testImmediate() {
         calendarAttributes.set(CalendarAttributes.immediate, Boolean.TRUE);
         setCurrentDateWithCalendarsTodayButtonAction.perform();
@@ -531,7 +531,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     @CoversAttributes("minDaysInFirstWeek")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12552")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12552")
     public void testMinDaysInFirstWeek() {
         calendarAttributes.set(CalendarAttributes.minDaysInFirstWeek, 1);
         // 1.1.2011 starts with saturday => only 1 day in first weak
@@ -662,7 +662,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     @CoversAttributes("oncurrentdateselect")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12505")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12505")
     public void testOncurrentdateselect() {
         testFireEvent(calendarAttributes, CalendarAttributes.oncurrentdateselect, setTodayAndThenClickToNextMonthAction);
     }
@@ -719,7 +719,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     @CoversAttributes("oninputchange")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9602")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9602")
     public void testOninputchange() {
         calendarAttributes.set(CalendarAttributes.enableManualInput, Boolean.TRUE);
         testFireEvent(calendarAttributes, CalendarAttributes.oninputchange, new Action() {
@@ -1055,7 +1055,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     @CoversAttributes("style")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9655")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9655")
     @Templates(value = "plain")
     public void testStyle() {
         testStyle(popupCalendar.getRootElement());
@@ -1070,7 +1070,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     @CoversAttributes("style")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10782")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10782")
     @Templates(value = "plain")
     public void testStyleWidth() {
         setAttribute("style", "width: 700px");
@@ -1087,7 +1087,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     @CoversAttributes("tabindex")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10980")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10980")
     @Templates(value = "richPopupPanel")
     public void testTabindexInputInPopupPanel() {
         testHTMLAttribute(popupCalendar.getInput().advanced().getInputElement(), calendarAttributes,

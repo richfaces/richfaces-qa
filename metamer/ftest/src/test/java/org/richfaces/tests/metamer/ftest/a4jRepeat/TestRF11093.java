@@ -31,7 +31,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.Lists;
@@ -56,7 +56,7 @@ public class TestRF11093 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11093")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11093")
     public void testVariableIsAvailableInContext() {
         final List<String> values = Lists.newArrayList("one", "two", "three", "four");
 

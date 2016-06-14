@@ -35,7 +35,6 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.switchable.SwitchType;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -130,7 +129,7 @@ public class TestTabPanelAddTab2 extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("switchType")
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-11081", "https://issues.jboss.org/browse/RF-12945" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-11081", "https://issues.jboss.org/browse/RF-12945" })
     public void testSwitchTypeAjax() {
         tabPanelAttributes.set(TabPanelAttributes.switchType, "ajax");
         page.fullPageRefresh();
@@ -160,7 +159,7 @@ public class TestTabPanelAddTab2 extends AbstractWebDriverTest {
      */
     @Test
     @CoversAttributes("switchType")
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-11081", "https://issues.jboss.org/browse/RF-12945" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-11081", "https://issues.jboss.org/browse/RF-12945" })
     public void testSwitchTypeNull() {
         createAndVerifyTab(page.getCreateTabButtonA4j());
         for (int i = 4; i < 8; i++) {

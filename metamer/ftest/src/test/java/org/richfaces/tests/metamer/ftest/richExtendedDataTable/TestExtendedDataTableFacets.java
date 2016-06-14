@@ -26,7 +26,7 @@ import static org.testng.Assert.assertEquals;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFacetsTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.MultipleCoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -99,7 +99,7 @@ public class TestExtendedDataTableFacets extends DataTableFacetsTest {
         @CoversAttributes("showColumnControl"),
         @CoversAttributes(value = "name", attributeEnumClass = ColumnAttributes.class)
     })
-    @RegressionTest("https://issues.jboss.org/browse/RF-7872")
+    @IssueTracking("https://issues.jboss.org/browse/RF-7872")
     public void testShowColumnControlsLabels() {
         setAttribute("showColumnControl", true);
         boolean hasColumnName = false, hasStateHeader = false, hasStateFooter = false, hasCapitalHeader = false,

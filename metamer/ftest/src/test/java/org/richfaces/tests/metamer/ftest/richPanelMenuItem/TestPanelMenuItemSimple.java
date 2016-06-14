@@ -48,7 +48,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.PanelMenuMode;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.checker.IconsChecker;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -219,7 +219,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("rightIcon")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10519")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10519")
     @Templates(value = "plain")
     public void testRightIcon() {
         verifyStandardIcons(rightIcon, page.getItem().advanced().getRightIconElement(), page.getItem().advanced().getRightIconImgElement());
@@ -230,7 +230,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("rightIconClass")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10519")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10519")
     @Templates(value = "plain")
     public void testRightIconClass() {
         testStyleClass(page.getItem().advanced().getRightIconElement(), rightIconClass);

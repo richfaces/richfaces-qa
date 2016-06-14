@@ -37,7 +37,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Keyboard;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.TextInputComponentImpl;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
@@ -105,7 +105,7 @@ public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTabl
 
     @Test
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.STRINGS, value = sampleBuiltIn)
-    @RegressionTest("https://issues.jboss.org/browse/RF-14150")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14150")
     public void testFilterNameBuiltInAppliesAfterEnterPressed() {
         for (String testedValue : new String[] { "Alexander", "aLEX" }) {
             // filter men table
@@ -123,7 +123,7 @@ public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTabl
     @Test
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "samples")
     @CoversAttributes("filterVar")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12673")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12673")
     public void testFilteringExpressionContainsIgnoreCase() {
         verifyFilteringInBothSubTables(BY_NAME, "Alexander");
         verifyFilteringInBothSubTables(BY_NAME, "aLEX");
@@ -132,7 +132,7 @@ public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTabl
     @Test
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "samples")
     @CoversAttributes("filterVar")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12673")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12673")
     public void testFilteringExpressionEquals() {
         verifyFilteringInBothSubTables(BY_TITLE, "Director");
         verifyFilteringInBothSubTables(BY_TITLE, "director");

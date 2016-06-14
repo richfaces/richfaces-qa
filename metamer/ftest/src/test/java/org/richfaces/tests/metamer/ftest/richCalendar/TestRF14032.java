@@ -31,7 +31,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Keyboard;
 import org.richfaces.fragment.calendar.DayPicker;
 import org.richfaces.fragment.calendar.PopupCalendar;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -48,7 +48,7 @@ public class TestRF14032 extends AbstractCalendarTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14032")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14032")
     public void testSelectedYearWillChangeOnlyByArrowsPressing() {
         // set some reference date
         Graphene.guardAjax(popupCalendar).setDateTime(firstOfJanuary2012);

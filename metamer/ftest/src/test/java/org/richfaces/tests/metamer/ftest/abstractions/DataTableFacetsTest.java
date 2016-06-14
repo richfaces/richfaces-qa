@@ -28,7 +28,7 @@ import org.richfaces.fragment.dataTable.AbstractTable;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleFooterInterface;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleHeaderInterface;
 import org.richfaces.tests.metamer.ftest.abstractions.fragments.SimpleRowInterface;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 
@@ -45,7 +45,7 @@ public abstract class DataTableFacetsTest extends AbstractDataTableTest {
 
     protected abstract AbstractTable<? extends SimpleHeaderInterface, ? extends SimpleRowInterface, ? extends SimpleFooterInterface> getTable();
 
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-10627" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-10627" })
     public void testNoDataFacet() {
         enableShowData(false);
         dataTableFacets.set(DataTableFacets.noData, SAMPLE_STRING);

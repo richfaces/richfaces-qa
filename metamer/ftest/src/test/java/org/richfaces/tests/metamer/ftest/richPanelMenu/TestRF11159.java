@@ -30,7 +30,7 @@ import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.fragment.panelMenu.RichFacesPanelMenu;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.Lists;
@@ -78,7 +78,7 @@ public class TestRF11159 extends AbstractPanelMenuTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11159")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11159")
     public void testGroupsSaveExpandedProperty() {
         getUnsafeAttributes("").set("groupMode", "ajax");
         RichFacesPanelMenu panelMenu = getPage().getPanelMenu();

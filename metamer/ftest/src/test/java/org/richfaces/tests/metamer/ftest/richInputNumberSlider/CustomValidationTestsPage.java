@@ -26,7 +26,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.inputNumberSlider.RichFacesInputNumberSlider;
 import org.richfaces.tests.metamer.ftest.abstractions.validations.NumberInputValidationPage;
 import org.richfaces.tests.metamer.ftest.abstractions.validations.ValidationMessageCase;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 
 /**
@@ -63,7 +63,7 @@ public class CustomValidationTestsPage extends NumberInputValidationPage {
             .dragHandleToPointInTrace(byPixels);
     }
 
-    @RegressionTest("https://issues.jboss.org/browse/RF-11314")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11314")
     public void verifyCustomBySliding(String submitMethod, WebDriverWait wait) {
         moveSliderWithWaitRequest(Position.LESS_THAN_ZERO.position, sliderCustom);
         submit(submitMethod);

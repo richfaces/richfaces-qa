@@ -33,7 +33,7 @@ import org.jboss.arquillian.graphene.GrapheneElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
@@ -139,7 +139,7 @@ public class TestTogglePanelAttributesAndJSApi extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("immediate")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10054")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10054")
     public void testImmediate() {
         togglePanelAttributes.set(TogglePanelAttributes.immediate, Boolean.TRUE);
         Graphene.guardAjax(tc3).click();
@@ -274,7 +274,7 @@ public class TestTogglePanelAttributesAndJSApi extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("switchType")
     @UseWithField(field = "switchType", valuesFrom = STRINGS, value = { "null", "ajax", "client", "server" })
-    @RegressionTest("https://issues.jboss.org/browse/RF-10040")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10040")
     public void testSwitchType() {
         togglePanelAttributes.set(TogglePanelAttributes.switchType, switchType);
         getGuardedLink(tcNext).click();

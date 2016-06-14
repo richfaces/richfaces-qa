@@ -30,7 +30,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Icon;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.checker.IconsChecker;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -76,7 +76,7 @@ public class TestCollapsiblePanel extends TestFacets {
 
     @Test
     @CoversAttributes("expanded")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10312")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10312")
     public void testExpanded() {
         collapsiblePanelAttributes.set(CollapsiblePanelAttributes.expanded, Boolean.TRUE);
         verifyStateAfterExpansion();
@@ -105,7 +105,7 @@ public class TestCollapsiblePanel extends TestFacets {
 
     @Test(groups = "smoke")
     @CoversAttributes("immediate")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10054")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10054")
     public void testImmediate() {
         collapsiblePanelAttributes.set(CollapsiblePanelAttributes.immediate, Boolean.TRUE);
 
@@ -235,7 +235,7 @@ public class TestCollapsiblePanel extends TestFacets {
     @CoversAttributes("switchType")
     @Templates(value = "plain")
     @UseWithField(field = "switchType", valuesFrom = STRINGS, value = { "null", "ajax", "client", "server" })
-    @RegressionTest("https://issues.jboss.org/browse/RF-10368")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10368")
     public void testSwitchType() {
         super.testSwitchType();
     }
@@ -249,7 +249,7 @@ public class TestCollapsiblePanel extends TestFacets {
 
     @Test
     @CoversAttributes("toggleListener")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11568")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11568")
     public void testToggleListener() {
         Graphene.guardAjax(panel).collapse();
         getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "panel collapsed");

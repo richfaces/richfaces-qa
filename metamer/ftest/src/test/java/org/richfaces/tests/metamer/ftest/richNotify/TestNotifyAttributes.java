@@ -36,7 +36,6 @@ import org.richfaces.fragment.notify.RichFacesNotifyMessage;
 import org.richfaces.tests.metamer.bean.rich.RichNotifyBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -240,7 +239,7 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("showShadow")
-    @RegressionTest("https://issues.jboss.org/browse/RF-13792")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13792")
     public void testShowShadow() {
         notifyAttributes.set(NotifyAttributes.showShadow, Boolean.TRUE);
         assertVisible(message.advanced().getShadowElement(), "Shadow should be visible");
@@ -277,7 +276,7 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("sticky")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11558")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11558")
     public void testSticky() {
         attsSetter()
             .setAttribute(NotifyAttributes.stayTime).toValue(1000)

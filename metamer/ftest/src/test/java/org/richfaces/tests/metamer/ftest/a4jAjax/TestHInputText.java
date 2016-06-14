@@ -21,7 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jAjax;
 
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
@@ -129,7 +129,7 @@ public class TestHInputText extends AbstractAjaxTest {
     }
 
     @Test(groups = "smoke")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9665")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9665")
     public void testSimpleTypeUnicode() {
         super.testTypeUnicode();
     }

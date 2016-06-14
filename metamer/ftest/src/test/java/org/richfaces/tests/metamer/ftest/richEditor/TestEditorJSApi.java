@@ -34,7 +34,7 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -216,7 +216,7 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14120")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14120")
     @Templates(value = { "plain" })
     public void testSetReadOnly() {
         String testText = "Some random text";

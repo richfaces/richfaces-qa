@@ -33,7 +33,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.MetamerAttributes;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.richProgressBar.ProgressBarAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.ElementVisibilityObserver;
@@ -54,7 +54,7 @@ public class TestFileUploadProgressFacet extends AbstractFileUploadTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14213")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14213")
     public void testCustomProgressBarIsUsedInMultiFileUpload() {
         Attributes<ProgressBarAttributes> pbAtts = getAttributes("attributesProgressBar");
         executeJS("window.metamerEvents='';");
@@ -71,7 +71,7 @@ public class TestFileUploadProgressFacet extends AbstractFileUploadTest {
     }
 
     @Test
-    @RegressionTest({ "https://issues.jboss.org/browse/RFPL-3503", "https://issues.jboss.org/browse/RFPL-2263" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RFPL-3503", "https://issues.jboss.org/browse/RFPL-2263" })
     public void testCustomProgressBarOnFinish() {
         Attributes<ProgressBarAttributes> pbAtts = getAttributes("attributesProgressBar");
         testFireEvent(pbAtts, ProgressBarAttributes.onfinish, new Action() {
@@ -84,7 +84,7 @@ public class TestFileUploadProgressFacet extends AbstractFileUploadTest {
     }
 
     @Test
-    @RegressionTest({ "https://issues.jboss.org/browse/RFPL-3503", "https://issues.jboss.org/browse/RFPL-2263" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RFPL-3503", "https://issues.jboss.org/browse/RFPL-2263" })
     public void testCustomProgressBarPresence() {
         assertPresent(customPB, "No custom progress bar is present on page.");
         assertNotVisible(customPB, "Custom progress bar should not be displayed now.");

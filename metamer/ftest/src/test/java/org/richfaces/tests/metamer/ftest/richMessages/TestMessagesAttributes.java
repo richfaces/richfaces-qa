@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richMessages;
 
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
@@ -84,7 +83,7 @@ public class TestMessagesAttributes extends AbstractMessagesTest {
     @Test
     @CoversAttributes("globalOnly")
     @Templates(value = { "richAccordion", "richCollapsiblePanel" })
-    @RegressionTest("https://issues.jboss.org/browse/RF-11415")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11415")
     public void testGlobalOnlyInAccordionCollapsiblePanel() {
         testGlobalOnly();
     }

@@ -27,7 +27,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.autocomplete.RichFacesAutocomplete;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -51,7 +51,7 @@ public class TestFocusManagerWithAutocomplete extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13251")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13251")
     public void testFocusToAutocomplete() {
         Assert.assertFalse(
             new ElementIsFocused(autocomplete.advanced().getInput().advanced().getInputElement()).apply(driver),

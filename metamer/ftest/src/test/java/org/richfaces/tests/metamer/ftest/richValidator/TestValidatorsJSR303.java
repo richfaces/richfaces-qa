@@ -21,7 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richValidator;
 
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -43,7 +43,7 @@ public class TestValidatorsJSR303 extends AbstractValidatorsTest {
     }
 
     @Test
-    @RegressionTest(value = "https://issues.jboss.org/browse/RF-11035")
+    @IssueTracking(value = "https://issues.jboss.org/browse/RF-11035")
     public void testAllWrongJSF() {
         verifyAllWrongWithJSFSubmit();
     }
@@ -89,7 +89,7 @@ public class TestValidatorsJSR303 extends AbstractValidatorsTest {
     }
 
     @Test
-    @RegressionTest(value = "https://issues.jboss.org/browse/RF-11035")
+    @IssueTracking(value = "https://issues.jboss.org/browse/RF-11035")
     public void testSelectionSize() {
         verifySelectionSize();
     }

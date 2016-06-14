@@ -30,7 +30,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.contextMenu.PopupMenuGroup;
 import org.richfaces.fragment.contextMenu.RichFacesContextMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SimpleEDT;
 import org.testng.annotations.Test;
 
@@ -56,7 +56,7 @@ public class TestRF14023 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-14023", "https://issues.jboss.org/browse/RF-14156" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-14023", "https://issues.jboss.org/browse/RF-14156" })
     public void testDynamicContextMenuAppearsAfterAjaxUpdateInEDT() {
         checkNoJSErrorsArePresent();
         // select first row (this should be enough to prevent context menu from showing -- RF-14023)

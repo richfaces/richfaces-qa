@@ -28,7 +28,7 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.checker.IconsChecker;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -58,7 +58,7 @@ public class TestAccordionIcons extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("itemActiveLeftIcon")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10352")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10352")
     @Templates(value = "plain")
     public void testItemActiveLeftIcon() {
         By image = By.cssSelector(String.format(leftIcon, "1") + " img");
@@ -96,7 +96,7 @@ public class TestAccordionIcons extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("itemInactiveLeftIcon")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10352")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10352")
     @Templates(value = "plain")
     public void testItemInactiveLeftIcon() {
         By image = By.cssSelector(String.format(leftIcon, "3") + " img");

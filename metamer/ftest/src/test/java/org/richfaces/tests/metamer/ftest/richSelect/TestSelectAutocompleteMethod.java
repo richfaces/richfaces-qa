@@ -34,7 +34,7 @@ import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.fragment.select.RichFacesSelect;
 import org.richfaces.fragment.select.SelectSuggestions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -157,7 +157,7 @@ public class TestSelectAutocompleteMethod extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13965")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13965")
     public void testPopupWillShowAfterWholeInputClearedAtOnce() {
         attributes.set(SelectAttributes.mode, Mode.ajax);
         // fill in some value

@@ -29,7 +29,7 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -53,7 +53,7 @@ public class TestAccordionKVS extends AbstractWebDriverTest {
     }
 
     @Test(groups = { "keepVisualStateTesting" })
-    @RegressionTest("https://issues.jboss.org/browse/RF-12035")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12035")
     public void testRenderAll() {
         accordionReloadTester.testRerenderAll();
     }

@@ -27,7 +27,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.select.RichFacesSelect;
 import org.richfaces.tests.metamer.bean.issues.RF11606;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -44,7 +44,7 @@ public class TestRF11606 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11606")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11606")
     public void testSelectContainsCastedValueOnPageLoad() {
         assertEquals(select.advanced().getInput().getStringValue(), RF11606.DEFAULT_VALUE.toString());
     }

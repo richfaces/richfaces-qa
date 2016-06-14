@@ -27,7 +27,7 @@ import static org.jboss.arquillian.graphene.Graphene.waitAjax;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
 import org.richfaces.tests.metamer.Template;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -59,13 +59,13 @@ public class TestListWithScroller extends AbstractListTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11787")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11787")
     public void testScrollerWithRowsAttributeIn() {
         testNumberedPages(scrollerInTableFooter);
     }
 
     @Test
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-11787", "https://issues.jboss.org/browse/RF-13732" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-11787", "https://issues.jboss.org/browse/RF-13732" })
     public void testScrollerWithRowsAttributeOut() {
         if (template.contains(Template.RICHPOPUPPANEL)) {
             popupTemplate.advanced().moveByOffset(0, 200);

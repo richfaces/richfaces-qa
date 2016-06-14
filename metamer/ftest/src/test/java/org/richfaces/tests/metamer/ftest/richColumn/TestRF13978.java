@@ -26,7 +26,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.bean.issues.RF13978;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -45,7 +45,7 @@ public class TestRF13978 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13978")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13978")
     public void testUnrenderedDataTableIsNotVisited() {
         Graphene.guardAjax(ajaxSubmit).click();
         getMetamerPage().assertNoListener(UNEXPECTED_MESSAGE);

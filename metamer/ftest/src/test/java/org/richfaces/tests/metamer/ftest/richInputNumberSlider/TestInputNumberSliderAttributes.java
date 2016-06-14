@@ -43,7 +43,6 @@ import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -99,7 +98,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
 
     @Test
     @CoversAttributes("accesskey")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11315")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11315")
     @Templates(value = "plain")
     public void testAccesskey() {
         testHTMLAttribute(slider.advanced().getInput().advanced().getInputElement(), inputNumberSliderAttributes,
@@ -369,7 +368,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
 
     @Test
     @CoversAttributes("maxlength")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9860")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9860")
     @Templates(value = "plain")
     public void testMaxlength() {
         String testedLength = "5";
@@ -411,7 +410,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11314")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11314")
     @Override
     public void testMoveWithSlider() {
         super.testMoveWithSlider();
@@ -584,7 +583,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
 
     @Test
     @CoversAttributes("showTooltip")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11314")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11314")
     public void testShowTooltip() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showTooltip, Boolean.TRUE);
         String startValue = slider.advanced().getInput().getStringValue();
@@ -640,7 +639,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
 
     @Test
     @CoversAttributes("tabindex")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10980")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10980")
     @Templates(value = "plain")
     public void testTabindex() {
         String value = "55";

@@ -31,14 +31,14 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Keyboard;
 import org.richfaces.fragment.calendar.PopupCalendar;
 import org.richfaces.fragment.calendar.TimeEditor;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-@RegressionTest({ "https://issues.jboss.org/browse/RF-14078", "https://issues.jboss.org/browse/RF-14166" })
+@IssueTracking({ "https://issues.jboss.org/browse/RF-14078", "https://issues.jboss.org/browse/RF-14166" })
 public class TestCalendarKeyboardNavigation extends AbstractCalendarTest {
 
     private static final String CLEAN_KEY = "c";

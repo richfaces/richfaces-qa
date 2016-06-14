@@ -25,7 +25,6 @@ import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
@@ -41,7 +40,7 @@ import org.testng.annotations.Test;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @since 4.3.0.M2
  */
-@RegressionTest("https://issues.jboss.org/browse/RF-10482")
+@IssueTracking("https://issues.jboss.org/browse/RF-10482")
 public class TestHCommandButton extends AbstractAjaxTest {
 
     private final Attributes<AjaxAttributes> ajaxAttributes = getAttributes();
@@ -162,7 +161,7 @@ public class TestHCommandButton extends AbstractAjaxTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-9665")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9665")
     public void testSimpleClickUnicode() {
         page.getInputElement().sendKeys("ľščťžýáíéúôň фывацукйешгщь");
         MetamerPage.waitRequest(page.getButtonElement(), WaitRequestType.XHR).click();

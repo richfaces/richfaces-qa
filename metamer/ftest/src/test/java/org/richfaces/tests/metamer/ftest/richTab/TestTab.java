@@ -45,7 +45,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -85,7 +84,7 @@ public class TestTab extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes({ "action", "actionListener" })
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-11427", "https://issues.jboss.org/browse/RF-13748" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-11427", "https://issues.jboss.org/browse/RF-13748" })
     public void testActionAndActionListener() {
         page.getTabPanel().switchTo(2);
 
@@ -315,7 +314,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14076")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14076")
     @CoversAttributes("onbegin")
     @Templates(value = "plain")
     public void testOnbegin() {
@@ -466,7 +465,7 @@ public class TestTab extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14076")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14076")
     @CoversAttributes("status")
     public void testStatus() {
         testStatus(switchToTabAction);

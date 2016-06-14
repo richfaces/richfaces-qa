@@ -7,7 +7,7 @@ import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 import com.google.common.base.Predicate;
@@ -26,7 +26,7 @@ public class TestRF12108 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12108")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12108")
     public void testStatusIsClearedWhenRequestCompleted() {
         final String expectedOutput = "Should be rendered aside as well!";
         Graphene.guardAjax(inputNotHandledCorrectly).sendKeys(expectedOutput);

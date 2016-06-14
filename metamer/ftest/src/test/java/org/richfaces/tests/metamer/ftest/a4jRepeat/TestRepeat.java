@@ -29,7 +29,7 @@ import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
@@ -76,7 +76,7 @@ public class TestRepeat extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("first")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10589")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10589")
     @UseWithField(field = "first", valuesFrom = FROM_FIELD, value = "intsFirst")
     public void testFirst() {
         repeatAttributes.set(RepeatAttributes.first, first);
@@ -85,7 +85,7 @@ public class TestRepeat extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("rows")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10589")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10589")
     @UseWithField(field = "rows", valuesFrom = FROM_FIELD, value = "intsRows")
     public void testRowsAttribute() {
         repeatAttributes.set(RepeatAttributes.rows, rows);

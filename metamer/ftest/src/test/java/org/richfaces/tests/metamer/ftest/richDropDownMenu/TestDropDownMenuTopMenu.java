@@ -27,7 +27,6 @@ import static org.testng.Assert.assertFalse;
 
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
@@ -104,7 +103,7 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
      * @since 4.5.17
      */
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12242")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12242")
     public void testMenuWillNotShowUp_whenMouseoverChildElementAndOutWithShowDelay() {
         setAttribute("showDelay", 2000);
         // move to menu label child element and then move out
@@ -121,7 +120,7 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
 
     @Test
     @Templates("plain")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12415")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12415")
     public void testNoResourceErrorPresent() {
         super.testNoResourceErrorPresent();
     }
@@ -253,7 +252,7 @@ public class TestDropDownMenuTopMenu extends AbstractDropDownMenuTest {
 
     @Test
     @Templates("plain")
-    @RegressionTest("https://issues.jboss.org/browse/RF-13167")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13167")
     public void testStyleClassWhenDisabled() {
         super.testStyleClassWhenDisabled();
     }

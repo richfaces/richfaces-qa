@@ -46,7 +46,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.checker.IconsChecker;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -135,7 +135,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("headerActiveClass")
     @Templates("plain")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10297")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10297")
     public void testHeaderActiveClass() {
         testStyleClass(page.getActiveHeaders().get(0), headerActiveClass);
         assertFalse(belongsClass(page.getActiveHeaders().get(1), "metamer-ftest-class"),
@@ -162,7 +162,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("headerDisabledClass")
     @Templates("plain")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10297")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10297")
     public void testHeaderDisabledClass() {
         accordionItemAttributes.set(AccordionItemAttributes.disabled, true);
 
@@ -172,7 +172,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("headerInactiveClass")
     @Templates("plain")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10297")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10297")
     public void testHeaderInactiveClass() {
         testStyleClass(page.getInactiveHeaders().get(0), headerInactiveClass);
         assertFalse(belongsClass(page.getInactiveHeaders().get(1), "metamer-ftest-class"),
@@ -200,7 +200,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("leftActiveIcon")
     @Templates("plain")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10488")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10488")
     public void testLeftActiveIcon() {
         By image = By.cssSelector(page.getLeftIconSelector() + " img");
 
@@ -257,7 +257,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("name")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10488")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10488")
     public void testName() {
         accordionItemAttributes.set(AccordionItemAttributes.name, "new name");
         guardAjax(driver.findElement(ByJQuery.selector("input[type=submit][name$=switchButtonCustom]"))).click();
@@ -343,7 +343,7 @@ public class TestAccordionItem extends AbstractWebDriverTest {
 
     @Test(groups = "smoke")
     @CoversAttributes("onleave")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9821 https://issues.jboss.org/browse/RF-10488")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9821 https://issues.jboss.org/browse/RF-10488")
     public void testOnleave() {
         testFireEvent(accordionItemAttributes, AccordionItemAttributes.onleave, new Action() {
             @Override

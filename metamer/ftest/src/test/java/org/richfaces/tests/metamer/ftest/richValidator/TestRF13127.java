@@ -33,7 +33,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
@@ -124,7 +124,7 @@ public class TestRF13127 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13127")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13127")
     public void testCorrectElementIsUsed_clientSideValidatedInputs() {
         checkInputsValidation(vinInputs, false);
     }

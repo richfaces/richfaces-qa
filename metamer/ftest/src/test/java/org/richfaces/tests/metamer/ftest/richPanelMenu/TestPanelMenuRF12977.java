@@ -25,7 +25,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.panelMenu.RichFacesPanelMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -42,7 +42,7 @@ public class TestPanelMenuRF12977 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12977")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12977")
     public void testComponentCanBeSwitchedWhenUsingGlobalQueue() {
         RichFacesPanelMenu guardedPM = Graphene.guardAjax(pm);
 

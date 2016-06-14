@@ -25,7 +25,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -44,7 +44,7 @@ public class TestFocusManager extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
-    @RegressionTest("https://issues.jboss.org/browse/RF-14231")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14231")
     public void testFocusManager() {
         // workaround to get the keyboard interface working, need to interact with page first
         blur(WaitRequestType.NONE);

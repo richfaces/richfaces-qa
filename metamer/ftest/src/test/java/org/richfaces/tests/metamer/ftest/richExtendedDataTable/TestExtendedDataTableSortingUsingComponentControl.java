@@ -22,18 +22,17 @@
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.testng.annotations.Test;
 
 /**
- * Tests in uiRepeat template fail due to RF-13690. All the tests are RegressionTests for RF-11359
+ * Tests in uiRepeat template fail due to RF-13690. All the tests are IssueTrackings for RF-11359
  *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22872 $
  */
-@RegressionTest("https://issues.jboss.org/browse/RF-11359")
+@IssueTracking("https://issues.jboss.org/browse/RF-11359")
 public class TestExtendedDataTableSortingUsingComponentControl extends ExtendedDataTableSortingTest {
 
     @Override
@@ -42,34 +41,34 @@ public class TestExtendedDataTableSortingUsingComponentControl extends ExtendedD
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-7872")
+    @IssueTracking("https://issues.jboss.org/browse/RF-7872")
     public void testShowColumnControlHideAllColumnsAndScroll() {
         super.testShowColumnControlHideAllColumnsAndScroll();
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-7872")
+    @IssueTracking("https://issues.jboss.org/browse/RF-7872")
     public void testShowColumnControlWithSorting() {
         super.testShowColumnControlWithSorting();
     }
 
     @Test
     @CoversAttributes("sortMode")
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-13881", "https://issues.jboss.org/browse/RF-13690" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-13881", "https://issues.jboss.org/browse/RF-13690" })
     public void testSortModeMulti() {
         super.testSortModeMulti();
     }
 
     @Test
     @CoversAttributes("sortMode")
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-13881", "https://issues.jboss.org/browse/RF-13690" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-13881", "https://issues.jboss.org/browse/RF-13690" })
     public void testSortModeMultiFullPageRefresh() {
         super.testSortModeMultiFullPageRefresh();
     }
 
     @Test
     @CoversAttributes("sortMode")
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-13881", "https://issues.jboss.org/browse/RF-13690" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-13881", "https://issues.jboss.org/browse/RF-13690" })
     public void testSortModeMultiReplacingOldOccurences() {
         super.testSortModeMultiReplacingOldOccurences();
     }
@@ -85,21 +84,21 @@ public class TestExtendedDataTableSortingUsingComponentControl extends ExtendedD
 
     @Test
     @CoversAttributes("sortMode")
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-13881", "https://issues.jboss.org/browse/RF-13690" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-13881", "https://issues.jboss.org/browse/RF-13690" })
     public void testSortModeMultiReverse() {
         super.testSortModeMultiReverse();
     }
 
     @Test
     @CoversAttributes("sortMode")
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-13881", "https://issues.jboss.org/browse/RF-13690" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-13881", "https://issues.jboss.org/browse/RF-13690" })
     public void testSortModeSingle() {
         super.testSortModeSingle();
     }
 
     @Test
     @CoversAttributes("sortMode")
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-13881", "https://issues.jboss.org/browse/RF-13690" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-13881", "https://issues.jboss.org/browse/RF-13690" })
     public void testSortModeSingleFullPageRefresh() {
         super.testSortModeSingleFullPageRefresh();
     }
@@ -115,7 +114,7 @@ public class TestExtendedDataTableSortingUsingComponentControl extends ExtendedD
 
     @Test
     @CoversAttributes("sortMode")
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-13881", "https://issues.jboss.org/browse/RF-13690" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-13881", "https://issues.jboss.org/browse/RF-13690" })
     public void testSortModeSingleReverse() {
         super.testSortModeSingleReverse();
     }

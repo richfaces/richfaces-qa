@@ -28,7 +28,7 @@ import java.util.List;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
@@ -52,7 +52,7 @@ public class TestRF12653 extends AbstractAutocompleteTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12653")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12653")
     public void testClosingSuggestionsPopupByBlur() {
         attsSetter()
             .setAttribute(AutocompleteAttributes.showButton).toValue(true)

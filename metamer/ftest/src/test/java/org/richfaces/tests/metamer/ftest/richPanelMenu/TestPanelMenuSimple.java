@@ -40,7 +40,6 @@ import org.openqa.selenium.WebElement;
 import org.richfaces.PanelMenuMode;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
@@ -94,7 +93,7 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
 
     @Test
     @CoversAttributes("disabled")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10158")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10158")
     public void testDisabled() {
         attsSetter()
             .setAttribute(PanelMenuAttributes.groupMode).toValue("client")
@@ -254,7 +253,7 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
 
     @Test
     @CoversAttributes("width")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10302")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10302")
     @Templates(value = "plain")
     public void testWidth() {
         attsSetter()

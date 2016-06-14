@@ -26,7 +26,7 @@ import javax.faces.event.PhaseId;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.fragment.SimpleEDT;
 import org.testng.annotations.Test;
 
@@ -44,7 +44,7 @@ public class TestRF13165 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13165")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13165")
     public void testRowClick() {
         Graphene.guardAjax(edt).selectRow(1);
         getMetamerPage().assertListener(PhaseId.INVOKE_APPLICATION, "action listener invoked");

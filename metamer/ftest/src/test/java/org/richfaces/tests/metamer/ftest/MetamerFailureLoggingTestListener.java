@@ -21,23 +21,12 @@
  */
 package org.richfaces.tests.metamer.ftest;
 
-import static java.util.Arrays.asList;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.StringUtils;
 import org.jboss.test.selenium.listener.FailureLoggingTestListener;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.ITestResult;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
- * @version $Revision: 22728 $
  */
 public class MetamerFailureLoggingTestListener extends FailureLoggingTestListener {
 
@@ -50,32 +39,5 @@ public class MetamerFailureLoggingTestListener extends FailureLoggingTestListene
     protected String getSeleniumLogIdentification(ITestResult result) {
         String id = super.getSeleniumLogIdentification(result);
         return id + " " + MetamerTestInfo.getConfigurationInfoInParenthesses(result);
-    }
-
-    @Override
-    public void saveScreenshotAndPageSource(ITestResult result) {
-        super.saveScreenshotAndPageSource(result);
-
-        List<String> issueList = new LinkedList<String>();
-        IssueTracking issueTracking = result.getMethod().getConstructorOrMethod().getMethod()
-            .getAnnotation(IssueTracking.class);
-        if (issueTracking != null) {
-            issueList.addAll(asList(issueTracking.value()));
-        }
-        issueTracking = (IssueTracking) result.getMethod().getRealClass().getAnnotation(IssueTracking.class);
-        if (issueTracking != null) {
-            issueList.addAll(asList(issueTracking.value()));
-        }
-
-        if (!issueList.isEmpty()) {
-            String issues = StringUtils.join(issueList, "\n");
-            String filenameIdentification = getFilenameIdentification(result);
-            File issueTrackingOutputFile = new File(failuresOutputDir, filenameIdentification + "/issues.txt");
-            try {
-                FileUtils.writeStringToFile(issueTrackingOutputFile, issues);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
     }
 }

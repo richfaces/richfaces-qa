@@ -36,7 +36,7 @@ import org.richfaces.fragment.common.Locations;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.dropDownMenu.RichFacesDropDownMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
@@ -105,7 +105,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("direction")
     @Templates("plain")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10218")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10218")
     @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "direction")
     public void testDirection() {
         testDirection(new ShowElementAndReturnAction() {
@@ -130,7 +130,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("horizontalOffset")
     @Templates("plain")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10216")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10216")
     public void testHorizontalOffset() {
         testHorizontalOffset(new ShowElementAndReturnAction() {
             @Override
@@ -143,7 +143,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
 
     @Test(groups = "smoke")
     @CoversAttributes("icon")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9989")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9989")
     @Templates(value = "plain")
     public void testIcon() {
         menuGroupAttributes.set(MenuGroupAttributes.icon, "null");
@@ -159,7 +159,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("iconDisabled")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9989")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9989")
     @Templates(value = "plain")
     public void testIconDisabled() {
         menuGroupAttributes.set(MenuGroupAttributes.disabled, Boolean.TRUE);
@@ -209,7 +209,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     @Test(groups = "smoke")
     @CoversAttributes("jointPoint")
     @Templates("plain")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10218")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10218")
     @UseWithField(field = "positioning", valuesFrom = FROM_ENUM, value = "")
     public void testJointPoint() {
         openMenu();
@@ -242,7 +242,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
 
     @Test
     @Templates("plain")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12415")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12415")
     public void testNoResourceErrorPresent() {
         checkNoResourceErrorPresent(new Action() {
 
@@ -372,7 +372,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("styleClass")
     @Templates("plain")
-    @RegressionTest("https://issues.jboss.org/browse/RF-13167")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13167")
     public void testStyleClassWhenDisabled() {
         setAttribute("disabled", true);
         testStyleClass();
@@ -388,7 +388,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("verticalOffset")
     @Templates("plain")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10216")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10216")
     public void testVerticalOffset() {
         testVerticalOffset(new ShowElementAndReturnAction() {
             @Override

@@ -43,7 +43,7 @@ import org.richfaces.fragment.inplaceInput.RichFacesInplaceInput;
 import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -127,7 +127,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("showControls")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9872")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9872")
     public void testClickCancelButton() {
         inplaceInputAttributes.set(InplaceInputAttributes.showControls, Boolean.TRUE);
         Graphene.guardNoRequest(inplaceInput.type("value that will be canceled")).cancelByControlls();
@@ -218,7 +218,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("inputWidth")
-    @RegressionTest("http://java.net/jira/browse/JAVASERVERFACES-1805")
+    @IssueTracking("http://java.net/jira/browse/JAVASERVERFACES-1805")
     @Templates(value = "plain")
     public void testInputWidth() {
         int tolerance = 10;
@@ -235,7 +235,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("onblur")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9868")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9868")
     public void testOnblur() {
         testFireEvent(inplaceInputAttributes, InplaceInputAttributes.onblur, new Action() {
             @Override
@@ -248,7 +248,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("onchange")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10044")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10044")
     public void testOnchange() {
         testFireEvent(inplaceInputAttributes, InplaceInputAttributes.onchange, new Action() {
             @Override
@@ -276,7 +276,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("onfocus")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9868")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9868")
     @Templates(value = "plain")
     public void testOnfocus() {
         testFireEvent(inplaceInputAttributes, InplaceInputAttributes.onfocus,
@@ -479,7 +479,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("showControls")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12609")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12609")
     public void testShowControls() {
         // check initial state
         assertNotVisible(inplaceInput.advanced().getCancelButtonElement(), "Cancel button should not be displayed.");
@@ -517,7 +517,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("style")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10782")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10782")
     @Templates(value = "plain")
     public void testStyleWidth() {
         setAttribute("style", "width: 700px");
@@ -526,7 +526,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("tabindex")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10980")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10980")
     @Templates(value = "plain")
     public void testTabindex() {
         int testedValue = 47;

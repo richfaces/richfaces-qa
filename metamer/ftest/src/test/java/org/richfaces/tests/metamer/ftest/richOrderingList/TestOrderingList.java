@@ -25,7 +25,7 @@ import static org.testng.Assert.assertEquals;
 
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.Test;
 
@@ -54,7 +54,7 @@ public class TestOrderingList extends AbstractOrderingListTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14261")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14261")
     public void testOrderingListWontShiftPageWhenBodyHasDirection() {
         final int delta = 10;
         final Long originalWidth = (Long) executeJS("return jQuery(document).width();");
@@ -70,7 +70,7 @@ public class TestOrderingList extends AbstractOrderingListTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13558")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13558")
     public void testScrollingWithKeyboard() {
         final Action workaround = new Action() {
             @Override

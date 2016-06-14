@@ -24,7 +24,7 @@ package org.richfaces.tests.metamer.ftest.richNotifyStack;
 import static org.testng.Assert.assertTrue;
 
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
@@ -40,7 +40,7 @@ public class TestRF12658 extends AbstractWebDriverTest {
 
     @Test
     @Templates("plain")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12658")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12658")
     public void testNoJavaScriptErrorPresentInConsole() {
         assertTrue(jsErrorStorage.getMessages().isEmpty(), "There should be no error message in browser's console!");
         getMetamerPage().rerenderAll();

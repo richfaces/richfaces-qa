@@ -36,7 +36,7 @@ import org.richfaces.fragment.inplaceInput.InplaceComponentState;
 import org.richfaces.fragment.inplaceSelect.RichFacesInplaceSelect;
 import org.richfaces.tests.metamer.bean.Model;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.model.Capital;
 import org.testng.annotations.Test;
@@ -68,7 +68,7 @@ public class TestInplaceSelectFAjax extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11227")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11227")
     public void testClick() {
         attsSetter()
             .setAttribute(InplaceSelectAttributes.showControls).toValue(true)

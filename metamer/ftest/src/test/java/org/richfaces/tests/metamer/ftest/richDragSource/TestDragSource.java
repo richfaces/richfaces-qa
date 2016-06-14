@@ -35,7 +35,6 @@ import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.as.cli.CommandLineException;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.AndExpression;
@@ -79,7 +78,7 @@ public class TestDragSource extends AbstractDragSourceTest {
     }
 
     @Test
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-12441", "https://issues.jboss.org/browse/RF-14081", "https://issues.jboss.org/browse/RF-14229" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-12441", "https://issues.jboss.org/browse/RF-14081", "https://issues.jboss.org/browse/RF-14229" })
     @Uses({
         @UseWithField(field = "indicatorValue", valuesFrom = ValuesFrom.STRINGS, value = { "", "indicator", "indicator2" }),
         @UseWithField(field = "dragOptionsValue", valuesFrom = ValuesFrom.STRINGS, value = { "", "predefinedWithHelper", "predefinedWithoutHelper" })
@@ -140,8 +139,10 @@ public class TestDragSource extends AbstractDragSourceTest {
         @AndExpression(On.Container.EAP63x.class),
         @AndExpression(On.Container.EAP64x.class)
     })
-    @IssueTracking("https://issues.jboss.org/browse/RF-14251")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10967")
+    @IssueTracking({
+        "https://issues.jboss.org/browse/RF-14251",// not resolved
+        "https://issues.jboss.org/browse/RF-10967"
+        })
     public void testDragValueWithPartialStateSavingOff() {
         disablePartialStateSavingAndRedeploy();
         openPageWithCurrentConfiguration();

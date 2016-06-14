@@ -24,7 +24,7 @@ package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractColumnAndRowClassesTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseForAllTests;
@@ -59,42 +59,42 @@ public class TestCollapsibleSubTableColumnAndRowClasses extends AbstractColumnAn
 
     @Test
     @CoversAttributes("columnClasses")
-    @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
+    @IssueTracking(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesEqualsToColumns_commaSeparated() {
         super.testColumnClasses_numberOfColumnClassesEqualsToColumns_commaSeparated();
     }
 
     @Test
     @CoversAttributes("columnClasses")
-    @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
+    @IssueTracking(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesEqualsToColumns_spaceSeparated() {
         super.testColumnClasses_numberOfColumnClassesEqualsToColumns_spaceSeparated();
     }
 
     @Test
     @CoversAttributes("columnClasses")
-    @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
+    @IssueTracking(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesGreaterThanColumns_commaSeparated() {
         super.testColumnClasses_numberOfColumnClassesGreaterThanColumns_commaSeparated();
     }
 
     @Test
     @CoversAttributes("columnClasses")
-    @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
+    @IssueTracking(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesLesserThanColumns_commaSeparated() {
         super.testColumnClasses_numberOfColumnClassesLesserThanColumns_commaSeparated();
     }
 
     @Test
     @CoversAttributes("columnClasses")
-    @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
+    @IssueTracking(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_numberOfColumnClassesLesserThanColumns_spaceSeparated() {
         super.testColumnClasses_numberOfColumnClassesLesserThanColumns_spaceSeparated();
     }
 
     @Test
     @CoversAttributes("columnClasses")
-    @RegressionTest(value = "https://issues.jboss.org/browse/RF-13721")
+    @IssueTracking(value = "https://issues.jboss.org/browse/RF-13721")
     public void testColumnClasses_oneColumnClass() {
         super.testColumnClasses_oneColumnClass();
     }

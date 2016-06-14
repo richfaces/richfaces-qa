@@ -32,7 +32,7 @@ import org.richfaces.fragment.log.Log.LogEntryLevel;
 import org.richfaces.fragment.log.RichFacesLog;
 import org.richfaces.tests.metamer.bean.issues.RF13780;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -67,7 +67,7 @@ public class TestRF13780 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-13988", "https://issues.jboss.org/browse/RF-13993" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-13988", "https://issues.jboss.org/browse/RF-13993" })
     public void testAjaxWillUpdateComponentsFollowingCollapsedCollapsiblePanel() {
         String text = "1";
         testCollapsedCollapsiblePanelWillNotBeVisited();
@@ -85,7 +85,7 @@ public class TestRF13780 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-13780", "https://issues.jboss.org/browse/RF-13993" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-13780", "https://issues.jboss.org/browse/RF-13993" })
     public void testCollapsedCollapsiblePanelWillNotBeVisited() {
         log.changeLevel(LogEntryLevel.ERROR);
         assertNoErrorsInLog();

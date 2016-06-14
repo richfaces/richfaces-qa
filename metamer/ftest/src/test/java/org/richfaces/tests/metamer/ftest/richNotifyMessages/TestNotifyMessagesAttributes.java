@@ -25,7 +25,6 @@ import org.openqa.selenium.TimeoutException;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.notify.NotifyMessage.NotifyMessagePosition;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -55,7 +54,7 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
 
     @Test
     @CoversAttributes("dir")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12923")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12923")
     @Templates("plain")
     public void testDir() {
         checkDir();
@@ -94,21 +93,21 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
     @Test
     @CoversAttributes("globalOnly")
     @Templates(value = { "richAccordion", "richCollapsiblePanel" })
-    @RegressionTest("https://issues.jboss.org/browse/RF-11415")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11415")
     public void testGlobalOnlyInAccordionCollapsiblePanel() {
         testGlobalOnly();
     }
 
     @Test
     @CoversAttributes("lang")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12923")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12923")
     @Templates("plain")
     public void testLang() {
         checkLang();
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11433")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11433")
     public void testMessagesTypes() {
         checkMessagesTypes();
     }
@@ -253,7 +252,7 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
 
     @Test
     @CoversAttributes("showShadow")
-    @RegressionTest("https://issues.jboss.org/browse/RF-13792")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13792")
     public void testShowShadow() {
         notifyMessagesAttributes.set(NotifyMessagesAttributes.showShadow, Boolean.TRUE);
         generateValidationMessagesWithWait();
@@ -308,7 +307,7 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
 
     @Test
     @CoversAttributes("sticky")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11558")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11558")
     public void testSticky() {
         attsSetter()
             .setAttribute(NotifyMessagesAttributes.stayTime).toValue(1000)
@@ -341,7 +340,7 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
     }
 
     @Test
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-12923", "https://issues.jboss.org/browse/RF-14164" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-12923", "https://issues.jboss.org/browse/RF-14164" })
     @CoversAttributes("style")
     @Templates(value = "plain")
     public void testStyle() {
@@ -356,7 +355,7 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
     }
 
     @Test
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-12923", "https://issues.jboss.org/browse/RF-14164" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-12923", "https://issues.jboss.org/browse/RF-14164" })
     @CoversAttributes("title")
     @Templates("plain")
     public void testTitle() {

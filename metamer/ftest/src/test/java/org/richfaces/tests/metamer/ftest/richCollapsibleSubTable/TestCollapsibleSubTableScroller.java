@@ -33,7 +33,7 @@ import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.fragment.collapsibleSubTableToggler.RichFacesCollapsibleSubTableToggler;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.model.Employee;
 import org.testng.annotations.BeforeMethod;
@@ -74,7 +74,7 @@ public class TestCollapsibleSubTableScroller extends AbstractCollapsibleSubTable
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11301")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11301")
     @UseWithField(field = "expandMode", valuesFrom = FROM_FIELD, value = "expandModeAjax")
     public void testScrollerExpandModeAjax() {
         menSubTable = getSubTable(Boolean.TRUE);
@@ -83,7 +83,7 @@ public class TestCollapsibleSubTableScroller extends AbstractCollapsibleSubTable
     }
 
     @Test(groups = "extended")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11301")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11301")
     @UseWithField(field = "expandMode", valuesFrom = FROM_FIELD, value = "expandModesOtherThanAjax")
     public void testScrollerExpandModeOtherThanAjax() {
         testScrollerExpandModeAjax();

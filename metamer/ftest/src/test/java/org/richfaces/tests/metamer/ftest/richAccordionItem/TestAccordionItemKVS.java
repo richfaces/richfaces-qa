@@ -27,7 +27,7 @@ import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -45,13 +45,13 @@ public class TestAccordionItemKVS extends AbstractWebDriverTest {
     }
 
     @Test(groups = { "keepVisualStateTesting" })
-    @RegressionTest(value = { "https://issues.jboss.org/browse/RF-12131", "https://issues.jboss.org/browse/RF-13727" })
+    @IssueTracking(value = { "https://issues.jboss.org/browse/RF-12131", "https://issues.jboss.org/browse/RF-13727" })
     public void testRefreshFullPage() {
         accordionReloadTester.testFullPageRefresh();
     }
 
     @Test(groups = { "keepVisualStateTesting" })
-    @RegressionTest(value = "https://issues.jboss.org/browse/RF-12035")
+    @IssueTracking(value = "https://issues.jboss.org/browse/RF-12035")
     public void testRenderAll() {
         accordionReloadTester.testRerenderAll();
     }

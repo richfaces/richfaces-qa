@@ -44,7 +44,7 @@ import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.select.RichFacesSelect;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -153,7 +153,7 @@ public class TestSelect extends AbstractWebDriverTest {
 
     @Test(groups = "smoke")
     @CoversAttributes("enableManualInput")
-    @RegressionTest(value = { "https://issues.jboss.org/browse/RF-9663", "https://issues.jboss.org/browse/RF-9855" })
+    @IssueTracking(value = { "https://issues.jboss.org/browse/RF-9663", "https://issues.jboss.org/browse/RF-9855" })
     public void testEnableManualInput() {
         selectAttributes.set(SelectAttributes.enableManualInput, Boolean.FALSE);
         String readonly = select.advanced().getInput().advanced().getInputElement().getAttribute("readonly");
@@ -201,7 +201,7 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test(groups = "smoke")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11320")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11320")
     public void testFiltering() {
         select.type("a");
         List<WebElement> suggestions = select.advanced().getSuggestionsElements();
@@ -250,7 +250,7 @@ public class TestSelect extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("listClass")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9735")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9735")
     @Templates(value = "plain")
     public void testListClass() {
         testStyleClass(listRoot, BasicAttributes.listClass);
@@ -258,7 +258,7 @@ public class TestSelect extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("listHeight")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9737")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9737")
     @Templates(value = "plain")
     public void testListHeight() {
         selectAttributes.set(SelectAttributes.listHeight, TESTSIZE);
@@ -272,7 +272,7 @@ public class TestSelect extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("listWidth")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9737")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9737")
     @Templates(value = "plain")
     public void testListWidth() {
         int tolerance = 20;
@@ -564,7 +564,7 @@ public class TestSelect extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("selectFirst")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11320")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11320")
     public void testSelectFirst() {
         selectAttributes.set(SelectAttributes.selectFirst, Boolean.TRUE);
 
@@ -605,7 +605,7 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14259")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14259")
     public void testSelectTypeDelete_errorStyleClassWillBeRemoved() {
         selectAttributes.set(SelectAttributes.enableManualInput, Boolean.TRUE);
         WebElement spanElement = select.advanced().getRootElement().findElement(By.tagName("span"));
@@ -699,7 +699,7 @@ public class TestSelect extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("style")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10782")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10782")
     @Templates(value = "plain")
     public void testStyleWidth() {
         setAttribute("style", "width: 700px");
@@ -721,7 +721,7 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14254")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14254")
     public void testTypingUnknownWillNotShowSuggestions() {
         selectAttributes.set(SelectAttributes.enableManualInput, Boolean.TRUE);
         WebElement spanElement = select.advanced().getRootElement().findElement(By.tagName("span"));

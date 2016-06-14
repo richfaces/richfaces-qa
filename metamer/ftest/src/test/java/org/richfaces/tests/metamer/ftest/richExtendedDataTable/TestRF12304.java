@@ -25,7 +25,7 @@ import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.page.RF12304Page;
 import org.testng.annotations.Test;
@@ -45,7 +45,7 @@ public class TestRF12304 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12304")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12304")
     @Templates(value = { "plain" })
     public void testMultiSelectionUsingControlIterationComponents() {
         // selecting from first table should work

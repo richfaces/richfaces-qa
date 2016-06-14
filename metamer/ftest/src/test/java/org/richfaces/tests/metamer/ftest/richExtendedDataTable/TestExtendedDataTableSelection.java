@@ -37,7 +37,6 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractDataTableTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -83,7 +82,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
 
     @Test
     @CoversAttributes({ "selectionMode", "selection" })
-    @RegressionTest("https://issues.jboss.org/browse/RF-10256")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10256")
     @Templates(exclude = "a4jRegion")
     public void testMultiSelectionRemovingUsingCtrl() {
         IntRange range1 = new IntRange(2, 14);
@@ -127,7 +126,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-10256")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10256")
     @CoversAttributes("selection")
     public void testMultiSelectionUsingControl() {
         Collection<Integer> forSelection = order(2, 5, 29, 16, 13, 21);
@@ -165,7 +164,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
 
     @Test
     @CoversAttributes("selection")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10256")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10256")
     @Templates(exclude = "uiRepeat")
     public void testMultiSelectionUsingShiftBetweenPagesInReversedOrder() {
         IntRange range = new IntRange(12, 35);
@@ -200,7 +199,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
 
     @Test
     @CoversAttributes("selection")
-    @RegressionTest("https://issues.jboss.org/browse/RF-13941")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13941")
     public void testSelectAllWithKeyShortcut() {
         page.selectAllWithCrtlAndA();
         selected.addAll(selection(new IntRange(0, 49)));
@@ -259,7 +258,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11932")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11932")
     @CoversAttributes({ "selection", "selectionMode" })
     public void testSelectionModeSingle() {
         tableAttributes.set(ExtendedDataTableAttributes.selectionMode, "single");

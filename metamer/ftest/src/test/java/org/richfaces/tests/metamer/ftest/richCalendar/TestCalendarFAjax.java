@@ -21,7 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -38,7 +38,7 @@ public class TestCalendarFAjax extends AbstractCalendarTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-10536")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10536")
     public void testApplyButton() {
         super.testApplyButton();
     }

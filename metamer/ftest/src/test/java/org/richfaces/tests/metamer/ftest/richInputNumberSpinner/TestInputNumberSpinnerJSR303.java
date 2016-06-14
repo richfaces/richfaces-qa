@@ -25,7 +25,7 @@ import static org.richfaces.tests.metamer.ftest.extension.configurator.use.annot
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.abstractions.validations.AbstractNumberInputComponentValidationTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.testng.annotations.Test;
@@ -36,7 +36,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  */
-@RegressionTest("https://issues.jboss.org/browse/RF-12301")
+@IssueTracking("https://issues.jboss.org/browse/RF-12301")
 public class TestInputNumberSpinnerJSR303 extends AbstractNumberInputComponentValidationTest {
 
     @Page

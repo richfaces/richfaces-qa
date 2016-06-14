@@ -29,7 +29,7 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -232,7 +232,7 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("style")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10969")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10969")
     @Templates(value = "plain")
     public void testWidthInStyleInfluencesProgressBarWidth() {
         final int tolerance = 10;

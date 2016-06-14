@@ -27,7 +27,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.bean.issues.RF13959;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -54,7 +54,7 @@ public class TestRF13959 extends AbstractMediaOutputTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13959")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13959")
     public void testImageIsCreatedFromWrappedBean() {
         // check that reference image is created
         assertVisible(imageNotUsingWrappedBean, "Image created directly from bean's method should be visible.");

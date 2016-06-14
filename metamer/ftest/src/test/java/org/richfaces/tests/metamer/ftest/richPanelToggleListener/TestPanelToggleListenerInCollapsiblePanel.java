@@ -36,7 +36,6 @@ import org.richfaces.tests.metamer.bean.rich.PanelToggleListenerBeanUsingListene
 import org.richfaces.tests.metamer.bean.rich.PanelToggleListenerBeanUsingType;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.testng.annotations.Test;
 
@@ -65,7 +64,7 @@ public class TestPanelToggleListenerInCollapsiblePanel extends AbstractWebDriver
     }
 
     @Test(groups = "smoke")
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-11568" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-11568" })
     public void testPTLAsAttribute() {
         testPTL("1 panel {0}");
     }
@@ -78,7 +77,7 @@ public class TestPanelToggleListenerInCollapsiblePanel extends AbstractWebDriver
     }
 
     @Test
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-12280" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-12280" })
     public void testPTLInsideComponentUsingType() {
         testPTL(PanelToggleListenerBeanUsingType.MSG_TEMPLATE);
     }

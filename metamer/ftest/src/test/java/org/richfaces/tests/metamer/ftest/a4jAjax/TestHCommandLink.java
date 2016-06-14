@@ -24,7 +24,7 @@ package org.richfaces.tests.metamer.ftest.a4jAjax;
 import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.SkipOnResultsCache;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -41,7 +41,7 @@ import org.testng.annotations.Test;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @since 4.3.0.M2
  */
-@RegressionTest("https://issues.jboss.org/browse/RF-10482")
+@IssueTracking("https://issues.jboss.org/browse/RF-10482")
 @Templates("plain")
 public class TestHCommandLink extends AbstractAjaxTest {
 
@@ -90,7 +90,7 @@ public class TestHCommandLink extends AbstractAjaxTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14045")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14045")
     public void testDisabled() {
         ajaxAttributes.set(AjaxAttributes.disabled, true);
 
@@ -158,7 +158,7 @@ public class TestHCommandLink extends AbstractAjaxTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-9665")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9665")
     public void testSimpleClickUnicode() {
         page.getInputElement().sendKeys("ľščťžýáíéúôň фывацукйешгщь");
         MetamerPage.waitRequest(page.getLinkElement(), WaitRequestType.XHR).click();

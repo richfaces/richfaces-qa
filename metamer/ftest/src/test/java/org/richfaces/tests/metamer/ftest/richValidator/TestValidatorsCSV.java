@@ -26,7 +26,7 @@ import javax.faces.event.PhaseId;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.common.Utils;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -67,7 +67,7 @@ public class TestValidatorsCSV extends AbstractValidatorsTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11035")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11035")
     public void testAllWrongJSF() {
         verifyAllWrongWithJSFSubmit();
     }
@@ -91,7 +91,7 @@ public class TestValidatorsCSV extends AbstractValidatorsTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14174")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14174")
     @CoversAttributes({ "immediate", "listener" })
     public void testImmediate() {
         final String listenerMsg = "listener invoked";
@@ -207,7 +207,7 @@ public class TestValidatorsCSV extends AbstractValidatorsTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11035")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11035")
     public void testSelectionSize() {
         verifySelectionSize();
     }

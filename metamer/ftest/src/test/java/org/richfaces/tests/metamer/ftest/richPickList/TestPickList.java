@@ -46,7 +46,7 @@ import org.richfaces.fragment.orderingList.OrderingList;
 import org.richfaces.fragment.pickList.RichFacesPickList;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractListScrollingTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
@@ -136,7 +136,7 @@ public class TestPickList extends AbstractListScrollingTest {
 
     @Test
     @UseWithField(field = "keepSourceOrder", valuesFrom = ValuesFrom.FROM_FIELD, value = "booleans")
-    @RegressionTest("https://issues.jboss.org/browse/RF-14094")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14094")
     public void testButtonsStateUsingKeepSourceOrdered() {
         pickListAttributes.set(PickListAttributes.keepSourceOrder, keepSourceOrder);
         assertButtonDisabled(pickList.advanced().getAddButtonElement());
@@ -344,7 +344,7 @@ public class TestPickList extends AbstractListScrollingTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14093")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14093")
     @CoversAttributes("keepSourceOrder")
     public void testKeepSourceOrder() {
         int maxIndex = 53;
@@ -466,7 +466,7 @@ public class TestPickList extends AbstractListScrollingTest {
 
     @Test
     @CoversAttributes("onblur")
-    @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     public void testOnblur() {
         testFireEvent(pickListAttributes, PickListAttributes.onblur,
             new Actions(driver).click(pickList.advanced().getRootElement()).click(getMetamerPage().getRequestTimeElement()).build());
@@ -494,7 +494,7 @@ public class TestPickList extends AbstractListScrollingTest {
 
     @Test
     @CoversAttributes("onfocus")
-    @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     public void testOnfocus() {
         testFireEvent(Event.FOCUS, pickList.advanced().getRootElement());
     }
@@ -569,7 +569,7 @@ public class TestPickList extends AbstractListScrollingTest {
 
     @Test
     @CoversAttributes("onsourceblur")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11322")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11322")
     public void testOnsourceblur() {
         testFireEvent(pickListAttributes, PickListAttributes.onsourceblur, new Action() {
             @Override
@@ -596,7 +596,7 @@ public class TestPickList extends AbstractListScrollingTest {
 
     @Test
     @CoversAttributes("onsourcefocus")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11322")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11322")
     public void testOnsourcefocus() {
         testFireEvent(pickListAttributes, PickListAttributes.onsourcefocus,
             new Actions(driver).click(pickList.advanced().getSourceListContentAreaElement()).build());
@@ -604,7 +604,7 @@ public class TestPickList extends AbstractListScrollingTest {
 
     @Test
     @CoversAttributes("onsourcekeydown")
-    @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     @Templates(value = "plain")
     public void testOnsourcekeydown() {
         testFireEvent(Event.KEYDOWN, pickList.advanced().getSourceListContentAreaElement(), "sourcekeydown");
@@ -612,7 +612,7 @@ public class TestPickList extends AbstractListScrollingTest {
 
     @Test
     @CoversAttributes("onsourcekeypress")
-    @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     @Templates(value = "plain")
     public void testOnsourcekeypress() {
         testFireEvent(Event.KEYPRESS, pickList.advanced().getSourceListContentAreaElement(), "sourcekeypress");
@@ -620,7 +620,7 @@ public class TestPickList extends AbstractListScrollingTest {
 
     @Test
     @CoversAttributes("onsourcekeyup")
-    @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     @Templates(value = "plain")
     public void testOnsourcekeyup() {
         testFireEvent(Event.KEYUP, pickList.advanced().getSourceListContentAreaElement(), "sourcekeyup");
@@ -663,7 +663,7 @@ public class TestPickList extends AbstractListScrollingTest {
 
     @Test
     @CoversAttributes("ontargetblur")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11322")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11322")
     public void testOntargetblur() {
         testFireEvent(
             pickListAttributes,
@@ -696,7 +696,7 @@ public class TestPickList extends AbstractListScrollingTest {
 
     @Test
     @CoversAttributes("ontargetfocus")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11322")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11322")
     public void testOntargetfocus() {
         testFireEvent(pickListAttributes, PickListAttributes.ontargetfocus,
             new Action() {
@@ -711,7 +711,7 @@ public class TestPickList extends AbstractListScrollingTest {
 
     @Test
     @CoversAttributes("ontargetkeydown")
-    @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     @Templates(value = "plain")
     public void testOntargetkeydown() {
         testFireEvent(Event.KEYDOWN, pickList.advanced().getTargetListContentAreaElement(), "targetkeydown");
@@ -719,7 +719,7 @@ public class TestPickList extends AbstractListScrollingTest {
 
     @Test
     @CoversAttributes("ontargetkeypress")
-    @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     @Templates(value = "plain")
     public void testOntargetkeypress() {
         testFireEvent(Event.KEYPRESS, pickList.advanced().getTargetListContentAreaElement(), "targetkeypress");
@@ -727,7 +727,7 @@ public class TestPickList extends AbstractListScrollingTest {
 
     @Test
     @CoversAttributes("ontargetkeyup")
-    @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     @Templates(value = "plain")
     public void testOntargetkeyup() {
         testFireEvent(Event.KEYUP, pickList.advanced().getTargetListContentAreaElement(), "targetkeyup");
@@ -825,7 +825,7 @@ public class TestPickList extends AbstractListScrollingTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12061")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12061")
     public void testPickListWontShiftPageWhenBodyHasDirection() {
         final int delta = 10;
         final Long originalWidth = (Long) executeJS("return jQuery(document).width();");
@@ -907,7 +907,7 @@ public class TestPickList extends AbstractListScrollingTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13558")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13558")
     public void testScrollingWithKeyboard() {
         final WebElement focusElement = pickList.advanced().getRootElement();
 
@@ -931,7 +931,7 @@ public class TestPickList extends AbstractListScrollingTest {
     @Test
     @CoversAttributes("selectItemClass")
     @Templates(value = "plain")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12777")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12777")
     public void testSelectItemClass() {
         testHTMLAttribute(new FutureTarget<WebElement>() {
             @Override
@@ -971,7 +971,7 @@ public class TestPickList extends AbstractListScrollingTest {
 
     @Test
     @CoversAttributes("styleClass")
-    @RegressionTest("https://issues.jboss.org/browse/RF-13350")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13350")
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(pickList.advanced().getRootElement());
@@ -1081,7 +1081,7 @@ public class TestPickList extends AbstractListScrollingTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14256")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14256")
     @CoversAttributes({ "keepSourceOrder", "onadditems", "onremoveitems" })
     public void testWhenUsingKeepSourceOrder_addAndRemoveItemsEventsAreFired() {
         pickListAttributes.set(PickListAttributes.keepSourceOrder, Boolean.TRUE);

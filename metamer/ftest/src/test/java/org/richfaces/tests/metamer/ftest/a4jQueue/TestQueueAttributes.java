@@ -27,7 +27,7 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -63,7 +63,7 @@ public class TestQueueAttributes extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11805")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11805")
     @CoversAttributes("onerror")
     public void testOnerror() {
         attributes.set(QueueAttributes.requestDelay, 0);
@@ -71,7 +71,7 @@ public class TestQueueAttributes extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11711")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11711")
     @CoversAttributes("onbeforedomupdate")
     public void testOnbeforedomupdate() {
         attributes.set(QueueAttributes.requestDelay, 0);
@@ -79,7 +79,7 @@ public class TestQueueAttributes extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11711")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11711")
     @CoversAttributes("oncomplete")
     public void testOncomplete() {
         attributes.set(QueueAttributes.requestDelay, 0);
@@ -87,7 +87,7 @@ public class TestQueueAttributes extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11711")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11711")
     @CoversAttributes("onsubmit")
     public void testOnsubmit() {
         attributes.set(QueueAttributes.requestDelay, 0);
@@ -110,7 +110,7 @@ public class TestQueueAttributes extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes(value = "status")
-    @RegressionTest(value = "https://issues.jboss.org/browse/RF-13203")
+    @IssueTracking(value = "https://issues.jboss.org/browse/RF-13203")
     public void testStatus() {
         attributes.set(QueueAttributes.requestDelay, 0);
         testStatus(new Actions(driver).click(actionButton).build());

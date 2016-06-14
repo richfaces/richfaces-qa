@@ -45,7 +45,7 @@ import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -107,7 +107,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14122")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14122")
     @CoversAttributes("autofill")
     public void testAutofillWorksCaseInsensitively() {
         autocompleteAttributes.set(AutocompleteAttributes.autofill, true);
@@ -190,7 +190,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
 
     @Test
     @CoversAttributes("layout")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12820")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12820")
     public void testLayout() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
         autocompleteAttributes.set(AutocompleteAttributes.autofill, true);
@@ -274,7 +274,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
 
     @Test
     @CoversAttributes("onbegin")
-    @RegressionTest("https://issues.jboss.org/browse/RF-13537")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13537")
     public void testOnbegin() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "ajax");
         testFireEvent(autocompleteAttributes, AutocompleteAttributes.onbegin, typeHToAutocompleteInputAction);
@@ -591,7 +591,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
 
     @Test
     @CoversAttributes("popupClass")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11079")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11079")
     @Templates(value = "plain")
     public void testPopupClassWidthInfluencesItemsWidth() {
         final int tolerance = 10;
@@ -666,7 +666,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
 
     @Test
     @CoversAttributes("status")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10966")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10966")
     public void testStatus() {
         testStatus(typeHToAutocompleteInputAction);
         blur(WaitRequestType.XHR);// prevent ViewExpiredException
@@ -688,7 +688,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
 
     @Test
     @CoversAttributes("style")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10782")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10782")
     @Templates(value = "plain")
     public void testStyleWidth() {
         setAttribute("style", "width: 700px");

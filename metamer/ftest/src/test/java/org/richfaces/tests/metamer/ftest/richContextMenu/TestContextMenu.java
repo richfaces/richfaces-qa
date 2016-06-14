@@ -52,7 +52,6 @@ import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.contextMenu.RichFacesContextMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -93,7 +92,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
 
     @Test
     @Templates("richAccordion")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12979")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12979")
     public void testContextMenuIsNotHiddenUnderAccordion() {
         // set direction to force menu to show in the needed position (under/over accordion)
         contextMenuAttributes.set(ContextMenuAttributes.direction, Positioning.topRight);
@@ -221,7 +220,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
 
     @Test
     @Templates("plain")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12415")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12415")
     public void testNoResourceErrorPresent() {
         checkNoResourceErrorPresent(new Action() {
             @Override
@@ -317,7 +316,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("onkeydown")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12792")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12792")
     @Templates(value = "plain")
     public void testOnkeydown() {
         updateShowAction();

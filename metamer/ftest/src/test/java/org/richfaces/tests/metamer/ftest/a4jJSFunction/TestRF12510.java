@@ -28,7 +28,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -54,7 +54,7 @@ public class TestRF12510 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12510")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12510")
     public void testTriggerJSFunctionAndSeeHowManyTimesCalledMethodOnData() {
         Graphene.guardAjax(jsFunctionTrigger).click();
 

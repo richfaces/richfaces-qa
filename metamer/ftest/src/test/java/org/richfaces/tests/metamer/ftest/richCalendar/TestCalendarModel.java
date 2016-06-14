@@ -37,7 +37,7 @@ import org.openqa.selenium.interactions.Keyboard;
 import org.richfaces.fragment.calendar.DayPicker;
 import org.richfaces.fragment.calendar.DayPicker.CalendarDay;
 import org.richfaces.fragment.calendar.DayPicker.CalendarDay.DayType;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.model.CalendarModel;
@@ -94,7 +94,7 @@ public class TestCalendarModel extends AbstractCalendarTest {
 
     @Test
     @CoversAttributes("dataModel")
-    @RegressionTest("https://issues.jboss.org/browse/RFPL-1222")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-1222")
     @Templates(value = "plain")
     public void testClasses() {
         int sundays = 1;
@@ -117,7 +117,7 @@ public class TestCalendarModel extends AbstractCalendarTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14199")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14199")
     public void testDisabledDayCannotBePickedByKeyboard() {
         DateTime referenceDate = new DateTime().withYear(2015).withMonthOfYear(11).withDayOfMonth(2).withHourOfDay(12).withMinuteOfHour(0);
         // set reference date
@@ -170,7 +170,7 @@ public class TestCalendarModel extends AbstractCalendarTest {
 
     @Test
     @CoversAttributes("dataModel")
-    @RegressionTest("https://issues.jboss.org/browse/RFPL-1222")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-1222")
     public void testPickADate() {
         DateTime referenceDate = new DateTime();
 

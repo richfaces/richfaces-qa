@@ -25,7 +25,6 @@ import static org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.requestTim
 
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.testng.annotations.Test;
@@ -59,7 +58,7 @@ public class TestInstantAttributes extends AbstractStatusTest {
 
     @Test
     @CoversAttributes("onstart")
-    @RegressionTest("https://issues.jboss.org/browse/RFPL-1516")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-1516")
     public void testOnStart() {
         for (int i = 0; i < 2; i++) {
             testFireEvent(getStatusAttributes(), StatusAttributes.onstart, new Action() {

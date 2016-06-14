@@ -27,7 +27,7 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -54,7 +54,7 @@ public class TestTooltipTarget extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("target")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11370")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11370")
     public void testTarget() {
         attsSetter()
             .setAttribute(TooltipAttributes.hideEvent).toValue("dblclick")

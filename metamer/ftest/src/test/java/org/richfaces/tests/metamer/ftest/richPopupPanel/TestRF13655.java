@@ -31,7 +31,7 @@ import org.richfaces.fragment.common.NullFragment;
 import org.richfaces.fragment.extendedDataTable.RichFacesExtendedDataTable;
 import org.richfaces.fragment.popupPanel.RichFacesPopupPanel;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -52,7 +52,7 @@ public class TestRF13655 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13655")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13655")
     public void testAutosize() {
         callPopupButton.click();
         Graphene.waitGui().until().element(popup.advanced().getRootElement()).is().visible();

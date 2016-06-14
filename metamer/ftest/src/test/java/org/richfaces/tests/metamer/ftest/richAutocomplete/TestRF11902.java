@@ -31,7 +31,7 @@ import org.richfaces.fragment.autocomplete.SelectOrConfirm;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.configurator.unstable.annotation.Unstable;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -92,13 +92,13 @@ public class TestRF11902 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11902")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11902")
     public void testAutocompleteWithAttachedQueueReferencigNamedQueue() {
         check(autocompleteUsingAttachedQueueReferencingNamedQueue, DELAY_ATTACHED_QUEUE_REFERENCING_OTHER_QUEUE, DELAY_GLOBAL);
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11902")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11902")
     public void testAutocompleteWithAttachedQueueWithRequestDelay() {
         check(autocompleteUsingAttachedQueueWithRequestDelay, DELAY_ATTACHED_QUEUE_WITH_OWN_DELAY, DELAY_GLOBAL);
     }

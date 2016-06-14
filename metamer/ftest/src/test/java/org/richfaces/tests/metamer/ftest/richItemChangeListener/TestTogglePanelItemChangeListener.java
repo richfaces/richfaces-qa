@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richItemChangeListener;
 
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -57,7 +56,7 @@ public class TestTogglePanelItemChangeListener extends AbstractItemChangeListene
 
     @Test
     @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid" })
-    @RegressionTest("https://issues.jboss.org/browse/RF-12173")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12173")
     public void testICLAsAttributeInIterationComponents() {
         super.testICLAsAttributeOfComponent(ICL_as_ComponentAttribute_PhaseName);
     }
@@ -77,7 +76,7 @@ public class TestTogglePanelItemChangeListener extends AbstractItemChangeListene
 
     @Test
     @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid" })
-    @RegressionTest("https://issues.jboss.org/browse/RF-12173")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12173")
     public void testICLInsideComponentUsingTypeInIterationComponents() {
         super.testICLInComponentWithType(ICL_inComponent_usingType_PhaseName);
     }

@@ -26,7 +26,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.hotkey.RichFacesHotkey;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -47,7 +47,7 @@ public class TestRF12759 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12759")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12759")
     public void testInvokingNotExistingJsApiFunctionFallsBackToJsFunctionOfDomElement() {
         hotkey1.advanced().setFromWidget();
         Graphene.guardAjax(hotkey1).invoke();

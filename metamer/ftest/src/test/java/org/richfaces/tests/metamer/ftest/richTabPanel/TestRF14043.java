@@ -25,7 +25,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.tabPanel.RichFacesTabPanel;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.richTab.TabAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
@@ -46,7 +46,7 @@ public class TestRF14043 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14043")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14043")
     public void testTabCanBeSwitchedToEvenIfNameIsANumber() {
         // check switching between tabs is possible
         Graphene.guardAjax(tabPanel).switchTo(1);

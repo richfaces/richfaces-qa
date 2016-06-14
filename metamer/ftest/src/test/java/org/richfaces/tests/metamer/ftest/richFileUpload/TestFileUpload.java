@@ -38,7 +38,6 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.AndExpression;
@@ -78,7 +77,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
     @Test(groups = { "smoke" })
     @CoversAttributes("acceptedTypes")
-    @RegressionTest("https://issues.jboss.org/browse/RFPL-3503")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
     public void testAcceptedTypes() {
         String acceptable = "txt";
         fileUploadAttributes.set(FileUploadAttributes.acceptedTypes, acceptable);
@@ -99,7 +98,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
     @Test
     @CoversAttributes("clearAllLabel")
-    @RegressionTest("https://issues.jboss.org/browse/RFPL-3503")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
     @Templates("plain")
     public void testClearAllLabel() {
         testLabelChanges(fileUpload.advanced().getClearAllButtonElement(), fileUploadAttributes, FileUploadAttributes.clearAllLabel, succesfulFileUploadAction);
@@ -107,7 +106,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
     @Test
     @CoversAttributes("clearLabel")
-    @RegressionTest("https://issues.jboss.org/browse/RFPL-3503")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
     @Templates("plain")
     public void testClearLabel() {
         testLabelChanges(new FutureTarget<WebElement>() {
@@ -119,7 +118,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
-    @RegressionTest({ "https://issues.jboss.org/browse/RFPL-3503", "https://issues.jboss.org/browse/RF-12039" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RFPL-3503", "https://issues.jboss.org/browse/RF-12039" })
     @CoversAttributes("data")
     public void testData() {
         testData(succesfulFileUploadAction);
@@ -164,7 +163,10 @@ public class TestFileUpload extends AbstractFileUploadTest {
     @Test(groups = { "smoke" })
     @CoversAttributes("doneLabel")
     @Templates("plain")
-    @RegressionTest(value = { "https://issues.jboss.org/browse/RF-12122", "https://issues.jboss.org/browse/RFPL-3503" })
+    @IssueTracking({
+        "https://issues.jboss.org/browse/RF-12122",
+        "https://issues.jboss.org/browse/RFPL-3503"
+    })
     public void testDoneLabel() {
         testLabelChanges(new FutureTarget<WebElement>() {
             @Override
@@ -176,7 +178,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
     @Test
     @CoversAttributes("execute")
-    @RegressionTest(value = { "https://issues.jboss.org/browse/RF-12122", "https://issues.jboss.org/browse/RFPL-3503" })
+    @IssueTracking(value = { "https://issues.jboss.org/browse/RF-12122", "https://issues.jboss.org/browse/RFPL-3503" })
     public void testExecute() {
         String cmd = "executeChecker";
         fileUploadAttributes.set(FileUploadAttributes.execute, cmd);
@@ -186,12 +188,14 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
     @Test
     @Skip(expressions = {// bug in UnderTow, see IssueTracking below
-
         @AndExpression(On.Container.EAP70.class),
         @AndExpression(On.Container.WildFly100.class)
     })
-    @IssueTracking({ "https://issues.jboss.org/browse/RF-14151", "https://issues.jboss.org/browse/UNDERTOW-550" })
-    @RegressionTest("https://issues.jboss.org/browse/RF-14092")
+    @IssueTracking({
+        "https://issues.jboss.org/browse/RF-14092",
+        "https://issues.jboss.org/browse/RF-14151",
+        "https://issues.jboss.org/browse/UNDERTOW-550"
+    })
     public void testFilenameEncodingIsPreserved() {
         sendFileWithWaiting(unicodeNameFile, true, true);
         waitUntilUploadedFilesListShow(1);
@@ -201,7 +205,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
     @Test(groups = { "smoke" })
     @CoversAttributes("immediateUpload")
-    @RegressionTest("https://issues.jboss.org/browse/RFPL-3503")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
     public void testImmediateUpload() {
         fileUploadAttributes.set(FileUploadAttributes.immediateUpload, Boolean.TRUE);
         sendFileToInputWithWaiting(filenames[0], true);
@@ -229,7 +233,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
     @Test
     @CoversAttributes("limitRender")
-    @RegressionTest(value = { "https://issues.jboss.org/browse/RF-12122", "https://issues.jboss.org/browse/RFPL-3503" })
+    @IssueTracking(value = { "https://issues.jboss.org/browse/RF-12122", "https://issues.jboss.org/browse/RFPL-3503" })
     public void testLimitRender() {
         //sendFile depends on requestTime and uploadedFilesPanel
         fileUploadAttributes.set(FileUploadAttributes.render, "statusCheckerOutput, requestTime, uploadedFilesPanel");
@@ -285,7 +289,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
     @Test
     @CoversAttributes("maxFilesQuantity")
-    @RegressionTest("https://issues.jboss.org/browse/RFPL-3503")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
     public void testMaxFilesQuantity() {
         final int maxFilesQuantity = 1;
         fileUploadAttributes.set(FileUploadAttributes.maxFilesQuantity, maxFilesQuantity);
@@ -319,14 +323,14 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12037")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12037")
     @CoversAttributes("onbeforedomupdate")
     public void testOnbeforedomupdate() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onbeforedomupdate, succesfulFileUploadAction);
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12037")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12037")
     @CoversAttributes("onbegin")
     public void testOnbegin() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onbegin, succesfulFileUploadAction);
@@ -353,7 +357,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12037")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12037")
     @CoversAttributes("oncomplete")
     public void testOncomplete() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.oncomplete, succesfulFileUploadAction);
@@ -382,7 +386,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     @Test
     @CoversAttributes("onerror")
     @Templates("plain")
-    @RegressionTest("https://issues.jboss.org/browse/RF-14258")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14258")
     public void testOnerrorIsFiredWhenSendingTheSameFileRepeatedly() {
         for (int i = 0; i < 3; i++) {
             testFireEvent("onerror", new Action() {
@@ -408,7 +412,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
     @Test
     @CoversAttributes("onfilesubmit")
-    @RegressionTest("https://issues.jboss.org/browse/RFPL-3503")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
     public void testOnfilesubmit() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onfilesubmit, succesfulFileUploadAction);
     }
@@ -485,7 +489,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     @Test
     @CoversAttributes("onsizerejected")
     @Templates("plain")
-    @RegressionTest("https://issues.jboss.org/browse/RF-14258")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14258")
     public void testOnsizerejectedIsFiredWhenSelectingTheSameFileRepeatedly() {
         fileUploadAttributes.set(FileUploadAttributes.maxFileSize, 1);
         for (int i = 0; i < 3; i++) {
@@ -515,7 +519,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     @Test
     @CoversAttributes("ontyperejected")
     @Templates("plain")
-    @RegressionTest("https://issues.jboss.org/browse/RF-14258")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14258")
     public void testOntyperejectedIsFiredWhenSelectingTheSameFileRepeatedly() {
         String acceptable = "txt";
         fileUploadAttributes.set(FileUploadAttributes.acceptedTypes, acceptable);
@@ -531,7 +535,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
     @Test
     @CoversAttributes("onuploadcomplete")
-    @RegressionTest("https://issues.jboss.org/browse/RFPL-3503")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
     public void testOnuploadcomplete() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onuploadcomplete, succesfulFileUploadAction);
     }
@@ -566,7 +570,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
     @Test
     @CoversAttributes("fileUploadListener")
-    @RegressionTest(value = { "https://issues.jboss.org/browse/RF-12122", "https://issues.jboss.org/browse/RFPL-3503" })
+    @IssueTracking(value = { "https://issues.jboss.org/browse/RF-12122", "https://issues.jboss.org/browse/RFPL-3503" })
     public void testSingleFileUpload() {
         sendFileToInputWithWaiting(filenames[0], true);
 
@@ -590,7 +594,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
     @Test
     @CoversAttributes("sizeExceededLabel")
-    @RegressionTest("https://issues.jboss.org/browse/RFPL-3503")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-3503")
     @Templates("plain")
     public void testSizeExceededLabel() {
         testLabelChanges(new FutureTarget<WebElement>() {
@@ -608,7 +612,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
     @Test
     @CoversAttributes("status")
-    @RegressionTest(value = { "https://issues.jboss.org/browse/RF-12879", "https://issues.jboss.org/browse/RF-13994", "https://issues.jboss.org/browse/RFPL-3503" })
+    @IssueTracking(value = { "https://issues.jboss.org/browse/RF-12879", "https://issues.jboss.org/browse/RF-13994", "https://issues.jboss.org/browse/RFPL-3503" })
     public void testStatus() {
         testStatus(succesfulFileUploadAction);
     }
@@ -629,7 +633,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
     @Test
     @CoversAttributes("style")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10782")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10782")
     @Templates(value = "plain")
     public void testStyleWidth() {
         setAttribute("style", "width: 700px");

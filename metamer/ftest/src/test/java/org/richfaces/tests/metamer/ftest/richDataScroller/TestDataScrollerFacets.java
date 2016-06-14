@@ -30,7 +30,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.dataScroller.DataScroller.DataScrollerSwitchButton;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -88,7 +88,7 @@ public class TestDataScrollerFacets extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13081")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13081")
     public void testFirstFacetDisabled() {
         // both facets are disabled
         assertTrue(page.getTopScroller().advanced().isButtonDisabled(DataScrollerSwitchButton.FIRST));
@@ -118,7 +118,7 @@ public class TestDataScrollerFacets extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13081")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13081")
     public void testFastRewindFacetDisabled() {
         // both facets should be disabled
         assertTrue(page.getTopScroller().advanced().isButtonDisabled(DataScrollerSwitchButton.FAST_REWIND));
@@ -148,7 +148,7 @@ public class TestDataScrollerFacets extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13081")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13081")
     public void testPreviousFacetDisabled() {
         // both facets should be disabled initially
         assertTrue(page.getTopScroller().advanced().isButtonDisabled(DataScrollerSwitchButton.PREVIOUS));
@@ -192,7 +192,7 @@ public class TestDataScrollerFacets extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13081")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13081")
     public void testNextFacetDisabled() {
         // switch to another page
         page.getTopScroller().switchTo(DataScrollerSwitchButton.LAST);
@@ -222,7 +222,7 @@ public class TestDataScrollerFacets extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13081")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13081")
     public void testfacetForwardFacetDisabled() {
         // switch to another page
         page.getTopScroller().switchTo(DataScrollerSwitchButton.LAST);
@@ -252,7 +252,7 @@ public class TestDataScrollerFacets extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13081")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13081")
     public void testLastFacetDisabled() {
         // switch to another page
         page.getTopScroller().switchTo(DataScrollerSwitchButton.LAST);

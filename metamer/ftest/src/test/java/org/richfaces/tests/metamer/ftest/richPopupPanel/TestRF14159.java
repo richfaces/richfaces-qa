@@ -33,7 +33,7 @@ import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.fragment.panel.TextualFragmentPart;
 import org.richfaces.fragment.popupPanel.RichFacesPopupPanel;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richPopupPanel.TestPopupPanel.TestedPopupPanelHeaderControls;
 import org.testng.annotations.Test;
@@ -57,7 +57,7 @@ public class TestRF14159 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14159")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14159")
     public void testAutosizedPanelShouldResizeAfterRerender() {
         final int tolerance = 5;
         // open popup panel

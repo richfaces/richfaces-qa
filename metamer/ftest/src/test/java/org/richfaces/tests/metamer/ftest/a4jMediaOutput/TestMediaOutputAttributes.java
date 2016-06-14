@@ -28,7 +28,6 @@ import static org.testng.Assert.assertNull;
 
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -127,7 +126,7 @@ public class TestMediaOutputAttributes extends AbstractMediaOutputTest {
     @Test
     @CoversAttributes("onclick")
     @Templates(value = "plain")
-    @RegressionTest("https://issues.jboss.org/browse/RF-13826")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13826")
     public void testOnclick() {
         testFireEvent(Event.CLICK, mediaOutput);
     }

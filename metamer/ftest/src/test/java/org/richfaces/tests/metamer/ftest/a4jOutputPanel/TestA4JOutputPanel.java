@@ -43,7 +43,6 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
@@ -95,7 +94,7 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11312")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11312")
     public void testClick() {
         Graphene.guardAjax(increaseCounterButton).click();
         Graphene.waitGui().until().element(outputDiv).text().equalTo("1");
@@ -157,7 +156,7 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("rendered")
-    @RegressionTest("https://issues.jboss.org/browse/RF-11312")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11312")
     @Templates(value = "plain")
     public void testRendered() {
         outputPanelAttributes.set(OutputPanelAttributes.rendered, false);

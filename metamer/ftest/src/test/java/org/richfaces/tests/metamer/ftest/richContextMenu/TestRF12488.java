@@ -31,7 +31,7 @@ import org.richfaces.fragment.common.Locations;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.contextMenu.RichFacesContextMenu;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
@@ -56,7 +56,7 @@ public class TestRF12488 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12488")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12488")
     public void testDetachedContextMenuShouldShowOnCorrectPositionAndStayVisible() {
         // check no menu is displayed
         contextMenu1.advanced().waitUntilIsNotVisible().perform();

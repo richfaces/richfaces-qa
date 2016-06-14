@@ -30,7 +30,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.collapsiblePanel.TextualRichFacesCollapsiblePanel;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -77,7 +77,7 @@ public class TestFacets extends AbstractWebDriverTest {
     @Test
     @CoversAttributes("switchType")
     @UseWithField(field = "switchType", valuesFrom = STRINGS, value = { "null", "ajax", "client", "server" })
-    @RegressionTest("https://issues.jboss.org/browse/RF-10368")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10368")
     public void testSwitchType() {
         collapsiblePanelAttributes.set(CollapsiblePanelAttributes.switchType, switchType);
         verifyStateAfterExpansion();

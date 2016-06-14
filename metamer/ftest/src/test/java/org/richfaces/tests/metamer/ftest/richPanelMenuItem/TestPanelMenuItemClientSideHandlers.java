@@ -29,7 +29,6 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
@@ -41,7 +40,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @since 4.3.1
  */
-@RegressionTest("https://issues.jboss.org/browse/RF-10486")
+@IssueTracking("https://issues.jboss.org/browse/RF-10486")
 public class TestPanelMenuItemClientSideHandlers extends AbstractWebDriverTest {
 
     private final String[] ajaxEvents = new String[] { "onbeforeselect", "onbegin", "onbeforedomupdate", "onselect", "oncomplete" };
@@ -75,7 +74,7 @@ public class TestPanelMenuItemClientSideHandlers extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes({ "onbeforeselect", "onbegin", "onbeforedomupdate", "onselect", "oncomplete" })
-    @RegressionTest("https://issues.jboss.org/browse/RF-12549")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12549")
     public void testClientSideEventsOrderAjax() {
         panelMenuItemAttributes.set(PanelMenuItemAttributes.mode, Mode.ajax);
         testRequestEventsBefore(ajaxEvents);

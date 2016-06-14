@@ -33,7 +33,7 @@ import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.common.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.a4jCommandButton.CommandButtonLinkPage;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
@@ -71,7 +71,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-9665")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9665")
     public void testSimpleClickUnicode() {
         page.typeToInput(CommandButtonLinkPage.STRING_UNICODE1);
         page.submitByLink();
@@ -375,7 +375,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("render")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10555")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10555")
     public void testRender() {
         commandLinkAttributes.set(CommandLinkAttributes.action, "doubleStringAction");
         commandLinkAttributes.set(CommandLinkAttributes.actionListener, "doubleStringActionListener");
@@ -439,7 +439,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("styleClass")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9307")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9307")
     @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(page.getLinkElement());

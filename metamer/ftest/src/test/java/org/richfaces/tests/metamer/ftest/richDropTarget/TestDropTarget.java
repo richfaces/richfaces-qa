@@ -39,7 +39,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator;
@@ -113,7 +113,7 @@ public class TestDropTarget extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("bypassUpdates")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10535")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10535")
     public void testBypassUpdates() {
         dropTargetAttributes.set(DropTargetAttributes.bypassUpdates, true);
         indicator = new Indicator(page.getIndicator());
@@ -206,7 +206,7 @@ public class TestDropTarget extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("immediate")
-    @RegressionTest("https://issues.jboss.org/browse/RF-10535")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10535")
     public void testImmediate() {
         dropTargetAttributes.set(DropTargetAttributes.immediate, true);
         indicator = new Indicator(page.getIndicator());

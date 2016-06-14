@@ -30,7 +30,7 @@ import org.richfaces.fragment.autocomplete.RichFacesAutocomplete;
 import org.richfaces.fragment.autocomplete.SelectOrConfirm;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -53,7 +53,7 @@ public class TestRF12948 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12948")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12948")
     public void testAutocompleteWithNestedPlaceholderDisplaysVisibleSuggestions() {
         assertEquals(autocomplete.advanced().getInput().getStringValue(), "...type here your favorite state...",
             "Autocomplete should contain placeholder.");

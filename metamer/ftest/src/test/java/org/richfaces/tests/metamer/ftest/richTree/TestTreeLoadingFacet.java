@@ -33,7 +33,7 @@ import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.tree.RichFacesTreeNode;
 import org.richfaces.fragment.tree.Tree.TreeNode;
 import org.richfaces.tests.metamer.ftest.MetamerAttributes;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -56,7 +56,7 @@ public class TestTreeLoadingFacet extends AbstractTreeTest {
 
     @Test(groups = "smoke")
     @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "simpleSwingTreeNode")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12696")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12696")
     public void testLoadingFacet() {
         int sufficientTimeToCheckHandles = 1500;// ms
         setLoadingFacet(true);

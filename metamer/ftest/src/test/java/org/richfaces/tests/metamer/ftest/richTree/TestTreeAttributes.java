@@ -36,7 +36,6 @@ import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.tree.Tree.TreeNode;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.MultipleCoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
@@ -54,11 +53,11 @@ import com.google.common.collect.Lists;
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-@RegressionTest("https://issues.jboss.org/browse/RF-11766")
+@IssueTracking("https://issues.jboss.org/browse/RF-11766")
 public class TestTreeAttributes extends AbstractTreeTest {
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-10265")
+    @IssueTracking("https://issues.jboss.org/browse/RF-10265")
     @UseWithField(field = "sample", valuesFrom = ValuesFrom.FROM_FIELD, value = "ALL_NODES")
     public void testAjaxAndToggleEventsOrder() {
         final String[] expected = { "onbeforenodetoggle", "onbegin", "onbeforedomupdate", "oncomplete", "onnodetoggle" };

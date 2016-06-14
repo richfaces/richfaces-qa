@@ -22,7 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richFileUpload;
 
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -36,7 +36,7 @@ public class TestRF12482 extends AbstractFileUploadTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12482")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12482")
     public void testUploadButtonDoesntDissappearAfterDeletingUploadedFile() {
         sendFileWithWaiting(filenames[0], true, true);
         sendFileToInputWithWaiting(filenames[1], true);

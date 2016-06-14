@@ -31,7 +31,7 @@ import org.richfaces.fragment.calendar.RichFacesCalendar;
 import org.richfaces.fragment.message.RichFacesMessage;
 import org.richfaces.tests.metamer.bean.issues.RF13595;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -55,7 +55,7 @@ public class TestRF13595 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-13595")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13595")
     public void testToggledInputValidator() {
         // toggle calendar and wait until it is present
         Graphene.guardAjax(toggleButton).click();

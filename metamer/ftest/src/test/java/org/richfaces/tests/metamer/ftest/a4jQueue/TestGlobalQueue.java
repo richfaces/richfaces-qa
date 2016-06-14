@@ -33,7 +33,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.richfaces.tests.configurator.unstable.annotation.Unstable;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.AjaxRequestHalter;
 import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.Halter;
 import org.richfaces.tests.metamer.ftest.extension.ajaxhalter.Halter.HaltedRequest;
@@ -151,7 +151,7 @@ public class TestGlobalQueue extends AbstractWebDriverTest {
      */
     @Test
     @Skip(On.JSF.MyFaces.class)// https://issues.jboss.org/browse/RFPL-3998
-    @RegressionTest("https://issues.jboss.org/browse/RFPL-1194")
+    @IssueTracking("https://issues.jboss.org/browse/RFPL-1194")
     public void testMultipleRequestsWithNoDelayStacking() {
         long delay = 0;
         attributes.set(QueueAttributes.requestDelay, delay);
@@ -203,7 +203,7 @@ public class TestGlobalQueue extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("rendered")
-    @RegressionTest("https://issues.jboss.org/browse/RF-9328")
+    @IssueTracking("https://issues.jboss.org/browse/RF-9328")
     public void testRendered() {
         attsSetter()
             .setAttribute(QueueAttributes.requestDelay).toValue(2000)

@@ -27,7 +27,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.select.RichFacesSelect;
 import org.richfaces.fragment.select.SelectSuggestions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -44,7 +44,7 @@ public class TestRF14129 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14129")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14129")
     public void testSuggestionsWillShowUpWhenFirstOptionIsEmpty() {
         // this was fixed
         SelectSuggestions openedSelect = select.openSelect();

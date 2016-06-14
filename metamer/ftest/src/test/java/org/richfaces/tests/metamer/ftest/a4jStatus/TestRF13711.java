@@ -27,7 +27,7 @@ import static org.testng.AssertJUnit.assertEquals;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -60,7 +60,7 @@ public class TestRF13711 extends AbstractWebDriverTest {
     }
 
     @Test
-    @RegressionTest(value = "https://issues.jboss.org/browse/RF-13711")
+    @IssueTracking(value = "https://issues.jboss.org/browse/RF-13711")
     public void testBothOptions() {
         // click the button without referenced status and assert changes
         guardAjax(notReferencedStatusButton).click();

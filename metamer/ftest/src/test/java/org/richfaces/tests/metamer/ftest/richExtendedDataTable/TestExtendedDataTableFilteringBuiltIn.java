@@ -28,7 +28,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.popupPanel.PopupPanel.ResizerLocation;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -73,7 +73,7 @@ public class TestExtendedDataTableFilteringBuiltIn extends ExtendedDataTableFilt
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-14150")
+    @IssueTracking("https://issues.jboss.org/browse/RF-14150")
     public void testFilterNameBuiltInAppliesAfterEnterPressed() {
         super.testFilterNameBuiltInAppliesAfterEnterPressed();
     }
@@ -136,7 +136,7 @@ public class TestExtendedDataTableFilteringBuiltIn extends ExtendedDataTableFilt
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11171")
+    @IssueTracking("https://issues.jboss.org/browse/RF-11171")
     public void testScrollingPositionIsPerservedAfterFiltering() {
         final int tolerance = 10;
         // setup frozen columns and decrease the size of the EDT so the table's scroller will be displayed
@@ -183,13 +183,13 @@ public class TestExtendedDataTableFilteringBuiltIn extends ExtendedDataTableFilt
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-7872")
+    @IssueTracking("https://issues.jboss.org/browse/RF-7872")
     public void testShowColumnControlHideAllColumnsAndScroll() {
         super.testShowColumnControlHideAllColumnsAndScroll();
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-7872")
+    @IssueTracking("https://issues.jboss.org/browse/RF-7872")
     public void testShowColumnControlWithFiltering() {
         super.testShowColumnControlWithFiltering(true);
     }
