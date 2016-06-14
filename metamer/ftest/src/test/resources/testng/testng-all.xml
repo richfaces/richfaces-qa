@@ -2,12 +2,6 @@
 <suite name="Extended Test Suite">
 
     <test name="All Components" preserve-order="true">
-        <groups>
-            <run>
-                <exclude name="extended" />
-            </run>
-        </groups>
-
         <packages>
             <package name="org.richfaces.tests.metamer.ftest.*" />
         </packages>

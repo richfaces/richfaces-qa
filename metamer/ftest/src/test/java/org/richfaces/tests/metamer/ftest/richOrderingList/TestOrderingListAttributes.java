@@ -73,7 +73,8 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
         }
     }
 
-    @Test(groups = "extended")
+    @Test
+    @Templates("plain")
     @CoversAttributes("collectionType")
     public void testCollectionType_unsupportedTypeThrowsException() {
         try {

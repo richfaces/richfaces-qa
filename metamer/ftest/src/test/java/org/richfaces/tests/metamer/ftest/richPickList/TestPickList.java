@@ -192,7 +192,8 @@ public class TestPickList extends AbstractListScrollingTest {
         }
     }
 
-    @Test(groups = "extended")
+    @Test
+    @Templates("plain")
     @CoversAttributes("collectionType")
     public void testCollectionType_unsupportedTypeThrowsException() {
         try {

@@ -2,15 +2,6 @@
 <suite name="Validation messages suite">
 
     <test name="Validation Messages" preserve-order="true">
-        <groups>
-            <run>
-                <exclude name="extended" />
-            </run>
-        </groups>
-
-        <packages>
-        </packages>
-
         <classes>
             <class name="org.richfaces.tests.metamer.ftest.richAutocomplete.TestAutocompleteValidationMessages" />
             <class name="org.richfaces.tests.metamer.ftest.richCalendar.TestCalendarValidationMessages" />

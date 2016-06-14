@@ -34,6 +34,7 @@ import org.richfaces.fragment.collapsibleSubTableToggler.RichFacesCollapsibleSub
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.dataScroller.RichFacesDataScroller;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.model.Employee;
 import org.testng.annotations.BeforeMethod;
@@ -82,7 +83,8 @@ public class TestCollapsibleSubTableScroller extends AbstractCollapsibleSubTable
         paginationTester.testNumberedPages();
     }
 
-    @Test(groups = "extended")
+    @Test
+    @Templates("plain")
     @IssueTracking("https://issues.jboss.org/browse/RF-11301")
     @UseWithField(field = "expandMode", valuesFrom = FROM_FIELD, value = "expandModesOtherThanAjax")
     public void testScrollerExpandModeOtherThanAjax() {
@@ -135,7 +137,7 @@ public class TestCollapsibleSubTableScroller extends AbstractCollapsibleSubTable
                     return Graphene.guardAjax(toggler);
                 case none:
                 case client:
-                    return Graphene.guardNoRequest(toggler);
+                    return toggler;
                 case server:
                     return Graphene.guardHttp(toggler);
             }

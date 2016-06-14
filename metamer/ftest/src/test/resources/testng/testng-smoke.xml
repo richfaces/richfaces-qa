@@ -6,7 +6,6 @@
             <run>
                 <include name="arquillian" />
                 <include name="smoke" />
-                <exclude name="extended" />
             </run>
         </groups>
 

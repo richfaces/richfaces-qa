@@ -2,12 +2,6 @@
 <suite name="Input components suite">
 
     <test name="Input Components part 1" preserve-order="true">
-        <groups>
-            <run>
-                <exclude name="extended" />
-            </run>
-        </groups>
-
         <packages>
             <package name="org.richfaces.tests.metamer.ftest.richAutocomplete" />
             <package name="org.richfaces.tests.metamer.ftest.richCalendar" />

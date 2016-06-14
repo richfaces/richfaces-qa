@@ -92,7 +92,8 @@ public class TestTreeToggling extends AbstractTreeTest {
         checkInitialState();
     }
 
-    @Test(groups = "extended")
+    @Test
+    @Templates("plain")
     @CoversAttributes(value = "toggleType", attributeEnumClass = TreeAttributes.class)
     @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "richFacesTreeNodes")
     public void testDeepExpansionAndCollapsionInRFTreeNodes() {
@@ -121,7 +122,7 @@ public class TestTreeToggling extends AbstractTreeTest {
         }
     }
 
-    @Test(groups = "extended")
+    @Test
     @CoversAttributes(value = "toggleType", attributeEnumClass = TreeAttributes.class)
     @Templates("plain")
     @UseWithField(field = "sample", valuesFrom = FROM_FIELD, value = "richFacesTreeNodes")
