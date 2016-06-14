@@ -75,6 +75,6 @@ public class RichCollapsiblePanelBean implements Serializable {
     }
 
     public void toggleListener(PanelToggleEvent event) {
-        RichBean.logToPage("* panel " + (event.getExpanded() ? "expanded" : "collapsed"));
+        RichBean.logToPage("* 1 panel " + (event.getExpanded() ? "expanded" : "collapsed"));
     }
 }

@@ -67,7 +67,7 @@ public class TestPanelToggleListenerInCollapsiblePanel extends AbstractWebDriver
     @Test(groups = "smoke")
     @RegressionTest({ "https://issues.jboss.org/browse/RF-11568" })
     public void testPTLAsAttribute() {
-        testPTL("panel {0}");
+        testPTL("1 panel {0}");
     }
 
     @Test

@@ -500,7 +500,7 @@ public class RichBean implements Serializable {
      * @param event an event representing the activation of a user interface component
      */
     public void itemChangeListener(ItemChangeEvent event) {
-        logToPage("* item changed: " + (event.getOldItem() == null ? null : event.getOldItem().getId()) + " -> "
+        logToPage("* 1 item changed: " + (event.getOldItem() == null ? null : event.getOldItem().getId()) + " -> "
             + (event.getNewItem() != null ? event.getNewItem().getId() : null));
     }
 
