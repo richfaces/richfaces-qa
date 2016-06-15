@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.picker.ChoicePickerHelper;
+import org.richfaces.fragment.panelMenu.PanelMenuGroup;
 import org.richfaces.fragment.panelMenu.RichFacesPanelMenu;
 import org.richfaces.fragment.panelMenu.RichFacesPanelMenuItem;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -20,8 +21,14 @@ public class TestPanelMenuFragmentShowcase extends AbstractWebDriverTest {
 
     private final Attributes<PanelMenuAttributes> attributes = getAttributes();
 
+    @FindBy(css = "div[id$=item21]")
+    private WebElement item21Element;
     @FindBy(css = "div[id$=item22]")
     private RichFacesPanelMenuItem item22;
+    @FindBy(css = "div[id$=item22]")
+    private WebElement item22Element;
+    @FindBy(css = "div[id$=item31]")
+    private WebElement item31Element;
     @FindBy(className = "rf-pm")
     private RichFacesPanelMenu menu;
     @FindByJQuery("*[id*=current]")
@@ -58,12 +65,17 @@ public class TestPanelMenuFragmentShowcase extends AbstractWebDriverTest {
 
         attributes.set(PanelMenuAttributes.expandEvent, "dblclick");
         menu.advanced().setExpandEvent(Event.DBLCLICK);
-        guardAjax(menu.expandGroup("Group 3")).selectItem("Item 3.1");
+
+        PanelMenuGroup group3 = menu.expandGroup("Group 3");
+        jsUtils.scrollToView(item31Element);
+        guardAjax(group3).selectItem("Item 3.1");
         assertEquals(selectedItem.getText(), "item31");
 
+        jsUtils.scrollToView(item22Element);
         guardAjax(item22).select();
         assertEquals(selectedItem.getText(), "item22");
 
+        jsUtils.scrollToView(item21Element);
         guardAjax(menu).selectItem("Item 2.1");
         assertEquals(selectedItem.getText(), "item21");
     }
