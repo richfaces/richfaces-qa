@@ -43,10 +43,18 @@ public class TestPanelMenuJSAPI extends AbstractPanelMenuTest {
     private WebElement collapseAllButton;
     @FindBy(css = "[id$=collapseAllCC]")
     private WebElement collapseAllCCButton;
+    @FindBy(css = "[id$=collapseGroup1]")
+    private WebElement collapseGroup1Button;
+    @FindBy(css = "[id$=collapseGroup1CC]")
+    private WebElement collapseGroup1CCButton;
     @FindBy(css = "[id$=expandAll]")
     private WebElement expandAllButton;
     @FindBy(css = "[id$=expandAllCC]")
     private WebElement expandAllCCButton;
+    @FindBy(css = "[id$=expandGroup1]")
+    private WebElement expandGroup1Button;
+    @FindBy(css = "[id$=expandGroup1CC]")
+    private WebElement expandGroup1CCButton;
     @FindBy(css = "[id$=current]")
     private WebElement output;
     @FindBy(css = "[id$=selectItem23]")
@@ -57,12 +65,20 @@ public class TestPanelMenuJSAPI extends AbstractPanelMenuTest {
     @UseForAllTests(valuesFrom = ValuesFrom.FROM_ENUM, value = "")
     private TestedButtonsSet testedButtons;
 
-    public WebElement getCollapseButton() {
+    public WebElement getCollapseAllButton() {
         return testedButtons.equals(TestedButtonsSet.js) ? collapseAllButton : collapseAllCCButton;
     }
 
-    public WebElement getExpandButton() {
+    public WebElement getCollapseGroup1Button() {
+        return testedButtons.equals(TestedButtonsSet.js) ? collapseGroup1Button : collapseGroup1CCButton;
+    }
+
+    public WebElement getExpandAllButton() {
         return testedButtons.equals(TestedButtonsSet.js) ? expandAllButton : expandAllCCButton;
+    }
+
+    public WebElement getExpandGroup1Button() {
+        return testedButtons.equals(TestedButtonsSet.js) ? expandGroup1Button : expandGroup1CCButton;
     }
 
     public WebElement getSelectButton() {
@@ -70,18 +86,38 @@ public class TestPanelMenuJSAPI extends AbstractPanelMenuTest {
     }
 
     @Test
-    public void testCollapseAndExpand() {
+    public void testCollapseAndExpandAll() {
         List<WebElement> allExpandedGroups = getPage().getPanelMenu().advanced().getAllExpandedGroups();
         assertEquals(allExpandedGroups.size(), 0);
-        getMetamerPage().performJSClickOnButton(getExpandButton(), WaitRequestType.NONE);
+        getMetamerPage().performJSClickOnButton(getExpandAllButton(), WaitRequestType.NONE);
         allExpandedGroups = getPage().getPanelMenu().advanced().getAllExpandedGroups();
         assertEquals(allExpandedGroups.size(), 6);
-        getMetamerPage().performJSClickOnButton(getCollapseButton(), WaitRequestType.NONE);
+        getMetamerPage().performJSClickOnButton(getCollapseAllButton(), WaitRequestType.NONE);
         allExpandedGroups = getPage().getPanelMenu().advanced().getAllExpandedGroups();
         assertEquals(allExpandedGroups.size(), 0);
-        getMetamerPage().performJSClickOnButton(getExpandButton(), WaitRequestType.NONE);
+        getMetamerPage().performJSClickOnButton(getExpandAllButton(), WaitRequestType.NONE);
         allExpandedGroups = getPage().getPanelMenu().advanced().getAllExpandedGroups();
         assertEquals(allExpandedGroups.size(), 6);
+    }
+
+    @Test
+    public void testCollapseAndExpandGroup() {
+        List<WebElement> allExpandedGroups = getPage().getPanelMenu().advanced().getAllExpandedGroups();
+        assertEquals(allExpandedGroups.size(), 0);
+
+        getMetamerPage().performJSClickOnButton(getExpandGroup1Button(), WaitRequestType.NONE);
+        allExpandedGroups = getPage().getPanelMenu().advanced().getAllExpandedGroups();
+        assertEquals(allExpandedGroups.size(), 1);
+        assertEquals(allExpandedGroups.get(0).getText(), "Group 1");
+
+        getMetamerPage().performJSClickOnButton(getCollapseGroup1Button(), WaitRequestType.NONE);
+        allExpandedGroups = getPage().getPanelMenu().advanced().getAllExpandedGroups();
+        assertEquals(allExpandedGroups.size(), 0);
+
+        getMetamerPage().performJSClickOnButton(getExpandGroup1Button(), WaitRequestType.NONE);
+        allExpandedGroups = getPage().getPanelMenu().advanced().getAllExpandedGroups();
+        assertEquals(allExpandedGroups.size(), 1);
+        assertEquals(allExpandedGroups.get(0).getText(), "Group 1");
     }
 
     @Test

@@ -178,6 +178,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <br/>
                 <input type="button" id="collapseAll" name="collapseAll" value="collapseAll()" onclick="#{rich:component('panelMenu')}.collapseAll()" />
                 <br/>
+                <input type="button" id="expandGroup1" name="expandGroup1" value="expandGroup('group1')" onclick="#{rich:component('panelMenu')}.expandGroup('group1')" />
+                <br/>
+                <input type="button" id="collapseGroup1" name="collapseGroup1" value="collapseGroup('group1')" onclick="#{rich:component('panelMenu')}.collapseGroup('group1')" />
+                <br/>
                 <input type="button" id="selectItem23" name="collapseAll" value="selectItem('item23')"
                        onclick="#{rich:component('panelMenu')}.selectItem('#{rich:clientId('item23')}')" />
             </fieldset>
@@ -189,6 +193,16 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </h:commandButton>
                 <h:commandButton id="collapseAllCC" value="collapseAll()">
                     <rich:componentControl event="click" operation="collapseAll" target="panelMenu" />
+                </h:commandButton>
+                <h:commandButton id="expandGroup1CC" value="expandGroup('group1)">
+                    <rich:componentControl event="click" operation="expandGroup" target="panelMenu" >
+                        <f:param value="group1"/>
+                    </rich:componentControl>
+                </h:commandButton>
+                <h:commandButton id="collapseGroup1CC" value="collapseGroup('group1')">
+                    <rich:componentControl event="click" operation="collapseGroup" target="panelMenu" >
+                        <f:param value="group1"/>
+                    </rich:componentControl>
                 </h:commandButton>
                 <h:commandButton id="selectItem23CC" value="selectItem('item23')">
                     <rich:componentControl event="click" operation="selectItem" target="panelMenu" >
