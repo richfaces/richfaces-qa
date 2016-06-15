@@ -166,12 +166,14 @@ In tests there are several important annotations we use:
 * `@IssueTracking("https://issues.jboss.org/browse/RF-007")`
 ** IssueTracking is a marker annotation for test methods and classes
 ** it is used to define, that the test is somehow connected with a tracked issue (e.g. tests it, is blocked by)
-** if such issue is resolved (the test method is not marked with `@Skip`) and the test fails, we now it is a regression problem
+** if such issue is resolved (the test method is not marked with `@Skip`) and the test fails, we know it is a regression problem
 
 * `@Templates(value = {"templateName"}, exclude = {"anotherTemplateName"})`
 ** this indicates in which templates you want or you do not want the test to be executed
 ** test will not run when it is not executed with correct template
 ** beware that it work only for templates listed in https://github.com/richfaces/richfaces-qa/blob/master/metamer/ftest/src/test/java/org/richfaces/tests/metamer/ftest/AbstractMetamerTest.java[AbstractMetamerTest class] in the annotation `@Templates` over the field https://github.com/richfaces/richfaces-qa/blob/master/metamer/ftest/src/test/java/org/richfaces/tests/metamer/ftest/AbstractMetamerTest.java#L94-L96[template]
+** it is usually used for marking tests, which are failing in certain templates, because of some issue in RichFaces or JSF. In such case it is often followed with `@Skip` and `@IssueTracking` annotations (see below)
+** some tests are marked to run only in `plain` template, because there is no profit to run them in other templates
 
 * `@UseForAllTests`
 ** this indicates that the field will be used as injection point in all tests from the class where it is placed to all classes extending it
@@ -193,7 +195,7 @@ In tests there are several important annotations we use:
 ** this indicates that the test method will be skipped if given configuration/condition occurs. Without any value specified, the test with this annotation will always be skipped. See the javadoc of https://github.com/richfaces/richfaces-qa/blob/master/metamer/ftest/src/test/java/org/richfaces/tests/metamer/ftest/extension/configurator/skip/SkipConfigurator.java[SkipConfigurator] for more details and examples.
 
 * `@Unstable`
-** this indicates unstable test method. Such annotated method can be executed more times, until the first success occurs or the maximum of retry attempts is reached.
+** this indicates unstable test method. Such annotated method can be executed more than once, until the first success occurs or the maximum count of retry attempts is reached (see the javadoc for more details).
 
 == Metamer RichFaces Bug Report Guidelines
 
