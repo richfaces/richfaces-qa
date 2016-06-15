@@ -394,6 +394,10 @@ FSF site: http://www.fsf.org. -->
         e.g.: -Dbrowser=FF, -Dbrowser=cr, -Dbrowser=internetExplorer, -Dbrowser=ff30
 
         All properties beginning with prefix 'qa.' (e.g. 'qa.eap.home' ) are returned from the qa-maven-plugin.
+        All properties changed by the plugin CAN also BE OVERRIDDEN by specifying a system property, e.g.:
+            `-DjbossEAP61Home=/some/path/to/eap61Home`
+            `-Dwebdriver.firefox.bin=/path/to/firefox/firefox.exe`
+
         -->
         <profile>
             <id>browser</id>
@@ -453,9 +457,13 @@ FSF site: http://www.fsf.org. -->
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <systemProperties>
+                                <!-- path to Firefox binary -->
                                 <webdriver.firefox.bin>${qa.firefox.bin}</webdriver.firefox.bin>
+                                <!-- path to WebDriver Chrome driver binary -->
                                 <webdriver.chrome.driver>${qa.chrome.driver.bin}</webdriver.chrome.driver>
+                                <!-- path to WebDriver IE driver binary -->
                                 <webdriver.ie.driver>${qa.ie.driver.bin}</webdriver.ie.driver>
+                                <!-- name of the browser, will be passed to Arquillian -->
                                 <arq.extension.webdriver.browser>${qa.webdriver.browser}</arq.extension.webdriver.browser>
                             </systemProperties>
                         </configuration>
