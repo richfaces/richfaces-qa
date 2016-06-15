@@ -44,9 +44,9 @@ import com.google.common.base.Predicate;
 public class ClientTimeWatcherFragment {
 
     private static final String COMMA_SPACE = ", ";
-    private static final int DELAY_TOLERANCE_DEFAULT = 500;
+    private static final int DELAY_TOLERANCE_DEFAULT = 700;
     private static final int MAXIMUM_WAIT_TIME_IN_SECS = 7;
-    private static final int MEDIAN_TOLERANCE_DEFAULT = 400;
+    private static final int MEDIAN_TOLERANCE_DEFAULT = 500;
     private static final String TITLE = "title";
     private static final String VALUE = "value";
 
