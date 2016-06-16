@@ -29,8 +29,6 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.CheckboxInputComponentImpl;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
-import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.annotations.Test;
 
@@ -52,7 +50,6 @@ public class TestRF14297 extends AbstractWebDriverTest {
     }
 
     @Test
-    @Skip(On.JSF.MyFaces.class)
     @IssueTracking("https://issues.jboss.org/browse/RF-14297")
     public void testListenerIsInvoked() {
         atts.set(AjaxAttributes.listener, "toUpperCaseListener");
