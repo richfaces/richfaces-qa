@@ -25,7 +25,6 @@ import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -418,21 +417,17 @@ public abstract class AbstractMetamerTest extends Arquillian {
      * jboss-cli.xml. Change the urn:jboss:cli:1.3 to *1.2
      */
     private static void workaroundCLIVersionInEAP63_or_64() throws URISyntaxException, IOException {
-        File[] jbossContainersDirs = new File(System.getProperty("project.build.directory")).listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File file) {
-                String lowerCaseFileName = file.getName().toLowerCase();
-                return file.isDirectory() && (lowerCaseFileName.startsWith("jboss-eap-6.3") || lowerCaseFileName.startsWith("jboss-eap-6.4"));
-            }
-        });
-        for (File containerDir : jbossContainersDirs) {
-            File jbossCliFile = new File(containerDir, "bin/jboss-cli.xml");
-            File workaroundedJBossCliFile = new File(AbstractMetamerTest.class
-                .getResource("eap/jboss-cli.xml").toURI());
-            jbossCliFile.delete();
-
-            Files.copy(workaroundedJBossCliFile, jbossCliFile);
+        String jbossHome = System.getProperty("JBOSS_HOME");
+        if (jbossHome == null || jbossHome.isEmpty()) {
+            System.err.println("JBOSS_HOME not detected. Exiting.");
+            System.exit(1);
         }
+        File jbossCliFile = new File(new File(jbossHome), "bin/jboss-cli.xml");
+        File workaroundedJBossCliFile = new File(AbstractMetamerTest.class
+            .getResource("eap/jboss-cli.xml").toURI());
+        jbossCliFile.delete();
+
+        Files.copy(workaroundedJBossCliFile, jbossCliFile);
     }
 
     /**
