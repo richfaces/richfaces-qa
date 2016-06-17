@@ -53,7 +53,7 @@
 
         <!-- version of Tomcat containers to use-->
         <version.tomcat7>7.0.69</version.tomcat7>
-        <version.tomcat8>8.0.33</version.tomcat8>
+        <version.tomcat8>8.0.35</version.tomcat8>
 
         <!-- arquillian versions -->
         <arquillian.bom.version>1.1.11.Final</arquillian.bom.version>
