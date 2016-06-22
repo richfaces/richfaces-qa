@@ -253,6 +253,9 @@ public class RichBean implements Serializable {
         allComponentsPermanentList.put("skinning", "Skinning");
         allComponentsPermanentList.put("uiRepeat", "UI Repeat");
 
+        allComponentsPermanentList.put("myComponent",
+            "My sample component samples");
+
         filteredComponents.putAll(allComponentsPermanentList);
     }
 
