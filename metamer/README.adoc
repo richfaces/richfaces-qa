@@ -177,6 +177,7 @@ To deploy the application just copy the WAR file into server deployment folder. 
 *** tests should extend `AbstractWebDriverTest`, have a look at: method with `@Deployment` annotation, `@Drone WebDriver browser` injection point, `@ArquillianResource contextRoot`, `@BeforeMethod loadPage`
 *** we are using Page Object pattern, have a look at @Page annotation
 *** we are using Page Fragments pattern, have a look at @FindBy annotations, for more information see Graphene documentation
+** see https://github.com/richfaces/richfaces-qa/blob/demo/metamer/TESTS.adoc[TESTS] document for some basics.
 
 === Creating issue reproducers in Metamer
 

@@ -1,0 +1,383 @@
+= Guide how to write a simple facelet and a test in Metamer
+In this demo a completely new example facelet and a few tests for it are created to present basics of work within the Metamer application.
+
+== Creating a sample facelet accessible from the Metamer application
+In this section is described hot to create a completely new component with accessible sample through the Metamer application.
+
+=== Create a component folder
+A folder in `metamer/application/src/main/webapp/components` needs to be created with name of our component. In this guide a `myComponent` folder is used.
+
+=== Create a sample
+Under the `myComponent` folder create a new xhtml file named `sample1.xhtml`. The content of the file is in the next snippet:
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" >
+
+    <ui:composition template="/templates/template.xhtml"> <!--1-->
+
+        <ui:define name="view">  <!--2-->
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="head">
+        </ui:define>
+
+        <ui:define name="outOfTemplateBefore">
+        </ui:define>
+
+        <ui:define name="component">  <!--3-->
+            <div id="myComponentId" style="border: solid 2px red; width: 400px;">  <!--4-->
+                <h:inputText id="inputId" styleClass="myInputClass" value="some text">
+                    <a4j:ajax/>  <!--5-->
+                </h:inputText>
+                <input id="buttonId" type="button" value="some button" onclick="$('[id$=inputId]').val('changed text').change()"/>  <!--6-->
+                <span id="spanId">some text in a span</span>
+            </div>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+        </ui:define>
+
+    </ui:composition>
+</html>
+----
+<1> In this line the Metamer template is extended, so all features of it can be used. These features contains, among other things, a header, where there are placed many useful features like: navigation buttons, various checkers (execute, render), request time, invoked phases, templates selection, etc.
+<2> Insert this block to your page, if you need to use the templates from tests (they are resolved/converted from the url parameter `templates`). Refer to https://github.com/richfaces/richfaces-qa/blob/demo/metamer/README.adoc[Metamer README] document for more details about templates.
+<3> In this block the component should be placed.
+<4> The sample component consists of one `div` element containing a button, an input and a span element. The `id` attributes will be used in tests.
+<5> Attached an ajax behaviour to the input text component. The ajax request will be send when the input text changes (the value changes and the input is blurred).
+<6> Button with attached behavior on click. It sets value of the `h:inputText` to `changed value` and triggers `onchange` event on it (this will send an ajax request).
+
+After the Metamer application is built and deployed, this sample will be accessible at the URL `http://localhost:8080/metamer/faces/components/myComponent/sample.xhtml` (the URL can look different on Tomcat containers, depends on the name of the web archive). The address can be used in tests (see section <<creating-a-sample-tests>>), but it is better to link it into the Metamer application.
+
+=== Make the page accessible from the application
+In order to make the page accessible from the application through series of links a few more steps, described in following subsections, need to be done.
+
+==== Add a record to the RichBean
+Our component needs to be added to the components map in `RichBean#createComponentsMap`.
+[source,java]
+----
+        allComponentsPermanentList.put("myComponent",  //<1>
+            "My sample component samples");  //<2>
+----
+<1> Name of the package.
+<2> Link name. This link will be visible in the index page (`http://localhost:8080/metamer/`).
+
+==== Create list of browsable samples
+Under the `myComponent` folder a new `xhtml` file named `list.xhtml` needs to be created, see following snippet:
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+
+    <ui:composition template="/templates/list.xhtml">  <!--1-->
+
+        <ui:define name="pageTitle">My sample component links</ui:define>
+
+        <ui:define name="links">
+            <metamer:testPageLink id="sample1"  <!--2-->
+                                  outcome="sample1"  <!--3-->
+                                  value="Sample page 1">  <!--4-->
+                Page that contains <b>my sample component</b>.  <!--5-->
+            </metamer:testPageLink>
+        </ui:define>
+    </ui:composition>
+</html>
+----
+<1> Extend the template to bring in styles, navigation buttons, footer, etc.
+<2> Create a new link to the component sample.
+<3> Outcome of the link, this is the name of the created xhtml file.
+<4> Name of the link.
+<5> Description of the sample.
+
+Now the sample is accessible from within the Metamer application.
+
+== Creating a sample test(s)
+In this section is described how to create a simple test for the sample, which was created in previous section.
+
+=== Create a test class extending test-base class `AbstractWebdriverTest`
+First step is to extend the `AbstractWebdriverTest` class. Extending this class you gain a way to access a bunch of features.
+To mention some of them, you can left behind all the process around preparement and deployment of the Metamer application, preparement of the browser and the container itself and focus only on creating the test(s). Also you get access to other useful utilities, methods and fields (e.g. browser, page object).
+
+[source,java]
+----
+package org.richfaces.tests.metamer.ftest.myPackage;
+
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+
+public class MyFirstTest extends AbstractWebDriverTest {
+
+    @Override
+    public String getComponentTestPagePath() {  //<1>
+        throw new UnsupportedOperationException("Not supported yet.");  //<2>
+    }
+
+}
+----
+<1> The abstract class has only one method returning the actually tested page. More details in following section.
+<2> Auto-generated method body, don't bother with it, it will be implemented it in the next step.
+
+=== Specify the tested sample path
+
+[source,java]
+----
+    @Override
+    public String getComponentTestPagePath() {
+        return "myComponent/sample1.xhtml";  //<1>
+    }
+----
+<1> This is the part after `http://localhost:8080/metamer/faces/components/`. This page will be automatically loaded before all test methods in this class, see `load` method in https://github.com/richfaces/richfaces-qa/blob/master/metamer/ftest/src/test/java/org/richfaces/tests/metamer/ftest/AbstractWebDriverTest.java[AbstractWebDriverTest class].
+
+=== Create a simple test
+
+[source,java]
+----
+import static org.testng.Assert.assertEquals;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.testng.annotations.Test;
+
+    @Test  //<1>
+    public void testComponentHasThreeElements() {  //<2>
+        List<WebElement> elements = driver.findElements(By.cssSelector("[id$=myComponentId] > *"));  //<3>
+        assertEquals(elements.size(), 3, "There should be 3 elements.");  //<4>
+    }
+----
+<1> Annotate the test method with TestNG's `@Test`
+<2> Used convention is to start the name of the test with `test`
+<3> Find elements with CSS selector. This one finds all child elements of element with id ending with `myComponentId` and stores them in a list
+<4> TestNG's assertion of equality of two integers.
+
+Now you can run this test using e.g.: `mvn clean verify -Pwildfly-managed-10-0 -Dbrowser=firefox45esr -Dtest=MyFirstTest` (executed from `richfaces-qa/metamer/ftest`)
+
+=== Replacing the in-place finding of the elements with a private field
+The test application uses Arquillian Graphene, so you can use a neat features like lazy-loadin proxy for finding of elements using annotated field. For more details and features please refer to https://docs.jboss.org/author/display/ARQGRA2/Home[Graphene documentation].
+
+[source,java]
+----
+package org.richfaces.tests.metamer.ftest.myPackage;
+
+import static org.testng.Assert.assertEquals;
+
+import java.util.List;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.testng.annotations.Test;
+
+public class MyFirstTest extends AbstractWebDriverTest {
+
+    @FindBy(css = "[id$=myComponentId] > *")  //<1>
+    private List<WebElement> elements;  //<2>
+
+    @Override
+    public String getComponentTestPagePath() {
+        return "myComponent/sample1.xhtml";
+    }
+
+    @Test
+    public void testComponentHasThreeElements() {
+        assertEquals(elements.size(), 3, "There should be 3 elements.");  //<3>
+    }
+}
+----
+<1> The annotation is almost the same as the used methods/classes from the browser instance. Values found by WebDriver (Selenium) are automatically injected to all fields annotated with `@FindBy`. This is handled by Arquillian Graphene.
+<2> This field now stores all the inner elements of our component. These elements are found on each invocation (Graphene).
+<3> Now the test is shrinked to only one line.
+
+=== Create and use custom page fragment
+The tests use lots of page fragments (https://docs.jboss.org/author/display/ARQGRA2/Page+Fragments[link to explanation]), so it is time to introduce how to create one.
+The following snippet creates object for the group of components, which was created in previous steps.
+[source,java]
+----
+package org.richfaces.tests.metamer.ftest.myPackage;
+
+import java.util.List;
+
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.jboss.arquillian.graphene.fragment.Root;
+import org.openqa.selenium.WebElement;
+
+public class MyCustomPageFragment {
+
+    @FindByJQuery("> *")  //<1>
+    private List<WebElement> innerElements;
+    @Root  //<2>
+    private WebElement rootElement;
+
+    public int getInnerElementsSize() {
+        return innerElements.size();
+    }
+
+    public WebElement getRootElement() {
+        return rootElement;
+    }
+}
+----
+<1> Graphene's custom `FindBy` annotation, as the name prompts, the element(s) are found by JQuery. With the WebDriver's `FindBy` we cannot use such selector.
+<2> Graphene's annotation to mark the field to which the root element will be stored. All inner elements are found from this root element. This annotation and field is not mandatory (will be hidden when not specified).
+
+Now, the `elements` field in test can be replaced with newly created fragment:
+[source,java]
+----
+    @FindBy(css = "[id$=myComponentId]")  //<1>
+    private MyCustomPageFragment fragment;
+
+    @Test
+    public void testComponentHasThreeElements() {
+        assertEquals(fragment.getInnerElementsSize(), 3, "There should be 3 elements.");
+    }
+----
+<1> This will be the root element. All inner elements will be found from this one.
+
+
+=== Add some elements and methods to the fragment
+The example component we created at the begginning had one `div` element, which is the root of the fragment. This `div` contains one text input, one button and one `span` element. Let's put this to the fragment:
+
+[source,java]
+----
+package org.richfaces.tests.metamer.ftest.myPackage;
+
+import java.util.List;
+
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.jboss.arquillian.graphene.fragment.Root;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
+public class MyCustomPageFragment {
+
+    @FindBy(css = "input[type=button]")
+    private WebElement innerButtonElement;
+    @FindByJQuery(value = "> *")
+    private List<WebElement> innerElements;
+    @FindBy(className = "myInputClass")
+    private WebElement innerInputElement;
+    @FindBy(tagName = "span")
+    private WebElement innerSpanElement;
+    @Root
+    private WebElement rootElement;
+
+    public WebElement getInnerButtonElement() {
+        return innerButtonElement;
+    }
+
+    public List<WebElement> getInnerElements() {
+        return innerElements;
+    }
+
+    public int getInnerElementsSize() {
+        return innerElements.size();
+    }
+
+    public WebElement getInnerInputElement() {
+        return innerInputElement;
+    }
+
+    public WebElement getInnerSpanElement() {
+        return innerSpanElement;
+    }
+
+    public WebElement getRootElement() {
+        return rootElement;
+    }
+}
+----
+
+=== Add more tests for the fragment
+The fragment is now enriched with new methods. The following section adds 2 new test methods in the `MyFirstTest` class.
+[source,java]
+----
+    @Test
+    public void testElementsTexts() {
+        assertEquals(fragment.getInnerSpanElement().getText(), "some text in a span");
+        assertEquals(fragment.getInnerButtonElement().getAttribute("value"), "some button");
+        assertEquals(fragment.getInnerInputElement().getAttribute("value"), "some text");
+    }
+
+    @Test
+    public void testClickButtonChangesInputText() {
+        assertEquals(fragment.getInnerInputElement().getAttribute("value"), "some text");
+        fragment.getInnerButtonElement().click();
+        Graphene.waitAjax().until().element(fragment.getInnerInputElement()).value().equalToIgnoreCase("changed text");  //<1>
+    }
+----
+<1> Here we use the Graphene's wait API, this should be more stable solution than using a simple assert, because it can take some time to perform the script attached to the button.
+
+=== Test the ajax behavior
+The input text in the facelet has attached ajax behaviour introduced with `<a4j:ajax/>` tag. In order to test the ajax request is send when the change event occurs, use Graphene.guardAjax method.
+
+[source,java]
+----
+    @Test
+    public void testClickButtonChangesInputText() {
+        assertEquals(fragment.getInnerInputElement().getAttribute("value"), "some text");
+        Graphene.guardAjax(fragment.getInnerButtonElement()).click();  //<1>
+        Graphene.waitAjax().until().element(fragment.getInnerInputElement()).value().equalToIgnoreCase("changed text");  //<1>
+    }
+----
+<1> Check ajax request is send and completed. The button in the component has attached behavior on click. After the button is clicked, it changes value of input text and triggers an `onchange` event on the input text, which should lead to an ajax request.
+
+=== Use Metamer page object utilities
+There is a page object for a Metamer page with some useful utilities. In the next snippet, we use a blur method. 
+[source,java]
+----
+    @Test
+    public void testTypingSomeTextSendsAjax() {
+        fragment.getInnerInputElement().clear();  //<1>
+        fragment.getInnerInputElement().sendKeys("text1");  //<2>
+        getMetamerPage().blur(WaitRequestType.XHR);  //<3>
+        Graphene.waitAjax().until().element(fragment.getInnerInputElement()).value().equalToIgnoreCase("text1");  //<4>
+    }
+----
+<1> Clear the input text.
+<2> Send text to the input.
+<3> Blur the input using Metamer utilities. This will finally send an ajax (XHR) request.
+<4> Check the input value is changed.
+
+=== `UseWith` configurators
+The `UseWith` configurators are useful for repeatedly running a single method with different parameters. In next snippet we use `UseWithField`.
+
+[source,java]
+----
+    private String injectedText;
+
+    @Test
+    @UseWithField(field = "injectedText", value = { "text1", "text2", "text3" }, valuesFrom = ValuesFrom.STRINGS)
+    public void testTypingSomeTextSendsAjax() {
+        fragment.getInnerInputElement().clear();
+        fragment.getInnerInputElement().sendKeys(injectedText);
+        getMetamerPage().blur(WaitRequestType.XHR);
+        Graphene.waitAjax().until().element(fragment.getInnerInputElement()).value().equalToIgnoreCase(injectedText);
+    }
+----
+Now, when you run the test, the method `testTypingSomeTextSendsAjax` will be executed for 3 times, each time with different parameter. In the console you can see the actual injected parameters:
+----
+[13:46:00] STARTED: myPackage.MyFirstTest#testTypingSomeTextSendsAjax() { template=plain, injectedText=text1 }
+[13:46:01] SUCCESS: myPackage.MyFirstTest#testTypingSomeTextSendsAjax() { template=plain, injectedText=text1 }
+
+[13:46:01] STARTED: myPackage.MyFirstTest#testTypingSomeTextSendsAjax() { template=plain, injectedText=text2 }
+[13:46:01] SUCCESS: myPackage.MyFirstTest#testTypingSomeTextSendsAjax() { template=plain, injectedText=text2 }
+
+[13:46:01] STARTED: myPackage.MyFirstTest#testTypingSomeTextSendsAjax() { template=plain, injectedText=text3 }
+[13:46:01] SUCCESS: myPackage.MyFirstTest#testTypingSomeTextSendsAjax() { template=plain, injectedText=text3 }
+----
+
+The sample and tests are accessible at https://github.com/richfaces/richfaces-qa/tree/demo[demo branch], https://github.com/richfaces/richfaces-qa/blob/demo/metamer/application/src/main/webapp/components/myComponent/sample1.xhtml[the sample], https://github.com/richfaces/richfaces-qa/blob/demo/metamer/ftest/src/test/java/org/richfaces/tests/metamer/ftest/myPackage/MyFirstTest.java[the test].
