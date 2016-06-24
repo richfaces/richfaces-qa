@@ -94,6 +94,18 @@ Changing of JSF implementation is supported only for Tomcat containers. The JSF 
 
 == Functional Test Development
 
+=== Prerequisites for running the tests
+
+* SW:
+** should be OS independent, but needs graphical interface to run Firefox browser -- tested with Windows 7/8/10, Fedora 20-23, RHEL 5/6/7
+** Firefox browser
+** Maven 3
+** JDK 1.7 and up
+
+* HW:
+** at least 4GB RAM
+** dual core processor with 2,5Ghz
+
 === Running a test
 * switch to metamer/ftest directory and run `mvn clean verify -PcontainerProfileName [-Dtest=testName | -Dtestng.suite.xml=pathToSuite] [-Dtemplates=templateName] [-DpathToEAPZip=/home/someUser/somePath/eap.zip] [-DpathToPatch=/home/someuser/somepath/BZXYZ.zip] [-Dversion.eap=x.y.z] [-Dbrowser=browserName] [-Drepeats=numberOfRepeats] [-Dconfigurator.skip.reverse] [-Dconfigurator.skip.case=caseName] [-Dconfigurator.skip.enabled=false] [-Dmyfaces]`
 ** *containerProfileName* is a name of a container you want to use, see https://github.com/richfaces/richfaces-qa/blob/master/pom.xml[pom.xml] in parent for their names
