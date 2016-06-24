@@ -253,3 +253,30 @@ There are a few tools to simplify/automatize some work in Metamer:
 ** creates a coverage report of all RichFaces components attributes
 ** for creating report it uses component attributes file (e.g. NotifyMessageAttributes.java) and all test methods (annotated with `@Test`) with `@CoversAttributes` annotation. So it is important to have correctly annotated test methods and to have updated all of the components attributes files.
 ** tool should be runnable from IDE with test classpath (e.g. in NetBeans simply 'Run File')
+
+== Known Issues
+
+[cols="2,5a", options="header"]
+|===
+|Issue
+|Problem description and probably solution
+
+|browser window does not start in given timeout
+|Unknown reason. You can:
+
+* increase the timeout, configurable through Arquillian Drone properties (refer to the https://docs.jboss.org/author/display/ARQ/Drone[Drone documentation])
+
+|RequestGuardException in tests
+|Selenium tries to click element which is not on screen. You can:
+
+* increase desktop resolution
+* move to the element before invoking the request (e.g. before clicking the element)
+* update Selenium and/or Arquillian dependencies
+
+|Updated Firefox and the tests does not run
+|There is a problem in Selenium. Each Selenium release works with limited number of Firefox releases. You can:
+
+* use older Firefox, e.g. add property `-Dbrowser=firefox45esr` to the maven command.
+* update Selenium and/or Arquillian dependencies.
+
+|===
