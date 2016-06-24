@@ -254,6 +254,17 @@ There are a few tools to simplify/automatize some work in Metamer:
 ** for creating report it uses component attributes file (e.g. NotifyMessageAttributes.java) and all test methods (annotated with `@Test`) with `@CoversAttributes` annotation. So it is important to have correctly annotated test methods and to have updated all of the components attributes files.
 ** tool should be runnable from IDE with test classpath (e.g. in NetBeans simply 'Run File')
 
+== Testing with other JSF implementation
+The test suite was executed with both Mojarra and MyFaces JSF implementations.
+The test suite is working with Mojarra provided in all EE aplication servers, which are present in the root `pom.xml` (WildFlys, EAPs) and with Mojarra bundled in the `war` for Tomcat containers (version is defined in upstream artifact https://github.com/richfaces/richfaces/blob/4.5.17.Final/build/pom.xml[richfaces-build], version can be changed using property `version.org.glassfish.javax.faces`, while building the Metamer application).
+The test suite is also working with MyFaces bundled in the `war` for Tomcat containers (version is defined in upstream artifact https://github.com/richfaces/richfaces/blob/4.5.17.Final/build/pom.xml[richfaces-build], version can be changed using property `version.myfaces`, while building the Metamer application).
+
+In order to run the test suite against e.g. EAP with MyFaces (aka _modified EAP_), you have at least these possibilities how to do that, you can:
+
+* run the test suite with property `jbossEAP{XY}Home` pointing to the home directory of the _modified EAP_ (property is already explained in this document)
+* run the test suite with property `pathToEAPZip` pointing to the zip file of the _modified EAP_ (property is already explained in this document)
+* create a custom maven profile (e.g. `jbosseap-remote`) and use it with the started _modified EAP_ (inspiration for the profile can be found at https://github.com/richfaces/richfaces/blob/4.5.17.Final/pom.xml#L1016-L1041).
+
 == Known Issues
 
 [cols="2,5a", options="header"]
