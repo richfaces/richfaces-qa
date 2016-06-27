@@ -73,8 +73,10 @@ public abstract class AbstractMetamerTest extends Arquillian {
 
     private static final String EAP_63_AND_UP_REGEX = ".*jbosseap-(managed|remote)-(6-[3-9]).*";
     private static final String EAP_70_AND_UP_REGEX = ".*jbosseap-(managed|remote)-(7-[0-9]).*";
-    // Key to enable WS on EAP
+
+    // Key to enable WebSockets on EAP
     public static final String EAP_WS_ENABLED = "eap.ws.enabled";
+
     /**
      * Keys to manage resources optimization (in previous releases named mapping), compression and packaging, used in web.xml
      */
@@ -133,9 +135,9 @@ public abstract class AbstractMetamerTest extends Arquillian {
                 if (!isUsingEAP70AndUp()) {
                     removeDefaultEncodingFromJbossWebXML(war, temporaryJBossWebXML);
                 }
-                // workaround to enable running commands through JBoss CLI in EAP 6.3 or 6.4
-                workaroundCLIVersionInEAP63_or_64();
             }
+            // workaround to enable running commands through JBoss CLI in EAP 6.3 or 6.4
+            workaroundCLIVersionInEAP63_or_64();
 
             // undeploy all metamer WARs if using a JBoss container
             if (isUsingJBossContainer()) {
@@ -143,21 +145,22 @@ public abstract class AbstractMetamerTest extends Arquillian {
                     undeployMetamerWars();
                 } catch (CommandLineException ignored) {// no metamer war was deployed
                 }
+            }
 
-                if (isUsingEAP63_or_64()) {
-                    // enable WS in EAP 6.3 or 6.4
-                    if (Boolean.getBoolean(EAP_WS_ENABLED)) {
-                        try {
-                            System.out.println("### Enabling WebSockets in EAP ###");
-                            enableWebSocketsInEAP63_or_64(war, temporaryJBossWebXML);
-                            System.out.println("### Enabling of WebSockets in EAP was successful ###");
-                        } catch (CommandLineException t) {
-                            t.printStackTrace(System.err);
-                            System.out.println("### Enabling of WebSockets in EAP was NOT successful ###");
-                        }
+            if (isUsingEAP63_or_64()) {
+                // enable WebSockets in EAP 6.3 or 6.4
+                if (Boolean.getBoolean(EAP_WS_ENABLED)) {
+                    try {
+                        System.out.println("### Enabling WebSockets in EAP ###");
+                        enableWebSocketsInEAP63_or_64(war, temporaryJBossWebXML);
+                        System.out.println("### Enabling of WebSockets in EAP was successful ###");
+                    } catch (CommandLineException t) {
+                        t.printStackTrace(System.err);
+                        System.out.println("### Enabling of WebSockets in EAP was NOT successful ###");
                     }
                 }
             }
+
             temporaryJBossWebXML.deleteOnExit();
         }
         // save actual war to target/metamer-UPDATED.war
@@ -417,17 +420,19 @@ public abstract class AbstractMetamerTest extends Arquillian {
      * jboss-cli.xml. Change the urn:jboss:cli:1.3 to *1.2
      */
     private static void workaroundCLIVersionInEAP63_or_64() throws URISyntaxException, IOException {
-        String jbossHome = System.getProperty("JBOSS_HOME");
-        if (jbossHome == null || jbossHome.isEmpty()) {
-            System.err.println("JBOSS_HOME not detected. Exiting.");
-            System.exit(1);
-        }
-        File jbossCliFile = new File(new File(jbossHome), "bin/jboss-cli.xml");
-        File workaroundedJBossCliFile = new File(AbstractMetamerTest.class
-            .getResource("eap/jboss-cli.xml").toURI());
-        jbossCliFile.delete();
+        if (isUsingEAP63_or_64()) {
+            String jbossHome = System.getProperty("JBOSS_HOME");
+            if (jbossHome == null || jbossHome.isEmpty()) {
+                System.err.println("JBOSS_HOME not detected. Exiting.");
+                System.exit(1);
+            }
+            File jbossCliFile = new File(new File(jbossHome), "bin/jboss-cli.xml");
+            File workaroundedJBossCliFile = new File(AbstractMetamerTest.class
+                .getResource("eap/jboss-cli.xml").toURI());
+            jbossCliFile.delete();
 
-        Files.copy(workaroundedJBossCliFile, jbossCliFile);
+            Files.copy(workaroundedJBossCliFile, jbossCliFile);
+        }
     }
 
     /**
