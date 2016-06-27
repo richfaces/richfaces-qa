@@ -3,7 +3,7 @@
 In this demo a completely new example facelet and a few tests for it are created to present basics of work within the Metamer application.
 
 == Creating a sample facelet accessible from the Metamer application
-In this section is described hot to create a completely new component with accessible sample through the Metamer application.
+In this section is described how to create a completely new component with accessible sample through the Metamer application.
 
 === Create a component folder
 A folder in `metamer/application/src/main/webapp/components` needs to be created with name of our component. In this guide a `myComponent` folder is used.
@@ -17,6 +17,8 @@ Under the `myComponent` folder create a new xhtml file named `sample1.xhtml`. Th
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer" >
 
     <ui:composition template="/templates/template.xhtml"> <!--1-->
@@ -58,7 +60,7 @@ Under the `myComponent` folder create a new xhtml file named `sample1.xhtml`. Th
 <5> Attached an ajax behaviour to the input text component. The ajax request will be send when the input text changes (the value changes and the input is blurred).
 <6> Button with attached behavior on click. It sets value of the `h:inputText` to `changed value` and triggers `onchange` event on it (this will send an ajax request).
 
-After the Metamer application is built and deployed, this sample will be accessible at the URL `http://localhost:8080/metamer/faces/components/myComponent/sample.xhtml` (the URL can look different on Tomcat containers, depends on the name of the web archive). The address can be used in tests (see section <<creating-a-sample-tests>>), but it is better to link it into the Metamer application.
+After the Metamer application is built and deployed, this sample will be accessible at the URL `http://localhost:8080/metamer/faces/components/myComponent/sample1.xhtml` (the URL can look different on Tomcat containers, depends on the name of the web archive). The address can be used in tests (see section <<creating-a-sample-tests>>), but it is better to link it into the Metamer application.
 
 === Make the page accessible from the application
 In order to make the page accessible from the application through series of links a few more steps, described in following subsections, need to be done.
@@ -165,7 +167,11 @@ import org.testng.annotations.Test;
 <3> Find elements with CSS selector. This one finds all child elements of element with id ending with `myComponentId` and stores them in a list
 <4> TestNG's assertion of equality of two integers.
 
-Now you can run this test using e.g.: `mvn clean verify -Pwildfly-managed-10-0 -Dbrowser=firefox45esr -Dtest=MyFirstTest` (executed from `richfaces-qa/metamer/ftest`)
+In order to run this test, you first need to build the Metamer application because tests will fetch it from Maven repository, run `mvn clean install` from `richfaces-qa/metamer/application`.
+
+Now you can run this test using e.g.: `mvn clean verify -Pwildfly-managed-10-0 -Dbrowser=firefox45esr -Dtest=MyFirstTest` (executed from `richfaces-qa/metamer/ftest`).
+
+Sometimes these Maven commands fail because some Checkstyle rules are violated (e.g. trailing spaces, unused imports etc). When this happens, look at the end of Maven log, fix the violations in your code and rerun build/tests again. 
 
 === Replacing the in-place finding of the elements with a private field
 The test application uses Arquillian Graphene, so you can use a neat features like lazy-loadin proxy for finding of elements using annotated field. For more details and features please refer to https://docs.jboss.org/author/display/ARQGRA2/Home[Graphene documentation].
@@ -331,7 +337,7 @@ The input text in the facelet has attached ajax behaviour introduced with `<a4j:
     public void testClickButtonChangesInputText() {
         assertEquals(fragment.getInnerInputElement().getAttribute("value"), "some text");
         Graphene.guardAjax(fragment.getInnerButtonElement()).click();  //<1>
-        Graphene.waitAjax().until().element(fragment.getInnerInputElement()).value().equalToIgnoreCase("changed text");  //<1>
+        Graphene.waitAjax().until().element(fragment.getInnerInputElement()).value().equalToIgnoreCase("changed text");
     }
 ----
 <1> Check ajax request is send and completed. The button in the component has attached behavior on click. After the button is clicked, it changes value of input text and triggers an `onchange` event on the input text, which should lead to an ajax request.
