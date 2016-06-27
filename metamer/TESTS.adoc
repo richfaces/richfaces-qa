@@ -17,9 +17,9 @@ Under the `myComponent` folder create a new xhtml file named `sample1.xhtml`. Th
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" >
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j">
 
     <ui:composition template="/templates/template.xhtml"> <!--1-->
 
