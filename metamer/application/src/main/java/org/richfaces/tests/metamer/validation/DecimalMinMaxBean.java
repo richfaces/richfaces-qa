@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.validation;
 import java.math.BigDecimal;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 
@@ -34,6 +35,7 @@ import javax.validation.constraints.DecimalMin;
  * @version $Revision: 22492 $
  */
 @ManagedBean
+@RequestScoped
 public class DecimalMinMaxBean extends Validable<BigDecimal> {
 
     public static final String VALIDATION_MSG = "must be less than or equal to 9.688";

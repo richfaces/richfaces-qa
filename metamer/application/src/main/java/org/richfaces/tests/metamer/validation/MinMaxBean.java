@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.validation;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
@@ -32,6 +33,7 @@ import javax.validation.constraints.Min;
  * @version $Revision: 22492 $
  */
 @ManagedBean
+@RequestScoped
 public class MinMaxBean extends Validable<Integer> {
 
     public static final String VALIDATION_MSG = "must be greater than or equal to 2";

@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.validation.constraints.Size;
 
 /**
@@ -39,6 +40,7 @@ import javax.validation.constraints.Size;
  *
  */
 @ManagedBean
+@RequestScoped
 public class SizeBean {
 
     public static final String VALIDATION_MSG = "size must be between 2 and 4";

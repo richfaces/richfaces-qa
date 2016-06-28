@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.validation;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.validation.constraints.Pattern;
 
 /**
@@ -31,6 +32,7 @@ import javax.validation.constraints.Pattern;
  * @version $Revision: 22492 $
  */
 @ManagedBean
+@RequestScoped
 public class PatternBean extends Validable<String> {
 
     public static final String VALIDATION_MSG = "must match \"[a-z].*\"";
