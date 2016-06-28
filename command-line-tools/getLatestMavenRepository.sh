@@ -10,7 +10,7 @@ SCRIPT_DIR=$( cd "$( dirname "$0" )" && pwd );
 . ${SCRIPT_DIR}/download.sh;
 
 getLatestMavenRepository(){
-  URL_SNAPSHOTS=https://jenkins.mw.lab.eng.bos.redhat.com/hudson/job/eap-build-richfaces-4.5-tests/lastSuccessfulBuild/artifact/maven-repository.zip;
+  URL_SNAPSHOTS=http://jenkins.mw.lab.eng.bos.redhat.com/hudson/job/eap-build-richfaces-4.5-tests/lastSuccessfulBuild/artifact/maven-repository.zip;
   URL_RELEASE=http://jenkins.mw.lab.eng.bos.redhat.com/hudson/view/RichFaces/view/Release/job/richfaces-4.5-release-metamer-repositories-packer/lastSuccessfulBuild/artifact/maven-repository.zip;
   URL_WFK=http://jenkins.mw.lab.eng.bos.redhat.com/hudson/view/RichFaces/view/RF-Prod/job/richfaces-wfk-2.7-tests/lastSuccessfulBuild/artifact/maven-repository.zip;
 
