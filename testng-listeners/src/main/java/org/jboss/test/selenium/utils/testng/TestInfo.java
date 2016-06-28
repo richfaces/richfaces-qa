@@ -84,7 +84,7 @@ public final class TestInfo {
      * @return the class + method name in current context
      */
     public static String getClassMethodName(ITestResult result) {
-        return getClassName(result) + "." + getMethodName(result);
+        return getClassName(result) + '#' + getMethodName(result);
     }
 
     /**
