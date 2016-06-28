@@ -32,6 +32,7 @@ import org.richfaces.fragment.messages.RichFacesMessages;
 import org.richfaces.tests.metamer.bean.rich.RichGraphValidatorBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 
 /**
  * Test for page /faces/components/richGraphValidator/all.xhtml
@@ -54,7 +55,11 @@ public abstract class AbstractGraphValidatorTest extends AbstractWebDriverTest {
     private GraphValidatorPage page;
 
     protected void applyChanges() {
-        Graphene.guardAjax(page.getApplyChangesBtn()).click();
+        if (isInPopupTemplate()) {
+            getMetamerPage().performJSClickOnButton(page.getApplyChangesBtn(), WaitRequestType.XHR);
+        } else {
+            Graphene.guardAjax(page.getApplyChangesBtn()).click();
+        }
     }
 
     protected void checkGraphValidatorSuccessMessage() {
