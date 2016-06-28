@@ -63,10 +63,10 @@ import com.google.common.base.Predicate;
 public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
     private final Map<ID, String[]> messages = new EnumMap<AbstractValidatorsTest.ID, String[]>(AbstractValidatorsTest.ID.class);
-    private final Map<ID, String> wrongValue = new EnumMap<AbstractValidatorsTest.ID, String>(AbstractValidatorsTest.ID.class);
 
     @Page
     private ValidatorSimplePage page;
+    private final Map<ID, String> wrongValue = new EnumMap<AbstractValidatorsTest.ID, String>(AbstractValidatorsTest.ID.class);
 
     private void checkAllErrorMessagesAreVisibleAndCorrect() {
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.assertFalse);
@@ -249,6 +249,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         // string input custom string
         getPage().getInputCustom().clear();
         getPage().getInputCustom().sendKeys(wrongValue.get(ID.custom));
+        waitForRequestToComplete();
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.custom);
@@ -264,7 +265,9 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         // date input future
         getPage().getInputFuture().clear();
         getPage().getInputFuture().sendKeys(wrongValue.get(ID.future));
+        waitForRequestToComplete();
         submitAjax();
+
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.future);
         preventViewExpiredException();
     }
@@ -278,6 +281,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         // date input past
         getPage().getInputPast().clear();
         getPage().getInputPast().sendKeys(wrongValue.get(ID.past));
+        waitForRequestToComplete();
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.past);
@@ -293,6 +297,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         // decimal input digits
         getPage().getInputDigits().clear();
         getPage().getInputDigits().sendKeys(wrongValue.get(ID.digits));
+        waitForRequestToComplete();
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.digits);
@@ -307,6 +312,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         // Decimal input
         getPage().getInputDecimalMinMax().clear();
         getPage().getInputDecimalMinMax().sendKeys(wrongValue.get(ID.decimalMinMax));
+        waitForRequestToComplete();
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.decimalMinMax);
@@ -381,6 +387,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         // string input not null
         getPage().getInputNotNull().clear();
         getPage().getInputNotNull().sendKeys("");
+        waitForRequestToComplete();
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.notNull);
@@ -424,6 +431,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         WebElement selectionItemByLabel = getPage().getSelectionItemByLabel(wrongValue.get(ID.size));
         jsUtils.scrollToView(selectionItemByLabel);
         selectionItemByLabel.click();
+        waitForRequestToComplete();
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.size);
@@ -441,6 +449,16 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         submitAjax();
 
         waitUtilMessageWithIDIsVisibleAndCorrect(ID.stringSize);
+    }
+
+    /**
+     * If there is an ajax request in progress, or the request will be sent when the current input is blurred, wait until the
+     * request is done by waiting for Metamer's status to change.
+     */
+    private void waitForRequestToComplete() {
+        getMetamerPage().getBlurButton().click();// blur the current input, this can sent ajax request
+        waiting(500);// wait until the request is initiated
+        getMetamerPage().getStatus().advanced().waitUntilStatusStateChanges(StatusState.STOP);// wait for status changes to 'stop' state
     }
 
     protected void waitUtilMessageWithIDIsVisibleAndCorrect(final ID id) {
