@@ -22,6 +22,8 @@
 package org.richfaces.tests.metamer.validation;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -31,6 +33,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @version $Revision: 22492 $
  */
 @ManagedBean
+@RequestScoped
 public class NotEmptyBean extends Validable<String> {
 
     public static final String VALIDATION_MSG = "may not be empty";

@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.validation;
 import java.util.Date;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.validation.constraints.Future;
 
 /**
@@ -33,6 +34,7 @@ import javax.validation.constraints.Future;
  * @version $Revision: 22492 $
  */
 @ManagedBean
+@RequestScoped
 public class FutureBean extends Validable<Date> {
 
     public static final String VALIDATION_MSG = "must be in the future";

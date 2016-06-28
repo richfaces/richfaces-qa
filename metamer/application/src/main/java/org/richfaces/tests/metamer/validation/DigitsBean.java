@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.validation;
 import java.math.BigDecimal;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.validation.constraints.Digits;
 
 /**
@@ -33,6 +34,7 @@ import javax.validation.constraints.Digits;
  * @version $Revision: 22492 $
  */
 @ManagedBean
+@RequestScoped
 public class DigitsBean extends Validable<BigDecimal> {
 
     public static final String VALIDATION_MSG = "numeric value out of bounds (<3 digits>.<4 digits> expected)";

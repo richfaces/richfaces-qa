@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.validation;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.validation.constraints.Size;
 
 /**
@@ -31,6 +32,7 @@ import javax.validation.constraints.Size;
  * @version $Revision: 22492 $
  */
 @ManagedBean
+@RequestScoped
 public class StringSizeBean extends Validable<String> {
 
     public static final String VALIDATION_MSG = "size must be between 2 and 4";

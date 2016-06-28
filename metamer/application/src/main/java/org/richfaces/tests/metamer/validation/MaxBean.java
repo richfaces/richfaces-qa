@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.validation;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.validation.constraints.Max;
 
 /**
@@ -31,6 +32,7 @@ import javax.validation.constraints.Max;
  * @version $Revision: 22492 $
  */
 @ManagedBean
+@RequestScoped
 public class MaxBean extends Validable<Integer> {
 
     public static final String VALIDATION_MSG = "must be less than or equal to 10";

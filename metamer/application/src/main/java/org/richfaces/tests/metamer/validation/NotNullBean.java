@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.validation;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -31,6 +32,7 @@ import javax.validation.constraints.NotNull;
  * @version $Revision: 22492 $
  */
 @ManagedBean
+@RequestScoped
 public class NotNullBean extends Validable<String> {
 
     public static final String VALIDATION_MSG = "may not be null";
