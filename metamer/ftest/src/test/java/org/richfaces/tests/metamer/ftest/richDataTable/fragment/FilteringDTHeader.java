@@ -70,11 +70,6 @@ public class FilteringDTHeader extends AbstractFilteringHeader {
     }
 
     @Override
-    public Select getSexSelect() {
-        return sexSelect;
-    }
-
-    @Override
     public TextInputComponentImpl getTitleBuildInInput() {
         return titleBuiltInInput;
     }

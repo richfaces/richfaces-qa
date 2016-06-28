@@ -85,11 +85,6 @@ public class FilteringEDTHeader extends AbstractFilteringHeader {
     }
 
     @Override
-    public Select getSexSelect() {
-        return sexSelect;
-    }
-
-    @Override
     public TextInputComponentImpl getTitleBuildInInput() {
         return titleBuiltInInput;
     }

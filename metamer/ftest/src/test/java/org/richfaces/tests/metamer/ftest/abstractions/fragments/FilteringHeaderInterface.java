@@ -21,9 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.abstractions.fragments;
 
-import org.openqa.selenium.support.ui.Select;
 import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.fragment.inputNumberSpinner.RichFacesInputNumberSpinner;
+import org.richfaces.tests.metamer.ftest.abstractions.fragments.AbstractFilteringHeader.SelectComponent;
 import org.richfaces.tests.metamer.model.Employee;
 
 /**
@@ -57,7 +57,7 @@ public interface FilteringHeaderInterface {
 
     RichFacesInputNumberSpinner getNumberOfKidsSpinner();
 
-    Select getSexSelect();
+    SelectComponent getSexSelect();
 
     TextInputComponentImpl getTitleBuildInInput();
 

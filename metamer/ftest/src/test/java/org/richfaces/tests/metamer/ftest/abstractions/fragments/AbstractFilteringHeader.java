@@ -24,16 +24,23 @@ package org.richfaces.tests.metamer.ftest.abstractions.fragments;
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.fragment.Root;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.ClearType;
 import org.richfaces.fragment.common.TextInputComponentImpl;
+import org.richfaces.fragment.common.Utils;
 import org.richfaces.tests.metamer.model.Employee;
 
 import com.google.common.base.Strings;
 
 public abstract class AbstractFilteringHeader implements FilteringHeaderInterface {
+
+    @FindBy(css = "[id$='columnHeaderSexInput']")
+    private SelectComponent sexSelect;// the Selenium Select component does not work within xvfb in here
 
     @ArquillianResource
     private WebDriver driver;
@@ -102,11 +109,26 @@ public abstract class AbstractFilteringHeader implements FilteringHeaderInterfac
         fillInAndBlur(getTitleBuildInInput(), title);
     }
 
+    @Override
+    public SelectComponent getSexSelect() {
+        return sexSelect;
+    }
+
     public void makeBlur() {
         try {
             Graphene.guardAjax(driver.findElement(By.id("blurButtonFooter"))).click();
         } catch (Exception ignored) {
             // if no ajax then it has been already done
+        }
+    }
+
+    public static class SelectComponent {
+
+        @Root
+        private WebElement rootElement;
+
+        public void selectByValue(String text) {
+            Utils.jQ("val('" + text + "').change();", rootElement);
         }
     }
 }
