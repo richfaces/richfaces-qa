@@ -8,8 +8,11 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.UseWithField;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.testng.annotations.Test;
+//import org.testng.annotations.Test;
 
+/** 
+ * This class contains the code from metamer/TESTS.adoc guide. All tests are excluded so that they don't run with test suite.  
+ */
 public class MyFirstTest extends AbstractWebDriverTest {
 
     @FindBy(css = "[id$=myComponentId]")
@@ -21,26 +24,26 @@ public class MyFirstTest extends AbstractWebDriverTest {
         return "myComponent/sample1.xhtml";
     }
 
-    @Test
+//    @Test
     public void testClickButtonChangesInputText() {
         assertEquals(fragment.getInnerInputElement().getAttribute("value"), "some text");
         Graphene.guardAjax(fragment.getInnerButtonElement()).click();
         Graphene.waitAjax().until().element(fragment.getInnerInputElement()).value().equalToIgnoreCase("changed text");
     }
 
-    @Test
+//    @Test
     public void testComponentHasThreeElements() {
         assertEquals(fragment.getInnerElementsSize(), 3, "There should be 3 elements.");
     }
 
-    @Test
+//    @Test
     public void testElementsTexts() {
         assertEquals(fragment.getInnerSpanElement().getText(), "some text in a span");
         assertEquals(fragment.getInnerButtonElement().getAttribute("value"), "some button");
         assertEquals(fragment.getInnerInputElement().getAttribute("value"), "some text");
     }
 
-    @Test
+//    @Test
     @UseWithField(field = "injectedText", value = { "text1", "text2", "text3" }, valuesFrom = ValuesFrom.STRINGS)
     public void testTypingSomeTextSendsAjax() {
         fragment.getInnerInputElement().clear();
