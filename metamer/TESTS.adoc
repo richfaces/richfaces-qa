@@ -75,7 +75,7 @@ After the Metamer application is built and deployed, this sample will be accessi
 As describe in previous paragraph, the page can be accessed directly in your web browser if you know the URL but it's not user-friendly. In order to make the page accessible from the application through series of links, a few more steps need to be done. First, you need to add a new component to the list of components in the class `RichBean`. This list is then used by page `index.xhtml` to dynamically generate a nice home page with list of all components. Next, you will create a special page `list.xhtml` that will list all pages for your component `myComponent` (at this point there is only one page `sample1.xhtml`). After these steps are done, you will be able to open http://localhost:8080/metamer[localhost:8080/metamer] and navigate to your new page.
 
 ==== Add a record to the RichBean
-Our component needs to be added to the components map in `RichBean#createComponentsMap`.
+Our component needs to be added to the components map in `metamer/application/src/main/java/org/richfaces/tests/metamer/bean/RichBean#createComponentsMap`.
 [source,java]
 ----
         allComponentsPermanentList.put("myComponent",  //<1>
@@ -156,6 +156,7 @@ public class MyFirstTest extends AbstractWebDriverTest {
 
 [source,java]
 ----
+package org.richfaces.tests.metamer.ftest.myPackage;
 import static org.testng.Assert.assertEquals;
 
 import java.util.List;
@@ -165,11 +166,19 @@ import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.Test;
 
+public class MyFirstTest extends AbstractWebDriverTest {
+
+	@Override
+    public String getComponentTestPagePath() {
+        return "myComponent/sample1.xhtml";
+    }
+
     @Test  //<1>
     public void testComponentHasThreeElements() {  //<2>
         List<WebElement> elements = driver.findElements(By.cssSelector("[id$=myComponentId] > *"));  //<3>
         assertEquals(elements.size(), 3, "There should be 3 elements.");  //<4>
     }
+}
 ----
 <1> Annotate the test method with TestNG's `@Test`
 <2> Used convention is to start the name of the test with `test`
