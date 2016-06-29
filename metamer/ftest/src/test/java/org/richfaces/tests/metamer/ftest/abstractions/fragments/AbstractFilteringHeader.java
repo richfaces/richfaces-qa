@@ -47,7 +47,7 @@ public abstract class AbstractFilteringHeader implements FilteringHeaderInterfac
 
     private void fillInAndBlur(TextInputComponentImpl input, String text) {
         if (Strings.isNullOrEmpty(text)) {
-            input.advanced().clear(ClearType.BACKSPACE);
+            input.advanced().clear(ClearType.WD);
         } else {
             input.clear().sendKeys(text);
         }
