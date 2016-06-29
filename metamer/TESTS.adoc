@@ -72,7 +72,7 @@ Under the `myComponent` folder create a new xhtml file named `sample1.xhtml`. Th
 After the Metamer application is built and deployed, this sample will be accessible at the URL `http://localhost:8080/metamer/faces/components/myComponent/sample1.xhtml` (the URL can look different on Tomcat containers, depends on the name of the web archive). The address can be used in tests (see section <<creating-a-sample-tests>>), but it is better to link it into the Metamer application.
 
 === Make the page accessible from the application
-As describe in previous paragraph, the page can be accessed directly in your web browser if you know the URL but it's not user-friendly. In order to make the page accessible from the application through series of links a few more steps, described in following subsections, need to be done. After these steps are done, you will be able to open http://localhost:8080/metamer[localhost:8080/metamer] and navigate to your new page.
+As describe in previous paragraph, the page can be accessed directly in your web browser if you know the URL but it's not user-friendly. In order to make the page accessible from the application through series of links, a few more steps need to be done. First, you need to add a new component to the list of components in the class `RichBean`. This list is then used by page `index.xhtml` to dynamically generate a nice home page with list of all components. Next, you will create a special page `list.xhtml` that will list all pages for your component `myComponent` (at this point there is only one page `sample1.xhtml`). After these steps are done, you will be able to open http://localhost:8080/metamer[localhost:8080/metamer] and navigate to your new page.
 
 ==== Add a record to the RichBean
 Our component needs to be added to the components map in `RichBean#createComponentsMap`.
@@ -121,7 +121,7 @@ In this section is described how to create a simple test for the sample, which w
 
 === Create a new test class
 
-First step is to create a new Java class (e.g. `MyFirstTest`) in suitable package, e.g. `metamer/application/src/main/java/org/richfaces/tests/metamer/ftest/myPackage`, and extend the `AbstractWebdriverTest` class. By extending this class, you gain a way to access a bunch of features. To mention some of them, you can left behind all the process around preparement and deployment of the Metamer application, preparement of the browser and the container itself and focus only on creating the test(s). Also you get access to other useful utilities, methods and fields (e.g. browser, page object).
+First step is to create a new Java class (e.g. `MyFirstTest`) in suitable package, e.g. `metamer/ftest/src/main/java/org/richfaces/tests/metamer/ftest/myPackage`, and extend the `AbstractWebdriverTest` class. By extending this class, you gain a way to access a bunch of features. To mention some of them, you can left behind all the process around preparement and deployment of the Metamer application, preparement of the browser and the container itself and focus only on creating the test(s). Also you get access to other useful utilities, methods and fields (e.g. browser, page object).
 
 [source,java]
 ----
