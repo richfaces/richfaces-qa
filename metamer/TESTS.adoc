@@ -1,8 +1,17 @@
 :sectnums:
-= Guide how to write a simple facelet and a test in Metamer
-In this demo a completely new example facelet and a few tests for it are created to present basics of work within the Metamer application.
+= Guide how to write a simple page and a test in Metamer
 
-== Creating a sample facelet accessible from the Metamer application
+This document guides a new team member how to create new functional tests for RichFaces/JSF. Metamer (in directory metamer/application) is a RichFaces/JSF application that is bundled by Maven to a WAR file and can be deployed to a servlet container of application server of your choice (e.g. EAP 7). This application is then used by functional test suite (in directory metamer/ftest) that uses Arquillian Graphene and Selenium to start a web browser (such as Firefox) and execute various test cases. You can find more information about Metamer and test suite in https://github.com/richfaces/richfaces-qa/tree/eap/metamer/README.adoc[README].
+
+This guide shows how to create a completely new page in Metamer, how to write new tests for it to and shows some advanced concepts and best practices for writing tests.
+
+For more information about used technologies, see the documentation
+
+* http://docs.oracle.com/javaee/6/tutorial/doc/bnaph.html[JavaServer Faces]
+* http://arquillian.org/guides/functional_testing_using_graphene/[Arquillian Graphene]
+* http://www.seleniumhq.org/docs/[Selenium]
+
+== Creating a sample page accessible from the Metamer application
 In this section is described how to create a completely new component with accessible sample through the Metamer application.
 
 === Create a component folder
@@ -53,8 +62,8 @@ Under the `myComponent` folder create a new xhtml file named `sample1.xhtml`. Th
     </ui:composition>
 </html>
 ----
-<1> In this line the Metamer template is extended, so all features of it can be used. These features contains, among other things, a header, where there are placed many useful features like: navigation buttons, various checkers (execute, render), request time, invoked phases, templates selection, etc.
-<2> Insert this block to your page, if you need to use the templates from tests (they are resolved/converted from the url parameter `templates`). Refer to https://github.com/richfaces/richfaces-qa/blob/demo/metamer/README.adoc[Metamer README] document for more details about templates.
+<1> In this line the Metamer template (file `metamer/application/src/main/webapp/templates/template.xhtml`) is extended, so all features of it can be used. These features contains, among other things, a header with many useful features like: navigation buttons, various checkers (execute, render), request time, invoked phases, templates selection, etc. Another advantage is that the page get unified look and feel as other pages in Metamer. Extending this template is not mandatory.
+<2> Insert this block to your page (xhtml file), if you need to use the templates from tests (they are resolved/converted from the url parameter `templates`). Refer to https://github.com/richfaces/richfaces-qa/blob/eap/metamer/README.adoc[Metamer README] document for more details about templates.
 <3> In this block the component should be placed.
 <4> The sample component consists of one `div` element containing a button, an input and a span element. The `id` attributes will be used in tests.
 <5> Attached an ajax behaviour to the input text component. The ajax request will be send when the input text changes (the value changes and the input is blurred).
@@ -63,7 +72,7 @@ Under the `myComponent` folder create a new xhtml file named `sample1.xhtml`. Th
 After the Metamer application is built and deployed, this sample will be accessible at the URL `http://localhost:8080/metamer/faces/components/myComponent/sample1.xhtml` (the URL can look different on Tomcat containers, depends on the name of the web archive). The address can be used in tests (see section <<creating-a-sample-tests>>), but it is better to link it into the Metamer application.
 
 === Make the page accessible from the application
-In order to make the page accessible from the application through series of links a few more steps, described in following subsections, need to be done.
+As describe in previous paragraph, the page can be accessed directly in your web browser if you know the URL but it's not user-friendly. In order to make the page accessible from the application through series of links a few more steps, described in following subsections, need to be done. After these steps are done, you will be able to open http://localhost:8080/metamer[localhost:8080/metamer] and navigate to your new page.
 
 ==== Add a record to the RichBean
 Our component needs to be added to the components map in `RichBean#createComponentsMap`.
@@ -110,9 +119,9 @@ Now the sample is accessible from within the Metamer application.
 == Creating a sample test(s)
 In this section is described how to create a simple test for the sample, which was created in previous section.
 
-=== Create a test class extending test-base class `AbstractWebdriverTest`
-First step is to extend the `AbstractWebdriverTest` class. Extending this class you gain a way to access a bunch of features.
-To mention some of them, you can left behind all the process around preparement and deployment of the Metamer application, preparement of the browser and the container itself and focus only on creating the test(s). Also you get access to other useful utilities, methods and fields (e.g. browser, page object).
+=== Create a new test class
+
+First step is to create a new Java class (e.g. `MyFirstTest`) in suitable package, e.g. `metamer/application/src/main/java/org/richfaces/tests/metamer/ftest/myPackage`, and extend the `AbstractWebdriverTest` class. By extending this class, you gain a way to access a bunch of features. To mention some of them, you can left behind all the process around preparement and deployment of the Metamer application, preparement of the browser and the container itself and focus only on creating the test(s). Also you get access to other useful utilities, methods and fields (e.g. browser, page object).
 
 [source,java]
 ----
@@ -141,7 +150,7 @@ public class MyFirstTest extends AbstractWebDriverTest {
         return "myComponent/sample1.xhtml";  //<1>
     }
 ----
-<1> This is the part after `http://localhost:8080/metamer/faces/components/`. This page will be automatically loaded before all test methods in this class, see `load` method in https://github.com/richfaces/richfaces-qa/blob/master/metamer/ftest/src/test/java/org/richfaces/tests/metamer/ftest/AbstractWebDriverTest.java[AbstractWebDriverTest class].
+<1> This is the part after `http://localhost:8080/metamer/faces/components/`. This page will be automatically loaded in the web browser before all test methods in this class, see `loadPage` method in https://github.com/richfaces/richfaces-qa/blob/eap/metamer/ftest/src/test/java/org/richfaces/tests/metamer/ftest/AbstractWebDriverTest.java[AbstractWebDriverTest class].
 
 === Create a simple test
 
@@ -210,8 +219,10 @@ public class MyFirstTest extends AbstractWebDriverTest {
 <3> Now the test is shrinked to only one line.
 
 === Create and use custom page fragment
-The tests use lots of page fragments (https://docs.jboss.org/author/display/ARQGRA2/Page+Fragments[link to explanation]), so it is time to introduce how to create one.
-The following snippet creates object for the group of components, which was created in previous steps.
+
+The tests use lots of page fragments (https://docs.jboss.org/author/display/ARQGRA2/Page+Fragments[link to explanation]). A page fragment is Arquillian Graphen's concept that extends Selenium's concept of Page Object. A page fragment decouples HTML structure of the tested application from the tests and it encapsulates some kind of page services or the interactions a user can do with the page so that the test is more readable and we avoid code duplication in our tests.
+
+The following snippet creates object for the group of components, which was created in previous steps. Create a new Java class and place it into the same package as your test class `MyFirstTest`.
 [source,java]
 ----
 package org.richfaces.tests.metamer.ftest.myPackage;
@@ -238,7 +249,7 @@ public class MyCustomPageFragment {
     }
 }
 ----
-<1> Graphene's custom `FindBy` annotation, as the name prompts, the element(s) are found by JQuery. With the WebDriver's `FindBy` we cannot use such selector.
+<1> Graphene's custom `FindBy` annotation, as the name prompts, the element(s) are found by JQuery. With the WebDriver's `FindBy` we cannot use such a selector because it's missing in Selenium API.
 <2> Graphene's annotation to mark the field to which the root element will be stored. All inner elements are found from this root element. This annotation and field is not mandatory (will be hidden when not specified).
 
 Now, the `elements` field in test can be replaced with newly created fragment:
@@ -312,6 +323,9 @@ public class MyCustomPageFragment {
 The fragment is now enriched with new methods. The following section adds 2 new test methods in the `MyFirstTest` class.
 [source,java]
 ----
+    @FindBy(css = "[id$=myComponentId]")
+    private MyCustomPageFragment fragment;
+    
     @Test
     public void testElementsTexts() {
         assertEquals(fragment.getInnerSpanElement().getText(), "some text in a span");
@@ -329,7 +343,7 @@ The fragment is now enriched with new methods. The following section adds 2 new 
 <1> Here we use the Graphene's wait API, this should be more stable solution than using a simple assert, because it can take some time to perform the script attached to the button.
 
 === Test the ajax behavior
-The input text in the facelet has attached ajax behaviour introduced with `<a4j:ajax/>` tag. In order to test the ajax request is send when the change event occurs, use Graphene.guardAjax method.
+The input text in the page `sample1.xhtml` has attached ajax behaviour introduced with `<a4j:ajax/>` tag. In order to test the ajax request is send when the change event occurs, use Graphene.guardAjax method.
 
 [source,java]
 ----
