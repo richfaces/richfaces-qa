@@ -168,7 +168,7 @@ import org.testng.annotations.Test;
 
 public class MyFirstTest extends AbstractWebDriverTest {
 
-	@Override
+    @Override
     public String getComponentTestPagePath() {
         return "myComponent/sample1.xhtml";
     }

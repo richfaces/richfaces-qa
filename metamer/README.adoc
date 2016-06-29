@@ -318,6 +318,6 @@ Related Selenium issues:
 * skip enabling of the WebSocket protocol by using system property `eap.ws.enabled=false`, beware that it can influence the stability of tests in `a4jPush` package
 
 |Test fails randomly with something like "Request type 'XHR' was expected, but type 'NONE' was done instead"
-|Most of tests can run when browser window is not focused, i.e. when it is not top-level window. However, tests using focus and blur browser events require that the browser window is active. Disable all programs that have pop-up windows (e.g. Windows update) while running tests.
+|Most of tests can run when browser window is not focused, i.e. when it is not top-level window. However, tests using focus and blur browser events require that the browser window is active. Disable all programs that have pop-up windows (e.g. Windows update) while running tests. Another workaround is to use Xvfb, start your tests using `xvfb-run mvn clean verify...`
 
 |===
