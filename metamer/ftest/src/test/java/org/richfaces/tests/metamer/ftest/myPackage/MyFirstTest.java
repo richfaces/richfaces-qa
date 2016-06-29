@@ -10,8 +10,8 @@ import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.V
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 //import org.testng.annotations.Test;
 
-/** 
- * This class contains the code from metamer/TESTS.adoc guide. All tests are excluded so that they don't run with test suite.  
+/**
+ * This class contains the code from metamer/TESTS.adoc guide. All tests are excluded so that they don't run with test suite.
  */
 public class MyFirstTest extends AbstractWebDriverTest {
 
