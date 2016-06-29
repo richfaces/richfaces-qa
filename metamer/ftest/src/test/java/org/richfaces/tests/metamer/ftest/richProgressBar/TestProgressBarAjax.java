@@ -124,6 +124,9 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
                     .until().element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
             }
         });
+        MetamerPage.requestTimeChangesWaiting(page.getStopPollingButtonElement()).click();
+        int timeout = Integer.parseInt(progressBarAttributes.get(ProgressBarAttributes.interval)) + 300;
+        waiting(timeout);//wait for the last request to finish
     }
 
     @Test(groups = "smoke")
