@@ -297,9 +297,20 @@ In order to run the test suite against e.g. EAP with MyFaces (aka _modified EAP_
 * update Selenium and/or Arquillian dependencies
 
 |Updated Firefox and the tests does not run
-|There is a problem in Selenium. Each Selenium release works with limited number of Firefox releases. You can:
+|There is a problem in Selenium. Each Selenium release works with limited number of Firefox releases (see http://www.seleniumhq.org/about/platforms.jsp[Platforms Supported by Selenium] -- support for Firefox is the latest release, the previous release, the latest ESR release and the previous ESR release). You can:
 
-* use older Firefox, e.g. add property `-Dbrowser=firefox45esr` to the maven command.
-* update Selenium and/or Arquillian dependencies.
+* use older Firefox, e.g. add property `-Dbrowser=firefox45esr` to the maven command
+* update Selenium and/or Arquillian dependencies
+
+Related Selenium issues:
+
+* https://github.com/SeleniumHQ/selenium/issues/1155[Selenium issue#1155]
+* https://github.com/seleniumhq/selenium/issues/2110[Selenium issue#2110]
+
+|View cannot be restored or ViewExpiredException in tests
+|This happens when a HTTP request is sent while there was already an ajax request in progress. You can:
+
+* use `Graphene.guardAjax()` on the action which resolves in ajax request to wait until the request is done
+* wait for Metamer's page status component (RichFaces component placed in header of the Metamer page, which extends the Metamer template `template="/templates/template.xhtml"`, to track the process of the ajax requests) to change to the _stop_ state with method `getMetamerPage().getStatus().advanced().waitUntilStatusStateChanges(StatusState.STOP)`. This solution can be less reliable than previous step
 
 |===
