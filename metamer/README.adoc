@@ -88,10 +88,6 @@ To build the application with one specific profile run `mvn clean install -Dskip
 
 To deploy the application just copy the WAR file into server deployment folder. Optionally, you can import the project into IDE (Eclipse, JBDS,...) and deploy directly from IDE. This is particularly useful when you need to do a lot of changes and re-deploy often.
 
-=== Changing JSF implementation
-
-Changing of JSF implementation is supported only for Tomcat containers. The JSF implementation can be changed to MyFaces with activation of maven profile named `war-tomcat-myfaces`.
-
 == Functional Test Development
 
 === Prerequisites for running the tests
