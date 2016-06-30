@@ -29,6 +29,8 @@ import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
+import org.openqa.selenium.WebDriver;
+import org.richfaces.tests.configurator.unstable.annotation.Unstable;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -40,7 +42,11 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
+import com.google.common.primitives.Ints;
+
+import edu.emory.mathcs.backport.java.util.Arrays;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -89,6 +95,7 @@ public class TestExtendedDataTableJSAPISelectAndDeselect extends AbstractWebDriv
 
     @Test
     @Templates("plain")
+    @Unstable
     public void testSelectRowsAndDeselectRow() {
         final int rows = Integer.parseInt(tableAttributes.get(ExtendedDataTableAttributes.rows));
         for (int p : new int[] { 1, 2 }) {
@@ -139,12 +146,17 @@ public class TestExtendedDataTableJSAPISelectAndDeselect extends AbstractWebDriv
         assertEquals(page.getActualPreviousSelection(), arrayToList(indexes));
     }
 
-    private void verifySelectedNow(int... indexes) {
+    private void verifySelectedNow(final int... indexes) {
         final int rows = Integer.parseInt(tableAttributes.get(ExtendedDataTableAttributes.rows));
 
-        // check selected indexes in output
+        // wait until client-side JavaScript is executed after Ajax and check selected indexes in output
+        Graphene.waitGui().until(new Predicate<WebDriver>() {
+            @Override
+            public boolean apply(WebDriver arg0) {
+                return Arrays.equals(Ints.toArray(page.getActualCurrentSelection()), indexes);
+            }
+        });
         List<Integer> listOfIndexes = arrayToList(indexes);
-        assertEquals(page.getActualCurrentSelection(), listOfIndexes);
 
         // check rows contains correct classes
         if (indexes != null && indexes.length > 0) {

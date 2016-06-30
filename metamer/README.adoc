@@ -329,4 +329,11 @@ Related Selenium issues:
 
 * skip enabling of the WebSocket protocol by using system property `eap.ws.enabled=false`, beware that it can influence the stability of tests in `a4jPush` package
 
+|Assertion in test fails randomly even though the logic of test is correct and there is no bug in JSF/RichFaces.
+|The is probably some race condition
+
+* use `Graphene.guardAjax()` on the action which resolves in Ajax request to wait until the request is done
+* in some cases, JavaScript needs to be executed after successful Ajax request so you need additional wait so that page is updated
+* workaround is to mark the test with annotation `@Unstable` (see section <<about-annotations>>)
+
 |===
