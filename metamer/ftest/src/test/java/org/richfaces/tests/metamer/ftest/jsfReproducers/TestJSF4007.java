@@ -5,12 +5,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.fragment.common.TextInputComponentImpl;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
 @Templates("plain")
+@IssueTracking("https://java.net/jira/browse/JAVASERVERFACES-4007")
 public class TestJSF4007 extends AbstractWebDriverTest {
 
     @FindBy(css = "[id$=add]")
@@ -28,7 +30,7 @@ public class TestJSF4007 extends AbstractWebDriverTest {
     }
 
     @Test
-    @Skip(On.Container.OtherThanEAP64WithVersion.Under649.class)
+    @Skip(On.Container.OtherThanEAPWithVersion.Under649.class)
     public void testJSF4007() {
         Graphene.guardHttp(addValidatorLink).click();
 

@@ -6,12 +6,16 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.On;
+import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.AndExpression;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.annotation.Skip;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
 import org.testng.annotations.Test;
 
 @Templates("plain")
+@IssueTracking(value = { "https://java.net/jira/browse/JAVASERVERFACES-3430",
+        "https://java.net/jira/browse/JAVASERVERFACES-3563" })
 public class TestJSF3563 extends AbstractWebDriverTest {
 
     @FindBy(css = "[id$=button]")
@@ -25,7 +29,8 @@ public class TestJSF3563 extends AbstractWebDriverTest {
     }
 
     @Test
-    @Skip(On.Container.OtherThanEAP64WithVersion.Under649.class)
+    @Skip(expressions = { @AndExpression({ On.Container.OtherThanEAPWithVersion.Under649.class }),
+            @AndExpression({ On.Container.EAP70.class, On.JSF.VersionLowerThan23.class }) })
     public void testJSF3563() {
         assertEquals(output.getText(), "initial");
         Graphene.guardAjax(customButton).click();

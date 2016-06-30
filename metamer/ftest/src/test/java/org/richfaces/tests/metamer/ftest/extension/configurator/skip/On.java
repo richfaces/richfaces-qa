@@ -389,7 +389,7 @@ public class On {
             }
         }
 
-        public static class OtherThanEAP64WithVersion {
+        public static class OtherThanEAPWithVersion {
 
             private static final String actEapVersion = System.getProperty("version.eap");
 
@@ -404,6 +404,10 @@ public class On {
                 return getResultFor(EAP64x.class);
             }
 
+            private static boolean isUsingEAP70() {
+                return getResultFor(EAP70.class);
+            }
+
             /**
              * Skip test when not using profile <code>jbosseap-managed-6-4</code> or <code>jbosseap-remote-6-4</code> and skip
              * test when using profile <code>jbosseap-managed-6-4</code> or <code>jbosseap-remote-6-4</code>, but the
@@ -415,6 +419,8 @@ public class On {
                 public boolean apply() {
                     if (isUsingEAP64()) {
                         return isEAPVersionUnder(Version.parseVersion("6.4.9"));
+                    } else if (isUsingEAP70()) {
+                        return false;
                     } else {
                         return true;
                     }
@@ -462,6 +468,17 @@ public class On {
                 return JSFDetectionUtils.isVersionLowerThan22();
             }
         }
+
+        /**
+        * Skip tests when version of JSF is < 2.3.x
+        */
+       public static class VersionLowerThan23 implements SkipOn {
+
+           @Override
+           public boolean apply() {
+               return JSFDetectionUtils.isVersionLowerThan23();
+           }
+       }
 
         /**
          * Skip tests when version of Mojarra is < 2.2.12
