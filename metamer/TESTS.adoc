@@ -410,4 +410,4 @@ Now, when you run the test, the method `testTypingSomeTextSendsAjax` will be exe
 [13:46:01] SUCCESS: myPackage.MyFirstTest#testTypingSomeTextSendsAjax() { template=plain, injectedText=text3 }
 ----
 
-The sample and tests are accessible at https://github.com/richfaces/richfaces-qa/tree/demo[demo branch], https://github.com/richfaces/richfaces-qa/blob/demo/metamer/application/src/main/webapp/components/myComponent/sample1.xhtml[the sample], https://github.com/richfaces/richfaces-qa/blob/demo/metamer/ftest/src/test/java/org/richfaces/tests/metamer/ftest/myPackage/MyFirstTest.java[the test].
+The sample and tests are accessible at https://github.com/richfaces/richfaces-qa/tree/eap[demo branch], https://github.com/richfaces/richfaces-qa/blob/eap/metamer/application/src/main/webapp/components/myComponent/sample1.xhtml[the sample], https://github.com/richfaces/richfaces-qa/blob/eap/metamer/ftest/src/test/java/org/richfaces/tests/metamer/ftest/myPackage/MyFirstTest.java[the test].
