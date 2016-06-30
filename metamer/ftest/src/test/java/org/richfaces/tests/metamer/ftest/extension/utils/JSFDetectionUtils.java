@@ -65,6 +65,15 @@ public class JSFDetectionUtils {
     }
 
     /**
+     * Detects if JSF version is lower than 2.3
+     *
+     * @return true if JSF version is lower than 2.3, false otherwise
+     */
+    public static boolean isVersionLowerThan23() {
+        return !isPatternPresentInJsfVersionTag(".*[2-9]{1}[\\.]{1}[3-9].*");
+    }
+
+    /**
      * Detects if JSF version is greater than 2.2.11 (in the next version several issues
      * with ui:repeate were fixed)
      *
