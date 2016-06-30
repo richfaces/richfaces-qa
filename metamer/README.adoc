@@ -119,6 +119,7 @@ To deploy the application just copy the WAR file into server deployment folder. 
 *** e.g. `-Dtestng.suite.xml=src/test/resources/testng/testng-output.xml`
 *** the pathToSuite configuration will be ignored, when you specify the `-Dtest` property
 *** the suites are (usually) defined by the focus of individual components in RichFaces (e.g. output, input, dnd)
+*** to see which tests are run with any particular TestNG suite, open the suite in https://github.com/richfaces/richfaces-qa/tree/master/metamer/ftest/src/test/resources/testng[metamer/ftest/src/test/resources/testng/]
 *** the *default value* is set to `src/test/resources/testng/testng-all.xml` (https://github.com/richfaces/richfaces-qa/blob/master/metamer/ftest/src/test/resources/testng/testng-all.xml[link])
 ** *templateName* is one or more of the templates such as plain, richPanel, a4jRepeat, uiRepeat
 *** the template is wrapper in which will be the tested component placed. It is used for checking the correct behavior between components (RichFaces component inside of other/same RichFaces component or inside of a JSF component).
