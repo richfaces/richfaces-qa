@@ -71,7 +71,7 @@ public class TestTreeModelAdaptorSelection extends AbstractTreeSelectionTest {
             selectionPaths = path.paths;
         }
         if (isInPopupTemplate()) {
-            popupTemplate.advanced().moveByOffset(0, -500);
+            popupTemplate.advanced().moveByOffset(350, 100);
         }
         if (representation == RecursiveModelRepresentation.MAP) {
             MetamerPage.requestTimeChangesWaiting(recursiveModelRepresentations.get(1)).click();
