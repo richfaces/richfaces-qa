@@ -224,7 +224,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         }
         driverType = DriverType.getCurrentType(driver);
         // resize browser window to 1280x1024 or full screen
-        driver.manage().window().setSize(new Dimension(1280, 1024));
+        driver.manage().window().setSize(new Dimension(1920, 1080));
     }
 
     protected void openPageWithCurrentConfiguration() {
