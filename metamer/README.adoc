@@ -312,6 +312,12 @@ Related Selenium issues:
 * https://github.com/SeleniumHQ/selenium/issues/1155[Selenium issue#1155]
 * https://github.com/seleniumhq/selenium/issues/2110[Selenium issue#2110]
 
+|UnreachableBrowserException during the test execution
+|Browser process probably died (or was killed) during the test execution. Might be a problem of particular machine running tests.
+
+* watch browser process during test execution to find whether it fails always on the same test, after some time, memory consumption of browser, etc.
+
+
 |View cannot be restored or ViewExpiredException in tests
 |This happens when a HTTP request is sent while there was already an ajax request in progress. You can:
 
