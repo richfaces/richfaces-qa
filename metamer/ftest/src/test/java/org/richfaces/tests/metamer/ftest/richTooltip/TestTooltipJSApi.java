@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.ftest.richTooltip;
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.fragment.common.Actions;
 import org.richfaces.fragment.tooltip.TextualRichFacesTooltip;
+import org.richfaces.tests.configurator.unstable.annotation.Unstable;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.Test;
 
@@ -47,6 +48,7 @@ public class TestTooltipJSApi extends AbstractWebDriverTest {
     }
 
     @Test
+    @Unstable
     public void testJsAPIbyMouseOver() {
         new Actions(driver).moveToElement(page.getJsAPIshowMouseOver()).build().perform();
         tooltip().advanced().waitUntilTooltipIsVisible().perform();
