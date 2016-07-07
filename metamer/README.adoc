@@ -348,13 +348,14 @@ Related Selenium issues:
 * double-check that the logic of test is correct
 * it might indicate that server and/or browser is too slow to execute desired actions, try to watch the test execution
 * workaround is to mark the test with annotation `@Unstable` (see section <<about-annotations>>)
+* it might also indicate that the test is dependent on focus or blur events, try runnit your tests using `xvfb-run mvn clean verify...`
 
 |ElementNotVisibleException is thrown during test execution
 |Selenium cannot interact with not visible elements on page (i.e. when hidden by CSS or when inside a container with scrollers)
 
 * make sure that you are not trying to use element that is supposed to be hidden
 * use `Graphene.guardAjax()` on the action which resolves in Ajax request to wait until the request is done
-* make sure to use high enough resolution of your display so that majority of page is visible, especially if your test is running inside VNC or Xvfb
+* make sure to use high enough resolution of your display so that majority of page is visible, especially if your test is running inside VNC (in view-only mode) or Xvfb
 * if your test is failing inside template richPopupPanel (or its alias popup), the problem will be probably caused by scrollers inside popup panel,
 Selenium cannot scroll the container (div HTML element), try enlarging the popup panel in `metamer/application/src/main/webapp/templates/richPopupPanel.xhtml`
 
