@@ -67,6 +67,7 @@ import org.richfaces.fragment.common.Event;
 import org.richfaces.fragment.common.Locations;
 import org.richfaces.fragment.common.Utils;
 import org.richfaces.fragment.message.RichFacesMessage;
+import org.richfaces.tests.configurator.unstable.annotation.Unstable;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
@@ -583,6 +584,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @Test
     @CoversAttributes("monthLabels")
     @Templates("plain")
+    @Unstable
     public void testMonthLabels() {
         String labelsString = "január, február, marec, apríl, máj, jún, júl, august, september, október, november, december";
         calendarAttributes.set(CalendarAttributes.monthLabels, labelsString);
