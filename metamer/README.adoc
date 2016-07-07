@@ -342,6 +342,13 @@ Related Selenium issues:
 * in some cases, JavaScript needs to be executed after successful Ajax request so you need additional wait so that page is updated
 * workaround is to mark the test with annotation `@Unstable` (see section <<about-annotations>>)
 
+|org.openqa.selenium.TimeoutException: Timed out after 4 seconds: (some reason)
+|The application doesn't behave as expected
+
+* double-check that the logic of test is correct
+* it might indicate that server and/or browser is too slow to execute desired actions, try to watch the test execution
+* workaround is to mark the test with annotation `@Unstable` (see section <<about-annotations>>)
+
 |ElementNotVisibleException is thrown during test execution
 |Selenium cannot interact with not visible elements on page (i.e. when hidden by CSS or when inside a container with scrollers)
 
