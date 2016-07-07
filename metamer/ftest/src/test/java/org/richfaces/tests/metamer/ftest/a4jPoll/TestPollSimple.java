@@ -40,6 +40,7 @@ import org.jboss.arquillian.graphene.javascript.JavaScript;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.fragment.status.Status.StatusState;
+import org.richfaces.tests.configurator.unstable.annotation.Unstable;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
 import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
@@ -99,6 +100,7 @@ public class TestPollSimple extends AbstractWebDriverTest {
 
     @Test
     @CoversAttributes("actionListener")
+    @Unstable
     public void testActionListener() {
         waitForNSubsequentRequests(2);
         getMetamerPage().assertListener(INVOKE_APPLICATION, "action listener invoked");
