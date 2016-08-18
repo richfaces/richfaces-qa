@@ -21,18 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.richDragSource;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
-
-import java.util.AbstractMap.SimpleEntry;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
+import com.google.common.collect.Lists;
 import org.jboss.arquillian.graphene.GrapheneElement;
-import org.jboss.as.cli.CommandLineException;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.extension.attributes.coverage.annotations.CoversAttributes;
@@ -45,8 +35,18 @@ import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.U
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.annotation.ValuesFrom;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator;
 import org.testng.annotations.Test;
+import org.wildfly.extras.creaper.core.online.CliException;
 
-import com.google.common.collect.Lists;
+import java.io.IOException;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
@@ -143,7 +143,7 @@ public class TestDragSource extends AbstractDragSourceTest {
         "https://issues.jboss.org/browse/RF-14251",// not resolved
         "https://issues.jboss.org/browse/RF-10967"
         })
-    public void testDragValueWithPartialStateSavingOff() {
+    public void testDragValueWithPartialStateSavingOff() throws IOException {
         disablePartialStateSavingAndRedeploy();
         openPageWithCurrentConfiguration();
         try {
@@ -152,7 +152,7 @@ public class TestDragSource extends AbstractDragSourceTest {
             try {
                 undeployMetamerWars();
                 deployMetamerWar();
-            } catch (CommandLineException ex) {
+            } catch (CliException ex) {
                 System.err.println(ex);
                 System.err.println("Was not able to deploy the original WAR. Exiting.");
                 System.exit(1);

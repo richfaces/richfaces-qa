@@ -61,6 +61,15 @@ http://www.fsf.org. -->
         </configuration>
     </container>
 
+    <container qualifier="jbosseap-managed-7-1">
+        <configuration>
+            <property name="javaVmArguments">${arquillian.container.jbossas.7-1.jvm.args}</property>
+            <property name="managementAddress">${arquillian.container.jbossas.7-1.node0}</property>
+            <property name="serverConfig">standalone.xml</property>
+            <property name="enableAssertions">false</property>
+        </configuration>
+    </container>
+
     <container qualifier="wildfly-managed-8-1">
         <configuration>
             <property name="javaVmArguments">${arquillian.container.jbossas.7-1.jvm.args}</property>

@@ -21,8 +21,30 @@
  */
 package org.richfaces.tests.metamer.ftest;
 
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertTrue;
+import com.google.common.io.Files;
+import org.eu.ingwar.tools.arquillian.extension.suite.annotations.ArquillianSuiteDeployment;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OverProtocol;
+import org.jboss.arquillian.container.test.api.RunAsClient;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.jboss.arquillian.testng.Arquillian;
+import org.jboss.shrinkwrap.api.ArchivePaths;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+import org.jboss.shrinkwrap.api.importer.ArchiveImportException;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.descriptor.api.Descriptors;
+import org.jboss.shrinkwrap.descriptor.api.javaee6.ParamValueType;
+import org.jboss.shrinkwrap.descriptor.api.webapp30.WebAppDescriptor;
+import org.richfaces.tests.metamer.TemplatesList;
+import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
+import org.richfaces.tests.metamer.ftest.utils.ManagementClientProvider;
+import org.richfaces.tests.metamer.ftest.utils.files.LineIdentifiers;
+import org.richfaces.tests.metamer.ftest.utils.files.SimpleFileManipulator;
+import org.wildfly.extras.creaper.core.online.CliException;
+import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
+import org.wildfly.extras.creaper.core.online.operations.admin.Administration;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -36,30 +58,8 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.Locale;
 
-import org.eu.ingwar.tools.arquillian.extension.suite.annotations.ArquillianSuiteDeployment;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.OverProtocol;
-import org.jboss.arquillian.container.test.api.RunAsClient;
-import org.jboss.arquillian.test.api.ArquillianResource;
-import org.jboss.arquillian.testng.Arquillian;
-import org.jboss.as.cli.CommandContext;
-import org.jboss.as.cli.CommandContextFactory;
-import org.jboss.as.cli.CommandLineException;
-import org.jboss.shrinkwrap.api.ArchivePaths;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.StringAsset;
-import org.jboss.shrinkwrap.api.exporter.ZipExporter;
-import org.jboss.shrinkwrap.api.importer.ArchiveImportException;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.descriptor.api.Descriptors;
-import org.jboss.shrinkwrap.descriptor.api.javaee6.ParamValueType;
-import org.jboss.shrinkwrap.descriptor.api.webapp30.WebAppDescriptor;
-import org.richfaces.tests.metamer.TemplatesList;
-import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annotation.Templates;
-import org.richfaces.tests.metamer.ftest.utils.files.LineIdentifiers;
-import org.richfaces.tests.metamer.ftest.utils.files.SimpleFileManipulator;
-
-import com.google.common.io.Files;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
 
 /**
  * Abstract test case used as a basis for majority of test cases.
@@ -143,7 +143,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
             if (isUsingJBossContainer()) {
                 try {
                     undeployMetamerWars();
-                } catch (CommandLineException ignored) {// no metamer war was deployed
+                } catch (CliException ignored) {// no metamer war was deployed
                 }
             }
 
@@ -154,7 +154,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
                         System.out.println("### Enabling WebSockets in EAP ###");
                         enableWebSocketsInEAP63_or_64(war, temporaryJBossWebXML);
                         System.out.println("### Enabling of WebSockets in EAP was successful ###");
-                    } catch (CommandLineException t) {
+                    } catch (CliException t) {
                         t.printStackTrace(System.err);
                         System.out.println("### Enabling of WebSockets in EAP was NOT successful ###");
                     }
@@ -179,7 +179,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
     /**
      * Deploys target/metamer-UPDATED.war file on current JBoss container.
      */
-    public static void deployMetamerWar() throws CommandLineException {
+    public static void deployMetamerWar() throws CliException, IOException {
         if (isUsingJBossContainer()) {
             runCLICommandWithWait("deploy target/metamer-UPDATED.war");
         } else {
@@ -191,7 +191,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
      * Sets javax.faces.PARTIAL_STATE_SAVING to false in web.xml and redeploys the current war. Can only be used with JBoss
      * containers.
      */
-    public static void disablePartialStateSavingAndRedeploy() {
+    public static void disablePartialStateSavingAndRedeploy() throws IOException {
         modifyAndDeployWar(new WARModifyAction() {
             @Override
             public WebArchive modify(WebArchive war) {
@@ -243,7 +243,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
     /**
      * Runs a command through JBoss CLI for enabling WebSockets and restarting the server.
      */
-    private static void enableWSInJBossCLI() throws CommandLineException {
+    private static void enableWSInJBossCLI() throws CliException, IOException {
         runCLICommandWithWait(
             "/subsystem=web/connector=http/:write-attribute(name=protocol,value=org.apache.coyote.http11.Http11NioProtocol)",
             ":reload");
@@ -257,7 +257,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
         return jbossWebXMLFile;
     }
 
-    private static void enableWebSocketsInEAP63_or_64(WebArchive war, File jBossWebXML) throws CommandLineException {
+    private static void enableWebSocketsInEAP63_or_64(WebArchive war, File jBossWebXML) throws CliException, IOException {
         System.out.println(" * adding  <enable-websockets>true</enable-websockets> to jboss-web.xml");
         replaceJBossWebXMLInWar(war, enableWSInJbossWebXML(jBossWebXML));
         enableWSInJBossCLI();
@@ -292,11 +292,11 @@ public abstract class AbstractMetamerTest extends Arquillian {
      * target/metamerModfied.war. Undeploys all *metamer* wars, deploys the modified one and deletes it in the target directory.
      * Can be used only with JBoss containers,
      */
-    public static void modifyAndDeployWar(WARModifyAction a) {
+    public static void modifyAndDeployWar(WARModifyAction a) throws IOException {
         if (isUsingJBossContainer()) {
             try {
                 undeployMetamerWars();
-            } catch (CommandLineException t) {
+            } catch (CliException t) {
                 System.err.println(t);
                 System.err.println("Undeployment of war was not successful. Exiting.");
                 System.exit(1);
@@ -307,7 +307,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
             modifiedWar.as(ZipExporter.class).exportTo(modifiedWarFile);
             try {
                 runCLICommandWithWait("deploy target/metamerModified.war");
-            } catch (CommandLineException t) {
+            } catch (CliException t) {
                 System.err.println(t);
                 System.err.println("Modification of war and redeployment was not successful. Exiting.");
                 System.exit(1);
@@ -349,27 +349,24 @@ public abstract class AbstractMetamerTest extends Arquillian {
     /**
      * Runs a command through JBoss CLI.
      */
-    private static void runCLICommand(String... commands) throws CommandLineException {
+    private static void runCLICommand(String... commands) throws CliException, IOException {
         if (commands == null || commands.length == 0) {
             return;
         }
-        final CommandContext ctx;
-        ctx = CommandContextFactory.getInstance().newCommandContext();
+        final OnlineManagementClient client = ManagementClientProvider.createOnlineManagementClientForStandaloneServer();
         int MAX_RETRY_COUNT = 20;
+        String cmd;
+        int i = 0;
+        int retryCount = 0;
         try {
-            String cmd;
-            int i = 0;
-            int retryCount = 0;
             while (i < commands.length) {
                 cmd = commands[i];
                 try {
-                    // connect to the server controller
-                    ctx.connectController();
                     // execute the command
-                    ctx.handle(cmd);
+                    client.executeCli(cmd);
                     retryCount = 0;
                     i++;
-                } catch (CommandLineException e) {
+                } catch (CliException e) {
                     if (e.getMessage().contains("The controller is not available")) {
                         retryCount++;
                         if (retryCount >= MAX_RETRY_COUNT) {
@@ -383,24 +380,27 @@ public abstract class AbstractMetamerTest extends Arquillian {
                 }
             }
         } finally {
-            // terminate the session and
-            // close the connection to the controller
-            ctx.terminateSession();
+            client.close();
         }
     }
 
     /**
      * Runs all CLI commands and then runs an empty command to wait until the container is ready again
      */
-    protected static void runCLICommandWithWait(String... commands) throws CommandLineException {
+    protected static void runCLICommandWithWait(String... commands) throws CliException, IOException {
         runCLICommand(commands);
-        runCLICommand("");// wait for EAP to be ready, e.g. after restart
+        final OnlineManagementClient client = ManagementClientProvider.createOnlineManagementClientForStandaloneServer();
+        try {
+            new Administration(client).waitUntilRunning();// wait for EAP to be ready, e.g. after restart
+        } finally {
+            client.close();
+        }
     }
 
     /**
      * Undeploys all metamer wars from current JBoss container.
      */
-    public static void undeployMetamerWars() throws CommandLineException {
+    public static void undeployMetamerWars() throws CliException, IOException {
         if (isUsingJBossContainer()) {
             runCLICommandWithWait("undeploy *metamer*");
         } else {

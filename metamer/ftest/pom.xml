@@ -58,6 +58,12 @@ FSF site: http://www.fsf.org. -->
             <version>${project.version}</version>
             <classifier>classes</classifier>
             <scope>test</scope>
+            <exclusions>
+            	<exclusion>
+            		<groupId>com.google.guava</groupId>
+            		<artifactId>guava</artifactId>
+            	</exclusion>
+            </exclusions>
         </dependency>
         <!-- Arquillian dependencies -->
         <dependency>
@@ -65,6 +71,12 @@ FSF site: http://www.fsf.org. -->
             <artifactId>graphene-webdriver</artifactId>
             <type>pom</type>
             <scope>test</scope>
+            <exclusions>
+            	<exclusion>
+            		<groupId>com.google.guava</groupId>
+            		<artifactId>guava</artifactId>
+            	</exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.jboss.arquillian.testng</groupId>
@@ -76,6 +88,12 @@ FSF site: http://www.fsf.org. -->
             <artifactId>richfaces-page-fragments</artifactId>
             <version>${version.richfaces}</version>
             <scope>test</scope>
+            <exclusions>
+            	<exclusion>
+            		<groupId>com.google.guava</groupId>
+            		<artifactId>guava</artifactId>
+            	</exclusion>
+            </exclusions>
         </dependency>
 
         <!-- Resolution of JAR libraries into WAR archive -->
@@ -83,6 +101,12 @@ FSF site: http://www.fsf.org. -->
             <groupId>org.jboss.shrinkwrap.resolver</groupId>
             <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
             <scope>test</scope>
+            <exclusions>
+            	<exclusion>
+            		<groupId>com.google.guava</groupId>
+            		<artifactId>guava</artifactId>
+            	</exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -121,6 +145,12 @@ FSF site: http://www.fsf.org. -->
             <artifactId>richfaces-qa-maven-plugin</artifactId>
             <scope>test</scope>
             <version>${project.version}</version>
+            <exclusions>
+            	<exclusion>
+            		<groupId>com.google.guava</groupId>
+            		<artifactId>guava</artifactId>
+            	</exclusion>
+            </exclusions>
         </dependency>
         <!-- see the https://community.jboss.org/wiki/WhatsTheCauseOfThisExceptionJavalangClassFormatErrorAbsentCode -->
         <dependency>
@@ -142,6 +172,12 @@ FSF site: http://www.fsf.org. -->
             <groupId>org.eu.ingwar.tools</groupId>
             <artifactId>arquillian-suite-extension</artifactId>
             <scope>test</scope>
+            <exclusions>
+            	<exclusion>
+            		<groupId>com.google.guava</groupId>
+            		<artifactId>guava</artifactId>
+            	</exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -149,12 +185,40 @@ FSF site: http://www.fsf.org. -->
             <artifactId>testng</artifactId>
         </dependency>
 
-        <!-- Command line interface for JBoss containers -->
+        <!--Creaper-->
         <dependency>
-            <groupId>org.wildfly</groupId>
-            <artifactId>wildfly-cli</artifactId>
-            <version>8.2.1.Final</version>
-            <scope>test</scope>
+            <groupId>org.wildfly.extras.creaper</groupId>
+            <artifactId>creaper-core</artifactId>
+            <version>${version.org.wildfly.extras.creaper}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jboss.logging</groupId>
+                    <artifactId>jboss-logging</artifactId>
+                </exclusion>
+                <exclusion>
+                	<groupId>com.google.guava</groupId>
+                	<artifactId>guava</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.extras.creaper</groupId>
+            <artifactId>creaper-commands</artifactId>
+            <version>${version.org.wildfly.extras.creaper}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jboss.logging</groupId>
+                    <artifactId>jboss-logging</artifactId>
+                </exclusion>
+                <exclusion>
+                	<groupId>com.google.guava</groupId>
+                	<artifactId>guava</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+        	<groupId>com.google.guava</groupId>
+        	<artifactId>guava</artifactId>
         </dependency>
     </dependencies>
 

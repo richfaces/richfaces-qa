@@ -21,8 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.richPickList;
 
-import java.text.MessageFormat;
-
+import com.google.common.collect.BoundType;
+import com.google.common.collect.Range;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -36,8 +36,7 @@ import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annota
 import org.richfaces.tests.metamer.ftest.webdriver.utils.LazyLoadedCachedValue;
 import org.testng.annotations.Test;
 
-import com.google.common.collect.BoundType;
-import com.google.common.collect.Ranges;
+import java.text.MessageFormat;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -63,7 +62,7 @@ public class TestPickListColumnClasses extends AbstractColumnAndRowClassesTest {
     @Override
     public void performAfterSettingOfAttributes() {
         // move some of the items to target list, so the @columnClasses can be also checked there
-        pickList.addMultiple(ChoicePickerHelper.byIndex().fromRange(Ranges.range(0, BoundType.CLOSED, pickList.advanced().getSourceListItemsElements().size() / 2, BoundType.CLOSED)));
+        pickList.addMultiple(ChoicePickerHelper.byIndex().fromRange(Range.range(0, BoundType.CLOSED, pickList.advanced().getSourceListItemsElements().size() / 2, BoundType.CLOSED)));
     }
 
     @Test
