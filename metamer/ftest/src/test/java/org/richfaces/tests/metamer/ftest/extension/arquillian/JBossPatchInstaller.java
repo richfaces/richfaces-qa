@@ -21,20 +21,18 @@
  */
 package org.richfaces.tests.metamer.ftest.extension.arquillian;
 
-import static java.text.MessageFormat.format;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.jboss.arquillian.container.spi.event.container.BeforeStart;
 import org.jboss.arquillian.core.api.annotation.Observes;
-import org.jboss.as.cli.CommandLineException;
+import org.richfaces.tests.metamer.ftest.extension.creaper.ApplyPatch;
+import org.richfaces.tests.metamer.ftest.utils.ManagementClientProvider;
+import org.wildfly.extras.creaper.core.CommandFailedException;
+import org.wildfly.extras.creaper.core.offline.OfflineManagementClient;
 
-import com.google.common.io.Files;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import static java.text.MessageFormat.format;
 
 /**
  * Installs patch from System property <code>pathToPatch</code> to JBoss container using the jboss-cli.sh script.
@@ -44,24 +42,7 @@ import com.google.common.io.Files;
 public class JBossPatchInstaller {
 
     private static final String ACTIVATED_MAVEN_PROFILES = System.getProperty("activated.maven.profiles", "");
-    private static final String JBOSS_HOME_SYSTEM_PROPERTY = "JBOSS_HOME";
-    private static final String OS_NAME = System.getProperty("os.name");
-    private static final String PATH_TO_JBOSS_HOME = System.getProperty(JBOSS_HOME_SYSTEM_PROPERTY);
     private static final String PATH_TO_JBOSS_PATCH_SYSTEM_PROPERTY = "pathToPatch";
-    private static final String SUCCESS_STRING = "success";
-
-    private static String formatOutput(List<String> outputFromProcess) {
-        StringBuilder sb = new StringBuilder(100);
-        boolean performed = false;
-        for (String o : outputFromProcess) {
-            if (performed) {
-                sb.append("\n");
-            }
-            sb.append(" * ").append(o);
-            performed = true;
-        }
-        return sb.toString();
-    }
 
     private static boolean isUsingJBossContainer() {
         return ACTIVATED_MAVEN_PROFILES.contains("jbosseap") || ACTIVATED_MAVEN_PROFILES.contains("wildfly");
@@ -69,64 +50,18 @@ public class JBossPatchInstaller {
 
     /**
      * Apply patch from given path.
+     * @throws IOException when there is an error during closing of client
+     * @throws CommandFailedException when the apply patch command fails
      */
-    private void applyPatch(String pathToPatch) throws CommandLineException {
-        if (PATH_TO_JBOSS_HOME == null || PATH_TO_JBOSS_HOME.isEmpty()) {
-            logError("JBOSS_HOME not detected. Exiting.");
-            System.exit(1);
-        }
+    private void applyPatch(String pathToPatch) throws IOException, CommandFailedException {
         logInfoMarked(format("Applying patch from path <{0}>", pathToPatch));
-        try {
-            File f = new File(PATH_TO_JBOSS_HOME + "/bin/jboss-cli" + (isOnWindows() ? ".bat" : ".sh"));
-            f.setExecutable(true);
-            File patch = new File(pathToPatch);
-            String patchName = patch.getName();
-            File patchCopy = new File("target/" + patchName);
-            logInfo(format("Copying patch <{0}> to <{1}> for easier manipulation.", patch.getAbsolutePath(), patchCopy.getAbsolutePath()));
-            Files.copy(patch, patchCopy);
+        File patch = new File(pathToPatch);
 
-            String cmd = f.getAbsolutePath() + " --command=\"patch apply " + patchCopy.getAbsolutePath() + "\"";
-            String[] cmdArray;
-            if (isOnWindows()) {
-                // the cmd.exe is hanging with 'Press any key to continue ...'
-                // give it some input from empty temporary file to workaround this
-                File tmp = new File("tempFile");
-                tmp.createNewFile();
-                tmp.deleteOnExit();
-                cmdArray = new String[] { "cmd.exe", "/C", cmd + " < " + tmp.getAbsolutePath() };
-            } else {
-                cmdArray = new String[] { "/bin/sh", "-c", cmd };
-            }
+        OfflineManagementClient client = ManagementClientProvider.createOfflineManagementClientForStandaloneServer();
 
-            logInfo("Applying patch " + patchCopy.getName());
-            // apply patch by running jboss-cli.sh with parameters
-            Process p = Runtime.getRuntime().exec(cmdArray);
-            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        logInfo("Applying patch " + patch.getName());
+        client.apply(new ApplyPatch.Builder(patch).build());
 
-            // check stdin contains success
-            String s;
-            boolean success = false;
-            List<String> outputFromProcess = new ArrayList<String>(10);
-            while ((s = stdInput.readLine()) != null) {
-                outputFromProcess.add(s);
-                if (s.toLowerCase().contains(SUCCESS_STRING)) {
-                    success = true;// do not break here, consume all the input
-                }
-            }
-            stdInput.close();
-            p.destroy();
-            // check stdin contained success, otherwise immediatelly exit
-            if (!success) {
-                logError(format("Attempt to apply a patch was not succesfull. Apllying patch ended with output:\n{0}",
-                    formatOutput(outputFromProcess)));
-                logError("Exiting.");
-                System.exit(1);
-            }
-        } catch (IOException ex) {
-            logError(ex.toString());
-            logError("Attempt to apply a patch was not succesfull. Exiting.");
-            System.exit(1);
-        }
         logInfoMarked("Patch applied succesfully");
     }
 
@@ -138,20 +73,20 @@ public class JBossPatchInstaller {
             if (new File(pathToPatch).exists()) {
                 try {
                     applyPatch(pathToPatch);
-                } catch (CommandLineException e) {
-                    logError(e.toString());
-                    logError("Was not able to apply the patch. Exiting.");
-                    System.exit(1);
+                } catch (Exception e) {
+                    systemExitWithException("Attempt to apply a patch was not succesfull. Exiting.", e);
                 }
             } else {
-                logError(format("The patch at <{0}> does not exist. Exiting.", pathToPatch));
-                System.exit(1);
+                String message = format("The patch at <{0}> does not exist. Exiting.", pathToPatch);
+                systemExitWithException(message, new FileNotFoundException(message));
             }
         }
     }
 
-    private boolean isOnWindows() {
-        return OS_NAME.toLowerCase().contains("win");
+    private void systemExitWithException(String message, Exception e) {
+        logError(message);
+        e.printStackTrace();
+        System.exit(1);
     }
 
     private void logError(String msg) {
