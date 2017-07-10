@@ -21,23 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest;
 
-import static java.text.MessageFormat.format;
-
-import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
-
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
+import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
@@ -71,7 +56,6 @@ import org.richfaces.fragment.common.VisibleComponent;
 import org.richfaces.fragment.popupPanel.TextualRichFacesPopupPanel;
 import org.richfaces.tests.configurator.unstable.UnstableTestConfigurator;
 import org.richfaces.tests.metamer.Template;
-import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.JSErrorStorage;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.extension.configurator.Configurator;
 import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config;
@@ -90,6 +74,8 @@ import org.richfaces.tests.metamer.ftest.webdriver.UnsafeAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.MetamerJavascriptUtils;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.IHookCallBack;
 import org.testng.ITestResult;
 import org.testng.SkipException;
@@ -97,10 +83,27 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Lists;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import static java.text.MessageFormat.format;
+import static org.jboss.test.selenium.support.url.URLUtils.buildUrl;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
 public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
+
+    private static final Logger log = LoggerFactory.getLogger(AbstractWebDriverTest.class);
 
     protected static final int WAIT_TIME = 5;// s
     protected static final int MINOR_WAIT_TIME = 50;// ms
@@ -137,6 +140,9 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     // this field is used by MetamerTestInfo to gather information about actual test method configuration
     private Config currentConfiguration;
+
+    // field for reporting purposes, please *DO NOT* change its name since reflection is used to access it
+    private Map<String, List<Config>> configurations = new HashMap<>();
 
     /**
      * @return method should return a String representing 'component/page' (case sensitive). E.g.:
@@ -179,7 +185,13 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     @DataProvider(name = DataProviderTestTransformer.DATAPROVIDER_NAME)
     public Object[][] provide(Method m) {
-        return c.prepareConfigurationsForMethod(m, this);
+        Object[][] configs = c.prepareConfigurationsForMethod(m, this);
+        List<List<Config>> archiveConfigs = c.getConfigurations();
+        configurations.put(m.getName(), archiveConfigs == null || archiveConfigs.isEmpty() ?
+                Collections.emptyList() :
+                new ArrayList<>(archiveConfigs.get(0)));
+        log.debug("Set configurations to '{}'", configurations);
+        return configs;
     }
 
     @BeforeMethod(alwaysRun = true)

@@ -22,6 +22,8 @@
 package org.jboss.test.selenium.listener;
 
 import org.jboss.test.selenium.utils.testng.TestLoggingUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
 
@@ -33,6 +35,8 @@ import org.testng.TestListenerAdapter;
  * @version $Revision$
  */
 public class ConsoleStatusTestListener extends TestListenerAdapter {
+
+    private static final Logger log = LoggerFactory.getLogger(ConsoleStatusTestListener.class);
 
     @Override
     public void onTestStart(ITestResult result) {
@@ -62,15 +66,14 @@ public class ConsoleStatusTestListener extends TestListenerAdapter {
     /**
      * This method will output method name and status on the standard output
      *
-     * @param result
-     *            from the fine-grained listener's method such as onTestFailure(ITestResult)
+     * @param result from the fine-grained listener's method such as onTestFailure(ITestResult)
      */
     private void logStatus(ITestResult result) {
         String message = getMessage(result);
-        System.out.println(message);
-        if (result.getStatus() != ITestResult.STARTED) {
+        log.info(message);
+        /*if (result.getStatus() != ITestResult.STARTED) {
             System.out.println();
-        }
+        }*/
     }
 
     protected String getMessage(ITestResult result) {

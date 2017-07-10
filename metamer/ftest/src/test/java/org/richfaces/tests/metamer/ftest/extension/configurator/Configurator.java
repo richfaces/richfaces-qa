@@ -21,9 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.extension.configurator;
 
-import java.lang.reflect.Method;
-import java.util.List;
-
+import com.google.common.collect.Lists;
 import org.richfaces.tests.metamer.ftest.extension.configurator.config.Config;
 import org.richfaces.tests.metamer.ftest.extension.configurator.repeater.RepeaterConfigurator;
 import org.richfaces.tests.metamer.ftest.extension.configurator.skip.SkipConfigurator;
@@ -32,7 +30,8 @@ import org.richfaces.tests.metamer.ftest.extension.configurator.use.UseForAllTes
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.UseWithFieldConfigurator;
 import org.richfaces.tests.metamer.ftest.extension.configurator.use.UsesConfigurator;
 
-import com.google.common.collect.Lists;
+import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -71,6 +70,10 @@ public class Configurator {
         return createInvocationsOfTestMethod(manager.createAllConfigurations(m, testInstance));
     }
 
+    public List<List<Config>> getConfigurations() {
+        return manager.getConfigurations();
+    }
+
     private static class ConfigManager {
 
         private final List<List<Config>> configurations = Lists.newLinkedList();
@@ -99,6 +102,10 @@ public class Configurator {
 
         public Config getNextConfigurationStep() {
             return configurations.get(0).remove(0);
+        }
+
+        public List<List<Config>> getConfigurations() {
+            return configurations;
         }
     }
 }

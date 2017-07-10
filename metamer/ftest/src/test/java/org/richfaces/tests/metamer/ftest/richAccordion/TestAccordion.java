@@ -21,14 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richAccordion;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
-
-import java.util.List;
-
-import javax.faces.event.PhaseId;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
@@ -45,6 +37,14 @@ import org.richfaces.tests.metamer.ftest.extension.configurator.templates.annota
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import javax.faces.event.PhaseId;
+import java.util.List;
+import java.util.Optional;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -107,10 +107,10 @@ public class TestAccordion extends AbstractWebDriverTest {
     public void testCycledSwitching() {
         WebElement rootElement = page.getAccordion().advanced().getRootElement();
         // RichFaces.$('form:accordion').nextItem('item5') will be null
-        assertEquals(Utils.invokeRichFacesJSAPIFunction(rootElement, "nextItem('item5')"), null, "Result of function nextItem('item5')");
+        assertEquals(Optional.ofNullable(Utils.invokeRichFacesJSAPIFunction(rootElement, "nextItem('item5')")), Optional.empty(), "Result of function nextItem('item5')");
 
         // RichFaces.$('form:accordion').prevItem('item1') will be null
-        assertEquals(Utils.invokeRichFacesJSAPIFunction(rootElement, "prevItem('item1')"), null, "Result of function prevItem('item1')");
+        assertEquals(Optional.ofNullable(Utils.invokeRichFacesJSAPIFunction(rootElement, "prevItem('item1')")), Optional.empty(), "Result of function prevItem('item1')");
 
         accordionAttributes.set(AccordionAttributes.cycledSwitching, true);
 

@@ -21,12 +21,12 @@
  */
 package org.jboss.test.selenium.utils.testng;
 
-import static org.jboss.test.selenium.utils.testng.TestInfo.STATUSES;
-import static org.jboss.test.selenium.utils.testng.TestInfo.getPackageClassMethodName;
+import org.testng.ITestResult;
 
 import java.util.Date;
 
-import org.testng.ITestResult;
+import static org.jboss.test.selenium.utils.testng.TestInfo.STATUSES;
+import static org.jboss.test.selenium.utils.testng.TestInfo.getPackageClassMethodName;
 
 /**
  * Provides the method for obtaining test description from ITestResult.
@@ -62,8 +62,6 @@ public final class TestLoggingUtils {
         parameters.append(")");
 
         // result
-        String message =
-            String.format("[%tT] %s: %s%s", new Date(), status.toUpperCase(), methodName, parameters.toString());
-        return message;
+        return String.format("[%tT] %s: %s%s", new Date(), status.toUpperCase(), methodName, parameters.toString());
     }
 }
